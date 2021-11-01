@@ -2103,11 +2103,14 @@ void atomisp_css_stop(struct atomisp_sub_device *asd,
 {
 	struct atomisp_device *isp = asd->isp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct atomisp_s3a_buf *s3a_buf;
 	struct atomisp_dis_buf *dis_buf;
 	struct atomisp_metadata_buf *md_buf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long irqflags;
 	unsigned int i;
 
@@ -2148,6 +2151,7 @@ void atomisp_css_stop(struct atomisp_sub_device *asd,
 
 	/* move stats buffers to free queue list */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	list_splice_init(&asd->s3a_stats_in_css, &asd->s3a_stats);
 	list_splice_init(&asd->s3a_stats_ready, &asd->s3a_stats);
 
@@ -2175,10 +2179,18 @@ void atomisp_css_stop(struct atomisp_sub_device *asd,
 		list_add_tail(&dis_buf->list, &asd->dis_stats);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list_splice_init(&asd->s3a_stats_in_css, &asd->s3a_stats);
+	list_splice_init(&asd->s3a_stats_ready, &asd->s3a_stats);
+
+	spin_lock_irqsave(&asd->dis_stats_lock, irqflags);
+	list_splice_init(&asd->dis_stats_in_css, &asd->dis_stats);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	asd->params.dis_proj_data_valid = false;
 	spin_unlock_irqrestore(&asd->dis_stats_lock, irqflags);
 
 	for (i = 0; i < ATOMISP_METADATA_TYPE_NUM; i++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		list_splice_init(&asd->metadata_in_css[i], &asd->metadata[i]);
 		list_splice_init(&asd->metadata_ready[i], &asd->metadata[i]);
@@ -2196,6 +2208,10 @@ void atomisp_css_stop(struct atomisp_sub_device *asd,
 			list_add_tail(&md_buf->list, &asd->metadata[i]);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		list_splice_init(&asd->metadata_in_css[i], &asd->metadata[i]);
+		list_splice_init(&asd->metadata_ready[i], &asd->metadata[i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	atomisp_flush_params_queue(&asd->video_out_capture);

@@ -5,6 +5,7 @@
 
 obj-$(CONFIG_KEYS)			+= keys/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 subdir-$(CONFIG_SECURITY_SELINUX)	+= selinux
 subdir-$(CONFIG_SECURITY_SMACK)		+= smack
@@ -17,6 +18,8 @@ subdir-$(CONFIG_SECURITY_LOCKDOWN_LSM)	+= lockdown
 subdir-$(CONFIG_BPF_LSM)		+= bpf
 subdir-$(CONFIG_SECURITY_LANDLOCK)	+= landlock
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # always enable default capabilities
 obj-y					+= commoncap.o
@@ -40,7 +43,10 @@ obj-$(CONFIG_SECURITY_LANDLOCK)		+= landlock/
 
 # Object integrity file lists
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 subdir-$(CONFIG_INTEGRITY)		+= integrity
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_INTEGRITY)			+= integrity/

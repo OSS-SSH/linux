@@ -14,10 +14,14 @@
 #include <linux/init.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init curve25519_init(void)
 =======
 static int __init mod_init(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init curve25519_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
 	    WARN_ON(!curve25519_selftest()))
@@ -25,6 +29,7 @@ static int __init mod_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void __exit curve25519_exit(void)
 {
@@ -40,6 +45,14 @@ static void __exit mod_exit(void)
 module_init(mod_init);
 module_exit(mod_exit);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit curve25519_exit(void)
+{
+}
+
+module_init(curve25519_init);
+module_exit(curve25519_exit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_LICENSE("GPL v2");
 MODULE_DESCRIPTION("Curve25519 scalar multiplication");

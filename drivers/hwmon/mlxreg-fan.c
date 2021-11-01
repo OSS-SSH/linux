@@ -316,12 +316,17 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
 	struct mlxreg_fan *fan = cdev->devdata;
 	unsigned long cur_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, config = 0;
 	u32 regval;
 =======
 	u32 regval;
 	int i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, config = 0;
+	u32 regval;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	/*
@@ -335,14 +340,20 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
 	 */
 	if (state >= MLXREG_FAN_SPEED_MIN && state <= MLXREG_FAN_SPEED_MAX) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * This is configuration change, which is only supported through sysfs.
 		 * For configuration non-zero value is to be returned to avoid thermal
 		 * statistics update.
 		 */
 		config = 1;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		state -= MLXREG_FAN_MAX_STATE;
 		for (i = 0; i < state; i++)
 			fan->cooling_levels[i] = state;
@@ -358,10 +369,14 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
 		cur_state = MLXREG_FAN_PWM_DUTY2STATE(regval);
 		if (state < cur_state)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return config;
 =======
 			return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return config;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		state = cur_state;
 	}
@@ -378,10 +393,14 @@ static int mlxreg_fan_set_cur_state(struct thermal_cooling_device *cdev,
 		return err;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return config;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return config;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct thermal_cooling_device_ops mlxreg_fan_cooling_ops = {

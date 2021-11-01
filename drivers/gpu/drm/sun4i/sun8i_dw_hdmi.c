@@ -217,10 +217,14 @@ static int sun8i_dw_hdmi_bind(struct device *dev, struct device *master,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = sun8i_hdmi_phy_init(hdmi->phy);
 	if (ret)
 		goto err_disable_clk_tmds;
 
+<<<<<<< HEAD
 	drm_encoder_helper_add(encoder, &sun8i_dw_hdmi_encoder_helper_funcs);
 	drm_simple_encoder_init(drm, encoder, DRM_MODE_ENCODER_TMDS);
 
@@ -231,6 +235,11 @@ static int sun8i_dw_hdmi_bind(struct device *dev, struct device *master,
 	sun8i_hdmi_phy_init(hdmi->phy);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_encoder_helper_add(encoder, &sun8i_dw_hdmi_encoder_helper_funcs);
+	drm_simple_encoder_init(drm, encoder, DRM_MODE_ENCODER_TMDS);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	plat_data->mode_valid = hdmi->quirks->mode_valid;
 	plat_data->use_drm_infoframe = hdmi->quirks->use_drm_infoframe;
 	sun8i_hdmi_phy_set_ops(hdmi->phy, plat_data);
@@ -273,9 +282,13 @@ static void sun8i_dw_hdmi_unbind(struct device *dev, struct device *master,
 
 	dw_hdmi_unbind(hdmi->hdmi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sun8i_hdmi_phy_deinit(hdmi->phy);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sun8i_hdmi_phy_deinit(hdmi->phy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clk_disable_unprepare(hdmi->clk_tmds);
 	reset_control_assert(hdmi->rst_ctrl);
 	gpiod_set_value(hdmi->ddc_en, 0);

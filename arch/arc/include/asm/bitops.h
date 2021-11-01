@@ -15,6 +15,7 @@
 #include <linux/types.h>
 #include <linux/compiler.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/barrier.h>
 #ifndef CONFIG_ARC_HAS_LLSC
@@ -199,6 +200,8 @@ test_bit(unsigned int nr, const volatile unsigned long *addr)
 	return ((mask & *addr) != 0);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_ISA_ARCOMPACT
 
@@ -300,10 +303,14 @@ static inline __attribute__ ((const)) unsigned long __ffs(unsigned long word)
  * fls(1) = 1, fls(0x80000000) = 32, fls(0) = 0
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline __attribute__ ((const)) int fls(unsigned int x)
 =======
 static inline __attribute__ ((const)) int fls(unsigned long x)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline __attribute__ ((const)) int fls(unsigned int x)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int n;
 
@@ -331,10 +338,14 @@ static inline __attribute__ ((const)) int __fls(unsigned long x)
  * @result: [1-32], 0 if all 0's
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline __attribute__ ((const)) int ffs(unsigned int x)
 =======
 static inline __attribute__ ((const)) int ffs(unsigned long x)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline __attribute__ ((const)) int ffs(unsigned int x)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int n;
 
@@ -380,10 +391,15 @@ static inline __attribute__ ((const)) unsigned long __ffs(unsigned long x)
 #include <asm-generic/bitops/sched.h>
 #include <asm-generic/bitops/lock.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm-generic/bitops/atomic.h>
 #include <asm-generic/bitops/non-atomic.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm-generic/bitops/atomic.h>
+#include <asm-generic/bitops/non-atomic.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm-generic/bitops/find.h>
 #include <asm-generic/bitops/le.h>

@@ -10,9 +10,13 @@
 #include <sound/soc-acpi-intel-match.h>
 #include "../skylake/skl.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "soc-acpi-intel-sdw-mockup-match.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "soc-acpi-intel-sdw-mockup-match.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct skl_machine_pdata cnl_pdata = {
 	.use_tplg_pcm = true,
@@ -65,6 +69,9 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_cnl_sdw_machines[] = {
 		.sof_tplg_filename = "sof-cnl-rt5682-sdw2.tplg"
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.link_mask = GENMASK(3, 0),
 		.links = sdw_mockup_headset_2amps_mic,
@@ -79,8 +86,11 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_cnl_sdw_machines[] = {
 		.sof_fw_filename = "sof-cnl.ri",
 		.sof_tplg_filename = "sof-cml-rt711-rt1308-mono-rt715.tplg",
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_cnl_sdw_machines);

@@ -216,6 +216,9 @@ Description:    Sets the skip reset on timeout option for the device. Value of
                 otherwise it will not be reset.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:           /sys/kernel/debug/habanalabs/hl<n>/state_dump
 Date:           Oct 2021
 KernelVersion:  5.15
@@ -227,8 +230,11 @@ Description:    Gets the state dump occurring on a CS timeout or failure.
                 Writing an integer X discards X state dumps, so that the
                 next read would return X+1-st newest state dump.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:           /sys/kernel/debug/habanalabs/hl<n>/stop_on_err
 Date:           Mar 2020
 KernelVersion:  5.6
@@ -245,6 +251,9 @@ Description:    Displays a list with information about the currently user
                 to DMA addresses
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:           /sys/kernel/debug/habanalabs/hl<n>/userptr_lookup
 Date:           Aug 2021
 KernelVersion:  5.15
@@ -253,8 +262,11 @@ Description:    Allows to search for specific user pointers (user virtual
                 addresses) that are pinned and mapped to DMA addresses, and see
                 their resolution to the specific dma address.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:           /sys/kernel/debug/habanalabs/hl<n>/vm
 Date:           Jan 2019
 KernelVersion:  5.1

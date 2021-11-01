@@ -26,9 +26,13 @@
 #define KTD253_T_LOW_NS (200 + 10) /* Additional 10ns as safety factor */
 #define KTD253_T_HIGH_NS (200 + 10) /* Additional 10ns as safety factor */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define KTD253_T_OFF_CRIT_NS 100000 /* 100 us, now it doesn't look good */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define KTD253_T_OFF_CRIT_NS 100000 /* 100 us, now it doesn't look good */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define KTD253_T_OFF_MS 3
 
 struct ktd253_backlight {
@@ -39,6 +43,9 @@ struct ktd253_backlight {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ktd253_backlight_set_max_ratio(struct ktd253_backlight *ktd253)
 {
 	gpiod_set_value_cansleep(ktd253->gpiod, 1);
@@ -76,8 +83,11 @@ static int ktd253_backlight_stepdown(struct ktd253_backlight *ktd253)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ktd253_backlight_update_status(struct backlight_device *bl)
 {
 	struct ktd253_backlight *ktd253 = bl_get_data(bl);
@@ -85,10 +95,14 @@ static int ktd253_backlight_update_status(struct backlight_device *bl)
 	u16 target_ratio;
 	u16 current_ratio = ktd253->ratio;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(ktd253->dev, "new brightness/ratio: %d/32\n", brightness);
 
@@ -111,6 +125,7 @@ static int ktd253_backlight_update_status(struct backlight_device *bl)
 
 	if (current_ratio == 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ktd253_backlight_set_max_ratio(ktd253);
 		current_ratio = KTD253_MAX_RATIO;
 	}
@@ -131,6 +146,12 @@ static int ktd253_backlight_update_status(struct backlight_device *bl)
 	 */
 	local_irq_save(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ktd253_backlight_set_max_ratio(ktd253);
+		current_ratio = KTD253_MAX_RATIO;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (current_ratio != target_ratio) {
 		/*
 		 * These GPIO operations absolutely can NOT sleep so no
@@ -138,6 +159,9 @@ static int ktd253_backlight_update_status(struct backlight_device *bl)
 		 * slow buses for this!
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = ktd253_backlight_stepdown(ktd253);
 		if (ret == -EAGAIN) {
 			/*
@@ -151,6 +175,7 @@ static int ktd253_backlight_update_status(struct backlight_device *bl)
 			current_ratio = KTD253_MAX_RATIO;
 		} else if (current_ratio == KTD253_MIN_RATIO) {
 			/* After 1/32 we loop back to 32/32 */
+<<<<<<< HEAD
 			current_ratio = KTD253_MAX_RATIO;
 		} else {
 			current_ratio--;
@@ -163,12 +188,18 @@ static int ktd253_backlight_update_status(struct backlight_device *bl)
 		ndelay(KTD253_T_HIGH_NS);
 		/* After 1/32 we loop back to 32/32 */
 		if (current_ratio == KTD253_MIN_RATIO)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			current_ratio = KTD253_MAX_RATIO;
-		else
+		} else {
 			current_ratio--;
+		}
 	}
+<<<<<<< HEAD
 	local_irq_restore(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ktd253->ratio = current_ratio;
 
 	dev_dbg(ktd253->dev, "new ratio set to %d/32\n", target_ratio);

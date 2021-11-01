@@ -25,9 +25,13 @@
 #include "intel_rc6_types.h"
 #include "intel_rps_types.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "intel_migrate_types.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "intel_migrate_types.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_wakeref.h"
 
 struct drm_i915_private;
@@ -36,6 +40,9 @@ struct intel_engine_cs;
 struct intel_uncore;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct intel_mmio_range {
 	u32 start;
 	u32 end;
@@ -63,8 +70,11 @@ enum intel_steering_type {
 	NUM_STEERING_TYPES
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum intel_submission_method {
 	INTEL_SUBMISSION_RING,
 	INTEL_SUBMISSION_ELSP,
@@ -180,6 +190,9 @@ struct intel_gt {
 	struct i915_vma *scratch;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_migrate migrate;
 
 	const struct intel_mmio_range *steering_table[NUM_STEERING_TYPES];
@@ -189,10 +202,13 @@ struct intel_gt {
 
 		u32 l3bank_mask;
 
+<<<<<<< HEAD
 =======
 	struct intel_gt_info {
 		intel_engine_mask_t engine_mask;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u8 num_engines;
 
 		/* Media engine access to SFC per instance */
@@ -201,10 +217,15 @@ struct intel_gt {
 		/* Slice/subslice/EU info */
 		struct sseu_dev_info sseu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		unsigned long mslice_mask;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		unsigned long mslice_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} info;
 };
 

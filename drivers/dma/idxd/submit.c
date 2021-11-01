@@ -23,6 +23,7 @@ static struct idxd_desc *__get_desc(struct idxd_wq *wq, int idx, int cpu)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * On host, MSIX vecotr 0 is used for misc interrupt. Therefore when we match
 	 * vector 1:1 to the WQ id, we need to add 1
 	 */
@@ -48,6 +49,15 @@ static struct idxd_desc *__get_desc(struct idxd_wq *wq, int idx, int cpu)
 		desc->hw->int_handle = idxd->int_handles[desc->vector - 1];
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * On host, MSIX vecotr 0 is used for misc interrupt. Therefore when we match
+	 * vector 1:1 to the WQ id, we need to add 1
+	 */
+	if (!idxd->int_handles)
+		desc->hw->int_handle = wq->id + 1;
+	else
+		desc->hw->int_handle = idxd->int_handles[wq->id];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return desc;
 }
@@ -79,10 +89,14 @@ struct idxd_desc *idxd_alloc_desc(struct idxd_wq *wq, enum idxd_op_type optype)
 			break;
 		idx = sbitmap_queue_get(sbq, &cpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (idx >= 0)
 =======
 		if (idx > 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (idx >= 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		schedule();
 	}
@@ -103,6 +117,9 @@ void idxd_free_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct idxd_desc *list_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
 					 struct idxd_desc *desc)
 {
@@ -156,6 +173,7 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
 		complete_desc(found, IDXD_COMPLETE_ABORT);
 }
 
+<<<<<<< HEAD
 int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 {
 	struct idxd_device *idxd = wq->idxd;
@@ -175,20 +193,31 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 
 	portal = idxd_wq_portal_addr(wq);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 {
 	struct idxd_device *idxd = wq->idxd;
+	struct idxd_irq_entry *ie = NULL;
 	void __iomem *portal;
 	int rc;
 
-	if (idxd->state != IDXD_DEV_ENABLED)
+	if (idxd->state != IDXD_DEV_ENABLED) {
+		idxd_free_desc(wq, desc);
 		return -EIO;
+	}
 
-	if (!percpu_ref_tryget_live(&wq->wq_active))
+	if (!percpu_ref_tryget_live(&wq->wq_active)) {
+		idxd_free_desc(wq, desc);
 		return -ENXIO;
+	}
 
+<<<<<<< HEAD
 	portal = wq->portal;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	portal = idxd_wq_portal_addr(wq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The wmb() flushes writes to coherent DMA data before
@@ -197,6 +226,9 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 	 */
 	wmb();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Pending the descriptor to the lockless list for the irq_entry
@@ -207,8 +239,11 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 		llist_add(&desc->llnode, &ie->pending_llist);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (wq_dedicated(wq)) {
 		iosubmit_cmds512(portal, desc->hw, 1);
 	} else {
@@ -220,6 +255,9 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 		 */
 		rc = enqcmds(portal, desc->hw);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rc < 0) {
 			percpu_ref_put(&wq->wq_active);
 			/* abort operation frees the descriptor */
@@ -227,6 +265,7 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 				llist_abort_desc(wq, ie, desc);
 			else
 				idxd_free_desc(wq, desc);
+<<<<<<< HEAD
 			return rc;
 		}
 	}
@@ -234,10 +273,14 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 	percpu_ref_put(&wq->wq_active);
 =======
 		if (rc < 0)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return rc;
+		}
 	}
 
 	percpu_ref_put(&wq->wq_active);
+<<<<<<< HEAD
 
 	/*
 	 * Pending the descriptor to the lockless list for the irq_entry
@@ -258,5 +301,7 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }

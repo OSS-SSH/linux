@@ -249,6 +249,7 @@ static inline cfi_check_fn find_shadow_check_fn(unsigned long ptr)
 	cfi_check_fn fn;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rcu_read_lock_sched_notrace();
 	fn = ptr_to_check_fn(rcu_dereference_sched(cfi_shadow), ptr);
 	rcu_read_unlock_sched_notrace();
@@ -257,6 +258,11 @@ static inline cfi_check_fn find_shadow_check_fn(unsigned long ptr)
 	fn = ptr_to_check_fn(rcu_dereference_sched(cfi_shadow), ptr);
 	rcu_read_unlock_sched();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rcu_read_lock_sched_notrace();
+	fn = ptr_to_check_fn(rcu_dereference_sched(cfi_shadow), ptr);
+	rcu_read_unlock_sched_notrace();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return fn;
 }
@@ -276,6 +282,7 @@ static inline cfi_check_fn find_module_check_fn(unsigned long ptr)
 	struct module *mod;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rcu_read_lock_sched_notrace();
 	mod = __module_address(ptr);
 	if (mod)
@@ -288,6 +295,13 @@ static inline cfi_check_fn find_module_check_fn(unsigned long ptr)
 		fn = mod->cfi_check;
 	rcu_read_unlock_sched();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rcu_read_lock_sched_notrace();
+	mod = __module_address(ptr);
+	if (mod)
+		fn = mod->cfi_check;
+	rcu_read_unlock_sched_notrace();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return fn;
 }

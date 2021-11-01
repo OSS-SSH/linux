@@ -23,10 +23,14 @@
 #define  ROCIT_CONFIG_GEN1_MEMMAP_MASK	(0xf << 8)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned char fdt_buf[16 << 10] __initdata __aligned(8);
 =======
 static unsigned char fdt_buf[16 << 10] __initdata;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static unsigned char fdt_buf[16 << 10] __initdata __aligned(8);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* determined physical memory size, not overridden by command line args	 */
 extern unsigned long physical_memsize;

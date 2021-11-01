@@ -6,9 +6,13 @@
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/soc/tegra-pmc.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <dt-bindings/thermal/thermal.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <dt-bindings/thermal/thermal.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "tegra30-peripherals-opp.dtsi"
 
@@ -805,6 +809,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tsensor: tsensor@70014000 {
 		compatible = "nvidia,tegra30-tsensor";
 		reg = <0x70014000 0x500>;
@@ -819,8 +826,11 @@
 		#thermal-sensor-cells = <1>;
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hda@70030000 {
 		compatible = "nvidia,tegra30-hda";
 		reg = <0x70030000 0x10000>;
@@ -1084,14 +1094,19 @@
 		#size-cells = <0>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpu0: cpu@0 {
 =======
 		cpu@0 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpu0: cpu@0 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <0>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			#cooling-cells = <2>;
 		};
@@ -1102,10 +1117,17 @@
 
 		cpu@1 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			#cooling-cells = <2>;
+		};
+
+		cpu1: cpu@1 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <1>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			#cooling-cells = <2>;
 		};
@@ -1116,10 +1138,17 @@
 
 		cpu@2 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			#cooling-cells = <2>;
+		};
+
+		cpu2: cpu@2 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <2>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			#cooling-cells = <2>;
 		};
@@ -1130,14 +1159,24 @@
 
 		cpu@3 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			#cooling-cells = <2>;
+		};
+
+		cpu3: cpu@3 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <3>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			#cooling-cells = <2>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			#cooling-cells = <2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 	};
 
@@ -1153,6 +1192,9 @@
 				     <&{/cpus/cpu@3}>;
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	thermal-zones {
 		tsensor0-thermal {
@@ -1213,6 +1255,9 @@
 			};
 		};
 	};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

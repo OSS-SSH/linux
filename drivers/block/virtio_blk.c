@@ -167,6 +167,7 @@ static inline void virtblk_request_done(struct request *req)
 	struct virtblk_req *vbr = blk_mq_rq_to_pdu(req);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (req->rq_flags & RQF_SPECIAL_PAYLOAD)
 		kfree(bvec_virt(&req->special_vec));
 =======
@@ -176,6 +177,10 @@ static inline void virtblk_request_done(struct request *req)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (req->rq_flags & RQF_SPECIAL_PAYLOAD)
+		kfree(bvec_virt(&req->special_vec));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blk_mq_end_request(req, virtblk_result(vbr));
 }
 
@@ -755,10 +760,14 @@ static int virtblk_probe(struct virtio_device *vdev)
 
 	/* Default queue sizing is to fill the ring. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!virtblk_queue_depth) {
 =======
 	if (likely(!virtblk_queue_depth)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!virtblk_queue_depth) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		queue_depth = vblk->vqs[0].vq->num_free;
 		/* ... but without indirect descs, we use 2 descs per req */
 		if (!virtio_has_feature(vdev, VIRTIO_RING_F_INDIRECT_DESC))
@@ -888,10 +897,14 @@ static int virtblk_probe(struct virtio_device *vdev)
 	virtio_device_ready(vdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = device_add_disk(&vdev->dev, vblk->disk, virtblk_attr_groups);
 	if (err)
 		goto out_cleanup_disk;
 
+<<<<<<< HEAD
 	return 0;
 
 out_cleanup_disk:
@@ -901,6 +914,12 @@ out_cleanup_disk:
 	return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+
+out_cleanup_disk:
+	blk_cleanup_disk(vblk->disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_free_tags:
 	blk_mq_free_tag_set(&vblk->tag_set);
 out_free_vq:

@@ -32,9 +32,13 @@ description: |
         ipq8074
         mdm9615
 <<<<<<< HEAD
+<<<<<<< HEAD
         msm8226
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        msm8226
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         msm8916
         msm8974
         msm8992
@@ -121,13 +125,19 @@ properties:
       - items:
           - enum:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - samsung,s3ve3g
           - const: qcom,msm8226
 
       - items:
           - enum:
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - qcom,msm8960-cdp
           - const: qcom,msm8960
 
@@ -142,10 +152,15 @@ properties:
 
       - items:
 <<<<<<< HEAD
+<<<<<<< HEAD
           - enum:
               - alcatel,idol347
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+          - enum:
+              - alcatel,idol347
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: qcom,msm8916-mtp/1
           - const: qcom,msm8916-mtp
           - const: qcom,msm8916
@@ -199,10 +214,15 @@ properties:
           - enum:
               - qcom,sc7280-idp
 <<<<<<< HEAD
+<<<<<<< HEAD
               - qcom,sc7280-idp2
               - google,piglin
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              - qcom,sc7280-idp2
+              - google,piglin
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - google,senor
           - const: qcom,sc7280
 

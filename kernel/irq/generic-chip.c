@@ -241,6 +241,7 @@ irq_alloc_generic_chip(const char *name, int num_ct, unsigned int irq_base,
 {
 	struct irq_chip_generic *gc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	gc = kzalloc(struct_size(gc, chip_types, num_ct), GFP_KERNEL);
 =======
@@ -248,6 +249,10 @@ irq_alloc_generic_chip(const char *name, int num_ct, unsigned int irq_base,
 
 	gc = kzalloc(sz, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	gc = kzalloc(struct_size(gc, chip_types, num_ct), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (gc) {
 		irq_init_generic_chip(gc, name, num_ct, irq_base, reg_base,
 				      handler);
@@ -294,6 +299,7 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
 	struct irq_domain_chip_generic *dgc;
 	struct irq_chip_generic *gc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 	int numchips, i;
 	size_t dgc_sz;
@@ -303,6 +309,13 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
 	int numchips, sz, i;
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long flags;
+	int numchips, i;
+	size_t dgc_sz;
+	size_t gc_sz;
+	size_t sz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *tmp;
 
 	if (d->gc)
@@ -314,6 +327,7 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
 
 	/* Allocate a pointer, generic chip and chiptypes for each chip */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gc_sz = struct_size(gc, chip_types, num_ct);
 	dgc_sz = struct_size(dgc, gc, numchips);
 	sz = dgc_sz + numchips * gc_sz;
@@ -321,6 +335,11 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
 	sz = sizeof(*dgc) + numchips * sizeof(gc);
 	sz += numchips * (sizeof(*gc) + num_ct * sizeof(struct irq_chip_type));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gc_sz = struct_size(gc, chip_types, num_ct);
+	dgc_sz = struct_size(dgc, gc, numchips);
+	sz = dgc_sz + numchips * gc_sz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tmp = dgc = kzalloc(sz, GFP_KERNEL);
 	if (!dgc)
@@ -334,10 +353,14 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
 
 	/* Calc pointer to the first generic chip */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tmp += dgc_sz;
 =======
 	tmp += sizeof(*dgc) + numchips * sizeof(gc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tmp += dgc_sz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < numchips; i++) {
 		/* Store the pointer to the generic chip */
 		dgc->gc[i] = gc = tmp;
@@ -355,10 +378,14 @@ int __irq_alloc_domain_generic_chips(struct irq_domain *d, int irqs_per_chip,
 		raw_spin_unlock_irqrestore(&gc_lock, flags);
 		/* Calc pointer to the next generic chip */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tmp += gc_sz;
 =======
 		tmp += sizeof(*gc) + num_ct * sizeof(struct irq_chip_type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tmp += gc_sz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return 0;
 }

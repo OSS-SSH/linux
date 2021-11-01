@@ -646,9 +646,12 @@ static void mtk_pcie_msi_handler(struct mtk_pcie_port *port, int set_idx)
 	struct mtk_msi_set *msi_set = &port->msi_sets[set_idx];
 	unsigned long msi_enable, msi_status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	irq_hw_number_t bit, hwirq;
 
 	msi_enable = readl_relaxed(msi_set->base + PCIE_MSI_SET_ENABLE_OFFSET);
@@ -663,11 +666,15 @@ static void mtk_pcie_msi_handler(struct mtk_pcie_port *port, int set_idx)
 		for_each_set_bit(bit, &msi_status, PCIE_MSI_IRQS_PER_SET) {
 			hwirq = bit + set_idx * PCIE_MSI_IRQS_PER_SET;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			generic_handle_domain_irq(port->msi_bottom_domain, hwirq);
 =======
 			virq = irq_find_mapping(port->msi_bottom_domain, hwirq);
 			generic_handle_irq(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(port->msi_bottom_domain, hwirq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} while (true);
 }
@@ -678,15 +685,19 @@ static void mtk_pcie_irq_handler(struct irq_desc *desc)
 	struct irq_chip *irqchip = irq_desc_get_chip(desc);
 	unsigned long status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	irq_hw_number_t irq_bit = PCIE_INTX_SHIFT;
 
 	chained_irq_enter(irqchip, desc);
 
 	status = readl_relaxed(port->base + PCIE_INT_STATUS_REG);
 	for_each_set_bit_from(irq_bit, &status, PCI_NUM_INTX +
+<<<<<<< HEAD
 <<<<<<< HEAD
 			      PCIE_INTX_SHIFT)
 		generic_handle_domain_irq(port->intx_domain,
@@ -698,6 +709,11 @@ static void mtk_pcie_irq_handler(struct irq_desc *desc)
 		generic_handle_irq(virq);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      PCIE_INTX_SHIFT)
+		generic_handle_domain_irq(port->intx_domain,
+					  irq_bit - PCIE_INTX_SHIFT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	irq_bit = PCIE_MSI_SHIFT;
 	for_each_set_bit_from(irq_bit, &status, PCIE_MSI_SET_NUM +

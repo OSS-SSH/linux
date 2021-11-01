@@ -1713,12 +1713,17 @@ static int loopback_probe(struct platform_device *devptr)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(struct loopback), &card);
 =======
 	err = snd_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
 			   sizeof(struct loopback), &card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(struct loopback), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 	loopback = card->private_data;
@@ -1736,6 +1741,7 @@ static int loopback_probe(struct platform_device *devptr)
 	err = loopback_pcm_new(loopback, 0, pcm_substreams[dev]);
 	if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 	err = loopback_pcm_new(loopback, 1, pcm_substreams[dev]);
 	if (err < 0)
@@ -1745,13 +1751,20 @@ static int loopback_probe(struct platform_device *devptr)
 		return err;
 =======
 		goto __nodev;
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = loopback_pcm_new(loopback, 1, pcm_substreams[dev]);
 	if (err < 0)
-		goto __nodev;
+		return err;
 	err = loopback_mixer_new(loopback, pcm_notify[dev] ? 1 : 0);
 	if (err < 0)
+<<<<<<< HEAD
 		goto __nodev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	loopback_cable_proc_new(loopback, 0);
 	loopback_cable_proc_new(loopback, 1);
 	loopback_timer_source_proc_new(loopback);
@@ -1759,6 +1772,7 @@ static int loopback_probe(struct platform_device *devptr)
 	strcpy(card->shortname, "Loopback");
 	sprintf(card->longname, "Loopback %i", dev + 1);
 	err = snd_card_register(card);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err < 0)
 		return err;
@@ -1777,6 +1791,11 @@ static int loopback_remove(struct platform_device *devptr)
 {
 	snd_card_free(platform_get_drvdata(devptr));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+	platform_set_drvdata(devptr, card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1808,9 +1827,12 @@ static SIMPLE_DEV_PM_OPS(loopback_pm, loopback_suspend, loopback_resume);
 static struct platform_driver loopback_driver = {
 	.probe		= loopback_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= loopback_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver		= {
 		.name	= SND_LOOPBACK_DRIVER,
 		.pm	= LOOPBACK_PM_OPS,

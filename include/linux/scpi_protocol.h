@@ -52,6 +52,9 @@ struct scpi_sensor_info {
  * @dvfs_get_info: returns the DVFS capabilities of the given power
  *	domain. It includes the OPP list and the latency information
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @device_domain_id: gets the scpi domain id for a given device
  * @get_transition_latency: gets the DVFS transition latency for a given device
  * @add_opps_to_device: adds all the OPPs for a given device
@@ -60,8 +63,11 @@ struct scpi_sensor_info {
  * @sensor_get_value: gets the current value of the sensor
  * @device_get_power_state: gets the power state of a power domain
  * @device_set_power_state: sets the power state of a power domain
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct scpi_ops {
 	u32 (*get_version)(void);

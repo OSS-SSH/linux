@@ -347,6 +347,7 @@ static void __init fixup_cede0_latency(void)
 {
 	struct xcede_latency_payload *payload;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 min_xcede_latency_us = UINT_MAX;
 	int i;
 
@@ -357,6 +358,11 @@ static void __init fixup_cede0_latency(void)
 	min_latency_us = dedicated_states[1].exit_latency; // CEDE latency
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 min_xcede_latency_us = UINT_MAX;
+	int i;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (parse_cede_parameters())
 		return;
 
@@ -365,6 +371,9 @@ static void __init fixup_cede0_latency(void)
 
 	payload = &xcede_latency_parameter.payload;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The CEDE idle state maps to CEDE(0). While the hypervisor
@@ -373,6 +382,7 @@ static void __init fixup_cede0_latency(void)
 	 * We use the lowest advertised exit latency value as a proxy
 	 * for the exit latency of CEDE(0).
 	 */
+<<<<<<< HEAD
 	for (i = 0; i < nr_xcede_records; i++) {
 		struct xcede_latency_record *record = &payload->records[i];
 		u8 hint = record->hint;
@@ -405,43 +415,44 @@ static void __init fixup_cede0_latency(void)
 		pr_info("cpuidle: Fixed up CEDE exit latency to %llu us\n",
 			min_xcede_latency_us);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < nr_xcede_records; i++) {
 		struct xcede_latency_record *record = &payload->records[i];
+		u8 hint = record->hint;
 		u64 latency_tb = be64_to_cpu(record->latency_ticks);
 		u64 latency_us = DIV_ROUND_UP_ULL(tb_to_ns(latency_tb), NSEC_PER_USEC);
 
-		if (latency_us == 0)
-			pr_warn("cpuidle: xcede record %d has an unrealistic latency of 0us.\n", i);
+		/*
+		 * We expect the exit latency of an extended CEDE
+		 * state to be non-zero, it to since it takes at least
+		 * a few nanoseconds to wakeup the idle CPU and
+		 * dispatch the virtual processor into the Linux
+		 * Guest.
+		 *
+		 * So we consider only non-zero value for performing
+		 * the fixup of CEDE(0) latency.
+		 */
+		if (latency_us == 0) {
+			pr_warn("cpuidle: Skipping xcede record %d [hint=%d]. Exit latency = 0us\n",
+				i, hint);
+			continue;
+		}
 
-		if (latency_us < min_latency_us)
-			min_latency_us = latency_us;
+		if (latency_us < min_xcede_latency_us)
+			min_xcede_latency_us = latency_us;
 	}
 
-	/*
-	 * By default, we assume that CEDE(0) has exit latency 10us,
-	 * since there is no way for us to query from the platform.
-	 *
-	 * However, if the wakeup latency of an Extended CEDE state is
-	 * smaller than 10us, then we can be sure that CEDE(0)
-	 * requires no more than that.
-	 *
-	 * Perform the fix-up.
-	 */
-	if (min_latency_us < dedicated_states[1].exit_latency) {
-		/*
-		 * We set a minimum of 1us wakeup latency for cede0 to
-		 * distinguish it from snooze
-		 */
-		u64 cede0_latency = 1;
-
-		if (min_latency_us > cede0_latency)
-			cede0_latency = min_latency_us - 1;
-
-		dedicated_states[1].exit_latency = cede0_latency;
-		dedicated_states[1].target_residency = 10 * (cede0_latency);
+	if (min_xcede_latency_us != UINT_MAX) {
+		dedicated_states[1].exit_latency = min_xcede_latency_us;
+		dedicated_states[1].target_residency = 10 * (min_xcede_latency_us);
 		pr_info("cpuidle: Fixed up CEDE exit latency to %llu us\n",
+<<<<<<< HEAD
 			cede0_latency);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			min_xcede_latency_us);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 }
@@ -451,10 +462,14 @@ static void __init fixup_cede0_latency(void)
  * Choose state table for shared versus dedicated partition
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init pseries_idle_probe(void)
 =======
 static int pseries_idle_probe(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init pseries_idle_probe(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 
 	if (cpuidle_disable != IDLE_NO_OVERRIDE)
@@ -472,6 +487,9 @@ static int pseries_idle_probe(void)
 			max_idle_state = ARRAY_SIZE(shared_states);
 		} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * Use firmware provided latency values
 			 * starting with POWER10 platforms. In the
@@ -487,9 +505,12 @@ static int pseries_idle_probe(void)
 			 */
 			if (cpu_has_feature(CPU_FTR_ARCH_31) || pvr_version_is(PVR_POWER10))
 				fixup_cede0_latency();
+<<<<<<< HEAD
 =======
 			fixup_cede0_latency();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cpuidle_state_table = dedicated_states;
 			max_idle_state = NR_DEDICATED_STATES;
 		}

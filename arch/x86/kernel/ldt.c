@@ -155,10 +155,14 @@ static struct ldt_struct *alloc_ldt_struct(unsigned int num_entries)
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	new_ldt = kmalloc(sizeof(struct ldt_struct), GFP_KERNEL_ACCOUNT);
 =======
 	new_ldt = kmalloc(sizeof(struct ldt_struct), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	new_ldt = kmalloc(sizeof(struct ldt_struct), GFP_KERNEL_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!new_ldt)
 		return NULL;
 
@@ -173,6 +177,7 @@ static struct ldt_struct *alloc_ldt_struct(unsigned int num_entries)
 	 */
 	if (alloc_size > PAGE_SIZE)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		new_ldt->entries = __vmalloc(alloc_size, GFP_KERNEL_ACCOUNT | __GFP_ZERO);
 	else
 		new_ldt->entries = (void *)get_zeroed_page(GFP_KERNEL_ACCOUNT);
@@ -181,6 +186,11 @@ static struct ldt_struct *alloc_ldt_struct(unsigned int num_entries)
 	else
 		new_ldt->entries = (void *)get_zeroed_page(GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		new_ldt->entries = __vmalloc(alloc_size, GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+	else
+		new_ldt->entries = (void *)get_zeroed_page(GFP_KERNEL_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!new_ldt->entries) {
 		kfree(new_ldt);

@@ -488,22 +488,30 @@ static int s390_dma_map_sg(struct device *dev, struct scatterlist *sg,
 	unsigned int size = s->offset + s->length;
 	unsigned int offset = s->offset;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int count = 0, i, ret;
 =======
 	int count = 0, i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int count = 0, i, ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 1; i < nr_elements; i++) {
 		s = sg_next(s);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		s->dma_address = DMA_MAPPING_ERROR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		s->dma_length = 0;
 
 		if (s->offset || (size & ~PAGE_MASK) ||
 		    size + s->length > max) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			ret = __s390_dma_map_sg(dev, start, size,
 						&dma->dma_address, dir);
@@ -512,6 +520,11 @@ static int s390_dma_map_sg(struct device *dev, struct scatterlist *sg,
 			if (__s390_dma_map_sg(dev, start, size,
 					      &dma->dma_address, dir))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = __s390_dma_map_sg(dev, start, size,
+						&dma->dma_address, dir);
+			if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto unmap;
 
 			dma->dma_address += offset;
@@ -525,11 +538,16 @@ static int s390_dma_map_sg(struct device *dev, struct scatterlist *sg,
 		size += s->length;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = __s390_dma_map_sg(dev, start, size, &dma->dma_address, dir);
 	if (ret)
 =======
 	if (__s390_dma_map_sg(dev, start, size, &dma->dma_address, dir))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = __s390_dma_map_sg(dev, start, size, &dma->dma_address, dir);
+	if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto unmap;
 
 	dma->dma_address += offset;
@@ -542,10 +560,14 @@ unmap:
 				     dir, attrs);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ret;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void s390_dma_unmap_sg(struct device *dev, struct scatterlist *sg,
@@ -613,6 +635,7 @@ int zpci_dma_init_device(struct zpci_dev *zdev)
 
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
 			       (u64)zdev->dma_table)) {
 		rc = -EIO;
@@ -624,6 +647,13 @@ int zpci_dma_init_device(struct zpci_dev *zdev)
 	if (rc)
 		goto free_bitmap;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+			       (u64)zdev->dma_table)) {
+		rc = -EIO;
+		goto free_bitmap;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 free_bitmap:
@@ -639,6 +669,7 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int zpci_dma_exit_device(struct zpci_dev *zdev)
 {
 	int cc = 0;
@@ -647,6 +678,12 @@ int zpci_dma_exit_device(struct zpci_dev *zdev)
 void zpci_dma_exit_device(struct zpci_dev *zdev)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int zpci_dma_exit_device(struct zpci_dev *zdev)
+{
+	int cc = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * At this point, if the device is part of an IOMMU domain, this would
 	 * be a strong hint towards a bug in the IOMMU API (common) code and/or
@@ -654,6 +691,9 @@ void zpci_dma_exit_device(struct zpci_dev *zdev)
 	 */
 	WARN_ON(zdev->s390_domain);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (zdev_enabled(zdev))
 		cc = zpci_unregister_ioat(zdev, 0);
 	/*
@@ -663,11 +703,14 @@ void zpci_dma_exit_device(struct zpci_dev *zdev)
 	 */
 	if (cc && cc != 3)
 		return -EIO;
+<<<<<<< HEAD
 =======
 
 	if (zpci_unregister_ioat(zdev, 0))
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dma_cleanup_tables(zdev->dma_table);
 	zdev->dma_table = NULL;
@@ -676,12 +719,17 @@ void zpci_dma_exit_device(struct zpci_dev *zdev)
 	vfree(zdev->lazy_bitmap);
 	zdev->lazy_bitmap = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zdev->next_bit = 0;
 	return 0;
 =======
 
 	zdev->next_bit = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zdev->next_bit = 0;
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __init dma_alloc_cpu_table_caches(void)

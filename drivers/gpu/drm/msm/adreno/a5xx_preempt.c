@@ -241,10 +241,14 @@ static int preempt_init_ring(struct a5xx_gpu *a5xx_gpu,
 		MSM_BO_WC, gpu->aspace, &counters_bo, &counters_iova);
 	if (IS_ERR(counters)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		msm_gem_kernel_put(bo, gpu->aspace);
 =======
 		msm_gem_kernel_put(bo, gpu->aspace, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		msm_gem_kernel_put(bo, gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return PTR_ERR(counters);
 	}
 
@@ -277,6 +281,7 @@ void a5xx_preempt_fini(struct msm_gpu *gpu)
 
 	for (i = 0; i < gpu->nr_rings; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		msm_gem_kernel_put(a5xx_gpu->preempt_bo[i], gpu->aspace);
 		msm_gem_kernel_put(a5xx_gpu->preempt_counters_bo[i], gpu->aspace);
 =======
@@ -284,6 +289,10 @@ void a5xx_preempt_fini(struct msm_gpu *gpu)
 		msm_gem_kernel_put(a5xx_gpu->preempt_counters_bo[i],
 			gpu->aspace, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		msm_gem_kernel_put(a5xx_gpu->preempt_bo[i], gpu->aspace);
+		msm_gem_kernel_put(a5xx_gpu->preempt_counters_bo[i], gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

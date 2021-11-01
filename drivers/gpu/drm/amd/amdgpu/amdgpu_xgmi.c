@@ -33,12 +33,18 @@
 #include "wafl/wafl2_4_0_0_sh_mask.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define smnPCS_XGMI23_PCS_ERROR_STATUS   0x11a01210
 #define smnPCS_XGMI3X16_PCS_ERROR_STATUS 0x11a0020c
 #define smnPCS_GOPX1_PCS_ERROR_STATUS    0x12200210
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEFINE_MUTEX(xgmi_mutex);
 
 #define AMDGPU_MAX_XGMI_DEVICE_PER_HIVE		4
@@ -71,6 +77,9 @@ static const int wafl_pcs_err_status_reg_arct[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const int xgmi23_pcs_err_status_reg_aldebaran[] = {
 	smnPCS_XGMI23_PCS_ERROR_STATUS,
 	smnPCS_XGMI23_PCS_ERROR_STATUS + 0x100000,
@@ -98,8 +107,11 @@ static const int walf_pcs_err_status_reg_aldebaran[] = {
 	smnPCS_GOPX1_PCS_ERROR_STATUS + 0x100000
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct amdgpu_pcs_ras_field xgmi_pcs_ras_fields[] = {
 	{"XGMI PCS DataLossErr",
 	 SOC15_REG_FIELD(XGMI0_PCS_GOPX16_PCS_ERROR_STATUS, DataLossErr)},
@@ -524,6 +536,9 @@ int amdgpu_xgmi_get_hops_count(struct amdgpu_device *adev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int amdgpu_xgmi_get_num_links(struct amdgpu_device *adev,
 		struct amdgpu_device *peer_adev)
 {
@@ -562,8 +577,11 @@ static int amdgpu_xgmi_initialize_hive_get_data_partition(struct amdgpu_hive_inf
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int amdgpu_xgmi_add_device(struct amdgpu_device *adev)
 {
 	struct psp_xgmi_topology_info *top_info;
@@ -579,10 +597,14 @@ int amdgpu_xgmi_add_device(struct amdgpu_device *adev)
 	if (!adev->gmc.xgmi.pending_reset &&
 	    amdgpu_device_ip_get_ip_block(adev, AMD_IP_BLOCK_TYPE_PSP)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = psp_xgmi_initialize(&adev->psp, false, true);
 =======
 		ret = psp_xgmi_initialize(&adev->psp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = psp_xgmi_initialize(&adev->psp, false, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret) {
 			dev_err(adev->dev,
 				"XGMI: Failed to initialize xgmi session\n");
@@ -646,10 +668,14 @@ int amdgpu_xgmi_add_device(struct amdgpu_device *adev)
 		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head) {
 			ret = psp_xgmi_get_topology_info(&tmp_adev->psp, count,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					&tmp_adev->psp.xgmi_context.top_info, false);
 =======
 					&tmp_adev->psp.xgmi_context.top_info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					&tmp_adev->psp.xgmi_context.top_info, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret) {
 				dev_err(tmp_adev->dev,
 					"XGMI: Get topology failure on device %llx, hive %llx, ret %d",
@@ -660,6 +686,9 @@ int amdgpu_xgmi_add_device(struct amdgpu_device *adev)
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* get topology again for hives that support extended data */
 		if (adev->psp.xgmi_context.supports_extended_data) {
@@ -688,8 +717,11 @@ int amdgpu_xgmi_add_device(struct amdgpu_device *adev)
 				goto exit_unlock;
 
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!ret && !adev->gmc.xgmi.pending_reset)
@@ -769,9 +801,12 @@ static int amdgpu_xgmi_ras_late_init(struct amdgpu_device *adev)
 		adev->gmc.xgmi.ras_if->type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
 		adev->gmc.xgmi.ras_if->sub_block_index = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		strcpy(adev->gmc.xgmi.ras_if->name, "xgmi_wafl");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	ih_info.head = fs_info.head = *adev->gmc.xgmi.ras_if;
 	r = amdgpu_ras_late_init(adev, adev->gmc.xgmi.ras_if,
@@ -827,6 +862,9 @@ static void amdgpu_xgmi_reset_ras_error_count(struct amdgpu_device *adev)
 					 xgmi_pcs_err_status_reg_vg20[i]);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_ALDEBARAN:
 		for (i = 0; i < ARRAY_SIZE(xgmi23_pcs_err_status_reg_aldebaran); i++)
 			pcs_clear_status(adev,
@@ -838,8 +876,11 @@ static void amdgpu_xgmi_reset_ras_error_count(struct amdgpu_device *adev)
 			pcs_clear_status(adev,
 					 walf_pcs_err_status_reg_aldebaran[i]);
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -918,9 +959,12 @@ static int amdgpu_xgmi_query_ras_error_count(struct amdgpu_device *adev,
 		break;
 	case CHIP_VEGA20:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	default:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* check xgmi pcs error */
 		for (i = 0; i < ARRAY_SIZE(xgmi_pcs_err_status_reg_vg20); i++) {
 			data = RREG32_PCIE(xgmi_pcs_err_status_reg_vg20[i]);
@@ -937,6 +981,9 @@ static int amdgpu_xgmi_query_ras_error_count(struct amdgpu_device *adev,
 		}
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_ALDEBARAN:
 		/* check xgmi23 pcs error */
 		for (i = 0; i < ARRAY_SIZE(xgmi23_pcs_err_status_reg_aldebaran); i++) {
@@ -963,8 +1010,11 @@ static int amdgpu_xgmi_query_ras_error_count(struct amdgpu_device *adev,
 	default:
 		dev_warn(adev->dev, "XGMI RAS error query not supported");
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	adev->gmc.xgmi.ras_funcs->reset_ras_error_count(adev);

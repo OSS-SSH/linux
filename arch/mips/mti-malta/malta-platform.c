@@ -49,11 +49,16 @@ static struct plat_serial8250_port uart8250_data[] = {
 		.irq		= MIPS_CPU_IRQ_BASE + MIPSCPU_INT_MB2,
 		.uartclk	= 3686400,	/* Twice the usual clk! */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.iotype		= IS_ENABLED(CONFIG_CPU_BIG_ENDIAN) ?
 				  UPIO_MEM32BE : UPIO_MEM32,
 =======
 		.iotype		= UPIO_MEM32,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.iotype		= IS_ENABLED(CONFIG_CPU_BIG_ENDIAN) ?
+				  UPIO_MEM32BE : UPIO_MEM32,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.flags		= CBUS_UART_FLAGS,
 		.regshift	= 3,
 	},

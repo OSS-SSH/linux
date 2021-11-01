@@ -393,12 +393,15 @@ static bool rate_control_send_low(struct ieee80211_sta *pubsta,
 	bool use_basicrate = false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (ieee80211_is_tx_data(txrc->skb) &&
 	    info->flags & IEEE80211_TX_CTL_NO_ACK)
 		return false;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!pubsta || rc_no_data_or_no_ack_use_min(txrc)) {
 		__rate_control_send_low(txrc->hw, sband, pubsta, info,
 					txrc->rate_idx_mask);

@@ -235,10 +235,14 @@ cxgbit_get_r2t_ttt(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
 	struct cxgbit_cmd *ccmd = iscsit_priv_cmd(cmd);
 	struct cxgbi_task_tag_info *ttinfo = &ccmd->ttinfo;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	int ret = -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((!ccmd->setup_ddp) ||
 	    (!test_bit(CSK_DDP_ENABLE, &csk->com.flags)))

@@ -175,6 +175,9 @@ enum afs_vl_operation {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum afs_cm_operation {
 	afs_CB_CallBack			= 204,	/* AFS break callback promises */
 	afs_CB_InitCallBackState	= 205,	/* AFS initialise callback state */
@@ -203,8 +206,11 @@ enum yfs_cm_operation {
 	yfs_CB_CallBack			= 64204,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum afs_edit_dir_op {
 	afs_edit_dir_create,
 	afs_edit_dir_create_error,
@@ -310,6 +316,7 @@ enum afs_flock_operation {
 enum afs_cb_break_reason {
 	afs_cb_break_no_break,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	afs_cb_break_no_promise,
 	afs_cb_break_for_callback,
 	afs_cb_break_for_deleted,
@@ -318,12 +325,20 @@ enum afs_cb_break_reason {
 	afs_cb_break_for_unlink,
 	afs_cb_break_for_v_break,
 =======
+=======
+	afs_cb_break_no_promise,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	afs_cb_break_for_callback,
 	afs_cb_break_for_deleted,
 	afs_cb_break_for_lapsed,
+	afs_cb_break_for_s_reinit,
 	afs_cb_break_for_unlink,
+<<<<<<< HEAD
 	afs_cb_break_for_vsbreak,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	afs_cb_break_for_v_break,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	afs_cb_break_for_volume_callback,
 	afs_cb_break_for_zap,
 };
@@ -478,6 +493,9 @@ enum afs_cb_break_reason {
 	E_(afs_VL_GetCapabilities,		"VL.GetCapabilities")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define afs_cm_operations \
 	EM(afs_CB_CallBack,			"CB.CallBack") \
 	EM(afs_CB_InitCallBackState,		"CB.InitCallBackState") \
@@ -504,8 +522,11 @@ enum afs_cb_break_reason {
 	EM(yfs_CB_TellMeAboutYourself,		"YFSCB.TellMeAboutYourself") \
 	E_(yfs_CB_CallBack,			"YFSCB.CallBack")
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define afs_edit_dir_ops				  \
 	EM(afs_edit_dir_create,			"create") \
 	EM(afs_edit_dir_create_error,		"c_fail") \
@@ -619,6 +640,7 @@ enum afs_cb_break_reason {
 #define afs_cb_break_reasons						\
 	EM(afs_cb_break_no_break,		"no-break")		\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	EM(afs_cb_break_no_promise,		"no-promise")		\
 	EM(afs_cb_break_for_callback,		"break-cb")		\
 	EM(afs_cb_break_for_deleted,		"break-del")		\
@@ -627,12 +649,20 @@ enum afs_cb_break_reason {
 	EM(afs_cb_break_for_unlink,		"break-unlink")		\
 	EM(afs_cb_break_for_v_break,		"break-v")		\
 =======
+=======
+	EM(afs_cb_break_no_promise,		"no-promise")		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	EM(afs_cb_break_for_callback,		"break-cb")		\
 	EM(afs_cb_break_for_deleted,		"break-del")		\
 	EM(afs_cb_break_for_lapsed,		"break-lapsed")		\
+	EM(afs_cb_break_for_s_reinit,		"s-reinit")		\
 	EM(afs_cb_break_for_unlink,		"break-unlink")		\
+<<<<<<< HEAD
 	EM(afs_cb_break_for_vsbreak,		"break-vs")		\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	EM(afs_cb_break_for_v_break,		"break-v")		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	EM(afs_cb_break_for_volume_callback,	"break-v-cb")		\
 	E_(afs_cb_break_for_zap,		"break-zap")
 
@@ -650,10 +680,15 @@ afs_cell_traces;
 afs_fs_operations;
 afs_vl_operations;
 <<<<<<< HEAD
+<<<<<<< HEAD
 afs_cm_operations;
 yfs_cm_operations;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+afs_cm_operations;
+yfs_cm_operations;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 afs_edit_dir_ops;
 afs_edit_dir_reasons;
 afs_eproto_causes;
@@ -735,16 +770,22 @@ TRACE_EVENT(afs_cb_call,
 	    TP_STRUCT__entry(
 		    __field(unsigned int,		call		)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    __field(u32,			op		)
 		    __field(u16,			service_id	)
 =======
 		    __field(const char *,		name		)
 		    __field(u32,			op		)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    __field(u32,			op		)
+		    __field(u16,			service_id	)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     ),
 
 	    TP_fast_assign(
 		    __entry->call	= call->debug_id;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		    __entry->op		= call->operation_ID;
 		    __entry->service_id	= call->service_id;
@@ -757,14 +798,23 @@ TRACE_EVENT(afs_cb_call,
 		      __print_symbolic(__entry->op, afs_cm_operations))
 =======
 		    __entry->name	= call->type->name;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    __entry->op		= call->operation_ID;
+		    __entry->service_id	= call->service_id;
 			   ),
 
-	    TP_printk("c=%08x %s o=%u",
+	    TP_printk("c=%08x %s",
 		      __entry->call,
+<<<<<<< HEAD
 		      __entry->name,
 		      __entry->op)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      __entry->service_id == 2501 ?
+		      __print_symbolic(__entry->op, yfs_cm_operations) :
+		      __print_symbolic(__entry->op, afs_cm_operations))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    );
 
 TRACE_EVENT(afs_call,

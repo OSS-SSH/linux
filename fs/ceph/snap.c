@@ -68,6 +68,7 @@ void ceph_get_snap_realm(struct ceph_mds_client *mdsc,
 	lockdep_assert_held(&mdsc->snap_rwsem);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*
 	 * The 0->1 and 1->0 transitions must take the snap_empty_lock
 	 * atomically with the refcount change. Go ahead and bump the
@@ -84,18 +85,27 @@ void ceph_get_snap_realm(struct ceph_mds_client *mdsc,
 =======
 	dout("get_realm %p %d -> %d\n", realm,
 	     atomic_read(&realm->nref), atomic_read(&realm->nref)+1);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
-	 * since we _only_ increment realm refs or empty the empty
-	 * list with snap_rwsem held, adjusting the empty list here is
-	 * safe.  we do need to protect against concurrent empty list
-	 * additions, however.
+	 * The 0->1 and 1->0 transitions must take the snap_empty_lock
+	 * atomically with the refcount change. Go ahead and bump the
+	 * nref here, unless it's 0, in which case we take the spinlock
+	 * and then do the increment and remove it from the list.
 	 */
-	if (atomic_inc_return(&realm->nref) == 1) {
-		spin_lock(&mdsc->snap_empty_lock);
+	if (atomic_inc_not_zero(&realm->nref))
+		return;
+
+	spin_lock(&mdsc->snap_empty_lock);
+	if (atomic_inc_return(&realm->nref) == 1)
 		list_del_init(&realm->empty_item);
+<<<<<<< HEAD
 		spin_unlock(&mdsc->snap_empty_lock);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock(&mdsc->snap_empty_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __insert_snap_realm(struct rb_root *root,
@@ -225,28 +235,39 @@ static void __put_snap_realm(struct ceph_mds_client *mdsc,
 	lockdep_assert_held_write(&mdsc->snap_rwsem);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We do not require the snap_empty_lock here, as any caller that
 	 * increments the value must hold the snap_rwsem.
 	 */
+<<<<<<< HEAD
 =======
 	dout("__put_snap_realm %llx %p %d -> %d\n", realm->ino, realm,
 	     atomic_read(&realm->nref), atomic_read(&realm->nref)-1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (atomic_dec_and_test(&realm->nref))
 		__destroy_snap_realm(mdsc, realm);
 }
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * See comments in ceph_get_snap_realm. Caller needn't hold any locks.
 =======
  * caller needn't hold any locks
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * See comments in ceph_get_snap_realm. Caller needn't hold any locks.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void ceph_put_snap_realm(struct ceph_mds_client *mdsc,
 			 struct ceph_snap_realm *realm)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!atomic_dec_and_lock(&realm->nref, &mdsc->snap_empty_lock))
 		return;
@@ -260,14 +281,21 @@ void ceph_put_snap_realm(struct ceph_mds_client *mdsc,
 	dout("put_snap_realm %llx %p %d -> %d\n", realm->ino, realm,
 	     atomic_read(&realm->nref), atomic_read(&realm->nref)-1);
 	if (!atomic_dec_and_test(&realm->nref))
+=======
+	if (!atomic_dec_and_lock(&realm->nref, &mdsc->snap_empty_lock))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (down_write_trylock(&mdsc->snap_rwsem)) {
+		spin_unlock(&mdsc->snap_empty_lock);
 		__destroy_snap_realm(mdsc, realm);
 		up_write(&mdsc->snap_rwsem);
 	} else {
+<<<<<<< HEAD
 		spin_lock(&mdsc->snap_empty_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_add(&realm->empty_item, &mdsc->snap_empty);
 		spin_unlock(&mdsc->snap_empty_lock);
 	}
@@ -526,11 +554,17 @@ static void ceph_queue_cap_snap(struct ceph_inode_info *ci)
 		return;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	capsnap->cap_flush.is_capsnap = true;
 	INIT_LIST_HEAD(&capsnap->cap_flush.i_list);
 	INIT_LIST_HEAD(&capsnap->cap_flush.g_list);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	capsnap->cap_flush.is_capsnap = true;
+	INIT_LIST_HEAD(&capsnap->cap_flush.i_list);
+	INIT_LIST_HEAD(&capsnap->cap_flush.g_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock(&ci->i_ceph_lock);
 	used = __ceph_caps_used(ci);
@@ -891,6 +925,9 @@ static void flush_snaps(struct ceph_mds_client *mdsc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ceph_change_snap_realm - change the snap_realm for an inode
  * @inode: inode to move to new snap realm
@@ -928,8 +965,11 @@ void ceph_change_snap_realm(struct inode *inode, struct ceph_snap_realm *realm)
 		spin_unlock(&realm->inodes_with_caps_lock);
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Handle a snap notification from the MDS.
@@ -1017,9 +1057,12 @@ void ceph_handle_snap(struct ceph_mds_client *mdsc,
 			struct inode *inode = ceph_find_inode(sb, vino);
 			struct ceph_inode_info *ci;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			struct ceph_snap_realm *oldrealm;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (!inode)
 				continue;
@@ -1044,6 +1087,7 @@ void ceph_handle_snap(struct ceph_mds_client *mdsc,
 			}
 			dout(" will move %p to split realm %llx %p\n",
 			     inode, realm->ino, realm);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 			ceph_get_snap_realm(mdsc, realm);
@@ -1072,6 +1116,12 @@ void ceph_handle_snap(struct ceph_mds_client *mdsc,
 			ceph_put_snap_realm(mdsc, oldrealm);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+			ceph_get_snap_realm(mdsc, realm);
+			ceph_change_snap_realm(inode, realm);
+			spin_unlock(&ci->i_ceph_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			iput(inode);
 			continue;
 

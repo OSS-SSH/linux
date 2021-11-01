@@ -320,11 +320,17 @@ SYM_INNER_LABEL(efi32_pe_stub_entry, SYM_L_LOCAL)
 	movw	%ds, rva(efi32_boot_ds)(%ebp)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Store firmware IDT descriptor */
 	sidtl	rva(efi32_boot_idt)(%ebp)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Store firmware IDT descriptor */
+	sidtl	rva(efi32_boot_idt)(%ebp)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Disable paging */
 	movl	%cr0, %eax
 	btrl	$X86_CR0_PG_BIT, %eax

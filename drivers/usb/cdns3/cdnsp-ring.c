@@ -1933,6 +1933,9 @@ int cdnsp_queue_bulk_tx(struct cdnsp_device *pdev, struct cdnsp_request *preq)
 
 		if (enqd_len + trb_buff_len >= full_len) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (need_zero_pkt)
 				zero_len_trb = !zero_len_trb;
 
@@ -1940,6 +1943,7 @@ int cdnsp_queue_bulk_tx(struct cdnsp_device *pdev, struct cdnsp_request *preq)
 			field |= TRB_IOC;
 			more_trbs_coming = false;
 			preq->td.last_trb = ring->enqueue;
+<<<<<<< HEAD
 =======
 			if (need_zero_pkt && zero_len_trb) {
 				zero_len_trb = true;
@@ -1951,6 +1955,8 @@ int cdnsp_queue_bulk_tx(struct cdnsp_device *pdev, struct cdnsp_request *preq)
 				preq->td.last_trb = ring->enqueue;
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/* Only set interrupt on short packet for OUT endpoints. */
@@ -1966,10 +1972,14 @@ int cdnsp_queue_bulk_tx(struct cdnsp_device *pdev, struct cdnsp_request *preq)
 			TRB_INTR_TARGET(0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cdnsp_queue_trb(pdev, ring, more_trbs_coming | zero_len_trb,
 =======
 		cdnsp_queue_trb(pdev, ring, more_trbs_coming | need_zero_pkt,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cdnsp_queue_trb(pdev, ring, more_trbs_coming | zero_len_trb,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				lower_32_bits(send_addr),
 				upper_32_bits(send_addr),
 				length_field,

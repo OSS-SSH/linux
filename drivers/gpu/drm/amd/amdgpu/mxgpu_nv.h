@@ -38,11 +38,16 @@ enum idh_request {
 	IDH_REQ_GPU_INIT_DATA,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	IDH_LOG_VF_ERROR	= 200,
 	IDH_READY_TO_RESET 	= 201,
 =======
 	IDH_LOG_VF_ERROR       = 200,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IDH_LOG_VF_ERROR	= 200,
+	IDH_READY_TO_RESET 	= 201,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum idh_event {

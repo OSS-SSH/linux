@@ -1326,12 +1326,17 @@ mwifiex_set_gen_ie_helper(struct mwifiex_private *priv, u8 *ie_data_ptr,
 {
 	struct ieee_types_vendor_header *pvendor_ie;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const u8 wpa_oui[] = { 0x00, 0x50, 0xf2, 0x01 };
 	static const u8 wps_oui[] = { 0x00, 0x50, 0xf2, 0x04 };
 =======
 	const u8 wpa_oui[] = { 0x00, 0x50, 0xf2, 0x01 };
 	const u8 wps_oui[] = { 0x00, 0x50, 0xf2, 0x04 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const u8 wpa_oui[] = { 0x00, 0x50, 0xf2, 0x01 };
+	static const u8 wps_oui[] = { 0x00, 0x50, 0xf2, 0x04 };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 unparsed_len = ie_len, cur_ie_len;
 
 	/* If the passed length is zero, reset the buffer */

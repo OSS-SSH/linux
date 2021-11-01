@@ -164,10 +164,15 @@
 			cap-mmc-highspeed;
 			non-removable;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			no-sdio;
 			no-sd;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			no-sdio;
+			no-sd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			vmmc-supply = <&db8500_vsmps2_reg>;
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&mc2_a_1_default>;
@@ -184,10 +189,15 @@
 			cap-mmc-highspeed;
 			non-removable;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			no-sdio;
 			no-sd;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			no-sdio;
+			no-sd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			vmmc-supply = <&ab8500_ldo_aux2_reg>;
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&mc4_a_1_default>;

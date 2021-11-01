@@ -18,10 +18,14 @@
 static struct read_info_sccb __bootdata(sclp_info_sccb);
 static int __bootdata(sclp_info_sccb_valid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 char *__bootdata(sclp_early_sccb);
 =======
 char *sclp_early_sccb = (char *) EARLY_SCCB_OFFSET;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+char *__bootdata(sclp_early_sccb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int sclp_init_state = sclp_init_state_uninitialized;
 /*
  * Used to keep track of the size of the event masks. Qemu until version 2.11
@@ -216,13 +220,19 @@ static int sclp_early_setup(int disable, int *have_linemode, int *have_vt220)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void sclp_early_set_buffer(void *sccb)
 {
 	sclp_early_sccb = sccb;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Output one or more lines of text on the SCLP console (VT220 and /
  * or line-mode).
@@ -248,6 +258,9 @@ void sclp_early_printk(const char *str)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * We can't pass sclp_info_sccb to sclp_early_cmd() here directly,
  * because it might not fulfil the requiremets for a SCLP communication buffer:
@@ -257,17 +270,24 @@ void sclp_early_printk(const char *str)
  * requirements) temporarily for communication and copy a received response
  * back into the buffer sclp_info_sccb upon successful completion.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int __init sclp_early_read_info(void)
 {
 	int i;
 	int length = test_facility(140) ? EXT_SCCB_READ_SCP : PAGE_SIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct read_info_sccb *sccb = (struct read_info_sccb *)sclp_early_sccb;
 =======
 	struct read_info_sccb *sccb = &sclp_info_sccb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct read_info_sccb *sccb = (struct read_info_sccb *)sclp_early_sccb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sclp_cmdw_t commands[] = {SCLP_CMDW_READ_SCP_INFO_FORCED,
 				  SCLP_CMDW_READ_SCP_INFO};
 
@@ -280,9 +300,13 @@ int __init sclp_early_read_info(void)
 			break;
 		if (sccb->header.response_code == 0x10) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			memcpy(&sclp_info_sccb, sccb, length);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			memcpy(&sclp_info_sccb, sccb, length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sclp_info_sccb_valid = 1;
 			return 0;
 		}

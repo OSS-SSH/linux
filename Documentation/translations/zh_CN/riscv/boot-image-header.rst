@@ -1,6 +1,7 @@
 .. include:: ../disclaimer-zh_CN.rst
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 :Original: Documentation/riscv/boot-image-header.rst
 
 :翻译:
@@ -12,9 +13,15 @@
 =======
 :Original: :doc:`../../../riscv/boot-image-header`
 :Translator: Yanteng Si <siyanteng@loongson.cn>
+=======
+:Original: Documentation/riscv/boot-image-header.rst
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+:翻译:
+
+ 司延腾 Yanteng Si <siyanteng@loongson.cn>
 
 .. _cn_boot-image-header.rst:
-
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ==========================

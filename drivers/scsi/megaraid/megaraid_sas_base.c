@@ -1452,6 +1452,7 @@ megasas_build_dcdb(struct megasas_instance *instance, struct scsi_cmnd *scp,
 	 */
 	if (scp->device->type == TYPE_TAPE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (scsi_cmd_to_rq(scp)->timeout / HZ > 0xFFFF)
 			pthru->timeout = cpu_to_le16(0xFFFF);
 		else
@@ -1462,6 +1463,12 @@ megasas_build_dcdb(struct megasas_instance *instance, struct scsi_cmnd *scp,
 		else
 			pthru->timeout = cpu_to_le16(scp->request->timeout / HZ);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (scsi_cmd_to_rq(scp)->timeout / HZ > 0xFFFF)
+			pthru->timeout = cpu_to_le16(0xFFFF);
+		else
+			pthru->timeout = cpu_to_le16(scsi_cmd_to_rq(scp)->timeout / HZ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -1924,10 +1931,14 @@ void megasas_set_dynamic_target_properties(struct scsi_device *sdev,
 
 		if (raid->capability.ldPiMode == MR_PROT_INFO_TYPE_CONTROLLER)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			blk_queue_update_dma_alignment(sdev->request_queue, 0x7);
 =======
 		blk_queue_update_dma_alignment(sdev->request_queue, 0x7);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			blk_queue_update_dma_alignment(sdev->request_queue, 0x7);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		mr_device_priv_data->is_tm_capable =
 			raid->capability.tmCapable;
@@ -8045,10 +8056,14 @@ skip_firing_dcmds:
 	if (instance->adapter_type != MFI_SERIES) {
 		megasas_release_fusion(instance);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pd_seq_map_sz = sizeof(struct MR_PD_CFG_SEQ_NUM_SYNC) +
 =======
 			pd_seq_map_sz = sizeof(struct MR_PD_CFG_SEQ_NUM_SYNC) +
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pd_seq_map_sz = sizeof(struct MR_PD_CFG_SEQ_NUM_SYNC) +
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				(sizeof(struct MR_PD_CFG_SEQ) *
 					(MAX_PHYSICAL_DEVICES - 1));
 		for (i = 0; i < 2 ; i++) {
@@ -8789,11 +8804,15 @@ int megasas_update_device_list(struct megasas_instance *instance,
 		if (event_type & SCAN_VD_CHANNEL) {
 			if (!instance->requestorId ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 			megasas_get_ld_vf_affiliation(instance, 0)) {
 =======
 			    (instance->requestorId &&
 			     megasas_get_ld_vf_affiliation(instance, 0))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			megasas_get_ld_vf_affiliation(instance, 0)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dcmd_ret = megasas_ld_list_query(instance,
 						MR_LD_QUERY_TYPE_EXPOSED_TO_HOST);
 				if (dcmd_ret != DCMD_SUCCESS)

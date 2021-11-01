@@ -1046,6 +1046,7 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
 	if (tup->cdata->fifo_mode_enable_status) {
 		ret = tegra_uart_wait_fifo_mode_enabled(tup);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret < 0) {
 			dev_err(tup->uport.dev,
 				"Failed to enable FIFO mode: %d\n", ret);
@@ -1056,6 +1057,13 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
 		if (ret < 0)
 			return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret < 0) {
+			dev_err(tup->uport.dev,
+				"Failed to enable FIFO mode: %d\n", ret);
+			return ret;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/*
 		 * For all tegra devices (up to t210), there is a hardware
@@ -1575,6 +1583,7 @@ static int tegra_uart_probe(struct platform_device *pdev)
 	int ret;
 	const struct tegra_uart_chip_data *cdata;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	cdata = of_device_get_match_data(&pdev->dev);
 	if (!cdata) {
@@ -1583,14 +1592,19 @@ static int tegra_uart_probe(struct platform_device *pdev)
 	}
 =======
 	const struct of_device_id *match;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	match = of_match_device(tegra_uart_of_match, &pdev->dev);
-	if (!match) {
+	cdata = of_device_get_match_data(&pdev->dev);
+	if (!cdata) {
 		dev_err(&pdev->dev, "Error: No device match found\n");
 		return -ENODEV;
 	}
+<<<<<<< HEAD
 	cdata = match->data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tup = devm_kzalloc(&pdev->dev, sizeof(*tup), GFP_KERNEL);
 	if (!tup) {

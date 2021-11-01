@@ -79,10 +79,14 @@ static int wl_add(struct acpi_device *device)
 	err = wireless_input_setup();
 	if (err)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_err("Failed to setup wireless hotkeys\n");
 =======
 		pr_err("Failed to setup hp wireless hotkeys\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("Failed to setup wireless hotkeys\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return err;
 }

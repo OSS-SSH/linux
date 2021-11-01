@@ -3665,10 +3665,14 @@ static const struct net_device_ops macb_netdev_ops = {
 	.ndo_set_rx_mode	= macb_set_rx_mode,
 	.ndo_get_stats		= macb_get_stats,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= macb_ioctl,
 =======
 	.ndo_do_ioctl		= macb_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= macb_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_change_mtu		= macb_change_mtu,
 	.ndo_set_mac_address	= eth_mac_addr,
@@ -4328,10 +4332,14 @@ static const struct net_device_ops at91ether_netdev_ops = {
 	.ndo_set_rx_mode	= macb_set_rx_mode,
 	.ndo_set_mac_address	= eth_mac_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= macb_ioctl,
 =======
 	.ndo_do_ioctl		= macb_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= macb_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	= at91ether_poll_controller,
@@ -4542,6 +4550,9 @@ static const struct macb_config sama5d2_config = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct macb_config sama5d29_config = {
 	.caps = MACB_CAPS_USRIO_DEFAULT_IS_MII_GMII | MACB_CAPS_GEM_HAS_PTP,
 	.dma_burst_length = 16,
@@ -4550,8 +4561,11 @@ static const struct macb_config sama5d29_config = {
 	.usrio = &macb_default_usrio,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct macb_config sama5d3_config = {
 	.caps = MACB_CAPS_SG_DISABLED | MACB_CAPS_GIGABIT_MODE_AVAILABLE
 	      | MACB_CAPS_USRIO_DEFAULT_IS_MII_GMII | MACB_CAPS_JUMBO,
@@ -4630,9 +4644,13 @@ static const struct of_device_id macb_dt_ids[] = {
 	{ .compatible = "cdns,sam9x60-macb", .data = &at91sam9260_config },
 	{ .compatible = "atmel,sama5d2-gem", .data = &sama5d2_config },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "atmel,sama5d29-gem", .data = &sama5d29_config },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "atmel,sama5d29-gem", .data = &sama5d29_config },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "atmel,sama5d3-gem", .data = &sama5d3_config },
 	{ .compatible = "atmel,sama5d3-macb", .data = &sama5d3macb_config },
 	{ .compatible = "atmel,sama5d4-gem", .data = &sama5d4_config },

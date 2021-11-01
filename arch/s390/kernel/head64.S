@@ -22,9 +22,13 @@ ENTRY(startup_continue)
 	mvc	0(16,%r1),__LC_BOOT_CLOCK
 	larl	%r13,.LPG1		# get base
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lctlg	%c0,%c15,.Lctl-.LPG1(%r13)	# load control registers
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lctlg	%c0,%c15,.Lctl-.LPG1(%r13)	# load control registers
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #
 # Setup stack
 #
@@ -46,6 +50,9 @@ ENTRY(startup_continue)
 .LPG1:
 .Ldw:	.quad	0x0002000180000000,0x0000000000000000
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 .Lctl:	.quad	0x04040000		# cr0: AFP registers & secondary space
 	.quad	0			# cr1: primary space segment table
 	.quad	0			# cr2: dispatchable unit control table
@@ -62,5 +69,8 @@ ENTRY(startup_continue)
 	.quad	0			# cr13: home space segment table
 	.quad	0xc0000000		# cr14: machine check handling off
 	.quad	0			# cr15: linkage stack operations
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

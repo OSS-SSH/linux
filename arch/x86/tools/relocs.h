@@ -18,9 +18,13 @@
 #include <tools/le_byteshift.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 __attribute__((__format__(printf, 1, 2)))
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__attribute__((__format__(printf, 1, 2)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void die(char *fmt, ...) __attribute__((noreturn));
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))

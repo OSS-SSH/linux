@@ -557,6 +557,7 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int intel_pcode_init(struct drm_i915_private *i915)
 {
 	int ret = 0;
@@ -565,21 +566,32 @@ int intel_pcode_init(struct drm_i915_private *i915)
 		return ret;
 =======
 void intel_pcode_init(struct drm_i915_private *i915)
+=======
+int intel_pcode_init(struct drm_i915_private *i915)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	int ret;
+	int ret = 0;
 
 	if (!IS_DGFX(i915))
+<<<<<<< HEAD
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = skl_pcode_request(i915, DG1_PCODE_STATUS,
 				DG1_UNCORE_GET_INIT_STATUS,
 				DG1_UNCORE_INIT_STATUS_COMPLETE,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				DG1_UNCORE_INIT_STATUS_COMPLETE, 180000);
 
 	drm_dbg(&i915->drm, "PCODE init status %d\n", ret);
 
+<<<<<<< HEAD
 	if (ret)
 		drm_err(&i915->drm, "Pcode did not report uncore initialization completion!\n");
 
@@ -589,4 +601,10 @@ void intel_pcode_init(struct drm_i915_private *i915)
 	if (ret)
 		drm_err(&i915->drm, "Pcode did not report uncore initialization completion!\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret)
+		drm_err(&i915->drm, "Pcode did not report uncore initialization completion!\n");
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

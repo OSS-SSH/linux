@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2020, Konrad Dybcio <konradybcio@gmail.com>
  * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
  */
@@ -15,13 +16,24 @@
 #include <dt-bindings/soc/qcom,apr.h>
 =======
  * Copyright (c) 2020, Konrad Dybcio
+=======
+ * Copyright (c) 2020, Konrad Dybcio <konradybcio@gmail.com>
+ * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+#include <dt-bindings/clock/qcom,gpucc-sdm660.h>
+#include <dt-bindings/clock/qcom,mmcc-sdm660.h>
 #include <dt-bindings/clock/qcom,rpmcc.h>
+#include <dt-bindings/power/qcom-rpmpd.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <dt-bindings/soc/qcom,apr.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 / {
 	interrupt-parent = <&intc>;
@@ -33,10 +45,14 @@
 
 	clocks {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		xo_board: xo-board {
 =======
 		xo_board: xo_board {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		xo_board: xo-board {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <19200000>;
@@ -44,10 +60,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sleep_clk: sleep-clk {
 =======
 		sleep_clk: sleep_clk {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sleep_clk: sleep-clk {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <32764>;
@@ -335,6 +355,7 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memory@80000000 {
 		device_type = "memory";
 		/* We expect the bootloader to fill in the reg */
@@ -345,6 +366,12 @@
 		/* We expect the bootloader to fill in the reg */
 		reg = <0 0 0 0>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memory@80000000 {
+		device_type = "memory";
+		/* We expect the bootloader to fill in the reg */
+		reg = <0x0 0x80000000 0x0 0x0>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	pmu {
@@ -374,6 +401,7 @@
 
 		qhee_code: qhee-code@85800000 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			reg = <0x0 0x85800000 0x0 0x600000>;
 			no-map;
 		};
@@ -393,6 +421,21 @@
 		};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			reg = <0x0 0x85800000 0x0 0x600000>;
+			no-map;
+		};
+
+		rmtfs_mem: memory@85e00000 {
+			compatible = "qcom,rmtfs-mem";
+			reg = <0x0 0x85e00000 0x0 0x200000>;
+			no-map;
+
+			qcom,client-id = <1>;
+			qcom,vmid = <15>;
+		};
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		smem_region: smem-mem@86000000 {
 			reg = <0 0x86000000 0 0x200000>;
 			no-map;
@@ -404,50 +447,71 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mpss_region: mpss@8ac00000 {
 =======
 		modem_fw_mem: modem-fw-region@8ac00000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mpss_region: mpss@8ac00000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x0 0x8ac00000 0x0 0x7e00000>;
 			no-map;
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		adsp_region: adsp@92a00000 {
 =======
 		adsp_fw_mem: adsp-fw-region@92a00000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		adsp_region: adsp@92a00000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x0 0x92a00000 0x0 0x1e00000>;
 			no-map;
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mba_region: mba@94800000 {
 =======
 		pil_mba_mem: pil-mba-region@94800000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mba_region: mba@94800000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x0 0x94800000 0x0 0x200000>;
 			no-map;
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		buffer_mem: tzbuffer@94a00000 {
 =======
 		buffer_mem: buffer-region@94a00000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		buffer_mem: tzbuffer@94a00000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x0 0x94a00000 0x0 0x100000>;
 			no-map;
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		venus_region: venus@9f800000 {
 =======
 		venus_fw_mem: venus-fw-region@9f800000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		venus_region: venus@9f800000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x0 0x9f800000 0x0 0x800000>;
 			no-map;
 		};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		secure_region2: secure-region2@f7c00000 {
@@ -456,11 +520,14 @@
 		};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adsp_mem: adsp-region@f6000000 {
 			reg = <0x0 0xf6000000 0x0 0x800000>;
 			no-map;
 		};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		qseecom_ta_mem: qseecom-ta-region@fec00000 {
@@ -469,11 +536,14 @@
 		};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qseecom_mem: qseecom-region@f6800000 {
 			reg = <0x0 0xf6800000 0x0 0x1400000>;
 			no-map;
 		};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		zap_shader_region: gpu@fed00000 {
 			compatible = "shared-dma-pool";
@@ -487,6 +557,11 @@
 		cont_splash_mem: cont-splash-region@9d400000 {
 			reg = <0x0 0x9d400000 0x0 0x23ff000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zap_shader_region: gpu@fed00000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0xfed00000 0x0 0xa00000>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			no-map;
 		};
 	};
@@ -507,6 +582,9 @@
 				#clock-cells = <1>;
 			};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			rpmpd: power-controller {
 				compatible = "qcom,sdm660-rpmpd";
@@ -553,8 +631,11 @@
 					};
 				};
 			};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 	};
 
@@ -565,6 +646,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	smp2p-adsp {
 		compatible = "qcom,smp2p";
 		qcom,smem = <443>, <429>;
@@ -605,8 +689,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	soc {
 		#address-cells = <1>;
 		#size-cells = <1>;
@@ -636,6 +723,9 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			qusb2_hstx_trim: hstx-trim@240 {
 				reg = <0x240 0x1>;
@@ -646,8 +736,11 @@
 				reg = <0x41a0 0x1>;
 				bits = <21 7>;
 			};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		rng: rng@793000 {
@@ -658,6 +751,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bimc: interconnect@1008000 {
 			compatible = "qcom,sdm660-bimc";
 			reg = <0x01008000 0x78000>;
@@ -667,14 +763,20 @@
 				 <&rpmcc RPM_SMD_BIMC_A_CLK>;
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		restart@10ac000 {
 			compatible = "qcom,pshold";
 			reg = <0x010ac000 0x4>;
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cnoc: interconnect@1500000 {
 			compatible = "qcom,sdm660-cnoc";
 			reg = <0x01500000 0x10000>;
@@ -693,6 +795,7 @@
 				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
 		};
 
+<<<<<<< HEAD
 		anoc2_smmu: iommu@16c0000 {
 			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
 			reg = <0x016c0000 0x40000>;
@@ -705,13 +808,23 @@
 			#iommu-cells = <1>;
 
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		anoc2_smmu: iommu@16c0000 {
 			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
 			reg = <0x016c0000 0x40000>;
+
+			assigned-clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+			assigned-clock-rates = <1000>;
+			clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
+			clock-names = "bus";
+			#global-interrupts = <2>;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
 			#iommu-cells = <1>;
 
-			#global-interrupts = <2>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			interrupts =
 				<GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
 				<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
@@ -750,6 +863,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		a2noc: interconnect@1704000 {
 			compatible = "qcom,sdm660-a2noc";
 			reg = <0x01704000 0xc100>;
@@ -791,6 +907,7 @@
 			#thermal-sensor-cells = <1>;
 		};
 
+<<<<<<< HEAD
 		tcsr_mutex_regs: syscon@1f40000 {
 			compatible = "syscon";
 			reg = <0x01f40000 0x40000>;
@@ -809,20 +926,30 @@
 			interrupt-controller;
 			#interrupt-cells = <2>;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tcsr_mutex_regs: syscon@1f40000 {
 			compatible = "syscon";
-			reg = <0x01f40000 0x20000>;
+			reg = <0x01f40000 0x40000>;
 		};
 
-		tlmm: pinctrl@3000000 {
+		tlmm: pinctrl@3100000 {
 			compatible = "qcom,sdm630-pinctrl";
-			reg = <0x03000000 0xc00000>;
+			reg = <0x03100000 0x400000>,
+				  <0x03500000 0x400000>,
+				  <0x03900000 0x400000>;
+			reg-names = "south", "center", "north";
 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
 			gpio-controller;
-			#gpio-cells = <0x2>;
+			gpio-ranges = <&tlmm 0 0 114>;
+			#gpio-cells = <2>;
 			interrupt-controller;
+<<<<<<< HEAD
 			#interrupt-cells = <0x2>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			#interrupt-cells = <2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			blsp1_uart1_default: blsp1-uart1-default {
 				pins = "gpio0", "gpio1", "gpio2", "gpio3";
@@ -843,6 +970,9 @@
 			};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			blsp2_uart1_default: blsp2-uart1-active {
 				tx-rts {
 					pins = "gpio16", "gpio19";
@@ -850,6 +980,7 @@
 					drive-strength = <2>;
 					bias-disable;
 				};
+<<<<<<< HEAD
 
 				rx {
 					/*
@@ -897,38 +1028,63 @@
 				drive-strength = <2>;
 				bias-pull-up;
 			};
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			blsp2_uart1_rxcts_active: blsp2-uart1-rxcts-active {
-				pins = "gpio17", "gpio18";
-				drive-strength = <2>;
-				bias-disable;
+				rx {
+					/*
+					 * Avoid garbage data while BT module
+					 * is powered off or not driving signal
+					 */
+					pins = "gpio17";
+					function = "blsp_uart5";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+
+				cts {
+					/* Match the pull of the BT module */
+					pins = "gpio18";
+					function = "blsp_uart5";
+					drive-strength = <2>;
+					bias-pull-down;
+				};
 			};
 
-			blsp2_uart1_rxcts_sleep: blsp2-uart1-rxcts-sleep {
-				pins = "gpio17", "gpio18";
-				drive-strength = <2>;
-				bias-no-pull;
-			};
+			blsp2_uart1_sleep: blsp2-uart1-sleep {
+				tx {
+					pins = "gpio16";
+					function = "gpio";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
 
-			blsp2_uart1_rfr_active: blsp2-uart1-rfr-active {
-				pins = "gpio19";
-				drive-strength = <2>;
-				bias-disable;
-			};
-
+<<<<<<< HEAD
 			blsp2_uart1_rfr_sleep: blsp2-uart1-rfr-sleep {
 				pins = "gpio19";
 				drive-strength = <2>;
 				bias-no-pull;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				rx-cts-rts {
+					pins = "gpio17", "gpio18", "gpio19";
+					function = "gpio";
+					drive-strength = <2>;
+					bias-no-pull;
+				};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			i2c1_default: i2c1-default {
 				pins = "gpio2", "gpio3";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c1";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c1";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -936,9 +1092,13 @@
 			i2c1_sleep: i2c1-sleep {
 				pins = "gpio2", "gpio3";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c1";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c1";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
@@ -946,9 +1106,13 @@
 			i2c2_default: i2c2-default {
 				pins = "gpio6", "gpio7";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c2";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c2";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -956,9 +1120,13 @@
 			i2c2_sleep: i2c2-sleep {
 				pins = "gpio6", "gpio7";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c2";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c2";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
@@ -966,9 +1134,13 @@
 			i2c3_default: i2c3-default {
 				pins = "gpio10", "gpio11";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c3";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c3";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -976,9 +1148,13 @@
 			i2c3_sleep: i2c3-sleep {
 				pins = "gpio10", "gpio11";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c3";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c3";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
@@ -986,9 +1162,13 @@
 			i2c4_default: i2c4-default {
 				pins = "gpio14", "gpio15";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c4";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c4";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -996,9 +1176,13 @@
 			i2c4_sleep: i2c4-sleep {
 				pins = "gpio14", "gpio15";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c4";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c4";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
@@ -1006,9 +1190,13 @@
 			i2c5_default: i2c5-default {
 				pins = "gpio18", "gpio19";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c5";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c5";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -1016,9 +1204,13 @@
 			i2c5_sleep: i2c5-sleep {
 				pins = "gpio18", "gpio19";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c5";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c5";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
@@ -1026,9 +1218,13 @@
 			i2c6_default: i2c6-default {
 				pins = "gpio22", "gpio23";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c6";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c6";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -1036,9 +1232,13 @@
 			i2c6_sleep: i2c6-sleep {
 				pins = "gpio22", "gpio23";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c6";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c6";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
@@ -1046,9 +1246,13 @@
 			i2c7_default: i2c7-default {
 				pins = "gpio26", "gpio27";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c7";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c7";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -1056,9 +1260,13 @@
 			i2c7_sleep: i2c7-sleep {
 				pins = "gpio26", "gpio27";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c7";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c7";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
@@ -1066,9 +1274,13 @@
 			i2c8_default: i2c8-default {
 				pins = "gpio30", "gpio31";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c8";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c8";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-disable;
 			};
@@ -1076,19 +1288,27 @@
 			i2c8_sleep: i2c8-sleep {
 				pins = "gpio30", "gpio31";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				function = "blsp_i2c8";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				function = "blsp_i2c8";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				drive-strength = <2>;
 				bias-pull-up;
 			};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cci0_default: cci0_default {
 				pinmux {
 					pins = "gpio36","gpio37";
 					function = "cci_i2c";
 				};
+<<<<<<< HEAD
 
 				pinconf {
 					pins = "gpio36","gpio37";
@@ -1297,50 +1517,222 @@
 				bias-disable;
 				drive-strength = <16>;
 			};
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			sdc1_clk_off: sdc1-clk-off {
-				pins = "sdc1_clk";
-				bias-disable;
-				drive-strength = <2>;
+				pinconf {
+					pins = "gpio36","gpio37";
+					bias-pull-up;
+					drive-strength = <2>;
+				};
 			};
 
-			sdc1_cmd_on: sdc1-cmd-on {
-				pins = "sdc1_cmd";
-				bias-pull-up;
-				drive-strength = <10>;
+			cci1_default: cci1_default {
+				pinmux {
+					pins = "gpio38","gpio39";
+					function = "cci_i2c";
+				};
+
+				pinconf {
+					pins = "gpio38","gpio39";
+					bias-pull-up;
+					drive-strength = <2>;
+				};
 			};
 
-			sdc1_cmd_off: sdc1-cmd-off {
-				pins = "sdc1_cmd";
-				bias-pull-up;
-				drive-strength = <2>;
+			sdc1_state_on: sdc1-on {
+				clk {
+					pins = "sdc1_clk";
+					bias-disable;
+					drive-strength = <16>;
+				};
+
+				cmd {
+					pins = "sdc1_cmd";
+					bias-pull-up;
+					drive-strength = <10>;
+				};
+
+				data {
+					pins = "sdc1_data";
+					bias-pull-up;
+					drive-strength = <10>;
+				};
+
+				rclk {
+					pins = "sdc1_rclk";
+					bias-pull-down;
+				};
 			};
 
-			sdc1_data_on: sdc1-data-on {
-				pins = "sdc1_data";
-				bias-pull-up;
-				drive-strength = <8>;
+			sdc1_state_off: sdc1-off {
+				clk {
+					pins = "sdc1_clk";
+					bias-disable;
+					drive-strength = <2>;
+				};
+
+				cmd {
+					pins = "sdc1_cmd";
+					bias-pull-up;
+					drive-strength = <2>;
+				};
+
+				data {
+					pins = "sdc1_data";
+					bias-pull-up;
+					drive-strength = <2>;
+				};
+
+				rclk {
+					pins = "sdc1_rclk";
+					bias-pull-down;
+				};
 			};
 
-			sdc1_data_off: sdc1-data-off {
-				pins = "sdc1_data";
-				bias-pull-up;
-				drive-strength = <2>;
+			sdc2_state_on: sdc2-on {
+				clk {
+					pins = "sdc2_clk";
+					bias-disable;
+					drive-strength = <16>;
+				};
+
+				cmd {
+					pins = "sdc2_cmd";
+					bias-pull-up;
+					drive-strength = <10>;
+				};
+
+				data {
+					pins = "sdc2_data";
+					bias-pull-up;
+					drive-strength = <10>;
+				};
+
+				sd-cd {
+					pins = "gpio54";
+					bias-pull-up;
+					drive-strength = <2>;
+				};
 			};
 
-			sdc1_rclk_on: sdc1-rclk-on {
-				pins = "sdc1_rclk";
-				bias-pull-down;
-			};
+			sdc2_state_off: sdc2-off {
+				clk {
+					pins = "sdc2_clk";
+					bias-disable;
+					drive-strength = <2>;
+				};
 
+				cmd {
+					pins = "sdc2_cmd";
+					bias-pull-up;
+					drive-strength = <2>;
+				};
+
+				data {
+					pins = "sdc2_data";
+					bias-pull-up;
+					drive-strength = <2>;
+				};
+
+				sd-cd {
+					pins = "gpio54";
+					bias-disable;
+					drive-strength = <2>;
+				};
+			};
+		};
+
+		adreno_gpu: gpu@5000000 {
+			compatible = "qcom,adreno-508.0", "qcom,adreno";
+			#stream-id-cells = <16>;
+
+			reg = <0x05000000 0x40000>;
+			reg-names = "kgsl_3d0_reg_memory";
+
+<<<<<<< HEAD
 			sdc1_rclk_off: sdc1-rclk-off {
 				pins = "sdc1_rclk";
 				bias-pull-down;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			interrupts = <0 300 IRQ_TYPE_LEVEL_HIGH>;
+
+			clocks = <&gcc GCC_GPU_CFG_AHB_CLK>,
+				<&gpucc GPUCC_RBBMTIMER_CLK>,
+				<&gcc GCC_BIMC_GFX_CLK>,
+				<&gcc GCC_GPU_BIMC_GFX_CLK>,
+				<&gpucc GPUCC_RBCPR_CLK>,
+				<&gpucc GPUCC_GFX3D_CLK>;
+
+			clock-names = "iface",
+				"rbbmtimer",
+				"mem",
+				"mem_iface",
+				"rbcpr",
+				"core";
+
+			power-domains = <&rpmpd SDM660_VDDMX>;
+			iommus = <&kgsl_smmu 0>;
+
+			nvmem-cells = <&gpu_speed_bin>;
+			nvmem-cell-names = "speed_bin";
+
+			interconnects = <&gnoc 1 &bimc 5>;
+			interconnect-names = "gfx-mem";
+
+			operating-points-v2 = <&gpu_sdm630_opp_table>;
+
+			gpu_sdm630_opp_table: opp-table {
+				compatible  = "operating-points-v2";
+				opp-775000000 {
+					opp-hz = /bits/ 64 <775000000>;
+					opp-level = <RPM_SMD_LEVEL_TURBO>;
+					opp-peak-kBps = <5412000>;
+					opp-supported-hw = <0xA2>;
+				};
+				opp-647000000 {
+					opp-hz = /bits/ 64 <647000000>;
+					opp-level = <RPM_SMD_LEVEL_NOM_PLUS>;
+					opp-peak-kBps = <4068000>;
+					opp-supported-hw = <0xFF>;
+				};
+				opp-588000000 {
+					opp-hz = /bits/ 64 <588000000>;
+					opp-level = <RPM_SMD_LEVEL_NOM>;
+					opp-peak-kBps = <3072000>;
+					opp-supported-hw = <0xFF>;
+				};
+				opp-465000000 {
+					opp-hz = /bits/ 64 <465000000>;
+					opp-level = <RPM_SMD_LEVEL_SVS_PLUS>;
+					opp-peak-kBps = <2724000>;
+					opp-supported-hw = <0xFF>;
+				};
+				opp-370000000 {
+					opp-hz = /bits/ 64 <370000000>;
+					opp-level = <RPM_SMD_LEVEL_SVS>;
+					opp-peak-kBps = <2188000>;
+					opp-supported-hw = <0xFF>;
+				};
+				opp-240000000 {
+					opp-hz = /bits/ 64 <240000000>;
+					opp-level = <RPM_SMD_LEVEL_LOW_SVS>;
+					opp-peak-kBps = <1648000>;
+					opp-supported-hw = <0xFF>;
+				};
+				opp-160000000 {
+					opp-hz = /bits/ 64 <160000000>;
+					opp-level = <RPM_SMD_LEVEL_MIN_SVS>;
+					opp-peak-kBps = <1200000>;
+					opp-supported-hw = <0xFF>;
+				};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 
 		kgsl_smmu: iommu@5040000 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			compatible = "qcom,sdm630-smmu-v2",
 				     "qcom,adreno-smmu", "qcom,smmu-v2";
@@ -1363,11 +1755,31 @@
 
 =======
 			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
+=======
+			compatible = "qcom,sdm630-smmu-v2",
+				     "qcom,adreno-smmu", "qcom,smmu-v2";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x05040000 0x10000>;
+
+			/*
+			 * GX GDSC parent is CX. We need to bring up CX for SMMU
+			 * but we need both up for Adreno. On the other hand, we
+			 * need to manage the GX rpmpd domain in the adreno driver.
+			 * Enable CX/GX GDSCs here so that we can manage just the GX
+			 * RPM Power Domain in the Adreno driver.
+			 */
+			power-domains = <&gpucc GPU_GX_GDSC>;
+			clocks = <&gcc GCC_GPU_CFG_AHB_CLK>,
+				 <&gcc GCC_BIMC_GFX_CLK>,
+				 <&gcc GCC_GPU_BIMC_GFX_CLK>;
+			clock-names = "iface", "mem", "mem_iface";
+			#global-interrupts = <2>;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
 			#iommu-cells = <1>;
 
-			#global-interrupts = <2>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			interrupts =
 				<GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
 				<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
@@ -1385,6 +1797,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gpucc: clock-controller@5065000 {
 			compatible = "qcom,gpucc-sdm630";
 			#clock-cells = <1>;
@@ -1401,8 +1816,11 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lpass_smmu: iommu@5100000 {
 			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
 			reg = <0x05100000 0x40000>;
@@ -1454,6 +1872,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		usb3: usb@a8f8800 {
 			compatible = "qcom,sdm660-dwc3", "qcom,dwc3";
 			reg = <0x0a8f8800 0x400>;
@@ -1568,8 +1989,11 @@
 			};
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sdhc_1: sdhci@c0c4000 {
 			compatible = "qcom,sdm630-sdhci", "qcom,sdhci-msm-v5";
 			reg = <0x0c0c4000 0x1000>,
@@ -1588,10 +2012,14 @@
 			clock-names = "core", "iface", "xo", "ice";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			interconnects = <&a2noc 2 &a2noc 10>,
 					<&gnoc 0 &cnoc 27>;
 			interconnect-names = "sdhc1-ddr", "cpu-sdhc1";
 			operating-points-v2 = <&sdhc1_opp_table>;
+<<<<<<< HEAD
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&sdc1_state_on>;
 			pinctrl-1 = <&sdc1_state_off>;
@@ -1601,12 +2029,21 @@
 			pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
 			pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pinctrl-names = "default", "sleep";
+			pinctrl-0 = <&sdc1_state_on>;
+			pinctrl-1 = <&sdc1_state_off>;
+			power-domains = <&rpmpd SDM660_VDDCX>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			bus-width = <8>;
 			non-removable;
 
 			status = "disabled";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			sdhc1_opp_table: opp-table {
 				compatible = "operating-points-v2";
@@ -1852,8 +2289,11 @@
 				clocks = <&mmcc MDSS_AHB_CLK>, <&xo_board>;
 				clock-names = "iface", "ref";
 			};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		blsp1_dma: dma-controller@c144000 {
@@ -1908,10 +2348,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp1_dma 4>, <&blsp1_dma 5>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp1_dma 4>, <&blsp1_dma 5>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c1_default>;
@@ -1931,10 +2376,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp1_dma 6>, <&blsp1_dma 7>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp1_dma 6>, <&blsp1_dma 7>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c2_default>;
@@ -1954,10 +2404,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp1_dma 8>, <&blsp1_dma 9>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp1_dma 8>, <&blsp1_dma 9>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c3_default>;
@@ -1977,10 +2432,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c4_default>;
@@ -2014,6 +2474,7 @@
 			dma-names = "tx", "rx";
 			pinctrl-names = "default", "sleep";
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pinctrl-0 = <&blsp2_uart1_default>;
 			pinctrl-1 = <&blsp2_uart1_sleep>;
 =======
@@ -2022,6 +2483,10 @@
 			pinctrl-1 = <&blsp2_uart1_tx_sleep &blsp2_uart1_rxcts_sleep
 				&blsp2_uart1_rfr_sleep>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pinctrl-0 = <&blsp2_uart1_default>;
+			pinctrl-1 = <&blsp2_uart1_sleep>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			status = "disabled";
 		};
 
@@ -2035,10 +2500,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp2_dma 4>, <&blsp2_dma 5>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp2_dma 4>, <&blsp2_dma 5>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c5_default>;
@@ -2058,10 +2528,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c6_default>;
@@ -2081,10 +2556,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp2_dma 8>, <&blsp2_dma 9>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp2_dma 8>, <&blsp2_dma 9>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c7_default>;
@@ -2104,10 +2584,15 @@
 			clock-names = "core", "iface";
 			clock-frequency = <400000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dmas = <&blsp2_dma 10>, <&blsp2_dma 11>;
 			dma-names = "tx", "rx";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dmas = <&blsp2_dma 10>, <&blsp2_dma 11>;
+			dma-names = "tx", "rx";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&i2c8_default>;
@@ -2118,6 +2603,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		imem@146bf000 {
 			compatible = "simple-mfd";
 			reg = <0x146bf000 0x1000>;
@@ -2322,6 +2810,7 @@
 			};
 		};
 
+<<<<<<< HEAD
 		mmss_smmu: iommu@cd00000 {
 			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
 			reg = <0x0cd00000 0x40000>;
@@ -2336,13 +2825,25 @@
 			#iommu-cells = <1>;
 
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mmss_smmu: iommu@cd00000 {
 			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
 			reg = <0x0cd00000 0x40000>;
+
+			clocks = <&mmcc MNOC_AHB_CLK>,
+				 <&mmcc BIMC_SMMU_AHB_CLK>,
+				 <&rpmcc RPM_SMD_MMSSNOC_AXI_CLK>,
+				 <&mmcc BIMC_SMMU_AXI_CLK>;
+			clock-names = "iface-mm", "iface-smmu",
+				      "bus-mm", "bus-smmu";
+			#global-interrupts = <2>;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
 			#iommu-cells = <1>;
 
-			#global-interrupts = <2>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			interrupts =
 				<GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>,
 				<GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>,
@@ -2376,6 +2877,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adsp_pil: remoteproc@15700000 {
 			compatible = "qcom,sdm660-adsp-pas";
 			reg = <0x15700000 0x4040>;
@@ -2467,8 +2971,11 @@
 			clocks = <&xo_board>, <&xo_board>;
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		apcs_glb: mailbox@17911000 {
 			compatible = "qcom,sdm660-apcs-hmss-global";
 			reg = <0x17911000 0x1000>;
@@ -2557,6 +3064,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sound: sound {
 	};
 
@@ -2733,8 +3243,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	timer {
 		compatible = "arm,armv8-timer";
 		interrupts = <GIC_PPI 1 0xf08>,

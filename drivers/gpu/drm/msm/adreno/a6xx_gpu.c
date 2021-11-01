@@ -53,6 +53,7 @@ static bool a6xx_idle(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void update_shadow_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
 {
 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
@@ -62,22 +63,29 @@ static void update_shadow_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
 	if (a6xx_gpu->has_whereami && !adreno_gpu->base.hw_apriv) {
 =======
 static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+=======
+static void update_shadow_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-	uint32_t wptr;
-	unsigned long flags;
 
 	/* Expanded APRIV doesn't need to issue the WHERE_AM_I opcode */
 	if (a6xx_gpu->has_whereami && !adreno_gpu->base.hw_apriv) {
+<<<<<<< HEAD
 		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		OUT_PKT7(ring, CP_WHERE_AM_I, 2);
 		OUT_RING(ring, lower_32_bits(shadowptr(a6xx_gpu, ring)));
 		OUT_RING(ring, upper_32_bits(shadowptr(a6xx_gpu, ring)));
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
@@ -86,8 +94,11 @@ static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
 	unsigned long flags;
 
 	update_shadow_rptr(gpu, ring);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&ring->preempt_lock, flags);
 
@@ -124,10 +135,14 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
 	u64 memptr = rbmemptr(ring, ttbr0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ctx->seqno == a6xx_gpu->cur_ctx_seqno)
 =======
 	if (ctx == a6xx_gpu->cur_ctx)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ctx->seqno == a6xx_gpu->cur_ctx_seqno)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
@@ -161,10 +176,14 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
 	OUT_RING(ring, 0x31);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	a6xx_gpu->cur_ctx_seqno = ctx->seqno;
 =======
 	a6xx_gpu->cur_ctx = ctx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	a6xx_gpu->cur_ctx_seqno = ctx->seqno;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
@@ -175,10 +194,14 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
 	struct msm_ringbuffer *ring = submit->ring;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int i, ibs = 0;
 =======
 	unsigned int i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i, ibs = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	a6xx_set_pagetable(a6xx_gpu, ring, submit->queue->ctx);
 
@@ -215,6 +238,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
 			OUT_RING(ring, upper_32_bits(submit->cmd[i].iova));
 			OUT_RING(ring, submit->cmd[i].size);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ibs++;
 			break;
 		}
@@ -232,6 +256,21 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
 			break;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ibs++;
+			break;
+		}
+
+		/*
+		 * Periodically update shadow-wptr if needed, so that we
+		 * can see partial progress of submits with large # of
+		 * cmds.. otherwise we could needlessly stall waiting for
+		 * ringbuffer state, simply due to looking at a shadow
+		 * rptr value that has not been updated
+		 */
+		if ((ibs % 32) == 0)
+			update_shadow_rptr(gpu, ring);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
@@ -702,10 +741,14 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
 		count = ARRAY_SIZE(a650_protect);
 		count_max = 48;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (adreno_is_a660_family(adreno_gpu)) {
 =======
 	} else if (adreno_is_a660(adreno_gpu)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (adreno_is_a660_family(adreno_gpu)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		regs = a660_protect;
 		count = ARRAY_SIZE(a660_protect);
 		count_max = 48;
@@ -737,10 +780,14 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adreno_is_a640_family(adreno_gpu))
 =======
 	if (adreno_is_a640(adreno_gpu))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adreno_is_a640_family(adreno_gpu))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		amsbc = 1;
 
 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
@@ -752,6 +799,9 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (adreno_is_7c3(adreno_gpu)) {
 		lower_bit = 1;
 		amsbc = 1;
@@ -759,8 +809,11 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
 		uavflagprd_inv = 2;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
 		rgb565_predicator << 11 | amsbc << 4 | lower_bit << 1);
 	gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, lower_bit << 1);
@@ -808,9 +861,13 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
 	struct msm_gpu *gpu = &adreno_gpu->base;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const char *sqe_name = adreno_gpu->info->fw[ADRENO_FW_SQE];
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const char *sqe_name = adreno_gpu->info->fw[ADRENO_FW_SQE];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 *buf = msm_gem_get_vaddr(obj);
 	bool ret = false;
 
@@ -828,11 +885,15 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
 	 * a660 targets have all the critical security fixes from the start
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!strcmp(sqe_name, "a630_sqe.fw")) {
 =======
 	if (adreno_is_a618(adreno_gpu) || adreno_is_a630(adreno_gpu) ||
 		adreno_is_a640(adreno_gpu)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!strcmp(sqe_name, "a630_sqe.fw")) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * If the lowest nibble is 0xa that is an indication that this
 		 * microcode has been patched. The actual version is in dword
@@ -854,10 +915,14 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
 			"a630 SQE ucode is too old. Have version %x need at least %x\n",
 			buf[0] & 0xfff, 0x190);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (!strcmp(sqe_name, "a650_sqe.fw")) {
 =======
 	} else if (adreno_is_a650(adreno_gpu)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (!strcmp(sqe_name, "a650_sqe.fw")) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if ((buf[0] & 0xfff) >= 0x095) {
 			ret = true;
 			goto out;
@@ -867,10 +932,14 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
 			"a650 SQE ucode is too old. Have version %x need at least %x\n",
 			buf[0] & 0xfff, 0x095);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (!strcmp(sqe_name, "a660_sqe.fw")) {
 =======
 	} else if (adreno_is_a660(adreno_gpu)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (!strcmp(sqe_name, "a660_sqe.fw")) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = true;
 	} else {
 		DRM_DEV_ERROR(&gpu->pdev->dev,
@@ -943,10 +1012,14 @@ static int a6xx_zap_shader_init(struct msm_gpu *gpu)
 	  A6XX_RBBM_INT_0_MASK_UCHE_TRAP_INTR)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int hw_init(struct msm_gpu *gpu)
 =======
 static int a6xx_hw_init(struct msm_gpu *gpu)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int hw_init(struct msm_gpu *gpu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
@@ -985,11 +1058,16 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 
 	/* VBIF/GBIF start*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adreno_is_a640_family(adreno_gpu) ||
 	    adreno_is_a650_family(adreno_gpu)) {
 =======
 	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adreno_is_a640_family(adreno_gpu) ||
+	    adreno_is_a650_family(adreno_gpu)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE0, 0x00071620);
 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE1, 0x00071620);
 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE2, 0x00071620);
@@ -1028,21 +1106,30 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 	gpu_write(gpu, REG_A6XX_UCHE_CACHE_WAYS, 0x4);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adreno_is_a640_family(adreno_gpu) ||
 	    adreno_is_a650_family(adreno_gpu))
 =======
 	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adreno_is_a640_family(adreno_gpu) ||
+	    adreno_is_a650_family(adreno_gpu))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x02000140);
 	else
 		gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x010000c0);
 	gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_1, 0x8040362c);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adreno_is_a660_family(adreno_gpu))
 =======
 	if (adreno_is_a660(adreno_gpu))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adreno_is_a660_family(adreno_gpu))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gpu_write(gpu, REG_A6XX_CP_LPAC_PROG_FIFO_SIZE, 0x00000020);
 
 	/* Setting the mem pool size */
@@ -1054,6 +1141,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (adreno_is_a640_family(adreno_gpu) || adreno_is_7c3(adreno_gpu))
 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
 	else if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
@@ -1062,6 +1150,12 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 	else if (adreno_is_a640(adreno_gpu))
 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (adreno_is_a640_family(adreno_gpu) || adreno_is_7c3(adreno_gpu))
+		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
+	else if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00180000);
 
@@ -1099,6 +1193,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 	a6xx_set_cp_protect(gpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adreno_is_a660_family(adreno_gpu)) {
 		gpu_write(gpu, REG_A6XX_CP_CHICKEN_DBG, 0x1);
 		gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x0);
@@ -1109,12 +1204,17 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 		gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
 =======
 	if (adreno_is_a660(adreno_gpu)) {
+=======
+	if (adreno_is_a660_family(adreno_gpu)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gpu_write(gpu, REG_A6XX_CP_CHICKEN_DBG, 0x1);
 		gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x0);
-		/* Set dualQ + disable afull for A660 GPU but not for A635 */
-		gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	/* Set dualQ + disable afull for A660 GPU */
+	if (adreno_is_a660(adreno_gpu))
+		gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
 
 	/* Enable expanded apriv for targets that support it */
 	if (gpu->hw_apriv) {
@@ -1155,10 +1255,14 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 	if (adreno_gpu->base.hw_apriv || a6xx_gpu->has_whereami) {
 		if (!a6xx_gpu->shadow_bo) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			a6xx_gpu->shadow = msm_gem_kernel_new(gpu->dev,
 =======
 			a6xx_gpu->shadow = msm_gem_kernel_new_locked(gpu->dev,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			a6xx_gpu->shadow = msm_gem_kernel_new(gpu->dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				sizeof(u32) * gpu->nr_rings,
 				MSM_BO_WC | MSM_BO_MAP_PRIV,
 				gpu->aspace, &a6xx_gpu->shadow_bo,
@@ -1177,10 +1281,14 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 	a6xx_gpu->cur_ring = gpu->rb[0];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	a6xx_gpu->cur_ctx_seqno = 0;
 =======
 	a6xx_gpu->cur_ctx = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	a6xx_gpu->cur_ctx_seqno = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Enable the SQE_to start the CP engine */
 	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 1);
@@ -1235,6 +1343,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int a6xx_hw_init(struct msm_gpu *gpu)
 {
 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
@@ -1248,8 +1359,11 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void a6xx_dump(struct msm_gpu *gpu)
 {
 	DRM_DEV_INFO(&gpu->pdev->dev, "status:   %08x\n",
@@ -1527,20 +1641,28 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
 	struct msm_gpu *gpu = &adreno_gpu->base;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 gpu_scid, cntl1_regval = 0;
 =======
 	u32 cntl1_regval = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 gpu_scid, cntl1_regval = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (IS_ERR(a6xx_gpu->llc_mmio))
 		return;
 
 	if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
 =======
 		u32 gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		gpu_scid &= 0x1f;
 		cntl1_regval = (gpu_scid << 0) | (gpu_scid << 5) | (gpu_scid << 10) |
@@ -1561,6 +1683,9 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!cntl1_regval)
 		return;
 
@@ -1572,6 +1697,7 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
 		a6xx_llc_write(a6xx_gpu,
 			REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
 
+<<<<<<< HEAD
 		/*
 		 * Program cacheability overrides to not allocate cache
 		 * lines on a write miss
@@ -1591,26 +1717,29 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
 			(1 << 8), (gpu_scid << 10) | (1 << 8));
 =======
 	if (cntl1_regval) {
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
-		 * Program the slice IDs for the various GPU blocks and GPU MMU
-		 * pagetables
+		 * Program cacheability overrides to not allocate cache
+		 * lines on a write miss
 		 */
-		if (a6xx_gpu->have_mmu500)
-			gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0),
-				cntl1_regval);
-		else {
-			a6xx_llc_write(a6xx_gpu,
-				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
-
-			/*
-			 * Program cacheability overrides to not allocate cache
-			 * lines on a write miss
-			 */
-			a6xx_llc_rmw(a6xx_gpu,
-				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
-		}
+		a6xx_llc_rmw(a6xx_gpu,
+			REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
+		return;
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0), cntl1_regval);
+
+	/* On A660, the SCID programming for UCHE traffic is done in
+	 * A6XX_GBIF_SCACHE_CNTL0[14:10]
+	 */
+	if (adreno_is_a660_family(adreno_gpu))
+		gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL0, (0x1f << 10) |
+			(1 << 8), (gpu_scid << 10) | (1 << 8));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void a6xx_llc_slices_destroy(struct a6xx_gpu *a6xx_gpu)
@@ -1656,6 +1785,7 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
 	trace_msm_gpu_resume(0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&a6xx_gpu->gmu.lock);
 	ret = a6xx_gmu_resume(a6xx_gpu);
 	mutex_unlock(&a6xx_gpu->gmu.lock);
@@ -1664,12 +1794,20 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
 
 	msm_devfreq_resume(gpu);
 =======
+=======
+	mutex_lock(&a6xx_gpu->gmu.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = a6xx_gmu_resume(a6xx_gpu);
+	mutex_unlock(&a6xx_gpu->gmu.lock);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	msm_gpu_resume_devfreq(gpu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_devfreq_resume(gpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	a6xx_llc_activate(a6xx_gpu);
 
@@ -1687,6 +1825,7 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
 	a6xx_llc_deactivate(a6xx_gpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	msm_devfreq_suspend(gpu);
 
 	mutex_lock(&a6xx_gpu->gmu.lock);
@@ -1694,9 +1833,17 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
 	mutex_unlock(&a6xx_gpu->gmu.lock);
 =======
 	devfreq_suspend_device(gpu->devfreq.devfreq);
+=======
+	msm_devfreq_suspend(gpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	mutex_lock(&a6xx_gpu->gmu.lock);
 	ret = a6xx_gmu_stop(a6xx_gpu);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&a6xx_gpu->gmu.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -1712,6 +1859,7 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	mutex_lock(&a6xx_gpu->gmu.lock);
 =======
@@ -1719,11 +1867,16 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
 
 	mutex_lock(&perfcounter_oob);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	mutex_lock(&a6xx_gpu->gmu.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Force the GPU power on so we can read this register */
 	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
 
 	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			    REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
 
@@ -1737,6 +1890,14 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
 	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
 	mutex_unlock(&perfcounter_oob);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
+
+	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+
+	mutex_unlock(&a6xx_gpu->gmu.lock);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1801,6 +1962,9 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
 {
 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
@@ -1811,8 +1975,11 @@ void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
 	mutex_unlock(&a6xx_gpu->gmu.lock);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct msm_gem_address_space *
 a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
 {
@@ -1895,6 +2062,7 @@ static u32 a618_get_speed_bin(u32 fuse)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
 {
 	u32 val = UINT_MAX;
@@ -1907,6 +2075,13 @@ static u32 fuse_to_supp_hw(struct device *dev, u32 revn, u32 fuse)
 
 	if (revn == 618)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
+{
+	u32 val = UINT_MAX;
+
+	if (adreno_cmp_rev(ADRENO_REV(6, 1, 8, ANY_ID), rev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val = a618_get_speed_bin(fuse);
 
 	if (val == UINT_MAX) {
@@ -1920,6 +2095,7 @@ static u32 fuse_to_supp_hw(struct device *dev, u32 revn, u32 fuse)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
 {
 	u32 supp_hw = UINT_MAX;
@@ -1930,13 +2106,20 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
 =======
 static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
 		u32 revn)
+=======
+static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 supp_hw = UINT_MAX;
-	u16 speedbin;
+	u32 speedbin;
 	int ret;
 
+<<<<<<< HEAD
 	ret = nvmem_cell_read_u16(dev, "speed_bin", &speedbin);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = nvmem_cell_read_variable_le_u32(dev, "speed_bin", &speedbin);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * -ENOENT means that the platform doesn't support speedbin which is
 	 * fine
@@ -1950,6 +2133,7 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
 		goto done;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
 =======
@@ -1957,6 +2141,10 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
 
 	supp_hw = fuse_to_supp_hw(dev, revn, speedbin);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 done:
 	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
@@ -1983,10 +2171,14 @@ static const struct adreno_gpu_funcs funcs = {
 		.gpu_busy = a6xx_gpu_busy,
 		.gpu_get_freq = a6xx_gmu_get_freq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.gpu_set_freq = a6xx_gpu_set_freq,
 =======
 		.gpu_set_freq = a6xx_gmu_set_freq,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.gpu_set_freq = a6xx_gpu_set_freq,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_MSM_GPU_STATE)
 		.gpu_state_get = a6xx_gpu_state_get,
 		.gpu_state_put = a6xx_gpu_state_put,
@@ -2027,20 +2219,29 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
 	info = adreno_info(config->rev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info && (info->revn == 650 || info->revn == 660 ||
 			adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), info->rev)))
 =======
 	if (info && (info->revn == 650 || info->revn == 660))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info && (info->revn == 650 || info->revn == 660 ||
+			adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), info->rev)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adreno_gpu->base.hw_apriv = true;
 
 	a6xx_llc_slices_init(pdev, a6xx_gpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = a6xx_set_supported_hw(&pdev->dev, config->rev);
 =======
 	ret = a6xx_set_supported_hw(&pdev->dev, a6xx_gpu, info->revn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = a6xx_set_supported_hw(&pdev->dev, config->rev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		a6xx_destroy(&(a6xx_gpu->base.base));
 		return ERR_PTR(ret);

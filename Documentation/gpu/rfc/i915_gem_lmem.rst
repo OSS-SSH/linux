@@ -19,6 +19,7 @@ real, with all the uAPI bits is:
         * TTM purgeable object support
         * Move i915 buddy allocator over to TTM
 <<<<<<< HEAD
+<<<<<<< HEAD
 * Send RFC(with mesa-dev on cc) for final sign off on the uAPI
 * Add pciid for DG1 and turn on uAPI for real
 =======
@@ -134,3 +135,7 @@ Links
 
 [2] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/5599#note_553791
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+* Send RFC(with mesa-dev on cc) for final sign off on the uAPI
+* Add pciid for DG1 and turn on uAPI for real
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

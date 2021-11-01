@@ -251,10 +251,14 @@ static int __init led_create_procfs(void)
 	if (!lcd_no_led_support)
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ent = proc_create_data("led", 0644, proc_pdc_root,
 =======
 		ent = proc_create_data("led", S_IRUGO|S_IWUSR, proc_pdc_root,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ent = proc_create_data("led", 0644, proc_pdc_root,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					&led_proc_ops, (void *)LED_NOLCD); /* LED */
 		if (!ent) return -1;
 	}
@@ -262,10 +266,14 @@ static int __init led_create_procfs(void)
 	if (led_type == LED_HASLCD)
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ent = proc_create_data("lcd", 0644, proc_pdc_root,
 =======
 		ent = proc_create_data("lcd", S_IRUGO|S_IWUSR, proc_pdc_root,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ent = proc_create_data("lcd", 0644, proc_pdc_root,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					&led_proc_ops, (void *)LED_HASLCD); /* LCD */
 		if (!ent) return -1;
 	}

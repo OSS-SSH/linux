@@ -20,9 +20,13 @@
 #include "cifs_unicode.h"
 #include "smb2glob.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "dns_resolve.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "dns_resolve.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "dfs_cache.h"
 
@@ -916,9 +920,13 @@ static int get_targets(struct cache_entry *ce, struct dfs_cache_tgt_list *tl)
 err_free_it:
 	list_for_each_entry_safe(it, nit, head, it_list) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		list_del(&it->it_list);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		list_del(&it->it_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(it->it_name);
 		kfree(it);
 	}
@@ -1302,6 +1310,9 @@ int dfs_cache_get_tgt_share(char *path, const struct dfs_cache_tgt_iterator *it,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool target_share_equal(struct TCP_Server_Info *server, const char *s1, const char *s2)
 {
 	char unc[sizeof("\\\\") + SERVER_NAME_LENGTH] = {0};
@@ -1490,8 +1501,11 @@ int dfs_cache_remount_fs(struct cifs_sb_info *cifs_sb)
 	return rc;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Refresh all active dfs mounts regardless of whether they are in cache or not.
  * (cache can be cleared)
@@ -1503,9 +1517,12 @@ static void refresh_mounts(struct cifs_ses **sessions)
 	struct cifs_tcon *tcon, *ntcon;
 	struct list_head tcons;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int xid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	INIT_LIST_HEAD(&tcons);
 
@@ -1523,6 +1540,7 @@ static void refresh_mounts(struct cifs_ses **sessions)
 	spin_unlock(&cifs_tcp_ses_lock);
 
 	list_for_each_entry_safe(tcon, ntcon, &tcons, ulist) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		list_del_init(&tcon->ulist);
 		refresh_tcon(sessions, tcon, false);
@@ -1566,6 +1584,10 @@ static void refresh_mounts(struct cifs_ses **sessions)
 next_tcon:
 		free_dfs_info_array(refs, numrefs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		list_del_init(&tcon->ulist);
+		refresh_tcon(sessions, tcon, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cifs_put_tcon(tcon);
 	}
 }

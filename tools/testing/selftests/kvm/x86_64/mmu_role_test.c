@@ -72,10 +72,14 @@ static void mmu_role_test(u32 *cpuid_reg, u32 evil_cpuid_val)
 	vm_init_descriptor_tables(vm);
 	vcpu_init_descriptor_tables(vm, VCPU_ID);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vm_install_exception_handler(vm, PF_VECTOR, guest_pf_handler);
 =======
 	vm_handle_exception(vm, PF_VECTOR, guest_pf_handler);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vm_install_exception_handler(vm, PF_VECTOR, guest_pf_handler);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	r = _vcpu_run(vm, VCPU_ID);
 	TEST_ASSERT(r == 0, "vcpu_run failed: %d\n", r);

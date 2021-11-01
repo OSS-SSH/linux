@@ -746,9 +746,13 @@ struct ibmvfc_event {
 	struct scsi_cmnd *cmnd;
 	atomic_t free;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t active;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_t active;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union ibmvfc_iu *xfer_iu;
 	void (*done)(struct ibmvfc_event *evt);
 	void (*_done)(struct ibmvfc_event *evt);
@@ -880,9 +884,13 @@ struct ibmvfc_host {
 	int delay_init;
 	int scan_complete;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int scan_timeout;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int scan_timeout;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int logged_in;
 	int mq_enabled;
 	int using_channels;

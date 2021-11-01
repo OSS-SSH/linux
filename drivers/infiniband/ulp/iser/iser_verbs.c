@@ -950,10 +950,14 @@ u8 iser_check_task_pi_status(struct iscsi_iser_task *iser_task,
 
 			sector_div(sector_off, sector_size + 8);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			*sector = scsi_get_sector(iser_task->sc) + sector_off;
 =======
 			*sector = scsi_get_lba(iser_task->sc) + sector_off;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			*sector = scsi_get_sector(iser_task->sc) + sector_off;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			iser_err("PI error found type %d at sector %llx "
 			       "expected %x vs actual %x\n",

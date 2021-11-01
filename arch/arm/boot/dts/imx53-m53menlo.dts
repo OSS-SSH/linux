@@ -57,9 +57,13 @@
 		compatible = "edt,etm0700g0dh6";
 		pinctrl-0 = <&pinctrl_display_gpio>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pinctrl-names = "default";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pinctrl-names = "default";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		enable-gpios = <&gpio6 0 GPIO_ACTIVE_HIGH>;
 
 		port {
@@ -81,11 +85,15 @@
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		gpio = <&gpio1 2 0>;
 =======
 		gpio = <&gpio1 2 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gpio = <&gpio1 2 0>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 
@@ -397,20 +405,28 @@
 		pinctrl_power_button: powerbutgrp {
 			fsl,pins = <
 <<<<<<< HEAD
+<<<<<<< HEAD
 				MX53_PAD_SD2_DATA0__GPIO1_15		0x1e4
 =======
 				MX53_PAD_SD2_DATA2__GPIO1_13		0x1e4
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				MX53_PAD_SD2_DATA0__GPIO1_15		0x1e4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			>;
 		};
 
 		pinctrl_power_out: poweroutgrp {
 			fsl,pins = <
 <<<<<<< HEAD
+<<<<<<< HEAD
 				MX53_PAD_SD2_DATA2__GPIO1_13		0x1e4
 =======
 				MX53_PAD_SD2_DATA0__GPIO1_15		0x1e4
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				MX53_PAD_SD2_DATA2__GPIO1_13		0x1e4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			>;
 		};
 

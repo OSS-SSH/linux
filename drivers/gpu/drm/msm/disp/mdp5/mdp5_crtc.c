@@ -1126,6 +1126,9 @@ static void mdp5_crtc_reset(struct drm_crtc *crtc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct drm_crtc_funcs mdp5_crtc_no_lm_cursor_funcs = {
 	.set_config = drm_atomic_helper_set_config,
 	.destroy = mdp5_crtc_destroy,
@@ -1140,8 +1143,11 @@ static const struct drm_crtc_funcs mdp5_crtc_no_lm_cursor_funcs = {
 	.get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct drm_crtc_funcs mdp5_crtc_funcs = {
 	.set_config = drm_atomic_helper_set_config,
 	.destroy = mdp5_crtc_destroy,
@@ -1331,10 +1337,15 @@ struct drm_crtc *mdp5_crtc_init(struct drm_device *dev,
 
 	drm_crtc_init_with_planes(dev, crtc, plane, cursor_plane,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  cursor_plane ?
 				  &mdp5_crtc_no_lm_cursor_funcs :
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  cursor_plane ?
+				  &mdp5_crtc_no_lm_cursor_funcs :
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  &mdp5_crtc_funcs, NULL);
 
 	drm_flip_work_init(&mdp5_crtc->unref_cursor_work,

@@ -26,10 +26,13 @@
 #include <net/netfilter/ipv6/nf_defrag_ipv6.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern unsigned int nf_frag_pernet_id;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEFINE_MUTEX(defrag6_mutex);
 
 static enum ip6_defrag_users nf_ct6_defrag_user(unsigned int hooknum,
@@ -95,6 +98,7 @@ static const struct nf_hook_ops ipv6_defrag_ops[] = {
 static void __net_exit defrag6_net_exit(struct net *net)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (net->nf.defrag_ipv6_users) {
 		nf_unregister_net_hooks(net, ipv6_defrag_ops,
 					ARRAY_SIZE(ipv6_defrag_ops));
@@ -107,6 +111,12 @@ static void __net_exit defrag6_net_exit(struct net *net)
 					ARRAY_SIZE(ipv6_defrag_ops));
 		nf_frag->users = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (net->nf.defrag_ipv6_users) {
+		nf_unregister_net_hooks(net, ipv6_defrag_ops,
+					ARRAY_SIZE(ipv6_defrag_ops));
+		net->nf.defrag_ipv6_users = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -145,6 +155,7 @@ static void __exit nf_defrag_fini(void)
 int nf_defrag_ipv6_enable(struct net *net)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err = 0;
 
 	mutex_lock(&defrag6_mutex);
@@ -156,10 +167,17 @@ int nf_defrag_ipv6_enable(struct net *net)
 	mutex_lock(&defrag6_mutex);
 	if (nf_frag->users == UINT_MAX) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err = 0;
+
+	mutex_lock(&defrag6_mutex);
+	if (net->nf.defrag_ipv6_users == UINT_MAX) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = -EOVERFLOW;
 		goto out_unlock;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (net->nf.defrag_ipv6_users) {
 		net->nf.defrag_ipv6_users++;
@@ -167,6 +185,10 @@ int nf_defrag_ipv6_enable(struct net *net)
 	if (nf_frag->users) {
 		nf_frag->users++;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (net->nf.defrag_ipv6_users) {
+		net->nf.defrag_ipv6_users++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_unlock;
 	}
 
@@ -174,10 +196,14 @@ int nf_defrag_ipv6_enable(struct net *net)
 				    ARRAY_SIZE(ipv6_defrag_ops));
 	if (err == 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		net->nf.defrag_ipv6_users = 1;
 =======
 		nf_frag->users = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		net->nf.defrag_ipv6_users = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  out_unlock:
 	mutex_unlock(&defrag6_mutex);
@@ -187,6 +213,7 @@ EXPORT_SYMBOL_GPL(nf_defrag_ipv6_enable);
 
 void nf_defrag_ipv6_disable(struct net *net)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	mutex_lock(&defrag6_mutex);
 	if (net->nf.defrag_ipv6_users) {
@@ -200,6 +227,12 @@ void nf_defrag_ipv6_disable(struct net *net)
 		nf_frag->users--;
 		if (nf_frag->users == 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_lock(&defrag6_mutex);
+	if (net->nf.defrag_ipv6_users) {
+		net->nf.defrag_ipv6_users--;
+		if (net->nf.defrag_ipv6_users == 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			nf_unregister_net_hooks(net, ipv6_defrag_ops,
 						ARRAY_SIZE(ipv6_defrag_ops));
 	}

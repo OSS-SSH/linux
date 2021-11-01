@@ -245,9 +245,13 @@ nouveau_cli_init(struct nouveau_drm *drm, const char *sname,
 			       &(struct nv_device_v0) {
 					.device = ~0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					.priv = true,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					.priv = true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       }, sizeof(struct nv_device_v0),
 			       &cli->device);
 	if (ret) {
@@ -349,11 +353,17 @@ nouveau_accel_gr_init(struct nouveau_drm *drm)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (device->info.family >= NV_DEVICE_INFO_V0_AMPERE)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (device->info.family >= NV_DEVICE_INFO_V0_AMPERE)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Allocate channel that has access to the graphics engine. */
 	if (device->info.family >= NV_DEVICE_INFO_V0_KEPLER) {
 		arg0 = nvif_fifo_runlist(device, NV_DEVICE_HOST_RUNLIST_ENGINES_GR);
@@ -479,9 +489,13 @@ nouveau_accel_init(struct nouveau_drm *drm)
 		case VOLTA_CHANNEL_GPFIFO_A:
 		case TURING_CHANNEL_GPFIFO_A:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case AMPERE_CHANNEL_GPFIFO_B:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case AMPERE_CHANNEL_GPFIFO_B:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = nvc0_fence_create(drm);
 			break;
 		default:
@@ -568,10 +582,13 @@ nouveau_drm_device_init(struct drm_device *dev)
 		goto fail_master;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dev->irq_enabled = true;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nvxx_client(&drm->client.base)->debug =
 		nvkm_dbgopt(nouveau_debug, "DRM");
 
@@ -756,10 +773,14 @@ static int nouveau_drm_probe(struct pci_dev *pdev,
 
 	/* Remove conflicting drivers (vesafb, efifb etc). */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &driver_pci);
 =======
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "nouveaufb");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &driver_pci);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -817,9 +838,12 @@ nouveau_drm_device_remove(struct drm_device *dev)
 	drm_dev_unregister(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dev->irq_enabled = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	client = nvxx_client(&drm->client.base);
 	device = nvkm_device_find(client->device);
 
@@ -1111,10 +1135,13 @@ nouveau_drm_open(struct drm_device *dev, struct drm_file *fpriv)
 		goto done;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	cli->base.super = false;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fpriv->driver_priv = cli;
 
 	mutex_lock(&drm->client.mutex);

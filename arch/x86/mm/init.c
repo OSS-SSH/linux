@@ -128,6 +128,7 @@ __ref void *alloc_low_pages(unsigned int num)
 
 		if (min_pfn_mapped < max_pfn_mapped) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = memblock_phys_alloc_range(
 					PAGE_SIZE * num, PAGE_SIZE,
 					min_pfn_mapped << PAGE_SHIFT,
@@ -136,14 +137,21 @@ __ref void *alloc_low_pages(unsigned int num)
 		if (!ret && can_use_brk_pgt)
 =======
 			ret = memblock_find_in_range(
+=======
+			ret = memblock_phys_alloc_range(
+					PAGE_SIZE * num, PAGE_SIZE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					min_pfn_mapped << PAGE_SHIFT,
-					max_pfn_mapped << PAGE_SHIFT,
-					PAGE_SIZE * num , PAGE_SIZE);
+					max_pfn_mapped << PAGE_SHIFT);
 		}
+<<<<<<< HEAD
 		if (ret)
 			memblock_reserve(ret, PAGE_SIZE * num);
 		else if (can_use_brk_pgt)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!ret && can_use_brk_pgt)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = __pa(extend_brk(PAGE_SIZE * num, PAGE_SIZE));
 
 		if (!ret)
@@ -620,6 +628,9 @@ static void __init memory_map_top_down(unsigned long map_start,
 	unsigned long mapped_ram_size = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Systems that have many reserved areas near top of the memory,
 	 * e.g. QEMU with less than 1G RAM and EFI enabled, or Xen, will
@@ -631,10 +642,13 @@ static void __init memory_map_top_down(unsigned long map_start,
 	addr = memblock_phys_alloc_range(PMD_SIZE, PMD_SIZE, map_start,
 					 map_end);
 	memblock_free(addr, PMD_SIZE);
+<<<<<<< HEAD
 =======
 	/* xen has big range in reserved near end of ram, skip it at first.*/
 	addr = memblock_find_in_range(map_start, map_end, PMD_SIZE, PMD_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	real_end = addr + PMD_SIZE;
 
 	/* step_size need to be small so pgt_buf from BRK could cover it */

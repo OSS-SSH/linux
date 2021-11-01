@@ -42,10 +42,14 @@
  * Each VM has an ID associated with it and there is a page table
  * associated with each VMID.  When execting a command buffer,
 <<<<<<< HEAD
+<<<<<<< HEAD
  * the kernel tells the ring what VMID to use for that command
 =======
  * the kernel tells the the ring what VMID to use for that command
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * the kernel tells the ring what VMID to use for that command
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * buffer.  VMIDs are allocated dynamically as commands are submitted.
  * The userspace drivers maintain their own address space and the kernel
  * sets up their pages tables accordingly when they submit their

@@ -92,11 +92,15 @@ static struct net_device *batadv_mcast_get_bridge(struct net_device *soft_iface)
 	} while (upper && !(upper->priv_flags & IFF_EBRIDGE));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_hold(upper);
 =======
 	if (upper)
 		dev_hold(upper);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(upper);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_unlock();
 
 	return upper;
@@ -514,11 +518,15 @@ batadv_mcast_mla_softif_get(struct net_device *dev,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(bridge);
 =======
 	if (bridge)
 		dev_put(bridge);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(bridge);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret4 + ret6;
 }
@@ -2248,6 +2256,7 @@ batadv_mcast_netlink_get_primary(struct netlink_callback *cb,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(soft_iface);
 
 	if (!ret && primary_if)
@@ -2261,6 +2270,13 @@ out:
 		*primary_if = hard_iface;
 	else if (hard_iface)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(soft_iface);
+
+	if (!ret && primary_if)
+		*primary_if = hard_iface;
+	else
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		batadv_hardif_put(hard_iface);
 
 	return ret;

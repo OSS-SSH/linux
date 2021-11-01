@@ -161,9 +161,12 @@ Code  Seq#    Include File                                           Comments
 'L'   00-1F  linux/loop.h                                            conflict!
 'L'   10-1F  drivers/scsi/mpt3sas/mpt3sas_ctl.h                      conflict!
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 'L'   20-2F  linux/lightnvm.h
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 'L'   E0-FF  linux/ppdd.h                                            encrypted disk device driver
                                                                      <http://linux01.gwdg.de/~alatham/ppdd.html>
 'M'   all    linux/soundcard.h                                       conflict!
@@ -304,9 +307,13 @@ Code  Seq#    Include File                                           Comments
 '|'   00-7F  linux/media.h
 0x80  00-1F  linux/fb.h
 <<<<<<< HEAD
+<<<<<<< HEAD
 0x81  00-1F  linux/vduse.h
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+0x81  00-1F  linux/vduse.h
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0x89  00-06  arch/x86/include/asm/sockios.h
 0x89  0B-DF  linux/sockios.h
 0x89  E0-EF  linux/sockios.h                                         SIOCPROTOPRIVATE range

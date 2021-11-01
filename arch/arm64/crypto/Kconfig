@@ -52,10 +52,14 @@ config CRYPTO_SM4_ARM64_CE
 	depends on KERNEL_MODE_NEON
 	select CRYPTO_ALGAPI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select CRYPTO_LIB_SM4
 =======
 	select CRYPTO_SM4
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select CRYPTO_LIB_SM4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config CRYPTO_GHASH_ARM64_CE
 	tristate "GHASH/AES-GCM using ARMv8 Crypto Extensions"

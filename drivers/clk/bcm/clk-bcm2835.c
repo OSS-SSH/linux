@@ -806,6 +806,7 @@ static int bcm2835_pll_divider_is_on(struct clk_hw *hw)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int bcm2835_pll_divider_determine_rate(struct clk_hw *hw,
 					      struct clk_rate_request *req)
 {
@@ -817,6 +818,12 @@ static long bcm2835_pll_divider_round_rate(struct clk_hw *hw,
 {
 	return clk_divider_ops.round_rate(hw, rate, parent_rate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int bcm2835_pll_divider_determine_rate(struct clk_hw *hw,
+					      struct clk_rate_request *req)
+{
+	return clk_divider_ops.determine_rate(hw, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static unsigned long bcm2835_pll_divider_get_rate(struct clk_hw *hw,
@@ -909,10 +916,14 @@ static const struct clk_ops bcm2835_pll_divider_clk_ops = {
 	.recalc_rate = bcm2835_pll_divider_get_rate,
 	.set_rate = bcm2835_pll_divider_set_rate,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.determine_rate = bcm2835_pll_divider_determine_rate,
 =======
 	.round_rate = bcm2835_pll_divider_round_rate,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.determine_rate = bcm2835_pll_divider_determine_rate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.debug_init = bcm2835_pll_divider_debug_init,
 };
 

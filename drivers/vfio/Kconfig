@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-only
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 menuconfig VFIO
 	tristate "VFIO Non-Privileged userspace driver framework"
 	select IOMMU_API
@@ -11,6 +14,7 @@ menuconfig VFIO
 	  If you don't know what to do here, say N.
 
 if VFIO
+<<<<<<< HEAD
 config VFIO_IOMMU_TYPE1
 	tristate
 =======
@@ -18,15 +22,23 @@ config VFIO_IOMMU_TYPE1
 	tristate
 	depends on VFIO
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+config VFIO_IOMMU_TYPE1
+	tristate
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default n
 
 config VFIO_IOMMU_SPAPR_TCE
 	tristate
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on SPAPR_TCE_IOMMU
 =======
 	depends on VFIO && SPAPR_TCE_IOMMU
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on SPAPR_TCE_IOMMU
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default VFIO
 
 config VFIO_SPAPR_EEH
@@ -37,6 +49,7 @@ config VFIO_SPAPR_EEH
 config VFIO_VIRQFD
 	tristate
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select EVENTFD
 	default n
 
@@ -44,22 +57,18 @@ config VFIO_NOIOMMU
 	bool "VFIO No-IOMMU support"
 =======
 	depends on VFIO && EVENTFD
+=======
+	select EVENTFD
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default n
 
-menuconfig VFIO
-	tristate "VFIO Non-Privileged userspace driver framework"
-	select IOMMU_API
-	select VFIO_IOMMU_TYPE1 if MMU && (X86 || S390 || ARM || ARM64)
-	help
-	  VFIO provides a framework for secure userspace device drivers.
-	  See Documentation/driver-api/vfio.rst for more details.
-
-	  If you don't know what to do here, say N.
-
-menuconfig VFIO_NOIOMMU
+config VFIO_NOIOMMU
 	bool "VFIO No-IOMMU support"
+<<<<<<< HEAD
 	depends on VFIO
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  VFIO is built on the ability to isolate devices using the IOMMU.
 	  Only with an IOMMU can userspace access to DMA capable devices be
@@ -77,8 +86,13 @@ source "drivers/vfio/platform/Kconfig"
 source "drivers/vfio/mdev/Kconfig"
 source "drivers/vfio/fsl-mc/Kconfig"
 <<<<<<< HEAD
+<<<<<<< HEAD
 endif
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+endif
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "virt/lib/Kconfig"

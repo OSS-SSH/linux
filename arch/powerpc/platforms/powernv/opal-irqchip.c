@@ -47,15 +47,20 @@ void opal_handle_events(void)
 again:
 	while (e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int hwirq;
 =======
 		int virq, hwirq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int hwirq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		hwirq = fls64(e) - 1;
 		e &= ~BIT_ULL(hwirq);
 
 		local_irq_disable();
+<<<<<<< HEAD
 <<<<<<< HEAD
 		irq_enter();
 		generic_handle_domain_irq(opal_event_irqchip.domain, hwirq);
@@ -68,6 +73,11 @@ again:
 			irq_exit();
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		irq_enter();
+		generic_handle_domain_irq(opal_event_irqchip.domain, hwirq);
+		irq_exit();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		local_irq_enable();
 
 		cond_resched();

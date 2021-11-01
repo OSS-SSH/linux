@@ -407,13 +407,19 @@ static bool inode_do_switch_wbs(struct inode *inode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK)) {
 		atomic_dec(&old_wb->writeback_inodes);
 		atomic_inc(&new_wb->writeback_inodes);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wb_get(new_wb);
 
 	/*
@@ -530,11 +536,17 @@ static bool inode_prepare_wbs_switch(struct inode *inode,
 	smp_mb();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IS_DAX(inode))
 		return false;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_DAX(inode))
+		return false;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* while holding I_WB_SWITCH, no one else can update the association */
 	spin_lock(&inode->i_lock);
 	if (!(inode->i_sb->s_flags & SB_ACTIVE) ||
@@ -1046,9 +1058,12 @@ restart:
  * @bdi_id: target bdi id
  * @memcg_id: target memcg css id
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * @nr: number of pages to write, 0 for best-effort dirty flushing
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @reason: reason why some writeback work initiated
  * @done: target wb_completion
  *
@@ -1056,10 +1071,14 @@ restart:
  * with the specified parameters.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
 =======
 int cgroup_writeback_by_id(u64 bdi_id, int memcg_id, unsigned long nr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   enum wb_reason reason, struct wb_completion *done)
 {
 	struct backing_dev_info *bdi;
@@ -1067,9 +1086,13 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id, unsigned long nr,
 	struct bdi_writeback *wb;
 	struct wb_writeback_work *work;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long dirty;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long dirty;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	/* lookup bdi and memcg */
@@ -1099,14 +1122,19 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id, unsigned long nr,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * The caller is attempting to write out most of
 =======
 	 * If @nr is zero, the caller is attempting to write out most of
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * The caller is attempting to write out most of
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * the currently dirty pages.  Let's take the current dirty page
 	 * count and inflate it by 25% which should be large enough to
 	 * flush out most dirty pages while avoiding getting livelocked by
 	 * concurrent dirtiers.
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 *
 	 * BTW the memcg stats are flushed periodically and this is best-effort
@@ -1124,15 +1152,27 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id, unsigned long nr,
 		nr = dirty * 10 / 8;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 *
+	 * BTW the memcg stats are flushed periodically and this is best-effort
+	 * estimation, so some potential error is ok.
+	 */
+	dirty = memcg_page_state(mem_cgroup_from_css(memcg_css), NR_FILE_DIRTY);
+	dirty = dirty * 10 / 8;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* issue the writeback work */
 	work = kzalloc(sizeof(*work), GFP_NOWAIT | __GFP_NOWARN);
 	if (work) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		work->nr_pages = dirty;
 =======
 		work->nr_pages = nr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		work->nr_pages = dirty;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		work->sync_mode = WB_SYNC_NONE;
 		work->range_cyclic = 1;
 		work->reason = reason;
@@ -2039,9 +2079,12 @@ static long wb_writeback(struct bdi_writeback *wb,
 			 struct wb_writeback_work *work)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long wb_start = jiffies;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	long nr_pages = work->nr_pages;
 	unsigned long dirtied_before = jiffies;
 	struct inode *inode;
@@ -2096,10 +2139,13 @@ static long wb_writeback(struct bdi_writeback *wb,
 		trace_writeback_written(wb, work);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		wb_update_bandwidth(wb, wb_start);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Did we write something? Try for more
 		 *
@@ -2776,6 +2822,7 @@ EXPORT_SYMBOL(write_inode_now);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * sync_inode - write an inode and its pages to disk.
  * @inode: the inode to sync
@@ -2795,6 +2842,8 @@ EXPORT_SYMBOL(sync_inode);
 
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * sync_inode_metadata - write an inode to disk
  * @inode: the inode to sync
  * @wait: wait for I/O to complete.
@@ -2811,9 +2860,13 @@ int sync_inode_metadata(struct inode *inode, int wait)
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return writeback_single_inode(inode, &wbc);
 =======
 	return sync_inode(inode, &wbc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return writeback_single_inode(inode, &wbc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(sync_inode_metadata);

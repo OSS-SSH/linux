@@ -4,10 +4,14 @@ The HiSilicon STB PCIe host controller is based on the DesignWare PCIe core.
 It shares common functions with the DesignWare PCIe core driver and inherits
 common properties defined in
 <<<<<<< HEAD
+<<<<<<< HEAD
 Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml.
 =======
 Documentation/devicetree/bindings/pci/designware-pcie.txt.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Additional properties are described here:
 

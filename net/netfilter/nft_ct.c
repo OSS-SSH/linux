@@ -42,9 +42,13 @@ struct nft_ct_helper_obj  {
 static DEFINE_PER_CPU(struct nf_conn *, nft_ct_pcpu_template);
 static unsigned int nft_ct_pcpu_template_refcnt __read_mostly;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_MUTEX(nft_ct_pcpu_mutex);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEFINE_MUTEX(nft_ct_pcpu_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static u64 nft_ct_get_eval_counter(const struct nf_conn_counter *c,
@@ -530,14 +534,20 @@ static void __nft_ct_set_destroy(const struct nft_ctx *ctx, struct nft_ct *priv)
 #ifdef CONFIG_NF_CONNTRACK_ZONES
 	case NFT_CT_ZONE:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mutex_lock(&nft_ct_pcpu_mutex);
 		if (--nft_ct_pcpu_template_refcnt == 0)
 			nft_ct_tmpl_put_pcpu();
 		mutex_unlock(&nft_ct_pcpu_mutex);
+<<<<<<< HEAD
 =======
 		if (--nft_ct_pcpu_template_refcnt == 0)
 			nft_ct_tmpl_put_pcpu();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 #endif
 	default:
@@ -576,6 +586,7 @@ static int nft_ct_set_init(const struct nft_ctx *ctx,
 #ifdef CONFIG_NF_CONNTRACK_ZONES
 	case NFT_CT_ZONE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_lock(&nft_ct_pcpu_mutex);
 		if (!nft_ct_tmpl_alloc_pcpu()) {
 			mutex_unlock(&nft_ct_pcpu_mutex);
@@ -585,9 +596,19 @@ static int nft_ct_set_init(const struct nft_ctx *ctx,
 		mutex_unlock(&nft_ct_pcpu_mutex);
 =======
 		if (!nft_ct_tmpl_alloc_pcpu())
+=======
+		mutex_lock(&nft_ct_pcpu_mutex);
+		if (!nft_ct_tmpl_alloc_pcpu()) {
+			mutex_unlock(&nft_ct_pcpu_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOMEM;
+		}
 		nft_ct_pcpu_template_refcnt++;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mutex_unlock(&nft_ct_pcpu_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		len = sizeof(u16);
 		break;
 #endif

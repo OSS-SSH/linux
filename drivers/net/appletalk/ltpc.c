@@ -1016,10 +1016,14 @@ static const struct net_device_ops ltpc_netdev = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct net_device * __init ltpc_probe(void)
 =======
 struct net_device * __init ltpc_probe(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct net_device * __init ltpc_probe(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_device *dev;
 	int err = -ENOMEM;
@@ -1226,6 +1230,7 @@ static int __init ltpc_setup(char *str)
 
 __setup("ltpc=", ltpc_setup);
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif
 
 static struct net_device *dev_ltpc;
@@ -1238,6 +1243,12 @@ static struct net_device *dev_ltpc;
 #ifdef MODULE
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+
+static struct net_device *dev_ltpc;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_LICENSE("GPL");
 module_param(debug, int, 0);
 module_param_hw(io, int, ioport, 0);
@@ -1256,9 +1267,12 @@ static int __init ltpc_module_init(void)
 }
 module_init(ltpc_module_init);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void __exit ltpc_cleanup(void)
 {

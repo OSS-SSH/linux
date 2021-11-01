@@ -5,6 +5,9 @@
 #include <linux/math.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Metric prefixes in accordance with Système international (d'unités) */
 #define PETA	1000000000000000ULL
 #define TERA	1000000000000ULL
@@ -28,11 +31,14 @@
 #define MILLIWATT_PER_WATT	1000UL
 #define MICROWATT_PER_MILLIWATT	1000UL
 #define MICROWATT_PER_WATT	1000000UL
+<<<<<<< HEAD
 =======
 #define MILLIWATT_PER_WATT	1000L
 #define MICROWATT_PER_MILLIWATT	1000L
 #define MICROWATT_PER_WATT	1000000L
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define ABSOLUTE_ZERO_MILLICELSIUS -273150
 

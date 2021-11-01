@@ -2,9 +2,13 @@
 /* Copyright (c) 2015, Huawei Inc. All rights reserved.
  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 /dts-v1/;
@@ -12,11 +16,17 @@
 #include "msm8994.dtsi"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Angler's firmware does not report where the memory is allocated */
 /delete-node/ &cont_splash_mem;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Angler's firmware does not report where the memory is allocated */
+/delete-node/ &cont_splash_mem;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 / {
 	model = "Huawei Nexus 6P";
 	compatible = "huawei,angler", "qcom,msm8994";

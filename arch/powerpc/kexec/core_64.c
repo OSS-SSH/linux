@@ -65,6 +65,7 @@ int default_machine_kexec_prepare(struct kimage *image)
 			end = begin + image->segment[i].memsz;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if ((begin < high) && (end > low)) {
 				of_node_put(node);
 				return -ETXTBSY;
@@ -73,6 +74,12 @@ int default_machine_kexec_prepare(struct kimage *image)
 			if ((begin < high) && (end > low))
 				return -ETXTBSY;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if ((begin < high) && (end > low)) {
+				of_node_put(node);
+				return -ETXTBSY;
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -80,11 +87,16 @@ int default_machine_kexec_prepare(struct kimage *image)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Called during kexec sequence with MMU off */
 static notrace void copy_segments(unsigned long ind)
 =======
 static void copy_segments(unsigned long ind)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Called during kexec sequence with MMU off */
+static notrace void copy_segments(unsigned long ind)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long entry;
 	unsigned long *ptr;
@@ -118,11 +130,16 @@ static void copy_segments(unsigned long ind)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Called during kexec sequence with MMU off */
 notrace void kexec_copy_flush(struct kimage *image)
 =======
 void kexec_copy_flush(struct kimage *image)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Called during kexec sequence with MMU off */
+notrace void kexec_copy_flush(struct kimage *image)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	long i, nr_segments = image->nr_segments;
 	struct  kexec_segment ranges[KEXEC_SEGMENT_MAX];

@@ -5,9 +5,12 @@
  *
  ******************************************************************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define _HAL_INIT_C_
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/firmware.h>
 #include <linux/slab.h>
@@ -602,9 +605,12 @@ static void Hal_GetEfuseDefinition(
 
 #define VOLTAGE_V25		0x03
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define LDOE25_SHIFT	28
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*  */
 /* 	The following is for compile ok */
@@ -612,9 +618,12 @@ static void Hal_GetEfuseDefinition(
 /*  */
 #define EFUSE_ACCESS_ON_8723			0x69	/*  For RTL8723 only. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define EFUSE_ACCESS_OFF_8723			0x00	/*  For RTL8723 only. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define REG_EFUSE_ACCESS_8723			0x00CF	/*  Efuse access protection for RTL8723 */
 
 /*  */
@@ -1653,9 +1662,12 @@ static struct hal_version ReadChipVersion8723B(struct adapter *padapter)
 	ChipVersion.ICType = CHIP_8723B;
 	ChipVersion.ChipType = ((value32 & RTL_ID) ? TEST_CHIP : NORMAL_CHIP);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ChipVersion.RFType = RF_TYPE_1T1R;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ChipVersion.VendorType = ((value32 & VENDOR_ID) ? CHIP_VENDOR_UMC : CHIP_VENDOR_TSMC);
 	ChipVersion.CUTVersion = (value32 & CHIP_VER_RTL_MASK)>>CHIP_VER_RTL_SHIFT; /*  IC version (CUT) */
 
@@ -1677,6 +1689,7 @@ static struct hal_version ReadChipVersion8723B(struct adapter *padapter)
 #endif
 	pHalData->VersionID = ChipVersion;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (IS_1T2R(ChipVersion))
 		pHalData->rf_type = RF_1T2R;
@@ -1685,6 +1698,8 @@ static struct hal_version ReadChipVersion8723B(struct adapter *padapter)
 	else
 		pHalData->rf_type = RF_1T1R;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ChipVersion;
 }
@@ -2077,6 +2092,7 @@ s32 rtl8723b_InitLLTTable(struct adapter *padapter)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void hal_get_chnl_group_8723b(u8 channel, u8 *group)
 {
 	if (1  <= channel && channel <= 2)
@@ -2141,6 +2157,20 @@ static bool Hal_GetChnlGroup8723B(u8 Channel, u8 *pGroup)
 	}
 	return bIn24G;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void hal_get_chnl_group_8723b(u8 channel, u8 *group)
+{
+	if (1  <= channel && channel <= 2)
+		*group = 0;
+	else if (3  <= channel && channel <= 5)
+		*group = 1;
+	else if (6  <= channel && channel <= 8)
+		*group = 2;
+	else if (9  <= channel && channel <= 11)
+		*group = 3;
+	else if (12 <= channel && channel <= 14)
+		*group = 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void Hal_InitPGData(struct adapter *padapter, u8 *PROMContent)
@@ -2304,10 +2334,14 @@ void Hal_EfuseParseTxPowerInfo_8723B(
 			u8 group = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			hal_get_chnl_group_8723b(ch + 1, &group);
 =======
 			Hal_GetChnlGroup8723B(ch+1, &group);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			hal_get_chnl_group_8723b(ch + 1, &group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (ch == 14-1) {
 				pHalData->Index24G_CCK_Base[rfPath][ch] = pwrInfo24G.IndexCCK_Base[rfPath][5];
@@ -2356,6 +2390,7 @@ void Hal_EfuseParseBTCoexistInfo_8723B(
 		if (tempval != 0xFF) {
 			pHalData->EEPROMBluetoothAntNum = tempval & BIT(0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			/*  EFUSE_0xC3[6] == 0, S1(Main)-RF_PATH_A; */
 			/*  EFUSE_0xC3[6] == 1, S0(Aux)-RF_PATH_B */
 			pHalData->ant_path = (tempval & BIT(6))? RF_PATH_B : RF_PATH_A;
@@ -2369,23 +2404,36 @@ void Hal_EfuseParseBTCoexistInfo_8723B(
 			/*  EFUSE_0xC3[6] == 0, S1(Main)-ODM_RF_PATH_A; */
 			/*  EFUSE_0xC3[6] == 1, S0(Aux)-ODM_RF_PATH_B */
 			pHalData->ant_path = (tempval & BIT(6))?ODM_RF_PATH_B:ODM_RF_PATH_A;
+=======
+			/*  EFUSE_0xC3[6] == 0, S1(Main)-RF_PATH_A; */
+			/*  EFUSE_0xC3[6] == 1, S0(Aux)-RF_PATH_B */
+			pHalData->ant_path = (tempval & BIT(6))? RF_PATH_B : RF_PATH_A;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			pHalData->EEPROMBluetoothAntNum = Ant_x1;
 			if (pHalData->PackageType == PACKAGE_QFN68)
-				pHalData->ant_path = ODM_RF_PATH_B;
+				pHalData->ant_path = RF_PATH_B;
 			else
+<<<<<<< HEAD
 				pHalData->ant_path = ODM_RF_PATH_A;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				pHalData->ant_path = RF_PATH_A;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} else {
 		pHalData->EEPROMBluetoothCoexist = false;
 		pHalData->EEPROMBluetoothType = BT_RTL8723B;
 		pHalData->EEPROMBluetoothAntNum = Ant_x1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pHalData->ant_path = RF_PATH_A;
 =======
 		pHalData->ant_path = ODM_RF_PATH_A;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pHalData->ant_path = RF_PATH_A;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (padapter->registrypriv.ant_num > 0) {

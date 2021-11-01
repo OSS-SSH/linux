@@ -211,9 +211,13 @@ static int af9035_add_i2c_dev(struct dvb_usb_device *d, const char *type,
 	client = i2c_new_client_device(adapter, &board_info);
 	if (!i2c_client_has_driver(client)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_err(&intf->dev, "failed to bind i2c device to %s driver\n", type);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_err(&intf->dev, "failed to bind i2c device to %s driver\n", type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -ENODEV;
 		goto err;
 	}

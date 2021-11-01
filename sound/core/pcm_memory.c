@@ -68,11 +68,16 @@ static void do_free_pages(struct snd_card *card, struct snd_dma_buffer *dmab)
  * the minimum size is snd_minimum_buffer.  it should be power of 2.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int preallocate_pcm_pages(struct snd_pcm_substream *substream,
 				 size_t size, bool no_fallback)
 =======
 static int preallocate_pcm_pages(struct snd_pcm_substream *substream, size_t size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int preallocate_pcm_pages(struct snd_pcm_substream *substream,
+				 size_t size, bool no_fallback)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct snd_dma_buffer *dmab = &substream->dma_buffer;
 	struct snd_card *card = substream->pcm->card;
@@ -85,10 +90,15 @@ static int preallocate_pcm_pages(struct snd_pcm_substream *substream, size_t siz
 		if (err != -ENOMEM)
 			return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (no_fallback)
 			break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (no_fallback)
+			break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		size >>= 1;
 	} while (size >= snd_minimum_buffer);
 	dmab->bytes = 0; /* tell error */
@@ -97,10 +107,14 @@ static int preallocate_pcm_pages(struct snd_pcm_substream *substream, size_t siz
 		substream->stream ? 'c' : 'p', substream->number,
 		substream->pcm->name, orig_size);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return -ENOMEM;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -237,6 +251,7 @@ static inline void preallocate_info_init(struct snd_pcm_substream *substream)
  * pre-allocate the buffer and create a proc file for the substream
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int preallocate_pages(struct snd_pcm_substream *substream,
 			      int type, struct device *data,
 			      size_t size, size_t max, bool managed)
@@ -247,17 +262,29 @@ static int preallocate_pages(struct snd_pcm_substream *substream,
 		return -EINVAL;
 =======
 static void preallocate_pages(struct snd_pcm_substream *substream,
+=======
+static int preallocate_pages(struct snd_pcm_substream *substream,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      int type, struct device *data,
 			      size_t size, size_t max, bool managed)
 {
+	int err;
+
 	if (snd_BUG_ON(substream->dma_buffer.dev.type))
+<<<<<<< HEAD
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	substream->dma_buffer.dev.type = type;
 	substream->dma_buffer.dev.dev = data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (size > 0) {
 		if (!max) {
 			/* no fallback, only also inform -ENOMEM */
@@ -271,10 +298,13 @@ static void preallocate_pages(struct snd_pcm_substream *substream,
 				return err;
 		}
 	}
+<<<<<<< HEAD
 =======
 	if (size > 0 && preallocate_dma && substream->number < maximum_substreams)
 		preallocate_pcm_pages(substream, size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (substream->dma_buffer.bytes > 0)
 		substream->buffer_bytes_max = substream->dma_buffer.bytes;
@@ -283,6 +313,7 @@ static void preallocate_pages(struct snd_pcm_substream *substream,
 		preallocate_info_init(substream);
 	if (managed)
 		substream->managed_buffer_alloc = 1;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return 0;
 }
@@ -293,10 +324,17 @@ static int preallocate_pages_for_all(struct snd_pcm *pcm, int type,
 
 static void preallocate_pages_for_all(struct snd_pcm *pcm, int type,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+}
+
+static int preallocate_pages_for_all(struct snd_pcm *pcm, int type,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      void *data, size_t size, size_t max,
 				      bool managed)
 {
 	struct snd_pcm_substream *substream;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int stream, err;
 
@@ -312,6 +350,16 @@ static void preallocate_pages_for_all(struct snd_pcm *pcm, int type,
 	for_each_pcm_substream(pcm, stream, substream)
 		preallocate_pages(substream, type, data, size, max, managed);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int stream, err;
+
+	for_each_pcm_substream(pcm, stream, substream) {
+		err = preallocate_pages(substream, type, data, size, max, managed);
+		if (err < 0)
+			return err;
+	}
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -369,6 +417,9 @@ EXPORT_SYMBOL(snd_pcm_lib_preallocate_pages_for_all);
  * turns on the runtime buffer_changed flag for drivers changing their h/w
  * parameters accordingly.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * When @size is non-zero and @max is zero, this tries to allocate for only
  * the exact buffer size without fallback, and may return -ENOMEM.
@@ -380,18 +431,25 @@ EXPORT_SYMBOL(snd_pcm_lib_preallocate_pages_for_all);
  * SNDRV_DMA_TYPE_VMALLOC type.
  *
  * Upon successful buffer allocation and setup, the function returns 0.
+<<<<<<< HEAD
  */
 int snd_pcm_set_managed_buffer(struct snd_pcm_substream *substream, int type,
 				struct device *data, size_t size, size_t max)
 {
 	return preallocate_pages(substream, type, data, size, max, true);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
-void snd_pcm_set_managed_buffer(struct snd_pcm_substream *substream, int type,
+int snd_pcm_set_managed_buffer(struct snd_pcm_substream *substream, int type,
 				struct device *data, size_t size, size_t max)
 {
+<<<<<<< HEAD
 	preallocate_pages(substream, type, data, size, max, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return preallocate_pages(substream, type, data, size, max, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(snd_pcm_set_managed_buffer);
 
@@ -408,6 +466,7 @@ EXPORT_SYMBOL(snd_pcm_set_managed_buffer);
  * type and size, and set the managed_buffer_alloc flag to each substream.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int snd_pcm_set_managed_buffer_all(struct snd_pcm *pcm, int type,
 				   struct device *data,
 				   size_t size, size_t max)
@@ -420,6 +479,13 @@ void snd_pcm_set_managed_buffer_all(struct snd_pcm *pcm, int type,
 {
 	preallocate_pages_for_all(pcm, type, data, size, max, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int snd_pcm_set_managed_buffer_all(struct snd_pcm *pcm, int type,
+				   struct device *data,
+				   size_t size, size_t max)
+{
+	return preallocate_pages_for_all(pcm, type, data, size, max, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(snd_pcm_set_managed_buffer_all);
 
@@ -463,11 +529,17 @@ int snd_pcm_lib_malloc_pages(struct snd_pcm_substream *substream, size_t size)
 		dmab = &substream->dma_buffer; /* use the pre-allocated buffer */
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* dma_max=0 means the fixed size preallocation */
 		if (substream->dma_buffer.area && !substream->dma_max)
 			return -ENOMEM;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* dma_max=0 means the fixed size preallocation */
+		if (substream->dma_buffer.area && !substream->dma_max)
+			return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dmab = kzalloc(sizeof(*dmab), GFP_KERNEL);
 		if (! dmab)
 			return -ENOMEM;

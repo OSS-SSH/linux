@@ -7,6 +7,7 @@
 menu "Firmware Drivers"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 source "drivers/firmware/arm_scmi/Kconfig"
 =======
 config ARM_SCMI_PROTOCOL
@@ -43,6 +44,9 @@ config ARM_SCMI_POWER_DOMAIN
 	  will be called scmi_pm_domain. Note this may needed early in boot
 	  before rootfs may be available.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+source "drivers/firmware/arm_scmi/Kconfig"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config ARM_SCPI_PROTOCOL
 	tristate "ARM System Control and Power Interface (SCPI) Message Protocol"
@@ -240,6 +244,7 @@ config INTEL_STRATIX10_RSU
 
 config QCOM_SCM
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tristate
 =======
 	bool
@@ -247,6 +252,9 @@ config QCOM_SCM
 	depends on HAVE_ARM_SMCCC
 	select RESET_CONTROLLER
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tristate
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
 	bool "Qualcomm download mode enabled by default"
@@ -260,6 +268,9 @@ config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
 	  Say Y here to enable "download mode" by default.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config SYSFB
 	bool
 	default y
@@ -292,8 +303,11 @@ config SYSFB_SIMPLEFB
 
 	  If unsure, say Y.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config TI_SCI_PROTOCOL
 	tristate "TI System Control Interface (TISCI) Message Protocol"
 	depends on TI_MESSAGE_MANAGER

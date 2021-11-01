@@ -477,10 +477,14 @@ static void brcm_pcie_msi_isr(struct irq_desc *desc)
 {
 	struct irq_chip *chip = irq_desc_get_chip(desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long status;
 =======
 	unsigned long status, virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long status;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct brcm_msi *msi;
 	struct device *dev;
 	u32 bit;
@@ -494,6 +498,7 @@ static void brcm_pcie_msi_isr(struct irq_desc *desc)
 
 	for_each_set_bit(bit, &status, msi->nr) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int ret;
 		ret = generic_handle_domain_irq(msi->inner_domain, bit);
 		if (ret)
@@ -503,6 +508,11 @@ static void brcm_pcie_msi_isr(struct irq_desc *desc)
 			generic_handle_irq(virq);
 		else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int ret;
+		ret = generic_handle_domain_irq(msi->inner_domain, bit);
+		if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_dbg(dev, "unexpected MSI\n");
 	}
 

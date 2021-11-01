@@ -34,10 +34,14 @@ static irqreturn_t panfrost_gpu_irq_handler(int irq, void *data)
 
 		dev_warn(pfdev->dev, "GPU Fault 0x%08x (%s) at 0x%016llx\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 fault_status, panfrost_exception_name(fault_status & 0xFF),
 =======
 			 fault_status & 0xFF, panfrost_exception_name(pfdev, fault_status),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 fault_status, panfrost_exception_name(fault_status & 0xFF),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 address);
 
 		if (state & GPU_IRQ_MULTIPLE_FAULT)

@@ -96,9 +96,13 @@
 #include <linux/time_namespace.h>
 #include <linux/resctrl.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/cn_proc.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/cn_proc.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <trace/events/oom.h>
 #include "internal.h"
 #include "fd.h"
@@ -1679,6 +1683,7 @@ static ssize_t comm_write(struct file *file, const char __user *buf,
 		return -ESRCH;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (same_thread_group(current, p)) {
 		set_task_comm(p, buffer);
 		proc_comm_connector(p);
@@ -1687,6 +1692,12 @@ static ssize_t comm_write(struct file *file, const char __user *buf,
 	if (same_thread_group(current, p))
 		set_task_comm(p, buffer);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (same_thread_group(current, p)) {
+		set_task_comm(p, buffer);
+		proc_comm_connector(p);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		count = -EINVAL;
 

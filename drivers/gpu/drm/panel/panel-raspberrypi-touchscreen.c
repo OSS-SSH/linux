@@ -448,9 +448,12 @@ static int rpi_touchscreen_remove(struct i2c_client *i2c)
 
 	mipi_dsi_device_unregister(ts->dsi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kfree(ts->dsi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

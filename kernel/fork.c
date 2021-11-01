@@ -447,9 +447,13 @@ void put_task_stack(struct task_struct *tsk)
 void free_task(struct task_struct *tsk)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	release_user_cpus_ptr(tsk);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	release_user_cpus_ptr(tsk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	scs_release(tsk);
 
 #ifndef CONFIG_THREAD_INFO_IN_TASK
@@ -475,6 +479,9 @@ void free_task(struct task_struct *tsk)
 EXPORT_SYMBOL(free_task);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dup_mm_exe_file(struct mm_struct *mm, struct mm_struct *oldmm)
 {
 	struct file *exe_file;
@@ -489,8 +496,11 @@ static void dup_mm_exe_file(struct mm_struct *mm, struct mm_struct *oldmm)
 		pr_warn_once("deny_write_access() failed in %s\n", __func__);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_MMU
 static __latent_entropy int dup_mmap(struct mm_struct *mm,
 					struct mm_struct *oldmm)
@@ -515,10 +525,14 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
 
 	/* No ordering required: file already has been exposed. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dup_mm_exe_file(mm, oldmm);
 =======
 	RCU_INIT_POINTER(mm->exe_file, get_mm_exe_file(oldmm));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dup_mm_exe_file(mm, oldmm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mm->total_vm = oldmm->total_vm;
 	mm->data_vm = oldmm->data_vm;
@@ -582,6 +596,7 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
 		file = tmp->vm_file;
 		if (file) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			struct address_space *mapping = file->f_mapping;
 
 			get_file(file);
@@ -593,6 +608,11 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
 			if (tmp->vm_flags & VM_DENYWRITE)
 				put_write_access(inode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct address_space *mapping = file->f_mapping;
+
+			get_file(file);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			i_mmap_lock_write(mapping);
 			if (tmp->vm_flags & VM_SHARED)
 				mapping_allow_writable(mapping);
@@ -671,10 +691,14 @@ static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
 {
 	mmap_write_lock(oldmm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dup_mm_exe_file(mm, oldmm);
 =======
 	RCU_INIT_POINTER(mm->exe_file, get_mm_exe_file(oldmm));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dup_mm_exe_file(mm, oldmm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mmap_write_unlock(oldmm);
 	return 0;
 }
@@ -864,16 +888,22 @@ void __init fork_init(void)
 		init_user_ns.ucount_max[i] = max_threads/2;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_NPROC,      RLIM_INFINITY);
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MSGQUEUE,   RLIM_INFINITY);
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_SIGPENDING, RLIM_INFINITY);
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MEMLOCK,    RLIM_INFINITY);
+<<<<<<< HEAD
 =======
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_NPROC, task_rlimit(&init_task, RLIMIT_NPROC));
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MSGQUEUE, task_rlimit(&init_task, RLIMIT_MSGQUEUE));
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_SIGPENDING, task_rlimit(&init_task, RLIMIT_SIGPENDING));
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MEMLOCK, task_rlimit(&init_task, RLIMIT_MEMLOCK));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_VMAP_STACK
 	cpuhp_setup_state(CPUHP_BP_PREPARE_DYN, "fork:vm_stack_cache",
@@ -967,9 +997,13 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
 	if (orig->cpus_ptr == &orig->cpus_mask)
 		tsk->cpus_ptr = &tsk->cpus_mask;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dup_user_cpus_ptr(tsk, orig, node);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dup_user_cpus_ptr(tsk, orig, node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * One for the user space visible state that goes away when reaped.
@@ -1097,9 +1131,13 @@ static struct mm_struct *mm_init(struct mm_struct *mm, struct task_struct *p,
 #endif
 	mm_init_uprobes_state(mm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hugetlb_count_init(mm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hugetlb_count_init(mm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (current->mm) {
 		mm->flags = current->mm->flags & MMF_INIT_MASK;
@@ -1199,6 +1237,7 @@ void mmput_async(struct mm_struct *mm)
  * Main users are mmput() and sys_execve(). Callers prevent concurrent
  * invocations: in mmput() nobody alive left, in execve task is single
 <<<<<<< HEAD
+<<<<<<< HEAD
  * threaded.
  *
  * Can only fail if new_exe_file != NULL.
@@ -1211,6 +1250,13 @@ int set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
  */
 void set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * threaded.
+ *
+ * Can only fail if new_exe_file != NULL.
+ */
+int set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct file *old_exe_file;
 
@@ -1222,6 +1268,9 @@ void set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
 	old_exe_file = rcu_dereference_raw(mm->exe_file);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (new_exe_file) {
 		/*
 		 * We expect the caller (i.e., sys_execve) to already denied
@@ -1229,6 +1278,7 @@ void set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
 		 */
 		if (unlikely(deny_write_access(new_exe_file)))
 			return -EACCES;
+<<<<<<< HEAD
 		get_file(new_exe_file);
 	}
 	rcu_assign_pointer(mm->exe_file, new_exe_file);
@@ -1291,11 +1341,72 @@ int replace_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
 	return 0;
 =======
 	if (new_exe_file)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		get_file(new_exe_file);
+	}
 	rcu_assign_pointer(mm->exe_file, new_exe_file);
-	if (old_exe_file)
+	if (old_exe_file) {
+		allow_write_access(old_exe_file);
 		fput(old_exe_file);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+	return 0;
+}
+
+/**
+ * replace_mm_exe_file - replace a reference to the mm's executable file
+ *
+ * This changes mm's executable file (shown as symlink /proc/[pid]/exe),
+ * dealing with concurrent invocation and without grabbing the mmap lock in
+ * write mode.
+ *
+ * Main user is sys_prctl(PR_SET_MM_MAP/EXE_FILE).
+ */
+int replace_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
+{
+	struct vm_area_struct *vma;
+	struct file *old_exe_file;
+	int ret = 0;
+
+	/* Forbid mm->exe_file change if old file still mapped. */
+	old_exe_file = get_mm_exe_file(mm);
+	if (old_exe_file) {
+		mmap_read_lock(mm);
+		for (vma = mm->mmap; vma && !ret; vma = vma->vm_next) {
+			if (!vma->vm_file)
+				continue;
+			if (path_equal(&vma->vm_file->f_path,
+				       &old_exe_file->f_path))
+				ret = -EBUSY;
+		}
+		mmap_read_unlock(mm);
+		fput(old_exe_file);
+		if (ret)
+			return ret;
+	}
+
+	/* set the new file, lockless */
+	ret = deny_write_access(new_exe_file);
+	if (ret)
+		return -EACCES;
+	get_file(new_exe_file);
+
+	old_exe_file = xchg(&mm->exe_file, new_exe_file);
+	if (old_exe_file) {
+		/*
+		 * Don't race with dup_mmap() getting the file and disallowing
+		 * write access while someone might open the file writable.
+		 */
+		mmap_read_lock(mm);
+		allow_write_access(old_exe_file);
+		fput(old_exe_file);
+		mmap_read_unlock(mm);
+	}
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1316,9 +1427,12 @@ struct file *get_mm_exe_file(struct mm_struct *mm)
 	return exe_file;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL(get_mm_exe_file);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * get_task_exe_file - acquire a reference to the task's executable file
@@ -1342,9 +1456,12 @@ struct file *get_task_exe_file(struct task_struct *task)
 	return exe_file;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL(get_task_exe_file);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * get_task_mm - acquire a reference to the task's mm
@@ -2218,9 +2335,13 @@ static __latent_entropy struct task_struct *copy_process(
 #ifdef CONFIG_BPF_SYSCALL
 	RCU_INIT_POINTER(p->bpf_storage, NULL);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	p->bpf_ctx = NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	p->bpf_ctx = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	/* Perform scheduler related setup. Assign this task to a CPU. */

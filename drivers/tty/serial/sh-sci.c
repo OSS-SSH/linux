@@ -1759,12 +1759,18 @@ static irqreturn_t sci_br_interrupt(int irq, void *ptr)
 	/* Handle BREAKs */
 	sci_handle_breaks(port);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* drop invalid character received before break was detected */
 	serial_port_in(port, SCxRDR);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sci_clear_SCxSR(port, SCxSR_BREAK_CLEAR(port));
 
 	return IRQ_HANDLED;
@@ -1845,11 +1851,16 @@ static irqreturn_t sci_mpxed_interrupt(int irq, void *ptr)
 
 	/* Break Interrupt */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (s->irqs[SCIx_ERI_IRQ] != s->irqs[SCIx_BRI_IRQ] &&
 	    (ssr_status & SCxSR_BRK(port)) && err_enabled)
 =======
 	if ((ssr_status & SCxSR_BRK(port)) && err_enabled)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (s->irqs[SCIx_ERI_IRQ] != s->irqs[SCIx_BRI_IRQ] &&
+	    (ssr_status & SCxSR_BRK(port)) && err_enabled)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = sci_br_interrupt(irq, ptr);
 
 	/* Overrun Interrupt */

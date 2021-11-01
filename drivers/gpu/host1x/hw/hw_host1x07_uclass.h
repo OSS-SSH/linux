@@ -166,6 +166,9 @@ static inline u32 host1x_uclass_indoff_rwn_read_v(void)
 #define HOST1X_UCLASS_INDOFF_INDROFFSET_F(v) \
 	host1x_uclass_indoff_indroffset_f(v)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline u32 host1x_uclass_load_syncpt_payload_32_r(void)
 {
 	return 0x4e;
@@ -178,7 +181,10 @@ static inline u32 host1x_uclass_wait_syncpt_32_r(void)
 }
 #define HOST1X_UCLASS_WAIT_SYNCPT_32 \
 	host1x_uclass_wait_syncpt_32_r()
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

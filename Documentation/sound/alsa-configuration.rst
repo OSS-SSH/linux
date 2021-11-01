@@ -1060,14 +1060,20 @@ model is given, the driver uses the generic codec parser without
 "codec-patch".  It's sometimes good for testing and debugging.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The model option can be used also for aliasing to another PCI or codec
 SSID.  When it's passed in the form of ``model=XXXX:YYYY`` where XXXX
 and YYYY are the sub-vendor and sub-device IDs in hex numbers,
 respectively, the driver will refer to that SSID as a reference to the
 quirk table.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 If the default configuration doesn't work and one of the above
 matches with your device, report it together with alsa-info.sh
 output (with ``--no-upload`` option) to kernel bugzilla or alsa-devel
@@ -2262,6 +2268,9 @@ delayed_register
     assignment: 1234abcd:04" for such a device, so that user can
     notice the need.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 quirk_flags
     Contains the bit flags for various device specific workarounds.
     Applied to the corresponding card index.
@@ -2283,8 +2292,11 @@ quirk_flags
         * bit 14: Ignore errors for mixer access
         * bit 15: Support generic DSD raw U32_BE format
         * bit 16: Set up the interface at first like UAC1
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 This module supports multiple devices, autoprobe and hotplugging.
 
@@ -2294,6 +2306,7 @@ check.
 
 NB: ``ignore_ctl_error=1`` may help when you get an error at accessing
 the mixer element such as URB error -22.  This happens on some
+<<<<<<< HEAD
 <<<<<<< HEAD
 buggy USB device or the controller.  This workaround corresponds to
 the ``quirk_flags`` bit 14, too.
@@ -2305,11 +2318,20 @@ Ditto for ``quirk_flags``.  If a device is known to require specific
 workarounds, please report to the upstream.
 =======
 buggy USB device or the controller.
+=======
+buggy USB device or the controller.  This workaround corresponds to
+the ``quirk_flags`` bit 14, too.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-NB: quirk_alias option is provided only for testing / development.
+NB: ``quirk_alias`` option is provided only for testing / development.
 If you want to have a proper support, contact to upstream for
 adding the matching quirk in the driver code statically.
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Ditto for ``quirk_flags``.  If a device is known to require specific
+workarounds, please report to the upstream.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Module snd-usb-caiaq
 --------------------

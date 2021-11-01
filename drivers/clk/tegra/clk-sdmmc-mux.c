@@ -195,6 +195,9 @@ static void clk_sdmmc_mux_disable(struct clk_hw *hw)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void clk_sdmmc_mux_disable_unused(struct clk_hw *hw)
 {
 	struct tegra_sdmmc_mux *sdmmc_mux = to_clk_sdmmc_mux(hw);
@@ -204,8 +207,11 @@ static void clk_sdmmc_mux_disable_unused(struct clk_hw *hw)
 	gate_ops->disable_unused(gate_hw);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void clk_sdmmc_mux_restore_context(struct clk_hw *hw)
 {
 	struct clk_hw *parent = clk_hw_get_parent(hw);
@@ -231,9 +237,13 @@ static const struct clk_ops tegra_clk_sdmmc_mux_ops = {
 	.enable = clk_sdmmc_mux_enable,
 	.disable = clk_sdmmc_mux_disable,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.disable_unused = clk_sdmmc_mux_disable_unused,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.disable_unused = clk_sdmmc_mux_disable_unused,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.restore_context = clk_sdmmc_mux_restore_context,
 };
 

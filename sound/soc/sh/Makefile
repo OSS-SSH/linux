@@ -23,9 +23,15 @@ snd-soc-migor-objs		:= migor.o
 obj-$(CONFIG_SND_SH7760_AC97)	+= snd-soc-sh7760-ac97.o
 obj-$(CONFIG_SND_SIU_MIGOR)	+= snd-soc-migor.o
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # RZ/G2L
 snd-soc-rz-ssi-objs		:= rz-ssi.o
 obj-$(CONFIG_SND_SOC_RZ)	+= snd-soc-rz-ssi.o
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

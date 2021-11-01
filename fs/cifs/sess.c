@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *   fs/cifs/sess.c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   SMB/CIFS session setup handling routines
  *
@@ -803,23 +806,30 @@ cifs_select_sectype(struct TCP_Server_Info *server, enum securityEnum requested)
 	case CIFS_NEGFLAVOR_UNENCAP:
 		switch (requested) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		case NTLM:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case NTLMv2:
 			return requested;
 		case Unspecified:
 			if (global_secflags & CIFSSEC_MAY_NTLMV2)
 				return NTLMv2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			if (global_secflags & CIFSSEC_MAY_NTLM)
 				return NTLM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		default:
 			break;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		fallthrough;
 =======
@@ -836,6 +846,9 @@ cifs_select_sectype(struct TCP_Server_Info *server, enum securityEnum requested)
 			return Unspecified;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return Unspecified;
 	}
@@ -891,10 +904,14 @@ sess_alloc_buffer(struct sess_data *sess_data, int wct)
 
 out_free_smb_buf:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cifs_small_buf_release(smb_buf);
 =======
 	kfree(smb_buf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cifs_small_buf_release(smb_buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sess_data->iov[0].iov_base = NULL;
 	sess_data->iov[0].iov_len = 0;
 	sess_data->buf0_type = CIFS_NO_BUFFER;
@@ -964,6 +981,7 @@ sess_sendreceive(struct sess_data *sess_data)
 	return rc;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /*
@@ -1191,6 +1209,8 @@ out:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void
 sess_auth_ntlmv2(struct sess_data *sess_data)
 {
@@ -1696,6 +1716,7 @@ static int select_sec(struct cifs_ses *ses, struct sess_data *sess_data)
 
 	switch (type) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case LANMAN:
 		/* LANMAN and plaintext are less secure and off by default.
@@ -1713,6 +1734,8 @@ static int select_sec(struct cifs_ses *ses, struct sess_data *sess_data)
 		sess_data->func = sess_auth_ntlm;
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case NTLMv2:
 		sess_data->func = sess_auth_ntlmv2;
 		break;

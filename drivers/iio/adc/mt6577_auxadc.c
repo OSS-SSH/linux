@@ -83,12 +83,18 @@ static const struct iio_chan_spec mt6577_auxadc_iio_channels[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* For Voltage calculation */
 #define VOLTAGE_FULL_RANGE  1500	/* VA voltage */
 #define AUXADC_PRECISE      4096	/* 12 bits */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mt_auxadc_get_cali_data(int rawdata, bool enable_cali)
 {
 	return rawdata;
@@ -199,12 +205,18 @@ static int mt6577_auxadc_read_raw(struct iio_dev *indio_dev,
 		if (adc_dev->dev_comp->sample_data_cali)
 			*val = mt_auxadc_get_cali_data(*val, true);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Convert adc raw data to voltage: 0 - 1500 mV */
 		*val = *val * VOLTAGE_FULL_RANGE / AUXADC_PRECISE;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return IIO_VAL_INT;
 
 	default:

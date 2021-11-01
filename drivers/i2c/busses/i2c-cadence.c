@@ -179,9 +179,13 @@ enum cdns_i2c_slave_state {
  * @clk_rate_change_nb:	Notifier block for clock rate changes
  * @quirks:		flag for broken hold bit usage in r1p10
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @ctrl_reg:		Cached value of the control register.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @ctrl_reg:		Cached value of the control register.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ctrl_reg_diva_divb: value of fields DIV_A and DIV_B from CR register
  * @slave:		Registered slave instance.
  * @dev_mode:		I2C operating role(master/slave).
@@ -207,9 +211,13 @@ struct cdns_i2c {
 	struct notifier_block clk_rate_change_nb;
 	u32 quirks;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 ctrl_reg;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 ctrl_reg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_I2C_SLAVE)
 	u16 ctrl_reg_diva_divb;
 	struct i2c_client *slave;
@@ -1080,6 +1088,7 @@ static int cdns_i2c_setclk(unsigned long clk_in, struct cdns_i2c *id)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctrl_reg = id->ctrl_reg;
 	ctrl_reg &= ~(CDNS_I2C_CR_DIVA_MASK | CDNS_I2C_CR_DIVB_MASK);
 	ctrl_reg |= ((div_a << CDNS_I2C_CR_DIVA_SHIFT) |
@@ -1091,6 +1100,13 @@ static int cdns_i2c_setclk(unsigned long clk_in, struct cdns_i2c *id)
 	ctrl_reg |= ((div_a << CDNS_I2C_CR_DIVA_SHIFT) |
 			(div_b << CDNS_I2C_CR_DIVB_SHIFT));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctrl_reg = id->ctrl_reg;
+	ctrl_reg &= ~(CDNS_I2C_CR_DIVA_MASK | CDNS_I2C_CR_DIVB_MASK);
+	ctrl_reg |= ((div_a << CDNS_I2C_CR_DIVA_SHIFT) |
+			(div_b << CDNS_I2C_CR_DIVB_SHIFT));
+	id->ctrl_reg = ctrl_reg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cdns_i2c_writereg(ctrl_reg, CDNS_I2C_CR_OFFSET);
 #if IS_ENABLED(CONFIG_I2C_SLAVE)
 	id->ctrl_reg_diva_divb = ctrl_reg & (CDNS_I2C_CR_DIVA_MASK |
@@ -1180,6 +1196,9 @@ static int __maybe_unused cdns_i2c_runtime_suspend(struct device *dev)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * cdns_i2c_init -  Controller initialisation
  * @id:		Device private data structure
  *
@@ -1200,8 +1219,11 @@ static void cdns_i2c_init(struct cdns_i2c *id)
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * cdns_i2c_runtime_resume - Runtime resume
  * @dev:	Address of the platform_device structure
  *
@@ -1220,9 +1242,13 @@ static int __maybe_unused cdns_i2c_runtime_resume(struct device *dev)
 		return ret;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cdns_i2c_init(xi2c);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cdns_i2c_init(xi2c);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1323,10 +1349,14 @@ static int cdns_i2c_probe(struct platform_device *pdev)
 	id->slave_state = CDNS_I2C_SLAVE_STATE_IDLE;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	id->ctrl_reg = CDNS_I2C_CR_ACK_EN | CDNS_I2C_CR_NEA | CDNS_I2C_CR_MS;
 =======
 	cdns_i2c_writereg(CDNS_I2C_CR_MASTER_EN_MASK, CDNS_I2C_CR_OFFSET);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	id->ctrl_reg = CDNS_I2C_CR_ACK_EN | CDNS_I2C_CR_NEA | CDNS_I2C_CR_MS;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = cdns_i2c_setclk(id->input_clk, id);
 	if (ret) {
@@ -1342,6 +1372,7 @@ static int cdns_i2c_probe(struct platform_device *pdev)
 		goto err_clk_dis;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cdns_i2c_init(id);
 =======
 
@@ -1354,6 +1385,9 @@ static int cdns_i2c_probe(struct platform_device *pdev)
 	 */
 	cdns_i2c_writereg(CDNS_I2C_TIMEOUT_MAX, CDNS_I2C_TIME_OUT_OFFSET);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cdns_i2c_init(id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = i2c_add_adapter(&id->adap);
 	if (ret < 0)

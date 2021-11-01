@@ -84,10 +84,14 @@ static int nxp_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct nci_ops nxp_nci_ops = {
 =======
 static struct nci_ops nxp_nci_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nci_ops nxp_nci_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.open = nxp_nci_open,
 	.close = nxp_nci_close,
 	.send = nxp_nci_send,

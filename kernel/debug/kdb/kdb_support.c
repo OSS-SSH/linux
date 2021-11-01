@@ -11,9 +11,12 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <stdarg.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/types.h>
 #include <linux/sched.h>
 #include <linux/mm.h>
@@ -56,11 +59,15 @@ int kdbgetsymval(const char *symname, kdb_symtab_t *symtab)
 EXPORT_SYMBOL(kdbgetsymval);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * kdbnearsym() - Return the name of the symbol with the nearest address
  *                less than @addr.
  * @addr: Address to check for near symbol
  * @symtab: Structure to receive results
+<<<<<<< HEAD
  *
  * WARNING: This function may return a pointer to a single statically
  * allocated buffer (namebuf). kdb's unusual calling context (single
@@ -105,6 +112,29 @@ static char *kdb_name_table[100];	/* arbitrary size */
  *	hold active strings, no kdb caller of kdbnearsym makes more
  *	than ~20 later calls before using a saved value.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * WARNING: This function may return a pointer to a single statically
+ * allocated buffer (namebuf). kdb's unusual calling context (single
+ * threaded, all other CPUs halted) provides us sufficient locking for
+ * this to be safe. The only constraint imposed by the static buffer is
+ * that the caller must consume any previous reply prior to another call
+ * to lookup a new symbol.
+ *
+ * Note that, strictly speaking, some architectures may re-enter the kdb
+ * trap if the system turns out to be very badly damaged and this breaks
+ * the single-threaded assumption above. In these circumstances successful
+ * continuation and exit from the inner trap is unlikely to work and any
+ * user attempting this receives a prominent warning before being allowed
+ * to progress. In these circumstances we remain memory safe because
+ * namebuf[KSYM_NAME_LEN-1] will never change from '\0' although we do
+ * tolerate the possibility of garbled symbol display from the outer kdb
+ * trap.
+ *
+ * Return:
+ * * 0 - No sections contain this address, symtab zero filled
+ * * 1 - Address mapped to module/symbol/section, data in symtab
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int kdbnearsym(unsigned long addr, kdb_symtab_t *symtab)
 {
@@ -112,17 +142,22 @@ int kdbnearsym(unsigned long addr, kdb_symtab_t *symtab)
 	unsigned long symbolsize = 0;
 	unsigned long offset = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static char namebuf[KSYM_NAME_LEN];
 =======
 #define knt1_size 128		/* must be >= kallsyms table size */
 	char *knt1 = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static char namebuf[KSYM_NAME_LEN];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kdb_dbg_printf(AR, "addr=0x%lx, symtab=%px\n", addr, symtab);
 	memset(symtab, 0, sizeof(*symtab));
 
 	if (addr < 4096)
 		goto out;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	symtab->sym_name = kallsyms_lookup(addr, &symbolsize , &offset,
@@ -136,6 +171,11 @@ int kdbnearsym(unsigned long addr, kdb_symtab_t *symtab)
 	symtab->sym_name = kallsyms_lookup(addr, &symbolsize , &offset,
 				(char **)(&symtab->mod_name), knt1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	symtab->sym_name = kallsyms_lookup(addr, &symbolsize , &offset,
+				(char **)(&symtab->mod_name), namebuf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (offset > 8*1024*1024) {
 		symtab->sym_name = NULL;
 		addr = offset = symbolsize = 0;
@@ -144,6 +184,7 @@ int kdbnearsym(unsigned long addr, kdb_symtab_t *symtab)
 	symtab->sym_end = symtab->sym_start + symbolsize;
 	ret = symtab->sym_name != NULL && *(symtab->sym_name) != '\0';
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (ret) {
@@ -183,10 +224,13 @@ int kdbnearsym(unsigned long addr, kdb_symtab_t *symtab)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (symtab->mod_name == NULL)
 		symtab->mod_name = "kernel";
 	kdb_dbg_printf(AR, "returns %d symtab->sym_start=0x%lx, symtab->mod_name=%px, symtab->sym_name=%px (%s)\n",
 		       ret, symtab->sym_start, symtab->mod_name, symtab->sym_name, symtab->sym_name);
+<<<<<<< HEAD
 <<<<<<< HEAD
 out:
 	return ret;
@@ -194,11 +238,13 @@ out:
 
 =======
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
-	debug_kfree(knt1);
 	return ret;
 }
 
+<<<<<<< HEAD
 void kdbnearsym_cleanup(void)
 {
 	int i;
@@ -211,6 +257,8 @@ void kdbnearsym_cleanup(void)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static char ks_namebuf[KSYM_NAME_LEN+1], ks_namebuf_prev[KSYM_NAME_LEN+1];
 
 /*
@@ -709,6 +757,7 @@ unsigned long kdb_task_state(const struct task_struct *p, unsigned long mask)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Last ditch allocator for debugging, so we can still debug even when
  * the GFP_ATOMIC pool has been exhausted.  The algorithms are tuned
@@ -935,6 +984,8 @@ out:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Maintain a small stack of kdb_flags to allow recursion without disturbing
  * the global kdb state.
  */

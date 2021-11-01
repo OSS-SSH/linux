@@ -39,10 +39,14 @@ mmu-$(CONFIG_MMU)	:= highmem.o memory.o mincore.o \
 			   mlock.o mmap.o mmu_gather.o mprotect.o mremap.o \
 			   msync.o page_vma_mapped.o pagewalk.o \
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   pgtable-generic.o rmap.o vmalloc.o
 =======
 			   pgtable-generic.o rmap.o vmalloc.o ioremap.o
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   pgtable-generic.o rmap.o vmalloc.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 ifdef CONFIG_CROSS_MEMORY_ATTACH
@@ -123,9 +127,13 @@ obj-$(CONFIG_USERFAULTFD) += userfaultfd.o
 obj-$(CONFIG_IDLE_PAGE_TRACKING) += page_idle.o
 obj-$(CONFIG_DEBUG_PAGE_REF) += debug_page_ref.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_DAMON) += damon/
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_DAMON) += damon/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_HARDENED_USERCOPY) += usercopy.o
 obj-$(CONFIG_PERCPU_STATS) += percpu-stats.o
 obj-$(CONFIG_ZONE_DEVICE) += memremap.o
@@ -137,6 +145,10 @@ obj-$(CONFIG_PAGE_REPORTING) += page_reporting.o
 obj-$(CONFIG_IO_MAPPING) += io-mapping.o
 obj-$(CONFIG_HAVE_BOOTMEM_INFO_NODE) += bootmem_info.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_GENERIC_IOREMAP) += ioremap.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_GENERIC_IOREMAP) += ioremap.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

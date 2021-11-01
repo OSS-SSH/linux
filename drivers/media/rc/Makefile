@@ -29,9 +29,13 @@ obj-$(CONFIG_IR_MCEUSB) += mceusb.o
 obj-$(CONFIG_IR_FINTEK) += fintek-cir.o
 obj-$(CONFIG_IR_MESON) += meson-ir.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_IR_MESON_TX) += meson-ir-tx.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_IR_MESON_TX) += meson-ir-tx.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_IR_NUVOTON) += nuvoton-cir.o
 obj-$(CONFIG_IR_ENE) += ene_ir.o
 obj-$(CONFIG_IR_REDRAT3) += redrat3.o

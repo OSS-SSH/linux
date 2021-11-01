@@ -318,6 +318,9 @@ static bool dev_is_untrusted(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* sysfs updates are serialised by the mutex of the group owning @domain */
 int iommu_dma_init_fq(struct iommu_domain *domain)
 {
@@ -342,8 +345,11 @@ int iommu_dma_init_fq(struct iommu_domain *domain)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * iommu_dma_init_domain - Initialise a DMA mapping domain
  * @domain: IOMMU domain previously prepared by iommu_get_dma_cookie()
@@ -398,6 +404,7 @@ static int iommu_dma_init_domain(struct iommu_domain *domain, dma_addr_t base,
 	init_iova_domain(iovad, 1UL << order, base_pfn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* If the FQ fails we can simply fall back to strict mode */
 	if (domain->type == IOMMU_DOMAIN_DMA_FQ && iommu_dma_init_fq(domain))
 		domain->type = IOMMU_DOMAIN_DMA;
@@ -414,6 +421,11 @@ static int iommu_dma_init_domain(struct iommu_domain *domain, dma_addr_t base,
 	if (!dev)
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* If the FQ fails we can simply fall back to strict mode */
+	if (domain->type == IOMMU_DOMAIN_DMA_FQ && iommu_dma_init_fq(domain))
+		domain->type = IOMMU_DOMAIN_DMA;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return iova_reserve_iommu_regions(dev, domain);
 }
@@ -489,16 +501,21 @@ static dma_addr_t iommu_dma_alloc_iova(struct iommu_domain *domain,
 
 static void iommu_dma_free_iova(struct iommu_dma_cookie *cookie,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_addr_t iova, size_t size, struct iommu_iotlb_gather *gather)
 =======
 		dma_addr_t iova, size_t size, struct page *freelist)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_addr_t iova, size_t size, struct iommu_iotlb_gather *gather)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct iova_domain *iovad = &cookie->iovad;
 
 	/* The MSI case is only ever cleaning up its most recent allocation */
 	if (cookie->type == IOMMU_DMA_MSI_COOKIE)
 		cookie->msi_iova -= size;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	else if (gather && gather->queued)
 		queue_iova(iovad, iova_pfn(iovad, iova),
@@ -510,6 +527,12 @@ static void iommu_dma_free_iova(struct iommu_dma_cookie *cookie,
 				size >> iova_shift(iovad),
 				(unsigned long)freelist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (gather && gather->queued)
+		queue_iova(iovad, iova_pfn(iovad, iova),
+				size >> iova_shift(iovad),
+				(unsigned long)gather->freelist);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		free_iova_fast(iovad, iova_pfn(iovad, iova),
 				size >> iova_shift(iovad));
@@ -529,13 +552,18 @@ static void __iommu_dma_unmap(struct device *dev, dma_addr_t dma_addr,
 	size = iova_align(iovad, size + iova_off);
 	iommu_iotlb_gather_init(&iotlb_gather);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iotlb_gather.queued = READ_ONCE(cookie->fq_domain);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iotlb_gather.queued = READ_ONCE(cookie->fq_domain);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	unmapped = iommu_unmap_fast(domain, dma_addr, size, &iotlb_gather);
 	WARN_ON(unmapped != size);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!iotlb_gather.queued)
 		iommu_iotlb_sync(domain, &iotlb_gather);
@@ -545,6 +573,11 @@ static void __iommu_dma_unmap(struct device *dev, dma_addr_t dma_addr,
 		iommu_iotlb_sync(domain, &iotlb_gather);
 	iommu_dma_free_iova(cookie, dma_addr, size, iotlb_gather.freelist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!iotlb_gather.queued)
+		iommu_iotlb_sync(domain, &iotlb_gather);
+	iommu_dma_free_iova(cookie, dma_addr, size, &iotlb_gather);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __iommu_dma_unmap_swiotlb(struct device *dev, dma_addr_t dma_addr,
@@ -561,10 +594,14 @@ static void __iommu_dma_unmap_swiotlb(struct device *dev, dma_addr_t dma_addr,
 	__iommu_dma_unmap(dev, dma_addr, size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(is_swiotlb_buffer(dev, phys)))
 =======
 	if (unlikely(is_swiotlb_buffer(phys)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(is_swiotlb_buffer(dev, phys)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swiotlb_tbl_unmap_single(dev, phys, size, dir, attrs);
 }
 
@@ -636,10 +673,14 @@ static dma_addr_t __iommu_dma_map_swiotlb(struct device *dev, phys_addr_t phys,
 
 	iova = __iommu_dma_map(dev, phys, aligned_size, prot, dma_mask);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iova == DMA_MAPPING_ERROR && is_swiotlb_buffer(dev, phys))
 =======
 	if (iova == DMA_MAPPING_ERROR && is_swiotlb_buffer(phys))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (iova == DMA_MAPPING_ERROR && is_swiotlb_buffer(dev, phys))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swiotlb_tbl_unmap_single(dev, phys, org_size, dir, attrs);
 	return iova;
 }
@@ -831,9 +872,13 @@ static void iommu_dma_free_noncontiguous(struct device *dev, size_t size,
 	__iommu_dma_free_pages(sh->pages, PAGE_ALIGN(size) >> PAGE_SHIFT);
 	sg_free_table(&sh->sgt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(sh);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfree(sh);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif /* CONFIG_DMA_REMAP */
 
@@ -850,10 +895,14 @@ static void iommu_dma_sync_single_for_cpu(struct device *dev,
 		arch_sync_dma_for_cpu(phys, size, dir);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (is_swiotlb_buffer(dev, phys))
 =======
 	if (is_swiotlb_buffer(phys))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (is_swiotlb_buffer(dev, phys))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swiotlb_sync_single_for_cpu(dev, phys, size, dir);
 }
 
@@ -867,10 +916,14 @@ static void iommu_dma_sync_single_for_device(struct device *dev,
 
 	phys = iommu_iova_to_phys(iommu_get_dma_domain(dev), dma_handle);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (is_swiotlb_buffer(dev, phys))
 =======
 	if (is_swiotlb_buffer(phys))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (is_swiotlb_buffer(dev, phys))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swiotlb_sync_single_for_device(dev, phys, size, dir);
 
 	if (!dev_is_dma_coherent(dev))
@@ -892,10 +945,14 @@ static void iommu_dma_sync_sg_for_cpu(struct device *dev,
 			arch_sync_dma_for_cpu(sg_phys(sg), sg->length, dir);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (is_swiotlb_buffer(dev, sg_phys(sg)))
 =======
 		if (is_swiotlb_buffer(sg_phys(sg)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (is_swiotlb_buffer(dev, sg_phys(sg)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			swiotlb_sync_single_for_cpu(dev, sg_phys(sg),
 						    sg->length, dir);
 	}
@@ -913,10 +970,14 @@ static void iommu_dma_sync_sg_for_device(struct device *dev,
 
 	for_each_sg(sgl, sg, nelems, i) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (is_swiotlb_buffer(dev, sg_phys(sg)))
 =======
 		if (is_swiotlb_buffer(sg_phys(sg)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (is_swiotlb_buffer(dev, sg_phys(sg)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			swiotlb_sync_single_for_device(dev, sg_phys(sg),
 						       sg->length, dir);
 
@@ -1055,10 +1116,14 @@ static int iommu_dma_map_sg_swiotlb(struct device *dev, struct scatterlist *sg,
 out_unmap:
 	iommu_dma_unmap_sg_swiotlb(dev, sg, i, dir, attrs | DMA_ATTR_SKIP_CPU_SYNC);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return -EIO;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1080,6 +1145,7 @@ static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
 	size_t iova_len = 0;
 	unsigned long mask = dma_get_seg_boundary(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ssize_t ret;
 	int i;
 
@@ -1094,6 +1160,15 @@ static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
 	    iommu_deferred_attach(dev, domain))
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ssize_t ret;
+	int i;
+
+	if (static_branch_unlikely(&iommu_deferred_attach_enabled)) {
+		ret = iommu_deferred_attach(dev, domain);
+		goto out;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC))
 		iommu_dma_sync_sg_for_device(dev, sg, nents, dir);
@@ -1142,6 +1217,7 @@ static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
 
 	iova = iommu_dma_alloc_iova(domain, iova_len, dma_get_mask(dev), dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!iova) {
 		ret = -ENOMEM;
 		goto out_restore_sg;
@@ -1150,17 +1226,28 @@ static int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
 	if (!iova)
 		goto out_restore_sg;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!iova) {
+		ret = -ENOMEM;
+		goto out_restore_sg;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * We'll leave any physical concatenation to the IOMMU driver's
 	 * implementation - it knows better than we do.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = iommu_map_sg_atomic(domain, iova, sg, nents, prot);
 	if (ret < iova_len)
 =======
 	if (iommu_map_sg_atomic(domain, iova, sg, nents, prot) < iova_len)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = iommu_map_sg_atomic(domain, iova, sg, nents, prot);
+	if (ret < iova_len)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_free_iova;
 
 	return __finalise_sg(dev, sg, nents, iova);
@@ -1170,13 +1257,19 @@ out_free_iova:
 out_restore_sg:
 	__invalidate_sg(sg, nents);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	if (ret != -ENOMEM)
 		return -EINVAL;
 	return ret;
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void iommu_dma_unmap_sg(struct device *dev, struct scatterlist *sg,
@@ -1437,10 +1530,14 @@ void iommu_setup_dma_ops(struct device *dev, u64 dma_base, u64 dma_limit)
 	 * underlying IOMMU driver needs to support via the dma-iommu layer.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iommu_is_dma_domain(domain)) {
 =======
 	if (domain->type == IOMMU_DOMAIN_DMA) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (iommu_is_dma_domain(domain)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (iommu_dma_init_domain(domain, dma_base, dma_limit, dev))
 			goto out_err;
 		dev->dma_ops = &iommu_dma_ops;

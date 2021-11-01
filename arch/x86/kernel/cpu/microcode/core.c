@@ -56,10 +56,14 @@ LIST_HEAD(microcode_cache);
  *
  * - microcode_mutex to synchronize with each other;
 <<<<<<< HEAD
+<<<<<<< HEAD
  * - cpus_read_lock/unlock() to synchronize with
 =======
  * - get/put_online_cpus() to synchronize with
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * - cpus_read_lock/unlock() to synchronize with
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   the cpu-hotplug-callback call sites.
  *
  * We guarantee that only a single cpu is being
@@ -436,10 +440,14 @@ static ssize_t microcode_write(struct file *file, const char __user *buf,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&microcode_mutex);
 
 	if (do_microcode_update(buf, len) == 0)
@@ -450,10 +458,14 @@ static ssize_t microcode_write(struct file *file, const char __user *buf,
 
 	mutex_unlock(&microcode_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -642,10 +654,14 @@ static ssize_t reload_store(struct device *dev,
 		return size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = check_online_cpus();
 	if (ret)
@@ -661,10 +677,14 @@ static ssize_t reload_store(struct device *dev,
 
 put:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret == 0)
 		ret = size;
@@ -874,10 +894,14 @@ static int __init microcode_init(void)
 		return PTR_ERR(microcode_pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&microcode_mutex);
 
 	error = subsys_interface_register(&mc_cpu_interface);
@@ -885,10 +909,14 @@ static int __init microcode_init(void)
 		perf_check_microcode();
 	mutex_unlock(&microcode_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (error)
 		goto out_pdev;
@@ -921,20 +949,28 @@ static int __init microcode_init(void)
 
  out_driver:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&microcode_mutex);
 
 	subsys_interface_unregister(&mc_cpu_interface);
 
 	mutex_unlock(&microcode_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  out_pdev:
 	platform_device_unregister(microcode_pdev);

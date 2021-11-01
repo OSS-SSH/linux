@@ -443,10 +443,14 @@ bool kvm_unmap_gfn_range(struct kvm *kvm, struct kvm_gfn_range *range)
 {
 	kvm_mips_flush_gpa_pt(kvm, range->start, range->end);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return true;
 =======
 	return 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 bool kvm_set_spte_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
@@ -491,10 +495,14 @@ bool kvm_test_age_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
 
 	if (!gpa_pte)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return false;
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return pte_young(*gpa_pte);
 }
 

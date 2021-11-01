@@ -711,10 +711,14 @@ static u64 storvsc_next_request_id(struct vmbus_channel *channel, u64 rqst_addr)
 	 * message from Hyper-V.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return (u64)blk_mq_unique_tag(scsi_cmd_to_rq(request->cmd)) + 1;
 =======
 	return (u64)blk_mq_unique_tag(request->cmd->request) + 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return (u64)blk_mq_unique_tag(scsi_cmd_to_rq(request->cmd)) + 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void handle_sc_creation(struct vmbus_channel *new_sc)
@@ -1204,6 +1208,9 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
 
 	if (vstor_packet->vm_srb.scsi_status != 0 ||
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    vstor_packet->vm_srb.srb_status != SRB_STATUS_SUCCESS) {
 
 		/*
@@ -1215,6 +1222,7 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
 			STORVSC_LOGGING_WARN : STORVSC_LOGGING_ERROR;
 
 		storvsc_log(device, loglevel,
+<<<<<<< HEAD
 			"tag#%d cmd 0x%x status: scsi 0x%x srb 0x%x hv 0x%x\n",
 			scsi_cmd_to_rq(request->cmd)->tag,
 =======
@@ -1223,14 +1231,22 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
 			"tag#%d cmd 0x%x status: scsi 0x%x srb 0x%x hv 0x%x\n",
 			request->cmd->request->tag,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			"tag#%d cmd 0x%x status: scsi 0x%x srb 0x%x hv 0x%x\n",
+			scsi_cmd_to_rq(request->cmd)->tag,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			stor_pkt->vm_srb.cdb[0],
 			vstor_packet->vm_srb.scsi_status,
 			vstor_packet->vm_srb.srb_status,
 			vstor_packet->status);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (vstor_packet->vm_srb.scsi_status == SAM_STAT_CHECK_CONDITION &&
 	    (vstor_packet->vm_srb.srb_status & SRB_STATUS_AUTOSENSE_VALID))

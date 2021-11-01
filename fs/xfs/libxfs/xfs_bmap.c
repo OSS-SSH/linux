@@ -243,10 +243,14 @@ xfs_bmap_get_bp(
 		if (!cur->bc_bufs[i])
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_buf_daddr(cur->bc_bufs[i]) == bno)
 =======
 		if (XFS_BUF_ADDR(cur->bc_bufs[i]) == bno)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_buf_daddr(cur->bc_bufs[i]) == bno)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return cur->bc_bufs[i];
 	}
 
@@ -256,10 +260,14 @@ xfs_bmap_get_bp(
 
 		if (bip->bli_item.li_type == XFS_LI_BUF &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    xfs_buf_daddr(bip->bli_buf) == bno)
 =======
 		    XFS_BUF_ADDR(bip->bli_buf) == bno)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    xfs_buf_daddr(bip->bli_buf) == bno)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return bip->bli_buf;
 	}
 
@@ -748,10 +756,14 @@ xfs_bmap_extents_to_btree(
 	abp->b_ops = &xfs_bmbt_buf_ops;
 	ablock = XFS_BUF_TO_BLOCK(abp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_btree_init_block_int(mp, ablock, xfs_buf_daddr(abp),
 =======
 	xfs_btree_init_block_int(mp, ablock, abp->b_bn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_btree_init_block_int(mp, ablock, xfs_buf_daddr(abp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				XFS_BTNUM_BMAP, 0, 0, ip->i_ino,
 				XFS_BTREE_LONG_PTRS);
 
@@ -1060,10 +1072,14 @@ xfs_bmap_set_attrforkoff(
 		if (!ip->i_forkoff)
 			ip->i_forkoff = default_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (xfs_has_attr2(ip->i_mount) && version)
 =======
 		else if ((ip->i_mount->m_flags & XFS_MOUNT_ATTR2) && version)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		else if (xfs_has_attr2(ip->i_mount) && version)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			*version = 2;
 		break;
 	default:
@@ -1132,6 +1148,7 @@ xfs_bmap_add_attrfork(
 	if (error)
 		goto trans_cancel;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_attr(mp) ||
 	   (!xfs_has_attr2(mp) && version == 2)) {
 		bool log_sb = false;
@@ -1146,16 +1163,25 @@ xfs_bmap_add_attrfork(
 =======
 	if (!xfs_sb_version_hasattr(&mp->m_sb) ||
 	   (!xfs_sb_version_hasattr2(&mp->m_sb) && version == 2)) {
+=======
+	if (!xfs_has_attr(mp) ||
+	   (!xfs_has_attr2(mp) && version == 2)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bool log_sb = false;
 
 		spin_lock(&mp->m_sb_lock);
-		if (!xfs_sb_version_hasattr(&mp->m_sb)) {
-			xfs_sb_version_addattr(&mp->m_sb);
+		if (!xfs_has_attr(mp)) {
+			xfs_add_attr(mp);
 			log_sb = true;
 		}
+<<<<<<< HEAD
 		if (!xfs_sb_version_hasattr2(&mp->m_sb) && version == 2) {
 			xfs_sb_version_addattr2(&mp->m_sb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!xfs_has_attr2(mp) && version == 2) {
+			xfs_add_attr2(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			log_sb = true;
 		}
 		spin_unlock(&mp->m_sb_lock);
@@ -3453,10 +3479,14 @@ xfs_bmap_compute_alignments(
 
 	/* stripe alignment for allocation is determined by mount parameters */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mp->m_swidth && xfs_has_swalloc(mp))
 =======
 	if (mp->m_swidth && (mp->m_flags & XFS_MOUNT_SWALLOC))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mp->m_swidth && xfs_has_swalloc(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		stripe_align = mp->m_swidth;
 	else if (mp->m_dalign)
 		stripe_align = mp->m_dalign;
@@ -3973,10 +4003,14 @@ xfs_bmapi_read(
 		return -EFSCORRUPTED;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	XFS_STATS_INC(mp, xs_blk_mapr);
@@ -4459,10 +4493,14 @@ xfs_bmapi_write(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	XFS_STATS_INC(mp, xs_blk_mapw);
@@ -4746,10 +4784,14 @@ xfs_bmapi_remap(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	error = xfs_iread_extents(tp, ip, whichfork);
@@ -5408,10 +5450,14 @@ __xfs_bunmapi(
 	if (XFS_IS_CORRUPT(mp, !xfs_ifork_has_extents(ifp)))
 		return -EFSCORRUPTED;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	ASSERT(xfs_isilocked(ip, XFS_ILOCK_EXCL));
@@ -5903,10 +5949,14 @@ xfs_bmap_collapse_extents(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	ASSERT(xfs_isilocked(ip, XFS_IOLOCK_EXCL | XFS_ILOCK_EXCL));
@@ -5985,10 +6035,14 @@ xfs_bmap_can_insert_extents(
 	ASSERT(xfs_isilocked(ip, XFS_IOLOCK_EXCL));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(ip->i_mount))
 =======
 	if (XFS_FORCED_SHUTDOWN(ip->i_mount))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(ip->i_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	xfs_ilock(ip, XFS_ILOCK_EXCL);
@@ -6026,10 +6080,14 @@ xfs_bmap_insert_extents(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	ASSERT(xfs_isilocked(ip, XFS_IOLOCK_EXCL | XFS_ILOCK_EXCL));
@@ -6133,10 +6191,14 @@ xfs_bmap_split_extent(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	/* Read in all the extents */

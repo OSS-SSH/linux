@@ -226,11 +226,16 @@ static int read_scc_data(struct scc_priv *priv);
 static int scc_open(struct net_device *dev);
 static int scc_close(struct net_device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int scc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			      void __user *data, int cmd);
 =======
 static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int scc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			      void __user *data, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int scc_send_packet(struct sk_buff *skb, struct net_device *dev);
 static int scc_set_mac_address(struct net_device *dev, void *sa);
 
@@ -438,10 +443,14 @@ static const struct net_device_ops scc_netdev_ops = {
 	.ndo_stop = scc_close,
 	.ndo_start_xmit = scc_send_packet,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate = scc_siocdevprivate,
 =======
 	.ndo_do_ioctl = scc_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate = scc_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address = scc_set_mac_address,
 };
 
@@ -891,15 +900,20 @@ static int scc_close(struct net_device *dev)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int scc_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
 =======
 static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int scc_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct scc_priv *priv = dev->ml_priv;
 
 	switch (cmd) {
 	case SIOCGSCCPARAM:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (copy_to_user(data, &priv->param, sizeof(struct scc_param)))
 =======
@@ -907,6 +921,9 @@ static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		    (ifr->ifr_data, &priv->param,
 		     sizeof(struct scc_param)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(data, &priv->param, sizeof(struct scc_param)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		return 0;
 	case SIOCSSCCPARAM:
@@ -914,6 +931,7 @@ static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 			return -EPERM;
 		if (netif_running(dev))
 			return -EAGAIN;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (copy_from_user(&priv->param, data,
 				   sizeof(struct scc_param)))
@@ -930,6 +948,14 @@ static int scc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	default:
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_from_user(&priv->param, data,
+				   sizeof(struct scc_param)))
+			return -EFAULT;
+		return 0;
+	default:
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1002,10 +1028,14 @@ static inline void tx_on(struct scc_priv *priv)
 		set_dma_mode(priv->param.dma, DMA_MODE_WRITE);
 		set_dma_addr(priv->param.dma,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     virt_to_bus(priv->tx_buf[priv->tx_tail]) + n);
 =======
 			     (int) priv->tx_buf[priv->tx_tail] + n);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     virt_to_bus(priv->tx_buf[priv->tx_tail]) + n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		set_dma_count(priv->param.dma,
 			      priv->tx_len[priv->tx_tail] - n);
 		release_dma_lock(flags);
@@ -1053,10 +1083,14 @@ static inline void rx_on(struct scc_priv *priv)
 		set_dma_mode(priv->param.dma, DMA_MODE_READ);
 		set_dma_addr(priv->param.dma,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     virt_to_bus(priv->rx_buf[priv->rx_head]));
 =======
 			     (int) priv->rx_buf[priv->rx_head]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     virt_to_bus(priv->rx_buf[priv->rx_head]));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		set_dma_count(priv->param.dma, BUF_SIZE);
 		release_dma_lock(flags);
 		enable_dma(priv->param.dma);
@@ -1270,10 +1304,14 @@ static void special_condition(struct scc_priv *priv, int rc)
 			flags = claim_dma_lock();
 			set_dma_addr(priv->param.dma,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     virt_to_bus(priv->rx_buf[priv->rx_head]));
 =======
 				     (int) priv->rx_buf[priv->rx_head]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     virt_to_bus(priv->rx_buf[priv->rx_head]));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			set_dma_count(priv->param.dma, BUF_SIZE);
 			release_dma_lock(flags);
 		} else {

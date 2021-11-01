@@ -54,6 +54,7 @@ xfs_dir3_block_verify(
 		return __this_address;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 		if (!uuid_equal(&hdr3->uuid, &mp->m_sb.sb_meta_uuid))
 			return __this_address;
@@ -64,6 +65,12 @@ xfs_dir3_block_verify(
 			return __this_address;
 		if (be64_to_cpu(hdr3->blkno) != bp->b_bn)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+		if (!uuid_equal(&hdr3->uuid, &mp->m_sb.sb_meta_uuid))
+			return __this_address;
+		if (be64_to_cpu(hdr3->blkno) != xfs_buf_daddr(bp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return __this_address;
 		if (!xfs_log_check_lsn(mp, be64_to_cpu(hdr3->lsn)))
 			return __this_address;
@@ -79,10 +86,14 @@ xfs_dir3_block_read_verify(
 	xfs_failaddr_t		fa;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp) &&
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	     !xfs_buf_verify_cksum(bp, XFS_DIR3_DATA_CRC_OFF))
 		xfs_verifier_error(bp, -EFSBADCRC, __this_address);
 	else {
@@ -108,10 +119,14 @@ xfs_dir3_block_write_verify(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 =======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (bip)
@@ -137,10 +152,14 @@ xfs_dir3_block_header_check(
 	struct xfs_mount	*mp = dp->i_mount;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct xfs_dir3_blk_hdr *hdr3 = bp->b_addr;
 
 		if (be64_to_cpu(hdr3->owner) != dp->i_ino)
@@ -191,6 +210,7 @@ xfs_dir3_block_init(
 	xfs_trans_buf_set_type(tp, bp, XFS_BLFT_DIR_BLOCK_BUF);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 		memset(hdr3, 0, sizeof(*hdr3));
 		hdr3->magic = cpu_to_be32(XFS_DIR3_BLOCK_MAGIC);
@@ -201,6 +221,12 @@ xfs_dir3_block_init(
 		hdr3->magic = cpu_to_be32(XFS_DIR3_BLOCK_MAGIC);
 		hdr3->blkno = cpu_to_be64(bp->b_bn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+		memset(hdr3, 0, sizeof(*hdr3));
+		hdr3->magic = cpu_to_be32(XFS_DIR3_BLOCK_MAGIC);
+		hdr3->blkno = cpu_to_be64(xfs_buf_daddr(bp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		hdr3->owner = cpu_to_be64(dp->i_ino);
 		uuid_copy(&hdr3->uuid, &mp->m_sb.sb_meta_uuid);
 		return;

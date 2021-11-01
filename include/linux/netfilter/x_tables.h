@@ -239,11 +239,14 @@ struct xt_table {
 	int priority;		/* hook order */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* called when table is needed in the given netns */
 	int (*table_init)(struct net *net);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* A unique name... */
 	const char name[XT_TABLE_MAXNAMELEN];
 };
@@ -456,11 +459,17 @@ xt_get_per_cpu_counter(struct xt_counters *cnt, unsigned int cpu)
 struct nf_hook_ops *xt_hook_ops_alloc(const struct xt_table *, nf_hookfn *);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int xt_register_template(const struct xt_table *t, int(*table_init)(struct net *net));
 void xt_unregister_template(const struct xt_table *t);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int xt_register_template(const struct xt_table *t, int(*table_init)(struct net *net));
+void xt_unregister_template(const struct xt_table *t);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_NETFILTER_XTABLES_COMPAT
 #include <net/compat.h>
 

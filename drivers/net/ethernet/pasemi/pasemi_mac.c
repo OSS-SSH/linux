@@ -248,20 +248,29 @@ static int pasemi_mac_unmap_tx_skb(struct pasemi_mac *mac,
 	struct pci_dev *pdev = mac->dma_pdev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_unmap_single(&pdev->dev, dmas[0], skb_headlen(skb), DMA_TO_DEVICE);
 =======
 	pci_unmap_single(pdev, dmas[0], skb_headlen(skb), PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(&pdev->dev, dmas[0], skb_headlen(skb), DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (f = 0; f < nfrags; f++) {
 		const skb_frag_t *frag = &skb_shinfo(skb)->frags[f];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dma_unmap_page(&pdev->dev, dmas[f + 1], skb_frag_size(frag),
 			       DMA_TO_DEVICE);
 =======
 		pci_unmap_page(pdev, dmas[f+1], skb_frag_size(frag), PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&pdev->dev, dmas[f + 1], skb_frag_size(frag),
+			       DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	dev_kfree_skb_irq(skb);
 
@@ -558,6 +567,7 @@ static void pasemi_mac_free_rx_buffers(struct pasemi_mac *mac)
 		info = &RX_DESC_INFO(rx, i);
 		if (info->skb && info->dma) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_single(&mac->dma_pdev->dev, info->dma,
 					 info->skb->len, DMA_FROM_DEVICE);
 =======
@@ -566,6 +576,10 @@ static void pasemi_mac_free_rx_buffers(struct pasemi_mac *mac)
 					 info->skb->len,
 					 PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_single(&mac->dma_pdev->dev, info->dma,
+					 info->skb->len, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_kfree_skb_any(info->skb);
 		}
 		info->dma = 0;
@@ -615,6 +629,7 @@ static void pasemi_mac_replenish_rx_ring(struct net_device *dev,
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma = dma_map_single(&mac->dma_pdev->dev, skb->data,
 				     mac->bufsz - LOCAL_SKB_ALIGN,
 				     DMA_FROM_DEVICE);
@@ -622,11 +637,18 @@ static void pasemi_mac_replenish_rx_ring(struct net_device *dev,
 		if (dma_mapping_error(&mac->dma_pdev->dev, dma)) {
 =======
 		dma = pci_map_single(mac->dma_pdev, skb->data,
+=======
+		dma = dma_map_single(&mac->dma_pdev->dev, skb->data,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     mac->bufsz - LOCAL_SKB_ALIGN,
-				     PCI_DMA_FROMDEVICE);
+				     DMA_FROM_DEVICE);
 
+<<<<<<< HEAD
 		if (unlikely(pci_dma_mapping_error(mac->dma_pdev, dma))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (dma_mapping_error(&mac->dma_pdev->dev, dma)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_kfree_skb_irq(info->skb);
 			break;
 		}
@@ -764,6 +786,7 @@ static int pasemi_mac_clean_rx(struct pasemi_mac_rxring *rx,
 		len = (macrx & XCT_MACRX_LLEN_M) >> XCT_MACRX_LLEN_S;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_unmap_single(&pdev->dev, dma,
 				 mac->bufsz - LOCAL_SKB_ALIGN,
 				 DMA_FROM_DEVICE);
@@ -771,6 +794,11 @@ static int pasemi_mac_clean_rx(struct pasemi_mac_rxring *rx,
 		pci_unmap_single(pdev, dma, mac->bufsz - LOCAL_SKB_ALIGN,
 				 PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(&pdev->dev, dma,
+				 mac->bufsz - LOCAL_SKB_ALIGN,
+				 DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (macrx & XCT_MACRX_CRC) {
 			/* CRC error flagged */
@@ -1473,6 +1501,7 @@ static int pasemi_mac_start_tx(struct sk_buff *skb, struct net_device *dev)
 	nfrags = skb_shinfo(skb)->nr_frags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	map[0] = dma_map_single(&mac->dma_pdev->dev, skb->data,
 				skb_headlen(skb), DMA_TO_DEVICE);
 	map_size[0] = skb_headlen(skb);
@@ -1483,6 +1512,12 @@ static int pasemi_mac_start_tx(struct sk_buff *skb, struct net_device *dev)
 	map_size[0] = skb_headlen(skb);
 	if (pci_dma_mapping_error(mac->dma_pdev, map[0]))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	map[0] = dma_map_single(&mac->dma_pdev->dev, skb->data,
+				skb_headlen(skb), DMA_TO_DEVICE);
+	map_size[0] = skb_headlen(skb);
+	if (dma_mapping_error(&mac->dma_pdev->dev, map[0]))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_err_nolock;
 
 	for (i = 0; i < nfrags; i++) {
@@ -1570,12 +1605,17 @@ out_err:
 out_err_nolock:
 	while (nfrags--)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_unmap_single(&mac->dma_pdev->dev, map[nfrags],
 				 map_size[nfrags], DMA_TO_DEVICE);
 =======
 		pci_unmap_single(mac->dma_pdev, map[nfrags], map_size[nfrags],
 				 PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(&mac->dma_pdev->dev, map[nfrags],
+				 map_size[nfrags], DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return NETDEV_TX_BUSY;
 }

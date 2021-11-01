@@ -12,9 +12,13 @@
 #include <linux/dma-map-ops.h>
 #include <linux/io.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/delay.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/delay.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/irq.h>
 
@@ -211,10 +215,13 @@ static inline void udc_device_init(struct omap_usb_config *pdata)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if	IS_ENABLED(CONFIG_USB_OHCI_HCD)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* The dmamask must be set for OHCI to work */
 static u64 ohci_dmamask = ~(u32)0;
 
@@ -244,17 +251,24 @@ static struct platform_device ohci_device = {
 static inline void ohci_device_init(struct omap_usb_config *pdata)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!IS_ENABLED(CONFIG_USB_OHCI_HCD))
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!IS_ENABLED(CONFIG_USB_OHCI_HCD))
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cpu_is_omap7xx())
 		ohci_resources[1].start = INT_7XX_USB_HHC_1;
 	pdata->ohci_device = &ohci_device;
 	pdata->ocpi_enable = &ocpi_enable;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 #else
@@ -266,6 +280,8 @@ static inline void ohci_device_init(struct omap_usb_config *pdata)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if	defined(CONFIG_USB_OTG) && defined(CONFIG_ARCH_OMAP_OTG)
 
 static struct resource otg_resources[] = {
@@ -551,6 +567,9 @@ bad:
 
 #ifdef	CONFIG_ARCH_OMAP15XX
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* OMAP-1510 OHCI has its own MMU for DMA */
 #define OMAP1510_LB_MEMSIZE	32	/* Should be same as SDRAM size */
 #define OMAP1510_LB_CLOCK_DIV	0xfffec10c
@@ -561,6 +580,7 @@ bad:
 #define OMAP1510_LB_MMU_CAM_L	0xfffec230
 #define OMAP1510_LB_MMU_RAM_H	0xfffec234
 #define OMAP1510_LB_MMU_RAM_L	0xfffec238
+<<<<<<< HEAD
 
 /*
  * Bus address is physical address, except for OMAP-1510 Local Bus.
@@ -626,6 +646,78 @@ static void omap_1510_local_bus_reset(void)
 }
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+/*
+ * Bus address is physical address, except for OMAP-1510 Local Bus.
+ * OMAP-1510 bus address is translated into a Local Bus address if the
+ * OMAP bus type is lbus.
+ */
+#define OMAP1510_LB_OFFSET	   UL(0x30000000)
+
+/*
+ * OMAP-1510 specific Local Bus clock on/off
+ */
+static int omap_1510_local_bus_power(int on)
+{
+	if (on) {
+		omap_writel((1 << 1) | (1 << 0), OMAP1510_LB_MMU_CTL);
+		udelay(200);
+	} else {
+		omap_writel(0, OMAP1510_LB_MMU_CTL);
+	}
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+static int omap_1510_usb_ohci_notifier(struct notifier_block *nb,
+		unsigned long event, void *data)
+=======
+	return 0;
+}
+
+/*
+ * OMAP-1510 specific Local Bus initialization
+ * NOTE: This assumes 32MB memory size in OMAP1510LB_MEMSIZE.
+ *       See also arch/mach-omap/memory.h for __virt_to_dma() and
+ *       __dma_to_virt() which need to match with the physical
+ *       Local Bus address below.
+ */
+static int omap_1510_local_bus_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	unsigned int tlb;
+	unsigned long lbaddr, physaddr;
+
+	omap_writel((omap_readl(OMAP1510_LB_CLOCK_DIV) & 0xfffffff8) | 0x4,
+	       OMAP1510_LB_CLOCK_DIV);
+
+	/* Configure the Local Bus MMU table */
+	for (tlb = 0; tlb < OMAP1510_LB_MEMSIZE; tlb++) {
+		lbaddr = tlb * 0x00100000 + OMAP1510_LB_OFFSET;
+		physaddr = tlb * 0x00100000 + PHYS_OFFSET;
+		omap_writel((lbaddr & 0x0fffffff) >> 22, OMAP1510_LB_MMU_CAM_H);
+		omap_writel(((lbaddr & 0x003ffc00) >> 6) | 0xc,
+		       OMAP1510_LB_MMU_CAM_L);
+		omap_writel(physaddr >> 16, OMAP1510_LB_MMU_RAM_H);
+		omap_writel((physaddr & 0x0000fc00) | 0x300, OMAP1510_LB_MMU_RAM_L);
+		omap_writel(tlb << 4, OMAP1510_LB_MMU_LCK);
+		omap_writel(0x1, OMAP1510_LB_MMU_LD_TLB);
+	}
+
+	/* Enable the walking table */
+	omap_writel(omap_readl(OMAP1510_LB_MMU_CTL) | (1 << 3), OMAP1510_LB_MMU_CTL);
+	udelay(200);
+
+	return 0;
+}
+
+static void omap_1510_local_bus_reset(void)
+{
+	omap_1510_local_bus_power(1);
+	omap_1510_local_bus_init();
+}
 
 /* ULPD_DPLL_CTRL */
 #define DPLL_IOB		(1 << 13)
@@ -634,27 +726,6 @@ static void omap_1510_local_bus_reset(void)
 
 /* ULPD_APLL_CTRL */
 #define APLL_NDPLL_SWITCH	(1 << 0)
-
-<<<<<<< HEAD
-=======
-static int omap_1510_usb_ohci_notifier(struct notifier_block *nb,
-		unsigned long event, void *data)
-{
-	struct device *dev = data;
-
-	if (event != BUS_NOTIFY_ADD_DEVICE)
-		return NOTIFY_DONE;
-
-	if (strncmp(dev_name(dev), "ohci", 4) == 0 &&
-	    dma_direct_set_offset(dev, PHYS_OFFSET, OMAP1510_LB_OFFSET,
-			(u64)-1))
-		WARN_ONCE(1, "failed to set DMA offset\n");
-	return NOTIFY_OK;
-}
-
-static struct notifier_block omap_1510_usb_ohci_nb = {
-	.notifier_call		= omap_1510_usb_ohci_notifier,
-};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __init omap_1510_usb_init(struct omap_usb_config *config)
@@ -712,6 +783,7 @@ static void __init omap_1510_usb_init(struct omap_usb_config *config)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_USB_OHCI_HCD) && config->register_host) {
 		int status;
 
@@ -721,16 +793,23 @@ static void __init omap_1510_usb_init(struct omap_usb_config *config)
 =======
 #if	IS_ENABLED(CONFIG_USB_OHCI_HCD)
 	if (config->register_host) {
+=======
+	if (IS_ENABLED(CONFIG_USB_OHCI_HCD) && config->register_host) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int status;
 
-		bus_register_notifier(&platform_bus_type,
-				      &omap_1510_usb_ohci_nb);
 		ohci_device.dev.platform_data = config;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_direct_set_offset(&ohci_device.dev, PHYS_OFFSET,
+				      OMAP1510_LB_OFFSET, (u64)-1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = platform_device_register(&ohci_device);
 		if (status)
 			pr_debug("can't register OHCI device, %d\n", status);
 		/* hcd explicitly gates 48MHz */
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		config->lb_reset = omap_1510_local_bus_reset;
@@ -739,6 +818,11 @@ static void __init omap_1510_usb_init(struct omap_usb_config *config)
 	}
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		config->lb_reset = omap_1510_local_bus_reset;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #else

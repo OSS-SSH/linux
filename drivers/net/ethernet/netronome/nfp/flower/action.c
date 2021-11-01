@@ -263,6 +263,7 @@ nfp_fl_output(struct nfp_app *app, struct nfp_fl_output *output,
 
 static bool
 <<<<<<< HEAD
+<<<<<<< HEAD
 nfp_flower_tun_is_gre(struct flow_rule *rule, int start_idx)
 {
 	struct flow_action_entry *act = rule->action.entries;
@@ -273,6 +274,12 @@ nfp_flower_tun_is_gre(struct flow_cls_offload *flow, int start_idx)
 	struct flow_action_entry *act = flow->rule->action.entries;
 	int num_act = flow->rule->action.num_entries;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+nfp_flower_tun_is_gre(struct flow_rule *rule, int start_idx)
+{
+	struct flow_action_entry *act = rule->action.entries;
+	int num_act = rule->action.num_entries;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int act_idx;
 
 	/* Preparse action list for next mirred or redirect action */
@@ -287,10 +294,14 @@ nfp_flower_tun_is_gre(struct flow_cls_offload *flow, int start_idx)
 static enum nfp_flower_tun_type
 nfp_fl_get_tun_from_act(struct nfp_app *app,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			struct flow_rule *rule,
 =======
 			struct flow_cls_offload *flow,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct flow_rule *rule,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			const struct flow_action_entry *act, int act_idx)
 {
 	const struct ip_tunnel_info *tun = act->tunnel;
@@ -300,10 +311,14 @@ nfp_fl_get_tun_from_act(struct nfp_app *app,
 	 * in the mirred action for tunnels without l4.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (nfp_flower_tun_is_gre(rule, act_idx))
 =======
 	if (nfp_flower_tun_is_gre(flow, act_idx))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (nfp_flower_tun_is_gre(rule, act_idx))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NFP_FL_TUNNEL_GRE;
 
 	switch (tun->key.tp_dst) {
@@ -804,6 +819,7 @@ struct nfp_flower_pedit_acts {
 
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 nfp_fl_commit_mangle(struct flow_rule *rule, char *nfp_action,
 		     int *a_len, struct nfp_flower_pedit_acts *set_act,
 		     u32 *csum_updated)
@@ -815,6 +831,12 @@ nfp_fl_commit_mangle(struct flow_cls_offload *flow, char *nfp_action,
 {
 	struct flow_rule *rule = flow_cls_offload_flow_rule(flow);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+nfp_fl_commit_mangle(struct flow_rule *rule, char *nfp_action,
+		     int *a_len, struct nfp_flower_pedit_acts *set_act,
+		     u32 *csum_updated)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size_t act_size = 0;
 	u8 ip_proto = 0;
 
@@ -913,10 +935,14 @@ nfp_fl_commit_mangle(struct flow_cls_offload *flow, char *nfp_action,
 static int
 nfp_fl_pedit(const struct flow_action_entry *act,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	     char *nfp_action, int *a_len,
 =======
 	     struct flow_cls_offload *flow, char *nfp_action, int *a_len,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	     char *nfp_action, int *a_len,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	     u32 *csum_updated, struct nfp_flower_pedit_acts *set_act,
 	     struct netlink_ext_ack *extack)
 {
@@ -1004,10 +1030,14 @@ nfp_flower_output_action(struct nfp_app *app,
 static int
 nfp_flower_loop_action(struct nfp_app *app, const struct flow_action_entry *act,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       struct flow_rule *rule,
 =======
 		       struct flow_cls_offload *flow,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       struct flow_rule *rule,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       struct nfp_fl_payload *nfp_fl, int *a_len,
 		       struct net_device *netdev,
 		       enum nfp_flower_tun_type *tun_type, int *tun_out_cnt,
@@ -1076,10 +1106,14 @@ nfp_flower_loop_action(struct nfp_app *app, const struct flow_action_entry *act,
 		const struct ip_tunnel_info *ip_tun = act->tunnel;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*tun_type = nfp_fl_get_tun_from_act(app, rule, act, act_idx);
 =======
 		*tun_type = nfp_fl_get_tun_from_act(app, flow, act, act_idx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*tun_type = nfp_fl_get_tun_from_act(app, rule, act, act_idx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (*tun_type == NFP_FL_TUNNEL_NONE) {
 			NL_SET_ERR_MSG_MOD(extack, "unsupported offload: unsupported tunnel type in action list");
 			return -EOPNOTSUPP;
@@ -1121,10 +1155,14 @@ nfp_flower_loop_action(struct nfp_app *app, const struct flow_action_entry *act,
 		return 0;
 	case FLOW_ACTION_MANGLE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (nfp_fl_pedit(act, &nfp_fl->action_data[*a_len],
 =======
 		if (nfp_fl_pedit(act, flow, &nfp_fl->action_data[*a_len],
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (nfp_fl_pedit(act, &nfp_fl->action_data[*a_len],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 a_len, csum_updated, set_act, extack))
 			return -EOPNOTSUPP;
 		break;
@@ -1234,10 +1272,14 @@ static bool nfp_fl_check_mangle_end(struct flow_action *flow_act,
 
 int nfp_flower_compile_action(struct nfp_app *app,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct flow_rule *rule,
 =======
 			      struct flow_cls_offload *flow,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct flow_rule *rule,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      struct net_device *netdev,
 			      struct nfp_fl_payload *nfp_flow,
 			      struct netlink_ext_ack *extack)
@@ -1250,10 +1292,14 @@ int nfp_flower_compile_action(struct nfp_app *app,
 	u32 csum_updated = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!flow_action_hw_stats_check(&rule->action, extack,
 =======
 	if (!flow_action_hw_stats_check(&flow->rule->action, extack,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!flow_action_hw_stats_check(&rule->action, extack,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					FLOW_ACTION_HW_STATS_DELAYED_BIT))
 		return -EOPNOTSUPP;
 
@@ -1266,6 +1312,7 @@ int nfp_flower_compile_action(struct nfp_app *app,
 	out_cnt = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flow_action_for_each(i, act, &rule->action) {
 		if (nfp_fl_check_mangle_start(&rule->action, i))
 			memset(&set_act, 0, sizeof(set_act));
@@ -1276,6 +1323,12 @@ int nfp_flower_compile_action(struct nfp_app *app,
 			memset(&set_act, 0, sizeof(set_act));
 		err = nfp_flower_loop_action(app, act, flow, nfp_flow, &act_len,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flow_action_for_each(i, act, &rule->action) {
+		if (nfp_fl_check_mangle_start(&rule->action, i))
+			memset(&set_act, 0, sizeof(set_act));
+		err = nfp_flower_loop_action(app, act, rule, nfp_flow, &act_len,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					     netdev, &tun_type, &tun_out_cnt,
 					     &out_cnt, &csum_updated,
 					     &set_act, &pkt_host, extack, i);
@@ -1283,12 +1336,17 @@ int nfp_flower_compile_action(struct nfp_app *app,
 			return err;
 		act_cnt++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (nfp_fl_check_mangle_end(&rule->action, i))
 			nfp_fl_commit_mangle(rule,
 =======
 		if (nfp_fl_check_mangle_end(&flow->rule->action, i))
 			nfp_fl_commit_mangle(flow,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (nfp_fl_check_mangle_end(&rule->action, i))
+			nfp_fl_commit_mangle(rule,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					     &nfp_flow->action_data[act_len],
 					     &act_len, &set_act, &csum_updated);
 	}

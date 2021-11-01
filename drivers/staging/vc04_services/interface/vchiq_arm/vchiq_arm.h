@@ -15,14 +15,20 @@
 #include "vchiq_debugfs.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Some per-instance constants */
 #define MAX_COMPLETIONS 128
 #define MAX_SERVICES 64
 #define MAX_ELEMENTS 8
 #define MSG_QUEUE_SIZE 128
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum USE_TYPE_E {
 	USE_TYPE_SERVICE,
 	USE_TYPE_VCHIQ
@@ -68,6 +74,9 @@ struct vchiq_drvdata {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct user_service {
 	struct vchiq_service *service;
 	void __user *userdata;
@@ -119,6 +128,7 @@ struct dump_context {
 	loff_t offset;
 };
 
+<<<<<<< HEAD
 extern int vchiq_arm_log_level;
 extern int vchiq_susp_log_level;
 
@@ -130,6 +140,14 @@ extern int vchiq_arm_log_level;
 extern int vchiq_susp_log_level;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern int vchiq_arm_log_level;
+extern int vchiq_susp_log_level;
+
+extern spinlock_t msg_queue_spinlock;
+extern struct vchiq_state g_state;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int vchiq_platform_init(struct platform_device *pdev,
 			struct vchiq_state *state);
 
@@ -184,6 +202,9 @@ extern void
 vchiq_instance_set_trace(struct vchiq_instance *instance, int trace);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_VCHIQ_CDEV)
 
 extern void
@@ -206,6 +227,9 @@ service_callback(enum vchiq_reason reason, struct vchiq_header *header,
 extern void
 free_bulk_waiter(struct vchiq_instance *instance);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* VCHIQ_ARM_H */

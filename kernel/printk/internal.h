@@ -7,11 +7,15 @@
 #ifdef CONFIG_PRINTK
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Flags for a single printk record. */
 enum printk_info_flags {
 	LOG_NEWLINE	= 2,	/* text ended with a newline */
 	LOG_CONT	= 8,	/* text is a fragment of a continuation line */
 };
+<<<<<<< HEAD
 =======
 #define PRINTK_SAFE_CONTEXT_MASK	0x007ffffff
 #define PRINTK_NMI_DIRECT_CONTEXT_MASK	0x008000000
@@ -19,6 +23,8 @@ enum printk_info_flags {
 
 #define PRINTK_NMI_CONTEXT_OFFSET	0x010000000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 __printf(4, 0)
 int vprintk_store(int facility, int level,
@@ -28,6 +34,7 @@ int vprintk_store(int facility, int level,
 __printf(1, 0) int vprintk_default(const char *fmt, va_list args);
 __printf(1, 0) int vprintk_deferred(const char *fmt, va_list args);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 void __printk_safe_enter(void);
@@ -35,6 +42,9 @@ void __printk_safe_exit(void);
 
 void printk_safe_init(void);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool printk_percpu_data_ready(void);
 
 #define printk_safe_enter_irqsave(flags)	\
@@ -49,6 +59,7 @@ bool printk_percpu_data_ready(void);
 		local_irq_restore(flags);	\
 	} while (0)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 void defer_console_output(void);
 
@@ -70,6 +81,12 @@ u16 printk_parse_prefix(const char *text, int *level,
 void defer_console_output(void);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void defer_console_output(void);
+
+u16 printk_parse_prefix(const char *text, int *level,
+			enum printk_info_flags *flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 
 /*
@@ -81,11 +98,14 @@ void defer_console_output(void);
 #define printk_safe_exit_irqrestore(flags) local_irq_restore(flags)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define printk_safe_enter_irq() local_irq_disable()
 #define printk_safe_exit_irq() local_irq_enable()
 
 static inline void printk_safe_init(void) { }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool printk_percpu_data_ready(void) { return false; }
 #endif /* CONFIG_PRINTK */

@@ -253,6 +253,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		smcc: memory-controller@e000e000 {
 			compatible = "arm,pl353-smc-r2p1", "arm,primecell";
 			reg = <0xe000e000 0x0001000>;
@@ -274,8 +277,11 @@
 			};
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sdhci0: mmc@e0100000 {
 			compatible = "arasan,sdhci-8.9a";
 			status = "disabled";

@@ -592,6 +592,9 @@ static void r871xu_dev_remove(struct usb_interface *pusb_intf)
 	struct net_device *pnetdev = usb_get_intfdata(pusb_intf);
 	struct usb_device *udev = interface_to_usbdev(pusb_intf);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct _adapter *padapter = netdev_priv(pnetdev);
 
 	/* never exit with a firmware callback pending */
@@ -615,6 +618,7 @@ static void r871xu_dev_remove(struct usb_interface *pusb_intf)
 	 * when disconnect
 	 */
 	usb_put_dev(udev);
+<<<<<<< HEAD
 
 =======
 
@@ -647,6 +651,9 @@ static void r871xu_dev_remove(struct usb_interface *pusb_intf)
 	}
 firmware_load_fail:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If we didn't unplug usb dongle and remove/insert module, driver
 	 * fails on sitesurvey for the first time when device is up.
 	 * Reset usb port for sitesurvey fail issue.

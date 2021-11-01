@@ -28,6 +28,9 @@ properties:
   interrupts:
     items:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - description: Transmit End Interrupt
       - description: Receive Data Full Interrupt
       - description: Transmit Data Empty Interrupt
@@ -47,6 +50,7 @@ properties:
       - const: naki
       - const: ali
       - const: tmoi
+<<<<<<< HEAD
 =======
       - description: Transmit End Interrupt (TEI)
       - description: Receive Data Full Interrupt (RI)
@@ -57,6 +61,8 @@ properties:
       - description: Arbitration-Lost Interrupt (ALI)
       - description: Timeout Interrupt (TMOI)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   clock-frequency:
     description:
@@ -74,9 +80,13 @@ required:
   - reg
   - interrupts
 <<<<<<< HEAD
+<<<<<<< HEAD
   - interrupt-names
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  - interrupt-names
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   - clocks
   - clock-frequency
   - power-domains
@@ -112,10 +122,15 @@ examples:
                          <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>,
                          <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH>;
 <<<<<<< HEAD
+<<<<<<< HEAD
             interrupt-names = "tei", "ri", "ti", "spi", "sti", "naki", "ali",
                               "tmoi";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+            interrupt-names = "tei", "ri", "ti", "spi", "sti", "naki", "ali",
+                              "tmoi";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             clocks = <&mstp9_clks R7S72100_CLK_I2C0>;
             clock-frequency = <100000>;
             power-domains = <&cpg_clocks>;

@@ -205,10 +205,14 @@ static int dra7xx_pcie_handle_msi(struct pcie_port *pp, int index)
 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
 	unsigned long val;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int pos;
 =======
 	int pos, irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int pos;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	val = dw_pcie_readl_dbi(pci, PCIE_MSI_INTR0_STATUS +
 				   (index * MSI_REG_CTRL_BLOCK_SIZE));
@@ -218,6 +222,7 @@ static int dra7xx_pcie_handle_msi(struct pcie_port *pp, int index)
 	pos = find_next_bit(&val, MAX_MSI_IRQS_PER_CTRL, 0);
 	while (pos != MAX_MSI_IRQS_PER_CTRL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(pp->irq_domain,
 					  (index * MAX_MSI_IRQS_PER_CTRL) + pos);
 =======
@@ -225,6 +230,10 @@ static int dra7xx_pcie_handle_msi(struct pcie_port *pp, int index)
 				       (index * MAX_MSI_IRQS_PER_CTRL) + pos);
 		generic_handle_irq(irq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(pp->irq_domain,
+					  (index * MAX_MSI_IRQS_PER_CTRL) + pos);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pos++;
 		pos = find_next_bit(&val, MAX_MSI_IRQS_PER_CTRL, pos);
 	}
@@ -267,10 +276,14 @@ static void dra7xx_pcie_msi_irq_handler(struct irq_desc *desc)
 	struct pcie_port *pp;
 	unsigned long reg;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 bit;
 =======
 	u32 virq, bit;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 bit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_enter(chip, desc);
 
@@ -290,6 +303,7 @@ static void dra7xx_pcie_msi_irq_handler(struct irq_desc *desc)
 	case INTC:
 	case INTD:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for_each_set_bit(bit, &reg, PCI_NUM_INTX)
 			generic_handle_domain_irq(dra7xx->irq_domain, bit);
 =======
@@ -299,6 +313,10 @@ static void dra7xx_pcie_msi_irq_handler(struct irq_desc *desc)
 				generic_handle_irq(virq);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for_each_set_bit(bit, &reg, PCI_NUM_INTX)
+			generic_handle_domain_irq(dra7xx->irq_domain, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 

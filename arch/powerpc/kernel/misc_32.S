@@ -68,10 +68,14 @@ _GLOBAL(reloc_got2)
 	beqlr
 	mtctr	r8
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4
 =======
 	bl	1f
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r0
 	lis	r4,1b@ha
 	addi	r4,r4,1b@l
@@ -242,10 +246,14 @@ _GLOBAL(copy_page)
 
 0:	twnei	r5, 0	/* WARN if r3 is not cache aligned */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	EMIT_WARN_ENTRY 0b,__FILE__,__LINE__, BUGFLAG_WARNING
 =======
 	EMIT_BUG_ENTRY 0b,__FILE__,__LINE__, BUGFLAG_WARNING
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	EMIT_WARN_ENTRY 0b,__FILE__,__LINE__, BUGFLAG_WARNING
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	addi	r4,r4,-4
 

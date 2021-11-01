@@ -233,6 +233,9 @@ err_out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define STRSIZE				4096
 
 static void btf_dump_snprintf(void *ctx, const char *fmt, va_list args)
@@ -815,6 +818,7 @@ static void test_btf_dump_datasec_data(char *str)
 			 license, sizeof(license));
 }
 
+<<<<<<< HEAD
 void test_btf_dump() {
 	char str[STRSIZE];
 	struct btf_dump_opts opts = { .ctx = str };
@@ -823,6 +827,13 @@ void test_btf_dump() {
 =======
 void test_btf_dump() {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void test_btf_dump() {
+	char str[STRSIZE];
+	struct btf_dump_opts opts = { .ctx = str };
+	struct btf_dump *d;
+	struct btf *btf;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	for (i = 0; i < ARRAY_SIZE(btf_dump_test_cases); i++) {
@@ -836,6 +847,9 @@ void test_btf_dump() {
 	if (test__start_subtest("btf_dump: incremental"))
 		test_btf_dump_incremental();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	btf = libbpf_find_kernel_btf();
 	if (!ASSERT_OK_PTR(btf, "no kernel BTF found"))
@@ -865,6 +879,9 @@ void test_btf_dump() {
 
 	if (test__start_subtest("btf_dump: datasec_data"))
 		test_btf_dump_datasec_data(str);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

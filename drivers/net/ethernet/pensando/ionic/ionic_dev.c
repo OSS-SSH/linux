@@ -16,9 +16,13 @@ static void ionic_watchdog_cb(struct timer_list *t)
 	struct ionic *ionic = from_timer(ionic, t, watchdog_timer);
 	struct ionic_lif *lif = ionic->lif;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ionic_deferred_work *work;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ionic_deferred_work *work;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int hb;
 
 	mod_timer(&ionic->watchdog_timer,
@@ -36,6 +40,9 @@ static void ionic_watchdog_cb(struct timer_list *t)
 	    !test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		ionic_link_status_check_request(lif, CAN_NOT_SLEEP);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (test_bit(IONIC_LIF_F_FILTER_SYNC_NEEDED, lif->state)) {
 		work = kzalloc(sizeof(*work), GFP_ATOMIC);
@@ -48,8 +55,11 @@ static void ionic_watchdog_cb(struct timer_list *t)
 		netdev_dbg(lif->netdev, "deferred: rx_mode\n");
 		ionic_lif_deferred_enqueue(&lif->deferred, work);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void ionic_init_devinfo(struct ionic *ionic)
@@ -126,10 +136,15 @@ int ionic_dev_setup(struct ionic *ionic)
 	idev->fw_hb_ready = true;
 	idev->fw_status_ready = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	idev->fw_generation = IONIC_FW_STS_F_GENERATION &
 			      ioread8(&idev->dev_info_regs->fw_status);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	idev->fw_generation = IONIC_FW_STS_F_GENERATION &
+			      ioread8(&idev->dev_info_regs->fw_status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mod_timer(&ionic->watchdog_timer,
 		  round_jiffies(jiffies + ionic->watchdog_period));
@@ -146,12 +161,18 @@ int ionic_heartbeat_check(struct ionic *ionic)
 	struct ionic_dev *idev = &ionic->idev;
 	unsigned long check_time, last_check_time;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool fw_status_ready = true;
 	bool fw_hb_ready;
 	u8 fw_generation;
 =======
 	bool fw_status_ready, fw_hb_ready;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool fw_status_ready = true;
+	bool fw_hb_ready;
+	u8 fw_generation;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 fw_status;
 	u32 fw_hb;
 
@@ -170,6 +191,7 @@ do_check_time:
 
 	/* firmware is useful only if the running bit is set and
 	 * fw_status != 0xff (bad PCI read)
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * If fw_status is not ready don't bother with the generation.
 	 */
@@ -199,6 +221,31 @@ do_check_time:
 	fw_status = ioread8(&idev->dev_info_regs->fw_status);
 	fw_status_ready = (fw_status != 0xff) && (fw_status & IONIC_FW_STS_F_RUNNING);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * If fw_status is not ready don't bother with the generation.
+	 */
+	fw_status = ioread8(&idev->dev_info_regs->fw_status);
+
+	if (fw_status == 0xff || !(fw_status & IONIC_FW_STS_F_RUNNING)) {
+		fw_status_ready = false;
+	} else {
+		fw_generation = fw_status & IONIC_FW_STS_F_GENERATION;
+		if (idev->fw_generation != fw_generation) {
+			dev_info(ionic->dev, "FW generation 0x%02x -> 0x%02x\n",
+				 idev->fw_generation, fw_generation);
+
+			idev->fw_generation = fw_generation;
+
+			/* If the generation changed, the fw status is not
+			 * ready so we need to trigger a fw-down cycle.  After
+			 * the down, the next watchdog will see the fw is up
+			 * and the generation value stable, so will trigger
+			 * the fw-up activity.
+			 */
+			fw_status_ready = false;
+		}
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* is this a transition? */
 	if (fw_status_ready != idev->fw_status_ready) {

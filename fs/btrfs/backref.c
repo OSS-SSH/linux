@@ -1212,10 +1212,14 @@ again:
 	head = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = btrfs_search_slot(NULL, fs_info->extent_root, &key, path, 0, 0);
 =======
 	ret = btrfs_search_slot(trans, fs_info->extent_root, &key, path, 0, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = btrfs_search_slot(NULL, fs_info->extent_root, &key, path, 0, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		goto out;
 	BUG_ON(ret == 0);
@@ -1493,6 +1497,7 @@ int btrfs_find_all_roots(struct btrfs_trans_handle *trans,
 			 struct btrfs_fs_info *fs_info, u64 bytenr,
 			 u64 time_seq, struct ulist **roots,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 bool skip_commit_root_sem)
 {
 	int ret;
@@ -1504,15 +1509,23 @@ int btrfs_find_all_roots(struct btrfs_trans_handle *trans,
 	if (!trans && !skip_commit_root_sem)
 =======
 			 bool ignore_offset)
+=======
+			 bool skip_commit_root_sem)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 
-	if (!trans)
+	if (!trans && !skip_commit_root_sem)
 		down_read(&fs_info->commit_root_sem);
 	ret = btrfs_find_all_roots_safe(trans, fs_info, bytenr,
+<<<<<<< HEAD
 					time_seq, roots, ignore_offset);
 	if (!trans)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					time_seq, roots, false);
+	if (!trans && !skip_commit_root_sem)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		up_read(&fs_info->commit_root_sem);
 	return ret;
 }

@@ -26,6 +26,9 @@ int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd)
 	hfs_dbg(BNODE_REFS, "find_init: %d (%p)\n",
 		tree->cnid, __builtin_return_address(0));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (tree->cnid) {
 	case HFS_CAT_CNID:
 		mutex_lock_nested(&tree->tree_lock, CATALOG_BTREE_MUTEX);
@@ -39,9 +42,12 @@ int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd)
 	default:
 		return -EINVAL;
 	}
+<<<<<<< HEAD
 =======
 	mutex_lock(&tree->tree_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

@@ -454,12 +454,17 @@ static int initialize_controller(struct scsi_device *sdev,
 			err = SCSI_DH_RES_TEMP_UNAVAIL;
 		else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			h->sdev = sdev;
 			list_add_rcu(&h->node, &h->ctlr->dh_list);
 =======
 			list_add_rcu(&h->node, &h->ctlr->dh_list);
 			h->sdev = sdev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			h->sdev = sdev;
+			list_add_rcu(&h->node, &h->ctlr->dh_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		spin_unlock(&list_lock);
 		err = SCSI_DH_OK;
@@ -784,17 +789,24 @@ static void rdac_bus_detach( struct scsi_device *sdev )
 	if (h->ctlr) {
 		list_del_rcu(&h->node);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		h->sdev = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kref_put(&h->ctlr->kref, release_controller);
 	}
 	spin_unlock(&list_lock);
 	sdev->handler_data = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	synchronize_rcu();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	synchronize_rcu();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(h);
 }
 

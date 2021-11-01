@@ -42,6 +42,7 @@ int
 get_joliet_filename(struct iso_directory_record * de, unsigned char *outname, struct inode * inode)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nls_table *nls;
 	unsigned char len = 0;
 
@@ -50,14 +51,19 @@ get_joliet_filename(struct iso_directory_record * de, unsigned char *outname, st
 	if (!nls) {
 =======
 	unsigned char utf8;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nls_table *nls;
 	unsigned char len = 0;
 
-	utf8 = ISOFS_SB(inode->i_sb)->s_utf8;
 	nls = ISOFS_SB(inode->i_sb)->s_nls_iocharset;
 
+<<<<<<< HEAD
 	if (utf8) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!nls) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		len = utf16s_to_utf8s((const wchar_t *) de->name,
 				de->name_len[0] >> 1, UTF16_BIG_ENDIAN,
 				outname, PAGE_SIZE);

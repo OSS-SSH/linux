@@ -79,10 +79,14 @@ static void media5200_irq_cascade(struct irq_desc *desc)
 {
 	struct irq_chip *chip = irq_desc_get_chip(desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int val;
 =======
 	int sub_virq, val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 status, enable;
 
 	/* Mask off the cascaded IRQ */
@@ -97,6 +101,7 @@ static void media5200_irq_cascade(struct irq_desc *desc)
 	val = ffs((status & enable) >> MEDIA5200_IRQ_SHIFT);
 	if (val) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(media5200_irq.irqhost, val - 1);
 		/* pr_debug("%s: virq=%i s=%.8x e=%.8x hwirq=%i\n",
 		 *          __func__, virq, status, enable, val - 1);
@@ -108,6 +113,12 @@ static void media5200_irq_cascade(struct irq_desc *desc)
 		 */
 		generic_handle_irq(sub_virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(media5200_irq.irqhost, val - 1);
+		/* pr_debug("%s: virq=%i s=%.8x e=%.8x hwirq=%i\n",
+		 *          __func__, virq, status, enable, val - 1);
+		 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Processing done; can reenable the cascade now */

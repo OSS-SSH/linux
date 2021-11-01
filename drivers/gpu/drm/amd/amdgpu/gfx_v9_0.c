@@ -788,10 +788,14 @@ static void gfx_v9_0_rlcg_w(struct amdgpu_device *adev, u32 offset, u32 v, u32 f
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void gfx_v9_0_sriov_wreg(struct amdgpu_device *adev, u32 offset,
 =======
 static void gfx_v9_0_rlcg_wreg(struct amdgpu_device *adev, u32 offset,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void gfx_v9_0_sriov_wreg(struct amdgpu_device *adev, u32 offset,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       u32 v, u32 acc_flags, u32 hwip)
 {
 	if ((acc_flags & AMDGPU_REGS_RLC) &&
@@ -1300,6 +1304,9 @@ static bool is_raven_kicker(struct amdgpu_device *adev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool check_if_enlarge_doorbell_range(struct amdgpu_device *adev)
 {
 	if ((adev->asic_type == CHIP_RENOIR) &&
@@ -1310,8 +1317,11 @@ static bool check_if_enlarge_doorbell_range(struct amdgpu_device *adev)
 		return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void gfx_v9_0_check_if_need_gfxoff(struct amdgpu_device *adev)
 {
 	if (gfx_v9_0_should_disable_gfxoff(adev->pdev))
@@ -2098,9 +2108,13 @@ static void gfx_v9_0_read_wave_data(struct amdgpu_device *adev, uint32_t simd, u
 	dst[(*no_fields)++] = wave_read_ind(adev, simd, wave, ixSQ_WAVE_IB_DBG0);
 	dst[(*no_fields)++] = wave_read_ind(adev, simd, wave, ixSQ_WAVE_M0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dst[(*no_fields)++] = wave_read_ind(adev, simd, wave, ixSQ_WAVE_MODE);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dst[(*no_fields)++] = wave_read_ind(adev, simd, wave, ixSQ_WAVE_MODE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void gfx_v9_0_read_wave_sgprs(struct amdgpu_device *adev, uint32_t simd,
@@ -3610,10 +3624,14 @@ static int gfx_v9_0_mqd_init(struct amdgpu_ring *ring)
 	/* set static priority for a queue/ring */
 	gfx_v9_0_mqd_set_priority(ring, mqd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mqd->cp_hqd_quantum = RREG32_SOC15(GC, 0, mmCP_HQD_QUANTUM);
 =======
 	mqd->cp_hqd_quantum = RREG32(mmCP_HQD_QUANTUM);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mqd->cp_hqd_quantum = RREG32_SOC15(GC, 0, mmCP_HQD_QUANTUM);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* map_queues packet doesn't need activate the queue,
 	 * so only kiq need set this field.
@@ -3701,6 +3719,9 @@ static int gfx_v9_0_kiq_init_register(struct amdgpu_ring *ring)
 		WREG32_SOC15(GC, 0, mmCP_MEC_DOORBELL_RANGE_LOWER,
 					(adev->doorbell_index.kiq * 2) << 2);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* If GC has entered CGPG, ringing doorbell > first page
 		 * doesn't wakeup GC. Enlarge CP_MEC_DOORBELL_RANGE_UPPER to
 		 * workaround this issue. And this change has to align with firmware
@@ -3711,9 +3732,12 @@ static int gfx_v9_0_kiq_init_register(struct amdgpu_ring *ring)
 					(adev->doorbell.size - 4));
 		else
 			WREG32_SOC15(GC, 0, mmCP_MEC_DOORBELL_RANGE_UPPER,
+<<<<<<< HEAD
 =======
 		WREG32_SOC15(GC, 0, mmCP_MEC_DOORBELL_RANGE_UPPER,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					(adev->doorbell_index.userqueue_end * 2) << 2);
 	}
 
@@ -5170,10 +5194,14 @@ static const struct amdgpu_rlc_funcs gfx_v9_0_rlc_funcs = {
 	.start = gfx_v9_0_rlc_start,
 	.update_spm_vmid = gfx_v9_0_update_spm_vmid,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.sriov_wreg = gfx_v9_0_sriov_wreg,
 =======
 	.rlcg_wreg = gfx_v9_0_rlcg_wreg,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.sriov_wreg = gfx_v9_0_sriov_wreg,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.is_rlcg_access_range = gfx_v9_0_is_rlcg_access_range,
 };
 

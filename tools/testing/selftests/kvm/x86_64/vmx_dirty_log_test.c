@@ -112,10 +112,14 @@ int main(int argc, char *argv[])
 	nested_map(vmx, vm, NESTED_TEST_MEM2, GUEST_TEST_MEM, 4096);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bmap = bitmap_zalloc(TEST_MEM_PAGES);
 =======
 	bmap = bitmap_alloc(TEST_MEM_PAGES);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bmap = bitmap_zalloc(TEST_MEM_PAGES);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	host_test_mem = addr_gpa2hva(vm, GUEST_TEST_MEM);
 
 	while (!done) {

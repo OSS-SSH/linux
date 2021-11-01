@@ -21,9 +21,12 @@
 #include <asm/xive-regs.h>
 #include <asm/debug.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/opal.h>
 
 #include <linux/debugfs.h>
@@ -97,10 +100,14 @@ void kvmppc_xive_native_cleanup_vcpu(struct kvm_vcpu *vcpu)
 		/* Free the escalation irq */
 		if (xc->esc_virq[i]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (kvmppc_xive_has_single_escalation(xc->xive))
 =======
 			if (xc->xive->single_escalation)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (kvmppc_xive_has_single_escalation(xc->xive))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				xive_cleanup_single_escalation(vcpu, xc,
 							xc->esc_virq[i]);
 			free_irq(xc->esc_virq[i], vcpu);
@@ -176,23 +183,33 @@ int kvmppc_xive_native_connect_vcpu(struct kvm_device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!kvmppc_xive_check_save_restore(vcpu)) {
 		pr_err("inconsistent save-restore setup for VCPU %d\n", server_num);
 		rc = -EIO;
 		goto bail;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Enable the VP first as the single escalation mode will
 	 * affect escalation interrupts numbering
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = xive_native_enable_vp(xc->vp_id, kvmppc_xive_has_single_escalation(xive));
 =======
 	rc = xive_native_enable_vp(xc->vp_id, xive->single_escalation);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = xive_native_enable_vp(xc->vp_id, kvmppc_xive_has_single_escalation(xive));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc) {
 		pr_err("Failed to enable VP in OPAL: %d\n", rc);
 		goto bail;
@@ -714,10 +731,14 @@ static int kvmppc_xive_native_set_queue_config(struct kvmppc_xive *xive,
 
 	rc = kvmppc_xive_attach_escalation(vcpu, priority,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					   kvmppc_xive_has_single_escalation(xive));
 =======
 					   xive->single_escalation);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					   kvmppc_xive_has_single_escalation(xive));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 error:
 	if (rc)
 		kvmppc_xive_native_cleanup_queue(vcpu, priority);
@@ -845,10 +866,14 @@ static int kvmppc_xive_reset(struct kvmppc_xive *xive)
 
 			/* Single escalation, no queue 7 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (prio == 7 && kvmppc_xive_has_single_escalation(xive))
 =======
 			if (prio == 7 && xive->single_escalation)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (prio == 7 && kvmppc_xive_has_single_escalation(xive))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 
 			if (xc->esc_virq[prio]) {
@@ -1140,15 +1165,21 @@ static int kvmppc_xive_native_create(struct kvm_device *dev, u32 type)
 	xive->nr_servers = KVM_MAX_VCPUS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xive_native_has_single_escalation())
 		xive->flags |= KVMPPC_XIVE_FLAG_SINGLE_ESCALATION;
 
 	if (xive_native_has_save_restore())
 		xive->flags |= KVMPPC_XIVE_FLAG_SAVE_RESTORE;
 
+<<<<<<< HEAD
 =======
 	xive->single_escalation = xive_native_has_single_escalation();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xive->ops = &kvmppc_xive_native_ops;
 
 	kvm->arch.xive = xive;
@@ -1295,10 +1326,14 @@ static void xive_native_debugfs_init(struct kvmppc_xive *xive)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xive->dentry = debugfs_create_file(name, 0444, arch_debugfs_dir,
 =======
 	xive->dentry = debugfs_create_file(name, 0444, powerpc_debugfs_root,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xive->dentry = debugfs_create_file(name, 0444, arch_debugfs_dir,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					   xive, &xive_native_debug_fops);
 
 	pr_debug("%s: created %s\n", __func__, name);

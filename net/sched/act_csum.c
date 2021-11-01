@@ -42,6 +42,7 @@ static struct tc_action_ops act_csum_ops;
 
 static int tcf_csum_init(struct net *net, struct nlattr *nla,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 struct nlattr *est, struct tc_action **a,
 			 struct tcf_proto *tp,
 			 u32 flags, struct netlink_ext_ack *extack)
@@ -55,6 +56,14 @@ static int tcf_csum_init(struct net *net, struct nlattr *nla,
 {
 	struct tc_action_net *tn = net_generic(net, csum_net_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 struct nlattr *est, struct tc_action **a,
+			 struct tcf_proto *tp,
+			 u32 flags, struct netlink_ext_ack *extack)
+{
+	struct tc_action_net *tn = net_generic(net, csum_net_id);
+	bool bind = flags & TCA_ACT_FLAGS_BIND;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct tcf_csum_params *params_new;
 	struct nlattr *tb[TCA_CSUM_MAX + 1];
 	struct tcf_chain *goto_ch = NULL;
@@ -88,10 +97,14 @@ static int tcf_csum_init(struct net *net, struct nlattr *nla,
 		if (bind)/* dont override defaults */
 			return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
 =======
 		if (!ovr) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			tcf_idr_release(*a, bind);
 			return -EEXIST;
 		}

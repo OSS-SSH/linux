@@ -553,10 +553,14 @@ static struct dasd_ccw_req *dasd_diag_build_cp(struct dasd_device *memdev,
 	recid = first_rec;
 	rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
 =======
 		dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (off = 0; off < bv.bv_len; off += blksize) {
 			memset(dbio, 0, sizeof (struct dasd_diag_bio));
 			dbio->type = rw_cmd;

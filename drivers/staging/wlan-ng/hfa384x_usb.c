@@ -2473,10 +2473,14 @@ int hfa384x_drvr_stop(struct hfa384x *hw)
  */
 int hfa384x_drvr_txframe(struct hfa384x *hw, struct sk_buff *skb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 struct p80211_hdr *p80211_hdr,
 =======
 			 union p80211_hdr *p80211_hdr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 struct p80211_hdr *p80211_hdr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 struct p80211_metawep *p80211_wep)
 {
 	int usbpktlen = sizeof(struct hfa384x_tx_frame);
@@ -2521,11 +2525,15 @@ int hfa384x_drvr_txframe(struct hfa384x *hw, struct sk_buff *skb,
 
 	/* copy the header over to the txdesc */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hw->txbuff.txfrm.desc.hdr = *p80211_hdr;
 =======
 	memcpy(&hw->txbuff.txfrm.desc.frame_control, p80211_hdr,
 	       sizeof(union p80211_hdr));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hw->txbuff.txfrm.desc.hdr = *p80211_hdr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* if we're using host WEP, increase size by IV+ICV */
 	if (p80211_wep->data) {
@@ -3267,10 +3275,14 @@ static void hfa384x_usbin_rx(struct wlandevice *wlandev, struct sk_buff *skb)
 	switch (status) {
 	case 0:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fc = le16_to_cpu(usbin->rxfrm.desc.hdr.frame_control);
 =======
 		fc = le16_to_cpu(usbin->rxfrm.desc.frame_control);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fc = le16_to_cpu(usbin->rxfrm.desc.hdr.frame_control);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* If exclude and we receive an unencrypted, drop it */
 		if ((wlandev->hostwep & HOSTWEP_EXCLUDEUNENCRYPTED) &&
@@ -3291,10 +3303,14 @@ static void hfa384x_usbin_rx(struct wlandevice *wlandev, struct sk_buff *skb)
 		 */
 		memmove(skb_push(skb, hdrlen),
 <<<<<<< HEAD
+<<<<<<< HEAD
 			&usbin->rxfrm.desc.hdr, hdrlen);
 =======
 			&usbin->rxfrm.desc.frame_control, hdrlen);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			&usbin->rxfrm.desc.hdr, hdrlen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		skb->dev = wlandev->netdev;
 
@@ -3373,10 +3389,14 @@ static void hfa384x_int_rxmonitor(struct wlandevice *wlandev,
 	/* Remember the status, time, and data_len fields are in host order */
 	/* Figure out how big the frame is */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fc = le16_to_cpu(rxdesc->hdr.frame_control);
 =======
 	fc = le16_to_cpu(rxdesc->frame_control);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fc = le16_to_cpu(rxdesc->hdr.frame_control);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hdrlen = p80211_headerlen(fc);
 	datalen = le16_to_cpu(rxdesc->data_len);
 
@@ -3425,10 +3445,14 @@ static void hfa384x_int_rxmonitor(struct wlandevice *wlandev,
 	 * (ctl frames may be less than a full header)
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb_put_data(skb, &rxdesc->hdr.frame_control, hdrlen);
 =======
 	skb_put_data(skb, &rxdesc->frame_control, hdrlen);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	skb_put_data(skb, &rxdesc->hdr.frame_control, hdrlen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* If any, copy the data from the card to the skb */
 	if (datalen > 0) {

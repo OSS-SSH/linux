@@ -124,9 +124,13 @@ struct b53_device {
 	/* used ports mask */
 	u16 enabled_ports;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int imp_port;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int imp_port;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int cpu_port;
 
 	/* connect specific data */
@@ -232,13 +236,19 @@ static inline void b53_switch_remove(struct b53_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void b53_switch_shutdown(struct b53_device *dev)
 {
 	dsa_switch_shutdown(dev->ds);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define b53_build_op(type_op_size, val_type)				\
 static inline int b53_##type_op_size(struct b53_device *dev, u8 page,	\
 				     u8 reg, val_type val)		\
@@ -341,10 +351,13 @@ int b53_br_flags(struct dsa_switch *ds, int port,
 		 struct switchdev_brport_flags flags,
 		 struct netlink_ext_ack *extack);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int b53_set_mrouter(struct dsa_switch *ds, int port, bool mrouter,
 		    struct netlink_ext_ack *extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int b53_setup_devlink_resources(struct dsa_switch *ds);
 void b53_port_event(struct dsa_switch *ds, int port);
 void b53_phylink_validate(struct dsa_switch *ds, int port,

@@ -948,9 +948,12 @@ static const struct drm_plane_funcs ltdc_plane_funcs = {
 
 static const struct drm_plane_helper_funcs ltdc_plane_helper_funcs = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.prepare_fb = drm_gem_plane_helper_prepare_fb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.atomic_check = ltdc_plane_atomic_check,
 	.atomic_update = ltdc_plane_atomic_update,
 	.atomic_disable = ltdc_plane_atomic_disable,
@@ -1126,6 +1129,7 @@ static int ltdc_encoder_init(struct drm_device *ddev, struct drm_bridge *bridge)
 	ret = drm_bridge_attach(encoder, bridge, NULL, 0);
 	if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret != -EPROBE_DEFER)
 			drm_encoder_cleanup(encoder);
 		return ret;
@@ -1133,6 +1137,11 @@ static int ltdc_encoder_init(struct drm_device *ddev, struct drm_bridge *bridge)
 		drm_encoder_cleanup(encoder);
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret != -EPROBE_DEFER)
+			drm_encoder_cleanup(encoder);
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	DRM_DEBUG_DRIVER("Bridge encoder:%d created\n", encoder->base.id);
@@ -1276,11 +1285,16 @@ int ltdc_load(struct drm_device *ddev)
 			ret = ltdc_encoder_init(ddev, bridge);
 			if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (ret != -EPROBE_DEFER)
 					DRM_ERROR("init encoder endpoint %d\n", i);
 =======
 				DRM_ERROR("init encoder endpoint %d\n", i);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (ret != -EPROBE_DEFER)
+					DRM_ERROR("init encoder endpoint %d\n", i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto err;
 			}
 		}
@@ -1354,11 +1368,14 @@ int ltdc_load(struct drm_device *ddev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Allow usage of vblank without having to call drm_irq_install */
 	ddev->irq_enabled = 1;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clk_disable_unprepare(ldev->pixel_clk);
 
 	pinctrl_pm_select_sleep_state(ddev->dev);

@@ -1648,12 +1648,18 @@ static int cxgb4vf_set_ringparam(struct net_device *dev,
  */
 static int cxgb4vf_get_coalesce(struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				struct ethtool_coalesce *coalesce,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
 =======
 				struct ethtool_coalesce *coalesce)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				struct ethtool_coalesce *coalesce,
+				struct kernel_ethtool_coalesce *kernel_coal,
+				struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct port_info *pi = netdev_priv(dev);
 	const struct adapter *adapter = pi->adapter;
@@ -1674,12 +1680,18 @@ static int cxgb4vf_get_coalesce(struct net_device *dev,
  */
 static int cxgb4vf_set_coalesce(struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				struct ethtool_coalesce *coalesce,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
 =======
 				struct ethtool_coalesce *coalesce)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				struct ethtool_coalesce *coalesce,
+				struct kernel_ethtool_coalesce *kernel_coal,
+				struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct port_info *pi = netdev_priv(dev);
 	struct adapter *adapter = pi->adapter;
@@ -2850,10 +2862,14 @@ static const struct net_device_ops cxgb4vf_netdev_ops	= {
 	.ndo_set_mac_address	= cxgb4vf_set_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= cxgb4vf_do_ioctl,
 =======
 	.ndo_do_ioctl		= cxgb4vf_do_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= cxgb4vf_do_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= cxgb4vf_change_mtu,
 	.ndo_fix_features	= cxgb4vf_fix_features,
 	.ndo_set_features	= cxgb4vf_set_features,
@@ -2934,6 +2950,7 @@ static int cxgb4vf_pci_probe(struct pci_dev *pdev,
 	 * fall back to 32-bit if we can't get 64 bits ...
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
 	if (err == 0) {
 		pci_using_dac = 1;
@@ -2941,17 +2958,18 @@ static int cxgb4vf_pci_probe(struct pci_dev *pdev,
 		err = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
 =======
 	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
+=======
+	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err == 0) {
-		err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
-		if (err) {
-			dev_err(&pdev->dev, "unable to obtain 64-bit DMA for"
-				" coherent allocations\n");
-			goto err_release_regions;
-		}
 		pci_using_dac = 1;
 	} else {
+<<<<<<< HEAD
 		err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err != 0) {
 			dev_err(&pdev->dev, "no usable DMA configuration\n");
 			goto err_release_regions;

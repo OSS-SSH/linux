@@ -1013,6 +1013,7 @@ static void __init reserve_crashkernel(void)
 		if (crash_max > lowmem_max)
 			crash_max = lowmem_max;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		crash_base = memblock_phys_alloc_range(crash_size, CRASH_ALIGN,
 						       CRASH_ALIGN, crash_max);
@@ -1020,11 +1021,17 @@ static void __init reserve_crashkernel(void)
 		crash_base = memblock_find_in_range(CRASH_ALIGN, crash_max,
 						    crash_size, CRASH_ALIGN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		crash_base = memblock_phys_alloc_range(crash_size, CRASH_ALIGN,
+						       CRASH_ALIGN, crash_max);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!crash_base) {
 			pr_err("crashkernel reservation failed - No suitable area found.\n");
 			return;
 		}
 	} else {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		unsigned long long crash_max = crash_base + crash_size;
 		unsigned long long start;
@@ -1040,11 +1047,20 @@ static void __init reserve_crashkernel(void)
 					       crash_size, SECTION_SIZE);
 		if (start != crash_base) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned long long crash_max = crash_base + crash_size;
+		unsigned long long start;
+
+		start = memblock_phys_alloc_range(crash_size, SECTION_SIZE,
+						  crash_base, crash_max);
+		if (!start) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pr_err("crashkernel reservation failed - memory is in use.\n");
 			return;
 		}
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	ret = memblock_reserve(crash_base, crash_size);
@@ -1055,6 +1071,8 @@ static void __init reserve_crashkernel(void)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pr_info("Reserving %ldMB of memory at %ldMB for crashkernel (System RAM: %ldMB)\n",
 		(unsigned long)(crash_size >> 20),
 		(unsigned long)(crash_base >> 20),

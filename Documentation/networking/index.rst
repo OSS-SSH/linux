@@ -58,9 +58,13 @@ Contents:
    gtp
    ila
 <<<<<<< HEAD
+<<<<<<< HEAD
    ioam6-sysctl
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+   ioam6-sysctl
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    ipddp
    ip_dynaddr
    ipsec
@@ -73,9 +77,13 @@ Contents:
    lapb-module
    mac80211-injection
 <<<<<<< HEAD
+<<<<<<< HEAD
    mctp
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+   mctp
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    mpls-sysctl
    mptcp-sysctl
    multiqueue

@@ -38,12 +38,18 @@ Therefore, if a given access is involved in an intentional data race,
 using READ_ONCE() for loads and WRITE_ONCE() for stores is usually
 preferable to data_race(), which in turn is usually preferable to plain
 <<<<<<< HEAD
+<<<<<<< HEAD
 C-language accesses.  It is permissible to combine #2 and #3, for example,
 data_race(READ_ONCE(a)), which will both restrict compiler optimizations
 and disable KCSAN diagnostics.
 =======
 C-language accesses.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+C-language accesses.  It is permissible to combine #2 and #3, for example,
+data_race(READ_ONCE(a)), which will both restrict compiler optimizations
+and disable KCSAN diagnostics.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 KCSAN will complain about many types of data races involving plain
 C-language accesses, but marking all accesses involved in a given data
@@ -93,12 +99,18 @@ data_race() for the diagnostic reads because otherwise KCSAN would give
 false-positive warnings about these diagnostic reads.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 If it is necessary to both restrict compiler optimizations and disable
 KCSAN diagnostics, use both data_race() and READ_ONCE(), for example,
 data_race(READ_ONCE(a)).
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 In theory, plain C-language loads can also be used for this use case.
 However, in practice this will have the disadvantage of causing KCSAN
 to generate false positives because KCSAN will have no way of knowing
@@ -140,13 +152,19 @@ Therefore use of data_race() should be limited to cases where some other
 code (such as a barrier() call) will force the occasional reload.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Note that this use case requires that the heuristic be able to handle
 any possible error.  In contrast, if the heuristics might be fatally
 confused by one or more of the possible erroneous values, use READ_ONCE()
 instead of data_race().
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 In theory, plain C-language loads can also be used for this use case.
 However, in practice this will have the disadvantage of causing KCSAN
 to generate false positives because KCSAN will have no way of knowing
@@ -281,6 +299,7 @@ diagnostic purposes.  The code might look as follows:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void read_foo_diagnostic(void)
 	{
 		pr_info("Current value of foo: %d\n", data_race(foo));
@@ -289,6 +308,11 @@ diagnostic purposes.  The code might look as follows:
 	{
 		return data_race(foo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void read_foo_diagnostic(void)
+	{
+		pr_info("Current value of foo: %d\n", data_race(foo));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 The reader-writer lock prevents the compiler from introducing concurrency
@@ -302,6 +326,9 @@ ignored.  This data_race() also tells the human reading the code that
 read_foo_diagnostic() might sometimes return a bogus value.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 If it is necessary to suppress compiler optimization and also detect
 buggy lockless writes, read_foo_diagnostic() can be updated as follows:
 
@@ -330,6 +357,7 @@ it is not necessarily a full replacement for hardware watchpoints.
 On the other hand, neither are hardware watchpoints a full replacement
 for KCSAN because it is not always easy to tell hardware watchpoint to
 conditionally trap on accesses.
+<<<<<<< HEAD
 =======
 However, please note that your kernel must be built with
 CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC=n in order for KCSAN to
@@ -345,6 +373,8 @@ hand, neither are hardware watchpoints a full replacement for KCSAN
 because it is not always easy to tell hardware watchpoint to conditionally
 trap on accesses.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 Lock-Protected Writes With Lockless Reads
@@ -378,6 +408,9 @@ concurrent lockless write.
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Lock-Protected Writes With Heuristic Lockless Reads
 ---------------------------------------------------
 
@@ -471,8 +504,11 @@ invocation of do_something() from do_something_locked() will see those
 changes.
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Lockless Reads and Writes
 -------------------------
 

@@ -583,12 +583,18 @@ config FB_HP300
 config FB_TGA
 	tristate "TGA/SFB+ framebuffer support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on FB
 	depends on PCI || TC
 	depends on ALPHA || TC
 =======
 	depends on FB && (ALPHA || TC)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on FB
+	depends on PCI || TC
+	depends on ALPHA || TC
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select FB_CFB_FILLRECT
 	select FB_CFB_COPYAREA
 	select FB_CFB_IMAGEBLIT
@@ -2198,6 +2204,7 @@ config FB_HYPERV
 
 config FB_SIMPLE
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tristate "Simple framebuffer support"
 	depends on FB
 	depends on !DRM_SIMPLEDRM
@@ -2205,6 +2212,11 @@ config FB_SIMPLE
 	bool "Simple framebuffer support"
 	depends on (FB = y) && !DRM_SIMPLEDRM
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tristate "Simple framebuffer support"
+	depends on FB
+	depends on !DRM_SIMPLEDRM
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select FB_CFB_FILLRECT
 	select FB_CFB_COPYAREA
 	select FB_CFB_IMAGEBLIT

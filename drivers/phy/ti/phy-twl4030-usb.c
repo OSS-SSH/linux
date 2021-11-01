@@ -163,10 +163,15 @@ struct twl4030_usb {
 	bool			vbus_supplied;
 	bool			musb_mailbox_pending;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long		runtime_suspended:1;
 	unsigned long		needs_resume:1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long		runtime_suspended:1;
+	unsigned long		needs_resume:1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct delayed_work	id_workaround_work;
 };
@@ -390,11 +395,17 @@ static void __twl4030_phy_power(struct twl4030_usb *twl, int on)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int twl4030_usb_runtime_suspend(struct device *dev);
 static int twl4030_usb_runtime_resume(struct device *dev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int twl4030_usb_runtime_suspend(struct device *dev);
+static int twl4030_usb_runtime_resume(struct device *dev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __maybe_unused twl4030_usb_suspend(struct device *dev)
 {
 	struct twl4030_usb *twl = dev_get_drvdata(dev);
@@ -407,12 +418,18 @@ static int __maybe_unused twl4030_usb_suspend(struct device *dev)
 	dev_dbg(twl->dev, "%s\n", __func__);
 	disable_irq(twl->irq);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!twl->runtime_suspended && !atomic_read(&twl->connected)) {
 		twl4030_usb_runtime_suspend(dev);
 		twl->needs_resume = 1;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -424,6 +441,9 @@ static int __maybe_unused twl4030_usb_resume(struct device *dev)
 	dev_dbg(twl->dev, "%s\n", __func__);
 	enable_irq(twl->irq);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (twl->needs_resume)
 		twl4030_usb_runtime_resume(dev);
 	/* check whether cable status changed */
@@ -431,11 +451,14 @@ static int __maybe_unused twl4030_usb_resume(struct device *dev)
 
 	twl->runtime_suspended = 0;
 
+<<<<<<< HEAD
 =======
 	/* check whether cable status changed */
 	twl4030_usb_irq(0, twl);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -451,10 +474,15 @@ static int __maybe_unused twl4030_usb_runtime_suspend(struct device *dev)
 	regulator_disable(twl->usb3v1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	twl->runtime_suspended = 1;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	twl->runtime_suspended = 1;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

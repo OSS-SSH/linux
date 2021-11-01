@@ -529,10 +529,14 @@ static int start_power_clamp(void)
 	set_target_ratio = clamp(set_target_ratio, 0U, MAX_TARGET_RATIO - 1);
 	/* prevent cpu hotplug */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* prefer BSP */
 	control_cpu = 0;
@@ -547,10 +551,14 @@ static int start_power_clamp(void)
 		start_power_clamp_worker(cpu);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

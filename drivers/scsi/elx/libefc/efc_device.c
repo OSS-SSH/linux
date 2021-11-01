@@ -929,11 +929,15 @@ __efc_d_wait_topology_notify(struct efc_sm_ctx *ctx,
 
 	case EFC_EVT_NPORT_TOPOLOGY_NOTIFY: {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		enum efc_nport_topology *topology = arg;
 =======
 		enum efc_nport_topology topology =
 					(enum efc_nport_topology)arg;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		enum efc_nport_topology *topology = arg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		WARN_ON(node->nport->domain->attached);
 
@@ -941,10 +945,14 @@ __efc_d_wait_topology_notify(struct efc_sm_ctx *ctx,
 
 		node_printf(node, "topology notification, topology=%d\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    *topology);
 =======
 			    topology);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    *topology);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* At the time the PLOGI was received, the topology was unknown,
 		 * so we didn't know which node would perform the domain attach:
@@ -952,10 +960,14 @@ __efc_d_wait_topology_notify(struct efc_sm_ctx *ctx,
 		 * 2. The node to which the FLOGI was sent (fabric).
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (*topology == EFC_NPORT_TOPO_P2P) {
 =======
 		if (topology == EFC_NPORT_TOPO_P2P) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (*topology == EFC_NPORT_TOPO_P2P) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* if this is p2p, need to attach to the domain using
 			 * the d_id from the PLOGI received
 			 */

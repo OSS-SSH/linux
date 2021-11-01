@@ -181,10 +181,14 @@ static int mmc_spi_skip(struct mmc_spi_host *host, unsigned long timeout,
 	unsigned long start = jiffies;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	do {
 =======
 	while (1) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	do {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int		status;
 		unsigned	i;
 
@@ -197,6 +201,7 @@ static int mmc_spi_skip(struct mmc_spi_host *host, unsigned long timeout,
 				return cp[i];
 		}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* If we need long timeouts, we may release the CPU */
 		cond_resched();
@@ -213,6 +218,11 @@ static int mmc_spi_skip(struct mmc_spi_host *host, unsigned long timeout,
 			schedule();
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* If we need long timeouts, we may release the CPU */
+		cond_resched();
+	} while (time_is_after_jiffies(start + timeout));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -ETIMEDOUT;
 }
 
@@ -959,10 +969,14 @@ mmc_spi_data_do(struct mmc_spi_host *host, struct mmc_command *cmd,
 		/* discard mappings */
 		if (direction == DMA_FROM_DEVICE)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			flush_dcache_page(sg_page(sg));
 =======
 			flush_kernel_dcache_page(sg_page(sg));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			flush_dcache_page(sg_page(sg));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kunmap(sg_page(sg));
 		if (dma_dev)
 			dma_unmap_page(dma_dev, dma_addr, PAGE_SIZE, dir);

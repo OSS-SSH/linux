@@ -254,12 +254,17 @@ static int hid_prox_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	indio_dev->channels = devm_kmemdup(&pdev->dev, prox_channels,
 					   sizeof(prox_channels), GFP_KERNEL);
 =======
 	indio_dev->channels = kmemdup(prox_channels, sizeof(prox_channels),
 				      GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	indio_dev->channels = devm_kmemdup(&pdev->dev, prox_channels,
+					   sizeof(prox_channels), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!indio_dev->channels) {
 		dev_err(&pdev->dev, "failed to duplicate channels\n");
 		return -ENOMEM;
@@ -271,10 +276,14 @@ static int hid_prox_probe(struct platform_device *pdev)
 	if (ret) {
 		dev_err(&pdev->dev, "failed to setup attributes\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto error_free_dev_mem;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	indio_dev->num_channels = ARRAY_SIZE(prox_channels);
@@ -289,10 +298,14 @@ static int hid_prox_probe(struct platform_device *pdev)
 	if (ret) {
 		dev_err(&pdev->dev, "trigger setup failed\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto error_free_dev_mem;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = iio_device_register(indio_dev);
@@ -318,10 +331,13 @@ error_iio_unreg:
 error_remove_trigger:
 	hid_sensor_remove_trigger(indio_dev, &prox_state->common_attributes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 error_free_dev_mem:
 	kfree(indio_dev->channels);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -336,9 +352,12 @@ static int hid_prox_remove(struct platform_device *pdev)
 	iio_device_unregister(indio_dev);
 	hid_sensor_remove_trigger(indio_dev, &prox_state->common_attributes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kfree(indio_dev->channels);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

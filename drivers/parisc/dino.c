@@ -157,6 +157,7 @@ static inline struct dino_device *DINO_DEV(struct pci_hba_data *hba)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Check if PCI device is behind a Card-mode Dino. */
 static int pci_dev_is_behind_card_dino(struct pci_dev *dev)
@@ -168,6 +169,8 @@ static int pci_dev_is_behind_card_dino(struct pci_dev *dev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Dino Configuration Space Accessor Functions
  */
@@ -451,6 +454,9 @@ DECLARE_PCI_FIXUP_ENABLE(PCI_VENDOR_ID_CIRRUS, PCI_DEVICE_ID_CIRRUS_6832, quirk_
 
 #ifdef CONFIG_TULIP
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Check if PCI device is behind a Card-mode Dino. */
 static int pci_dev_is_behind_card_dino(struct pci_dev *dev)
 {
@@ -460,8 +466,11 @@ static int pci_dev_is_behind_card_dino(struct pci_dev *dev)
 	return is_card_dino(&dino_dev->hba.dev->id);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void pci_fixup_tulip(struct pci_dev *dev)
 {
 	if (!pci_dev_is_behind_card_dino(dev))

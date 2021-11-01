@@ -1056,10 +1056,14 @@ static void __armv8pmu_probe_pmu(void *info)
 	pmuver = cpuid_feature_extract_unsigned_field(dfr0,
 			ID_AA64DFR0_PMUVER_SHIFT);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pmuver == ID_AA64DFR0_PMUVER_IMP_DEF || pmuver == 0)
 =======
 	if (pmuver == 0xf || pmuver == 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (pmuver == ID_AA64DFR0_PMUVER_IMP_DEF || pmuver == 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	cpu_pmu->pmuver = pmuver;

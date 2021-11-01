@@ -47,10 +47,14 @@ struct	__queue	{
 
 static inline u32 end_of_queue_search(struct list_head *head,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				      struct list_head *plist)
 =======
 		struct list_head *plist)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      struct list_head *plist)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return (head == plist);
 }

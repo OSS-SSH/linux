@@ -29,9 +29,13 @@
 #include "dc.h"
 #include "rc_calc.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "fixed31_32.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "fixed31_32.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* This module's internal functions */
 
@@ -44,6 +48,9 @@ static bool dsc_policy_enable_dsc_when_not_needed;
 static bool dsc_policy_disable_dsc_stream_overhead;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Forward Declerations */
 static void get_dsc_bandwidth_range(
 		const uint32_t min_bpp_x16,
@@ -85,8 +92,11 @@ static struct fixed31_32 compute_dsc_max_bandwidth_overhead(
 		const int num_slices_h,
 		const bool is_dp);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool dsc_buff_block_size_from_dpcd(int dpcd_buff_block_size, int *buff_block_size)
 {
 
@@ -220,6 +230,9 @@ static bool dsc_bpp_increment_div_from_dpcd(uint8_t bpp_increment_dpcd, uint32_t
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 bool dc_dsc_parse_dsc_dpcd(const struct dc *dc,
@@ -374,6 +387,7 @@ bool dc_dsc_compute_bandwidth_range(
 	return is_dsc_possible;
 }
 
+<<<<<<< HEAD
 static void get_dsc_enc_caps(
 		const struct display_stream_compressor *dsc,
 		struct dsc_enc_caps *dsc_enc_caps,
@@ -384,6 +398,12 @@ static void get_dsc_enc_caps(
 	struct dsc_enc_caps *dsc_enc_caps,
 	int pixel_clock_100Hz)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void get_dsc_enc_caps(
+		const struct display_stream_compressor *dsc,
+		struct dsc_enc_caps *dsc_enc_caps,
+		int pixel_clock_100Hz)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	// This is a static HW query, so we can use any DSC
 
@@ -396,6 +416,7 @@ static void get_dsc_enc_caps(
 	}
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* Returns 'false' if no intersection was found for at least one capability.
  * It also implicitly validates some sink caps against invalid value of zero.
@@ -415,6 +436,16 @@ static bool intersect_dsc_caps(
 	enum dc_pixel_encoding pixel_encoding,
 	struct dsc_enc_caps *dsc_common_caps)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Returns 'false' if no intersection was found for at least one capability.
+ * It also implicitly validates some sink caps against invalid value of zero.
+ */
+static bool intersect_dsc_caps(
+		const struct dsc_dec_dpcd_caps *dsc_sink_caps,
+		const struct dsc_enc_caps *dsc_enc_caps,
+		enum dc_pixel_encoding pixel_encoding,
+		struct dsc_enc_caps *dsc_common_caps)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int32_t max_slices;
 	int32_t total_sink_throughput;
@@ -426,6 +457,9 @@ static bool intersect_dsc_caps(
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dsc_common_caps->slice_caps.bits.NUM_SLICES_1 =
 		dsc_sink_caps->slice_caps1.bits.NUM_SLICES_1 && dsc_enc_caps->slice_caps.bits.NUM_SLICES_1;
 	dsc_common_caps->slice_caps.bits.NUM_SLICES_2 =
@@ -434,12 +468,15 @@ static bool intersect_dsc_caps(
 		dsc_sink_caps->slice_caps1.bits.NUM_SLICES_4 && dsc_enc_caps->slice_caps.bits.NUM_SLICES_4;
 	dsc_common_caps->slice_caps.bits.NUM_SLICES_8 =
 		dsc_sink_caps->slice_caps1.bits.NUM_SLICES_8 && dsc_enc_caps->slice_caps.bits.NUM_SLICES_8;
+<<<<<<< HEAD
 =======
 	dsc_common_caps->slice_caps.bits.NUM_SLICES_1 = dsc_sink_caps->slice_caps1.bits.NUM_SLICES_1 && dsc_enc_caps->slice_caps.bits.NUM_SLICES_1;
 	dsc_common_caps->slice_caps.bits.NUM_SLICES_2 = dsc_sink_caps->slice_caps1.bits.NUM_SLICES_2 && dsc_enc_caps->slice_caps.bits.NUM_SLICES_2;
 	dsc_common_caps->slice_caps.bits.NUM_SLICES_4 = dsc_sink_caps->slice_caps1.bits.NUM_SLICES_4 && dsc_enc_caps->slice_caps.bits.NUM_SLICES_4;
 	dsc_common_caps->slice_caps.bits.NUM_SLICES_8 = dsc_sink_caps->slice_caps1.bits.NUM_SLICES_8 && dsc_enc_caps->slice_caps.bits.NUM_SLICES_8;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dsc_common_caps->slice_caps.raw)
 		return false;
 
@@ -448,11 +485,16 @@ static bool intersect_dsc_caps(
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dsc_common_caps->is_block_pred_supported =
 		dsc_sink_caps->is_block_pred_supported && dsc_enc_caps->is_block_pred_supported;
 =======
 	dsc_common_caps->is_block_pred_supported = dsc_sink_caps->is_block_pred_supported && dsc_enc_caps->is_block_pred_supported;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsc_common_caps->is_block_pred_supported =
+		dsc_sink_caps->is_block_pred_supported && dsc_enc_caps->is_block_pred_supported;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dsc_common_caps->color_formats.raw = dsc_sink_caps->color_formats.raw & dsc_enc_caps->color_formats.raw;
 	if (!dsc_common_caps->color_formats.raw)
@@ -525,11 +567,15 @@ static struct fixed31_32 compute_dsc_max_bandwidth_overhead(
 
 static uint32_t compute_bpp_x16_from_target_bandwidth(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const uint32_t bandwidth_in_kbps,
 	const struct dc_crtc_timing *timing,
 	const uint32_t num_slices_h,
 	const uint32_t bpp_increment_div,
 	const bool is_dp)
+<<<<<<< HEAD
 =======
 		const uint32_t bandwidth_in_kbps,
 		const struct dc_crtc_timing *timing,
@@ -537,6 +583,8 @@ static uint32_t compute_bpp_x16_from_target_bandwidth(
 		const uint32_t bpp_increment_div,
 		const bool is_dp)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fixed31_32 overhead_in_kbps;
 	struct fixed31_32 effective_bandwidth_in_kbps;
@@ -1014,6 +1062,7 @@ done:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 bool dc_dsc_parse_dsc_dpcd(const struct dc *dc, const uint8_t *dpcd_dsc_basic_data, const uint8_t *dpcd_dsc_branch_decoder_caps, struct dsc_dec_dpcd_caps *dsc_sink_caps)
 {
@@ -1156,6 +1205,8 @@ bool dc_dsc_compute_bandwidth_range(
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool dc_dsc_compute_config(
 		const struct display_stream_compressor *dsc,
 		const struct dsc_dec_dpcd_caps *dsc_sink_caps,
@@ -1171,25 +1222,35 @@ bool dc_dsc_compute_config(
 	get_dsc_enc_caps(dsc, &dsc_enc_caps, timing->pix_clk_100hz);
 	is_dsc_possible = setup_dsc_config(dsc_sink_caps,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		&dsc_enc_caps,
 		target_bandwidth_kbps,
 		timing, dsc_min_slice_height_override,
 		max_target_bpp_limit_override * 16, dsc_cfg);
+<<<<<<< HEAD
 =======
 			&dsc_enc_caps,
 			target_bandwidth_kbps,
 			timing, dsc_min_slice_height_override,
 			max_target_bpp_limit_override * 16, dsc_cfg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return is_dsc_possible;
 }
 
 uint32_t dc_dsc_stream_bandwidth_in_kbps(const struct dc_crtc_timing *timing,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t bpp_x16, uint32_t num_slices_h, bool is_dp)
 =======
 		uint32_t bpp_x16, uint32_t num_slices_h, bool is_dp)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t bpp_x16, uint32_t num_slices_h, bool is_dp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fixed31_32 overhead_in_kbps;
 	struct fixed31_32 bpp;
@@ -1197,10 +1258,14 @@ uint32_t dc_dsc_stream_bandwidth_in_kbps(const struct dc_crtc_timing *timing,
 
 	overhead_in_kbps = compute_dsc_max_bandwidth_overhead(
 <<<<<<< HEAD
+<<<<<<< HEAD
 		timing, num_slices_h, is_dp);
 =======
 			timing, num_slices_h, is_dp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		timing, num_slices_h, is_dp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bpp = dc_fixpt_from_fraction(bpp_x16, 16);
 	actual_bandwidth_in_kbps = dc_fixpt_from_fraction(timing->pix_clk_100hz, 10);
 	actual_bandwidth_in_kbps = dc_fixpt_mul(actual_bandwidth_in_kbps, bpp);
@@ -1209,12 +1274,18 @@ uint32_t dc_dsc_stream_bandwidth_in_kbps(const struct dc_crtc_timing *timing,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void dc_dsc_get_policy_for_timing(const struct dc_crtc_timing *timing,
 		uint32_t max_target_bpp_limit_override_x16,
 		struct dc_dsc_policy *policy)
 =======
 void dc_dsc_get_policy_for_timing(const struct dc_crtc_timing *timing, uint32_t max_target_bpp_limit_override_x16, struct dc_dsc_policy *policy)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void dc_dsc_get_policy_for_timing(const struct dc_crtc_timing *timing,
+		uint32_t max_target_bpp_limit_override_x16,
+		struct dc_dsc_policy *policy)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	uint32_t bpc = 0;
 

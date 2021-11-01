@@ -170,11 +170,16 @@ static void ps3_hpte_invalidate(unsigned long slot, unsigned long vpn,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Called during kexec sequence with MMU off */
 static notrace void ps3_hpte_clear(void)
 =======
 static void ps3_hpte_clear(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Called during kexec sequence with MMU off */
+static notrace void ps3_hpte_clear(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long hpte_count = (1UL << ppc64_pft_size) >> 4;
 	u64 i;

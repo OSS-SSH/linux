@@ -68,10 +68,14 @@ static struct fb_info *get_fb_info(unsigned int idx)
 	fb_info = registered_fb[idx];
 	if (fb_info)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		refcount_inc(&fb_info->count);
 =======
 		atomic_inc(&fb_info->count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		refcount_inc(&fb_info->count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&registration_lock);
 
 	return fb_info;
@@ -80,10 +84,14 @@ static struct fb_info *get_fb_info(unsigned int idx)
 static void put_fb_info(struct fb_info *fb_info)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!refcount_dec_and_test(&fb_info->count))
 =======
 	if (!atomic_dec_and_test(&fb_info->count))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!refcount_dec_and_test(&fb_info->count))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	if (fb_info->fbops->fb_destroy)
 		fb_info->fbops->fb_destroy(fb_info);
@@ -971,9 +979,13 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
 	struct fb_videomode mode;
 	struct fb_event event;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 unused;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 unused;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (var->activate & FB_ACTIVATE_INV_MODE) {
 		struct fb_videomode mode1, mode2;
@@ -983,11 +995,15 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
 		/* make sure we don't delete the videomode of current var */
 		ret = fb_mode_is_equal(&mode1, &mode2);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!ret) {
 			ret = fbcon_mode_deleted(info, &mode1);
 			if (!ret)
 				fb_delete_videomode(&mode1, &info->modelist);
 		}
+<<<<<<< HEAD
 =======
 
 		if (!ret)
@@ -997,6 +1013,8 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
 			fb_delete_videomode(&mode1, &info->modelist);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		return ret ? -EINVAL : 0;
 	}
@@ -1031,13 +1049,19 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Too huge resolution causes multiplication overflow. */
 	if (check_mul_overflow(var->xres, var->yres, &unused) ||
 	    check_mul_overflow(var->xres_virtual, var->yres_virtual, &unused))
 		return -EINVAL;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = info->fbops->fb_check_var(var, info);
 
 	if (ret)
@@ -1623,10 +1647,14 @@ static int do_register_framebuffer(struct fb_info *fb_info)
 			break;
 	fb_info->node = i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refcount_set(&fb_info->count, 1);
 =======
 	atomic_set(&fb_info->count, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	refcount_set(&fb_info->count, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&fb_info->lock);
 	mutex_init(&fb_info->mm_lock);
 

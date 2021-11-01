@@ -231,10 +231,14 @@
 260	common	osf_memcntl			sys_ni_syscall
 261	common	osf_fdatasync			sys_ni_syscall
 <<<<<<< HEAD
+<<<<<<< HEAD
 300	common	bdflush				sys_ni_syscall
 =======
 300	common	bdflush				sys_bdflush
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+300	common	bdflush				sys_ni_syscall
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 301	common	sethae				sys_sethae
 302	common	mount				sys_mount
 303	common	old_adjtimex			sys_old_adjtimex
@@ -491,7 +495,12 @@
 555	common	landlock_add_rule		sys_landlock_add_rule
 556	common	landlock_restrict_self		sys_landlock_restrict_self
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 557 reserved for memfd_secret
 558	common	process_mrelease		sys_process_mrelease
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# 557 reserved for memfd_secret
+558	common	process_mrelease		sys_process_mrelease
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

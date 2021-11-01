@@ -251,6 +251,7 @@ xprt_rdma_connect_worker(struct work_struct *work)
 		xprt_set_connected(xprt);
 		rc = -EAGAIN;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else
 		rpcrdma_xprt_disconnect(r_xprt);
 	xprt_unlock_connect(xprt, r_xprt);
@@ -262,6 +263,11 @@ xprt_rdma_connect_worker(struct work_struct *work)
 		spin_unlock(&xprt->transport_lock);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else
+		rpcrdma_xprt_disconnect(r_xprt);
+	xprt_unlock_connect(xprt, r_xprt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xprt_wake_pending_tasks(xprt, rc);
 }
 
@@ -496,10 +502,15 @@ xprt_rdma_connect(struct rpc_xprt *xprt, struct rpc_task *task)
 	unsigned long delay;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ON_ONCE(!xprt_lock_connect(xprt, task, r_xprt));
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON_ONCE(!xprt_lock_connect(xprt, task, r_xprt));
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	delay = 0;
 	if (ep && ep->re_connect_status != 0) {
 		delay = xprt_reconnect_delay(xprt);
@@ -673,10 +684,14 @@ xprt_rdma_send_request(struct rpc_rqst *rqst)
 	rqst->rq_xtime = ktime_get();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (frwr_send(r_xprt, req))
 =======
 	if (rpcrdma_post_sends(r_xprt, req))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (frwr_send(r_xprt, req))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto drop_connection;
 
 	rqst->rq_xmit_bytes_sent += rqst->rq_snd_buf.len;

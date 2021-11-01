@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RPM CN10K driver
 =======
 /*  Marvell RPM CN10K driver
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Marvell RPM CN10K driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2020 Marvell.
  */
@@ -15,6 +19,9 @@
 #include "rvu_reg.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* RVU LMTST */
 #define LMT_TBL_OP_READ		0
 #define LMT_TBL_OP_WRITE	1
@@ -281,6 +288,7 @@ void rvu_reset_lmt_map_tbl(struct rvu *rvu, u16 pcifunc)
 	}
 }
 
+<<<<<<< HEAD
 int rvu_set_channels_base(struct rvu *rvu)
 {
 	u16 nr_lbk_chans, nr_sdp_chans, nr_cgx_chans, nr_cpt_chans;
@@ -288,12 +296,20 @@ int rvu_set_channels_base(struct rvu *rvu)
 	struct rvu_hwinfo *hw = rvu->hw;
 	u64 nix_const, nix_const1;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int rvu_set_channels_base(struct rvu *rvu)
 {
+	u16 nr_lbk_chans, nr_sdp_chans, nr_cgx_chans, nr_cpt_chans;
+	u16 sdp_chan_base, cgx_chan_base, cpt_chan_base;
 	struct rvu_hwinfo *hw = rvu->hw;
+<<<<<<< HEAD
 	u16 cpt_chan_base;
 	u64 nix_const;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 nix_const, nix_const1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int blkaddr;
 
 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NIX, 0);
@@ -302,9 +318,13 @@ int rvu_set_channels_base(struct rvu *rvu)
 
 	nix_const = rvu_read64(rvu, blkaddr, NIX_AF_CONST);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nix_const1 = rvu_read64(rvu, blkaddr, NIX_AF_CONST1);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nix_const1 = rvu_read64(rvu, blkaddr, NIX_AF_CONST1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hw->cgx = (nix_const >> 12) & 0xFULL;
 	hw->lmac_per_cgx = (nix_const >> 8) & 0xFULL;
@@ -328,6 +348,7 @@ int rvu_set_channels_base(struct rvu *rvu)
 	 * leaving no holes. This way the new CPT channels can be
 	 * accomodated. The order of channel numbers assigned is
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * LBK, SDP, CGX and CPT. Also the base channel number
 	 * of a block must be multiple of number of channels
 	 * of the block.
@@ -348,14 +369,32 @@ int rvu_set_channels_base(struct rvu *rvu)
 	hw->cpt_chan_base = ALIGN(cpt_chan_base, nr_cpt_chans);
 =======
 	 * LBK, SDP, CGX and CPT.
+=======
+	 * LBK, SDP, CGX and CPT. Also the base channel number
+	 * of a block must be multiple of number of channels
+	 * of the block.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-	hw->sdp_chan_base = hw->lbk_chan_base + hw->lbk_links *
-				((nix_const >> 16) & 0xFFULL);
-	hw->cgx_chan_base = hw->sdp_chan_base + hw->sdp_links * SDP_CHANNELS;
+	nr_lbk_chans = (nix_const >> 16) & 0xFFULL;
+	nr_sdp_chans = nix_const1 & 0xFFFULL;
+	nr_cgx_chans = nix_const & 0xFFULL;
+	nr_cpt_chans = (nix_const >> 32) & 0xFFFULL;
 
+	sdp_chan_base = hw->lbk_chan_base + hw->lbk_links * nr_lbk_chans;
+	/* Round up base channel to multiple of number of channels */
+	hw->sdp_chan_base = ALIGN(sdp_chan_base, nr_sdp_chans);
+
+	cgx_chan_base = hw->sdp_chan_base + hw->sdp_links * nr_sdp_chans;
+	hw->cgx_chan_base = ALIGN(cgx_chan_base, nr_cgx_chans);
+
+<<<<<<< HEAD
 	cpt_chan_base = hw->cgx_chan_base + hw->cgx_links *
 				(nix_const & 0xFFULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpt_chan_base = hw->cgx_chan_base + hw->cgx_links * nr_cgx_chans;
+	hw->cpt_chan_base = ALIGN(cpt_chan_base, nr_cpt_chans);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Out of 4096 channels start CPT from 2048 so
 	 * that MSB for CPT channels is always set
@@ -460,9 +499,13 @@ err_put:
 static void __rvu_nix_set_channels(struct rvu *rvu, int blkaddr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 nix_const1 = rvu_read64(rvu, blkaddr, NIX_AF_CONST1);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 nix_const1 = rvu_read64(rvu, blkaddr, NIX_AF_CONST1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 nix_const = rvu_read64(rvu, blkaddr, NIX_AF_CONST);
 	u16 cgx_chans, lbk_chans, sdp_chans, cpt_chans;
 	struct rvu_hwinfo *hw = rvu->hw;
@@ -473,10 +516,14 @@ static void __rvu_nix_set_channels(struct rvu *rvu, int blkaddr)
 	cgx_chans = nix_const & 0xFFULL;
 	lbk_chans = (nix_const >> 16) & 0xFFULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sdp_chans = nix_const1 & 0xFFFULL;
 =======
 	sdp_chans = SDP_CHANNELS;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sdp_chans = nix_const1 & 0xFFFULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpt_chans = (nix_const >> 32) & 0xFFFULL;
 
 	start = hw->cgx_chan_base;

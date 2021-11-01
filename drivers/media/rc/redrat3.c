@@ -7,10 +7,14 @@
  *  help from RedRat Ltd.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This driver began life based on an old version of the first-generation
 =======
  * This driver began life based an an old version of the first-generation
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This driver began life based on an old version of the first-generation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * lirc_mceusb driver from the lirc 0.7.2 distribution. It was then
  * significantly rewritten by Stephen Cox with the aid of RedRat Ltd's
  * Chris Dodge.

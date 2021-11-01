@@ -70,9 +70,13 @@
 	SRI(RDPCSTX_PHY_CNTL5, RDPCSTX, id), \
 	SRI(RDPCSTX_PHY_CNTL6, RDPCSTX, id), \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SRI(RDPCSPIPE_PHY_CNTL6, RDPCSPIPE, id), \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SRI(RDPCSPIPE_PHY_CNTL6, RDPCSPIPE, id), \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SRI(RDPCSTX_PHY_CNTL7, RDPCSTX, id), \
 	SRI(RDPCSTX_PHY_CNTL8, RDPCSTX, id), \
 	SRI(RDPCSTX_PHY_CNTL9, RDPCSTX, id), \
@@ -120,12 +124,18 @@
 	LE_SF(RDPCSTX0_RDPCSTX_PHY_CNTL6, RDPCS_PHY_DP_TX3_MPLL_EN, mask_sh),\
 	LE_SF(RDPCSTX0_RDPCSTX_PHY_CNTL6, RDPCS_PHY_DPALT_DP4, mask_sh),\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	LE_SF(RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6, RDPCS_PHY_DPALT_DP4, mask_sh),\
 	LE_SF(RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6, RDPCS_PHY_DPALT_DISABLE, mask_sh),\
 	LE_SF(RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6, RDPCS_PHY_DPALT_DISABLE_ACK, mask_sh),\
 =======
 	LE_SF(RDPCSTX0_RDPCSTX_PHY_CNTL6, RDPCS_PHY_DPALT_DISABLE, mask_sh),\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	LE_SF(RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6, RDPCS_PHY_DPALT_DP4, mask_sh),\
+	LE_SF(RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6, RDPCS_PHY_DPALT_DISABLE, mask_sh),\
+	LE_SF(RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6, RDPCS_PHY_DPALT_DISABLE_ACK, mask_sh),\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	LE_SF(RDPCSTX0_RDPCSTX_PHY_CNTL7, RDPCS_PHY_DP_MPLLB_FRACN_QUOT, mask_sh),\
 	LE_SF(RDPCSTX0_RDPCSTX_PHY_CNTL7, RDPCS_PHY_DP_MPLLB_FRACN_DEN, mask_sh),\
 	LE_SF(RDPCSTX0_RDPCSTX_PHY_CNTL8, RDPCS_PHY_DP_MPLLB_SSC_PEAK, mask_sh),\
@@ -254,6 +264,9 @@ void dcn31_link_encoder_disable_output(
 	enum signal_type signal);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Check whether USB-C DP Alt mode is disabled
  */
@@ -263,6 +276,9 @@ bool dcn31_link_encoder_is_in_alt_mode(
 void dcn31_link_encoder_get_max_link_cap(struct link_encoder *enc,
 	struct dc_link_settings *link_settings);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __DC_LINK_ENCODER__DCN31_H__ */

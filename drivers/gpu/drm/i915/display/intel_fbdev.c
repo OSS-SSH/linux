@@ -336,6 +336,7 @@ static void intel_fbdev_destroy(struct intel_fbdev *ifbdev)
  */
 static bool intel_fbdev_init_bios(struct drm_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  struct intel_fbdev *ifbdev)
 {
 	struct drm_i915_private *i915 = to_i915(dev);
@@ -367,29 +368,49 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 				    plane->base.base.id, plane->base.name);
 =======
 				 struct intel_fbdev *ifbdev)
+=======
+				  struct intel_fbdev *ifbdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_i915_private *i915 = to_i915(dev);
 	struct intel_framebuffer *fb = NULL;
-	struct drm_crtc *crtc;
-	struct intel_crtc *intel_crtc;
+	struct intel_crtc *crtc;
 	unsigned int max_size = 0;
 
 	/* Find the largest fb */
-	for_each_crtc(dev, crtc) {
+	for_each_intel_crtc(dev, crtc) {
+		struct intel_crtc_state *crtc_state =
+			to_intel_crtc_state(crtc->base.state);
+		struct intel_plane *plane =
+			to_intel_plane(crtc->base.primary);
+		struct intel_plane_state *plane_state =
+			to_intel_plane_state(plane->base.state);
 		struct drm_i915_gem_object *obj =
-			intel_fb_obj(crtc->primary->state->fb);
-		intel_crtc = to_intel_crtc(crtc);
+			intel_fb_obj(plane_state->uapi.fb);
 
-		if (!crtc->state->active || !obj) {
+		if (!crtc_state->uapi.active) {
 			drm_dbg_kms(&i915->drm,
+<<<<<<< HEAD
 				    "pipe %c not active or no fb, skipping\n",
 				    pipe_name(intel_crtc->pipe));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    "[CRTC:%d:%s] not active, skipping\n",
+				    crtc->base.base.id, crtc->base.name);
+			continue;
+		}
+
+		if (!obj) {
+			drm_dbg_kms(&i915->drm,
+				    "[PLANE:%d:%s] no fb, skipping\n",
+				    plane->base.base.id, plane->base.name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		}
 
 		if (obj->base.size > max_size) {
 			drm_dbg_kms(&i915->drm,
+<<<<<<< HEAD
 <<<<<<< HEAD
 				    "found possible fb from [PLANE:%d:%s]\n",
 				    plane->base.base.id, plane->base.name);
@@ -399,6 +420,11 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 				    pipe_name(intel_crtc->pipe));
 			fb = to_intel_framebuffer(crtc->primary->state->fb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    "found possible fb from [PLANE:%d:%s]\n",
+				    plane->base.base.id, plane->base.name);
+			fb = to_intel_framebuffer(plane_state->uapi.fb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			max_size = obj->base.size;
 		}
 	}
@@ -411,11 +437,15 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 
 	/* Now make sure all the pipes will fit into it */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_intel_crtc(dev, crtc) {
 		struct intel_crtc_state *crtc_state =
 			to_intel_crtc_state(crtc->base.state);
 		struct intel_plane *plane =
 			to_intel_plane(crtc->base.primary);
+<<<<<<< HEAD
 		unsigned int cur_size;
 
 		if (!crtc_state->uapi.active) {
@@ -429,26 +459,32 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 			    plane->base.base.id, plane->base.name);
 =======
 	for_each_crtc(dev, crtc) {
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unsigned int cur_size;
 
-		intel_crtc = to_intel_crtc(crtc);
-
-		if (!crtc->state->active) {
+		if (!crtc_state->uapi.active) {
 			drm_dbg_kms(&i915->drm,
-				    "pipe %c not active, skipping\n",
-				    pipe_name(intel_crtc->pipe));
+				    "[CRTC:%d:%s] not active, skipping\n",
+				    crtc->base.base.id, crtc->base.name);
 			continue;
 		}
 
+<<<<<<< HEAD
 		drm_dbg_kms(&i915->drm, "checking plane %c for BIOS fb\n",
 			    pipe_name(intel_crtc->pipe));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		drm_dbg_kms(&i915->drm, "checking [PLANE:%d:%s] for BIOS fb\n",
+			    plane->base.base.id, plane->base.name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * See if the plane fb we found above will fit on this
 		 * pipe.  Note we need to use the selected fb's pitch and bpp
 		 * rather than the current pipe's, since they differ.
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		cur_size = crtc_state->uapi.adjusted_mode.crtc_hdisplay;
 		cur_size = cur_size * fb->base.format->cpp[0];
@@ -464,11 +500,20 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 				    "fb not wide enough for plane %c (%d vs %d)\n",
 				    pipe_name(intel_crtc->pipe),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cur_size = crtc_state->uapi.adjusted_mode.crtc_hdisplay;
+		cur_size = cur_size * fb->base.format->cpp[0];
+		if (fb->base.pitches[0] < cur_size) {
+			drm_dbg_kms(&i915->drm,
+				    "fb not wide enough for [PLANE:%d:%s] (%d vs %d)\n",
+				    plane->base.base.id, plane->base.name,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    cur_size, fb->base.pitches[0]);
 			fb = NULL;
 			break;
 		}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		cur_size = crtc_state->uapi.adjusted_mode.crtc_vdisplay;
 		cur_size = intel_fb_align_height(&fb->base, 0, cur_size);
@@ -488,11 +533,22 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 			    crtc->state->adjusted_mode.crtc_hdisplay,
 			    crtc->state->adjusted_mode.crtc_vdisplay,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cur_size = crtc_state->uapi.adjusted_mode.crtc_vdisplay;
+		cur_size = intel_fb_align_height(&fb->base, 0, cur_size);
+		cur_size *= fb->base.pitches[0];
+		drm_dbg_kms(&i915->drm,
+			    "[CRTC:%d:%s] area: %dx%d, bpp: %d, size: %d\n",
+			    crtc->base.base.id, crtc->base.name,
+			    crtc_state->uapi.adjusted_mode.crtc_hdisplay,
+			    crtc_state->uapi.adjusted_mode.crtc_vdisplay,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    fb->base.format->cpp[0] * 8,
 			    cur_size);
 
 		if (cur_size > max_size) {
 			drm_dbg_kms(&i915->drm,
+<<<<<<< HEAD
 <<<<<<< HEAD
 				    "fb not big enough for [PLANE:%d:%s] (%d vs %d)\n",
 				    plane->base.base.id, plane->base.name,
@@ -500,6 +556,10 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 				    "fb not big enough for plane %c (%d vs %d)\n",
 				    pipe_name(intel_crtc->pipe),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    "fb not big enough for [PLANE:%d:%s] (%d vs %d)\n",
+				    plane->base.base.id, plane->base.name,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    cur_size, max_size);
 			fb = NULL;
 			break;
@@ -507,12 +567,17 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 
 		drm_dbg_kms(&i915->drm,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    "fb big enough [PLANE:%d:%s] (%d >= %d)\n",
 			    plane->base.base.id, plane->base.name,
 =======
 			    "fb big enough for plane %c (%d >= %d)\n",
 			    pipe_name(intel_crtc->pipe),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    "fb big enough [PLANE:%d:%s] (%d >= %d)\n",
+			    plane->base.base.id, plane->base.name,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    max_size, cur_size);
 	}
 
@@ -529,6 +594,9 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 
 	/* Final pass to check if any active pipes don't have fbs */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_intel_crtc(dev, crtc) {
 		struct intel_crtc_state *crtc_state =
 			to_intel_crtc_state(crtc->base.state);
@@ -538,6 +606,7 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 			to_intel_plane_state(plane->base.state);
 
 		if (!crtc_state->uapi.active)
+<<<<<<< HEAD
 			continue;
 
 		drm_WARN(dev, !plane_state->uapi.fb,
@@ -554,6 +623,13 @@ static bool intel_fbdev_init_bios(struct drm_device *dev,
 			 "re-used BIOS config but lost an fb on crtc %d\n",
 			 crtc->base.id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			continue;
+
+		drm_WARN(dev, !plane_state->uapi.fb,
+			 "re-used BIOS config but lost an fb on [PLANE:%d:%s]\n",
+			 plane->base.base.id, plane->base.name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 

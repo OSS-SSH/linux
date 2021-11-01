@@ -49,6 +49,9 @@
 #include "dc_dmub_srv.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "yellow_carp_offset.h"
 
 #define regCLK1_CLK_PLL_REQ			0x0237
@@ -64,8 +67,11 @@
 #define REG(reg_name) \
 	(CLK_BASE.instance[0].segment[reg ## reg_name ## _BASE_IDX] + reg ## reg_name)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define TO_CLK_MGR_DCN31(clk_mgr)\
 	container_of(clk_mgr, struct clk_mgr_dcn31, base)
 
@@ -143,6 +149,7 @@ static void dcn31_update_clocks(struct clk_mgr *clk_mgr_base,
 	 */
 	if (safe_to_lower) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (new_clocks->zstate_support == DCN_ZSTATE_SUPPORT_ALLOW &&
 				new_clocks->zstate_support != clk_mgr_base->clks.zstate_support) {
 			dcn31_smu_set_Z9_support(clk_mgr, true);
@@ -153,6 +160,12 @@ static void dcn31_update_clocks(struct clk_mgr *clk_mgr_base,
 			dcn31_smu_set_Z9_support(clk_mgr, true);
 			clk_mgr_base->clks.z9_support = new_clocks->z9_support;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (new_clocks->zstate_support == DCN_ZSTATE_SUPPORT_ALLOW &&
+				new_clocks->zstate_support != clk_mgr_base->clks.zstate_support) {
+			dcn31_smu_set_Z9_support(clk_mgr, true);
+			clk_mgr_base->clks.zstate_support = new_clocks->zstate_support;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		if (clk_mgr_base->clks.dtbclk_en && !new_clocks->dtbclk_en) {
@@ -174,6 +187,7 @@ static void dcn31_update_clocks(struct clk_mgr *clk_mgr_base,
 		}
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (new_clocks->zstate_support == DCN_ZSTATE_SUPPORT_DISALLOW &&
 				new_clocks->zstate_support != clk_mgr_base->clks.zstate_support) {
 			dcn31_smu_set_Z9_support(clk_mgr, false);
@@ -184,6 +198,12 @@ static void dcn31_update_clocks(struct clk_mgr *clk_mgr_base,
 			dcn31_smu_set_Z9_support(clk_mgr, false);
 			clk_mgr_base->clks.z9_support = new_clocks->z9_support;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (new_clocks->zstate_support == DCN_ZSTATE_SUPPORT_DISALLOW &&
+				new_clocks->zstate_support != clk_mgr_base->clks.zstate_support) {
+			dcn31_smu_set_Z9_support(clk_mgr, false);
+			clk_mgr_base->clks.zstate_support = new_clocks->zstate_support;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		if (!clk_mgr_base->clks.dtbclk_en && new_clocks->dtbclk_en) {
@@ -262,6 +282,9 @@ static void dcn31_update_clocks(struct clk_mgr *clk_mgr_base,
 static int get_vco_frequency_from_reg(struct clk_mgr_internal *clk_mgr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* get FbMult value */
 	struct fixed31_32 pll_req;
 	unsigned int fbmult_frac_val = 0;
@@ -288,9 +311,12 @@ static int get_vco_frequency_from_reg(struct clk_mgr_internal *clk_mgr)
 
 	/* integer part is now VCO frequency in kHz */
 	return dc_fixpt_floor(pll_req);
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void dcn31_enable_pme_wa(struct clk_mgr *clk_mgr_base)
@@ -308,10 +334,14 @@ static void dcn31_init_clocks(struct clk_mgr *clk_mgr)
 	clk_mgr->clks.prev_p_state_change_support = true;
 	clk_mgr->clks.pwr_state = DCN_PWR_STATE_UNKNOWN;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clk_mgr->clks.zstate_support = DCN_ZSTATE_SUPPORT_UNKNOWN;
 =======
 	clk_mgr->clks.z9_support = DCN_Z9_SUPPORT_UNKNOWN;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_mgr->clks.zstate_support = DCN_ZSTATE_SUPPORT_UNKNOWN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool dcn31_are_clock_states_equal(struct dc_clocks *a,
@@ -326,10 +356,14 @@ static bool dcn31_are_clock_states_equal(struct dc_clocks *a,
 	else if (a->dcfclk_deep_sleep_khz != b->dcfclk_deep_sleep_khz)
 		return false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (a->zstate_support != b->zstate_support)
 =======
 	else if (a->z9_support != b->z9_support)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (a->zstate_support != b->zstate_support)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 	else if (a->dtbclk_en != b->dtbclk_en)
 		return false;
@@ -662,9 +696,13 @@ void dcn31_clk_mgr_construct(
 	clk_mgr->base.dprefclk_ss_divider = 1000;
 	clk_mgr->base.ss_on_dprefclk = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clk_mgr->base.dfs_ref_freq_khz = 48000;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_mgr->base.dfs_ref_freq_khz = 48000;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	clk_mgr->smu_wm_set.wm_set = (struct dcn31_watermarks *)dm_helpers_allocate_gpu_mem(
 				clk_mgr->base.base.ctx,

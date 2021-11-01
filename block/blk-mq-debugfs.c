@@ -130,9 +130,13 @@ static const char *const blk_queue_flag_name[] = {
 	QUEUE_FLAG_NAME(ZONE_RESETALL),
 	QUEUE_FLAG_NAME(RQ_ALLOC_TIME),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	QUEUE_FLAG_NAME(HCTX_ACTIVE),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	QUEUE_FLAG_NAME(HCTX_ACTIVE),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	QUEUE_FLAG_NAME(NOWAIT),
 };
 #undef QUEUE_FLAG_NAME

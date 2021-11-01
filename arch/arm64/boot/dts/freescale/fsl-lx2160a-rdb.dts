@@ -66,9 +66,13 @@
 		/* AR8035 PHY */
 		compatible = "ethernet-phy-id004d.d072";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 4 IRQ_TYPE_LEVEL_LOW>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		interrupts-extended = <&extirq 4 IRQ_TYPE_LEVEL_LOW>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x1>;
 		eee-broken-1000t;
 	};
@@ -77,9 +81,13 @@
 		/* AR8035 PHY */
 		compatible = "ethernet-phy-id004d.d072";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 5 IRQ_TYPE_LEVEL_LOW>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		interrupts-extended = <&extirq 5 IRQ_TYPE_LEVEL_LOW>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x2>;
 		eee-broken-1000t;
 	};
@@ -88,9 +96,13 @@
 		/* AQR107 PHY */
 		compatible = "ethernet-phy-ieee802.3-c45";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 2 IRQ_TYPE_LEVEL_LOW>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		interrupts-extended = <&extirq 2 IRQ_TYPE_LEVEL_LOW>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x4>;
 	};
 
@@ -98,9 +110,13 @@
 		/* AQR107 PHY */
 		compatible = "ethernet-phy-ieee802.3-c45";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 3 IRQ_TYPE_LEVEL_LOW>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		interrupts-extended = <&extirq 3 IRQ_TYPE_LEVEL_LOW>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x5>;
 	};
 };

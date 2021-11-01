@@ -117,6 +117,7 @@
  * Except GCC 4.9, that feels the need to align on 64 bytes.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define STRUCT_ALIGNMENT 32
 =======
 #if __GNUC__ == 4 && __GNUC_MINOR__ == 9
@@ -125,6 +126,9 @@
 #define STRUCT_ALIGNMENT 32
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define STRUCT_ALIGNMENT 32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define STRUCT_ALIGN() . = ALIGN(STRUCT_ALIGNMENT)
 
 /*
@@ -488,10 +492,15 @@
 	TRACEDATA							\
 									\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	PRINTK_INDEX							\
 									\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	PRINTK_INDEX							\
+									\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Kernel symbol table: Normal symbols */			\
 	__ksymtab         : AT(ADDR(__ksymtab) - LOAD_OFFSET) {		\
 		__start___ksymtab = .;					\
@@ -596,9 +605,13 @@
 		*(.text..refcount)					\
 		*(.ref.text)						\
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*(.text.asan.* .text.tsan.*)				\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*(.text.asan.* .text.tsan.*)				\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		TEXT_CFI_JT						\
 	MEM_KEEP(init.text*)						\
 	MEM_KEEP(exit.text*)						\
@@ -907,6 +920,9 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PRINTK_INDEX
 #define PRINTK_INDEX							\
 	.printk_index : AT(ADDR(.printk_index) - LOAD_OFFSET) {		\
@@ -918,8 +934,11 @@
 #define PRINTK_INDEX
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define NOTES								\
 	.notes : AT(ADDR(.notes) - LOAD_OFFSET) {			\
 		__start_notes = .;					\

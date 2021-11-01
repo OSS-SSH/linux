@@ -19,12 +19,18 @@
 #ifdef __KERNEL__
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct gendisk;
 struct scsi_device;
 struct sg_io_hdr;
 =======
 struct scsi_device;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct gendisk;
+struct scsi_device;
+struct sg_io_hdr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Structures used for scsi_ioctl et al.
@@ -50,15 +56,21 @@ typedef struct scsi_fctargaddress {
 int scsi_ioctl_block_when_processing_errors(struct scsi_device *sdev,
 		int cmd, bool ndelay);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int scsi_ioctl(struct scsi_device *sdev, struct gendisk *disk, fmode_t mode,
 		int cmd, void __user *arg);
 int get_sg_io_hdr(struct sg_io_hdr *hdr, const void __user *argp);
 int put_sg_io_hdr(const struct sg_io_hdr *hdr, void __user *argp);
 bool scsi_cmd_allowed(unsigned char *cmd, fmode_t mode);
+<<<<<<< HEAD
 =======
 extern int scsi_ioctl(struct scsi_device *, int, void __user *);
 extern int scsi_compat_ioctl(struct scsi_device *sdev, int cmd, void __user *arg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* __KERNEL__ */
 #endif /* _SCSI_IOCTL_H */

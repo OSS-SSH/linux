@@ -19,9 +19,13 @@
 #include <linux/mutex.h>
 #include <linux/kvm_host.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/vfio.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/vfio.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "ap_bus.h"
 
@@ -84,13 +88,18 @@ struct ap_matrix {
  */
 struct ap_matrix_mdev {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct vfio_device vdev;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct vfio_device vdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head node;
 	struct ap_matrix matrix;
 	struct notifier_block group_notifier;
 	struct notifier_block iommu_notifier;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct kvm *kvm;
 	crypto_hook pqap_hook;
@@ -100,6 +109,10 @@ struct ap_matrix_mdev {
 	struct kvm *kvm;
 	struct kvm_s390_module_hook pqap_hook;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kvm *kvm;
+	crypto_hook pqap_hook;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mdev_device *mdev;
 };
 

@@ -193,9 +193,12 @@ static int imx6q_cpufreq_init(struct cpufreq_policy *policy)
 	cpufreq_generic_init(policy, freq_table, transition_latency);
 	policy->suspend_freq = max_freq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -208,9 +211,13 @@ static struct cpufreq_driver imx6q_cpufreq_driver = {
 	.get = cpufreq_generic_get,
 	.init = imx6q_cpufreq_init,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.register_em = cpufreq_register_em_with_opp,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.register_em = cpufreq_register_em_with_opp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.name = "imx6q-cpufreq",
 	.attr = cpufreq_generic_attr,
 	.suspend = cpufreq_generic_suspend,

@@ -261,10 +261,14 @@ xbitmap_set_btcur_path(
 		if (!bp)
 			continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fsb = XFS_DADDR_TO_FSB(cur->bc_mp, xfs_buf_daddr(bp));
 =======
 		fsb = XFS_DADDR_TO_FSB(cur->bc_mp, bp->b_bn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fsb = XFS_DADDR_TO_FSB(cur->bc_mp, xfs_buf_daddr(bp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xbitmap_set(bitmap, fsb, 1);
 		if (error)
 			return error;
@@ -289,10 +293,14 @@ xbitmap_collect_btblock(
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fsbno = XFS_DADDR_TO_FSB(cur->bc_mp, xfs_buf_daddr(bp));
 =======
 	fsbno = XFS_DADDR_TO_FSB(cur->bc_mp, bp->b_bn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fsbno = XFS_DADDR_TO_FSB(cur->bc_mp, xfs_buf_daddr(bp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return xbitmap_set(bitmap, fsbno, 1);
 }
 

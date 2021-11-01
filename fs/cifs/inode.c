@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *   fs/cifs/inode.c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (C) International Business Machines  Corp., 2002,2010
  *   Author(s): Steve French (sfrench@us.ibm.com)
@@ -1629,10 +1632,14 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cifs_close_deferred_file_under_dentry(tcon, full_path);
 =======
 	cifs_close_all_deferred_files(tcon);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cifs_close_deferred_file_under_dentry(tcon, full_path);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cap_unix(tcon->ses) && (CIFS_UNIX_POSIX_PATH_OPS_CAP &
 				le64_to_cpu(tcon->fsUnixInfo.Capability))) {
 		rc = CIFSPOSIXDelFile(xid, tcon, full_path,
@@ -2092,9 +2099,13 @@ cifs_rename2(struct user_namespace *mnt_userns, struct inode *source_dir,
 	unsigned int xid;
 	int rc, tmprc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int retry_count = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int retry_count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (flags & ~RENAME_NOREPLACE)
 		return -EINVAL;
@@ -2125,10 +2136,14 @@ cifs_rename2(struct user_namespace *mnt_userns, struct inode *source_dir,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cifs_close_deferred_file_under_dentry(tcon, from_name);
 	if (d_inode(target_dentry) != NULL)
 		cifs_close_deferred_file_under_dentry(tcon, to_name);
 
+<<<<<<< HEAD
 	rc = cifs_do_rename(xid, source_dentry, from_name, target_dentry,
 			    to_name);
 
@@ -2149,6 +2164,22 @@ cifs_rename2(struct user_namespace *mnt_userns, struct inode *source_dir,
 			    to_name);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = cifs_do_rename(xid, source_dentry, from_name, target_dentry,
+			    to_name);
+
+	if (rc == -EACCES) {
+		while (retry_count < 3) {
+			cifs_close_all_deferred_files(tcon);
+			rc = cifs_do_rename(xid, source_dentry, from_name, target_dentry,
+					    to_name);
+			if (rc != -EACCES)
+				break;
+			retry_count++;
+		}
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * No-replace is the natural behavior for CIFS, so skip unlink hacks.
 	 */
@@ -2315,9 +2346,13 @@ cifs_revalidate_mapping(struct inode *inode)
 	int rc;
 	unsigned long *flags = &CIFS_I(inode)->flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* swapfiles are not supposed to be shared */
 	if (IS_SWAPFILE(inode))
@@ -2330,21 +2365,31 @@ cifs_revalidate_mapping(struct inode *inode)
 
 	if (test_and_clear_bit(CIFS_INO_INVALID_MAPPING, flags)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* for cache=singleclient, do not invalidate */
 		if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_RW_CACHE)
 			goto skip_invalidate;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc = cifs_invalidate_mapping(inode);
 		if (rc)
 			set_bit(CIFS_INO_INVALID_MAPPING, flags);
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 skip_invalidate:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+skip_invalidate:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clear_bit_unlock(CIFS_INO_LOCK, flags);
 	smp_mb__after_atomic();
 	wake_up_bit(flags, CIFS_INO_LOCK);

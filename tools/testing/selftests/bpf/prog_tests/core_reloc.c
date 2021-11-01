@@ -817,10 +817,14 @@ void test_core_reloc(void)
 {
 	const size_t mmap_sz = roundup_page(sizeof(struct data));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DECLARE_LIBBPF_OPTS(bpf_object_open_opts, open_opts);
 =======
 	struct bpf_object_load_attr load_attr = {};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DECLARE_LIBBPF_OPTS(bpf_object_open_opts, open_opts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct core_reloc_test_case *test_case;
 	const char *tp_name, *probe_name;
 	int err, i, equal;
@@ -851,6 +855,9 @@ void test_core_reloc(void)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (test_case->btf_src_file) {
 			err = access(test_case->btf_src_file, R_OK);
 			if (!ASSERT_OK(err, "btf_src_file"))
@@ -859,6 +866,7 @@ void test_core_reloc(void)
 
 		open_opts.btf_custom_path = test_case->btf_src_file;
 		obj = bpf_object__open_file(test_case->bpf_obj_file, &open_opts);
+<<<<<<< HEAD
 		if (!ASSERT_OK_PTR(obj, "obj_open"))
 			goto cleanup;
 =======
@@ -866,6 +874,10 @@ void test_core_reloc(void)
 		if (!ASSERT_OK_PTR(obj, "obj_open"))
 			continue;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!ASSERT_OK_PTR(obj, "obj_open"))
+			goto cleanup;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		probe_name = "raw_tracepoint/sys_enter";
 		tp_name = "sys_enter";
@@ -879,6 +891,7 @@ void test_core_reloc(void)
 			  "prog '%s' not found\n", probe_name))
 			goto cleanup;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		err = bpf_object__load(obj);
 =======
@@ -894,6 +907,9 @@ void test_core_reloc(void)
 		load_attr.target_btf_path = test_case->btf_src_file;
 		err = bpf_object__load_xattr(&load_attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = bpf_object__load(obj);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			if (!test_case->fails)
 				ASSERT_OK(err, "obj_load");

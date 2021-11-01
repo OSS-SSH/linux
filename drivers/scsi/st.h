@@ -188,10 +188,14 @@ struct scsi_tape {
 	unsigned char last_sense[16];
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char name[DISK_NAME_LEN];
 =======
 	struct gendisk *disk;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char name[DISK_NAME_LEN];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct kref     kref;
 	struct scsi_tape_stats *stats;
 };

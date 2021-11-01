@@ -584,15 +584,21 @@ int memtype_reserve(u64 start, u64 end, enum page_cache_mode req_type,
 
 	start = sanitize_phys(start);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The end address passed into this function is exclusive, but
 	 * sanitize_phys() expects an inclusive address.
 	 */
 	end = sanitize_phys(end - 1) + 1;
+<<<<<<< HEAD
 =======
 	end = sanitize_phys(end);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (start >= end) {
 		WARN(1, "%s failed: [mem %#010Lx-%#010Lx], req %s\n", __func__,
 				start, end - 1, cattr_name(req_type));

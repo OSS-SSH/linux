@@ -74,6 +74,9 @@ properties:
       - 2 # SMB3XX_SOFT_TEMP_COMPENSATE_VOLTAGE Voltage compensation
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   summit,inok-polarity:
     description: |
       Polarity of INOK signal indicating presence of external power supply.
@@ -94,8 +97,11 @@ properties:
 
     unevaluatedProperties: false
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 allOf:
   - if:
       properties:
@@ -158,9 +164,13 @@ examples:
 
             summit,enable-charge-control = <SMB3XX_CHG_ENABLE_PIN_ACTIVE_HIGH>;
 <<<<<<< HEAD
+<<<<<<< HEAD
             summit,inok-polarity = <SMB3XX_SYSOK_INOK_ACTIVE_LOW>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+            summit,inok-polarity = <SMB3XX_SYSOK_INOK_ACTIVE_LOW>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             summit,chip-temperature-threshold-celsius = <110>;
             summit,mains-current-limit-microamp = <2000000>;
             summit,usb-current-limit-microamp = <500000>;
@@ -169,6 +179,9 @@ examples:
 
             monitored-battery = <&battery>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
             usb-vbus {
                 regulator-name = "usb_vbus";
@@ -178,8 +191,11 @@ examples:
                 regulator-max-microamp = <750000>;
                 summit,needs-inok-toggle;
             };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         };
     };
 

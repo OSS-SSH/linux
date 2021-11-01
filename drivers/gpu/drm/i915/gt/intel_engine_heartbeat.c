@@ -71,6 +71,9 @@ static void show_heartbeat(const struct i915_request *rq,
 	struct drm_printer p = drm_debug_printer("heartbeat");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rq) {
 		intel_engine_dump(engine, &p,
 				  "%s heartbeat not ticking\n",
@@ -103,6 +106,7 @@ reset_engine(struct intel_engine_cs *engine, struct i915_request *rq)
 			      I915_ERROR_CAPTURE,
 			      "stopped heartbeat on %s",
 			      engine->name);
+<<<<<<< HEAD
 =======
 	intel_engine_dump(engine, &p,
 			  "%s heartbeat {seqno:%llx:%lld, prio:%d} not ticking\n",
@@ -111,6 +115,8 @@ reset_engine(struct intel_engine_cs *engine, struct i915_request *rq)
 			  rq->fence.seqno,
 			  rq->sched.attr.priority);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void heartbeat(struct work_struct *wrk)
@@ -138,13 +144,19 @@ static void heartbeat(struct work_struct *wrk)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (i915_sched_engine_disabled(engine->sched_engine)) {
 		reset_engine(engine, engine->heartbeat.systole);
 		goto out;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (engine->heartbeat.systole) {
 		long delay = READ_ONCE(engine->props.heartbeat_interval_ms);
 
@@ -165,10 +177,14 @@ static void heartbeat(struct work_struct *wrk)
 			 * context are stuck waiting for the signal.
 			 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else if (engine->sched_engine->schedule &&
 =======
 		} else if (engine->schedule &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		} else if (engine->sched_engine->schedule &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   rq->sched.attr.priority < I915_PRIORITY_BARRIER) {
 			/*
 			 * Gradually raise the priority of the heartbeat to
@@ -183,6 +199,7 @@ static void heartbeat(struct work_struct *wrk)
 				attr.priority = I915_PRIORITY_BARRIER;
 
 			local_bh_disable();
+<<<<<<< HEAD
 <<<<<<< HEAD
 			engine->sched_engine->schedule(rq, &attr);
 			local_bh_enable();
@@ -200,6 +217,12 @@ static void heartbeat(struct work_struct *wrk)
 					      "stopped heartbeat on %s",
 					      engine->name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			engine->sched_engine->schedule(rq, &attr);
+			local_bh_enable();
+		} else {
+			reset_engine(engine, rq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		rq->emitted_jiffies = jiffies;
@@ -249,6 +272,9 @@ void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_gt_unpark_heartbeats(struct intel_gt *gt)
 {
 	struct intel_engine_cs *engine;
@@ -268,8 +294,11 @@ void intel_gt_park_heartbeats(struct intel_gt *gt)
 		intel_engine_park_heartbeat(engine);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_engine_init_heartbeat(struct intel_engine_cs *engine)
 {
 	INIT_DELAYED_WORK(&engine->heartbeat.work, heartbeat);

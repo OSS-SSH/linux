@@ -498,17 +498,25 @@ static struct regmap_bus phymap_encx24j600 = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int devm_regmap_init_encx24j600(struct device *dev,
 				struct encx24j600_context *ctx)
 =======
 void devm_regmap_init_encx24j600(struct device *dev,
 				 struct encx24j600_context *ctx)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int devm_regmap_init_encx24j600(struct device *dev,
+				struct encx24j600_context *ctx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	mutex_init(&ctx->mutex);
 	regcfg.lock_arg = ctx;
 	ctx->regmap = devm_regmap_init(dev, &regmap_encx24j600, ctx, &regcfg);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ctx->regmap))
 		return PTR_ERR(ctx->regmap);
 	ctx->phymap = devm_regmap_init(dev, &phymap_encx24j600, ctx, &phycfg);
@@ -516,9 +524,12 @@ void devm_regmap_init_encx24j600(struct device *dev,
 		return PTR_ERR(ctx->phymap);
 
 	return 0;
+<<<<<<< HEAD
 =======
 	ctx->phymap = devm_regmap_init(dev, &phymap_encx24j600, ctx, &phycfg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(devm_regmap_init_encx24j600);
 

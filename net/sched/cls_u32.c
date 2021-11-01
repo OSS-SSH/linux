@@ -710,19 +710,27 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
 			 unsigned long base,
 			 struct tc_u_knode *n, struct nlattr **tb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 struct nlattr *est, u32 flags,
 =======
 			 struct nlattr *est, bool ovr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 struct nlattr *est, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 struct netlink_ext_ack *extack)
 {
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = tcf_exts_validate(net, tp, tb, est, &n->exts, flags, extack);
 =======
 	err = tcf_exts_validate(net, tp, tb, est, &n->exts, ovr, true, extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = tcf_exts_validate(net, tp, tb, est, &n->exts, flags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -849,10 +857,14 @@ static struct tc_u_knode *u32_init_knode(struct net *net, struct tcf_proto *tp,
 static int u32_change(struct net *net, struct sk_buff *in_skb,
 		      struct tcf_proto *tp, unsigned long base, u32 handle,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      struct nlattr **tca, void **arg, u32 flags,
 =======
 		      struct nlattr **tca, void **arg, bool ovr, bool rtnl_held,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      struct nlattr **tca, void **arg, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		      struct netlink_ext_ack *extack)
 {
 	struct tc_u_common *tp_c = tp->data;
@@ -862,10 +874,14 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 	struct nlattr *opt = tca[TCA_OPTIONS];
 	struct nlattr *tb[TCA_U32_MAX + 1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 htid, userflags = 0;
 =======
 	u32 htid, flags = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 htid, userflags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size_t sel_size;
 	int err;
 
@@ -885,12 +901,17 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 
 	if (tb[TCA_U32_FLAGS]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		userflags = nla_get_u32(tb[TCA_U32_FLAGS]);
 		if (!tc_flags_valid(userflags)) {
 =======
 		flags = nla_get_u32(tb[TCA_U32_FLAGS]);
 		if (!tc_flags_valid(flags)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		userflags = nla_get_u32(tb[TCA_U32_FLAGS]);
+		if (!tc_flags_valid(userflags)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			NL_SET_ERR_MSG_MOD(extack, "Invalid filter flags");
 			return -EINVAL;
 		}
@@ -906,10 +927,14 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((n->flags ^ userflags) &
 =======
 		if ((n->flags ^ flags) &
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((n->flags ^ userflags) &
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    ~(TCA_CLS_FLAGS_IN_HW | TCA_CLS_FLAGS_NOT_IN_HW)) {
 			NL_SET_ERR_MSG_MOD(extack, "Key node flags do not match passed flags");
 			return -EINVAL;
@@ -921,10 +946,14 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 
 		err = u32_set_parms(net, tp, base, new, tb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    tca[TCA_RATE], flags, extack);
 =======
 				    tca[TCA_RATE], ovr, extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    tca[TCA_RATE], flags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (err) {
 			u32_destroy_key(new, false);
@@ -985,6 +1014,7 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 		ht->prio = tp->prio;
 		idr_init(&ht->handle_idr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ht->flags = userflags;
 
 		err = u32_replace_hw_hnode(tp, ht, userflags, extack);
@@ -993,6 +1023,11 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 
 		err = u32_replace_hw_hnode(tp, ht, flags, extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ht->flags = userflags;
+
+		err = u32_replace_hw_hnode(tp, ht, userflags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			idr_remove(&tp_c->handle_idr, handle);
 			kfree(ht);
@@ -1074,10 +1109,14 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 	n->handle = handle;
 	n->fshift = s->hmask ? ffs(ntohl(s->hmask)) - 1 : 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	n->flags = userflags;
 =======
 	n->flags = flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	n->flags = userflags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = tcf_exts_init(&n->exts, net, TCA_U32_ACT, TCA_U32_POLICE);
 	if (err < 0)
@@ -1100,10 +1139,14 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = u32_set_parms(net, tp, base, n, tb, tca[TCA_RATE], flags,
 =======
 	err = u32_set_parms(net, tp, base, n, tb, tca[TCA_RATE], ovr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = u32_set_parms(net, tp, base, n, tb, tca[TCA_RATE], flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    extack);
 	if (err == 0) {
 		struct tc_u_knode __rcu **ins;

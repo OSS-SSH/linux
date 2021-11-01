@@ -142,10 +142,14 @@ int hl_device_open(struct inode *inode, struct file *filp)
 	hl_ctx_mgr_init(&hpriv->ctx_mgr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hpriv->taskpid = get_task_pid(current, PIDTYPE_PID);
 =======
 	hpriv->taskpid = find_get_pid(current->pid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hpriv->taskpid = get_task_pid(current, PIDTYPE_PID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&hdev->fpriv_list_lock);
 
@@ -199,9 +203,12 @@ int hl_device_open(struct inode *inode, struct file *filp)
 out_err:
 	mutex_unlock(&hdev->fpriv_list_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hl_cb_mgr_fini(hpriv->hdev, &hpriv->cb_mgr);
 	hl_ctx_mgr_fini(hpriv->hdev, &hpriv->ctx_mgr);
 	filp->private_data = NULL;
@@ -326,6 +333,7 @@ int create_hdev(struct hl_device **dev, struct pci_dev *pdev,
 
 	/* Assign status description string */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	strncpy(hdev->status[HL_DEVICE_STATUS_OPERATIONAL],
 					"operational", HL_STR_MAX);
 	strncpy(hdev->status[HL_DEVICE_STATUS_IN_RESET],
@@ -339,11 +347,22 @@ int create_hdev(struct hl_device **dev, struct pci_dev *pdev,
 =======
 	strncpy(hdev->status[HL_DEVICE_STATUS_MALFUNCTION],
 					"disabled", HL_STR_MAX);
+=======
+	strncpy(hdev->status[HL_DEVICE_STATUS_OPERATIONAL],
+					"operational", HL_STR_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	strncpy(hdev->status[HL_DEVICE_STATUS_IN_RESET],
 					"in reset", HL_STR_MAX);
+	strncpy(hdev->status[HL_DEVICE_STATUS_MALFUNCTION],
+					"disabled", HL_STR_MAX);
 	strncpy(hdev->status[HL_DEVICE_STATUS_NEEDS_RESET],
 					"needs reset", HL_STR_MAX);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	strncpy(hdev->status[HL_DEVICE_STATUS_IN_DEVICE_CREATION],
+					"in device creation", HL_STR_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hdev->major = hl_major;
 	hdev->reset_on_lockup = reset_on_lockup;
@@ -553,10 +572,14 @@ hl_pci_err_detected(struct pci_dev *pdev, pci_channel_state_t state)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hdev->asic_funcs->halt_engines(hdev, true, false);
 =======
 	hdev->asic_funcs->halt_engines(hdev, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hdev->asic_funcs->halt_engines(hdev, true, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return result;
 }

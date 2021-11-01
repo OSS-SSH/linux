@@ -615,6 +615,9 @@ static int snd_usb_pcm_prepare(struct snd_pcm_substream *substream)
 	runtime->delay = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* check whether early start is needed for playback stream */
 	subs->early_playback_start =
 		subs->direction == SNDRV_PCM_STREAM_PLAYBACK &&
@@ -624,8 +627,11 @@ static int snd_usb_pcm_prepare(struct snd_pcm_substream *substream)
 	if (subs->early_playback_start)
 		ret = start_endpoints(subs);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  unlock:
 	snd_usb_unlock_shutdown(chip);
 	return ret;
@@ -1407,10 +1413,14 @@ static void prepare_playback_urb(struct snd_usb_substream *subs,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (period_elapsed && !subs->running && !subs->early_playback_start) {
 =======
 	if (period_elapsed && !subs->running) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (period_elapsed && !subs->running && !subs->early_playback_start) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		subs->period_elapsed_pending = 1;
 		period_elapsed = 0;
 	}
@@ -1465,11 +1475,16 @@ static int snd_usb_substream_playback_trigger(struct snd_pcm_substream *substrea
 					      retire_playback_urb,
 					      subs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!subs->early_playback_start &&
 		    cmd == SNDRV_PCM_TRIGGER_START) {
 =======
 		if (cmd == SNDRV_PCM_TRIGGER_START) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!subs->early_playback_start &&
+		    cmd == SNDRV_PCM_TRIGGER_START) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = start_endpoints(subs);
 			if (err < 0) {
 				snd_usb_endpoint_set_callback(subs->data_endpoint,

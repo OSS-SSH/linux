@@ -87,6 +87,9 @@ bool evlist__has_hybrid(struct evlist *evlist)
 	return false;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int evlist__fix_hybrid_cpus(struct evlist *evlist, const char *cpu_list)
 {
@@ -160,5 +163,8 @@ out:
 	perf_cpu_map__put(cpus);
 	return ret;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

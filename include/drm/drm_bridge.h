@@ -172,13 +172,19 @@ struct drm_bridge_funcs {
 	 *
 	 * The @disable callback is optional.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_disable.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	void (*disable)(struct drm_bridge *bridge);
 
@@ -199,13 +205,19 @@ struct drm_bridge_funcs {
 	 *
 	 * The @post_disable callback is optional.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_post_disable.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	void (*post_disable)(struct drm_bridge *bridge);
 
@@ -232,6 +244,7 @@ struct drm_bridge_funcs {
 	 * NOTE:
 	 *
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * This is deprecated, do not use!
 	 * New drivers shall set their mode in the
 	 * &drm_bridge_funcs.atomic_enable operation.
@@ -240,6 +253,11 @@ struct drm_bridge_funcs {
 	 * locations than the connection between the CRTC and the first bridge,
 	 * the DRM framework will have to be extended with DRM bridge states.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * This is deprecated, do not use!
+	 * New drivers shall set their mode in the
+	 * &drm_bridge_funcs.atomic_enable operation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	void (*mode_set)(struct drm_bridge *bridge,
 			 const struct drm_display_mode *mode,
@@ -262,13 +280,19 @@ struct drm_bridge_funcs {
 	 *
 	 * The @pre_enable callback is optional.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_pre_enable.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	void (*pre_enable)(struct drm_bridge *bridge);
 
@@ -290,13 +314,19 @@ struct drm_bridge_funcs {
 	 *
 	 * The @enable callback is optional.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_enable.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	void (*enable)(struct drm_bridge *bridge);
 

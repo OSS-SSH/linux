@@ -97,16 +97,21 @@ $(obj)/bootpImage: $(obj)/bootp/bootp FORCE
 	$(call if_changed,objcopy)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 PHONY += initrd
 =======
 PHONY += initrd install zinstall uinstall
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+PHONY += initrd
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 initrd:
 	@test "$(INITRD_PHYS)" != "" || \
 	(echo This machine does not support INITRD; exit -1)
 	@test "$(INITRD)" != "" || \
 	(echo You must specify INITRD; exit -1)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 install:
@@ -122,4 +127,6 @@ uinstall:
 	$(obj)/uImage System.map "$(INSTALL_PATH)"
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 subdir-	    := bootp compressed dts

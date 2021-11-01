@@ -434,10 +434,14 @@ static u32 cmd_to_target_hwq(struct Scsi_Host *host, struct scsi_cmnd *scp,
 		break;
 	case HWQ_MODE_TAG:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tag = blk_mq_unique_tag(scsi_cmd_to_rq(scp));
 =======
 		tag = blk_mq_unique_tag(scp->request);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tag = blk_mq_unique_tag(scsi_cmd_to_rq(scp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		hwq = blk_mq_unique_tag_to_hwq(tag);
 		break;
 	case HWQ_MODE_CPU:
@@ -1634,12 +1638,17 @@ static int read_vpd(struct cxlflash_cfg *cfg, u64 wwpn[])
 	struct device *dev = &cfg->dev->dev;
 	struct pci_dev *pdev = cfg->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, k, rc = 0;
 	unsigned int kw_size;
 =======
 	int rc = 0;
 	int ro_start, ro_size, i, j, k;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, k, rc = 0;
+	unsigned int kw_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t vpd_size;
 	char vpd_data[CXLFLASH_VPD_LEN];
 	char tmp_buf[WWPN_BUF_LEN] = { 0 };
@@ -1657,6 +1666,7 @@ static int read_vpd(struct cxlflash_cfg *cfg, u64 wwpn[])
 		goto out;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/* Get the read only section offset */
@@ -1678,6 +1688,8 @@ static int read_vpd(struct cxlflash_cfg *cfg, u64 wwpn[])
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Find the offset of the WWPN tag within the read only
 	 * VPD data and validate the found field (partials are
@@ -1694,6 +1706,7 @@ static int read_vpd(struct cxlflash_cfg *cfg, u64 wwpn[])
 	 */
 	for (k = 0; k < cfg->num_fc_ports; k++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		i = pci_vpd_find_ro_info_keyword(vpd_data, vpd_size,
 						 wwpn_vpd_tags[k], &kw_size);
 		if (i == -ENOENT) {
@@ -1704,6 +1717,11 @@ static int read_vpd(struct cxlflash_cfg *cfg, u64 wwpn[])
 		i = pci_vpd_find_info_keyword(vpd_data, i, j, wwpn_vpd_tags[k]);
 		if (i < 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		i = pci_vpd_find_ro_info_keyword(vpd_data, vpd_size,
+						 wwpn_vpd_tags[k], &kw_size);
+		if (i == -ENOENT) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (wwpn_vpd_required)
 				dev_err(dev, "%s: Port %d WWPN not found\n",
 					__func__, k);
@@ -1712,12 +1730,16 @@ static int read_vpd(struct cxlflash_cfg *cfg, u64 wwpn[])
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (i < 0 || kw_size != WWPN_LEN) {
 =======
 		j = pci_vpd_info_field_size(&vpd_data[i]);
 		i += PCI_VPD_INFO_FLD_HDR_SIZE;
 		if (unlikely((i + j > vpd_size) || (j != WWPN_LEN))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (i < 0 || kw_size != WWPN_LEN) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_err(dev, "%s: Port %d WWPN incomplete or bad VPD\n",
 				__func__, k);
 			rc = -ENODEV;

@@ -178,9 +178,13 @@ config XEN_GRANT_DMA_ALLOC
 config SWIOTLB_XEN
 	def_bool y
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on XEN_PV || ARM || ARM64
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on XEN_PV || ARM || ARM64
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select DMA_OPS
 	select SWIOTLB
 
@@ -219,10 +223,14 @@ config XEN_PVCALLS_FRONTEND
 
 config XEN_PVCALLS_BACKEND
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tristate "XEN PV Calls backend driver"
 =======
 	bool "XEN PV Calls backend driver"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tristate "XEN PV Calls backend driver"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on INET && XEN && XEN_BACKEND
 	help
 	  Experimental backend for the Xen PV Calls protocol
@@ -249,10 +257,14 @@ config XEN_PRIVCMD
 config XEN_ACPI_PROCESSOR
 	tristate "Xen ACPI processor"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on XEN && XEN_PV_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
 =======
 	depends on XEN && XEN_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on XEN && XEN_PV_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default m
 	help
 	  This ACPI processor uploads Power Management information to the Xen
@@ -271,10 +283,14 @@ config XEN_ACPI_PROCESSOR
 config XEN_MCE_LOG
 	bool "Xen platform mcelog"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on XEN_PV_DOM0 && X86_MCE
 =======
 	depends on XEN_DOM0 && X86_MCE
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on XEN_PV_DOM0 && X86_MCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Allow kernel fetching MCE error from Xen platform and
 	  converting it into Linux mcelog format for mcelog tools

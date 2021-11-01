@@ -12,9 +12,13 @@
 #include "intel_engine_user.h"
 #include "intel_gt.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "uc/intel_guc_submission.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "uc/intel_guc_submission.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct intel_engine_cs *
 intel_engine_lookup_user(struct drm_i915_private *i915, u8 class, u8 instance)
@@ -113,10 +117,14 @@ static void set_scheduler_caps(struct drm_i915_private *i915)
 		int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (engine->sched_engine->schedule)
 =======
 		if (engine->schedule)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (engine->sched_engine->schedule)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			enabled |= (I915_SCHEDULER_CAP_ENABLED |
 				    I915_SCHEDULER_CAP_PRIORITY);
 		else
@@ -124,11 +132,17 @@ static void set_scheduler_caps(struct drm_i915_private *i915)
 				     I915_SCHEDULER_CAP_PRIORITY);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (intel_uc_uses_guc_submission(&i915->gt.uc))
 			enabled |= I915_SCHEDULER_CAP_STATIC_PRIORITY_MAP;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (intel_uc_uses_guc_submission(&i915->gt.uc))
+			enabled |= I915_SCHEDULER_CAP_STATIC_PRIORITY_MAP;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (i = 0; i < ARRAY_SIZE(map); i++) {
 			if (engine->flags & BIT(map[i].engine))
 				enabled |= BIT(map[i].sched);

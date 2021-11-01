@@ -902,10 +902,14 @@ err:
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * drm_gem_open - initializes GEM file-private structures at devnode open time
 =======
  * drm_gem_open - initalizes GEM file-private structures at devnode open time
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * drm_gem_open - initializes GEM file-private structures at devnode open time
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dev: drm_device which is being opened by userspace
  * @file_private: drm file-private structure to set up
  *
@@ -941,10 +945,14 @@ drm_gem_release(struct drm_device *dev, struct drm_file *file_private)
  * @obj: GEM buffer object
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This releases any structures and resources used by @obj and is the inverse of
 =======
  * This releases any structures and resources used by @obj and is the invers of
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This releases any structures and resources used by @obj and is the inverse of
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_gem_object_init().
  */
 void
@@ -983,6 +991,7 @@ EXPORT_SYMBOL(drm_gem_object_free);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * drm_gem_object_put_locked - release a GEM buffer object reference
  * @obj: GEM buffer object
@@ -1007,6 +1016,8 @@ EXPORT_SYMBOL(drm_gem_object_put_locked);
 
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_gem_vm_open - vma->ops->open implementation for GEM
  * @vma: VM area structure
  *
@@ -1160,6 +1171,7 @@ int drm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (node->readonly) {
 		if (vma->vm_flags & VM_WRITE) {
@@ -1171,6 +1183,8 @@ int drm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = drm_gem_mmap_obj(obj, drm_vma_node_size(node) << PAGE_SHIFT,
 			       vma);
 
@@ -1326,11 +1340,17 @@ EXPORT_SYMBOL(drm_gem_unlock_reservations);
  * @fence: the dma_fence to add to the list of dependencies.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This functions consumes the reference for @fence both on success and error
  * cases.
  *
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This functions consumes the reference for @fence both on success and error
+ * cases.
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Returns:
  * 0 on success, or an error on failing to expand the array.
  */

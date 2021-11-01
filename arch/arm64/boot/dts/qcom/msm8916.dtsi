@@ -490,6 +490,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		stm: stm@802000 {
 			compatible = "arm,coresight-stm", "arm,primecell";
 			reg = <0x00802000 0x1000>,
@@ -510,8 +513,11 @@
 			};
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* System CTIs */
 		/* CTI 0 - TMC connections */
 		cti0: cti@810000 {
@@ -586,6 +592,9 @@
 					};
 				};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				port@7 {
 					reg = <7>;
@@ -593,8 +602,11 @@
 						remote-endpoint = <&stm_out>;
 					};
 				};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			out-ports {

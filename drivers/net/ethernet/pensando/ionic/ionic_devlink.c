@@ -65,10 +65,14 @@ struct ionic *ionic_devlink_alloc(struct device *dev)
 	struct devlink *dl;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dl = devlink_alloc(&ionic_dl_ops, sizeof(struct ionic), dev);
 =======
 	dl = devlink_alloc(&ionic_dl_ops, sizeof(struct ionic));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dl = devlink_alloc(&ionic_dl_ops, sizeof(struct ionic), dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return devlink_priv(dl);
 }
@@ -87,10 +91,14 @@ int ionic_devlink_register(struct ionic *ionic)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = devlink_register(dl);
 =======
 	err = devlink_register(dl, ionic->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = devlink_register(dl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		dev_warn(ionic->dev, "devlink_register failed: %d\n", err);
 		return err;
@@ -99,6 +107,7 @@ int ionic_devlink_register(struct ionic *ionic)
 	attrs.flavour = DEVLINK_PORT_FLAVOUR_PHYSICAL;
 	devlink_port_attrs_set(&ionic->dl_port, &attrs);
 	err = devlink_port_register(dl, &ionic->dl_port, 0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err) {
 		dev_err(ionic->dev, "devlink_port_register failed: %d\n", err);
@@ -110,13 +119,21 @@ int ionic_devlink_register(struct ionic *ionic)
 	return 0;
 =======
 	if (err)
+=======
+	if (err) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(ionic->dev, "devlink_port_register failed: %d\n", err);
-	else
-		devlink_port_type_eth_set(&ionic->dl_port,
-					  ionic->lif->netdev);
+		devlink_unregister(dl);
+		return err;
+	}
 
+<<<<<<< HEAD
 	return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devlink_port_type_eth_set(&ionic->dl_port, ionic->lif->netdev);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void ionic_devlink_unregister(struct ionic *ionic)
@@ -124,10 +141,14 @@ void ionic_devlink_unregister(struct ionic *ionic)
 	struct devlink *dl = priv_to_devlink(ionic);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	devlink_port_unregister(&ionic->dl_port);
 =======
 	if (ionic->dl_port.registered)
 		devlink_port_unregister(&ionic->dl_port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devlink_port_unregister(&ionic->dl_port);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	devlink_unregister(dl);
 }

@@ -188,9 +188,13 @@ config SND_SOC_ALL_CODECS
 	imply SND_SOC_RT1308_SDW
 	imply SND_SOC_RT1316_SDW
 <<<<<<< HEAD
+<<<<<<< HEAD
 	imply SND_SOC_SDW_MOCKUP
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	imply SND_SOC_SDW_MOCKUP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imply SND_SOC_SGTL5000
 	imply SND_SOC_SI476X
 	imply SND_SOC_SIMPLE_AMPLIFIER
@@ -852,10 +856,14 @@ config SND_SOC_HDAC_HDA
 
 config SND_SOC_ICS43432
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tristate "ICS43423 and compatible i2s microphones"
 =======
 	tristate
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tristate "ICS43423 and compatible i2s microphones"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config SND_SOC_INNO_RK3036
 	tristate "Inno codec driver for RK3036 SoC"
@@ -1296,6 +1304,9 @@ config SND_SOC_RT715_SDCA_SDW
 	select REGMAP_SOUNDWIRE_MBQ
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config SND_SOC_SDW_MOCKUP
 	tristate "SoundWire mockup codec"
 	depends on EXPERT
@@ -1313,8 +1324,11 @@ config SND_SOC_SDW_MOCKUP
 	  generate audio data for capture. However, nothing prevents such a
 	  peripheral device from snooping the bus.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #Freescale sgtl5000 codec
 config SND_SOC_SGTL5000
 	tristate "Freescale SGTL5000 CODEC"
@@ -1354,10 +1368,14 @@ config SND_SOC_SSM2305
 
 config SND_SOC_SSM2518
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tristate "Analog Devices SSM2518 Class-D Amplifier"
 =======
 	tristate
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tristate "Analog Devices SSM2518 Class-D Amplifier"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on I2C
 
 config SND_SOC_SSM2602
@@ -1590,20 +1608,30 @@ config SND_SOC_WCD934X
 
 config SND_SOC_WCD938X
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on SND_SOC_WCD938X_SDW
 	tristate
 	depends on SOUNDWIRE || !SOUNDWIRE
 =======
 	tristate
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on SND_SOC_WCD938X_SDW
+	tristate
+	depends on SOUNDWIRE || !SOUNDWIRE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config SND_SOC_WCD938X_SDW
 	tristate "WCD9380/WCD9385 Codec - SDW"
 	select SND_SOC_WCD938X
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select SND_SOC_WCD_MBHC
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select SND_SOC_WCD_MBHC
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on SOUNDWIRE
 	select REGMAP_SOUNDWIRE
 	help
@@ -1856,6 +1884,7 @@ config SND_SOC_ZL38060
 	  Audio Interfaces (DAIs), analog outputs, and a block of 14 GPIOs.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config SND_SOC_ZX_AUD96P22
 	tristate "ZTE ZX AUD96P22 CODEC"
@@ -1863,6 +1892,8 @@ config SND_SOC_ZX_AUD96P22
 	select REGMAP_I2C
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # Amp
 config SND_SOC_LM4857
 	tristate

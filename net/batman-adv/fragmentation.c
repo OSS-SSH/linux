@@ -382,6 +382,7 @@ bool batadv_frag_skb_fwd(struct sk_buff *skb,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_orig_node_put(orig_node_dst);
 	batadv_neigh_node_put(neigh_node);
 =======
@@ -390,6 +391,10 @@ out:
 	if (neigh_node)
 		batadv_neigh_node_put(neigh_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(orig_node_dst);
+	batadv_neigh_node_put(neigh_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

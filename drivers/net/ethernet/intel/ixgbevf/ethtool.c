@@ -788,12 +788,18 @@ static int ixgbevf_nway_reset(struct net_device *netdev)
 
 static int ixgbevf_get_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				struct ethtool_coalesce *ec,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
 =======
 				struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				struct ethtool_coalesce *ec,
+				struct kernel_ethtool_coalesce *kernel_coal,
+				struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ixgbevf_adapter *adapter = netdev_priv(netdev);
 
@@ -818,12 +824,18 @@ static int ixgbevf_get_coalesce(struct net_device *netdev,
 
 static int ixgbevf_set_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				struct ethtool_coalesce *ec,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
 =======
 				struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				struct ethtool_coalesce *ec,
+				struct kernel_ethtool_coalesce *kernel_coal,
+				struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ixgbevf_adapter *adapter = netdev_priv(netdev);
 	struct ixgbevf_q_vector *q_vector;

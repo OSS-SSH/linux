@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ldm - Support for Windows Logical Disk Manager (Dynamic Disks)
  *
  * Copyright (C) 2001,2002 Richard Russon <ldm@flatcap.org>
@@ -309,10 +313,14 @@ static bool ldm_validate_privheads(struct parsed_partitions *state,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	num_sects = get_capacity(state->disk);
 =======
 	num_sects = state->bdev->bd_inode->i_size >> 9;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	num_sects = get_capacity(state->disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((ph[0]->config_start > num_sects) ||
 	   ((ph[0]->config_start + ph[0]->config_size) > num_sects)) {
@@ -348,6 +356,7 @@ out:
  * ldm_validate_tocblocks - Validate the table of contents and its backups
  * @state: Partition check state including device holding the LDM Database
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @base:  Offset, into @state->disk, of the database
  * @ldb:   Cache of the database structures
  *
@@ -360,6 +369,13 @@ out:
  * Find and compare the four tables of contents of the LDM Database stored on
  * @state->bdev and return the parsed information into @toc1.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @base:  Offset, into @state->disk, of the database
+ * @ldb:   Cache of the database structures
+ *
+ * Find and compare the four tables of contents of the LDM Database stored on
+ * @state->disk and return the parsed information into @toc1.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * The offsets and sizes of the configs are range-checked against a privhead.
  *
@@ -503,12 +519,17 @@ out:
  *       the case we should return zero to let someone else try.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Return:  'true'   @state->disk is a dynamic disk
  *          'false'  @state->disk is not a dynamic disk, or an error occurred
 =======
  * Return:  'true'   @state->bdev is a dynamic disk
  *          'false'  @state->bdev is not a dynamic disk, or an error occurred
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Return:  'true'   @state->disk is a dynamic disk
+ *          'false'  @state->disk is not a dynamic disk, or an error occurred
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static bool ldm_validate_partition_table(struct parsed_partitions *state)
 {
@@ -1362,10 +1383,14 @@ static bool ldm_frag_commit (struct list_head *frags, struct ldmdb *ldb)
  * ldm_get_vblks - Read the on-disk database of VBLKs into memory
  * @state: Partition check state including device holding the LDM Database
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @base:  Offset, into @state->disk, of the database
 =======
  * @base:  Offset, into @state->bdev, of the database
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @base:  Offset, into @state->disk, of the database
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ldb:   Cache of the database structures
  *
  * To use the information from the VBLKs, they need to be read from the disk,
@@ -1458,6 +1483,7 @@ static void ldm_free_vblks (struct list_head *lh)
  * and so on: the actual data containing partitions.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Return:  1 Success, @state->disk is a dynamic disk and we handled it
  *          0 Success, @state->disk is not a dynamic disk
  *         -1 An error occurred before enough information had been read
@@ -1468,6 +1494,12 @@ static void ldm_free_vblks (struct list_head *lh)
  *         -1 An error occurred before enough information had been read
  *            Or @state->bdev is a dynamic disk, but it may be corrupted
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Return:  1 Success, @state->disk is a dynamic disk and we handled it
+ *          0 Success, @state->disk is not a dynamic disk
+ *         -1 An error occurred before enough information had been read
+ *            Or @state->disk is a dynamic disk, but it may be corrupted
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int ldm_partition(struct parsed_partitions *state)
 {

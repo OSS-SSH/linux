@@ -25,9 +25,13 @@
 #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
 #define MSM_DSI_6G_VER_MINOR_V2_4_1	0x20040001
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MSM_DSI_6G_VER_MINOR_V2_5_0	0x20050000
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MSM_DSI_6G_VER_MINOR_V2_5_0	0x20050000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MSM_DSI_V2_VER_MINOR_8064	0x0
 
@@ -52,10 +56,14 @@ struct msm_dsi_host_cfg_ops {
 	void (*tx_buf_put)(struct msm_dsi_host *msm_host);
 	int (*dma_base_get)(struct msm_dsi_host *msm_host, uint64_t *iova);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*calc_clk_rate)(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
 =======
 	int (*calc_clk_rate)(struct msm_dsi_host *msm_host, bool is_dual_dsi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*calc_clk_rate)(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct msm_dsi_cfg_handler {

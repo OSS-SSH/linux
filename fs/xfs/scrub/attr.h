@@ -66,9 +66,12 @@ xchk_xattr_dstmap(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int xchk_setup_xattr_buf(struct xfs_scrub *sc, size_t value_size,
 		xfs_km_flags_t flags);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif	/* __XFS_SCRUB_ATTR_H__ */

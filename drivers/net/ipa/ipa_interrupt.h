@@ -87,14 +87,19 @@ void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * ipa_interrupt_config() - Configure the IPA interrupt framework
 =======
  * ipa_interrupt_setup() - Set up the IPA interrupt framework
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * ipa_interrupt_config() - Configure the IPA interrupt framework
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ipa:	IPA pointer
  *
  * Return:	Pointer to IPA SMP2P info, or a pointer-coded error
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa);
 
@@ -105,12 +110,19 @@ struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa);
 void ipa_interrupt_deconfig(struct ipa_interrupt *interrupt);
 =======
 struct ipa_interrupt *ipa_interrupt_setup(struct ipa *ipa);
+=======
+struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
- * ipa_interrupt_teardown() - Tear down the IPA interrupt framework
+ * ipa_interrupt_deconfig() - Inverse of ipa_interrupt_config()
  * @interrupt:	IPA interrupt structure
  */
+<<<<<<< HEAD
 void ipa_interrupt_teardown(struct ipa_interrupt *interrupt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void ipa_interrupt_deconfig(struct ipa_interrupt *interrupt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _IPA_INTERRUPT_H_ */

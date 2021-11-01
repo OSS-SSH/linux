@@ -12,23 +12,32 @@
 #include <dt-bindings/reset/qcom,sdm845-pdc.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define RPMH_SDM845_PDC_SYNC_RESET	0x100
 #define RPMH_SC7280_PDC_SYNC_RESET	0x1000
 =======
 #define RPMH_PDC_SYNC_RESET	0x100
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define RPMH_SDM845_PDC_SYNC_RESET	0x100
+#define RPMH_SC7280_PDC_SYNC_RESET	0x1000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct qcom_pdc_reset_map {
 	u8 bit;
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct qcom_pdc_reset_desc {
 	const struct qcom_pdc_reset_map *resets;
 	size_t num_resets;
 	unsigned int offset;
 };
 
+<<<<<<< HEAD
 struct qcom_pdc_reset_data {
 	struct reset_controller_dev rcdev;
 	struct regmap *regmap;
@@ -37,13 +46,20 @@ struct qcom_pdc_reset_data {
 
 static const struct regmap_config pdc_regmap_config = {
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct qcom_pdc_reset_data {
 	struct reset_controller_dev rcdev;
 	struct regmap *regmap;
+	const struct qcom_pdc_reset_desc *desc;
 };
 
+<<<<<<< HEAD
 static const struct regmap_config sdm845_pdc_regmap_config = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct regmap_config pdc_regmap_config = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.name		= "pdc-reset",
 	.reg_bits	= 32,
 	.reg_stride	= 4,
@@ -66,6 +82,9 @@ static const struct qcom_pdc_reset_map sdm845_pdc_resets[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct qcom_pdc_reset_desc sdm845_pdc_reset_desc = {
 	.resets = sdm845_pdc_resets,
 	.num_resets = ARRAY_SIZE(sdm845_pdc_resets),
@@ -93,8 +112,11 @@ static const struct qcom_pdc_reset_desc sc7280_pdc_reset_desc = {
 	.offset = RPMH_SC7280_PDC_SYNC_RESET,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct qcom_pdc_reset_data *to_qcom_pdc_reset_data(
 				struct reset_controller_dev *rcdev)
 {
@@ -106,6 +128,7 @@ static int qcom_pdc_control_assert(struct reset_controller_dev *rcdev,
 {
 	struct qcom_pdc_reset_data *data = to_qcom_pdc_reset_data(rcdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 mask = BIT(data->desc->resets[idx].bit);
 
 	return regmap_update_bits(data->regmap, data->desc->offset, mask, mask);
@@ -115,12 +138,18 @@ static int qcom_pdc_control_assert(struct reset_controller_dev *rcdev,
 				  BIT(sdm845_pdc_resets[idx].bit),
 				  BIT(sdm845_pdc_resets[idx].bit));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 mask = BIT(data->desc->resets[idx].bit);
+
+	return regmap_update_bits(data->regmap, data->desc->offset, mask, mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int qcom_pdc_control_deassert(struct reset_controller_dev *rcdev,
 					unsigned long idx)
 {
 	struct qcom_pdc_reset_data *data = to_qcom_pdc_reset_data(rcdev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	u32 mask = BIT(data->desc->resets[idx].bit);
 
@@ -130,6 +159,11 @@ static int qcom_pdc_control_deassert(struct reset_controller_dev *rcdev,
 	return regmap_update_bits(data->regmap, RPMH_PDC_SYNC_RESET,
 				  BIT(sdm845_pdc_resets[idx].bit), 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 mask = BIT(data->desc->resets[idx].bit);
+
+	return regmap_update_bits(data->regmap, data->desc->offset, mask, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct reset_control_ops qcom_pdc_reset_ops = {
@@ -140,40 +174,58 @@ static const struct reset_control_ops qcom_pdc_reset_ops = {
 static int qcom_pdc_reset_probe(struct platform_device *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct qcom_pdc_reset_desc *desc;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct qcom_pdc_reset_desc *desc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct qcom_pdc_reset_data *data;
 	struct device *dev = &pdev->dev;
 	void __iomem *base;
 	struct resource *res;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	desc = device_get_match_data(&pdev->dev);
 	if (!desc)
 		return -EINVAL;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
 	if (!data)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data->desc = desc;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	data->desc = desc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	base = devm_ioremap_resource(dev, res);
 	if (IS_ERR(base))
 		return PTR_ERR(base);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data->regmap = devm_regmap_init_mmio(dev, base, &pdc_regmap_config);
 =======
 	data->regmap = devm_regmap_init_mmio(dev, base,
 					     &sdm845_pdc_regmap_config);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	data->regmap = devm_regmap_init_mmio(dev, base, &pdc_regmap_config);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(data->regmap)) {
 		dev_err(dev, "Unable to initialize regmap\n");
 		return PTR_ERR(data->regmap);
@@ -182,10 +234,14 @@ static int qcom_pdc_reset_probe(struct platform_device *pdev)
 	data->rcdev.owner = THIS_MODULE;
 	data->rcdev.ops = &qcom_pdc_reset_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data->rcdev.nr_resets = desc->num_resets;
 =======
 	data->rcdev.nr_resets = ARRAY_SIZE(sdm845_pdc_resets);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	data->rcdev.nr_resets = desc->num_resets;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data->rcdev.of_node = dev->of_node;
 
 	return devm_reset_controller_register(dev, &data->rcdev);
@@ -193,11 +249,16 @@ static int qcom_pdc_reset_probe(struct platform_device *pdev)
 
 static const struct of_device_id qcom_pdc_reset_of_match[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "qcom,sc7280-pdc-global", .data = &sc7280_pdc_reset_desc },
 	{ .compatible = "qcom,sdm845-pdc-global", .data = &sdm845_pdc_reset_desc },
 =======
 	{ .compatible = "qcom,sdm845-pdc-global" },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "qcom,sc7280-pdc-global", .data = &sc7280_pdc_reset_desc },
+	{ .compatible = "qcom,sdm845-pdc-global", .data = &sdm845_pdc_reset_desc },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 MODULE_DEVICE_TABLE(of, qcom_pdc_reset_of_match);

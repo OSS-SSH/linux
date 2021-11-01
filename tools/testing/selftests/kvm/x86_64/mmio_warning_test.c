@@ -83,11 +83,16 @@ int get_warnings_count(void)
 
 	f = popen("dmesg | grep \"WARNING:\" | wc -l", "r");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (fscanf(f, "%d", &warnings) < 1)
 		warnings = 0;
 =======
 	fscanf(f, "%d", &warnings);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (fscanf(f, "%d", &warnings) < 1)
+		warnings = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fclose(f);
 
 	return warnings;

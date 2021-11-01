@@ -586,6 +586,9 @@ static const struct ipu_rgb def_bgra_16 = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define Y_OFFSET(pix, x, y)	((x) + pix->bytesperline * (y))
 #define U_OFFSET(pix, x, y)	((pix->bytesperline * pix->height) +	 \
 				 (pix->bytesperline * ((y) / 2) / 2) + (x) / 2)
@@ -601,6 +604,7 @@ static const struct ipu_rgb def_bgra_16 = {
 				 (pix->bytesperline * ((y) / 2)) + (x))
 #define UV2_OFFSET(pix, x, y)	((pix->bytesperline * pix->height) +	 \
 				 (pix->bytesperline * y) + (x))
+<<<<<<< HEAD
 =======
 #define Y_OFFSET(pix, x, y)	((x) + pix->width * (y))
 #define U_OFFSET(pix, x, y)	((pix->width * pix->height) +		\
@@ -618,6 +622,8 @@ static const struct ipu_rgb def_bgra_16 = {
 #define UV2_OFFSET(pix, x, y)	((pix->width * pix->height) +	\
 				 (pix->width * y) + (x))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define NUM_ALPHA_CHANNELS	7
 

@@ -40,6 +40,9 @@ dm_dp_create_fake_mst_encoders(struct amdgpu_device *adev);
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct dsc_mst_fairness_vars {
 	int pbn;
@@ -48,6 +51,7 @@ struct dsc_mst_fairness_vars {
 	struct amdgpu_dm_connector *aconnector;
 };
 
+<<<<<<< HEAD
 bool compute_mst_dsc_configs_for_state(struct drm_atomic_state *state,
 				       struct dc_state *dc_state,
 				       struct dsc_mst_fairness_vars *vars);
@@ -55,6 +59,11 @@ bool compute_mst_dsc_configs_for_state(struct drm_atomic_state *state,
 bool compute_mst_dsc_configs_for_state(struct drm_atomic_state *state,
 				       struct dc_state *dc_state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool compute_mst_dsc_configs_for_state(struct drm_atomic_state *state,
+				       struct dc_state *dc_state,
+				       struct dsc_mst_fairness_vars *vars);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #endif

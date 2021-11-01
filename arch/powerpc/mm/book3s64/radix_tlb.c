@@ -11,9 +11,13 @@
 #include <linux/mmu_context.h>
 #include <linux/sched/mm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/ppc-opcode.h>
 #include <asm/tlb.h>
@@ -1111,12 +1115,17 @@ EXPORT_SYMBOL(radix__flush_tlb_kernel_range);
  * individual page flushes to full-pid flushes.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 tlb_single_page_flush_ceiling __read_mostly = 33;
 static u32 tlb_local_single_page_flush_ceiling __read_mostly = POWER9_TLB_SETS_RADIX * 2;
 =======
 static unsigned long tlb_single_page_flush_ceiling __read_mostly = 33;
 static unsigned long tlb_local_single_page_flush_ceiling __read_mostly = POWER9_TLB_SETS_RADIX * 2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u32 tlb_single_page_flush_ceiling __read_mostly = 33;
+static u32 tlb_local_single_page_flush_ceiling __read_mostly = POWER9_TLB_SETS_RADIX * 2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline void __radix__flush_tlb_range(struct mm_struct *mm,
 					    unsigned long start, unsigned long end)
@@ -1534,6 +1543,9 @@ EXPORT_SYMBOL_GPL(do_h_rpt_invalidate_prt);
 
 #endif /* CONFIG_KVM_BOOK3S_HV_POSSIBLE */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init create_tlb_single_page_flush_ceiling(void)
 {
@@ -1545,5 +1557,8 @@ static int __init create_tlb_single_page_flush_ceiling(void)
 }
 late_initcall(create_tlb_single_page_flush_ceiling);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

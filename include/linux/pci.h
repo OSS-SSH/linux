@@ -50,14 +50,20 @@
 			       PCI_STATUS_PARITY)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Number of reset methods used in pci_reset_fn_methods array in pci.c */
 #define PCI_NUM_RESET_METHODS 7
 
 #define PCI_RESET_PROBE		true
 #define PCI_RESET_DO_RESET	false
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The PCI interface treats multi-function devices as independent
  * devices.  The slot/function address of each device is encoded
@@ -298,10 +304,14 @@ enum pci_bus_speed pcie_get_speed_cap(struct pci_dev *dev);
 enum pcie_link_width pcie_get_width_cap(struct pci_dev *dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct pci_vpd {
 	struct mutex	lock;
 	unsigned int	len;
 	u8		cap;
+<<<<<<< HEAD
 =======
 struct pci_cap_saved_data {
 	u16		cap_nr;
@@ -314,14 +324,19 @@ struct pci_cap_saved_state {
 	struct hlist_node		next;
 	struct pci_cap_saved_data	cap;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct irq_affinity;
 struct pcie_link_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct pci_vpd;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct pci_sriov;
 struct pci_p2pdma;
 struct rcec_ea;
@@ -353,9 +368,13 @@ struct pci_dev {
 	struct pci_dev  *rcec;          /* Associated RCEC device */
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32		devcap;		/* PCIe Device Capabilities */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32		devcap;		/* PCIe Device Capabilities */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8		pcie_cap;	/* PCIe capability offset */
 	u8		msi_cap;	/* MSI capability offset */
 	u8		msix_cap;	/* MSI-X capability offset */
@@ -412,9 +431,13 @@ struct pci_dev {
 	u16		l1ss;		/* L1SS Capability pointer */
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int	pasid_no_tlp:1;		/* PASID works without TLP Prefix */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int	pasid_no_tlp:1;		/* PASID works without TLP Prefix */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int	eetlp_prefix_path:1;	/* End-to-End TLP Prefix */
 
 	pci_channel_state_t error_state;	/* Current connectivity state */
@@ -455,9 +478,12 @@ struct pci_dev {
 	unsigned int	is_physfn:1;
 	unsigned int	is_virtfn:1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int	reset_fn:1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int	is_hotplug_bridge:1;
 	unsigned int	shpc_managed:1;		/* SHPC owned by shpchp */
 	unsigned int	is_thunderbolt:1;	/* Thunderbolt controller */
@@ -504,10 +530,14 @@ struct pci_dev {
 	const struct attribute_group **msi_irq_groups;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct pci_vpd	vpd;
 =======
 	struct pci_vpd *vpd;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pci_vpd	vpd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PCIE_DPC
 	u16		dpc_cap;
 	unsigned int	dpc_rp_extensions:1;
@@ -540,11 +570,17 @@ struct pci_dev {
 
 	unsigned long	priv_flags;	/* Private flags for the PCI driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* These methods index pci_reset_fn_methods[] */
 	u8 reset_methods[PCI_NUM_RESET_METHODS]; /* In priority order */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* These methods index pci_reset_fn_methods[] */
+	u8 reset_methods[PCI_NUM_RESET_METHODS]; /* In priority order */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct pci_dev *pci_physfn(struct pci_dev *dev)
@@ -567,6 +603,9 @@ static inline int pci_channel_offline(struct pci_dev *pdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Currently in ACPI spec, for each PCI host bridge, PCI Segment
  * Group number is limited to a 16-bit value, therefore (int)-1 is
@@ -577,8 +616,11 @@ static inline int pci_channel_offline(struct pci_dev *pdev)
  */
 #define PCI_DOMAIN_NR_NOT_SET (-1)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct pci_host_bridge {
 	struct device	dev;
 	struct pci_bus	*bus;		/* Root bus */
@@ -587,9 +629,13 @@ struct pci_host_bridge {
 	void		*sysdata;
 	int		busnr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int		domain_nr;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int		domain_nr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head windows;	/* resource_entry */
 	struct list_head dma_ranges;	/* dma ranges resource list */
 	u8 (*swizzle_irq)(struct pci_dev *, u8 *); /* Platform IRQ swizzler */
@@ -960,6 +1006,9 @@ struct pci_driver {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * PCI_DEVICE_DRIVER_OVERRIDE - macro used to describe a PCI device with
  *                              override_only flags.
  * @vend: the 16 bit PCI Vendor ID
@@ -989,8 +1038,11 @@ struct pci_driver {
 	PCI_DEVICE_DRIVER_OVERRIDE(vend, dev, PCI_ID_F_VFIO_DRIVER_OVERRIDE)
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * PCI_DEVICE_SUB - macro used to describe a specific PCI device with subsystem
  * @vend: the 16 bit PCI Vendor ID
  * @dev: the 16 bit PCI Device ID
@@ -1318,10 +1370,14 @@ u32 pcie_bandwidth_available(struct pci_dev *dev, struct pci_dev **limiting_dev,
 			     enum pcie_link_width *width);
 void pcie_print_link_status(struct pci_dev *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int pcie_reset_flr(struct pci_dev *dev, bool probe);
 =======
 bool pcie_has_flr(struct pci_dev *dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int pcie_reset_flr(struct pci_dev *dev, bool probe);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int pcie_flr(struct pci_dev *dev);
 int __pci_reset_function_locked(struct pci_dev *dev);
 int pci_reset_function(struct pci_dev *dev);
@@ -1372,6 +1428,7 @@ int pci_load_saved_state(struct pci_dev *dev,
 int pci_load_and_free_saved_state(struct pci_dev *dev,
 				  struct pci_saved_state **state);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct pci_cap_saved_state *pci_find_saved_cap(struct pci_dev *dev, char cap);
 struct pci_cap_saved_state *pci_find_saved_ext_cap(struct pci_dev *dev,
@@ -1380,6 +1437,8 @@ int pci_add_cap_save_buffer(struct pci_dev *dev, char cap, unsigned int size);
 int pci_add_ext_cap_save_buffer(struct pci_dev *dev,
 				u16 cap, unsigned int size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int pci_platform_power_transition(struct pci_dev *dev, pci_power_t state);
 int pci_set_power_state(struct pci_dev *dev, pci_power_t state);
 pci_power_t pci_choose_state(struct pci_dev *dev, pm_message_t state);
@@ -1717,6 +1776,9 @@ static inline bool pci_aer_available(void) { return false; }
 bool pci_ats_disabled(void);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PCIE_PTM
 int pci_enable_ptm(struct pci_dev *dev, u8 *granularity);
 bool pcie_ptm_enabled(struct pci_dev *dev);
@@ -1727,8 +1789,11 @@ static inline bool pcie_ptm_enabled(struct pci_dev *dev)
 { return false; }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void pci_cfg_access_lock(struct pci_dev *dev);
 bool pci_cfg_access_trylock(struct pci_dev *dev);
 void pci_cfg_access_unlock(struct pci_dev *dev);
@@ -1850,6 +1915,7 @@ static inline int pcim_enable_device(struct pci_dev *pdev) { return -EIO; }
 static inline int pci_assign_resource(struct pci_dev *dev, int i)
 { return -EBUSY; }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int __must_check __pci_register_driver(struct pci_driver *drv,
 						     struct module *owner,
 						     const char *mod_name)
@@ -1857,6 +1923,11 @@ static inline int __must_check __pci_register_driver(struct pci_driver *drv,
 static inline int __pci_register_driver(struct pci_driver *drv,
 					struct module *owner)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int __must_check __pci_register_driver(struct pci_driver *drv,
+						     struct module *owner,
+						     const char *mod_name)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 { return 0; }
 static inline int pci_register_driver(struct pci_driver *drv)
 { return 0; }
@@ -1997,12 +2068,16 @@ int pci_iobar_pfn(struct pci_dev *pdev, int bar, struct vm_area_struct *vma);
 #define pci_resource_flags(dev, bar)	((dev)->resource[(bar)].flags)
 #define pci_resource_len(dev,bar) \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	((pci_resource_end((dev), (bar)) == 0) ? 0 :	\
 =======
 	((pci_resource_start((dev), (bar)) == 0 &&	\
 	  pci_resource_end((dev), (bar)) ==		\
 	  pci_resource_start((dev), (bar))) ? 0 :	\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	((pci_resource_end((dev), (bar)) == 0) ? 0 :	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							\
 	 (pci_resource_end((dev), (bar)) -		\
 	  pci_resource_start((dev), (bar)) + 1))
@@ -2370,6 +2445,7 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask);
 #define PCI_VPD_LRDT_RW_DATA		PCI_VPD_LRDT_ID(PCI_VPD_LTIN_RW_DATA)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Small Resource Data Type Tag Item Names */
 #define PCI_VPD_STIN_END		0x0f	/* End */
@@ -2386,6 +2462,8 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask);
 #define PCI_VPD_INFO_FLD_HDR_SIZE	3
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PCI_VPD_RO_KEYWORD_PARTNO	"PN"
 #define PCI_VPD_RO_KEYWORD_SERIALNO	"SN"
 #define PCI_VPD_RO_KEYWORD_MFR_ID	"MN"
@@ -2393,6 +2471,7 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask);
 #define PCI_VPD_RO_KEYWORD_CHKSUM	"RV"
 
 /**
+<<<<<<< HEAD
 <<<<<<< HEAD
  * pci_vpd_alloc - Allocate buffer and read VPD into it
  * @dev: PCI device
@@ -2469,49 +2548,53 @@ static inline u8 pci_vpd_srdt_size(const u8 *srdt)
 /**
  * pci_vpd_srdt_tag - Extracts the Small Resource Data Type Tag Item
  * @srdt: Pointer to the beginning of the Small Resource Data Type tag
+=======
+ * pci_vpd_alloc - Allocate buffer and read VPD into it
+ * @dev: PCI device
+ * @size: pointer to field where VPD length is returned
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Returns the extracted Small Resource Data Type Tag Item.
+ * Returns pointer to allocated buffer or an ERR_PTR in case of failure
  */
-static inline u8 pci_vpd_srdt_tag(const u8 *srdt)
-{
-	return ((*srdt) & PCI_VPD_SRDT_TIN_MASK) >> 3;
-}
+void *pci_vpd_alloc(struct pci_dev *dev, unsigned int *size);
 
 /**
- * pci_vpd_info_field_size - Extracts the information field length
- * @info_field: Pointer to the beginning of an information field header
+ * pci_vpd_find_id_string - Locate id string in VPD
+ * @buf: Pointer to buffered VPD data
+ * @len: The length of the buffer area in which to search
+ * @size: Pointer to field where length of id string is returned
  *
- * Returns the extracted information field length.
+ * Returns the index of the id string or -ENOENT if not found.
  */
-static inline u8 pci_vpd_info_field_size(const u8 *info_field)
-{
-	return info_field[2];
-}
+int pci_vpd_find_id_string(const u8 *buf, unsigned int len, unsigned int *size);
 
 /**
- * pci_vpd_find_tag - Locates the Resource Data Type tag provided
- * @buf: Pointer to buffered vpd data
- * @len: The length of the vpd buffer
- * @rdt: The Resource Data Type to search for
- *
- * Returns the index where the Resource Data Type was found or
- * -ENOENT otherwise.
- */
-int pci_vpd_find_tag(const u8 *buf, unsigned int len, u8 rdt);
-
-/**
- * pci_vpd_find_info_keyword - Locates an information field keyword in the VPD
- * @buf: Pointer to buffered vpd data
- * @off: The offset into the buffer at which to begin the search
- * @len: The length of the buffer area, relative to off, in which to search
+ * pci_vpd_find_ro_info_keyword - Locate info field keyword in VPD RO section
+ * @buf: Pointer to buffered VPD data
+ * @len: The length of the buffer area in which to search
  * @kw: The keyword to search for
+ * @size: Pointer to field where length of found keyword data is returned
  *
- * Returns the index where the information field keyword was found or
- * -ENOENT otherwise.
+ * Returns the index of the information field keyword data or -ENOENT if
+ * not found.
  */
+int pci_vpd_find_ro_info_keyword(const void *buf, unsigned int len,
+				 const char *kw, unsigned int *size);
+
+/**
+ * pci_vpd_check_csum - Check VPD checksum
+ * @buf: Pointer to buffered VPD data
+ * @len: VPD size
+ *
+ * Returns 1 if VPD has no checksum, otherwise 0 or an errno
+ */
+<<<<<<< HEAD
 int pci_vpd_find_info_keyword(const u8 *buf, unsigned int off,
 			      unsigned int len, const char *kw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int pci_vpd_check_csum(const void *buf, unsigned int len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* PCI <-> OF binding helpers */
 #ifdef CONFIG_OF

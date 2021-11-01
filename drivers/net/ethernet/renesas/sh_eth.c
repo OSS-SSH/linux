@@ -2534,9 +2534,13 @@ static netdev_tx_t sh_eth_start_xmit(struct sk_buff *skb,
 		txdesc->status |= cpu_to_le32(TD_TACT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wmb(); /* cur_tx must be incremented after TACT bit was set */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	wmb(); /* cur_tx must be incremented after TACT bit was set */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mdp->cur_tx++;
 
 	if (!(sh_eth_read(ndev, EDTRR) & mdp->cd->edtrr_trns))
@@ -3146,10 +3150,14 @@ static const struct net_device_ops sh_eth_netdev_ops = {
 	.ndo_set_rx_mode	= sh_eth_set_rx_mode,
 	.ndo_tx_timeout		= sh_eth_tx_timeout,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= phy_do_ioctl_running,
 =======
 	.ndo_do_ioctl		= phy_do_ioctl_running,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= phy_do_ioctl_running,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= sh_eth_change_mtu,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= eth_mac_addr,
@@ -3166,10 +3174,14 @@ static const struct net_device_ops sh_eth_netdev_ops_tsu = {
 	.ndo_vlan_rx_kill_vid	= sh_eth_vlan_rx_kill_vid,
 	.ndo_tx_timeout		= sh_eth_tx_timeout,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= phy_do_ioctl_running,
 =======
 	.ndo_do_ioctl		= phy_do_ioctl_running,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= phy_do_ioctl_running,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= sh_eth_change_mtu,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= eth_mac_addr,

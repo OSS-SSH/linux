@@ -4030,6 +4030,9 @@ static int floppy_open(struct block_device *bdev, fmode_t mode)
 		fdc_state[FDC(drive)].rawcmd = 2;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(mode & FMODE_NDELAY)) {
 		if (mode & (FMODE_READ|FMODE_WRITE)) {
 			drive_state[drive].last_checked = 0;
@@ -4045,6 +4048,7 @@ static int floppy_open(struct block_device *bdev, fmode_t mode)
 		res = -EROFS;
 		if ((mode & FMODE_WRITE) &&
 		    !test_bit(FD_DISK_WRITABLE_BIT, &drive_state[drive].flags))
+<<<<<<< HEAD
 			goto out;
 	}
 =======
@@ -4066,6 +4070,10 @@ static int floppy_open(struct block_device *bdev, fmode_t mode)
 		goto out;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto out;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&open_lock);
 	mutex_unlock(&floppy_mutex);
 	return 0;

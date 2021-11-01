@@ -7,18 +7,25 @@
 #include <linux/kernel.h>
 #include <linux/time.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/units.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/units.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/hid-sensor-hub.h>
 #include <linux/iio/iio.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HZ_PER_MHZ	1000000L
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct {
 	u32 usage_id;
 	int unit; /* 0 for default others from HID sensor spec */

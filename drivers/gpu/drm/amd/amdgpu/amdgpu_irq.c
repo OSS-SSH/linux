@@ -47,9 +47,12 @@
 
 #include <drm/drm_crtc_helper.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <drm/drm_irq.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_vblank.h>
 #include <drm/amdgpu_drm.h>
 #include <drm/drm_drv.h>
@@ -188,10 +191,14 @@ void amdgpu_irq_disable_all(struct amdgpu_device *adev)
  * result of handling the IRQ, as defined by &irqreturn_t
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static irqreturn_t amdgpu_irq_handler(int irq, void *arg)
 =======
 irqreturn_t amdgpu_irq_handler(int irq, void *arg)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static irqreturn_t amdgpu_irq_handler(int irq, void *arg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_device *dev = (struct drm_device *) arg;
 	struct amdgpu_device *adev = drm_to_adev(dev);
@@ -286,6 +293,9 @@ static bool amdgpu_msi_ok(struct amdgpu_device *adev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void amdgpu_restore_msix(struct amdgpu_device *adev)
 {
 	u16 ctrl;
@@ -301,8 +311,11 @@ static void amdgpu_restore_msix(struct amdgpu_device *adev)
 	pci_write_config_word(adev->pdev, adev->pdev->msix_cap + PCI_MSIX_FLAGS, ctrl);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * amdgpu_irq_init - initialize interrupt handling
  *
@@ -318,9 +331,13 @@ int amdgpu_irq_init(struct amdgpu_device *adev)
 {
 	int r = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int irq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int irq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_init(&adev->irq.lock);
 
@@ -364,6 +381,9 @@ int amdgpu_irq_init(struct amdgpu_device *adev)
 	INIT_WORK(&adev->irq.ih_soft_work, amdgpu_irq_handle_ih_soft);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Use vector 0 for MSI-X. */
 	r = pci_irq_vector(adev->pdev, 0);
 	if (r < 0)
@@ -373,6 +393,7 @@ int amdgpu_irq_init(struct amdgpu_device *adev)
 	/* PCI devices require shared interrupts. */
 	r = request_irq(irq, amdgpu_irq_handler, IRQF_SHARED, adev_to_drm(adev)->driver->name,
 			adev_to_drm(adev));
+<<<<<<< HEAD
 	if (r) {
 =======
 	adev->irq.installed = true;
@@ -381,15 +402,23 @@ int amdgpu_irq_init(struct amdgpu_device *adev)
 	if (r) {
 		adev->irq.installed = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (r) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!amdgpu_device_has_dc_support(adev))
 			flush_work(&adev->hotplug_work);
 		return r;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	adev->irq.installed = true;
 	adev->irq.irq = irq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	adev->irq.installed = true;
+	adev->irq.irq = irq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	adev_to_drm(adev)->max_vblank_count = 0x00ffffff;
 
 	DRM_DEBUG("amdgpu: irq initialized.\n");
@@ -401,10 +430,14 @@ void amdgpu_irq_fini_hw(struct amdgpu_device *adev)
 {
 	if (adev->irq.installed) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		free_irq(adev->irq.irq, adev_to_drm(adev));
 =======
 		drm_irq_uninstall(&adev->ddev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		free_irq(adev->irq.irq, adev_to_drm(adev));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adev->irq.installed = false;
 		if (adev->irq.msi_enabled)
 			pci_free_irq_vectors(adev->pdev);
@@ -539,10 +572,14 @@ void amdgpu_irq_dispatch(struct amdgpu_device *adev,
 	} else if ((client_id == AMDGPU_IRQ_CLIENTID_LEGACY) &&
 		   adev->irq.virq[src_id]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(adev->irq.domain, src_id);
 =======
 		generic_handle_irq(irq_find_mapping(adev->irq.domain, src_id));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(adev->irq.domain, src_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	} else if (!adev->irq.client[client_id].sources) {
 		DRM_DEBUG("Unregistered interrupt client_id: %d src_id: %d\n",
@@ -625,11 +662,17 @@ void amdgpu_irq_gpu_reset_resume_helper(struct amdgpu_device *adev)
 	int i, j, k;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (amdgpu_sriov_vf(adev) || amdgpu_passthrough(adev))
 		amdgpu_restore_msix(adev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (amdgpu_sriov_vf(adev) || amdgpu_passthrough(adev))
+		amdgpu_restore_msix(adev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < AMDGPU_IRQ_CLIENTID_MAX; ++i) {
 		if (!adev->irq.client[i].sources)
 			continue;
@@ -661,10 +704,14 @@ int amdgpu_irq_get(struct amdgpu_device *adev, struct amdgpu_irq_src *src,
 		   unsigned type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!adev->irq.installed)
 =======
 	if (!adev_to_drm(adev)->irq_enabled)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!adev->irq.installed)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOENT;
 
 	if (type >= src->num_types)
@@ -695,10 +742,14 @@ int amdgpu_irq_put(struct amdgpu_device *adev, struct amdgpu_irq_src *src,
 		   unsigned type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!adev->irq.installed)
 =======
 	if (!adev_to_drm(adev)->irq_enabled)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!adev->irq.installed)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOENT;
 
 	if (type >= src->num_types)
@@ -730,10 +781,14 @@ bool amdgpu_irq_enabled(struct amdgpu_device *adev, struct amdgpu_irq_src *src,
 			unsigned type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!adev->irq.installed)
 =======
 	if (!adev_to_drm(adev)->irq_enabled)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!adev->irq.installed)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	if (type >= src->num_types)

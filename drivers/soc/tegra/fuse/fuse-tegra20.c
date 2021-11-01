@@ -17,9 +17,13 @@
 #include <linux/of_device.h>
 #include <linux/platform_device.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pm_runtime.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/random.h>
 
 #include <soc/tegra/fuse.h>
@@ -51,12 +55,18 @@ static u32 tegra20_fuse_read(struct tegra_fuse *fuse, unsigned int offset)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = pm_runtime_resume_and_get(fuse->dev);
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&fuse->apbdma.lock);
 
 	fuse->apbdma.config.src_addr = fuse->phys + FUSE_BEGIN + offset;
@@ -78,10 +88,13 @@ static u32 tegra20_fuse_read(struct tegra_fuse *fuse, unsigned int offset)
 	reinit_completion(&fuse->apbdma.wait);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	clk_prepare_enable(fuse->clk);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dmaengine_submit(dma_desc);
 	dma_async_issue_pending(fuse->apbdma.chan);
 	time_left = wait_for_completion_timeout(&fuse->apbdma.wait,
@@ -93,6 +106,7 @@ static u32 tegra20_fuse_read(struct tegra_fuse *fuse, unsigned int offset)
 		value = *fuse->apbdma.virt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 out:
 	mutex_unlock(&fuse->apbdma.lock);
 	pm_runtime_put(fuse->dev);
@@ -102,6 +116,11 @@ out:
 out:
 	mutex_unlock(&fuse->apbdma.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out:
+	mutex_unlock(&fuse->apbdma.lock);
+	pm_runtime_put(fuse->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return value;
 }
 
@@ -186,7 +205,11 @@ const struct tegra_fuse_soc tegra20_fuse_soc = {
 	.info = &tegra20_fuse_info,
 	.soc_attr_group = &tegra_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

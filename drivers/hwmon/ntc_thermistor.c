@@ -14,9 +14,13 @@
 #include <linux/of.h>
 #include <linux/of_device.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/fixp-arith.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/fixp-arith.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/platform_data/ntc_thermistor.h>
 
@@ -554,6 +558,9 @@ static int get_temp_mc(struct ntc_data *data, unsigned int ohm)
 
 	lookup_comp(data, ohm, &low, &high);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * First multiplying the table temperatures with 1000 to get to
 	 * millicentigrades (which is what we want) and then interpolating
@@ -564,6 +571,7 @@ static int get_temp_mc(struct ntc_data *data, unsigned int ohm)
 				       data->comp[high].ohm,
 				       data->comp[high].temp_c * 1000,
 				       ohm);
+<<<<<<< HEAD
 =======
 	if (low == high) {
 		/* Unable to use linear approximation */
@@ -575,6 +583,8 @@ static int get_temp_mc(struct ntc_data *data, unsigned int ohm)
 			((int)data->comp[high].ohm - (int)data->comp[low].ohm);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return temp;
 }
 

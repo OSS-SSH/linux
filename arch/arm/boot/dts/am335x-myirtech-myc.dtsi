@@ -58,6 +58,9 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &mac_sw {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&eth_slave1_pins_default>;
@@ -66,6 +69,7 @@
 };
 
 &cpsw_port1 {
+<<<<<<< HEAD
 	phy-handle = <&phy0>;
 	phy-mode = "rgmii-id";
 	ti,dual-emac-pvid = <1>;
@@ -81,16 +85,26 @@
 	pinctrl-1 = <&mdio_pins_sleep>;
 =======
 &cpsw_emac0 {
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-handle = <&phy0>;
 	phy-mode = "rgmii-id";
+	ti,dual-emac-pvid = <1>;
 };
 
-&davinci_mdio {
+&cpsw_port2 {
+	status = "disabled";
+};
+
+&davinci_mdio_sw {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&mdio_pins_default>;
 	pinctrl-1 = <&mdio_pins_sleep>;
+<<<<<<< HEAD
 	status = "okay";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	phy0: ethernet-phy@4 {
 		reg = <4>;
@@ -162,6 +176,7 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 &mac {
 	pinctrl-names = "default", "sleep";
@@ -172,6 +187,8 @@
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &rtc {
 	system-power-controller;
 };

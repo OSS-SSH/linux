@@ -47,9 +47,13 @@ int dlm_lowcomms_connect_node(int nodeid);
 int dlm_lowcomms_nodes_set_mark(int nodeid, unsigned int mark);
 int dlm_lowcomms_addr(int nodeid, struct sockaddr_storage *addr, int len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void dlm_midcomms_receive_done(int nodeid);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void dlm_midcomms_receive_done(int nodeid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif				/* __LOWCOMMS_DOT_H__ */
 

@@ -29,9 +29,12 @@ struct usbmix_ctl_map {
 	const struct usbmix_selector_map *selector_map;
 	const struct usbmix_connector_map *connector_map;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ignore_ctl_error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -436,9 +439,12 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		.id = USB_ID(0x041e, 0x3000),
 		.map = extigy_map,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		.ignore_ctl_error = 1,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		.id = USB_ID(0x041e, 0x3010),
@@ -459,6 +465,7 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		.selector_map = audigy2nx_selectors,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{	/* Logitech, Inc. QuickCam Pro for Notebooks */
 		.id = USB_ID(0x046d, 0x0991),
@@ -469,11 +476,14 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		.ignore_ctl_error = 1,
 	},
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{	/* Plantronics GameCom 780 */
 		.id = USB_ID(0x047f, 0xc010),
 		.map = gamecom780_map,
 	},
 	{
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		/* Hercules DJ Console (Windows Edition) */
@@ -487,6 +497,8 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
 	},
 	{
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Hercules Gamesurround Muse Pocket LT
 		 * (USB 5.1 Channel Audio Adapter)
 		 */
@@ -505,9 +517,12 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		.id = USB_ID(0x08bb, 0x2702),
 		.map = linex_map,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		.ignore_ctl_error = 1,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		.id = USB_ID(0x0a92, 0x0091),
@@ -533,9 +548,12 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		.id = USB_ID(0x13e5, 0x0001),
 		.map = scratch_live_map,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		.ignore_ctl_error = 1,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		.id = USB_ID(0x200c, 0x1018),

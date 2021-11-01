@@ -134,10 +134,15 @@ static void bond_info_show_master(struct seq_file *seq)
 
 		seq_puts(seq, "\n802.3ad info\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		seq_printf(seq, "LACP active: %s\n",
 			   (bond->params.lacp_active) ? "on" : "off");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		seq_printf(seq, "LACP active: %s\n",
+			   (bond->params.lacp_active) ? "on" : "off");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		seq_printf(seq, "LACP rate: %s\n",
 			   (bond->params.lacp_fast) ? "fast" : "slow");
 		seq_printf(seq, "Min links: %d\n", bond->params.min_links);

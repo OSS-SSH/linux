@@ -25,9 +25,13 @@
  * the wrong signature.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ACPI_SIG_AEST           "AEST"	/* Arm Error Source Table */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ACPI_SIG_AEST           "AEST"	/* Arm Error Source Table */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ACPI_SIG_ASF            "ASF!"	/* Alert Standard Format table */
 #define ACPI_SIG_BERT           "BERT"	/* Boot Error Record Table */
 #define ACPI_SIG_BGRT           "BGRT"	/* Boot Graphics Resource Table */
@@ -487,10 +491,14 @@ struct acpi_csrt_descriptor {
  *        Version 0 (Both main table and subtables)
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Conforms to "Microsoft Debug Port Table 2 (DBG2)", September 21, 2020
 =======
  * Conforms to "Microsoft Debug Port Table 2 (DBG2)", December 10, 2015
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Conforms to "Microsoft Debug Port Table 2 (DBG2)", September 21, 2020
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  ******************************************************************************/
 
@@ -541,6 +549,9 @@ struct acpi_dbg2_device {
 #define ACPI_DBG2_16550_COMPATIBLE  0x0000
 #define ACPI_DBG2_16550_SUBSET      0x0001
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ACPI_DBG2_MAX311XE_SPI      0x0002
 #define ACPI_DBG2_ARM_PL011         0x0003
 #define ACPI_DBG2_MSM8X60           0x0004
@@ -551,20 +562,29 @@ struct acpi_dbg2_device {
 #define ACPI_DBG2_SAM5250           0x000A
 #define ACPI_DBG2_INTEL_USIF        0x000B
 #define ACPI_DBG2_IMX6              0x000C
+<<<<<<< HEAD
 =======
 #define ACPI_DBG2_ARM_PL011         0x0003
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ACPI_DBG2_ARM_SBSA_32BIT    0x000D
 #define ACPI_DBG2_ARM_SBSA_GENERIC  0x000E
 #define ACPI_DBG2_ARM_DCC           0x000F
 #define ACPI_DBG2_BCM2835           0x0010
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ACPI_DBG2_SDM845_1_8432MHZ  0x0011
 #define ACPI_DBG2_16550_WITH_GAS    0x0012
 #define ACPI_DBG2_SDM845_7_372MHZ   0x0013
 #define ACPI_DBG2_INTEL_LPSS        0x0014
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define ACPI_DBG2_1394_STANDARD     0x0000
 

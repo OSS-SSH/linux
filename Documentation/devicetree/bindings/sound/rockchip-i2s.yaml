@@ -21,12 +21,18 @@ properties:
           - enum:
               - rockchip,px30-i2s
 <<<<<<< HEAD
+<<<<<<< HEAD
               - rockchip,rk1808-i2s
               - rockchip,rk3036-i2s
               - rockchip,rk3128-i2s
 =======
               - rockchip,rk3036-i2s
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              - rockchip,rk1808-i2s
+              - rockchip,rk3036-i2s
+              - rockchip,rk3128-i2s
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - rockchip,rk3188-i2s
               - rockchip,rk3228-i2s
               - rockchip,rk3288-i2s
@@ -36,9 +42,13 @@ properties:
               - rockchip,rk3368-i2s
               - rockchip,rk3399-i2s
 <<<<<<< HEAD
+<<<<<<< HEAD
               - rockchip,rv1126-i2s
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              - rockchip,rv1126-i2s
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: rockchip,rk3066-i2s
 
   reg:
@@ -72,6 +82,9 @@ properties:
     maxItems: 1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   reset-names:
     items:
       - const: reset-m
@@ -80,8 +93,11 @@ properties:
   resets:
     maxItems: 2
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   rockchip,capture-channels:
     $ref: /schemas/types.yaml#/definitions/uint32
     default: 2

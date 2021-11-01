@@ -862,6 +862,7 @@ static int linflex_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, sport);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return uart_add_one_port(&linflex_reg, sport);
 =======
 	ret = uart_add_one_port(&linflex_reg, sport);
@@ -870,6 +871,9 @@ static int linflex_probe(struct platform_device *pdev)
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return uart_add_one_port(&linflex_reg, sport);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int linflex_remove(struct platform_device *pdev)

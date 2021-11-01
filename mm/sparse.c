@@ -110,6 +110,7 @@ static inline int sparse_index_init(unsigned long section_nr, int nid)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_SPARSEMEM_EXTREME
 unsigned long __section_nr(struct mem_section *ms)
@@ -138,6 +139,8 @@ unsigned long __section_nr(struct mem_section *ms)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * During early boot, before section_mem_map is used for an actual
  * mem_map, we use section_mem_map to store the section's NUMA
@@ -147,10 +150,14 @@ unsigned long __section_nr(struct mem_section *ms)
 static inline unsigned long sparse_encode_early_nid(int nid)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ((unsigned long)nid << SECTION_NID_SHIFT);
 =======
 	return (nid << SECTION_NID_SHIFT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ((unsigned long)nid << SECTION_NID_SHIFT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int sparse_early_nid(struct mem_section *section)
@@ -195,6 +202,7 @@ void __meminit mminit_validate_memmodel_limits(unsigned long *start_pfn,
  */
 unsigned long __highest_present_section_nr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __section_mark_present(struct mem_section *ms,
 		unsigned long section_nr)
 {
@@ -204,6 +212,11 @@ static void section_mark_present(struct mem_section *ms)
 	unsigned long section_nr = __section_nr(ms);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __section_mark_present(struct mem_section *ms,
+		unsigned long section_nr)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (section_nr > __highest_present_section_nr)
 		__highest_present_section_nr = section_nr;
 
@@ -294,10 +307,14 @@ static void __init memory_present(int nid, unsigned long start, unsigned long en
 			ms->section_mem_map = sparse_encode_early_nid(nid) |
 							SECTION_IS_ONLINE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			__section_mark_present(ms, section);
 =======
 			section_mark_present(ms);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			__section_mark_present(ms, section);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -366,11 +383,16 @@ static inline phys_addr_t pgdat_to_phys(struct pglist_data *pgdat)
 {
 #ifndef CONFIG_NUMA
 <<<<<<< HEAD
+<<<<<<< HEAD
 	VM_BUG_ON(pgdat != &contig_page_data);
 	return __pa_symbol(&contig_page_data);
 =======
 	return __pa_symbol(pgdat);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	VM_BUG_ON(pgdat != &contig_page_data);
+	return __pa_symbol(&contig_page_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 	return __pa(pgdat);
 #endif
@@ -485,11 +507,15 @@ struct page __init *__populate_section_memmap(unsigned long pfn,
 		return map;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	map = memmap_alloc(size, size, addr, nid, false);
 =======
 	map = memblock_alloc_try_nid_raw(size, size, addr,
 					  MEMBLOCK_ALLOC_ACCESSIBLE, nid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	map = memmap_alloc(size, size, addr, nid, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!map)
 		panic("%s: Failed to allocate %lu bytes align=0x%lx nid=%d from=%pa\n",
 		      __func__, size, PAGE_SIZE, nid, &addr);
@@ -517,11 +543,15 @@ static void __init sparse_buffer_init(unsigned long size, int nid)
 	 * especially the case for VMEMMAP which maps memmap to PMDs
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sparsemap_buf = memmap_alloc(size, section_map_size(), addr, nid, true);
 =======
 	sparsemap_buf = memblock_alloc_exact_nid_raw(size, section_map_size(),
 					addr, MEMBLOCK_ALLOC_ACCESSIBLE, nid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sparsemap_buf = memmap_alloc(size, section_map_size(), addr, nid, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sparsemap_buf_end = sparsemap_buf + size;
 }
 
@@ -965,10 +995,14 @@ int __meminit sparse_add_section(int nid, unsigned long start_pfn,
 	ms = __nr_to_section(section_nr);
 	set_section_nid(section_nr, nid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__section_mark_present(ms, section_nr);
 =======
 	section_mark_present(ms);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__section_mark_present(ms, section_nr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Align memmap to section boundary in the subsection case */
 	if (section_nr_to_pfn(section_nr) != start_pfn)

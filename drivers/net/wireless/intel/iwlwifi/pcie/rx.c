@@ -488,11 +488,17 @@ void iwl_pcie_free_rbs_pool(struct iwl_trans *trans)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!trans_pcie->rx_pool)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!trans_pcie->rx_pool)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < RX_POOL_SIZE(trans_pcie->num_rx_bufs); i++) {
 		if (!trans_pcie->rx_pool[i].page)
 			continue;
@@ -1069,10 +1075,14 @@ static int _iwl_pcie_rx_init(struct iwl_trans *trans)
 	spin_unlock_bh(&rba->lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* free all first - we overwrite everything here */
 =======
 	/* free all first - we might be reconfigured for a different size */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* free all first - we overwrite everything here */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iwl_pcie_free_rbs_pool(trans);
 
 	for (i = 0; i < RX_QUEUE_SIZE; i++)
@@ -1664,10 +1674,14 @@ static void iwl_pcie_irq_handle_error(struct iwl_trans *trans)
 	/* The STATUS_FW_ERROR bit is set in this function. This must happen
 	 * before we wake up the command caller, to ensure a proper cleanup. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iwl_trans_fw_error(trans, false);
 =======
 	iwl_trans_fw_error(trans);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iwl_trans_fw_error(trans, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	clear_bit(STATUS_SYNC_HCMD_ACTIVE, &trans->status);
 	wake_up(&trans->wait_command_queue);
@@ -2240,6 +2254,9 @@ irqreturn_t iwl_pcie_irq_msix_handler(int irq, void *dev_id)
 			inta_fh);
 		isr_stats->sw++;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* during FW reset flow report errors from there */
 		if (trans_pcie->fw_reset_state == FW_RESET_REQUESTED) {
 			trans_pcie->fw_reset_state = FW_RESET_ERROR;
@@ -2247,9 +2264,12 @@ irqreturn_t iwl_pcie_irq_msix_handler(int irq, void *dev_id)
 		} else {
 			iwl_pcie_irq_handle_error(trans);
 		}
+<<<<<<< HEAD
 =======
 		iwl_pcie_irq_handle_error(trans);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* After checking FH register check HW register */
@@ -2318,10 +2338,14 @@ irqreturn_t iwl_pcie_irq_msix_handler(int irq, void *dev_id)
 	if (inta_hw & MSIX_HW_INT_CAUSES_REG_RESET_DONE) {
 		IWL_DEBUG_ISR(trans, "Reset flow completed\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		trans_pcie->fw_reset_state = FW_RESET_OK;
 =======
 		trans_pcie->fw_reset_done = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		trans_pcie->fw_reset_state = FW_RESET_OK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		wake_up(&trans_pcie->fw_reset_waitq);
 	}
 

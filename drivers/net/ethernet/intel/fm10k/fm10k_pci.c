@@ -2228,9 +2228,13 @@ err_ioremap:
 	free_netdev(netdev);
 err_alloc_netdev:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pci_disable_pcie_error_reporting(pdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pci_disable_pcie_error_reporting(pdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_release_mem_regions(pdev);
 err_pci_reg:
 err_dma:

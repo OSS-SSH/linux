@@ -144,6 +144,7 @@ EXPORT_SYMBOL(raw_copy_to_user);
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * __strncpy_from_user: - Copy a NUL terminated string from userspace,
  * with less checking.
@@ -248,6 +249,8 @@ EXPORT_SYMBOL(__strnlen_user);
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * __clear_user: - Zero a block of memory in user space, with less checking.
  * @to:   Destination address, in user space.
  * @n:    Number of bytes to zero.

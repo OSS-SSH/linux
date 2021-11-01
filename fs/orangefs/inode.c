@@ -883,6 +883,7 @@ int orangefs_getattr(struct user_namespace *mnt_userns, const struct path *path,
 			stat->result_mask &= ~STATX_SIZE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_fill_statx_attr(inode, stat);
 =======
 		stat->attributes_mask = STATX_ATTR_IMMUTABLE |
@@ -892,6 +893,9 @@ int orangefs_getattr(struct user_namespace *mnt_userns, const struct path *path,
 		if (inode->i_flags & S_APPEND)
 			stat->attributes |= STATX_ATTR_APPEND;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_fill_statx_attr(inode, stat);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return ret;
 }

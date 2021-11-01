@@ -388,6 +388,9 @@ void pathrelse(struct treepath *search_path)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int has_valid_deh_location(struct buffer_head *bh, struct item_head *ih)
 {
 	struct reiserfs_de_head *deh;
@@ -406,8 +409,11 @@ static int has_valid_deh_location(struct buffer_head *bh, struct item_head *ih)
 	return 1;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int is_leaf(char *buf, int blocksize, struct buffer_head *bh)
 {
 	struct block_head *blkh;
@@ -476,6 +482,9 @@ static int is_leaf(char *buf, int blocksize, struct buffer_head *bh)
 			return 0;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (is_direntry_le_ih(ih)) {
 			if (ih_item_len(ih) < (ih_entry_count(ih) * IH_SIZE)) {
 				reiserfs_warning(NULL, "reiserfs-5093",
@@ -484,6 +493,7 @@ static int is_leaf(char *buf, int blocksize, struct buffer_head *bh)
 				return 0;
 			}
 			return has_valid_deh_location(bh, ih);
+<<<<<<< HEAD
 =======
 		if (is_direntry_le_ih(ih) && (ih_item_len(ih) < (ih_entry_count(ih) * IH_SIZE))) {
 			reiserfs_warning(NULL, "reiserfs-5093",
@@ -491,6 +501,8 @@ static int is_leaf(char *buf, int blocksize, struct buffer_head *bh)
 					 ih);
 			return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		prev_location = ih_location(ih);
 	}

@@ -391,10 +391,14 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
 		hw->netdev_features = NETIF_F_HIGHDMA | NETIF_F_SG;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hw->queues = IEEE80211_NUM_ACS;
 =======
 	hw->queues = IEEE80211_MAX_QUEUES;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hw->queues = IEEE80211_NUM_ACS;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hw->offchannel_tx_hw_queue = IWL_MVM_OFFCHANNEL_QUEUE;
 	hw->radiotap_mcs_details |= IEEE80211_RADIOTAP_MCS_HAVE_FEC |
 				    IEEE80211_RADIOTAP_MCS_HAVE_STBC;
@@ -767,11 +771,15 @@ static void iwl_mvm_mac_tx(struct ieee80211_hw *hw,
 		goto drop;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * bufferable MMPDUs or MMPDUs on STA interfaces come via TXQs
 	 * so we treat the others as broadcast
 	 */
 	if (ieee80211_is_mgmt(hdr->frame_control))
+<<<<<<< HEAD
 =======
 	/* treat non-bufferable MMPDUs on AP interfaces as broadcast */
 	if ((info->control.vif->type == NL80211_IFTYPE_AP ||
@@ -779,6 +787,8 @@ static void iwl_mvm_mac_tx(struct ieee80211_hw *hw,
 	    ieee80211_is_mgmt(hdr->frame_control) &&
 	    !ieee80211_is_bufferable_mmpdu(hdr->frame_control))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sta = NULL;
 
 	/* If there is no sta, and it's not offchannel - send through AP */
@@ -2453,11 +2463,17 @@ static void iwl_mvm_bss_info_changed_station(struct iwl_mvm *mvm,
 		iwl_mvm_configure_bcast_filter(mvm);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (changes & BSS_CHANGED_BANDWIDTH)
 		iwl_mvm_apply_fw_smps_request(vif);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (changes & BSS_CHANGED_BANDWIDTH)
+		iwl_mvm_apply_fw_smps_request(vif);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int iwl_mvm_start_ap_ibss(struct ieee80211_hw *hw,
@@ -3006,6 +3022,7 @@ static void iwl_mvm_check_he_obss_narrow_bw_ru_iter(struct wiphy *wiphy,
 {
 	struct iwl_mvm_he_obss_narrow_bw_ru_data *data = _data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct cfg80211_bss_ies *ies;
 	const struct element *elem;
 
@@ -3019,6 +3036,15 @@ static void iwl_mvm_check_he_obss_narrow_bw_ru_iter(struct wiphy *wiphy,
 	elem = cfg80211_find_elem(WLAN_EID_EXT_CAPABILITY, bss->ies->data,
 				  bss->ies->len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct cfg80211_bss_ies *ies;
+	const struct element *elem;
+
+	rcu_read_lock();
+	ies = rcu_dereference(bss->ies);
+	elem = cfg80211_find_elem(WLAN_EID_EXT_CAPABILITY, ies->data,
+				  ies->len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!elem || elem->datalen < 10 ||
 	    !(elem->data[10] &
@@ -3026,9 +3052,13 @@ static void iwl_mvm_check_he_obss_narrow_bw_ru_iter(struct wiphy *wiphy,
 		data->tolerated = false;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rcu_read_unlock();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rcu_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void iwl_mvm_check_he_obss_narrow_bw_ru(struct ieee80211_hw *hw,
@@ -5068,18 +5098,24 @@ static void iwl_mvm_event_mlme_callback_ini(struct iwl_mvm *mvm,
 					    const  struct ieee80211_mlme_event *mlme)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((mlme->data == ASSOC_EVENT || mlme->data == AUTH_EVENT) &&
 	    (mlme->status == MLME_DENIED || mlme->status == MLME_TIMEOUT)) {
 =======
 	if (mlme->data == ASSOC_EVENT && (mlme->status == MLME_DENIED ||
 					  mlme->status == MLME_TIMEOUT)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((mlme->data == ASSOC_EVENT || mlme->data == AUTH_EVENT) &&
+	    (mlme->status == MLME_DENIED || mlme->status == MLME_TIMEOUT)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iwl_dbg_tlv_time_point(&mvm->fwrt,
 				       IWL_FW_INI_TIME_POINT_ASSOC_FAILED,
 				       NULL);
 		return;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (mlme->data == AUTH_EVENT && (mlme->status == MLME_DENIED ||
@@ -5091,6 +5127,8 @@ static void iwl_mvm_event_mlme_callback_ini(struct iwl_mvm *mvm,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mlme->data == DEAUTH_RX_EVENT || mlme->data == DEAUTH_TX_EVENT) {
 		iwl_dbg_tlv_time_point(&mvm->fwrt,
 				       IWL_FW_INI_TIME_POINT_DEASSOC,

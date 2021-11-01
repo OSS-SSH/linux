@@ -202,6 +202,9 @@ EXPORT_SYMBOL_GPL(usb_get_dr_mode);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * usb_get_role_switch_default_mode - Get default mode for given device
  * @dev: Pointer to the given device
  *
@@ -222,8 +225,11 @@ enum usb_dr_mode usb_get_role_switch_default_mode(struct device *dev)
 EXPORT_SYMBOL_GPL(usb_get_role_switch_default_mode);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * usb_decode_interval - Decode bInterval into the time expressed in 1us unit
  * @epd: The descriptor of the endpoint
  * @speed: The speed that the endpoint works as

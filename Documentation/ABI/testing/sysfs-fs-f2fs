@@ -42,11 +42,15 @@ What:		/sys/fs/f2fs/<disk>/main_blkaddr
 Date:		November 2019
 Contact:	"Ramon Pantin" <pantin@google.com>
 <<<<<<< HEAD
+<<<<<<< HEAD
 Description:	Shows first block address of MAIN area.
 =======
 Description:
 		 Shows first block address of MAIN area.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Description:	Shows first block address of MAIN area.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 What:		/sys/fs/f2fs/<disk>/ipu_policy
 Date:		November 2013
@@ -498,6 +502,9 @@ Description:	When ATGC is on, it controls age threshold to bypass GCing young
 		candidates whose age is not beyond the threshold, by default it was
 		initialized as 604800 seconds (equals to 7 days).
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 What:		/sys/fs/f2fs/<disk>/gc_reclaimed_segments
 Date:		July 2021
@@ -518,5 +525,8 @@ Date:		July 2021
 Contact:	"Daeho Jeong" <daehojeong@google.com>
 Description:	You can	control the multiplier value of	bdi device readahead window size
 		between 2 (default) and 256 for POSIX_FADV_SEQUENTIAL advise option.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

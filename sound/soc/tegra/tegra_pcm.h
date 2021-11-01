@@ -23,10 +23,13 @@
 int tegra_pcm_construct(struct snd_soc_component *component,
 			struct snd_soc_pcm_runtime *rtd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void tegra_pcm_destruct(struct snd_soc_component *component,
 			struct snd_pcm *pcm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int tegra_pcm_open(struct snd_soc_component *component,
 		   struct snd_pcm_substream *substream);
 int tegra_pcm_close(struct snd_soc_component *component,
@@ -35,6 +38,7 @@ int tegra_pcm_hw_params(struct snd_soc_component *component,
 			struct snd_pcm_substream *substream,
 			struct snd_pcm_hw_params *params);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int tegra_pcm_hw_free(struct snd_soc_component *component,
 		      struct snd_pcm_substream *substream);
@@ -42,6 +46,8 @@ int tegra_pcm_mmap(struct snd_soc_component *component,
 		   struct snd_pcm_substream *substream,
 		   struct vm_area_struct *vma);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 snd_pcm_uframes_t tegra_pcm_pointer(struct snd_soc_component *component,
 				    struct snd_pcm_substream *substream);
 int tegra_pcm_platform_register(struct device *dev);

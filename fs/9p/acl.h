@@ -17,10 +17,14 @@
 #ifdef CONFIG_9P_FS_POSIX_ACL
 extern int v9fs_get_acl(struct inode *, struct p9_fid *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern struct posix_acl *v9fs_iop_get_acl(struct inode *inode, int type, bool rcu);
 =======
 extern struct posix_acl *v9fs_iop_get_acl(struct inode *inode, int type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern struct posix_acl *v9fs_iop_get_acl(struct inode *inode, int type, bool rcu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int v9fs_acl_chmod(struct inode *, struct p9_fid *);
 extern int v9fs_set_create_acl(struct inode *, struct p9_fid *,
 			       struct posix_acl *, struct posix_acl *);

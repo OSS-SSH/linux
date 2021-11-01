@@ -72,6 +72,9 @@ static int grts_cb(const void *data, void *private)
 		unsigned int Rt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (likely(x && z1)) {
 			Rt = z2;
 			Rt -= z1;
@@ -88,6 +91,7 @@ static int grts_cb(const void *data, void *private)
 			if (Rt < GRTS_DEFAULT_PRESSURE_MAX)
 				press = GRTS_DEFAULT_PRESSURE_MAX - Rt;
 		}
+<<<<<<< HEAD
 =======
 		Rt = z2;
 		Rt -= z1;
@@ -103,6 +107,8 @@ static int grts_cb(const void *data, void *private)
 		if (Rt < GRTS_DEFAULT_PRESSURE_MAX)
 			press = GRTS_DEFAULT_PRESSURE_MAX - Rt;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if ((!x && !y) || (st->pressure && (press < st->pressure_min))) {

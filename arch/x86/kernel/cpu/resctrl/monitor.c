@@ -175,10 +175,14 @@ void __check_limbo(struct rdt_domain *d, bool force_free)
 	u32 crmid = 1, nrmid;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
 =======
 	r = &rdt_resources_all[RDT_RESOURCE_L3];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Skip RMID 0 and start from RMID 1 and check all the RMIDs that
@@ -237,10 +241,14 @@ static void add_rmid_to_limbo(struct rmid_entry *entry)
 	u64 val;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
 =======
 	r = &rdt_resources_all[RDT_RESOURCE_L3];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	entry->busy = 0;
 	cpu = get_cpu();
@@ -294,6 +302,7 @@ static u64 mbm_overflow_count(u64 prev_msr, u64 cur_msr, unsigned int width)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u64 __mon_event_count(u32 rmid, struct rmid_read *rr)
 {
 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(rr->r);
@@ -301,17 +310,26 @@ static u64 __mon_event_count(u32 rmid, struct rmid_read *rr)
 static int __mon_event_count(u32 rmid, struct rmid_read *rr)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u64 __mon_event_count(u32 rmid, struct rmid_read *rr)
+{
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(rr->r);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mbm_state *m;
 	u64 chunks, tval;
 
 	tval = __rmid_read(rmid, rr->evtid);
 	if (tval & (RMID_VAL_ERROR | RMID_VAL_UNAVAIL)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return tval;
 =======
 		rr->val = tval;
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return tval;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	switch (rr->evtid) {
 	case QOS_L3_OCCUP_EVENT_ID:
@@ -326,6 +344,7 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
 	default:
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * Code would never reach here because an invalid
 		 * event id would fail the __rmid_read.
 		 */
@@ -336,6 +355,12 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
 		 */
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * Code would never reach here because an invalid
+		 * event id would fail the __rmid_read.
+		 */
+		return RMID_VAL_ERROR;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (rr->first) {
@@ -345,10 +370,14 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chunks = mbm_overflow_count(m->prev_msr, tval, hw_res->mbm_width);
 =======
 	chunks = mbm_overflow_count(m->prev_msr, tval, rr->r->mbm_width);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chunks = mbm_overflow_count(m->prev_msr, tval, hw_res->mbm_width);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	m->chunks += chunks;
 	m->prev_msr = tval;
 
@@ -364,10 +393,14 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
 static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(rr->r);
 =======
 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(rr->r);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mbm_state *m = &rr->d->mbm_local[rmid];
 	u64 tval, cur_bw, chunks;
 
@@ -376,12 +409,17 @@ static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chunks = mbm_overflow_count(m->prev_bw_msr, tval, hw_res->mbm_width);
 	cur_bw = (get_corrected_mbm_count(rmid, chunks) * hw_res->mon_scale) >> 20;
 =======
 	chunks = mbm_overflow_count(m->prev_bw_msr, tval, rr->r->mbm_width);
 	cur_bw = (get_corrected_mbm_count(rmid, chunks) * r->mon_scale) >> 20;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chunks = mbm_overflow_count(m->prev_bw_msr, tval, hw_res->mbm_width);
+	cur_bw = (get_corrected_mbm_count(rmid, chunks) * hw_res->mon_scale) >> 20;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (m->delta_comp)
 		m->delta_bw = abs(cur_bw - m->prev_bw);
@@ -400,6 +438,7 @@ void mon_event_count(void *info)
 	struct rmid_read *rr = info;
 	struct list_head *head;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 ret_val;
 
 	rdtgrp = rr->rgrp;
@@ -411,20 +450,29 @@ void mon_event_count(void *info)
 	 * add them together. Count events which are read successfully.
 	 * Discard the rmid_read's reporting errors.
 =======
+=======
+	u64 ret_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rdtgrp = rr->rgrp;
 
-	if (__mon_event_count(rdtgrp->mon.rmid, rr))
-		return;
+	ret_val = __mon_event_count(rdtgrp->mon.rmid, rr);
 
 	/*
+<<<<<<< HEAD
 	 * For Ctrl groups read data from child monitor groups.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * For Ctrl groups read data from child monitor groups and
+	 * add them together. Count events which are read successfully.
+	 * Discard the rmid_read's reporting errors.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	head = &rdtgrp->mon.crdtgrp_list;
 
 	if (rdtgrp->type == RDTCTRL_GROUP) {
 		list_for_each_entry(entry, head, mon.crdtgrp_list) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (__mon_event_count(entry->mon.rmid, rr) == 0)
 				ret_val = 0;
@@ -440,6 +488,16 @@ void mon_event_count(void *info)
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (__mon_event_count(entry->mon.rmid, rr) == 0)
+				ret_val = 0;
+		}
+	}
+
+	/* Report error if none of rmid_reads are successful */
+	if (ret_val)
+		rr->val = ret_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -479,10 +537,15 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
 	u32 closid, rmid, cur_msr, cur_msr_val, new_msr_val;
 	struct mbm_state *pmbm_data, *cmbm_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rdt_hw_resource *hw_r_mba;
 	struct rdt_hw_domain *hw_dom_mba;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rdt_hw_resource *hw_r_mba;
+	struct rdt_hw_domain *hw_dom_mba;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 cur_bw, delta_bw, user_bw;
 	struct rdt_resource *r_mba;
 	struct rdt_domain *dom_mba;
@@ -493,11 +556,16 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hw_r_mba = &rdt_resources_all[RDT_RESOURCE_MBA];
 	r_mba = &hw_r_mba->r_resctrl;
 =======
 	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hw_r_mba = &rdt_resources_all[RDT_RESOURCE_MBA];
+	r_mba = &hw_r_mba->r_resctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	closid = rgrp->closid;
 	rmid = rgrp->mon.rmid;
 	pmbm_data = &dom_mbm->mbm_local[rmid];
@@ -507,6 +575,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
 		pr_warn_once("Failure to get domain for MBA update\n");
 		return;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	hw_dom_mba = resctrl_to_arch_dom(dom_mba);
 
@@ -519,12 +588,23 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
 	 */
 	cur_msr_val = hw_dom_mba->ctrl_val[closid];
 =======
+=======
+	hw_dom_mba = resctrl_to_arch_dom(dom_mba);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cur_bw = pmbm_data->prev_bw;
-	user_bw = dom_mba->mbps_val[closid];
+	user_bw = resctrl_arch_get_config(r_mba, dom_mba, closid, CDP_NONE);
 	delta_bw = pmbm_data->delta_bw;
+<<<<<<< HEAD
 	cur_msr_val = dom_mba->ctrl_val[closid];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/*
+	 * resctrl_arch_get_config() chooses the mbps/ctrl value to return
+	 * based on is_mba_sc(). For now, reach into the hw_dom.
+	 */
+	cur_msr_val = hw_dom_mba->ctrl_val[closid];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * For Ctrl groups read data from child monitor groups.
@@ -560,6 +640,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cur_msr = hw_r_mba->msr_base + closid;
 	wrmsrl(cur_msr, delay_bw_map(new_msr_val, r_mba));
 	hw_dom_mba->ctrl_val[closid] = new_msr_val;
@@ -568,6 +649,11 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
 	wrmsrl(cur_msr, delay_bw_map(new_msr_val, r_mba));
 	dom_mba->ctrl_val[closid] = new_msr_val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cur_msr = hw_r_mba->msr_base + closid;
+	wrmsrl(cur_msr, delay_bw_map(new_msr_val, r_mba));
+	hw_dom_mba->ctrl_val[closid] = new_msr_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Delta values are updated dynamically package wise for each
@@ -630,10 +716,14 @@ void cqm_handle_limbo(struct work_struct *work)
 	mutex_lock(&rdtgroup_mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
 =======
 	r = &rdt_resources_all[RDT_RESOURCE_L3];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	d = container_of(work, struct rdt_domain, cqm_limbo.work);
 
 	__check_limbo(d, false);
@@ -670,10 +760,14 @@ void mbm_handle_overflow(struct work_struct *work)
 		goto out_unlock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
 =======
 	r = &rdt_resources_all[RDT_RESOURCE_L3];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	d = container_of(work, struct rdt_domain, mbm_over.work);
 
 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
@@ -771,6 +865,7 @@ int rdt_get_mon_l3_config(struct rdt_resource *r)
 {
 	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
 	unsigned int cl_size = boot_cpu_data.x86_cache_size;
 	int ret;
@@ -782,16 +877,23 @@ int rdt_get_mon_l3_config(struct rdt_resource *r)
 	if (mbm_offset > 0 && mbm_offset <= MBM_CNTR_WIDTH_OFFSET_MAX)
 		hw_res->mbm_width += mbm_offset;
 =======
+=======
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int cl_size = boot_cpu_data.x86_cache_size;
 	int ret;
 
-	r->mon_scale = boot_cpu_data.x86_cache_occ_scale;
+	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale;
 	r->num_rmid = boot_cpu_data.x86_cache_max_rmid + 1;
-	r->mbm_width = MBM_CNTR_WIDTH_BASE;
+	hw_res->mbm_width = MBM_CNTR_WIDTH_BASE;
 
 	if (mbm_offset > 0 && mbm_offset <= MBM_CNTR_WIDTH_OFFSET_MAX)
+<<<<<<< HEAD
 		r->mbm_width += mbm_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hw_res->mbm_width += mbm_offset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (mbm_offset > MBM_CNTR_WIDTH_OFFSET_MAX)
 		pr_warn("Ignoring impossible MBM counter offset\n");
 
@@ -806,10 +908,14 @@ int rdt_get_mon_l3_config(struct rdt_resource *r)
 
 	/* h/w works in units of "boot_cpu_data.x86_cache_occ_scale" */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	resctrl_cqm_threshold /= hw_res->mon_scale;
 =======
 	resctrl_cqm_threshold /= r->mon_scale;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	resctrl_cqm_threshold /= hw_res->mon_scale;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = dom_data_init(r);
 	if (ret)

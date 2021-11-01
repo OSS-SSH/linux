@@ -14,6 +14,7 @@ static struct coex_sta_8723b_1ant GLCoexSta8723b1Ant;
 static struct coex_sta_8723b_1ant *pCoexSta = &GLCoexSta8723b1Ant;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const char *const GLBtInfoSrc8723b1Ant[] = {
 	"BT Info[wifi fw]",
@@ -25,6 +26,8 @@ static u32 GLCoexVerDate8723b1Ant = 20140507;
 static u32 GLCoexVer8723b1Ant = 0x4e;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*  local function proto type if needed */
 /*  local function start with halbtc8723b1ant_ */
 static u8 halbtc8723b1ant_BtRssiState(
@@ -2214,6 +2217,7 @@ void EXhalbtc8723b1ant_InitCoexDm(struct btc_coexist *pBtCoexist)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void EXhalbtc8723b1ant_DisplayCoexInfo(struct btc_coexist *pBtCoexist)
 {
@@ -2671,6 +2675,8 @@ void EXhalbtc8723b1ant_DisplayCoexInfo(struct btc_coexist *pBtCoexist)
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void EXhalbtc8723b1ant_IpsNotify(struct btc_coexist *pBtCoexist, u8 type)
 {
 	if (pBtCoexist->bManualControl ||	pBtCoexist->bStopCoexDm)

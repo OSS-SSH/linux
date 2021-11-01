@@ -15,9 +15,13 @@
 #include <asm/trace/diag.h>
 #include <asm/sections.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "entry.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "entry.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct diag_stat {
 	unsigned int counter[NR_DIAG_STAT];
@@ -55,6 +59,9 @@ static const struct diag_desc diag_map[NR_DIAG_STAT] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct diag_ops __amode31_ref diag_amode31_ops = {
 	.diag210 = _diag210_amode31,
 	.diag26c = _diag26c_amode31,
@@ -65,10 +72,13 @@ struct diag_ops __amode31_ref diag_amode31_ops = {
 
 static struct diag210 _diag210_tmp_amode31 __section(".amode31.data");
 struct diag210 __amode31_ref *__diag210_tmp_amode31 = &_diag210_tmp_amode31;
+<<<<<<< HEAD
 =======
 struct diag_ops __bootdata_preserved(diag_dma_ops);
 struct diag210 *__bootdata_preserved(__diag210_tmp_dma);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int show_diag_stat(struct seq_file *m, void *v)
 {
@@ -77,10 +87,14 @@ static int show_diag_stat(struct seq_file *m, void *v)
 	int cpu, prec, tmp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (n == 0) {
 		seq_puts(m, "         ");
 
@@ -100,10 +114,14 @@ static int show_diag_stat(struct seq_file *m, void *v)
 		seq_printf(m, "    %s\n", diag_map[n-1].name);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -161,10 +179,14 @@ int diag14(unsigned long rx, unsigned long ry1, unsigned long subcode)
 {
 	diag_stat_inc(DIAG_STAT_X014);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return diag_amode31_ops.diag14(rx, ry1, subcode);
 =======
 	return diag_dma_ops.diag14(rx, ry1, subcode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return diag_amode31_ops.diag14(rx, ry1, subcode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(diag14);
 
@@ -202,6 +224,7 @@ int diag210(struct diag210 *addr)
 
 	spin_lock_irqsave(&diag210_lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*__diag210_tmp_amode31 = *addr;
 
 	diag_stat_inc(DIAG_STAT_X210);
@@ -210,12 +233,19 @@ int diag210(struct diag210 *addr)
 	*addr = *__diag210_tmp_amode31;
 =======
 	*__diag210_tmp_dma = *addr;
+=======
+	*__diag210_tmp_amode31 = *addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	diag_stat_inc(DIAG_STAT_X210);
-	ccode = diag_dma_ops.diag210(__diag210_tmp_dma);
+	ccode = diag_amode31_ops.diag210(__diag210_tmp_amode31);
 
+<<<<<<< HEAD
 	*addr = *__diag210_tmp_dma;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*addr = *__diag210_tmp_amode31;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&diag210_lock, flags);
 
 	return ccode;
@@ -244,9 +274,13 @@ int diag26c(void *req, void *resp, enum diag26c_sc subcode)
 {
 	diag_stat_inc(DIAG_STAT_X26C);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return diag_amode31_ops.diag26c(req, resp, subcode);
 =======
 	return diag_dma_ops.diag26c(req, resp, subcode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return diag_amode31_ops.diag26c(req, resp, subcode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(diag26c);

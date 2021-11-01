@@ -1888,6 +1888,9 @@ qla2x00_port_speed_show(struct device *dev, struct device_attribute *attr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t
 qla2x00_mpi_pause_store(struct device *dev,
 	struct device_attribute *attr, const char *buf, size_t count)
@@ -1912,8 +1915,11 @@ qla2x00_mpi_pause_store(struct device *dev,
 
 static DEVICE_ATTR(mpi_pause, S_IWUSR, NULL, qla2x00_mpi_pause_store);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* ----- */
 
 static ssize_t
@@ -2463,9 +2469,13 @@ static DEVICE_ATTR(port_speed, 0644, qla2x00_port_speed_show,
 static DEVICE_ATTR(port_no, 0444, qla2x00_port_no_show, NULL);
 static DEVICE_ATTR(fw_attr, 0444, qla2x00_fw_attr_show, NULL);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEVICE_ATTR_RO(edif_doorbell);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEVICE_ATTR_RO(edif_doorbell);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 struct device_attribute *qla2x00_host_attrs[] = {
@@ -2512,10 +2522,15 @@ struct device_attribute *qla2x00_host_attrs[] = {
 	&dev_attr_fw_attr,
 	&dev_attr_dport_diagnostics,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	&dev_attr_edif_doorbell,
 	&dev_attr_mpi_pause,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_edif_doorbell,
+	&dev_attr_mpi_pause,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NULL, /* reserve for qlini_mode */
 	NULL, /* reserve for ql2xiniexchg */
 	NULL, /* reserve for ql2xexchoffld */
@@ -2743,12 +2758,16 @@ qla2x00_terminate_rport_io(struct fc_rport *rport)
 	 */
 	if (fcport->loop_id != FC_NO_LOOP_ID) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_FWI2_CAPABLE(fcport->vha->hw)) {
 			if (fcport->loop_id != FC_NO_LOOP_ID)
 				fcport->logout_on_delete = 1;
 
 			qlt_schedule_sess_for_deletion(fcport);
 		} else {
+<<<<<<< HEAD
 			qla2x00_port_logout(fcport->vha, fcport);
 		}
 =======
@@ -2759,6 +2778,10 @@ qla2x00_terminate_rport_io(struct fc_rport *rport)
 		else
 			qla2x00_port_logout(fcport->vha, fcport);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			qla2x00_port_logout(fcport->vha, fcport);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -3155,11 +3178,17 @@ qla24xx_vport_delete(struct fc_vport *fc_vport)
 
 	qla_nvme_delete(vha);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	qla_enode_stop(vha);
 	qla_edb_stop(vha);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qla_enode_stop(vha);
+	qla_edb_stop(vha);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vha->flags.delete_progress = 1;
 
 	qlt_remove_target(ha, vha);

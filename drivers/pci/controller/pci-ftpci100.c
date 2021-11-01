@@ -315,10 +315,14 @@ static void faraday_pci_irq_handler(struct irq_desc *desc)
 		if ((irq_stat & BIT(i)) == 0)
 			continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(p->irqdomain, i);
 =======
 		generic_handle_irq(irq_find_mapping(p->irqdomain, i));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(p->irqdomain, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(irqchip, desc);

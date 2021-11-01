@@ -2,9 +2,13 @@
 /* SandyBridge-EP/IvyTown uncore support */
 #include "uncore.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "uncore_discovery.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "uncore_discovery.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* SNB-EP pci bus to socket mapping */
 #define SNBEP_CPUNODEID			0x40
@@ -459,6 +463,9 @@
 #define ICX_IMC_MEM_STRIDE			0x4
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* SPR */
 #define SPR_RAW_EVENT_MASK_EXT			0xffffff
 
@@ -470,8 +477,11 @@
 
 #define SPR_C0_MSR_PMON_BOX_FILTER0		0x200e
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DEFINE_UNCORE_FORMAT_ATTR(event, event, "config:0-7");
 DEFINE_UNCORE_FORMAT_ATTR(event2, event, "config:0-6");
 DEFINE_UNCORE_FORMAT_ATTR(event_ext, event, "config:0-7,21");
@@ -485,9 +495,13 @@ DEFINE_UNCORE_FORMAT_ATTR(qor, qor, "config:16");
 DEFINE_UNCORE_FORMAT_ATTR(edge, edge, "config:18");
 DEFINE_UNCORE_FORMAT_ATTR(tid_en, tid_en, "config:19");
 <<<<<<< HEAD
+<<<<<<< HEAD
 DEFINE_UNCORE_FORMAT_ATTR(tid_en2, tid_en, "config:16");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+DEFINE_UNCORE_FORMAT_ATTR(tid_en2, tid_en, "config:16");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DEFINE_UNCORE_FORMAT_ATTR(inv, inv, "config:23");
 DEFINE_UNCORE_FORMAT_ATTR(thresh9, thresh, "config:24-35");
 DEFINE_UNCORE_FORMAT_ATTR(thresh8, thresh, "config:24-31");
@@ -3861,6 +3875,7 @@ clear_attr_update:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void
 pmu_iio_cleanup_mapping(struct intel_uncore_type *type, struct attribute_group *ag)
 {
@@ -3875,12 +3890,19 @@ static void skx_iio_cleanup_mapping(struct intel_uncore_type *type)
 {
 	struct attribute **attr = skx_iio_mapping_group.attrs;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void
+pmu_iio_cleanup_mapping(struct intel_uncore_type *type, struct attribute_group *ag)
+{
+	struct attribute **attr = ag->attrs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!attr)
 		return;
 
 	for (; *attr; attr++)
 		kfree((*attr)->name);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	kfree(attr_to_ext_attr(*ag->attrs));
 	kfree(ag->attrs);
@@ -3906,6 +3928,24 @@ static void skx_iio_cleanup_mapping(struct intel_uncore_type *type)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfree(attr_to_ext_attr(*ag->attrs));
+	kfree(ag->attrs);
+	ag->attrs = NULL;
+	kfree(type->topology);
+}
+
+static int skx_iio_set_mapping(struct intel_uncore_type *type)
+{
+	return pmu_iio_set_mapping(type, &skx_iio_mapping_group);
+}
+
+static void skx_iio_cleanup_mapping(struct intel_uncore_type *type)
+{
+	pmu_iio_cleanup_mapping(type, &skx_iio_mapping_group);
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct intel_uncore_type skx_uncore_iio = {
 	.name			= "iio",
 	.num_counters		= 4,
@@ -4550,13 +4590,19 @@ static int snr_iio_set_mapping(struct intel_uncore_type *type)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void snr_iio_cleanup_mapping(struct intel_uncore_type *type)
 {
 	pmu_iio_cleanup_mapping(type, &snr_iio_mapping_group);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct intel_uncore_type snr_uncore_iio = {
 	.name			= "iio",
 	.num_counters		= 4,
@@ -4574,10 +4620,14 @@ static struct intel_uncore_type snr_uncore_iio = {
 	.get_topology		= snr_iio_get_topology,
 	.set_mapping		= snr_iio_set_mapping,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.cleanup_mapping	= snr_iio_cleanup_mapping,
 =======
 	.cleanup_mapping	= skx_iio_cleanup_mapping,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.cleanup_mapping	= snr_iio_cleanup_mapping,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct intel_uncore_type snr_uncore_irp = {
@@ -4844,22 +4894,32 @@ int snr_uncore_pci_init(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SNR_MC_DEVICE_ID	0x3451
 
 static struct pci_dev *snr_uncore_get_mc_dev(unsigned int device, int id)
 =======
 static struct pci_dev *snr_uncore_get_mc_dev(int id)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SNR_MC_DEVICE_ID	0x3451
+
+static struct pci_dev *snr_uncore_get_mc_dev(unsigned int device, int id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pci_dev *mc_dev = NULL;
 	int pkg;
 
 	while (1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mc_dev = pci_get_device(PCI_VENDOR_ID_INTEL, device, mc_dev);
 =======
 		mc_dev = pci_get_device(PCI_VENDOR_ID_INTEL, 0x3451, mc_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mc_dev = pci_get_device(PCI_VENDOR_ID_INTEL, device, mc_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!mc_dev)
 			break;
 		pkg = uncore_pcibus_to_dieid(mc_dev->bus);
@@ -4869,6 +4929,7 @@ static struct pci_dev *snr_uncore_get_mc_dev(int id)
 	return mc_dev;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int snr_uncore_mmio_map(struct intel_uncore_box *box,
 			       unsigned int box_ctl, int mem_offset,
@@ -4881,11 +4942,19 @@ static void __snr_uncore_mmio_init_box(struct intel_uncore_box *box,
 {
 	struct pci_dev *pdev = snr_uncore_get_mc_dev(box->dieid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int snr_uncore_mmio_map(struct intel_uncore_box *box,
+			       unsigned int box_ctl, int mem_offset,
+			       unsigned int device)
+{
+	struct pci_dev *pdev = snr_uncore_get_mc_dev(device, box->dieid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_uncore_type *type = box->pmu->type;
 	resource_size_t addr;
 	u32 pci_dword;
 
 	if (!pdev)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return -ENODEV;
 
@@ -4897,6 +4966,12 @@ static void __snr_uncore_mmio_init_box(struct intel_uncore_box *box,
 	pci_read_config_dword(pdev, SNR_IMC_MMIO_BASE_OFFSET, &pci_dword);
 	addr = (pci_dword & SNR_IMC_MMIO_BASE_MASK) << 23;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENODEV;
+
+	pci_read_config_dword(pdev, SNR_IMC_MMIO_BASE_OFFSET, &pci_dword);
+	addr = ((resource_size_t)pci_dword & SNR_IMC_MMIO_BASE_MASK) << 23;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_read_config_dword(pdev, mem_offset, &pci_dword);
 	addr |= (pci_dword & SNR_IMC_MMIO_MEM0_MASK) << 12;
@@ -4906,6 +4981,7 @@ static void __snr_uncore_mmio_init_box(struct intel_uncore_box *box,
 	box->io_addr = ioremap(addr, type->mmio_map_size);
 	if (!box->io_addr) {
 		pr_warn("perf uncore: Failed to ioremap for %s.\n", type->name);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return -EINVAL;
 	}
@@ -4925,17 +5001,36 @@ static void __snr_uncore_mmio_init_box(struct intel_uncore_box *box,
 
 	writel(IVBEP_PMON_BOX_CTL_INT, box->io_addr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EINVAL;
+	}
+
+	return 0;
+}
+
+static void __snr_uncore_mmio_init_box(struct intel_uncore_box *box,
+				       unsigned int box_ctl, int mem_offset,
+				       unsigned int device)
+{
+	if (!snr_uncore_mmio_map(box, box_ctl, mem_offset, device))
+		writel(IVBEP_PMON_BOX_CTL_INT, box->io_addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void snr_uncore_mmio_init_box(struct intel_uncore_box *box)
 {
 	__snr_uncore_mmio_init_box(box, uncore_mmio_box_ctl(box),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   SNR_IMC_MMIO_MEM0_OFFSET,
 				   SNR_MC_DEVICE_ID);
 =======
 				   SNR_IMC_MMIO_MEM0_OFFSET);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   SNR_IMC_MMIO_MEM0_OFFSET,
+				   SNR_MC_DEVICE_ID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void snr_uncore_mmio_disable_box(struct intel_uncore_box *box)
@@ -5198,13 +5293,19 @@ static int icx_iio_set_mapping(struct intel_uncore_type *type)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void icx_iio_cleanup_mapping(struct intel_uncore_type *type)
 {
 	pmu_iio_cleanup_mapping(type, &icx_iio_mapping_group);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct intel_uncore_type icx_uncore_iio = {
 	.name			= "iio",
 	.num_counters		= 4,
@@ -5223,10 +5324,14 @@ static struct intel_uncore_type icx_uncore_iio = {
 	.get_topology		= icx_iio_get_topology,
 	.set_mapping		= icx_iio_set_mapping,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.cleanup_mapping	= icx_iio_cleanup_mapping,
 =======
 	.cleanup_mapping	= skx_iio_cleanup_mapping,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.cleanup_mapping	= icx_iio_cleanup_mapping,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct intel_uncore_type icx_uncore_irp = {
@@ -5523,11 +5628,16 @@ static void icx_uncore_imc_init_box(struct intel_uncore_box *box)
 			 SNR_IMC_MMIO_MEM0_OFFSET;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__snr_uncore_mmio_init_box(box, box_ctl, mem_offset,
 				   SNR_MC_DEVICE_ID);
 =======
 	__snr_uncore_mmio_init_box(box, box_ctl, mem_offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__snr_uncore_mmio_init_box(box, box_ctl, mem_offset,
+				   SNR_MC_DEVICE_ID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct intel_uncore_ops icx_uncore_mmio_ops = {
@@ -5598,11 +5708,16 @@ static void icx_uncore_imc_freerunning_init_box(struct intel_uncore_box *box)
 			 SNR_IMC_MMIO_MEM0_OFFSET;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snr_uncore_mmio_map(box, uncore_mmio_box_ctl(box),
 			    mem_offset, SNR_MC_DEVICE_ID);
 =======
 	__snr_uncore_mmio_init_box(box, uncore_mmio_box_ctl(box), mem_offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snr_uncore_mmio_map(box, uncore_mmio_box_ctl(box),
+			    mem_offset, SNR_MC_DEVICE_ID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct intel_uncore_ops icx_uncore_imc_freerunning_ops = {
@@ -5637,6 +5752,9 @@ void icx_uncore_mmio_init(void)
 
 /* end of ICX uncore support */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* SPR uncore support */
 
@@ -6131,5 +6249,8 @@ void spr_uncore_mmio_init(void)
 }
 
 /* end of SPR uncore support */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -34,17 +34,25 @@
 enum {
 	FSSBS_BIT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	FSVE_BIT,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	FSVE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	FMAX_END
 };
 
 #define FEAT_SSBS		(1UL << FSSBS_BIT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define FEAT_SVE		(1UL << FSVE_BIT)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FEAT_SVE		(1UL << FSVE_BIT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * A descriptor used to describe and configure a test case.

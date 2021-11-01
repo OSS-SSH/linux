@@ -51,6 +51,7 @@ static void cherryview_sseu_device_status(struct intel_gt *gt,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void gen11_sseu_device_status(struct intel_gt *gt,
 				     struct sseu_dev_info *sseu)
 {
@@ -61,6 +62,12 @@ static void gen10_sseu_device_status(struct intel_gt *gt,
 {
 #define SS_MAX 6
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void gen11_sseu_device_status(struct intel_gt *gt,
+				     struct sseu_dev_info *sseu)
+{
+#define SS_MAX 8
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_uncore *uncore = gt->uncore;
 	const struct intel_gt_info *info = &gt->info;
 	u32 s_reg[SS_MAX], eu_reg[2 * SS_MAX], eu_mask[2];
@@ -275,12 +282,17 @@ int intel_sseu_status(struct seq_file *m, struct intel_gt *gt)
 		else if (GRAPHICS_VER(i915) == 9)
 			gen9_sseu_device_status(gt, &sseu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (GRAPHICS_VER(i915) >= 11)
 			gen11_sseu_device_status(gt, &sseu);
 =======
 		else if (GRAPHICS_VER(i915) >= 10)
 			gen10_sseu_device_status(gt, &sseu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		else if (GRAPHICS_VER(i915) >= 11)
+			gen11_sseu_device_status(gt, &sseu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	i915_print_sseu_info(m, false, HAS_POOLED_EU(i915), &sseu);

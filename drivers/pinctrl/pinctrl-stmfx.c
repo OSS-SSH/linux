@@ -567,10 +567,14 @@ static irqreturn_t stmfx_pinctrl_irq_thread_fn(int irq, void *dev_id)
 	u8 src[NR_GPIO_REGS] = {0, 0, 0};
 	unsigned long n, status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, ret;
 =======
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = regmap_bulk_read(pctl->stmfx->map, STMFX_REG_IRQ_GPI_PENDING,
 			       &pending, NR_GPIO_REGS);
@@ -581,12 +585,18 @@ static irqreturn_t stmfx_pinctrl_irq_thread_fn(int irq, void *dev_id)
 			  src, NR_GPIO_REGS);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUILD_BUG_ON(NR_GPIO_REGS > sizeof(status));
 	for (i = 0, status = 0; i < NR_GPIO_REGS; i++)
 		status |= (unsigned long)pending[i] << (i * 8);
 =======
 	status = *(unsigned long *)pending;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUILD_BUG_ON(NR_GPIO_REGS > sizeof(status));
+	for (i = 0, status = 0; i < NR_GPIO_REGS; i++)
+		status |= (unsigned long)pending[i] << (i * 8);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_set_bit(n, &status, gc->ngpio) {
 		handle_nested_irq(irq_find_mapping(gc->irq.domain, n));
 		stmfx_pinctrl_irq_toggle_trigger(pctl, n);

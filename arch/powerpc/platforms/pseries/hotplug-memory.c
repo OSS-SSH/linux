@@ -181,10 +181,15 @@ static int update_lmb_associativity_index(struct drmem_lmb *lmb)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	update_numa_distance(lmb_node);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	update_numa_distance(lmb_node);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dr_node = of_find_node_by_path("/ibm,dynamic-reconfiguration-memory");
 	if (!dr_node) {
 		dlpar_free_cc_nodes(lmb_node);
@@ -217,6 +222,7 @@ static struct memory_block *lmb_to_memblock(struct drmem_lmb *lmb)
 {
 	unsigned long section_nr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct memory_block *mem_block;
 
 	section_nr = pfn_to_section_nr(PFN_DOWN(lmb->base_addr));
@@ -224,13 +230,18 @@ static struct memory_block *lmb_to_memblock(struct drmem_lmb *lmb)
 	mem_block = find_memory_block(section_nr);
 =======
 	struct mem_section *mem_sect;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct memory_block *mem_block;
 
 	section_nr = pfn_to_section_nr(PFN_DOWN(lmb->base_addr));
-	mem_sect = __nr_to_section(section_nr);
 
+<<<<<<< HEAD
 	mem_block = find_memory_block(mem_sect);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mem_block = find_memory_block(section_nr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return mem_block;
 }
 
@@ -300,10 +311,14 @@ static int pseries_remove_memblock(unsigned long base, unsigned long memblock_si
 	unsigned long block_sz, start_pfn;
 	int sections_per_block;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 =======
 	int i, nid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	start_pfn = base >> PAGE_SHIFT;
 
@@ -315,6 +330,7 @@ static int pseries_remove_memblock(unsigned long base, unsigned long memblock_si
 	block_sz = pseries_memory_block_size();
 	sections_per_block = block_sz / MIN_MEMORY_BLOCK_SIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	for (i = 0; i < sections_per_block; i++) {
 		__remove_memory(base, MIN_MEMORY_BLOCK_SIZE);
@@ -324,6 +340,11 @@ static int pseries_remove_memblock(unsigned long base, unsigned long memblock_si
 	for (i = 0; i < sections_per_block; i++) {
 		__remove_memory(nid, base, MIN_MEMORY_BLOCK_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	for (i = 0; i < sections_per_block; i++) {
+		__remove_memory(base, MIN_MEMORY_BLOCK_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		base += MIN_MEMORY_BLOCK_SIZE;
 	}
 
@@ -411,10 +432,14 @@ static int dlpar_remove_lmb(struct drmem_lmb *lmb)
 	block_sz = pseries_memory_block_size();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__remove_memory(lmb->base_addr, block_sz);
 =======
 	__remove_memory(mem_block->nid, lmb->base_addr, block_sz);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__remove_memory(lmb->base_addr, block_sz);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	put_device(&mem_block->dev);
 
 	/* Update memory regions for memory remove */
@@ -688,10 +713,14 @@ static int dlpar_add_lmb(struct drmem_lmb *lmb)
 	rc = dlpar_online_lmb(lmb);
 	if (rc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__remove_memory(lmb->base_addr, block_sz);
 =======
 		__remove_memory(nid, lmb->base_addr, block_sz);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__remove_memory(lmb->base_addr, block_sz);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		invalidate_lmb_associativity_index(lmb);
 	} else {
 		lmb->flags |= DRCONF_MEM_ASSIGNED;
@@ -1011,12 +1040,18 @@ static int pseries_memory_notifier(struct notifier_block *nb,
 		err = pseries_remove_mem_node(rd->dn);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case OF_RECONFIG_UPDATE_PROPERTY:
 		if (!strcmp(rd->dn->name,
 			    "ibm,dynamic-reconfiguration-memory"))
 			drmem_update_lmbs(rd->prop);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return notifier_from_errno(err);
 }

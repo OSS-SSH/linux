@@ -15,9 +15,13 @@
 #include <linux/phy/phy.h>
 #include <linux/pm_runtime.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/phy/phy.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/phy/phy.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/regmap.h>
 
 #include <video/mipi_display.h>
@@ -130,12 +134,18 @@
 #define TERMINATION_RESISTER_CONTROL			0x21
 #define AFE_BIAS_BANDGAP_ANALOG_PROGRAMMABILITY		0x22
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HS_RX_CONTROL_OF_LANE_CLK			0x34
 #define HS_RX_CONTROL_OF_LANE_0				0x44
 #define HS_RX_CONTROL_OF_LANE_1				0x54
 =======
 #define HS_RX_CONTROL_OF_LANE_0				0x44
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HS_RX_CONTROL_OF_LANE_CLK			0x34
+#define HS_RX_CONTROL_OF_LANE_0				0x44
+#define HS_RX_CONTROL_OF_LANE_1				0x54
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HS_TX_CLOCK_LANE_REQUEST_STATE_TIME_CONTROL	0x60
 #define HS_TX_CLOCK_LANE_PREPARE_STATE_TIME_CONTROL	0x61
 #define HS_TX_CLOCK_LANE_HS_ZERO_STATE_TIME_CONTROL	0x62
@@ -148,11 +158,17 @@
 #define HS_TX_DATA_LANE_TRAIL_STATE_TIME_CONTROL	0x73
 #define HS_TX_DATA_LANE_EXIT_STATE_TIME_CONTROL		0x74
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HS_RX_DATA_LANE_THS_SETTLE_CONTROL		0x75
 #define HS_RX_CONTROL_OF_LANE_2				0x84
 #define HS_RX_CONTROL_OF_LANE_3				0x94
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HS_RX_DATA_LANE_THS_SETTLE_CONTROL		0x75
+#define HS_RX_CONTROL_OF_LANE_2				0x84
+#define HS_RX_CONTROL_OF_LANE_3				0x94
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define DW_MIPI_NEEDS_PHY_CFG_CLK	BIT(0)
 #define DW_MIPI_NEEDS_GRF_CLK		BIT(1)
@@ -188,10 +204,15 @@
 #define RK3399_TXRX_ENABLECLK		BIT(6)
 #define RK3399_TXRX_BASEDIR		BIT(5)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define RK3399_TXRX_SRC_SEL_ISP0	BIT(4)
 #define RK3399_TXRX_TURNREQUEST		GENMASK(3, 0)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define RK3399_TXRX_SRC_SEL_ISP0	BIT(4)
+#define RK3399_TXRX_TURNREQUEST		GENMASK(3, 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HIWORD_UPDATE(val, mask)	(val | (mask) << 16)
 
@@ -199,14 +220,20 @@
 
 enum {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DW_DSI_USAGE_IDLE,
 	DW_DSI_USAGE_DSI,
 	DW_DSI_USAGE_PHY,
 };
 
 enum {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	BANDGAP_97_07,
 	BANDGAP_98_05,
 	BANDGAP_99_02,
@@ -244,12 +271,18 @@ struct rockchip_dw_dsi_chip_data {
 	u32 lanecfg2;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*dphy_rx_init)(struct phy *phy);
 	int (*dphy_rx_power_on)(struct phy *phy);
 	int (*dphy_rx_power_off)(struct phy *phy);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int flags;
 	unsigned int max_data_lanes;
 };
@@ -261,9 +294,13 @@ struct dw_mipi_dsi_rockchip {
 
 	struct regmap *grf_regmap;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct clk *pclk;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct clk *pclk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct clk *pllref_clk;
 	struct clk *grf_clk;
 	struct clk *phy_cfg_clk;
@@ -277,14 +314,20 @@ struct dw_mipi_dsi_rockchip {
 	union phy_configure_opts phy_opts;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* being a phy for other mipi hosts */
 	unsigned int usage_mode;
 	struct mutex usage_mutex;
 	struct phy *dphy;
 	struct phy_configure_opts_mipi_dphy dphy_config;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int lane_mbps; /* per lane */
 	u16 input_div;
 	u16 feedback_div;
@@ -1029,6 +1072,9 @@ static int dw_mipi_dsi_rockchip_host_attach(void *priv_data,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&dsi->usage_mutex);
 
 	if (dsi->usage_mode != DW_DSI_USAGE_IDLE) {
@@ -1040,8 +1086,11 @@ static int dw_mipi_dsi_rockchip_host_attach(void *priv_data,
 	dsi->usage_mode = DW_DSI_USAGE_DSI;
 	mutex_unlock(&dsi->usage_mutex);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = component_add(dsi->dev, &dw_mipi_dsi_rockchip_ops);
 	if (ret) {
 		DRM_DEV_ERROR(dsi->dev, "Failed to register component: %d\n",
@@ -1078,12 +1127,18 @@ static int dw_mipi_dsi_rockchip_host_detach(void *priv_data,
 	component_del(dsi->dev, &dw_mipi_dsi_rockchip_ops);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&dsi->usage_mutex);
 	dsi->usage_mode = DW_DSI_USAGE_IDLE;
 	mutex_unlock(&dsi->usage_mutex);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1093,6 +1148,9 @@ static const struct dw_mipi_dsi_host_ops dw_mipi_dsi_rockchip_host_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dw_mipi_dsi_rockchip_dphy_bind(struct device *dev,
 					  struct device *master,
 					  void *data)
@@ -1308,17 +1366,24 @@ static const struct phy_ops dw_mipi_dsi_dphy_ops = {
 	.exit		= dw_mipi_dsi_dphy_exit,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dw_mipi_dsi_rockchip_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct device_node *np = dev->of_node;
 	struct dw_mipi_dsi_rockchip *dsi;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct phy_provider *phy_provider;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct phy_provider *phy_provider;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct resource *res;
 	const struct rockchip_dw_dsi_chip_data *cdata =
 				of_device_get_match_data(dev);
@@ -1359,6 +1424,9 @@ static int dw_mipi_dsi_rockchip_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dsi->pclk = devm_clk_get(dev, "pclk");
 	if (IS_ERR(dsi->pclk)) {
 		ret = PTR_ERR(dsi->pclk);
@@ -1366,8 +1434,11 @@ static int dw_mipi_dsi_rockchip_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dsi->pllref_clk = devm_clk_get(dev, "ref");
 	if (IS_ERR(dsi->pllref_clk)) {
 		if (dsi->phy) {
@@ -1419,6 +1490,9 @@ static int dw_mipi_dsi_rockchip_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, dsi);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&dsi->usage_mutex);
 
 	dsi->dphy = devm_phy_create(dev, NULL, &dw_mipi_dsi_dphy_ops);
@@ -1432,8 +1506,11 @@ static int dw_mipi_dsi_rockchip_probe(struct platform_device *pdev)
 	if (IS_ERR(phy_provider))
 		return PTR_ERR(phy_provider);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dsi->dmd = dw_mipi_dsi_probe(pdev, &dsi->pdata);
 	if (IS_ERR(dsi->dmd)) {
 		ret = PTR_ERR(dsi->dmd);
@@ -1498,6 +1575,9 @@ static const struct rockchip_dw_dsi_chip_data rk3288_chip_data[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rk3399_dphy_tx1rx1_init(struct phy *phy)
 {
 	struct dw_mipi_dsi_rockchip *dsi = phy_get_drvdata(phy);
@@ -1567,8 +1647,11 @@ static int rk3399_dphy_tx1rx1_power_off(struct phy *phy)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct rockchip_dw_dsi_chip_data rk3399_chip_data[] = {
 	{
 		.reg = 0xff960000,
@@ -1612,12 +1695,18 @@ static const struct rockchip_dw_dsi_chip_data rk3399_chip_data[] = {
 		.flags = DW_MIPI_NEEDS_PHY_CFG_CLK | DW_MIPI_NEEDS_GRF_CLK,
 		.max_data_lanes = 4,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		.dphy_rx_init = rk3399_dphy_tx1rx1_init,
 		.dphy_rx_power_on = rk3399_dphy_tx1rx1_power_on,
 		.dphy_rx_power_off = rk3399_dphy_tx1rx1_power_off,
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{ /* sentinel */ }
 };

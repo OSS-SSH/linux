@@ -72,10 +72,14 @@ struct smc_firmware_header_v2_1 {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct psp_fw_legacy_bin_desc {
 =======
 struct psp_fw_bin_desc {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct psp_fw_legacy_bin_desc {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t fw_version;
 	uint32_t offset_bytes;
 	uint32_t size_bytes;
@@ -85,15 +89,20 @@ struct psp_fw_bin_desc {
 struct psp_firmware_header_v1_0 {
 	struct common_firmware_header header;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct psp_fw_legacy_bin_desc sos;
 =======
 	struct psp_fw_bin_desc sos;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct psp_fw_legacy_bin_desc sos;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* version_major=1, version_minor=1 */
 struct psp_firmware_header_v1_1 {
 	struct psp_firmware_header_v1_0 v1_0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct psp_fw_legacy_bin_desc toc;
 	struct psp_fw_legacy_bin_desc kdb;
@@ -101,11 +110,16 @@ struct psp_firmware_header_v1_1 {
 	struct psp_fw_bin_desc toc;
 	struct psp_fw_bin_desc kdb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct psp_fw_legacy_bin_desc toc;
+	struct psp_fw_legacy_bin_desc kdb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* version_major=1, version_minor=2 */
 struct psp_firmware_header_v1_2 {
 	struct psp_firmware_header_v1_0 v1_0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct psp_fw_legacy_bin_desc res;
 	struct psp_fw_legacy_bin_desc kdb;
@@ -113,12 +127,19 @@ struct psp_firmware_header_v1_2 {
 	struct psp_fw_bin_desc res;
 	struct psp_fw_bin_desc kdb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct psp_fw_legacy_bin_desc res;
+	struct psp_fw_legacy_bin_desc kdb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* version_major=1, version_minor=3 */
 struct psp_firmware_header_v1_3 {
 	struct psp_firmware_header_v1_1 v1_1;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct psp_fw_legacy_bin_desc spl;
 	struct psp_fw_legacy_bin_desc rl;
 	struct psp_fw_legacy_bin_desc sys_drv_aux;
@@ -150,23 +171,30 @@ struct psp_firmware_header_v2_0 {
 	struct common_firmware_header header;
 	uint32_t psp_fw_bin_count;
 	struct psp_fw_bin_desc psp_fw_bin[];
+<<<<<<< HEAD
 =======
 	struct psp_fw_bin_desc spl;
 	struct psp_fw_bin_desc rl;
 	struct psp_fw_bin_desc sys_drv_aux;
 	struct psp_fw_bin_desc sos_aux;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* version_major=1, version_minor=0 */
 struct ta_firmware_header_v1_0 {
 	struct common_firmware_header header;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct psp_fw_legacy_bin_desc xgmi;
 	struct psp_fw_legacy_bin_desc ras;
 	struct psp_fw_legacy_bin_desc hdcp;
 	struct psp_fw_legacy_bin_desc dtm;
 	struct psp_fw_legacy_bin_desc securedisplay;
+<<<<<<< HEAD
 =======
 	uint32_t ta_xgmi_ucode_version;
 	uint32_t ta_xgmi_offset_bytes;
@@ -184,6 +212,8 @@ struct ta_firmware_header_v1_0 {
 	uint32_t ta_securedisplay_offset_bytes;
 	uint32_t ta_securedisplay_size_bytes;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum ta_fw_type {
@@ -199,6 +229,7 @@ enum ta_fw_type {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct ta_fw_bin_desc {
 	uint32_t fw_type;
@@ -208,15 +239,21 @@ struct ta_fw_bin_desc {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* version_major=2, version_minor=0 */
 struct ta_firmware_header_v2_0 {
 	struct common_firmware_header header;
 	uint32_t ta_fw_bin_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct psp_fw_bin_desc ta_fw_bin[];
 =======
 	struct ta_fw_bin_desc ta_fw_bin[];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct psp_fw_bin_desc ta_fw_bin[];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* version_major=1, version_minor=0 */
@@ -380,9 +417,13 @@ union amdgpu_firmware_header {
 	struct psp_firmware_header_v1_1 psp_v1_1;
 	struct psp_firmware_header_v1_3 psp_v1_3;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct psp_firmware_header_v2_0 psp_v2_0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct psp_firmware_header_v2_0 psp_v2_0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ta_firmware_header_v1_0 ta;
 	struct ta_firmware_header_v2_0 ta_v2_0;
 	struct gfx_firmware_header_v1_0 gfx;
@@ -398,10 +439,14 @@ union amdgpu_firmware_header {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define UCODE_MAX_PSP_PACKAGING ((sizeof(union amdgpu_firmware_header) - sizeof(struct common_firmware_header) - 4) / sizeof(struct psp_fw_bin_desc))
 =======
 #define UCODE_MAX_TA_PACKAGING ((sizeof(union amdgpu_firmware_header) - sizeof(struct common_firmware_header) - 4) / sizeof(struct ta_fw_bin_desc))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define UCODE_MAX_PSP_PACKAGING ((sizeof(union amdgpu_firmware_header) - sizeof(struct common_firmware_header) - 4) / sizeof(struct psp_fw_bin_desc))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * fw loading support
@@ -525,8 +570,13 @@ enum amdgpu_firmware_load_type
 amdgpu_ucode_get_load_type(struct amdgpu_device *adev, int load_type);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const char *amdgpu_ucode_name(enum AMDGPU_UCODE_ID ucode_id);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const char *amdgpu_ucode_name(enum AMDGPU_UCODE_ID ucode_id);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

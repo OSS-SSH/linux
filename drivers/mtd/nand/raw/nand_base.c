@@ -5229,6 +5229,7 @@ static int of_get_nand_secure_regions(struct nand_chip *chip)
 {
 	struct device_node *dn = nand_get_flash_node(chip);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct property *prop;
 	int nr_elem, i, j;
 
@@ -5241,12 +5242,20 @@ static int of_get_nand_secure_regions(struct nand_chip *chip)
 	if (nr_elem <= 0)
 		return nr_elem;
 =======
+=======
+	struct property *prop;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int nr_elem, i, j;
 
-	nr_elem = of_property_count_elems_of_size(dn, "secure-regions", sizeof(u64));
-	if (!nr_elem)
+	/* Only proceed if the "secure-regions" property is present in DT */
+	prop = of_find_property(dn, "secure-regions", NULL);
+	if (!prop)
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	nr_elem = of_property_count_elems_of_size(dn, "secure-regions", sizeof(u64));
+	if (nr_elem <= 0)
+		return nr_elem;
 
 	chip->nr_secure_regions = nr_elem / 2;
 	chip->secure_regions = kcalloc(chip->nr_secure_regions, sizeof(*chip->secure_regions),

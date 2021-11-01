@@ -15,6 +15,7 @@
 #include <linux/kernel.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "core.h"
 #include "sh_pfc.h"
 
@@ -48,6 +49,29 @@
 		PORT_GP_21(5, fn, sfx),		\
 		PORT_GP_14(6, fn, sfx)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "core.h"
+#include "sh_pfc.h"
+
+#define CPU_ALL_GP(fn, sfx)						\
+	PORT_GP_CFG_9(0,  fn, sfx, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PORT_GP_CFG_32(1, fn, sfx, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PORT_GP_CFG_32(2, fn, sfx, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PORT_GP_CFG_10(3, fn, sfx, SH_PFC_PIN_CFG_IO_VOLTAGE | SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PORT_GP_CFG_32(4, fn, sfx, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PORT_GP_CFG_21(5, fn, sfx, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PORT_GP_CFG_14(6, fn, sfx, SH_PFC_PIN_CFG_PULL_UP_DOWN)
+
+#define CPU_ALL_NOGP(fn)						\
+	PIN_NOGP_CFG(DU_DOTCLKIN0, "DU_DOTCLKIN0", fn, SH_PFC_PIN_CFG_PULL_DOWN),	\
+	PIN_NOGP_CFG(FSCLKST_N, "FSCLKST#", fn, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PIN_NOGP_CFG(MLB_REF, "MLB_REF", fn, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PIN_NOGP_CFG(PRESETOUT_N, "PRESETOUT#", fn, SH_PFC_PIN_CFG_PULL_UP_DOWN),	\
+	PIN_NOGP_CFG(TCK, "TCK", fn, SH_PFC_PIN_CFG_PULL_UP),		\
+	PIN_NOGP_CFG(TDI, "TDI", fn, SH_PFC_PIN_CFG_PULL_UP),		\
+	PIN_NOGP_CFG(TMS, "TMS", fn, SH_PFC_PIN_CFG_PULL_UP),		\
+	PIN_NOGP_CFG(TRST_N, "TRST#", fn, SH_PFC_PIN_CFG_PULL_UP)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * F_() : just information
@@ -955,6 +979,9 @@ static const u16 pinmux_data[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Pins not associated with a GPIO port.
  */
@@ -966,10 +993,13 @@ enum {
 static const struct sh_pfc_pin pinmux_pins[] = {
 	PINMUX_GPIO_GP_ALL(),
 	PINMUX_NOGP_ALL(),
+<<<<<<< HEAD
 =======
 static const struct sh_pfc_pin pinmux_pins[] = {
 	PINMUX_GPIO_GP_ALL(),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* - AUDIO CLOCK ------------------------------------------------------------- */
@@ -2873,6 +2903,9 @@ static int r8a77995_pin_to_pocctrl(struct sh_pfc *pfc, unsigned int pin, u32 *po
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pinmux_bias_reg pinmux_bias_regs[] = {
 	{ PINMUX_BIAS_REG("PUEN0", 0xe6060400, "PUD0", 0xe6060440) {
 		[ 0] = RCAR_GP_PIN(1, 9),	/* DU_DG1 */
@@ -3081,8 +3114,11 @@ static const struct pinmux_bias_reg pinmux_bias_regs[] = {
 	{ /* sentinel */ }
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum ioctrl_regs {
 	TDSELCTRL,
 };
@@ -3093,6 +3129,9 @@ static const struct pinmux_ioctrl_reg pinmux_ioctrl_regs[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pinmux_bias_reg *
 r8a77995_pin_to_bias_reg(const struct sh_pfc *pfc, unsigned int pin,
 			 unsigned int *puen_bit, unsigned int *pud_bit)
@@ -3166,6 +3205,7 @@ static void r8a77995_pinmux_set_bias(struct sh_pfc *pfc, unsigned int pin,
 	sh_pfc_write(pfc, reg->puen, enable);
 }
 
+<<<<<<< HEAD
 static const struct sh_pfc_soc_operations r8a77995_pinmux_ops = {
 	.pin_to_pocctrl = r8a77995_pin_to_pocctrl,
 	.get_bias = r8a77995_pinmux_get_bias,
@@ -3174,6 +3214,12 @@ static const struct sh_pfc_soc_operations r8a77995_pinmux_ops = {
 static const struct sh_pfc_soc_operations r8a77995_pinmux_ops = {
 	.pin_to_pocctrl = r8a77995_pin_to_pocctrl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct sh_pfc_soc_operations r8a77995_pinmux_ops = {
+	.pin_to_pocctrl = r8a77995_pin_to_pocctrl,
+	.get_bias = r8a77995_pinmux_get_bias,
+	.set_bias = r8a77995_pinmux_set_bias,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 const struct sh_pfc_soc_info r8a77995_pinmux_info = {
@@ -3192,9 +3238,13 @@ const struct sh_pfc_soc_info r8a77995_pinmux_info = {
 
 	.cfg_regs = pinmux_config_regs,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.bias_regs = pinmux_bias_regs,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.bias_regs = pinmux_bias_regs,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ioctrl_regs = pinmux_ioctrl_regs,
 
 	.pinmux_data = pinmux_data,

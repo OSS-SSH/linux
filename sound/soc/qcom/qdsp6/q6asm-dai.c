@@ -430,10 +430,13 @@ static int q6asm_dai_open(struct snd_soc_component *component,
 		prtd->phys = substream->dma_buffer.addr | (pdata->sid << 32);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -474,6 +477,7 @@ static snd_pcm_uframes_t q6asm_dai_pointer(struct snd_soc_component *component,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int q6asm_dai_mmap(struct snd_soc_component *component,
 			  struct snd_pcm_substream *substream,
@@ -488,6 +492,8 @@ static int q6asm_dai_mmap(struct snd_soc_component *component,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int q6asm_dai_hw_params(struct snd_soc_component *component,
 			       struct snd_pcm_substream *substream,
 			       struct snd_pcm_hw_params *params)
@@ -1192,6 +1198,7 @@ static int q6asm_dai_pcm_new(struct snd_soc_component *component,
 			     struct snd_soc_pcm_runtime *rtd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_pcm *pcm = rtd->pcm;
 	size_t size = q6asm_dai_hardware_playback.buffer_bytes_max;
 
@@ -1199,22 +1206,12 @@ static int q6asm_dai_pcm_new(struct snd_soc_component *component,
 					    component->dev, size);
 =======
 	struct snd_pcm_substream *psubstream, *csubstream;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct snd_pcm *pcm = rtd->pcm;
-	struct device *dev;
-	int size, ret;
+	size_t size = q6asm_dai_hardware_playback.buffer_bytes_max;
 
-	dev = component->dev;
-	size = q6asm_dai_hardware_playback.buffer_bytes_max;
-	psubstream = pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
-	if (psubstream) {
-		ret = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, dev, size,
-					  &psubstream->dma_buffer);
-		if (ret) {
-			dev_err(dev, "Cannot allocate buffer(s)\n");
-			return ret;
-		}
-	}
-
+<<<<<<< HEAD
 	csubstream = pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
 	if (csubstream) {
 		ret = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, dev, size,
@@ -1245,6 +1242,10 @@ static void q6asm_dai_pcm_free(struct snd_soc_component *component,
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+					    component->dev, size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct snd_soc_dapm_widget q6asm_dapm_widgets[] = {
@@ -1275,12 +1276,16 @@ static const struct snd_soc_component_driver q6asm_fe_dai_component = {
 	.trigger	= q6asm_dai_trigger,
 	.pointer	= q6asm_dai_pointer,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.pcm_construct	= q6asm_dai_pcm_new,
 =======
 	.mmap		= q6asm_dai_mmap,
 	.pcm_construct	= q6asm_dai_pcm_new,
 	.pcm_destruct	= q6asm_dai_pcm_free,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.pcm_construct	= q6asm_dai_pcm_new,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.compress_ops	= &q6asm_dai_compress_ops,
 	.dapm_widgets	= q6asm_dapm_widgets,
 	.num_dapm_widgets = ARRAY_SIZE(q6asm_dapm_widgets),

@@ -499,10 +499,14 @@ static void acpi_bus_notify(acpi_handle handle, u32 type, void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void acpi_notify_device(acpi_handle handle, u32 event, void *data)
 =======
 static void acpi_device_notify(acpi_handle handle, u32 event, void *data)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void acpi_notify_device(acpi_handle handle, u32 event, void *data)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct acpi_device *device = data;
 
@@ -510,28 +514,40 @@ static void acpi_device_notify(acpi_handle handle, u32 event, void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void acpi_notify_device_fixed(void *data)
 =======
 static void acpi_device_notify_fixed(void *data)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void acpi_notify_device_fixed(void *data)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct acpi_device *device = data;
 
 	/* Fixed hardware devices have no handles */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	acpi_notify_device(NULL, ACPI_FIXED_HARDWARE_EVENT, device);
 =======
 	acpi_device_notify(NULL, ACPI_FIXED_HARDWARE_EVENT, device);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	acpi_notify_device(NULL, ACPI_FIXED_HARDWARE_EVENT, device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u32 acpi_device_fixed_event(void *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	acpi_os_execute(OSL_NOTIFY_HANDLER, acpi_notify_device_fixed, data);
 =======
 	acpi_os_execute(OSL_NOTIFY_HANDLER, acpi_device_notify_fixed, data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	acpi_os_execute(OSL_NOTIFY_HANDLER, acpi_notify_device_fixed, data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ACPI_INTERRUPT_HANDLED;
 }
 
@@ -553,10 +569,14 @@ static int acpi_device_install_notify_handler(struct acpi_device *device)
 		status = acpi_install_notify_handler(device->handle,
 						     ACPI_DEVICE_NOTIFY,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						     acpi_notify_device,
 =======
 						     acpi_device_notify,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						     acpi_notify_device,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						     device);
 
 	if (ACPI_FAILURE(status))
@@ -575,10 +595,14 @@ static void acpi_device_remove_notify_handler(struct acpi_device *device)
 	else
 		acpi_remove_notify_handler(device->handle, ACPI_DEVICE_NOTIFY,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					   acpi_notify_device);
 =======
 					   acpi_device_notify);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					   acpi_notify_device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Handle events targeting \_SB device (at present only graceful shutdown) */
@@ -1044,10 +1068,14 @@ static int acpi_device_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void acpi_device_remove(struct device *dev)
 =======
 static int acpi_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void acpi_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct acpi_device *acpi_dev = to_acpi_device(dev);
 	struct acpi_driver *acpi_drv = acpi_dev->driver;
@@ -1063,9 +1091,12 @@ static int acpi_device_remove(struct device *dev)
 
 	put_device(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct bus_type acpi_bus_type = {

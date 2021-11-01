@@ -33,6 +33,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reg_vcc1v8: regulator-vcc1v8 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc1v8";
@@ -41,9 +44,12 @@
 	};
 
 	reg_vcc3v3: regulator-vcc3v3 {
+<<<<<<< HEAD
 =======
 	reg_vcc3v3: vcc3v3 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		compatible = "regulator-fixed";
 		regulator-name = "vcc3v3";
 		regulator-min-microvolt = <3300000>;
@@ -51,10 +57,14 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	reg_vdd_cpu_gpu: regulator-vdd-cpu-gpu {
 =======
 	reg_vdd_cpu_gpu: vdd-cpu-gpu {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	reg_vdd_cpu_gpu: regulator-vdd-cpu-gpu {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		compatible = "regulator-fixed";
 		regulator-name = "vdd-cpu-gpu";
 		regulator-min-microvolt = <1135000>;
@@ -107,6 +117,9 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &mmc2 {
 	vmmc-supply = <&reg_vcc3v3>;
 	vqmmc-supply = <&reg_vcc1v8>;
@@ -117,8 +130,11 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &ohci0 {
 	status = "okay";
 };
@@ -128,14 +144,20 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &pio {
 	vcc-pc-supply = <&reg_vcc1v8>;
 	vcc-pd-supply = <&reg_vcc3v3>;
 	vcc-pg-supply = <&reg_vcc1v8>;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &r_ir {
 	linux,rc-map-name = "rc-tanix-tx5max";
 	status = "okay";

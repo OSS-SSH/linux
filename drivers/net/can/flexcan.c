@@ -29,9 +29,13 @@
 #include <linux/pinctrl/consumer.h>
 #include <linux/platform_device.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/can/platform/flexcan.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/can/platform/flexcan.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/pm_runtime.h>
 #include <linux/regmap.h>
 #include <linux/regulator/consumer.h>
@@ -213,6 +217,7 @@
  *
  * Below is some version info we got:
 <<<<<<< HEAD
+<<<<<<< HEAD
  *    SOC   Version   IP-Version  Glitch- [TR]WRN_INT IRQ Err Memory err RTR rece-   FD Mode     MB
  *                                Filter? connected?  Passive detection  ption in MB Supported?
  * MCF5441X FlexCAN2  ?               no       yes        no       no       yes           no     16
@@ -240,6 +245,21 @@
  * LS1021A FlexCAN2  03.00.04.00     no       yes        no       no       yes           no
  * LX2160A FlexCAN3  03.00.23.00     no       yes        no      yes       yes          yes
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *    SOC   Version   IP-Version  Glitch- [TR]WRN_INT IRQ Err Memory err RTR rece-   FD Mode     MB
+ *                                Filter? connected?  Passive detection  ption in MB Supported?
+ * MCF5441X FlexCAN2  ?               no       yes        no       no       yes           no     16
+ *    MX25  FlexCAN2  03.00.00.00     no        no        no       no        no           no     64
+ *    MX28  FlexCAN2  03.00.04.00    yes       yes        no       no        no           no     64
+ *    MX35  FlexCAN2  03.00.00.00     no        no        no       no        no           no     64
+ *    MX53  FlexCAN2  03.00.00.00    yes        no        no       no        no           no     64
+ *    MX6s  FlexCAN3  10.00.12.00    yes       yes        no       no       yes           no     64
+ *    MX8QM FlexCAN3  03.00.23.00    yes       yes        no       no       yes          yes     64
+ *    MX8MP FlexCAN3  03.00.17.01    yes       yes        no      yes       yes          yes     64
+ *    VF610 FlexCAN3  ?               no       yes        no      yes       yes?          no     64
+ *  LS1021A FlexCAN2  03.00.04.00     no       yes        no       no       yes           no     64
+ *  LX2160A FlexCAN3  03.00.23.00     no       yes        no      yes       yes          yes     64
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Some SOCs do not have the RX_WARN & TX_WARN interrupt line connected.
  */
@@ -267,12 +287,18 @@
 /* Setup stop mode with SCU firmware to support wakeup */
 #define FLEXCAN_QUIRK_SETUP_STOP_MODE_SCFW BIT(11)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Setup 3 separate interrupts, main, boff and err */
 #define FLEXCAN_QUIRK_NR_IRQ_3 BIT(12)
 /* Setup 16 mailboxes */
 #define FLEXCAN_QUIRK_NR_MB_16 BIT(13)
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Structure of the message buffer */
 struct flexcan_mb {
@@ -391,11 +417,17 @@ struct flexcan_priv {
 	struct flexcan_stop_mode stm;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int irq_boff;
 	int irq_err;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int irq_boff;
+	int irq_err;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* IPC handle when setup stop mode by System Controller firmware(scfw) */
 	struct imx_sc_ipc *sc_ipc_handle;
 
@@ -405,13 +437,19 @@ struct flexcan_priv {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct flexcan_devtype_data fsl_mcf5441x_devtype_data = {
 	.quirks = FLEXCAN_QUIRK_BROKEN_PERR_STATE |
 		FLEXCAN_QUIRK_NR_IRQ_3 | FLEXCAN_QUIRK_NR_MB_16,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct flexcan_devtype_data fsl_p1010_devtype_data = {
 	.quirks = FLEXCAN_QUIRK_BROKEN_WERR_STATE |
 		FLEXCAN_QUIRK_BROKEN_PERR_STATE |
@@ -677,6 +715,7 @@ static inline void flexcan_error_irq_disable(const struct flexcan_priv *priv)
 static int flexcan_clks_enable(const struct flexcan_priv *priv)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err = 0;
 
 	if (priv->clk_ipg) {
@@ -692,15 +731,28 @@ static int flexcan_clks_enable(const struct flexcan_priv *priv)
 	}
 =======
 	int err;
+=======
+	int err = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	err = clk_prepare_enable(priv->clk_ipg);
-	if (err)
-		return err;
+	if (priv->clk_ipg) {
+		err = clk_prepare_enable(priv->clk_ipg);
+		if (err)
+			return err;
+	}
 
+<<<<<<< HEAD
 	err = clk_prepare_enable(priv->clk_per);
 	if (err)
 		clk_disable_unprepare(priv->clk_ipg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (priv->clk_per) {
+		err = clk_prepare_enable(priv->clk_per);
+		if (err)
+			clk_disable_unprepare(priv->clk_ipg);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return err;
 }
@@ -1256,11 +1308,17 @@ static irqreturn_t flexcan_irq(int irq, void *dev_id)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (handled)
 		can_rx_offload_irq_finish(&priv->offload);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (handled)
+		can_rx_offload_irq_finish(&priv->offload);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return handled;
 }
 
@@ -1465,16 +1523,22 @@ static int flexcan_rx_offload_setup(struct net_device *dev)
 	else
 		priv->mb_size = sizeof(struct flexcan_mb) + CAN_MAX_DLEN;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (priv->devtype_data->quirks & FLEXCAN_QUIRK_NR_MB_16)
 		priv->mb_count = 16;
 	else
 		priv->mb_count = (sizeof(priv->regs->mb[0]) / priv->mb_size) +
 				 (sizeof(priv->regs->mb[1]) / priv->mb_size);
+<<<<<<< HEAD
 =======
 	priv->mb_count = (sizeof(priv->regs->mb[0]) / priv->mb_size) +
 			 (sizeof(priv->regs->mb[1]) / priv->mb_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (priv->devtype_data->quirks & FLEXCAN_QUIRK_USE_OFF_TIMESTAMP)
 		priv->tx_mb_reserved =
@@ -1847,6 +1911,9 @@ static int flexcan_open(struct net_device *dev)
 		goto out_can_rx_offload_disable;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (priv->devtype_data->quirks & FLEXCAN_QUIRK_NR_IRQ_3) {
 		err = request_irq(priv->irq_boff,
 				  flexcan_irq, IRQF_SHARED, dev->name, dev);
@@ -1859,8 +1926,11 @@ static int flexcan_open(struct net_device *dev)
 			goto out_free_irq_boff;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	flexcan_chip_interrupts_enable(dev);
 
 	can_led_event(dev, CAN_LED_EVENT_OPEN);
@@ -1870,12 +1940,18 @@ static int flexcan_open(struct net_device *dev)
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out_free_irq_boff:
 	free_irq(priv->irq_boff, dev);
  out_free_irq:
 	free_irq(dev->irq, dev);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out_can_rx_offload_disable:
 	can_rx_offload_disable(&priv->offload);
 	flexcan_chip_stop(dev);
@@ -1898,14 +1974,20 @@ static int flexcan_close(struct net_device *dev)
 	netif_stop_queue(dev);
 	flexcan_chip_interrupts_disable(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (priv->devtype_data->quirks & FLEXCAN_QUIRK_NR_IRQ_3) {
 		free_irq(priv->irq_err, dev);
 		free_irq(priv->irq_boff, dev);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free_irq(dev->irq, dev);
 	can_rx_offload_disable(&priv->offload);
 	flexcan_chip_stop_disable_on_error(dev);
@@ -2143,6 +2225,9 @@ static const struct of_device_id flexcan_of_match[] = {
 MODULE_DEVICE_TABLE(of, flexcan_of_match);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct platform_device_id flexcan_id_table[] = {
 	{
 		.name = "flexcan-mcf5441x",
@@ -2153,6 +2238,7 @@ static const struct platform_device_id flexcan_id_table[] = {
 };
 MODULE_DEVICE_TABLE(platform, flexcan_id_table);
 
+<<<<<<< HEAD
 static int flexcan_probe(struct platform_device *pdev)
 {
 	const struct of_device_id *of_id;
@@ -2160,6 +2246,11 @@ static int flexcan_probe(struct platform_device *pdev)
 static int flexcan_probe(struct platform_device *pdev)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int flexcan_probe(struct platform_device *pdev)
+{
+	const struct of_device_id *of_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct flexcan_devtype_data *devtype_data;
 	struct net_device *dev;
 	struct flexcan_priv *priv;
@@ -2167,9 +2258,13 @@ static int flexcan_probe(struct platform_device *pdev)
 	struct clk *clk_ipg = NULL, *clk_per = NULL;
 	struct flexcan_regs __iomem *regs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct flexcan_platform_data *pdata;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct flexcan_platform_data *pdata;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err, irq;
 	u8 clk_src = 1;
 	u32 clock_freq = 0;
@@ -2188,14 +2283,20 @@ static int flexcan_probe(struct platform_device *pdev)
 		of_property_read_u8(pdev->dev.of_node,
 				    "fsl,clk-source", &clk_src);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		pdata = dev_get_platdata(&pdev->dev);
 		if (pdata) {
 			clock_freq = pdata->clock_frequency;
 			clk_src = pdata->clk_src;
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!clock_freq) {
@@ -2222,6 +2323,9 @@ static int flexcan_probe(struct platform_device *pdev)
 		return PTR_ERR(regs);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	of_id = of_match_device(flexcan_of_match, &pdev->dev);
 	if (of_id)
 		devtype_data = of_id->data;
@@ -2230,9 +2334,12 @@ static int flexcan_probe(struct platform_device *pdev)
 			platform_get_device_id(pdev)->driver_data;
 	else
 		return -ENODEV;
+<<<<<<< HEAD
 =======
 	devtype_data = of_device_get_match_data(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((devtype_data->quirks & FLEXCAN_QUIRK_SUPPORT_FD) &&
 	    !(devtype_data->quirks & FLEXCAN_QUIRK_USE_OFF_TIMESTAMP)) {
@@ -2277,6 +2384,9 @@ static int flexcan_probe(struct platform_device *pdev)
 	priv->reg_xceiver = reg_xceiver;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (devtype_data->quirks & FLEXCAN_QUIRK_NR_IRQ_3) {
 		priv->irq_boff = platform_get_irq(pdev, 1);
 		if (priv->irq_boff <= 0) {
@@ -2290,8 +2400,11 @@ static int flexcan_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (priv->devtype_data->quirks & FLEXCAN_QUIRK_SUPPORT_FD) {
 		priv->can.ctrlmode_supported |= CAN_CTRLMODE_FD |
 			CAN_CTRLMODE_FD_NON_ISO;
@@ -2330,9 +2443,13 @@ static int flexcan_probe(struct platform_device *pdev)
 	pm_runtime_put_noidle(&pdev->dev);
 	pm_runtime_disable(&pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
  failed_platform_get_irq:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ failed_platform_get_irq:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free_candev(dev);
 	return err;
 }
@@ -2486,9 +2603,13 @@ static struct platform_driver flexcan_driver = {
 	.probe = flexcan_probe,
 	.remove = flexcan_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.id_table = flexcan_id_table,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.id_table = flexcan_id_table,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_platform_driver(flexcan_driver);

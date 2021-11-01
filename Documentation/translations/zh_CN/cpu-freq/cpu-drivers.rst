@@ -3,6 +3,7 @@
 .. include:: ../disclaimer-zh_CN.rst
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 :Original: Documentation/cpu-freq/cpu-drivers.rst
 
 :翻译:
@@ -14,9 +15,15 @@
 =======
 :Original: :doc:`../../../cpu-freq/cpu-drivers`
 :Translator: Yanteng Si <siyanteng@loongson.cn>
+=======
+:Original: Documentation/cpu-freq/cpu-drivers.rst
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+:翻译:
+
+ 司延腾 Yanteng Si <siyanteng@loongson.cn>
 
 .. _cn_cpu-drivers.rst:
-
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======================================
@@ -92,10 +99,13 @@ CPUfreq核心层注册一个cpufreq_driver结构体。
  调用。
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  .ready - 一个指向per-policy准备函数的指针，该函数在策略完全初始化之后被调用。
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  .attr - 一个指向NULL结尾的"struct freq_attr"列表的指针，该函数允许导出值到
  sysfs。
 

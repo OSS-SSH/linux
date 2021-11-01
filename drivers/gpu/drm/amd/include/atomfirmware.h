@@ -591,10 +591,14 @@ struct atom_firmware_info_v3_4 {
 	uint8_t  board_i2c_feature_gpio_id;       // i2c id find in gpio_lut data table gpio_id
 	uint8_t  board_i2c_feature_slave_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint8_t  ras_rom_i2c_slave_addr;
 =======
 	uint8_t  reserved3;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint8_t  ras_rom_i2c_slave_addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint16_t bootup_mvddq_mv;
 	uint16_t bootup_mvpp_mv;
 	uint32_t zfbstartaddrin16mb;

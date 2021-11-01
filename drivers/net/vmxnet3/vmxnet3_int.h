@@ -2,10 +2,14 @@
  * Linux driver for VMware's vmxnet3 ethernet NIC.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
 =======
  * Copyright (C) 2008-2020, VMware, Inc. All Rights Reserved.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -74,19 +78,27 @@
  * Version numbers
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define VMXNET3_DRIVER_VERSION_STRING   "1.6.0.0-k"
 =======
 #define VMXNET3_DRIVER_VERSION_STRING   "1.5.0.0-k"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VMXNET3_DRIVER_VERSION_STRING   "1.6.0.0-k"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Each byte of this 32-bit integer encodes a version number in
  * VMXNET3_DRIVER_VERSION_STRING.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define VMXNET3_DRIVER_VERSION_NUM      0x01060000
 =======
 #define VMXNET3_DRIVER_VERSION_NUM      0x01050000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VMXNET3_DRIVER_VERSION_NUM      0x01060000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if defined(CONFIG_PCI_MSI)
 	/* RSS only makes sense if MSI-X is supported. */
@@ -94,10 +106,15 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define VMXNET3_REV_6		5	/* Vmxnet3 Rev. 6 */
 #define VMXNET3_REV_5		4	/* Vmxnet3 Rev. 5 */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VMXNET3_REV_6		5	/* Vmxnet3 Rev. 6 */
+#define VMXNET3_REV_5		4	/* Vmxnet3 Rev. 5 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define VMXNET3_REV_4		3	/* Vmxnet3 Rev. 4 */
 #define VMXNET3_REV_3		2	/* Vmxnet3 Rev. 3 */
 #define VMXNET3_REV_2		1	/* Vmxnet3 Rev. 2 */
@@ -319,15 +336,21 @@ struct vmxnet3_rx_queue {
 } __attribute__((__aligned__(SMP_CACHE_BYTES)));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define VMXNET3_DEVICE_MAX_TX_QUEUES 32
 #define VMXNET3_DEVICE_MAX_RX_QUEUES 32   /* Keep this value as a power of 2 */
 
 #define VMXNET3_DEVICE_DEFAULT_TX_QUEUES 8
 #define VMXNET3_DEVICE_DEFAULT_RX_QUEUES 8   /* Keep this value as a power of 2 */
+<<<<<<< HEAD
 =======
 #define VMXNET3_DEVICE_MAX_TX_QUEUES 8
 #define VMXNET3_DEVICE_MAX_RX_QUEUES 8   /* Keep this value as a power of 2 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Should be less than UPT1_RSS_MAX_IND_TABLE_SIZE */
 #define VMXNET3_RSS_IND_TABLE_SIZE (VMXNET3_DEVICE_MAX_RX_QUEUES * 4)
@@ -335,10 +358,14 @@ struct vmxnet3_rx_queue {
 #define VMXNET3_LINUX_MAX_MSIX_VECT     (VMXNET3_DEVICE_MAX_TX_QUEUES + \
 					 VMXNET3_DEVICE_MAX_RX_QUEUES + 1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define VMXNET3_LINUX_MIN_MSIX_VECT     3 /* 1 for tx, 1 for rx pair and 1 for event */
 =======
 #define VMXNET3_LINUX_MIN_MSIX_VECT     2 /* 1 for tx-rx pair and 1 for event */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VMXNET3_LINUX_MIN_MSIX_VECT     3 /* 1 for tx, 1 for rx pair and 1 for event */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 struct vmxnet3_intr {
@@ -426,9 +453,13 @@ struct vmxnet3_adapter {
 	dma_addr_t pm_conf_pa;
 	dma_addr_t rss_conf_pa;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool   queuesExtEnabled;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool   queuesExtEnabled;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define VMXNET3_WRITE_BAR0_REG(adapter, reg, val)  \
@@ -455,12 +486,18 @@ struct vmxnet3_adapter {
 #define VMXNET3_VERSION_GE_4(adapter) \
 	(adapter->version >= VMXNET3_REV_4 + 1)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define VMXNET3_VERSION_GE_5(adapter) \
 	(adapter->version >= VMXNET3_REV_5 + 1)
 #define VMXNET3_VERSION_GE_6(adapter) \
 	(adapter->version >= VMXNET3_REV_6 + 1)
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* must be a multiple of VMXNET3_RING_SIZE_ALIGN */
 #define VMXNET3_DEF_TX_RING_SIZE    512

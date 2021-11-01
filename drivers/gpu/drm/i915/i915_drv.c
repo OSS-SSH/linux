@@ -272,17 +272,23 @@ static void intel_detect_preproduction_hw(struct drm_i915_private *dev_priv)
 
 	pre |= IS_HSW_EARLY_SDV(dev_priv);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pre |= IS_SKYLAKE(dev_priv) && INTEL_REVID(dev_priv) < 0x6;
 	pre |= IS_BROXTON(dev_priv) && INTEL_REVID(dev_priv) < 0xA;
 	pre |= IS_KABYLAKE(dev_priv) && INTEL_REVID(dev_priv) < 0x1;
 	pre |= IS_GEMINILAKE(dev_priv) && INTEL_REVID(dev_priv) < 0x3;
 	pre |= IS_ICELAKE(dev_priv) && INTEL_REVID(dev_priv) < 0x7;
+<<<<<<< HEAD
 =======
 	pre |= IS_SKL_REVID(dev_priv, 0, SKL_REVID_F0);
 	pre |= IS_BXT_REVID(dev_priv, 0, BXT_REVID_B_LAST);
 	pre |= IS_KBL_GT_STEP(dev_priv, 0, STEP_A0);
 	pre |= IS_GLK_REVID(dev_priv, 0, GLK_REVID_A2);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pre) {
 		drm_err(&dev_priv->drm, "This is a pre-production stepping. "
@@ -570,10 +576,14 @@ static int i915_driver_hw_probe(struct drm_i915_private *dev_priv)
 		goto err_perf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, dev_priv->drm.driver);
 =======
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "inteldrmfb");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, dev_priv->drm.driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto err_ggtt;
 
@@ -632,12 +642,18 @@ static int i915_driver_hw_probe(struct drm_i915_private *dev_priv)
 	intel_opregion_setup(dev_priv);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = intel_pcode_init(dev_priv);
 	if (ret)
 		goto err_msi;
 =======
 	intel_pcode_init(dev_priv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = intel_pcode_init(dev_priv);
+	if (ret)
+		goto err_msi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Fill the dram structure to get the system dram info. This will be
@@ -1249,12 +1265,18 @@ static int i915_drm_resume(struct drm_device *dev)
 	disable_rpm_wakeref_asserts(&dev_priv->runtime_pm);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = intel_pcode_init(dev_priv);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sanitize_gpu(dev_priv);
 
 	ret = i915_ggtt_enable_hw(dev_priv);

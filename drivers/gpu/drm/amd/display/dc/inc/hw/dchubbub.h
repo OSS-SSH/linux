@@ -103,6 +103,9 @@ struct hubbub_addr_config {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct dcn_hubbub_state {
 	uint32_t vm_fault_addr_msb;
 	uint32_t vm_fault_addr_lsb;
@@ -112,8 +115,11 @@ struct dcn_hubbub_state {
 	uint32_t vm_error_mode;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hubbub_funcs {
 	void (*update_dchub)(
 			struct hubbub *hubbub,
@@ -162,10 +168,15 @@ struct hubbub_funcs {
 	void (*force_wm_propagate_to_pipes)(struct hubbub *hubbub);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void (*hubbub_read_state)(struct hubbub *hubbub, struct dcn_hubbub_state *hubbub_state);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void (*hubbub_read_state)(struct hubbub *hubbub, struct dcn_hubbub_state *hubbub_state);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*force_pstate_change_control)(struct hubbub *hubbub, bool force, bool allow);
 
 	void (*init_watermarks)(struct hubbub *hubbub);

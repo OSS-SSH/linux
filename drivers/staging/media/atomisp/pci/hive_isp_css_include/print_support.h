@@ -17,10 +17,14 @@
 #define __PRINT_SUPPORT_H_INCLUDED__
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/stdarg.h>
 =======
 #include <stdarg.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/stdarg.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int (*sh_css_printf)(const char *fmt, va_list args);
 /* depends on host supplied print function in ia_css_init() */

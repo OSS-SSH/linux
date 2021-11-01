@@ -527,10 +527,14 @@ struct stm32f4_pll {
 struct stm32f4_pll_post_div_data {
 	int idx;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int pll_idx;
 =======
 	u8 pll_num;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int pll_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char *name;
 	const char *parent;
 	u8 flag;
@@ -562,6 +566,7 @@ static const struct clk_div_table post_divr_table[] = {
 #define MAX_POST_DIV 3
 static const struct stm32f4_pll_post_div_data  post_div_data[MAX_POST_DIV] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ CLK_I2SQ_PDIV, PLL_VCO_I2S, "plli2s-q-div", "plli2s-q",
 		CLK_SET_RATE_PARENT, STM32F4_RCC_DCKCFGR, 0, 5, 0, NULL},
 
@@ -571,13 +576,20 @@ static const struct stm32f4_pll_post_div_data  post_div_data[MAX_POST_DIV] = {
 	{ NO_IDX, PLL_VCO_SAI, "pllsai-r-div", "pllsai-r", CLK_SET_RATE_PARENT,
 =======
 	{ CLK_I2SQ_PDIV, PLL_I2S, "plli2s-q-div", "plli2s-q",
+=======
+	{ CLK_I2SQ_PDIV, PLL_VCO_I2S, "plli2s-q-div", "plli2s-q",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		CLK_SET_RATE_PARENT, STM32F4_RCC_DCKCFGR, 0, 5, 0, NULL},
 
-	{ CLK_SAIQ_PDIV, PLL_SAI, "pllsai-q-div", "pllsai-q",
+	{ CLK_SAIQ_PDIV, PLL_VCO_SAI, "pllsai-q-div", "pllsai-q",
 		CLK_SET_RATE_PARENT, STM32F4_RCC_DCKCFGR, 8, 5, 0, NULL },
 
+<<<<<<< HEAD
 	{ NO_IDX, PLL_SAI, "pllsai-r-div", "pllsai-r", CLK_SET_RATE_PARENT,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ NO_IDX, PLL_VCO_SAI, "pllsai-r-div", "pllsai-r", CLK_SET_RATE_PARENT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		STM32F4_RCC_DCKCFGR, 16, 2, 0, post_divr_table },
 };
 
@@ -724,6 +736,7 @@ static unsigned long stm32f4_pll_div_recalc_rate(struct clk_hw *hw,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int stm32f4_pll_div_determine_rate(struct clk_hw *hw,
 					  struct clk_rate_request *req)
 {
@@ -734,6 +747,12 @@ static long stm32f4_pll_div_round_rate(struct clk_hw *hw, unsigned long rate,
 {
 	return clk_divider_ops.round_rate(hw, rate, prate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int stm32f4_pll_div_determine_rate(struct clk_hw *hw,
+					  struct clk_rate_request *req)
+{
+	return clk_divider_ops.determine_rate(hw, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int stm32f4_pll_div_set_rate(struct clk_hw *hw, unsigned long rate,
@@ -760,10 +779,14 @@ static int stm32f4_pll_div_set_rate(struct clk_hw *hw, unsigned long rate,
 static const struct clk_ops stm32f4_pll_div_ops = {
 	.recalc_rate = stm32f4_pll_div_recalc_rate,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.determine_rate = stm32f4_pll_div_determine_rate,
 =======
 	.round_rate = stm32f4_pll_div_round_rate,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.determine_rate = stm32f4_pll_div_determine_rate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.set_rate = stm32f4_pll_div_set_rate,
 };
 
@@ -1800,10 +1823,14 @@ static void __init stm32f4_rcc_init(struct device_node *np)
 				post_div->flag_div,
 				post_div->div_table,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				clks[post_div->pll_idx],
 =======
 				clks[post_div->pll_num],
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				clks[post_div->pll_idx],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				&stm32f4_clk_lock);
 
 		if (post_div->idx != NO_IDX)

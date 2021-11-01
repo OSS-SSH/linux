@@ -182,6 +182,9 @@ With ``kasan_multi_shot``, KASAN prints a report on every invalid access. This
 effectively disables ``panic_on_warn`` for KASAN reports.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Alternatively, independent of ``panic_on_warn`` the ``kasan.fault=`` boot
 parameter can be used to control panic and reporting behaviour:
 
@@ -189,6 +192,7 @@ parameter can be used to control panic and reporting behaviour:
   report or also panic the kernel (default: ``report``). The panic happens even
   if ``kasan_multi_shot`` is enabled.
 
+<<<<<<< HEAD
 Hardware tag-based KASAN mode (see the section about various modes below) is
 intended for use in production as a security mitigation. Therefore, it supports
 additional boot parameters that allow disabling KASAN or controlling features:
@@ -197,6 +201,11 @@ Hardware tag-based KASAN mode (see the section about various modes below) is
 intended for use in production as a security mitigation. Therefore, it supports
 boot parameters that allow disabling KASAN or controlling its features.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Hardware tag-based KASAN mode (see the section about various modes below) is
+intended for use in production as a security mitigation. Therefore, it supports
+additional boot parameters that allow disabling KASAN or controlling features:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 - ``kasan=off`` or ``=on`` controls whether KASAN is enabled (default: ``on``).
 
@@ -213,12 +222,15 @@ boot parameters that allow disabling KASAN or controlling its features.
   traces collection (default: ``on``).
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 - ``kasan.fault=report`` or ``=panic`` controls whether to only print a KASAN
   report or also panic the kernel (default: ``report``). The panic happens even
   if ``kasan_multi_shot`` is enabled.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Implementation details
 ----------------------
 

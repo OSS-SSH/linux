@@ -225,6 +225,9 @@ void r8712_unregister_cmd_alive(struct _adapter *padapter)
 	mutex_unlock(&pwrctrl->mutex_lock);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void r8712_flush_rwctrl_works(struct _adapter *padapter)
 {
@@ -233,5 +236,8 @@ void r8712_flush_rwctrl_works(struct _adapter *padapter)
 	flush_work(&pwrctrl->SetPSModeWorkItem);
 	flush_work(&pwrctrl->rpwm_workitem);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

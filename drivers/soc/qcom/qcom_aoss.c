@@ -477,19 +477,27 @@ static int qmp_cooling_devices_register(struct qmp *qmp)
 {
 	struct device_node *np, *child;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int count = 0;
 =======
 	int count = QMP_NUM_COOLING_RESOURCES;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	np = qmp->dev->of_node;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	qmp->cooling_devs = devm_kcalloc(qmp->dev, QMP_NUM_COOLING_RESOURCES,
 =======
 	qmp->cooling_devs = devm_kcalloc(qmp->dev, count,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qmp->cooling_devs = devm_kcalloc(qmp->dev, QMP_NUM_COOLING_RESOURCES,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 sizeof(*qmp->cooling_devs),
 					 GFP_KERNEL);
 
@@ -506,11 +514,17 @@ static int qmp_cooling_devices_register(struct qmp *qmp)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!count)
 		devm_kfree(qmp->dev, qmp->cooling_devs);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!count)
+		devm_kfree(qmp->dev, qmp->cooling_devs);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 unroll:
@@ -518,9 +532,13 @@ unroll:
 		thermal_cooling_device_unregister
 			(qmp->cooling_devs[count].cdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	devm_kfree(qmp->dev, qmp->cooling_devs);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devm_kfree(qmp->dev, qmp->cooling_devs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -621,9 +639,13 @@ static const struct of_device_id qmp_dt_match[] = {
 	{ .compatible = "qcom,sm8250-aoss-qmp", },
 	{ .compatible = "qcom,sm8350-aoss-qmp", },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "qcom,aoss-qmp", },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "qcom,aoss-qmp", },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 MODULE_DEVICE_TABLE(of, qmp_dt_match);

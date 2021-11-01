@@ -184,10 +184,13 @@ new_port_store(struct device *dev, struct device_attribute *attr,
 {
 	struct nsim_bus_dev *nsim_bus_dev = to_nsim_bus_dev(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct nsim_dev *nsim_dev = dev_get_drvdata(dev);
 	struct devlink *devlink;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int port_index;
 	int ret;
 
@@ -199,6 +202,9 @@ new_port_store(struct device *dev, struct device_attribute *attr,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!mutex_trylock(&nsim_bus_dev->nsim_bus_reload_lock))
 		return -EBUSY;
 
@@ -206,16 +212,20 @@ new_port_store(struct device *dev, struct device_attribute *attr,
 		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
 		return -EBUSY;
 	}
+<<<<<<< HEAD
 
 	ret = nsim_dev_port_add(nsim_bus_dev, NSIM_DEV_PORT_TYPE_PF, port_index);
 =======
 	devlink = priv_to_devlink(nsim_dev);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	mutex_lock(&nsim_bus_dev->nsim_bus_reload_lock);
-	devlink_reload_disable(devlink);
 	ret = nsim_dev_port_add(nsim_bus_dev, NSIM_DEV_PORT_TYPE_PF, port_index);
+<<<<<<< HEAD
 	devlink_reload_enable(devlink);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
 	return ret ? ret : count;
 }
@@ -228,10 +238,13 @@ del_port_store(struct device *dev, struct device_attribute *attr,
 {
 	struct nsim_bus_dev *nsim_bus_dev = to_nsim_bus_dev(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct nsim_dev *nsim_dev = dev_get_drvdata(dev);
 	struct devlink *devlink;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int port_index;
 	int ret;
 
@@ -243,6 +256,9 @@ del_port_store(struct device *dev, struct device_attribute *attr,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!mutex_trylock(&nsim_bus_dev->nsim_bus_reload_lock))
 		return -EBUSY;
 
@@ -250,16 +266,20 @@ del_port_store(struct device *dev, struct device_attribute *attr,
 		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
 		return -EBUSY;
 	}
+<<<<<<< HEAD
 
 	ret = nsim_dev_port_del(nsim_bus_dev, NSIM_DEV_PORT_TYPE_PF, port_index);
 =======
 	devlink = priv_to_devlink(nsim_dev);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	mutex_lock(&nsim_bus_dev->nsim_bus_reload_lock);
-	devlink_reload_disable(devlink);
 	ret = nsim_dev_port_del(nsim_bus_dev, NSIM_DEV_PORT_TYPE_PF, port_index);
+<<<<<<< HEAD
 	devlink_reload_enable(devlink);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
 	return ret ? ret : count;
 }
@@ -293,14 +313,19 @@ static struct device_type nsim_bus_dev_type = {
 
 static struct nsim_bus_dev *
 <<<<<<< HEAD
+<<<<<<< HEAD
 nsim_bus_dev_new(unsigned int id, unsigned int port_count, unsigned int num_queues);
 =======
 nsim_bus_dev_new(unsigned int id, unsigned int port_count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+nsim_bus_dev_new(unsigned int id, unsigned int port_count, unsigned int num_queues);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static ssize_t
 new_device_store(struct bus_type *bus, const char *buf, size_t count)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned int id, port_count, num_queues;
 	struct nsim_bus_dev *nsim_bus_dev;
@@ -308,24 +333,35 @@ new_device_store(struct bus_type *bus, const char *buf, size_t count)
 
 	err = sscanf(buf, "%u %u %u", &id, &port_count, &num_queues);
 =======
+=======
+	unsigned int id, port_count, num_queues;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nsim_bus_dev *nsim_bus_dev;
-	unsigned int port_count;
-	unsigned int id;
 	int err;
 
+<<<<<<< HEAD
 	err = sscanf(buf, "%u %u", &id, &port_count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = sscanf(buf, "%u %u %u", &id, &port_count, &num_queues);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (err) {
 	case 1:
 		port_count = 1;
 		fallthrough;
 	case 2:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		num_queues = 1;
 		fallthrough;
 	case 3:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		num_queues = 1;
+		fallthrough;
+	case 3:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (id > INT_MAX) {
 			pr_err("Value of \"id\" is too big.\n");
 			return -EINVAL;
@@ -333,10 +369,14 @@ new_device_store(struct bus_type *bus, const char *buf, size_t count)
 		break;
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_err("Format for adding new device is \"id port_count num_queues\" (uint uint unit).\n");
 =======
 		pr_err("Format for adding new device is \"id port_count\" (uint uint).\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("Format for adding new device is \"id port_count num_queues\" (uint uint unit).\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 
@@ -348,10 +388,14 @@ new_device_store(struct bus_type *bus, const char *buf, size_t count)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nsim_bus_dev = nsim_bus_dev_new(id, port_count, num_queues);
 =======
 	nsim_bus_dev = nsim_bus_dev_new(id, port_count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nsim_bus_dev = nsim_bus_dev_new(id, port_count, num_queues);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(nsim_bus_dev)) {
 		err = PTR_ERR(nsim_bus_dev);
 		goto err;
@@ -427,18 +471,25 @@ static int nsim_bus_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void nsim_bus_remove(struct device *dev)
 =======
 static int nsim_bus_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void nsim_bus_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nsim_bus_dev *nsim_bus_dev = to_nsim_bus_dev(dev);
 
 	nsim_dev_remove(nsim_bus_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int nsim_num_vf(struct device *dev)
@@ -461,10 +512,14 @@ static struct bus_type nsim_bus = {
 
 static struct nsim_bus_dev *
 <<<<<<< HEAD
+<<<<<<< HEAD
 nsim_bus_dev_new(unsigned int id, unsigned int port_count, unsigned int num_queues)
 =======
 nsim_bus_dev_new(unsigned int id, unsigned int port_count)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+nsim_bus_dev_new(unsigned int id, unsigned int port_count, unsigned int num_queues)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nsim_bus_dev *nsim_bus_dev;
 	int err;
@@ -481,9 +536,13 @@ nsim_bus_dev_new(unsigned int id, unsigned int port_count)
 	nsim_bus_dev->dev.type = &nsim_bus_dev_type;
 	nsim_bus_dev->port_count = port_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nsim_bus_dev->num_queues = num_queues;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nsim_bus_dev->num_queues = num_queues;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nsim_bus_dev->initial_net = current->nsproxy->net_ns;
 	nsim_bus_dev->max_vfs = NSIM_BUS_DEV_MAX_VFS;
 	mutex_init(&nsim_bus_dev->nsim_bus_reload_lock);

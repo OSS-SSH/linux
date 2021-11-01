@@ -8,6 +8,7 @@
 #define IGT_MMAP_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/types.h>
 
 struct drm_i915_private;
@@ -28,5 +29,17 @@ unsigned long igt_mmap_node(struct drm_i915_private *i915,
 			    unsigned long prot,
 			    unsigned long flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/types.h>
+
+struct drm_i915_private;
+struct drm_vma_offset_node;
+
+unsigned long igt_mmap_offset(struct drm_i915_private *i915,
+			      u64 offset,
+			      unsigned long size,
+			      unsigned long prot,
+			      unsigned long flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* IGT_MMAP_H */

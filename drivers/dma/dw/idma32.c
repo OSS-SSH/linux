@@ -1,24 +1,36 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Copyright (C) 2013,2018,2020-2021 Intel Corporation
 =======
 // Copyright (C) 2013,2018 Intel Corporation
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// Copyright (C) 2013,2018,2020-2021 Intel Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/bitops.h>
 #include <linux/dmaengine.h>
 #include <linux/errno.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/io.h>
 #include <linux/pci.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/io.h>
+#include <linux/pci.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 #include <linux/types.h>
 
 #include "internal.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DMA_CTL_CH(x)			(0x1000 + (x) * 4)
 #define DMA_SRC_ADDR_FILLIN(x)		(0x1100 + (x) * 4)
 #define DMA_DST_ADDR_FILLIN(x)		(0x1200 + (x) * 4)
@@ -147,9 +159,12 @@ static void idma32_initialize_chan_xbar(struct dw_dma_chan *dwc)
 }
 
 static void idma32_initialize_chan_generic(struct dw_dma_chan *dwc)
+<<<<<<< HEAD
 =======
 static void idma32_initialize_chan(struct dw_dma_chan *dwc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 cfghi = 0;
 	u32 cfglo = 0;
@@ -275,13 +290,19 @@ int idma32_dma_probe(struct dw_dma_chip *chip)
 
 	/* Channel operations */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (chip->pdata->quirks & DW_DMA_QUIRK_XBAR_PRESENT)
 		dw->initialize_chan = idma32_initialize_chan_xbar;
 	else
 		dw->initialize_chan = idma32_initialize_chan_generic;
+<<<<<<< HEAD
 =======
 	dw->initialize_chan = idma32_initialize_chan;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dw->suspend_chan = idma32_suspend_chan;
 	dw->resume_chan = idma32_resume_chan;
 	dw->prepare_ctllo = idma32_prepare_ctllo;

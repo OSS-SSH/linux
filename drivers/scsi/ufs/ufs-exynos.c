@@ -261,10 +261,14 @@ static int exynos_ufs_get_clk_info(struct exynos_ufs *ufs)
 	struct list_head *head = &hba->clk_list_head;
 	struct ufs_clk_info *clki;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long pclk_rate;
 =======
 	u32 pclk_rate;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long pclk_rate;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 f_min, f_max;
 	u8 div = 0;
 	int ret = 0;
@@ -304,10 +308,14 @@ static int exynos_ufs_get_clk_info(struct exynos_ufs *ufs)
 
 	if (unlikely(pclk_rate < f_min || pclk_rate > f_max)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_err(hba->dev, "not available pclk range %lu\n", pclk_rate);
 =======
 		dev_err(hba->dev, "not available pclk range %d\n", pclk_rate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_err(hba->dev, "not available pclk range %lu\n", pclk_rate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EINVAL;
 		goto out;
 	}
@@ -1296,6 +1304,7 @@ static const struct of_device_id exynos_ufs_of_match[] = {
 
 static const struct dev_pm_ops exynos_ufs_pm_ops = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SET_SYSTEM_SLEEP_PM_OPS(ufshcd_system_suspend, ufshcd_system_resume)
 	SET_RUNTIME_PM_OPS(ufshcd_runtime_suspend, ufshcd_runtime_resume, NULL)
 =======
@@ -1305,6 +1314,10 @@ static const struct dev_pm_ops exynos_ufs_pm_ops = {
 	.runtime_resume  = ufshcd_pltfrm_runtime_resume,
 	.runtime_idle    = ufshcd_pltfrm_runtime_idle,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SET_SYSTEM_SLEEP_PM_OPS(ufshcd_system_suspend, ufshcd_system_resume)
+	SET_RUNTIME_PM_OPS(ufshcd_runtime_suspend, ufshcd_runtime_resume, NULL)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.prepare	 = ufshcd_suspend_prepare,
 	.complete	 = ufshcd_resume_complete,
 };

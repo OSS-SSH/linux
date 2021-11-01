@@ -302,13 +302,17 @@ static acpi_status ssam_serdev_setup_via_acpi_crs(struct acpi_resource *rsc,
 {
 	struct serdev_device *serdev = ctx;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct acpi_resource_common_serialbus *serial;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct acpi_resource_uart_serialbus *uart;
 	bool flow_control;
 	int status = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!serdev_acpi_get_uart_resource(rsc, &uart))
 		return AE_OK;
@@ -324,6 +328,11 @@ static acpi_status ssam_serdev_setup_via_acpi_crs(struct acpi_resource *rsc,
 	uart = &rsc->data.uart_serial_bus;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!serdev_acpi_get_uart_resource(rsc, &uart))
+		return AE_OK;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Set up serdev device. */
 	serdev_device_set_baudrate(serdev, uart->default_baud_rate);
 

@@ -81,6 +81,9 @@ static int vfs_parse_sb_flag(struct fs_context *fc, const char *key)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * vfs_parse_fs_param_source - Handle setting "source" via parameter
  * @fc: The filesystem context to modify
  * @param: The parameter
@@ -110,8 +113,11 @@ int vfs_parse_fs_param_source(struct fs_context *fc, struct fs_parameter *param)
 EXPORT_SYMBOL(vfs_parse_fs_param_source);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * vfs_parse_fs_param - Add a single parameter to a superblock config
  * @fc: The filesystem context to modify
  * @param: The parameter
@@ -155,6 +161,7 @@ int vfs_parse_fs_param(struct fs_context *fc, struct fs_parameter *param)
 	 * default handling of source.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = vfs_parse_fs_param_source(fc, param);
 	if (ret != -ENOPARAM)
 		return ret;
@@ -169,6 +176,11 @@ int vfs_parse_fs_param(struct fs_context *fc, struct fs_parameter *param)
 		return 0;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = vfs_parse_fs_param_source(fc, param);
+	if (ret != -ENOPARAM)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return invalf(fc, "%s: Unknown parameter '%s'",
 		      fc->fs_type->name, param->key);
@@ -270,10 +282,14 @@ static struct fs_context *alloc_fs_context(struct file_system_type *fs_type,
 	int ret = -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL_ACCOUNT);
 =======
 	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fc = kzalloc(sizeof(struct fs_context), GFP_KERNEL_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!fc)
 		return ERR_PTR(-ENOMEM);
 
@@ -547,6 +563,7 @@ static int legacy_parse_param(struct fs_context *fc, struct fs_parameter *param)
 	unsigned int size = ctx->data_size;
 	size_t len = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	ret = vfs_parse_fs_param_source(fc, param);
@@ -564,6 +581,13 @@ static int legacy_parse_param(struct fs_context *fc, struct fs_parameter *param)
 		return 0;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	ret = vfs_parse_fs_param_source(fc, param);
+	if (ret != -ENOPARAM)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ctx->param_type == LEGACY_FS_MONOLITHIC_PARAMS)
 		return invalf(fc, "VFS: Legacy: Can't mix monolithic and individual options");
@@ -682,10 +706,14 @@ const struct fs_context_operations legacy_fs_context_ops = {
 static int legacy_init_fs_context(struct fs_context *fc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fc->fs_private = kzalloc(sizeof(struct legacy_fs_context), GFP_KERNEL_ACCOUNT);
 =======
 	fc->fs_private = kzalloc(sizeof(struct legacy_fs_context), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fc->fs_private = kzalloc(sizeof(struct legacy_fs_context), GFP_KERNEL_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!fc->fs_private)
 		return -ENOMEM;
 	fc->ops = &legacy_fs_context_ops;

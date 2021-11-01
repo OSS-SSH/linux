@@ -262,6 +262,9 @@ static const struct stmmac_stats stmmac_mmc[] = {
 #define STMMAC_MMC_STATS_LEN ARRAY_SIZE(stmmac_mmc)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const char stmmac_qstats_tx_string[][ETH_GSTRING_LEN] = {
 	"tx_pkt_n",
 	"tx_irq_n",
@@ -274,8 +277,11 @@ static const char stmmac_qstats_rx_string[][ETH_GSTRING_LEN] = {
 #define STMMAC_RXQ_STATS ARRAY_SIZE(stmmac_qstats_rx_string)
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void stmmac_ethtool_getdrvinfo(struct net_device *dev,
 				      struct ethtool_drvinfo *info)
 {
@@ -526,6 +532,9 @@ stmmac_set_pauseparam(struct net_device *netdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void stmmac_get_per_qstats(struct stmmac_priv *priv, u64 *data)
 {
 	u32 tx_cnt = priv->plat->tx_queues_to_use;
@@ -551,8 +560,11 @@ static void stmmac_get_per_qstats(struct stmmac_priv *priv, u64 *data)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void stmmac_get_ethtool_stats(struct net_device *dev,
 				 struct ethtool_stats *dummy, u64 *data)
 {
@@ -604,23 +616,33 @@ static void stmmac_get_ethtool_stats(struct net_device *dev,
 			     sizeof(u64)) ? (*(u64 *)p) : (*(u32 *)p);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	stmmac_get_per_qstats(priv, &data[j]);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	stmmac_get_per_qstats(priv, &data[j]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int stmmac_get_sset_count(struct net_device *netdev, int sset)
 {
 	struct stmmac_priv *priv = netdev_priv(netdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 tx_cnt = priv->plat->tx_queues_to_use;
 	u32 rx_cnt = priv->plat->rx_queues_to_use;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 tx_cnt = priv->plat->tx_queues_to_use;
+	u32 rx_cnt = priv->plat->rx_queues_to_use;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, len, safety_len = 0;
 
 	switch (sset) {
 	case ETH_SS_STATS:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		len = STMMAC_STATS_LEN +
 		      STMMAC_TXQ_STATS * tx_cnt +
@@ -628,6 +650,11 @@ static int stmmac_get_sset_count(struct net_device *netdev, int sset)
 =======
 		len = STMMAC_STATS_LEN;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		len = STMMAC_STATS_LEN +
+		      STMMAC_TXQ_STATS * tx_cnt +
+		      STMMAC_RXQ_STATS * rx_cnt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (priv->dma_cap.rmon)
 			len += STMMAC_MMC_STATS_LEN;
@@ -651,6 +678,9 @@ static int stmmac_get_sset_count(struct net_device *netdev, int sset)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void stmmac_get_qstats_string(struct stmmac_priv *priv, u8 *data)
 {
 	u32 tx_cnt = priv->plat->tx_queues_to_use;
@@ -673,8 +703,11 @@ static void stmmac_get_qstats_string(struct stmmac_priv *priv, u8 *data)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void stmmac_get_strings(struct net_device *dev, u32 stringset, u8 *data)
 {
 	int i;
@@ -706,9 +739,13 @@ static void stmmac_get_strings(struct net_device *dev, u32 stringset, u8 *data)
 			p += ETH_GSTRING_LEN;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		stmmac_get_qstats_string(priv, p);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		stmmac_get_qstats_string(priv, p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case ETH_SS_TEST:
 		stmmac_selftest_get_strings(priv, p);
@@ -897,12 +934,18 @@ static int __stmmac_get_coalesce(struct net_device *dev,
 
 static int stmmac_get_coalesce(struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			       struct ethtool_coalesce *ec,
 			       struct kernel_ethtool_coalesce *kernel_coal,
 			       struct netlink_ext_ack *extack)
 =======
 			       struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       struct ethtool_coalesce *ec,
+			       struct kernel_ethtool_coalesce *kernel_coal,
+			       struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __stmmac_get_coalesce(dev, ec, -1);
 }
@@ -987,12 +1030,18 @@ static int __stmmac_set_coalesce(struct net_device *dev,
 
 static int stmmac_set_coalesce(struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			       struct ethtool_coalesce *ec,
 			       struct kernel_ethtool_coalesce *kernel_coal,
 			       struct netlink_ext_ack *extack)
 =======
 			       struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       struct ethtool_coalesce *ec,
+			       struct kernel_ethtool_coalesce *kernel_coal,
+			       struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __stmmac_set_coalesce(dev, ec, -1);
 }

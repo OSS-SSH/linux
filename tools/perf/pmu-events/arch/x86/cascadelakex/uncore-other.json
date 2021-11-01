@@ -105,6 +105,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         "BriefDescription": "write requests from remote home agent",
         "Counter": "0,1,2,3",
@@ -116,6 +117,8 @@
     },
     {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "BriefDescription": "UPI interconnect send bandwidth for payload. Derived from unc_upi_txl_flits.all_data",
         "Counter": "0,1,2,3",
         "EventCode": "0x2",
@@ -548,10 +551,14 @@
         "Filter": "config1=0x40433",
         "PerPkg": "1",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "PublicDescription": "TOR Inserts : DRds issued by iA Cores that Missed the LLC : Counts the number of entries successfuly inserted into the TOR that match qualifications specified by the subevent.   Does not include addressless requests such as locks and interrupts.",
 =======
         "PublicDescription": "TOR Inserts : DRds issued by iA Cores that Missed the LLC : Counts the number of entries successfully inserted into the TOR that match qualifications specified by the subevent.   Does not include addressless requests such as locks and interrupts.",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        "PublicDescription": "TOR Inserts : DRds issued by iA Cores that Missed the LLC : Counts the number of entries successfuly inserted into the TOR that match qualifications specified by the subevent.   Does not include addressless requests such as locks and interrupts.",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "UMask": "0x21",
         "Unit": "CHA"
     },
@@ -576,6 +583,9 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "BriefDescription": "PCIe Completion Buffer Inserts of completions with data: Part 0",
         "Counter": "0,1,2,3",
         "EventCode": "0xC2",
@@ -668,8 +678,11 @@
         "Unit": "IIO"
     },
     {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "BriefDescription": "Read request for 4 bytes made by the CPU to IIO Part0",
         "Counter": "2,3",
         "EventCode": "0xC0",
@@ -1343,6 +1356,9 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "BriefDescription": "Total IRP occupancy of inbound read and write requests.",
         "Counter": "0,1",
         "EventCode": "0xF",
@@ -1401,8 +1417,11 @@
         "Unit": "IRP"
     },
     {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "BriefDescription": "Traffic in which the M2M to iMC Bypass was not taken",
         "Counter": "0,1,2,3",
         "EventCode": "0x22",

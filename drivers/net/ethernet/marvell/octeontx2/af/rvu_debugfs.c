@@ -1,18 +1,25 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RVU Admin Function driver
  *
  * Copyright (C) 2019 Marvell.
  *
 =======
 /* Marvell OcteonTx2 RVU Admin Function driver
+=======
+/* Marvell RVU Admin Function driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2019 Marvell International Ltd.
+ * Copyright (C) 2019 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #ifdef CONFIG_DEBUG_FS
@@ -1979,6 +1986,7 @@ static int cgx_print_stats(struct seq_file *s, int lmac_id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int rvu_dbg_derive_lmacid(struct seq_file *filp, int *lmac_id)
 {
 	struct dentry *current_dir;
@@ -1988,6 +1996,11 @@ static int rvu_dbg_cgx_stat_display(struct seq_file *filp, void *unused)
 	struct dentry *current_dir;
 	int err, lmac_id;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int rvu_dbg_derive_lmacid(struct seq_file *filp, int *lmac_id)
+{
+	struct dentry *current_dir;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char *buf;
 
 	current_dir = filp->file->f_path.dentry->d_parent;
@@ -1996,6 +2009,9 @@ static int rvu_dbg_cgx_stat_display(struct seq_file *filp, void *unused)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return kstrtoint(buf + 1, 10, lmac_id);
 }
 
@@ -2007,6 +2023,7 @@ static int rvu_dbg_cgx_stat_display(struct seq_file *filp, void *unused)
 	if (!err)
 		return cgx_print_stats(filp, lmac_id);
 
+<<<<<<< HEAD
 	return err;
 }
 
@@ -2083,11 +2100,78 @@ RVU_DEBUG_SEQ_FOPS(cgx_dmac_flt, cgx_dmac_flt_display, NULL);
 		if (err)
 			return err;
 	}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
 RVU_DEBUG_SEQ_FOPS(cgx_stat, cgx_stat_display, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+static int cgx_print_dmac_flt(struct seq_file *s, int lmac_id)
+{
+	struct pci_dev *pdev = NULL;
+	void *cgxd = s->private;
+	char *bcast, *mcast;
+	u16 index, domain;
+	u8 dmac[ETH_ALEN];
+	struct rvu *rvu;
+	u64 cfg, mac;
+	int pf;
+
+	rvu = pci_get_drvdata(pci_get_device(PCI_VENDOR_ID_CAVIUM,
+					     PCI_DEVID_OCTEONTX2_RVU_AF, NULL));
+	if (!rvu)
+		return -ENODEV;
+
+	pf = cgxlmac_to_pf(rvu, cgx_get_cgxid(cgxd), lmac_id);
+	domain = 2;
+
+	pdev = pci_get_domain_bus_and_slot(domain, pf + 1, 0);
+	if (!pdev)
+		return 0;
+
+	cfg = cgx_read_dmac_ctrl(cgxd, lmac_id);
+	bcast = cfg & CGX_DMAC_BCAST_MODE ? "ACCEPT" : "REJECT";
+	mcast = cfg & CGX_DMAC_MCAST_MODE ? "ACCEPT" : "REJECT";
+
+	seq_puts(s,
+		 "PCI dev       RVUPF   BROADCAST  MULTICAST  FILTER-MODE\n");
+	seq_printf(s, "%s  PF%d  %9s  %9s",
+		   dev_name(&pdev->dev), pf, bcast, mcast);
+	if (cfg & CGX_DMAC_CAM_ACCEPT)
+		seq_printf(s, "%12s\n\n", "UNICAST");
+	else
+		seq_printf(s, "%16s\n\n", "PROMISCUOUS");
+
+	seq_puts(s, "\nDMAC-INDEX  ADDRESS\n");
+
+	for (index = 0 ; index < 32 ; index++) {
+		cfg = cgx_read_dmac_entry(cgxd, index);
+		/* Display enabled dmac entries associated with current lmac */
+		if (lmac_id == FIELD_GET(CGX_DMAC_CAM_ENTRY_LMACID, cfg) &&
+		    FIELD_GET(CGX_DMAC_CAM_ADDR_ENABLE, cfg)) {
+			mac = FIELD_GET(CGX_RX_DMAC_ADR_MASK, cfg);
+			u64_to_ether_addr(mac, dmac);
+			seq_printf(s, "%7d     %pM\n", index, dmac);
+		}
+	}
+
+	return 0;
+}
+
+static int rvu_dbg_cgx_dmac_flt_display(struct seq_file *filp, void *unused)
+{
+	int err, lmac_id;
+
+	err = rvu_dbg_derive_lmacid(filp, &lmac_id);
+	if (!err)
+		return cgx_print_dmac_flt(filp, lmac_id);
+
+	return err;
+}
+
+RVU_DEBUG_SEQ_FOPS(cgx_dmac_flt, cgx_dmac_flt_display, NULL);
 
 static void rvu_dbg_cgx_init(struct rvu *rvu)
 {
@@ -2126,11 +2210,17 @@ static void rvu_dbg_cgx_init(struct rvu *rvu)
 			debugfs_create_file("stats", 0600, rvu->rvu_dbg.lmac,
 					    cgx, &rvu_dbg_cgx_stat_fops);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			debugfs_create_file("mac_filter", 0600,
 					    rvu->rvu_dbg.lmac, cgx,
 					    &rvu_dbg_cgx_dmac_flt_fops);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			debugfs_create_file("mac_filter", 0600,
+					    rvu->rvu_dbg.lmac, cgx,
+					    &rvu_dbg_cgx_dmac_flt_fops);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -2144,11 +2234,14 @@ static void rvu_print_npc_mcam_info(struct seq_file *s,
 	int cntr_acnt, cntr_ecnt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Skip PF0 */
 	if (!pcifunc)
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rvu_npc_get_mcam_entry_alloc_info(rvu, pcifunc, blkaddr,
 					  &entry_acnt, &entry_ecnt);
 	rvu_npc_get_mcam_counter_alloc_info(rvu, pcifunc, blkaddr,
@@ -2332,10 +2425,14 @@ static void rvu_dbg_npc_mcam_show_action(struct seq_file *s,
 					 struct rvu_npc_mcam_rule *rule)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (is_npc_intf_tx(rule->intf)) {
 =======
 	if (rule->intf == NIX_INTF_TX) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (is_npc_intf_tx(rule->intf)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		switch (rule->tx_action.op) {
 		case NIX_TX_ACTIONOP_DROP:
 			seq_puts(s, "\taction: Drop\n");

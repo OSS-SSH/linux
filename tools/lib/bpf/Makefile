@@ -5,6 +5,7 @@ RM ?= rm
 srctree = $(abs_srctree)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 VERSION_SCRIPT := libbpf.map
 LIBBPF_VERSION := $(shell \
 	grep -oE '^LIBBPF_([0-9.]+)' $(VERSION_SCRIPT) | \
@@ -12,6 +13,11 @@ LIBBPF_VERSION := $(shell \
 LIBBPF_VERSION := $(shell \
 	grep -oE '^LIBBPF_([0-9.]+)' libbpf.map | \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+VERSION_SCRIPT := libbpf.map
+LIBBPF_VERSION := $(shell \
+	grep -oE '^LIBBPF_([0-9.]+)' $(VERSION_SCRIPT) | \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sort -rV | head -n1 | cut -d'_' -f2)
 LIBBPF_MAJOR_VERSION := $(firstword $(subst ., ,$(LIBBPF_VERSION)))
 
@@ -117,9 +123,12 @@ STATIC_OBJDIR	:= $(OUTPUT)staticobjs/
 BPF_IN_SHARED	:= $(SHARED_OBJDIR)libbpf-in.o
 BPF_IN_STATIC	:= $(STATIC_OBJDIR)libbpf-in.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 VERSION_SCRIPT	:= libbpf.map
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 BPF_HELPER_DEFS	:= $(OUTPUT)bpf_helper_defs.h
 
 LIB_TARGET	:= $(addprefix $(OUTPUT),$(LIB_TARGET))
@@ -173,6 +182,7 @@ $(BPF_HELPER_DEFS): $(srctree)/tools/include/uapi/linux/bpf.h
 $(OUTPUT)libbpf.so: $(OUTPUT)libbpf.so.$(LIBBPF_VERSION)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 $(OUTPUT)libbpf.so.$(LIBBPF_VERSION): $(BPF_IN_SHARED) $(VERSION_SCRIPT)
 	$(QUIET_LINK)$(CC) $(LDFLAGS) \
 		--shared -Wl,-soname,libbpf.so.$(LIBBPF_MAJOR_VERSION) \
@@ -183,6 +193,12 @@ $(OUTPUT)libbpf.so.$(LIBBPF_VERSION): $(BPF_IN_SHARED)
 		--shared -Wl,-soname,libbpf.so.$(LIBBPF_MAJOR_VERSION) \
 		-Wl,--version-script=$(VERSION_SCRIPT) $^ -lelf -lz -o $@
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(OUTPUT)libbpf.so.$(LIBBPF_VERSION): $(BPF_IN_SHARED) $(VERSION_SCRIPT)
+	$(QUIET_LINK)$(CC) $(LDFLAGS) \
+		--shared -Wl,-soname,libbpf.so.$(LIBBPF_MAJOR_VERSION) \
+		-Wl,--version-script=$(VERSION_SCRIPT) $< -lelf -lz -o $@
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	@ln -sf $(@F) $(OUTPUT)libbpf.so
 	@ln -sf $(@F) $(OUTPUT)libbpf.so.$(LIBBPF_MAJOR_VERSION)
 
@@ -198,10 +214,14 @@ $(OUTPUT)libbpf.pc:
 check: check_abi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 check_abi: $(OUTPUT)libbpf.so $(VERSION_SCRIPT)
 =======
 check_abi: $(OUTPUT)libbpf.so
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+check_abi: $(OUTPUT)libbpf.so $(VERSION_SCRIPT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	@if [ "$(GLOBAL_SYM_COUNT)" != "$(VERSIONED_SYM_COUNT)" ]; then	 \
 		echo "Warning: Num of global symbols in $(BPF_IN_SHARED)"	 \
 		     "($(GLOBAL_SYM_COUNT)) does NOT match with num of"	 \

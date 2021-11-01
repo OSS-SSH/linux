@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 =======
 # SPDX-License-Identifier: GPL-2.0-only
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 %YAML 1.2
 ---
 $id: http://devicetree.org/schemas/clock/qcom,videocc.yaml#
@@ -16,6 +20,7 @@ maintainers:
 description: |
   Qualcomm video clock control module which supports the clocks, resets and
 <<<<<<< HEAD
+<<<<<<< HEAD
   power domains on Qualcomm SoCs.
 
   See also:
@@ -27,6 +32,13 @@ description: |
   See also:
     dt-bindings/clock/qcom,videocc-sc7180.h
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  power domains on Qualcomm SoCs.
+
+  See also:
+    dt-bindings/clock/qcom,videocc-sc7180.h
+    dt-bindings/clock/qcom,videocc-sc7280.h
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     dt-bindings/clock/qcom,videocc-sdm845.h
     dt-bindings/clock/qcom,videocc-sm8150.h
     dt-bindings/clock/qcom,videocc-sm8250.h
@@ -36,9 +48,13 @@ properties:
     enum:
       - qcom,sc7180-videocc
 <<<<<<< HEAD
+<<<<<<< HEAD
       - qcom,sc7280-videocc
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      - qcom,sc7280-videocc
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,sdm845-videocc
       - qcom,sm8150-videocc
       - qcom,sm8250-videocc

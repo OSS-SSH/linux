@@ -120,11 +120,17 @@ properties:
     maximum: 2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   termination-gpios: true
   termination-ohms: true
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  termination-gpios: true
+  termination-ohms: true
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 required:
   - compatible
   - reg
@@ -155,6 +161,9 @@ examples:
         fsl,scu-index = /bits/ 8 <1>;
     };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   - |
     #include <dt-bindings/interrupt-controller/irq.h>
     #include <dt-bindings/gpio/gpio.h>
@@ -169,5 +178,8 @@ examples:
         termination-gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
         termination-ohms = <120>;
     };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -65,6 +65,9 @@ int acrn_vm_destroy(struct acrn_vm *vm)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = hcall_destroy_vm(vm->vmid);
 	if (ret < 0) {
 		dev_err(acrn_dev.this_device,
@@ -73,8 +76,11 @@ int acrn_vm_destroy(struct acrn_vm *vm)
 		return ret;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Remove from global VM list */
 	write_lock_bh(&acrn_vm_list_lock);
 	list_del_init(&vm->list);
@@ -90,6 +96,7 @@ int acrn_vm_destroy(struct acrn_vm *vm)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ret = hcall_destroy_vm(vm->vmid);
 	if (ret < 0) {
@@ -100,6 +107,8 @@ int acrn_vm_destroy(struct acrn_vm *vm)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acrn_vm_all_ram_unmap(vm);
 
 	dev_dbg(acrn_dev.this_device, "VM %u destroyed.\n", vm->vmid);

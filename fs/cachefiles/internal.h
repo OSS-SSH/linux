@@ -182,6 +182,7 @@ extern int cachefiles_check_in_use(struct cachefiles_cache *cache,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * proc.c
  */
@@ -209,6 +210,8 @@ void cachefiles_hist(atomic_t histogram[], unsigned long start_jif)
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * rdwr.c
  */
 extern int cachefiles_read_or_alloc_page(struct fscache_retrieval *,

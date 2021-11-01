@@ -1725,16 +1725,22 @@ static int fetch_cca_info(u16 cardnr, u16 domain, struct cca_info *ci)
 	rc = cca_query_crypto_facility(cardnr, domain, "STATICSB",
 				       rarray, &rlen, varray, &vlen);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc == 0 && rlen >= 13*8 && vlen >= 240) {
 		ci->new_apka_mk_state = (char) rarray[10*8];
 		ci->cur_apka_mk_state = (char) rarray[11*8];
 		ci->old_apka_mk_state = (char) rarray[12*8];
+<<<<<<< HEAD
 =======
 	if (rc == 0 && rlen >= 10*8 && vlen >= 240) {
 		ci->new_apka_mk_state = (char) rarray[7*8];
 		ci->cur_apka_mk_state = (char) rarray[8*8];
 		ci->old_apka_mk_state = (char) rarray[9*8];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ci->old_apka_mk_state == '2')
 			memcpy(&ci->old_apka_mkvp, varray + 208, 8);
 		if (ci->cur_apka_mk_state == '2')

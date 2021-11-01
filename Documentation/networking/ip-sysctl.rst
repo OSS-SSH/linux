@@ -827,10 +827,14 @@ tcp_fastopen_blackhole_timeout_sec - INTEGER
 	0 to disable the blackhole detection.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	By default, it is set to 0 (feature is disabled).
 =======
 	By default, it is set to 1hr.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	By default, it is set to 0 (feature is disabled).
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 tcp_fastopen_key - list of comma separated 32-digit hexadecimal INTEGERs
 	The list consists of a primary key and an optional backup key. The
@@ -1931,6 +1935,9 @@ fib_notify_on_flag_change - INTEGER
         - 2 - Emit notifications only for RTM_F_OFFLOAD_FAILED flag change.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ioam6_id - INTEGER
         Define the IOAM id of this node. Uses only 24 bits out of 32 in total.
 
@@ -1948,8 +1955,11 @@ ioam6_id_wide - LONG INTEGER
 
         Default: 0xFFFFFFFFFFFFFF
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 IPv6 Fragmentation:
 
 ip6frag_high_thresh - INTEGER

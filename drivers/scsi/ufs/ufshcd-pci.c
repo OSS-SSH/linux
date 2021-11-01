@@ -129,6 +129,9 @@ static int ufs_intel_link_startup_notify(struct ufs_hba *hba,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ufs_intel_set_lanes(struct ufs_hba *hba, u32 lanes)
 {
 	struct ufs_pa_layer_attr pwr_info = hba->pwr_info;
@@ -204,8 +207,11 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define INTEL_ACTIVELTR		0x804
 #define INTEL_IDLELTR		0x808
 
@@ -430,9 +436,13 @@ static int ufs_intel_lkf_init(struct ufs_hba *hba)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hba->nop_out_timeout = 200;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hba->nop_out_timeout = 200;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hba->quirks |= UFSHCD_QUIRK_BROKEN_AUTO_HIBERN8;
 	hba->caps |= UFSHCD_CAP_CRYPTO;
 	err = ufs_intel_common_init(hba);
@@ -464,14 +474,20 @@ static struct ufs_hba_variant_ops ufs_intel_lkf_hba_vops = {
 	.hce_enable_notify	= ufs_intel_hce_enable_notify,
 	.link_startup_notify	= ufs_intel_link_startup_notify,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.pwr_change_notify	= ufs_intel_lkf_pwr_change_notify,
 	.apply_dev_quirks	= ufs_intel_lkf_apply_dev_quirks,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.pwr_change_notify	= ufs_intel_lkf_pwr_change_notify,
+	.apply_dev_quirks	= ufs_intel_lkf_apply_dev_quirks,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.resume			= ufs_intel_resume,
 	.device_reset		= ufs_intel_device_reset,
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 #ifdef CONFIG_PM_SLEEP
@@ -517,6 +533,8 @@ static int ufshcd_pci_runtime_idle(struct device *dev)
 #endif /* !CONFIG_PM */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ufshcd_pci_shutdown - main function to put the controller in reset state
  * @pdev: pointer to PCI device handle
@@ -601,6 +619,7 @@ ufshcd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 static const struct dev_pm_ops ufshcd_pci_pm_ops = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SET_SYSTEM_SLEEP_PM_OPS(ufshcd_system_suspend, ufshcd_system_resume)
 	SET_RUNTIME_PM_OPS(ufshcd_runtime_suspend, ufshcd_runtime_resume, NULL)
 =======
@@ -609,6 +628,10 @@ static const struct dev_pm_ops ufshcd_pci_pm_ops = {
 			   ufshcd_pci_runtime_idle)
 	SET_SYSTEM_SLEEP_PM_OPS(ufshcd_pci_suspend, ufshcd_pci_resume)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SET_SYSTEM_SLEEP_PM_OPS(ufshcd_system_suspend, ufshcd_system_resume)
+	SET_RUNTIME_PM_OPS(ufshcd_runtime_suspend, ufshcd_runtime_resume, NULL)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 	.prepare	= ufshcd_suspend_prepare,
 	.complete	= ufshcd_resume_complete,

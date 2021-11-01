@@ -160,10 +160,15 @@ KMS Core Structures and Functions
    :export:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .. _kms_base_object_abstraction:
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. _kms_base_object_abstraction:
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Modeset Base Object Abstraction
 ===============================
 
@@ -469,6 +474,9 @@ This section of the documentation is primarily aimed at user-space developers.
 For the driver APIs, see the other sections.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Requirements
 ------------
 
@@ -498,8 +506,11 @@ addition to the one mentioned above:
 
 * An IGT test must be submitted where reasonable.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Property Types and Blob Property Support
 ----------------------------------------
 
@@ -546,12 +557,17 @@ Damage Tracking Properties
 --------------------------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .. kernel-doc:: drivers/gpu/drm/drm_plane.c
    :doc: damage tracking
 =======
 .. kernel-doc:: drivers/gpu/drm/drm_damage_helper.c
    :doc: overview
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. kernel-doc:: drivers/gpu/drm/drm_plane.c
+   :doc: damage tracking
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Color Management Properties
 ---------------------------

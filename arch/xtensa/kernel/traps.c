@@ -269,9 +269,13 @@ void do_interrupt(struct pt_regs *regs)
 	};
 	struct pt_regs *old_regs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned unhandled = ~0u;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned unhandled = ~0u;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	trace_hardirqs_off();
 
@@ -288,12 +292,18 @@ void do_interrupt(struct pt_regs *regs)
 			if (int_at_level & int_level_mask[level]) {
 				int_at_level &= int_level_mask[level];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (int_at_level & unhandled)
 					int_at_level &= unhandled;
 				else
 					unhandled |= int_level_mask[level];
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			}
 		}
@@ -302,10 +312,15 @@ void do_interrupt(struct pt_regs *regs)
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* clear lowest pending irq in the unhandled mask */
 		unhandled ^= (int_at_level & -int_at_level);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* clear lowest pending irq in the unhandled mask */
+		unhandled ^= (int_at_level & -int_at_level);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		do_IRQ(__ffs(int_at_level), regs);
 	}
 

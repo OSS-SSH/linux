@@ -19,9 +19,13 @@
 
 #include "dm.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "dm-ima.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "dm-ima.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define DM_RESERVED_MAX_IOS		1024
 
@@ -124,12 +128,18 @@ struct mapped_device {
 	unsigned int *zwp_offset;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_IMA
 	struct dm_ima_measurements ima;
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*

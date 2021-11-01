@@ -124,10 +124,14 @@ function root_check_run_with_sudo() {
 	if [ -x $0 ]; then # Directly executable use sudo
 	    info "Not root, running with sudo"
 <<<<<<< HEAD
+<<<<<<< HEAD
             sudo -E "$0" "$@"
 =======
             sudo "$0" "$@"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+            sudo -E "$0" "$@"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             exit $?
 	fi
 	err 4 "cannot perform sudo run of $0"

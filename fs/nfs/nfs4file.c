@@ -159,6 +159,7 @@ static ssize_t __nfs4_copy_file_range(struct file *file_in, loff_t pos_in,
 retry:
 	if (!nfs42_files_from_same_server(file_in, file_out)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * for inter copy, if copy size is too small
 		 * then fallback to generic copy.
@@ -173,6 +174,13 @@ retry:
 		if (sync ||
 			count <= 14 * NFS_SERVER(file_inode(file_in))->rsize)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/*
+		 * for inter copy, if copy size is too small
+		 * then fallback to generic copy.
+		 */
+		if (sync)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EOPNOTSUPP;
 		cn_resp = kzalloc(sizeof(struct nfs42_copy_notify_res),
 				GFP_NOFS);

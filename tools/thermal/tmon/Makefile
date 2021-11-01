@@ -11,6 +11,7 @@ override CFLAGS+= $(call cc-option,-O3,-O1) ${WARNFLAGS}
 override CFLAGS+= $(call cc-option,-fstack-protector-strong)
 CC?= $(CROSS_COMPILE)gcc
 <<<<<<< HEAD
+<<<<<<< HEAD
 PKG_CONFIG?= $(CROSS_COMPILE)pkg-config
 
 override CFLAGS+=-D VERSION=\"$(VERSION)\"
@@ -20,6 +21,11 @@ PKG_CONFIG?= pkg-config
 override CFLAGS+=-D VERSION=\"$(VERSION)\"
 LDFLAGS+=
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+PKG_CONFIG?= $(CROSS_COMPILE)pkg-config
+
+override CFLAGS+=-D VERSION=\"$(VERSION)\"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TARGET=tmon
 
 INSTALL_PROGRAM=install -m 755 -p
@@ -40,9 +46,12 @@ override CFLAGS += $(shell $(PKG_CONFIG) --cflags $(STATIC) panelw ncursesw 2> /
 
 OBJS = tmon.o tui.o sysfs.o pid.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 OBJS +=
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 tmon: $(OBJS) Makefile tmon.h
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS)  -o $(TARGET) $(TMON_LIBS)
@@ -52,22 +61,30 @@ valgrind: tmon
 
 install:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	- $(INSTALL_PROGRAM) -D "$(TARGET)" "$(INSTALL_ROOT)/$(BINDIR)/$(TARGET)"
 =======
 	- mkdir -p $(INSTALL_ROOT)/$(BINDIR)
 	- $(INSTALL_PROGRAM) "$(TARGET)" "$(INSTALL_ROOT)/$(BINDIR)/$(TARGET)"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	- $(INSTALL_PROGRAM) -D "$(TARGET)" "$(INSTALL_ROOT)/$(BINDIR)/$(TARGET)"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 uninstall:
 	$(DEL_FILE) "$(INSTALL_ROOT)/$(BINDIR)/$(TARGET)"
 
 clean:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rm -f $(TARGET) $(OBJS)
 =======
 	find . -name "*.o" | xargs $(DEL_FILE)
 	rm -f $(TARGET)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rm -f $(TARGET) $(OBJS)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 dist:
 	git tag v$(VERSION)

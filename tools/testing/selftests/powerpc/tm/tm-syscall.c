@@ -20,10 +20,14 @@
 #include "tm.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef PPC_FEATURE2_SCV
 #define PPC_FEATURE2_SCV               0x00100000 /* scv syscall */
 #endif
 
+<<<<<<< HEAD
 extern int getppid_tm_active(void);
 extern int getppid_tm_suspended(void);
 extern int getppid_scv_tm_active(void);
@@ -32,10 +36,17 @@ extern int getppid_scv_tm_suspended(void);
 extern int getppid_tm_active(void);
 extern int getppid_tm_suspended(void);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern int getppid_tm_active(void);
+extern int getppid_tm_suspended(void);
+extern int getppid_scv_tm_active(void);
+extern int getppid_scv_tm_suspended(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 unsigned retries = 0;
 
 #define TEST_DURATION 10 /* seconds */
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 pid_t getppid_tm(bool scv, bool suspend)
@@ -44,12 +55,19 @@ pid_t getppid_tm(bool scv, bool suspend)
 
 pid_t getppid_tm(bool suspend)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+pid_t getppid_tm(bool scv, bool suspend)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i;
 	pid_t pid;
 
 	for (i = 0; i < TM_RETRIES; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (suspend) {
 			if (scv)
 				pid = getppid_scv_tm_suspended();
@@ -61,12 +79,15 @@ pid_t getppid_tm(bool suspend)
 			else
 				pid = getppid_tm_active();
 		}
+<<<<<<< HEAD
 =======
 		if (suspend)
 			pid = getppid_tm_suspended();
 		else
 			pid = getppid_tm_active();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (pid >= 0)
 			return pid;
@@ -98,9 +119,13 @@ int tm_syscall(void)
 
 	SKIP_IF(!have_htm_nosc());
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SKIP_IF(htm_is_synthetic());
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	setbuf(stdout, NULL);
 
@@ -117,15 +142,20 @@ int tm_syscall(void)
 		 * that it succeeds.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		FAIL_IF(getppid_tm(false, true) == -1); /* Should succeed. */
 =======
 		FAIL_IF(getppid_tm(true) == -1); /* Should succeed. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		FAIL_IF(getppid_tm(false, true) == -1); /* Should succeed. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Test a syscall within an active transaction and verify that
 		 * it fails with the correct failure code.
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		FAIL_IF(getppid_tm(false, false) != -1);  /* Should fail... */
 		FAIL_IF(!failure_is_persistent()); /* ...persistently... */
@@ -144,6 +174,20 @@ int tm_syscall(void)
 		FAIL_IF(!failure_is_persistent()); /* ...persistently... */
 		FAIL_IF(!failure_is_syscall());    /* ...with code syscall. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		FAIL_IF(getppid_tm(false, false) != -1);  /* Should fail... */
+		FAIL_IF(!failure_is_persistent()); /* ...persistently... */
+		FAIL_IF(!failure_is_syscall());    /* ...with code syscall. */
+
+		/* Now do it all again with scv if it is available. */
+		if (have_hwcap2(PPC_FEATURE2_SCV)) {
+			FAIL_IF(getppid_tm(true, true) == -1); /* Should succeed. */
+			FAIL_IF(getppid_tm(true, false) != -1);  /* Should fail... */
+			FAIL_IF(!failure_is_persistent()); /* ...persistently... */
+			FAIL_IF(!failure_is_syscall());    /* ...with code syscall. */
+		}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gettimeofday(&now, 0);
 	}
 

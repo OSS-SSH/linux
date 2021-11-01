@@ -14,10 +14,14 @@
 #include <linux/gfp.h>
 #include <net/xfrm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/siphash.h>
 =======
 #include <linux/jhash.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/siphash.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/rtnetlink.h>
 
 #include <net/netfilter/nf_conntrack.h>
@@ -39,10 +43,14 @@ static unsigned int nat_net_id __read_mostly;
 static struct hlist_head *nf_nat_bysource __read_mostly;
 static unsigned int nf_nat_htable_size __read_mostly;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static siphash_key_t nf_nat_hash_rnd __read_mostly;
 =======
 static unsigned int nf_nat_hash_rnd __read_mostly;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static siphash_key_t nf_nat_hash_rnd __read_mostly;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct nf_nat_lookup_hook_priv {
 	struct nf_hook_entries __rcu *entries;
@@ -159,6 +167,7 @@ static void __nf_nat_decode_session(struct sk_buff *skb, struct flowi *fl)
 /* We keep an extra hash for each conntrack, for fast searching. */
 static unsigned int
 <<<<<<< HEAD
+<<<<<<< HEAD
 hash_by_src(const struct net *net,
 	    const struct nf_conntrack_zone *zone,
 	    const struct nf_conntrack_tuple *tuple)
@@ -187,15 +196,40 @@ hash_by_src(const struct net *net,
 	hash = siphash(&combined, sizeof(combined), &nf_nat_hash_rnd);
 =======
 hash_by_src(const struct net *n, const struct nf_conntrack_tuple *tuple)
+=======
+hash_by_src(const struct net *net,
+	    const struct nf_conntrack_zone *zone,
+	    const struct nf_conntrack_tuple *tuple)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int hash;
+	struct {
+		struct nf_conntrack_man src;
+		u32 net_mix;
+		u32 protonum;
+		u32 zone;
+	} __aligned(SIPHASH_ALIGNMENT) combined;
 
 	get_random_once(&nf_nat_hash_rnd, sizeof(nf_nat_hash_rnd));
 
+	memset(&combined, 0, sizeof(combined));
+
 	/* Original src, to ensure we map it consistently if poss. */
+<<<<<<< HEAD
 	hash = jhash2((u32 *)&tuple->src, sizeof(tuple->src) / sizeof(u32),
 		      tuple->dst.protonum ^ nf_nat_hash_rnd ^ net_hash_mix(n));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	combined.src = tuple->src;
+	combined.net_mix = net_hash_mix(net);
+	combined.protonum = tuple->dst.protonum;
+
+	/* Zone ID can be used provided its valid for both directions */
+	if (zone->dir == NF_CT_DEFAULT_ZONE_DIR)
+		combined.zone = zone->id;
+
+	hash = siphash(&combined, sizeof(combined), &nf_nat_hash_rnd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return reciprocal_scale(hash, nf_nat_htable_size);
 }
@@ -300,10 +334,14 @@ find_appropriate_src(struct net *net,
 		     const struct nf_nat_range2 *range)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int h = hash_by_src(net, zone, tuple);
 =======
 	unsigned int h = hash_by_src(net, tuple);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int h = hash_by_src(net, zone, tuple);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct nf_conn *ct;
 
 	hlist_for_each_entry_rcu(ct, &nf_nat_bysource[h], nat_bysource) {
@@ -651,10 +689,14 @@ nf_nat_setup_info(struct nf_conn *ct,
 		spinlock_t *lock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		srchash = hash_by_src(net, nf_ct_zone(ct),
 =======
 		srchash = hash_by_src(net,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		srchash = hash_by_src(net, nf_ct_zone(ct),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      &ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple);
 		lock = &nf_nat_locks[srchash % CONNTRACK_LOCKS];
 		spin_lock_bh(lock);
@@ -824,10 +866,14 @@ static void __nf_nat_cleanup_conntrack(struct nf_conn *ct)
 	unsigned int h;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	h = hash_by_src(nf_ct_net(ct), nf_ct_zone(ct), &ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple);
 =======
 	h = hash_by_src(nf_ct_net(ct), &ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	h = hash_by_src(nf_ct_net(ct), nf_ct_zone(ct), &ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_bh(&nf_nat_locks[h % CONNTRACK_LOCKS]);
 	hlist_del_rcu(&ct->nat_bysource);
 	spin_unlock_bh(&nf_nat_locks[h % CONNTRACK_LOCKS]);

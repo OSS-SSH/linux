@@ -2,11 +2,17 @@
 # SPDX-License-Identifier: GPL-2.0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Kselftest framework requirement - SKIP code is 4.
 ksft_skip=4
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# Kselftest framework requirement - SKIP code is 4.
+ksft_skip=4
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ##############################################################################
 # Defines
 
@@ -16,6 +22,7 @@ if [[ ! -v DEVLINK_DEV ]]; then
 	if [ -z "$DEVLINK_DEV" ]; then
 		echo "SKIP: ${NETIFS[p1]} has no devlink device registered for it"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		exit $ksft_skip
 	fi
 	if [[ "$(echo $DEVLINK_DEV | grep -c pci)" -eq 0 ]]; then
@@ -28,6 +35,13 @@ if [[ ! -v DEVLINK_DEV ]]; then
 		echo "SKIP: devlink device's bus is not PCI"
 		exit 1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		exit $ksft_skip
+	fi
+	if [[ "$(echo $DEVLINK_DEV | grep -c pci)" -eq 0 ]]; then
+		echo "SKIP: devlink device's bus is not PCI"
+		exit $ksft_skip
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 
 	DEVLINK_VIDDID=$(lspci -s $(echo $DEVLINK_DEV | cut -d"/" -f2) \
@@ -37,10 +51,14 @@ elif [[ ! -z "$DEVLINK_DEV" ]]; then
 	if [ $? -ne 0 ]; then
 		echo "SKIP: devlink device \"$DEVLINK_DEV\" not found"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		exit $ksft_skip
 =======
 		exit 1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		exit $ksft_skip
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 fi
 
@@ -51,30 +69,42 @@ devlink help 2>&1 | grep resource &> /dev/null
 if [ $? -ne 0 ]; then
 	echo "SKIP: iproute2 too old, missing devlink resource support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exit $ksft_skip
 =======
 	exit 1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exit $ksft_skip
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 devlink help 2>&1 | grep trap &> /dev/null
 if [ $? -ne 0 ]; then
 	echo "SKIP: iproute2 too old, missing devlink trap support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exit $ksft_skip
 =======
 	exit 1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exit $ksft_skip
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 devlink dev help 2>&1 | grep info &> /dev/null
 if [ $? -ne 0 ]; then
 	echo "SKIP: iproute2 too old, missing devlink dev info support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exit $ksft_skip
 =======
 	exit 1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exit $ksft_skip
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 ##############################################################################

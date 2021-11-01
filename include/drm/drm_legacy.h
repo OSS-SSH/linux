@@ -193,11 +193,17 @@ void drm_legacy_idlelock_take(struct drm_lock_data *lock);
 void drm_legacy_idlelock_release(struct drm_lock_data *lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* drm_irq.c */
 int drm_legacy_irq_uninstall(struct drm_device *dev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* drm_irq.c */
+int drm_legacy_irq_uninstall(struct drm_device *dev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* drm_pci.c */
 
 #ifdef CONFIG_PCI

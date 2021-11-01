@@ -264,9 +264,13 @@ static struct event_constraint intel_icl_event_constraints[] = {
 	INTEL_EVENT_CONSTRAINT_RANGE(0xb7, 0xbd, 0xf),
 	INTEL_EVENT_CONSTRAINT_RANGE(0xd0, 0xe6, 0xf),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INTEL_EVENT_CONSTRAINT(0xef, 0xf),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INTEL_EVENT_CONSTRAINT(0xef, 0xf),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INTEL_EVENT_CONSTRAINT_RANGE(0xf0, 0xf4, 0xf),
 	EVENT_CONSTRAINT_END
 };
@@ -2909,22 +2913,31 @@ static int handle_pmi_common(struct pt_regs *regs, u64 status)
 static int intel_pmu_handle_irq(struct pt_regs *regs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
 	bool late_ack = hybrid_bit(cpuc->pmu, late_ack);
 	bool mid_ack = hybrid_bit(cpuc->pmu, mid_ack);
 =======
 	struct cpu_hw_events *cpuc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+	bool late_ack = hybrid_bit(cpuc->pmu, late_ack);
+	bool mid_ack = hybrid_bit(cpuc->pmu, mid_ack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int loops;
 	u64 status;
 	int handled;
 	int pmu_enabled;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	cpuc = this_cpu_ptr(&cpu_hw_events);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Save the PMU state.
 	 * It needs to be restored when leaving the handler.
@@ -2932,12 +2945,16 @@ static int intel_pmu_handle_irq(struct pt_regs *regs)
 	pmu_enabled = cpuc->enabled;
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * In general, the early ACK is only applied for old platforms.
 	 * For the big core starts from Haswell, the late ACK should be
 	 * applied.
 	 * For the small core after Tremont, we have to do the ACK right
 	 * before re-enabling counters, which is in the middle of the
 	 * NMI handler.
+<<<<<<< HEAD
 	 */
 	if (!late_ack && !mid_ack)
 =======
@@ -2946,6 +2963,10 @@ static int intel_pmu_handle_irq(struct pt_regs *regs)
 	 */
 	if (!x86_pmu.late_ack)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 */
+	if (!late_ack && !mid_ack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		apic_write(APIC_LVTPC, APIC_DM_NMI);
 	intel_bts_disable_local();
 	cpuc->enabled = 0;
@@ -2983,10 +3004,15 @@ again:
 
 done:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mid_ack)
 		apic_write(APIC_LVTPC, APIC_DM_NMI);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mid_ack)
+		apic_write(APIC_LVTPC, APIC_DM_NMI);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Only restore PMU state when it's active. See x86_pmu_disable(). */
 	cpuc->enabled = pmu_enabled;
 	if (pmu_enabled)
@@ -2999,10 +3025,14 @@ done:
 	 * Haswell CPUs.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (late_ack)
 =======
 	if (x86_pmu.late_ack)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (late_ack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		apic_write(APIC_LVTPC, APIC_DM_NMI);
 	return handled;
 }
@@ -5060,6 +5090,7 @@ static ssize_t freeze_on_smi_store(struct device *cdev,
 	x86_pmu.attr_freeze_on_smi = val;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 	on_each_cpu(flip_smm_bit, &val, 1);
 	cpus_read_unlock();
@@ -5068,6 +5099,11 @@ static ssize_t freeze_on_smi_store(struct device *cdev,
 	on_each_cpu(flip_smm_bit, &val, 1);
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	on_each_cpu(flip_smm_bit, &val, 1);
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 done:
 	mutex_unlock(&freeze_on_smi_mutex);
 
@@ -5111,6 +5147,7 @@ static ssize_t set_sysctl_tfa(struct device *cdev,
 	allow_tsx_force_abort = val;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 	on_each_cpu(update_tfa_sched, NULL, 1);
 	cpus_read_unlock();
@@ -5119,6 +5156,11 @@ static ssize_t set_sysctl_tfa(struct device *cdev,
 	on_each_cpu(update_tfa_sched, NULL, 1);
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	on_each_cpu(update_tfa_sched, NULL, 1);
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return count;
 }
@@ -6175,9 +6217,12 @@ __init int intel_pmu_init(void)
 		x86_pmu.num_hybrid_pmus = X86_HYBRID_NUM_PMUS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		x86_pmu.late_ack = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		x86_pmu.pebs_aliases = NULL;
 		x86_pmu.pebs_prec_dist = true;
 		x86_pmu.pebs_block = true;
@@ -6216,9 +6261,13 @@ __init int intel_pmu_init(void)
 		pmu->name = "cpu_core";
 		pmu->cpu_type = hybrid_big;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pmu->late_ack = true;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pmu->late_ack = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (cpu_feature_enabled(X86_FEATURE_HYBRID_CPU)) {
 			pmu->num_counters = x86_pmu.num_counters + 2;
 			pmu->num_counters_fixed = x86_pmu.num_counters_fixed + 1;
@@ -6245,9 +6294,13 @@ __init int intel_pmu_init(void)
 		pmu->name = "cpu_atom";
 		pmu->cpu_type = hybrid_small;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pmu->mid_ack = true;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pmu->mid_ack = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pmu->num_counters = x86_pmu.num_counters;
 		pmu->num_counters_fixed = x86_pmu.num_counters_fixed;
 		pmu->max_pebs_events = x86_pmu.max_pebs_events;

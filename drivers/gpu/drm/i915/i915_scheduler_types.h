@@ -92,6 +92,9 @@ struct i915_dependency {
 				signal_link)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct i915_sched_engine - scheduler engine
  *
@@ -203,6 +206,9 @@ struct i915_sched_engine {
 			    const struct i915_sched_attr *attr);
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _I915_SCHEDULER_TYPES_H_ */

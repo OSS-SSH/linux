@@ -686,10 +686,15 @@ static int __iavf_get_coalesce(struct net_device *netdev,
  * @netdev: network interface device structure
  * @ec: ethtool coalesce structure
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @kernel_coal: ethtool CQE mode setting structure
  * @extack: extack for reporting error messages
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @kernel_coal: ethtool CQE mode setting structure
+ * @extack: extack for reporting error messages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Returns current coalescing settings. This is referred to elsewhere in the
  * driver as Interrupt Throttle Rate, as this is how the hardware describes
@@ -698,12 +703,18 @@ static int __iavf_get_coalesce(struct net_device *netdev,
  **/
 static int iavf_get_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct ethtool_coalesce *ec,
 			     struct kernel_ethtool_coalesce *kernel_coal,
 			     struct netlink_ext_ack *extack)
 =======
 			     struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *ec,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __iavf_get_coalesce(netdev, ec, -1);
 }
@@ -816,14 +827,20 @@ static int __iavf_set_coalesce(struct net_device *netdev,
  * @netdev: network interface device structure
  * @ec: ethtool coalesce structure
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @kernel_coal: ethtool CQE mode setting structure
  * @extack: extack for reporting error messages
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @kernel_coal: ethtool CQE mode setting structure
+ * @extack: extack for reporting error messages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Change current coalescing settings for every queue.
  **/
 static int iavf_set_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			     struct ethtool_coalesce *ec,
 			     struct kernel_ethtool_coalesce *kernel_coal,
@@ -831,6 +848,11 @@ static int iavf_set_coalesce(struct net_device *netdev,
 =======
 			     struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *ec,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __iavf_set_coalesce(netdev, ec, -1);
 }
@@ -1375,11 +1397,15 @@ static int iavf_add_fdir_ethtool(struct iavf_adapter *adapter, struct ethtool_rx
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (!mutex_trylock(&adapter->crit_lock)) {
 =======
 	while (test_and_set_bit(__IAVF_IN_CRITICAL_TASK,
 				&adapter->crit_section)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (!mutex_trylock(&adapter->crit_lock)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (--count == 0) {
 			kfree(fltr);
 			return -EINVAL;
@@ -1405,10 +1431,14 @@ ret:
 		kfree(fltr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
 =======
 	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&adapter->crit_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -1594,11 +1624,15 @@ iavf_set_adv_rss_hash_opt(struct iavf_adapter *adapter,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (!mutex_trylock(&adapter->crit_lock)) {
 =======
 	while (test_and_set_bit(__IAVF_IN_CRITICAL_TASK,
 				&adapter->crit_section)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (!mutex_trylock(&adapter->crit_lock)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (--count == 0) {
 			kfree(rss_new);
 			return -EINVAL;
@@ -1635,10 +1669,14 @@ iavf_set_adv_rss_hash_opt(struct iavf_adapter *adapter,
 		mod_delayed_work(iavf_wq, &adapter->watchdog_task, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
 =======
 	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&adapter->crit_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!rss_new_add)
 		kfree(rss_new);

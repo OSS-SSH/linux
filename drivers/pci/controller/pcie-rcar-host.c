@@ -14,9 +14,13 @@
 #include <linux/bitops.h>
 #include <linux/clk.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/clk-provider.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/clk-provider.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/delay.h>
 #include <linux/interrupt.h>
 #include <linux/irq.h>
@@ -24,9 +28,13 @@
 #include <linux/kernel.h>
 #include <linux/init.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/iopoll.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/iopoll.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/msi.h>
 #include <linux/of_address.h>
 #include <linux/of_irq.h>
@@ -50,6 +58,9 @@ struct rcar_msi {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ARM
 /*
  * Here we keep a static copy of the remapped PCIe controller address.
@@ -65,8 +76,11 @@ static void __iomem *pcie_base;
 static struct clk *pcie_bus_clk;
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Structure representing the PCIe interface */
 struct rcar_pcie_host {
 	struct rcar_pcie	pcie;
@@ -513,6 +527,7 @@ static irqreturn_t rcar_pcie_msi_irq(int irq, void *data)
 	while (reg) {
 		unsigned int index = find_first_bit(&reg, 32);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int ret;
 
 		ret = generic_handle_domain_irq(msi->domain->parent, index);
@@ -525,6 +540,12 @@ static irqreturn_t rcar_pcie_msi_irq(int irq, void *data)
 			generic_handle_irq(msi_irq);
 		} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int ret;
+
+		ret = generic_handle_domain_irq(msi->domain->parent, index);
+		if (ret) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* Unknown MSI, just clear it */
 			dev_dbg(dev, "unexpected MSI\n");
 			rcar_pci_write_reg(pcie, BIT(index), PCIEMSIFR);
@@ -810,14 +831,20 @@ static int rcar_pcie_get_resources(struct rcar_pcie_host *host)
 	host->msi.irq2 = i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ARM
 	/* Cache static copy for L1 link state fixup hook on aarch32 */
 	pcie_base = pcie->base;
 	pcie_bus_clk = host->bus_clk;
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 err_irq2:
@@ -1074,6 +1101,9 @@ static struct platform_driver rcar_pcie_driver = {
 	.probe = rcar_pcie_probe,
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_ARM
 static DEFINE_SPINLOCK(pmsr_lock);
@@ -1136,8 +1166,13 @@ static int __init rcar_pcie_init(void)
 }
 device_initcall(rcar_pcie_init);
 #else
+<<<<<<< HEAD
 builtin_platform_driver(rcar_pcie_driver);
 #endif
 =======
 builtin_platform_driver(rcar_pcie_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+builtin_platform_driver(rcar_pcie_driver);
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

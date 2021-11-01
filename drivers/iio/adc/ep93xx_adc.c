@@ -206,10 +206,14 @@ static int ep93xx_adc_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = clk_prepare_enable(priv->clk);
 =======
 	ret = clk_enable(priv->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = clk_prepare_enable(priv->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		dev_err(&pdev->dev, "Cannot enable clock\n");
 		return ret;
@@ -218,10 +222,14 @@ static int ep93xx_adc_probe(struct platform_device *pdev)
 	ret = iio_device_register(iiodev);
 	if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		clk_disable_unprepare(priv->clk);
 =======
 		clk_disable(priv->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clk_disable_unprepare(priv->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -233,10 +241,14 @@ static int ep93xx_adc_remove(struct platform_device *pdev)
 
 	iio_device_unregister(iiodev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clk_disable_unprepare(priv->clk);
 =======
 	clk_disable(priv->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_disable_unprepare(priv->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

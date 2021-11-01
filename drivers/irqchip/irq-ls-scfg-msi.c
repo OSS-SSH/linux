@@ -363,6 +363,7 @@ static int ls_scfg_msi_probe(struct platform_device *pdev)
 	msi_data->irqs_num = MSI_IRQS_PER_MSIR *
 			     (1 << msi_data->cfg->ibs_shift);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	msi_data->used = devm_bitmap_zalloc(&pdev->dev, msi_data->irqs_num, GFP_KERNEL);
 =======
 	msi_data->used = devm_kcalloc(&pdev->dev,
@@ -370,6 +371,9 @@ static int ls_scfg_msi_probe(struct platform_device *pdev)
 				    sizeof(*msi_data->used),
 				    GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msi_data->used = devm_bitmap_zalloc(&pdev->dev, msi_data->irqs_num, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!msi_data->used)
 		return -ENOMEM;
 	/*

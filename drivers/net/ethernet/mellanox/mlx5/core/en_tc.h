@@ -71,9 +71,13 @@ struct mlx5_flow_attr {
 	struct mlx5_modify_hdr *modify_hdr;
 	struct mlx5_ct_attr ct_attr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mlx5e_sample_attr *sample_attr;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mlx5e_sample_attr *sample_attr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mlx5e_tc_flow_parse_attr *parse_attr;
 	u32 chain;
 	u16 prio;

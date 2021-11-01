@@ -13,10 +13,15 @@
 #include <linux/nvmem-provider.h>
 #include <linux/platform_device.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/pm_domain.h>
 #include <linux/pm_runtime.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pm_domain.h>
+#include <linux/pm_runtime.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/property.h>
 #include <linux/regulator/consumer.h>
 
@@ -145,14 +150,20 @@ static void qfprom_disable_fuse_blowing(const struct qfprom_priv *priv,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writel(old->timer_val, priv->qfpconf + QFPROM_BLOW_TIMER_OFFSET);
 	writel(old->accel_val, priv->qfpconf + QFPROM_ACCEL_OFFSET);
 
 	dev_pm_genpd_set_performance_state(priv->dev, 0);
 	pm_runtime_put(priv->dev);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * This may be a shared rail and may be able to run at a lower rate
 	 * when we're not blowing fuses.  At the moment, the regulator framework
@@ -174,11 +185,14 @@ static void qfprom_disable_fuse_blowing(const struct qfprom_priv *priv,
 
 	clk_disable_unprepare(priv->secclk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	writel(old->timer_val, priv->qfpconf + QFPROM_BLOW_TIMER_OFFSET);
 	writel(old->accel_val, priv->qfpconf + QFPROM_ACCEL_OFFSET);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -230,6 +244,9 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = pm_runtime_get_sync(priv->dev);
 	if (ret < 0) {
 		pm_runtime_put_noidle(priv->dev);
@@ -238,8 +255,11 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
 	}
 	dev_pm_genpd_set_performance_state(priv->dev, INT_MAX);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	old->timer_val = readl(priv->qfpconf + QFPROM_BLOW_TIMER_OFFSET);
 	old->accel_val = readl(priv->qfpconf + QFPROM_ACCEL_OFFSET);
 	writel(priv->soc_data->qfprom_blow_timer_value,
@@ -250,10 +270,15 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 err_reg_enable:
 	regulator_disable(priv->vcc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_reg_enable:
+	regulator_disable(priv->vcc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_clk_rate_set:
 	clk_set_rate(priv->secclk, old->clk_rate);
 err_clk_prepared:
@@ -354,13 +379,19 @@ static int qfprom_reg_read(void *context,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void qfprom_runtime_disable(void *data)
 {
 	pm_runtime_disable(data);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct qfprom_soc_data qfprom_7_8_data = {
 	.accel_value = 0xD10,
 	.qfprom_blow_timer_value = 25,
@@ -462,13 +493,19 @@ static int qfprom_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_enable(dev);
 	ret = devm_add_action_or_reset(dev, qfprom_runtime_disable, dev);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nvmem = devm_nvmem_register(dev, &econfig);
 
 	return PTR_ERR_OR_ZERO(nvmem);

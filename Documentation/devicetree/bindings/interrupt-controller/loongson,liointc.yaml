@@ -20,16 +20,22 @@ allOf:
 properties:
   compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     enum:
       - loongson,liointc-1.0
       - loongson,liointc-1.0a
       - loongson,liointc-2.0
+<<<<<<< HEAD
 =======
     oneOf:
       - const: loongson,liointc-1.0
       - const: loongson,liointc-1.0a
       - const: loongson,liointc-2.0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg:
     minItems: 1

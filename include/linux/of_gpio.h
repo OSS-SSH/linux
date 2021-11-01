@@ -50,10 +50,14 @@ static inline struct of_mm_gpio_chip *to_of_mm_gpio_chip(struct gpio_chip *gc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern int of_get_named_gpio_flags(const struct device_node *np,
 =======
 extern int of_get_named_gpio_flags(struct device_node *np,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern int of_get_named_gpio_flags(const struct device_node *np,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		const char *list_name, int index, enum of_gpio_flags *flags);
 
 extern int of_mm_gpiochip_add_data(struct device_node *np,
@@ -72,10 +76,14 @@ extern void of_mm_gpiochip_remove(struct of_mm_gpio_chip *mm_gc);
 
 /* Drivers may not strictly depend on the GPIO support, so let them link. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int of_get_named_gpio_flags(const struct device_node *np,
 =======
 static inline int of_get_named_gpio_flags(struct device_node *np,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int of_get_named_gpio_flags(const struct device_node *np,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		const char *list_name, int index, enum of_gpio_flags *flags)
 {
 	if (flags)
@@ -107,11 +115,16 @@ static inline int of_get_named_gpio_flags(struct device_node *np,
  * This function will return '4'
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int of_gpio_named_count(const struct device_node *np,
 				      const char *propname)
 =======
 static inline int of_gpio_named_count(struct device_node *np, const char* propname)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int of_gpio_named_count(const struct device_node *np,
+				      const char *propname)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return of_count_phandle_with_args(np, propname, "#gpio-cells");
 }
@@ -123,19 +136,27 @@ static inline int of_gpio_named_count(struct device_node *np, const char* propna
  * Same as of_gpio_named_count, but hard coded to use the 'gpios' property
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int of_gpio_count(const struct device_node *np)
 =======
 static inline int of_gpio_count(struct device_node *np)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int of_gpio_count(const struct device_node *np)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return of_gpio_named_count(np, "gpios");
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int of_get_gpio_flags(const struct device_node *np, int index,
 =======
 static inline int of_get_gpio_flags(struct device_node *np, int index,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int of_get_gpio_flags(const struct device_node *np, int index,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		      enum of_gpio_flags *flags)
 {
 	return of_get_named_gpio_flags(np, "gpios", index, flags);
@@ -151,10 +172,14 @@ static inline int of_get_gpio_flags(struct device_node *np, int index,
  * value on the error condition.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int of_get_named_gpio(const struct device_node *np,
 =======
 static inline int of_get_named_gpio(struct device_node *np,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int of_get_named_gpio(const struct device_node *np,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
                                    const char *propname, int index)
 {
 	return of_get_named_gpio_flags(np, propname, index, NULL);
@@ -169,10 +194,14 @@ static inline int of_get_named_gpio(struct device_node *np,
  * value on the error condition.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int of_get_gpio(const struct device_node *np, int index)
 =======
 static inline int of_get_gpio(struct device_node *np, int index)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int of_get_gpio(const struct device_node *np, int index)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return of_get_gpio_flags(np, index, NULL);
 }

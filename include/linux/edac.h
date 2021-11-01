@@ -185,9 +185,13 @@ static inline char *mc_event_error_type(const unsigned int err_type)
  * @MEM_NVDIMM:		Non-volatile RAM
  * @MEM_WIO2:		Wide I/O 2.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @MEM_HBM2:		High bandwidth Memory Gen 2.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @MEM_HBM2:		High bandwidth Memory Gen 2.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 enum mem_type {
 	MEM_EMPTY = 0,
@@ -217,9 +221,13 @@ enum mem_type {
 	MEM_NVDIMM,
 	MEM_WIO2,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MEM_HBM2,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MEM_HBM2,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define MEM_FLAG_EMPTY		BIT(MEM_EMPTY)
@@ -248,9 +256,13 @@ enum mem_type {
 #define MEM_FLAG_NVDIMM         BIT(MEM_NVDIMM)
 #define MEM_FLAG_WIO2		BIT(MEM_WIO2)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MEM_FLAG_HBM2		BIT(MEM_HBM2)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MEM_FLAG_HBM2		BIT(MEM_HBM2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * enum edac_type - Error Detection and Correction capabilities and mode

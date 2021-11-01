@@ -58,11 +58,15 @@ struct qeth_dbf_info qeth_dbf[QETH_DBF_INFOS] = {
 EXPORT_SYMBOL_GPL(qeth_dbf);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct kmem_cache *qeth_core_header_cache;
 =======
 struct kmem_cache *qeth_core_header_cache;
 EXPORT_SYMBOL_GPL(qeth_core_header_cache);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct kmem_cache *qeth_core_header_cache;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct kmem_cache *qeth_qdio_outbuf_cache;
 
 static struct device *qeth_core_root_dev;
@@ -76,6 +80,7 @@ static int qeth_qdio_establish(struct qeth_card *);
 static void qeth_free_qdio_queues(struct qeth_card *card);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void qeth_close_dev_handler(struct work_struct *work)
 {
@@ -87,6 +92,8 @@ static void qeth_close_dev_handler(struct work_struct *work)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const char *qeth_get_cardname(struct qeth_card *card)
 {
 	if (IS_VM_NIC(card)) {
@@ -109,10 +116,13 @@ static const char *qeth_get_cardname(struct qeth_card *card)
 		case QETH_CARD_TYPE_IQD:
 			return " HiperSockets";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		case QETH_CARD_TYPE_OSN:
 			return " OSN QDIO";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case QETH_CARD_TYPE_OSM:
 			return " OSM QDIO";
 		case QETH_CARD_TYPE_OSX:
@@ -168,10 +178,13 @@ const char *qeth_get_cardname_short(struct qeth_card *card)
 		case QETH_CARD_TYPE_IQD:
 			return "HiperSockets";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		case QETH_CARD_TYPE_OSN:
 			return "OSN";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case QETH_CARD_TYPE_OSM:
 			return "OSM_1000";
 		case QETH_CARD_TYPE_OSX:
@@ -221,11 +234,17 @@ static void qeth_clear_working_pool_list(struct qeth_card *card)
 		list_del(&pool_entry->list);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!queue)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!queue)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < ARRAY_SIZE(queue->bufs); i++)
 		queue->bufs[i].pool_entry = NULL;
 }
@@ -451,6 +470,9 @@ static enum iucv_tx_notify qeth_compute_cq_notification(int sbalf15,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void qeth_put_cmd(struct qeth_cmd_buffer *iob)
 {
 	if (refcount_dec_and_test(&iob->ref_count)) {
@@ -458,8 +480,11 @@ static void qeth_put_cmd(struct qeth_cmd_buffer *iob)
 		kfree(iob);
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void qeth_setup_ccw(struct ccw1 *ccw, u8 cmd_code, u8 flags, u32 len,
 			   void *data)
 {
@@ -529,18 +554,25 @@ static void qeth_dequeue_cmd(struct qeth_card *card,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void qeth_notify_cmd(struct qeth_cmd_buffer *iob, int reason)
 =======
 void qeth_notify_cmd(struct qeth_cmd_buffer *iob, int reason)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void qeth_notify_cmd(struct qeth_cmd_buffer *iob, int reason)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	iob->rc = reason;
 	complete(&iob->done);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(qeth_notify_cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void qeth_flush_local_addrs4(struct qeth_card *card)
 {
@@ -818,6 +850,7 @@ static struct qeth_ipa_cmd *qeth_check_ipa_data(struct qeth_card *card,
 
 	if (IS_IPA_REPLY(cmd)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (cmd->hdr.command != IPA_CMD_SET_DIAG_ASS)
 =======
 		if (cmd->hdr.command != IPA_CMD_SETCCID &&
@@ -825,6 +858,9 @@ static struct qeth_ipa_cmd *qeth_check_ipa_data(struct qeth_card *card,
 		    cmd->hdr.command != IPA_CMD_MODCCID &&
 		    cmd->hdr.command != IPA_CMD_SET_DIAG_ASS)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (cmd->hdr.command != IPA_CMD_SET_DIAG_ASS)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			qeth_issue_ipa_msg(cmd, cmd->hdr.return_code, card);
 		return cmd;
 	}
@@ -835,6 +871,7 @@ static struct qeth_ipa_cmd *qeth_check_ipa_data(struct qeth_card *card,
 		if (cmd->hdr.return_code == IPA_RC_VEPA_TO_VEB_TRANSITION) {
 			dev_err(&card->gdev->dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"Adjacent port of interface %s is no longer in reflective relay mode, trigger recovery\n",
 				netdev_name(card->dev));
 			/* Set offline, then probably fail to set online: */
@@ -843,10 +880,18 @@ static struct qeth_ipa_cmd *qeth_check_ipa_data(struct qeth_card *card,
 			/* stay online for subsequent STARTLAN */
 =======
 				"Interface %s is down because the adjacent port is no longer in reflective relay mode\n",
+=======
+				"Adjacent port of interface %s is no longer in reflective relay mode, trigger recovery\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				netdev_name(card->dev));
-			schedule_work(&card->close_dev_work);
+			/* Set offline, then probably fail to set online: */
+			qeth_schedule_recovery(card);
 		} else {
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			/* stay online for subsequent STARTLAN */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_warn(&card->gdev->dev,
 				 "The link for interface %s on CHPID 0x%X failed\n",
 				 netdev_name(card->dev), card->info.chpid);
@@ -869,10 +914,13 @@ static struct qeth_ipa_cmd *qeth_check_ipa_data(struct qeth_card *card,
 			return cmd;
 		return NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case IPA_CMD_MODCCID:
 		return cmd;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case IPA_CMD_REGISTER_LOCAL_ADDR:
 		if (cmd->hdr.prot_version == QETH_PROT_IPV4)
 			qeth_add_local_addrs4(card, &cmd->data.local_addrs4);
@@ -930,6 +978,7 @@ static int qeth_check_idx_response(struct qeth_card *card,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void qeth_put_cmd(struct qeth_cmd_buffer *iob)
 {
@@ -941,6 +990,8 @@ void qeth_put_cmd(struct qeth_cmd_buffer *iob)
 EXPORT_SYMBOL_GPL(qeth_put_cmd);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void qeth_release_buffer_cb(struct qeth_card *card,
 				   struct qeth_cmd_buffer *iob,
 				   unsigned int data_length)
@@ -955,6 +1006,7 @@ static void qeth_cancel_cmd(struct qeth_cmd_buffer *iob, int rc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct qeth_cmd_buffer *qeth_alloc_cmd(struct qeth_channel *channel,
 					      unsigned int length,
 					      unsigned int ccws, long timeout)
@@ -963,6 +1015,11 @@ struct qeth_cmd_buffer *qeth_alloc_cmd(struct qeth_channel *channel,
 				       unsigned int length, unsigned int ccws,
 				       long timeout)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct qeth_cmd_buffer *qeth_alloc_cmd(struct qeth_channel *channel,
+					      unsigned int length,
+					      unsigned int ccws, long timeout)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct qeth_cmd_buffer *iob;
 
@@ -989,9 +1046,12 @@ struct qeth_cmd_buffer *qeth_alloc_cmd(struct qeth_channel *channel,
 	return iob;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(qeth_alloc_cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void qeth_issue_next_read_cb(struct qeth_card *card,
 				    struct qeth_cmd_buffer *iob,
@@ -1023,6 +1083,7 @@ static void qeth_issue_next_read_cb(struct qeth_card *card,
 		if (!cmd)
 			goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (IS_OSN(card) && card->osn_info.assist_cb &&
 		    cmd->hdr.command != IPA_CMD_STARTLAN) {
@@ -1030,6 +1091,8 @@ static void qeth_issue_next_read_cb(struct qeth_card *card,
 			goto out;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* match against pending cmd requests */
@@ -1624,9 +1687,12 @@ static void qeth_setup_card(struct qeth_card *card)
 	qeth_init_qdio_info(card);
 	INIT_DELAYED_WORK(&card->buffer_reclaim_work, qeth_buffer_reclaim_work);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	INIT_WORK(&card->close_dev_work, qeth_close_dev_handler);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hash_init(card->rx_mode_addrs);
 	hash_init(card->local_addrs4);
 	hash_init(card->local_addrs6);
@@ -1906,10 +1972,14 @@ static enum qeth_discipline_id qeth_enforce_discipline(struct qeth_card *card)
 	enum qeth_discipline_id disc = QETH_DISCIPLINE_UNDETERMINED;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IS_OSM(card))
 =======
 	if (IS_OSM(card) || IS_OSN(card))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_OSM(card))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		disc = QETH_DISCIPLINE_LAYER2;
 	else if (IS_VM_NIC(card))
 		disc = IS_IQD(card) ? QETH_DISCIPLINE_LAYER3 :
@@ -1960,9 +2030,12 @@ static void qeth_idx_init(struct qeth_card *card)
 		break;
 	case QETH_CARD_TYPE_OSD:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case QETH_CARD_TYPE_OSN:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		card->info.func_level = QETH_IDX_FUNC_LEVEL_OSD;
 		break;
 	default:
@@ -2520,12 +2593,16 @@ static int qeth_ulp_enable_cb(struct qeth_card *card, struct qeth_reply *reply,
 static u8 qeth_mpc_select_prot_type(struct qeth_card *card)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return IS_LAYER2(card) ? QETH_MPC_PROT_L2 : QETH_MPC_PROT_L3;
 =======
 	if (IS_OSN(card))
 		return QETH_PROT_OSN2;
 	return IS_LAYER2(card) ? QETH_PROT_LAYER2 : QETH_PROT_TCPIP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return IS_LAYER2(card) ? QETH_MPC_PROT_L2 : QETH_MPC_PROT_L3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int qeth_ulp_enable(struct qeth_card *card)
@@ -3082,6 +3159,7 @@ static void qeth_ipa_finalize_cmd(struct qeth_card *card,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void qeth_prepare_ipa_cmd(struct qeth_card *card,
 				 struct qeth_cmd_buffer *iob, u16 cmd_length)
 =======
@@ -3090,6 +3168,10 @@ void qeth_prepare_ipa_cmd(struct qeth_card *card, struct qeth_cmd_buffer *iob,
 			  bool (*match)(struct qeth_cmd_buffer *iob,
 					struct qeth_cmd_buffer *reply))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void qeth_prepare_ipa_cmd(struct qeth_card *card,
+				 struct qeth_cmd_buffer *iob, u16 cmd_length)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u8 prot_type = qeth_mpc_select_prot_type(card);
 	u16 total_length = iob->length;
@@ -3098,9 +3180,12 @@ void qeth_prepare_ipa_cmd(struct qeth_card *card, struct qeth_cmd_buffer *iob,
 		       iob->data);
 	iob->finalize = qeth_ipa_finalize_cmd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	iob->match = match;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memcpy(iob->data, IPA_PDU_HEADER, IPA_PDU_HEADER_SIZE);
 	memcpy(QETH_IPA_PDU_LEN_TOTAL(iob->data), &total_length, 2);
@@ -3112,9 +3197,12 @@ void qeth_prepare_ipa_cmd(struct qeth_card *card, struct qeth_cmd_buffer *iob,
 	memcpy(QETH_IPA_PDU_LEN_PDU3(iob->data), &cmd_length, 2);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(qeth_prepare_ipa_cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static bool qeth_ipa_match_reply(struct qeth_cmd_buffer *iob,
 				 struct qeth_cmd_buffer *reply)
@@ -3139,11 +3227,16 @@ struct qeth_cmd_buffer *qeth_ipa_alloc_cmd(struct qeth_card *card,
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	qeth_prepare_ipa_cmd(card, iob, data_length);
 	iob->match = qeth_ipa_match_reply;
 =======
 	qeth_prepare_ipa_cmd(card, iob, data_length, qeth_ipa_match_reply);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qeth_prepare_ipa_cmd(card, iob, data_length);
+	iob->match = qeth_ipa_match_reply;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hdr = &__ipa_cmd(iob)->hdr;
 	hdr->command = cmd_code;
@@ -3902,6 +3995,7 @@ static void qeth_qdio_output_handler(struct ccw_device *ccwdev,
 {
 	struct qeth_card *card        = (struct qeth_card *) card_ptr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	QETH_CARD_TEXT(card, 2, "achkcond");
 	netif_tx_stop_all_queues(card->dev);
@@ -3916,6 +4010,12 @@ static void qeth_qdio_output_handler(struct ccw_device *ccwdev,
 		qeth_schedule_recovery(card);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	QETH_CARD_TEXT(card, 2, "achkcond");
+	netif_tx_stop_all_queues(card->dev);
+	qeth_schedule_recovery(card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -3999,11 +4099,16 @@ static int qeth_get_elements_for_frags(struct sk_buff *skb)
  * skb's data (both its linear part and paged fragments).
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned int qeth_count_elements(struct sk_buff *skb,
 					unsigned int data_offset)
 =======
 unsigned int qeth_count_elements(struct sk_buff *skb, unsigned int data_offset)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static unsigned int qeth_count_elements(struct sk_buff *skb,
+					unsigned int data_offset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int elements = qeth_get_elements_for_frags(skb);
 	addr_t end = (addr_t)skb->data + skb_headlen(skb);
@@ -4014,9 +4119,12 @@ unsigned int qeth_count_elements(struct sk_buff *skb, unsigned int data_offset)
 	return elements;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(qeth_count_elements);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define QETH_HDR_CACHE_OBJ_SIZE		(sizeof(struct qeth_hdr_tso) + \
 					 MAX_TCP_HEADER)
@@ -4305,17 +4413,23 @@ static int __qeth_xmit(struct qeth_card *card, struct qeth_qdio_out_q *queue,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int qeth_do_send_packet(struct qeth_card *card,
 			       struct qeth_qdio_out_q *queue,
 			       struct sk_buff *skb, struct qeth_hdr *hdr,
 			       unsigned int offset, unsigned int hd_len,
 			       unsigned int elements_needed)
+<<<<<<< HEAD
 =======
 int qeth_do_send_packet(struct qeth_card *card, struct qeth_qdio_out_q *queue,
 			struct sk_buff *skb, struct qeth_hdr *hdr,
 			unsigned int offset, unsigned int hd_len,
 			int elements_needed)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int start_index = queue->next_buf_to_fill;
 	struct qeth_qdio_out_buffer *buffer;
@@ -4396,9 +4510,12 @@ out:
 	return rc;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(qeth_do_send_packet);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void qeth_fill_tso_ext(struct qeth_hdr_tso *hdr,
 			      unsigned int payload_len, struct sk_buff *skb,
@@ -4678,9 +4795,12 @@ static int qeth_mdio_read(struct net_device *dev, int phy_id, int regnum)
 		rc = BMCR_FULLDPLX;
 		if ((card->info.link_type != QETH_LINK_TYPE_GBIT_ETH) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		    (card->info.link_type != QETH_LINK_TYPE_OSN) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    (card->info.link_type != QETH_LINK_TYPE_10GBIT_ETH) &&
 		    (card->info.link_type != QETH_LINK_TYPE_25GBIT_ETH))
 			rc |= BMCR_SPEED100;
@@ -5393,12 +5513,15 @@ static struct ccw_device_id qeth_ids[] = {
 	{CCW_DEVICE_DEVTYPE(0x1731, 0x05, 0x1732, 0x05),
 					.driver_info = QETH_CARD_TYPE_IQD},
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_QETH_OSN
 	{CCW_DEVICE_DEVTYPE(0x1731, 0x06, 0x1732, 0x06),
 					.driver_info = QETH_CARD_TYPE_OSN},
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{CCW_DEVICE_DEVTYPE(0x1731, 0x02, 0x1732, 0x03),
 					.driver_info = QETH_CARD_TYPE_OSM},
 #ifdef CONFIG_QETH_OSX
@@ -5683,11 +5806,16 @@ static int qeth_do_reset(void *data)
 			 "Device successfully recovered!\n");
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		qeth_set_offline(card, disc, true);
 		ccwgroup_set_offline(card->gdev, false);
 =======
 		ccwgroup_set_offline(card->gdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		qeth_set_offline(card, disc, true);
+		ccwgroup_set_offline(card->gdev, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_warn(&card->gdev->dev,
 			 "The qeth device driver failed to recover an error on the device\n");
 	}
@@ -5763,6 +5891,7 @@ static void qeth_receive_skb(struct qeth_card *card, struct sk_buff *skb,
 
 	switch (hdr->hdr.l2.id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case QETH_HEADER_TYPE_OSN:
 		skb_push(skb, sizeof(*hdr));
@@ -5773,6 +5902,8 @@ static void qeth_receive_skb(struct qeth_card *card, struct sk_buff *skb,
 		card->osn_info.data_cb(skb);
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_QETH_L3)
 	case QETH_HEADER_TYPE_LAYER3:
 		qeth_l3_rebuild_skb(card, skb, hdr);
@@ -5888,6 +6019,7 @@ next_packet:
 		headroom = ETH_HLEN;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case QETH_HEADER_TYPE_OSN:
 		skb_len = hdr->hdr.osn.pdu_length;
@@ -5900,6 +6032,8 @@ next_packet:
 		headroom = sizeof(struct qeth_hdr);
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		if (hdr->hdr.l2.id & QETH_HEADER_MASK_INVAL)
 			QETH_CARD_STAT_INC(card, rx_frame_errors);
@@ -5918,11 +6052,15 @@ next_packet:
 	use_rx_sg = (card->options.cq == QETH_CQ_ENABLED) ||
 		    (skb_len > READ_ONCE(priv->rx_copybreak) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     !atomic_read(&card->force_alloc_skb));
 =======
 		     !atomic_read(&card->force_alloc_skb) &&
 		     !IS_OSN(card));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     !atomic_read(&card->force_alloc_skb));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (use_rx_sg) {
 		/* QETH_CQ_ENABLED only: */
@@ -6480,6 +6618,7 @@ void qeth_remove_discipline(struct qeth_card *card)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct device_type qeth_generic_devtype = {
 	.name = "qeth_generic",
 };
@@ -6493,6 +6632,11 @@ static const struct device_type qeth_osn_devtype = {
 	.name = "qeth_osn",
 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct device_type qeth_generic_devtype = {
+	.name = "qeth_generic",
+};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define DBF_NAME_LEN	20
 
@@ -6576,12 +6720,15 @@ static struct net_device *qeth_alloc_netdev(struct qeth_card *card)
 		dev = alloc_etherdev(sizeof(*priv));
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case QETH_CARD_TYPE_OSN:
 		dev = alloc_netdev(sizeof(*priv), "osn%d", NET_NAME_UNKNOWN,
 				   ether_setup);
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		dev = alloc_etherdev_mqs(sizeof(*priv), QETH_MAX_OUT_QUEUES, 1);
 	}
@@ -6596,10 +6743,14 @@ static struct net_device *qeth_alloc_netdev(struct qeth_card *card)
 	dev->ml_priv = card;
 	dev->watchdog_timeo = QETH_TX_TIMEOUT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev->min_mtu = 576;
 =======
 	dev->min_mtu = IS_OSN(card) ? 64 : 576;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev->min_mtu = 576;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 /* initialized when device first goes online: */
 	dev->max_mtu = 0;
 	dev->mtu = 0;
@@ -6607,12 +6758,16 @@ static struct net_device *qeth_alloc_netdev(struct qeth_card *card)
 	netif_carrier_off(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev->ethtool_ops = &qeth_ethtool_ops;
 	dev->priv_flags &= ~IFF_TX_SKB_SHARING;
 	dev->hw_features |= NETIF_F_SG;
 	dev->vlan_features |= NETIF_F_SG;
 	if (IS_IQD(card))
 		dev->features |= NETIF_F_SG;
+<<<<<<< HEAD
 =======
 	if (IS_OSN(card)) {
 		dev->ethtool_ops = &qeth_osn_ethtool_ops;
@@ -6625,6 +6780,8 @@ static struct net_device *qeth_alloc_netdev(struct qeth_card *card)
 			dev->features |= NETIF_F_SG;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return dev;
 }
@@ -6688,6 +6845,7 @@ static int qeth_core_probe_device(struct ccwgroup_device *gdev)
 		goto err_chp_desc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gdev->dev.groups = qeth_dev_groups;
 =======
 	if (IS_OSN(card))
@@ -6695,6 +6853,9 @@ static int qeth_core_probe_device(struct ccwgroup_device *gdev)
 	else
 		gdev->dev.groups = qeth_dev_groups;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gdev->dev.groups = qeth_dev_groups;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	enforced_disc = qeth_enforce_discipline(card);
 	switch (enforced_disc) {
@@ -6709,10 +6870,13 @@ static int qeth_core_probe_device(struct ccwgroup_device *gdev)
 			goto err_setup_disc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		gdev->dev.type = IS_OSN(card) ? &qeth_osn_devtype :
 						card->discipline->devtype;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 
@@ -6831,6 +6995,7 @@ static struct ccwgroup_driver qeth_core_ccwgroup_driver = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int qeth_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
 {
 	struct qeth_card *card = dev->ml_priv;
@@ -6855,15 +7020,24 @@ int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 	struct qeth_card *card = dev->ml_priv;
 	struct mii_ioctl_data *mii_data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int qeth_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
+{
+	struct qeth_card *card = dev->ml_priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rc = 0;
 
 	switch (cmd) {
 	case SIOC_QETH_ADP_SET_SNMP_CONTROL:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rc = qeth_snmp_command(card, data);
 =======
 		rc = qeth_snmp_command(card, rq->ifr_ifru.ifru_data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rc = qeth_snmp_command(card, data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case SIOC_QETH_GET_CARD_TYPE:
 		if ((IS_OSD(card) || IS_OSM(card) || IS_OSX(card)) &&
@@ -6871,6 +7045,9 @@ int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 			return 1;
 		return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOC_QETH_QUERY_OAT:
 		rc = qeth_query_oat_command(card, data);
 		break;
@@ -6893,8 +7070,11 @@ int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 	int rc = 0;
 
 	switch (cmd) {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOCGMIIPHY:
 		mii_data = if_mii(rq);
 		mii_data->phy_id = 0;
@@ -6908,6 +7088,7 @@ int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 				mii_data->phy_id, mii_data->reg_num);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	default:
 		return -EOPNOTSUPP;
 =======
@@ -6920,6 +7101,10 @@ int qeth_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 		else
 			rc = -EOPNOTSUPP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	default:
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (rc)
 		QETH_CARD_TEXT_(card, 2, "ioce%x", rc);

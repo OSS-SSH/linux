@@ -204,6 +204,9 @@ static void garp_attr_destroy(struct garp_applicant *app, struct garp_attr *attr
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void garp_attr_destroy_all(struct garp_applicant *app)
 {
 	struct rb_node *node, *next;
@@ -217,8 +220,11 @@ static void garp_attr_destroy_all(struct garp_applicant *app)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int garp_pdu_init(struct garp_applicant *app)
 {
 	struct sk_buff *skb;
@@ -626,9 +632,13 @@ void garp_uninit_applicant(struct net_device *dev, struct garp_application *appl
 	spin_lock_bh(&app->lock);
 	garp_gid_event(app, GARP_EVENT_TRANSMIT_PDU);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	garp_attr_destroy_all(app);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	garp_attr_destroy_all(app);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	garp_pdu_queue(app);
 	spin_unlock_bh(&app->lock);
 

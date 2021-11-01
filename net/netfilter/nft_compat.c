@@ -20,9 +20,13 @@
 #include <linux/netfilter_arp/arp_tables.h>
 #include <net/netfilter/nf_tables.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <net/netfilter/nf_log.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <net/netfilter/nf_log.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Used for matches where *info is larger than X byte */
 #define NFT_MATCH_LARGE_THRESH	192
@@ -262,6 +266,9 @@ nft_target_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
 
 	ret = xt_check_target(&par, size, proto, inv);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		if (ret == -ENOENT) {
 			const char *modname = NULL;
@@ -276,12 +283,17 @@ nft_target_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
 				return -EAGAIN;
 		}
 
+<<<<<<< HEAD
 		return ret;
 	}
 =======
 	if (ret < 0)
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The standard target cannot be used */
 	if (!target->target)
@@ -707,6 +719,7 @@ static int nfnl_compat_get_rcu(struct sk_buff *skb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = nfnetlink_unicast(skb2, info->net, NETLINK_CB(skb).portid);
 out_put:
 	rcu_read_lock();
@@ -723,6 +736,14 @@ out_put:
 	module_put(THIS_MODULE);
 	return ret == -EAGAIN ? -ENOBUFS : ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = nfnetlink_unicast(skb2, info->net, NETLINK_CB(skb).portid);
+out_put:
+	rcu_read_lock();
+	module_put(THIS_MODULE);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct nla_policy nfnl_compat_policy_get[NFTA_COMPAT_MAX+1] = {

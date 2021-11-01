@@ -58,10 +58,14 @@ static int mdev_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void mdev_remove(struct device *dev)
 =======
 static int mdev_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void mdev_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mdev_driver *drv =
 		container_of(dev->driver, struct mdev_driver, driver);
@@ -72,10 +76,13 @@ static int mdev_remove(struct device *dev)
 
 	mdev_detach_iommu(mdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int mdev_match(struct device *dev, struct device_driver *drv)

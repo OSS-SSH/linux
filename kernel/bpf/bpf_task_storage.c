@@ -318,10 +318,13 @@ const struct bpf_map_ops task_storage_map_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 BTF_ID_LIST_SINGLE(bpf_task_storage_btf_ids, struct, task_struct)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct bpf_func_proto bpf_task_storage_get_proto = {
 	.func = bpf_task_storage_get,
 	.gpl_only = false,
@@ -329,10 +332,14 @@ const struct bpf_func_proto bpf_task_storage_get_proto = {
 	.arg1_type = ARG_CONST_MAP_PTR,
 	.arg2_type = ARG_PTR_TO_BTF_ID,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.arg2_btf_id = &btf_task_struct_ids[0],
 =======
 	.arg2_btf_id = &bpf_task_storage_btf_ids[0],
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.arg2_btf_id = &btf_task_struct_ids[0],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.arg3_type = ARG_PTR_TO_MAP_VALUE_OR_NULL,
 	.arg4_type = ARG_ANYTHING,
 };
@@ -344,8 +351,12 @@ const struct bpf_func_proto bpf_task_storage_delete_proto = {
 	.arg1_type = ARG_CONST_MAP_PTR,
 	.arg2_type = ARG_PTR_TO_BTF_ID,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.arg2_btf_id = &btf_task_struct_ids[0],
 =======
 	.arg2_btf_id = &bpf_task_storage_btf_ids[0],
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.arg2_btf_id = &btf_task_struct_ids[0],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

@@ -4,6 +4,9 @@
 
 struct {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__uint(type, BPF_MAP_TYPE_ARRAY);
 	__uint(max_entries, 1);
 	__uint(key_size, sizeof(__u32));
@@ -11,8 +14,11 @@ struct {
 } nop_table SEC(".maps");
 
 struct {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__uint(type, BPF_MAP_TYPE_PROG_ARRAY);
 	__uint(max_entries, 3);
 	__uint(key_size, sizeof(__u32));
@@ -21,6 +27,9 @@ struct {
 
 int count = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int noise = 0;
 
 __always_inline int subprog_noise(void)
@@ -30,17 +39,25 @@ __always_inline int subprog_noise(void)
 	bpf_map_lookup_elem(&nop_table, &key);
 	return 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 __noinline
 int subprog_tail_2(struct __sk_buff *skb)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (noise)
 		subprog_noise();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (noise)
+		subprog_noise();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bpf_tail_call_static(skb, &jmp_table, 2);
 	return skb->len * 3;
 }

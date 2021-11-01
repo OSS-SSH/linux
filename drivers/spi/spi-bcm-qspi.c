@@ -1251,19 +1251,29 @@ static void bcm_qspi_hw_init(struct bcm_qspi *qspi)
 static void bcm_qspi_hw_uninit(struct bcm_qspi *qspi)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 status = bcm_qspi_read(qspi, MSPI, MSPI_MSPI_STATUS);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 status = bcm_qspi_read(qspi, MSPI, MSPI_MSPI_STATUS);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bcm_qspi_write(qspi, MSPI, MSPI_SPCR2, 0);
 	if (has_bspi(qspi))
 		bcm_qspi_write(qspi, MSPI, MSPI_WRITE_LOCK, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* clear interrupt */
 	bcm_qspi_write(qspi, MSPI, MSPI_MSPI_STATUS, status & ~1);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* clear interrupt */
+	bcm_qspi_write(qspi, MSPI, MSPI_MSPI_STATUS, status & ~1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct spi_controller_mem_ops bcm_qspi_mem_ops = {
@@ -1408,6 +1418,9 @@ int bcm_qspi_probe(struct platform_device *pdev,
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Some SoCs integrate spi controller (e.g., its interrupt bits)
 	 * in specific ways
@@ -1449,8 +1462,11 @@ int bcm_qspi_probe(struct platform_device *pdev,
 	 */
 	bcm_qspi_hw_uninit(qspi);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (val = 0; val < num_irqs; val++) {
 		irq = -1;
 		name = qspi_irq_tab[val].irq_name;
@@ -1488,6 +1504,7 @@ int bcm_qspi_probe(struct platform_device *pdev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * Some SoCs integrate spi controller (e.g., its interrupt bits)
@@ -1522,6 +1539,8 @@ int bcm_qspi_probe(struct platform_device *pdev,
 	qspi->max_speed_hz = qspi->base_clk / (bcm_qspi_spbr_min(qspi) * 2);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bcm_qspi_hw_init(qspi);
 	init_completion(&qspi->mspi_done);
 	init_completion(&qspi->bspi_done);

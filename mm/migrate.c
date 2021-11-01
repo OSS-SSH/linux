@@ -50,9 +50,13 @@
 #include <linux/ptrace.h>
 #include <linux/oom.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/memory.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/memory.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/tlbflush.h>
 
@@ -542,6 +546,7 @@ int migrate_huge_page_move_mapping(struct address_space *mapping,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * Gigantic pages are so large that we do not guarantee that page++ pointer
  * arithmetic will work across the entire page.  We need something more
@@ -592,6 +597,8 @@ void copy_huge_page(struct page *dst, struct page *src)
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Copy the page to its new location
  */
 void migrate_page_states(struct page *newpage, struct page *page)
@@ -1015,10 +1022,14 @@ static int __unmap_and_move(struct page *page, struct page *newpage,
 {
 	int rc = -EAGAIN;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool page_was_mapped = false;
 =======
 	int page_was_mapped = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool page_was_mapped = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct anon_vma *anon_vma = NULL;
 	bool is_lru = !__PageMovable(page);
 
@@ -1067,10 +1078,14 @@ static int __unmap_and_move(struct page *page, struct page *newpage,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * By try_to_migrate(), page->mapcount goes down to 0 here. In this case,
 =======
 	 * By try_to_unmap(), page->mapcount goes down to 0 here. In this case,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * By try_to_migrate(), page->mapcount goes down to 0 here. In this case,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * we cannot notice that anon_vma is freed while we migrates a page.
 	 * This get_anon_vma() delays freeing anon_vma pointer until the end
 	 * of migration. File cache pages are no problem because of page_lock()
@@ -1126,10 +1141,14 @@ static int __unmap_and_move(struct page *page, struct page *newpage,
 				page);
 		try_to_migrate(page, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		page_was_mapped = true;
 =======
 		page_was_mapped = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		page_was_mapped = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!page_mapped(page))
@@ -1167,6 +1186,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * node_demotion[] example:
@@ -1241,8 +1263,11 @@ int next_demotion_node(int node)
 	return target;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Obtain the lock on page, remove all ptes and migrate the page
  * to the newly allocated page in newpage.
@@ -1499,10 +1524,15 @@ static inline int try_split_thp(struct page *page, struct page **page2,
  *			page migration, if any.
  * @reason:		The reason for page migration.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @ret_succeeded:	Set to the number of pages migrated successfully if
  *			the caller passes a non-NULL pointer.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @ret_succeeded:	Set to the number of pages migrated successfully if
+ *			the caller passes a non-NULL pointer.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * The function returns after 10 attempts or if no pages are movable any more
  * because the list has become empty or no retryable pages exist any more.
@@ -1514,10 +1544,14 @@ static inline int try_split_thp(struct page *page, struct page **page2,
 int migrate_pages(struct list_head *from, new_page_t get_new_page,
 		free_page_t put_new_page, unsigned long private,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		enum migrate_mode mode, int reason, unsigned int *ret_succeeded)
 =======
 		enum migrate_mode mode, int reason)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		enum migrate_mode mode, int reason, unsigned int *ret_succeeded)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int retry = 1;
 	int thp_retry = 1;
@@ -1673,11 +1707,17 @@ out:
 		current->flags &= ~PF_SWAPWRITE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret_succeeded)
 		*ret_succeeded = nr_succeeded;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret_succeeded)
+		*ret_succeeded = nr_succeeded;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -1748,10 +1788,14 @@ static int do_move_pages_to_node(struct mm_struct *mm,
 
 	err = migrate_pages(pagelist, alloc_migration_target, NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL, NULL);
 =======
 			(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		putback_movable_pages(pagelist);
 	return err;
@@ -1984,6 +2028,9 @@ set_status:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int get_compat_pages_array(const void __user *chunk_pages[],
 				  const void __user * __user *pages,
 				  unsigned long chunk_nr)
@@ -2001,8 +2048,11 @@ static int get_compat_pages_array(const void __user *chunk_pages[],
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Determine the nodes of a user array of pages and store it in
  * a user array of status.
@@ -2023,6 +2073,9 @@ static int do_pages_stat(struct mm_struct *mm, unsigned long nr_pages,
 			chunk_nr = DO_PAGES_STAT_CHUNK_NR;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (in_compat_syscall()) {
 			if (get_compat_pages_array(chunk_pages, pages,
 						   chunk_nr))
@@ -2032,10 +2085,13 @@ static int do_pages_stat(struct mm_struct *mm, unsigned long nr_pages,
 				      chunk_nr * sizeof(*chunk_pages)))
 				break;
 		}
+<<<<<<< HEAD
 =======
 		if (copy_from_user(chunk_pages, pages, chunk_nr * sizeof(*chunk_pages)))
 			break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		do_pages_stat_array(mm, chunk_nr, chunk_pages, chunk_status);
 
@@ -2139,6 +2195,7 @@ SYSCALL_DEFINE6(move_pages, pid_t, pid, unsigned long, nr_pages,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_COMPAT
 COMPAT_SYSCALL_DEFINE6(move_pages, pid_t, pid, compat_ulong_t, nr_pages,
@@ -2163,6 +2220,8 @@ COMPAT_SYSCALL_DEFINE6(move_pages, pid_t, pid, compat_ulong_t, nr_pages,
 #endif /* CONFIG_COMPAT */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_NUMA_BALANCING
 /*
  * Returns true if this is a safe migration target node for misplaced NUMA
@@ -2226,9 +2285,13 @@ static int numamigrate_isolate_page(pg_data_t *pgdat, struct page *page)
 {
 	int page_lru;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int nr_pages = thp_nr_pages(page);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int nr_pages = thp_nr_pages(page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	VM_BUG_ON_PAGE(compound_order(page) && !PageTransHuge(page), page);
 
@@ -2238,10 +2301,14 @@ static int numamigrate_isolate_page(pg_data_t *pgdat, struct page *page)
 
 	/* Avoid migrating to a node that is nearly full */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!migrate_balanced_pgdat(pgdat, nr_pages))
 =======
 	if (!migrate_balanced_pgdat(pgdat, compound_nr(page)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!migrate_balanced_pgdat(pgdat, nr_pages))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	if (isolate_lru_page(page))
@@ -2250,10 +2317,14 @@ static int numamigrate_isolate_page(pg_data_t *pgdat, struct page *page)
 	page_lru = page_is_file_lru(page);
 	mod_node_page_state(page_pgdat(page), NR_ISOLATED_ANON + page_lru,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    nr_pages);
 =======
 				thp_nr_pages(page));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    nr_pages);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Isolating the page has taken another reference, so the
@@ -2279,10 +2350,14 @@ int migrate_misplaced_page(struct page *page, struct vm_area_struct *vma,
 	new_page_t *new;
 	bool compound;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int nr_pages = thp_nr_pages(page);
 =======
 	unsigned int nr_pages = thp_nr_pages(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int nr_pages = thp_nr_pages(page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * PTE mapped THP or HugeTLB page can't reach here so the page could
@@ -2318,10 +2393,14 @@ int migrate_misplaced_page(struct page *page, struct vm_area_struct *vma,
 	list_add(&page->lru, &migratepages);
 	nr_remaining = migrate_pages(&migratepages, *new, NULL, node,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     MIGRATE_ASYNC, MR_NUMA_MISPLACED, NULL);
 =======
 				     MIGRATE_ASYNC, MR_NUMA_MISPLACED);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     MIGRATE_ASYNC, MR_NUMA_MISPLACED, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (nr_remaining) {
 		if (!list_empty(&migratepages)) {
 			list_del(&page->lru);
@@ -3201,6 +3280,9 @@ void migrate_vma_finalize(struct migrate_vma *migrate)
 EXPORT_SYMBOL(migrate_vma_finalize);
 #endif /* CONFIG_DEVICE_PRIVATE */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if defined(CONFIG_MEMORY_HOTPLUG)
 /* Disable reclaim-based migration. */
@@ -3430,5 +3512,8 @@ static int __init migrate_on_reclaim_init(void)
 }
 late_initcall(migrate_on_reclaim_init);
 #endif /* CONFIG_MEMORY_HOTPLUG */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

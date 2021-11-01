@@ -75,6 +75,7 @@ int ioprio_check_cap(int ioprio)
 			/* rt has prio field too */
 		case IOPRIO_CLASS_BE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (data >= IOPRIO_NR_LEVELS || data < 0)
 				return -EINVAL;
 =======
@@ -82,6 +83,10 @@ int ioprio_check_cap(int ioprio)
 				return -EINVAL;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (data >= IOPRIO_NR_LEVELS || data < 0)
+				return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		case IOPRIO_CLASS_IDLE:
 			break;
@@ -177,10 +182,14 @@ static int get_task_ioprio(struct task_struct *p)
 	if (ret)
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = IOPRIO_DEFAULT;
 =======
 	ret = IOPRIO_PRIO_VALUE(IOPRIO_CLASS_NONE, IOPRIO_NORM);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = IOPRIO_DEFAULT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	task_lock(p);
 	if (p->io_context)
 		ret = p->io_context->ioprio;
@@ -193,6 +202,7 @@ int ioprio_best(unsigned short aprio, unsigned short bprio)
 {
 	if (!ioprio_valid(aprio))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		aprio = IOPRIO_DEFAULT;
 	if (!ioprio_valid(bprio))
 		bprio = IOPRIO_DEFAULT;
@@ -201,6 +211,11 @@ int ioprio_best(unsigned short aprio, unsigned short bprio)
 	if (!ioprio_valid(bprio))
 		bprio = IOPRIO_PRIO_VALUE(IOPRIO_CLASS_BE, IOPRIO_NORM);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		aprio = IOPRIO_DEFAULT;
+	if (!ioprio_valid(bprio))
+		bprio = IOPRIO_DEFAULT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return min(aprio, bprio);
 }

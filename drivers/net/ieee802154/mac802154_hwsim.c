@@ -419,10 +419,14 @@ static int hwsim_new_edge_nl(struct sk_buff *msg, struct genl_info *info)
 	u32 v0, v1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!info->attrs[MAC802154_HWSIM_ATTR_RADIO_ID] ||
 =======
 	if (!info->attrs[MAC802154_HWSIM_ATTR_RADIO_ID] &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!info->attrs[MAC802154_HWSIM_ATTR_RADIO_ID] ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !info->attrs[MAC802154_HWSIM_ATTR_RADIO_EDGE])
 		return -EINVAL;
 
@@ -533,10 +537,14 @@ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
 	u8 lqi;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!info->attrs[MAC802154_HWSIM_ATTR_RADIO_ID] ||
 =======
 	if (!info->attrs[MAC802154_HWSIM_ATTR_RADIO_ID] &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!info->attrs[MAC802154_HWSIM_ATTR_RADIO_ID] ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !info->attrs[MAC802154_HWSIM_ATTR_RADIO_EDGE])
 		return -EINVAL;
 
@@ -544,10 +552,14 @@ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!edge_attrs[MAC802154_HWSIM_EDGE_ATTR_ENDPOINT_ID] ||
 =======
 	if (!edge_attrs[MAC802154_HWSIM_EDGE_ATTR_ENDPOINT_ID] &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!edge_attrs[MAC802154_HWSIM_EDGE_ATTR_ENDPOINT_ID] ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !edge_attrs[MAC802154_HWSIM_EDGE_ATTR_LQI])
 		return -EINVAL;
 

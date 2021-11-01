@@ -317,9 +317,12 @@ static const struct drm_simple_display_pipe_funcs tve200_display_funcs = {
 	.disable = tve200_display_disable,
 	.update = tve200_display_update,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.prepare_fb = drm_gem_simple_display_pipe_prepare_fb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.enable_vblank = tve200_display_enable_vblank,
 	.disable_vblank = tve200_display_disable_vblank,
 };

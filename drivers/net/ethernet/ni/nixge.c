@@ -994,15 +994,21 @@ static void nixge_ethtools_get_drvinfo(struct net_device *ndev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 nixge_ethtools_get_coalesce(struct net_device *ndev,
 			    struct ethtool_coalesce *ecoalesce,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int nixge_ethtools_get_coalesce(struct net_device *ndev,
 				       struct ethtool_coalesce *ecoalesce)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nixge_priv *priv = netdev_priv(ndev);
 	u32 regval = 0;
@@ -1017,15 +1023,21 @@ static int nixge_ethtools_get_coalesce(struct net_device *ndev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 nixge_ethtools_set_coalesce(struct net_device *ndev,
 			    struct ethtool_coalesce *ecoalesce,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int nixge_ethtools_set_coalesce(struct net_device *ndev,
 				       struct ethtool_coalesce *ecoalesce)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nixge_priv *priv = netdev_priv(ndev);
 
@@ -1240,9 +1252,12 @@ static int nixge_of_get_resources(struct platform_device *pdev)
 	const struct of_device_id *of_id;
 	enum nixge_version version;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct resource *ctrlres;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *ndev;
 	struct nixge_priv *priv;
 
@@ -1262,6 +1277,7 @@ static int nixge_of_get_resources(struct platform_device *pdev)
 		return PTR_ERR(priv->dma_regs);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (version <= NIXGE_V2)
 		priv->ctrl_regs = priv->dma_regs + NIXGE_REG_CTRL_OFFSET;
 	else
@@ -1275,6 +1291,12 @@ static int nixge_of_get_resources(struct platform_device *pdev)
 		priv->ctrl_regs = devm_ioremap_resource(&pdev->dev, ctrlres);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (version <= NIXGE_V2)
+		priv->ctrl_regs = priv->dma_regs + NIXGE_REG_CTRL_OFFSET;
+	else
+		priv->ctrl_regs = devm_platform_ioremap_resource_byname(pdev, "ctrl");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(priv->ctrl_regs)) {
 		netdev_err(ndev, "failed to map ctrl regs\n");
 		return PTR_ERR(priv->ctrl_regs);

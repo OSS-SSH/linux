@@ -4452,14 +4452,20 @@ static const struct alg_test_desc alg_test_descs[] = {
 		}
 	}, {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "cbcmac(sm4)",
 		.test = alg_test_hash,
 		.suite = {
 			.hash = __VECS(sm4_cbcmac_tv_template)
 		}
 	}, {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "ccm(aes)",
 		.generic_driver = "ccm_base(ctr(aes-generic),cbcmac(aes-generic))",
 		.test = alg_test_aead,
@@ -4472,6 +4478,9 @@ static const struct alg_test_desc alg_test_descs[] = {
 		}
 	}, {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "ccm(sm4)",
 		.generic_driver = "ccm_base(ctr(sm4-generic),cbcmac(sm4-generic))",
 		.test = alg_test_aead,
@@ -4482,8 +4491,11 @@ static const struct alg_test_desc alg_test_descs[] = {
 			}
 		}
 	}, {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "cfb(aes)",
 		.test = alg_test_skcipher,
 		.fips_allowed = 1,
@@ -4518,14 +4530,20 @@ static const struct alg_test_desc alg_test_descs[] = {
 		}
 	}, {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "cmac(sm4)",
 		.test = alg_test_hash,
 		.suite = {
 			.hash = __VECS(sm4_cmac128_tv_template)
 		}
 	}, {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "compress_null",
 		.test = alg_test_null,
 	}, {
@@ -5000,6 +5018,9 @@ static const struct alg_test_desc alg_test_descs[] = {
 		}
 	}, {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "gcm(sm4)",
 		.generic_driver = "gcm_base(ctr(sm4-generic),ghash-generic)",
 		.test = alg_test_aead,
@@ -5007,8 +5028,11 @@ static const struct alg_test_desc alg_test_descs[] = {
 			.aead = __VECS(sm4_gcm_tv_template)
 		}
 	}, {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.alg = "ghash",
 		.test = alg_test_hash,
 		.fips_allowed = 1,

@@ -644,6 +644,7 @@ qca8k_mdio_busy_wait(struct mii_bus *bus, u32 reg, u32 mask)
 
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 qca8k_mdio_write(struct mii_bus *bus, int phy, int regnum, u16 data)
 {
 =======
@@ -652,6 +653,10 @@ qca8k_mdio_write(struct mii_bus *salve_bus, int phy, int regnum, u16 data)
 	struct qca8k_priv *priv = salve_bus->priv;
 	struct mii_bus *bus = priv->bus;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+qca8k_mdio_write(struct mii_bus *bus, int phy, int regnum, u16 data)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 r1, r2, page;
 	u32 val;
 	int ret;
@@ -688,6 +693,7 @@ exit:
 
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 qca8k_mdio_read(struct mii_bus *bus, int phy, int regnum)
 {
 =======
@@ -696,6 +702,10 @@ qca8k_mdio_read(struct mii_bus *salve_bus, int phy, int regnum)
 	struct qca8k_priv *priv = salve_bus->priv;
 	struct mii_bus *bus = priv->bus;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+qca8k_mdio_read(struct mii_bus *bus, int phy, int regnum)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 r1, r2, page;
 	u32 val;
 	int ret;
@@ -738,6 +748,9 @@ exit:
 
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 qca8k_internal_mdio_write(struct mii_bus *slave_bus, int phy, int regnum, u16 data)
 {
 	struct qca8k_priv *priv = slave_bus->priv;
@@ -756,8 +769,11 @@ qca8k_internal_mdio_read(struct mii_bus *slave_bus, int phy, int regnum)
 }
 
 static int
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 qca8k_phy_write(struct dsa_switch *ds, int port, int regnum, u16 data)
 {
 	struct qca8k_priv *priv = ds->priv;
@@ -807,12 +823,17 @@ qca8k_mdio_register(struct qca8k_priv *priv, struct device_node *mdio)
 	bus->priv = (void *)priv;
 	bus->name = "qca8k slave mii";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bus->read = qca8k_internal_mdio_read;
 	bus->write = qca8k_internal_mdio_write;
 =======
 	bus->read = qca8k_mdio_read;
 	bus->write = qca8k_mdio_write;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bus->read = qca8k_internal_mdio_read;
+	bus->write = qca8k_internal_mdio_write;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snprintf(bus->id, MII_BUS_ID_SIZE, "qca8k-%d",
 		 ds->index);
 
@@ -1903,16 +1924,25 @@ qca8k_sw_remove(struct mdio_device *mdiodev)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!priv)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!priv)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < QCA8K_NUM_PORTS; i++)
 		qca8k_port_set_status(priv, i, 0);
 
 	dsa_unregister_switch(priv->ds);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
 }
@@ -1927,8 +1957,11 @@ static void qca8k_sw_shutdown(struct mdio_device *mdiodev)
 	dsa_switch_shutdown(priv->ds);
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP
@@ -1986,9 +2019,13 @@ static struct mdio_driver qca8kmdio_driver = {
 	.probe  = qca8k_sw_probe,
 	.remove = qca8k_sw_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.shutdown = qca8k_sw_shutdown,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown = qca8k_sw_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.mdiodrv.driver = {
 		.name = "qca8k",
 		.of_match_table = qca8k_of_match,

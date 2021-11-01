@@ -5,9 +5,13 @@
 #include <linux/dsa/sja1105.h>
 #include <linux/dsa/8021q.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/skbuff.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/skbuff.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/packing.h>
 #include "dsa_priv.h"
 
@@ -58,13 +62,19 @@
 #define SJA1110_MAX_PADDING_LEN			15
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum sja1110_meta_tstamp {
 	SJA1110_META_TSTAMP_TX = 0,
 	SJA1110_META_TSTAMP_RX = 1,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Similar to is_link_local_ether_addr(hdr->h_dest) but also covers PTP */
 static inline bool sja1105_is_link_local(const struct sk_buff *skb)
 {
@@ -127,6 +137,7 @@ static inline bool sja1105_is_meta_frame(const struct sk_buff *skb)
 	return true;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* Calls sja1105_port_deferred_xmit in sja1105_main.c */
 static struct sk_buff *sja1105_defer_xmit(struct dsa_port *dp,
@@ -241,43 +252,17 @@ static struct sk_buff *sja1105_pvid_tag_control_pkt(struct dsa_port *dp,
 			       SJA1105_DEFAULT_VLAN);
 =======
 static bool sja1105_can_use_vlan_as_tags(const struct sk_buff *skb)
-{
-	struct vlan_ethhdr *hdr = vlan_eth_hdr(skb);
-	u16 vlan_tci;
-
-	if (hdr->h_vlan_proto == htons(ETH_P_SJA1105))
-		return true;
-
-	if (hdr->h_vlan_proto != htons(ETH_P_8021Q) &&
-	    !skb_vlan_tag_present(skb))
-		return false;
-
-	if (skb_vlan_tag_present(skb))
-		vlan_tci = skb_vlan_tag_get(skb);
-	else
-		vlan_tci = ntohs(hdr->h_vlan_TCI);
-
-	return vid_is_dsa_8021q(vlan_tci & VLAN_VID_MASK);
-}
-
-/* This is the first time the tagger sees the frame on RX.
- * Figure out if we can decode it.
- */
-static bool sja1105_filter(const struct sk_buff *skb, struct net_device *dev)
-{
-	if (sja1105_can_use_vlan_as_tags(skb))
-		return true;
-	if (sja1105_is_link_local(skb))
-		return true;
-	if (sja1105_is_meta_frame(skb))
-		return true;
-	return false;
-}
-
+=======
 /* Calls sja1105_port_deferred_xmit in sja1105_main.c */
-static struct sk_buff *sja1105_defer_xmit(struct sja1105_port *sp,
+static struct sk_buff *sja1105_defer_xmit(struct dsa_port *dp,
 					  struct sk_buff *skb)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	struct sja1105_port *sp = dp->priv;
+
+	if (!dsa_port_is_sja1105(dp))
+		return skb;
+
 	/* Increase refcount so the kfree_skb in dsa_slave_xmit
 	 * won't really free the packet.
 	 */
@@ -287,10 +272,104 @@ static struct sk_buff *sja1105_defer_xmit(struct sja1105_port *sp,
 	return NULL;
 }
 
-static u16 sja1105_xmit_tpid(struct sja1105_port *sp)
+/* Send VLAN tags with a TPID that blends in with whatever VLAN protocol a
+ * bridge spanning ports of this switch might have.
+ */
+static u16 sja1105_xmit_tpid(struct dsa_port *dp)
 {
+	struct dsa_switch *ds = dp->ds;
+	struct dsa_port *other_dp;
+	u16 proto;
+
+	/* Since VLAN awareness is global, then if this port is VLAN-unaware,
+	 * all ports are. Use the VLAN-unaware TPID used for tag_8021q.
+	 */
+	if (!dsa_port_is_vlan_filtering(dp))
+		return ETH_P_SJA1105;
+
+	/* Port is VLAN-aware, so there is a bridge somewhere (a single one,
+	 * we're sure about that). It may not be on this port though, so we
+	 * need to find it.
+	 */
+	list_for_each_entry(other_dp, &ds->dst->ports, list) {
+		if (other_dp->ds != ds)
+			continue;
+
+		if (!other_dp->bridge_dev)
+			continue;
+
+		/* Error is returned only if CONFIG_BRIDGE_VLAN_FILTERING,
+		 * which seems pointless to handle, as our port cannot become
+		 * VLAN-aware in that case.
+		 */
+		br_vlan_get_proto(other_dp->bridge_dev, &proto);
+
+		return proto;
+	}
+
+	WARN_ONCE(1, "Port is VLAN-aware but cannot find associated bridge!\n");
+
+	return ETH_P_SJA1105;
+}
+
+static struct sk_buff *sja1105_imprecise_xmit(struct sk_buff *skb,
+					      struct net_device *netdev)
+{
+	struct dsa_port *dp = dsa_slave_to_port(netdev);
+	struct net_device *br = dp->bridge_dev;
+	u16 tx_vid;
+
+	/* If the port is under a VLAN-aware bridge, just slide the
+	 * VLAN-tagged packet into the FDB and hope for the best.
+	 * This works because we support a single VLAN-aware bridge
+	 * across the entire dst, and its VLANs cannot be shared with
+	 * any standalone port.
+	 */
+	if (br_vlan_enabled(br))
+		return skb;
+
+	/* If the port is under a VLAN-unaware bridge, use an imprecise
+	 * TX VLAN that targets the bridge's entire broadcast domain,
+	 * instead of just the specific port.
+	 */
+	tx_vid = dsa_8021q_bridge_tx_fwd_offload_vid(dp->bridge_num);
+
+	return dsa_8021q_xmit(skb, netdev, sja1105_xmit_tpid(dp), tx_vid);
+}
+
+/* Transform untagged control packets into pvid-tagged control packets so that
+ * all packets sent by this tagger are VLAN-tagged and we can configure the
+ * switch to drop untagged packets coming from the DSA master.
+ */
+static struct sk_buff *sja1105_pvid_tag_control_pkt(struct dsa_port *dp,
+						    struct sk_buff *skb, u8 pcp)
+{
+<<<<<<< HEAD
 	return sp->xmit_tpid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__be16 xmit_tpid = htons(sja1105_xmit_tpid(dp));
+	struct vlan_ethhdr *hdr;
+
+	/* If VLAN tag is in hwaccel area, move it to the payload
+	 * to deal with both cases uniformly and to ensure that
+	 * the VLANs are added in the right order.
+	 */
+	if (unlikely(skb_vlan_tag_present(skb))) {
+		skb = __vlan_hwaccel_push_inside(skb);
+		if (!skb)
+			return NULL;
+	}
+
+	hdr = (struct vlan_ethhdr *)skb_mac_header(skb);
+
+	/* If skb is already VLAN-tagged, leave that VLAN ID in place */
+	if (hdr->h_vlan_proto == xmit_tpid)
+		return skb;
+
+	return vlan_insert_tag(skb, xmit_tpid, (pcp << VLAN_PRIO_SHIFT) |
+			       SJA1105_DEFAULT_VLAN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct sk_buff *sja1105_xmit(struct sk_buff *skb,
@@ -302,20 +381,30 @@ static struct sk_buff *sja1105_xmit(struct sk_buff *skb,
 	u8 pcp = netdev_txq_to_tc(netdev, queue_mapping);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->offload_fwd_mark)
 		return sja1105_imprecise_xmit(skb, netdev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb->offload_fwd_mark)
+		return sja1105_imprecise_xmit(skb, netdev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Transmitting management traffic does not rely upon switch tagging,
 	 * but instead SPI-installed management routes. Part 2 of this
 	 * is the .port_deferred_xmit driver callback.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(sja1105_is_link_local(skb))) {
 		skb = sja1105_pvid_tag_control_pkt(dp, skb, pcp);
 		if (!skb)
 			return NULL;
+<<<<<<< HEAD
 
 		return sja1105_defer_xmit(dp, skb);
 	}
@@ -327,6 +416,13 @@ static struct sk_buff *sja1105_xmit(struct sk_buff *skb,
 
 	return dsa_8021q_xmit(skb, netdev, sja1105_xmit_tpid(dp->priv),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		return sja1105_defer_xmit(dp, skb);
+	}
+
+	return dsa_8021q_xmit(skb, netdev, sja1105_xmit_tpid(dp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     ((pcp << VLAN_PRIO_SHIFT) | tx_vid));
 }
 
@@ -339,24 +435,34 @@ static struct sk_buff *sja1110_xmit(struct sk_buff *skb,
 	u16 queue_mapping = skb_get_queue_mapping(skb);
 	u8 pcp = netdev_txq_to_tc(netdev, queue_mapping);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct ethhdr *eth_hdr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__be32 *tx_trailer;
 	__be16 *tx_header;
 	int trailer_pos;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (skb->offload_fwd_mark)
 		return sja1105_imprecise_xmit(skb, netdev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb->offload_fwd_mark)
+		return sja1105_imprecise_xmit(skb, netdev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Transmitting control packets is done using in-band control
 	 * extensions, while data packets are transmitted using
 	 * tag_8021q TX VLANs.
 	 */
 	if (likely(!sja1105_is_link_local(skb)))
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return dsa_8021q_xmit(skb, netdev, sja1105_xmit_tpid(dp),
 				     ((pcp << VLAN_PRIO_SHIFT) | tx_vid));
@@ -380,26 +486,37 @@ static struct sk_buff *sja1110_xmit(struct sk_buff *skb,
 			     SJA1110_TX_HEADER_TRAILER_POS(trailer_pos));
 =======
 		return dsa_8021q_xmit(skb, netdev, sja1105_xmit_tpid(dp->priv),
+=======
+		return dsa_8021q_xmit(skb, netdev, sja1105_xmit_tpid(dp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     ((pcp << VLAN_PRIO_SHIFT) | tx_vid));
+
+	skb = sja1105_pvid_tag_control_pkt(dp, skb, pcp);
+	if (!skb)
+		return NULL;
 
 	skb_push(skb, SJA1110_HEADER_LEN);
 
-	/* Move Ethernet header to the left, making space for DSA tag */
-	memmove(skb->data, skb->data + SJA1110_HEADER_LEN, 2 * ETH_ALEN);
+	dsa_alloc_etype_header(skb, SJA1110_HEADER_LEN);
 
 	trailer_pos = skb->len;
 
-	/* On TX, skb->data points to skb_mac_header(skb) */
-	eth_hdr = (struct ethhdr *)skb->data;
-	tx_header = (__be16 *)(eth_hdr + 1);
+	tx_header = dsa_etype_header_pos_tx(skb);
 	tx_trailer = skb_put(skb, SJA1110_TX_TRAILER_LEN);
 
+<<<<<<< HEAD
 	eth_hdr->h_proto = htons(ETH_P_SJA1110);
 
 	*tx_header = htons(SJA1110_HEADER_HOST_TO_SWITCH |
 			   SJA1110_TX_HEADER_HAS_TRAILER |
 			   SJA1110_TX_HEADER_TRAILER_POS(trailer_pos));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tx_header[0] = htons(ETH_P_SJA1110);
+	tx_header[1] = htons(SJA1110_HEADER_HOST_TO_SWITCH |
+			     SJA1110_TX_HEADER_HAS_TRAILER |
+			     SJA1110_TX_HEADER_TRAILER_POS(trailer_pos));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*tx_trailer = cpu_to_be32(SJA1110_TX_TRAILER_PRIO(pcp) |
 				  SJA1110_TX_TRAILER_SWITCHID(dp->ds->index) |
 				  SJA1110_TX_TRAILER_DESTPORTS(BIT(dp->index)));
@@ -407,10 +524,14 @@ static struct sk_buff *sja1110_xmit(struct sk_buff *skb,
 		u8 ts_id = SJA1105_SKB_CB(clone)->ts_id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tx_header[1] |= htons(SJA1110_TX_HEADER_TAKE_TS);
 =======
 		*tx_header |= htons(SJA1110_TX_HEADER_TAKE_TS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tx_header[1] |= htons(SJA1110_TX_HEADER_TAKE_TS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*tx_trailer |= cpu_to_be32(SJA1110_TX_TRAILER_TSTAMP_ID(ts_id));
 	}
 
@@ -454,6 +575,7 @@ static struct sk_buff
 				bool is_meta)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct sja1105_port *sp;
 	struct dsa_port *dp;
@@ -462,19 +584,27 @@ static struct sk_buff
 	sp = dp->priv;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Step 1: A timestampable frame was received.
 	 * Buffer it until we get its meta frame.
 	 */
 	if (is_link_local) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct dsa_port *dp = dsa_slave_to_port(skb->dev);
 		struct sja1105_port *sp = dp->priv;
 
 		if (unlikely(!dsa_port_is_sja1105(dp)))
 			return skb;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!test_bit(SJA1105_HWTS_RX_EN, &sp->data->state))
 			/* Do normal processing. */
 			return skb;
@@ -508,6 +638,7 @@ static struct sk_buff
 	 */
 	} else if (is_meta) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct dsa_port *dp = dsa_slave_to_port(skb->dev);
 		struct sja1105_port *sp = dp->priv;
 		struct sk_buff *stampable_skb;
@@ -519,6 +650,15 @@ static struct sk_buff
 		struct sk_buff *stampable_skb;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct dsa_port *dp = dsa_slave_to_port(skb->dev);
+		struct sja1105_port *sp = dp->priv;
+		struct sk_buff *stampable_skb;
+
+		if (unlikely(!dsa_port_is_sja1105(dp)))
+			return skb;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Drop the meta frame if we're not in the right state
 		 * to process it.
 		 */
@@ -561,6 +701,7 @@ static struct sk_buff
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void sja1105_decode_subvlan(struct sk_buff *skb, u16 subvlan)
 {
@@ -577,6 +718,8 @@ static void sja1105_decode_subvlan(struct sk_buff *skb, u16 subvlan)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool sja1105_skb_has_tag_8021q(const struct sk_buff *skb)
 {
 	u16 tpid = ntohs(eth_hdr(skb)->h_proto);
@@ -591,6 +734,9 @@ static bool sja1110_skb_has_inband_control_extension(const struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* If the VLAN in the packet is a tag_8021q one, set @source_port and
  * @switch_id and strip the header. Otherwise set @vid and keep it in the
  * packet.
@@ -613,30 +759,41 @@ static void sja1105_vlan_rcv(struct sk_buff *skb, int *source_port,
 	*vid = vlan_tci & VLAN_VID_MASK;
 }
 
+<<<<<<< HEAD
 static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
 				   struct net_device *netdev)
 {
 	int source_port = -1, switch_id = -1;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
-				   struct net_device *netdev,
-				   struct packet_type *pt)
+				   struct net_device *netdev)
 {
+<<<<<<< HEAD
 	int source_port, switch_id, subvlan = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int source_port = -1, switch_id = -1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sja1105_meta meta = {0};
 	struct ethhdr *hdr;
 	bool is_link_local;
 	bool is_meta;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 vid;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 vid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hdr = eth_hdr(skb);
 	is_link_local = sja1105_is_link_local(skb);
 	is_meta = sja1105_is_meta_frame(skb);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (sja1105_skb_has_tag_8021q(skb)) {
 		/* Normal traffic path. */
@@ -648,6 +805,11 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
 		/* Normal traffic path. */
 		dsa_8021q_rcv(skb, &source_port, &switch_id, &subvlan);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (sja1105_skb_has_tag_8021q(skb)) {
+		/* Normal traffic path. */
+		sja1105_vlan_rcv(skb, &source_port, &switch_id, &vid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (is_link_local) {
 		/* Management traffic path. Switch embeds the switch ID and
 		 * port ID into bytes of the destination MAC, courtesy of
@@ -667,18 +829,25 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (source_port == -1 || switch_id == -1)
 		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
 	else
 		skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
+<<<<<<< HEAD
 =======
 	skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!skb->dev) {
 		netdev_warn(netdev, "Couldn't decode source port\n");
 		return NULL;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!is_link_local)
 		dsa_default_offload_fwd_mark(skb);
@@ -686,12 +855,19 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
 	if (subvlan)
 		sja1105_decode_subvlan(skb, subvlan);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!is_link_local)
+		dsa_default_offload_fwd_mark(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return sja1105_rcv_meta_state_machine(skb, &meta, is_link_local,
 					      is_meta);
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sja1110_process_meta_tstamp(struct dsa_switch *ds, int port,
 					u8 ts_id, enum sja1110_meta_tstamp dir,
 					u64 tstamp)
@@ -729,6 +905,7 @@ static void sja1110_process_meta_tstamp(struct dsa_switch *ds, int port,
 	skb_complete_tx_timestamp(skb_match, &shwt);
 }
 
+<<<<<<< HEAD
 static struct sk_buff *sja1110_rcv_meta(struct sk_buff *skb, u16 rx_header)
 {
 	u8 *buf = dsa_etype_header_pos_rx(skb) + SJA1110_HEADER_LEN;
@@ -736,14 +913,22 @@ static struct sk_buff *sja1110_rcv_meta(struct sk_buff *skb, u16 rx_header)
 static struct sk_buff *sja1110_rcv_meta(struct sk_buff *skb, u16 rx_header)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *sja1110_rcv_meta(struct sk_buff *skb, u16 rx_header)
+{
+	u8 *buf = dsa_etype_header_pos_rx(skb) + SJA1110_HEADER_LEN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int switch_id = SJA1110_RX_HEADER_SWITCH_ID(rx_header);
 	int n_ts = SJA1110_RX_HEADER_N_TS(rx_header);
 	struct net_device *master = skb->dev;
 	struct dsa_port *cpu_dp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u8 *buf = skb->data + 2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dsa_switch *ds;
 	int i;
 
@@ -777,11 +962,16 @@ static struct sk_buff *sja1110_rcv_meta(struct sk_buff *skb, u16 rx_header)
 static struct sk_buff *sja1110_rcv_inband_control_extension(struct sk_buff *skb,
 							    int *source_port,
 <<<<<<< HEAD
+<<<<<<< HEAD
 							    int *switch_id,
 							    bool *host_only)
 =======
 							    int *switch_id)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							    int *switch_id,
+							    bool *host_only)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u16 rx_header;
 
@@ -796,11 +986,17 @@ static struct sk_buff *sja1110_rcv_inband_control_extension(struct sk_buff *skb,
 	rx_header = ntohs(*(__be16 *)skb->data);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rx_header & SJA1110_RX_HEADER_HOST_ONLY)
 		*host_only = true;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rx_header & SJA1110_RX_HEADER_HOST_ONLY)
+		*host_only = true;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rx_header & SJA1110_RX_HEADER_IS_METADATA)
 		return sja1110_rcv_meta(skb, rx_header);
 
@@ -836,12 +1032,16 @@ static struct sk_buff *sja1110_rcv_inband_control_extension(struct sk_buff *skb,
 	skb_pull_rcsum(skb, SJA1110_HEADER_LEN);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dsa_strip_etype_header(skb, SJA1110_HEADER_LEN);
 =======
 	/* Remove the DSA header */
 	memmove(skb->data - ETH_HLEN, skb->data - ETH_HLEN - SJA1110_HEADER_LEN,
 		2 * ETH_ALEN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_strip_etype_header(skb, SJA1110_HEADER_LEN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* With skb->data in its final place, update the MAC header
 	 * so that eth_hdr() continues to works properly.
@@ -852,6 +1052,7 @@ static struct sk_buff *sja1110_rcv_inband_control_extension(struct sk_buff *skb,
 }
 
 static struct sk_buff *sja1110_rcv(struct sk_buff *skb,
+<<<<<<< HEAD
 <<<<<<< HEAD
 				   struct net_device *netdev)
 {
@@ -866,21 +1067,30 @@ static struct sk_buff *sja1110_rcv(struct sk_buff *skb,
 =======
 				   struct net_device *netdev,
 				   struct packet_type *pt)
+=======
+				   struct net_device *netdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	int source_port = -1, switch_id = -1, subvlan = 0;
-
-	skb->offload_fwd_mark = 1;
+	int source_port = -1, switch_id = -1;
+	bool host_only = false;
+	u16 vid = 0;
 
 	if (sja1110_skb_has_inband_control_extension(skb)) {
 		skb = sja1110_rcv_inband_control_extension(skb, &source_port,
+<<<<<<< HEAD
 							   &switch_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							   &switch_id,
+							   &host_only);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!skb)
 			return NULL;
 	}
 
 	/* Packets with in-band control extensions might still have RX VLANs */
 	if (likely(sja1105_skb_has_tag_8021q(skb)))
+<<<<<<< HEAD
 <<<<<<< HEAD
 		sja1105_vlan_rcv(skb, &source_port, &switch_id, &vid);
 
@@ -897,18 +1107,27 @@ static struct sk_buff *sja1110_rcv(struct sk_buff *skb,
 		dsa_default_offload_fwd_mark(skb);
 =======
 		dsa_8021q_rcv(skb, &source_port, &switch_id, &subvlan);
+=======
+		sja1105_vlan_rcv(skb, &source_port, &switch_id, &vid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
+	if (source_port == -1 || switch_id == -1)
+		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
+	else
+		skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
 	if (!skb->dev) {
-		netdev_warn(netdev,
-			    "Couldn't decode source port %d and switch id %d\n",
-			    source_port, switch_id);
+		netdev_warn(netdev, "Couldn't decode source port\n");
 		return NULL;
 	}
 
+<<<<<<< HEAD
 	if (subvlan)
 		sja1105_decode_subvlan(skb, subvlan);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!host_only)
+		dsa_default_offload_fwd_mark(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return skb;
 }
@@ -943,9 +1162,12 @@ static const struct dsa_device_ops sja1105_netdev_ops = {
 	.xmit = sja1105_xmit,
 	.rcv = sja1105_rcv,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.filter = sja1105_filter,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.needed_headroom = VLAN_HLEN,
 	.flow_dissect = sja1105_flow_dissect,
 	.promisc_on_master = true,
@@ -960,9 +1182,12 @@ static const struct dsa_device_ops sja1110_netdev_ops = {
 	.xmit = sja1110_xmit,
 	.rcv = sja1110_rcv,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.filter = sja1105_filter,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.flow_dissect = sja1110_flow_dissect,
 	.needed_headroom = SJA1110_HEADER_LEN + VLAN_HLEN,
 	.needed_tailroom = SJA1110_RX_TRAILER_LEN + SJA1110_MAX_PADDING_LEN,

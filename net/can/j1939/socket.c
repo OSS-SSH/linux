@@ -353,10 +353,14 @@ static void j1939_sk_sock_destruct(struct sock *sk)
 	struct j1939_sock *jsk = j1939_sk(sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* This function will be called by the generic networking code, when
 =======
 	/* This function will be call by the generic networking code, when then
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* This function will be called by the generic networking code, when
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * the socket is ultimately closed (sk->sk_destruct).
 	 *
 	 * The race between
@@ -910,6 +914,7 @@ failure:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static size_t j1939_sk_opt_stats_get_size(enum j1939_sk_errqueue_type type)
 {
 	switch (type) {
@@ -934,24 +939,48 @@ j1939_sk_get_timestamping_opt_stats(struct j1939_session *session,
 				    enum j1939_sk_errqueue_type type)
 =======
 static size_t j1939_sk_opt_stats_get_size(void)
+=======
+static size_t j1939_sk_opt_stats_get_size(enum j1939_sk_errqueue_type type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	return
-		nla_total_size(sizeof(u32)) + /* J1939_NLA_BYTES_ACKED */
-		0;
+	switch (type) {
+	case J1939_ERRQUEUE_RX_RTS:
+		return
+			nla_total_size(sizeof(u32)) + /* J1939_NLA_TOTAL_SIZE */
+			nla_total_size(sizeof(u32)) + /* J1939_NLA_PGN */
+			nla_total_size(sizeof(u64)) + /* J1939_NLA_SRC_NAME */
+			nla_total_size(sizeof(u64)) + /* J1939_NLA_DEST_NAME */
+			nla_total_size(sizeof(u8)) +  /* J1939_NLA_SRC_ADDR */
+			nla_total_size(sizeof(u8)) +  /* J1939_NLA_DEST_ADDR */
+			0;
+	default:
+		return
+			nla_total_size(sizeof(u32)) + /* J1939_NLA_BYTES_ACKED */
+			0;
+	}
 }
 
 static struct sk_buff *
+<<<<<<< HEAD
 j1939_sk_get_timestamping_opt_stats(struct j1939_session *session)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+j1939_sk_get_timestamping_opt_stats(struct j1939_session *session,
+				    enum j1939_sk_errqueue_type type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct sk_buff *stats;
 	u32 size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	stats = alloc_skb(j1939_sk_opt_stats_get_size(type), GFP_ATOMIC);
 =======
 	stats = alloc_skb(j1939_sk_opt_stats_get_size(), GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	stats = alloc_skb(j1939_sk_opt_stats_get_size(type), GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!stats)
 		return NULL;
 
@@ -962,6 +991,9 @@ j1939_sk_get_timestamping_opt_stats(struct j1939_session *session)
 			   session->total_message_size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case J1939_ERRQUEUE_RX_RTS:
 		nla_put_u32(stats, J1939_NLA_TOTAL_SIZE,
@@ -980,13 +1012,17 @@ j1939_sk_get_timestamping_opt_stats(struct j1939_session *session)
 	default:
 		nla_put_u32(stats, J1939_NLA_BYTES_ACKED, size);
 	}
+<<<<<<< HEAD
 =======
 	nla_put_u32(stats, J1939_NLA_BYTES_ACKED, size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return stats;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void __j1939_sk_errqueue(struct j1939_session *session, struct sock *sk,
 				enum j1939_sk_errqueue_type type)
@@ -999,6 +1035,12 @@ void j1939_sk_errqueue(struct j1939_session *session,
 	struct j1939_priv *priv = session->priv;
 	struct sock *sk = session->sk;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __j1939_sk_errqueue(struct j1939_session *session, struct sock *sk,
+				enum j1939_sk_errqueue_type type)
+{
+	struct j1939_priv *priv = session->priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct j1939_sock *jsk;
 	struct sock_exterr_skb *serr;
 	struct sk_buff *skb;
@@ -1006,18 +1048,24 @@ void j1939_sk_errqueue(struct j1939_session *session,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* currently we have no sk for the RX session */
 	if (!sk)
 		return;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	jsk = j1939_sk(sk);
 
 	if (!(jsk->state & J1939_SOCK_ERRQUEUE))
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case J1939_ERRQUEUE_TX_ACK:
 		if (!(sk->sk_tsflags & SOF_TIMESTAMPING_TX_ACK))
@@ -1042,9 +1090,12 @@ void j1939_sk_errqueue(struct j1939_session *session,
 	}
 
 	skb = j1939_sk_get_timestamping_opt_stats(session, type);
+<<<<<<< HEAD
 =======
 	skb = j1939_sk_get_timestamping_opt_stats(session);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!skb)
 		return;
 
@@ -1055,6 +1106,7 @@ void j1939_sk_errqueue(struct j1939_session *session,
 	serr = SKB_EXT_ERR(skb);
 	memset(serr, 0, sizeof(*serr));
 	switch (type) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	case J1939_ERRQUEUE_TX_ACK:
 		serr->ee.ee_errno = ENOMSG;
@@ -1099,31 +1151,50 @@ void j1939_sk_errqueue(struct j1939_session *session,
 			return;
 		}
 
+=======
+	case J1939_ERRQUEUE_TX_ACK:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		serr->ee.ee_errno = ENOMSG;
 		serr->ee.ee_origin = SO_EE_ORIGIN_TIMESTAMPING;
 		serr->ee.ee_info = SCM_TSTAMP_ACK;
-		state = "ACK";
+		state = "TX ACK";
 		break;
-	case J1939_ERRQUEUE_SCHED:
-		if (!(sk->sk_tsflags & SOF_TIMESTAMPING_TX_SCHED)) {
-			kfree_skb(skb);
-			return;
-		}
-
+	case J1939_ERRQUEUE_TX_SCHED:
 		serr->ee.ee_errno = ENOMSG;
 		serr->ee.ee_origin = SO_EE_ORIGIN_TIMESTAMPING;
 		serr->ee.ee_info = SCM_TSTAMP_SCHED;
-		state = "SCH";
+		state = "TX SCH";
 		break;
-	case J1939_ERRQUEUE_ABORT:
+	case J1939_ERRQUEUE_TX_ABORT:
 		serr->ee.ee_errno = session->err;
 		serr->ee.ee_origin = SO_EE_ORIGIN_LOCAL;
 		serr->ee.ee_info = J1939_EE_INFO_TX_ABORT;
-		state = "ABT";
+		state = "TX ABT";
 		break;
+	case J1939_ERRQUEUE_RX_RTS:
+		serr->ee.ee_errno = ENOMSG;
+		serr->ee.ee_origin = SO_EE_ORIGIN_LOCAL;
+		serr->ee.ee_info = J1939_EE_INFO_RX_RTS;
+		state = "RX RTS";
+		break;
+	case J1939_ERRQUEUE_RX_DPO:
+		serr->ee.ee_errno = ENOMSG;
+		serr->ee.ee_origin = SO_EE_ORIGIN_LOCAL;
+		serr->ee.ee_info = J1939_EE_INFO_RX_DPO;
+		state = "RX DPO";
+		break;
+	case J1939_ERRQUEUE_RX_ABORT:
+		serr->ee.ee_errno = session->err;
+		serr->ee.ee_origin = SO_EE_ORIGIN_LOCAL;
+		serr->ee.ee_info = J1939_EE_INFO_RX_ABORT;
+		state = "RX ABT";
+		break;
+<<<<<<< HEAD
 	default:
 		netdev_err(priv->ndev, "Unknown errqueue type %i\n", type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	serr->opt_stats = true;
@@ -1139,6 +1210,9 @@ void j1939_sk_errqueue(struct j1939_session *session,
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void j1939_sk_errqueue(struct j1939_session *session,
 		       enum j1939_sk_errqueue_type type)
 {
@@ -1160,8 +1234,11 @@ void j1939_sk_errqueue(struct j1939_session *session,
 	spin_unlock_bh(&priv->j1939_socks_lock);
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void j1939_sk_send_loop_abort(struct sock *sk, int err)
 {
 	sk->sk_err = err;

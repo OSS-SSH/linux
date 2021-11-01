@@ -18,9 +18,12 @@
 #include "amd_sfh_hid.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define AMD_SFH_IDLE_LOOP	200
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct request_list {
 	struct hid_device *hid;
@@ -127,23 +130,32 @@ static void amd_sfh_work_buffer(struct work_struct *work)
 
 	for (i = 0; i < cli_data->num_hid_devices; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (cli_data->sensor_sts[i] == SENSOR_ENABLED) {
 			report_size = get_input_report
 				(i, cli_data->sensor_idx[i], cli_data->report_id[i], in_data);
 			hid_input_report(cli_data->hid_sensor_hubs[i], HID_INPUT_REPORT,
 					 in_data->input_report[i], report_size, 0);
 		}
+<<<<<<< HEAD
 =======
 		report_size = get_input_report(i, cli_data->sensor_idx[i], cli_data->report_id[i],
 					       in_data);
 		hid_input_report(cli_data->hid_sensor_hubs[i], HID_INPUT_REPORT,
 				 in_data->input_report[i], report_size, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	schedule_delayed_work(&cli_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u32 amd_sfh_wait_for_response(struct amd_mp2_dev *mp2, u8 sid, u32 sensor_sts)
 {
 	if (mp2->mp2_ops->response)
@@ -152,8 +164,11 @@ u32 amd_sfh_wait_for_response(struct amd_mp2_dev *mp2, u8 sid, u32 sensor_sts)
 	return sensor_sts;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
 {
 	struct amd_input_data *in_data = &privdata->in_data;
@@ -163,12 +178,17 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
 	u32 feature_report_size;
 	u32 input_report_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int rc, i, status;
 	u8 cl_idx;
 =======
 	u8 cl_idx;
 	int rc, i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int rc, i, status;
+	u8 cl_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev = &privdata->pdev->dev;
 
@@ -184,10 +204,14 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
 								  &cl_data->sensor_dma_addr[i],
 								  GFP_KERNEL);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cl_data->sensor_sts[i] = SENSOR_DISABLED;
 =======
 		cl_data->sensor_sts[i] = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cl_data->sensor_sts[i] = SENSOR_DISABLED;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cl_data->sensor_requested_cnt[i] = 0;
 		cl_data->cur_hid_dev = i;
 		cl_idx = cl_data->sensor_idx[i];
@@ -217,10 +241,14 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
 			goto cleanup;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		info.period = AMD_SFH_IDLE_LOOP;
 =======
 		info.period = msecs_to_jiffies(AMD_SFH_IDLE_LOOP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		info.period = AMD_SFH_IDLE_LOOP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		info.sensor_idx = cl_idx;
 		info.dma_address = cl_data->sensor_dma_addr[i];
 
@@ -233,6 +261,7 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
 		rc = get_report_descriptor(cl_idx, cl_data->report_descr[i]);
 		if (rc)
 			return rc;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		privdata->mp2_ops->start(privdata, info);
 		status = amd_sfh_wait_for_response
@@ -260,6 +289,27 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
 		privdata->mp2_ops->start(privdata, info);
 		cl_data->sensor_sts[i] = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		privdata->mp2_ops->start(privdata, info);
+		status = amd_sfh_wait_for_response
+				(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
+		if (status == SENSOR_ENABLED) {
+			cl_data->sensor_sts[i] = SENSOR_ENABLED;
+			rc = amdtp_hid_probe(cl_data->cur_hid_dev, cl_data);
+			if (rc) {
+				privdata->mp2_ops->stop(privdata, cl_data->sensor_idx[i]);
+				status = amd_sfh_wait_for_response
+					(privdata, cl_data->sensor_idx[i], SENSOR_DISABLED);
+				if (status != SENSOR_ENABLED)
+					cl_data->sensor_sts[i] = SENSOR_DISABLED;
+				dev_dbg(dev, "sid 0x%x status 0x%x\n",
+					cl_data->sensor_idx[i], cl_data->sensor_sts[i]);
+				goto cleanup;
+			}
+		}
+		dev_dbg(dev, "sid 0x%x status 0x%x\n",
+			cl_data->sensor_idx[i], cl_data->sensor_sts[i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
 	return 0;
@@ -283,6 +333,7 @@ int amd_sfh_hid_client_deinit(struct amd_mp2_dev *privdata)
 	struct amdtp_cl_data *cl_data = privdata->cl_data;
 	struct amd_input_data *in_data = cl_data->in_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, status;
 
 	for (i = 0; i < cl_data->num_hid_devices; i++) {
@@ -302,6 +353,21 @@ int amd_sfh_hid_client_deinit(struct amd_mp2_dev *privdata)
 	for (i = 0; i < cl_data->num_hid_devices; i++)
 		privdata->mp2_ops->stop(privdata, i);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, status;
+
+	for (i = 0; i < cl_data->num_hid_devices; i++) {
+		if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
+			privdata->mp2_ops->stop(privdata, cl_data->sensor_idx[i]);
+			status = amd_sfh_wait_for_response
+					(privdata, cl_data->sensor_idx[i], SENSOR_DISABLED);
+			if (status != SENSOR_ENABLED)
+				cl_data->sensor_sts[i] = SENSOR_DISABLED;
+			dev_dbg(&privdata->pdev->dev, "stopping sid 0x%x status 0x%x\n",
+				cl_data->sensor_idx[i], cl_data->sensor_sts[i]);
+		}
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cancel_delayed_work_sync(&cl_data->work);
 	cancel_delayed_work_sync(&cl_data->work_buffer);

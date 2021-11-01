@@ -34,10 +34,14 @@ static struct fscache_object *cachefiles_alloc_object(
 	cache = container_of(_cache, struct cachefiles_cache, cache);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	_enter("{%s},%x,", cache->cache.identifier, cookie->debug_id);
 =======
 	_enter("{%s},%p,", cache->cache.identifier, cookie);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	_enter("{%s},%x,", cache->cache.identifier, cookie->debug_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lookup_data = kmalloc(sizeof(*lookup_data), cachefiles_gfp);
 	if (!lookup_data)
@@ -101,10 +105,14 @@ static struct fscache_object *cachefiles_alloc_object(
 	object->lookup_data = lookup_data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	_leave(" = %x [%p]", object->fscache.debug_id, lookup_data);
 =======
 	_leave(" = %p [%p]", &object->fscache, lookup_data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	_leave(" = %x [%p]", object->fscache.debug_id, lookup_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return &object->fscache;
 
 nomem_key:
@@ -388,10 +396,14 @@ static void cachefiles_sync_cache(struct fscache_cache *_cache)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	_enter("%s", _cache->tag->name);
 =======
 	_enter("%p", _cache);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	_enter("%s", _cache->tag->name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cache = container_of(_cache, struct cachefiles_cache, cache);
 

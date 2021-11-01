@@ -94,10 +94,14 @@ static const struct devlink_health_reporter_ops qed_fw_fatal_reporter_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define QED_REPORTER_FW_GRACEFUL_PERIOD 0
 =======
 #define QED_REPORTER_FW_GRACEFUL_PERIOD 1200000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define QED_REPORTER_FW_GRACEFUL_PERIOD 0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void qed_fw_reporters_create(struct devlink *devlink)
 {
@@ -212,11 +216,16 @@ struct devlink *qed_devlink_register(struct qed_dev *cdev)
 	int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dl = devlink_alloc(&qed_dl_ops, sizeof(struct qed_devlink),
 			   &cdev->pdev->dev);
 =======
 	dl = devlink_alloc(&qed_dl_ops, sizeof(struct qed_devlink));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dl = devlink_alloc(&qed_dl_ops, sizeof(struct qed_devlink),
+			   &cdev->pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dl)
 		return ERR_PTR(-ENOMEM);
 
@@ -224,10 +233,14 @@ struct devlink *qed_devlink_register(struct qed_dev *cdev)
 	qdevlink->cdev = cdev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = devlink_register(dl);
 =======
 	rc = devlink_register(dl, &cdev->pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = devlink_register(dl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		goto err_free;
 

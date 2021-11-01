@@ -40,14 +40,20 @@
 static int rtas_stop_self_token = RTAS_UNKNOWN_SERVICE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Record the CPU ids used on each nodes.
  * Protected by cpu_add_remove_lock.
  */
 static cpumask_var_t node_recorded_ids_map[MAX_NUMNODES];
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void rtas_stop_self(void)
 {
 	static struct rtas_args args;
@@ -149,6 +155,9 @@ static void pseries_cpu_die(unsigned int cpu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * find_cpu_id_range - found a linear ranger of @nthreads free CPU ids.
  * @nthreads : the number of threads (cpu ids)
@@ -209,6 +218,7 @@ out:
 	return rc;
 }
 
+<<<<<<< HEAD
 /*
  * Update cpu_present_mask and paca(s) for a new cpu node.  The wrinkle
  * here is that a cpu device node may represent multiple logical cpus
@@ -217,12 +227,18 @@ out:
  * Update cpu_present_mask and paca(s) for a new cpu node.  The wrinkle
  * here is that a cpu device node may represent up to two logical cpus
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+ * Update cpu_present_mask and paca(s) for a new cpu node.  The wrinkle
+ * here is that a cpu device node may represent multiple logical cpus
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * in the SMT case.  We must honor the assumption in other code that
  * the logical ids for sibling SMT threads x and y are adjacent, such
  * that x^1 == y and y^1 == x.
  */
 static int pseries_add_processor(struct device_node *np)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int len, nthreads, node, cpu, assigned_node;
 	int rc = 0;
@@ -232,12 +248,18 @@ static int pseries_add_processor(struct device_node *np)
 	cpumask_var_t candidate_mask, tmp;
 	int err = -ENOSPC, len, nthreads, i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int len, nthreads, node, cpu, assigned_node;
+	int rc = 0;
+	cpumask_var_t cpu_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const __be32 *intserv;
 
 	intserv = of_get_property(np, "ibm,ppc-interrupt-server#s", &len);
 	if (!intserv)
 		return 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	nthreads = len / sizeof(u32);
 
@@ -277,47 +299,55 @@ static int pseries_add_processor(struct device_node *np)
 	zalloc_cpumask_var(&candidate_mask, GFP_KERNEL);
 	zalloc_cpumask_var(&tmp, GFP_KERNEL);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nthreads = len / sizeof(u32);
-	for (i = 0; i < nthreads; i++)
-		cpumask_set_cpu(i, tmp);
+
+	if (!alloc_cpumask_var(&cpu_mask, GFP_KERNEL))
+		return -ENOMEM;
+
+	/*
+	 * Fetch from the DT nodes read by dlpar_configure_connector() the NUMA
+	 * node id the added CPU belongs to.
+	 */
+	node = of_node_to_nid(np);
+	if (node < 0 || !node_possible(node))
+		node = first_online_node;
+
+	BUG_ON(node == NUMA_NO_NODE);
+	assigned_node = node;
 
 	cpu_maps_update_begin();
 
-	BUG_ON(!cpumask_subset(cpu_present_mask, cpu_possible_mask));
-
-	/* Get a bitmap of unoccupied slots. */
-	cpumask_xor(candidate_mask, cpu_possible_mask, cpu_present_mask);
-	if (cpumask_empty(candidate_mask)) {
-		/* If we get here, it most likely means that NR_CPUS is
-		 * less than the partition's max processors setting.
+	rc = find_cpu_id_range(nthreads, node, &cpu_mask);
+	if (rc && nr_node_ids > 1) {
+		/*
+		 * Try again, considering the free CPU ids from the other node.
 		 */
-		printk(KERN_ERR "Cannot add cpu %pOF; this system configuration"
-		       " supports %d logical cpus.\n", np,
-		       num_possible_cpus());
-		goto out_unlock;
+		node = NUMA_NO_NODE;
+		rc = find_cpu_id_range(nthreads, NUMA_NO_NODE, &cpu_mask);
 	}
 
-	while (!cpumask_empty(tmp))
-		if (cpumask_subset(tmp, candidate_mask))
-			/* Found a range where we can insert the new cpu(s) */
-			break;
-		else
-			cpumask_shift_left(tmp, tmp, nthreads);
-
-	if (cpumask_empty(tmp)) {
-		printk(KERN_ERR "Unable to find space in cpu_present_mask for"
-		       " processor %pOFn with %d thread(s)\n", np,
-		       nthreads);
-		goto out_unlock;
+	if (rc) {
+		pr_err("Cannot add cpu %pOF; this system configuration"
+		       " supports %d logical cpus.\n", np, num_possible_cpus());
+		goto out;
 	}
 
+<<<<<<< HEAD
 	for_each_cpu(cpu, tmp) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for_each_cpu(cpu, cpu_mask) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		BUG_ON(cpu_present(cpu));
 		set_cpu_present(cpu, true);
 		set_hard_smp_processor_id(cpu, be32_to_cpu(*intserv++));
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Record the newly used CPU ids for the associate node. */
 	cpumask_or(node_recorded_ids_map[assigned_node],
@@ -341,6 +371,7 @@ static int pseries_add_processor(struct device_node *np)
 	}
 
 out:
+<<<<<<< HEAD
 	cpu_maps_update_done();
 	free_cpumask_var(cpu_mask);
 	return rc;
@@ -352,6 +383,11 @@ out_unlock:
 	free_cpumask_var(tmp);
 	return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpu_maps_update_done();
+	free_cpumask_var(cpu_mask);
+	return rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -646,10 +682,15 @@ static ssize_t dlpar_cpu_add(u32 drc_index)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	update_numa_distance(dn);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	update_numa_distance(dn);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = dlpar_online_cpu(dn);
 	if (rc) {
 		saved_rc = rc;
@@ -1061,9 +1102,13 @@ static int __init pseries_cpu_hotplug_init(void)
 {
 	int qcss_tok;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int node;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_ARCH_CPU_PROBE_RELEASE
 	ppc_md.cpu_probe = dlpar_cpu_probe;
@@ -1086,6 +1131,9 @@ static int __init pseries_cpu_hotplug_init(void)
 
 	/* Processors can be added/removed only on LPAR */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (firmware_has_feature(FW_FEATURE_LPAR)) {
 		for_each_node(node) {
 			alloc_bootmem_cpumask_var(&node_recorded_ids_map[node]);
@@ -1096,12 +1144,17 @@ static int __init pseries_cpu_hotplug_init(void)
 				   cpumask_of_node(node));
 		}
 
+<<<<<<< HEAD
 		of_reconfig_notifier_register(&pseries_smp_nb);
 	}
 =======
 	if (firmware_has_feature(FW_FEATURE_LPAR))
 		of_reconfig_notifier_register(&pseries_smp_nb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		of_reconfig_notifier_register(&pseries_smp_nb);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

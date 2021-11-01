@@ -69,9 +69,13 @@ static bool test_intel(int idx, void *data)
 	case INTEL_FAM6_BROADWELL_G:
 	case INTEL_FAM6_BROADWELL_X:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case INTEL_FAM6_SAPPHIRERAPIDS_X:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case INTEL_FAM6_SAPPHIRERAPIDS_X:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	case INTEL_FAM6_ATOM_SILVERMONT:
 	case INTEL_FAM6_ATOM_SILVERMONT_D:

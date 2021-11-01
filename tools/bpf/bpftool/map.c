@@ -808,6 +808,7 @@ static struct btf *get_map_kv_btf(const struct bpf_map_info *info)
 		int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		btf = btf__load_from_kernel_by_id(info->btf_id);
 		err = libbpf_get_error(btf);
 		if (err) {
@@ -819,6 +820,13 @@ static struct btf *get_map_kv_btf(const struct bpf_map_info *info)
 			p_err("failed to get btf");
 			btf = err ? ERR_PTR(err) : ERR_PTR(-ESRCH);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		btf = btf__load_from_kernel_by_id(info->btf_id);
+		err = libbpf_get_error(btf);
+		if (err) {
+			p_err("failed to get btf");
+			btf = ERR_PTR(err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -1048,6 +1056,7 @@ static void print_key_value(struct bpf_map_info *info, void *key,
 {
 	json_writer_t *btf_wtr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct btf *btf;
 
 	btf = btf__load_from_kernel_by_id(info->btf_id);
@@ -1059,6 +1068,12 @@ static void print_key_value(struct bpf_map_info *info, void *key,
 	err = btf__get_from_id(info->btf_id, &btf);
 	if (err) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct btf *btf;
+
+	btf = btf__load_from_kernel_by_id(info->btf_id);
+	if (libbpf_get_error(btf)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		p_err("failed to get btf");
 		return;
 	}
@@ -1482,6 +1497,7 @@ static int do_help(int argc, char **argv)
 		"                 cgroup_storage | reuseport_sockarray | percpu_cgroup_storage |\n"
 		"                 queue | stack | sk_storage | struct_ops | ringbuf | inode_storage |\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"                 task_storage }\n"
 		"       " HELP_SPEC_OPTIONS " |\n"
 		"                    {-f|--bpffs} | {-n|--nomount} }\n"
@@ -1489,6 +1505,11 @@ static int do_help(int argc, char **argv)
 		"		  task_storage }\n"
 		"       " HELP_SPEC_OPTIONS "\n"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"                 task_storage }\n"
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-f|--bpffs} | {-n|--nomount} }\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"",
 		bin_name, argv[-2]);
 

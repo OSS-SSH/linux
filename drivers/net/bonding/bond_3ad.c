@@ -97,10 +97,14 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr);
 static void ad_rx_machine(struct lacpdu *lacpdu, struct port *port);
 static void ad_tx_machine(struct port *port);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ad_periodic_machine(struct port *port, struct bond_params *bond_params);
 =======
 static void ad_periodic_machine(struct port *port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ad_periodic_machine(struct port *port, struct bond_params *bond_params);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ad_port_selection_logic(struct port *port, bool *update_slave_arr);
 static void ad_agg_selection_logic(struct aggregator *aggregator,
 				   bool *update_slave_arr);
@@ -1299,6 +1303,7 @@ static void ad_tx_machine(struct port *port)
  * ad_periodic_machine - handle a port's periodic state machine
  * @port: the port we're looking at
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @bond_params: bond parameters we will use
  *
  * Turn ntt flag on priodically to perform periodic transmission of lacpdu's.
@@ -1310,6 +1315,13 @@ static void ad_periodic_machine(struct port *port, struct bond_params *bond_para
  */
 static void ad_periodic_machine(struct port *port)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @bond_params: bond parameters we will use
+ *
+ * Turn ntt flag on priodically to perform periodic transmission of lacpdu's.
+ */
+static void ad_periodic_machine(struct port *port, struct bond_params *bond_params)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	periodic_states_t last_state;
 
@@ -1319,12 +1331,17 @@ static void ad_periodic_machine(struct port *port)
 	/* check if port was reinitialized */
 	if (((port->sm_vars & AD_PORT_BEGIN) || !(port->sm_vars & AD_PORT_LACP_ENABLED) || !port->is_enabled) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    (!(port->actor_oper_port_state & LACP_STATE_LACP_ACTIVITY) && !(port->partner_oper.port_state & LACP_STATE_LACP_ACTIVITY)) ||
 	    !bond_params->lacp_active) {
 =======
 	    (!(port->actor_oper_port_state & LACP_STATE_LACP_ACTIVITY) && !(port->partner_oper.port_state & LACP_STATE_LACP_ACTIVITY))
 	   ) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    (!(port->actor_oper_port_state & LACP_STATE_LACP_ACTIVITY) && !(port->partner_oper.port_state & LACP_STATE_LACP_ACTIVITY)) ||
+	    !bond_params->lacp_active) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		port->sm_periodic_state = AD_NO_PERIODIC;
 	}
 	/* check if state machine should change state */
@@ -2359,10 +2376,14 @@ void bond_3ad_state_machine_handler(struct work_struct *work)
 
 		ad_rx_machine(NULL, port);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ad_periodic_machine(port, &bond->params);
 =======
 		ad_periodic_machine(port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ad_periodic_machine(port, &bond->params);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ad_port_selection_logic(port, &update_slave_arr);
 		ad_mux_machine(port, &update_slave_arr);
 		ad_tx_machine(port);

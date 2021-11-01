@@ -130,6 +130,9 @@ void intel_uncore_generic_uncore_cpu_init(void);
 int intel_uncore_generic_uncore_pci_init(void);
 void intel_uncore_generic_uncore_mmio_init(void);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void intel_generic_uncore_msr_init_box(struct intel_uncore_box *box);
 void intel_generic_uncore_msr_disable_box(struct intel_uncore_box *box);
@@ -151,5 +154,8 @@ u64 intel_generic_uncore_pci_read_counter(struct intel_uncore_box *box,
 
 struct intel_uncore_type **
 intel_uncore_generic_init_uncores(enum uncore_access_type type_id, int num_extra);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

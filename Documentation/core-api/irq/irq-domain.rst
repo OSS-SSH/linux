@@ -56,6 +56,9 @@ the hwirq, and call the .map() callback so the driver can perform any
 required hardware setup.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Once a mapping has been established, it can be retrieved or used via a
 variety of methods:
 
@@ -74,10 +77,13 @@ variety of methods:
 
 Note that irq domain lookups must happen in contexts that are
 compatible with a RCU read-side critical section.
+<<<<<<< HEAD
 =======
 When an interrupt is received, irq_find_mapping() function should
 be used to find the Linux IRQ number from the hwirq number.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The irq_create_mapping() function must be called *atleast once*
 before any call to irq_find_mapping(), lest the descriptor will not
@@ -159,12 +165,18 @@ IRQ number and call the .map() callback so that driver can program the
 Linux IRQ number into the hardware.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Most drivers cannot use this mapping, and it is now gated on the
 CONFIG_IRQ_DOMAIN_NOMAP option. Please refrain from introducing new
 users of this API.
 =======
 Most drivers cannot use this mapping.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Most drivers cannot use this mapping, and it is now gated on the
+CONFIG_IRQ_DOMAIN_NOMAP option. Please refrain from introducing new
+users of this API.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Legacy
 ------
@@ -185,13 +197,19 @@ case the Linux IRQ numbers cannot be dynamically assigned and the legacy
 mapping should be used.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 As the name implies, the \*_legacy() functions are deprecated and only
 exist to ease the support of ancient platforms. No new users should be
 added. Same goes for the \*_simple() functions when their use results
 in the legacy behaviour.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The legacy map assumes a contiguous range of IRQ numbers has already
 been allocated for the controller and that the IRQ number can be
 calculated by adding a fixed offset to the hwirq number, and

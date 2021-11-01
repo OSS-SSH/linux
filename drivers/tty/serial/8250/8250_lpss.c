@@ -159,6 +159,9 @@ static int byt_serial_setup(struct lpss8250 *lpss, struct uart_port *port)
 static int ehl_serial_setup(struct lpss8250 *lpss, struct uart_port *port)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct uart_8250_dma *dma = &lpss->data.dma;
 	struct uart_8250_port *up = up_to_u8250p(port);
 
@@ -169,8 +172,11 @@ static int ehl_serial_setup(struct lpss8250 *lpss, struct uart_port *port)
 	 * matching with the registered General Purpose DMA controllers.
 	 */
 	up->dma = dma;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

@@ -1202,6 +1202,7 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 		key.offset = (u64)-1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = btrfs_search_backwards(root, &key, path);
 		if (ret < 0) {
 			goto err;
@@ -1212,21 +1213,21 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 
 =======
 		ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
+=======
+		ret = btrfs_search_backwards(root, &key, path);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0) {
 			goto err;
 		} else if (ret > 0) {
-			ret = btrfs_previous_item(root, path, subvol_objectid,
-						  BTRFS_ROOT_BACKREF_KEY);
-			if (ret < 0) {
-				goto err;
-			} else if (ret > 0) {
-				ret = -ENOENT;
-				goto err;
-			}
+			ret = -ENOENT;
+			goto err;
 		}
 
+<<<<<<< HEAD
 		btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		subvol_objectid = key.offset;
 
 		root_ref = btrfs_item_ptr(path->nodes[0], path->slots[0],
@@ -1260,6 +1261,7 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 			key.offset = (u64)-1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = btrfs_search_backwards(fs_root, &key, path);
 			if (ret < 0) {
 				goto err;
@@ -1270,21 +1272,21 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 
 =======
 			ret = btrfs_search_slot(NULL, fs_root, &key, path, 0, 0);
+=======
+			ret = btrfs_search_backwards(fs_root, &key, path);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret < 0) {
 				goto err;
 			} else if (ret > 0) {
-				ret = btrfs_previous_item(fs_root, path, dirid,
-							  BTRFS_INODE_REF_KEY);
-				if (ret < 0) {
-					goto err;
-				} else if (ret > 0) {
-					ret = -ENOENT;
-					goto err;
-				}
+				ret = -ENOENT;
+				goto err;
 			}
 
+<<<<<<< HEAD
 			btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dirid = key.offset;
 
 			inode_ref = btrfs_item_ptr(path->nodes[0],
@@ -1376,11 +1378,17 @@ static int btrfs_fill_super(struct super_block *sb,
 	sb->s_d_op = &btrfs_dentry_operations;
 	sb->s_export_op = &btrfs_export_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_FS_VERITY
 	sb->s_vop = &btrfs_verityops;
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_FS_VERITY
+	sb->s_vop = &btrfs_verityops;
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sb->s_xattr = btrfs_xattr_handlers;
 	sb->s_time_gran = 1;
 #ifdef CONFIG_BTRFS_FS_POSIX_ACL
@@ -2070,6 +2078,7 @@ static int btrfs_remount(struct super_block *sb, int *flags, char *data)
 			goto restore;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (fs_info->sectorsize < PAGE_SIZE) {
 			btrfs_warn(fs_info,
@@ -2079,6 +2088,8 @@ static int btrfs_remount(struct super_block *sb, int *flags, char *data)
 			goto restore;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * NOTE: when remounting with a change that does writes, don't
@@ -2128,6 +2139,7 @@ restore:
 
 /* Used to sort the devices by max_avail(descending sort) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int btrfs_cmp_device_free_bytes(const void *a, const void *b)
 {
 	const struct btrfs_device_info *dev_info1 = a;
@@ -2140,15 +2152,22 @@ static int btrfs_cmp_device_free_bytes(const void *a, const void *b)
 =======
 static inline int btrfs_cmp_device_free_bytes(const void *dev_info1,
 				       const void *dev_info2)
+=======
+static int btrfs_cmp_device_free_bytes(const void *a, const void *b)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	if (((struct btrfs_device_info *)dev_info1)->max_avail >
-	    ((struct btrfs_device_info *)dev_info2)->max_avail)
+	const struct btrfs_device_info *dev_info1 = a;
+	const struct btrfs_device_info *dev_info2 = b;
+
+	if (dev_info1->max_avail > dev_info2->max_avail)
 		return -1;
-	else if (((struct btrfs_device_info *)dev_info1)->max_avail <
-		 ((struct btrfs_device_info *)dev_info2)->max_avail)
+	else if (dev_info1->max_avail < dev_info2->max_avail)
 		return 1;
+<<<<<<< HEAD
 	else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2425,10 +2444,14 @@ static struct file_system_type btrfs_root_fs_type = {
 	.mount		= btrfs_mount_root,
 	.kill_sb	= btrfs_kill_super,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.fs_flags	= FS_REQUIRES_DEV | FS_BINARY_MOUNTDATA | FS_ALLOW_IDMAP,
 =======
 	.fs_flags	= FS_REQUIRES_DEV | FS_BINARY_MOUNTDATA,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.fs_flags	= FS_REQUIRES_DEV | FS_BINARY_MOUNTDATA | FS_ALLOW_IDMAP,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 MODULE_ALIAS_FS("btrfs");
@@ -2620,13 +2643,19 @@ static void __init btrfs_print_mod_info(void)
 			", zoned=no"
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_FS_VERITY
 			", fsverity=yes"
 #else
 			", fsverity=no"
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			;
 	pr_info("Btrfs loaded, crc32c=%s%s\n", crc32c_impl(), options);
 }

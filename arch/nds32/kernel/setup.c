@@ -245,9 +245,12 @@ static void __init setup_memory(void)
 	unsigned long free_ram_start_pfn;
 	phys_addr_t memory_start, memory_end;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct memblock_region *region;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memory_end = memory_start = 0;
 

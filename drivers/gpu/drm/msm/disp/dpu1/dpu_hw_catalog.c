@@ -297,10 +297,14 @@ static const struct dpu_mdp_cfg sm8250_mdp[] = {
 	{
 	.name = "top_0", .id = MDP_TOP,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.base = 0x0, .len = 0x494,
 =======
 	.base = 0x0, .len = 0x45C,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.base = 0x0, .len = 0x494,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.features = 0,
 	.highest_bank_bit = 0x3, /* TODO: 2 for LP_DDR4 */
 	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
@@ -799,10 +803,14 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
 			-1),
 	PP_BLK("pingpong_5", PINGPONG_5, 0x72800, MERGE_3D_2, sdm845_pp_sblk,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
 =======
 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			-1),
 };
 
@@ -983,9 +991,13 @@ static const struct dpu_perf_cfg sdm845_perf_data = {
 	.min_prefill_lines = 24,
 	.danger_lut_tbl = {0xf, 0xffff, 0x0},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.safe_lut_tbl = {0xfff0, 0xf000, 0xffff},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.safe_lut_tbl = {0xfff0, 0xf000, 0xffff},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.qos_lut_tbl = {
 		{.nentry = ARRAY_SIZE(sdm845_qos_linear),
 		.entries = sdm845_qos_linear
@@ -1014,9 +1026,13 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
 	.min_prefill_lines = 24,
 	.danger_lut_tbl = {0xff, 0xffff, 0x0},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.qos_lut_tbl = {
 		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
 		.entries = sc7180_qos_linear
@@ -1045,9 +1061,13 @@ static const struct dpu_perf_cfg sm8150_perf_data = {
 	.min_prefill_lines = 24,
 	.danger_lut_tbl = {0xf, 0xffff, 0x0},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.safe_lut_tbl = {0xfff8, 0xf000, 0xffff},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.safe_lut_tbl = {0xfff8, 0xf000, 0xffff},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.qos_lut_tbl = {
 		{.nentry = ARRAY_SIZE(sm8150_qos_linear),
 		.entries = sm8150_qos_linear
@@ -1077,9 +1097,13 @@ static const struct dpu_perf_cfg sm8250_perf_data = {
 	.min_prefill_lines = 35,
 	.danger_lut_tbl = {0xf, 0xffff, 0x0},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.qos_lut_tbl = {
 		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
 		.entries = sc7180_qos_linear
@@ -1109,9 +1133,13 @@ static const struct dpu_perf_cfg sc7280_perf_data = {
 	.min_prefill_lines = 24,
 	.danger_lut_tbl = {0xffff, 0xffff, 0x0},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.safe_lut_tbl = {0xff00, 0xff00, 0xffff},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.safe_lut_tbl = {0xff00, 0xff00, 0xffff},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.qos_lut_tbl = {
 		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
 		.entries = sc7180_qos_macrotile

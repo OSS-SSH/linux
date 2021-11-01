@@ -8,9 +8,12 @@
 #include <linux/pm_domain.h>
 #include <linux/slab.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/version.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <soc/tegra/bpmp.h>
 #include <soc/tegra/bpmp-abi.h>

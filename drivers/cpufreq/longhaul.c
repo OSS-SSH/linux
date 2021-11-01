@@ -943,10 +943,13 @@ static int __init longhaul_init(void)
 	case 10:
 		pr_err("Use acpi-cpufreq driver for VIA C7\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	default:
 		;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return -ENODEV;

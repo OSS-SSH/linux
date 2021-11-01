@@ -899,10 +899,14 @@ static int tipc_aead_decrypt(struct net *net, struct tipc_aead *aead,
 		return -ENOKEY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nsg = skb_cow_data(skb, 0, &unused);
 	if (unlikely(nsg < 0)) {
 		pr_err("RX: skb_cow_data() returned %d\n", nsg);
 		return nsg;
+<<<<<<< HEAD
 =======
 	/* Cow skb data if needed */
 	if (likely(!skb_cloned(skb) &&
@@ -915,6 +919,8 @@ static int tipc_aead_decrypt(struct net *net, struct tipc_aead *aead,
 			return nsg;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Allocate memory for the AEAD operation */

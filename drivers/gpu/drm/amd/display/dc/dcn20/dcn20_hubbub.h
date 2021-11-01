@@ -30,6 +30,7 @@
 #include "dcn20_vmid.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HUBBUB_REG_LIST_DCN20_COMMON()\
 	HUBBUB_REG_LIST_DCN_COMMON(), \
@@ -42,6 +43,8 @@
 	SR(DCN_VM_AGP_BASE)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define TO_DCN20_HUBBUB(hubbub)\
 	container_of(hubbub, struct dcn20_hubbub, base)
 
@@ -54,14 +57,20 @@
 	SR(DCN_VM_AGP_BOT),\
 	SR(DCN_VM_AGP_TOP),\
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SR(DCN_VM_AGP_BASE),\
 	SR(DCN_VM_FAULT_ADDR_MSB), \
 	SR(DCN_VM_FAULT_ADDR_LSB), \
 	SR(DCN_VM_FAULT_CNTL), \
 	SR(DCN_VM_FAULT_STATUS)
+<<<<<<< HEAD
 =======
 	SR(DCN_VM_AGP_BASE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HUBBUB_REG_LIST_DCN20(id)\
 	HUBBUB_REG_LIST_DCN20_COMMON(), \
@@ -83,6 +92,9 @@
 	HUBBUB_SF(DCN_VM_AGP_BASE, AGP_BASE, mask_sh), \
 	HUBBUB_SF(DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_MSB, DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_MSB, mask_sh), \
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	HUBBUB_SF(DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_LSB, DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_LSB, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_ADDR_MSB, DCN_VM_FAULT_ADDR_MSB, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_ADDR_LSB, DCN_VM_FAULT_ADDR_LSB, mask_sh), \
@@ -96,9 +108,12 @@
 	HUBBUB_SF(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_TABLE_LEVEL, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_PIPE, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_INTERRUPT_STATUS, mask_sh)
+<<<<<<< HEAD
 =======
 	HUBBUB_SF(DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_LSB, DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_LSB, mask_sh)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct dcn20_hubbub {
 	struct hubbub base;
@@ -159,9 +174,15 @@ void hubbub2_wm_read_state(struct hubbub *hubbub,
 		struct dcn_hubbub_wm *wm);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void hubbub2_read_state(struct hubbub *hubbub,
 		struct dcn_hubbub_state *hubbub_state);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hubbub2_read_state(struct hubbub *hubbub,
+		struct dcn_hubbub_state *hubbub_state);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

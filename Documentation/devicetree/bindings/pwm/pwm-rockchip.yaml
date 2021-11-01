@@ -30,9 +30,13 @@ properties:
               - rockchip,px30-pwm
               - rockchip,rk3308-pwm
 <<<<<<< HEAD
+<<<<<<< HEAD
               - rockchip,rk3568-pwm
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              - rockchip,rk3568-pwm
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: rockchip,rk3328-pwm
 
   reg:

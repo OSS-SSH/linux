@@ -331,6 +331,7 @@ int kgdb_register_nmi_console(void)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kgdb_nmi_tty_driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW);
 	if (IS_ERR(kgdb_nmi_tty_driver)) {
 		pr_err("%s: cannot allocate tty\n", __func__);
@@ -341,6 +342,12 @@ int kgdb_register_nmi_console(void)
 		pr_err("%s: cannot allocate tty\n", __func__);
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kgdb_nmi_tty_driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW);
+	if (IS_ERR(kgdb_nmi_tty_driver)) {
+		pr_err("%s: cannot allocate tty\n", __func__);
+		return PTR_ERR(kgdb_nmi_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	kgdb_nmi_tty_driver->driver_name	= "ttyNMI";
 	kgdb_nmi_tty_driver->name		= "ttyNMI";
@@ -348,9 +355,12 @@ int kgdb_register_nmi_console(void)
 	kgdb_nmi_tty_driver->type		= TTY_DRIVER_TYPE_SERIAL;
 	kgdb_nmi_tty_driver->subtype		= SERIAL_TYPE_NORMAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kgdb_nmi_tty_driver->flags		= TTY_DRIVER_REAL_RAW;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kgdb_nmi_tty_driver->init_termios	= tty_std_termios;
 	tty_termios_encode_baud_rate(&kgdb_nmi_tty_driver->init_termios,
 				     KGDB_NMI_BAUD, KGDB_NMI_BAUD);
@@ -367,10 +377,14 @@ int kgdb_register_nmi_console(void)
 	return 0;
 err_drv_reg:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(kgdb_nmi_tty_driver);
 =======
 	put_tty_driver(kgdb_nmi_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(kgdb_nmi_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 EXPORT_SYMBOL_GPL(kgdb_register_nmi_console);
@@ -389,10 +403,14 @@ int kgdb_unregister_nmi_console(void)
 
 	tty_unregister_driver(kgdb_nmi_tty_driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(kgdb_nmi_tty_driver);
 =======
 	put_tty_driver(kgdb_nmi_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(kgdb_nmi_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

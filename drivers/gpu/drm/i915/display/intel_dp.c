@@ -223,6 +223,7 @@ bool intel_dp_can_bigjoiner(struct intel_dp *intel_dp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int cnl_max_source_rate(struct intel_dp *intel_dp)
 {
@@ -248,6 +249,8 @@ static int cnl_max_source_rate(struct intel_dp *intel_dp)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int icl_max_source_rate(struct intel_dp *intel_dp)
 {
 	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
@@ -274,10 +277,14 @@ intel_dp_set_source_rates(struct intel_dp *intel_dp)
 {
 	/* The values must be in increasing order */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const int icl_rates[] = {
 =======
 	static const int cnl_rates[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const int icl_rates[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		162000, 216000, 270000, 324000, 432000, 540000, 648000, 810000
 	};
 	static const int bxt_rates[] = {
@@ -303,10 +310,14 @@ intel_dp_set_source_rates(struct intel_dp *intel_dp)
 		    intel_dp->source_rates || intel_dp->num_source_rates);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (DISPLAY_VER(dev_priv) >= 11) {
 		source_rates = icl_rates;
 		size = ARRAY_SIZE(icl_rates);
 		if (IS_JSL_EHL(dev_priv))
+<<<<<<< HEAD
 =======
 	if (DISPLAY_VER(dev_priv) >= 11 || IS_CANNONLAKE(dev_priv)) {
 		source_rates = cnl_rates;
@@ -315,6 +326,8 @@ intel_dp_set_source_rates(struct intel_dp *intel_dp)
 			max_rate = cnl_max_source_rate(intel_dp);
 		else if (IS_JSL_EHL(dev_priv))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			max_rate = ehl_max_source_rate(intel_dp);
 		else
 			max_rate = icl_max_source_rate(intel_dp);
@@ -1289,6 +1302,9 @@ static int intel_dp_dsc_compute_config(struct intel_dp *intel_dp,
 		pipe_config->dsc.slice_count = dsc_dp_slice_count;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* As of today we support DSC for only RGB */
 	if (intel_dp->force_dsc_bpp) {
@@ -1306,8 +1322,11 @@ static int intel_dp_dsc_compute_config(struct intel_dp *intel_dp,
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * VDSC engine operates at 1 Pixel per clock, so if peak pixel rate
 	 * is greater than the maximum Cdclock and if slice count is even
@@ -2494,20 +2513,30 @@ intel_edp_init_dpcd(struct intel_dp *intel_dp)
 	if (drm_dp_dpcd_read(&intel_dp->aux, DP_EDP_DPCD_REV,
 			     intel_dp->edp_dpcd, sizeof(intel_dp->edp_dpcd)) ==
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     sizeof(intel_dp->edp_dpcd)) {
 =======
 			     sizeof(intel_dp->edp_dpcd))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     sizeof(intel_dp->edp_dpcd)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_dbg_kms(&dev_priv->drm, "eDP DPCD: %*ph\n",
 			    (int)sizeof(intel_dp->edp_dpcd),
 			    intel_dp->edp_dpcd);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		intel_dp->use_max_params = intel_dp->edp_dpcd[0] < DP_EDP_14;
 	}
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		intel_dp->use_max_params = intel_dp->edp_dpcd[0] < DP_EDP_14;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * This has to be called after intel_dp->edp_dpcd is filled, PSR checks
 	 * for SET_POWER_CAPABLE bit in intel_dp->edp_dpcd[1]
@@ -3082,11 +3111,14 @@ void intel_read_dp_sdp(struct intel_encoder *encoder,
 		       unsigned int type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (encoder->type != INTEL_OUTPUT_DDI)
 		return;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case DP_SDP_VSC:
 		intel_read_dp_vsc_sdp(encoder, crtc_state,
@@ -3396,11 +3428,17 @@ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
 	intel_dp_autotest_phy_ddi_enable(intel_dp, crtc_state);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_dp_dpcd_write(&intel_dp->aux, DP_TRAINING_LANE0_SET,
 			  intel_dp->train_set, crtc_state->lane_count);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_dp_dpcd_write(&intel_dp->aux, DP_TRAINING_LANE0_SET,
+			  intel_dp->train_set, crtc_state->lane_count);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drm_dp_set_phy_test_pattern(&intel_dp->aux, data,
 				    link_status[DP_DPCD_REV]);
 }
@@ -3910,15 +3948,19 @@ static void intel_dp_check_device_service_irq(struct intel_dp *intel_dp)
 static void intel_dp_check_link_service_irq(struct intel_dp *intel_dp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct drm_i915_private *i915 = dp_to_i915(intel_dp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 val;
 
 	if (intel_dp->dpcd[DP_DPCD_REV] < 0x11)
 		return;
 
 	if (drm_dp_dpcd_readb(&intel_dp->aux,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			      DP_LINK_SERVICE_IRQ_VECTOR_ESI0, &val) != 1 || !val)
 		return;
@@ -3929,15 +3971,19 @@ static void intel_dp_check_link_service_irq(struct intel_dp *intel_dp)
 =======
 			      DP_LINK_SERVICE_IRQ_VECTOR_ESI0, &val) != 1 || !val) {
 		drm_dbg_kms(&i915->drm, "Error in reading link service irq vector\n");
+=======
+			      DP_LINK_SERVICE_IRQ_VECTOR_ESI0, &val) != 1 || !val)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
-	}
 
 	if (drm_dp_dpcd_writeb(&intel_dp->aux,
-			       DP_LINK_SERVICE_IRQ_VECTOR_ESI0, val) != 1) {
-		drm_dbg_kms(&i915->drm, "Error in writing link service irq vector\n");
+			       DP_LINK_SERVICE_IRQ_VECTOR_ESI0, val) != 1)
 		return;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (val & HDMI_LINK_STATUS_CHANGED)
 		intel_dp_handle_hdmi_link_status_change(intel_dp);
@@ -4813,10 +4859,14 @@ static void intel_dp_set_drrs_state(struct drm_i915_private *dev_priv,
 {
 	struct intel_dp *intel_dp = dev_priv->drrs.dp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
 =======
 	struct intel_crtc *intel_crtc = to_intel_crtc(crtc_state->uapi.crtc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum drrs_refresh_rate_type index = DRRS_HIGH_RR;
 
 	if (refresh_rate <= 0) {
@@ -4831,10 +4881,14 @@ static void intel_dp_set_drrs_state(struct drm_i915_private *dev_priv,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!crtc) {
 =======
 	if (!intel_crtc) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!crtc) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_dbg_kms(&dev_priv->drm,
 			    "DRRS: intel_crtc not initialized\n");
 		return;
@@ -5318,11 +5372,16 @@ static bool intel_edp_init_connector(struct intel_dp *intel_dp,
 
 	intel_panel_init(&intel_connector->panel, fixed_mode, downclock_mode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(dev_priv->quirks & QUIRK_NO_PPS_BACKLIGHT_POWER_HOOK))
 		intel_connector->panel.backlight.power = intel_pps_backlight_power;
 =======
 	intel_connector->panel.backlight.power = intel_pps_backlight_power;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(dev_priv->quirks & QUIRK_NO_PPS_BACKLIGHT_POWER_HOOK))
+		intel_connector->panel.backlight.power = intel_pps_backlight_power;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_panel_setup_backlight(connector, pipe);
 
 	if (fixed_mode) {

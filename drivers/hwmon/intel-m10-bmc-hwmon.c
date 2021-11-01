@@ -229,6 +229,9 @@ static const struct m10bmc_hwmon_board_data d5005bmc_hwmon_bdata = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct m10bmc_sdata n5010bmc_temp_tbl[] = {
 	{ 0x100, 0x0, 0x104, 0x0, 0x0, 1000, "Board Local Temperature" },
 	{ 0x108, 0x0, 0x10c, 0x0, 0x0, 1000, "FPGA 1 Temperature" },
@@ -341,8 +344,11 @@ static const struct m10bmc_hwmon_board_data n5010bmc_hwmon_bdata = {
 	.hinfo = n5010bmc_hinfo,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static umode_t
 m10bmc_hwmon_is_visible(const void *data, enum hwmon_sensor_types type,
 			u32 attr, int channel)
@@ -554,12 +560,18 @@ static const struct platform_device_id intel_m10bmc_hwmon_ids[] = {
 		.driver_data = (unsigned long)&d5005bmc_hwmon_bdata,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.name = "n5010bmc-hwmon",
 		.driver_data = (unsigned long)&n5010bmc_hwmon_bdata,
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ }
 };
 

@@ -157,10 +157,14 @@ void *__netdev_alloc_frag_align(unsigned int fragsz, unsigned int align_mask)
 
 	fragsz = SKB_DATA_ALIGN(fragsz);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (in_hardirq() || irqs_disabled()) {
 =======
 	if (in_irq() || irqs_disabled()) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (in_hardirq() || irqs_disabled()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nc = this_cpu_ptr(&netdev_alloc_cache);
 		data = page_frag_alloc_align(nc, fragsz, GFP_ATOMIC, align_mask);
 	} else {
@@ -507,10 +511,14 @@ struct sk_buff *__netdev_alloc_skb(struct net_device *dev, unsigned int len,
 		gfp_mask |= __GFP_MEMALLOC;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (in_hardirq() || irqs_disabled()) {
 =======
 	if (in_irq() || irqs_disabled()) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (in_hardirq() || irqs_disabled()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nc = this_cpu_ptr(&netdev_alloc_cache);
 		data = page_frag_alloc(nc, len, gfp_mask);
 		pfmemalloc = nc->pfmemalloc;
@@ -672,10 +680,14 @@ static void skb_release_data(struct sk_buff *skb)
 	    atomic_sub_return(skb->nohdr ? (1 << SKB_DATAREF_SHIFT) + 1 : 1,
 			      &shinfo->dataref))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit;
 =======
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto exit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	skb_zcopy_clear(skb, true);
 
@@ -687,6 +699,9 @@ static void skb_release_data(struct sk_buff *skb)
 
 	skb_free_head(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 exit:
 	/* When we clone an SKB we copy the reycling bit. The pp_recycle
 	 * bit is only set on the head though, so in order to avoid races
@@ -698,8 +713,11 @@ exit:
 	 * dataref set to 0, which will trigger the recycling
 	 */
 	skb->pp_recycle = 0;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -740,10 +758,14 @@ void skb_release_head_state(struct sk_buff *skb)
 	skb_dst_drop(skb);
 	if (skb->destructor) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		WARN_ON(in_hardirq());
 =======
 		WARN_ON(in_irq());
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WARN_ON(in_hardirq());
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb->destructor(skb);
 	}
 #if IS_ENABLED(CONFIG_NF_CONNTRACK)
@@ -974,6 +996,9 @@ void __kfree_skb_defer(struct sk_buff *skb)
 void napi_skb_free_stolen_head(struct sk_buff *skb)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(skb->slow_gro)) {
 		nf_reset_ct(skb);
 		skb_dst_drop(skb);
@@ -981,10 +1006,13 @@ void napi_skb_free_stolen_head(struct sk_buff *skb)
 		skb_orphan(skb);
 		skb->slow_gro = 0;
 	}
+<<<<<<< HEAD
 =======
 	skb_dst_drop(skb);
 	skb_ext_put(skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	napi_skb_cache_put(skb);
 }
 
@@ -1815,6 +1843,9 @@ EXPORT_SYMBOL(skb_realloc_headroom);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	skb_expand_head - reallocate header of &sk_buff
  *	@skb: buffer to reallocate
  *	@headroom: needed headroom
@@ -1857,8 +1888,11 @@ struct sk_buff *skb_expand_head(struct sk_buff *skb, unsigned int headroom)
 EXPORT_SYMBOL(skb_expand_head);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	skb_copy_expand	-	copy and expand sk_buff
  *	@skb: buffer to copy
  *	@newheadroom: new free bytes at head
@@ -3096,6 +3130,7 @@ skb_zerocopy_headlen(const struct sk_buff *from)
 	if (!from->head_frag ||
 	    skb_headlen(from) < L1_CACHE_BYTES ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    skb_shinfo(from)->nr_frags >= MAX_SKB_FRAGS) {
 		hlen = skb_headlen(from);
 		if (!hlen)
@@ -3105,6 +3140,13 @@ skb_zerocopy_headlen(const struct sk_buff *from)
 	    skb_shinfo(from)->nr_frags >= MAX_SKB_FRAGS)
 		hlen = skb_headlen(from);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    skb_shinfo(from)->nr_frags >= MAX_SKB_FRAGS) {
+		hlen = skb_headlen(from);
+		if (!hlen)
+			hlen = from->len;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (skb_has_frag_list(from))
 		hlen = from->len;
@@ -3917,10 +3959,14 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
 
 		skb_release_head_state(nskb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__copy_skb_header(nskb, skb);
 =======
 		 __copy_skb_header(nskb, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__copy_skb_header(nskb, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		skb_headers_offset_update(nskb, skb_headroom(nskb) - skb_headroom(skb));
 		skb_copy_from_linear_data_offset(skb, -tnl_hlen,
@@ -3972,11 +4018,17 @@ int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
 	NAPI_GRO_CB(p)->count++;
 	p->data_len += skb->len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* sk owenrship - if any - completely transferred to the aggregated packet */
 	skb->destructor = NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* sk owenrship - if any - completely transferred to the aggregated packet */
+	skb->destructor = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	p->truesize += skb->truesize;
 	p->len += skb->len;
 
@@ -4345,9 +4397,13 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
 	unsigned int len = skb_gro_len(skb);
 	unsigned int delta_truesize;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int new_truesize;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int new_truesize;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sk_buff *lp;
 
 	if (unlikely(p->len + len >= 65536 || NAPI_GRO_CB(skb)->flush))
@@ -4380,6 +4436,7 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
 
 		/* all fragments truesize : remove (head size + sk_buff) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		new_truesize = SKB_TRUESIZE(skb_end_offset(skb));
 		delta_truesize = skb->truesize - new_truesize;
 
@@ -4390,6 +4447,12 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
 
 		skb->truesize -= skb->data_len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		new_truesize = SKB_TRUESIZE(skb_end_offset(skb));
+		delta_truesize = skb->truesize - new_truesize;
+
+		skb->truesize = new_truesize;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb->len -= skb->data_len;
 		skb->data_len = 0;
 
@@ -4419,22 +4482,33 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
 		/* We dont need to clear skbinfo->nr_frags here */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		new_truesize = SKB_DATA_ALIGN(sizeof(struct sk_buff));
 		delta_truesize = skb->truesize - new_truesize;
 		skb->truesize = new_truesize;
 =======
 		delta_truesize = skb->truesize - SKB_DATA_ALIGN(sizeof(struct sk_buff));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		new_truesize = SKB_DATA_ALIGN(sizeof(struct sk_buff));
+		delta_truesize = skb->truesize - new_truesize;
+		skb->truesize = new_truesize;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		NAPI_GRO_CB(skb)->free = NAPI_GRO_FREE_STOLEN_HEAD;
 		goto done;
 	}
 
 merge:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* sk owenrship - if any - completely transferred to the aggregated packet */
 	skb->destructor = NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* sk owenrship - if any - completely transferred to the aggregated packet */
+	skb->destructor = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	delta_truesize = skb->truesize;
 	if (offset > headlen) {
 		unsigned int eat = offset - headlen;
@@ -6560,9 +6634,13 @@ void *skb_ext_add(struct sk_buff *skb, enum skb_ext_id id)
 	new->offset[id] = newoff;
 set_active:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb->slow_gro = 1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	skb->slow_gro = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	skb->extensions = new;
 	skb->active_extensions |= 1 << id;
 	return skb_ext_get_ptr(new, id);

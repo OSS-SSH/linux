@@ -1022,15 +1022,21 @@ static int hvc_init(void)
 
 	/* We need more than hvc_count adapters due to hotplug additions. */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drv = tty_alloc_driver(HVC_ALLOC_TTY_ADAPTERS, TTY_DRIVER_REAL_RAW |
 			TTY_DRIVER_RESET_TERMIOS);
 	if (IS_ERR(drv)) {
 		err = PTR_ERR(drv);
+<<<<<<< HEAD
 =======
 	drv = alloc_tty_driver(HVC_ALLOC_TTY_ADAPTERS);
 	if (!drv) {
 		err = -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
@@ -1041,9 +1047,12 @@ static int hvc_init(void)
 	drv->type = TTY_DRIVER_TYPE_SYSTEM;
 	drv->init_termios = tty_std_termios;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	drv->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_RESET_TERMIOS;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tty_set_operations(drv, &hvc_ops);
 
 	/* Always start the kthread because there can be hotplug vty adapters
@@ -1074,10 +1083,14 @@ stop_thread:
 	hvc_task = NULL;
 put_tty:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(drv);
 =======
 	put_tty_driver(drv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(drv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return err;
 }

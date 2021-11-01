@@ -43,9 +43,13 @@ int main(void)
 	DEVID_FIELD(pci_device_id, class);
 	DEVID_FIELD(pci_device_id, class_mask);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DEVID_FIELD(pci_device_id, override_only);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DEVID_FIELD(pci_device_id, override_only);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	DEVID(ccw_device_id);
 	DEVID_FIELD(ccw_device_id, match_flags);

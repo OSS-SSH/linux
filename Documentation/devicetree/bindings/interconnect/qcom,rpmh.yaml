@@ -50,6 +50,9 @@ properties:
       - qcom,sc7280-nsp-noc
       - qcom,sc7280-system-noc
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,sc8180x-aggre1-noc
       - qcom,sc8180x-aggre2-noc
       - qcom,sc8180x-camnoc-virt
@@ -61,8 +64,11 @@ properties:
       - qcom,sc8180x-mc-virt
       - qcom,sc8180x-mmss-noc
       - qcom,sc8180x-system-noc
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,sdm845-aggre1-noc
       - qcom,sdm845-aggre2-noc
       - qcom,sdm845-config-noc

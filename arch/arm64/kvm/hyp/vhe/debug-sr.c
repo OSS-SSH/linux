@@ -21,10 +21,14 @@ void __debug_switch_to_host(struct kvm_vcpu *vcpu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 u64 __kvm_get_mdcr_el2(void)
 =======
 u32 __kvm_get_mdcr_el2(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u64 __kvm_get_mdcr_el2(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return read_sysreg(mdcr_el2);
 }

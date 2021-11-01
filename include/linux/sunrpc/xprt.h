@@ -289,9 +289,12 @@ struct rpc_xprt {
 #if IS_ENABLED(CONFIG_SUNRPC_DEBUG)
 	struct dentry		*debugfs;		/* debugfs directory */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	atomic_t		inject_disconnect;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	struct rcu_head		rcu;
 	const struct xprt_class	*xprt_class;
@@ -436,9 +439,13 @@ void			xprt_release_write(struct rpc_xprt *, struct rpc_task *);
 #define XPRT_CWND_WAIT		(10)
 #define XPRT_WRITE_SPACE	(11)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define XPRT_SND_IS_COOKIE	(12)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define XPRT_SND_IS_COOKIE	(12)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline void xprt_set_connected(struct rpc_xprt *xprt)
 {
@@ -510,6 +517,7 @@ static inline int xprt_test_and_set_binding(struct rpc_xprt *xprt)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if IS_ENABLED(CONFIG_SUNRPC_DEBUG)
 extern unsigned int rpc_inject_disconnect;
@@ -529,4 +537,6 @@ static inline void xprt_inject_disconnect(struct rpc_xprt *xprt)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _LINUX_SUNRPC_XPRT_H */

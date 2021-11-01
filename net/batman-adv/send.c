@@ -153,11 +153,15 @@ int batadv_send_unicast_skb(struct sk_buff *skb,
 		hardif_neigh->bat_v.last_unicast_tx = jiffies;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_neigh_put(hardif_neigh);
 =======
 	if (hardif_neigh)
 		batadv_hardif_neigh_put(hardif_neigh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_neigh_put(hardif_neigh);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	return ret;
@@ -314,11 +318,15 @@ bool batadv_send_skb_prepare_unicast_4addr(struct batadv_priv *bat_priv,
 	ret = true;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_put(primary_if);
 =======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -434,11 +442,15 @@ int batadv_send_skb_via_tt_generic(struct batadv_priv *bat_priv,
 				      packet_subtype, orig_node, vid);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_orig_node_put(orig_node);
 =======
 	if (orig_node)
 		batadv_orig_node_put(orig_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -465,11 +477,15 @@ int batadv_send_skb_via_gw(struct batadv_priv *bat_priv, struct sk_buff *skb,
 				      BATADV_P_DATA, orig_node, vid);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_orig_node_put(orig_node);
 =======
 	if (orig_node)
 		batadv_orig_node_put(orig_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -491,6 +507,7 @@ void batadv_forw_packet_free(struct batadv_forw_packet *forw_packet,
 		consume_skb(forw_packet->skb);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_put(forw_packet->if_incoming);
 	batadv_hardif_put(forw_packet->if_outgoing);
 =======
@@ -499,6 +516,10 @@ void batadv_forw_packet_free(struct batadv_forw_packet *forw_packet,
 	if (forw_packet->if_outgoing)
 		batadv_hardif_put(forw_packet->if_outgoing);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(forw_packet->if_incoming);
+	batadv_hardif_put(forw_packet->if_outgoing);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (forw_packet->queue_left)
 		atomic_inc(forw_packet->queue_left);
 	kfree(forw_packet);
@@ -770,12 +791,18 @@ void batadv_forw_packet_ogmv1_queue(struct batadv_priv *bat_priv,
  * are sent multiple times to increase probability for being received.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * This call clones the given skb, hence the caller needs to take into
  * account that the data segment of the original skb might not be
  * modifiable anymore.
  *
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Return: NETDEV_TX_OK on success and NETDEV_TX_BUSY on errors.
  */
 static int batadv_forw_bcast_packet_to_list(struct batadv_priv *bat_priv,
@@ -790,10 +817,14 @@ static int batadv_forw_bcast_packet_to_list(struct batadv_priv *bat_priv,
 	struct sk_buff *newskb;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	newskb = skb_clone(skb, GFP_ATOMIC);
 =======
 	newskb = skb_copy(skb, GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	newskb = skb_clone(skb, GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!newskb)
 		goto err;
 
@@ -833,12 +864,18 @@ err:
  * retransmissions if this interface is a wireless one.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * This call clones the given skb, hence the caller needs to take into
  * account that the data segment of the original skb might not be
  * modifiable anymore.
  *
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Return: NETDEV_TX_OK on success and NETDEV_TX_BUSY on errors.
  */
 static int batadv_forw_bcast_packet_if(struct batadv_priv *bat_priv,
@@ -854,10 +891,14 @@ static int batadv_forw_bcast_packet_if(struct batadv_priv *bat_priv,
 
 	if (!delay) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		newskb = skb_clone(skb, GFP_ATOMIC);
 =======
 		newskb = skb_copy(skb, GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		newskb = skb_clone(skb, GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!newskb)
 			return NETDEV_TX_BUSY;
 
@@ -911,11 +952,15 @@ static bool batadv_send_no_broadcast(struct batadv_priv *bat_priv,
 					 orig_neigh);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_neigh_put(neigh_node);
 =======
 	if (neigh_node)
 		batadv_hardif_neigh_put(neigh_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_neigh_put(neigh_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* ok, may broadcast */
 	if (!ret)

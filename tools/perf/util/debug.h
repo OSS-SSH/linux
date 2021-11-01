@@ -23,6 +23,9 @@ extern int debug_data_convert;
 #define pr_warning(fmt, ...) \
 	eprintf(0, verbose, pr_fmt(fmt), ##__VA_ARGS__)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define pr_warning_once(fmt, ...) ({		\
 	static int __warned;			\
 	if (unlikely(!__warned)) {		\
@@ -30,8 +33,11 @@ extern int debug_data_convert;
 		__warned = 1;			\
 	}					\
 })
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define pr_info(fmt, ...) \
 	eprintf(0, verbose, pr_fmt(fmt), ##__VA_ARGS__)
 #define pr_debug(fmt, ...) \
@@ -66,6 +72,9 @@ void trace_event(union perf_event *event);
 int ui__error(const char *format, ...) __printf(1, 2);
 int ui__warning(const char *format, ...) __printf(1, 2);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ui__warning_once(format, ...) ({		\
 	static int __warned;				\
 	if (unlikely(!__warned)) {			\
@@ -73,8 +82,11 @@ int ui__warning(const char *format, ...) __printf(1, 2);
 		__warned = 1;				\
 	}						\
 })
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void pr_stat(const char *fmt, ...);
 

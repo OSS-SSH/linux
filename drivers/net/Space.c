@@ -31,6 +31,9 @@
 #include <net/Space.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * This structure holds boot-time configured netdevice settings. They
  * are then used in the device probing.
@@ -173,8 +176,11 @@ static int __init ether_boot_setup(char *str)
 __setup("ether=", ether_boot_setup);
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* A unified ethernet device probe.  This is the easiest way to have every
  * ethernet adaptor have the name "eth[0123...]".
  */
@@ -223,6 +229,7 @@ static struct devprobe2 isa_probes[] __initdata = {
 	{smc_init, 0},
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CS89x0_ISA
 	{cs89x0_probe, 0},
 #endif
@@ -236,12 +243,18 @@ static struct devprobe2 isa_probes[] __initdata = {
 	{i82596_probe, 0},					/* I82596 */
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_CS89x0_ISA
+	{cs89x0_probe, 0},
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_NI65
 	{ni65_probe, 0},
 #endif
 	{NULL, 0},
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static struct devprobe2 m68k_probes[] __initdata = {
@@ -264,6 +277,8 @@ static struct devprobe2 m68k_probes[] __initdata = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Unified ethernet device probe, segmented per architecture and
  * per bus interface. This drives the legacy devices only for now.
  */
@@ -276,11 +291,15 @@ static void __init ethif_probe2(int unit)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	probe_list2(unit, isa_probes, base_addr == 0);
 =======
 	(void)(probe_list2(unit, m68k_probes, base_addr == 0) &&
 		probe_list2(unit, isa_probes, base_addr == 0));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	probe_list2(unit, isa_probes, base_addr == 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*  Statically configured drivers -- order matters here. */
@@ -289,12 +308,15 @@ static int __init net_olddevs_init(void)
 	int num;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_SBNI
 	for (num = 0; num < 8; ++num)
 		sbni_probe(num);
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (num = 0; num < 8; ++num)
 		ethif_probe2(num);
 
@@ -304,11 +326,14 @@ static int __init net_olddevs_init(void)
 	cops_probe(2);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_LTPC
 	ltpc_probe();
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

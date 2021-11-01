@@ -1734,9 +1734,13 @@ static void migrate_task_rq_dl(struct task_struct *p, int new_cpu __maybe_unused
 	raw_spin_rq_lock(rq);
 	if (p->dl.dl_non_contending) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		update_rq_clock(rq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		update_rq_clock(rq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sub_running_bw(&p->dl, &rq->dl);
 		p->dl.dl_non_contending = 0;
 		/*
@@ -2746,10 +2750,14 @@ void __setparam_dl(struct task_struct *p, const struct sched_attr *attr)
 	dl_se->dl_deadline = attr->sched_deadline;
 	dl_se->dl_period = attr->sched_period ?: dl_se->dl_deadline;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dl_se->flags = attr->sched_flags & SCHED_DL_FLAGS;
 =======
 	dl_se->flags = attr->sched_flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dl_se->flags = attr->sched_flags & SCHED_DL_FLAGS;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dl_se->dl_bw = to_ratio(dl_se->dl_period, dl_se->dl_runtime);
 	dl_se->dl_density = to_ratio(dl_se->dl_deadline, dl_se->dl_runtime);
 }
@@ -2763,11 +2771,16 @@ void __getparam_dl(struct task_struct *p, struct sched_attr *attr)
 	attr->sched_deadline = dl_se->dl_deadline;
 	attr->sched_period = dl_se->dl_period;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	attr->sched_flags &= ~SCHED_DL_FLAGS;
 	attr->sched_flags |= dl_se->flags;
 =======
 	attr->sched_flags = dl_se->flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	attr->sched_flags &= ~SCHED_DL_FLAGS;
+	attr->sched_flags |= dl_se->flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -2865,10 +2878,14 @@ bool dl_param_changed(struct task_struct *p, const struct sched_attr *attr)
 	    dl_se->dl_deadline != attr->sched_deadline ||
 	    dl_se->dl_period != attr->sched_period ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    dl_se->flags != (attr->sched_flags & SCHED_DL_FLAGS))
 =======
 	    dl_se->flags != attr->sched_flags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    dl_se->flags != (attr->sched_flags & SCHED_DL_FLAGS))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 
 	return false;

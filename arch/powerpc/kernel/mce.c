@@ -250,9 +250,13 @@ void machine_check_queue_event(void)
 	int index;
 	struct machine_check_event evt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long msr;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long msr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!get_mce_event(&evt, MCE_EVENT_RELEASE))
 		return;
@@ -267,6 +271,9 @@ void machine_check_queue_event(void)
 	       &evt, sizeof(evt));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Queue irq work to process this event later. Before
 	 * queuing the work enable translation for non radix LPAR,
@@ -281,10 +288,13 @@ void machine_check_queue_event(void)
 	} else {
 		irq_work_queue(&mce_event_process_work);
 	}
+<<<<<<< HEAD
 =======
 	/* Queue irq work to process this event later. */
 	irq_work_queue(&mce_event_process_work);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void mce_common_process_ue(struct pt_regs *regs,

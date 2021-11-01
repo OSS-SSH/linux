@@ -21,9 +21,13 @@
 #include <linux/hashtable.h>
 #include <linux/debugfs.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/rwsem.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/rwsem.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/bitfield.h>
 #include <linux/genalloc.h>
 #include <linux/sched/signal.h>
@@ -70,13 +74,19 @@
 #define HL_COMMON_USER_INTERRUPT_ID	0xFFF
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HL_STATE_DUMP_HIST_LEN		5
 
 #define OBJ_NAMES_HASH_TABLE_BITS	7 /* 1 << 7 buckets */
 #define SYNC_TO_ENGINE_HASH_TABLE_BITS	7 /* 1 << 7 buckets */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Memory */
 #define MEM_HASH_TABLE_BITS		7 /* 1 << 7 buckets */
 
@@ -135,12 +145,18 @@ enum hl_mmu_page_table_location {
  * - HL_RESET_DEVICE_RELEASE
  *       Set if reset is due to device release
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * - HL_RESET_FW
  *       F/W will perform the reset. No need to ask it to reset the device. This is relevant
  *       only when running with secured f/w
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #define HL_RESET_HARD			(1 << 0)
 #define HL_RESET_FROM_RESET_THREAD	(1 << 1)
@@ -148,9 +164,13 @@ enum hl_mmu_page_table_location {
 #define HL_RESET_TDR			(1 << 3)
 #define HL_RESET_DEVICE_RELEASE		(1 << 4)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HL_RESET_FW			(1 << 5)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HL_RESET_FW			(1 << 5)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HL_MAX_SOBS_PER_MONITOR	8
 
@@ -260,12 +280,18 @@ enum hl_cs_type {
 	CS_TYPE_SIGNAL,
 	CS_TYPE_WAIT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	CS_TYPE_COLLECTIVE_WAIT,
 	CS_RESERVE_SIGNALS,
 	CS_UNRESERVE_SIGNALS
 =======
 	CS_TYPE_COLLECTIVE_WAIT
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	CS_TYPE_COLLECTIVE_WAIT,
+	CS_RESERVE_SIGNALS,
+	CS_UNRESERVE_SIGNALS
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -311,17 +337,24 @@ enum queue_cb_alloc_flags {
  * @kref: refcount of this SOB. The SOB will reset once the refcount is zero.
  * @sob_id: id of this SOB.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @sob_addr: the sob offset from the base address.
  * @q_idx: the H/W queue that uses this SOB.
  * @need_reset: reset indication set when switching to the other sob.
 =======
  * @q_idx: the H/W queue that uses this SOB.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @sob_addr: the sob offset from the base address.
+ * @q_idx: the H/W queue that uses this SOB.
+ * @need_reset: reset indication set when switching to the other sob.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hl_hw_sob {
 	struct hl_device	*hdev;
 	struct kref		kref;
 	u32			sob_id;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	u32			sob_addr;
 	u32			q_idx;
@@ -329,6 +362,11 @@ struct hl_hw_sob {
 =======
 	u32			q_idx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32			sob_addr;
+	u32			q_idx;
+	bool			need_reset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum hl_collective_mode {
@@ -359,6 +397,7 @@ struct hw_queue_properties {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * enum vm_type - virtual memory mapping request information.
  * @VM_TYPE_USERPTR: mapping of user memory to device virtual address.
  * @VM_TYPE_PHYS_PACK: mapping of DRAM memory to device virtual address.
@@ -371,6 +410,13 @@ enum vm_type {
  */
 enum vm_type_t {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * enum vm_type - virtual memory mapping request information.
+ * @VM_TYPE_USERPTR: mapping of user memory to device virtual address.
+ * @VM_TYPE_PHYS_PACK: mapping of DRAM memory to device virtual address.
+ */
+enum vm_type {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	VM_TYPE_USERPTR = 0x1,
 	VM_TYPE_PHYS_PACK = 0x2
 };
@@ -432,6 +478,9 @@ struct hl_mmu_properties {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct hl_hints_range - hint addresses reserved va range.
  * @start_addr: start address of the va range.
  * @end_addr: end address of the va range.
@@ -442,8 +491,11 @@ struct hl_hints_range {
 };
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct asic_fixed_properties - ASIC specific immutable properties.
  * @hw_queues_props: H/W queues properties.
  * @cpucp_info: received various information from CPU-CP regarding the H/W, e.g.
@@ -455,12 +507,18 @@ struct hl_hints_range {
  * @pmmu_huge: PCI (host) MMU address translation properties for memory
  *              allocated with huge pages.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @hints_dram_reserved_va_range: dram hint addresses reserved range.
  * @hints_host_reserved_va_range: host hint addresses reserved range.
  * @hints_host_hpage_reserved_va_range: host huge page hint addresses reserved
  *                                      range.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @sram_base_address: SRAM physical start address.
  * @sram_end_address: SRAM physical end address.
  * @sram_user_base_address - SRAM physical start address for user access.
@@ -482,12 +540,18 @@ struct hl_hints_range {
  * @cb_va_end_addr: virtual end address of command buffers which are mapped to
  *                  the device's MMU.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dram_hints_align_mask: dram va hint addresses alignment mask which is used
  *                  for hints validity check.
  * device_dma_offset_for_host_access: the offset to add to host DMA addresses
  *                                    to enable the device to access them.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @mmu_pgt_size: MMU page tables total size.
  * @mmu_pte_size: PTE size in MMU page tables.
  * @mmu_hop_table_size: MMU hop table size.
@@ -536,10 +600,15 @@ struct hl_hints_range {
  * @first_available_cq: first available CQ for the user.
  * @user_interrupt_count: number of user interrupts.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @server_type: Server type that the ASIC is currently installed in.
  *               The value is according to enum hl_server_type in uapi file.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @server_type: Server type that the ASIC is currently installed in.
+ *               The value is according to enum hl_server_type in uapi file.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @tpc_enabled_mask: which TPCs are enabled.
  * @completion_queues_count: number of completion queues.
  * @fw_security_enabled: true if security measures are enabled in firmware,
@@ -552,9 +621,13 @@ struct hl_hints_range {
  * @hard_reset_done_by_fw: true if firmware is handling hard reset flow
  * @num_functional_hbms: number of functional HBMs in each DCORE.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @hints_range_reservation: device support hint addresses range reservation.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @hints_range_reservation: device support hint addresses range reservation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @iatu_done_by_fw: true if iATU configuration is being done by FW.
  * @dynamic_fw_load: is dynamic FW load is supported.
  * @gic_interrupts_enable: true if FW is not blocking GIC controller,
@@ -569,11 +642,17 @@ struct asic_fixed_properties {
 	struct hl_mmu_properties	pmmu;
 	struct hl_mmu_properties	pmmu_huge;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hl_hints_range		hints_dram_reserved_va_range;
 	struct hl_hints_range		hints_host_reserved_va_range;
 	struct hl_hints_range		hints_host_hpage_reserved_va_range;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hl_hints_range		hints_dram_reserved_va_range;
+	struct hl_hints_range		hints_host_reserved_va_range;
+	struct hl_hints_range		hints_host_hpage_reserved_va_range;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64				sram_base_address;
 	u64				sram_end_address;
 	u64				sram_user_base_address;
@@ -592,10 +671,15 @@ struct asic_fixed_properties {
 	u64				cb_va_start_addr;
 	u64				cb_va_end_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64				dram_hints_align_mask;
 	u64				device_dma_offset_for_host_access;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64				dram_hints_align_mask;
+	u64				device_dma_offset_for_host_access;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32				mmu_pgt_size;
 	u32				mmu_pte_size;
 	u32				mmu_hop_table_size;
@@ -631,9 +715,13 @@ struct asic_fixed_properties {
 	u16				first_available_cq[HL_MAX_DCORES];
 	u16				user_interrupt_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16				server_type;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16				server_type;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8				tpc_enabled_mask;
 	u8				completion_queues_count;
 	u8				fw_security_enabled;
@@ -643,9 +731,13 @@ struct asic_fixed_properties {
 	u8				hard_reset_done_by_fw;
 	u8				num_functional_hbms;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8				hints_range_reservation;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8				hints_range_reservation;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8				iatu_done_by_fw;
 	u8				dynamic_fw_load;
 	u8				gic_interrupts_enable;
@@ -657,6 +749,7 @@ struct asic_fixed_properties {
  * @refcount: refcount for this fence
  * @cs_sequence: sequence of the corresponding command submission
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @stream_master_qid_map: streams masters QID bitmap to represent all streams
  *                         masters QIDs that multi cs is waiting on
  * @error: mark this fence with error
@@ -666,15 +759,25 @@ struct asic_fixed_properties {
  * @timestamp: timestamp upon completion
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @stream_master_qid_map: streams masters QID bitmap to represent all streams
+ *                         masters QIDs that multi cs is waiting on
+ * @error: mark this fence with error
+ * @timestamp: timestamp upon completion
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hl_fence {
 	struct completion	completion;
 	struct kref		refcount;
 	u64			cs_sequence;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32			stream_master_qid_map;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32			stream_master_qid_map;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			error;
 	ktime_t			timestamp;
 };
@@ -682,21 +785,29 @@ struct hl_fence {
 /**
  * struct hl_cs_compl - command submission completion object.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * @sob_reset_work: workqueue object to run SOB reset flow.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @base_fence: hl fence object.
  * @lock: spinlock to protect fence.
  * @hdev: habanalabs device structure.
  * @hw_sob: the H/W SOB used in this signal/wait CS.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @encaps_sig_hdl: encaps signals hanlder.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @encaps_sig_hdl: encaps signals hanlder.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cs_seq: command submission sequence number.
  * @type: type of the CS - signal/wait.
  * @sob_val: the SOB value that is used in this signal/wait CS.
  * @sob_group: the SOB group that is used in this collective wait CS.
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @encaps_signals: indication whether it's a completion object of cs with
  * encaps signals or not.
@@ -707,22 +818,36 @@ struct hl_cs_compl {
 struct hl_cs_compl {
 	struct work_struct	sob_reset_work;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @encaps_signals: indication whether it's a completion object of cs with
+ * encaps signals or not.
+ */
+struct hl_cs_compl {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hl_fence		base_fence;
 	spinlock_t		lock;
 	struct hl_device	*hdev;
 	struct hl_hw_sob	*hw_sob;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hl_cs_encaps_sig_handle *encaps_sig_hdl;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hl_cs_encaps_sig_handle *encaps_sig_hdl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64			cs_seq;
 	enum hl_cs_type		type;
 	u16			sob_val;
 	u16			sob_group;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool			encaps_signals;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool			encaps_signals;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -836,6 +961,9 @@ struct hl_sync_stream_properties {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct hl_encaps_signals_mgr - describes sync stream encapsulated signals
  * handlers manager
  * @lock: protects handles.
@@ -847,8 +975,11 @@ struct hl_encaps_signals_mgr {
 };
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct hl_hw_queue - describes a H/W transport queue.
  * @shadow_queue: pointer to a shadow queue that holds pointers to jobs.
  * @sync_stream_prop: sync stream queue properties
@@ -1027,10 +1158,14 @@ struct pci_mem_region {
 	u64 region_size;
 	u64 bar_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 offset_in_bar;
 =======
 	u32 offset_in_bar;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 offset_in_bar;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 bar_id;
 	u8 used;
 };
@@ -1152,10 +1287,14 @@ struct fw_load_mgr {
  * @suspend: handles IP specific H/W or SW changes for suspend.
  * @resume: handles IP specific H/W or SW changes for resume.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @mmap: maps a memory.
 =======
  * @cb_mmap: maps a CB.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mmap: maps a memory.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ring_doorbell: increment PI on a given QMAN.
  * @pqe_write: Write the PQ entry to the PQ. This is ASIC-specific
  *             function because the PQs are located in different memory areas
@@ -1261,12 +1400,18 @@ struct fw_load_mgr {
  * @init_firmware_loader: initialize data for FW loader.
  * @init_cpu_scrambler_dram: Enable CPU specific DRAM scrambling
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @state_dump_init: initialize constants required for state dump
  * @get_sob_addr: get SOB base address offset.
  * @set_pci_memory_regions: setting properties of PCI memory regions
  * @get_stream_master_qid_arr: get pointer to stream masters QID array
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hl_asic_funcs {
 	int (*early_init)(struct hl_device *hdev);
@@ -1276,6 +1421,7 @@ struct hl_asic_funcs {
 	int (*sw_init)(struct hl_device *hdev);
 	int (*sw_fini)(struct hl_device *hdev);
 	int (*hw_init)(struct hl_device *hdev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	void (*hw_fini)(struct hl_device *hdev, bool hard_reset, bool fw_reset);
 	void (*halt_engines)(struct hl_device *hdev, bool hard_reset, bool fw_reset);
@@ -1289,6 +1435,13 @@ struct hl_asic_funcs {
 	int (*resume)(struct hl_device *hdev);
 	int (*cb_mmap)(struct hl_device *hdev, struct vm_area_struct *vma,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void (*hw_fini)(struct hl_device *hdev, bool hard_reset, bool fw_reset);
+	void (*halt_engines)(struct hl_device *hdev, bool hard_reset, bool fw_reset);
+	int (*suspend)(struct hl_device *hdev);
+	int (*resume)(struct hl_device *hdev);
+	int (*mmap)(struct hl_device *hdev, struct vm_area_struct *vma,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			void *cpu_addr, dma_addr_t dma_addr, size_t size);
 	void (*ring_doorbell)(struct hl_device *hdev, u32 hw_queue_id, u32 pi);
 	void (*pqe_write)(struct hl_device *hdev, __le64 *pqe,
@@ -1385,6 +1538,7 @@ struct hl_asic_funcs {
 	void (*set_dma_mask_from_fw)(struct hl_device *hdev);
 	u64 (*get_device_time)(struct hl_device *hdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*collective_wait_init_cs)(struct hl_cs *cs);
 	int (*collective_wait_create_jobs)(struct hl_device *hdev,
 			struct hl_ctx *ctx, struct hl_cs *cs,
@@ -1396,6 +1550,13 @@ struct hl_asic_funcs {
 			struct hl_ctx *ctx, struct hl_cs *cs, u32 wait_queue_id,
 			u32 collective_engine_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*collective_wait_init_cs)(struct hl_cs *cs);
+	int (*collective_wait_create_jobs)(struct hl_device *hdev,
+			struct hl_ctx *ctx, struct hl_cs *cs,
+			u32 wait_queue_id, u32 collective_engine_id,
+			u32 encaps_signal_offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 (*scramble_addr)(struct hl_device *hdev, u64 addr);
 	u64 (*descramble_addr)(struct hl_device *hdev, u64 addr);
 	void (*ack_protection_bits_errors)(struct hl_device *hdev);
@@ -1409,12 +1570,18 @@ struct hl_asic_funcs {
 	void (*init_firmware_loader)(struct hl_device *hdev);
 	void (*init_cpu_scrambler_dram)(struct hl_device *hdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*state_dump_init)(struct hl_device *hdev);
 	u32 (*get_sob_addr)(struct hl_device *hdev, u32 sob_id);
 	void (*set_pci_memory_regions)(struct hl_device *hdev);
 	u32* (*get_stream_master_qid_arr)(void);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 
@@ -1473,6 +1640,7 @@ struct hl_cs_counters_atomic {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * struct hl_pending_cb - pending command buffer structure
  * @cb_node: cb node in pending cb list
@@ -1489,6 +1657,8 @@ struct hl_pending_cb {
 
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct hl_ctx - user/kernel context.
  * @mem_hash: holds mapping from virtual address to virtual memory area
  *		descriptor (hl_vm_phys_pg_list or hl_userptr).
@@ -1505,32 +1675,43 @@ struct hl_pending_cb {
  * @hw_block_list_lock: protects the HW block memory list.
  * @debugfs_list: node in debugfs list of contexts.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * pending_cb_list: list of pending command buffers waiting to be sent upon
  *                  next user command submission context.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @hw_block_mem_list: list of HW block virtual mapped addresses.
  * @cs_counters: context command submission counters.
  * @cb_va_pool: device VA pool for command buffers which are mapped to the
  *              device's MMU.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @sig_mgr: encaps signals handle manager.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @sig_mgr: encaps signals handle manager.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cs_sequence: sequence number for CS. Value is assigned to a CS and passed
  *			to user so user could inquire about CS. It is used as
  *			index to cs_pending array.
  * @dram_default_hops: array that holds all hops addresses needed for default
  *                     DRAM mapping.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * @pending_cb_lock: spinlock to protect pending cb list
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cs_lock: spinlock to protect cs_sequence.
  * @dram_phys_mem: amount of used physical DRAM memory by this context.
  * @thread_ctx_switch_token: token to prevent multiple threads of the same
  *				context	from running the context switch phase.
  *				Only a single thread should run it.
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
  * @thread_pending_cb_token: token to prevent multiple threads from processing
@@ -1539,6 +1720,8 @@ struct hl_pending_cb {
  *				spinlock and we don't want to halt the entire
  *				command submission sequence.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @thread_ctx_switch_wait_token: token to prevent the threads that didn't run
  *				the context switch phase from moving to their
  *				execution phase before the context switch phase
@@ -1559,6 +1742,7 @@ struct hl_ctx {
 	struct mutex			hw_block_list_lock;
 	struct list_head		debugfs_list;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct list_head		hw_block_mem_list;
 	struct hl_cs_counters_atomic	cs_counters;
 	struct gen_pool			*cb_va_pool;
@@ -1570,17 +1754,22 @@ struct hl_ctx {
 	atomic_t			thread_ctx_switch_token;
 =======
 	struct list_head		pending_cb_list;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head		hw_block_mem_list;
 	struct hl_cs_counters_atomic	cs_counters;
 	struct gen_pool			*cb_va_pool;
+	struct hl_encaps_signals_mgr	sig_mgr;
 	u64				cs_sequence;
 	u64				*dram_default_hops;
-	spinlock_t			pending_cb_lock;
 	spinlock_t			cs_lock;
 	atomic64_t			dram_phys_mem;
 	atomic_t			thread_ctx_switch_token;
+<<<<<<< HEAD
 	atomic_t			thread_pending_cb_token;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32				thread_ctx_switch_wait_token;
 	u32				asid;
 	u32				handle;
@@ -1612,25 +1801,34 @@ struct hl_ctx_mgr {
  * @dir: for DMA unmapping, the direction must be supplied, so save it.
  * @debugfs_list: node in debugfs list of command submissions.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @pid: the pid of the user process owning the memory
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @pid: the pid of the user process owning the memory
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @addr: user-space virtual address of the start of the memory area.
  * @size: size of the memory area to pin & map.
  * @dma_mapped: true if the SG was mapped to DMA addresses, false otherwise.
  */
 struct hl_userptr {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum vm_type		vm_type; /* must be first */
 =======
 	enum vm_type_t		vm_type; /* must be first */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum vm_type		vm_type; /* must be first */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	job_node;
 	struct page		**pages;
 	unsigned int		npages;
 	struct sg_table		*sgt;
 	enum dma_data_direction dir;
 	struct list_head	debugfs_list;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	pid_t			pid;
 	u64			addr;
@@ -1639,6 +1837,11 @@ struct hl_userptr {
 	u64			addr;
 	u32			size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pid_t			pid;
+	u64			addr;
+	u64			size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8			dma_mapped;
 };
 
@@ -1658,9 +1861,13 @@ struct hl_userptr {
  * @staged_cs_node: node in the staged cs list.
  * @debugfs_list: node in debugfs list of command submissions.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @encaps_sig_hdl: holds the encaps signals handle.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @encaps_sig_hdl: holds the encaps signals handle.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @sequence: the sequence number of this CS.
  * @staged_sequence: the sequence of the staged submission this CS is part of,
  *                   relevant only if staged_cs is set.
@@ -1668,9 +1875,13 @@ struct hl_userptr {
  * @submission_time_jiffies: submission time of the cs
  * @type: CS_TYPE_*.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @encaps_sig_hdl_id: encaps signals handle id, set for the first staged cs.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @encaps_sig_hdl_id: encaps signals handle id, set for the first staged cs.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @submitted: true if CS was submitted to H/W.
  * @completed: true if CS was completed by device.
  * @timedout : true if CS was timedout.
@@ -1685,9 +1896,13 @@ struct hl_userptr {
  * @skip_reset_on_timeout: true if we shall not reset the device in case
  *                         timeout occurs (debug scenario).
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @encaps_signals: true if this CS has encaps reserved signals.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @encaps_signals: true if this CS has encaps reserved signals.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hl_cs {
 	u16			*jobs_in_queue_cnt;
@@ -1703,18 +1918,26 @@ struct hl_cs {
 	struct list_head	staged_cs_node;
 	struct list_head	debugfs_list;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hl_cs_encaps_sig_handle *encaps_sig_hdl;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hl_cs_encaps_sig_handle *encaps_sig_hdl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64			sequence;
 	u64			staged_sequence;
 	u64			timeout_jiffies;
 	u64			submission_time_jiffies;
 	enum hl_cs_type		type;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32			encaps_sig_hdl_id;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32			encaps_sig_hdl_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8			submitted;
 	u8			completed;
 	u8			timedout;
@@ -1726,9 +1949,13 @@ struct hl_cs {
 	u8			staged_cs;
 	u8			skip_reset_on_timeout;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8			encaps_signals;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8			encaps_signals;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -1749,10 +1976,15 @@ struct hl_cs {
  * @user_cb_size: the actual size of the CB we got from the user.
  * @job_cb_size: the actual size of the CB that we put on the queue.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @encaps_sig_wait_offset: encapsulated signals offset, which allow user
  *                          to wait on part of the reserved signals.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @encaps_sig_wait_offset: encapsulated signals offset, which allow user
+ *                          to wait on part of the reserved signals.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @is_kernel_allocated_cb: true if the CB handle we got from the user holds a
  *                          handle to a kernel-allocated CB object, false
  *                          otherwise (SRAM/DRAM/host address).
@@ -1778,9 +2010,13 @@ struct hl_cs_job {
 	u32			user_cb_size;
 	u32			job_cb_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32			encaps_sig_wait_offset;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32			encaps_sig_wait_offset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8			is_kernel_allocated_cb;
 	u8			contains_dma_pkt;
 };
@@ -1878,10 +2114,14 @@ struct hl_vm_hw_block_list_node {
  */
 struct hl_vm_phys_pg_pack {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum vm_type		vm_type; /* must be first */
 =======
 	enum vm_type_t		vm_type; /* must be first */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum vm_type		vm_type; /* must be first */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64			*pages;
 	u64			npages;
 	u64			total_size;
@@ -2028,6 +2268,9 @@ struct hl_debugfs_entry {
  * @ctx_mem_hash_spinlock: protects cb_list.
  * @blob_desc: descriptor of blob
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @state_dump: data of the system states in case of a bad cs.
  * @state_dump_sem: protects state_dump.
  * @addr: next address to read/write from/to in read/write32.
@@ -2035,11 +2278,14 @@ struct hl_debugfs_entry {
  * @userptr_lookup: the target user ptr to look up for on demand.
  * @mmu_asid: ASID to use while translating in mmu_show.
  * @state_dump_head: index of the latest state dump
+<<<<<<< HEAD
 =======
  * @addr: next address to read/write from/to in read/write32.
  * @mmu_addr: next virtual address to translate to physical address in mmu_show.
  * @mmu_asid: ASID to use while translating in mmu_show.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @i2c_bus: generic u8 debugfs file for bus value to use in i2c_data_read.
  * @i2c_addr: generic u8 debugfs file for address value to use in i2c_data_read.
  * @i2c_reg: generic u8 debugfs file for register value to use in i2c_data_read.
@@ -2062,6 +2308,9 @@ struct hl_dbg_device_entry {
 	spinlock_t			ctx_mem_hash_spinlock;
 	struct debugfs_blob_wrapper	blob_desc;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char				*state_dump[HL_STATE_DUMP_HIST_LEN];
 	struct rw_semaphore		state_dump_sem;
 	u64				addr;
@@ -2069,17 +2318,23 @@ struct hl_dbg_device_entry {
 	u64				userptr_lookup;
 	u32				mmu_asid;
 	u32				state_dump_head;
+<<<<<<< HEAD
 =======
 	u64				addr;
 	u64				mmu_addr;
 	u32				mmu_asid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8				i2c_bus;
 	u8				i2c_addr;
 	u8				i2c_reg;
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct hl_hw_obj_name_entry - single hw object name, member of
  * hl_state_dump_specs
@@ -2211,8 +2466,11 @@ struct hl_state_dump_specs {
 	s64					*props;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * DEVICES
@@ -2221,10 +2479,14 @@ struct hl_state_dump_specs {
 #define HL_STR_MAX	32
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HL_DEV_STS_MAX (HL_DEVICE_STATUS_LAST + 1)
 =======
 #define HL_DEV_STS_MAX (HL_DEVICE_STATUS_NEEDS_RESET + 1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HL_DEV_STS_MAX (HL_DEVICE_STATUS_LAST + 1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Theoretical limit only. A single host can only contain up to 4 or 8 PCIe
  * x16 cards. In extreme cases, there are hosts that can accommodate 16 cards.
@@ -2373,18 +2635,26 @@ struct hwmon_chip_info;
  * @reset_work: reset work to be done.
  * @hdev: habanalabs device structure.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @fw_reset: whether f/w will do the reset without us sending them a message to do it.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @fw_reset: whether f/w will do the reset without us sending them a message to do it.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hl_device_reset_work {
 	struct workqueue_struct		*wq;
 	struct delayed_work		reset_work;
 	struct hl_device		*hdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool				fw_reset;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool				fw_reset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -2500,6 +2770,9 @@ struct hl_mmu_funcs {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * number of user contexts allowed to call wait_for_multi_cs ioctl in
  * parallel
  */
@@ -2552,8 +2825,11 @@ struct multi_cs_data {
 };
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct hl_device - habanalabs device structure.
  * @pdev: pointer to PCI device, can be NULL in case of simulator device.
  * @pcie_bar_phys: array of available PCIe bars physical addresses.
@@ -2619,10 +2895,15 @@ struct multi_cs_data {
  * @fw_loader: FW loader manager.
  * @pci_mem_region: array of memory regions in the PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @state_dump_specs: constants and dictionaries needed to dump system state.
  * @multi_cs_completion: array of multi-CS completion.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @state_dump_specs: constants and dictionaries needed to dump system state.
+ * @multi_cs_completion: array of multi-CS completion.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dram_used_mem: current DRAM memory consumption.
  * @timeout_jiffies: device CS timeout value.
  * @max_power: the max power of the device, as configured by the sysadmin. This
@@ -2700,9 +2981,13 @@ struct multi_cs_data {
  *                        protocol will throw an error. Relevant only for
  *                        cases where Linux was not loaded to device CPU
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @supports_wait_for_multi_cs: true if wait for multi CS is supported
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @supports_wait_for_multi_cs: true if wait for multi CS is supported
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hl_device {
 	struct pci_dev			*pdev;
@@ -2772,13 +3057,19 @@ struct hl_device {
 	struct pci_mem_region		pci_mem_region[PCI_REGION_NUMBER];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hl_state_dump_specs	state_dump_specs;
 
 	struct multi_cs_completion	multi_cs_completion[
 							MULTI_CS_MAX_USER_CTX];
 	u32				*stream_master_qid_arr;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic64_t			dram_used_mem;
 	u64				timeout_jiffies;
 	u64				max_power;
@@ -2829,10 +3120,15 @@ struct hl_device {
 	u8				skip_reset_on_timeout;
 	u8				device_cpu_is_halted;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8				supports_wait_for_multi_cs;
 	u8				stream_master_qid_arr_size;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8				supports_wait_for_multi_cs;
+	u8				stream_master_qid_arr_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Parameters for bring-up */
 	u64				nic_ports_mask;
@@ -2855,6 +3151,9 @@ struct hl_device {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct hl_cs_encaps_sig_handle - encapsulated signals handle structure
  * @refcount: refcount used to protect removing this id when several
@@ -2878,8 +3177,11 @@ struct hl_cs_encaps_sig_handle {
 	u32  count;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * IOCTLs
  */
@@ -2911,6 +3213,9 @@ struct hl_ioctl_desc {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * hl_get_sg_info() - get number of pages and the DMA address from SG list.
  * @sg: the SG list.
  * @dma_addr: pointer to DMA address to return.
@@ -2928,8 +3233,11 @@ static inline u32 hl_get_sg_info(struct scatterlist *sg, dma_addr_t *dma_addr)
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * hl_mem_area_inside_range() - Checks whether address+size are inside a range.
  * @address: The start address of the area we want to validate.
  * @size: The size in bytes of the area we want to validate.
@@ -2994,12 +3302,18 @@ int hl_hw_queues_create(struct hl_device *hdev);
 void hl_hw_queues_destroy(struct hl_device *hdev);
 int hl_hw_queue_send_cb_no_cmpl(struct hl_device *hdev, u32 hw_queue_id,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u32 cb_size, u64 cb_ptr);
 void hl_hw_queue_submit_bd(struct hl_device *hdev, struct hl_hw_queue *q,
 		u32 ctl, u32 len, u64 ptr);
 =======
 				u32 cb_size, u64 cb_ptr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		u32 cb_size, u64 cb_ptr);
+void hl_hw_queue_submit_bd(struct hl_device *hdev, struct hl_hw_queue *q,
+		u32 ctl, u32 len, u64 ptr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hl_hw_queue_schedule_cs(struct hl_cs *cs);
 u32 hl_hw_queue_add_ptr(u32 ptr, u16 val);
 void hl_hw_queue_inc_ci_kernel(struct hl_device *hdev, u32 hw_queue_id);
@@ -3034,10 +3348,15 @@ void hl_ctx_get(struct hl_device *hdev,	struct hl_ctx *ctx);
 int hl_ctx_put(struct hl_ctx *ctx);
 struct hl_fence *hl_ctx_get_fence(struct hl_ctx *ctx, u64 seq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int hl_ctx_get_fences(struct hl_ctx *ctx, u64 *seq_arr,
 				struct hl_fence **fence, u32 arr_len);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int hl_ctx_get_fences(struct hl_ctx *ctx, u64 *seq_arr,
+				struct hl_fence **fence, u32 arr_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hl_ctx_mgr_init(struct hl_ctx_mgr *mgr);
 void hl_ctx_mgr_fini(struct hl_device *hdev, struct hl_ctx_mgr *mgr);
 
@@ -3080,18 +3399,25 @@ void hl_cb_va_pool_fini(struct hl_ctx *ctx);
 
 void hl_cs_rollback_all(struct hl_device *hdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void hl_pending_cb_list_flush(struct hl_ctx *ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hl_cs_job *hl_cs_allocate_job(struct hl_device *hdev,
 		enum hl_queue_type queue_type, bool is_kernel_allocated_cb);
 void hl_sob_reset_error(struct kref *ref);
 int hl_gen_sob_mask(u16 sob_base, u8 sob_mask, u8 *mask);
 void hl_fence_put(struct hl_fence *fence);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void hl_fences_put(struct hl_fence **fence, int len);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hl_fences_put(struct hl_fence **fence, int len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hl_fence_get(struct hl_fence *fence);
 void cs_get(struct hl_cs *cs);
 bool cs_needs_completion(struct hl_cs *cs);
@@ -3099,9 +3425,13 @@ bool cs_needs_timeout(struct hl_cs *cs);
 bool is_staged_cs_last_exists(struct hl_device *hdev, struct hl_cs *cs);
 struct hl_cs *hl_staged_cs_find_first(struct hl_device *hdev, u64 cs_seq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void hl_multi_cs_completion_init(struct hl_device *hdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hl_multi_cs_completion_init(struct hl_device *hdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void goya_set_asic_funcs(struct hl_device *hdev);
 void gaudi_set_asic_funcs(struct hl_device *hdev);
@@ -3230,12 +3560,16 @@ int hl_set_voltage(struct hl_device *hdev,
 int hl_set_current(struct hl_device *hdev,
 			int sensor_index, u32 attr, long value);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hw_sob_get(struct hl_hw_sob *hw_sob);
 void hw_sob_put(struct hl_hw_sob *hw_sob);
 void hl_encaps_handle_do_release(struct kref *ref);
 void hl_hw_queue_encaps_sig_set_sob_info(struct hl_device *hdev,
 			struct hl_cs *cs, struct hl_cs_job *job,
 			struct hl_cs_compl *cs_cmpl);
+<<<<<<< HEAD
 void hl_release_pending_user_interrupts(struct hl_device *hdev);
 int hl_cs_signal_sob_wraparound_handler(struct hl_device *hdev, u32 q_idx,
 			struct hl_hw_sob **hw_sob, u32 count, bool encaps_sig);
@@ -3254,6 +3588,21 @@ void hl_release_pending_user_interrupts(struct hl_device *hdev);
 int hl_cs_signal_sob_wraparound_handler(struct hl_device *hdev, u32 q_idx,
 			struct hl_hw_sob **hw_sob, u32 count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hl_release_pending_user_interrupts(struct hl_device *hdev);
+int hl_cs_signal_sob_wraparound_handler(struct hl_device *hdev, u32 q_idx,
+			struct hl_hw_sob **hw_sob, u32 count, bool encaps_sig);
+
+int hl_state_dump(struct hl_device *hdev);
+const char *hl_state_dump_get_sync_name(struct hl_device *hdev, u32 sync_id);
+const char *hl_state_dump_get_monitor_name(struct hl_device *hdev,
+					struct hl_mon_state_dump *mon);
+void hl_state_dump_free_sync_to_engine_map(struct hl_sync_to_engine_map *map);
+__printf(4, 5) int hl_snprintf_resize(char **buf, size_t *size, size_t *offset,
+					const char *format, ...);
+char *hl_format_as_binary(char *buf, size_t buf_len, u32 n);
+const char *hl_sync_engine_to_string(enum hl_sync_engine_type engine_type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_DEBUG_FS
 
@@ -3275,10 +3624,15 @@ void hl_debugfs_remove_userptr(struct hl_device *hdev,
 void hl_debugfs_add_ctx_mem_hash(struct hl_device *hdev, struct hl_ctx *ctx);
 void hl_debugfs_remove_ctx_mem_hash(struct hl_device *hdev, struct hl_ctx *ctx);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void hl_debugfs_set_state_dump(struct hl_device *hdev, char *data,
 					unsigned long length);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hl_debugfs_set_state_dump(struct hl_device *hdev, char *data,
+					unsigned long length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else
 
@@ -3353,13 +3707,19 @@ static inline void hl_debugfs_remove_ctx_mem_hash(struct hl_device *hdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void hl_debugfs_set_state_dump(struct hl_device *hdev,
 					char *data, unsigned long length)
 {
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /* IOCTLs */

@@ -52,6 +52,7 @@
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "amdgpu_dm/dc_fpu.h"
 #define DC_FP_START() dc_fpu_begin(__func__, __LINE__)
 #define DC_FP_END() dc_fpu_end(__func__, __LINE__)
@@ -89,6 +90,11 @@
 }
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "amdgpu_dm/dc_fpu.h"
+#define DC_FP_START() dc_fpu_begin(__func__, __LINE__)
+#define DC_FP_END() dc_fpu_end(__func__, __LINE__)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /*

@@ -34,9 +34,12 @@
 #include <drm/drm_gem_atomic_helper.h>
 #include <drm/drm_gem_framebuffer_helper.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <drm/drm_irq.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_managed.h>
 #include <drm/drm_of.h>
 #include <drm/drm_panel.h>
@@ -706,6 +709,7 @@ static int ingenic_drm_encoder_atomic_check(struct drm_encoder *encoder,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void ingenic_drm_atomic_helper_commit_tail(struct drm_atomic_state *old_state)
 {
@@ -731,6 +735,8 @@ static void ingenic_drm_atomic_helper_commit_tail(struct drm_atomic_state *old_s
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static irqreturn_t ingenic_drm_irq_handler(int irq, void *arg)
 {
 	struct ingenic_drm *priv = drm_device_get_priv(arg);
@@ -752,11 +758,17 @@ static int ingenic_drm_enable_vblank(struct drm_crtc *crtc)
 	struct ingenic_drm *priv = drm_crtc_get_priv(crtc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (priv->no_vblank)
 		return -EINVAL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (priv->no_vblank)
+		return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regmap_update_bits(priv->map, JZ_REG_LCD_CTRL,
 			   JZ_LCD_CTRL_EOF_IRQ, JZ_LCD_CTRL_EOF_IRQ);
 
@@ -812,10 +824,13 @@ static const struct drm_driver ingenic_drm_driver_data = {
 	.gem_create_object	= ingenic_drm_gem_create_object,
 	DRM_GEM_CMA_DRIVER_OPS,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	.irq_handler		= ingenic_drm_irq_handler,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct drm_plane_funcs ingenic_drm_primary_plane_funcs = {
@@ -846,9 +861,12 @@ static const struct drm_plane_helper_funcs ingenic_drm_plane_helper_funcs = {
 	.atomic_check		= ingenic_drm_plane_atomic_check,
 	.atomic_disable		= ingenic_drm_plane_atomic_disable,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.prepare_fb		= drm_gem_plane_helper_prepare_fb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct drm_crtc_helper_funcs ingenic_drm_crtc_helper_funcs = {
@@ -874,10 +892,14 @@ static const struct drm_mode_config_funcs ingenic_drm_mode_config_funcs = {
 
 static struct drm_mode_config_helper_funcs ingenic_drm_mode_config_helpers = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.atomic_commit_tail = drm_atomic_helper_commit_tail,
 =======
 	.atomic_commit_tail = ingenic_drm_atomic_helper_commit_tail,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.atomic_commit_tail = drm_atomic_helper_commit_tail,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void ingenic_drm_unbind_all(void *d)
@@ -1011,11 +1033,14 @@ static int ingenic_drm_bind(struct device *dev, bool has_components)
 		| (sizeof(priv->dma_hwdescs->palette) / 4);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (soc_info->has_osd)
 		priv->ipu_plane = drm_plane_from_index(drm, 0);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	primary = priv->soc_info->has_osd ? &priv->f1 : &priv->f0;
 
 	drm_plane_helper_add(primary, &ingenic_drm_plane_helper_funcs);
@@ -1111,6 +1136,7 @@ static int ingenic_drm_bind(struct device *dev, bool has_components)
 
 		ret = drm_bridge_attach(encoder, bridge, NULL, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret)
 			return ret;
 =======
@@ -1119,6 +1145,10 @@ static int ingenic_drm_bind(struct device *dev, bool has_components)
 			return ret;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret)
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	drm_for_each_encoder(encoder, drm) {
@@ -1130,10 +1160,14 @@ static int ingenic_drm_bind(struct device *dev, bool has_components)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = devm_request_irq(dev, irq, ingenic_drm_irq_handler, 0, drm->driver->name, drm);
 =======
 	ret = drm_irq_install(drm, irq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_request_irq(dev, irq, ingenic_drm_irq_handler, 0, drm->driver->name, drm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		dev_err(dev, "Unable to install IRQ handler\n");
 		return ret;

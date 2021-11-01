@@ -250,10 +250,14 @@ void drm_minor_release(struct drm_minor *minor)
  * instance can be published using drm_dev_register().
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * There is also deprecated support for initializing device instances using
 =======
  * There is also deprecated support for initalizing device instances using
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * There is also deprecated support for initializing device instances using
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * bus-specific helpers and the &drm_driver.load callback. But due to
  * backwards-compatibility needs the device instance have to be published too
  * early, which requires unpretty global locking to make safe and is therefore
@@ -384,10 +388,14 @@ void drm_minor_release(struct drm_minor *minor)
  * drm_atomic_helper_shutdown() is called. This means that if the disable code
  * paths are protected, they will not run on regular driver module unload,
 <<<<<<< HEAD
+<<<<<<< HEAD
  * possibly leaving the hardware enabled.
 =======
  * possibily leaving the hardware enabled.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * possibly leaving the hardware enabled.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 /**

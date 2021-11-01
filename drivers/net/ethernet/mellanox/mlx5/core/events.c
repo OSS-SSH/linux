@@ -28,10 +28,14 @@ static int forward_event(struct notifier_block *, unsigned long, void *);
 
 static struct mlx5_nb events_nbs_ref[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Events to be processed by mlx5_core */
 =======
 	/* Events to be proccessed by mlx5_core */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Events to be processed by mlx5_core */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{.nb.notifier_call = any_notifier,  .event_type = MLX5_EVENT_TYPE_NOTIFY_ANY },
 	{.nb.notifier_call = temp_warn,     .event_type = MLX5_EVENT_TYPE_TEMP_WARN_EVENT },
 	{.nb.notifier_call = port_module,   .event_type = MLX5_EVENT_TYPE_PORT_MODULE_EVENT },

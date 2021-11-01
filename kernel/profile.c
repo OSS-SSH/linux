@@ -42,11 +42,16 @@ struct profile_hit {
 
 static atomic_t *prof_buffer;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned long prof_len;
 static unsigned short int prof_shift;
 =======
 static unsigned long prof_len, prof_shift;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static unsigned long prof_len;
+static unsigned short int prof_shift;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int prof_on __read_mostly;
 EXPORT_SYMBOL_GPL(prof_on);
@@ -73,12 +78,17 @@ int profile_setup(char *str)
 			str += strlen(sleepstr) + 1;
 		if (get_option(&str, &par))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			prof_shift = clamp(par, 0, BITS_PER_LONG - 1);
 		pr_info("kernel sleep profiling enabled (shift: %u)\n",
 =======
 			prof_shift = par;
 		pr_info("kernel sleep profiling enabled (shift: %ld)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			prof_shift = clamp(par, 0, BITS_PER_LONG - 1);
+		pr_info("kernel sleep profiling enabled (shift: %u)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			prof_shift);
 #else
 		pr_warn("kernel sleep profiling requires CONFIG_SCHEDSTATS\n");
@@ -89,18 +99,24 @@ int profile_setup(char *str)
 			str += strlen(schedstr) + 1;
 		if (get_option(&str, &par))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			prof_shift = clamp(par, 0, BITS_PER_LONG - 1);
 		pr_info("kernel schedule profiling enabled (shift: %u)\n",
 =======
 			prof_shift = par;
 		pr_info("kernel schedule profiling enabled (shift: %ld)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			prof_shift = clamp(par, 0, BITS_PER_LONG - 1);
+		pr_info("kernel schedule profiling enabled (shift: %u)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			prof_shift);
 	} else if (!strncmp(str, kvmstr, strlen(kvmstr))) {
 		prof_on = KVM_PROFILING;
 		if (str[strlen(kvmstr)] == ',')
 			str += strlen(kvmstr) + 1;
 		if (get_option(&str, &par))
+<<<<<<< HEAD
 <<<<<<< HEAD
 			prof_shift = clamp(par, 0, BITS_PER_LONG - 1);
 		pr_info("kernel KVM profiling enabled (shift: %u)\n",
@@ -112,12 +128,20 @@ int profile_setup(char *str)
 =======
 			prof_shift = par;
 		pr_info("kernel KVM profiling enabled (shift: %ld)\n",
+=======
+			prof_shift = clamp(par, 0, BITS_PER_LONG - 1);
+		pr_info("kernel KVM profiling enabled (shift: %u)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			prof_shift);
 	} else if (get_option(&str, &par)) {
-		prof_shift = par;
+		prof_shift = clamp(par, 0, BITS_PER_LONG - 1);
 		prof_on = CPU_PROFILING;
+<<<<<<< HEAD
 		pr_info("kernel profiling enabled (shift: %ld)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_info("kernel profiling enabled (shift: %u)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			prof_shift);
 	}
 	return 1;
@@ -494,10 +518,14 @@ read_profile(struct file *file, char __user *buf, size_t count, loff_t *ppos)
 	ssize_t read;
 	char *pnt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long sample_step = 1UL << prof_shift;
 =======
 	unsigned int sample_step = 1 << prof_shift;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long sample_step = 1UL << prof_shift;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	profile_flip_buffers();
 	if (p >= (prof_len+1)*sizeof(unsigned int))

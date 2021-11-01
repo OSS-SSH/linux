@@ -105,9 +105,13 @@ struct xfs_log_item;
 struct xfs_item_ops;
 struct xfs_trans;
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct xlog;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct xlog;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int	  xfs_log_force(struct xfs_mount *mp, uint flags);
 int	  xfs_log_force_seq(struct xfs_mount *mp, xfs_csn_t seq, uint flags,
@@ -130,9 +134,12 @@ int	  xfs_log_reserve(struct xfs_mount *mp,
 int	  xfs_log_regrant(struct xfs_mount *mp, struct xlog_ticket *tic);
 void      xfs_log_unmount(struct xfs_mount *mp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int	  xfs_log_force_umount(struct xfs_mount *mp, int logerror);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool	xfs_log_writable(struct xfs_mount *mp);
 
 struct xlog_ticket *xfs_log_ticket_get(struct xlog_ticket *ticket);
@@ -146,6 +153,7 @@ int	xfs_log_quiesce(struct xfs_mount *mp);
 void	xfs_log_clean(struct xfs_mount *mp);
 bool	xfs_log_check_lsn(struct xfs_mount *, xfs_lsn_t);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 xfs_lsn_t xlog_grant_push_threshold(struct xlog *log, int need_bytes);
 bool	  xlog_force_shutdown(struct xlog *log, int shutdown_flags);
@@ -157,5 +165,13 @@ bool	xfs_log_in_recovery(struct xfs_mount *);
 
 xfs_lsn_t xlog_grant_push_threshold(struct xlog *log, int need_bytes);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+xfs_lsn_t xlog_grant_push_threshold(struct xlog *log, int need_bytes);
+bool	  xlog_force_shutdown(struct xlog *log, int shutdown_flags);
+
+void xlog_use_incompat_feat(struct xlog *log);
+void xlog_drop_incompat_feat(struct xlog *log);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif	/* __XFS_LOG_H__ */

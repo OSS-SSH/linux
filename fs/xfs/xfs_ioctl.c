@@ -757,10 +757,14 @@ xfs_ioc_fsbulkstat(
 		return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	if (copy_from_user(&bulkreq, arg, sizeof(struct xfs_fsop_bulkreq)))
@@ -932,10 +936,14 @@ xfs_ioc_bulkstat(
 		return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	if (copy_from_user(&hdr, &arg->hdr, sizeof(hdr)))
@@ -986,10 +994,14 @@ xfs_ioc_inumbers(
 		return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	if (copy_from_user(&hdr, &arg->hdr, sizeof(hdr)))
@@ -1023,10 +1035,14 @@ xfs_ioc_fsgeometry(
 	size_t			len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_fs_geometry(mp, &fsgeo, struct_version);
 =======
 	xfs_fs_geometry(&mp->m_sb, &fsgeo, struct_version);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_fs_geometry(mp, &fsgeo, struct_version);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (struct_version <= 3)
 		len = sizeof(struct xfs_fsop_geom_v1);
@@ -1082,6 +1098,9 @@ xfs_fill_fsxattr(
 	fileattr_fill_xflags(fa, xfs_ip2xflags(ip));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ip->i_diflags & XFS_DIFLAG_EXTSIZE) {
 		fa->fsx_extsize = XFS_FSB_TO_B(mp, ip->i_extsize);
 	} else if (ip->i_diflags & XFS_DIFLAG_EXTSZINHERIT) {
@@ -1100,9 +1119,12 @@ xfs_fill_fsxattr(
 		}
 	}
 
+<<<<<<< HEAD
 =======
 	fa->fsx_extsize = XFS_FSB_TO_B(mp, ip->i_extsize);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ip->i_diflags2 & XFS_DIFLAG2_COWEXTSIZE)
 		fa->fsx_cowextsize = XFS_FSB_TO_B(mp, ip->i_cowextsize);
 	fa->fsx_projid = ip->i_projid;
@@ -1234,10 +1256,14 @@ xfs_ioctl_setattr_xflags(
 	/* diflags2 only valid for v3 inodes. */
 	i_flags2 = xfs_flags2diflags2(ip, fa->fsx_xflags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (i_flags2 && !xfs_has_v3inodes(mp))
 =======
 	if (i_flags2 && !xfs_sb_version_has_v3inode(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (i_flags2 && !xfs_has_v3inodes(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	ip->i_diflags = xfs_flags2diflags(ip, fa->fsx_xflags);
@@ -1262,11 +1288,15 @@ xfs_ioctl_setattr_prepare_dax(
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_dax_always(mp) || xfs_has_dax_never(mp))
 =======
 	if ((mp->m_flags & XFS_MOUNT_DAX_ALWAYS) ||
 	    (mp->m_flags & XFS_MOUNT_DAX_NEVER))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_dax_always(mp) || xfs_has_dax_never(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (((fa->fsx_xflags & FS_XFLAG_DAX) &&
@@ -1292,6 +1322,7 @@ xfs_ioctl_setattr_get_trans(
 	int			error = -EROFS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_readonly(mp))
 		goto out_error;
 	error = -EIO;
@@ -1302,6 +1333,12 @@ xfs_ioctl_setattr_get_trans(
 	error = -EIO;
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_readonly(mp))
+		goto out_error;
+	error = -EIO;
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_error;
 
 	error = xfs_trans_alloc_ichange(ip, NULL, NULL, pdqp,
@@ -1310,10 +1347,14 @@ xfs_ioctl_setattr_get_trans(
 		goto out_error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp))
 =======
 	if (mp->m_flags & XFS_MOUNT_WSYNC)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_wsync(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_trans_set_sync(tp);
 
 	return tp;
@@ -1349,16 +1390,22 @@ xfs_ioctl_setattr_check_extsize(
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Inode verifiers do not check that the extent size hint is an integer
 	 * multiple of the rt extent size on a directory with both rtinherit
 	 * and extszinherit flags set.  Don't let sysadmins misconfigure
 	 * directories.
+<<<<<<< HEAD
 =======
 	 * Inode verifiers on older kernels don't check that the extent size
 	 * hint is an integer multiple of the rt extent size on a directory
 	 * with both rtinherit and extszinherit flags set.  Don't let sysadmins
 	 * misconfigure directories.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	if ((new_diflags & XFS_DIFLAG_RTINHERIT) &&
 	    (new_diflags & XFS_DIFLAG_EXTSZINHERIT)) {
@@ -1409,6 +1456,7 @@ xfs_ioctl_setattr_check_projid(
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Disallow 32bit project ids if 32bit IDs are not enabled. */
 	if (fa->fsx_projid > (uint16_t)-1 &&
 	    !xfs_has_projid32(ip->i_mount))
@@ -1417,6 +1465,11 @@ xfs_ioctl_setattr_check_projid(
 	if (fa->fsx_projid > (uint16_t)-1 &&
 	    !xfs_sb_version_hasprojid32bit(&ip->i_mount->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Disallow 32bit project ids if 32bit IDs are not enabled. */
+	if (fa->fsx_projid > (uint16_t)-1 &&
+	    !xfs_has_projid32(ip->i_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	return 0;
 }
@@ -1503,10 +1556,14 @@ xfs_fileattr_set(
 	/* Change the ownerships and register project quota modifications */
 	if (ip->i_projid != fa->fsx_projid) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (XFS_IS_PQUOTA_ON(mp)) {
 =======
 		if (XFS_IS_QUOTA_RUNNING(mp) && XFS_IS_PQUOTA_ON(mp)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (XFS_IS_PQUOTA_ON(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			olddquot = xfs_qm_vop_chown(tp, ip,
 						&ip->i_pdquot, pdqp);
 		}
@@ -1524,10 +1581,14 @@ xfs_fileattr_set(
 		ip->i_extsize = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(mp)) {
 =======
 	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_v3inodes(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ip->i_diflags2 & XFS_DIFLAG2_COWEXTSIZE)
 			ip->i_cowextsize = XFS_B_TO_FSB(mp, fa->fsx_cowextsize);
 		else
@@ -1853,10 +1914,14 @@ xfs_ioc_swapext(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(ip->i_mount)) {
 =======
 	if (XFS_FORCED_SHUTDOWN(ip->i_mount)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(ip->i_mount)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = -EIO;
 		goto out_put_tmp_file;
 	}
@@ -2146,10 +2211,14 @@ xfs_file_ioctl(
 			return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_is_readonly(mp))
 =======
 		if (mp->m_flags & XFS_MOUNT_RDONLY)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_is_readonly(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EROFS;
 
 		if (copy_from_user(&inout, arg, sizeof(inout)))
@@ -2267,10 +2336,14 @@ xfs_file_ioctl(
 			return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_is_readonly(mp))
 =======
 		if (mp->m_flags & XFS_MOUNT_RDONLY)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_is_readonly(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EROFS;
 
 		if (copy_from_user(&eofb, arg, sizeof(eofb)))

@@ -29,19 +29,26 @@ static int kdb_hello_cmd(int argc, const char **argv)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static kdbtab_t hello_cmd = {
 	.name = "hello",
 	.func = kdb_hello_cmd,
 	.usage = "[string]",
 	.help = "Say Hello World or Hello [string]",
 };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init kdb_hello_cmd_init(void)
 {
 	/*
 	 * Registration of a dynamically added kdb command is done with
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * kdb_register().
 	 */
@@ -59,16 +66,25 @@ static int __init kdb_hello_cmd_init(void)
 	kdb_register("hello", kdb_hello_cmd, "[string]",
 		     "Say Hello World or Hello [string]", 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * kdb_register().
+	 */
+	kdb_register(&hello_cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 static void __exit kdb_hello_cmd_exit(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kdb_unregister(&hello_cmd);
 =======
 	kdb_unregister("hello");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kdb_unregister(&hello_cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(kdb_hello_cmd_init);

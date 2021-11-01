@@ -16,6 +16,7 @@
 #include <linux/bitmap.h>
 #include <linux/compat.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/netlink.h>
 #include <uapi/linux/ethtool.h>
 
@@ -25,6 +26,11 @@
 #ifdef CONFIG_COMPAT
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/netlink.h>
+#include <uapi/linux/ethtool.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct compat_ethtool_rx_flow_spec {
 	u32		flow_type;
 	union ethtool_flow_union h_u;
@@ -45,10 +51,13 @@ struct compat_ethtool_rxnfc {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #endif /* CONFIG_COMPAT */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/rculist.h>
 
 /**
@@ -186,13 +195,19 @@ __ethtool_get_link_ksettings(struct net_device *dev,
 			     struct ethtool_link_ksettings *link_ksettings);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct kernel_ethtool_coalesce {
 	u8 use_cqe_mode_tx;
 	u8 use_cqe_mode_rx;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ethtool_intersect_link_masks - Given two link masks, AND them together
  * @dst: first mask and where result is stored
@@ -233,12 +248,18 @@ bool ethtool_convert_link_mode_to_legacy_u32(u32 *legacy_u32,
 #define ETHTOOL_COALESCE_TX_MAX_FRAMES_HIGH	BIT(20)
 #define ETHTOOL_COALESCE_RATE_SAMPLE_INTERVAL	BIT(21)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ETHTOOL_COALESCE_USE_CQE_RX		BIT(22)
 #define ETHTOOL_COALESCE_USE_CQE_TX		BIT(23)
 #define ETHTOOL_COALESCE_ALL_PARAMS		GENMASK(23, 0)
 =======
 #define ETHTOOL_COALESCE_ALL_PARAMS		GENMASK(21, 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ETHTOOL_COALESCE_USE_CQE_RX		BIT(22)
+#define ETHTOOL_COALESCE_USE_CQE_TX		BIT(23)
+#define ETHTOOL_COALESCE_ALL_PARAMS		GENMASK(23, 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define ETHTOOL_COALESCE_USECS						\
 	(ETHTOOL_COALESCE_RX_USECS | ETHTOOL_COALESCE_TX_USECS)
@@ -265,10 +286,15 @@ bool ethtool_convert_link_mode_to_legacy_u32(u32 *legacy_u32,
 	 ETHTOOL_COALESCE_PKT_RATE_LOW | ETHTOOL_COALESCE_PKT_RATE_HIGH | \
 	 ETHTOOL_COALESCE_RATE_SAMPLE_INTERVAL)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ETHTOOL_COALESCE_USE_CQE					\
 	(ETHTOOL_COALESCE_USE_CQE_RX | ETHTOOL_COALESCE_USE_CQE_TX)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ETHTOOL_COALESCE_USE_CQE					\
+	(ETHTOOL_COALESCE_USE_CQE_RX | ETHTOOL_COALESCE_USE_CQE_TX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define ETHTOOL_STAT_NOT_SET	(~0ULL)
 
@@ -635,6 +661,9 @@ struct ethtool_ops {
 	int	(*set_eeprom)(struct net_device *,
 			      struct ethtool_eeprom *, u8 *);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int	(*get_coalesce)(struct net_device *,
 				struct ethtool_coalesce *,
 				struct kernel_ethtool_coalesce *,
@@ -643,10 +672,13 @@ struct ethtool_ops {
 				struct ethtool_coalesce *,
 				struct kernel_ethtool_coalesce *,
 				struct netlink_ext_ack *);
+<<<<<<< HEAD
 =======
 	int	(*get_coalesce)(struct net_device *, struct ethtool_coalesce *);
 	int	(*set_coalesce)(struct net_device *, struct ethtool_coalesce *);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void	(*get_ringparam)(struct net_device *,
 				 struct ethtool_ringparam *);
 	int	(*set_ringparam)(struct net_device *,
@@ -798,6 +830,9 @@ ethtool_params_from_link_mode(struct ethtool_link_ksettings *link_ksettings,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ethtool_get_phc_vclocks - Derive phc vclocks information, and caller
  *                           is responsible to free memory of vclock_index
  * @dev: pointer to net_device structure
@@ -808,8 +843,11 @@ ethtool_params_from_link_mode(struct ethtool_link_ksettings *link_ksettings,
 int ethtool_get_phc_vclocks(struct net_device *dev, int **vclock_index);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ethtool_sprintf - Write formatted string to ethtool string data
  * @data: Pointer to start of string to update
  * @fmt: Format of string to write

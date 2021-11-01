@@ -14,6 +14,9 @@
 #include <linux/syscore_ops.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * atomic_notifiers use a spinlock_t, which can block under PREEMPT_RT.
  * Notifications for cpu_pm will be issued by the idle task itself, which can
@@ -26,15 +29,19 @@ static struct {
 	.chain = RAW_NOTIFIER_INIT(cpu_pm_notifier.chain),
 	.lock  = __RAW_SPIN_LOCK_UNLOCKED(cpu_pm_notifier.lock),
 };
+<<<<<<< HEAD
 =======
 static ATOMIC_NOTIFIER_HEAD(cpu_pm_notifier_chain);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int cpu_pm_notify(enum cpu_pm_event event)
 {
 	int ret;
 
 	/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * This introduces a RCU read critical section, which could be
 	 * disfunctional in cpu idle. Copy RCU_NONIDLE code to let RCU know
@@ -52,6 +59,16 @@ static int cpu_pm_notify(enum cpu_pm_event event)
 	rcu_irq_enter_irqson();
 	ret = atomic_notifier_call_chain(&cpu_pm_notifier_chain, event, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * This introduces a RCU read critical section, which could be
+	 * disfunctional in cpu idle. Copy RCU_NONIDLE code to let RCU know
+	 * this.
+	 */
+	rcu_irq_enter_irqson();
+	rcu_read_lock();
+	ret = raw_notifier_call_chain(&cpu_pm_notifier.chain, event, NULL);
+	rcu_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_irq_exit_irqson();
 
 	return notifier_to_errno(ret);
@@ -59,6 +76,7 @@ static int cpu_pm_notify(enum cpu_pm_event event)
 
 static int cpu_pm_notify_robust(enum cpu_pm_event event_up, enum cpu_pm_event event_down)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned long flags;
 	int ret;
@@ -73,6 +91,15 @@ static int cpu_pm_notify_robust(enum cpu_pm_event event_up, enum cpu_pm_event ev
 	rcu_irq_enter_irqson();
 	ret = atomic_notifier_call_chain_robust(&cpu_pm_notifier_chain, event_up, event_down, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long flags;
+	int ret;
+
+	rcu_irq_enter_irqson();
+	raw_spin_lock_irqsave(&cpu_pm_notifier.lock, flags);
+	ret = raw_notifier_call_chain_robust(&cpu_pm_notifier.chain, event_up, event_down, NULL);
+	raw_spin_unlock_irqrestore(&cpu_pm_notifier.lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_irq_exit_irqson();
 
 	return notifier_to_errno(ret);
@@ -85,6 +112,7 @@ static int cpu_pm_notify_robust(enum cpu_pm_event event_up, enum cpu_pm_event ev
  * Add a driver to a list of drivers that are notified about
  * CPU and CPU cluster low power entry and exit.
  *
+<<<<<<< HEAD
 <<<<<<< HEAD
  * This function has the same return conditions as raw_notifier_chain_register.
  */
@@ -105,6 +133,19 @@ int cpu_pm_register_notifier(struct notifier_block *nb)
 {
 	return atomic_notifier_chain_register(&cpu_pm_notifier_chain, nb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This function has the same return conditions as raw_notifier_chain_register.
+ */
+int cpu_pm_register_notifier(struct notifier_block *nb)
+{
+	unsigned long flags;
+	int ret;
+
+	raw_spin_lock_irqsave(&cpu_pm_notifier.lock, flags);
+	ret = raw_notifier_chain_register(&cpu_pm_notifier.chain, nb);
+	raw_spin_unlock_irqrestore(&cpu_pm_notifier.lock, flags);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(cpu_pm_register_notifier);
 
@@ -114,6 +155,7 @@ EXPORT_SYMBOL_GPL(cpu_pm_register_notifier);
  *
  * Remove a driver from the CPU PM notifier list.
  *
+<<<<<<< HEAD
 <<<<<<< HEAD
  * This function has the same return conditions as raw_notifier_chain_unregister.
  */
@@ -134,6 +176,19 @@ int cpu_pm_unregister_notifier(struct notifier_block *nb)
 {
 	return atomic_notifier_chain_unregister(&cpu_pm_notifier_chain, nb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This function has the same return conditions as raw_notifier_chain_unregister.
+ */
+int cpu_pm_unregister_notifier(struct notifier_block *nb)
+{
+	unsigned long flags;
+	int ret;
+
+	raw_spin_lock_irqsave(&cpu_pm_notifier.lock, flags);
+	ret = raw_notifier_chain_unregister(&cpu_pm_notifier.chain, nb);
+	raw_spin_unlock_irqrestore(&cpu_pm_notifier.lock, flags);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(cpu_pm_unregister_notifier);
 

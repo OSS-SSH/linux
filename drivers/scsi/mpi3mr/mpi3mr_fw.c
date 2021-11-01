@@ -2608,6 +2608,9 @@ static int mpi3mr_issue_iocinit(struct mpi3mr_ioc *mrioc)
 	}
 	drv_info->information_length = cpu_to_le32(data_len);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	strscpy(drv_info->driver_signature, "Broadcom", sizeof(drv_info->driver_signature));
 	strscpy(drv_info->os_name, utsname()->sysname, sizeof(drv_info->os_name));
 	strscpy(drv_info->os_version, utsname()->release, sizeof(drv_info->os_version));
@@ -2615,6 +2618,7 @@ static int mpi3mr_issue_iocinit(struct mpi3mr_ioc *mrioc)
 	strscpy(drv_info->driver_version, MPI3MR_DRIVER_VERSION, sizeof(drv_info->driver_version));
 	strscpy(drv_info->driver_release_date, MPI3MR_DRIVER_RELDATE,
 	    sizeof(drv_info->driver_release_date));
+<<<<<<< HEAD
 =======
 	strncpy(drv_info->driver_signature, "Broadcom", sizeof(drv_info->driver_signature));
 	strncpy(drv_info->os_name, utsname()->sysname, sizeof(drv_info->os_name));
@@ -2625,6 +2629,8 @@ static int mpi3mr_issue_iocinit(struct mpi3mr_ioc *mrioc)
 	strncpy(drv_info->driver_version, MPI3MR_DRIVER_VERSION, sizeof(drv_info->driver_version));
 	strncpy(drv_info->driver_release_date, MPI3MR_DRIVER_RELDATE, sizeof(drv_info->driver_release_date));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drv_info->driver_capabilities = 0;
 	memcpy((u8 *)&mrioc->driver_info, (u8 *)drv_info,
 	    sizeof(mrioc->driver_info));
@@ -3217,10 +3223,14 @@ out_failed:
  * mpi3mr_init_ioc - Initialize the controller
  * @mrioc: Adapter instance reference
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @init_type: Flag to indicate is the init_type
 =======
  * @re_init: Flag to indicate is this fresh init or re-init
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @init_type: Flag to indicate is the init_type
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This the controller initialization routine, executed either
  * after soft reset or from pci probe callback.
@@ -3234,10 +3244,14 @@ out_failed:
  * Return: 0 on success and non-zero on failure.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 init_type)
 =======
 int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 init_type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int retval = 0;
 	enum mpi3mr_iocstate ioc_state;
@@ -3249,10 +3263,14 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 	mrioc->irqpoll_sleep = MPI3MR_IRQ_POLL_SLEEP;
 	mrioc->change_count = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (init_type == MPI3MR_IT_INIT) {
 =======
 	if (!re_init) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (init_type == MPI3MR_IT_INIT) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mrioc->cpu_count = num_online_cpus();
 		retval = mpi3mr_setup_resources(mrioc);
 		if (retval) {
@@ -3338,10 +3356,14 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (init_type != MPI3MR_IT_RESET) {
 =======
 	if (!re_init) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (init_type != MPI3MR_IT_RESET) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		retval = mpi3mr_setup_isr(mrioc, 1);
 		if (retval) {
 			ioc_err(mrioc, "Failed to setup ISR error %d\n",
@@ -3360,10 +3382,14 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 
 	mpi3mr_process_factsdata(mrioc, &facts_data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (init_type == MPI3MR_IT_INIT) {
 =======
 	if (!re_init) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (init_type == MPI3MR_IT_INIT) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		retval = mpi3mr_check_reset_dma_mask(mrioc);
 		if (retval) {
 			ioc_err(mrioc, "Resetting dma mask failed %d\n",
@@ -3383,10 +3409,14 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (init_type == MPI3MR_IT_INIT) {
 =======
 	if (!re_init) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (init_type == MPI3MR_IT_INIT) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		retval = mpi3mr_alloc_chain_bufs(mrioc);
 		if (retval) {
 			ioc_err(mrioc, "Failed to allocated chain buffers %d\n",
@@ -3410,10 +3440,14 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 	    &mrioc->sysif_regs->sense_buffer_free_host_index);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (init_type != MPI3MR_IT_RESET) {
 =======
 	if (!re_init)  {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (init_type != MPI3MR_IT_RESET) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		retval = mpi3mr_setup_isr(mrioc, 0);
 		if (retval) {
 			ioc_err(mrioc, "Failed to re-setup ISR, error %d\n",
@@ -3430,10 +3464,14 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((init_type != MPI3MR_IT_INIT) &&
 =======
 	if (re_init &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((init_type != MPI3MR_IT_INIT) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    (mrioc->shost->nr_hw_queues > mrioc->num_op_reply_q)) {
 		retval = -1;
 		ioc_err(mrioc,
@@ -3466,10 +3504,14 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (init_type != MPI3MR_IT_INIT) {
 =======
 	if (re_init) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (init_type != MPI3MR_IT_INIT) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ioc_info(mrioc, "Issuing Port Enable\n");
 		retval = mpi3mr_issue_port_enable(mrioc, 0);
 		if (retval) {
@@ -3482,13 +3524,19 @@ int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 
 out_failed:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (init_type == MPI3MR_IT_INIT)
 		mpi3mr_cleanup_ioc(mrioc, MPI3MR_COMPLETE_CLEANUP);
 	else
 		mpi3mr_cleanup_ioc(mrioc, MPI3MR_REINIT_FAILURE);
+<<<<<<< HEAD
 =======
 	mpi3mr_cleanup_ioc(mrioc, re_init);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_nocleanup:
 	return retval;
 }
@@ -3550,10 +3598,14 @@ static void mpi3mr_memset_op_req_q_buffers(struct mpi3mr_ioc *mrioc, u16 qidx)
  * Return: Nothing.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
 =======
 static void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u16 i;
 
@@ -3769,10 +3821,14 @@ static void mpi3mr_issue_ioc_shutdown(struct mpi3mr_ioc *mrioc)
  * mpi3mr_cleanup_ioc - Cleanup controller
  * @mrioc: Adapter instance reference
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @reason: Cleanup reason
 =======
  * @re_init: Cleanup due to a reinit or not
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @reason: Cleanup reason
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * controller cleanup handler, Message unit reset or soft reset
  * and shutdown notification is issued to the controller and the
@@ -3780,6 +3836,7 @@ static void mpi3mr_issue_ioc_shutdown(struct mpi3mr_ioc *mrioc)
  *
  * Return: Nothing.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 void mpi3mr_cleanup_ioc(struct mpi3mr_ioc *mrioc, u8 reason)
 {
@@ -3793,6 +3850,13 @@ void mpi3mr_cleanup_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 
 	if (!re_init)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void mpi3mr_cleanup_ioc(struct mpi3mr_ioc *mrioc, u8 reason)
+{
+	enum mpi3mr_iocstate ioc_state;
+
+	if (reason == MPI3MR_COMPLETE_CLEANUP)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mpi3mr_stop_watchdog(mrioc);
 
 	mpi3mr_ioc_disable_intr(mrioc);
@@ -3808,6 +3872,7 @@ void mpi3mr_cleanup_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 			    MPI3MR_RESET_FROM_MUR_FAILURE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (reason != MPI3MR_REINIT_FAILURE)
 			mpi3mr_issue_ioc_shutdown(mrioc);
 	}
@@ -3820,6 +3885,13 @@ void mpi3mr_cleanup_ioc(struct mpi3mr_ioc *mrioc, u8 re_init)
 
 	if (!re_init) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (reason != MPI3MR_REINIT_FAILURE)
+			mpi3mr_issue_ioc_shutdown(mrioc);
+	}
+
+	if (reason == MPI3MR_COMPLETE_CLEANUP) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mpi3mr_free_mem(mrioc);
 		mpi3mr_cleanup_resources(mrioc);
 	}
@@ -4002,10 +4074,14 @@ int mpi3mr_soft_reset_handler(struct mpi3mr_ioc *mrioc,
 	mpi3mr_invalidate_devhandles(mrioc);
 	mpi3mr_memset_buffers(mrioc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	retval = mpi3mr_init_ioc(mrioc, MPI3MR_IT_RESET);
 =======
 	retval = mpi3mr_init_ioc(mrioc, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	retval = mpi3mr_init_ioc(mrioc, MPI3MR_IT_RESET);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (retval) {
 		pr_err(IOCNAME "reinit after soft reset failed: reason %d\n",
 		    mrioc->name, reset_reason);

@@ -48,10 +48,13 @@ head-y := arch/ia64/kernel/head.o
 
 libs-y				+= arch/ia64/lib/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 core-y				+= arch/ia64/kernel/ arch/ia64/mm/
 core-$(CONFIG_IA64_SGI_UV)	+= arch/ia64/uv/
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 drivers-y			+= arch/ia64/pci/ arch/ia64/hp/common/
 

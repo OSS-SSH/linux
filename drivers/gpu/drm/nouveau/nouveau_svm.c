@@ -238,19 +238,25 @@ nouveau_svmm_invalidate(struct nouveau_svmm *svmm, u64 start, u64 limit)
 {
 	if (limit > start) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		bool super = svmm->vmm->vmm.object.client->super;
 		svmm->vmm->vmm.object.client->super = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nvif_object_mthd(&svmm->vmm->vmm.object, NVIF_VMM_V0_PFNCLR,
 				 &(struct nvif_vmm_pfnclr_v0) {
 					.addr = start,
 					.size = limit - start,
 				 }, sizeof(struct nvif_vmm_pfnclr_v0));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		svmm->vmm->vmm.object.client->super = super;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -641,12 +647,16 @@ static int nouveau_atomic_range_fault(struct nouveau_svmm *svmm,
 		NVIF_VMM_PFNMAP_V0_HOST;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, size, NULL);
 =======
 	svmm->vmm->vmm.object.client->super = true;
 	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, size, NULL);
 	svmm->vmm->vmm.object.client->super = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, size, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&svmm->mutex);
 
 	unlock_page(page);
@@ -713,12 +723,16 @@ static int nouveau_range_fault(struct nouveau_svmm *svmm,
 	nouveau_hmm_convert_pfn(drm, &range, args);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, size, NULL);
 =======
 	svmm->vmm->vmm.object.client->super = true;
 	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, size, NULL);
 	svmm->vmm->vmm.object.client->super = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, size, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&svmm->mutex);
 
 out:
@@ -943,6 +957,7 @@ nouveau_pfns_map(struct nouveau_svmm *svmm, struct mm_struct *mm,
 	mutex_lock(&svmm->mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, sizeof(*args) +
 				npages * sizeof(args->p.phys[0]), NULL);
 =======
@@ -951,6 +966,10 @@ nouveau_pfns_map(struct nouveau_svmm *svmm, struct mm_struct *mm,
 				npages * sizeof(args->p.phys[0]), NULL);
 	svmm->vmm->vmm.object.client->super = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, sizeof(*args) +
+				npages * sizeof(args->p.phys[0]), NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_unlock(&svmm->mutex);
 }

@@ -420,10 +420,14 @@ static void enetc_rx_dim_work(struct work_struct *w)
 static void enetc_rx_net_dim(struct enetc_int_vector *v)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dim_sample dim_sample = {};
 =======
 	struct dim_sample dim_sample;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct dim_sample dim_sample = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	v->comp_cnt++;
 
@@ -1884,9 +1888,12 @@ static int enetc_setup_irqs(struct enetc_ndev_priv *priv)
 {
 	struct pci_dev *pdev = priv->si->pdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	cpumask_t cpu_mask;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, j, err;
 
 	for (i = 0; i < priv->bdr_int_num; i++) {
@@ -1916,12 +1923,16 @@ static int enetc_setup_irqs(struct enetc_ndev_priv *priv)
 			enetc_wr(hw, ENETC_SIMSITRV(idx), entry);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		irq_set_affinity_hint(irq, get_cpu_mask(i % num_online_cpus()));
 =======
 		cpumask_clear(&cpu_mask);
 		cpumask_set_cpu(i % num_online_cpus(), &cpu_mask);
 		irq_set_affinity_hint(irq, &cpu_mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		irq_set_affinity_hint(irq, get_cpu_mask(i % num_online_cpus()));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;

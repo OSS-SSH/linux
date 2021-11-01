@@ -268,6 +268,9 @@ static void i2c_parport_attach(struct parport *port)
 	struct pardev_cb i2c_parport_cb;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (type < 0) {
 		pr_warn("adapter type unspecified\n");
 		return;
@@ -278,8 +281,11 @@ static void i2c_parport_attach(struct parport *port)
 		return;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < MAX_DEVICE; i++) {
 		if (parport[i] == -1)
 			continue;
@@ -406,6 +412,7 @@ static struct parport_driver i2c_parport_driver = {
 	.devmodel = true,
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 module_parport_driver(i2c_parport_driver);
 =======
 
@@ -431,13 +438,19 @@ static void __exit i2c_parport_exit(void)
 	parport_unregister_driver(&i2c_parport_driver);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_parport_driver(i2c_parport_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_AUTHOR("Jean Delvare <jdelvare@suse.de>");
 MODULE_DESCRIPTION("I2C bus over parallel port");
 MODULE_LICENSE("GPL");
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
 module_init(i2c_parport_init);
 module_exit(i2c_parport_exit);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

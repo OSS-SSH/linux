@@ -25,10 +25,14 @@ static struct sk_buff *ksz_common_rcv(struct sk_buff *skb,
 	pskb_trim_rcsum(skb, skb->len - len);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dsa_default_offload_fwd_mark(skb);
 =======
 	skb->offload_fwd_mark = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_default_offload_fwd_mark(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return skb;
 }
@@ -58,11 +62,17 @@ static struct sk_buff *ksz8795_xmit(struct sk_buff *skb, struct net_device *dev)
 	u8 *addr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->ip_summed == CHECKSUM_PARTIAL && skb_checksum_help(skb))
 		return NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb->ip_summed == CHECKSUM_PARTIAL && skb_checksum_help(skb))
+		return NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Tag encoding */
 	tag = skb_put(skb, KSZ_INGRESS_TAG_LEN);
 	addr = skb_mac_header(skb);
@@ -75,11 +85,15 @@ static struct sk_buff *ksz8795_xmit(struct sk_buff *skb, struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct sk_buff *ksz8795_rcv(struct sk_buff *skb, struct net_device *dev)
 =======
 static struct sk_buff *ksz8795_rcv(struct sk_buff *skb, struct net_device *dev,
 				  struct packet_type *pt)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *ksz8795_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u8 *tag = skb_tail_pointer(skb) - KSZ_EGRESS_TAG_LEN;
 
@@ -129,11 +143,17 @@ static struct sk_buff *ksz9477_xmit(struct sk_buff *skb,
 	u16 val;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->ip_summed == CHECKSUM_PARTIAL && skb_checksum_help(skb))
 		return NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb->ip_summed == CHECKSUM_PARTIAL && skb_checksum_help(skb))
+		return NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Tag encoding */
 	tag = skb_put(skb, KSZ9477_INGRESS_TAG_LEN);
 	addr = skb_mac_header(skb);
@@ -149,11 +169,15 @@ static struct sk_buff *ksz9477_xmit(struct sk_buff *skb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct sk_buff *ksz9477_rcv(struct sk_buff *skb, struct net_device *dev)
 =======
 static struct sk_buff *ksz9477_rcv(struct sk_buff *skb, struct net_device *dev,
 				   struct packet_type *pt)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *ksz9477_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Tag decoding */
 	u8 *tag = skb_tail_pointer(skb) - KSZ_EGRESS_TAG_LEN;
@@ -189,11 +213,17 @@ static struct sk_buff *ksz9893_xmit(struct sk_buff *skb,
 	u8 *tag;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->ip_summed == CHECKSUM_PARTIAL && skb_checksum_help(skb))
 		return NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb->ip_summed == CHECKSUM_PARTIAL && skb_checksum_help(skb))
+		return NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Tag encoding */
 	tag = skb_put(skb, KSZ_INGRESS_TAG_LEN);
 	addr = skb_mac_header(skb);

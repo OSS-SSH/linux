@@ -309,6 +309,9 @@ int test__dso_data_cache(struct test *test __maybe_unused, int subtest __maybe_u
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static long new_limit(int count)
 {
 	int fd = open("/dev/null", O_RDONLY);
@@ -319,6 +322,7 @@ static long new_limit(int count)
 	return ret;
 }
 
+<<<<<<< HEAD
 int test__dso_data_reopen(struct test *test __maybe_unused, int subtest __maybe_unused)
 {
 	struct machine machine;
@@ -329,6 +333,12 @@ int test__dso_data_reopen(struct test *test __maybe_unused, int subtest __maybe_
 	struct machine machine;
 	long nr_end, nr = open_files_cnt();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int test__dso_data_reopen(struct test *test __maybe_unused, int subtest __maybe_unused)
+{
+	struct machine machine;
+	long nr_end, nr = open_files_cnt(), lim = new_limit(3);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int fd, fd_extra;
 
 #define dso_0 (dsos[0])
@@ -352,10 +362,14 @@ int test__dso_data_reopen(struct test *test __maybe_unused, int subtest __maybe_
 	/* Make sure we are able to open 3 fds anyway */
 	TEST_ASSERT_VAL("failed to set file limit",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			!set_fd_limit((lim)));
 =======
 			!set_fd_limit((nr + 3)));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			!set_fd_limit((lim)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TEST_ASSERT_VAL("failed to create dsos\n", !dsos__create(3, TEST_FILE_SIZE));
 

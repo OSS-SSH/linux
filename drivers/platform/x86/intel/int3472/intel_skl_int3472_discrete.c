@@ -402,10 +402,14 @@ int skl_int3472_discrete_remove(struct platform_device *pdev)
 	gpiod_remove_lookup_table(&int3472->gpios);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (int3472->clock.cl)
 =======
 	if (int3472->clock.ena_gpio)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (int3472->clock.cl)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skl_int3472_unregister_clock(int3472);
 
 	gpiod_put(int3472->clock.ena_gpio);

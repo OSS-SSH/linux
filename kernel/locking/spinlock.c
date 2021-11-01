@@ -125,6 +125,7 @@ void __lockfunc __raw_##op##_lock_bh(locktype##_t *lock)		\
  */
 BUILD_LOCK_OPS(spin, raw_spinlock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #ifndef CONFIG_PREEMPT_RT
 BUILD_LOCK_OPS(read, rwlock);
@@ -134,6 +135,13 @@ BUILD_LOCK_OPS(write, rwlock);
 BUILD_LOCK_OPS(read, rwlock);
 BUILD_LOCK_OPS(write, rwlock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#ifndef CONFIG_PREEMPT_RT
+BUILD_LOCK_OPS(read, rwlock);
+BUILD_LOCK_OPS(write, rwlock);
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif
 
@@ -218,10 +226,15 @@ EXPORT_SYMBOL(_raw_spin_unlock_bh);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef CONFIG_PREEMPT_RT
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifndef CONFIG_PREEMPT_RT
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef CONFIG_INLINE_READ_TRYLOCK
 int __lockfunc _raw_read_trylock(rwlock_t *lock)
 {
@@ -367,10 +380,15 @@ EXPORT_SYMBOL(_raw_write_unlock_bh);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* !CONFIG_PREEMPT_RT */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* !CONFIG_PREEMPT_RT */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 
 void __lockfunc _raw_spin_lock_nested(raw_spinlock_t *lock, int subclass)

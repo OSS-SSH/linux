@@ -287,6 +287,7 @@ int main(void)
 	STACK_PT_REGS_OFFSET(_XER, xer);
 	STACK_PT_REGS_OFFSET(_DAR, dar);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	STACK_PT_REGS_OFFSET(_DEAR, dear);
 	STACK_PT_REGS_OFFSET(_DSISR, dsisr);
 	STACK_PT_REGS_OFFSET(_ESR, esr);
@@ -298,30 +299,30 @@ int main(void)
 	STACK_PT_REGS_OFFSET(_PPR, ppr);
 #endif
 =======
+=======
+	STACK_PT_REGS_OFFSET(_DEAR, dear);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	STACK_PT_REGS_OFFSET(_DSISR, dsisr);
+	STACK_PT_REGS_OFFSET(_ESR, esr);
 	STACK_PT_REGS_OFFSET(ORIG_GPR3, orig_gpr3);
 	STACK_PT_REGS_OFFSET(RESULT, result);
 	STACK_PT_REGS_OFFSET(_TRAP, trap);
-#ifndef CONFIG_PPC64
-	/*
-	 * The PowerPC 400-class & Book-E processors have neither the DAR
-	 * nor the DSISR SPRs. Hence, we overload them to hold the similar
-	 * DEAR and ESR SPRs for such processors.  For critical interrupts
-	 * we use them to hold SRR0 and SRR1.
-	 */
-	STACK_PT_REGS_OFFSET(_DEAR, dar);
-	STACK_PT_REGS_OFFSET(_ESR, dsisr);
-#else /* CONFIG_PPC64 */
+#ifdef CONFIG_PPC64
 	STACK_PT_REGS_OFFSET(SOFTE, softe);
 	STACK_PT_REGS_OFFSET(_PPR, ppr);
+<<<<<<< HEAD
 #endif /* CONFIG_PPC64 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_PPC_PKEY
 	STACK_PT_REGS_OFFSET(STACK_REGS_AMR, amr);
 	STACK_PT_REGS_OFFSET(STACK_REGS_IAMR, iamr);
 #endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #if defined(CONFIG_PPC32) && defined(CONFIG_BOOKE)
 	STACK_PT_REGS_OFFSET(MAS0, mas0);
@@ -358,6 +359,23 @@ int main(void)
 	DEFINE(_DSRR1, STACK_INT_FRAME_SIZE+offsetof(struct exception_regs, dsrr1));
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_PPC32) && defined(CONFIG_BOOKE)
+	STACK_PT_REGS_OFFSET(MAS0, mas0);
+	/* we overload MMUCR for 44x on MAS0 since they are mutually exclusive */
+	STACK_PT_REGS_OFFSET(MMUCR, mas0);
+	STACK_PT_REGS_OFFSET(MAS1, mas1);
+	STACK_PT_REGS_OFFSET(MAS2, mas2);
+	STACK_PT_REGS_OFFSET(MAS3, mas3);
+	STACK_PT_REGS_OFFSET(MAS6, mas6);
+	STACK_PT_REGS_OFFSET(MAS7, mas7);
+	STACK_PT_REGS_OFFSET(_SRR0, srr0);
+	STACK_PT_REGS_OFFSET(_SRR1, srr1);
+	STACK_PT_REGS_OFFSET(_CSRR0, csrr0);
+	STACK_PT_REGS_OFFSET(_CSRR1, csrr1);
+	STACK_PT_REGS_OFFSET(_DSRR0, dsrr0);
+	STACK_PT_REGS_OFFSET(_DSRR1, dsrr1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	/* About the CPU features table */

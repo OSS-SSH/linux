@@ -20,10 +20,15 @@
 		spi0 = &spi0;
 		ethernet1 = &eth1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mmc0 = &sdhci0;
 		mmc1 = &sdhci1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mmc0 = &sdhci0;
+		mmc1 = &sdhci1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	chosen {
@@ -125,9 +130,13 @@
 	pinctrl-0 = <&i2c1_pins>;
 	clock-frequency = <100000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/delete-property/ mrvl,i2c-fast-mode;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/delete-property/ mrvl,i2c-fast-mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
 
 	rtc@6f {
@@ -142,6 +151,9 @@
 	status = "okay";
 	reset-gpios = <&gpiosb 3 GPIO_ACTIVE_LOW>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * U-Boot port for Turris Mox has a bug which always expects that "ranges" DT property
 	 * contains exactly 2 ranges with 3 (child) address cells, 2 (parent) address cells and
@@ -159,8 +171,11 @@
 	#size-cells = <2>;
 	ranges = <0x81000000 0 0xe8000000   0 0xe8000000   0 0x01000000   /* Port 0 IO */
 		  0x82000000 0 0xe9000000   0 0xe9000000   0 0x07000000>; /* Port 0 MEM */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* enabled by U-Boot if PCIe module is present */
 	status = "disabled";

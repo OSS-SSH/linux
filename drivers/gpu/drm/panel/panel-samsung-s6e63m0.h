@@ -4,6 +4,9 @@
 #define _PANEL_SAMSUNG_S6E63M0_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Manufacturer Command Set */
 #define MCS_ELVSS_ON		0xb1
 #define MCS_TEMP_SWIRE		0xb2
@@ -34,11 +37,14 @@ int s6e63m0_probe(struct device *dev, void *trsp,
 				  const u8 cmd, u8 *val),
 		  int (*dcs_write)(struct device *dev, void *trsp,
 				   const u8 *data,
+<<<<<<< HEAD
 =======
 int s6e63m0_probe(struct device *dev,
 		  int (*dcs_read)(struct device *dev, const u8 cmd, u8 *val),
 		  int (*dcs_write)(struct device *dev, const u8 *data,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   size_t len),
 		  bool dsi_mode);
 int s6e63m0_remove(struct device *dev);

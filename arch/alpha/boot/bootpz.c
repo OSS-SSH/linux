@@ -201,10 +201,14 @@ extern char _end;
 
 	ZERO_PGE	KSEG address of page full of zeroes, but 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			upon entry to kernel, it can be expected
 =======
 			upon entry to kerne cvan be expected
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			upon entry to kernel, it can be expected
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			to hold the parameter list and possible
 			INTRD information.
 

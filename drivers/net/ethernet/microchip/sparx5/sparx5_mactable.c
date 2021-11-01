@@ -278,10 +278,14 @@ static void sparx5_fdb_call_notifiers(enum switchdev_notifier_type type,
 				      struct net_device *dev, bool offloaded)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info info = {};
 =======
 	struct switchdev_notifier_fdb_info info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct switchdev_notifier_fdb_info info = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info.addr = mac;
 	info.vid = vid;

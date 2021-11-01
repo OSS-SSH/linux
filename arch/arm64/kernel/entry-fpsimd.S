@@ -34,20 +34,29 @@ SYM_FUNC_END(fpsimd_load_state)
 #ifdef CONFIG_ARM64_SVE
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Save the SVE state
  *
  * x0 - pointer to buffer for state
  * x1 - pointer to storage for FPSR
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 SYM_FUNC_START(sve_save_state)
 	sve_save 0, x1, 2
 	ret
 SYM_FUNC_END(sve_save_state)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Load the SVE state
  *
@@ -55,8 +64,11 @@ SYM_FUNC_END(sve_save_state)
  * x1 - pointer to storage for FPSR
  * x2 - VQ-1
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 SYM_FUNC_START(sve_load_state)
 	sve_load 0, x1, x2, 3, x4
 	ret

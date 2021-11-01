@@ -18,10 +18,14 @@ Usage:
 	Wait some times but not too much, the script is a bit slow.
 	Break the pipe (Ctrl + Z)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	$ scripts/tracing/draw_functrace.py < ~/raw_trace_func > draw_functrace
 =======
 	$ scripts/draw_functrace.py < raw_trace_func > draw_functrace
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	$ scripts/tracing/draw_functrace.py < ~/raw_trace_func > draw_functrace
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	Then you have your drawn trace in draw_functrace
 """
 
@@ -108,6 +112,7 @@ def parseLine(line):
 	if line.startswith("#"):
 		raise CommentLineException
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m = re.match("[^]]+?\\] +([a-z.]+) +([0-9.]+): (\\w+) <-(\\w+)", line)
 	if m is None:
 		raise BrokenLineException
@@ -118,6 +123,12 @@ def parseLine(line):
 		raise BrokenLineException
 	return (m.group(1), m.group(2), m.group(3))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	m = re.match("[^]]+?\\] +([a-z.]+) +([0-9.]+): (\\w+) <-(\\w+)", line)
+	if m is None:
+		raise BrokenLineException
+	return (m.group(2), m.group(3), m.group(4))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 def main():

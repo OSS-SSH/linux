@@ -63,9 +63,13 @@
 
 #define SL_CHECK_TRANSMIT
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/compat.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/compat.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <linux/moduleparam.h>
 
@@ -113,10 +117,14 @@ static void slip_unesc6(struct slip *sl, unsigned char c);
 static void sl_keepalive(struct timer_list *t);
 static void sl_outfill(struct timer_list *t);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sl_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd);
 =======
 static int sl_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int sl_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /********************************
@@ -656,10 +664,14 @@ static const struct net_device_ops sl_netdev_ops = {
 	.ndo_tx_timeout		= sl_tx_timeout,
 #ifdef CONFIG_SLIP_SMART
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= sl_siocdevprivate,
 =======
 	.ndo_do_ioctl		= sl_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= sl_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 };
 
@@ -1192,6 +1204,7 @@ static int slip_ioctl(struct tty_struct *tty, struct file *file,
 /* VSV changes start here */
 #ifdef CONFIG_SLIP_SMART
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* function sl_siocdevprivate called from net/core/dev.c
    to allow get/set outfill/keepalive parameter
    by ifconfig                                 */
@@ -1205,6 +1218,14 @@ static int sl_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 
 static int sl_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* function sl_siocdevprivate called from net/core/dev.c
+   to allow get/set outfill/keepalive parameter
+   by ifconfig                                 */
+
+static int sl_siocdevprivate(struct net_device *dev, struct ifreq *rq,
+			     void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct slip *sl = netdev_priv(dev);
 	unsigned long *p = (unsigned long *)&rq->ifr_ifru;
@@ -1213,11 +1234,17 @@ static int sl_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 		return -ENODEV;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (in_compat_syscall())
 		return -EOPNOTSUPP;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (in_compat_syscall())
+		return -EOPNOTSUPP;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_bh(&sl->lock);
 
 	if (!sl->tty) {

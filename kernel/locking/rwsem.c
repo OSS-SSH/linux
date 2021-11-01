@@ -29,9 +29,13 @@
 #include <linux/atomic.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef CONFIG_PREEMPT_RT
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifndef CONFIG_PREEMPT_RT
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "lock_events.h"
 
 /*
@@ -1170,10 +1174,14 @@ out_nolock:
  * - up_read/up_write has decremented the active part of count if we come here
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct rw_semaphore *rwsem_wake(struct rw_semaphore *sem)
 =======
 static struct rw_semaphore *rwsem_wake(struct rw_semaphore *sem, long count)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct rw_semaphore *rwsem_wake(struct rw_semaphore *sem)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long flags;
 	DEFINE_WAKE_Q(wake_q);
@@ -1306,10 +1314,14 @@ static inline void __up_read(struct rw_semaphore *sem)
 		      RWSEM_FLAG_WAITERS)) {
 		clear_nonspinnable(sem);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rwsem_wake(sem);
 =======
 		rwsem_wake(sem, tmp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rwsem_wake(sem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1332,10 +1344,14 @@ static inline void __up_write(struct rw_semaphore *sem)
 	tmp = atomic_long_fetch_add_release(-RWSEM_WRITER_LOCKED, &sem->count);
 	if (unlikely(tmp & RWSEM_FLAG_WAITERS))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rwsem_wake(sem);
 =======
 		rwsem_wake(sem, tmp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rwsem_wake(sem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1361,6 +1377,9 @@ static inline void __downgrade_write(struct rw_semaphore *sem)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else /* !CONFIG_PREEMPT_RT */
 
 #define RT_MUTEX_BUILD_MUTEX
@@ -1471,8 +1490,11 @@ static inline bool is_rwsem_reader_owned(struct rw_semaphore *sem)
 
 #endif /* CONFIG_PREEMPT_RT */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * lock for reading
  */

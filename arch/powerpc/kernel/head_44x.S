@@ -71,10 +71,14 @@ _ENTRY(_start);
  * r21 will be loaded with the physical runtime address of _stext
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4			/* Get our runtime address */
 =======
 	bl	0f				/* Get our runtime address */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4			/* Get our runtime address */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0:	mflr	r21				/* Make it accessible */
 	addis	r21,r21,(_stext - 0b)@ha
 	addi	r21,r21,(_stext - 0b)@l 	/* Get our current runtime base */
@@ -858,10 +862,14 @@ wmmucr:	mtspr	SPRN_MMUCR,r3			/* Put MMUCR */
 	sync
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4			/* Find our address */
 =======
 	bl	invstr				/* Find our address */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4			/* Find our address */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 invstr:	mflr	r5				/* Make it accessible */
 	tlbsx	r23,0,r5			/* Find entry we are in */
 	li	r4,0				/* Start at TLB entry 0 */
@@ -1054,10 +1062,14 @@ head_start_47x:
 
 	/* Find the entry we are running from */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4
 =======
 	bl	1f
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r23
 	tlbsx	r23,0,r23
 	tlbre	r24,r23,0

@@ -608,10 +608,15 @@ struct ib_device *_ib_alloc_device(size_t size)
 		INIT_LIST_HEAD(&device->cq_pools[i]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rwlock_init(&device->cache_lock);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rwlock_init(&device->cache_lock);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	device->uverbs_cmd_mask =
 		BIT_ULL(IB_USER_VERBS_CMD_ALLOC_MW) |
 		BIT_ULL(IB_USER_VERBS_CMD_ALLOC_PD) |
@@ -2056,9 +2061,12 @@ static int __ib_query_port(struct ib_device *device,
 			   struct ib_port_attr *port_attr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	union ib_gid gid = {};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	memset(port_attr, 0, sizeof(*port_attr));
@@ -2072,6 +2080,7 @@ static int __ib_query_port(struct ib_device *device,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ib_get_cached_subnet_prefix(device, port_num,
 				    &port_attr->subnet_prefix);
 =======
@@ -2081,6 +2090,10 @@ static int __ib_query_port(struct ib_device *device,
 
 	port_attr->subnet_prefix = be64_to_cpu(gid.global.subnet_prefix);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ib_get_cached_subnet_prefix(device, port_num,
+				    &port_attr->subnet_prefix);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2670,9 +2683,13 @@ void ib_set_device_ops(struct ib_device *dev, const struct ib_device_ops *ops)
 	SET_DEVICE_OP(dev_ops, get_link_layer);
 	SET_DEVICE_OP(dev_ops, get_netdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SET_DEVICE_OP(dev_ops, get_numa_node);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SET_DEVICE_OP(dev_ops, get_numa_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SET_DEVICE_OP(dev_ops, get_port_immutable);
 	SET_DEVICE_OP(dev_ops, get_vector_affinity);
 	SET_DEVICE_OP(dev_ops, get_vf_config);
@@ -2730,9 +2747,13 @@ void ib_set_device_ops(struct ib_device *dev, const struct ib_device_ops *ops)
 	SET_OBJ_SIZE(dev_ops, ib_mw);
 	SET_OBJ_SIZE(dev_ops, ib_pd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SET_OBJ_SIZE(dev_ops, ib_qp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SET_OBJ_SIZE(dev_ops, ib_qp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SET_OBJ_SIZE(dev_ops, ib_rwq_ind_table);
 	SET_OBJ_SIZE(dev_ops, ib_srq);
 	SET_OBJ_SIZE(dev_ops, ib_ucontext);

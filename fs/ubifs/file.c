@@ -1631,6 +1631,9 @@ static const char *ubifs_get_link(struct dentry *dentry,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ubifs_symlink_getattr(struct user_namespace *mnt_userns,
 				 const struct path *path, struct kstat *stat,
 				 u32 request_mask, unsigned int query_flags)
@@ -1642,8 +1645,11 @@ static int ubifs_symlink_getattr(struct user_namespace *mnt_userns,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct address_space_operations ubifs_file_address_operations = {
 	.readpage       = ubifs_readpage,
 	.writepage      = ubifs_writepage,
@@ -1670,10 +1676,14 @@ const struct inode_operations ubifs_symlink_inode_operations = {
 	.get_link    = ubifs_get_link,
 	.setattr     = ubifs_setattr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.getattr     = ubifs_symlink_getattr,
 =======
 	.getattr     = ubifs_getattr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.getattr     = ubifs_symlink_getattr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.listxattr   = ubifs_listxattr,
 	.update_time = ubifs_update_time,
 };

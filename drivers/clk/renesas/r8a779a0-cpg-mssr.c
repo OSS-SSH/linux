@@ -136,9 +136,12 @@ static const struct cpg_core_clk r8a779a0_core_clks[] __initconst = {
 	DEF_FIXED("ztr",	R8A779A0_CLK_ZTR,	CLK_PLL1_DIV2,	2, 1),
 	DEF_FIXED("zr",		R8A779A0_CLK_ZR,	CLK_PLL1_DIV2,	1, 1),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	DEF_FIXED("dsi",	R8A779A0_CLK_DSI,	CLK_PLL5_DIV4,	1, 1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEF_FIXED("cnndsp",	R8A779A0_CLK_CNNDSP,	CLK_PLL5_DIV4,	1, 1),
 	DEF_FIXED("vip",	R8A779A0_CLK_VIP,	CLK_PLL5,	5, 1),
 	DEF_FIXED("adgh",	R8A779A0_CLK_ADGH,	CLK_PLL5_DIV4,	1, 1),
@@ -155,9 +158,13 @@ static const struct cpg_core_clk r8a779a0_core_clks[] __initconst = {
 	DEF_DIV6P1("canfd",	R8A779A0_CLK_CANFD,	CLK_PLL5_DIV4,	0x878),
 	DEF_DIV6P1("csi0",	R8A779A0_CLK_CSI0,	CLK_PLL5_DIV4,	0x880),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DEF_DIV6P1("dsi",	R8A779A0_CLK_DSI,	CLK_PLL5_DIV4,	0x884),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DEF_DIV6P1("dsi",	R8A779A0_CLK_DSI,	CLK_PLL5_DIV4,	0x884),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	DEF_OSC("osc",		R8A779A0_CLK_OSC,	CLK_EXTAL,	8),
 	DEF_MDSEL("r",		R8A779A0_CLK_R, 29, CLK_EXTALR, 1, CLK_OCO, 1),
@@ -175,11 +182,17 @@ static const struct mssr_mod_clk r8a779a0_mod_clks[] __initconst = {
 	DEF_MOD("csi42",	401,	R8A779A0_CLK_CSI0),
 	DEF_MOD("csi43",	402,	R8A779A0_CLK_CSI0),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DEF_MOD("du",		411,	R8A779A0_CLK_S3D1),
 	DEF_MOD("dsi0",		415,	R8A779A0_CLK_DSI),
 	DEF_MOD("dsi1",		416,	R8A779A0_CLK_DSI),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DEF_MOD("du",		411,	R8A779A0_CLK_S3D1),
+	DEF_MOD("dsi0",		415,	R8A779A0_CLK_DSI),
+	DEF_MOD("dsi1",		416,	R8A779A0_CLK_DSI),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEF_MOD("fcpvd0",	508,	R8A779A0_CLK_S3D1),
 	DEF_MOD("fcpvd1",	509,	R8A779A0_CLK_S3D1),
 	DEF_MOD("hscif0",	514,	R8A779A0_CLK_S1D2),

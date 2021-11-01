@@ -124,12 +124,18 @@ static void __qeth_set_coalesce(struct net_device *dev,
 
 static int qeth_set_coalesce(struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct ethtool_coalesce *coal,
 			     struct kernel_ethtool_coalesce *kernel_coal,
 			     struct netlink_ext_ack *extack)
 =======
 			     struct ethtool_coalesce *coal)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *coal,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct qeth_card *card = dev->ml_priv;
 	struct qeth_qdio_out_q *queue;
@@ -476,6 +482,7 @@ const struct ethtool_ops qeth_ethtool_ops = {
 	.get_link_ksettings = qeth_get_link_ksettings,
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 const struct ethtool_ops qeth_osn_ethtool_ops = {
@@ -485,3 +492,5 @@ const struct ethtool_ops qeth_osn_ethtool_ops = {
 	.get_drvinfo = qeth_get_drvinfo,
 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

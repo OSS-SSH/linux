@@ -9,18 +9,26 @@
 #include <linux/cpu.h>
 #include <linux/debugfs.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/sched/smt.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/sched/smt.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/tlbflush.h>
 #include <asm/mmu_context.h>
 #include <asm/nospec-branch.h>
 #include <asm/cache.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/cacheflush.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/cacheflush.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/apic.h>
 #include <asm/perf_event.h>
 
@@ -52,6 +60,7 @@
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Bits to mangle the TIF_SPEC_* state into the mm pointer which is
  * stored in cpu_tlb_state.last_user_mm_spec.
  */
@@ -67,6 +76,17 @@
  */
 #define LAST_USER_MM_IBPB	0x1UL
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Bits to mangle the TIF_SPEC_* state into the mm pointer which is
+ * stored in cpu_tlb_state.last_user_mm_spec.
+ */
+#define LAST_USER_MM_IBPB	0x1UL
+#define LAST_USER_MM_L1D_FLUSH	0x2UL
+#define LAST_USER_MM_SPEC_MASK	(LAST_USER_MM_IBPB | LAST_USER_MM_L1D_FLUSH)
+
+/* Bits to set when tlbstate and flush is (re)initialized */
+#define LAST_USER_MM_INIT	LAST_USER_MM_IBPB
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * The x86 feature is called PCID (Process Context IDentifier). It is similar
@@ -338,6 +358,9 @@ void switch_mm(struct mm_struct *prev, struct mm_struct *next,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Invoked from return to user/guest by a task that opted-in to L1D
  * flushing but ended up running on an SMT enabled core due to wrong
@@ -374,6 +397,7 @@ static void l1d_flush_evaluate(unsigned long prev_mm, unsigned long next_mm,
 }
 
 static unsigned long mm_mangle_tif_spec_bits(struct task_struct *next)
+<<<<<<< HEAD
 {
 	unsigned long next_tif = task_thread_info(next)->flags;
 	unsigned long spec_bits = (next_tif >> TIF_SPEC_IB) & LAST_USER_MM_SPEC_MASK;
@@ -404,20 +428,40 @@ static void cond_mitigation(struct task_struct *next)
 	 *
 =======
 static unsigned long mm_mangle_tif_spec_ib(struct task_struct *next)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long next_tif = task_thread_info(next)->flags;
-	unsigned long ibpb = (next_tif >> TIF_SPEC_IB) & LAST_USER_MM_IBPB;
+	unsigned long spec_bits = (next_tif >> TIF_SPEC_IB) & LAST_USER_MM_SPEC_MASK;
 
-	return (unsigned long)next->mm | ibpb;
+	/*
+	 * Ensure that the bit shift above works as expected and the two flags
+	 * end up in bit 0 and 1.
+	 */
+	BUILD_BUG_ON(TIF_SPEC_L1D_FLUSH != TIF_SPEC_IB + 1);
+
+	return (unsigned long)next->mm | spec_bits;
 }
 
-static void cond_ibpb(struct task_struct *next)
+static void cond_mitigation(struct task_struct *next)
 {
+	unsigned long prev_mm, next_mm;
+
 	if (!next || !next->mm)
 		return;
 
+	next_mm = mm_mangle_tif_spec_bits(next);
+	prev_mm = this_cpu_read(cpu_tlbstate.last_user_mm_spec);
+
 	/*
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * Avoid user/user BTB poisoning by flushing the branch predictor
+	 * when switching between processes. This stops one process from
+	 * doing Spectre-v2 attacks on another.
+	 *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Both, the conditional and the always IBPB mode use the mm
 	 * pointer to avoid the IBPB when switching between tasks of the
 	 * same process. Using the mm pointer instead of mm->context.ctx_id
@@ -428,10 +472,13 @@ static void cond_ibpb(struct task_struct *next)
 	 */
 	if (static_branch_likely(&switch_mm_cond_ibpb)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		unsigned long prev_mm, next_mm;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * This is a bit more complex than the always mode because
 		 * it has to handle two cases:
@@ -462,6 +509,7 @@ static void cond_ibpb(struct task_struct *next)
 		 * above cases. Mangle the TIF_SPEC_IB bit into the mm
 		 * pointer of the incoming task which is stored in
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * cpu_tlbstate.last_user_mm_spec for comparison.
 		 *
 =======
@@ -472,6 +520,10 @@ static void cond_ibpb(struct task_struct *next)
 
 		/*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * cpu_tlbstate.last_user_mm_spec for comparison.
+		 *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * Issue IBPB only if the mm's are different and one or
 		 * both have the IBPB bit set.
 		 */
@@ -479,10 +531,13 @@ static void cond_ibpb(struct task_struct *next)
 		    (next_mm | prev_mm) & LAST_USER_MM_IBPB)
 			indirect_branch_prediction_barrier();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 		this_cpu_write(cpu_tlbstate.last_user_mm_ibpb, next_mm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (static_branch_unlikely(&switch_mm_always_ibpb)) {
@@ -491,6 +546,7 @@ static void cond_ibpb(struct task_struct *next)
 		 * different context than the user space task which ran
 		 * last on this CPU.
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if ((prev_mm & ~LAST_USER_MM_SPEC_MASK) !=
 					(unsigned long)next->mm)
@@ -510,11 +566,28 @@ static void cond_ibpb(struct task_struct *next)
 	this_cpu_write(cpu_tlbstate.last_user_mm_spec, next_mm);
 =======
 		if (this_cpu_read(cpu_tlbstate.last_user_mm) != next->mm) {
+=======
+		if ((prev_mm & ~LAST_USER_MM_SPEC_MASK) !=
+					(unsigned long)next->mm)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			indirect_branch_prediction_barrier();
-			this_cpu_write(cpu_tlbstate.last_user_mm, next->mm);
-		}
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (static_branch_unlikely(&switch_mm_cond_l1d_flush)) {
+		/*
+		 * Flush L1D when the outgoing task requested it and/or
+		 * check whether the incoming task requested L1D flushing
+		 * and ended up on an SMT sibling.
+		 */
+		if (unlikely((prev_mm | next_mm) & LAST_USER_MM_L1D_FLUSH))
+			l1d_flush_evaluate(prev_mm, next_mm, next);
+	}
+
+	this_cpu_write(cpu_tlbstate.last_user_mm_spec, next_mm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PERF_EVENTS
@@ -649,6 +722,7 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
 	} else {
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * Apply process to process speculation vulnerability
 		 * mitigations if applicable.
 		 */
@@ -660,6 +734,12 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
 		 */
 		cond_ibpb(tsk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * Apply process to process speculation vulnerability
+		 * mitigations if applicable.
+		 */
+		cond_mitigation(tsk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Stop remote flushes for the previous mm.
@@ -768,10 +848,14 @@ void initialize_tlbstate_and_flush(void)
 
 	/* Reinitialize tlbstate. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	this_cpu_write(cpu_tlbstate.last_user_mm_spec, LAST_USER_MM_INIT);
 =======
 	this_cpu_write(cpu_tlbstate.last_user_mm_ibpb, LAST_USER_MM_IBPB);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	this_cpu_write(cpu_tlbstate.last_user_mm_spec, LAST_USER_MM_INIT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	this_cpu_write(cpu_tlbstate.loaded_mm_asid, 0);
 	this_cpu_write(cpu_tlbstate.next_asid, 1);
 	this_cpu_write(cpu_tlbstate.ctxs[0].ctx_id, mm->context.ctx_id);

@@ -12,9 +12,12 @@
 #include <asm/stage2_pgtable.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define KVM_PTE_VALID			BIT(0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define KVM_PTE_TYPE			BIT(1)
 #define KVM_PTE_TYPE_BLOCK		0
@@ -22,11 +25,14 @@
 #define KVM_PTE_TYPE_TABLE		1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define KVM_PTE_ADDR_MASK		GENMASK(47, PAGE_SHIFT)
 #define KVM_PTE_ADDR_51_48		GENMASK(15, 12)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define KVM_PTE_LEAF_ATTR_LO		GENMASK(11, 2)
 
 #define KVM_PTE_LEAF_ATTR_LO_S1_ATTRIDX	GENMASK(4, 2)
@@ -47,10 +53,15 @@
 #define KVM_PTE_LEAF_ATTR_HI		GENMASK(63, 51)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define KVM_PTE_LEAF_ATTR_HI_SW		GENMASK(58, 55)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define KVM_PTE_LEAF_ATTR_HI_SW		GENMASK(58, 55)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define KVM_PTE_LEAF_ATTR_HI_S1_XN	BIT(54)
 
 #define KVM_PTE_LEAF_ATTR_HI_S2_XN	BIT(54)
@@ -60,12 +71,16 @@
 					 KVM_PTE_LEAF_ATTR_HI_S2_XN)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define KVM_INVALID_PTE_OWNER_MASK	GENMASK(9, 2)
 =======
 #define KVM_PTE_LEAF_ATTR_S2_IGNORED	GENMASK(58, 55)
 
 #define KVM_INVALID_PTE_OWNER_MASK	GENMASK(63, 56)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define KVM_INVALID_PTE_OWNER_MASK	GENMASK(9, 2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define KVM_MAX_OWNER_ID		1
 
 struct kvm_pgtable_walk_data {
@@ -76,6 +91,7 @@ struct kvm_pgtable_walk_data {
 	u64				end;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static u64 kvm_granule_shift(u32 level)
@@ -90,6 +106,8 @@ static u64 kvm_granule_size(u32 level)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define KVM_PHYS_INVALID (-1ULL)
 
 static bool kvm_phys_is_valid(u64 phys)
@@ -97,6 +115,7 @@ static bool kvm_phys_is_valid(u64 phys)
 	return phys < BIT(id_aa64mmfr0_parange_to_phys_shift(ID_AA64MMFR0_PARANGE_MAX));
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static bool kvm_level_supports_block_mapping(u32 level)
@@ -109,6 +128,8 @@ static bool kvm_level_supports_block_mapping(u32 level)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool kvm_block_mapping_supported(u64 addr, u64 end, u64 phys, u32 level)
 {
 	u64 granule = kvm_granule_size(level);
@@ -157,6 +178,7 @@ static u32 kvm_pgd_pages(u32 ia_bits, u32 start_level)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static bool kvm_pte_valid(kvm_pte_t pte)
 {
@@ -164,6 +186,8 @@ static bool kvm_pte_valid(kvm_pte_t pte)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool kvm_pte_table(kvm_pte_t pte, u32 level)
 {
 	if (level == KVM_PGTABLE_MAX_LEVELS - 1)
@@ -175,6 +199,7 @@ static bool kvm_pte_table(kvm_pte_t pte, u32 level)
 	return FIELD_GET(KVM_PTE_TYPE, pte) == KVM_PTE_TYPE_TABLE;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static u64 kvm_pte_to_phys(kvm_pte_t pte)
@@ -188,6 +213,8 @@ static u64 kvm_pte_to_phys(kvm_pte_t pte)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static kvm_pte_t kvm_phys_to_pte(u64 pa)
 {
 	kvm_pte_t pte = pa & KVM_PTE_ADDR_MASK;
@@ -354,6 +381,9 @@ int kvm_pgtable_walk(struct kvm_pgtable *pgt, u64 addr, u64 size,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct leaf_walk_data {
 	kvm_pte_t	pte;
 	u32		level;
@@ -393,8 +423,11 @@ int kvm_pgtable_get_leaf(struct kvm_pgtable *pgt, u64 addr,
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hyp_map_data {
 	u64				phys;
 	kvm_pte_t			attr;
@@ -427,15 +460,22 @@ static int hyp_set_prot_attr(enum kvm_pgtable_prot prot, kvm_pte_t *ptep)
 	attr |= FIELD_PREP(KVM_PTE_LEAF_ATTR_LO_S1_SH, sh);
 	attr |= KVM_PTE_LEAF_ATTR_LO_S1_AF;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	attr |= prot & KVM_PTE_LEAF_ATTR_HI_SW;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	attr |= prot & KVM_PTE_LEAF_ATTR_HI_SW;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*ptep = attr;
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum kvm_pgtable_prot kvm_pgtable_hyp_pte_prot(kvm_pte_t pte)
 {
 	enum kvm_pgtable_prot prot = pte & KVM_PTE_LEAF_ATTR_HI_SW;
@@ -471,8 +511,11 @@ static bool hyp_pte_needs_update(kvm_pte_t old, kvm_pte_t new)
 	return !WARN_ON((old ^ new) & ~KVM_PTE_LEAF_ATTR_HI_SW);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool hyp_map_walker_try_leaf(u64 addr, u64 end, u32 level,
 				    kvm_pte_t *ptep, struct hyp_map_data *data)
 {
@@ -483,6 +526,7 @@ static bool hyp_map_walker_try_leaf(u64 addr, u64 end, u32 level,
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	new = kvm_init_valid_leaf_pte(phys, data->attr, level);
 	if (hyp_pte_needs_update(old, new))
 =======
@@ -490,6 +534,10 @@ static bool hyp_map_walker_try_leaf(u64 addr, u64 end, u32 level,
 	new = kvm_init_valid_leaf_pte(phys, data->attr, level);
 	if (old != new && !WARN_ON(kvm_pte_valid(old)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	new = kvm_init_valid_leaf_pte(phys, data->attr, level);
+	if (hyp_pte_needs_update(old, new))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		smp_store_release(ptep, new);
 
 	data->phys += granule;
@@ -555,10 +603,15 @@ int kvm_pgtable_hyp_init(struct kvm_pgtable *pgt, u32 va_bits,
 	pgt->mm_ops		= mm_ops;
 	pgt->mmu		= NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pgt->force_pte_cb	= NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pgt->force_pte_cb	= NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -597,11 +650,17 @@ struct stage2_map_data {
 
 	struct kvm_pgtable_mm_ops	*mm_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Force mappings to page granularity */
 	bool				force_pte;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Force mappings to page granularity */
+	bool				force_pte;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 u64 kvm_get_vtcr(u64 mmfr0, u64 mmfr1, u32 phys_shift)
@@ -667,15 +726,22 @@ static int stage2_set_prot_attr(struct kvm_pgtable *pgt, enum kvm_pgtable_prot p
 	attr |= FIELD_PREP(KVM_PTE_LEAF_ATTR_LO_S2_SH, sh);
 	attr |= KVM_PTE_LEAF_ATTR_LO_S2_AF;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	attr |= prot & KVM_PTE_LEAF_ATTR_HI_SW;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	attr |= prot & KVM_PTE_LEAF_ATTR_HI_SW;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*ptep = attr;
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum kvm_pgtable_prot kvm_pgtable_stage2_pte_prot(kvm_pte_t pte)
 {
 	enum kvm_pgtable_prot prot = pte & KVM_PTE_LEAF_ATTR_HI_SW;
@@ -693,8 +759,11 @@ enum kvm_pgtable_prot kvm_pgtable_stage2_pte_prot(kvm_pte_t pte)
 	return prot;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool stage2_pte_needs_update(kvm_pte_t old, kvm_pte_t new)
 {
 	if (!kvm_pte_valid(old) || !kvm_pte_valid(new))
@@ -740,6 +809,9 @@ static bool stage2_pte_executable(kvm_pte_t pte)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool stage2_leaf_mapping_allowed(u64 addr, u64 end, u32 level,
 					struct stage2_map_data *data)
 {
@@ -749,8 +821,11 @@ static bool stage2_leaf_mapping_allowed(u64 addr, u64 end, u32 level,
 	return kvm_block_mapping_supported(addr, end, data->phys, level);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int stage2_map_walker_try_leaf(u64 addr, u64 end, u32 level,
 				      kvm_pte_t *ptep,
 				      struct stage2_map_data *data)
@@ -761,10 +836,14 @@ static int stage2_map_walker_try_leaf(u64 addr, u64 end, u32 level,
 	struct kvm_pgtable_mm_ops *mm_ops = data->mm_ops;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!stage2_leaf_mapping_allowed(addr, end, level, data))
 =======
 	if (!kvm_block_mapping_supported(addr, end, phys, level))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!stage2_leaf_mapping_allowed(addr, end, level, data))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -E2BIG;
 
 	if (kvm_phys_is_valid(phys))
@@ -809,10 +888,14 @@ static int stage2_map_walk_table_pre(u64 addr, u64 end, u32 level,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!stage2_leaf_mapping_allowed(addr, end, level, data))
 =======
 	if (!kvm_block_mapping_supported(addr, end, data->phys, level))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!stage2_leaf_mapping_allowed(addr, end, level, data))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	data->childp = kvm_pte_follow(*ptep, data->mm_ops);
@@ -943,9 +1026,13 @@ int kvm_pgtable_stage2_map(struct kvm_pgtable *pgt, u64 addr, u64 size,
 		.memcache	= mc,
 		.mm_ops		= pgt->mm_ops,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.force_pte	= pgt->force_pte_cb && pgt->force_pte_cb(addr, addr + size, prot),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.force_pte	= pgt->force_pte_cb && pgt->force_pte_cb(addr, addr + size, prot),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	struct kvm_pgtable_walker walker = {
 		.cb		= stage2_map_walker,
@@ -978,9 +1065,13 @@ int kvm_pgtable_stage2_set_owner(struct kvm_pgtable *pgt, u64 addr, u64 size,
 		.mm_ops		= pgt->mm_ops,
 		.owner_id	= owner_id,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.force_pte	= true,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.force_pte	= true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	struct kvm_pgtable_walker walker = {
 		.cb		= stage2_map_walker,
@@ -1175,11 +1266,17 @@ int kvm_pgtable_stage2_relax_perms(struct kvm_pgtable *pgt, u64 addr,
 	kvm_pte_t set = 0, clr = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (prot & KVM_PTE_LEAF_ATTR_HI_SW)
 		return -EINVAL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (prot & KVM_PTE_LEAF_ATTR_HI_SW)
+		return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (prot & KVM_PGTABLE_PROT_R)
 		set |= KVM_PTE_LEAF_ATTR_LO_S2_S2AP_R;
 
@@ -1229,16 +1326,22 @@ int kvm_pgtable_stage2_flush(struct kvm_pgtable *pgt, u64 addr, u64 size)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int __kvm_pgtable_stage2_init(struct kvm_pgtable *pgt, struct kvm_arch *arch,
 			      struct kvm_pgtable_mm_ops *mm_ops,
 			      enum kvm_pgtable_stage2_flags flags,
 			      kvm_pgtable_force_pte_cb_t force_pte_cb)
+<<<<<<< HEAD
 =======
 int kvm_pgtable_stage2_init_flags(struct kvm_pgtable *pgt, struct kvm_arch *arch,
 				  struct kvm_pgtable_mm_ops *mm_ops,
 				  enum kvm_pgtable_stage2_flags flags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	size_t pgd_sz;
 	u64 vtcr = arch->vtcr;
@@ -1257,9 +1360,13 @@ int kvm_pgtable_stage2_init_flags(struct kvm_pgtable *pgt, struct kvm_arch *arch
 	pgt->mmu		= &arch->mmu;
 	pgt->flags		= flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pgt->force_pte_cb	= force_pte_cb;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pgt->force_pte_cb	= force_pte_cb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Ensure zeroed PGD pages are visible to the hardware walker */
 	dsb(ishst);
@@ -1299,6 +1406,7 @@ void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt)
 	pgt->mm_ops->free_pages_exact(pgt->pgd, pgd_sz);
 	pgt->pgd = NULL;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -1376,3 +1484,5 @@ int kvm_pgtable_stage2_find_range(struct kvm_pgtable *pgt, u64 addr,
 	return ret;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

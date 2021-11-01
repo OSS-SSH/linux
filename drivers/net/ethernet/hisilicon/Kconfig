@@ -91,10 +91,15 @@ config HNS3
 	tristate "Hisilicon Network Subsystem Support HNS3 (Framework)"
 	depends on PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select NET_DEVLINK
 	select PAGE_POOL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select NET_DEVLINK
+	select PAGE_POOL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This selects the framework support for Hisilicon Network Subsystem 3.
 	  This layer facilitates clients like ENET, RoCE and user-space ethernet
@@ -108,10 +113,14 @@ config HNS3_HCLGE
 	default m
 	depends on PCI_MSI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This selects the HNS3_HCLGE network acceleration engine & its hardware
 	  compatibility layer. The engine would be used in Hisilicon hip08 family of

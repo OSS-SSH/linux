@@ -1173,9 +1173,12 @@ struct dvb_frontend *cx24117_attach(const struct cx24117_config *config,
 			KBUILD_MODNAME, demod);
 		goto error1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 1:
 		/* new priv instance */
 		priv->i2c = i2c;

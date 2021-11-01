@@ -189,6 +189,7 @@ struct nfc_dev {
 	struct rfkill *rfkill;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct nfc_vendor_cmd *vendor_cmds;
 	int n_vendor_cmds;
 
@@ -199,6 +200,12 @@ struct nfc_dev {
 
 	struct nfc_ops *ops;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct nfc_vendor_cmd *vendor_cmds;
+	int n_vendor_cmds;
+
+	const struct nfc_ops *ops;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct genl_info *cur_cmd_info;
 };
 #define to_nfc_dev(_dev) container_of(_dev, struct nfc_dev, dev)
@@ -206,10 +213,14 @@ struct nfc_dev {
 extern struct class nfc_class;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct nfc_dev *nfc_allocate_device(const struct nfc_ops *ops,
 =======
 struct nfc_dev *nfc_allocate_device(struct nfc_ops *ops,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct nfc_dev *nfc_allocate_device(const struct nfc_ops *ops,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    u32 supported_protocols,
 				    int tx_headroom,
 				    int tx_tailroom);
@@ -257,10 +268,14 @@ static inline void nfc_set_drvdata(struct nfc_dev *dev, void *data)
  * @dev: The nfc device
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void *nfc_get_drvdata(const struct nfc_dev *dev)
 =======
 static inline void *nfc_get_drvdata(struct nfc_dev *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void *nfc_get_drvdata(const struct nfc_dev *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return dev_get_drvdata(&dev->dev);
 }
@@ -271,10 +286,14 @@ static inline void *nfc_get_drvdata(struct nfc_dev *dev)
  * @dev: The nfc device whose name to return
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline const char *nfc_device_name(const struct nfc_dev *dev)
 =======
 static inline const char *nfc_device_name(struct nfc_dev *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline const char *nfc_device_name(const struct nfc_dev *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return dev_name(&dev->dev);
 }
@@ -286,10 +305,14 @@ struct sk_buff *nfc_alloc_recv_skb(unsigned int size, gfp_t gfp);
 
 int nfc_set_remote_general_bytes(struct nfc_dev *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 const u8 *gt, u8 gt_len);
 =======
 				 u8 *gt, u8 gt_len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 const u8 *gt, u8 gt_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u8 *nfc_get_local_general_bytes(struct nfc_dev *dev, size_t *gb_len);
 
 int nfc_fw_download_done(struct nfc_dev *dev, const char *firmware_name,
@@ -304,10 +327,14 @@ int nfc_dep_link_is_up(struct nfc_dev *dev, u32 target_idx,
 
 int nfc_tm_activated(struct nfc_dev *dev, u32 protocol, u8 comm_mode,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     const u8 *gb, size_t gb_len);
 =======
 		     u8 *gb, size_t gb_len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     const u8 *gb, size_t gb_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int nfc_tm_deactivated(struct nfc_dev *dev);
 int nfc_tm_data_received(struct nfc_dev *dev, struct sk_buff *skb);
 
@@ -325,10 +352,14 @@ void nfc_send_to_raw_sock(struct nfc_dev *dev, struct sk_buff *skb,
 
 static inline int nfc_set_vendor_cmds(struct nfc_dev *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				      const struct nfc_vendor_cmd *cmds,
 =======
 				      struct nfc_vendor_cmd *cmds,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      const struct nfc_vendor_cmd *cmds,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      int n_cmds)
 {
 	if (dev->vendor_cmds || dev->n_vendor_cmds)

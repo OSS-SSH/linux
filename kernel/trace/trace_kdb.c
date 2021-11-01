@@ -148,6 +148,9 @@ static int kdb_ftdump(int argc, const char **argv)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static kdbtab_t ftdump_cmd = {
 	.name = "ftdump",
 	.func = kdb_ftdump,
@@ -156,6 +159,7 @@ static kdbtab_t ftdump_cmd = {
 	.flags = KDB_ENABLE_ALWAYS_SAFE,
 };
 
+<<<<<<< HEAD
 static __init int kdb_ftrace_register(void)
 {
 	kdb_register(&ftdump_cmd);
@@ -166,6 +170,11 @@ static __init int kdb_ftrace_register(void)
 			    "Dump ftrace log; -skip dumps last #entries", 0,
 			    KDB_ENABLE_ALWAYS_SAFE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static __init int kdb_ftrace_register(void)
+{
+	kdb_register(&ftdump_cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

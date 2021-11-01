@@ -254,10 +254,14 @@
 	/*P0-P7*/	"","","","","led-pcieslot-power","","","",
 	/*Q0-Q7*/	"","","","","","","","",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/*R0-R7*/	"bmc-tpm-reset","power-chassis-control","power-chassis-good","","","I2C_FLASH_MICRO_N","","",
 =======
 	/*R0-R7*/	"","","","","","I2C_FLASH_MICRO_N","","",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/*R0-R7*/	"bmc-tpm-reset","power-chassis-control","power-chassis-good","","","I2C_FLASH_MICRO_N","","",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*S0-S7*/	"","","","","","","","",
 	/*T0-T7*/	"","","","","","","","",
 	/*U0-U7*/	"","","","","","","","",
@@ -308,10 +312,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		gpio@1 {
 =======
 		gpio@01 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gpio@1 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <1>;
 			type = <PCA955X_TYPE_GPIO>;
 		};
@@ -415,6 +423,7 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	power-supply@6b {
 		compatible = "ibm,cffps";
 		reg = <0x6b>;
@@ -425,14 +434,21 @@
 		reg = <0x6d>;
 =======
 	power-supply@6a {
-		compatible = "ibm,cffps";
-		reg = <0x6a>;
-	};
-
+=======
 	power-supply@6b {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		compatible = "ibm,cffps";
 		reg = <0x6b>;
+	};
+
+	power-supply@6d {
+		compatible = "ibm,cffps";
+<<<<<<< HEAD
+		reg = <0x6b>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		reg = <0x6d>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 
@@ -2852,9 +2868,13 @@
 &emmc {
 	status = "okay";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clk-phase-mmc-hs200 = <210>, <228>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk-phase-mmc-hs200 = <210>, <228>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &fsim0 {

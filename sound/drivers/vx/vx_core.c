@@ -775,13 +775,19 @@ EXPORT_SYMBOL(snd_vx_resume);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void snd_vx_release(struct device *dev, void *data)
 {
 	snd_vx_free_firmware(data);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * snd_vx_create - constructor for struct vx_core
  * @card: card instance
@@ -793,10 +799,15 @@ static void snd_vx_release(struct device *dev, void *data)
  * initialization.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * The object is managed via devres, and will be automatically released.
  *
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * The object is managed via devres, and will be automatically released.
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * return the instance pointer if successful, NULL in error.
  */
 struct vx_core *snd_vx_create(struct snd_card *card,
@@ -810,6 +821,7 @@ struct vx_core *snd_vx_create(struct snd_card *card,
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chip = devres_alloc(snd_vx_release, sizeof(*chip) + extra_size,
 			    GFP_KERNEL);
 	if (!chip)
@@ -817,6 +829,11 @@ struct vx_core *snd_vx_create(struct snd_card *card,
 	chip = kzalloc(sizeof(*chip) + extra_size, GFP_KERNEL);
 	if (! chip)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chip = devres_alloc(snd_vx_release, sizeof(*chip) + extra_size,
+			    GFP_KERNEL);
+	if (!chip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 	mutex_init(&chip->lock);
 	chip->irq = -1;

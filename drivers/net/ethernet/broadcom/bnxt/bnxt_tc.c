@@ -23,9 +23,13 @@
 #include "bnxt_hsi.h"
 #include "bnxt.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "bnxt_hwrm.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "bnxt_hwrm.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "bnxt_sriov.h"
 #include "bnxt_tc.h"
 #include "bnxt_vfr.h"
@@ -507,6 +511,7 @@ static int bnxt_hwrm_cfa_flow_free(struct bnxt *bp,
 				   struct bnxt_tc_flow_node *flow_node)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_cfa_flow_free_input *req;
 	int rc;
 
@@ -521,16 +526,25 @@ static int bnxt_hwrm_cfa_flow_free(struct bnxt *bp,
 	}
 =======
 	struct hwrm_cfa_flow_free_input req = { 0 };
+=======
+	struct hwrm_cfa_flow_free_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rc;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_CFA_FLOW_FREE, -1, -1);
-	if (bp->fw_cap & BNXT_FW_CAP_OVS_64BIT_HANDLE)
-		req.ext_flow_handle = flow_node->ext_flow_handle;
-	else
-		req.flow_handle = flow_node->flow_handle;
+	rc = hwrm_req_init(bp, req, HWRM_CFA_FLOW_FREE);
+	if (!rc) {
+		if (bp->fw_cap & BNXT_FW_CAP_OVS_64BIT_HANDLE)
+			req->ext_flow_handle = flow_node->ext_flow_handle;
+		else
+			req->flow_handle = flow_node->flow_handle;
 
+<<<<<<< HEAD
 	rc = hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rc = hwrm_req_send(bp, req);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		netdev_info(bp->dev, "%s: Error rc=%d\n", __func__, rc);
 
@@ -607,6 +621,7 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 	struct bnxt_tc_l3_key *l3_mask = &flow->l3_mask;
 	struct bnxt_tc_l3_key *l3_key = &flow->l3_key;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_cfa_flow_alloc_output *resp;
 	struct hwrm_cfa_flow_alloc_input *req;
 	u16 flow_flags = 0, action_flags = 0;
@@ -625,20 +640,29 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 		memcpy(req->l2_rewrite_smac, actions->l2_rewrite_smac,
 =======
 	struct hwrm_cfa_flow_alloc_input req = { 0 };
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hwrm_cfa_flow_alloc_output *resp;
+	struct hwrm_cfa_flow_alloc_input *req;
 	u16 flow_flags = 0, action_flags = 0;
 	int rc;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_CFA_FLOW_ALLOC, -1, -1);
+	rc = hwrm_req_init(bp, req, HWRM_CFA_FLOW_ALLOC);
+	if (rc)
+		return rc;
 
-	req.src_fid = cpu_to_le16(flow->src_fid);
-	req.ref_flow_handle = ref_flow_handle;
+	req->src_fid = cpu_to_le16(flow->src_fid);
+	req->ref_flow_handle = ref_flow_handle;
 
 	if (actions->flags & BNXT_TC_ACTION_FLAG_L2_REWRITE) {
-		memcpy(req.l2_rewrite_dmac, actions->l2_rewrite_dmac,
+		memcpy(req->l2_rewrite_dmac, actions->l2_rewrite_dmac,
 		       ETH_ALEN);
+<<<<<<< HEAD
 		memcpy(req.l2_rewrite_smac, actions->l2_rewrite_smac,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memcpy(req->l2_rewrite_smac, actions->l2_rewrite_smac,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       ETH_ALEN);
 		action_flags |=
 			CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_L2_HEADER_REWRITE;
@@ -654,6 +678,7 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 					CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_NAT_SRC;
 				/* L3 source rewrite */
 <<<<<<< HEAD
+<<<<<<< HEAD
 				req->nat_ip_address[0] =
 					actions->nat.l3.ipv4.saddr.s_addr;
 				/* L4 source port */
@@ -666,11 +691,19 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 				if (actions->nat.l4.ports.sport)
 					req.nat_port =
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				req->nat_ip_address[0] =
+					actions->nat.l3.ipv4.saddr.s_addr;
+				/* L4 source port */
+				if (actions->nat.l4.ports.sport)
+					req->nat_port =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						actions->nat.l4.ports.sport;
 			} else {
 				action_flags |=
 					CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_NAT_DEST;
 				/* L3 destination rewrite */
+<<<<<<< HEAD
 <<<<<<< HEAD
 				req->nat_ip_address[0] =
 					actions->nat.l3.ipv4.daddr.s_addr;
@@ -685,22 +718,32 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 				   req->nat_port);
 =======
 				req.nat_ip_address[0] =
+=======
+				req->nat_ip_address[0] =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					actions->nat.l3.ipv4.daddr.s_addr;
 				/* L4 destination port */
 				if (actions->nat.l4.ports.dport)
-					req.nat_port =
+					req->nat_port =
 						actions->nat.l4.ports.dport;
 			}
 			netdev_dbg(bp->dev,
+<<<<<<< HEAD
 				   "req.nat_ip_address: %pI4 src_xlate: %d req.nat_port: %x\n",
 				   req.nat_ip_address, actions->nat.src_xlate,
 				   req.nat_port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   "req->nat_ip_address: %pI4 src_xlate: %d req->nat_port: %x\n",
+				   req->nat_ip_address, actions->nat.src_xlate,
+				   req->nat_port);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			if (actions->nat.src_xlate) {
 				action_flags |=
 					CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_NAT_SRC;
 				/* L3 source rewrite */
+<<<<<<< HEAD
 <<<<<<< HEAD
 				memcpy(req->nat_ip_address,
 				       actions->nat.l3.ipv6.saddr.s6_addr32,
@@ -710,17 +753,25 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 					req->nat_port =
 =======
 				memcpy(req.nat_ip_address,
+=======
+				memcpy(req->nat_ip_address,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       actions->nat.l3.ipv6.saddr.s6_addr32,
-				       sizeof(req.nat_ip_address));
+				       sizeof(req->nat_ip_address));
 				/* L4 source port */
 				if (actions->nat.l4.ports.sport)
+<<<<<<< HEAD
 					req.nat_port =
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					req->nat_port =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						actions->nat.l4.ports.sport;
 			} else {
 				action_flags |=
 					CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_NAT_DEST;
 				/* L3 destination rewrite */
+<<<<<<< HEAD
 <<<<<<< HEAD
 				memcpy(req->nat_ip_address,
 				       actions->nat.l3.ipv6.daddr.s6_addr32,
@@ -736,32 +787,46 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 				   req->nat_port);
 =======
 				memcpy(req.nat_ip_address,
+=======
+				memcpy(req->nat_ip_address,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       actions->nat.l3.ipv6.daddr.s6_addr32,
-				       sizeof(req.nat_ip_address));
+				       sizeof(req->nat_ip_address));
 				/* L4 destination port */
 				if (actions->nat.l4.ports.dport)
-					req.nat_port =
+					req->nat_port =
 						actions->nat.l4.ports.dport;
 			}
 			netdev_dbg(bp->dev,
+<<<<<<< HEAD
 				   "req.nat_ip_address: %pI6 src_xlate: %d req.nat_port: %x\n",
 				   req.nat_ip_address, actions->nat.src_xlate,
 				   req.nat_port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   "req->nat_ip_address: %pI6 src_xlate: %d req->nat_port: %x\n",
+				   req->nat_ip_address, actions->nat.src_xlate,
+				   req->nat_port);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
 	if (actions->flags & BNXT_TC_ACTION_FLAG_TUNNEL_DECAP ||
 	    actions->flags & BNXT_TC_ACTION_FLAG_TUNNEL_ENCAP) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		req->tunnel_handle = tunnel_handle;
 =======
 		req.tunnel_handle = tunnel_handle;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->tunnel_handle = tunnel_handle;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		flow_flags |= CFA_FLOW_ALLOC_REQ_FLAGS_TUNNEL;
 		action_flags |= CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_TUNNEL;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	req->ethertype = flow->l2_key.ether_type;
 	req->ip_proto = flow->l4_key.ip_proto;
@@ -777,6 +842,14 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 		memcpy(req.dmac, flow->l2_key.dmac, ETH_ALEN);
 		memcpy(req.smac, flow->l2_key.smac, ETH_ALEN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->ethertype = flow->l2_key.ether_type;
+	req->ip_proto = flow->l4_key.ip_proto;
+
+	if (flow->flags & BNXT_TC_FLOW_FLAGS_ETH_ADDRS) {
+		memcpy(req->dmac, flow->l2_key.dmac, ETH_ALEN);
+		memcpy(req->smac, flow->l2_key.smac, ETH_ALEN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (flow->l2_key.num_vlans > 0) {
@@ -786,10 +859,14 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 		 * always the case in TC.)
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		req->outer_vlan_tci = flow->l2_key.inner_vlan_tci;
 =======
 		req.outer_vlan_tci = flow->l2_key.inner_vlan_tci;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->outer_vlan_tci = flow->l2_key.inner_vlan_tci;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* If all IP and L4 fields are wildcarded then this is an L2 flow */
@@ -802,6 +879,7 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 				CFA_FLOW_ALLOC_REQ_FLAGS_FLOWTYPE_IPV6;
 
 		if (flow->flags & BNXT_TC_FLOW_FLAGS_IPV4_ADDRS) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			req->ip_dst[0] = l3_key->ipv4.daddr.s_addr;
 			req->ip_dst_mask_len =
@@ -820,29 +898,43 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 =======
 			req.ip_dst[0] = l3_key->ipv4.daddr.s_addr;
 			req.ip_dst_mask_len =
+=======
+			req->ip_dst[0] = l3_key->ipv4.daddr.s_addr;
+			req->ip_dst_mask_len =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				inet_mask_len(l3_mask->ipv4.daddr.s_addr);
-			req.ip_src[0] = l3_key->ipv4.saddr.s_addr;
-			req.ip_src_mask_len =
+			req->ip_src[0] = l3_key->ipv4.saddr.s_addr;
+			req->ip_src_mask_len =
 				inet_mask_len(l3_mask->ipv4.saddr.s_addr);
 		} else if (flow->flags & BNXT_TC_FLOW_FLAGS_IPV6_ADDRS) {
-			memcpy(req.ip_dst, l3_key->ipv6.daddr.s6_addr32,
-			       sizeof(req.ip_dst));
-			req.ip_dst_mask_len =
+			memcpy(req->ip_dst, l3_key->ipv6.daddr.s6_addr32,
+			       sizeof(req->ip_dst));
+			req->ip_dst_mask_len =
 					ipv6_mask_len(&l3_mask->ipv6.daddr);
+<<<<<<< HEAD
 			memcpy(req.ip_src, l3_key->ipv6.saddr.s6_addr32,
 			       sizeof(req.ip_src));
 			req.ip_src_mask_len =
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			memcpy(req->ip_src, l3_key->ipv6.saddr.s6_addr32,
+			       sizeof(req->ip_src));
+			req->ip_src_mask_len =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					ipv6_mask_len(&l3_mask->ipv6.saddr);
 		}
 	}
 
 	if (flow->flags & BNXT_TC_FLOW_FLAGS_PORTS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		req->l4_src_port = flow->l4_key.ports.sport;
 		req->l4_src_port_mask = flow->l4_mask.ports.sport;
 		req->l4_dst_port = flow->l4_key.ports.dport;
 		req->l4_dst_port_mask = flow->l4_mask.ports.dport;
+<<<<<<< HEAD
 	} else if (flow->flags & BNXT_TC_FLOW_FLAGS_ICMP) {
 		/* l4 ports serve as type/code when ip_proto is ICMP */
 		req->l4_src_port = htons(flow->l4_key.icmp.type);
@@ -856,15 +948,21 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 		req.l4_src_port_mask = flow->l4_mask.ports.sport;
 		req.l4_dst_port = flow->l4_key.ports.dport;
 		req.l4_dst_port_mask = flow->l4_mask.ports.dport;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (flow->flags & BNXT_TC_FLOW_FLAGS_ICMP) {
 		/* l4 ports serve as type/code when ip_proto is ICMP */
-		req.l4_src_port = htons(flow->l4_key.icmp.type);
-		req.l4_src_port_mask = htons(flow->l4_mask.icmp.type);
-		req.l4_dst_port = htons(flow->l4_key.icmp.code);
-		req.l4_dst_port_mask = htons(flow->l4_mask.icmp.code);
+		req->l4_src_port = htons(flow->l4_key.icmp.type);
+		req->l4_src_port_mask = htons(flow->l4_mask.icmp.type);
+		req->l4_dst_port = htons(flow->l4_key.icmp.code);
+		req->l4_dst_port_mask = htons(flow->l4_mask.icmp.code);
 	}
+<<<<<<< HEAD
 	req.flags = cpu_to_le16(flow_flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->flags = cpu_to_le16(flow_flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (actions->flags & BNXT_TC_ACTION_FLAG_DROP) {
 		action_flags |= CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_DROP;
@@ -872,30 +970,41 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 		if (actions->flags & BNXT_TC_ACTION_FLAG_FWD) {
 			action_flags |= CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_FWD;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			req->dst_fid = cpu_to_le16(actions->dst_fid);
 =======
 			req.dst_fid = cpu_to_le16(actions->dst_fid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			req->dst_fid = cpu_to_le16(actions->dst_fid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		if (actions->flags & BNXT_TC_ACTION_FLAG_PUSH_VLAN) {
 			action_flags |=
 			    CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_L2_HEADER_REWRITE;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			req->l2_rewrite_vlan_tpid = actions->push_vlan_tpid;
 			req->l2_rewrite_vlan_tci = actions->push_vlan_tci;
 			memcpy(&req->l2_rewrite_dmac, &req->dmac, ETH_ALEN);
 			memcpy(&req->l2_rewrite_smac, &req->smac, ETH_ALEN);
+<<<<<<< HEAD
 =======
 			req.l2_rewrite_vlan_tpid = actions->push_vlan_tpid;
 			req.l2_rewrite_vlan_tci = actions->push_vlan_tci;
 			memcpy(&req.l2_rewrite_dmac, &req.dmac, ETH_ALEN);
 			memcpy(&req.l2_rewrite_smac, &req.smac, ETH_ALEN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		if (actions->flags & BNXT_TC_ACTION_FLAG_POP_VLAN) {
 			action_flags |=
 			    CFA_FLOW_ALLOC_REQ_ACTION_FLAGS_L2_HEADER_REWRITE;
 			/* Rewrite config with tpid = 0 implies vlan pop */
+<<<<<<< HEAD
 <<<<<<< HEAD
 			req->l2_rewrite_vlan_tpid = 0;
 			memcpy(&req->l2_rewrite_dmac, &req->dmac, ETH_ALEN);
@@ -911,15 +1020,23 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 			req.l2_rewrite_vlan_tpid = 0;
 			memcpy(&req.l2_rewrite_dmac, &req.dmac, ETH_ALEN);
 			memcpy(&req.l2_rewrite_smac, &req.smac, ETH_ALEN);
+=======
+			req->l2_rewrite_vlan_tpid = 0;
+			memcpy(&req->l2_rewrite_dmac, &req->dmac, ETH_ALEN);
+			memcpy(&req->l2_rewrite_smac, &req->smac, ETH_ALEN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
-	req.action_flags = cpu_to_le16(action_flags);
+	req->action_flags = cpu_to_le16(action_flags);
 
-	mutex_lock(&bp->hwrm_cmd_lock);
-	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send_silent(bp, req);
 	if (!rc) {
+<<<<<<< HEAD
 		resp = bnxt_get_hwrm_resp_addr(bp, &req);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* CFA_FLOW_ALLOC response interpretation:
 		 *		    fw with	     fw with
 		 *		    16-bit	     64-bit
@@ -936,10 +1053,14 @@ static int bnxt_hwrm_cfa_flow_alloc(struct bnxt *bp, struct bnxt_tc_flow *flow,
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hwrm_req_drop(bp, req);
 =======
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -949,6 +1070,7 @@ static int hwrm_cfa_decap_filter_alloc(struct bnxt *bp,
 				       __le32 ref_decap_handle,
 				       __le32 *decap_filter_handle)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_cfa_decap_filter_alloc_output *resp;
 	struct ip_tunnel_key *tun_key = &flow->tun_key;
@@ -967,32 +1089,47 @@ static int hwrm_cfa_decap_filter_alloc(struct bnxt *bp,
 	req->ip_protocol = CFA_DECAP_FILTER_ALLOC_REQ_IP_PROTOCOL_UDP;
 =======
 	struct hwrm_cfa_decap_filter_alloc_input req = { 0 };
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hwrm_cfa_decap_filter_alloc_output *resp;
 	struct ip_tunnel_key *tun_key = &flow->tun_key;
+	struct hwrm_cfa_decap_filter_alloc_input *req;
 	u32 enables = 0;
 	int rc;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_CFA_DECAP_FILTER_ALLOC, -1, -1);
+	rc = hwrm_req_init(bp, req, HWRM_CFA_DECAP_FILTER_ALLOC);
+	if (rc)
+		goto exit;
 
-	req.flags = cpu_to_le32(CFA_DECAP_FILTER_ALLOC_REQ_FLAGS_OVS_TUNNEL);
+	req->flags = cpu_to_le32(CFA_DECAP_FILTER_ALLOC_REQ_FLAGS_OVS_TUNNEL);
 	enables |= CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_TUNNEL_TYPE |
 		   CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_IP_PROTOCOL;
+<<<<<<< HEAD
 	req.tunnel_type = CFA_DECAP_FILTER_ALLOC_REQ_TUNNEL_TYPE_VXLAN;
 	req.ip_protocol = CFA_DECAP_FILTER_ALLOC_REQ_IP_PROTOCOL_UDP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->tunnel_type = CFA_DECAP_FILTER_ALLOC_REQ_TUNNEL_TYPE_VXLAN;
+	req->ip_protocol = CFA_DECAP_FILTER_ALLOC_REQ_IP_PROTOCOL_UDP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (flow->flags & BNXT_TC_FLOW_FLAGS_TUNL_ID) {
 		enables |= CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_TUNNEL_ID;
 		/* tunnel_id is wrongly defined in hsi defn. as __le32 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		req->tunnel_id = tunnel_id_to_key32(tun_key->tun_id);
 =======
 		req.tunnel_id = tunnel_id_to_key32(tun_key->tun_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->tunnel_id = tunnel_id_to_key32(tun_key->tun_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (flow->flags & BNXT_TC_FLOW_FLAGS_TUNL_ETH_ADDRS) {
 		enables |= CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_DST_MACADDR;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		ether_addr_copy(req->dst_macaddr, l2_info->dmac);
 	}
@@ -1005,44 +1142,62 @@ static int hwrm_cfa_decap_filter_alloc(struct bnxt *bp,
 	req->ethertype = htons(ETH_P_IP);
 =======
 		ether_addr_copy(req.dst_macaddr, l2_info->dmac);
+=======
+		ether_addr_copy(req->dst_macaddr, l2_info->dmac);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (l2_info->num_vlans) {
 		enables |= CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_T_IVLAN_VID;
-		req.t_ivlan_vid = l2_info->inner_vlan_tci;
+		req->t_ivlan_vid = l2_info->inner_vlan_tci;
 	}
 
 	enables |= CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_ETHERTYPE;
+<<<<<<< HEAD
 	req.ethertype = htons(ETH_P_IP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->ethertype = htons(ETH_P_IP);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (flow->flags & BNXT_TC_FLOW_FLAGS_TUNL_IPV4_ADDRS) {
 		enables |= CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_SRC_IPADDR |
 			   CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_DST_IPADDR |
 			   CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_IPADDR_TYPE;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		req->ip_addr_type =
 			CFA_DECAP_FILTER_ALLOC_REQ_IP_ADDR_TYPE_IPV4;
 		req->dst_ipaddr[0] = tun_key->u.ipv4.dst;
 		req->src_ipaddr[0] = tun_key->u.ipv4.src;
+<<<<<<< HEAD
 =======
 		req.ip_addr_type = CFA_DECAP_FILTER_ALLOC_REQ_IP_ADDR_TYPE_IPV4;
 		req.dst_ipaddr[0] = tun_key->u.ipv4.dst;
 		req.src_ipaddr[0] = tun_key->u.ipv4.src;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (flow->flags & BNXT_TC_FLOW_FLAGS_TUNL_PORTS) {
 		enables |= CFA_DECAP_FILTER_ALLOC_REQ_ENABLES_DST_PORT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		req->dst_port = tun_key->tp_dst;
 =======
 		req.dst_port = tun_key->tp_dst;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->dst_port = tun_key->tp_dst;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Eventhough the decap_handle returned by hwrm_cfa_decap_filter_alloc
 	 * is defined as __le32, l2_ctxt_ref_id is defined in HSI as __le16.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	req->l2_ctxt_ref_id = (__force __le16)ref_decap_handle;
 	req->enables = cpu_to_le32(enables);
@@ -1058,17 +1213,25 @@ exit:
 =======
 	req.l2_ctxt_ref_id = (__force __le16)ref_decap_handle;
 	req.enables = cpu_to_le32(enables);
+=======
+	req->l2_ctxt_ref_id = (__force __le16)ref_decap_handle;
+	req->enables = cpu_to_le32(enables);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	mutex_lock(&bp->hwrm_cmd_lock);
-	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
-	if (!rc) {
-		resp = bnxt_get_hwrm_resp_addr(bp, &req);
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send_silent(bp, req);
+	if (!rc)
 		*decap_filter_handle = resp->decap_filter_id;
-	} else {
+	hwrm_req_drop(bp, req);
+exit:
+	if (rc)
 		netdev_info(bp->dev, "%s: Error rc=%d\n", __func__, rc);
+<<<<<<< HEAD
 	}
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rc;
 }
@@ -1076,6 +1239,7 @@ exit:
 static int hwrm_cfa_decap_filter_free(struct bnxt *bp,
 				      __le32 decap_filter_handle)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_cfa_decap_filter_free_input *req;
 	int rc;
@@ -1094,6 +1258,16 @@ static int hwrm_cfa_decap_filter_free(struct bnxt *bp,
 
 	rc = hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_cfa_decap_filter_free_input *req;
+	int rc;
+
+	rc = hwrm_req_init(bp, req, HWRM_CFA_DECAP_FILTER_FREE);
+	if (!rc) {
+		req->decap_filter_id = decap_filter_handle;
+		rc = hwrm_req_send(bp, req);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		netdev_info(bp->dev, "%s: Error rc=%d\n", __func__, rc);
 
@@ -1105,6 +1279,7 @@ static int hwrm_cfa_encap_record_alloc(struct bnxt *bp,
 				       struct bnxt_tc_l2_key *l2_info,
 				       __le32 *encap_record_handle)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_cfa_encap_record_alloc_output *resp;
 	struct hwrm_cfa_encap_record_alloc_input *req;
@@ -1120,18 +1295,24 @@ static int hwrm_cfa_encap_record_alloc(struct bnxt *bp,
 	req->encap_type = CFA_ENCAP_RECORD_ALLOC_REQ_ENCAP_TYPE_VXLAN;
 =======
 	struct hwrm_cfa_encap_record_alloc_input req = { 0 };
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hwrm_cfa_encap_record_alloc_output *resp;
-	struct hwrm_cfa_encap_data_vxlan *encap =
-			(struct hwrm_cfa_encap_data_vxlan *)&req.encap_data;
-	struct hwrm_vxlan_ipv4_hdr *encap_ipv4 =
-				(struct hwrm_vxlan_ipv4_hdr *)encap->l3;
+	struct hwrm_cfa_encap_record_alloc_input *req;
+	struct hwrm_cfa_encap_data_vxlan *encap;
+	struct hwrm_vxlan_ipv4_hdr *encap_ipv4;
 	int rc;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_CFA_ENCAP_RECORD_ALLOC, -1, -1);
+	rc = hwrm_req_init(bp, req, HWRM_CFA_ENCAP_RECORD_ALLOC);
+	if (rc)
+		goto exit;
 
-	req.encap_type = CFA_ENCAP_RECORD_ALLOC_REQ_ENCAP_TYPE_VXLAN;
-
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	encap = (struct hwrm_cfa_encap_data_vxlan *)&req->encap_data;
+	req->encap_type = CFA_ENCAP_RECORD_ALLOC_REQ_ENCAP_TYPE_VXLAN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ether_addr_copy(encap->dst_mac_addr, l2_info->dmac);
 	ether_addr_copy(encap->src_mac_addr, l2_info->smac);
 	if (l2_info->num_vlans) {
@@ -1141,9 +1322,13 @@ static int hwrm_cfa_encap_record_alloc(struct bnxt *bp,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	encap_ipv4 = (struct hwrm_vxlan_ipv4_hdr *)encap->l3;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	encap_ipv4 = (struct hwrm_vxlan_ipv4_hdr *)encap->l3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	encap_ipv4->ver_hlen = 4 << VXLAN_IPV4_HDR_VER_HLEN_VERSION_SFT;
 	encap_ipv4->ver_hlen |= 5 << VXLAN_IPV4_HDR_VER_HLEN_HEADER_LENGTH_SFT;
 	encap_ipv4->ttl = encap_key->ttl;
@@ -1155,6 +1340,7 @@ static int hwrm_cfa_encap_record_alloc(struct bnxt *bp,
 	encap->dst_port = encap_key->tp_dst;
 	encap->vni = tunnel_id_to_key32(encap_key->tun_id);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	resp = hwrm_req_hold(bp, req);
 	rc = hwrm_req_send_silent(bp, req);
@@ -1169,12 +1355,22 @@ exit:
 	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 	if (!rc) {
 		resp = bnxt_get_hwrm_resp_addr(bp, &req);
+=======
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send_silent(bp, req);
+	if (!rc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*encap_record_handle = resp->encap_record_id;
-	} else {
+	hwrm_req_drop(bp, req);
+exit:
+	if (rc)
 		netdev_info(bp->dev, "%s: Error rc=%d\n", __func__, rc);
+<<<<<<< HEAD
 	}
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rc;
 }
@@ -1182,6 +1378,7 @@ exit:
 static int hwrm_cfa_encap_record_free(struct bnxt *bp,
 				      __le32 encap_record_handle)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_cfa_encap_record_free_input *req;
 	int rc;
@@ -1200,6 +1397,16 @@ static int hwrm_cfa_encap_record_free(struct bnxt *bp,
 
 	rc = hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_cfa_encap_record_free_input *req;
+	int rc;
+
+	rc = hwrm_req_init(bp, req, HWRM_CFA_ENCAP_RECORD_FREE);
+	if (!rc) {
+		req->encap_record_id = encap_record_handle;
+		rc = hwrm_req_send(bp, req);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		netdev_info(bp->dev, "%s: Error rc=%d\n", __func__, rc);
 
@@ -1946,6 +2153,7 @@ bnxt_hwrm_cfa_flow_stats_get(struct bnxt *bp, int num_flows,
 			     struct bnxt_tc_stats_batch stats_batch[])
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_cfa_flow_stats_output *resp;
 	struct hwrm_cfa_flow_stats_input *req;
 	__le16 *req_flow_handles;
@@ -1962,14 +2170,28 @@ bnxt_hwrm_cfa_flow_stats_get(struct bnxt *bp, int num_flows,
 	req->num_flows = cpu_to_le16(num_flows);
 =======
 	struct hwrm_cfa_flow_stats_input req = { 0 };
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hwrm_cfa_flow_stats_output *resp;
-	__le16 *req_flow_handles = &req.flow_handle_0;
-	__le32 *req_flow_ids = &req.flow_id_0;
+	struct hwrm_cfa_flow_stats_input *req;
+	__le16 *req_flow_handles;
+	__le32 *req_flow_ids;
 	int rc, i;
 
+<<<<<<< HEAD
 	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_CFA_FLOW_STATS, -1, -1);
 	req.num_flows = cpu_to_le16(num_flows);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = hwrm_req_init(bp, req, HWRM_CFA_FLOW_STATS);
+	if (rc)
+		goto exit;
+
+	req_flow_handles = &req->flow_handle_0;
+	req_flow_ids = &req->flow_id_0;
+
+	req->num_flows = cpu_to_le16(num_flows);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < num_flows; i++) {
 		struct bnxt_tc_flow_node *flow_node = stats_batch[i].flow_node;
 
@@ -1978,20 +2200,28 @@ bnxt_hwrm_cfa_flow_stats_get(struct bnxt *bp, int num_flows,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	resp = hwrm_req_hold(bp, req);
 	rc = hwrm_req_send(bp, req);
 =======
 	mutex_lock(&bp->hwrm_cmd_lock);
 	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rc) {
 		__le64 *resp_packets;
 		__le64 *resp_bytes;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		resp = bnxt_get_hwrm_resp_addr(bp, &req);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		resp_packets = &resp->packet_0;
 		resp_bytes = &resp->byte_0;
 
@@ -2001,6 +2231,7 @@ bnxt_hwrm_cfa_flow_stats_get(struct bnxt *bp, int num_flows,
 			stats_batch[i].hw_stats.bytes =
 						le64_to_cpu(resp_bytes[i]);
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	}
 	hwrm_req_drop(bp, req);
@@ -2013,6 +2244,13 @@ exit:
 	}
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+	hwrm_req_drop(bp, req);
+exit:
+	if (rc)
+		netdev_info(bp->dev, "error rc=%d\n", rc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rc;
 }
@@ -2176,11 +2414,14 @@ bnxt_tc_indr_block_cb_lookup(struct bnxt *bp, struct net_device *netdev)
 	struct bnxt_flower_indr_block_cb_priv *cb_priv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* All callback list access should be protected by RTNL. */
 	ASSERT_RTNL();
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(cb_priv, &bp->tc_indr_block_list, list)
 		if (cb_priv->tunnel_netdev == netdev)
 			return cb_priv;

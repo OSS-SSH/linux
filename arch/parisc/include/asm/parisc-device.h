@@ -35,12 +35,17 @@ struct parisc_driver {
 	char *name; 
 	const struct parisc_device_id *id_table;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*probe)(struct parisc_device *dev); /* New device discovered */
 	void (*remove)(struct parisc_device *dev);
 =======
 	int (*probe) (struct parisc_device *dev); /* New device discovered */
 	int (*remove) (struct parisc_device *dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*probe)(struct parisc_device *dev); /* New device discovered */
+	void (*remove)(struct parisc_device *dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct device_driver drv;
 };
 

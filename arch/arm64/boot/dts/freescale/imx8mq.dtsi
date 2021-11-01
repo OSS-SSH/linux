@@ -194,9 +194,12 @@
 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
 		interrupt-parent = <&gic>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		interrupt-affinity = <&A53_0>, <&A53_1>, <&A53_2>, <&A53_3>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	psci {
@@ -1103,6 +1106,9 @@
 			};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mipi_csi1: csi@30a70000 {
 				compatible = "fsl,imx8mq-mipi-csi2";
 				reg = <0x30a70000 0x1000>;
@@ -1207,8 +1213,11 @@
 				};
 			};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mu: mailbox@30aa0000 {
 				compatible = "fsl,imx8mq-mu", "fsl,imx6sx-mu";
 				reg = <0x30aa0000 0x10000>;

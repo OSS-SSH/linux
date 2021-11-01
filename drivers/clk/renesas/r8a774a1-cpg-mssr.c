@@ -211,10 +211,14 @@ static const struct mssr_mod_clk r8a774a1_mod_clks[] __initconst = {
 	DEF_MOD("i2c6",			 918,	R8A774A1_CLK_S0D6),
 	DEF_MOD("i2c5",			 919,	R8A774A1_CLK_S0D6),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DEF_MOD("iic-pmic",		 926,	R8A774A1_CLK_CP),
 =======
 	DEF_MOD("i2c-dvfs",		 926,	R8A774A1_CLK_CP),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DEF_MOD("iic-pmic",		 926,	R8A774A1_CLK_CP),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEF_MOD("i2c4",			 927,	R8A774A1_CLK_S0D6),
 	DEF_MOD("i2c3",			 928,	R8A774A1_CLK_S0D6),
 	DEF_MOD("i2c2",			 929,	R8A774A1_CLK_S3D2),

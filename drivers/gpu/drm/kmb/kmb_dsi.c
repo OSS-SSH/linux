@@ -1442,9 +1442,12 @@ int kmb_dsi_encoder_init(struct drm_device *dev, struct kmb_dsi *kmb_dsi)
 				DRM_BRIDGE_ATTACH_NO_CONNECTOR);
 	if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		DRM_ERROR("failed to attach bridge to MIPI\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_encoder_cleanup(encoder);
 		return ret;
 	}

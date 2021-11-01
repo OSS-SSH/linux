@@ -145,6 +145,9 @@ netfilter rules on the VRF device can be used to limit access to services
 running in the default VRF context as well.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Using VRF-aware applications (applications which simultaneously create sockets
 outside and inside VRFs) in conjunction with ``net.ipv4.tcp_l3mdev_accept=1``
 is possible but may lead to problems in some situations. With that sysctl
@@ -158,8 +161,11 @@ exclusively be handled by sockets bound to VRFs, as would be the case with
 which listening socket is selected, established sockets will be created in the
 VRF based on the ingress interface, as documented earlier.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 --------------------------------------------------------------------------------
 
 Using iproute2 for VRFs

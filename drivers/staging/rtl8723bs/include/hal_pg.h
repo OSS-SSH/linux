@@ -15,6 +15,7 @@
 #define MAX_TX_COUNT				4
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*  TX power by rate table. */
 /*  RF: = AB = 0/1 */
 /*  CCK = 0 OFDM = 1 HT-MCS 0-7 = 2 */
@@ -25,6 +26,11 @@
 /*  CCK = 0 OFDM = 1/2 HT-MCS 0-15 =3/4/56 VHT =7/8/9/10/11 */
 #define TX_PWR_BY_RATE_NUM_RF			4
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*  TX power by rate table. */
+/*  RF: = AB = 0/1 */
+/*  CCK = 0 OFDM = 1 HT-MCS 0-7 = 2 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define TX_PWR_BY_RATE_NUM_RATE			84
 #define MAX_RF_PATH_NUM				2
 #define	MAX_CHNL_GROUP_24G			6

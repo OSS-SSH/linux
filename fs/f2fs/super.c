@@ -34,9 +34,13 @@
 #include "xattr.h"
 #include "gc.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "iostat.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "iostat.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/f2fs.h>
@@ -61,9 +65,13 @@ const char *f2fs_fault_name[FAULT_MAX] = {
 	[FAULT_DISCARD]		= "discard error",
 	[FAULT_WRITE_IO]	= "write IO error",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[FAULT_SLAB_ALLOC]	= "slab alloc",
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[FAULT_SLAB_ALLOC]	= "slab alloc",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 void f2fs_build_fault_attr(struct f2fs_sb_info *sbi, unsigned int rate,
@@ -164,9 +172,13 @@ enum {
 	Opt_gc_merge,
 	Opt_nogc_merge,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Opt_discard_unit,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	Opt_discard_unit,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	Opt_err,
 };
 
@@ -244,9 +256,13 @@ static match_table_t f2fs_tokens = {
 	{Opt_gc_merge, "gc_merge"},
 	{Opt_nogc_merge, "nogc_merge"},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{Opt_discard_unit, "discard_unit=%s"},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{Opt_discard_unit, "discard_unit=%s"},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{Opt_err, NULL},
 };
 
@@ -674,10 +690,14 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
 			break;
 		case Opt_discard:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!f2fs_hw_support_discard(sbi)) {
 				f2fs_warn(sbi, "device does not support discard");
 				break;
 			}
+<<<<<<< HEAD
 			set_opt(sbi, DISCARD);
 			break;
 		case Opt_nodiscard:
@@ -688,6 +708,12 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
 		case Opt_nodiscard:
 			if (f2fs_sb_has_blkzoned(sbi)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			set_opt(sbi, DISCARD);
+			break;
+		case Opt_nodiscard:
+			if (f2fs_hw_should_discard(sbi)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				f2fs_warn(sbi, "discard is required for zoned block devices");
 				return -EINVAL;
 			}
@@ -1201,6 +1227,9 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
 			clear_opt(sbi, GC_MERGE);
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case Opt_discard_unit:
 			name = match_strdup(&args[0]);
 			if (!name)
@@ -1220,8 +1249,11 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
 			}
 			kfree(name);
 			break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			f2fs_err(sbi, "Unrecognized mount option \"%s\" or missing value",
 				 p);
@@ -1261,6 +1293,9 @@ default_check:
 	}
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (f2fs_sb_has_blkzoned(sbi)) {
 		if (F2FS_OPTION(sbi).discard_unit !=
 						DISCARD_UNIT_SECTION) {
@@ -1269,8 +1304,11 @@ default_check:
 					DISCARD_UNIT_SECTION;
 		}
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_F2FS_FS_COMPRESSION
 	if (f2fs_test_compress_extension(sbi)) {
@@ -1332,11 +1370,16 @@ static struct inode *f2fs_alloc_inode(struct super_block *sb)
 	struct f2fs_inode_info *fi;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fi = f2fs_kmem_cache_alloc(f2fs_inode_cachep,
 				GFP_F2FS_ZERO, false, F2FS_SB(sb));
 =======
 	fi = kmem_cache_alloc(f2fs_inode_cachep, GFP_F2FS_ZERO);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fi = f2fs_kmem_cache_alloc(f2fs_inode_cachep,
+				GFP_F2FS_ZERO, false, F2FS_SB(sb));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!fi)
 		return NULL;
 
@@ -1355,9 +1398,12 @@ static struct inode *f2fs_alloc_inode(struct super_block *sb)
 	init_rwsem(&fi->i_gc_rwsem[READ]);
 	init_rwsem(&fi->i_gc_rwsem[WRITE]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	init_rwsem(&fi->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	init_rwsem(&fi->i_xattr_sem);
 
 	/* Will be used by directory only */
@@ -1611,9 +1657,13 @@ static void f2fs_put_super(struct super_block *sb)
 	fscrypt_free_dummy_policy(&F2FS_OPTION(sbi).dummy_enc_policy);
 	destroy_percpu_info(sbi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	f2fs_destroy_iostat(sbi);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	f2fs_destroy_iostat(sbi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < NR_PAGE_TYPE; i++)
 		kvfree(sbi->write_io[i]);
 #ifdef CONFIG_UNICODE
@@ -1998,6 +2048,9 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
 	if (test_opt(sbi, ATGC))
 		seq_puts(seq, ",atgc");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (F2FS_OPTION(sbi).discard_unit == DISCARD_UNIT_BLOCK)
 		seq_printf(seq, ",discard_unit=%s", "block");
@@ -2006,8 +2059,11 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
 	else if (F2FS_OPTION(sbi).discard_unit == DISCARD_UNIT_SECTION)
 		seq_printf(seq, ",discard_unit=%s", "section");
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2044,6 +2100,7 @@ static void default_options(struct f2fs_sb_info *sbi)
 	sbi->sb->s_flags |= SB_LAZYTIME;
 	set_opt(sbi, FLUSH_MERGE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
 		set_opt(sbi, DISCARD);
 	if (f2fs_sb_has_blkzoned(sbi)) {
@@ -2056,10 +2113,21 @@ static void default_options(struct f2fs_sb_info *sbi)
 =======
 	set_opt(sbi, DISCARD);
 	if (f2fs_sb_has_blkzoned(sbi))
+=======
+	if (f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi))
+		set_opt(sbi, DISCARD);
+	if (f2fs_sb_has_blkzoned(sbi)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		F2FS_OPTION(sbi).fs_mode = FS_MODE_LFS;
-	else
+		F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_SECTION;
+	} else {
 		F2FS_OPTION(sbi).fs_mode = FS_MODE_ADAPTIVE;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		F2FS_OPTION(sbi).discard_unit = DISCARD_UNIT_BLOCK;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_F2FS_FS_XATTR
 	set_opt(sbi, XATTR_USER);
@@ -2135,6 +2203,7 @@ restore_flag:
 static void f2fs_enable_checkpoint(struct f2fs_sb_info *sbi)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int retry = DEFAULT_RETRY_IO_COUNT;
 
 	/* we should flush all the data to keep data consistency */
@@ -2150,6 +2219,19 @@ static void f2fs_enable_checkpoint(struct f2fs_sb_info *sbi)
 	/* we should flush all the data to keep data consistency */
 	sync_inodes_sb(sbi->sb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int retry = DEFAULT_RETRY_IO_COUNT;
+
+	/* we should flush all the data to keep data consistency */
+	do {
+		sync_inodes_sb(sbi->sb);
+		cond_resched();
+		congestion_wait(BLK_RW_ASYNC, DEFAULT_IO_TIMEOUT);
+	} while (get_pages(sbi, F2FS_DIRTY_DATA) && retry--);
+
+	if (unlikely(retry < 0))
+		f2fs_warn(sbi, "checkpoint=enable has some unwritten data.");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	down_write(&sbi->gc_lock);
 	f2fs_dirty_to_prefree(sbi);
@@ -2171,6 +2253,7 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 	bool need_restart_ckpt = false, need_stop_ckpt = false;
 	bool need_restart_flush = false, need_stop_flush = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool need_restart_discard = false, need_stop_discard = false;
 	bool no_extent_cache = !test_opt(sbi, EXTENT_CACHE);
 	bool enable_checkpoint = !test_opt(sbi, DISABLE_CHECKPOINT);
@@ -2181,13 +2264,22 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 	bool block_unit_discard = f2fs_block_unit_discard(sbi);
 	struct discard_cmd_control *dcc;
 =======
+=======
+	bool need_restart_discard = false, need_stop_discard = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool no_extent_cache = !test_opt(sbi, EXTENT_CACHE);
-	bool disable_checkpoint = test_opt(sbi, DISABLE_CHECKPOINT);
+	bool enable_checkpoint = !test_opt(sbi, DISABLE_CHECKPOINT);
 	bool no_io_align = !F2FS_IO_ALIGNED(sbi);
 	bool no_atgc = !test_opt(sbi, ATGC);
+	bool no_discard = !test_opt(sbi, DISCARD);
 	bool no_compress_cache = !test_opt(sbi, COMPRESS_CACHE);
+<<<<<<< HEAD
 	bool checkpoint_changed;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool block_unit_discard = f2fs_block_unit_discard(sbi);
+	struct discard_cmd_control *dcc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_QUOTA
 	int i, j;
 #endif
@@ -2233,10 +2325,13 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 	if (err)
 		goto restore_opts;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	checkpoint_changed =
 			disable_checkpoint != test_opt(sbi, DISABLE_CHECKPOINT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Previous and new state of filesystem is RO,
@@ -2294,14 +2389,20 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (block_unit_discard != f2fs_block_unit_discard(sbi)) {
 		err = -EINVAL;
 		f2fs_warn(sbi, "switch discard_unit option is not allowed");
 		goto restore_opts;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((*flags & SB_RDONLY) && test_opt(sbi, DISABLE_CHECKPOINT)) {
 		err = -EINVAL;
 		f2fs_warn(sbi, "disabling checkpoint not compatible with read-only");
@@ -2368,6 +2469,9 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (no_discard == !!test_opt(sbi, DISCARD)) {
 		if (test_opt(sbi, DISCARD)) {
 			err = f2fs_start_discard_thread(sbi);
@@ -2384,6 +2488,7 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 	}
 
 	if (enable_checkpoint == !!test_opt(sbi, DISABLE_CHECKPOINT)) {
+<<<<<<< HEAD
 		if (test_opt(sbi, DISABLE_CHECKPOINT)) {
 			err = f2fs_disable_checkpoint(sbi);
 			if (err)
@@ -2395,6 +2500,12 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
 			if (err)
 				goto restore_flush;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (test_opt(sbi, DISABLE_CHECKPOINT)) {
+			err = f2fs_disable_checkpoint(sbi);
+			if (err)
+				goto restore_discard;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			f2fs_enable_checkpoint(sbi);
 		}
@@ -2415,6 +2526,9 @@ skip:
 	*flags = (*flags & ~SB_LAZYTIME) | (sb->s_flags & SB_LAZYTIME);
 	return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 restore_discard:
 	if (need_restart_discard) {
 		if (f2fs_start_discard_thread(sbi))
@@ -2422,8 +2536,11 @@ restore_discard:
 	} else if (need_stop_discard) {
 		f2fs_stop_discard_thread(sbi);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 restore_flush:
 	if (need_restart_flush) {
 		if (f2fs_create_flush_cmd_control(sbi))
@@ -2685,6 +2802,9 @@ static int f2fs_enable_quotas(struct super_block *sb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int f2fs_quota_sync_file(struct f2fs_sb_info *sbi, int type)
 {
 	struct quota_info *dqopt = sb_dqopt(sbi->sb);
@@ -2712,8 +2832,11 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int f2fs_quota_sync(struct super_block *sb, int type)
 {
 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
@@ -2722,6 +2845,7 @@ int f2fs_quota_sync(struct super_block *sb, int type)
 	int ret;
 
 	/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	 * do_quotactl
@@ -2741,10 +2865,13 @@ int f2fs_quota_sync(struct super_block *sb, int type)
 
 	/*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Now when everything is written we can discard the pagecache so
 	 * that userspace sees the changes.
 	 */
 	for (cnt = 0; cnt < MAXQUOTAS; cnt++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		if (type != -1 && cnt != type)
@@ -2779,36 +2906,48 @@ int f2fs_quota_sync(struct super_block *sb, int type)
 	}
 =======
 		struct address_space *mapping;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (type != -1 && cnt != type)
 			continue;
-		if (!sb_has_quota_active(sb, cnt))
-			continue;
 
-		mapping = dqopt->files[cnt]->i_mapping;
-
-		ret = filemap_fdatawrite(mapping);
-		if (ret)
-			goto out;
-
-		/* if we are using journalled quota */
-		if (is_journalled_quota(sbi))
-			continue;
-
-		ret = filemap_fdatawait(mapping);
-		if (ret)
-			set_sbi_flag(F2FS_SB(sb), SBI_QUOTA_NEED_REPAIR);
+		if (!sb_has_quota_active(sb, type))
+			return 0;
 
 		inode_lock(dqopt->files[cnt]);
-		truncate_inode_pages(&dqopt->files[cnt]->i_data, 0);
+
+		/*
+		 * do_quotactl
+		 *  f2fs_quota_sync
+		 *  down_read(quota_sem)
+		 *  dquot_writeback_dquots()
+		 *  f2fs_dquot_commit
+		 *			      block_operation
+		 *			      down_read(quota_sem)
+		 */
+		f2fs_lock_op(sbi);
+		down_read(&sbi->quota_sem);
+
+		ret = f2fs_quota_sync_file(sbi, cnt);
+
+		up_read(&sbi->quota_sem);
+		f2fs_unlock_op(sbi);
+
 		inode_unlock(dqopt->files[cnt]);
+
+		if (ret)
+			break;
 	}
+<<<<<<< HEAD
 out:
 	if (ret)
 		set_sbi_flag(F2FS_SB(sb), SBI_QUOTA_NEED_REPAIR);
 	up_read(&sbi->quota_sem);
 	f2fs_unlock_op(sbi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -3442,10 +3581,14 @@ static int sanity_check_raw_super(struct f2fs_sb_info *sbi,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (le32_to_cpu(raw_super->cp_payload) >=
 				(blocks_per_seg - F2FS_CP_PACKS -
 				NR_CURSEG_PERSIST_TYPE)) {
 		f2fs_info(sbi, "Insane cp_payload (%u >= %u)",
+<<<<<<< HEAD
 			  le32_to_cpu(raw_super->cp_payload),
 			  blocks_per_seg - F2FS_CP_PACKS -
 			  NR_CURSEG_PERSIST_TYPE);
@@ -3456,6 +3599,11 @@ static int sanity_check_raw_super(struct f2fs_sb_info *sbi,
 			  le32_to_cpu(raw_super->cp_payload),
 			  blocks_per_seg - F2FS_CP_PACKS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  le32_to_cpu(raw_super->cp_payload),
+			  blocks_per_seg - F2FS_CP_PACKS -
+			  NR_CURSEG_PERSIST_TYPE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFSCORRUPTED;
 	}
 
@@ -3492,9 +3640,13 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
 	block_t user_block_count, valid_user_blocks;
 	block_t avail_node_count, valid_node_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, j;
 
 	total = le32_to_cpu(raw_super->segment_count);
@@ -3626,6 +3778,9 @@ skip_cross:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nat_blocks = nat_segs << log_blocks_per_seg;
 	nat_bits_bytes = nat_blocks / BITS_PER_BYTE;
 	nat_bits_blocks = F2FS_BLK_ALIGN((nat_bits_bytes << 1) + 8);
@@ -3637,8 +3792,11 @@ skip_cross:
 		return -EFSCORRUPTED;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(f2fs_cp_error(sbi))) {
 		f2fs_err(sbi, "A bug case: need to run fsck");
 		return 1;
@@ -3672,9 +3830,13 @@ static void init_sb_info(struct f2fs_sb_info *sbi)
 	sbi->max_victim_search = DEF_MAX_VICTIM_SEARCH;
 	sbi->migration_granularity = sbi->segs_per_sec;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sbi->seq_file_ra_mul = MIN_RA_MUL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sbi->seq_file_ra_mul = MIN_RA_MUL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sbi->dir_level = DEF_DIR_LEVEL;
 	sbi->interval_time[CP_TIME] = DEF_CP_INTERVAL;
@@ -4035,11 +4197,16 @@ static void f2fs_tuning_parameters(struct f2fs_sb_info *sbi)
 	if (sm_i->main_segments <= SMALL_VOLUME_SEGMENTS) {
 		F2FS_OPTION(sbi).alloc_mode = ALLOC_MODE_REUSE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (f2fs_block_unit_discard(sbi))
 			sm_i->dcc_info->discard_granularity = 1;
 =======
 		sm_i->dcc_info->discard_granularity = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (f2fs_block_unit_discard(sbi))
+			sm_i->dcc_info->discard_granularity = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sm_i->ipu_policy = 1 << F2FS_IPU_FORCE;
 	}
 
@@ -4161,6 +4328,7 @@ try_onemore:
 	spin_lock_init(&sbi->stat_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* init iostat info */
 	spin_lock_init(&sbi->iostat_lock);
@@ -4168,6 +4336,8 @@ try_onemore:
 	sbi->iostat_period_ms = DEFAULT_IOSTAT_PERIOD_MS;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < NR_PAGE_TYPE; i++) {
 		int n = (i == META) ? 1 : NR_TEMP_TYPE;
 		int j;
@@ -4199,6 +4369,7 @@ try_onemore:
 	init_sb_info(sbi);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = f2fs_init_iostat(sbi);
 	if (err)
 		goto free_bio_info;
@@ -4208,9 +4379,16 @@ try_onemore:
 		goto free_iostat;
 =======
 	err = init_percpu_info(sbi);
+=======
+	err = f2fs_init_iostat(sbi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto free_bio_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	err = init_percpu_info(sbi);
+	if (err)
+		goto free_iostat;
 
 	if (F2FS_IO_ALIGNED(sbi)) {
 		sbi->write_io_dummy =
@@ -4544,10 +4722,15 @@ free_io_dummy:
 free_percpu:
 	destroy_percpu_info(sbi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 free_iostat:
 	f2fs_destroy_iostat(sbi);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+free_iostat:
+	f2fs_destroy_iostat(sbi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_bio_info:
 	for (i = 0; i < NR_PAGE_TYPE; i++)
 		kvfree(sbi->write_io[i]);
@@ -4691,6 +4874,7 @@ static int __init init_f2fs_fs(void)
 	if (err)
 		goto free_root_stats;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = f2fs_init_iostat_processing();
 	if (err)
 		goto free_post_read;
@@ -4702,6 +4886,14 @@ static int __init init_f2fs_fs(void)
 	if (err)
 		goto free_post_read;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = f2fs_init_iostat_processing();
+	if (err)
+		goto free_post_read;
+	err = f2fs_init_bio_entry_cache();
+	if (err)
+		goto free_iostat;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = f2fs_init_bioset();
 	if (err)
 		goto free_bio_enrty_cache;
@@ -4724,10 +4916,15 @@ free_bioset:
 free_bio_enrty_cache:
 	f2fs_destroy_bio_entry_cache();
 <<<<<<< HEAD
+<<<<<<< HEAD
 free_iostat:
 	f2fs_destroy_iostat_processing();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+free_iostat:
+	f2fs_destroy_iostat_processing();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_post_read:
 	f2fs_destroy_post_read_processing();
 free_root_stats:
@@ -4763,9 +4960,13 @@ static void __exit exit_f2fs_fs(void)
 	f2fs_destroy_bioset();
 	f2fs_destroy_bio_entry_cache();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	f2fs_destroy_iostat_processing();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	f2fs_destroy_iostat_processing();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	f2fs_destroy_post_read_processing();
 	f2fs_destroy_root_stats();
 	unregister_filesystem(&f2fs_fs_type);

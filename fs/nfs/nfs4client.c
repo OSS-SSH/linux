@@ -403,6 +403,9 @@ static int nfs4_init_client_minor_version(struct nfs_client *clp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nfs4_add_trunk(struct nfs_client *clp, struct nfs_client *old)
 {
 	struct sockaddr_storage clp_addr, old_addr;
@@ -430,8 +433,11 @@ static void nfs4_add_trunk(struct nfs_client *clp, struct nfs_client *old)
 			  rpc_clnt_test_and_add_xprt, NULL);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * nfs4_init_client - Initialise an NFS4 client record
  *
@@ -467,10 +473,15 @@ struct nfs_client *nfs4_init_client(struct nfs_client *clp,
 		 */
 		nfs_mark_client_ready(clp, -EPERM);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (old->cl_mvops->session_trunk)
 			nfs4_add_trunk(clp, old);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (old->cl_mvops->session_trunk)
+			nfs4_add_trunk(clp, old);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	clear_bit(NFS_CS_TSM_POSSIBLE, &clp->cl_flags);
 	nfs_put_client(clp);
@@ -901,9 +912,13 @@ static int nfs4_set_client(struct nfs_server *server,
 		int proto, const struct rpc_timeout *timeparms,
 		u32 minorversion, unsigned int nconnect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned int max_connect,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned int max_connect,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct net *net)
 {
 	struct nfs_client_initdata cl_init = {
@@ -923,10 +938,15 @@ static int nfs4_set_client(struct nfs_server *server,
 	if (minorversion == 0)
 		__set_bit(NFS_CS_REUSEPORT, &cl_init.init_flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else
 		cl_init.max_connect = max_connect;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else
+		cl_init.max_connect = max_connect;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (proto == XPRT_TRANSPORT_TCP)
 		cl_init.nconnect = nconnect;
 
@@ -997,6 +1017,7 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
 	cl_init.hostname = buf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mds_clp->cl_nconnect > 1 && ds_proto == XPRT_TRANSPORT_TCP) {
 		cl_init.nconnect = mds_clp->cl_nconnect;
 		cl_init.max_connect = NFS_MAX_TRANSPORTS;
@@ -1005,6 +1026,12 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
 	if (mds_clp->cl_nconnect > 1 && ds_proto == XPRT_TRANSPORT_TCP)
 		cl_init.nconnect = mds_clp->cl_nconnect;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mds_clp->cl_nconnect > 1 && ds_proto == XPRT_TRANSPORT_TCP) {
+		cl_init.nconnect = mds_clp->cl_nconnect;
+		cl_init.max_connect = NFS_MAX_TRANSPORTS;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mds_srv->flags & NFS_MOUNT_NORESVPORT)
 		__set_bit(NFS_CS_NORESVPORT, &cl_init.init_flags);
@@ -1174,9 +1201,13 @@ static int nfs4_init_server(struct nfs_server *server, struct fs_context *fc)
 				ctx->minorversion,
 				ctx->nfs_server.nconnect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				ctx->nfs_server.max_connect,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				ctx->nfs_server.max_connect,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				fc->net_ns);
 	if (error < 0)
 		return error;
@@ -1267,9 +1298,13 @@ struct nfs_server *nfs4_create_referral_server(struct fs_context *fc)
 				parent_client->cl_mvops->minor_version,
 				parent_client->cl_nconnect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				parent_client->cl_max_connect,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				parent_client->cl_max_connect,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				parent_client->cl_net);
 	if (!error)
 		goto init_server;
@@ -1286,9 +1321,13 @@ struct nfs_server *nfs4_create_referral_server(struct fs_context *fc)
 				parent_client->cl_mvops->minor_version,
 				parent_client->cl_nconnect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				parent_client->cl_max_connect,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				parent_client->cl_max_connect,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				parent_client->cl_net);
 	if (error < 0)
 		goto error;
@@ -1387,10 +1426,14 @@ int nfs4_update_server(struct nfs_server *server, const char *hostname,
 				clp->cl_proto, clnt->cl_timeout,
 				clp->cl_minorversion,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				clp->cl_nconnect, clp->cl_max_connect, net);
 =======
 				clp->cl_nconnect, net);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				clp->cl_nconnect, clp->cl_max_connect, net);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clear_bit(NFS_MIG_TSM_POSSIBLE, &server->mig_status);
 	if (error != 0) {
 		nfs_server_insert_lists(server);

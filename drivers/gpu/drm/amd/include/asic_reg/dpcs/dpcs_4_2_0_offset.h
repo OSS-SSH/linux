@@ -11933,6 +11933,9 @@
 #define ixDPCSSYS_CR4_RAWLANEX_DIG_PCS_XF_TX_OVRD_IN_2                                                 0xe0c8
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 //RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6
 #define RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6__RDPCS_PHY_DPALT_DP4__SHIFT                                            0x10
 #define RDPCSPIPE0_RDPCSPIPE_PHY_CNTL6__RDPCS_PHY_DPALT_DISABLE__SHIFT                                        0x11
@@ -11960,7 +11963,10 @@
 #define regRDPCSPIPE3_RDPCSPIPE_PHY_CNTL6_BASE_IDX                                                     2
 #define regRDPCSPIPE4_RDPCSPIPE_PHY_CNTL6                                                              0x2d73
 #define regRDPCSPIPE4_RDPCSPIPE_PHY_CNTL6_BASE_IDX                                                     2
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

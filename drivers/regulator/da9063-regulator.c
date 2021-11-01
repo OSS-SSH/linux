@@ -413,6 +413,9 @@ static int da9063_ldo_set_suspend_mode(struct regulator_dev *rdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static unsigned int da9063_get_overdrive_mask(const struct regulator_desc *desc)
 {
 	switch (desc->id) {
@@ -541,8 +544,11 @@ static int da9063_buck_get_current_limit(struct regulator_dev *rdev)
 	return limit;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct regulator_ops da9063_buck_ops = {
 	.enable			= regulator_enable_regmap,
 	.disable		= regulator_disable_regmap,
@@ -551,12 +557,17 @@ static const struct regulator_ops da9063_buck_ops = {
 	.set_voltage_sel	= regulator_set_voltage_sel_regmap,
 	.list_voltage		= regulator_list_voltage_linear,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.set_current_limit	= da9063_buck_set_current_limit,
 	.get_current_limit	= da9063_buck_get_current_limit,
 =======
 	.set_current_limit	= regulator_set_current_limit_regmap,
 	.get_current_limit	= regulator_get_current_limit_regmap,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.set_current_limit	= da9063_buck_set_current_limit,
+	.get_current_limit	= da9063_buck_get_current_limit,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.set_mode		= da9063_buck_set_mode,
 	.get_mode		= da9063_buck_get_mode,
 	.get_status		= da9063_buck_get_status,

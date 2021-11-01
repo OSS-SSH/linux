@@ -1,18 +1,25 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RVU Admin Function driver
  *
  * Copyright (C) 2018 Marvell.
  *
 =======
 /* Marvell OcteonTx2 RVU Admin Function driver
+=======
+/* Marvell RVU Admin Function driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2018 Marvell International Ltd.
+ * Copyright (C) 2018 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/module.h>
@@ -427,12 +434,18 @@ exit:
 	rsp->stack_pg_bytes = cfg & 0xFF;
 	rsp->qints = (cfg >> 28) & 0xFFF;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!is_rvu_otx2(rvu)) {
 		cfg = rvu_read64(rvu, block->addr, NPA_AF_BATCH_CTL);
 		rsp->cache_lines = (cfg >> 1) & 0x3F;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -493,6 +506,9 @@ static int npa_aq_init(struct rvu *rvu, struct rvu_block *block)
 	rvu_write64(rvu, block->addr, NPA_AF_NDC_CFG, cfg);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* For CN10K NPA BATCH DMA set 35 cache lines */
 	if (!is_rvu_otx2(rvu)) {
 		cfg = rvu_read64(rvu, block->addr, NPA_AF_BATCH_CTL);
@@ -500,8 +516,11 @@ static int npa_aq_init(struct rvu *rvu, struct rvu_block *block)
 		cfg |= BIT_ULL(6) | BIT_ULL(2) | BIT_ULL(1);
 		rvu_write64(rvu, block->addr, NPA_AF_BATCH_CTL, cfg);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Result structure can be followed by Aura/Pool context at
 	 * RES + 128bytes and a write mask at RES + 256 bytes, depending on
 	 * operation type. Alloc sufficient result memory for all operations.

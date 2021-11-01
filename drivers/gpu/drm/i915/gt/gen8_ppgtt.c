@@ -304,6 +304,7 @@ static void __gen8_ppgtt_alloc(struct i915_address_space * const vm,
 			i915_gem_object_make_unshrinkable(pt->base);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			fill_px(pt, vm->scratch[lvl]->encode);
 =======
 			if (lvl ||
@@ -311,6 +312,9 @@ static void __gen8_ppgtt_alloc(struct i915_address_space * const vm,
 			    intel_vgpu_active(vm->i915))
 				fill_px(pt, vm->scratch[lvl]->encode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			fill_px(pt, vm->scratch[lvl]->encode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			spin_lock(&pd->lock);
 			if (likely(!pd->entry[idx])) {
@@ -366,6 +370,9 @@ static void gen8_ppgtt_alloc(struct i915_address_space *vm,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __gen8_ppgtt_foreach(struct i915_address_space *vm,
 				 struct i915_page_directory *pd,
 				 u64 *start, u64 end, int lvl,
@@ -414,8 +421,11 @@ static void gen8_ppgtt_foreach(struct i915_address_space *vm,
 			     fn, data);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static __always_inline u64
 gen8_ppgtt_insert_pte(struct i915_ppgtt *ppgtt,
 		      struct i915_page_directory *pdp,
@@ -611,6 +621,9 @@ static void gen8_ppgtt_insert(struct i915_address_space *vm,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void gen8_ppgtt_insert_entry(struct i915_address_space *vm,
 				    dma_addr_t addr,
 				    u64 offset,
@@ -629,8 +642,11 @@ static void gen8_ppgtt_insert_entry(struct i915_address_space *vm,
 	clflush_cache_range(&vaddr[gen8_pd_index(idx, 0)], sizeof(*vaddr));
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int gen8_init_scratch(struct i915_address_space *vm)
 {
 	u32 pte_flags;
@@ -811,6 +827,7 @@ struct i915_ppgtt *gen8_ppgtt_create(struct intel_gt *gt)
 	ppgtt->vm.bind_async_flags = I915_VMA_LOCAL_BIND;
 	ppgtt->vm.insert_entries = gen8_ppgtt_insert;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ppgtt->vm.insert_page = gen8_ppgtt_insert_entry;
 	ppgtt->vm.allocate_va_range = gen8_ppgtt_alloc;
 	ppgtt->vm.clear_range = gen8_ppgtt_clear;
@@ -819,6 +836,12 @@ struct i915_ppgtt *gen8_ppgtt_create(struct intel_gt *gt)
 	ppgtt->vm.allocate_va_range = gen8_ppgtt_alloc;
 	ppgtt->vm.clear_range = gen8_ppgtt_clear;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ppgtt->vm.insert_page = gen8_ppgtt_insert_entry;
+	ppgtt->vm.allocate_va_range = gen8_ppgtt_alloc;
+	ppgtt->vm.clear_range = gen8_ppgtt_clear;
+	ppgtt->vm.foreach = gen8_ppgtt_foreach;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ppgtt->vm.pte_encode = gen8_pte_encode;
 

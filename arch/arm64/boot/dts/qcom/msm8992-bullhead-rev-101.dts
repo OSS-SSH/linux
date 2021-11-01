@@ -2,9 +2,13 @@
 /* Copyright (c) 2015, LGE Inc. All rights reserved.
  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 /dts-v1/;
@@ -14,11 +18,17 @@
 #include "pmi8994.dtsi"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* cont_splash_mem has different memory mapping */
 /delete-node/ &cont_splash_mem;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* cont_splash_mem has different memory mapping */
+/delete-node/ &cont_splash_mem;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 / {
 	model = "LG Nexus 5X";
 	compatible = "lg,bullhead", "qcom,msm8992";
@@ -28,11 +38,17 @@
 	qcom,pmic-id = <0x10009 0x1000A 0x0 0x0>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Bullhead firmware doesn't support PSCI */
 	/delete-node/ psci;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Bullhead firmware doesn't support PSCI */
+	/delete-node/ psci;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	aliases {
 		serial0 = &blsp1_uart2;
 	};
@@ -55,13 +71,19 @@
 			pmsg-size = <0x20000>;
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		cont_splash_mem: memory@3400000 {
 			reg = <0 0x03400000 0 0x1200000>;
 			no-map;
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 

@@ -641,6 +641,7 @@ static int sparx5_start(struct sparx5 *sparx5)
 	err = sparx5_register_notifier_blocks(sparx5);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Start Frame DMA with fallback to register based INJ/XTR */
 	err = -ENXIO;
 	if (sparx5->fdma_irq >= 0) {
@@ -662,6 +663,25 @@ static int sparx5_start(struct sparx5 *sparx5)
 	/* Start register based INJ/XTR */
 	err = -ENXIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Start Frame DMA with fallback to register based INJ/XTR */
+	err = -ENXIO;
+	if (sparx5->fdma_irq >= 0) {
+		if (GCB_CHIP_ID_REV_ID_GET(sparx5->chip_id) > 0)
+			err = devm_request_threaded_irq(sparx5->dev,
+							sparx5->fdma_irq,
+							NULL,
+							sparx5_fdma_handler,
+							IRQF_ONESHOT,
+							"sparx5-fdma", sparx5);
+		if (!err)
+			err = sparx5_fdma_start(sparx5);
+		if (err)
+			sparx5->fdma_irq = -ENXIO;
+	} else {
+		sparx5->fdma_irq = -ENXIO;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err && sparx5->xtr_irq >= 0) {
 		err = devm_request_irq(sparx5->dev, sparx5->xtr_irq,
 				       sparx5_xtr_handler, IRQF_SHARED,
@@ -787,9 +807,13 @@ static int mchp_sparx5_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sparx5->fdma_irq = platform_get_irq_byname(sparx5->pdev, "fdma");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sparx5->xtr_irq = platform_get_irq_byname(sparx5->pdev, "xtr");
 
 	/* Read chip ID to check CPU interface */
@@ -849,13 +873,19 @@ static int mchp_sparx5_remove(struct platform_device *pdev)
 		sparx5->xtr_irq = -ENXIO;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sparx5->fdma_irq) {
 		disable_irq(sparx5->fdma_irq);
 		sparx5->fdma_irq = -ENXIO;
 	}
 	sparx5_fdma_stop(sparx5);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sparx5_cleanup_ports(sparx5);
 	/* Unregister netdevs */
 	sparx5_unregister_notifier_blocks(sparx5);

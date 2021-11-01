@@ -63,6 +63,7 @@ static int get_power_status(struct hotplug_slot *hotplug_slot, u8 *value)
 					     hotplug_slot);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*value = zpci_is_device_configured(zdev) ? 1 : 0;
 =======
 	switch (zdev->state) {
@@ -74,6 +75,9 @@ static int get_power_status(struct hotplug_slot *hotplug_slot, u8 *value)
 		break;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*value = zpci_is_device_configured(zdev) ? 1 : 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

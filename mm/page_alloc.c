@@ -595,10 +595,13 @@ static int page_outside_zone_boundaries(struct zone *zone, struct page *page)
 static int page_is_consistent(struct zone *zone, struct page *page)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!pfn_valid_within(page_to_pfn(page)))
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (zone != page_zone(page))
 		return 0;
 
@@ -844,12 +847,16 @@ void init_mem_debugging_and_hardening(void)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((_init_on_alloc_enabled_early || _init_on_free_enabled_early) &&
 	    page_poisoning_requested) {
 		pr_info("mem auto-init: CONFIG_PAGE_POISONING is on, "
 			"will take precedence over init_on_alloc and init_on_free\n");
 		_init_on_alloc_enabled_early = false;
 		_init_on_free_enabled_early = false;
+<<<<<<< HEAD
 	}
 
 	if (_init_on_alloc_enabled_early)
@@ -875,8 +882,20 @@ void init_mem_debugging_and_hardening(void)
 				"will take precedence over init_on_free\n");
 		else
 			static_branch_enable(&init_on_free);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	if (_init_on_alloc_enabled_early)
+		static_branch_enable(&init_on_alloc);
+	else
+		static_branch_disable(&init_on_alloc);
+
+	if (_init_on_free_enabled_early)
+		static_branch_enable(&init_on_free);
+	else
+		static_branch_disable(&init_on_free);
 
 #ifdef CONFIG_DEBUG_PAGEALLOC
 	if (!debug_pagealloc_enabled())
@@ -1046,22 +1065,29 @@ buddy_merge_likely(unsigned long pfn, unsigned long buddy_pfn,
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!pfn_valid_within(buddy_pfn))
 		return false;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	combined_pfn = buddy_pfn & pfn;
 	higher_page = page + (combined_pfn - pfn);
 	buddy_pfn = __find_buddy_pfn(combined_pfn, order + 1);
 	higher_buddy = higher_page + (buddy_pfn - combined_pfn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return page_is_buddy(higher_page, higher_buddy, order + 1);
 =======
 	return pfn_valid_within(buddy_pfn) &&
 	       page_is_buddy(higher_page, higher_buddy, order + 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return page_is_buddy(higher_page, higher_buddy, order + 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1123,10 +1149,13 @@ continue_merging:
 		buddy = page + (buddy_pfn - pfn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (!pfn_valid_within(buddy_pfn))
 			goto done_merging;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!page_is_buddy(page, buddy, order))
 			goto done_merging;
 		/*
@@ -1785,12 +1814,16 @@ void __init memblock_free_pages(struct page *page, unsigned long pfn,
  * Check that the whole (or subset of) a pageblock given by the interval of
  * [start_pfn, end_pfn) is valid and within the same zone, before scanning it
 <<<<<<< HEAD
+<<<<<<< HEAD
  * with the migration of free compaction scanner.
 =======
  * with the migration of free compaction scanner. The scanners then need to
  * use only pfn_valid_within() check for arches that allow holes within
  * pageblocks.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * with the migration of free compaction scanner.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Return struct page pointer of start_pfn, or NULL if checks were not passed.
  *
@@ -1907,10 +1940,13 @@ static inline void __init pgdat_init_report_one_done(void)
 static inline bool __init deferred_pfn_valid(unsigned long pfn)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!pfn_valid_within(pfn))
 		return false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(pfn & (pageblock_nr_pages - 1)) && !pfn_valid(pfn))
 		return false;
 	return true;
@@ -2558,6 +2594,7 @@ static int move_freepages(struct zone *zone,
 
 	for (pfn = start_pfn; pfn <= end_pfn;) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (!pfn_valid_within(pfn)) {
 			pfn++;
@@ -2565,6 +2602,8 @@ static int move_freepages(struct zone *zone,
 		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		page = pfn_to_page(pfn);
 		if (!PageBuddy(page)) {
 			/*
@@ -3486,6 +3525,7 @@ void free_unref_page_list(struct list_head *list)
 	list_for_each_entry_safe(page, next, list, lru) {
 		pfn = page_to_pfn(page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!free_unref_page_prepare(page, pfn, 0)) {
 			list_del(&page->lru);
 			continue;
@@ -3494,6 +3534,12 @@ void free_unref_page_list(struct list_head *list)
 		if (!free_unref_page_prepare(page, pfn, 0))
 			list_del(&page->lru);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!free_unref_page_prepare(page, pfn, 0)) {
+			list_del(&page->lru);
+			continue;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Free isolated pages directly to the allocator, see
@@ -3501,10 +3547,14 @@ void free_unref_page_list(struct list_head *list)
 		 */
 		migratetype = get_pcppage_migratetype(page);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (unlikely(is_migrate_isolate(migratetype))) {
 			list_del(&page->lru);
 			free_one_page(page_zone(page), page, pfn, 0, migratetype, FPI_NONE);
 			continue;
+<<<<<<< HEAD
 =======
 		if (unlikely(migratetype >= MIGRATE_PCPTYPES)) {
 			if (unlikely(is_migrate_isolate(migratetype))) {
@@ -3520,6 +3570,8 @@ void free_unref_page_list(struct list_head *list)
 			 */
 			set_pcppage_migratetype(page, MIGRATE_MOVABLE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		set_page_private(page, pfn);
@@ -3530,11 +3582,15 @@ void free_unref_page_list(struct list_head *list)
 		pfn = page_private(page);
 		set_page_private(page, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Non-isolated types over MIGRATE_PCPTYPES get added
 		 * to the MIGRATE_MOVABLE pcp list.
 		 */
+<<<<<<< HEAD
 		migratetype = get_pcppage_migratetype(page);
 		if (unlikely(migratetype >= MIGRATE_PCPTYPES))
 			migratetype = MIGRATE_MOVABLE;
@@ -3542,6 +3598,12 @@ void free_unref_page_list(struct list_head *list)
 =======
 		migratetype = get_pcppage_migratetype(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		migratetype = get_pcppage_migratetype(page);
+		if (unlikely(migratetype >= MIGRATE_PCPTYPES))
+			migratetype = MIGRATE_MOVABLE;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		trace_mm_page_free_batched(page);
 		free_unref_page_commit(page, pfn, migratetype, 0);
 
@@ -3890,10 +3952,14 @@ static inline bool __should_fail_alloc_page(gfp_t gfp_mask, unsigned int order)
 #endif /* CONFIG_FAIL_PAGE_ALLOC */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 noinline bool should_fail_alloc_page(gfp_t gfp_mask, unsigned int order)
 =======
 static noinline bool should_fail_alloc_page(gfp_t gfp_mask, unsigned int order)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+noinline bool should_fail_alloc_page(gfp_t gfp_mask, unsigned int order)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __should_fail_alloc_page(gfp_mask, order);
 }
@@ -4283,10 +4349,14 @@ static void warn_alloc_show_mem(gfp_t gfp_mask, nodemask_t *nodemask)
 		    (current->flags & (PF_MEMALLOC | PF_EXITING)))
 			filter &= ~SHOW_MEM_FILTER_NODES;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!in_task() || !(gfp_mask & __GFP_DIRECT_RECLAIM))
 =======
 	if (in_interrupt() || !(gfp_mask & __GFP_DIRECT_RECLAIM))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!in_task() || !(gfp_mask & __GFP_DIRECT_RECLAIM))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		filter &= ~SHOW_MEM_FILTER_NODES;
 
 	show_mem(filter, nodemask);
@@ -4625,6 +4695,7 @@ static bool __need_reclaim(gfp_t gfp_mask)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __fs_reclaim_acquire(unsigned long ip)
 {
 	lock_acquire_exclusive(&__fs_reclaim_map, 0, 0, NULL, ip);
@@ -4635,14 +4706,21 @@ void __fs_reclaim_release(unsigned long ip)
 	lock_release(&__fs_reclaim_map, ip);
 =======
 void __fs_reclaim_acquire(void)
+=======
+void __fs_reclaim_acquire(unsigned long ip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	lock_map_acquire(&__fs_reclaim_map);
+	lock_acquire_exclusive(&__fs_reclaim_map, 0, 0, NULL, ip);
 }
 
-void __fs_reclaim_release(void)
+void __fs_reclaim_release(unsigned long ip)
 {
+<<<<<<< HEAD
 	lock_map_release(&__fs_reclaim_map);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lock_release(&__fs_reclaim_map, ip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void fs_reclaim_acquire(gfp_t gfp_mask)
@@ -4652,10 +4730,14 @@ void fs_reclaim_acquire(gfp_t gfp_mask)
 	if (__need_reclaim(gfp_mask)) {
 		if (gfp_mask & __GFP_FS)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			__fs_reclaim_acquire(_RET_IP_);
 =======
 			__fs_reclaim_acquire();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			__fs_reclaim_acquire(_RET_IP_);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_MMU_NOTIFIER
 		lock_map_acquire(&__mmu_notifier_invalidate_range_start_map);
@@ -4673,10 +4755,14 @@ void fs_reclaim_release(gfp_t gfp_mask)
 	if (__need_reclaim(gfp_mask)) {
 		if (gfp_mask & __GFP_FS)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			__fs_reclaim_release(_RET_IP_);
 =======
 			__fs_reclaim_release();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			__fs_reclaim_release(_RET_IP_);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 EXPORT_SYMBOL_GPL(fs_reclaim_release);
@@ -4792,10 +4878,14 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
 		 */
 		alloc_flags &= ~ALLOC_CPUSET;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (unlikely(rt_task(current)) && in_task())
 =======
 	} else if (unlikely(rt_task(current)) && !in_interrupt())
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (unlikely(rt_task(current)) && in_task())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		alloc_flags |= ALLOC_HARDER;
 
 	alloc_flags = gfp_to_alloc_flags_cma(gfp_mask, alloc_flags);
@@ -5256,10 +5346,14 @@ static inline bool prepare_alloc_pages(gfp_t gfp_mask, unsigned int order,
 		 * to the current task context. It means that any node ok.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (in_task() && !ac->nodemask)
 =======
 		if (!in_interrupt() && !ac->nodemask)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (in_task() && !ac->nodemask)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ac->nodemask = &cpuset_current_mems_allowed;
 		else
 			*alloc_flags |= ALLOC_CPUSET;
@@ -5326,11 +5420,14 @@ unsigned long __alloc_pages_bulk(gfp_t gfp, int preferred_nid,
 	int nr_populated = 0, nr_account = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (unlikely(nr_pages <= 0))
 		return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Skip populated array elements to determine if any pages need
 	 * to be allocated before disabling IRQs.
@@ -5339,10 +5436,14 @@ unsigned long __alloc_pages_bulk(gfp_t gfp, int preferred_nid,
 		nr_populated++;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* No pages requested? */
 	if (unlikely(nr_pages <= 0))
 		goto out;
 
+<<<<<<< HEAD
 	/* Already populated array? */
 	if (unlikely(page_array && nr_pages - nr_populated == 0))
 		goto out;
@@ -5351,12 +5452,20 @@ unsigned long __alloc_pages_bulk(gfp_t gfp, int preferred_nid,
 	if (unlikely(page_array && nr_pages - nr_populated == 0))
 		return nr_populated;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Already populated array? */
+	if (unlikely(page_array && nr_pages - nr_populated == 0))
+		goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Use the single page allocator for one page. */
 	if (nr_pages - nr_populated == 1)
 		goto failed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PAGE_OWNER
 	/*
 	 * PAGE_OWNER may recurse into the allocator to allocate space to
@@ -5369,17 +5478,24 @@ unsigned long __alloc_pages_bulk(gfp_t gfp, int preferred_nid,
 		goto failed;
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* May set ALLOC_NOFRAGMENT, fragmentation will return 1 page. */
 	gfp &= gfp_allowed_mask;
 	alloc_gfp = gfp;
 	if (!prepare_alloc_pages(gfp, 0, preferred_nid, nodemask, &ac, &alloc_gfp, &alloc_flags))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out;
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gfp = alloc_gfp;
 
 	/* Find an allowed local zone that meets the low watermark. */
@@ -5448,9 +5564,13 @@ unsigned long __alloc_pages_bulk(gfp_t gfp, int preferred_nid,
 	zone_statistics(ac.preferred_zoneref->zone, zone, nr_account);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 out:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return nr_populated;
 
 failed_irq:
@@ -5467,10 +5587,14 @@ failed:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	goto out;
 =======
 	return nr_populated;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(__alloc_pages_bulk);
 
@@ -6032,9 +6156,13 @@ void show_free_areas(unsigned int filter, nodemask_t *nodemask)
 		" slab_reclaimable:%lu slab_unreclaimable:%lu\n"
 		" mapped:%lu shmem:%lu pagetables:%lu bounce:%lu\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		" kernel_misc_reclaimable:%lu\n"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		" kernel_misc_reclaimable:%lu\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		" free:%lu free_pcp:%lu free_cma:%lu\n",
 		global_node_page_state(NR_ACTIVE_ANON),
 		global_node_page_state(NR_INACTIVE_ANON),
@@ -6052,9 +6180,13 @@ void show_free_areas(unsigned int filter, nodemask_t *nodemask)
 		global_node_page_state(NR_PAGETABLE),
 		global_zone_page_state(NR_BOUNCE),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		global_node_page_state(NR_KERNEL_MISC_RECLAIMABLE),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		global_node_page_state(NR_KERNEL_MISC_RECLAIMABLE),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		global_zone_page_state(NR_FREE_PAGES),
 		free_pcp,
 		global_zone_page_state(NR_FREE_CMA_PAGES));
@@ -6292,10 +6424,14 @@ static int node_load[MAX_NUMNODES];
  * Return: node id of the found node or %NUMA_NO_NODE if no node is found.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int find_next_best_node(int node, nodemask_t *used_node_mask)
 =======
 static int find_next_best_node(int node, nodemask_t *used_node_mask)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int find_next_best_node(int node, nodemask_t *used_node_mask)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int n, val;
 	int min_val = INT_MAX;
@@ -6781,9 +6917,12 @@ static void __meminit zone_init_free_lists(struct zone *zone)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if !defined(CONFIG_FLATMEM)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Only struct pages that correspond to ranges defined by memblock.memory
  * are zeroed and initialized by going through __init_single_page() during
@@ -6829,6 +6968,7 @@ static void __init init_unavailable_range(unsigned long spfn,
 			node, zone_names[zone], pgcnt);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #else
 static inline void init_unavailable_range(unsigned long spfn,
@@ -6838,6 +6978,8 @@ static inline void init_unavailable_range(unsigned long spfn,
 }
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void __init memmap_init_zone_range(struct zone *zone,
 					  unsigned long start_pfn,
@@ -6868,10 +7010,14 @@ static void __init memmap_init(void)
 	unsigned long start_pfn, end_pfn;
 	unsigned long hole_pfn = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, j, zone_id = 0, nid;
 =======
 	int i, j, zone_id, nid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, j, zone_id = 0, nid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for_each_mem_pfn_range(i, MAX_NUMNODES, &start_pfn, &end_pfn, &nid) {
 		struct pglist_data *node = NODE_DATA(nid);
@@ -6905,6 +7051,9 @@ static void __init memmap_init(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __init *memmap_alloc(phys_addr_t size, phys_addr_t align,
 			  phys_addr_t min_addr, int nid, bool exact_nid)
 {
@@ -6925,8 +7074,11 @@ void __init *memmap_alloc(phys_addr_t size, phys_addr_t align,
 	return ptr;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int zone_batchsize(struct zone *zone)
 {
 #ifdef CONFIG_MMU
@@ -7431,11 +7583,17 @@ static void __init calculate_node_totalpages(struct pglist_data *pgdat,
 		zone->spanned_pages = size;
 		zone->present_pages = real_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(CONFIG_MEMORY_HOTPLUG)
 		zone->present_early_pages = real_size;
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_MEMORY_HOTPLUG)
+		zone->present_early_pages = real_size;
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		totalpages += size;
 		realtotalpages += real_size;
@@ -7681,10 +7839,14 @@ static void __init free_area_init_core(struct pglist_data *pgdat)
 
 #ifdef CONFIG_FLATMEM
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __init alloc_node_mem_map(struct pglist_data *pgdat)
 =======
 static void __ref alloc_node_mem_map(struct pglist_data *pgdat)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __init alloc_node_mem_map(struct pglist_data *pgdat)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long __maybe_unused start = 0;
 	unsigned long __maybe_unused offset = 0;
@@ -7709,12 +7871,17 @@ static void __ref alloc_node_mem_map(struct pglist_data *pgdat)
 		end = ALIGN(end, MAX_ORDER_NR_PAGES);
 		size =  (end - start) * sizeof(struct page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		map = memmap_alloc(size, SMP_CACHE_BYTES, MEMBLOCK_LOW_LIMIT,
 				   pgdat->node_id, false);
 =======
 		map = memblock_alloc_node(size, SMP_CACHE_BYTES,
 					  pgdat->node_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		map = memmap_alloc(size, SMP_CACHE_BYTES, MEMBLOCK_LOW_LIMIT,
+				   pgdat->node_id, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!map)
 			panic("Failed to allocate %ld bytes for node %d memory map\n",
 			      size, pgdat->node_id);
@@ -7736,10 +7903,14 @@ static void __ref alloc_node_mem_map(struct pglist_data *pgdat)
 }
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void alloc_node_mem_map(struct pglist_data *pgdat) { }
 =======
 static void __ref alloc_node_mem_map(struct pglist_data *pgdat) { }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void alloc_node_mem_map(struct pglist_data *pgdat) { }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_FLATMEM */
 
 #ifdef CONFIG_DEFERRED_STRUCT_PAGE_INIT
@@ -9007,11 +9178,14 @@ struct page *has_unmovable_pages(struct zone *zone, struct page *page,
 
 	for (; iter < pageblock_nr_pages - offset; iter++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (!pfn_valid_within(pfn + iter))
 			continue;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		page = pfn_to_page(pfn + iter);
 
 		/*
@@ -9172,10 +9346,14 @@ static int __alloc_contig_migrate_range(struct compact_control *cc,
 
 		ret = migrate_pages(&cc->migratepages, alloc_migration_target,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			NULL, (unsigned long)&mtc, cc->mode, MR_CONTIG_RANGE, NULL);
 =======
 				NULL, (unsigned long)&mtc, cc->mode, MR_CONTIG_RANGE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			NULL, (unsigned long)&mtc, cc->mode, MR_CONTIG_RANGE, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * On -ENOMEM, migrate_pages() bails out right away. It is pointless

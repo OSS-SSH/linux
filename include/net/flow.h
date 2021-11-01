@@ -195,10 +195,14 @@ static inline struct flowi *flowi4_to_flowi(struct flowi4 *fl4)
 static inline struct flowi_common *flowi4_to_flowi_common(struct flowi4 *fl4)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return &(fl4->__fl_common);
 =======
 	return &(flowi4_to_flowi(fl4)->u.__fl_common);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return &(fl4->__fl_common);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline struct flowi *flowi6_to_flowi(struct flowi6 *fl6)
@@ -209,10 +213,14 @@ static inline struct flowi *flowi6_to_flowi(struct flowi6 *fl6)
 static inline struct flowi_common *flowi6_to_flowi_common(struct flowi6 *fl6)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return &(fl6->__fl_common);
 =======
 	return &(flowi6_to_flowi(fl6)->u.__fl_common);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return &(fl6->__fl_common);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline struct flowi *flowidn_to_flowi(struct flowidn *fldn)

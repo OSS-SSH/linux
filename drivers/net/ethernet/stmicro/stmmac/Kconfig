@@ -3,18 +3,25 @@ config STMMAC_ETH
 	tristate "STMicroelectronics Multi-Gigabit Ethernet driver"
 	depends on HAS_IOMEM && HAS_DMA
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select MII
 	select PCS_XPCS
 	select PAGE_POOL
 	select PHYLINK
 	select CRC32
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select RESET_CONTROLLER
 	help
 	  This is the driver for the Ethernet IPs built around a

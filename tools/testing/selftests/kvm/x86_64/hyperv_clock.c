@@ -216,10 +216,14 @@ int main(void)
 
 	tsc_page_gva = vm_vaddr_alloc_page(vm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(addr_gva2hva(vm, tsc_page_gva), 0x0, getpagesize());
 =======
 	memset(addr_gpa2hva(vm, tsc_page_gva), 0x0, getpagesize());
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memset(addr_gva2hva(vm, tsc_page_gva), 0x0, getpagesize());
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	TEST_ASSERT((addr_gva2gpa(vm, tsc_page_gva) & (getpagesize() - 1)) == 0,
 		"TSC page has to be page aligned\n");
 	vcpu_args_set(vm, VCPU_ID, 2, tsc_page_gva, addr_gva2gpa(vm, tsc_page_gva));

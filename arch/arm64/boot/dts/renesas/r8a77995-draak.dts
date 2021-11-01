@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Device Tree Source for the Draak board with R-Car D3
 =======
  * Device Tree Source for the Draak board
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Device Tree Source for the Draak board with R-Car D3
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2016-2018 Renesas Electronics Corp.
  * Copyright (C) 2017 Glider bvba
@@ -14,9 +18,13 @@
 #include "r8a77995.dtsi"
 #include <dt-bindings/gpio/gpio.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <dt-bindings/input/input.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <dt-bindings/input/input.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 / {
 	model = "Renesas Draak board based on r8a77995";
@@ -28,6 +36,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	audio_clkout: audio-clkout {
 		/*
 		 * This is same as <&rcar_sound 0>
@@ -38,8 +49,11 @@
 		clock-frequency = <12288000>;
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	backlight: backlight {
 		compatible = "pwm-backlight";
 		pwms = <&pwm1 0 50000>;
@@ -89,6 +103,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	keys {
 		compatible = "gpio-keys";
 
@@ -125,8 +142,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lvds-decoder {
 		compatible = "thine,thc63lvd1024";
 		vcc-supply = <&reg_3p3v>;
@@ -185,6 +205,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sound_card: sound {
 		compatible = "audio-graph-card";
 
@@ -193,8 +216,11 @@
 		>;
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vga {
 		compatible = "vga-connector";
 
@@ -233,6 +259,9 @@
 		clock-frequency = <74250000>;
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	x19_clk: x19 {
 		compatible = "fixed-clock";
@@ -252,8 +281,11 @@
 	 */
 
 	clock-frequency = <22579200>;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &avb {
@@ -330,6 +362,9 @@
 	status = "okay";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ak4613: codec@10 {
 		compatible = "asahi-kasei,ak4613";
 		#sound-dai-cells = <0>;
@@ -352,8 +387,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	composite-in@20 {
 		compatible = "adi,adv7180cp";
 		reg = <0x20>;
@@ -396,12 +434,15 @@
 		interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		/* Depends on LVDS */
 		max-clock = <135000000>;
 		min-vrefresh = <50>;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adi,input-depth = <8>;
 		adi,input-colorspace = "rgb";
 		adi,input-clock = "1x";
@@ -464,6 +505,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cs2000: clk-multiplier@4f {
 		#clock-cells = <0>;
 		compatible = "cirrus,cs2000-cp";
@@ -475,8 +519,11 @@
 		assigned-clock-rates = <24576000>; /* 1/1 divide */
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	eeprom@50 {
 		compatible = "rohm,br24t01", "atmel,24c01";
 		reg = <0x50>;
@@ -558,13 +605,19 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	keys_pins: keys {
 		pins = "GP_4_12", "GP_4_13", "GP_4_14", "GP_4_15";
 		bias-pull-up;
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pwm0_pins: pwm0 {
 		groups = "pwm0_c";
 		function = "pwm0";
@@ -593,6 +646,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sound_pins: sound {
 		groups = "ssi34_ctrl", "ssi3_data", "ssi4_data_a";
 		function = "ssi";
@@ -604,8 +660,11 @@
 		function = "audio_clk";
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb0_pins: usb0 {
 		groups = "usb0";
 		function = "usb0";
@@ -632,6 +691,9 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &rcar_sound {
 	pinctrl-0 = <&sound_pins>, <&sound_clk_pins>;
 	pinctrl-names = "default";
@@ -668,8 +730,11 @@
 	};
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &rwdt {
 	timeout-sec = <60>;
 	status = "okay";
@@ -699,12 +764,18 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &ssi4 {
 	shared-pin;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &usb2_phy0 {
 	pinctrl-0 = <&usb0_pins>;
 	pinctrl-names = "default";

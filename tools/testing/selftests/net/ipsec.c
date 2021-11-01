@@ -485,9 +485,13 @@ enum desc_type {
 	EXPIRE_STATE,
 	EXPIRE_POLICY,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SPDINFO_ATTRS,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SPDINFO_ATTRS,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 const char *desc_name[] = {
 	"create tunnel",
@@ -495,12 +499,18 @@ const char *desc_name[] = {
 	"monitor acquire",
 	"expire state",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"expire policy",
 	"spdinfo attributes",
 	""
 =======
 	"expire policy"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	"expire policy",
+	"spdinfo attributes",
+	""
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 struct xfrm_desc {
 	enum desc_type	type;
@@ -1604,6 +1614,9 @@ out_close:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xfrm_spdinfo_set_thresh(int xfrm_sock, uint32_t *seq,
 		unsigned thresh4_l, unsigned thresh4_r,
 		unsigned thresh6_l, unsigned thresh6_r,
@@ -1753,8 +1766,11 @@ static int xfrm_spdinfo_attrs(int xfrm_sock, uint32_t *seq)
 	return KSFT_PASS;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int child_serv(int xfrm_sock, uint32_t *seq,
 		unsigned int nr, int cmd_fd, void *buf, struct xfrm_desc *desc)
 {
@@ -1880,11 +1896,17 @@ static int child_f(unsigned int nr, int test_desc_fd, int cmd_fd, void *buf)
 			ret = xfrm_expire_policy(xfrm_sock, &seq, nr, &desc);
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case SPDINFO_ATTRS:
 			ret = xfrm_spdinfo_attrs(xfrm_sock, &seq);
 			break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case SPDINFO_ATTRS:
+			ret = xfrm_spdinfo_attrs(xfrm_sock, &seq);
+			break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			printk("Unknown desc type %d", desc.type);
 			exit(KSFT_FAIL);
@@ -2163,6 +2185,7 @@ static int write_proto_plan(int fd, int proto)
  *
  * Check the affected by the UABI difference structures.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Also, check translation for xfrm_set_spdinfo: it has it's own attributes
  * which needs to be correctly copied, but not translated.
  */
@@ -2171,6 +2194,12 @@ const unsigned int compat_plan = 5;
  */
 const unsigned int compat_plan = 4;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Also, check translation for xfrm_set_spdinfo: it has it's own attributes
+ * which needs to be correctly copied, but not translated.
+ */
+const unsigned int compat_plan = 5;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int write_compat_struct_tests(int test_desc_fd)
 {
 	struct xfrm_desc desc = {};
@@ -2195,12 +2224,18 @@ static int write_compat_struct_tests(int test_desc_fd)
 		return -1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	desc.type = SPDINFO_ATTRS;
 	if (__write_desc(test_desc_fd, &desc))
 		return -1;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

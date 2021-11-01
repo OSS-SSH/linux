@@ -127,10 +127,15 @@ struct am65_cpsw_common {
 	struct napi_struct	napi_rx;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool			rx_irq_disabled;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool			rx_irq_disabled;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32			nuss_ver;
 	u32			cpsw_ver;
 	unsigned long		bus_freq;

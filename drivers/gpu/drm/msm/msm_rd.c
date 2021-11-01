@@ -326,6 +326,7 @@ static void snapshot_buf(struct msm_rd_state *rd,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	msm_gem_lock(&obj->base);
 	buf = msm_gem_get_vaddr_active(&obj->base);
 	if (IS_ERR(buf))
@@ -335,6 +336,12 @@ static void snapshot_buf(struct msm_rd_state *rd,
 	if (IS_ERR(buf))
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_gem_lock(&obj->base);
+	buf = msm_gem_get_vaddr_active(&obj->base);
+	if (IS_ERR(buf))
+		goto out_unlock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	buf += offset;
 
@@ -342,11 +349,17 @@ static void snapshot_buf(struct msm_rd_state *rd,
 
 	msm_gem_put_vaddr_locked(&obj->base);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 out_unlock:
 	msm_gem_unlock(&obj->base);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+out_unlock:
+	msm_gem_unlock(&obj->base);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* called under struct_mutex */

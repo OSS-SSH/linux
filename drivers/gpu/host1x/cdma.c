@@ -313,12 +313,15 @@ static void update_cdma_locked(struct host1x_cdma *cdma)
 	struct host1x_job *job, *n;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* If CDMA is stopped, queue is cleared and we can return */
 	if (!cdma->running)
 		return;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Walk the sync queue, reading the sync point registers as necessary,
 	 * to consume as many sync queue entries as possible without blocking
@@ -328,11 +331,16 @@ static void update_cdma_locked(struct host1x_cdma *cdma)
 
 		/* Check whether this syncpt has completed, and bail if not */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!host1x_syncpt_is_expired(sp, job->syncpt_end) &&
 		    !job->cancelled) {
 =======
 		if (!host1x_syncpt_is_expired(sp, job->syncpt_end)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!host1x_syncpt_is_expired(sp, job->syncpt_end) &&
+		    !job->cancelled) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* Start timer on next pending syncpt */
 			if (job->timeout)
 				cdma_start_timer_locked(cdma, job);
@@ -422,6 +430,7 @@ syncpt_incr:
 		restart_addr = cdma->last_pos;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!job)
 		goto resume;
 
@@ -431,6 +440,13 @@ syncpt_incr:
 	/* do CPU increments for the remaining syncpts */
 	if (job) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!job)
+		goto resume;
+
+	/* do CPU increments for the remaining syncpts */
+	if (job->syncpt_recovery) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_dbg(dev, "%s: perform CPU incr on pending buffers\n",
 			__func__);
 
@@ -450,6 +466,9 @@ syncpt_incr:
 		dev_dbg(dev, "%s: finished sync_queue modification\n",
 			__func__);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		struct host1x_job *failed_job = job;
 
@@ -485,6 +504,7 @@ syncpt_incr:
 		wmb();
 
 		update_cdma_locked(cdma);
+<<<<<<< HEAD
 	}
 
 resume:
@@ -492,6 +512,11 @@ resume:
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+
+resume:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* roll back DMAGET and start up channel again */
 	host1x_hw_cdma_resume(host1x, cdma, restart_addr);
 }
@@ -548,6 +573,9 @@ int host1x_cdma_begin(struct host1x_cdma *cdma, struct host1x_job *job)
 	mutex_lock(&cdma->lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Check if syncpoint was locked due to previous job timeout.
 	 * This needs to be done within the cdma lock to avoid a race
@@ -558,8 +586,11 @@ int host1x_cdma_begin(struct host1x_cdma *cdma, struct host1x_job *job)
 		return -EPERM;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (job->timeout) {
 		/* init state on first submit with timeout value */
 		if (!cdma->timeout.initialized) {

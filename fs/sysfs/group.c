@@ -447,10 +447,14 @@ int compat_only_sysfs_link_entry_to_kobj(struct kobject *kobj,
 		return -ENOENT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	entry = kernfs_find_and_get(target, target_name);
 =======
 	entry = kernfs_find_and_get(target_kobj->sd, target_name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	entry = kernfs_find_and_get(target, target_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!entry) {
 		kernfs_put(target);
 		return -ENOENT;

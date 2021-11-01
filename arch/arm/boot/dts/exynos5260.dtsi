@@ -35,6 +35,9 @@
 		#size-cells = <0>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpu-map {
 			cluster0 {
 				core0 {
@@ -62,9 +65,12 @@
 		};
 
 		cpu0: cpu@0 {
+<<<<<<< HEAD
 =======
 		cpu@0 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a15";
 			reg = <0x0>;
@@ -72,10 +78,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpu1: cpu@1 {
 =======
 		cpu@1 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpu1: cpu@1 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a15";
 			reg = <0x1>;
@@ -83,10 +93,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpu2: cpu@100 {
 =======
 		cpu@100 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpu2: cpu@100 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a7";
 			reg = <0x100>;
@@ -94,10 +108,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpu3: cpu@101 {
 =======
 		cpu@101 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpu3: cpu@101 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a7";
 			reg = <0x101>;
@@ -105,10 +123,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpu4: cpu@102 {
 =======
 		cpu@102 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpu4: cpu@102 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a7";
 			reg = <0x102>;
@@ -116,10 +138,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpu5: cpu@103 {
 =======
 		cpu@103 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpu5: cpu@103 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			device_type = "cpu";
 			compatible = "arm,cortex-a7";
 			reg = <0x103>;

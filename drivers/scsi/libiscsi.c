@@ -2282,6 +2282,7 @@ int iscsi_eh_abort(struct scsi_cmnd *sc)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	conn = session->leadconn;
 	iscsi_get_conn(conn->cls_conn);
@@ -2289,6 +2290,8 @@ int iscsi_eh_abort(struct scsi_cmnd *sc)
 	age = session->age;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock(&session->back_lock);
 	task = (struct iscsi_task *)sc->SCp.ptr;
 	if (!task || !task->sc) {
@@ -2296,6 +2299,7 @@ int iscsi_eh_abort(struct scsi_cmnd *sc)
 		ISCSI_DBG_EH(session, "sc completed while abort in progress\n");
 
 		spin_unlock(&session->back_lock);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		spin_unlock_bh(&session->frwd_lock);
 		mutex_unlock(&session->eh_mutex);
@@ -2311,6 +2315,18 @@ int iscsi_eh_abort(struct scsi_cmnd *sc)
 		goto success;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spin_unlock_bh(&session->frwd_lock);
+		mutex_unlock(&session->eh_mutex);
+		return SUCCESS;
+	}
+
+	conn = session->leadconn;
+	iscsi_get_conn(conn->cls_conn);
+	conn->eh_abort_cnt++;
+	age = session->age;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ISCSI_DBG_EH(session, "aborting [sc %p itt 0x%x]\n", sc, task->itt);
 	__iscsi_get_task(task);
 	spin_unlock(&session->back_lock);

@@ -537,6 +537,9 @@ static void proc_put_char(void **buf, size_t *size, char c)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int do_proc_dobool_conv(bool *negp, unsigned long *lvalp,
 				int *valp,
 				int write, void *data)
@@ -552,8 +555,11 @@ static int do_proc_dobool_conv(bool *negp, unsigned long *lvalp,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int do_proc_dointvec_conv(bool *negp, unsigned long *lvalp,
 				 int *valp,
 				 int write, void *data)
@@ -818,6 +824,9 @@ static int do_proc_douintvec(struct ctl_table *table, int write,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * proc_dobool - read/write a bool
  * @table: the sysctl table
  * @write: %TRUE if this is a write to the sysctl file
@@ -838,8 +847,11 @@ int proc_dobool(struct ctl_table *table, int write, void *buffer,
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * proc_dointvec - read a vector of integers
  * @table: the sysctl table
  * @write: %TRUE if this is a write to the sysctl file
@@ -1672,14 +1684,20 @@ int proc_dostring(struct ctl_table *table, int write,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int proc_dobool(struct ctl_table *table, int write,
 		void *buffer, size_t *lenp, loff_t *ppos)
 {
 	return -ENOSYS;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int proc_dointvec(struct ctl_table *table, int write,
 		  void *buffer, size_t *lenp, loff_t *ppos)
 {
@@ -2922,10 +2940,14 @@ static struct ctl_table vm_table[] = {
 		.maxlen		= sizeof(sysctl_compaction_proactiveness),
 		.mode		= 0644,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.proc_handler	= compaction_proactiveness_sysctl_handler,
 =======
 		.proc_handler	= proc_dointvec_minmax,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.proc_handler	= compaction_proactiveness_sysctl_handler,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.extra1		= SYSCTL_ZERO,
 		.extra2		= &one_hundred,
 	},
@@ -3480,9 +3502,13 @@ int __init sysctl_init(void)
  * exception granted :-)
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL(proc_dobool);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL(proc_dobool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXPORT_SYMBOL(proc_dointvec);
 EXPORT_SYMBOL(proc_douintvec);
 EXPORT_SYMBOL(proc_dointvec_jiffies);

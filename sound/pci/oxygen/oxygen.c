@@ -855,9 +855,12 @@ static struct pci_driver oxygen_driver = {
 	.id_table = oxygen_ids,
 	.probe = generic_oxygen_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = oxygen_pci_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 	.driver = {
 		.pm = &oxygen_pci_pm,

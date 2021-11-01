@@ -164,6 +164,9 @@ void disk_flush_events(struct gendisk *disk, unsigned int mask)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Tell userland about new events.  Only the events listed in @disk->events are
  * reported, and only if DISK_EVENT_FLAG_UEVENT is set.  Otherwise, events are
@@ -182,12 +185,16 @@ static void disk_event_uevent(struct gendisk *disk, unsigned int events)
 		kobject_uevent_env(&disk_to_dev(disk)->kobj, KOBJ_CHANGE, envp);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void disk_check_events(struct disk_events *ev,
 			      unsigned int *clearing_ptr)
 {
 	struct gendisk *disk = ev->disk;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned int clearing = *clearing_ptr;
 	unsigned int events;
@@ -199,6 +206,11 @@ static void disk_check_events(struct disk_events *ev,
 	unsigned long intv;
 	int nr_events = 0, i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int clearing = *clearing_ptr;
+	unsigned int events;
+	unsigned long intv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* check events */
 	events = disk->fops->check_events(disk, clearing);
@@ -217,6 +229,7 @@ static void disk_check_events(struct disk_events *ev,
 
 	spin_unlock_irq(&ev->lock);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (events & DISK_EVENT_MEDIA_CHANGE)
 		inc_diskseq(disk);
@@ -238,6 +251,13 @@ static void disk_check_events(struct disk_events *ev,
 	if (nr_events)
 		kobject_uevent_env(&disk_to_dev(disk)->kobj, KOBJ_CHANGE, envp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (events & DISK_EVENT_MEDIA_CHANGE)
+		inc_diskseq(disk);
+
+	if (disk->event_flags & DISK_EVENT_FLAG_UEVENT)
+		disk_event_uevent(disk, events);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -317,6 +337,9 @@ bool bdev_check_media_change(struct block_device *bdev)
 EXPORT_SYMBOL(bdev_check_media_change);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * disk_force_media_change - force a media change event
  * @disk: the disk which will raise the event
@@ -343,8 +366,11 @@ bool disk_force_media_change(struct gendisk *disk, unsigned int events)
 }
 EXPORT_SYMBOL_GPL(disk_force_media_change);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Separate this part out so that a different pointer for clearing_ptr can be
  * passed in for disk_clear_events.
@@ -475,28 +501,40 @@ module_param_cb(events_dfl_poll_msecs, &disk_events_dfl_poll_msecs_param_ops,
  * disk_{alloc|add|del|release}_events - initialize and destroy disk_events.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int disk_alloc_events(struct gendisk *disk)
 =======
 void disk_alloc_events(struct gendisk *disk)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int disk_alloc_events(struct gendisk *disk)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct disk_events *ev;
 
 	if (!disk->fops->check_events || !disk->events)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return 0;
 =======
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ev = kzalloc(sizeof(*ev), GFP_KERNEL);
 	if (!ev) {
 		pr_warn("%s: failed to initialize events\n", disk->disk_name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -ENOMEM;
 =======
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	INIT_LIST_HEAD(&ev->node);
@@ -509,9 +547,13 @@ void disk_alloc_events(struct gendisk *disk)
 
 	disk->ev = ev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void disk_add_events(struct gendisk *disk)

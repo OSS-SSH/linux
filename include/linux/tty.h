@@ -7,6 +7,7 @@
 #include <linux/termios.h>
 #include <linux/workqueue.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/tty_buffer.h>
 #include <linux/tty_driver.h>
 #include <linux/tty_ldisc.h>
@@ -14,12 +15,19 @@
 #include <linux/mutex.h>
 #include <linux/tty_flags.h>
 =======
+=======
+#include <linux/tty_buffer.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/tty_driver.h>
 #include <linux/tty_ldisc.h>
+#include <linux/tty_port.h>
 #include <linux/mutex.h>
 #include <linux/tty_flags.h>
+<<<<<<< HEAD
 #include <linux/seq_file.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <uapi/linux/tty.h>
 #include <linux/rwsem.h>
 #include <linux/llist.h>
@@ -40,6 +48,7 @@
  */
 #define __DISABLED_CHAR '\0'
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 struct tty_buffer {
@@ -91,6 +100,8 @@ struct tty_bufhead {
 #define TTY_OVERRUN	4
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define INTR_CHAR(tty) ((tty)->termios.c_cc[VINTR])
 #define QUIT_CHAR(tty) ((tty)->termios.c_cc[VQUIT])
 #define ERASE_CHAR(tty) ((tty)->termios.c_cc[VERASE])
@@ -177,6 +188,7 @@ struct tty_bufhead {
 struct device;
 struct signal_struct;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 /*
@@ -258,6 +270,8 @@ struct tty_port {
 					   kernel */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct tty_operations;
 
 /**
@@ -462,6 +476,7 @@ extern void tty_wait_until_sent(struct tty_struct *tty, long timeout);
 extern void stop_tty(struct tty_struct *tty);
 extern void start_tty(struct tty_struct *tty);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern int tty_register_driver(struct tty_driver *driver);
 extern void tty_unregister_driver(struct tty_driver *driver);
@@ -473,6 +488,8 @@ extern struct device *tty_register_device_attr(struct tty_driver *driver,
 				const struct attribute_group **attr_grp);
 extern void tty_unregister_device(struct tty_driver *driver, unsigned index);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void tty_write_message(struct tty_struct *tty, char *msg);
 extern int tty_send_xchar(struct tty_struct *tty, char ch);
 extern int tty_put_char(struct tty_struct *tty, unsigned char c);
@@ -521,6 +538,7 @@ extern int tty_termios_hw_change(const struct ktermios *a, const struct ktermios
 extern int tty_set_termios(struct tty_struct *tty, struct ktermios *kt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void tty_wakeup(struct tty_struct *tty);
 =======
 extern struct tty_ldisc *tty_ldisc_ref(struct tty_struct *);
@@ -531,6 +549,9 @@ extern const struct seq_operations tty_ldiscs_seq_ops;
 extern void tty_wakeup(struct tty_struct *tty);
 extern void tty_ldisc_flush(struct tty_struct *tty);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void tty_wakeup(struct tty_struct *tty);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int tty_mode_ioctl(struct tty_struct *tty, struct file *file,
 			unsigned int cmd, unsigned long arg);
@@ -544,6 +565,7 @@ extern int tty_standard_install(struct tty_driver *driver,
 
 extern struct mutex tty_mutex;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 extern void tty_port_init(struct tty_port *port);
@@ -669,6 +691,8 @@ extern int tty_ldisc_receive_buf(struct tty_ldisc *ld, const unsigned char *p,
 				 const char *f, int count);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* n_tty.c */
 extern void n_tty_inherit_ops(struct tty_ldisc_ops *ops);
 #ifdef CONFIG_TTY
@@ -717,6 +741,7 @@ extern void tty_unlock_slave(struct tty_struct *tty);
 extern void tty_set_lock_subclass(struct tty_struct *tty);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PROC_FS
 extern void proc_tty_register_driver(struct tty_driver *);
@@ -727,4 +752,6 @@ static inline void proc_tty_unregister_driver(struct tty_driver *d) {}
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

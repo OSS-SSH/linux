@@ -123,10 +123,14 @@ static int mlx5e_xsk_enable_locked(struct mlx5e_priv *priv,
 	 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = mlx5e_rx_res_xsk_activate(priv->rx_res, &priv->channels, ix);
 =======
 	err = mlx5e_xsk_redirect_rqt_to_channel(priv, priv->channels.c[ix]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = mlx5e_rx_res_xsk_activate(priv->rx_res, &priv->channels, ix);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err))
 		goto err_deactivate;
 
@@ -174,10 +178,14 @@ static int mlx5e_xsk_disable_locked(struct mlx5e_priv *priv, u16 ix)
 
 	c = priv->channels.c[ix];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlx5e_rx_res_xsk_deactivate(priv->rx_res, ix);
 =======
 	mlx5e_xsk_redirect_rqt_to_drop(priv, ix);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5e_rx_res_xsk_deactivate(priv->rx_res, ix);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlx5e_deactivate_xsk(c);
 	mlx5e_close_xsk(c);
 

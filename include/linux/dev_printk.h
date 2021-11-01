@@ -39,12 +39,17 @@ int dev_printk_emit(int level, const struct device *dev, const char *fmt, ...);
 
 __printf(3, 4) __cold
 <<<<<<< HEAD
+<<<<<<< HEAD
 void _dev_printk(const char *level, const struct device *dev,
 		 const char *fmt, ...);
 =======
 void dev_printk(const char *level, const struct device *dev,
 		const char *fmt, ...);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void _dev_printk(const char *level, const struct device *dev,
+		 const char *fmt, ...);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 __printf(2, 3) __cold
 void _dev_emerg(const struct device *dev, const char *fmt, ...);
 __printf(2, 3) __cold
@@ -75,10 +80,14 @@ static inline void __dev_printk(const char *level, const struct device *dev,
 {}
 static inline __printf(3, 4)
 <<<<<<< HEAD
+<<<<<<< HEAD
 void _dev_printk(const char *level, const struct device *dev,
 =======
 void dev_printk(const char *level, const struct device *dev,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void _dev_printk(const char *level, const struct device *dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 const char *fmt, ...)
 {}
 
@@ -108,6 +117,9 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Need to take variadic arguments even though we don't use them, as dev_fmt()
  * may only just have been expanded and may result in multiple arguments.
  */
@@ -140,13 +152,19 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 	})
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * #defines for all the dev_<level> macros to prefix with whatever
  * possible use of #define dev_fmt(fmt) ...
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define dev_emerg(dev, fmt, ...) \
 	dev_printk_index_wrap(_dev_emerg, KERN_EMERG, dev, dev_fmt(fmt), ##__VA_ARGS__)
 #define dev_crit(dev, fmt, ...) \
@@ -161,6 +179,7 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 	dev_printk_index_wrap(_dev_notice, KERN_NOTICE, dev, dev_fmt(fmt), ##__VA_ARGS__)
 #define dev_info(dev, fmt, ...) \
 	dev_printk_index_wrap(_dev_info, KERN_INFO, dev, dev_fmt(fmt), ##__VA_ARGS__)
+<<<<<<< HEAD
 =======
 #define dev_emerg(dev, fmt, ...)					\
 	_dev_emerg(dev, dev_fmt(fmt), ##__VA_ARGS__)
@@ -177,6 +196,8 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 #define dev_info(dev, fmt, ...)						\
 	_dev_info(dev, dev_fmt(fmt), ##__VA_ARGS__)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if defined(CONFIG_DYNAMIC_DEBUG) || \
 	(defined(CONFIG_DYNAMIC_DEBUG_CORE) && defined(DYNAMIC_DEBUG_MODULE))

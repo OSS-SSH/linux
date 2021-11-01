@@ -5,9 +5,12 @@
  *
  ******************************************************************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define _RTL8723BS_RECV_C_
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <drv_types.h>
 #include <rtw_debug.h>
@@ -134,10 +137,14 @@ static void update_recvframe_phyinfo(union recv_frame *precvframe,
 	/* rtl8723b_query_rx_phy_status(precvframe, pphy_status); */
 	/* spin_lock_bh(&p_hal_data->odm_stainfo_lock); */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	odm_phy_status_query(&p_hal_data->odmpriv, p_phy_info,
 =======
 	ODM_PhyStatusQuery(&p_hal_data->odmpriv, p_phy_info,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	odm_phy_status_query(&p_hal_data->odmpriv, p_phy_info,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   (u8 *)pphy_status, &(pkt_info));
 	if (psta)
 		psta->rssi = pattrib->phy_info.RecvSignalPower;

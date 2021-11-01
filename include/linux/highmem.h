@@ -131,6 +131,7 @@ static inline void flush_anon_page(struct vm_area_struct *vma, struct page *page
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef ARCH_IMPLEMENTS_FLUSH_KERNEL_VMAP_RANGE
 =======
 #ifndef ARCH_HAS_FLUSH_KERNEL_DCACHE_PAGE
@@ -138,6 +139,9 @@ static inline void flush_kernel_dcache_page(struct page *page)
 {
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifndef ARCH_IMPLEMENTS_FLUSH_KERNEL_VMAP_RANGE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void flush_kernel_vmap_range(void *vaddr, int size)
 {
 }
@@ -323,14 +327,19 @@ static inline void memcpy_to_page(struct page *page, size_t offset,
 	VM_BUG_ON(offset + len > PAGE_SIZE);
 	memcpy(to + offset, from, len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flush_dcache_page(page);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flush_dcache_page(page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kunmap_local(to);
 }
 
 static inline void memzero_page(struct page *page, size_t offset, size_t len)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	char *addr = kmap_local_page(page);
 	memset(addr + offset, 0, len);
@@ -341,6 +350,12 @@ static inline void memzero_page(struct page *page, size_t offset, size_t len)
 	memset(addr + offset, 0, len);
 	kunmap_atomic(addr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char *addr = kmap_local_page(page);
+	memset(addr + offset, 0, len);
+	flush_dcache_page(page);
+	kunmap_local(addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #endif /* _LINUX_HIGHMEM_H */

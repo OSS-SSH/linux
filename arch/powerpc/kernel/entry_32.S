@@ -162,6 +162,7 @@ ret_from_kernel_thread:
 	REST_NVGPRS(r1)
 	bl	schedule_tail
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mtctr	r14
 	mr	r3,r15
 	PPC440EP_ERR42
@@ -172,6 +173,12 @@ ret_from_kernel_thread:
 	PPC440EP_ERR42
 	blrl
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mtctr	r14
+	mr	r3,r15
+	PPC440EP_ERR42
+	bctrl
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	li	r3,0
 	b	ret_from_syscall
 

@@ -24,10 +24,14 @@
 	stmfd	sp!, {r0-r3, ip, lr}
 	ldr	r0, =1f
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bl	_printk
 =======
 	bl	printk
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bl	_printk
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ldmfd	sp!, {r0-r3, ip, lr}
 
 	.pushsection .rodata, "a"
@@ -43,10 +47,14 @@
 	mov	r1, \arg
 	ldr	r0, =1f
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bl	_printk
 =======
 	bl	printk
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bl	_printk
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ldmfd	sp!, {r0-r3, ip, lr}
 
 	.pushsection .rodata, "a"
@@ -64,10 +72,14 @@
 	mov	r1, \arg1
 	ldr	r0, =1f
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bl	_printk
 =======
 	bl	printk
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bl	_printk
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ldmfd	sp!, {r0-r3, ip, lr}
 
 	.pushsection .rodata, "a"

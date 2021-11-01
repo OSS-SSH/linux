@@ -830,10 +830,14 @@ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
 	      DIV_ROUND_UP(dsi_cfg.hsa, nlanes);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
 =======
 	if (!(output->dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tmp -= DIV_ROUND_UP(DSI_EOT_PKT_SIZE, nlanes);
 
 	tx_byte_period = DIV_ROUND_DOWN_ULL((u64)NSEC_PER_SEC * 8,
@@ -907,10 +911,14 @@ static void cdns_dsi_bridge_enable(struct drm_bridge *bridge)
 	tmp &= ~(IF_VID_SELECT_MASK | HOST_EOT_GEN | IF_VID_MODE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
 =======
 	if (!(output->dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(output->dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tmp |= HOST_EOT_GEN;
 
 	if (output->dev->mode_flags & MIPI_DSI_MODE_VIDEO)

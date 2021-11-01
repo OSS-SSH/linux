@@ -33,6 +33,7 @@
 #define	ODM_TXAGC_B_MCS0_MCS3			0x83c
 #define	ODM_TXAGC_B_MCS4_MCS7			0x848
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define	ODM_ANALOG_REGISTER			0x85c
 #define	ODM_RF_INTERFACE_OUTPUT			0x860
 =======
@@ -41,6 +42,10 @@
 #define	ODM_RF_INTERFACE_OUTPUT			0x860
 #define	ODM_TXAGC_B_MCS12_MCS15			0x868
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define	ODM_ANALOG_REGISTER			0x85c
+#define	ODM_RF_INTERFACE_OUTPUT			0x860
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define	ODM_TXAGC_B_11_A_2_11			0x86c
 #define	ODM_AD_DA_LSB_MASK			0x874
 #define	ODM_ENABLE_3_WIRE			0x88c
@@ -77,10 +82,13 @@
 #define	ODM_TXAGC_A_MCS0_MCS3			0xe10
 #define	ODM_TXAGC_A_MCS4_MCS7			0xe14
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define	ODM_TXAGC_A_MCS8_MCS11			0xe18
 #define	ODM_TXAGC_A_MCS12_MCS15			0xe1c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* RF REG */
 #define	ODM_GAIN_SETTING			0x00

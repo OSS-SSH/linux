@@ -332,10 +332,14 @@ static int __dma_map_cont(struct device *dev, struct scatterlist *start,
 
 	if (iommu_start == -1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -ENOMEM;
 =======
 		return -1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for_each_sg(start, s, nelems, i) {
 		unsigned long pages, addr;
@@ -385,20 +389,28 @@ static int gart_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 {
 	struct scatterlist *s, *ps, *start_sg, *sgmap;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int need = 0, nextneed, i, out, start, ret;
 =======
 	int need = 0, nextneed, i, out, start;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int need = 0, nextneed, i, out, start, ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long pages = 0;
 	unsigned int seg_size;
 	unsigned int max_seg_size;
 
 	if (nents == 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EINVAL;
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	out		= 0;
 	start		= 0;
@@ -427,6 +439,7 @@ static int gart_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 			    (s->length + seg_size > max_seg_size) ||
 			    (ps->offset + ps->length) % PAGE_SIZE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				ret = dma_map_cont(dev, start_sg, i - start,
 						   sgmap, pages, need);
 				if (ret < 0)
@@ -434,6 +447,11 @@ static int gart_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 				if (dma_map_cont(dev, start_sg, i - start,
 						 sgmap, pages, need) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				ret = dma_map_cont(dev, start_sg, i - start,
+						   sgmap, pages, need);
+				if (ret < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					goto error;
 				out++;
 
@@ -451,11 +469,16 @@ static int gart_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 		ps = s;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dma_map_cont(dev, start_sg, i - start, sgmap, pages, need);
 	if (ret < 0)
 =======
 	if (dma_map_cont(dev, start_sg, i - start, sgmap, pages, need) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dma_map_cont(dev, start_sg, i - start, sgmap, pages, need);
+	if (ret < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto error;
 	out++;
 	flush_gart();
@@ -480,12 +503,16 @@ error:
 
 	iommu_full(dev, pages << PAGE_SHIFT, dir);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ret;
 =======
 	for_each_sg(sg, s, nents, i)
 		s->dma_address = DMA_MAPPING_ERROR;
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* allocate and map a coherent mapping */

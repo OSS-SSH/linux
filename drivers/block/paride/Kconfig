@@ -28,9 +28,12 @@ config PARIDE_PCD
 	depends on PARIDE
 	select CDROM
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select BLK_SCSI_REQUEST # only for the generic cdrom code
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This option enables the high-level driver for ATAPI CD-ROM devices
 	  connected through a parallel port. If you chose to build PARIDE

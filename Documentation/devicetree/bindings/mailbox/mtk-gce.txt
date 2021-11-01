@@ -10,12 +10,17 @@ mailbox.txt for generic information about mailbox device-tree bindings.
 
 Required properties:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - compatible: can be "mediatek,mt8173-gce", "mediatek,mt8183-gce",
   "mediatek,mt8192-gce", "mediatek,mt8195-gce" or "mediatek,mt6779-gce".
 =======
 - compatible: can be "mediatek,mt8173-gce", "mediatek,mt8183-gce" or
   "mediatek,mt6779-gce".
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+- compatible: can be "mediatek,mt8173-gce", "mediatek,mt8183-gce",
+  "mediatek,mt8192-gce", "mediatek,mt8195-gce" or "mediatek,mt6779-gce".
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - reg: Address range of the GCE unit
 - interrupts: The interrupt signal from the GCE block
 - clock: Clocks according to the common clock binding
@@ -41,10 +46,14 @@ Optional properties for a client device:
   size: the total size of register address that GCE can access.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Optional properties for a client mutex node:
 - mediatek,gce-events: GCE events used by clients. The event numbers are
   defined in 'dt-bindings/gce/<chip>-gce.h'.
 
+<<<<<<< HEAD
 Some vaules of properties are defined in 'dt-bindings/gce/mt8173-gce.h',
 'dt-binding/gce/mt8183-gce.h', 'dt-binding/gce/mt8192-gce.h',
 'dt-binding/gce/mt8195-gce.h' or 'dt-bindings/gce/mt6779-gce.h'.
@@ -54,6 +63,12 @@ Some vaules of properties are defined in 'dt-bindings/gce/mt8173-gce.h',
 'dt-binding/gce/mt8183-gce.h' or 'dt-bindings/gce/mt6779-gce.h'. Such as
 sub-system ids, thread priority, event ids.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Some vaules of properties are defined in 'dt-bindings/gce/mt8173-gce.h',
+'dt-binding/gce/mt8183-gce.h', 'dt-binding/gce/mt8192-gce.h',
+'dt-binding/gce/mt8195-gce.h' or 'dt-bindings/gce/mt6779-gce.h'.
+Such as sub-system ids, thread priority, event ids.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Example:
 
@@ -79,6 +94,9 @@ Example for a client device:
 		...
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Example for a client mutex node:
 	mutex: mutex@14020000 {
@@ -90,5 +108,8 @@ Example for a client mutex node:
 		mediatek,gce-events = <CMDQ_EVENT_MUTEX0_STREAM_EOF>,
 				      <CMDQ_EVENT_MUTEX1_STREAM_EOF>;
 	};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

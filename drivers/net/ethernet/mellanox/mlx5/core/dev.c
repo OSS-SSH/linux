@@ -54,10 +54,14 @@ static bool is_eth_rep_supported(struct mlx5_core_dev *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool mlx5_eth_supported(struct mlx5_core_dev *dev)
 =======
 static bool is_eth_supported(struct mlx5_core_dev *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool mlx5_eth_supported(struct mlx5_core_dev *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!IS_ENABLED(CONFIG_MLX5_CORE_EN))
 		return false;
@@ -110,6 +114,9 @@ static bool is_eth_supported(struct mlx5_core_dev *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool is_eth_enabled(struct mlx5_core_dev *dev)
 {
 	union devlink_param_value val;
@@ -122,9 +129,12 @@ static bool is_eth_enabled(struct mlx5_core_dev *dev)
 }
 
 bool mlx5_vnet_supported(struct mlx5_core_dev *dev)
+<<<<<<< HEAD
 =======
 static bool is_vnet_supported(struct mlx5_core_dev *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!IS_ENABLED(CONFIG_MLX5_VDPA_NET))
 		return false;
@@ -147,6 +157,9 @@ static bool is_vnet_supported(struct mlx5_core_dev *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool is_vnet_enabled(struct mlx5_core_dev *dev)
 {
 	union devlink_param_value val;
@@ -158,8 +171,11 @@ static bool is_vnet_enabled(struct mlx5_core_dev *dev)
 	return err ? false : val.vbool;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool is_ib_rep_supported(struct mlx5_core_dev *dev)
 {
 	if (!IS_ENABLED(CONFIG_MLX5_INFINIBAND))
@@ -204,10 +220,14 @@ static bool is_mp_supported(struct mlx5_core_dev *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool mlx5_rdma_supported(struct mlx5_core_dev *dev)
 =======
 static bool is_ib_supported(struct mlx5_core_dev *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool mlx5_rdma_supported(struct mlx5_core_dev *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!IS_ENABLED(CONFIG_MLX5_INFINIBAND))
 		return false;
@@ -225,6 +245,9 @@ static bool is_ib_supported(struct mlx5_core_dev *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool is_ib_enabled(struct mlx5_core_dev *dev)
 {
 	union devlink_param_value val;
@@ -236,8 +259,11 @@ static bool is_ib_enabled(struct mlx5_core_dev *dev)
 	return err ? false : val.vbool;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	MLX5_INTERFACE_PROTOCOL_ETH,
 	MLX5_INTERFACE_PROTOCOL_ETH_REP,
@@ -253,6 +279,7 @@ static const struct mlx5_adev_device {
 	const char *suffix;
 	bool (*is_supported)(struct mlx5_core_dev *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool (*is_enabled)(struct mlx5_core_dev *dev);
 } mlx5_adev_devices[] = {
 	[MLX5_INTERFACE_PROTOCOL_VNET] = { .suffix = "vnet",
@@ -265,14 +292,24 @@ static const struct mlx5_adev_device {
 					  .is_supported = &mlx5_eth_supported,
 					  .is_enabled = &is_eth_enabled },
 =======
+=======
+	bool (*is_enabled)(struct mlx5_core_dev *dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } mlx5_adev_devices[] = {
 	[MLX5_INTERFACE_PROTOCOL_VNET] = { .suffix = "vnet",
-					   .is_supported = &is_vnet_supported },
+					   .is_supported = &mlx5_vnet_supported,
+					   .is_enabled = &is_vnet_enabled },
 	[MLX5_INTERFACE_PROTOCOL_IB] = { .suffix = "rdma",
-					 .is_supported = &is_ib_supported },
+					 .is_supported = &mlx5_rdma_supported,
+					 .is_enabled = &is_ib_enabled },
 	[MLX5_INTERFACE_PROTOCOL_ETH] = { .suffix = "eth",
+<<<<<<< HEAD
 					  .is_supported = &is_eth_supported },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  .is_supported = &mlx5_eth_supported,
+					  .is_enabled = &is_eth_enabled },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[MLX5_INTERFACE_PROTOCOL_ETH_REP] = { .suffix = "eth-rep",
 					   .is_supported = &is_eth_rep_supported },
 	[MLX5_INTERFACE_PROTOCOL_IB_REP] = { .suffix = "rdma-rep",
@@ -374,6 +411,9 @@ int mlx5_attach_device(struct mlx5_core_dev *dev)
 			bool is_supported = false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (mlx5_adev_devices[i].is_enabled) {
 				bool enabled;
 
@@ -382,8 +422,11 @@ int mlx5_attach_device(struct mlx5_core_dev *dev)
 					continue;
 			}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (mlx5_adev_devices[i].is_supported)
 				is_supported = mlx5_adev_devices[i].is_supported(dev);
 
@@ -437,6 +480,9 @@ void mlx5_detach_device(struct mlx5_core_dev *dev)
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mlx5_adev_devices[i].is_enabled) {
 			bool enabled;
 
@@ -445,8 +491,11 @@ void mlx5_detach_device(struct mlx5_core_dev *dev)
 				goto skip_suspend;
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adev = &priv->adev[i]->adev;
 		/* Auxiliary driver was unbind manually through sysfs */
 		if (!adev->dev.driver)
@@ -485,10 +534,14 @@ void mlx5_unregister_device(struct mlx5_core_dev *dev)
 {
 	mutex_lock(&mlx5_intf_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev->priv.flags = MLX5_PRIV_FLAGS_DISABLE_ALL_ADEV;
 =======
 	dev->priv.flags |= MLX5_PRIV_FLAGS_DISABLE_ALL_ADEV;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev->priv.flags = MLX5_PRIV_FLAGS_DISABLE_ALL_ADEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlx5_rescan_drivers_locked(dev);
 	mutex_unlock(&mlx5_intf_mutex);
 }
@@ -539,6 +592,9 @@ static void delete_drivers(struct mlx5_core_dev *dev)
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mlx5_adev_devices[i].is_enabled) {
 			bool enabled;
 
@@ -547,8 +603,11 @@ static void delete_drivers(struct mlx5_core_dev *dev)
 				goto del_adev;
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mlx5_adev_devices[i].is_supported && !delete_all)
 			is_supported = mlx5_adev_devices[i].is_supported(dev);
 
@@ -556,9 +615,13 @@ static void delete_drivers(struct mlx5_core_dev *dev)
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 del_adev:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+del_adev:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		del_adev(&priv->adev[i]->adev);
 		priv->adev[i] = NULL;
 	}
@@ -607,6 +670,7 @@ static int next_phys_dev(struct device *dev, const void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Must be called with intf_mutex held */
 =======
 /* This function is called with two flows:
@@ -614,6 +678,9 @@ static int next_phys_dev(struct device *dev, const void *data)
  * 2. During LAG configure stage and caller holds &mlx5_intf_mutex.
  */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Must be called with intf_mutex held */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlx5_core_dev *mlx5_get_next_phys_dev(struct mlx5_core_dev *dev)
 {
 	struct auxiliary_device *adev;

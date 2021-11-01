@@ -81,11 +81,17 @@ struct mdio_driver {
 	/* Clears up any memory if needed */
 	void (*remove)(struct mdio_device *mdiodev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Quiesces the device on system shutdown, turns off interrupts etc */
 	void (*shutdown)(struct mdio_device *mdiodev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Quiesces the device on system shutdown, turns off interrupts etc */
+	void (*shutdown)(struct mdio_device *mdiodev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct mdio_driver *

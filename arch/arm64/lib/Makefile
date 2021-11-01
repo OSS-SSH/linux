@@ -1,10 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0
 lib-y		:= clear_user.o delay.o copy_from_user.o		\
 <<<<<<< HEAD
+<<<<<<< HEAD
 		   copy_to_user.o copy_page.o				\
 =======
 		   copy_to_user.o copy_in_user.o copy_page.o		\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		   copy_to_user.o copy_page.o				\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		   clear_page.o csum.o insn.o memchr.o memcpy.o		\
 		   memset.o memcmp.o strcmp.o strncmp.o strlen.o	\
 		   strnlen.o strchr.o strrchr.o tishift.o

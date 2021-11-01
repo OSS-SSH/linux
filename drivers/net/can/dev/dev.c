@@ -16,9 +16,13 @@
 #include <linux/can/skb.h>
 #include <linux/can/led.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/gpio/consumer.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/gpio/consumer.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/of.h>
 
 #define MOD_DESC "CAN device driver interface"
@@ -405,6 +409,9 @@ void close_candev(struct net_device *dev)
 EXPORT_SYMBOL_GPL(close_candev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int can_set_termination(struct net_device *ndev, u16 term)
 {
 	struct can_priv *priv = netdev_priv(ndev);
@@ -463,16 +470,23 @@ static int can_get_termination(struct net_device *ndev)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Register the CAN network device */
 int register_candev(struct net_device *dev)
 {
 	struct can_priv *priv = netdev_priv(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Ensure termination_const, termination_const_cnt and
 	 * do_set_termination consistency. All must be either set or
@@ -489,14 +503,20 @@ int register_candev(struct net_device *dev)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!priv->termination_const) {
 		err = can_get_termination(dev);
 		if (err)
 			return err;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev->rtnl_link_ops = &can_link_ops;
 	netif_carrier_off(dev);
 

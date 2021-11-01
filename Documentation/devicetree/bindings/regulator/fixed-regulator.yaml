@@ -58,9 +58,13 @@ properties:
 
   power-domains:
 <<<<<<< HEAD
+<<<<<<< HEAD
     deprecated: true
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    deprecated: true
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     description:
       Power domain to use for enable control. This binding is only
       available if the compatible is chosen to regulator-fixed-domain.
@@ -68,9 +72,13 @@ properties:
 
   required-opps:
 <<<<<<< HEAD
+<<<<<<< HEAD
     deprecated: true
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    deprecated: true
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     description:
       Performance state to use for enable control. This binding is only
       available if the compatible is chosen to regulator-fixed-domain. The

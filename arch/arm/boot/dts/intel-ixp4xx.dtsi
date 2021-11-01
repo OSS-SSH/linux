@@ -16,6 +16,7 @@
 
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * The IXP4xx expansion bus is a set of up to 7 each up to 16MB
 		 * windows in the 256MB space from 0x50000000 to 0x5fffffff.
 		 */
@@ -44,14 +45,38 @@
 		 * The IXP4xx expansion bus is a set of 16 or 32MB
 		 * windows in the 256MB space from 0x50000000 to
 		 * 0x5fffffff.
+=======
+		 * The IXP4xx expansion bus is a set of up to 7 each up to 16MB
+		 * windows in the 256MB space from 0x50000000 to 0x5fffffff.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
-		bus@50000000 {
-			compatible = "simple-bus";
-			#address-cells = <1>;
+		bus@c4000000 {
+			/* compatible and reg filled in by per-soc device tree */
+			native-endian;
+			#address-cells = <2>;
 			#size-cells = <1>;
+<<<<<<< HEAD
 			ranges = <0x00000000 0x50000000 0x10000000>;
 			dma-ranges = <0x00000000 0x50000000 0x10000000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ranges = <0 0x0 0x50000000 0x01000000>,
+				 <1 0x0 0x51000000 0x01000000>,
+				 <2 0x0 0x52000000 0x01000000>,
+				 <3 0x0 0x53000000 0x01000000>,
+				 <4 0x0 0x54000000 0x01000000>,
+				 <5 0x0 0x55000000 0x01000000>,
+				 <6 0x0 0x56000000 0x01000000>,
+				 <7 0x0 0x57000000 0x01000000>;
+			dma-ranges = <0 0x0 0x50000000 0x01000000>,
+				 <1 0x0 0x51000000 0x01000000>,
+				 <2 0x0 0x52000000 0x01000000>,
+				 <3 0x0 0x53000000 0x01000000>,
+				 <4 0x0 0x54000000 0x01000000>,
+				 <5 0x0 0x55000000 0x01000000>,
+				 <6 0x0 0x56000000 0x01000000>,
+				 <7 0x0 0x57000000 0x01000000>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		qmgr: queue-manager@60000000 {
@@ -111,6 +136,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uart1: serial@c8001000 {
 			compatible = "intel,xscale-uart";
 			reg = <0xc8001000 0x1000>;
@@ -125,8 +153,11 @@
 			no-loopback-test;
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gpio0: gpio@c8004000 {
 			compatible = "intel,ixp4xx-gpio";
 			reg = <0xc8004000 0x1000>;

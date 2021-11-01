@@ -2,9 +2,13 @@
 #include <linux/fanotify.h>
 #include <linux/fcntl.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/fdtable.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/fdtable.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/file.h>
 #include <linux/fs.h>
 #include <linux/anon_inodes.h>
@@ -59,31 +63,22 @@ static int fanotify_max_queued_events __read_mostly;
 #include <linux/sysctl.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static long ft_zero = 0;
 static long ft_int_max = INT_MAX;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static long ft_zero = 0;
+static long ft_int_max = INT_MAX;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ctl_table fanotify_table[] = {
 	{
 		.procname	= "max_user_groups",
 		.data	= &init_user_ns.ucount_max[UCOUNT_FANOTIFY_GROUPS],
 <<<<<<< HEAD
-		.maxlen		= sizeof(long),
-		.mode		= 0644,
-		.proc_handler	= proc_doulongvec_minmax,
-		.extra1		= &ft_zero,
-		.extra2		= &ft_int_max,
-=======
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec_minmax,
-		.extra1		= SYSCTL_ZERO,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-	},
-	{
-		.procname	= "max_user_marks",
-		.data	= &init_user_ns.ucount_max[UCOUNT_FANOTIFY_MARKS],
 <<<<<<< HEAD
 		.maxlen		= sizeof(long),
 		.mode		= 0644,
@@ -96,6 +91,37 @@ struct ctl_table fanotify_table[] = {
 		.proc_handler	= proc_dointvec_minmax,
 		.extra1		= SYSCTL_ZERO,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.maxlen		= sizeof(long),
+		.mode		= 0644,
+		.proc_handler	= proc_doulongvec_minmax,
+		.extra1		= &ft_zero,
+		.extra2		= &ft_int_max,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	},
+	{
+		.procname	= "max_user_marks",
+		.data	= &init_user_ns.ucount_max[UCOUNT_FANOTIFY_MARKS],
+<<<<<<< HEAD
+<<<<<<< HEAD
+		.maxlen		= sizeof(long),
+		.mode		= 0644,
+		.proc_handler	= proc_doulongvec_minmax,
+		.extra1		= &ft_zero,
+		.extra2		= &ft_int_max,
+=======
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= SYSCTL_ZERO,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.maxlen		= sizeof(long),
+		.mode		= 0644,
+		.proc_handler	= proc_doulongvec_minmax,
+		.extra1		= &ft_zero,
+		.extra2		= &ft_int_max,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		.procname	= "max_queued_events",
@@ -131,6 +157,7 @@ struct kmem_cache *fanotify_perm_event_cachep __read_mostly;
 
 #define FANOTIFY_EVENT_ALIGN 4
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define FANOTIFY_FID_INFO_HDR_LEN \
 	(sizeof(struct fanotify_event_info_fid) + sizeof(struct file_handle))
 #define FANOTIFY_PIDFD_INFO_HDR_LEN \
@@ -139,6 +166,12 @@ struct kmem_cache *fanotify_perm_event_cachep __read_mostly;
 #define FANOTIFY_INFO_HDR_LEN \
 	(sizeof(struct fanotify_event_info_fid) + sizeof(struct file_handle))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FANOTIFY_FID_INFO_HDR_LEN \
+	(sizeof(struct fanotify_event_info_fid) + sizeof(struct file_handle))
+#define FANOTIFY_PIDFD_INFO_HDR_LEN \
+	sizeof(struct fanotify_event_info_pidfd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int fanotify_fid_info_len(int fh_len, int name_len)
 {
@@ -147,6 +180,7 @@ static int fanotify_fid_info_len(int fh_len, int name_len)
 	if (name_len)
 		info_len += name_len + 1;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return roundup(FANOTIFY_FID_INFO_HDR_LEN + info_len,
 		       FANOTIFY_EVENT_ALIGN);
@@ -159,6 +193,13 @@ static int fanotify_event_info_len(unsigned int info_mode,
 
 static int fanotify_event_info_len(unsigned int fid_mode,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return roundup(FANOTIFY_FID_INFO_HDR_LEN + info_len,
+		       FANOTIFY_EVENT_ALIGN);
+}
+
+static int fanotify_event_info_len(unsigned int info_mode,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct fanotify_event *event)
 {
 	struct fanotify_info *info = fanotify_event_info(event);
@@ -170,11 +211,16 @@ static int fanotify_event_info_len(unsigned int fid_mode,
 	if (dir_fh_len) {
 		info_len += fanotify_fid_info_len(dir_fh_len, info->name_len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if ((info_mode & FAN_REPORT_NAME) &&
 		   (event->mask & FAN_ONDIR)) {
 =======
 	} else if ((fid_mode & FAN_REPORT_NAME) && (event->mask & FAN_ONDIR)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if ((info_mode & FAN_REPORT_NAME) &&
+		   (event->mask & FAN_ONDIR)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * With group flag FAN_REPORT_NAME, if name was not recorded in
 		 * event on a directory, we will report the name ".".
@@ -183,11 +229,17 @@ static int fanotify_event_info_len(unsigned int fid_mode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info_mode & FAN_REPORT_PIDFD)
 		info_len += FANOTIFY_PIDFD_INFO_HDR_LEN;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info_mode & FAN_REPORT_PIDFD)
+		info_len += FANOTIFY_PIDFD_INFO_HDR_LEN;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fh_len)
 		info_len += fanotify_fid_info_len(fh_len, dot_len);
 
@@ -224,10 +276,14 @@ static struct fanotify_event *get_one_event(struct fsnotify_group *group,
 	struct fanotify_event *event = NULL;
 	struct fsnotify_event *fsn_event;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
 =======
 	unsigned int fid_mode = FAN_GROUP_FLAG(group, FANOTIFY_FID_BITS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("%s: group=%p count=%zd\n", __func__, group, count);
 
@@ -238,12 +294,17 @@ static struct fanotify_event *get_one_event(struct fsnotify_group *group,
 
 	event = FANOTIFY_E(fsn_event);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info_mode)
 		event_size += fanotify_event_info_len(info_mode, event);
 =======
 	if (fid_mode)
 		event_size += fanotify_event_info_len(fid_mode, event);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info_mode)
+		event_size += fanotify_event_info_len(info_mode, event);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (event_size > count) {
 		event = ERR_PTR(-EINVAL);
@@ -365,15 +426,21 @@ static int process_access_response(struct fsnotify_group *group,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
 				 int info_type, const char *name,
 				 size_t name_len,
 				 char __user *buf, size_t count)
+<<<<<<< HEAD
 =======
 static int copy_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
 			     int info_type, const char *name, size_t name_len,
 			     char __user *buf, size_t count)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fanotify_event_info_fid info = { };
 	struct file_handle handle = { };
@@ -467,6 +534,9 @@ static int copy_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int copy_pidfd_info_to_user(int pidfd,
 				   char __user *buf,
 				   size_t count)
@@ -578,8 +648,11 @@ static int copy_info_records_to_user(struct fanotify_event *event,
 	return total_bytes;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t copy_event_to_user(struct fsnotify_group *group,
 				  struct fanotify_event *event,
 				  char __user *buf, size_t count)
@@ -587,6 +660,7 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 	struct fanotify_event_metadata metadata;
 	struct path *path = fanotify_event_path(event);
 	struct fanotify_info *info = fanotify_event_info(event);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
 	unsigned int pidfd_mode = info_mode & FAN_REPORT_PIDFD;
@@ -598,15 +672,25 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 	int ret, fd = FAN_NOFD;
 	int info_type = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
+	unsigned int pidfd_mode = info_mode & FAN_REPORT_PIDFD;
+	struct file *f = NULL;
+	int ret, pidfd = FAN_NOPIDFD, fd = FAN_NOFD;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("%s: group=%p event=%p\n", __func__, group, event);
 
 	metadata.event_len = FAN_EVENT_METADATA_LEN +
 <<<<<<< HEAD
+<<<<<<< HEAD
 				fanotify_event_info_len(info_mode, event);
 =======
 				fanotify_event_info_len(fid_mode, event);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				fanotify_event_info_len(info_mode, event);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	metadata.metadata_len = FAN_EVENT_METADATA_LEN;
 	metadata.vers = FANOTIFY_METADATA_VERSION;
 	metadata.reserved = 0;
@@ -636,6 +720,9 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 	metadata.fd = fd;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (pidfd_mode) {
 		/*
 		 * Complain if the FAN_REPORT_PIDFD and FAN_REPORT_TID mutual
@@ -663,8 +750,11 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = -EFAULT;
 	/*
 	 * Sanity check copy size in case get_one_event() and
@@ -685,6 +775,7 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 	if (f)
 		fd_install(fd, f);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (info_mode) {
 		ret = copy_info_records_to_user(event, info, info_mode, pidfd,
@@ -754,6 +845,13 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 		buf += ret;
 		count -= ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info_mode) {
+		ret = copy_info_records_to_user(event, info, info_mode, pidfd,
+						buf, count);
+		if (ret < 0)
+			goto out_close_fd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return metadata.event_len;
@@ -764,12 +862,18 @@ out_close_fd:
 		fput(f);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pidfd >= 0)
 		close_fd(pidfd);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1316,6 +1420,9 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * A pidfd can only be returned for a thread-group leader; thus
 	 * FAN_REPORT_PIDFD and FAN_REPORT_TID need to remain mutually
@@ -1324,8 +1431,11 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
 	if ((flags & FAN_REPORT_PIDFD) && (flags & FAN_REPORT_TID))
 		return -EINVAL;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (event_f_flags & ~FANOTIFY_INIT_ALL_EVENT_F_BITS)
 		return -EINVAL;
 
@@ -1728,10 +1838,14 @@ static int __init fanotify_user_setup(void)
 
 	BUILD_BUG_ON(FANOTIFY_INIT_FLAGS & FANOTIFY_INTERNAL_GROUP_FLAGS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 11);
 =======
 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 10);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 11);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_MARK_FLAGS) != 9);
 
 	fanotify_mark_cache = KMEM_CACHE(fsnotify_mark,

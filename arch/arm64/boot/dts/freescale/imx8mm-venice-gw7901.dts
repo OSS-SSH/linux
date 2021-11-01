@@ -217,10 +217,14 @@
 		compatible = "regulator-fixed";
 		regulator-name = "usb_usb2_vbus";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		gpio = <&gpio4 2 GPIO_ACTIVE_HIGH>;
 =======
 		gpio = <&gpio4 17 GPIO_ACTIVE_HIGH>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gpio = <&gpio4 2 GPIO_ACTIVE_HIGH>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		enable-active-high;
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
@@ -301,10 +305,13 @@
 		interrupt-controller;
 		#interrupt-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		#address-cells = <1>;
 		#size-cells = <0>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		adc {
 			compatible = "gw,gsc-adc";
@@ -832,6 +839,7 @@
 	pinctrl_reg_usb2: regusb1grp {
 		fsl,pins = <
 <<<<<<< HEAD
+<<<<<<< HEAD
 			MX8MM_IOMUXC_SAI1_RXD0_GPIO4_IO2	0x41
 			MX8MM_IOMUXC_SAI1_TXD5_GPIO4_IO17	0x140
 			MX8MM_IOMUXC_GPIO1_IO15_USB2_OTG_OC	0x140
@@ -839,6 +847,11 @@
 			MX8MM_IOMUXC_SAI1_TXD5_GPIO4_IO17	0x41
 			MX8MM_IOMUXC_GPIO1_IO15_USB2_OTG_OC	0x41
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			MX8MM_IOMUXC_SAI1_RXD0_GPIO4_IO2	0x41
+			MX8MM_IOMUXC_SAI1_TXD5_GPIO4_IO17	0x140
+			MX8MM_IOMUXC_GPIO1_IO15_USB2_OTG_OC	0x140
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		>;
 	};
 
@@ -890,6 +903,7 @@
 	pinctrl_uart3_gpio: uart3gpiogrp {
 		fsl,pins = <
 <<<<<<< HEAD
+<<<<<<< HEAD
 			MX8MM_IOMUXC_SAI1_RXD4_GPIO4_IO6	0x40000110 /* RS232# */
 			MX8MM_IOMUXC_SAI1_RXD5_GPIO4_IO7	0x40000110 /* RS422# */
 			MX8MM_IOMUXC_SAI1_RXD6_GPIO4_IO8	0x40000110 /* RS485# */
@@ -898,6 +912,11 @@
 			MX8MM_IOMUXC_SAI1_RXD5_GPIO4_IO7	0x40000041 /* RS422# */
 			MX8MM_IOMUXC_SAI1_RXD6_GPIO4_IO8	0x40000041 /* RS485# */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			MX8MM_IOMUXC_SAI1_RXD4_GPIO4_IO6	0x40000110 /* RS232# */
+			MX8MM_IOMUXC_SAI1_RXD5_GPIO4_IO7	0x40000110 /* RS422# */
+			MX8MM_IOMUXC_SAI1_RXD6_GPIO4_IO8	0x40000110 /* RS485# */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		>;
 	};
 

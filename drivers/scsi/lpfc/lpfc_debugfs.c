@@ -5430,6 +5430,9 @@ lpfc_idiag_extacc_read(struct file *file, char __user *buf, size_t nbytes,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 lpfc_cgn_buffer_open(struct inode *inode, struct file *file)
 {
@@ -5604,8 +5607,11 @@ lpfc_rx_monitor_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #undef lpfc_debugfs_op_disc_trc
 static const struct file_operations lpfc_debugfs_op_disc_trc = {
 	.owner =        THIS_MODULE,
@@ -5835,6 +5841,9 @@ static const struct file_operations lpfc_idiag_op_extAcc = {
 	.release =      lpfc_idiag_cmd_release,
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #undef lpfc_cgn_buffer_op
 static const struct file_operations lpfc_cgn_buffer_op = {
 	.owner =        THIS_MODULE,
@@ -5852,8 +5861,11 @@ static const struct file_operations lpfc_rx_monitor_op = {
 	.read =         lpfc_rx_monitor_read,
 	.release =      lpfc_rx_monitor_release,
 };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /* lpfc_idiag_mbxacc_dump_bsg_mbox - idiag debugfs dump bsg mailbox command
@@ -6105,6 +6117,9 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Congestion Info Buffer */
 		scnprintf(name, sizeof(name), "cgn_buffer");
 		phba->debug_cgn_buffer =
@@ -6131,8 +6146,11 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
 			goto debug_failed;
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* RAS log */
 		snprintf(name, sizeof(name), "ras_log");
 		phba->debug_ras_log =
@@ -6562,14 +6580,20 @@ lpfc_debugfs_terminate(struct lpfc_vport *vport)
 		phba->debug_hbqinfo = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		debugfs_remove(phba->debug_cgn_buffer);
 		phba->debug_cgn_buffer = NULL;
 
 		debugfs_remove(phba->debug_rx_monitor);
 		phba->debug_rx_monitor = NULL;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		debugfs_remove(phba->debug_ras_log);
 		phba->debug_ras_log = NULL;
 

@@ -19,9 +19,13 @@
 #define PTP_MAX_TIMESTAMPS 128
 #define PTP_BUF_TIMESTAMPS 30
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PTP_DEFAULT_MAX_VCLOCKS 20
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PTP_DEFAULT_MAX_VCLOCKS 20
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct timestamp_event_queue {
 	struct ptp_extts_event buf[PTP_MAX_TIMESTAMPS];
@@ -51,6 +55,9 @@ struct ptp_clock {
 	struct kthread_worker *kworker;
 	struct kthread_delayed_work aux_work;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int max_vclocks;
 	unsigned int n_vclocks;
 	int *vclock_index;
@@ -69,8 +76,11 @@ struct ptp_vclock {
 	struct cyclecounter cc;
 	struct timecounter tc;
 	spinlock_t lock;	/* protects tc/cc */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -87,6 +97,9 @@ static inline int queue_cnt(struct timestamp_event_queue *q)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Check if ptp virtual clock is in use */
 static inline bool ptp_vclock_in_use(struct ptp_clock *ptp)
 {
@@ -105,8 +118,11 @@ static inline bool ptp_vclock_in_use(struct ptp_clock *ptp)
 
 extern struct class *ptp_class;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * see ptp_chardev.c
  */
@@ -136,8 +152,13 @@ int ptp_populate_pin_groups(struct ptp_clock *ptp);
 void ptp_cleanup_pin_groups(struct ptp_clock *ptp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct ptp_vclock *ptp_vclock_register(struct ptp_clock *pclock);
 void ptp_vclock_unregister(struct ptp_vclock *vclock);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct ptp_vclock *ptp_vclock_register(struct ptp_clock *pclock);
+void ptp_vclock_unregister(struct ptp_vclock *vclock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

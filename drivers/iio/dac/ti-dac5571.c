@@ -351,9 +351,13 @@ static int dac5571_probe(struct i2c_client *client,
 		break;
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -EINVAL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err;
 	}
 

@@ -378,10 +378,14 @@ static const struct net_device_ops emac_netdev_ops = {
 	.ndo_set_mac_address	= eth_mac_addr,
 	.ndo_change_mtu		= emac_change_mtu,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= phy_do_ioctl_running,
 =======
 	.ndo_do_ioctl		= phy_do_ioctl_running,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= phy_do_ioctl_running,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout		= emac_tx_timeout,
 	.ndo_get_stats64	= emac_get_stats64,
 	.ndo_set_features       = emac_set_features,
@@ -740,19 +744,27 @@ static int emac_remove(struct platform_device *pdev)
 	put_device(&adpt->phydev->mdio.dev);
 	mdiobus_unregister(adpt->mii_bus);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	free_netdev(netdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (adpt->phy.digital)
 		iounmap(adpt->phy.digital);
 	iounmap(adpt->phy.base);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	free_netdev(netdev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free_netdev(netdev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

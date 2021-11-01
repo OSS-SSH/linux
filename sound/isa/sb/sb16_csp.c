@@ -817,9 +817,13 @@ static int snd_sb_csp_start(struct snd_sb_csp * p, int sample_width, int channel
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV, mixL & 0x7);
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV + 1, mixR & 0x7);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&p->chip->mixer_lock, flags);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irqrestore(&p->chip->mixer_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock(&p->chip->reg_lock);
 	set_mode_register(p->chip, 0xc0);	/* c0 = STOP */
@@ -860,9 +864,13 @@ static int snd_sb_csp_start(struct snd_sb_csp * p, int sample_width, int channel
 
 	/* restore PCM volume */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irqsave(&p->chip->mixer_lock, flags);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_irqsave(&p->chip->mixer_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV, mixL);
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV + 1, mixR);
 	spin_unlock_irqrestore(&p->chip->mixer_lock, flags);
@@ -889,9 +897,13 @@ static int snd_sb_csp_stop(struct snd_sb_csp * p)
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV, mixL & 0x7);
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV + 1, mixR & 0x7);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&p->chip->mixer_lock, flags);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irqrestore(&p->chip->mixer_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock(&p->chip->reg_lock);
 	if (p->running & SNDRV_SB_CSP_ST_QSOUND) {
@@ -907,9 +919,13 @@ static int snd_sb_csp_stop(struct snd_sb_csp * p)
 
 	/* restore PCM volume */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irqsave(&p->chip->mixer_lock, flags);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_irqsave(&p->chip->mixer_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV, mixL);
 	snd_sbmixer_write(p->chip, SB_DSP4_PCM_DEV + 1, mixR);
 	spin_unlock_irqrestore(&p->chip->mixer_lock, flags);

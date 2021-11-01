@@ -155,17 +155,24 @@ static const struct nla_policy ctinfo_policy[TCA_CTINFO_MAX + 1] = {
 static int tcf_ctinfo_init(struct net *net, struct nlattr *nla,
 			   struct nlattr *est, struct tc_action **a,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			   int ovr, int bind, bool rtnl_held,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   struct tcf_proto *tp, u32 flags,
 			   struct netlink_ext_ack *extack)
 {
 	struct tc_action_net *tn = net_generic(net, ctinfo_net_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool bind = flags & TCA_ACT_FLAGS_BIND;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool bind = flags & TCA_ACT_FLAGS_BIND;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 dscpmask = 0, dscpstatemask, index;
 	struct nlattr *tb[TCA_CTINFO_MAX + 1];
 	struct tcf_ctinfo_params *cp_new;
@@ -229,10 +236,14 @@ static int tcf_ctinfo_init(struct net *net, struct nlattr *nla,
 		if (bind) /* don't override defaults */
 			return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
 =======
 		if (!ovr) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			tcf_idr_release(*a, bind);
 			return -EEXIST;
 		}

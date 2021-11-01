@@ -57,9 +57,13 @@
 #include "sunrpc.h"
 #include "sysfs.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "fail.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "fail.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Local variables
@@ -766,6 +770,9 @@ EXPORT_SYMBOL_GPL(xprt_disconnect_done);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * xprt_schedule_autoclose_locked - Try to schedule an autoclose RPC call
  * @xprt: transport to disconnect
  */
@@ -780,8 +787,11 @@ static void xprt_schedule_autoclose_locked(struct rpc_xprt *xprt)
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * xprt_force_disconnect - force a transport to disconnect
  * @xprt: transport to disconnect
  *
@@ -793,6 +803,7 @@ void xprt_force_disconnect(struct rpc_xprt *xprt)
 	/* Don't race with the test_bit() in xprt_clear_locked() */
 	spin_lock(&xprt->transport_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xprt_schedule_autoclose_locked(xprt);
 =======
 	set_bit(XPRT_CLOSE_WAIT, &xprt->state);
@@ -803,6 +814,9 @@ void xprt_force_disconnect(struct rpc_xprt *xprt)
 		rpc_wake_up_queued_task_set_status(&xprt->pending,
 				xprt->snd_task, -ENOTCONN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xprt_schedule_autoclose_locked(xprt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock(&xprt->transport_lock);
 }
 EXPORT_SYMBOL_GPL(xprt_force_disconnect);
@@ -843,6 +857,7 @@ void xprt_conditional_disconnect(struct rpc_xprt *xprt, unsigned int cookie)
 	if (test_bit(XPRT_CLOSING, &xprt->state))
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xprt_schedule_autoclose_locked(xprt);
 =======
 	set_bit(XPRT_CLOSE_WAIT, &xprt->state);
@@ -851,6 +866,9 @@ void xprt_conditional_disconnect(struct rpc_xprt *xprt, unsigned int cookie)
 		queue_work(xprtiod_workqueue, &xprt->task_cleanup);
 	xprt_wake_pending_tasks(xprt, -EAGAIN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xprt_schedule_autoclose_locked(xprt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	spin_unlock(&xprt->transport_lock);
 }
@@ -885,6 +903,9 @@ xprt_init_autodisconnect(struct timer_list *t)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_FAIL_SUNRPC)
 static void xprt_inject_disconnect(struct rpc_xprt *xprt)
 {
@@ -898,8 +919,11 @@ static inline void xprt_inject_disconnect(struct rpc_xprt *xprt)
 }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool xprt_lock_connect(struct rpc_xprt *xprt,
 		struct rpc_task *task,
 		void *cookie)
@@ -912,9 +936,13 @@ bool xprt_lock_connect(struct rpc_xprt *xprt,
 	if (xprt->snd_task != task)
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_bit(XPRT_SND_IS_COOKIE, &xprt->state);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_bit(XPRT_SND_IS_COOKIE, &xprt->state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xprt->snd_task = cookie;
 	ret = true;
 out:
@@ -922,9 +950,13 @@ out:
 	return ret;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(xprt_lock_connect);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(xprt_lock_connect);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void xprt_unlock_connect(struct rpc_xprt *xprt, void *cookie)
 {
@@ -935,9 +967,13 @@ void xprt_unlock_connect(struct rpc_xprt *xprt, void *cookie)
 		goto out;
 	xprt->snd_task =NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clear_bit(XPRT_SND_IS_COOKIE, &xprt->state);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clear_bit(XPRT_SND_IS_COOKIE, &xprt->state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xprt->ops->release_xprt(xprt, NULL);
 	xprt_schedule_autodisconnect(xprt);
 out:
@@ -945,9 +981,13 @@ out:
 	wake_up_bit(&xprt->state, XPRT_LOCKED);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(xprt_unlock_connect);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(xprt_unlock_connect);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * xprt_connect - schedule a transport connect operation

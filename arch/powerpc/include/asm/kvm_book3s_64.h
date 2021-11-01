@@ -40,9 +40,13 @@ struct kvm_nested_guest {
 	u64 l1_gr_to_hr;		/* L1's addr of part'n-scoped table */
 	u64 process_table;		/* process table entry for this guest */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 hfscr;			/* HFSCR that the L1 requested for this nested guest */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 hfscr;			/* HFSCR that the L1 requested for this nested guest */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	long refcnt;			/* number of pointers to this struct */
 	struct mutex tlb_lock;		/* serialize page faults and tlbies */
 	struct kvm_nested_guest *next;

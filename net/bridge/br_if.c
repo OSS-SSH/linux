@@ -457,10 +457,14 @@ int br_add_bridge(struct net *net, const char *name)
 	dev->rtnl_link_ops = &br_link_ops;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	res = register_netdevice(dev);
 =======
 	res = register_netdev(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	res = register_netdevice(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (res)
 		free_netdev(dev);
 	return res;
@@ -472,9 +476,12 @@ int br_del_bridge(struct net *net, const char *name)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	rtnl_lock();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev = __dev_get_by_name(net, name);
 	if (dev == NULL)
 		ret =  -ENXIO; 	/* Could not find device */
@@ -493,9 +500,12 @@ int br_del_bridge(struct net *net, const char *name)
 		br_dev_delete(dev, NULL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	rtnl_unlock();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -573,10 +583,14 @@ int br_add_if(struct net_bridge *br, struct net_device *dev,
 	int err = 0;
 	unsigned br_hr, dev_hr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool changed_addr, fdb_synced = false;
 =======
 	bool changed_addr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool changed_addr, fdb_synced = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Don't allow bridging non-ethernet like devices. */
 	if ((dev->flags & IFF_LOOPBACK) ||
@@ -631,9 +645,13 @@ int br_add_if(struct net_bridge *br, struct net_device *dev,
 	err = dev_set_allmulti(dev, 1);
 	if (err) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		br_multicast_del_port(p);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		br_multicast_del_port(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(p);	/* kobject not yet init'd, manually free */
 		goto err1;
 	}
@@ -662,18 +680,24 @@ int br_add_if(struct net_bridge *br, struct net_device *dev,
 		goto err5;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	err = nbp_switchdev_mark_set(p);
 	if (err)
 		goto err6;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_disable_lro(dev);
 
 	list_add_rcu(&p->list, &br->port_list);
 
 	nbp_update_port_count(br);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!br_promisc_port(p) && (p->dev->priv_flags & IFF_UNICAST_FLT)) {
 		/* When updating the port count we also update all ports'
 		 * promiscuous mode.
@@ -687,8 +711,11 @@ int br_add_if(struct net_bridge *br, struct net_device *dev,
 		if (!fdb_synced)
 			netdev_err(dev, "failed to sync bridge static fdb addresses to this port\n");
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	netdev_update_features(br->dev);
 
@@ -709,20 +736,28 @@ int br_add_if(struct net_bridge *br, struct net_device *dev,
 		err = dev_pre_changeaddr_notify(br->dev, dev->dev_addr, extack);
 		if (err)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err6;
 =======
 			goto err7;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err6;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = nbp_vlan_init(p, extack);
 	if (err) {
 		netdev_err(dev, "failed to initialize vlan filtering on this port\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err6;
 =======
 		goto err7;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err6;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	spin_lock_bh(&br->lock);
@@ -746,6 +781,7 @@ int br_add_if(struct net_bridge *br, struct net_device *dev,
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 err6:
 	if (fdb_synced)
 		br_fdb_unsync_static(br, p);
@@ -759,6 +795,14 @@ err7:
 	nbp_update_port_count(br);
 err6:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err6:
+	if (fdb_synced)
+		br_fdb_unsync_static(br, p);
+	list_del_rcu(&p->list);
+	br_fdb_delete_by_port(br, p, 0, 1);
+	nbp_update_port_count(br);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netdev_upper_dev_unlink(dev, br->dev);
 err5:
 	dev->priv_flags &= ~IFF_BRIDGE_PORT;
@@ -769,9 +813,13 @@ err3:
 	sysfs_remove_link(br->ifobj, p->dev->name);
 err2:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	br_multicast_del_port(p);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	br_multicast_del_port(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kobject_put(&p->kobj);
 	dev_set_allmulti(dev, -1);
 err1:

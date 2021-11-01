@@ -383,12 +383,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
 	alt_recent = idx_recent_sum > NR_RECENT / 2;
 	if (alt_recent || alt_intercepts) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		s64 first_suitable_span_ns = duration_ns;
 		int first_suitable_idx = idx;
 =======
 		s64 last_enabled_span_ns = duration_ns;
 		int last_enabled_idx = idx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		s64 first_suitable_span_ns = duration_ns;
+		int first_suitable_idx = idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Look for the deepest idle state whose target residency had
@@ -403,10 +408,14 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
 		recent_sum = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for (i = idx - 1; i >= 0; i--) {
 =======
 		for (i = idx - 1; i >= idx0; i--) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for (i = idx - 1; i >= 0; i--) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct teo_bin *bin = &cpu_data->state_bins[i];
 			s64 span_ns;
 
@@ -414,6 +423,9 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
 			recent_sum += bin->recent;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			span_ns = teo_middle_of_bin(i, drv);
 
 			if ((!alt_recent || 2 * recent_sum > idx_recent_sum) &&
@@ -435,6 +447,7 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
 				break;
 			}
 
+<<<<<<< HEAD
 			if (dev->states_usage[i].disable)
 				continue;
 
@@ -453,31 +466,31 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
 			first_suitable_span_ns = span_ns;
 			first_suitable_idx = i;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (dev->states_usage[i].disable)
 				continue;
 
-			span_ns = teo_middle_of_bin(i, drv);
 			if (!teo_time_ok(span_ns)) {
 				/*
-				 * The current state is too shallow, so select
-				 * the first enabled deeper state.
+				 * The current state is too shallow, but if an
+				 * alternative candidate state has been found,
+				 * it may still turn out to be a better choice.
 				 */
-				duration_ns = last_enabled_span_ns;
-				idx = last_enabled_idx;
+				if (first_suitable_idx != idx)
+					continue;
+
 				break;
 			}
 
-			if ((!alt_recent || 2 * recent_sum > idx_recent_sum) &&
-			    (!alt_intercepts ||
-			     2 * intercept_sum > idx_intercept_sum)) {
-				idx = i;
-				duration_ns = span_ns;
-				break;
-			}
-
+<<<<<<< HEAD
 			last_enabled_span_ns = span_ns;
 			last_enabled_idx = i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			first_suitable_span_ns = span_ns;
+			first_suitable_idx = i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

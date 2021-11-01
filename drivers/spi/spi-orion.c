@@ -329,6 +329,7 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 {
 	struct orion_spi *orion_spi;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void __iomem *ctrl_reg;
 	u32 val;
 
@@ -343,6 +344,18 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 
 	orion_spi = spi_master_get_devdata(spi->master);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void __iomem *ctrl_reg;
+	u32 val;
+
+	orion_spi = spi_master_get_devdata(spi->master);
+	ctrl_reg = spi_reg(orion_spi, ORION_SPI_IF_CTRL_REG);
+
+	val = readl(ctrl_reg);
+
+	/* Clear existing chip-select and assertion state */
+	val &= ~(ORION_SPI_CS_MASK | 0x1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * If this line is using a GPIO to control chip select, this internal
@@ -352,12 +365,16 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 	 * is to deassert the old chip select and assert some other chip select.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	val |= ORION_SPI_CS(spi->chip_select);
 =======
 	orion_spi_clrbits(orion_spi, ORION_SPI_IF_CTRL_REG, ORION_SPI_CS_MASK);
 	orion_spi_setbits(orion_spi, ORION_SPI_IF_CTRL_REG,
 			  ORION_SPI_CS(spi->chip_select));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	val |= ORION_SPI_CS(spi->chip_select);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Chip select logic is inverted from spi_set_cs(). For lines using a
@@ -368,6 +385,9 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 	 */
 	if (!enable)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val |= 0x1;
 
 	/*
@@ -375,11 +395,14 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 	 * with a single write.
 	 */
 	writel(val, ctrl_reg);
+<<<<<<< HEAD
 =======
 		orion_spi_setbits(orion_spi, ORION_SPI_IF_CTRL_REG, 0x1);
 	else
 		orion_spi_clrbits(orion_spi, ORION_SPI_IF_CTRL_REG, 0x1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int orion_spi_wait_till_ready(struct orion_spi *orion_spi)

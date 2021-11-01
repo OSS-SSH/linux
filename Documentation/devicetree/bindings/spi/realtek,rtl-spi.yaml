@@ -16,12 +16,16 @@ allOf:
 properties:
   compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     enum:
       - realtek,rtl8380-spi
       - realtek,rtl8382-spi
       - realtek,rtl8391-spi
       - realtek,rtl8392-spi
       - realtek,rtl8393-spi
+<<<<<<< HEAD
 =======
     oneOf:
       - const: realtek,rtl8380-spi
@@ -30,6 +34,8 @@ properties:
       - const: realtek,rtl8392-spi
       - const: realtek,rtl8393-spi
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg:
     maxItems: 1

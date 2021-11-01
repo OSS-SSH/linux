@@ -155,10 +155,14 @@ static int ql_wait_for_drvr_lock(struct ql3_adapter *qdev)
 			return 1;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mdelay(1000);
 =======
 		ssleep(1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mdelay(1000);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while (++i < 10);
 
 	netdev_err(qdev->ndev, "Timed out waiting for driver lock...\n");
@@ -3279,10 +3283,14 @@ static int ql_adapter_reset(struct ql3_adapter *qdev)
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mdelay(1000);
 =======
 		ssleep(1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mdelay(1000);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while ((--max_wait_time));
 
 	/*
@@ -3319,10 +3327,14 @@ static int ql_adapter_reset(struct ql3_adapter *qdev)
 			if ((value & ISP_CONTROL_FSR) == 0)
 				break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			mdelay(1000);
 =======
 			ssleep(1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			mdelay(1000);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} while ((--max_wait_time));
 	}
 	if (max_wait_time == 0)

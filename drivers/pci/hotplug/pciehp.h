@@ -185,10 +185,14 @@ void pciehp_release_ctrl(struct controller *ctrl);
 int pciehp_sysfs_enable_slot(struct hotplug_slot *hotplug_slot);
 int pciehp_sysfs_disable_slot(struct hotplug_slot *hotplug_slot);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, bool probe);
 =======
 int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, int probe);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, bool probe);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int pciehp_get_attention_status(struct hotplug_slot *hotplug_slot, u8 *status);
 int pciehp_set_raw_indicator_status(struct hotplug_slot *h_slot, u8 status);
 int pciehp_get_raw_indicator_status(struct hotplug_slot *h_slot, u8 *status);

@@ -33,14 +33,20 @@ enum can_mode {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum can_termination_gpio {
 	CAN_TERMINATION_GPIO_DISABLED = 0,
 	CAN_TERMINATION_GPIO_ENABLED,
 	CAN_TERMINATION_GPIO_MAX,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * CAN common private data
  */
@@ -65,10 +71,15 @@ struct can_priv {
 	const u16 *termination_const;
 	u16 termination;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct gpio_desc *termination_gpio;
 	u16 termination_gpio_ohms[CAN_TERMINATION_GPIO_MAX];
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct gpio_desc *termination_gpio;
+	u16 termination_gpio_ohms[CAN_TERMINATION_GPIO_MAX];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	enum can_state state;
 

@@ -172,9 +172,13 @@ static struct {
 	{"Generic", "USB SD Reader", "1.00", BLIST_FORCELUN | BLIST_INQUIRY_36},
 	{"Generic", "USB Storage-SMC", NULL, BLIST_FORCELUN | BLIST_INQUIRY_36}, /* FW: 0180 and 0207 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{"Generic", "Ultra HS-SD/MMC", "2.09", BLIST_IGN_MEDIA_CHANGE | BLIST_INQUIRY_36},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{"Generic", "Ultra HS-SD/MMC", "2.09", BLIST_IGN_MEDIA_CHANGE | BLIST_INQUIRY_36},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{"HITACHI", "DF400", "*", BLIST_REPORTLUN2},
 	{"HITACHI", "DF500", "*", BLIST_REPORTLUN2},
 	{"HITACHI", "DISK-SUBSYSTEM", "*", BLIST_REPORTLUN2},

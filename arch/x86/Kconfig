@@ -120,9 +120,13 @@ config X86
 	select ARCH_WANT_LD_ORPHAN_WARN
 	select ARCH_WANTS_THP_SWAP		if X86_64
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select ARCH_HAS_PARANOID_L1D_FLUSH
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select ARCH_HAS_PARANOID_L1D_FLUSH
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select BUILDTIME_TABLE_SORT
 	select CLKEVT_I8253
 	select CLOCKSOURCE_VALIDATE_LAST_CYCLE
@@ -149,10 +153,13 @@ config X86
 	select GENERIC_PTDUMP
 	select GENERIC_SMP_IDLE_THREAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select GENERIC_STRNCPY_FROM_USER
 	select GENERIC_STRNLEN_USER
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select GENERIC_TIME_VSYSCALL
 	select GENERIC_GETTIMEOFDAY
 	select GENERIC_VDSO_TIME_NS
@@ -210,9 +217,12 @@ config X86
 	select HAVE_GCC_PLUGINS
 	select HAVE_HW_BREAKPOINT
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select HAVE_IDE
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select HAVE_IOREMAP_PROT
 	select HAVE_IRQ_EXIT_ON_IRQ_STACK	if X86_64
 	select HAVE_IRQ_TIME_ACCOUNTING
@@ -272,9 +282,13 @@ config X86
 	select SYSCTL_EXCEPTION_TRACE
 	select THREAD_INFO_IN_TASK
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select TRACE_IRQFLAGS_SUPPORT
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select TRACE_IRQFLAGS_SUPPORT
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select USER_STACKTRACE_SUPPORT
 	select VIRT_TO_BUS
 	select HAVE_ARCH_KCSAN			if X86_64
@@ -355,13 +369,19 @@ config ARCH_HIBERNATION_POSSIBLE
 	def_bool y
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config ARCH_NR_GPIO
 	int
 	default 1024 if X86_64
 	default 512
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config ARCH_SUSPEND_POSSIBLE
 	def_bool y
 
@@ -1424,10 +1444,14 @@ config HIGHMEM4G
 config HIGHMEM64G
 	bool "64GB"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on !M486SX && !M486 && !M586 && !M586TSC && !M586MMX && !MGEODE_LX && !MGEODEGX1 && !MCYRIXIII && !MELAN && !MWINCHIPC6 && !MWINCHIP3D && !MK6
 =======
 	depends on !M486SX && !M486 && !M586 && !M586TSC && !M586MMX && !MGEODE_LX && !MGEODEGX1 && !MCYRIXIII && !MELAN && !MWINCHIPC6 && !WINCHIP3D && !MK6
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on !M486SX && !M486 && !M586 && !M586TSC && !M586MMX && !MGEODE_LX && !MGEODEGX1 && !MCYRIXIII && !MELAN && !MWINCHIPC6 && !MWINCHIP3D && !MK6
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select X86_PAE
 	help
 	  Select this if you have a 32-bit processor and more than 4
@@ -1548,9 +1572,12 @@ config AMD_MEM_ENCRYPT
 config AMD_MEM_ENCRYPT_ACTIVE_BY_DEFAULT
 	bool "Activate AMD Secure Memory Encryption (SME) by default"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	default y
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on AMD_MEM_ENCRYPT
 	help
 	  Say yes to have system memory encrypted by default if running on
@@ -2636,9 +2663,12 @@ config PCI_XEN
 	def_bool y
 	depends on PCI && XEN
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select SWIOTLB_XEN
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config MMCONF_FAM10H
 	def_bool y
@@ -2800,6 +2830,7 @@ config AMD_NB
 	depends on CPU_SUP_AMD && PCI
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config X86_SYSFB
 	bool "Mark VGA/VBE/EFI FB as generic system framebuffer"
@@ -2828,6 +2859,8 @@ config X86_SYSFB
 	  If unsure, say Y.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endmenu
 
 
@@ -2891,10 +2924,13 @@ config HAVE_ATOMIC_IOMAP
 	depends on X86_32
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 source "drivers/firmware/Kconfig"
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "arch/x86/kvm/Kconfig"
 
 source "arch/x86/Kconfig.assembler"

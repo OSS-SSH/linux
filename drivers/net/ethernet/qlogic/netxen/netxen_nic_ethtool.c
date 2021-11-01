@@ -732,12 +732,18 @@ netxen_nic_set_wol(struct net_device *dev, struct ethtool_wolinfo *wol)
  */
 static int netxen_set_intr_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    struct ethtool_coalesce *ethcoal,
 				    struct kernel_ethtool_coalesce *kernel_coal,
 				    struct netlink_ext_ack *extack)
 =======
 			struct ethtool_coalesce *ethcoal)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    struct ethtool_coalesce *ethcoal,
+				    struct kernel_ethtool_coalesce *kernel_coal,
+				    struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct netxen_adapter *adapter = netdev_priv(netdev);
 
@@ -782,12 +788,18 @@ static int netxen_set_intr_coalesce(struct net_device *netdev,
 
 static int netxen_get_intr_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    struct ethtool_coalesce *ethcoal,
 				    struct kernel_ethtool_coalesce *kernel_coal,
 				    struct netlink_ext_ack *extack)
 =======
 			struct ethtool_coalesce *ethcoal)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    struct ethtool_coalesce *ethcoal,
+				    struct kernel_ethtool_coalesce *kernel_coal,
+				    struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct netxen_adapter *adapter = netdev_priv(netdev);
 

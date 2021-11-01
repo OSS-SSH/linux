@@ -362,9 +362,13 @@ static void imx7_csi_dma_unsetup_vb2_buf(struct imx7_csi *csi,
 			vb->timestamp = ktime_get_ns();
 			vb2_buffer_done(vb, return_status);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			csi->active_vb2_buf[i] = NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			csi->active_vb2_buf[i] = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -391,6 +395,7 @@ static int imx7_csi_dma_setup(struct imx7_csi *csi)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void imx7_csi_dma_cleanup(struct imx7_csi *csi,
 				 enum vb2_buffer_state return_status)
 {
@@ -400,6 +405,12 @@ static void imx7_csi_dma_cleanup(struct imx7_csi *csi)
 {
 	imx7_csi_dma_unsetup_vb2_buf(csi, VB2_BUF_STATE_ERROR);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void imx7_csi_dma_cleanup(struct imx7_csi *csi,
+				 enum vb2_buffer_state return_status)
+{
+	imx7_csi_dma_unsetup_vb2_buf(csi, return_status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx_media_free_dma_buf(csi->dev, &csi->underrun_buf);
 }
 
@@ -433,9 +444,13 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 	int width = out_pix->width;
 	u32 stride = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 cr3 = BIT_FRMCNT_RST;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 cr3 = BIT_FRMCNT_RST;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 cr1, cr18;
 
 	cr18 = imx7_csi_reg_read(csi, CSI_CSICR18);
@@ -480,9 +495,13 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 		case MEDIA_BUS_FMT_SGRBG10_1X10:
 		case MEDIA_BUS_FMT_SRGGB10_1X10:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cr3 |= BIT_TWO_8BIT_SENSOR;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cr3 |= BIT_TWO_8BIT_SENSOR;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cr18 |= BIT_MIPI_DATA_FORMAT_RAW10;
 			break;
 		case MEDIA_BUS_FMT_Y12_1X12:
@@ -491,9 +510,13 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 		case MEDIA_BUS_FMT_SGRBG12_1X12:
 		case MEDIA_BUS_FMT_SRGGB12_1X12:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cr3 |= BIT_TWO_8BIT_SENSOR;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cr3 |= BIT_TWO_8BIT_SENSOR;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cr18 |= BIT_MIPI_DATA_FORMAT_RAW12;
 			break;
 		case MEDIA_BUS_FMT_Y14_1X14:
@@ -502,9 +525,13 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 		case MEDIA_BUS_FMT_SGRBG14_1X14:
 		case MEDIA_BUS_FMT_SRGGB14_1X14:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cr3 |= BIT_TWO_8BIT_SENSOR;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cr3 |= BIT_TWO_8BIT_SENSOR;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cr18 |= BIT_MIPI_DATA_FORMAT_RAW14;
 			break;
 		/*
@@ -518,6 +545,7 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 			cr18 |= BIT_MIPI_DATA_FORMAT_YUV422_8B;
 			break;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -536,15 +564,21 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 			break;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	imx7_csi_reg_write(csi, cr1, CSI_CSICR1);
 	imx7_csi_reg_write(csi, BIT_DMA_BURST_TYPE_RFF_INCR16, CSI_CSICR2);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	imx7_csi_reg_write(csi, cr3, CSI_CSICR3);
 =======
 	imx7_csi_reg_write(csi, BIT_FRMCNT_RST, CSI_CSICR3);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	imx7_csi_reg_write(csi, cr3, CSI_CSICR3);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx7_csi_reg_write(csi, cr18, CSI_CSICR18);
 
 	imx7_csi_reg_write(csi, (width * out_pix->height) >> 2, CSI_CSIRXCNT);
@@ -572,6 +606,7 @@ static int imx7_csi_init(struct imx7_csi *csi)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void imx7_csi_deinit(struct imx7_csi *csi,
 			    enum vb2_buffer_state return_status)
 {
@@ -581,6 +616,12 @@ static void imx7_csi_deinit(struct imx7_csi *csi)
 {
 	imx7_csi_dma_cleanup(csi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void imx7_csi_deinit(struct imx7_csi *csi,
+			    enum vb2_buffer_state return_status)
+{
+	imx7_csi_dma_cleanup(csi, return_status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx7_csi_init_default(csi);
 	imx7_csi_dmareq_rff_disable(csi);
 	clk_disable_unprepare(csi->mclk);
@@ -744,10 +785,14 @@ static int imx7_csi_s_stream(struct v4l2_subdev *sd, int enable)
 		ret = v4l2_subdev_call(csi->src_sd, video, s_stream, 1);
 		if (ret < 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			imx7_csi_deinit(csi, VB2_BUF_STATE_QUEUED);
 =======
 			imx7_csi_deinit(csi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			imx7_csi_deinit(csi, VB2_BUF_STATE_QUEUED);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out_unlock;
 		}
 
@@ -758,10 +803,14 @@ static int imx7_csi_s_stream(struct v4l2_subdev *sd, int enable)
 		v4l2_subdev_call(csi->src_sd, video, s_stream, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		imx7_csi_deinit(csi, VB2_BUF_STATE_ERROR);
 =======
 		imx7_csi_deinit(csi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		imx7_csi_deinit(csi, VB2_BUF_STATE_ERROR);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	csi->is_streaming = !!enable;

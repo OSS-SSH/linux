@@ -30,9 +30,13 @@
 #include <linux/slab.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/unaligned.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/unaligned.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/byteorder.h>
 #include <asm/word-at-a-time.h>
 #include <asm/page.h>
@@ -940,6 +944,9 @@ __visible int memcmp(const void *cs, const void *ct, size_t count)
 	int res = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
 	if (count >= sizeof(unsigned long)) {
 		const unsigned long *u1 = cs;
@@ -955,8 +962,11 @@ __visible int memcmp(const void *cs, const void *ct, size_t count)
 		ct = u2;
 	}
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (su1 = cs, su2 = ct; 0 < count; ++su1, ++su2, count--)
 		if ((res = *su1 - *su2) != 0)
 			break;

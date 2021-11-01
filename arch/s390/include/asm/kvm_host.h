@@ -245,9 +245,13 @@ struct kvm_s390_sie_block {
 #define ECB_GS		0x40
 #define ECB_TE		0x10
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ECB_SPECI	0x08
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ECB_SPECI	0x08
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ECB_SRSI	0x04
 #define ECB_HOSTPROTINT	0x02
 	__u8	ecb;			/* 0x0061 */
@@ -450,6 +454,9 @@ struct kvm_vcpu_stat {
 	u64 instruction_sigp_cpu_reset;
 	u64 instruction_sigp_unknown;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 instruction_diagnose_10;
 	u64 instruction_diagnose_44;
 	u64 instruction_diagnose_9c;
@@ -459,6 +466,7 @@ struct kvm_vcpu_stat {
 	u64 instruction_diagnose_308;
 	u64 instruction_diagnose_500;
 	u64 instruction_diagnose_other;
+<<<<<<< HEAD
 =======
 	u64 diagnose_10;
 	u64 diagnose_44;
@@ -470,6 +478,8 @@ struct kvm_vcpu_stat {
 	u64 diagnose_500;
 	u64 diagnose_other;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 pfault_sync;
 };
 
@@ -815,6 +825,7 @@ struct kvm_s390_cpu_model {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 typedef int (*crypto_hook)(struct kvm_vcpu *vcpu);
 
 struct kvm_s390_crypto {
@@ -831,6 +842,14 @@ struct kvm_s390_crypto {
 	struct kvm_s390_crypto_cb *crycb;
 	struct kvm_s390_module_hook *pqap_hook;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+typedef int (*crypto_hook)(struct kvm_vcpu *vcpu);
+
+struct kvm_s390_crypto {
+	struct kvm_s390_crypto_cb *crycb;
+	struct rw_semaphore pqap_hook_rwsem;
+	crypto_hook *pqap_hook;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32 crycbd;
 	__u8 aes_kw;
 	__u8 dea_kw;
@@ -983,9 +1002,13 @@ struct kvm_arch{
 	/* subset of available cpu features enabled by user space */
 	DECLARE_BITMAP(cpu_feat, KVM_S390_VM_CPU_FEAT_NR_BITS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* indexed by vcpu_idx */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* indexed by vcpu_idx */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DECLARE_BITMAP(idle_mask, KVM_MAX_VCPUS);
 	struct kvm_s390_gisa_interrupt gisa_int;
 	struct kvm_s390_pv pv;

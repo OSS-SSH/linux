@@ -1423,6 +1423,9 @@ static void python_process_event(union perf_event *event,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void python_process_throttle(union perf_event *event,
 				    struct perf_sample *sample,
 				    struct machine *machine)
@@ -1454,8 +1457,11 @@ static void python_process_throttle(union perf_event *event,
 	Py_DECREF(t);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void python_do_process_switch(union perf_event *event,
 				     struct perf_sample *sample,
 				     struct machine *machine)
@@ -2114,8 +2120,12 @@ struct scripting_ops python_scripting_ops = {
 	.process_stat		= python_process_stat,
 	.process_stat_interval	= python_process_stat_interval,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.process_throttle	= python_process_throttle,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.process_throttle	= python_process_throttle,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.generate_script	= python_generate_script,
 };

@@ -171,9 +171,13 @@ struct dso {
 	u8		 hit:1;
 	u8		 annotate_warned:1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8		 auxtrace_warned:1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8		 auxtrace_warned:1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8		 short_name_allocated:1;
 	u8		 long_name_allocated:1;
 	u8		 is_64_bit:1;

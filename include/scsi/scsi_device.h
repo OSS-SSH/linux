@@ -11,9 +11,13 @@
 #include <linux/sbitmap.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct bsg_device;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct bsg_device;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct device;
 struct request_queue;
 struct scsi_cmnd;
@@ -150,9 +154,12 @@ struct scsi_device {
 	struct scsi_vpd __rcu *vpd_pg80;
 	struct scsi_vpd __rcu *vpd_pg89;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned char current_tag;	/* current tag */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct scsi_target      *sdev_target;
 
 	blist_flags_t		sdev_bflags; /* black/white flags as also found in
@@ -213,9 +220,13 @@ struct scsi_device {
 	unsigned rpm_autosuspend:1;	/* Enable runtime autosuspend at device
 					 * creation time */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned ignore_media_change:1; /* Ignore MEDIA CHANGE on resume */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned ignore_media_change:1; /* Ignore MEDIA CHANGE on resume */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	bool offline_already;		/* Device offline message logged */
 
@@ -246,12 +257,18 @@ struct scsi_device {
 	void			*dma_drain_buf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int		sg_timeout;
 	unsigned int		sg_reserved_size;
 
 	struct bsg_device	*bsg_dev;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned char		access_state;
 	struct mutex		state_mutex;
 	enum scsi_device_state sdev_state;
@@ -284,6 +301,9 @@ __printf(3, 4) void
 scmd_printk(const char *, const struct scsi_cmnd *, const char *, ...);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define scmd_dbg(scmd, fmt, a...)					\
 	do {								\
 		struct request *__rq = scsi_cmd_to_rq((scmd));		\
@@ -293,6 +313,7 @@ scmd_printk(const char *, const struct scsi_cmnd *, const char *, ...);
 				 __rq->rq_disk->disk_name, ##a);	\
 		else							\
 			sdev_dbg((scmd)->device, fmt, ##a);		\
+<<<<<<< HEAD
 =======
 #define scmd_dbg(scmd, fmt, a...)					   \
 	do {								   \
@@ -302,6 +323,8 @@ scmd_printk(const char *, const struct scsi_cmnd *, const char *, ...);
 		else							   \
 			sdev_dbg((scmd)->device, fmt, ##a);		   \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while (0)
 
 enum scsi_target_state {

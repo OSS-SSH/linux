@@ -54,12 +54,17 @@ void test_core_autosize(void)
 	int err, fd = -1, zero = 0;
 	int char_id, short_id, int_id, long_long_id, void_ptr_id, id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DECLARE_LIBBPF_OPTS(bpf_object_open_opts, open_opts);
 	struct test_core_autosize* skel = NULL;
 =======
 	struct test_core_autosize* skel = NULL;
 	struct bpf_object_load_attr load_attr = {};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DECLARE_LIBBPF_OPTS(bpf_object_open_opts, open_opts);
+	struct test_core_autosize* skel = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bpf_program *prog;
 	struct bpf_map *bss_map;
 	struct btf *btf = NULL;
@@ -131,6 +136,7 @@ void test_core_autosize(void)
 
 	/* open and load BPF program with custom BTF as the kernel BTF */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	open_opts.btf_custom_path = btf_file;
 	skel = test_core_autosize__open_opts(&open_opts);
 	if (!ASSERT_OK_PTR(skel, "skel_open"))
@@ -140,6 +146,12 @@ void test_core_autosize(void)
 	if (!ASSERT_OK_PTR(skel, "skel_open"))
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	open_opts.btf_custom_path = btf_file;
+	skel = test_core_autosize__open_opts(&open_opts);
+	if (!ASSERT_OK_PTR(skel, "skel_open"))
+		goto cleanup;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* disable handle_signed() for now */
 	prog = bpf_object__find_program_by_name(skel->obj, "handle_signed");
@@ -148,12 +160,16 @@ void test_core_autosize(void)
 	bpf_program__set_autoload(prog, false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = bpf_object__load(skel->obj);
 =======
 	load_attr.obj = skel->obj;
 	load_attr.target_btf_path = btf_file;
 	err = bpf_object__load_xattr(&load_attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = bpf_object__load(skel->obj);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ASSERT_OK(err, "prog_load"))
 		goto cleanup;
 
@@ -221,6 +237,7 @@ void test_core_autosize(void)
 
 	/* now re-load with handle_signed() enabled, it should fail loading */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	open_opts.btf_custom_path = btf_file;
 	skel = test_core_autosize__open_opts(&open_opts);
 	if (!ASSERT_OK_PTR(skel, "skel_open"))
@@ -230,14 +247,23 @@ void test_core_autosize(void)
 	if (!ASSERT_ERR(err, "skel_load"))
 =======
 	skel = test_core_autosize__open();
+=======
+	open_opts.btf_custom_path = btf_file;
+	skel = test_core_autosize__open_opts(&open_opts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ASSERT_OK_PTR(skel, "skel_open"))
-		return;
+		goto cleanup;
 
+<<<<<<< HEAD
 	load_attr.obj = skel->obj;
 	load_attr.target_btf_path = btf_file;
 	err = bpf_object__load_xattr(&load_attr);
 	if (!ASSERT_ERR(err, "bad_prog_load"))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = test_core_autosize__load(skel);
+	if (!ASSERT_ERR(err, "skel_load"))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto cleanup;
 
 cleanup:

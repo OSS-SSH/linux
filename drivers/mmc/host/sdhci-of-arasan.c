@@ -160,14 +160,20 @@ struct sdhci_arasan_data {
  * internal clock even when the clock isn't stable */
 #define SDHCI_ARASAN_QUIRK_CLOCK_UNSTABLE BIT(1)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Some of the Arasan variations might not have timing requirements
  * met at 25MHz for Default Speed mode, those controllers work at
  * 19MHz instead
  */
 #define SDHCI_ARASAN_QUIRK_CLOCK_25_BROKEN BIT(2)
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct sdhci_arasan_of_data {
@@ -277,15 +283,21 @@ static void sdhci_arasan_set_clock(struct sdhci_host *host, unsigned int clock)
 			 */
 			sdhci_set_clock(host, host->max_clk);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (phy_power_on(sdhci_arasan->phy)) {
 				pr_err("%s: Cannot power on phy.\n",
 				       mmc_hostname(host->mmc));
 				return;
 			}
 
+<<<<<<< HEAD
 =======
 			phy_power_on(sdhci_arasan->phy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sdhci_arasan->is_phy_on = true;
 
 			/*
@@ -309,6 +321,9 @@ static void sdhci_arasan_set_clock(struct sdhci_host *host, unsigned int clock)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sdhci_arasan->quirks & SDHCI_ARASAN_QUIRK_CLOCK_25_BROKEN) {
 		/*
 		 * Some of the Arasan variations might not have timing
@@ -319,8 +334,11 @@ static void sdhci_arasan_set_clock(struct sdhci_host *host, unsigned int clock)
 			clock = (DEFAULT_SPEED_MAX_DTR * 19) / 25;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Set the Input and Output Clock Phase Delays */
 	if (clk_data->set_clk_delays)
 		clk_data->set_clk_delays(host);
@@ -339,15 +357,21 @@ static void sdhci_arasan_set_clock(struct sdhci_host *host, unsigned int clock)
 
 	if (ctrl_phy) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (phy_power_on(sdhci_arasan->phy)) {
 			pr_err("%s: Cannot power on phy.\n",
 			       mmc_hostname(host->mmc));
 			return;
 		}
 
+<<<<<<< HEAD
 =======
 		phy_power_on(sdhci_arasan->phy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sdhci_arasan->is_phy_on = true;
 	}
 }
@@ -504,12 +528,18 @@ static int sdhci_arasan_suspend(struct device *dev)
 		if (ret) {
 			dev_err(dev, "Cannot power off phy.\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (sdhci_resume_host(host))
 				dev_err(dev, "Cannot resume host.\n");
 
 =======
 			sdhci_resume_host(host);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (sdhci_resume_host(host))
+				dev_err(dev, "Cannot resume host.\n");
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return ret;
 		}
 		sdhci_arasan->is_phy_on = false;
@@ -925,12 +955,18 @@ static int arasan_zynqmp_execute_tuning(struct mmc_host *mmc, u32 opcode)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* ZynqMP SD controller does not perform auto tuning in DDR50 mode */
 	if (mmc->ios.timing == MMC_TIMING_UHS_DDR50)
 		return 0;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	arasan_zynqmp_dll_reset(host, device_id);
 
 	err = sdhci_execute_tuning(mmc, opcode);
@@ -1006,10 +1042,14 @@ static void sdhci_arasan_update_baseclkfreq(struct sdhci_host *host)
 	const struct sdhci_arasan_soc_ctl_map *soc_ctl_map =
 		sdhci_arasan->soc_ctl_map;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 mhz = DIV_ROUND_CLOSEST_ULL(clk_get_rate(pltfm_host->clk), 1000000);
 =======
 	u32 mhz = DIV_ROUND_CLOSEST(clk_get_rate(pltfm_host->clk), 1000000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 mhz = DIV_ROUND_CLOSEST_ULL(clk_get_rate(pltfm_host->clk), 1000000);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Having a map is optional */
 	if (!soc_ctl_map)
@@ -1044,16 +1084,22 @@ static void arasan_dt_read_clk_phase(struct device *dev,
 	struct device_node *np = dev->of_node;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 clk_phase[2] = {0};
 	int ret;
 =======
 	int clk_phase[2] = {0};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 clk_phase[2] = {0};
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Read Tap Delay values from DT, if the DT does not contain the
 	 * Tap Values then use the pre-defined values.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = of_property_read_variable_u32_array(np, prop, &clk_phase[0],
 						  2, 0);
@@ -1062,6 +1108,11 @@ static void arasan_dt_read_clk_phase(struct device *dev,
 	if (of_property_read_variable_u32_array(np, prop, &clk_phase[0],
 						2, 0)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = of_property_read_variable_u32_array(np, prop, &clk_phase[0],
+						  2, 0);
+	if (ret < 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_dbg(dev, "Using predefined clock phase for %s = %d %d\n",
 			prop, clk_data->clk_phase_in[timing],
 			clk_data->clk_phase_out[timing]);
@@ -1677,11 +1728,17 @@ static int sdhci_arasan_probe(struct platform_device *pdev)
 		host->mmc_host_ops.execute_tuning =
 			arasan_zynqmp_execute_tuning;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		sdhci_arasan->quirks |= SDHCI_ARASAN_QUIRK_CLOCK_25_BROKEN;
 		host->quirks |= SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		sdhci_arasan->quirks |= SDHCI_ARASAN_QUIRK_CLOCK_25_BROKEN;
+		host->quirks |= SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	arasan_dt_parse_clk_phases(dev, &sdhci_arasan->clk_data);

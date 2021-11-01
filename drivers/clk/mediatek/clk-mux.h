@@ -34,19 +34,27 @@ struct mtk_mux {
 	s8 upd_shift;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct clk_ops *ops;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct clk_ops *ops;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	signed char num_parents;
 };
 
 #define GATE_CLR_SET_UPD_FLAGS(_id, _name, _parents, _mux_ofs,		\
 			_mux_set_ofs, _mux_clr_ofs, _shift, _width,	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 			_gate, _upd_ofs, _upd, _flags, _ops) {		\
 =======
 			_gate, _upd_ofs, _upd, _flags) {		\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			_gate, _upd_ofs, _upd, _flags, _ops) {		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.id = _id,						\
 		.name = _name,						\
 		.mux_ofs = _mux_ofs,					\
@@ -61,27 +69,38 @@ struct mtk_mux {
 		.num_parents = ARRAY_SIZE(_parents),			\
 		.flags = _flags,					\
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &_ops,						\
 	}
 
 extern const struct clk_ops mtk_mux_clr_set_upd_ops;
 extern const struct clk_ops mtk_mux_gate_clr_set_upd_ops;
 
+<<<<<<< HEAD
 =======
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MUX_GATE_CLR_SET_UPD_FLAGS(_id, _name, _parents, _mux_ofs,	\
 			_mux_set_ofs, _mux_clr_ofs, _shift, _width,	\
 			_gate, _upd_ofs, _upd, _flags)			\
 		GATE_CLR_SET_UPD_FLAGS(_id, _name, _parents, _mux_ofs,	\
 			_mux_set_ofs, _mux_clr_ofs, _shift, _width,	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 			_gate, _upd_ofs, _upd, _flags,			\
 			mtk_mux_gate_clr_set_upd_ops)
 =======
 			_gate, _upd_ofs, _upd, _flags)			\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			_gate, _upd_ofs, _upd, _flags,			\
+			mtk_mux_gate_clr_set_upd_ops)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MUX_GATE_CLR_SET_UPD(_id, _name, _parents, _mux_ofs,		\
 			_mux_set_ofs, _mux_clr_ofs, _shift, _width,	\
@@ -92,6 +111,9 @@ extern const struct clk_ops mtk_mux_gate_clr_set_upd_ops;
 			CLK_SET_RATE_PARENT)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MUX_CLR_SET_UPD(_id, _name, _parents, _mux_ofs,			\
 			_mux_set_ofs, _mux_clr_ofs, _shift, _width,	\
 			_upd_ofs, _upd)					\
@@ -100,8 +122,11 @@ extern const struct clk_ops mtk_mux_gate_clr_set_upd_ops;
 			0, _upd_ofs, _upd, CLK_SET_RATE_PARENT,		\
 			mtk_mux_clr_set_upd_ops)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mtk_clk_register_muxes(const struct mtk_mux *muxes,
 			   int num, struct device_node *node,
 			   spinlock_t *lock,

@@ -60,6 +60,7 @@
 
 	eeprom@52 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		compatible = "onnn,cat24c05", "atmel,24c04";
 		reg = <0x52>;
 	};
@@ -73,6 +74,11 @@
 		reg = <0x53>;
 	};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		compatible = "onnn,cat24c05", "atmel,24c04";
+		reg = <0x52>;
+	};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &i2c3 {

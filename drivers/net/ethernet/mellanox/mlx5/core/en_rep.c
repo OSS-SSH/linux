@@ -50,9 +50,13 @@
 #include "fs_core.h"
 #include "lib/mlx5.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "lib/devcom.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "lib/devcom.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CREATE_TRACE_POINTS
 #include "diag/en_rep_tracepoint.h"
 #include "en_accel/ipsec.h"
@@ -255,12 +259,18 @@ static int mlx5e_rep_set_channels(struct net_device *dev,
 
 static int mlx5e_rep_get_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  struct ethtool_coalesce *coal,
 				  struct kernel_ethtool_coalesce *kernel_coal,
 				  struct netlink_ext_ack *extack)
 =======
 				  struct ethtool_coalesce *coal)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  struct ethtool_coalesce *coal,
+				  struct kernel_ethtool_coalesce *kernel_coal,
+				  struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5e_priv *priv = netdev_priv(netdev);
 
@@ -269,12 +279,18 @@ static int mlx5e_rep_get_coalesce(struct net_device *netdev,
 
 static int mlx5e_rep_set_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  struct ethtool_coalesce *coal,
 				  struct kernel_ethtool_coalesce *kernel_coal,
 				  struct netlink_ext_ack *extack)
 =======
 				  struct ethtool_coalesce *coal)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  struct ethtool_coalesce *coal,
+				  struct kernel_ethtool_coalesce *kernel_coal,
+				  struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5e_priv *priv = netdev_priv(netdev);
 
@@ -327,10 +343,15 @@ static void mlx5e_sqs2vport_stop(struct mlx5_eswitch *esw,
 	list_for_each_entry_safe(rep_sq, tmp, &rpriv->vport_sqs_list, list) {
 		mlx5_eswitch_del_send_to_vport_rule(rep_sq->send_to_vport_rule);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (rep_sq->send_to_vport_rule_peer)
 			mlx5_eswitch_del_send_to_vport_rule(rep_sq->send_to_vport_rule_peer);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (rep_sq->send_to_vport_rule_peer)
+			mlx5_eswitch_del_send_to_vport_rule(rep_sq->send_to_vport_rule_peer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_del(&rep_sq->list);
 		kfree(rep_sq);
 	}
@@ -341,9 +362,13 @@ static int mlx5e_sqs2vport_start(struct mlx5_eswitch *esw,
 				 u32 *sqns_array, int sqns_num)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mlx5_eswitch *peer_esw = NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mlx5_eswitch *peer_esw = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mlx5_flow_handle *flow_rule;
 	struct mlx5e_rep_priv *rpriv;
 	struct mlx5e_rep_sq *rep_sq;
@@ -355,12 +380,18 @@ static int mlx5e_sqs2vport_start(struct mlx5_eswitch *esw,
 
 	rpriv = mlx5e_rep_to_rep_priv(rep);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mlx5_devcom_is_paired(esw->dev->priv.devcom, MLX5_DEVCOM_ESW_OFFLOADS))
 		peer_esw = mlx5_devcom_get_peer_data(esw->dev->priv.devcom,
 						     MLX5_DEVCOM_ESW_OFFLOADS);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < sqns_num; i++) {
 		rep_sq = kzalloc(sizeof(*rep_sq), GFP_KERNEL);
 		if (!rep_sq) {
@@ -370,10 +401,14 @@ static int mlx5e_sqs2vport_start(struct mlx5_eswitch *esw,
 
 		/* Add re-inject rule to the PF/representor sqs */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flow_rule = mlx5_eswitch_add_send_to_vport_rule(esw, esw, rep,
 =======
 		flow_rule = mlx5_eswitch_add_send_to_vport_rule(esw, rep,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		flow_rule = mlx5_eswitch_add_send_to_vport_rule(esw, esw, rep,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 								sqns_array[i]);
 		if (IS_ERR(flow_rule)) {
 			err = PTR_ERR(flow_rule);
@@ -382,6 +417,9 @@ static int mlx5e_sqs2vport_start(struct mlx5_eswitch *esw,
 		}
 		rep_sq->send_to_vport_rule = flow_rule;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rep_sq->sqn = sqns_array[i];
 
 		if (peer_esw) {
@@ -396,6 +434,7 @@ static int mlx5e_sqs2vport_start(struct mlx5_eswitch *esw,
 			rep_sq->send_to_vport_rule_peer = flow_rule;
 		}
 
+<<<<<<< HEAD
 		list_add(&rep_sq->list, &rpriv->vport_sqs_list);
 	}
 
@@ -406,17 +445,31 @@ static int mlx5e_sqs2vport_start(struct mlx5_eswitch *esw,
 		list_add(&rep_sq->list, &rpriv->vport_sqs_list);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		list_add(&rep_sq->list, &rpriv->vport_sqs_list);
+	}
+
+	if (peer_esw)
+		mlx5_devcom_release_peer_data(esw->dev->priv.devcom, MLX5_DEVCOM_ESW_OFFLOADS);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 out_err:
 	mlx5e_sqs2vport_stop(esw, rep);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (peer_esw)
 		mlx5_devcom_release_peer_data(esw->dev->priv.devcom, MLX5_DEVCOM_ESW_OFFLOADS);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -431,11 +484,16 @@ int mlx5e_add_sqs_fwd_rules(struct mlx5e_priv *priv)
 	u32 *sqs;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sqs = kcalloc(priv->channels.num * mlx5e_get_dcb_num_tc(&priv->channels.params),
 		      sizeof(*sqs), GFP_KERNEL);
 =======
 	sqs = kcalloc(priv->channels.num * priv->channels.params.num_tc, sizeof(*sqs), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sqs = kcalloc(priv->channels.num * mlx5e_get_dcb_num_tc(&priv->channels.params),
+		      sizeof(*sqs), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!sqs)
 		goto out;
 
@@ -633,9 +691,12 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
 					 MLX5_CQ_PERIOD_MODE_START_FROM_EQE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	priv->max_nch = mlx5e_calc_max_nch(priv, priv->profile);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	params = &priv->channels.params;
 
 	params->num_channels = MLX5E_REP_PARAMS_DEF_NUM_CHANNELS;
@@ -656,6 +717,7 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
 	mlx5e_set_rx_cq_mode_params(params, cq_period_mode);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	params->mqprio.num_tc       = 1;
 	params->tunneled_offload_en = false;
 
@@ -667,13 +729,23 @@ static void mlx5e_build_rep_params(struct net_device *netdev)
 	mlx5_query_min_inline(mdev, &params->tx_min_inline_mode);
 =======
 	params->num_tc                = 1;
+=======
+	params->mqprio.num_tc       = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	params->tunneled_offload_en = false;
 
-	mlx5_query_min_inline(mdev, &params->tx_min_inline_mode);
+	/* Set an initial non-zero value, so that mlx5e_select_queue won't
+	 * divide by zero if called before first activating channels.
+	 */
+	priv->num_tc_x_num_ch = params->num_channels * params->mqprio.num_tc;
 
+<<<<<<< HEAD
 	/* RSS */
 	mlx5e_build_rss_params(&priv->rss_params, params->num_channels);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5_query_min_inline(mdev, &params->tx_min_inline_mode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mlx5e_build_rep_netdev(struct net_device *netdev,
@@ -699,9 +771,12 @@ static void mlx5e_build_rep_netdev(struct net_device *netdev,
 
 	netdev->features |= netdev->hw_features;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	netdev->features |= NETIF_F_VLAN_CHALLENGED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netdev->features |= NETIF_F_NETNS_LOCAL;
 }
 
@@ -741,32 +816,44 @@ static int mlx5e_create_rep_ttc_table(struct mlx5e_priv *priv)
 	struct mlx5_eswitch_rep *rep = rpriv->rep;
 	struct ttc_params ttc_params = {};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 =======
 	int tt, err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	priv->fs.ns = mlx5_get_flow_namespace(priv->mdev,
 					      MLX5_FLOW_NAMESPACE_KERNEL);
 
 	/* The inner_ttc in the ttc params is intentionally not set */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlx5e_set_ttc_params(priv, &ttc_params, false);
 =======
 	ttc_params.any_tt_tirn = priv->direct_tir[0].tirn;
 	mlx5e_set_ttc_ft_params(&ttc_params);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5e_set_ttc_params(priv, &ttc_params, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (rep->vport != MLX5_VPORT_UPLINK)
 		/* To give uplik rep TTC a lower level for chaining from root ft */
 		ttc_params.ft_attr.level = MLX5E_TTC_FT_LEVEL + 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->fs.ttc = mlx5_create_ttc_table(priv->mdev, &ttc_params);
 	if (IS_ERR(priv->fs.ttc)) {
 		err = PTR_ERR(priv->fs.ttc);
 		netdev_err(priv->netdev, "Failed to create rep ttc table, err=%d\n",
 			   err);
+<<<<<<< HEAD
 =======
 	for (tt = 0; tt < MLX5E_NUM_INDIR_TIRS; tt++)
 		ttc_params.indir_tirn[tt] = priv->indir_tir[tt].tirn;
@@ -775,6 +862,8 @@ static int mlx5e_create_rep_ttc_table(struct mlx5e_priv *priv)
 	if (err) {
 		netdev_err(priv->netdev, "Failed to create rep ttc table, err=%d\n", err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
 	}
 	return 0;
@@ -793,10 +882,14 @@ static int mlx5e_create_rep_root_ft(struct mlx5e_priv *priv)
 		 * their own ttc
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rpriv->root_ft = mlx5_get_ttc_flow_table(priv->fs.ttc);
 =======
 		rpriv->root_ft = priv->fs.ttc.ft.t;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rpriv->root_ft = mlx5_get_ttc_flow_table(priv->fs.ttc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 
@@ -870,6 +963,7 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
 {
 	struct mlx5_core_dev *mdev = priv->mdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mlx5e_lro_param lro_param;
 	int err;
 
@@ -882,6 +976,15 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
 	int err;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mlx5e_lro_param lro_param;
+	int err;
+
+	priv->rx_res = mlx5e_rx_res_alloc();
+	if (!priv->rx_res)
+		return -ENOMEM;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlx5e_init_l2_addr(priv);
 
 	err = mlx5e_open_drop_rq(priv, &priv->drop_rq);
@@ -891,10 +994,14 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lro_param = mlx5e_get_lro_param(&priv->channels.params);
 	err = mlx5e_rx_res_init(priv->rx_res, priv->mdev, 0,
 				priv->max_nch, priv->drop_rq.rqn, &lro_param,
 				priv->channels.params.num_channels);
+<<<<<<< HEAD
 	if (err)
 		goto err_close_drop_rq;
 
@@ -903,25 +1010,19 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
 		goto err_destroy_rx_res;
 =======
 	err = mlx5e_create_indirect_rqt(priv);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto err_close_drop_rq;
 
-	err = mlx5e_create_direct_rqts(priv, priv->direct_tir, max_nch);
-	if (err)
-		goto err_destroy_indirect_rqts;
-
-	err = mlx5e_create_indirect_tirs(priv, false);
-	if (err)
-		goto err_destroy_direct_rqts;
-
-	err = mlx5e_create_direct_tirs(priv, priv->direct_tir, max_nch);
-	if (err)
-		goto err_destroy_indirect_tirs;
-
 	err = mlx5e_create_rep_ttc_table(priv);
 	if (err)
+<<<<<<< HEAD
 		goto err_destroy_direct_tirs;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_destroy_rx_res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = mlx5e_create_rep_root_ft(priv);
 	if (err)
@@ -938,6 +1039,7 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
 err_destroy_root_ft:
 	mlx5e_destroy_rep_root_ft(priv);
 err_destroy_ttc_table:
+<<<<<<< HEAD
 <<<<<<< HEAD
 	mlx5_destroy_ttc_table(priv->fs.ttc);
 err_destroy_rx_res:
@@ -959,11 +1061,21 @@ err_destroy_indirect_rqts:
 err_close_drop_rq:
 	mlx5e_close_drop_rq(&priv->drop_rq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5_destroy_ttc_table(priv->fs.ttc);
+err_destroy_rx_res:
+	mlx5e_rx_res_destroy(priv->rx_res);
+err_close_drop_rq:
+	mlx5e_close_drop_rq(&priv->drop_rq);
+	mlx5e_rx_res_free(priv->rx_res);
+	priv->rx_res = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
 static void mlx5e_cleanup_rep_rx(struct mlx5e_priv *priv)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	mlx5e_ethtool_cleanup_steering(priv);
 	rep_vport_rx_rule_destroy(priv);
@@ -976,16 +1088,20 @@ static void mlx5e_cleanup_rep_rx(struct mlx5e_priv *priv)
 =======
 	u16 max_nch = priv->max_nch;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlx5e_ethtool_cleanup_steering(priv);
 	rep_vport_rx_rule_destroy(priv);
 	mlx5e_destroy_rep_root_ft(priv);
-	mlx5e_destroy_ttc_table(priv, &priv->fs.ttc);
-	mlx5e_destroy_direct_tirs(priv, priv->direct_tir, max_nch);
-	mlx5e_destroy_indirect_tirs(priv);
-	mlx5e_destroy_direct_rqts(priv, priv->direct_tir, max_nch);
-	mlx5e_destroy_rqt(priv, &priv->indir_rqt);
+	mlx5_destroy_ttc_table(priv->fs.ttc);
+	mlx5e_rx_res_destroy(priv->rx_res);
 	mlx5e_close_drop_rq(&priv->drop_rq);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5e_rx_res_free(priv->rx_res);
+	priv->rx_res = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int mlx5e_init_ul_rep_rx(struct mlx5e_priv *priv)
@@ -1305,10 +1421,14 @@ mlx5e_vport_vf_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *rep)
 	txqs = nch * profile->max_tc;
 	rxqs = nch * profile->rq_groups;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netdev = mlx5e_create_netdev(dev, profile, txqs, rxqs);
 =======
 	netdev = mlx5e_create_netdev(dev, txqs, rxqs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netdev = mlx5e_create_netdev(dev, profile, txqs, rxqs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!netdev) {
 		mlx5_core_warn(dev,
 			       "Failed to create representor netdev for vport %d\n",
@@ -1422,6 +1542,9 @@ static void *mlx5e_vport_rep_get_proto_dev(struct mlx5_eswitch_rep *rep)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mlx5e_vport_rep_event_unpair(struct mlx5_eswitch_rep *rep)
 {
 	struct mlx5e_rep_priv *rpriv;
@@ -1475,6 +1598,7 @@ static int mlx5e_vport_rep_event(struct mlx5_eswitch *esw,
 	return err;
 }
 
+<<<<<<< HEAD
 static const struct mlx5_eswitch_rep_ops rep_ops = {
 	.load = mlx5e_vport_rep_load,
 	.unload = mlx5e_vport_rep_unload,
@@ -1486,6 +1610,13 @@ static const struct mlx5_eswitch_rep_ops rep_ops = {
 	.unload = mlx5e_vport_rep_unload,
 	.get_proto_dev = mlx5e_vport_rep_get_proto_dev
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct mlx5_eswitch_rep_ops rep_ops = {
+	.load = mlx5e_vport_rep_load,
+	.unload = mlx5e_vport_rep_unload,
+	.get_proto_dev = mlx5e_vport_rep_get_proto_dev,
+	.event = mlx5e_vport_rep_event,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int mlx5e_rep_probe(struct auxiliary_device *adev,

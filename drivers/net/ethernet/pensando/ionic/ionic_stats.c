@@ -381,6 +381,7 @@ static void ionic_sw_stats_get_txq_values(struct ionic_lif *lif, u64 **buf,
 		(*buf)++;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	for (i = 0; i < IONIC_NUM_DBG_NAPI_STATS; i++) {
 		**buf = IONIC_READ_STAT64(&txqcq->napi_stats,
@@ -392,6 +393,8 @@ static void ionic_sw_stats_get_txq_values(struct ionic_lif *lif, u64 **buf,
 		(*buf)++;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < IONIC_MAX_NUM_SG_CNTR; i++) {
 		**buf = txstats->sg_cntr[i];
 		(*buf)++;

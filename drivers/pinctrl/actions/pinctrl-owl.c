@@ -834,10 +834,14 @@ static void owl_gpio_irq_handler(struct irq_desc *desc)
 	const struct owl_gpio_port *port;
 	void __iomem *base;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int pin, offset = 0, i;
 =======
 	unsigned int pin, irq, offset = 0, i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int pin, offset = 0, i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long pending_irq;
 
 	chained_irq_enter(chip, desc);
@@ -854,11 +858,15 @@ static void owl_gpio_irq_handler(struct irq_desc *desc)
 
 		for_each_set_bit(pin, &pending_irq, port->pins) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			generic_handle_domain_irq(domain, offset + pin);
 =======
 			irq = irq_find_mapping(domain, offset + pin);
 			generic_handle_irq(irq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(domain, offset + pin);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/* clear pending interrupt */
 			owl_gpio_update_reg(base + port->intc_pd, pin, true);

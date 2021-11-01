@@ -429,10 +429,15 @@ struct i40e_channel {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct i40e_ptp_pins_settings;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct i40e_ptp_pins_settings;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool i40e_is_channel_macvlan(struct i40e_channel *ch)
 {
 	return !!ch->fwd;
@@ -650,6 +655,9 @@ struct i40e_pf {
 	struct i40e_dcbx_config tmp_cfg;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* GPIO defines used by PTP */
 #define I40E_SDP3_2			18
 #define I40E_SDP3_3			19
@@ -718,8 +726,11 @@ struct i40e_pf {
 #define I40E_PTP_HALF_SECOND		500000000LL /* nano seconds */
 #define I40E_PTP_2_SEC_DELAY		2
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ptp_clock *ptp_clock;
 	struct ptp_clock_info ptp_caps;
 	struct sk_buff *ptp_tx_skb;
@@ -727,11 +738,17 @@ struct i40e_pf {
 	struct hwtstamp_config tstamp_config;
 	struct timespec64 ptp_prev_hw_time;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct work_struct ptp_pps_work;
 	struct work_struct ptp_extts0_work;
 	struct work_struct ptp_extts1_work;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct work_struct ptp_pps_work;
+	struct work_struct ptp_extts0_work;
+	struct work_struct ptp_extts1_work;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ktime_t ptp_reset_start;
 	struct mutex tmreg_lock; /* Used to protect the SYSTIME registers. */
 	u32 ptp_adj_mult;
@@ -739,6 +756,7 @@ struct i40e_pf {
 	u32 tx_hwtstamp_skipped;
 	u32 rx_hwtstamp_cleared;
 	u32 latch_event_flags;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	u64 ptp_pps_start;
 	u32 pps_delay;
@@ -749,11 +767,20 @@ struct i40e_pf {
 	bool ptp_rx;
 	struct i40e_ptp_pins_settings *ptp_pins;
 =======
+=======
+	u64 ptp_pps_start;
+	u32 pps_delay;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spinlock_t ptp_rx_lock; /* Used to protect Rx timestamp registers. */
+	struct ptp_pin_desc ptp_pin[3];
 	unsigned long latch_events[4];
 	bool ptp_tx;
 	bool ptp_rx;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct i40e_ptp_pins_settings *ptp_pins;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 rss_table_size; /* HW RSS table size */
 	u32 max_bw;
 	u32 min_bw;
@@ -1263,9 +1290,13 @@ void i40e_ptp_restore_hw_time(struct i40e_pf *pf);
 void i40e_ptp_init(struct i40e_pf *pf);
 void i40e_ptp_stop(struct i40e_pf *pf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int i40e_ptp_alloc_pins(struct i40e_pf *pf);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int i40e_ptp_alloc_pins(struct i40e_pf *pf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int i40e_is_vsi_uplink_mode_veb(struct i40e_vsi *vsi);
 i40e_status i40e_get_partition_bw_setting(struct i40e_pf *pf);
 i40e_status i40e_set_partition_bw_setting(struct i40e_pf *pf);

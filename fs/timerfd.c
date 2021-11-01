@@ -116,6 +116,9 @@ void timerfd_clock_was_set(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void timerfd_resume_work(struct work_struct *work)
 {
 	timerfd_clock_was_set();
@@ -132,8 +135,11 @@ void timerfd_resume(void)
 	schedule_work(&timerfd_work);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __timerfd_remove_cancel(struct timerfd_ctx *ctx)
 {
 	if (ctx->might_cancel) {

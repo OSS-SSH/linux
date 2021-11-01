@@ -99,6 +99,9 @@ struct hl_eq_fw_alive {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum hl_pcie_addr_dec_cause {
 	PCIE_ADDR_DEC_HBW_ERR_RESP,
 	PCIE_ADDR_DEC_LBW_ERR_RESP,
@@ -111,8 +114,11 @@ struct hl_eq_pcie_addr_dec_data {
 	__u8 pad[7];
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hl_eq_entry {
 	struct hl_eq_header hdr;
 	union {
@@ -122,9 +128,13 @@ struct hl_eq_entry {
 		struct cpucp_pkt_sync_err pkt_sync_err;
 		struct hl_eq_fw_alive fw_alive;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct hl_eq_pcie_addr_dec_data pcie_addr_dec_data;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct hl_eq_pcie_addr_dec_data pcie_addr_dec_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__le64 data[7];
 	};
 };
@@ -136,10 +146,14 @@ struct hl_eq_entry {
 
 #define EQ_CTL_EVENT_TYPE_SHIFT		16
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define EQ_CTL_EVENT_TYPE_MASK		0x0FFF0000
 =======
 #define EQ_CTL_EVENT_TYPE_MASK		0x03FF0000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define EQ_CTL_EVENT_TYPE_MASK		0x0FFF0000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define EQ_CTL_INDEX_SHIFT		0
 #define EQ_CTL_INDEX_MASK		0x0000FFFF
@@ -324,10 +338,14 @@ enum pq_init_status {
  *       set.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * CPUCP_PACKET_PCIE_THROUGHPUT_GET -
 =======
  * CPUCP_PACKET_PCIE_THROUGHPUT_GET
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * CPUCP_PACKET_PCIE_THROUGHPUT_GET -
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *       Get throughput of PCIe.
  *       The packet's arguments specify the transaction direction (TX/RX).
  *       The window measurement is 10[msec], and the return value is in KB/sec.
@@ -337,19 +355,27 @@ enum pq_init_status {
  *       number of retries done by PCIe.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * CPUCP_PACKET_TOTAL_ENERGY_GET -
 =======
  * CPUCP_PACKET_TOTAL_ENERGY_GET
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * CPUCP_PACKET_TOTAL_ENERGY_GET -
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *       Total Energy is measurement of energy from the time FW Linux
  *       is loaded. It is calculated by multiplying the average power
  *       by time (passed from armcp start). The units are in MilliJouls.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * CPUCP_PACKET_PLL_INFO_GET -
 =======
  * CPUCP_PACKET_PLL_INFO_GET
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * CPUCP_PACKET_PLL_INFO_GET -
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *       Fetch frequencies of PLL from the required PLL IP.
  *       The packet's arguments specify the device PLL type
  *       Pll type is the PLL from device pll_index enum.
@@ -357,10 +383,14 @@ enum pq_init_status {
  *       frequency in MHz.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * CPUCP_PACKET_POWER_GET -
 =======
  * CPUCP_PACKET_POWER_GET
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * CPUCP_PACKET_POWER_GET -
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *       Fetch the present power consumption of the device (Current * Voltage).
  *
  * CPUCP_PACKET_NIC_PFC_SET -
@@ -385,6 +415,9 @@ enum pq_init_status {
  *       set the index number for each supported msi type going from
  *       host to device
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * CPUCP_PACKET_NIC_XPCS91_REGS_GET -
  *       Fetch the un/correctable counters values from the NIC MAC.
@@ -403,8 +436,11 @@ enum pq_init_status {
  *       and QMANs. The f/w will return a bitmask where each bit represents
  *       a different engine or QMAN according to enum cpucp_idle_mask.
  *       The bit will be 1 if the engine is NOT idle.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 enum cpucp_packet_id {
@@ -446,13 +482,19 @@ enum cpucp_packet_id {
 	CPUCP_PACKET_NIC_MAC_CFG,		/* internal */
 	CPUCP_PACKET_MSI_INFO_SET,		/* internal */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	CPUCP_PACKET_NIC_XPCS91_REGS_GET,	/* internal */
 	CPUCP_PACKET_NIC_STAT_REGS_GET,		/* internal */
 	CPUCP_PACKET_NIC_STAT_REGS_CLR,		/* internal */
 	CPUCP_PACKET_NIC_STAT_REGS_ALL_GET,	/* internal */
 	CPUCP_PACKET_IS_IDLE_CHECK,		/* internal */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define CPUCP_PACKET_FENCE_VAL	0xFE8CE7A5
@@ -483,13 +525,19 @@ enum cpucp_packet_id {
 #define CPUCP_PKT_VAL_LPBK_IN2_MASK	0x000000000000001Eull
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CPUCP_PKT_VAL_MAC_CNT_IN1_SHIFT	0
 #define CPUCP_PKT_VAL_MAC_CNT_IN1_MASK	0x0000000000000001ull
 #define CPUCP_PKT_VAL_MAC_CNT_IN2_SHIFT	1
 #define CPUCP_PKT_VAL_MAC_CNT_IN2_MASK	0x00000000FFFFFFFEull
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* heartbeat status bits */
 #define CPUCP_PKT_HB_STATUS_EQ_FAULT_SHIFT		0
 #define CPUCP_PKT_HB_STATUS_EQ_FAULT_MASK		0x00000001
@@ -544,11 +592,16 @@ struct cpucp_packet {
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* For NIC requests */
 	__le32 port_index;
 =======
 	__le32 reserved;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* For NIC requests */
+	__le32 port_index;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct cpucp_unmask_irq_arr_packet {
@@ -558,14 +611,20 @@ struct cpucp_unmask_irq_arr_packet {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct cpucp_nic_status_packet {
 	struct cpucp_packet cpucp_pkt;
 	__le32 length;
 	__le32 data[0];
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct cpucp_array_data_packet {
 	struct cpucp_packet cpucp_pkt;
 	__le32 length;
@@ -686,6 +745,9 @@ enum pll_index {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum rl_index {
 	TPC_RL = 0,
 	MME_RL,
@@ -698,8 +760,11 @@ enum pvt_index {
 	PVT_NE
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Event Queue Packets */
 
 struct eq_generic_event {
@@ -806,6 +871,9 @@ struct cpucp_mac_addr {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum cpucp_serdes_type {
 	TYPE_1_SERDES_TYPE,
 	TYPE_2_SERDES_TYPE,
@@ -815,8 +883,11 @@ enum cpucp_serdes_type {
 	MAX_NUM_SERDES_TYPE = UNKNOWN_SERDES_TYPE
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct cpucp_nic_info {
 	struct cpucp_mac_addr mac_addrs[CPUCP_MAX_NICS];
 	__le64 link_mask[CPUCP_NIC_MASK_ARR_LEN];
@@ -826,6 +897,9 @@ struct cpucp_nic_info {
 	__u8 qsfp_eeprom[CPUCP_NIC_QSFP_EEPROM_MAX_LEN];
 	__le64 auto_neg_mask[CPUCP_NIC_MASK_ARR_LEN];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le16 serdes_type; /* enum cpucp_serdes_type */
 	__u8 reserved[6];
 };
@@ -860,8 +934,11 @@ struct cpucp_nic_status {
 	__u8 auto_neg;
 	__le32 timeout_retransmission_cnt;
 	__le32 high_ber_cnt;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif /* CPUCP_IF_H */

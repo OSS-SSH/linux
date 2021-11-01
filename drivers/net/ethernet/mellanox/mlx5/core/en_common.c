@@ -34,6 +34,7 @@
 
 /* mlx5e global resources should be placed in this file.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Global resources are common to all the netdevices created on the same nic.
  */
 
@@ -69,6 +70,11 @@ void mlx5e_destroy_tir(struct mlx5_core_dev *mdev,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Global resources are common to all the netdevices created on the same nic.
+ */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void mlx5e_mkey_set_relaxed_ordering(struct mlx5_core_dev *mdev, void *mkc)
 {
 	bool ro_pci_enable = pcie_relaxed_ordering_enabled(mdev->pdev);

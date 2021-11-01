@@ -35,6 +35,9 @@ static inline void ppc_set_pmu_inuse(int inuse)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
 static inline int ppc_get_pmu_inuse(void)
 {
@@ -42,8 +45,11 @@ static inline int ppc_get_pmu_inuse(void)
 }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void power4_enable_pmcs(void);
 
 #else /* CONFIG_PPC64 */

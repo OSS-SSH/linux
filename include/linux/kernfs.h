@@ -99,13 +99,19 @@ struct kernfs_elem_dir {
 	 */
 	struct kernfs_root	*root;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Monotonic revision counter, used to identify if a directory
 	 * node has changed during negative dentry revalidation.
 	 */
 	unsigned long		rev;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct kernfs_elem_symlink {
@@ -197,10 +203,14 @@ struct kernfs_root {
 	struct kernfs_syscall_ops *syscall_ops;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* list of kernfs_super_info of this root, protected by kernfs_rwsem */
 =======
 	/* list of kernfs_super_info of this root, protected by kernfs_mutex */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* list of kernfs_super_info of this root, protected by kernfs_rwsem */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	supers;
 
 	wait_queue_head_t	deactivate_waitq;

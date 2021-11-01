@@ -1176,10 +1176,15 @@ int cmd_report(int argc, const char **argv)
 		.skip_empty		 = true,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char *sort_order_help = sort_help("sort by key(s):");
 	char *field_order_help = sort_help("output field(s): overhead period sample ");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char *sort_order_help = sort_help("sort by key(s):");
+	char *field_order_help = sort_help("output field(s): overhead period sample ");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct option options[] = {
 	OPT_STRING('i', "input", &input_name, "file",
 		    "input file name"),
@@ -1215,6 +1220,7 @@ int cmd_report(int argc, const char **argv)
 		    "Show only data header."),
 	OPT_STRING('s', "sort", &sort_order, "key[,key2...]",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		   sort_order_help),
 	OPT_STRING('F', "fields", &field_order, "key[,keys...]",
 		   field_order_help),
@@ -1223,6 +1229,11 @@ int cmd_report(int argc, const char **argv)
 	OPT_STRING('F', "fields", &field_order, "key[,keys...]",
 		   sort_help("output field(s): overhead period sample ")),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		   sort_order_help),
+	OPT_STRING('F', "fields", &field_order, "key[,keys...]",
+		   field_order_help),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	OPT_BOOLEAN(0, "show-cpu-utilization", &symbol_conf.show_cpu_utilization,
 		    "Show sample percentage for different cpu modes"),
 	OPT_BOOLEAN_FLAG(0, "showcpuutilization", &symbol_conf.show_cpu_utilization,
@@ -1356,6 +1367,7 @@ int cmd_report(int argc, const char **argv)
 
 	if (ret < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit;
 
 	ret = perf_config(report__config, &report);
@@ -1368,6 +1380,13 @@ int cmd_report(int argc, const char **argv)
 	if (ret)
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto exit;
+
+	ret = perf_config(report__config, &report);
+	if (ret)
+		goto exit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	argc = parse_options(argc, argv, options, report_usage, 0);
 	if (argc) {
@@ -1382,14 +1401,20 @@ int cmd_report(int argc, const char **argv)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (annotate_check_args(&report.annotation_opts) < 0) {
 		ret = -EINVAL;
 		goto exit;
 	}
+<<<<<<< HEAD
 =======
 	if (annotate_check_args(&report.annotation_opts) < 0)
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (report.mmaps_mode)
 		report.tasks_mode = true;
@@ -1404,21 +1429,31 @@ int cmd_report(int argc, const char **argv)
 	    access(symbol_conf.vmlinux_name, R_OK)) {
 		pr_err("Invalid file: %s\n", symbol_conf.vmlinux_name);
 <<<<<<< HEAD
-		ret = -EINVAL;
-		goto exit;
-=======
-		return -EINVAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-	}
-	if (symbol_conf.kallsyms_name &&
-	    access(symbol_conf.kallsyms_name, R_OK)) {
-		pr_err("Invalid file: %s\n", symbol_conf.kallsyms_name);
 <<<<<<< HEAD
 		ret = -EINVAL;
 		goto exit;
 =======
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = -EINVAL;
+		goto exit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	}
+	if (symbol_conf.kallsyms_name &&
+	    access(symbol_conf.kallsyms_name, R_OK)) {
+		pr_err("Invalid file: %s\n", symbol_conf.kallsyms_name);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = -EINVAL;
+		goto exit;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = -EINVAL;
+		goto exit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (report.inverted_callchain)
@@ -1442,11 +1477,15 @@ int cmd_report(int argc, const char **argv)
 
 repeat:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	session = perf_session__new(&data, &report.tool);
 	if (IS_ERR(session)) {
 		ret = PTR_ERR(session);
 		goto exit;
 	}
+<<<<<<< HEAD
 
 	ret = evswitch__init(&report.evswitch, session->evlist, stderr);
 	if (ret)
@@ -1460,6 +1499,12 @@ repeat:
 	if (ret)
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	ret = evswitch__init(&report.evswitch, session->evlist, stderr);
+	if (ret)
+		goto exit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (zstd_init(&(session->zstd_data), 0) < 0)
 		pr_warning("Decompression initialization failed. Reported data may be incomplete.\n");
@@ -1695,10 +1740,16 @@ error:
 	zstd_fini(&(session->zstd_data));
 	perf_session__delete(session);
 <<<<<<< HEAD
+<<<<<<< HEAD
 exit:
 	free(sort_order_help);
 	free(field_order_help);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+exit:
+	free(sort_order_help);
+	free(field_order_help);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }

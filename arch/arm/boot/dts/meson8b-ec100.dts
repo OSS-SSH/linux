@@ -97,6 +97,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sound {
 		compatible = "amlogic,gx-sound-card";
 		model = "M8B-EC100";
@@ -123,8 +126,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_vbus: regulator-usb-vbus {
 		/*
 		 * Silergy SY6288CCAC-GP 2A Power Distribution Switch.
@@ -178,10 +184,14 @@
 		regulator-max-microvolt = <1140000>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pwm-supply = <&vcc_5v>;
 =======
 		vin-supply = <&vcc_5v>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pwm-supply = <&vcc_5v>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pwms = <&pwm_cd 0 1148 0>;
 		pwm-dutycycle-range = <100 0>;
@@ -266,10 +276,14 @@
 		regulator-max-microvolt = <1140000>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pwm-supply = <&vcc_5v>;
 =======
 		vin-supply = <&vcc_5v>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pwm-supply = <&vcc_5v>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pwms = <&pwm_cd 1 1148 0>;
 		pwm-dutycycle-range = <100 0>;
@@ -280,6 +294,9 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &aiu {
 	status = "okay";
 
@@ -288,8 +305,11 @@
 	pinctrl-names = "default";
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &cpu0 {
 	cpu-supply = <&vcck>;
 };
@@ -332,6 +352,7 @@
 	rt5640: codec@1c {
 		compatible = "realtek,rt5640";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		reg = <0x1c>;
 
@@ -346,10 +367,25 @@
 		 * Luckily for us it's in the "right" state by default.
 		 */
 =======
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x1c>;
+
+		#sound-dai-cells = <0>;
+
 		interrupt-parent = <&gpio_intc>;
 		interrupts = <13 IRQ_TYPE_EDGE_BOTH>; /* GPIOAO_13 */
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		/*
+		 * TODO: realtek,ldo1-en-gpios is connected to GPIO_BSD_EN.
+		 * We currently cannot configure this pin correctly.
+		 * Luckily for us it's in the "right" state by default.
+		 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		realtek,in1-differential;
 	};
 };

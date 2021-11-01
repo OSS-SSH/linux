@@ -78,6 +78,7 @@
 
 	soc {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bus@c4000000 {
 			flash@0,0 {
 				compatible = "intel,ixp4xx-flash", "cfi-flash";
@@ -92,14 +93,24 @@
 =======
 		bus@50000000 {
 			flash@0 {
+=======
+		bus@c4000000 {
+			flash@0,0 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "intel,ixp4xx-flash", "cfi-flash";
 				bank-width = <2>;
+				/* Enable writes on the expansion bus */
+				intel,ixp4xx-eb-write-enable = <1>;
 				/*
 				 * 32 MB of Flash in 0x20000 byte blocks
-				 * mapped in at CS0.
+				 * mapped in at CS0 and CS1
 				 */
+<<<<<<< HEAD
 				reg = <0x00000000 0x2000000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				reg = <0 0x00000000 0x2000000>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				partitions {
 					compatible = "redboot-fis";
@@ -108,6 +119,9 @@
 				};
 			};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ide@3,0 {
 				compatible = "intel,ixp4xx-compact-flash";
 				/*
@@ -131,8 +145,11 @@
 				interrupt-parent = <&gpio0>;
 				interrupts = <12 IRQ_TYPE_EDGE_RISING>;
 			};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		pci@c0000000 {
@@ -149,10 +166,14 @@
 			interrupt-map =
 			/* IDSEL 1 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			<0x0800 0 0 1 &gpio0 11 IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 1 is irq 11 */
 			<0x0800 0 0 2 &gpio0 10 IRQ_TYPE_LEVEL_LOW>, /* INT B on slot 1 is irq 10 */
 			<0x0800 0 0 3 &gpio0 9  IRQ_TYPE_LEVEL_LOW>, /* INT C on slot 1 is irq 9 */
 			<0x0800 0 0 4 &gpio0 8  IRQ_TYPE_LEVEL_LOW>, /* INT D on slot 1 is irq 8 */
+<<<<<<< HEAD
 			/* IDSEL 2 */
 			<0x1000 0 0 1 &gpio0 10 IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 2 is irq 10 */
 			<0x1000 0 0 2 &gpio0 9  IRQ_TYPE_LEVEL_LOW>, /* INT B on slot 2 is irq 9 */
@@ -183,32 +204,41 @@
 			<0x0800 0 0 2 &gpio0 10 3>, /* INT B on slot 1 is irq 10 */
 			<0x0800 0 0 3 &gpio0 9  3>, /* INT C on slot 1 is irq 9 */
 			<0x0800 0 0 4 &gpio0 8  3>, /* INT D on slot 1 is irq 8 */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* IDSEL 2 */
-			<0x1000 0 0 1 &gpio0 10 3>, /* INT A on slot 2 is irq 10 */
-			<0x1000 0 0 2 &gpio0 9  3>, /* INT B on slot 2 is irq 9 */
-			<0x1000 0 0 3 &gpio0 8  3>, /* INT C on slot 2 is irq 8 */
-			<0x1000 0 0 4 &gpio0 11 3>, /* INT D on slot 2 is irq 11 */
+			<0x1000 0 0 1 &gpio0 10 IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 2 is irq 10 */
+			<0x1000 0 0 2 &gpio0 9  IRQ_TYPE_LEVEL_LOW>, /* INT B on slot 2 is irq 9 */
+			<0x1000 0 0 3 &gpio0 8  IRQ_TYPE_LEVEL_LOW>, /* INT C on slot 2 is irq 8 */
+			<0x1000 0 0 4 &gpio0 11 IRQ_TYPE_LEVEL_LOW>, /* INT D on slot 2 is irq 11 */
 			/* IDSEL 3 */
-			<0x1800 0 0 1 &gpio0 9  3>, /* INT A on slot 3 is irq 9 */
-			<0x1800 0 0 2 &gpio0 8  3>, /* INT B on slot 3 is irq 8 */
-			<0x1800 0 0 3 &gpio0 11 3>, /* INT C on slot 3 is irq 11 */
-			<0x1800 0 0 4 &gpio0 10 3>, /* INT D on slot 3 is irq 10 */
+			<0x1800 0 0 1 &gpio0 9  IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 3 is irq 9 */
+			<0x1800 0 0 2 &gpio0 8  IRQ_TYPE_LEVEL_LOW>, /* INT B on slot 3 is irq 8 */
+			<0x1800 0 0 3 &gpio0 11 IRQ_TYPE_LEVEL_LOW>, /* INT C on slot 3 is irq 11 */
+			<0x1800 0 0 4 &gpio0 10 IRQ_TYPE_LEVEL_LOW>, /* INT D on slot 3 is irq 10 */
 			/* IDSEL 4 */
-			<0x2000 0 0 1 &gpio0 8  3>, /* INT A on slot 3 is irq 8 */
-			<0x2000 0 0 2 &gpio0 11 3>, /* INT B on slot 3 is irq 11 */
-			<0x2000 0 0 3 &gpio0 10 3>, /* INT C on slot 3 is irq 10 */
-			<0x2000 0 0 4 &gpio0 9  3>, /* INT D on slot 3 is irq 9 */
+			<0x2000 0 0 1 &gpio0 8  IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 3 is irq 8 */
+			<0x2000 0 0 2 &gpio0 11 IRQ_TYPE_LEVEL_LOW>, /* INT B on slot 3 is irq 11 */
+			<0x2000 0 0 3 &gpio0 10 IRQ_TYPE_LEVEL_LOW>, /* INT C on slot 3 is irq 10 */
+			<0x2000 0 0 4 &gpio0 9  IRQ_TYPE_LEVEL_LOW>, /* INT D on slot 3 is irq 9 */
 			/* IDSEL 6 */
-			<0x3000 0 0 1 &gpio0 10 3>, /* INT A on slot 3 is irq 10 */
-			<0x3000 0 0 2 &gpio0 9  3>, /* INT B on slot 3 is irq 9 */
-			<0x3000 0 0 3 &gpio0 8  3>, /* INT C on slot 3 is irq 8 */
-			<0x3000 0 0 4 &gpio0 11 3>, /* INT D on slot 3 is irq 11 */
+			<0x3000 0 0 1 &gpio0 10 IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 3 is irq 10 */
+			<0x3000 0 0 2 &gpio0 9  IRQ_TYPE_LEVEL_LOW>, /* INT B on slot 3 is irq 9 */
+			<0x3000 0 0 3 &gpio0 8  IRQ_TYPE_LEVEL_LOW>, /* INT C on slot 3 is irq 8 */
+			<0x3000 0 0 4 &gpio0 11 IRQ_TYPE_LEVEL_LOW>, /* INT D on slot 3 is irq 11 */
 			/* IDSEL 15 */
+<<<<<<< HEAD
 			<0x7800 0 0 1 &gpio0 8  3>, /* INT A on slot 3 is irq 8 */
 			<0x7800 0 0 2 &gpio0 11 3>, /* INT B on slot 3 is irq 11 */
 			<0x7800 0 0 3 &gpio0 10 3>, /* INT C on slot 3 is irq 10 */
 			<0x7800 0 0 4 &gpio0 9  3>; /* INT D on slot 3 is irq 9 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			<0x7800 0 0 1 &gpio0 8  IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 3 is irq 8 */
+			<0x7800 0 0 2 &gpio0 11 IRQ_TYPE_LEVEL_LOW>, /* INT B on slot 3 is irq 11 */
+			<0x7800 0 0 3 &gpio0 10 IRQ_TYPE_LEVEL_LOW>, /* INT C on slot 3 is irq 10 */
+			<0x7800 0 0 4 &gpio0 9  IRQ_TYPE_LEVEL_LOW>; /* INT D on slot 3 is irq 9 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		ethernet@c800a000 {

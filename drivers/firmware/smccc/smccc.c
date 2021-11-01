@@ -10,9 +10,13 @@
 #include <linux/arm-smccc.h>
 #include <linux/kernel.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/platform_device.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/platform_device.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/archrandom.h>
 
 static u32 smccc_version = ARM_SMCCC_VERSION_1_0;
@@ -47,6 +51,9 @@ u32 arm_smccc_get_version(void)
 }
 EXPORT_SYMBOL_GPL(arm_smccc_get_version);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init smccc_devices_init(void)
 {
@@ -63,5 +70,8 @@ static int __init smccc_devices_init(void)
 	return 0;
 }
 device_initcall(smccc_devices_init);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

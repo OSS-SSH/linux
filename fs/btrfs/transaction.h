@@ -97,6 +97,7 @@ struct btrfs_transaction {
 	spinlock_t releasing_ebs_lock;
 	struct list_head releasing_ebs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	/*
@@ -106,6 +107,8 @@ struct btrfs_transaction {
 	atomic64_t chunk_bytes_reserved;
 	wait_queue_head_t chunk_reserve_wait;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define __TRANS_FREEZABLE	(1U << 0)
@@ -143,10 +146,14 @@ struct btrfs_trans_handle {
 	bool adding_csums;
 	bool allocating_chunk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool removing_chunk;
 =======
 	bool can_flush_pending_bgs;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool removing_chunk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool reloc_reserved;
 	bool in_fsync;
 	struct btrfs_root *root;

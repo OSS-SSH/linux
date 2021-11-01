@@ -6,9 +6,13 @@
 #include <linux/list.h>
 #include <linux/mutex.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/scatterlist.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/scatterlist.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/usb.h>
 #include <linux/workqueue.h>
 #include <uapi/drm/drm_fourcc.h>
@@ -31,9 +35,13 @@ struct gud_device {
 	void *bulk_buf;
 	size_t bulk_len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sg_table bulk_sgt;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct sg_table bulk_sgt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u8 compression;
 	void *lz4_comp_mem;

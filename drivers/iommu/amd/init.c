@@ -162,9 +162,12 @@ u16 amd_iommu_last_bdf;			/* largest PCI device id we have
 LIST_HEAD(amd_iommu_unity_map);		/* a list of required unity mappings
 					   we find in ACPI */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 bool amd_iommu_unmap_flush;		/* if true, flush on every unmap */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 LIST_HEAD(amd_iommu_list);		/* list of all AMD IOMMUs in the
 					   system */
@@ -302,6 +305,9 @@ int amd_iommu_get_num_iommus(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_IRQ_REMAP
 static bool check_feature_on_all_iommus(u64 mask)
 {
@@ -318,8 +324,11 @@ static bool check_feature_on_all_iommus(u64 mask)
 }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * For IVHD type 0x11/0x40, EFR is also available via IVHD.
  * Default to IVHD EFR since it is available sooner
@@ -837,6 +846,7 @@ static int iommu_ga_log_enable(struct amd_iommu *iommu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int iommu_init_ga_log(struct amd_iommu *iommu)
 {
 #ifdef CONFIG_IRQ_REMAP
@@ -845,6 +855,11 @@ static int iommu_init_ga_log(struct amd_iommu *iommu)
 static int iommu_init_ga_log(struct amd_iommu *iommu)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int iommu_init_ga_log(struct amd_iommu *iommu)
+{
+#ifdef CONFIG_IRQ_REMAP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 entry;
 
 	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))
@@ -875,6 +890,7 @@ err_out:
 	free_ga_log(iommu);
 	return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #else
 	return 0;
 #endif /* CONFIG_IRQ_REMAP */
@@ -899,6 +915,11 @@ static int iommu_init_ga(struct amd_iommu *iommu)
 
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#else
+	return 0;
+#endif /* CONFIG_IRQ_REMAP */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __init alloc_cwwb_sem(struct amd_iommu *iommu)
@@ -1881,6 +1902,7 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = iommu_init_ga_log(iommu);
 	if (ret)
 		return ret;
@@ -1892,12 +1914,21 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
 	}
 =======
 	ret = iommu_init_ga(iommu);
+=======
+	ret = iommu_init_ga_log(iommu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
-	if (iommu->cap & (1UL << IOMMU_CAP_NPCACHE))
+	if (iommu->cap & (1UL << IOMMU_CAP_NPCACHE)) {
+		pr_info("Using strict mode due to virtualization\n");
+		iommu_set_dma_strict();
 		amd_iommu_np_cache = true;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	init_iommu_perf_ctr(iommu);
 
@@ -2524,6 +2555,9 @@ static void early_enable_iommus(void)
 
 #ifdef CONFIG_IRQ_REMAP
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Note: We have already checked GASup from IVRS table.
 	 *       Now, we need to make sure that GAMSup is set.
@@ -2532,8 +2566,11 @@ static void early_enable_iommus(void)
 	    !check_feature_on_all_iommus(FEATURE_GAM_VAPIC))
 		amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY_GA;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))
 		amd_iommu_irq_ops.capability |= (1 << IRQ_POSTING_CAP);
 #endif
@@ -3156,14 +3193,20 @@ static int __init parse_amd_iommu_options(char *str)
 {
 	for (; *str; ++str) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (strncmp(str, "fullflush", 9) == 0) {
 			pr_warn("amd_iommu=fullflush deprecated; use iommu.strict=1 instead\n");
 			iommu_set_dma_strict();
 		}
+<<<<<<< HEAD
 =======
 		if (strncmp(str, "fullflush", 9) == 0)
 			amd_iommu_unmap_flush = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (strncmp(str, "force_enable", 12) == 0)
 			amd_iommu_force_enable = true;
 		if (strncmp(str, "off", 3) == 0)

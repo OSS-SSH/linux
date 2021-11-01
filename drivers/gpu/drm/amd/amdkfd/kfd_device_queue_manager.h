@@ -170,10 +170,14 @@ struct device_queue_manager {
 
 	struct mqd_manager	*mqd_mgrs[KFD_MQD_TYPE_MAX];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct packet_manager	packet_mgr;
 =======
 	struct packet_manager	packets;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct packet_manager	packet_mgr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct kfd_dev		*dev;
 	struct mutex		lock_hidden; /* use dqm_lock/unlock(dqm) */
 	struct list_head	queues;

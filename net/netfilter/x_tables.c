@@ -40,6 +40,9 @@ MODULE_DESCRIPTION("{ip,ip6,arp,eb}_tables backend module");
 #define XT_MAX_TABLE_SIZE	(512 * 1024 * 1024)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct xt_template {
 	struct list_head list;
 
@@ -54,8 +57,11 @@ struct xt_template {
 
 static struct list_head xt_templates[NFPROTO_NUMPROTO];
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct xt_pernet {
 	struct list_head tables[NFPROTO_NUMPROTO];
 };
@@ -1239,18 +1245,25 @@ struct xt_table *xt_find_table_lock(struct net *net, u_int8_t af,
 {
 	struct xt_pernet *xt_net = net_generic(net, xt_pernet_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct module *owner = NULL;
 	struct xt_template *tmpl;
 	struct xt_table *t;
 =======
 	struct xt_table *t, *found = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct module *owner = NULL;
+	struct xt_template *tmpl;
+	struct xt_table *t;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&xt[af].mutex);
 	list_for_each_entry(t, &xt_net->tables[af], list)
 		if (strcmp(t->name, name) == 0 && try_module_get(t->me))
 			return t;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Table doesn't exist in this netns, check larval list */
 	list_for_each_entry(tmpl, &xt_templates[af], list) {
@@ -1277,26 +1290,37 @@ struct xt_table *xt_find_table_lock(struct net *net, u_int8_t af,
 	/* Table doesn't exist in this netns, re-try init */
 	xt_net = net_generic(&init_net, xt_pernet_id);
 	list_for_each_entry(t, &xt_net->tables[af], list) {
+=======
+	/* Table doesn't exist in this netns, check larval list */
+	list_for_each_entry(tmpl, &xt_templates[af], list) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int err;
 
-		if (strcmp(t->name, name))
+		if (strcmp(tmpl->name, name))
 			continue;
-		if (!try_module_get(t->me))
+		if (!try_module_get(tmpl->me))
 			goto out;
+
+		owner = tmpl->me;
+
 		mutex_unlock(&xt[af].mutex);
-		err = t->table_init(net);
+		err = tmpl->table_init(net);
 		if (err < 0) {
-			module_put(t->me);
+			module_put(owner);
 			return ERR_PTR(err);
 		}
 
+<<<<<<< HEAD
 		found = t;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mutex_lock(&xt[af].mutex);
 		break;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (!found)
@@ -1304,16 +1328,22 @@ struct xt_table *xt_find_table_lock(struct net *net, u_int8_t af,
 
 	xt_net = net_generic(net, xt_pernet_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* and once again: */
 	list_for_each_entry(t, &xt_net->tables[af], list)
 		if (strcmp(t->name, name) == 0)
 			return t;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	module_put(owner);
 =======
 	module_put(found->me);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	module_put(owner);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out:
 	mutex_unlock(&xt[af].mutex);
 	return ERR_PTR(-ENOENT);
@@ -1801,6 +1831,9 @@ xt_hook_ops_alloc(const struct xt_table *table, nf_hookfn *fn)
 EXPORT_SYMBOL_GPL(xt_hook_ops_alloc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int xt_register_template(const struct xt_table *table,
 			 int (*table_init)(struct net *net))
 {
@@ -1853,8 +1886,11 @@ void xt_unregister_template(const struct xt_table *table)
 }
 EXPORT_SYMBOL_GPL(xt_unregister_template);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int xt_proto_init(struct net *net, u_int8_t af)
 {
 #ifdef CONFIG_PROC_FS
@@ -2044,9 +2080,13 @@ static int __init xt_init(void)
 		INIT_LIST_HEAD(&xt[i].target);
 		INIT_LIST_HEAD(&xt[i].match);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		INIT_LIST_HEAD(&xt_templates[i]);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		INIT_LIST_HEAD(&xt_templates[i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	rv = register_pernet_subsys(&xt_net_ops);
 	if (rv < 0)

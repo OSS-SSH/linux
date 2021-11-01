@@ -322,9 +322,13 @@ static s32 e1000_init_phy_workarounds_pchlan(struct e1000_hw *hw)
 	case e1000_pch_adp:
 	case e1000_pch_mtp:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case e1000_pch_lnp:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case e1000_pch_lnp:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (e1000_phy_is_accessible_pchlan(hw))
 			break;
 
@@ -471,9 +475,13 @@ static s32 e1000_init_phy_params_pchlan(struct e1000_hw *hw)
 		case e1000_pch_adp:
 		case e1000_pch_mtp:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case e1000_pch_lnp:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case e1000_pch_lnp:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* In case the PHY needs to be in mdio slow mode,
 			 * set slow mode and try to get the PHY id again.
 			 */
@@ -720,9 +728,13 @@ static s32 e1000_init_mac_params_ich8lan(struct e1000_hw *hw)
 	case e1000_pch_adp:
 	case e1000_pch_mtp:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case e1000_pch_lnp:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case e1000_pch_lnp:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case e1000_pchlan:
 		/* check management mode */
 		mac->ops.check_mng_mode = e1000_check_mng_mode_pchlan;
@@ -1019,10 +1031,15 @@ static s32 e1000_platform_pm_pch_lpt(struct e1000_hw *hw, bool link)
 	u32 reg = link << (E1000_LTRV_REQ_SHIFT + E1000_LTRV_NOSNOOP_SHIFT) |
 	    link << E1000_LTRV_REQ_SHIFT | E1000_LTRV_SEND;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 max_ltr_enc_d = 0;	/* maximum LTR decoded by platform */
 	u16 lat_enc_d = 0;	/* latency decoded */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 max_ltr_enc_d = 0;	/* maximum LTR decoded by platform */
+	u16 lat_enc_d = 0;	/* latency decoded */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 lat_enc = 0;	/* latency encoded */
 
 	if (link) {
@@ -1077,6 +1094,9 @@ static s32 e1000_platform_pm_pch_lpt(struct e1000_hw *hw, bool link)
 		max_ltr_enc = max_t(u16, max_snoop, max_nosnoop);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lat_enc_d = (lat_enc & E1000_LTRV_VALUE_MASK) *
 			     (1U << (E1000_LTRV_SCALE_FACTOR *
 			     ((lat_enc & E1000_LTRV_SCALE_MASK)
@@ -1088,9 +1108,12 @@ static s32 e1000_platform_pm_pch_lpt(struct e1000_hw *hw, bool link)
 				 >> E1000_LTRV_SCALE_SHIFT)));
 
 		if (lat_enc_d > max_ltr_enc_d)
+<<<<<<< HEAD
 =======
 		if (lat_enc > max_ltr_enc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			lat_enc = max_ltr_enc;
 	}
 
@@ -1298,6 +1321,7 @@ static s32 e1000_disable_ulp_lpt_lp(struct e1000_hw *hw, bool force)
 		}
 		if (firmware_bug)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			e_warn("ULP_CONFIG_DONE took %d msec. This is a firmware bug\n",
 			       i * 10);
 		else
@@ -1308,6 +1332,13 @@ static s32 e1000_disable_ulp_lpt_lp(struct e1000_hw *hw, bool force)
 		else
 			e_dbg("ULP_CONFIG_DONE cleared after %dmsec\n", i * 10);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			e_warn("ULP_CONFIG_DONE took %d msec. This is a firmware bug\n",
+			       i * 10);
+		else
+			e_dbg("ULP_CONFIG_DONE cleared after %d msec\n",
+			      i * 10);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (force) {
 			mac_reg = er32(H2ME);
@@ -1703,9 +1734,13 @@ static s32 e1000_get_variants_ich8lan(struct e1000_adapter *adapter)
 	case e1000_pch_adp:
 	case e1000_pch_mtp:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case e1000_pch_lnp:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case e1000_pch_lnp:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc = e1000_init_phy_params_pchlan(hw);
 		break;
 	default:
@@ -2162,9 +2197,13 @@ static s32 e1000_sw_lcd_config_ich8lan(struct e1000_hw *hw)
 	case e1000_pch_adp:
 	case e1000_pch_mtp:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case e1000_pch_lnp:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case e1000_pch_lnp:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sw_cfg_mask = E1000_FEXTNVM_SW_CONFIG_ICH8M;
 		break;
 	default:
@@ -3210,9 +3249,13 @@ static s32 e1000_valid_nvm_bank_detect_ich8lan(struct e1000_hw *hw, u32 *bank)
 	case e1000_pch_adp:
 	case e1000_pch_mtp:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case e1000_pch_lnp:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case e1000_pch_lnp:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bank1_offset = nvm->flash_bank_size;
 		act_offset = E1000_ICH_NVM_SIG_WORD;
 
@@ -4153,9 +4196,13 @@ static s32 e1000_validate_nvm_checksum_ich8lan(struct e1000_hw *hw)
 	case e1000_pch_adp:
 	case e1000_pch_mtp:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case e1000_pch_lnp:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case e1000_pch_lnp:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		word = NVM_COMPAT;
 		valid_csum_mask = NVM_COMPAT_VALID_CSUM;
 		break;
@@ -4171,6 +4218,9 @@ static s32 e1000_validate_nvm_checksum_ich8lan(struct e1000_hw *hw)
 
 	if (!(data & valid_csum_mask)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		e_dbg("NVM Checksum Invalid\n");
 
 		if (hw->mac.type < e1000_pch_cnp) {
@@ -4182,6 +4232,7 @@ static s32 e1000_validate_nvm_checksum_ich8lan(struct e1000_hw *hw)
 			if (ret_val)
 				return ret_val;
 		}
+<<<<<<< HEAD
 =======
 		data |= valid_csum_mask;
 		ret_val = e1000_write_nvm(hw, word, 1, &data);
@@ -4191,6 +4242,8 @@ static s32 e1000_validate_nvm_checksum_ich8lan(struct e1000_hw *hw)
 		if (ret_val)
 			return ret_val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return e1000e_validate_nvm_checksum_generic(hw);

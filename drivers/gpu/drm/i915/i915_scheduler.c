@@ -8,6 +8,7 @@
 
 #include "i915_drv.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "i915_request.h"
 #include "i915_scheduler.h"
 
@@ -24,6 +25,13 @@ static struct i915_global_scheduler {
 	struct kmem_cache *slab_priorities;
 } global;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "i915_request.h"
+#include "i915_scheduler.h"
+
+static struct kmem_cache *slab_dependencies;
+static struct kmem_cache *slab_priorities;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static DEFINE_SPINLOCK(schedule_lock);
 
@@ -49,10 +57,14 @@ static inline struct i915_priolist *to_priolist(struct rb_node *rb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void assert_priolists(struct i915_sched_engine * const sched_engine)
 =======
 static void assert_priolists(struct intel_engine_execlists * const execlists)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void assert_priolists(struct i915_sched_engine * const sched_engine)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rb_node *rb;
 	long last_prio;
@@ -60,6 +72,7 @@ static void assert_priolists(struct intel_engine_execlists * const execlists)
 	if (!IS_ENABLED(CONFIG_DRM_I915_DEBUG_GEM))
 		return;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	GEM_BUG_ON(rb_first_cached(&sched_engine->queue) !=
 		   rb_first(&sched_engine->queue.rb_root));
@@ -73,6 +86,13 @@ static void assert_priolists(struct intel_engine_execlists * const execlists)
 	last_prio = INT_MAX;
 	for (rb = rb_first_cached(&execlists->queue); rb; rb = rb_next(rb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(rb_first_cached(&sched_engine->queue) !=
+		   rb_first(&sched_engine->queue.rb_root));
+
+	last_prio = INT_MAX;
+	for (rb = rb_first_cached(&sched_engine->queue); rb; rb = rb_next(rb)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		const struct i915_priolist *p = to_priolist(rb);
 
 		GEM_BUG_ON(p->priority > last_prio);
@@ -82,6 +102,7 @@ static void assert_priolists(struct intel_engine_execlists * const execlists)
 
 struct list_head *
 <<<<<<< HEAD
+<<<<<<< HEAD
 i915_sched_lookup_priolist(struct i915_sched_engine *sched_engine, int prio)
 {
 =======
@@ -89,10 +110,15 @@ i915_sched_lookup_priolist(struct intel_engine_cs *engine, int prio)
 {
 	struct intel_engine_execlists * const execlists = &engine->execlists;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+i915_sched_lookup_priolist(struct i915_sched_engine *sched_engine, int prio)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct i915_priolist *p;
 	struct rb_node **parent, *rb;
 	bool first = true;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	lockdep_assert_held(&sched_engine->lock);
 	assert_priolists(sched_engine);
@@ -104,16 +130,26 @@ i915_sched_lookup_priolist(struct intel_engine_cs *engine, int prio)
 
 	if (unlikely(execlists->no_priolist))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lockdep_assert_held(&sched_engine->lock);
+	assert_priolists(sched_engine);
+
+	if (unlikely(sched_engine->no_priolist))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		prio = I915_PRIORITY_NORMAL;
 
 find_priolist:
 	/* most positive priority is scheduled first, equal priorities fifo */
 	rb = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	parent = &sched_engine->queue.rb_root.rb_node;
 =======
 	parent = &execlists->queue.rb_root.rb_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	parent = &sched_engine->queue.rb_root.rb_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (*parent) {
 		rb = *parent;
 		p = to_priolist(rb);
@@ -129,6 +165,7 @@ find_priolist:
 
 	if (prio == I915_PRIORITY_NORMAL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		p = &sched_engine->default_priolist;
 	} else {
 		p = kmem_cache_alloc(slab_priorities, GFP_ATOMIC);
@@ -137,6 +174,11 @@ find_priolist:
 	} else {
 		p = kmem_cache_alloc(global.slab_priorities, GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		p = &sched_engine->default_priolist;
+	} else {
+		p = kmem_cache_alloc(slab_priorities, GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Convert an allocation failure to a priority bump */
 		if (unlikely(!p)) {
 			prio = I915_PRIORITY_NORMAL; /* recurses just once */
@@ -150,10 +192,14 @@ find_priolist:
 			 * dependencies that reordering may be visible.
 			 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			sched_engine->no_priolist = true;
 =======
 			execlists->no_priolist = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			sched_engine->no_priolist = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto find_priolist;
 		}
 	}
@@ -163,10 +209,14 @@ find_priolist:
 
 	rb_link_node(&p->node, rb, parent);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rb_insert_color_cached(&p->node, &sched_engine->queue, first);
 =======
 	rb_insert_color_cached(&p->node, &execlists->queue, first);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rb_insert_color_cached(&p->node, &sched_engine->queue, first);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return &p->requests;
 }
@@ -174,16 +224,21 @@ find_priolist:
 void __i915_priolist_free(struct i915_priolist *p)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kmem_cache_free(slab_priorities, p);
 =======
 	kmem_cache_free(global.slab_priorities, p);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kmem_cache_free(slab_priorities, p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct sched_cache {
 	struct list_head *priolist;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static struct i915_sched_engine *
 lock_sched_engine(struct i915_sched_node *node,
@@ -201,6 +256,15 @@ sched_lock_engine(const struct i915_sched_node *node,
 	const struct i915_request *rq = node_to_request(node);
 	struct intel_engine_cs *engine;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct i915_sched_engine *
+lock_sched_engine(struct i915_sched_node *node,
+		  struct i915_sched_engine *locked,
+		  struct sched_cache *cache)
+{
+	const struct i915_request *rq = node_to_request(node);
+	struct i915_sched_engine *sched_engine;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	GEM_BUG_ON(!locked);
 
@@ -210,6 +274,7 @@ sched_lock_engine(const struct i915_sched_node *node,
 	 * engine lock. The simple ploy we use is to take the lock then
 	 * check that the rq still belongs to the newly locked engine.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	while (locked != (sched_engine = READ_ONCE(rq->engine)->sched_engine)) {
 		spin_unlock(&locked->lock);
@@ -225,15 +290,20 @@ sched_lock_engine(const struct i915_sched_node *node,
 =======
 	while (locked != (engine = READ_ONCE(rq->engine))) {
 		spin_unlock(&locked->active.lock);
+=======
+	while (locked != (sched_engine = READ_ONCE(rq->engine)->sched_engine)) {
+		spin_unlock(&locked->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memset(cache, 0, sizeof(*cache));
-		spin_lock(&engine->active.lock);
-		locked = engine;
+		spin_lock(&sched_engine->lock);
+		locked = sched_engine;
 	}
 
-	GEM_BUG_ON(locked != engine);
+	GEM_BUG_ON(locked != sched_engine);
 	return locked;
 }
 
+<<<<<<< HEAD
 static inline int rq_prio(const struct i915_request *rq)
 {
 	return rq->sched.attr.priority;
@@ -294,15 +364,21 @@ unlock:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __i915_schedule(struct i915_sched_node *node,
 			    const struct i915_sched_attr *attr)
 {
 	const int prio = max(attr->priority, node->attr.priority);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct i915_sched_engine *sched_engine;
 =======
 	struct intel_engine_cs *engine;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct i915_sched_engine *sched_engine;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct i915_dependency *dep, *p;
 	struct i915_dependency stack;
 	struct sched_cache cache;
@@ -378,6 +454,7 @@ static void __i915_schedule(struct i915_sched_node *node,
 
 	memset(&cache, 0, sizeof(cache));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sched_engine = node_to_request(node)->engine->sched_engine;
 	spin_lock(&sched_engine->lock);
 
@@ -395,31 +472,49 @@ static void __i915_schedule(struct i915_sched_node *node,
 =======
 	engine = node_to_request(node)->engine;
 	spin_lock(&engine->active.lock);
+=======
+	sched_engine = node_to_request(node)->engine->sched_engine;
+	spin_lock(&sched_engine->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Fifo and depth-first replacement ensure our deps execute before us */
-	engine = sched_lock_engine(node, engine, &cache);
+	sched_engine = lock_sched_engine(node, sched_engine, &cache);
 	list_for_each_entry_safe_reverse(dep, p, &dfs, dfs_link) {
+		struct i915_request *from = container_of(dep->signaler,
+							 struct i915_request,
+							 sched);
 		INIT_LIST_HEAD(&dep->dfs_link);
 
 		node = dep->signaler;
+<<<<<<< HEAD
 		engine = sched_lock_engine(node, engine, &cache);
 		lockdep_assert_held(&engine->active.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sched_engine = lock_sched_engine(node, sched_engine, &cache);
+		lockdep_assert_held(&sched_engine->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Recheck after acquiring the engine->timeline.lock */
 		if (prio <= node->attr.priority || node_signaled(node))
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		GEM_BUG_ON(node_to_request(node)->engine->sched_engine !=
 			   sched_engine);
 
 		/* Must be called before changing the nodes priority */
 		if (sched_engine->bump_inflight_request_prio)
 			sched_engine->bump_inflight_request_prio(from, prio);
+<<<<<<< HEAD
 =======
 		GEM_BUG_ON(node_to_request(node)->engine != engine);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		WRITE_ONCE(node->attr.priority, prio);
 
@@ -438,15 +533,20 @@ static void __i915_schedule(struct i915_sched_node *node,
 			if (!cache.priolist)
 				cache.priolist =
 <<<<<<< HEAD
+<<<<<<< HEAD
 					i915_sched_lookup_priolist(sched_engine,
 =======
 					i915_sched_lookup_priolist(engine,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					i915_sched_lookup_priolist(sched_engine,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 								   prio);
 			list_move_tail(&node->link, cache.priolist);
 		}
 
 		/* Defer (tasklet) submission until after all of our updates. */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (sched_engine->kick_backend)
 			sched_engine->kick_backend(node_to_request(node), prio);
@@ -459,6 +559,13 @@ static void __i915_schedule(struct i915_sched_node *node,
 
 	spin_unlock(&engine->active.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (sched_engine->kick_backend)
+			sched_engine->kick_backend(node_to_request(node), prio);
+	}
+
+	spin_unlock(&sched_engine->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void i915_schedule(struct i915_request *rq, const struct i915_sched_attr *attr)
@@ -492,20 +599,28 @@ static struct i915_dependency *
 i915_dependency_alloc(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return kmem_cache_alloc(slab_dependencies, GFP_KERNEL);
 =======
 	return kmem_cache_alloc(global.slab_dependencies, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return kmem_cache_alloc(slab_dependencies, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
 i915_dependency_free(struct i915_dependency *dep)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kmem_cache_free(slab_dependencies, dep);
 =======
 	kmem_cache_free(global.slab_dependencies, dep);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kmem_cache_free(slab_dependencies, dep);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 bool __i915_sched_node_add_dependency(struct i915_sched_node *node,
@@ -618,6 +733,9 @@ void i915_request_show_with_schedule(struct drm_printer *m,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void default_destroy(struct kref *kref)
 {
 	struct i915_sched_engine *sched_engine =
@@ -628,6 +746,7 @@ static void default_destroy(struct kref *kref)
 }
 
 static bool default_disabled(struct i915_sched_engine *sched_engine)
+<<<<<<< HEAD
 {
 	return false;
 }
@@ -693,39 +812,75 @@ err_priorities:
 	kmem_cache_destroy(slab_priorities);
 =======
 static void i915_global_scheduler_shrink(void)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	kmem_cache_shrink(global.slab_dependencies);
-	kmem_cache_shrink(global.slab_priorities);
+	return false;
 }
 
-static void i915_global_scheduler_exit(void)
+struct i915_sched_engine *
+i915_sched_engine_create(unsigned int subclass)
 {
-	kmem_cache_destroy(global.slab_dependencies);
-	kmem_cache_destroy(global.slab_priorities);
+	struct i915_sched_engine *sched_engine;
+
+	sched_engine = kzalloc(sizeof(*sched_engine), GFP_KERNEL);
+	if (!sched_engine)
+		return NULL;
+
+	kref_init(&sched_engine->ref);
+
+	sched_engine->queue = RB_ROOT_CACHED;
+	sched_engine->queue_priority_hint = INT_MIN;
+	sched_engine->destroy = default_destroy;
+	sched_engine->disabled = default_disabled;
+
+	INIT_LIST_HEAD(&sched_engine->requests);
+	INIT_LIST_HEAD(&sched_engine->hold);
+
+	spin_lock_init(&sched_engine->lock);
+	lockdep_set_subclass(&sched_engine->lock, subclass);
+
+	/*
+	 * Due to an interesting quirk in lockdep's internal debug tracking,
+	 * after setting a subclass we must ensure the lock is used. Otherwise,
+	 * nr_unused_locks is incremented once too often.
+	 */
+#ifdef CONFIG_DEBUG_LOCK_ALLOC
+	local_irq_disable();
+	lock_map_acquire(&sched_engine->lock.dep_map);
+	lock_map_release(&sched_engine->lock.dep_map);
+	local_irq_enable();
+#endif
+
+	return sched_engine;
 }
 
-static struct i915_global_scheduler global = { {
-	.shrink = i915_global_scheduler_shrink,
-	.exit = i915_global_scheduler_exit,
-} };
-
-int __init i915_global_scheduler_init(void)
+void i915_scheduler_module_exit(void)
 {
-	global.slab_dependencies = KMEM_CACHE(i915_dependency,
+	kmem_cache_destroy(slab_dependencies);
+	kmem_cache_destroy(slab_priorities);
+}
+
+int __init i915_scheduler_module_init(void)
+{
+	slab_dependencies = KMEM_CACHE(i915_dependency,
 					      SLAB_HWCACHE_ALIGN |
 					      SLAB_TYPESAFE_BY_RCU);
-	if (!global.slab_dependencies)
+	if (!slab_dependencies)
 		return -ENOMEM;
 
-	global.slab_priorities = KMEM_CACHE(i915_priolist, 0);
-	if (!global.slab_priorities)
+	slab_priorities = KMEM_CACHE(i915_priolist, 0);
+	if (!slab_priorities)
 		goto err_priorities;
 
-	i915_global_register(&global.base);
 	return 0;
 
 err_priorities:
+<<<<<<< HEAD
 	kmem_cache_destroy(global.slab_priorities);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kmem_cache_destroy(slab_priorities);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -ENOMEM;
 }

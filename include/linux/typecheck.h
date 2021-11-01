@@ -23,6 +23,9 @@
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Check at compile time that something is a pointer type.
  */
@@ -32,6 +35,9 @@
 	1; \
 })
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif		/* TYPECHECK_H_INCLUDED */

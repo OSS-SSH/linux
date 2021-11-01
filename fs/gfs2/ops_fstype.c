@@ -615,9 +615,13 @@ static int gfs2_jindex_hold(struct gfs2_sbd *sdp, struct gfs2_holder *ji_gh)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		d_mark_dontcache(jd->jd_inode);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		d_mark_dontcache(jd->jd_inode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_lock(&sdp->sd_jindex_spin);
 		jd->jd_jid = sdp->sd_journals++;
 		jip = GFS2_I(jd->jd_inode);
@@ -682,9 +686,13 @@ static int init_statfs(struct gfs2_sbd *sdp)
 			fs_err(sdp, "can't find local \"sc\" file#%u: %d\n",
 			       jd->jd_jid, error);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			kfree(lsi);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			kfree(lsi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto free_local;
 		}
 		lsi->si_jid = jd->jd_jid;
@@ -704,12 +712,16 @@ static int init_statfs(struct gfs2_sbd *sdp)
 		goto free_local;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* read in the local statfs buffer - other nodes don't change it. */
 	error = gfs2_meta_inode_buffer(ip, &sdp->sd_sc_bh);
 	if (error) {
 		fs_err(sdp, "Cannot read in local statfs: %d\n", error);
 		goto unlock_sd_gh;
 	}
+<<<<<<< HEAD
 	return 0;
 
 unlock_sd_gh:
@@ -718,6 +730,12 @@ unlock_sd_gh:
 	return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+
+unlock_sd_gh:
+	gfs2_glock_dq_uninit(&sdp->sd_sc_gh);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_local:
 	free_local_statfs_inodes(sdp);
 	iput(pn);
@@ -732,9 +750,13 @@ static void uninit_statfs(struct gfs2_sbd *sdp)
 {
 	if (!sdp->sd_args.ar_spectator) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		brelse(sdp->sd_sc_bh);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		brelse(sdp->sd_sc_bh);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gfs2_glock_dq_uninit(&sdp->sd_sc_gh);
 		free_local_statfs_inodes(sdp);
 	}
@@ -1114,6 +1136,9 @@ void gfs2_online_uevent(struct gfs2_sbd *sdp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int init_threads(struct gfs2_sbd *sdp)
 {
 	struct task_struct *p;
@@ -1142,8 +1167,11 @@ fail:
 	return error;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * gfs2_fill_super - Read in superblock
  * @sb: The VFS superblock
@@ -1273,6 +1301,9 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!sb_rdonly(sb)) {
 		error = init_threads(sdp);
 		if (error) {
@@ -1281,8 +1312,11 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = gfs2_freeze_lock(sdp, &freeze_gh, 0);
 	if (error)
 		goto fail_per_node;
@@ -1293,14 +1327,20 @@ static int gfs2_fill_super(struct super_block *sb, struct fs_context *fc)
 	gfs2_freeze_unlock(&freeze_gh);
 	if (error) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (sdp->sd_quotad_process)
 			kthread_stop(sdp->sd_quotad_process);
 		sdp->sd_quotad_process = NULL;
 		if (sdp->sd_logd_process)
 			kthread_stop(sdp->sd_logd_process);
 		sdp->sd_logd_process = NULL;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fs_err(sdp, "can't make FS RW: %d\n", error);
 		goto fail_per_node;
 	}

@@ -143,10 +143,14 @@ IRQCHIP_DECLARE(arc_intc, "snps,arc700-intc", init_onchip_IRQ);
  *    Here local_irq_enable( ) shd not re-enable lower priority interrupts
  * -If called from soft-ISR, it must re-enable all interrupts
 <<<<<<< HEAD
+<<<<<<< HEAD
  *    soft ISR are low priority jobs which can be very slow, thus all IRQs
 =======
  *    soft ISR are low prioity jobs which can be very slow, thus all IRQs
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *    soft ISR are low priority jobs which can be very slow, thus all IRQs
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *    must be enabled while they run.
  *    Now hardware context wise we may still be in L2 ISR (not done rtie)
  *    still we must re-enable both L1 and L2 IRQs

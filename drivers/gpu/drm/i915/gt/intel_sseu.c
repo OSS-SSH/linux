@@ -140,11 +140,15 @@ static void gen12_sseu_info_init(struct intel_gt *gt)
 	 * Instead of splitting these, provide userspace with an array
 	 * of DSS to more closely represent the hardware resource.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * In addition, the concept of slice has been removed in Xe_HP.
 	 * To be compatible with prior generations, assume a single slice
 	 * across the entire device. Then calculate out the DSS for each
 	 * workload type within that software slice.
+<<<<<<< HEAD
 	 */
 	if (IS_DG2(gt->i915) || IS_XEHPSDV(gt->i915))
 		intel_sseu_set_info(sseu, 1, 32, 16);
@@ -161,27 +165,50 @@ static void gen12_sseu_info_init(struct intel_gt *gt)
 		s_en = intel_uncore_read(uncore, GEN11_GT_SLICE_ENABLE) &
 		       GEN11_GT_S_ENA_MASK;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-	intel_sseu_set_info(sseu, 1, 6, 16);
+	if (IS_DG2(gt->i915) || IS_XEHPSDV(gt->i915))
+		intel_sseu_set_info(sseu, 1, 32, 16);
+	else
+		intel_sseu_set_info(sseu, 1, 6, 16);
 
+<<<<<<< HEAD
 	s_en = intel_uncore_read(uncore, GEN11_GT_SLICE_ENABLE) &
 		GEN11_GT_S_ENA_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/*
+	 * As mentioned above, Xe_HP does not have the concept of a slice.
+	 * Enable one for software backwards compatibility.
+	 */
+	if (GRAPHICS_VER_FULL(gt->i915) >= IP_VER(12, 50))
+		s_en = 0x1;
+	else
+		s_en = intel_uncore_read(uncore, GEN11_GT_SLICE_ENABLE) &
+		       GEN11_GT_S_ENA_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dss_en = intel_uncore_read(uncore, GEN12_GT_DSS_ENABLE);
 
 	/* one bit per pair of EUs */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (GRAPHICS_VER_FULL(gt->i915) >= IP_VER(12, 50))
 		eu_en_fuse = intel_uncore_read(uncore, XEHP_EU_ENABLE) & XEHP_EU_ENA_MASK;
 	else
 		eu_en_fuse = ~(intel_uncore_read(uncore, GEN11_EU_DISABLE) &
 			       GEN11_EU_DIS_MASK);
 
+<<<<<<< HEAD
 =======
 	eu_en_fuse = ~(intel_uncore_read(uncore, GEN11_EU_DISABLE) &
 		       GEN11_EU_DIS_MASK);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (eu = 0; eu < sseu->max_eus_per_subslice / 2; eu++)
 		if (eu_en_fuse & BIT(eu))
 			eu_en |= BIT(eu * 2) | BIT(eu * 2 + 1);
@@ -220,6 +247,7 @@ static void gen11_sseu_info_init(struct intel_gt *gt)
 	sseu->has_eu_pg = 1;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void gen10_sseu_info_init(struct intel_gt *gt)
@@ -300,6 +328,8 @@ static void gen10_sseu_info_init(struct intel_gt *gt)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void cherryview_sseu_info_init(struct intel_gt *gt)
 {
 	struct sseu_dev_info *sseu = &gt->info.sseu;
@@ -628,10 +658,13 @@ void intel_sseu_info_init(struct intel_gt *gt)
 	else if (GRAPHICS_VER(i915) == 9)
 		gen9_sseu_info_init(gt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	else if (GRAPHICS_VER(i915) == 10)
 		gen10_sseu_info_init(gt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (GRAPHICS_VER(i915) == 11)
 		gen11_sseu_info_init(gt);
 	else if (GRAPHICS_VER(i915) >= 12)
@@ -798,6 +831,9 @@ void intel_sseu_print_topology(const struct sseu_dev_info *sseu,
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 u16 intel_slicemask_from_dssmask(u64 dss_mask, int dss_per_slice)
 {
@@ -816,5 +852,8 @@ u16 intel_slicemask_from_dssmask(u64 dss_mask, int dss_per_slice)
 	return slice_mask;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -79,10 +79,14 @@ enum {
 
 /* Protects the table contents, i.e. the ops pointer & drv list */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_MUTEX(iwlwifi_opmode_table_mtx);
 =======
 static struct mutex iwlwifi_opmode_table_mtx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEFINE_MUTEX(iwlwifi_opmode_table_mtx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct iwlwifi_opmode_table {
 	const char *name;			/* name: iwldvm, iwlmvm, etc */
 	const struct iwl_op_mode_ops *ops;	/* pointer to op_mode ops */
@@ -1759,10 +1763,13 @@ static int __init iwl_drv_init(void)
 	int i, err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	mutex_init(&iwlwifi_opmode_table_mtx);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < ARRAY_SIZE(iwlwifi_opmode_table); i++)
 		INIT_LIST_HEAD(&iwlwifi_opmode_table[i].drv);
 

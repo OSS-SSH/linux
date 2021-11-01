@@ -788,10 +788,14 @@ static void hpte_decode(struct hash_pte *hpte, unsigned long slot,
  * although there is the control page available...
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static notrace void native_hpte_clear(void)
 =======
 static void native_hpte_clear(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static notrace void native_hpte_clear(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long vpn = 0;
 	unsigned long slot, slots;

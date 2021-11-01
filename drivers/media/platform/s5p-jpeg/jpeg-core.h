@@ -38,6 +38,9 @@
 
 /* a selection of JPEG markers */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define JPEG_MARKER_TEM				0x01
 #define JPEG_MARKER_SOF0				0xc0
 #define JPEG_MARKER_DHT				0xc4
@@ -47,6 +50,7 @@
 #define	JPEG_MARKER_SOS				0xda
 #define JPEG_MARKER_DQT				0xdb
 #define JPEG_MARKER_DHP				0xde
+<<<<<<< HEAD
 =======
 #define TEM				0x01
 #define SOF0				0xc0
@@ -58,6 +62,8 @@
 #define DQT				0xdb
 #define DHP				0xde
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Flags that indicate a format can be used for capture/output */
 #define SJPEG_FMT_FLAG_ENC_CAPTURE	(1 << 0)
@@ -200,11 +206,15 @@ struct s5p_jpeg_marker {
  * @w:		image width
  * @h:		image height
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @sos:	JPEG_MARKER_SOS's position relative to the buffer beginning
  * @dht:	JPEG_MARKER_DHT' positions relative to the buffer beginning
  * @dqt:	JPEG_MARKER_DQT' positions relative to the buffer beginning
  * @sof:	JPEG_MARKER_SOF0's position relative to the buffer beginning
  * @sof_len:	JPEG_MARKER_SOF0's payload length (without length field itself)
+<<<<<<< HEAD
 =======
  * @sos:	SOS marker's position relative to the buffer beginning
  * @dht:	DHT markers' positions relative to the buffer beginning
@@ -212,6 +222,8 @@ struct s5p_jpeg_marker {
  * @sof:	SOF0 marker's position relative to the buffer beginning
  * @sof_len:	SOF0 marker's payload length (without length field itself)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @size:	image buffer size in bytes
  */
 struct s5p_jpeg_q_data {

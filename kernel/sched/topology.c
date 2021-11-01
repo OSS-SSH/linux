@@ -1483,10 +1483,15 @@ static int			*sched_domains_numa_distance;
 static struct cpumask		***sched_domains_numa_masks;
 int __read_mostly		node_reclaim_distance = RECLAIM_DISTANCE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 static unsigned long __read_mostly *sched_numa_onlined_nodes;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+static unsigned long __read_mostly *sched_numa_onlined_nodes;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /*
@@ -1839,6 +1844,9 @@ void sched_init_numa(void)
 
 			for_each_node(k) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				/*
 				 * Distance information can be unreliable for
 				 * offline nodes, defer building the node
@@ -1849,8 +1857,11 @@ void sched_init_numa(void)
 				if (!node_online(j))
 					continue;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (sched_debug() && (node_distance(j, k) != node_distance(k, j)))
 					sched_numa_warn("Node-distance not symmetric");
 
@@ -1905,6 +1916,9 @@ void sched_init_numa(void)
 
 	init_numa_topology_type();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sched_numa_onlined_nodes = bitmap_alloc(nr_node_ids, GFP_KERNEL);
 	if (!sched_numa_onlined_nodes)
@@ -1952,8 +1966,11 @@ static void __sched_domains_numa_masks_set(unsigned int node)
 	 * Note that this is racy vs any use of sched_numa_topology_type :/
 	 */
 	init_numa_topology_type();
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void sched_domains_numa_masks_set(unsigned int cpu)
@@ -1961,6 +1978,7 @@ void sched_domains_numa_masks_set(unsigned int cpu)
 	int node = cpu_to_node(cpu);
 	int i, j;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	__sched_domains_numa_masks_set(node);
 
@@ -1974,6 +1992,16 @@ void sched_domains_numa_masks_set(unsigned int cpu)
 	for (i = 0; i < sched_domains_numa_levels; i++) {
 		for (j = 0; j < nr_node_ids; j++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__sched_domains_numa_masks_set(node);
+
+	for (i = 0; i < sched_domains_numa_levels; i++) {
+		for (j = 0; j < nr_node_ids; j++) {
+			if (!node_online(j))
+				continue;
+
+			/* Set ourselves in the remote node's masks */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (node_distance(j, node) <= sched_domains_numa_distance[i])
 				cpumask_set_cpu(cpu, sched_domains_numa_masks[i][j]);
 		}

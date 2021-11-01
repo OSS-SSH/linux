@@ -90,9 +90,13 @@
 #include <linux/seq_file.h>
 #include <linux/export.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/ioam6.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/ioam6.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define	INFINITY_LIFE_TIME	0xFFFFFFFF
 
@@ -242,11 +246,17 @@ static struct ipv6_devconf ipv6_devconf __read_mostly = {
 	.disable_policy		= 0,
 	.rpl_seg_enabled	= 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ioam6_enabled		= 0,
 	.ioam6_id               = IOAM6_DEFAULT_IF_ID,
 	.ioam6_id_wide		= IOAM6_DEFAULT_IF_ID_WIDE,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ioam6_enabled		= 0,
+	.ioam6_id               = IOAM6_DEFAULT_IF_ID,
+	.ioam6_id_wide		= IOAM6_DEFAULT_IF_ID_WIDE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct ipv6_devconf ipv6_devconf_dflt __read_mostly = {
@@ -304,11 +314,17 @@ static struct ipv6_devconf ipv6_devconf_dflt __read_mostly = {
 	.disable_policy		= 0,
 	.rpl_seg_enabled	= 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ioam6_enabled		= 0,
 	.ioam6_id               = IOAM6_DEFAULT_IF_ID,
 	.ioam6_id_wide		= IOAM6_DEFAULT_IF_ID_WIDE,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ioam6_enabled		= 0,
+	.ioam6_id               = IOAM6_DEFAULT_IF_ID,
+	.ioam6_id_wide		= IOAM6_DEFAULT_IF_ID_WIDE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* Check if link is ready: is it up and is a valid qdisc available */
@@ -404,9 +420,13 @@ static struct inet6_dev *ipv6_add_dev(struct net_device *dev)
 
 	ndev->cnf.mtu6 = dev->mtu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ndev->ra_mtu = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ndev->ra_mtu = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ndev->nd_parms = neigh_parms_alloc(dev, &nd_tbl);
 	if (!ndev->nd_parms) {
 		kfree(ndev);
@@ -715,11 +735,15 @@ errout:
 	if (in6_dev)
 		in6_dev_put(in6_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(dev);
 =======
 	if (dev)
 		dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -1105,10 +1129,14 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ifa = kzalloc(sizeof(*ifa), gfp_flags | __GFP_ACCOUNT);
 =======
 	ifa = kzalloc(sizeof(*ifa), gfp_flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ifa = kzalloc(sizeof(*ifa), gfp_flags | __GFP_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ifa) {
 		err = -ENOBUFS;
 		goto out;
@@ -3114,34 +3142,49 @@ static void add_addr(struct inet6_dev *idev, const struct in6_addr *addr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_IPV6_SIT) || IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
 static void add_v4_addrs(struct inet6_dev *idev)
 =======
 #if IS_ENABLED(CONFIG_IPV6_SIT)
 static void sit_add_v4_addrs(struct inet6_dev *idev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if IS_ENABLED(CONFIG_IPV6_SIT) || IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
+static void add_v4_addrs(struct inet6_dev *idev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct in6_addr addr;
 	struct net_device *dev;
 	struct net *net = dev_net(idev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int scope, plen, offset = 0;
 =======
 	int scope, plen;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int scope, plen, offset = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 pflags = 0;
 
 	ASSERT_RTNL();
 
 	memset(&addr, 0, sizeof(struct in6_addr));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
 	if (idev->dev->addr_len == sizeof(struct in6_addr))
 		offset = sizeof(struct in6_addr) - 4;
 	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
+<<<<<<< HEAD
 =======
 	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (idev->dev->flags&IFF_POINTOPOINT) {
 		addr.s6_addr32[0] = htonl(0xfe800000);
@@ -3380,10 +3423,13 @@ static void addrconf_dev_config(struct net_device *dev)
 	    (dev->type != ARPHRD_TUNNEL6) &&
 	    (dev->type != ARPHRD_6LOWPAN) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	    (dev->type != ARPHRD_IP6GRE) &&
 	    (dev->type != ARPHRD_IPGRE) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    (dev->type != ARPHRD_TUNNEL) &&
 	    (dev->type != ARPHRD_NONE) &&
 	    (dev->type != ARPHRD_RAWIP)) {
@@ -3432,10 +3478,14 @@ static void addrconf_sit_config(struct net_device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	add_v4_addrs(idev);
 =======
 	sit_add_v4_addrs(idev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	add_v4_addrs(idev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dev->flags&IFF_POINTOPOINT)
 		addrconf_add_mroute(dev);
@@ -3443,10 +3493,14 @@ static void addrconf_sit_config(struct net_device *dev)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
 =======
 #if IS_ENABLED(CONFIG_NET_IPGRE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void addrconf_gre_config(struct net_device *dev)
 {
 	struct inet6_dev *idev;
@@ -3460,6 +3514,9 @@ static void addrconf_gre_config(struct net_device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dev->type == ARPHRD_ETHER) {
 		addrconf_addr_gen(idev, true);
 		return;
@@ -3467,9 +3524,12 @@ static void addrconf_gre_config(struct net_device *dev)
 
 	add_v4_addrs(idev);
 
+<<<<<<< HEAD
 =======
 	addrconf_addr_gen(idev, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dev->flags & IFF_POINTOPOINT)
 		addrconf_add_mroute(dev);
 }
@@ -3646,11 +3706,16 @@ static int addrconf_notify(struct notifier_block *this, unsigned long event,
 			break;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
 		case ARPHRD_IP6GRE:
 =======
 #if IS_ENABLED(CONFIG_NET_IPGRE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
+		case ARPHRD_IP6GRE:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case ARPHRD_IPGRE:
 			addrconf_gre_config(dev);
 			break;
@@ -3914,9 +3979,13 @@ restart:
 
 	idev->tstamp = jiffies;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	idev->ra_mtu = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	idev->ra_mtu = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Last: Shot the device (if unregistered) */
 	if (unregister) {
@@ -5286,11 +5355,15 @@ static int inet6_dump_addr(struct sk_buff *skb, struct netlink_callback *cb,
 		.type = type,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net *tgt_net = sock_net(skb->sk);
 =======
 	struct net *net = sock_net(skb->sk);
 	struct net *tgt_net = net;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net *tgt_net = sock_net(skb->sk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int idx, s_idx, s_ip_idx;
 	int h, s_h;
 	struct net_device *dev;
@@ -5430,10 +5503,14 @@ static int inet6_rtm_getaddr(struct sk_buff *in_skb, struct nlmsghdr *nlh,
 			     struct netlink_ext_ack *extack)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net *tgt_net = sock_net(in_skb->sk);
 =======
 	struct net *net = sock_net(in_skb->sk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net *tgt_net = sock_net(in_skb->sk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct inet6_fill_args fillargs = {
 		.portid = NETLINK_CB(in_skb).portid,
 		.seq = nlh->nlmsg_seq,
@@ -5442,9 +5519,12 @@ static int inet6_rtm_getaddr(struct sk_buff *in_skb, struct nlmsghdr *nlh,
 		.netnsid = -1,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct net *tgt_net = net;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ifaddrmsg *ifm;
 	struct nlattr *tb[IFA_MAX+1];
 	struct in6_addr *addr = NULL, *peer;
@@ -5498,11 +5578,15 @@ errout_ifa:
 	in6_ifa_put(ifa);
 errout:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(dev);
 =======
 	if (dev)
 		dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fillargs.netnsid >= 0)
 		put_net(tgt_net);
 
@@ -5616,11 +5700,17 @@ static inline void ipv6_store_devconf(struct ipv6_devconf *cnf,
 	array[DEVCONF_NDISC_TCLASS] = cnf->ndisc_tclass;
 	array[DEVCONF_RPL_SEG_ENABLED] = cnf->rpl_seg_enabled;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	array[DEVCONF_IOAM6_ENABLED] = cnf->ioam6_enabled;
 	array[DEVCONF_IOAM6_ID] = cnf->ioam6_id;
 	array[DEVCONF_IOAM6_ID_WIDE] = cnf->ioam6_id_wide;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	array[DEVCONF_IOAM6_ENABLED] = cnf->ioam6_enabled;
+	array[DEVCONF_IOAM6_ID] = cnf->ioam6_id;
+	array[DEVCONF_IOAM6_ID_WIDE] = cnf->ioam6_id_wide;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline size_t inet6_ifla6_size(void)
@@ -5633,9 +5723,13 @@ static inline size_t inet6_ifla6_size(void)
 	     + nla_total_size(sizeof(struct in6_addr)) /* IFLA_INET6_TOKEN */
 	     + nla_total_size(1) /* IFLA_INET6_ADDR_GEN_MODE */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	     + nla_total_size(4) /* IFLA_INET6_RA_MTU */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	     + nla_total_size(4) /* IFLA_INET6_RA_MTU */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	     + 0;
 }
 
@@ -5745,12 +5839,18 @@ static int inet6_fill_ifla6_attrs(struct sk_buff *skb, struct inet6_dev *idev,
 		goto nla_put_failure;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (idev->ra_mtu &&
 	    nla_put_u32(skb, IFLA_INET6_RA_MTU, idev->ra_mtu))
 		goto nla_put_failure;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 nla_put_failure:
@@ -5868,11 +5968,17 @@ static const struct nla_policy inet6_af_policy[IFLA_INET6_MAX + 1] = {
 	[IFLA_INET6_ADDR_GEN_MODE]	= { .type = NLA_U8 },
 	[IFLA_INET6_TOKEN]		= { .len = sizeof(struct in6_addr) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[IFLA_INET6_RA_MTU]		= { .type = NLA_REJECT,
 					    .reject_message =
 						"IFLA_INET6_RA_MTU can not be set" },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[IFLA_INET6_RA_MTU]		= { .type = NLA_REJECT,
+					    .reject_message =
+						"IFLA_INET6_RA_MTU can not be set" },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int check_addr_gen_mode(int mode)
@@ -5897,11 +6003,16 @@ static int check_stable_privacy(struct inet6_dev *idev, struct net *net,
 
 static int inet6_validate_link_af(const struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  const struct nlattr *nla,
 				  struct netlink_ext_ack *extack)
 =======
 				  const struct nlattr *nla)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  const struct nlattr *nla,
+				  struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nlattr *tb[IFLA_INET6_MAX + 1];
 	struct inet6_dev *idev = NULL;
@@ -5915,10 +6026,14 @@ static int inet6_validate_link_af(const struct net_device *dev,
 
 	err = nla_parse_nested_deprecated(tb, IFLA_INET6_MAX, nla,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					  inet6_af_policy, extack);
 =======
 					  inet6_af_policy, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  inet6_af_policy, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -6662,9 +6777,13 @@ static int addrconf_sysctl_disable_policy(struct ctl_table *ctl, int write,
 static int minus_one = -1;
 static const int two_five_five = 255;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 ioam6_if_id_max = U16_MAX;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u32 ioam6_if_id_max = U16_MAX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct ctl_table addrconf_sysctl[] = {
 	{
@@ -7059,6 +7178,9 @@ static const struct ctl_table addrconf_sysctl[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.procname	= "ioam6_enabled",
 		.data		= &ipv6_devconf.ioam6_enabled,
 		.maxlen		= sizeof(u8),
@@ -7084,8 +7206,11 @@ static const struct ctl_table addrconf_sysctl[] = {
 		.proc_handler	= proc_douintvec,
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* sentinel */
 	}
 };

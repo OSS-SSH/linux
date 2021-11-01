@@ -2,10 +2,14 @@
 /*
  * Copyright (C) 2015-2017 Intel Deutschland GmbH
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2018-2021 Intel Corporation
 =======
  * Copyright (C) 2018-2020 Intel Corporation
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2018-2021 Intel Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include <net/cfg80211.h>
 #include <linux/etherdevice.h>
@@ -82,10 +86,14 @@ static int iwl_mvm_ftm_responder_set_bw_v2(struct cfg80211_chan_def *chandef,
 static void
 iwl_mvm_ftm_responder_set_ndp(struct iwl_mvm *mvm,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct iwl_tof_responder_config_cmd_v9 *cmd)
 =======
 			      struct iwl_tof_responder_config_cmd_v8 *cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct iwl_tof_responder_config_cmd_v9 *cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Up to 2 R2I STS are allowed on the responder */
 	u32 r2i_max_sts = IWL_MVM_FTM_R2I_MAX_STS < 2 ?
@@ -113,10 +121,14 @@ iwl_mvm_ftm_responder_cmd(struct iwl_mvm *mvm,
 	 * for all cases.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct iwl_tof_responder_config_cmd_v9 cmd = {
 =======
 	struct iwl_tof_responder_config_cmd_v8 cmd = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct iwl_tof_responder_config_cmd_v9 cmd = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.channel_num = chandef->chan->hw_value,
 		.cmd_valid_fields =
 			cpu_to_le32(IWL_TOF_RESPONDER_CMD_VALID_CHAN_INFO |
@@ -127,6 +139,7 @@ iwl_mvm_ftm_responder_cmd(struct iwl_mvm *mvm,
 	u8 cmd_ver = iwl_fw_lookup_cmd_ver(mvm->fw, LOCATION_GROUP,
 					   TOF_RESPONDER_CONFIG_CMD, 6);
 	int err;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int cmd_size;
 
@@ -155,6 +168,29 @@ iwl_mvm_ftm_responder_cmd(struct iwl_mvm *mvm,
 
 if (cmd_ver == 8)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int cmd_size;
+
+	lockdep_assert_held(&mvm->mutex);
+
+	/* Use a default of bss_color=1 for now */
+	if (cmd_ver == 9) {
+		cmd.cmd_valid_fields |=
+			cpu_to_le32(IWL_TOF_RESPONDER_CMD_VALID_BSS_COLOR |
+				    IWL_TOF_RESPONDER_CMD_VALID_MIN_MAX_TIME_BETWEEN_MSR);
+		cmd.bss_color = 1;
+		cmd.min_time_between_msr =
+			cpu_to_le16(IWL_MVM_FTM_NON_TB_MIN_TIME_BETWEEN_MSR);
+		cmd.max_time_between_msr =
+			cpu_to_le16(IWL_MVM_FTM_NON_TB_MAX_TIME_BETWEEN_MSR);
+		cmd_size = sizeof(struct iwl_tof_responder_config_cmd_v9);
+	} else {
+		/* All versions up to version 8 have the same size */
+		cmd_size = sizeof(struct iwl_tof_responder_config_cmd_v8);
+	}
+
+	if (cmd_ver >= 8)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iwl_mvm_ftm_responder_set_ndp(mvm, &cmd);
 
 	if (cmd_ver >= 7)
@@ -174,10 +210,14 @@ if (cmd_ver == 8)
 	return iwl_mvm_send_cmd_pdu(mvm, iwl_cmd_id(TOF_RESPONDER_CONFIG_CMD,
 						    LOCATION_GROUP, 0),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    0, cmd_size, &cmd);
 =======
 				    0, sizeof(cmd), &cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    0, cmd_size, &cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int

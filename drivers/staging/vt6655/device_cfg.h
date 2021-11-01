@@ -4,10 +4,13 @@
  * All rights reserved.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * File: device_cfg.h
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Purpose: Driver configuration header
  * Author: Lyndon Chen
  *
@@ -15,9 +18,13 @@
  *
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef __DEVICE_CONFIG_H
 #define __DEVICE_CONFIG_H
 
@@ -47,11 +54,14 @@
 #include <linux/fs.h>
 #include <linux/fcntl.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifndef CONFIG_PATH
 #define CONFIG_PATH            "/etc/vntconfiguration.dat"
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define PKT_BUF_SZ          2390
 

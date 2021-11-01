@@ -1750,13 +1750,19 @@ rtl_coalesce_info(struct rtl8169_private *tp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rtl_get_coalesce(struct net_device *dev,
 			    struct ethtool_coalesce *ec,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int rtl_get_coalesce(struct net_device *dev, struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rtl8169_private *tp = netdev_priv(dev);
 	const struct rtl_coalesce_info *ci;
@@ -1815,13 +1821,19 @@ static int rtl_coalesce_choose_scale(struct rtl8169_private *tp, u32 usec,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rtl_set_coalesce(struct net_device *dev,
 			    struct ethtool_coalesce *ec,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int rtl_set_coalesce(struct net_device *dev, struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rtl8169_private *tp = netdev_priv(dev);
 	u32 tx_fr = ec->tx_max_coalesced_frames;
@@ -2613,10 +2625,14 @@ static u32 rtl_csi_read(struct rtl8169_private *tp, int addr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void rtl_set_aspm_entry_latency(struct rtl8169_private *tp, u8 val)
 =======
 static void rtl_csi_access_enable(struct rtl8169_private *tp, u8 val)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void rtl_set_aspm_entry_latency(struct rtl8169_private *tp, u8 val)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pci_dev *pdev = tp->pci_dev;
 	u32 csi;
@@ -2625,10 +2641,15 @@ static void rtl_csi_access_enable(struct rtl8169_private *tp, u8 val)
 	 * controls the L0s/L1 entrance latency. We try standard ECAM access
 	 * first and if it fails fall back to CSI.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * bit 0..2: L0: 0 = 1us, 1 = 2us .. 6 = 7us, 7 = 7us (no typo)
 	 * bit 3..5: L1: 0 = 1us, 1 = 2us .. 6 = 64us, 7 = 64us
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * bit 0..2: L0: 0 = 1us, 1 = 2us .. 6 = 7us, 7 = 7us (no typo)
+	 * bit 3..5: L1: 0 = 1us, 1 = 2us .. 6 = 64us, 7 = 64us
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	if (pdev->cfg_size > 0x070f &&
 	    pci_write_config_byte(pdev, 0x070f, val) == PCIBIOS_SUCCESSFUL)
@@ -2643,11 +2664,16 @@ static void rtl_csi_access_enable(struct rtl8169_private *tp, u8 val)
 static void rtl_set_def_aspm_entry_latency(struct rtl8169_private *tp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* L0 7us, L1 16us */
 	rtl_set_aspm_entry_latency(tp, 0x27);
 =======
 	rtl_csi_access_enable(tp, 0x27);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* L0 7us, L1 16us */
+	rtl_set_aspm_entry_latency(tp, 0x27);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct ephy_info {
@@ -2689,6 +2715,9 @@ static void rtl_pcie_state_l2l3_disable(struct rtl8169_private *tp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void rtl_enable_exit_l1(struct rtl8169_private *tp)
 {
 	/* Bits control which events trigger ASPM L1 exit:
@@ -2717,8 +2746,11 @@ static void rtl_enable_exit_l1(struct rtl8169_private *tp)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void rtl_hw_aspm_clkreq_enable(struct rtl8169_private *tp, bool enable)
 {
 	/* Don't enable ASPM in the chip if OS can't control ASPM */
@@ -2908,9 +2940,12 @@ static void rtl_hw_start_8168e_2(struct rtl8169_private *tp)
 	rtl_eri_write(tp, 0xb8, ERIAR_MASK_1111, 0x0000);
 	rtl_set_fifo_size(tp, 0x10, 0x10, 0x02, 0x06);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	rtl_eri_set_bits(tp, 0x0d4, 0x1f00);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rtl_eri_set_bits(tp, 0x1d0, BIT(1));
 	rtl_reset_packet_filter(tp);
 	rtl_eri_set_bits(tp, 0x1b0, BIT(4));
@@ -2968,10 +3003,13 @@ static void rtl_hw_start_8168f_1(struct rtl8169_private *tp)
 
 	rtl_ephy_init(tp, e_info_8168f_1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	rtl_eri_set_bits(tp, 0x0d4, 0x1f00);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void rtl_hw_start_8411(struct rtl8169_private *tp)
@@ -2989,10 +3027,13 @@ static void rtl_hw_start_8411(struct rtl8169_private *tp)
 
 	rtl_ephy_init(tp, e_info_8168f_1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	rtl_eri_set_bits(tp, 0x0d4, 0x0c00);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void rtl_hw_start_8168g(struct rtl8169_private *tp)
@@ -3010,9 +3051,12 @@ static void rtl_hw_start_8168g(struct rtl8169_private *tp)
 	rtl_eri_write(tp, 0xc0, ERIAR_MASK_0011, 0x0000);
 	rtl_eri_write(tp, 0xb8, ERIAR_MASK_0011, 0x0000);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	rtl_eri_set_bits(tp, 0x0d4, 0x1f80);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rtl8168_config_eee_mac(tp);
 
@@ -3244,9 +3288,12 @@ static void rtl_hw_start_8168h_1(struct rtl8169_private *tp)
 	rtl_reset_packet_filter(tp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	rtl_eri_set_bits(tp, 0xd4, 0x1f00);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rtl_eri_set_bits(tp, 0xdc, 0x001c);
 
 	rtl_eri_write(tp, 0x5f0, ERIAR_MASK_0011, 0x4f87);
@@ -3301,10 +3348,13 @@ static void rtl_hw_start_8168ep(struct rtl8169_private *tp)
 	rtl_reset_packet_filter(tp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	rtl_eri_set_bits(tp, 0xd4, 0x1f80);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rtl_eri_write(tp, 0x5f0, ERIAR_MASK_0011, 0x4f87);
 
 	RTL_W32(tp, MISC, RTL_R32(tp, MISC) & ~RXDV_GATED_EN);
@@ -3407,10 +3457,14 @@ static void rtl_hw_start_8117(struct rtl8169_private *tp)
 	rtl_reset_packet_filter(tp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rtl_eri_set_bits(tp, 0xd4, 0x0010);
 =======
 	rtl_eri_set_bits(tp, 0xd4, 0x1f90);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rtl_eri_set_bits(tp, 0xd4, 0x0010);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rtl_eri_write(tp, 0x5f0, ERIAR_MASK_0011, 0x4f87);
 
@@ -3584,11 +3638,17 @@ static void rtl_hw_start_8106(struct rtl8169_private *tp)
 	RTL_W8(tp, DLLPR, RTL_R8(tp, DLLPR) & ~PFM_EN);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* L0 7us, L1 32us - needed to avoid issues with link-up detection */
 	rtl_set_aspm_entry_latency(tp, 0x2f);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* L0 7us, L1 32us - needed to avoid issues with link-up detection */
+	rtl_set_aspm_entry_latency(tp, 0x2f);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rtl_eri_write(tp, 0x1d0, ERIAR_MASK_0011, 0x0000);
 
 	/* disable EEE */
@@ -3596,9 +3656,13 @@ static void rtl_hw_start_8106(struct rtl8169_private *tp)
 
 	rtl_pcie_state_l2l3_disable(tp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rtl_hw_aspm_clkreq_enable(tp, true);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rtl_hw_aspm_clkreq_enable(tp, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 DECLARE_RTL_COND(rtl_mac_ocp_e00e_cond)
@@ -3648,9 +3712,12 @@ static void rtl_hw_start_8125_common(struct rtl8169_private *tp)
 	r8168_mac_ocp_modify(tp, 0xe0c0, 0x4f0f, 0x4403);
 	r8168_mac_ocp_modify(tp, 0xe052, 0x0080, 0x0068);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	r8168_mac_ocp_modify(tp, 0xc0ac, 0x0080, 0x1f00);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	r8168_mac_ocp_modify(tp, 0xd430, 0x0fff, 0x047f);
 
 	r8168_mac_ocp_modify(tp, 0xea1c, 0x0004, 0x0000);
@@ -3874,9 +3941,13 @@ static void rtl_hw_start(struct  rtl8169_private *tp)
 		rtl_hw_start_8168(tp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rtl_enable_exit_l1(tp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rtl_enable_exit_l1(tp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rtl_set_rx_max_size(tp);
 	rtl_set_rx_tx_desc_registers(tp);
 	rtl_lock_config_regs(tp);
@@ -5078,10 +5149,14 @@ static const struct net_device_ops rtl_netdev_ops = {
 	.ndo_set_features	= rtl8169_set_features,
 	.ndo_set_mac_address	= rtl_set_mac_address,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= phy_do_ioctl_running,
 =======
 	.ndo_do_ioctl		= phy_do_ioctl_running,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= phy_do_ioctl_running,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode	= rtl_set_rx_mode,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	= rtl8169_netpoll,
@@ -5187,11 +5262,16 @@ static int r8169_mdio_register(struct rtl8169_private *tp)
 	new_bus->parent = &pdev->dev;
 	new_bus->irq[0] = PHY_MAC_INTERRUPT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snprintf(new_bus->id, MII_BUS_ID_SIZE, "r8169-%x-%x",
 		 pci_domain_nr(pdev->bus), pci_dev_id(pdev));
 =======
 	snprintf(new_bus->id, MII_BUS_ID_SIZE, "r8169-%x", pci_dev_id(pdev));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snprintf(new_bus->id, MII_BUS_ID_SIZE, "r8169-%x-%x",
+		 pci_domain_nr(pdev->bus), pci_dev_id(pdev));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	new_bus->read = r8169_mdio_read_reg;
 	new_bus->write = r8169_mdio_write_reg;
@@ -5381,6 +5461,7 @@ static int rtl_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 		return rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Disable ASPM L1 as that cause random device stop working
 	 * problems as well as full system hangs for some PCIe devices users.
 	 */
@@ -5392,6 +5473,12 @@ static int rtl_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L0S |
 					  PCIE_LINK_STATE_L1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Disable ASPM L1 as that cause random device stop working
+	 * problems as well as full system hangs for some PCIe devices users.
+	 */
+	rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tp->aspm_manageable = !rc;
 
 	/* enable device (incl. PCI PM wakeup and hotplug setup) */

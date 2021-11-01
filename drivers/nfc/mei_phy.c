@@ -203,10 +203,14 @@ err:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int mei_nfc_send(struct nfc_mei_phy *phy, const u8 *buf, size_t length)
 =======
 static int mei_nfc_send(struct nfc_mei_phy *phy, u8 *buf, size_t length)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int mei_nfc_send(struct nfc_mei_phy *phy, const u8 *buf, size_t length)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mei_nfc_hdr *hdr;
 	u8 *mei_buf;
@@ -367,10 +371,14 @@ static void nfc_mei_phy_disable(void *phy_id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const struct nfc_phy_ops mei_phy_ops = {
 =======
 struct nfc_phy_ops mei_phy_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const struct nfc_phy_ops mei_phy_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.write = nfc_mei_phy_write,
 	.enable = nfc_mei_phy_enable,
 	.disable = nfc_mei_phy_disable,

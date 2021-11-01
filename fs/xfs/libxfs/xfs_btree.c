@@ -65,20 +65,28 @@ __xfs_btree_check_lblock(
 	struct xfs_mount	*mp = cur->bc_mp;
 	xfs_btnum_t		btnum = cur->bc_btnum;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int			crc = xfs_has_crc(mp);
 =======
 	int			crc = xfs_sb_version_hascrc(&mp->m_sb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			crc = xfs_has_crc(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (crc) {
 		if (!uuid_equal(&block->bb_u.l.bb_uuid, &mp->m_sb.sb_meta_uuid))
 			return __this_address;
 		if (block->bb_u.l.bb_blkno !=
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    cpu_to_be64(bp ? xfs_buf_daddr(bp) : XFS_BUF_DADDR_NULL))
 =======
 		    cpu_to_be64(bp ? bp->b_bn : XFS_BUF_DADDR_NULL))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    cpu_to_be64(bp ? xfs_buf_daddr(bp) : XFS_BUF_DADDR_NULL))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return __this_address;
 		if (block->bb_u.l.bb_pad != cpu_to_be32(0))
 			return __this_address;
@@ -138,20 +146,28 @@ __xfs_btree_check_sblock(
 	struct xfs_mount	*mp = cur->bc_mp;
 	xfs_btnum_t		btnum = cur->bc_btnum;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int			crc = xfs_has_crc(mp);
 =======
 	int			crc = xfs_sb_version_hascrc(&mp->m_sb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			crc = xfs_has_crc(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (crc) {
 		if (!uuid_equal(&block->bb_u.s.bb_uuid, &mp->m_sb.sb_meta_uuid))
 			return __this_address;
 		if (block->bb_u.s.bb_blkno !=
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    cpu_to_be64(bp ? xfs_buf_daddr(bp) : XFS_BUF_DADDR_NULL))
 =======
 		    cpu_to_be64(bp ? bp->b_bn : XFS_BUF_DADDR_NULL))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    cpu_to_be64(bp ? xfs_buf_daddr(bp) : XFS_BUF_DADDR_NULL))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return __this_address;
 	}
 
@@ -242,16 +258,22 @@ xfs_btree_check_sptr(
 static int
 xfs_btree_check_ptr(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*ptr,
 	int				index,
 	int				level)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	union xfs_btree_ptr	*ptr,
 	int			index,
 	int			level)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (cur->bc_flags & XFS_BTREE_LONG_PTRS) {
 		if (xfs_btree_check_lptr(cur, be64_to_cpu((&ptr->l)[index]),
@@ -297,10 +319,14 @@ xfs_btree_lblock_calc_crc(
 	struct xfs_buf_log_item	*bip = bp->b_log_item;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(bp->b_mount))
 =======
 	if (!xfs_sb_version_hascrc(&bp->b_mount->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(bp->b_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	if (bip)
 		block->bb_u.l.bb_lsn = cpu_to_be64(bip->bli_item.li_lsn);
@@ -315,10 +341,14 @@ xfs_btree_lblock_verify_crc(
 	struct xfs_mount	*mp = bp->b_mount;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!xfs_log_check_lsn(mp, be64_to_cpu(block->bb_u.l.bb_lsn)))
 			return false;
 		return xfs_buf_verify_cksum(bp, XFS_BTREE_LBLOCK_CRC_OFF);
@@ -343,10 +373,14 @@ xfs_btree_sblock_calc_crc(
 	struct xfs_buf_log_item	*bip = bp->b_log_item;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(bp->b_mount))
 =======
 	if (!xfs_sb_version_hascrc(&bp->b_mount->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(bp->b_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	if (bip)
 		block->bb_u.s.bb_lsn = cpu_to_be64(bip->bli_item.li_lsn);
@@ -361,10 +395,14 @@ xfs_btree_sblock_verify_crc(
 	struct xfs_mount	*mp = bp->b_mount;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!xfs_log_check_lsn(mp, be64_to_cpu(block->bb_u.s.bb_lsn)))
 			return false;
 		return xfs_buf_verify_cksum(bp, XFS_BTREE_SBLOCK_CRC_OFF);
@@ -414,10 +452,14 @@ xfs_btree_del_cursor(
 
 	ASSERT(cur->bc_btnum != XFS_BTNUM_BMAP || cur->bc_ino.allocated == 0 ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       xfs_is_shutdown(cur->bc_mp));
 =======
 	       XFS_FORCED_SHUTDOWN(cur->bc_mp));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	       xfs_is_shutdown(cur->bc_mp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(cur->bc_flags & XFS_BTREE_STAGING))
 		kmem_free(cur->bc_ops);
 	if (!(cur->bc_flags & XFS_BTREE_LONG_PTRS) && cur->bc_ag.pag)
@@ -464,10 +506,14 @@ xfs_btree_dup_cursor(
 		if (bp) {
 			error = xfs_trans_read_buf(mp, tp, mp->m_ddev_targp,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						   xfs_buf_daddr(bp), mp->m_bsize,
 =======
 						   XFS_BUF_ADDR(bp), mp->m_bsize,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						   xfs_buf_daddr(bp), mp->m_bsize,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						   0, &bp,
 						   cur->bc_ops->buf_ops);
 			if (error) {
@@ -983,6 +1029,7 @@ xfs_btree_readahead(
 STATIC int
 xfs_btree_ptr_to_daddr(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*ptr,
 	xfs_daddr_t			*daddr)
@@ -991,6 +1038,11 @@ xfs_btree_ptr_to_daddr(
 	union xfs_btree_ptr	*ptr,
 	xfs_daddr_t		*daddr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_ptr	*ptr,
+	xfs_daddr_t			*daddr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	xfs_fsblock_t		fsbno;
 	xfs_agblock_t		agbno;
@@ -1066,12 +1118,17 @@ xfs_btree_setbuf(
 bool
 xfs_btree_ptr_is_null(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*ptr)
 =======
 	struct xfs_btree_cur	*cur,
 	union xfs_btree_ptr	*ptr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_ptr	*ptr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (cur->bc_flags & XFS_BTREE_LONG_PTRS)
 		return ptr->l == cpu_to_be64(NULLFSBLOCK);
@@ -1118,16 +1175,22 @@ xfs_btree_get_sibling(
 void
 xfs_btree_set_sibling(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	struct xfs_btree_block		*block,
 	const union xfs_btree_ptr	*ptr,
 	int				lr)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	struct xfs_btree_block	*block,
 	union xfs_btree_ptr	*ptr,
 	int			lr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	ASSERT(lr == XFS_BB_LEFTSIB || lr == XFS_BB_RIGHTSIB);
 
@@ -1156,10 +1219,14 @@ xfs_btree_init_block_int(
 	unsigned int		flags)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int			crc = xfs_has_crc(mp);
 =======
 	int			crc = xfs_sb_version_hascrc(&mp->m_sb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			crc = xfs_has_crc(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32			magic = xfs_btree_magic(crc, btnum);
 
 	buf->bb_magic = cpu_to_be32(magic);
@@ -1201,10 +1268,14 @@ xfs_btree_init_block(
 	__u64		owner)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_btree_init_block_int(mp, XFS_BUF_TO_BLOCK(bp), xfs_buf_daddr(bp),
 =======
 	xfs_btree_init_block_int(mp, XFS_BUF_TO_BLOCK(bp), bp->b_bn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_btree_init_block_int(mp, XFS_BUF_TO_BLOCK(bp), xfs_buf_daddr(bp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 btnum, level, numrecs, owner, 0);
 }
 
@@ -1229,6 +1300,7 @@ xfs_btree_init_block_cur(
 		owner = cur->bc_ag.pag->pag_agno;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_btree_init_block_int(cur->bc_mp, XFS_BUF_TO_BLOCK(bp),
 				xfs_buf_daddr(bp), cur->bc_btnum, level,
 				numrecs, owner, cur->bc_flags);
@@ -1237,6 +1309,11 @@ xfs_btree_init_block_cur(
 				 cur->bc_btnum, level, numrecs,
 				 owner, cur->bc_flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_btree_init_block_int(cur->bc_mp, XFS_BUF_TO_BLOCK(bp),
+				xfs_buf_daddr(bp), cur->bc_btnum, level,
+				numrecs, owner, cur->bc_flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1272,6 +1349,7 @@ xfs_btree_buf_to_ptr(
 	if (cur->bc_flags & XFS_BTREE_LONG_PTRS)
 		ptr->l = cpu_to_be64(XFS_DADDR_TO_FSB(cur->bc_mp,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					xfs_buf_daddr(bp)));
 	else {
 		ptr->s = cpu_to_be32(xfs_daddr_to_agbno(cur->bc_mp,
@@ -1282,6 +1360,12 @@ xfs_btree_buf_to_ptr(
 		ptr->s = cpu_to_be32(xfs_daddr_to_agbno(cur->bc_mp,
 					XFS_BUF_ADDR(bp)));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					xfs_buf_daddr(bp)));
+	else {
+		ptr->s = cpu_to_be32(xfs_daddr_to_agbno(cur->bc_mp,
+					xfs_buf_daddr(bp)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1316,16 +1400,22 @@ xfs_btree_set_refs(
 int
 xfs_btree_get_buf_block(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*ptr,
 	struct xfs_btree_block		**block,
 	struct xfs_buf			**bpp)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	union xfs_btree_ptr	*ptr,
 	struct xfs_btree_block	**block,
 	struct xfs_buf		**bpp)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_mount	*mp = cur->bc_mp;
 	xfs_daddr_t		d;
@@ -1351,11 +1441,15 @@ xfs_btree_get_buf_block(
 STATIC int
 xfs_btree_read_buf_block(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*ptr,
 	int				flags,
 	struct xfs_btree_block		**block,
 	struct xfs_buf			**bpp)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	union xfs_btree_ptr	*ptr,
@@ -1363,6 +1457,8 @@ xfs_btree_read_buf_block(
 	struct xfs_btree_block	**block,
 	struct xfs_buf		**bpp)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_mount	*mp = cur->bc_mp;
 	xfs_daddr_t		d;
@@ -1391,16 +1487,22 @@ xfs_btree_read_buf_block(
 void
 xfs_btree_copy_keys(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	union xfs_btree_key		*dst_key,
 	const union xfs_btree_key	*src_key,
 	int				numkeys)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	union xfs_btree_key	*dst_key,
 	union xfs_btree_key	*src_key,
 	int			numkeys)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	ASSERT(numkeys >= 0);
 	memcpy(dst_key, src_key, numkeys * cur->bc_ops->key_len);
@@ -1822,16 +1924,22 @@ error0:
 int
 xfs_btree_lookup_get_block(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,	/* btree cursor */
 	int				level,	/* level in the btree */
 	const union xfs_btree_ptr	*pp,	/* ptr to btree block */
 	struct xfs_btree_block		**blkp) /* return btree block */
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,	/* btree cursor */
 	int			level,	/* level in the btree */
 	union xfs_btree_ptr	*pp,	/* ptr to btree block */
 	struct xfs_btree_block	**blkp) /* return btree block */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_buf		*bp;	/* buffer pointer for btree block */
 	xfs_daddr_t		daddr;
@@ -1855,10 +1963,14 @@ xfs_btree_lookup_get_block(
 	if (error)
 		return error;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bp && xfs_buf_daddr(bp) == daddr) {
 =======
 	if (bp && XFS_BUF_ADDR(bp) == daddr) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (bp && xfs_buf_daddr(bp) == daddr) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*blkp = XFS_BUF_TO_BLOCK(bp);
 		return 0;
 	}
@@ -1869,10 +1981,14 @@ xfs_btree_lookup_get_block(
 
 	/* Check the inode owner since the verifiers don't. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(cur->bc_mp) &&
 =======
 	if (xfs_sb_version_hascrc(&cur->bc_mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(cur->bc_mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !(cur->bc_ino.flags & XFS_BTCUR_BMBT_INVALID_OWNER) &&
 	    (cur->bc_flags & XFS_BTREE_LONG_PTRS) &&
 	    be64_to_cpu((*blkp)->bb_u.l.bb_owner) !=
@@ -3047,17 +3163,25 @@ xfs_btree_new_iroot(
 	memcpy(cblock, block, xfs_btree_block_len(cur));
 	if (cur->bc_flags & XFS_BTREE_CRC_BLOCKS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__be64 bno = cpu_to_be64(xfs_buf_daddr(cbp));
 		if (cur->bc_flags & XFS_BTREE_LONG_PTRS)
 			cblock->bb_u.l.bb_blkno = bno;
 		else
 			cblock->bb_u.s.bb_blkno = bno;
 =======
+=======
+		__be64 bno = cpu_to_be64(xfs_buf_daddr(cbp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (cur->bc_flags & XFS_BTREE_LONG_PTRS)
-			cblock->bb_u.l.bb_blkno = cpu_to_be64(cbp->b_bn);
+			cblock->bb_u.l.bb_blkno = bno;
 		else
+<<<<<<< HEAD
 			cblock->bb_u.s.bb_blkno = cpu_to_be64(cbp->b_bn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cblock->bb_u.s.bb_blkno = bno;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	be16_add_cpu(&block->bb_level, 1);
@@ -3357,10 +3481,14 @@ xfs_btree_insrec(
 	/* Get pointers to the btree buffer and block. */
 	block = xfs_btree_get_block(cur, level, &bp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	old_bn = bp ? xfs_buf_daddr(bp) : XFS_BUF_DADDR_NULL;
 =======
 	old_bn = bp ? bp->b_bn : XFS_BUF_DADDR_NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	old_bn = bp ? xfs_buf_daddr(bp) : XFS_BUF_DADDR_NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numrecs = xfs_btree_get_numrecs(block);
 
 #ifdef DEBUG
@@ -3477,10 +3605,14 @@ xfs_btree_insrec(
 	 * update mechanism.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bp && xfs_buf_daddr(bp) != old_bn) {
 =======
 	if (bp && bp->b_bn != old_bn) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (bp && xfs_buf_daddr(bp) != old_bn) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_btree_get_keys(cur, block, lkey);
 	} else if (xfs_btree_needs_key_update(cur, optr)) {
 		error = xfs_btree_update_keys(cur, level);
@@ -4558,6 +4690,7 @@ xfs_btree_lblock_v5hdr_verify(
 	struct xfs_btree_block	*block = XFS_BUF_TO_BLOCK(bp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 		return __this_address;
 	if (!uuid_equal(&block->bb_u.l.bb_uuid, &mp->m_sb.sb_meta_uuid))
@@ -4570,6 +4703,13 @@ xfs_btree_lblock_v5hdr_verify(
 		return __this_address;
 	if (block->bb_u.l.bb_blkno != cpu_to_be64(bp->b_bn))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+		return __this_address;
+	if (!uuid_equal(&block->bb_u.l.bb_uuid, &mp->m_sb.sb_meta_uuid))
+		return __this_address;
+	if (block->bb_u.l.bb_blkno != cpu_to_be64(xfs_buf_daddr(bp)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return __this_address;
 	if (owner != XFS_RMAP_OWN_UNKNOWN &&
 	    be64_to_cpu(block->bb_u.l.bb_owner) != owner)
@@ -4616,6 +4756,7 @@ xfs_btree_sblock_v5hdr_verify(
 	struct xfs_perag	*pag = bp->b_pag;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 		return __this_address;
 	if (!uuid_equal(&block->bb_u.s.bb_uuid, &mp->m_sb.sb_meta_uuid))
@@ -4628,6 +4769,13 @@ xfs_btree_sblock_v5hdr_verify(
 		return __this_address;
 	if (block->bb_u.s.bb_blkno != cpu_to_be64(bp->b_bn))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+		return __this_address;
+	if (!uuid_equal(&block->bb_u.s.bb_uuid, &mp->m_sb.sb_meta_uuid))
+		return __this_address;
+	if (block->bb_u.s.bb_blkno != cpu_to_be64(xfs_buf_daddr(bp)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return __this_address;
 	if (pag && be32_to_cpu(block->bb_u.s.bb_owner) != pag->pag_agno)
 		return __this_address;
@@ -4655,10 +4803,14 @@ xfs_btree_sblock_verify(
 
 	/* sibling pointer verification */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	agno = xfs_daddr_to_agno(mp, xfs_buf_daddr(bp));
 =======
 	agno = xfs_daddr_to_agno(mp, XFS_BUF_ADDR(bp));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	agno = xfs_daddr_to_agno(mp, xfs_buf_daddr(bp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (block->bb_u.s.bb_leftsib != cpu_to_be32(NULLAGBLOCK) &&
 	    !xfs_verify_agbno(mp, agno, be32_to_cpu(block->bb_u.s.bb_leftsib)))
 		return __this_address;
@@ -4696,12 +4848,17 @@ STATIC int
 xfs_btree_simple_query_range(
 	struct xfs_btree_cur		*cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_key	*low_key,
 	const union xfs_btree_key	*high_key,
 =======
 	union xfs_btree_key		*low_key,
 	union xfs_btree_key		*high_key,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_key	*low_key,
+	const union xfs_btree_key	*high_key,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_btree_query_range_fn	fn,
 	void				*priv)
 {
@@ -4792,12 +4949,17 @@ STATIC int
 xfs_btree_overlapped_query_range(
 	struct xfs_btree_cur		*cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_key	*low_key,
 	const union xfs_btree_key	*high_key,
 =======
 	union xfs_btree_key		*low_key,
 	union xfs_btree_key		*high_key,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_key	*low_key,
+	const union xfs_btree_key	*high_key,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_btree_query_range_fn	fn,
 	void				*priv)
 {
@@ -4939,12 +5101,17 @@ int
 xfs_btree_query_range(
 	struct xfs_btree_cur		*cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_irec	*low_rec,
 	const union xfs_btree_irec	*high_rec,
 =======
 	union xfs_btree_irec		*low_rec,
 	union xfs_btree_irec		*high_rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_irec	*low_rec,
+	const union xfs_btree_irec	*high_rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_btree_query_range_fn	fn,
 	void				*priv)
 {
@@ -5052,10 +5219,14 @@ STATIC int
 xfs_btree_has_record_helper(
 	struct xfs_btree_cur		*cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_rec	*rec,
 =======
 	union xfs_btree_rec		*rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_rec	*rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void				*priv)
 {
 	return -ECANCELED;
@@ -5065,10 +5236,14 @@ xfs_btree_has_record_helper(
 int
 xfs_btree_has_record(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_irec	*low,
 	const union xfs_btree_irec	*high,
 	bool				*exists)
+<<<<<<< HEAD
 {
 	int				error;
 =======
@@ -5079,6 +5254,10 @@ xfs_btree_has_record(
 {
 	int			error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+{
+	int				error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = xfs_btree_query_range(cur, low, high,
 			&xfs_btree_has_record_helper, NULL);

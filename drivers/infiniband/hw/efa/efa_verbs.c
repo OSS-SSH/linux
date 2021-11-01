@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright 2018-2021 Amazon.com, Inc. or its affiliates. All rights reserved.
 =======
  * Copyright 2018-2020 Amazon.com, Inc. or its affiliates. All rights reserved.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright 2018-2021 Amazon.com, Inc. or its affiliates. All rights reserved.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/vmalloc.h>
@@ -35,6 +39,9 @@ struct efa_user_mmap_entry {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define EFA_DEFINE_DEVICE_STATS(op) \
 	op(EFA_SUBMITTED_CMDS, "submitted_cmds") \
 	op(EFA_COMPLETED_CMDS, "completed_cmds") \
@@ -50,9 +57,12 @@ struct efa_user_mmap_entry {
 	op(EFA_MMAP_ERR, "mmap_err")
 
 #define EFA_DEFINE_PORT_STATS(op) \
+<<<<<<< HEAD
 =======
 #define EFA_DEFINE_STATS(op) \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	op(EFA_TX_BYTES, "tx_bytes") \
 	op(EFA_TX_PKTS, "tx_pkts") \
 	op(EFA_RX_BYTES, "rx_bytes") \
@@ -66,6 +76,7 @@ struct efa_user_mmap_entry {
 	op(EFA_RDMA_READ_BYTES, "rdma_read_bytes") \
 	op(EFA_RDMA_READ_WR_ERR, "rdma_read_wr_err") \
 	op(EFA_RDMA_READ_RESP_BYTES, "rdma_read_resp_bytes") \
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	op(EFA_SUBMITTED_CMDS, "submitted_cmds") \
@@ -81,10 +92,13 @@ struct efa_user_mmap_entry {
 	op(EFA_CREATE_AH_ERR, "create_ah_err") \
 	op(EFA_MMAP_ERR, "mmap_err")
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define EFA_STATS_ENUM(ename, name) ename,
 #define EFA_STATS_STR(ename, name) [ename] = name,
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 enum efa_hw_device_stats {
 	EFA_DEFINE_DEVICE_STATS(EFA_STATS_ENUM)
@@ -108,6 +122,22 @@ enum efa_hw_stats {
 static const char *const efa_stats_names[] = {
 	EFA_DEFINE_STATS(EFA_STATS_STR)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+enum efa_hw_device_stats {
+	EFA_DEFINE_DEVICE_STATS(EFA_STATS_ENUM)
+};
+
+static const char *const efa_device_stats_names[] = {
+	EFA_DEFINE_DEVICE_STATS(EFA_STATS_STR)
+};
+
+enum efa_hw_port_stats {
+	EFA_DEFINE_PORT_STATS(EFA_STATS_ENUM)
+};
+
+static const char *const efa_port_stats_names[] = {
+	EFA_DEFINE_PORT_STATS(EFA_STATS_STR)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define EFA_CHUNK_PAYLOAD_SHIFT       12
@@ -483,9 +513,12 @@ int efa_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kfree(qp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -645,6 +678,7 @@ static int efa_qp_validate_attr(struct efa_dev *dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int efa_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		  struct ib_udata *udata)
 {
@@ -659,15 +693,23 @@ int efa_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 struct ib_qp *efa_create_qp(struct ib_pd *ibpd,
 			    struct ib_qp_init_attr *init_attr,
 			    struct ib_udata *udata)
+=======
+int efa_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
+		  struct ib_udata *udata)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct efa_com_create_qp_params create_qp_params = {};
 	struct efa_com_create_qp_result create_qp_resp;
-	struct efa_dev *dev = to_edev(ibpd->device);
+	struct efa_dev *dev = to_edev(ibqp->device);
 	struct efa_ibv_create_qp_resp resp = {};
 	struct efa_ibv_create_qp cmd = {};
+	struct efa_qp *qp = to_eqp(ibqp);
 	struct efa_ucontext *ucontext;
+<<<<<<< HEAD
 	struct efa_qp *qp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	ucontext = rdma_udata_to_drv_context(udata, struct efa_ucontext,
@@ -713,6 +755,7 @@ struct ib_qp *efa_create_qp(struct ib_pd *ibpd,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	create_qp_params.uarn = ucontext->uarn;
 	create_qp_params.pd = to_epd(ibqp->pd)->pdn;
 =======
@@ -725,6 +768,10 @@ struct ib_qp *efa_create_qp(struct ib_pd *ibpd,
 	create_qp_params.uarn = ucontext->uarn;
 	create_qp_params.pd = to_epd(ibpd)->pdn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	create_qp_params.uarn = ucontext->uarn;
+	create_qp_params.pd = to_epd(ibqp->pd)->pdn;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (init_attr->qp_type == IB_QPT_UD) {
 		create_qp_params.qp_type = EFA_ADMIN_QP_TYPE_UD;
@@ -736,10 +783,14 @@ struct ib_qp *efa_create_qp(struct ib_pd *ibpd,
 			  init_attr->qp_type, cmd.driver_qp_type);
 		err = -EOPNOTSUPP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_out;
 =======
 		goto err_free_qp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ibdev_dbg(&dev->ibdev, "Create QP: qp type %d driver qp type %#x\n",
@@ -758,10 +809,14 @@ struct ib_qp *efa_create_qp(struct ib_pd *ibpd,
 		if (!qp->rq_cpu_addr) {
 			err = -ENOMEM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_out;
 =======
 			goto err_free_qp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		ibdev_dbg(&dev->ibdev,
@@ -789,9 +844,12 @@ struct ib_qp *efa_create_qp(struct ib_pd *ibpd,
 	qp->qp_handle = create_qp_resp.qp_handle;
 	qp->ibqp.qp_num = create_qp_resp.qp_num;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	qp->ibqp.qp_type = init_attr->qp_type;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qp->max_send_wr = init_attr->cap.max_send_wr;
 	qp->max_recv_wr = init_attr->cap.max_recv_wr;
 	qp->max_send_sge = init_attr->cap.max_send_sge;
@@ -812,10 +870,14 @@ struct ib_qp *efa_create_qp(struct ib_pd *ibpd,
 	ibdev_dbg(&dev->ibdev, "Created qp[%d]\n", qp->ibqp.qp_num);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return &qp->ibqp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 err_remove_mmap_entries:
 	efa_qp_user_mmap_entries_remove(qp);
@@ -825,6 +887,7 @@ err_free_mapped:
 	if (qp->rq_size)
 		efa_free_mapped(dev, qp->rq_cpu_addr, qp->rq_dma_addr,
 				qp->rq_size, DMA_TO_DEVICE);
+<<<<<<< HEAD
 <<<<<<< HEAD
 err_out:
 	atomic64_inc(&dev->stats.create_qp_err);
@@ -836,6 +899,11 @@ err_out:
 	atomic64_inc(&dev->stats.create_qp_err);
 	return ERR_PTR(err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_out:
+	atomic64_inc(&dev->stats.create_qp_err);
+	return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct {
@@ -1989,6 +2057,7 @@ int efa_destroy_ah(struct ib_ah *ibah, u32 flags)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct rdma_hw_stats *efa_alloc_hw_port_stats(struct ib_device *ibdev,
 					      u32 port_num)
 {
@@ -2000,11 +2069,19 @@ struct rdma_hw_stats *efa_alloc_hw_port_stats(struct ib_device *ibdev, u32 port_
 	return rdma_alloc_hw_stats_struct(efa_stats_names,
 					  ARRAY_SIZE(efa_stats_names),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct rdma_hw_stats *efa_alloc_hw_port_stats(struct ib_device *ibdev,
+					      u32 port_num)
+{
+	return rdma_alloc_hw_stats_struct(efa_port_stats_names,
+					  ARRAY_SIZE(efa_port_stats_names),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					  RDMA_HW_STATS_DEFAULT_LIFESPAN);
 }
 
 struct rdma_hw_stats *efa_alloc_hw_device_stats(struct ib_device *ibdev)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return rdma_alloc_hw_stats_struct(efa_device_stats_names,
 					  ARRAY_SIZE(efa_device_stats_names),
@@ -2049,20 +2126,51 @@ static int efa_fill_port_stats(struct efa_dev *dev, struct rdma_hw_stats *stats,
 	 * stats
 	 */
 	return efa_alloc_hw_port_stats(ibdev, 0);
+=======
+	return rdma_alloc_hw_stats_struct(efa_device_stats_names,
+					  ARRAY_SIZE(efa_device_stats_names),
+					  RDMA_HW_STATS_DEFAULT_LIFESPAN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
-int efa_get_hw_stats(struct ib_device *ibdev, struct rdma_hw_stats *stats,
-		     u32 port_num, int index)
+static int efa_fill_device_stats(struct efa_dev *dev,
+				 struct rdma_hw_stats *stats)
+{
+	struct efa_com_stats_admin *as = &dev->edev.aq.stats;
+	struct efa_stats *s = &dev->stats;
+
+	stats->value[EFA_SUBMITTED_CMDS] = atomic64_read(&as->submitted_cmd);
+	stats->value[EFA_COMPLETED_CMDS] = atomic64_read(&as->completed_cmd);
+	stats->value[EFA_CMDS_ERR] = atomic64_read(&as->cmd_err);
+	stats->value[EFA_NO_COMPLETION_CMDS] = atomic64_read(&as->no_completion);
+
+	stats->value[EFA_KEEP_ALIVE_RCVD] = atomic64_read(&s->keep_alive_rcvd);
+	stats->value[EFA_ALLOC_PD_ERR] = atomic64_read(&s->alloc_pd_err);
+	stats->value[EFA_CREATE_QP_ERR] = atomic64_read(&s->create_qp_err);
+	stats->value[EFA_CREATE_CQ_ERR] = atomic64_read(&s->create_cq_err);
+	stats->value[EFA_REG_MR_ERR] = atomic64_read(&s->reg_mr_err);
+	stats->value[EFA_ALLOC_UCONTEXT_ERR] =
+		atomic64_read(&s->alloc_ucontext_err);
+	stats->value[EFA_CREATE_AH_ERR] = atomic64_read(&s->create_ah_err);
+	stats->value[EFA_MMAP_ERR] = atomic64_read(&s->mmap_err);
+
+	return ARRAY_SIZE(efa_device_stats_names);
+}
+
+static int efa_fill_port_stats(struct efa_dev *dev, struct rdma_hw_stats *stats,
+			       u32 port_num)
 {
 	struct efa_com_get_stats_params params = {};
 	union efa_com_get_stats_result result;
-	struct efa_dev *dev = to_edev(ibdev);
 	struct efa_com_rdma_read_stats *rrs;
 	struct efa_com_messages_stats *ms;
 	struct efa_com_basic_stats *bs;
+<<<<<<< HEAD
 	struct efa_com_stats_admin *as;
 	struct efa_stats *s;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	params.scope = EFA_ADMIN_GET_STATS_SCOPE_ALL;
@@ -2102,6 +2210,7 @@ int efa_get_hw_stats(struct ib_device *ibdev, struct rdma_hw_stats *stats,
 	stats->value[EFA_RDMA_READ_RESP_BYTES] = rrs->read_resp_bytes;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ARRAY_SIZE(efa_port_stats_names);
 }
 
@@ -2132,6 +2241,18 @@ int efa_get_hw_stats(struct ib_device *ibdev, struct rdma_hw_stats *stats,
 
 	return ARRAY_SIZE(efa_stats_names);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ARRAY_SIZE(efa_port_stats_names);
+}
+
+int efa_get_hw_stats(struct ib_device *ibdev, struct rdma_hw_stats *stats,
+		     u32 port_num, int index)
+{
+	if (port_num)
+		return efa_fill_port_stats(to_edev(ibdev), stats, port_num);
+	else
+		return efa_fill_device_stats(to_edev(ibdev), stats);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 enum rdma_link_layer efa_port_link_layer(struct ib_device *ibdev,

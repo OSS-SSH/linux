@@ -23,6 +23,7 @@
 #include <scsi/scsi_transport_sas.h>
 #include <scsi/sas_ata.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "scsi_sas_internal.h"
 #include "scsi_transport_api.h"
 #include "scsi_priv.h"
@@ -31,6 +32,11 @@
 #include "../scsi_transport_api.h"
 #include "../scsi_priv.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "scsi_sas_internal.h"
+#include "scsi_transport_api.h"
+#include "scsi_priv.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/err.h>
 #include <linux/blkdev.h>
@@ -915,10 +921,14 @@ void sas_task_abort(struct sas_task *task)
 		sas_ata_task_abort(task);
 	else
 <<<<<<< HEAD
+<<<<<<< HEAD
 		blk_abort_request(scsi_cmd_to_rq(sc));
 =======
 		blk_abort_request(sc->request);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		blk_abort_request(scsi_cmd_to_rq(sc));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int sas_slave_alloc(struct scsi_device *sdev)

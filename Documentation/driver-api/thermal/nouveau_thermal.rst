@@ -91,10 +91,14 @@ Bug reports
 
 Thermal management on Nouveau is new and may not work on all cards. If you have
 <<<<<<< HEAD
+<<<<<<< HEAD
 inquiries, please ping mupuf on IRC (#nouveau, OFTC).
 =======
 inquiries, please ping mupuf on IRC (#nouveau, freenode).
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+inquiries, please ping mupuf on IRC (#nouveau, OFTC).
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Bug reports should be filled on Freedesktop's bug tracker. Please follow
 https://nouveau.freedesktop.org/wiki/Bugs

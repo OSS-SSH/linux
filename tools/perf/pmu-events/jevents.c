@@ -815,10 +815,14 @@ static void print_mapping_test_table(FILE *outfp)
 	fprintf(outfp, "\t.version = \"v1\",\n");
 	fprintf(outfp, "\t.type = \"core\",\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fprintf(outfp, "\t.table = pme_test_soc_cpu,\n");
 =======
 	fprintf(outfp, "\t.table = pme_test_cpu,\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fprintf(outfp, "\t.table = pme_test_soc_cpu,\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fprintf(outfp, "},\n");
 }
 
@@ -841,11 +845,16 @@ static int process_system_event_tables(FILE *outfp)
 
 	list_for_each_entry(sys_event_table, &sys_event_tables, list) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fprintf(outfp, "\n\t{\n\t\t.table = %s,\n\t\t.name = \"%s\",\n\t},",
 			sys_event_table->soc_id,
 =======
 		fprintf(outfp, "\n\t{\n\t\t.table = %s,\n\t},",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fprintf(outfp, "\n\t{\n\t\t.table = %s,\n\t\t.name = \"%s\",\n\t},",
+			sys_event_table->soc_id,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sys_event_table->soc_id);
 	}
 
@@ -1294,9 +1303,13 @@ int main(int argc, char *argv[])
 
 	free_arch_std_events();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	free_sys_event_tables();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free_sys_event_tables();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free(mapfile);
 	return 0;
 
@@ -1319,9 +1332,13 @@ err_close_eventsfp:
 err_out:
 	free_arch_std_events();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	free_sys_event_tables();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free_sys_event_tables();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free(mapfile);
 	return ret;
 }

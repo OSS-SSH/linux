@@ -25,9 +25,12 @@
 #include <drm/drm_gem_cma_helper.h>
 #include <drm/drm_gem_framebuffer_helper.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <drm/drm_irq.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_mode_config.h>
 #include <drm/drm_of.h>
 #include <drm/drm_probe_helper.h>
@@ -55,9 +58,13 @@ static const struct mxsfb_devdata mxsfb_devdata[] = {
 		.hs_wdth_shift	= 24,
 		.has_overlay	= false,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has_ctrl2	= false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has_ctrl2	= false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	[MXSFB_V4] = {
 		.transfer_count	= LCDC_V4_TRANSFER_COUNT,
@@ -67,9 +74,13 @@ static const struct mxsfb_devdata mxsfb_devdata[] = {
 		.hs_wdth_shift	= 18,
 		.has_overlay	= false,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has_ctrl2	= true,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has_ctrl2	= true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	[MXSFB_V6] = {
 		.transfer_count	= LCDC_V4_TRANSFER_COUNT,
@@ -79,9 +90,13 @@ static const struct mxsfb_devdata mxsfb_devdata[] = {
 		.hs_wdth_shift	= 18,
 		.has_overlay	= true,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has_ctrl2	= true,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has_ctrl2	= true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 };
 
@@ -166,6 +181,9 @@ static int mxsfb_attach_bridge(struct mxsfb_drm_private *mxsfb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static irqreturn_t mxsfb_irq_handler(int irq, void *data)
 {
 	struct drm_device *drm = data;
@@ -209,8 +227,11 @@ static void mxsfb_irq_uninstall(struct drm_device *dev)
 	free_irq(mxsfb->irq, dev);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mxsfb_load(struct drm_device *drm,
 		      const struct mxsfb_devdata *devdata)
 {
@@ -285,17 +306,25 @@ static int mxsfb_load(struct drm_device *drm,
 	drm_mode_config_reset(drm);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = platform_get_irq(pdev, 0);
 	if (ret < 0)
 		goto err_vblank;
 	mxsfb->irq = ret;
 
+<<<<<<< HEAD
 	pm_runtime_get_sync(drm->dev);
 	ret = mxsfb_irq_install(drm, mxsfb->irq);
 =======
 	pm_runtime_get_sync(drm->dev);
 	ret = drm_irq_install(drm, platform_get_irq(pdev, 0));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_get_sync(drm->dev);
+	ret = mxsfb_irq_install(drm, mxsfb->irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_put_sync(drm->dev);
 
 	if (ret < 0) {
@@ -324,10 +353,14 @@ static void mxsfb_unload(struct drm_device *drm)
 
 	pm_runtime_get_sync(drm->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mxsfb_irq_uninstall(drm);
 =======
 	drm_irq_uninstall(drm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mxsfb_irq_uninstall(drm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_put_sync(drm->dev);
 
 	drm->dev_private = NULL;
@@ -335,6 +368,7 @@ static void mxsfb_unload(struct drm_device *drm)
 	pm_runtime_disable(drm->dev);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void mxsfb_irq_disable(struct drm_device *drm)
@@ -363,16 +397,21 @@ static irqreturn_t mxsfb_irq_handler(int irq, void *data)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DEFINE_DRM_GEM_CMA_FOPS(fops);
 
 static const struct drm_driver mxsfb_driver = {
 	.driver_features	= DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	.irq_handler		= mxsfb_irq_handler,
 	.irq_preinstall		= mxsfb_irq_disable,
 	.irq_uninstall		= mxsfb_irq_disable,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DRM_GEM_CMA_DRIVER_OPS,
 	.fops	= &fops,
 	.name	= "mxsfb-drm",

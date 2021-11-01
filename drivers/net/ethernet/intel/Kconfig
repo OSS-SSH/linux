@@ -59,12 +59,17 @@ config E1000E
 	tristate "Intel(R) PRO/1000 PCI-Express Gigabit Ethernet support"
 	depends on PCI && (!SPARC32 || BROKEN)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 	select CRC32
 =======
 	select CRC32
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+	select CRC32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports the PCI-Express Intel(R) PRO/1000 gigabit
 	  ethernet family of adapters. For PCI or PCI-X e1000 adapters,
@@ -93,10 +98,14 @@ config IGB
 	tristate "Intel(R) 82575/82576 PCI-Express Gigabit Ethernet support"
 	depends on PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select I2C
 	select I2C_ALGOBIT
 	help
@@ -169,6 +178,7 @@ config IXGBE
 	tristate "Intel(R) 10GbE PCI Express adapters support"
 	depends on PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 	select MDIO
 	select PHYLIB
@@ -177,6 +187,11 @@ config IXGBE
 	select PHYLIB
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+	select MDIO
+	select PHYLIB
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports Intel(R) 10GbE PCI Express family of
 	  adapters.  For more information on how to identify your adapter, go
@@ -255,10 +270,14 @@ config IXGBEVF_IPSEC
 config I40E
 	tristate "Intel(R) Ethernet Controller XL710 Family support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on PCI
 	select AUXILIARY_BUS
 	help
@@ -315,17 +334,24 @@ config ICE
 	default n
 	depends on PCI_MSI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select AUXILIARY_BUS
 	select DIMLIB
 	select NET_DEVLINK
 	select PLDMFW
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports Intel(R) Ethernet Connection E800 Series of
 	  devices.  For more information on how to identify your adapter, go
@@ -344,10 +370,14 @@ config FM10K
 	default n
 	depends on PCI_MSI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports Intel(R) FM10000 Ethernet Switch Host
 	  Interface.  For more information on how to identify your adapter,
@@ -366,9 +396,13 @@ config IGC
 	default n
 	depends on PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports Intel(R) Ethernet Controller I225-LM/I225-V
 	  family of adapters.

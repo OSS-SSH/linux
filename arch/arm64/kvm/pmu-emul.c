@@ -374,9 +374,12 @@ static u64 kvm_pmu_overflow_status(struct kvm_vcpu *vcpu)
 		reg &= __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
 		reg &= __vcpu_sys_reg(vcpu, PMINTENSET_EL1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		reg &= kvm_pmu_valid_counter_mask(vcpu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return reg;
@@ -568,13 +571,17 @@ void kvm_pmu_software_increment(struct kvm_vcpu *vcpu, u64 val)
 void kvm_pmu_handle_pmcr(struct kvm_vcpu *vcpu, u64 val)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long mask = kvm_pmu_valid_counter_mask(vcpu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	if (val & ARMV8_PMU_PMCR_E) {
 		kvm_pmu_enable_counter_mask(vcpu,
+<<<<<<< HEAD
 <<<<<<< HEAD
 		       __vcpu_sys_reg(vcpu, PMCNTENSET_EL0));
 	} else {
@@ -585,6 +592,12 @@ void kvm_pmu_handle_pmcr(struct kvm_vcpu *vcpu, u64 val)
 	} else {
 		kvm_pmu_disable_counter_mask(vcpu, mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       __vcpu_sys_reg(vcpu, PMCNTENSET_EL0));
+	} else {
+		kvm_pmu_disable_counter_mask(vcpu,
+		       __vcpu_sys_reg(vcpu, PMCNTENSET_EL0));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (val & ARMV8_PMU_PMCR_C)
@@ -592,9 +605,13 @@ void kvm_pmu_handle_pmcr(struct kvm_vcpu *vcpu, u64 val)
 
 	if (val & ARMV8_PMU_PMCR_P) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned long mask = kvm_pmu_valid_counter_mask(vcpu);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned long mask = kvm_pmu_valid_counter_mask(vcpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mask &= ~BIT(ARMV8_PMU_CYCLE_IDX);
 		for_each_set_bit(i, &mask, 32)
 			kvm_pmu_set_counter_value(vcpu, i, 0);
@@ -758,6 +775,9 @@ void kvm_pmu_set_counter_event_type(struct kvm_vcpu *vcpu, u64 data,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void kvm_host_pmu_init(struct arm_pmu *pmu)
 {
 	if (pmu->pmuver != 0 && pmu->pmuver != ID_AA64DFR0_PMUVER_IMP_DEF &&
@@ -766,18 +786,25 @@ void kvm_host_pmu_init(struct arm_pmu *pmu)
 }
 
 static int kvm_pmu_probe_pmuver(void)
+<<<<<<< HEAD
 =======
 int kvm_pmu_probe_pmuver(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct perf_event_attr attr = { };
 	struct perf_event *event;
 	struct arm_pmu *pmu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int pmuver = ID_AA64DFR0_PMUVER_IMP_DEF;
 =======
 	int pmuver = 0xf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int pmuver = ID_AA64DFR0_PMUVER_IMP_DEF;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Create a dummy event that only counts user cycles. As we'll never
@@ -803,10 +830,14 @@ int kvm_pmu_probe_pmuver(void)
 		pr_err_once("kvm: pmu event creation failed %ld\n",
 			    PTR_ERR(event));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ID_AA64DFR0_PMUVER_IMP_DEF;
 =======
 		return 0xf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ID_AA64DFR0_PMUVER_IMP_DEF;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (event->pmu) {
@@ -960,10 +991,14 @@ int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
 		vcpu->kvm->arch.pmuver = kvm_pmu_probe_pmuver();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vcpu->kvm->arch.pmuver == ID_AA64DFR0_PMUVER_IMP_DEF)
 =======
 	if (vcpu->kvm->arch.pmuver == 0xf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (vcpu->kvm->arch.pmuver == ID_AA64DFR0_PMUVER_IMP_DEF)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 
 	switch (attr->attr) {

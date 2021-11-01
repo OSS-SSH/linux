@@ -174,6 +174,7 @@ struct partial_cluster {
 	((le16_to_cpu((__hdr__)->eh_max)) ? \
 	((EXT_FIRST_EXTENT((__hdr__)) + le16_to_cpu((__hdr__)->eh_max) - 1)) \
 <<<<<<< HEAD
+<<<<<<< HEAD
 					: NULL)
 #define EXT_MAX_INDEX(__hdr__) \
 	((le16_to_cpu((__hdr__)->eh_max)) ? \
@@ -185,6 +186,13 @@ struct partial_cluster {
 	((le16_to_cpu((__hdr__)->eh_max)) ? \
 	((EXT_FIRST_INDEX((__hdr__)) + le16_to_cpu((__hdr__)->eh_max) - 1)) : 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					: NULL)
+#define EXT_MAX_INDEX(__hdr__) \
+	((le16_to_cpu((__hdr__)->eh_max)) ? \
+	((EXT_FIRST_INDEX((__hdr__)) + le16_to_cpu((__hdr__)->eh_max) - 1)) \
+					: NULL)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline struct ext4_extent_header *ext_inode_hdr(struct inode *inode)
 {

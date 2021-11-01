@@ -283,10 +283,14 @@ static int sharp_nt_panel_probe(struct mipi_dsi_device *dsi)
 			MIPI_DSI_MODE_VIDEO_HSE |
 			MIPI_DSI_CLOCK_NON_CONTINUOUS |
 <<<<<<< HEAD
+<<<<<<< HEAD
 			MIPI_DSI_MODE_NO_EOT_PACKET;
 =======
 			MIPI_DSI_MODE_EOT_PACKET;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			MIPI_DSI_MODE_NO_EOT_PACKET;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sharp_nt = devm_kzalloc(&dsi->dev, sizeof(*sharp_nt), GFP_KERNEL);
 	if (!sharp_nt)

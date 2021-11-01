@@ -96,9 +96,13 @@ __vector128 __initdata boot_cpu_vector_save_area[__NUM_VXRS];
 
 static unsigned int smp_max_threads __initdata = -1U;
 <<<<<<< HEAD
+<<<<<<< HEAD
 cpumask_t cpu_setup_mask;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+cpumask_t cpu_setup_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init early_nosmt(char *s)
 {
@@ -257,9 +261,13 @@ static void pcpu_prepare_secondary(struct pcpu *pcpu, int cpu)
 	cpumask_set_cpu(cpu, mm_cpumask(&init_mm));
 	lc->cpu_nr = cpu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lc->restart_flags = RESTART_FLAG_CTLREGS;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lc->restart_flags = RESTART_FLAG_CTLREGS;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lc->spinlock_lockval = arch_spin_lockval(cpu);
 	lc->spinlock_index = 0;
 	lc->percpu_offset = __per_cpu_offset[cpu];
@@ -303,6 +311,7 @@ static void pcpu_start_fn(struct pcpu *pcpu, void (*func)(void *), void *data)
 	cpu = pcpu - pcpu_devices;
 	lc = lowcore_ptr[cpu];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lc->restart_stack = lc->kernel_stack;
 	lc->restart_fn = (unsigned long) func;
 	lc->restart_data = (unsigned long) data;
@@ -313,6 +322,12 @@ static void pcpu_start_fn(struct pcpu *pcpu, void (*func)(void *), void *data)
 	lc->restart_data = (unsigned long) data;
 	lc->restart_source = -1UL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lc->restart_stack = lc->kernel_stack;
+	lc->restart_fn = (unsigned long) func;
+	lc->restart_data = (unsigned long) data;
+	lc->restart_source = -1U;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pcpu_sigp_retry(pcpu, SIGP_RESTART, 0);
 }
 
@@ -326,6 +341,7 @@ static void __pcpu_delegate(pcpu_delegate_fn *func, void *data)
 	func(data);	/* should not return */
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void pcpu_delegate(struct pcpu *pcpu,
 			  pcpu_delegate_fn *func,
@@ -341,6 +357,14 @@ static void __no_sanitize_address pcpu_delegate(struct pcpu *pcpu,
 	struct lowcore *lc = lowcore_ptr[pcpu - pcpu_devices];
 	unsigned long source_cpu = stap();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void pcpu_delegate(struct pcpu *pcpu,
+			  pcpu_delegate_fn *func,
+			  void *data, unsigned long stack)
+{
+	struct lowcore *lc = lowcore_ptr[pcpu - pcpu_devices];
+	unsigned int source_cpu = stap();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	__load_psw_mask(PSW_KERNEL_BITS | PSW_MASK_DAT);
 	if (pcpu->address == source_cpu) {
@@ -594,11 +618,17 @@ static void smp_ctl_bit_callback(void *info)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_SPINLOCK(ctl_lock);
 static unsigned long ctlreg;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEFINE_SPINLOCK(ctl_lock);
+static unsigned long ctlreg;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Set a bit in a control register of all cpus
  */
@@ -607,13 +637,19 @@ void smp_ctl_set_bit(int cr, int bit)
 	struct ec_creg_mask_parms parms = { 1UL << bit, -1UL, cr };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock(&ctl_lock);
 	memcpy_absolute(&ctlreg, &S390_lowcore.cregs_save_area[cr], sizeof(ctlreg));
 	__set_bit(bit, &ctlreg);
 	memcpy_absolute(&S390_lowcore.cregs_save_area[cr], &ctlreg, sizeof(ctlreg));
 	spin_unlock(&ctl_lock);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	on_each_cpu(smp_ctl_bit_callback, &parms, 1);
 }
 EXPORT_SYMBOL(smp_ctl_set_bit);
@@ -626,13 +662,19 @@ void smp_ctl_clear_bit(int cr, int bit)
 	struct ec_creg_mask_parms parms = { 0, ~(1UL << bit), cr };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock(&ctl_lock);
 	memcpy_absolute(&ctlreg, &S390_lowcore.cregs_save_area[cr], sizeof(ctlreg));
 	__clear_bit(bit, &ctlreg);
 	memcpy_absolute(&S390_lowcore.cregs_save_area[cr], &ctlreg, sizeof(ctlreg));
 	spin_unlock(&ctl_lock);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	on_each_cpu(smp_ctl_bit_callback, &parms, 1);
 }
 EXPORT_SYMBOL(smp_ctl_clear_bit);
@@ -720,10 +762,14 @@ void __init smp_save_dump_cpus(void)
 	bool is_boot_cpu;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(oldmem_data.start || is_ipl_type_dump()))
 =======
 	if (!(OLDMEM_BASE || is_ipl_type_dump()))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(oldmem_data.start || is_ipl_type_dump()))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* No previous system present, normal boot. */
 		return;
 	/* Allocate a page as dumping area for the store status sigps */
@@ -755,19 +801,27 @@ void __init smp_save_dump_cpus(void)
 		 * done by drivers/s390/char/zcore.c:init_cpu_info()
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!is_boot_cpu || oldmem_data.start)
 =======
 		if (!is_boot_cpu || OLDMEM_BASE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!is_boot_cpu || oldmem_data.start)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* Get the CPU registers */
 			smp_save_cpu_regs(sa, addr, is_boot_cpu, page);
 	}
 	memblock_free(page, PAGE_SIZE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	diag_amode31_ops.diag308_reset();
 =======
 	diag_dma_ops.diag308_reset();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	diag_amode31_ops.diag308_reset();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pcpu_set_smt(0);
 }
 #endif /* CONFIG_CRASH_DUMP */
@@ -852,10 +906,14 @@ static int __smp_rescan_cpus(struct sclp_core_info *info, bool early)
 	int nr, i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&smp_cpu_state_mutex);
 	nr = 0;
 	cpumask_xor(&avail, cpu_possible_mask, cpu_present_mask);
@@ -879,10 +937,14 @@ static int __smp_rescan_cpus(struct sclp_core_info *info, bool early)
 	}
 	mutex_unlock(&smp_cpu_state_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return nr;
 }
 
@@ -935,25 +997,37 @@ void __init smp_detect_cpus(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  *	Activate a secondary processor.
  */
 static void smp_start_secondary(void *cpuvoid)
+<<<<<<< HEAD
 =======
 static void smp_init_secondary(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int cpu = raw_smp_processor_id();
 
 	S390_lowcore.last_update_clock = get_tod_clock();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	S390_lowcore.restart_stack = (unsigned long)restart_stack;
 	S390_lowcore.restart_fn = (unsigned long)do_restart;
 	S390_lowcore.restart_data = 0;
 	S390_lowcore.restart_source = -1U;
 	S390_lowcore.restart_flags = 0;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	restore_access_regs(S390_lowcore.access_regs_save_area);
 	cpu_init();
 	rcu_cpu_starting(cpu);
@@ -962,10 +1036,15 @@ static void smp_init_secondary(void)
 	vdso_getcpu_init();
 	pfault_init();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpumask_set_cpu(cpu, &cpu_setup_mask);
 	update_cpu_masks();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpumask_set_cpu(cpu, &cpu_setup_mask);
+	update_cpu_masks();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	notify_cpu_starting(cpu);
 	if (topology_cpu_dedicated(cpu))
 		set_cpu_flag(CIF_DEDICATED_CPU);
@@ -973,14 +1052,18 @@ static void smp_init_secondary(void)
 		clear_cpu_flag(CIF_DEDICATED_CPU);
 	set_cpu_online(cpu, true);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	update_cpu_masks();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	inc_irq_stat(CPU_RST);
 	local_irq_enable();
 	cpu_startup_entry(CPUHP_AP_ONLINE_IDLE);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /*
@@ -998,6 +1081,8 @@ static void __no_sanitize_address smp_start_secondary(void *cpuvoid)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Upping and downing of CPUs */
 int __cpu_up(unsigned int cpu, struct task_struct *tidle)
 {
@@ -1035,6 +1120,7 @@ int __cpu_disable(void)
 {
 	unsigned long cregs[16];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int cpu;
 
 	/* Handle possible pending IPIs */
@@ -1048,6 +1134,15 @@ int __cpu_disable(void)
 	smp_handle_ext_call();
 	set_cpu_online(smp_processor_id(), false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int cpu;
+
+	/* Handle possible pending IPIs */
+	smp_handle_ext_call();
+	cpu = smp_processor_id();
+	set_cpu_online(cpu, false);
+	cpumask_clear_cpu(cpu, &cpu_setup_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	update_cpu_masks();
 	/* Disable pseudo page faults on this cpu. */
 	pfault_fini();
@@ -1158,10 +1253,14 @@ static ssize_t cpu_configure_store(struct device *dev,
 	if (val != 0 && val != 1)
 		return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&smp_cpu_state_mutex);
 	rc = -EBUSY;
 	/* disallow configuration changes of online cpus and cpu 0 */
@@ -1211,10 +1310,14 @@ static ssize_t cpu_configure_store(struct device *dev,
 out:
 	mutex_unlock(&smp_cpu_state_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc ? rc : count;
 }
 static DEVICE_ATTR(configure, 0644, cpu_configure_show, cpu_configure_store);

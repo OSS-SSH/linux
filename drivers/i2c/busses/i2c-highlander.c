@@ -380,10 +380,14 @@ static int highlander_i2c_probe(struct platform_device *pdev)
 
 	dev->irq = platform_get_irq(pdev, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dev->irq < 0 || iic_force_poll)
 =======
 	if (iic_force_poll)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dev->irq < 0 || iic_force_poll)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev->irq = 0;
 
 	if (dev->irq) {

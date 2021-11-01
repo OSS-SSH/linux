@@ -2168,10 +2168,14 @@ rtl92e_init_variables(struct net_device  *dev)
 	struct r8192_priv *priv = rtllib_priv(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	strscpy(priv->nick, "rtl8192E", sizeof(priv->nick));
 =======
 	strcpy(priv->nick, "rtl8192E");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	strscpy(priv->nick, "rtl8192E", sizeof(priv->nick));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	priv->rtllib->softmac_features  = IEEE_SOFTMAC_SCAN |
 		IEEE_SOFTMAC_ASSOCIATE | IEEE_SOFTMAC_PROBERQ |

@@ -99,6 +99,7 @@
 void proc_task_name(struct seq_file *m, struct task_struct *p, bool escape)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char tcomm[64];
 =======
 	char *buf;
@@ -106,6 +107,9 @@ void proc_task_name(struct seq_file *m, struct task_struct *p, bool escape)
 	char tcomm[64];
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char tcomm[64];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (p->flags & PF_WQ_WORKER)
 		wq_worker_comm(tcomm, sizeof(tcomm), p);
@@ -113,10 +117,14 @@ void proc_task_name(struct seq_file *m, struct task_struct *p, bool escape)
 		__get_task_comm(tcomm, sizeof(tcomm), p);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (escape)
 		seq_escape_str(m, tcomm, ESCAPE_SPACE | ESCAPE_SPECIAL, "\n\\");
 	else
 		seq_printf(m, "%.64s", tcomm);
+<<<<<<< HEAD
 =======
 	size = seq_get_buf(m, &buf);
 	if (escape) {
@@ -130,6 +138,8 @@ void proc_task_name(struct seq_file *m, struct task_struct *p, bool escape)
 
 	seq_commit(m, ret);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

@@ -18,10 +18,14 @@
 #include "en/tc_tun.h"
 #include "lib/port_tun.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "en/tc/sample.h"
 =======
 #include "esw/sample.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "en/tc/sample.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct mlx5e_rep_indr_block_priv {
 	struct net_device *netdev;
@@ -305,11 +309,14 @@ mlx5e_rep_indr_block_priv_lookup(struct mlx5e_rep_priv *rpriv,
 	struct mlx5e_rep_indr_block_priv *cb_priv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* All callback list access should be protected by RTNL. */
 	ASSERT_RTNL();
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(cb_priv,
 			    &rpriv->uplink_priv.tc_indr_block_priv_list,
 			    list)
@@ -524,9 +531,12 @@ void mlx5e_rep_tc_netdevice_event_unregister(struct mlx5e_rep_priv *rpriv)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if IS_ENABLED(CONFIG_NET_TC_SKB_EXT)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool mlx5e_restore_tunnel(struct mlx5e_priv *priv, struct sk_buff *skb,
 				 struct mlx5e_tc_update_priv *tc_priv,
 				 u32 tunnel_id)
@@ -620,20 +630,29 @@ static bool mlx5e_restore_tunnel(struct mlx5e_priv *priv, struct sk_buff *skb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool mlx5e_restore_skb_chain(struct sk_buff *skb, u32 chain, u32 reg_c1,
 				    struct mlx5e_tc_update_priv *tc_priv)
 =======
 static bool mlx5e_restore_skb(struct sk_buff *skb, u32 chain, u32 reg_c1,
 			      struct mlx5e_tc_update_priv *tc_priv)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static bool mlx5e_restore_skb_chain(struct sk_buff *skb, u32 chain, u32 reg_c1,
+				    struct mlx5e_tc_update_priv *tc_priv)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5e_priv *priv = netdev_priv(skb->dev);
 	u32 tunnel_id = (reg_c1 >> ESW_TUN_OFFSET) & TUNNEL_ID_MASK;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_NET_TC_SKB_EXT)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if IS_ENABLED(CONFIG_NET_TC_SKB_EXT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (chain) {
 		struct mlx5_rep_uplink_priv *uplink_priv;
 		struct mlx5e_rep_priv *uplink_rpriv;
@@ -655,6 +674,7 @@ static bool mlx5e_restore_skb(struct sk_buff *skb, u32 chain, u32 reg_c1,
 					      zone_restore_id))
 			return false;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif /* CONFIG_NET_TC_SKB_EXT */
 
@@ -680,6 +700,27 @@ static void mlx5e_restore_skb_sample(struct mlx5e_priv *priv, struct sk_buff *sk
 }
 #endif /* CONFIG_NET_TC_SKB_EXT */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_NET_TC_SKB_EXT */
+
+	return mlx5e_restore_tunnel(priv, skb, tc_priv, tunnel_id);
+}
+
+static void mlx5e_restore_skb_sample(struct mlx5e_priv *priv, struct sk_buff *skb,
+				     struct mlx5_mapped_obj *mapped_obj,
+				     struct mlx5e_tc_update_priv *tc_priv)
+{
+	if (!mlx5e_restore_tunnel(priv, skb, tc_priv, mapped_obj->sample.tunnel_id)) {
+		netdev_dbg(priv->netdev,
+			   "Failed to restore tunnel info for sampled packet\n");
+		return;
+	}
+#if IS_ENABLED(CONFIG_MLX5_TC_SAMPLE)
+	mlx5e_tc_sample_skb(skb, mapped_obj);
+#endif /* CONFIG_MLX5_TC_SAMPLE */
+	mlx5_rep_tc_post_napi_receive(tc_priv);
+}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool mlx5e_rep_tc_update_skb(struct mlx5_cqe64 *cqe,
 			     struct sk_buff *skb,
@@ -689,10 +730,14 @@ bool mlx5e_rep_tc_update_skb(struct mlx5_cqe64 *cqe,
 	struct mlx5_eswitch *esw;
 	struct mlx5e_priv *priv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 reg_c0;
 =======
 	u32 reg_c0, reg_c1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 reg_c0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	reg_c0 = (be32_to_cpu(cqe->sop_drop_qpn) & MLX5E_TC_FLOW_ID_MASK);
@@ -705,10 +750,13 @@ bool mlx5e_rep_tc_update_skb(struct mlx5_cqe64 *cqe,
 	skb->mark = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	reg_c1 = be32_to_cpu(cqe->ft_metadata);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv = netdev_priv(skb->dev);
 	esw = priv->mdev->priv.eswitch;
 	err = mapping_find(esw->offloads.reg_c0_obj_pool, reg_c0, &mapped_obj);
@@ -720,12 +768,16 @@ bool mlx5e_rep_tc_update_skb(struct mlx5_cqe64 *cqe,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mapped_obj.type == MLX5_MAPPED_OBJ_CHAIN) {
 		u32 reg_c1 = be32_to_cpu(cqe->ft_metadata);
 
 		return mlx5e_restore_skb_chain(skb, mapped_obj.chain, reg_c1, tc_priv);
 	} else if (mapped_obj.type == MLX5_MAPPED_OBJ_SAMPLE) {
 		mlx5e_restore_skb_sample(priv, skb, &mapped_obj, tc_priv);
+<<<<<<< HEAD
 		return false;
 	} else {
 =======
@@ -742,6 +794,10 @@ bool mlx5e_rep_tc_update_skb(struct mlx5_cqe64 *cqe,
 	if (mapped_obj.type != MLX5_MAPPED_OBJ_SAMPLE &&
 	    mapped_obj.type != MLX5_MAPPED_OBJ_CHAIN) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return false;
+	} else {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		netdev_dbg(priv->netdev, "Invalid mapped object type: %d\n", mapped_obj.type);
 		return false;
 	}

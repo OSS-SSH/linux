@@ -198,10 +198,14 @@ static unsigned int lb_get_skb_hash(struct lb_priv *lb_priv,
 	if (unlikely(!fp))
 		return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lhash = bpf_prog_run(fp, skb);
 =======
 	lhash = BPF_PROG_RUN(fp, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lhash = bpf_prog_run(fp, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	c = (char *) &lhash;
 	return c[0] ^ c[1] ^ c[2] ^ c[3];
 }

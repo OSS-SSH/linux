@@ -113,11 +113,15 @@ extern int page_is_ram(unsigned long pfn);
 
 #  define ARCH_PFN_OFFSET	(memory_start >> PAGE_SHIFT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #  define pfn_valid(pfn)	((pfn) >= ARCH_PFN_OFFSET && (pfn) < (max_mapnr + ARCH_PFN_OFFSET))
 =======
 #  define pfn_valid(pfn)	((pfn) < (max_mapnr + ARCH_PFN_OFFSET))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#  define pfn_valid(pfn)	((pfn) >= ARCH_PFN_OFFSET && (pfn) < (max_mapnr + ARCH_PFN_OFFSET))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # endif /* __ASSEMBLY__ */
 
 #define	virt_addr_valid(vaddr)	(pfn_valid(virt_to_pfn(vaddr)))

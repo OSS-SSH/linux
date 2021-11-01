@@ -146,10 +146,14 @@
 132	o32	getpgid				sys_getpgid
 133	o32	fchdir				sys_fchdir
 <<<<<<< HEAD
+<<<<<<< HEAD
 134	o32	bdflush				sys_ni_syscall
 =======
 134	o32	bdflush				sys_bdflush
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+134	o32	bdflush				sys_ni_syscall
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 135	o32	sysfs				sys_sysfs
 136	o32	personality			sys_personality			sys_32_personality
 137	o32	afs_syscall			sys_ni_syscall
@@ -284,6 +288,7 @@
 266	o32	tgkill				sys_tgkill
 267	o32	utimes				sys_utimes_time32
 <<<<<<< HEAD
+<<<<<<< HEAD
 268	o32	mbind				sys_mbind
 269	o32	get_mempolicy			sys_get_mempolicy
 270	o32	set_mempolicy			sys_set_mempolicy
@@ -292,6 +297,11 @@
 269	o32	get_mempolicy			sys_get_mempolicy		compat_sys_get_mempolicy
 270	o32	set_mempolicy			sys_set_mempolicy		compat_sys_set_mempolicy
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+268	o32	mbind				sys_mbind
+269	o32	get_mempolicy			sys_get_mempolicy
+270	o32	set_mempolicy			sys_set_mempolicy
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 271	o32	mq_open				sys_mq_open			compat_sys_mq_open
 272	o32	mq_unlink			sys_mq_unlink
 273	o32	mq_timedsend			sys_mq_timedsend_time32
@@ -309,10 +319,14 @@
 285	o32	inotify_add_watch		sys_inotify_add_watch
 286	o32	inotify_rm_watch		sys_inotify_rm_watch
 <<<<<<< HEAD
+<<<<<<< HEAD
 287	o32	migrate_pages			sys_migrate_pages
 =======
 287	o32	migrate_pages			sys_migrate_pages		compat_sys_migrate_pages
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+287	o32	migrate_pages			sys_migrate_pages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 288	o32	openat				sys_openat			compat_sys_openat
 289	o32	mkdirat				sys_mkdirat
 290	o32	mknodat				sys_mknodat
@@ -334,10 +348,14 @@
 306	o32	tee				sys_tee
 307	o32	vmsplice			sys_vmsplice
 <<<<<<< HEAD
+<<<<<<< HEAD
 308	o32	move_pages			sys_move_pages
 =======
 308	o32	move_pages			sys_move_pages			compat_sys_move_pages
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+308	o32	move_pages			sys_move_pages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 309	o32	set_robust_list			sys_set_robust_list		compat_sys_set_robust_list
 310	o32	get_robust_list			sys_get_robust_list		compat_sys_get_robust_list
 311	o32	kexec_load			sys_kexec_load			compat_sys_kexec_load
@@ -453,7 +471,12 @@
 445	o32	landlock_add_rule		sys_landlock_add_rule
 446	o32	landlock_restrict_self		sys_landlock_restrict_self
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 447 reserved for memfd_secret
 448	o32	process_mrelease		sys_process_mrelease
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# 447 reserved for memfd_secret
+448	o32	process_mrelease		sys_process_mrelease
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

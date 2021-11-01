@@ -24,6 +24,7 @@
 #include <trace/events/printk.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/kfence.h>
 
 #include "kfence.h"
@@ -37,6 +38,17 @@
 #include "kfence.h"
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/kfence.h>
+
+#include "kfence.h"
+
+/* May be overridden by <asm/kfence.h>. */
+#ifndef arch_kfence_test_address
+#define arch_kfence_test_address(addr) (addr)
+#endif
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Report as observed from console. */
 static struct {
 	spinlock_t lock;
@@ -95,9 +107,13 @@ static const char *get_access_type(const struct expect_report *r)
 static bool report_matches(const struct expect_report *r)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long addr = (unsigned long)r->addr;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long addr = (unsigned long)r->addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool ret = false;
 	unsigned long flags;
 	typeof(observed.lines) expect;
@@ -148,16 +164,22 @@ static bool report_matches(const struct expect_report *r)
 	case KFENCE_ERROR_OOB:
 		cur += scnprintf(cur, end - cur, "Out-of-bounds %s at", get_access_type(r));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		addr = arch_kfence_test_address(addr);
 		break;
 	case KFENCE_ERROR_UAF:
 		cur += scnprintf(cur, end - cur, "Use-after-free %s at", get_access_type(r));
 		addr = arch_kfence_test_address(addr);
+<<<<<<< HEAD
 =======
 		break;
 	case KFENCE_ERROR_UAF:
 		cur += scnprintf(cur, end - cur, "Use-after-free %s at", get_access_type(r));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case KFENCE_ERROR_CORRUPTION:
 		cur += scnprintf(cur, end - cur, "Corrupted memory at");
@@ -165,9 +187,13 @@ static bool report_matches(const struct expect_report *r)
 	case KFENCE_ERROR_INVALID:
 		cur += scnprintf(cur, end - cur, "Invalid %s at", get_access_type(r));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		addr = arch_kfence_test_address(addr);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		addr = arch_kfence_test_address(addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case KFENCE_ERROR_INVALID_FREE:
 		cur += scnprintf(cur, end - cur, "Invalid free of");
@@ -175,10 +201,14 @@ static bool report_matches(const struct expect_report *r)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cur += scnprintf(cur, end - cur, " 0x%p", (void *)addr);
 =======
 	cur += scnprintf(cur, end - cur, " 0x%p", (void *)r->addr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cur += scnprintf(cur, end - cur, " 0x%p", (void *)addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&observed.lock, flags);
 	if (!report_available())
@@ -822,11 +852,17 @@ static int test_init(struct kunit *test)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!__kfence_pool)
 		return -EINVAL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!__kfence_pool)
+		return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&observed.lock, flags);
 	for (i = 0; i < ARRAY_SIZE(observed.lines); i++)
 		observed.lines[i][0] = '\0';
@@ -891,10 +927,14 @@ static void kfence_test_exit(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 late_initcall_sync(kfence_test_init);
 =======
 late_initcall(kfence_test_init);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+late_initcall_sync(kfence_test_init);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 module_exit(kfence_test_exit);
 
 MODULE_LICENSE("GPL v2");

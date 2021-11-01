@@ -7,9 +7,13 @@
 #include <net/mac80211.h>
 #include "ieee80211_i.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "driver-ops.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "driver-ops.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void ieee80211_s1g_sta_rate_init(struct sta_info *sta)
 {
@@ -19,6 +23,9 @@ void ieee80211_s1g_sta_rate_init(struct sta_info *sta)
 			STA_STATS_FIELD(TYPE, STA_STATS_RATE_TYPE_S1G);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool ieee80211_s1g_is_twt_setup(struct sk_buff *skb)
 {
@@ -198,5 +205,8 @@ void ieee80211_s1g_status_twt_action(struct ieee80211_sub_if_data *sdata,
 out:
 	mutex_unlock(&local->sta_mtx);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

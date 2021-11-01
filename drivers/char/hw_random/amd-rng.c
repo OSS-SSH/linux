@@ -125,10 +125,14 @@ static struct hwrng amd_rng = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init amd_rng_mod_init(void)
 =======
 static int __init mod_init(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init amd_rng_mod_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err;
 	struct pci_dev *pdev = NULL;
@@ -193,10 +197,14 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __exit amd_rng_mod_exit(void)
 =======
 static void __exit mod_exit(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit amd_rng_mod_exit(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct amd768_priv *priv;
 
@@ -212,12 +220,17 @@ static void __exit mod_exit(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 module_init(amd_rng_mod_init);
 module_exit(amd_rng_mod_exit);
 =======
 module_init(mod_init);
 module_exit(mod_exit);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_init(amd_rng_mod_init);
+module_exit(amd_rng_mod_exit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_AUTHOR("The Linux Kernel team");
 MODULE_DESCRIPTION("H/W RNG driver for AMD chipsets");

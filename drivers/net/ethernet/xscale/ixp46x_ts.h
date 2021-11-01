@@ -63,6 +63,9 @@ struct ixp46x_ts_regs {
 #define RX_SNAPSHOT_LOCKED (1<<1)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_PTP_1588_CLOCK_IXP46X)
 int ixp46x_ptp_find(struct ixp46x_ts_regs *__iomem *regs, int *phc_index);
 #else
@@ -74,9 +77,12 @@ static inline int ixp46x_ptp_find(struct ixp46x_ts_regs *__iomem *regs, int *phc
 	return -ENODEV;
 }
 #endif
+<<<<<<< HEAD
 =======
 /* The ptp_ixp46x module will set this variable */
 extern int ixp46x_phc_index;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

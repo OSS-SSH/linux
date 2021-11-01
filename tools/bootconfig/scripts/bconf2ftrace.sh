@@ -95,6 +95,9 @@ compose_synth() { # event_name branch
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 print_hist_array() { # prefix key
 	__sep="="
 	if xbc_has_key ${1}.${2}; then
@@ -181,8 +184,11 @@ setup_histograms() { # prefix trigger-file
 	fi
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 setup_event() { # prefix group event [instance]
 	branch=$1.$2.$3
 	if [ "$4" ]; then
@@ -191,14 +197,20 @@ setup_event() { # prefix group event [instance]
 		eventdir="$TRACEFS/events/$2/$3"
 	fi
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	# group enable
 	if [ "$3" = "enable" ]; then
 		run_cmd "echo 1 > ${eventdir}"
 		return
 	fi
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case $2 in
 	kprobes)
 		xbc_get_val ${branch}.probes | while read line; do
@@ -214,10 +226,15 @@ setup_event() { # prefix group event [instance]
 	set_array_of ${branch}.actions ${eventdir}/trigger
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	setup_histograms ${branch}.hist ${eventdir}/trigger
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	setup_histograms ${branch}.hist ${eventdir}/trigger
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if xbc_has_key ${branch}.enable; then
 		run_cmd "echo 1 > ${eventdir}/enable"
 	fi
@@ -231,6 +248,9 @@ setup_events() { # prefix("ftrace" or "ftrace.instance.INSTANCE") [instance]
 		done
 	fi
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if xbc_has_branch ${1}.event.enable; then
 		if [ "$2" ]; then
 			run_cmd "echo 1 > $TRACEFS/instances/$2/events/enable"
@@ -238,8 +258,11 @@ setup_events() { # prefix("ftrace" or "ftrace.instance.INSTANCE") [instance]
 			run_cmd "echo 1 > $TRACEFS/events/enable"
 		fi
 	fi
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 size2kb() { # size[KB|MB]

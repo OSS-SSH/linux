@@ -27,6 +27,7 @@ void ceph_fscache_file_set_cookie(struct inode *inode, struct file *filp);
 void ceph_fscache_revalidate_cookie(struct ceph_inode_info *ci);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int ceph_readpage_from_fscache(struct inode *inode, struct page *page);
 int ceph_readpages_from_fscache(struct inode *inode,
@@ -35,6 +36,8 @@ int ceph_readpages_from_fscache(struct inode *inode,
 				unsigned *nr_pages);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void ceph_fscache_inode_init(struct ceph_inode_info *ci)
 {
 	ci->fscache = NULL;

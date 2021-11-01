@@ -407,16 +407,22 @@ setup_rt_frame(struct ksignal *ksig, struct pt_regs *regs)
 
 	if (!wsaved) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err |= raw_copy_in_user((u64 __user *)sf,
 					(u64 __user *)(regs->u_regs[UREG_FP] +
 					   STACK_BIAS),
 					sizeof(struct reg_window));
+<<<<<<< HEAD
 =======
 		err |= copy_in_user((u64 __user *)sf,
 				    (u64 __user *)(regs->u_regs[UREG_FP] +
 						   STACK_BIAS),
 				    sizeof(struct reg_window));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		struct reg_window *rp;
 
@@ -564,6 +570,9 @@ void do_notify_resume(struct pt_regs *regs, unsigned long orig_i0, unsigned long
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Compile-time assertions for siginfo_t offsets. Check NSIG* as well, as
  * changes likely come with new fields that should be added below.
@@ -600,5 +609,8 @@ static_assert(offsetof(siginfo_t, si_perf_data)	== 0x18);
 static_assert(offsetof(siginfo_t, si_perf_type)	== 0x20);
 static_assert(offsetof(siginfo_t, si_band)	== 0x10);
 static_assert(offsetof(siginfo_t, si_fd)	== 0x14);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

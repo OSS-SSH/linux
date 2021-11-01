@@ -385,6 +385,9 @@ static int anx7625_odfc_config(struct anx7625_data *ctx,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The MIPI source video data exist large variation (e.g. 59Hz ~ 61Hz),
  * anx7625 defined K ratio for matching MIPI input video clock and
@@ -404,8 +407,11 @@ static int anx7625_set_k_value(struct anx7625_data *ctx)
 				 MIPI_DIGITAL_ADJ_1, 0x3D);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int anx7625_dsi_video_timing_config(struct anx7625_data *ctx)
 {
 	struct device *dev = &ctx->client->dev;
@@ -493,6 +499,7 @@ static int anx7625_dsi_video_timing_config(struct anx7625_data *ctx)
 	ret |= anx7625_reg_write(ctx, ctx->i2c.rx_p1_client, MIPI_PLL_N_NUM_7_0,
 			(n & 0xff));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	anx7625_set_k_value(ctx);
 =======
@@ -500,6 +507,10 @@ static int anx7625_dsi_video_timing_config(struct anx7625_data *ctx)
 	ret |= anx7625_reg_write(ctx, ctx->i2c.rx_p1_client,
 			MIPI_DIGITAL_ADJ_1, 0x3D);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	anx7625_set_k_value(ctx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret |= anx7625_odfc_config(ctx, post_divider - 1);
 
@@ -1335,10 +1346,14 @@ static int anx7625_attach_dsi(struct anx7625_data *ctx)
 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO	|
 		MIPI_DSI_MODE_VIDEO_SYNC_PULSE	|
 <<<<<<< HEAD
+<<<<<<< HEAD
 		MIPI_DSI_MODE_NO_EOT_PACKET	|
 =======
 		MIPI_DSI_MODE_EOT_PACKET	|
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		MIPI_DSI_MODE_NO_EOT_PACKET	|
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		MIPI_DSI_MODE_VIDEO_HSE;
 
 	if (mipi_dsi_attach(dsi) < 0) {
@@ -1391,6 +1406,7 @@ static int anx7625_bridge_attach(struct drm_bridge *bridge,
 					ctx->pdata.panel_bridge,
 					&ctx->bridge, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (err)
 			return err;
 =======
@@ -1400,6 +1416,10 @@ static int anx7625_bridge_attach(struct drm_bridge *bridge,
 			return err;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (err)
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ctx->bridge_attached = 1;
@@ -1767,9 +1787,12 @@ static int __maybe_unused anx7625_suspend(struct device *dev)
 		anx7625_runtime_pm_suspend(dev);
 		disable_irq(ctx->pdata.intp_irq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		flush_workqueue(ctx->workqueue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -1830,11 +1853,16 @@ static int anx7625_i2c_probe(struct i2c_client *client,
 	if (platform->pdata.intp_irq) {
 		INIT_WORK(&platform->work, anx7625_work_func);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		platform->workqueue = alloc_workqueue("anx7625_work",
 						      WQ_FREEZABLE | WQ_MEM_RECLAIM, 1);
 =======
 		platform->workqueue = create_workqueue("anx7625_work");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		platform->workqueue = alloc_workqueue("anx7625_work",
+						      WQ_FREEZABLE | WQ_MEM_RECLAIM, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!platform->workqueue) {
 			DRM_DEV_ERROR(dev, "fail to create work queue\n");
 			ret = -ENOMEM;
@@ -1919,9 +1947,13 @@ static const struct of_device_id anx_match_table[] = {
 	{},
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(of, anx_match_table);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+MODULE_DEVICE_TABLE(of, anx_match_table);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct i2c_driver anx7625_driver = {
 	.driver = {

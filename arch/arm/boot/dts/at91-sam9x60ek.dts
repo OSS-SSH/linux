@@ -93,10 +93,15 @@
 	leds {
 		compatible = "gpio-leds";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_gpio_leds>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpio_leds>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = "okay"; /* Conflict with pwm0. */
 
 		red {
@@ -543,12 +548,18 @@
 				 AT91_PIOA 20 AT91_PERIPH_A (AT91_PINCTRL_PULL_UP | AT91_PINCTRL_DRIVE_STRENGTH_HI)>;	/* PA20 DAT3 periph A with pullup */
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pinctrl_sdmmc0_cd: sdmmc0_cd {
 			atmel,pins =
 				<AT91_PIOA 23 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	sdmmc1 {
@@ -582,6 +593,9 @@
 		};
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	leds {
 		pinctrl_gpio_leds: gpio_leds {
@@ -590,8 +604,11 @@
 				      AT91_PIOB 13 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 		};
 	};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }; /* pinctrl */
 
 &pwm0 {
@@ -604,10 +621,14 @@
 	bus-width = <4>;
 	pinctrl-names = "default";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pinctrl-0 = <&pinctrl_sdmmc0_default &pinctrl_sdmmc0_cd>;
 =======
 	pinctrl-0 = <&pinctrl_sdmmc0_default>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pinctrl-0 = <&pinctrl_sdmmc0_default &pinctrl_sdmmc0_cd>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
 	cd-gpios = <&pioA 23 GPIO_ACTIVE_LOW>;
 	disable-wp;
@@ -676,10 +697,14 @@
 
 &shutdown_controller {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	debounce-delay-us = <976>;
 =======
 	atmel,shdwc-debouncer = <976>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	debounce-delay-us = <976>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
 
 	input@0 {

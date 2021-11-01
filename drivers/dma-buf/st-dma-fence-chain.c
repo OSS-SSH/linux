@@ -59,6 +59,7 @@ static struct dma_fence *mock_fence(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline struct mock_chain {
 	struct dma_fence_chain base;
@@ -67,10 +68,13 @@ static inline struct mock_chain {
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct dma_fence *mock_chain(struct dma_fence *prev,
 				    struct dma_fence *fence,
 				    u64 seqno)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct dma_fence_chain *f;
 
@@ -84,18 +88,23 @@ static struct dma_fence *mock_chain(struct dma_fence *prev,
 	return &f->base;
 =======
 	struct mock_chain *f;
+=======
+	struct dma_fence_chain *f;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	f = kmalloc(sizeof(*f), GFP_KERNEL);
+	f = dma_fence_chain_alloc();
 	if (!f)
 		return NULL;
 
-	dma_fence_chain_init(&f->base,
-			     dma_fence_get(prev),
-			     dma_fence_get(fence),
+	dma_fence_chain_init(f, dma_fence_get(prev), dma_fence_get(fence),
 			     seqno);
 
+<<<<<<< HEAD
 	return &f->base.base;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return &f->base;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int sanitycheck(void *arg)

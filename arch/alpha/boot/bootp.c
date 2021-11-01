@@ -24,10 +24,14 @@
 
 extern unsigned long switch_to_osf_pal(unsigned long nr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct pcb_struct *pcb_va, struct pcb_struct *pcb_pa,
 =======
 	struct pcb_struct * pcb_va, struct pcb_struct * pcb_pa,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pcb_struct *pcb_va, struct pcb_struct *pcb_pa,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long *vptb);
 
 extern void move_stack(unsigned long new_stack);

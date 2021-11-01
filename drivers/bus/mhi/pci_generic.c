@@ -33,11 +33,17 @@
  * @bar_num: PCI base address register to use for MHI MMIO register space
  * @dma_data_width: DMA transfer word size (32 or 64 bits)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @mru_default: default MRU size for MBIM network packets
  * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
  *		   of inband wake support (such as sdx24)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mru_default: default MRU size for MBIM network packets
+ * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
+ *		   of inband wake support (such as sdx24)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct mhi_pci_dev_info {
 	const struct mhi_controller_config *config;
@@ -47,10 +53,15 @@ struct mhi_pci_dev_info {
 	unsigned int bar_num;
 	unsigned int dma_data_width;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int mru_default;
 	bool sideband_wake;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int mru_default;
+	bool sideband_wake;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
@@ -84,6 +95,9 @@ struct mhi_pci_dev_info {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(ch_num, ch_name, el_count, ev_ring) \
 	{						\
 		.num = ch_num,				\
@@ -100,8 +114,11 @@ struct mhi_pci_dev_info {
 		.auto_queue = true,			\
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MHI_EVENT_CONFIG_CTRL(ev_ring, el_count) \
 	{					\
 		.num_elements = el_count,	\
@@ -241,10 +258,14 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
 	MHI_CHANNEL_CONFIG_DL(15, "QMI", 4, 0),
 	MHI_CHANNEL_CONFIG_UL(20, "IPCR", 8, 0),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(21, "IPCR", 8, 0),
 =======
 	MHI_CHANNEL_CONFIG_DL(21, "IPCR", 8, 0),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(21, "IPCR", 8, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
 	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
 	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
@@ -277,11 +298,16 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
 	.config = &modem_qcom_v1_mhiv_config,
 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.dma_data_width = 32,
 	.sideband_wake = false,
 =======
 	.dma_data_width = 32
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.dma_data_width = 32,
+	.sideband_wake = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
@@ -291,12 +317,18 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
 	.config = &modem_qcom_v1_mhiv_config,
 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.dma_data_width = 32,
 	.mru_default = 32768,
 	.sideband_wake = false,
 =======
 	.dma_data_width = 32
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.dma_data_width = 32,
+	.mru_default = 32768,
+	.sideband_wake = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
@@ -305,11 +337,16 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
 	.config = &modem_qcom_v1_mhiv_config,
 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.dma_data_width = 32,
 	.sideband_wake = true,
 =======
 	.dma_data_width = 32
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.dma_data_width = 32,
+	.sideband_wake = true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct mhi_channel_config mhi_quectel_em1xx_channels[] = {
@@ -352,11 +389,16 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
 	.config = &modem_quectel_em1xx_config,
 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.dma_data_width = 32,
 	.sideband_wake = true,
 =======
 	.dma_data_width = 32
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.dma_data_width = 32,
+	.sideband_wake = true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
@@ -395,6 +437,9 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
 	.config = &modem_foxconn_sdx55_config,
 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.dma_data_width = 32,
 	.sideband_wake = false,
 };
@@ -431,9 +476,12 @@ static const struct mhi_pci_dev_info mhi_mv31_info = {
 	.config = &modem_mv31_config,
 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
 	.dma_data_width = 32,
+<<<<<<< HEAD
 =======
 	.dma_data_width = 32
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct pci_device_id mhi_pci_id_table[] = {
@@ -457,11 +505,17 @@ static const struct pci_device_id mhi_pci_id_table[] = {
 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* MV31-W (Cinterion) */
 	{ PCI_DEVICE(0x1269, 0x00b3),
 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* MV31-W (Cinterion) */
+	{ PCI_DEVICE(0x1269, 0x00b3),
+		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{  }
 };
 MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
@@ -564,9 +618,13 @@ static int mhi_pci_claim(struct mhi_controller *mhi_cntrl,
 	}
 	mhi_cntrl->regs = pcim_iomap_table(pdev)[bar_num];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mhi_cntrl->reg_len = pci_resource_len(pdev, bar_num);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mhi_cntrl->reg_len = pci_resource_len(pdev, bar_num);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = pci_set_dma_mask(pdev, dma_mask);
 	if (err) {
@@ -745,6 +803,9 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
 	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mhi_cntrl->mru = info->mru_default;
 
 	if (info->sideband_wake) {
@@ -752,11 +813,14 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
 		mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
 	}
+<<<<<<< HEAD
 =======
 	mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
 	mhi_cntrl->wake_put = mhi_pci_wake_put_nop;
 	mhi_cntrl->wake_toggle = mhi_pci_wake_toggle_nop;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = mhi_pci_claim(mhi_cntrl, info->bar_num, DMA_BIT_MASK(info->dma_data_width));
 	if (err)

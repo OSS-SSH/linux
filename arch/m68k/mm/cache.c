@@ -50,6 +50,7 @@ static unsigned long virt_to_phys_slow(unsigned long vaddr)
 			return (mmusr & PAGE_MASK) | (vaddr & ~PAGE_MASK);
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		WARN_ON_ONCE(!CPU_IS_040_OR_060);
 =======
 		unsigned short mmusr;
@@ -71,6 +72,9 @@ static unsigned long virt_to_phys_slow(unsigned long vaddr)
 			return (*descaddr & PAGE_MASK) | (vaddr & ~PAGE_MASK);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WARN_ON_ONCE(!CPU_IS_040_OR_060);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return 0;
 }
@@ -112,6 +116,7 @@ void flush_icache_user_range(unsigned long address, unsigned long endaddr)
 void flush_icache_range(unsigned long address, unsigned long endaddr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_fc(SUPER_DATA);
 	flush_icache_user_range(address, endaddr);
 	set_fc(USER_DATA);
@@ -122,6 +127,11 @@ void flush_icache_range(unsigned long address, unsigned long endaddr)
 	flush_icache_user_range(address, endaddr);
 	set_fs(old_fs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_fc(SUPER_DATA);
+	flush_icache_user_range(address, endaddr);
+	set_fc(USER_DATA);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(flush_icache_range);
 

@@ -75,10 +75,14 @@ int handle__sched_switch(u64 *ctx)
 
 	/* ivcsw: treat like an enqueue event and store timestamp */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (prev->__state == TASK_RUNNING)
 =======
 	if (prev->state == TASK_RUNNING)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (prev->__state == TASK_RUNNING)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		trace_enqueue(prev);
 
 	pid = next->pid;

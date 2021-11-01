@@ -10,10 +10,14 @@ include include/config/auto.conf
 include $(srctree)/scripts/Kbuild.include
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # for c_flags and mod-prelink-ext
 =======
 # for c_flags and objtool_args
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# for c_flags and mod-prelink-ext
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 include $(srctree)/scripts/Makefile.lib
 
 # find all modules listed in modules.order
@@ -35,6 +39,7 @@ quiet_cmd_cc_o_c = CC [M]  $@
 ARCH_POSTLINK := $(wildcard $(srctree)/arch/$(SRCARCH)/Makefile.postlink)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ifdef CONFIG_LTO_CLANG
 # With CONFIG_LTO_CLANG, reuse the object file we compiled for modpost to
@@ -54,6 +59,8 @@ endif # CONFIG_STACK_VALIDATION
 endif # CONFIG_LTO_CLANG
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 quiet_cmd_ld_ko_o = LD [M]  $@
       cmd_ld_ko_o +=							\
 	$(LD) -r $(KBUILD_LDFLAGS)					\
@@ -80,10 +87,14 @@ if_changed_except = $(if $(call newer_prereqs_except,$(2))$(cmd-check),      \
 
 # Re-generate module BTFs if either module's .ko or vmlinux changed
 <<<<<<< HEAD
+<<<<<<< HEAD
 $(modules): %.ko: %$(mod-prelink-ext).o %.mod.o scripts/module.lds $(if $(KBUILD_BUILTIN),vmlinux) FORCE
 =======
 $(modules): %.ko: %$(prelink-ext).o %.mod.o scripts/module.lds $(if $(KBUILD_BUILTIN),vmlinux) FORCE
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(modules): %.ko: %$(mod-prelink-ext).o %.mod.o scripts/module.lds $(if $(KBUILD_BUILTIN),vmlinux) FORCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	+$(call if_changed_except,ld_ko_o,vmlinux)
 ifdef CONFIG_DEBUG_INFO_BTF_MODULES
 	+$(if $(newer-prereqs),$(call cmd,btf_ko))

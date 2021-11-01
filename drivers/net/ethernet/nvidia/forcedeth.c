@@ -5783,14 +5783,19 @@ static int nv_probe(struct pci_dev *pci_dev, const struct pci_device_id *id)
 		np->txrxctl_bits = NVREG_TXRXCTL_DESC_3;
 		if (dma_64bit) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (dma_set_mask_and_coherent(&pci_dev->dev, DMA_BIT_MASK(39)))
 =======
 			if (pci_set_dma_mask(pci_dev, DMA_BIT_MASK(39)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (dma_set_mask_and_coherent(&pci_dev->dev, DMA_BIT_MASK(39)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dev_info(&pci_dev->dev,
 					 "64-bit DMA failed, using 32-bit addressing\n");
 			else
 				dev->features |= NETIF_F_HIGHDMA;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 			if (pci_set_consistent_dma_mask(pci_dev, DMA_BIT_MASK(39))) {
@@ -5798,6 +5803,8 @@ static int nv_probe(struct pci_dev *pci_dev, const struct pci_device_id *id)
 					 "64-bit DMA (consistent) failed, using 32-bit ring buffers\n");
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} else if (id->driver_data & DEV_HAS_LARGEDESC) {
 		/* packet format 2: supports jumbo frames */

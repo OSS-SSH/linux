@@ -85,12 +85,16 @@ MODULE_LICENSE("GPL");
 MODULE_VERSION(IBFT_ISCSI_VERSION);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct acpi_table_ibft *ibft_addr;
 =======
 #ifndef CONFIG_ISCSI_IBFT_FIND
 struct acpi_table_ibft *ibft_addr;
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct acpi_table_ibft *ibft_addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct ibft_hdr {
 	u8 id;
@@ -854,6 +858,9 @@ static void __init acpi_find_ibft_region(void)
 }
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ISCSI_IBFT_FIND
 static int __init acpi_find_isa_region(void)
 {
@@ -869,9 +876,12 @@ static int __init acpi_find_isa_region(void)
 	return -ENODEV;
 }
 #endif
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * ibft_init() - creates sysfs tree entries for the iBFT data.
  */
@@ -880,6 +890,7 @@ static int __init ibft_init(void)
 	int rc = 0;
 
 	/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 	   As on UEFI systems the setup_arch()/reserve_ibft_region()
 	   is called before ACPI tables are parsed and it only does
@@ -893,6 +904,13 @@ static int __init ibft_init(void)
 	*/
 	if (!ibft_addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	   As on UEFI systems the setup_arch()/reserve_ibft_region()
+	   is called before ACPI tables are parsed and it only does
+	   legacy finding.
+	*/
+	if (acpi_find_isa_region())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		acpi_find_ibft_region();
 
 	if (ibft_addr) {

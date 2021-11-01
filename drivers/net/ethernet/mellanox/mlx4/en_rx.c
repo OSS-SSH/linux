@@ -992,10 +992,14 @@ void mlx4_en_calc_rx_buf(struct net_device *dev)
 		 */
 		priv->frag_info[0].frag_stride = PAGE_SIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		priv->dma_dir = DMA_BIDIRECTIONAL;
 =======
 		priv->dma_dir = PCI_DMA_BIDIRECTIONAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		priv->dma_dir = DMA_BIDIRECTIONAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		priv->rx_headroom = XDP_PACKET_HEADROOM;
 		i = 1;
 	} else {
@@ -1026,10 +1030,14 @@ void mlx4_en_calc_rx_buf(struct net_device *dev)
 			i++;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		priv->dma_dir = DMA_FROM_DEVICE;
 =======
 		priv->dma_dir = PCI_DMA_FROMDEVICE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		priv->dma_dir = DMA_FROM_DEVICE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		priv->rx_headroom = 0;
 	}
 

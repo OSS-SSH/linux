@@ -185,9 +185,13 @@ struct asix_common_private {
 	u16 phy_addr;
 	char phy_name[20];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool embd_phy;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool embd_phy;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 extern const struct driver_info ax88172a_info;

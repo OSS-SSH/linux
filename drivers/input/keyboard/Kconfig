@@ -211,10 +211,14 @@ config KEYBOARD_LKKBD
 	help
 	  Say Y here if you want to use a LK201 or LK401 style serial
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  keyboard. This keyboard is also usable on PCs if you attach
 =======
 	  keyboard. This keyboard is also useable on PCs if you attach
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  keyboard. This keyboard is also usable on PCs if you attach
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  it with the inputattach program. The connector pinout is
 	  described within lkkbd.c.
 

@@ -90,10 +90,15 @@ struct hantro_h264_dec_reflists {
  * @reflists:	P/B0/B1 reflists
  * @ctrls:	V4L2 controls attached to a run
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @dpb_longterm: DPB long-term
  * @dpb_valid:	  DPB valid
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @dpb_longterm: DPB long-term
+ * @dpb_valid:	  DPB valid
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hantro_h264_dec_hw_ctx {
 	struct hantro_aux_buf priv;
@@ -101,10 +106,15 @@ struct hantro_h264_dec_hw_ctx {
 	struct hantro_h264_dec_reflists reflists;
 	struct hantro_h264_dec_ctrls ctrls;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 dpb_longterm;
 	u32 dpb_valid;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 dpb_longterm;
+	u32 dpb_valid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -216,9 +226,13 @@ enum hantro_enc_fmt {
 extern const struct hantro_variant imx8mq_vpu_g2_variant;
 extern const struct hantro_variant imx8mq_vpu_variant;
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern const struct hantro_variant px30_vpu_variant;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern const struct hantro_variant px30_vpu_variant;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct hantro_variant rk3036_vpu_variant;
 extern const struct hantro_variant rk3066_vpu_variant;
 extern const struct hantro_variant rk3288_vpu_variant;
@@ -249,13 +263,19 @@ void hantro_jpeg_enc_done(struct hantro_ctx *ctx);
 dma_addr_t hantro_h264_get_ref_buf(struct hantro_ctx *ctx,
 				   unsigned int dpb_idx);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u16 hantro_h264_get_ref_nbr(struct hantro_ctx *ctx,
 			    unsigned int dpb_idx);
 int hantro_h264_dec_prepare_run(struct hantro_ctx *ctx);
 int rockchip_vpu2_h264_dec_run(struct hantro_ctx *ctx);
+<<<<<<< HEAD
 =======
 int hantro_h264_dec_prepare_run(struct hantro_ctx *ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hantro_g1_h264_dec_run(struct hantro_ctx *ctx);
 int hantro_h264_dec_init(struct hantro_ctx *ctx);
 void hantro_h264_dec_exit(struct hantro_ctx *ctx);

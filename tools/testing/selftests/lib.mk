@@ -49,9 +49,13 @@ ARCH		?= $(SUBARCH)
 # INSTALL_HDR_PATH usr/include.
 .PHONY: khdr
 <<<<<<< HEAD
+<<<<<<< HEAD
 .NOTPARALLEL:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.NOTPARALLEL:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 khdr:
 ifndef KSFT_KHDR_INSTALL_DONE
 ifeq (1,$(DEFAULT_INSTALL_HDR_PATH))

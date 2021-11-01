@@ -410,11 +410,16 @@ static struct buffer_head *bclean(handle_t *handle, struct super_block *sb,
 		return ERR_PTR(-ENOMEM);
 	BUFFER_TRACE(bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, bh, EXT4_JTR_NONE);
 	if (err) {
 =======
 	if ((err = ext4_journal_get_write_access(handle, bh))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, bh, EXT4_JTR_NONE);
+	if (err) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		brelse(bh);
 		bh = ERR_PTR(err);
 	} else {
@@ -480,11 +485,16 @@ static int set_flexbg_block_bitmap(struct super_block *sb, handle_t *handle,
 
 		BUFFER_TRACE(bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = ext4_journal_get_write_access(handle, sb, bh,
 						    EXT4_JTR_NONE);
 =======
 		err = ext4_journal_get_write_access(handle, bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = ext4_journal_get_write_access(handle, sb, bh,
+						    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			brelse(bh);
 			return err;
@@ -580,11 +590,16 @@ static int setup_new_flex_group_blocks(struct super_block *sb,
 
 			BUFFER_TRACE(gdb, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			err = ext4_journal_get_write_access(handle, sb, gdb,
 							    EXT4_JTR_NONE);
 =======
 			err = ext4_journal_get_write_access(handle, gdb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			err = ext4_journal_get_write_access(handle, sb, gdb,
+							    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (err) {
 				brelse(gdb);
 				goto out;
@@ -853,29 +868,42 @@ static int add_new_gdb(handle_t *handle, struct inode *inode,
 
 	BUFFER_TRACE(EXT4_SB(sb)->s_sbh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, EXT4_SB(sb)->s_sbh,
 					    EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, EXT4_SB(sb)->s_sbh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, EXT4_SB(sb)->s_sbh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err))
 		goto errout;
 
 	BUFFER_TRACE(gdb_bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, gdb_bh, EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, gdb_bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, gdb_bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err))
 		goto errout;
 
 	BUFFER_TRACE(dind, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, dind, EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, dind);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, dind, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err)) {
 		ext4_std_error(sb, err);
 		goto errout;
@@ -985,10 +1013,14 @@ static int add_new_gdb_meta_bg(struct super_block *sb,
 
 	BUFFER_TRACE(gdb_bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, gdb_bh, EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, gdb_bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, gdb_bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		kvfree(n_group_desc);
 		brelse(gdb_bh);
@@ -1075,11 +1107,16 @@ static int reserve_backup_gdb(handle_t *handle, struct inode *inode,
 	for (i = 0; i < reserved_gdb; i++) {
 		BUFFER_TRACE(primary[i], "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((err = ext4_journal_get_write_access(handle, sb, primary[i],
 							 EXT4_JTR_NONE)))
 =======
 		if ((err = ext4_journal_get_write_access(handle, primary[i])))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((err = ext4_journal_get_write_access(handle, sb, primary[i],
+							 EXT4_JTR_NONE)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto exit_bh;
 	}
 
@@ -1187,6 +1224,7 @@ static void update_backups(struct super_block *sb, sector_t blk_off, char *data,
 			   ext4_group_first_block_no(sb, group));
 		BUFFER_TRACE(bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((err = ext4_journal_get_write_access(handle, sb, bh,
 							 EXT4_JTR_NONE)))
 			break;
@@ -1196,6 +1234,11 @@ static void update_backups(struct super_block *sb, sector_t blk_off, char *data,
 			break;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((err = ext4_journal_get_write_access(handle, sb, bh,
+							 EXT4_JTR_NONE)))
+			break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lock_buffer(bh);
 		memcpy(bh->b_data, data, size);
 		if (rest)
@@ -1276,11 +1319,16 @@ static int ext4_add_new_descs(handle_t *handle, struct super_block *sb,
 						     gdb_num);
 			BUFFER_TRACE(gdb_bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			err = ext4_journal_get_write_access(handle, sb, gdb_bh,
 							    EXT4_JTR_NONE);
 =======
 			err = ext4_journal_get_write_access(handle, gdb_bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			err = ext4_journal_get_write_access(handle, sb, gdb_bh,
+							    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (!err && reserved_gdb && ext4_bg_num_gdb(sb, group))
 				err = reserve_backup_gdb(handle, resize_inode, group);
@@ -1558,11 +1606,16 @@ static int ext4_flex_group_add(struct super_block *sb,
 
 	BUFFER_TRACE(sbi->s_sbh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, sbi->s_sbh,
 					    EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, sbi->s_sbh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, sbi->s_sbh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto exit_journal;
 
@@ -1776,11 +1829,16 @@ static int ext4_group_extend_no_check(struct super_block *sb,
 
 	BUFFER_TRACE(EXT4_SB(sb)->s_sbh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, EXT4_SB(sb)->s_sbh,
 					    EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, EXT4_SB(sb)->s_sbh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, EXT4_SB(sb)->s_sbh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		ext4_warning(sb, "error %d on journal write access", err);
 		goto errout;
@@ -1943,11 +2001,16 @@ static int ext4_convert_meta_bg(struct super_block *sb, struct inode *inode)
 
 	BUFFER_TRACE(sbi->s_sbh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, sb, sbi->s_sbh,
 					    EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, sbi->s_sbh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, sbi->s_sbh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto errout;
 

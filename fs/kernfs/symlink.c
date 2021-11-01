@@ -117,6 +117,7 @@ static int kernfs_getlink(struct inode *inode, char *path)
 	int error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	down_read(&kernfs_rwsem);
 	error = kernfs_get_target_path(parent, target, path);
 	up_read(&kernfs_rwsem);
@@ -125,6 +126,11 @@ static int kernfs_getlink(struct inode *inode, char *path)
 	error = kernfs_get_target_path(parent, target, path);
 	mutex_unlock(&kernfs_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	down_read(&kernfs_rwsem);
+	error = kernfs_get_target_path(parent, target, path);
+	up_read(&kernfs_rwsem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return error;
 }

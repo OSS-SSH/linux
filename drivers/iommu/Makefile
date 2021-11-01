@@ -30,6 +30,10 @@ obj-$(CONFIG_VIRTIO_IOMMU) += virtio-iommu.o
 obj-$(CONFIG_IOMMU_SVA_LIB) += iommu-sva-lib.o io-pgfault.o
 obj-$(CONFIG_SPRD_IOMMU) += sprd-iommu.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_APPLE_DART) += apple-dart.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_APPLE_DART) += apple-dart.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

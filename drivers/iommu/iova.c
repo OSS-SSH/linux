@@ -122,10 +122,13 @@ int init_iova_flush_queue(struct iova_domain *iovad,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	smp_wmb();
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iovad->fq = queue;
 
 	timer_setup(&iovad->fq_timer, fq_flush_timeout, 0);
@@ -525,9 +528,13 @@ retry:
 	return new_iova->pfn_lo;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(alloc_iova_fast);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(alloc_iova_fast);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * free_iova_fast - free iova pfn range into rcache
@@ -546,9 +553,13 @@ free_iova_fast(struct iova_domain *iovad, unsigned long pfn, unsigned long size)
 	free_iova(iovad, pfn);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(free_iova_fast);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(free_iova_fast);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define fq_ring_for_each(i, fq) \
 	for ((i) = (fq)->head; (i) != (fq)->tail; (i) = ((i) + 1) % IOVA_FQ_SIZE)
@@ -645,6 +656,7 @@ void queue_iova(struct iova_domain *iovad,
 		unsigned long data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct iova_fq *fq;
 	unsigned long flags;
 	unsigned idx;
@@ -665,6 +677,22 @@ void queue_iova(struct iova_domain *iovad,
 	unsigned idx;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct iova_fq *fq;
+	unsigned long flags;
+	unsigned idx;
+
+	/*
+	 * Order against the IOMMU driver's pagetable update from unmapping
+	 * @pte, to guarantee that iova_domain_flush() observes that if called
+	 * from a different CPU before we release the lock below. Full barrier
+	 * so it also pairs with iommu_dma_init_fq() to avoid seeing partially
+	 * written fq state here.
+	 */
+	smp_mb();
+
+	fq = raw_cpu_ptr(iovad->fq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&fq->lock, flags);
 
 	/*

@@ -71,10 +71,14 @@ prototypes::
 	void (*truncate) (struct inode *);
 	int (*permission) (struct inode *, int, unsigned int);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct posix_acl * (*get_acl)(struct inode *, int, bool);
 =======
 	int (*get_acl)(struct inode *, int);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct posix_acl * (*get_acl)(struct inode *, int, bool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*setattr) (struct dentry *, struct iattr *);
 	int (*getattr) (const struct path *, struct kstat *, u32, unsigned int);
 	ssize_t (*listxattr) (struct dentry *, char *, size_t);
@@ -276,6 +280,7 @@ locking rules:
 	All except set_page_dirty and freepage may block
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ======================	======================== =========	===============
 ops			PageLocked(page)	 i_rwsem	invalidate_lock
 ======================	======================== =========	===============
@@ -293,17 +298,26 @@ invalidatepage:		yes					exclusive
 ======================	======================== =========
 ops			PageLocked(page)	 i_rwsem
 ======================	======================== =========
+=======
+======================	======================== =========	===============
+ops			PageLocked(page)	 i_rwsem	invalidate_lock
+======================	======================== =========	===============
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 writepage:		yes, unlocks (see below)
-readpage:		yes, unlocks
+readpage:		yes, unlocks				shared
 writepages:
 set_page_dirty		no
-readahead:		yes, unlocks
-readpages:		no
+readahead:		yes, unlocks				shared
+readpages:		no					shared
 write_begin:		locks the page		 exclusive
 write_end:		yes, unlocks		 exclusive
 bmap:
+<<<<<<< HEAD
 invalidatepage:		yes
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+invalidatepage:		yes					exclusive
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 releasepage:		yes
 freepage:		yes
 direct_IO:
@@ -316,10 +330,14 @@ error_remove_page:	yes
 swap_activate:		no
 swap_deactivate:	no
 <<<<<<< HEAD
+<<<<<<< HEAD
 ======================	======================== =========	===============
 =======
 ======================	======================== =========
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+======================	======================== =========	===============
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ->write_begin(), ->write_end() and ->readpage() may be called from
 the request handler (/dev/loop).
@@ -403,13 +421,19 @@ keep it that way and don't breed new callers.
 some or all of the buffers from the page when it is being truncated. It
 returns zero on success. If ->invalidatepage is zero, the kernel uses
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 block_invalidatepage() instead. The filesystem must exclusively acquire
 invalidate_lock before invalidating page cache in truncate / hole punch path
 (and thus calling into ->invalidatepage) to block races between page cache
 invalidation and page cache filling functions (fault, read, ...).
+<<<<<<< HEAD
 =======
 block_invalidatepage() instead.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ->releasepage() is called when the kernel is about to try to drop the
 buffers from the page in preparation for freeing it.  It returns zero to
@@ -538,9 +562,13 @@ prototypes::
 	ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
 	ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*iopoll) (struct kiocb *kiocb, bool spin);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*iopoll) (struct kiocb *kiocb, bool spin);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*iterate) (struct file *, struct dir_context *);
 	int (*iterate_shared) (struct file *, struct dir_context *);
 	__poll_t (*poll) (struct file *, struct poll_table_struct *);
@@ -554,6 +582,7 @@ prototypes::
 	int (*fasync) (int, struct file *, int);
 	int (*lock) (struct file *, int, struct file_lock *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ssize_t (*readv) (struct file *, const struct iovec *, unsigned long,
 			loff_t *);
@@ -562,6 +591,8 @@ prototypes::
 	ssize_t (*sendfile) (struct file *, loff_t *, size_t, read_actor_t,
 			void __user *);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t (*sendpage) (struct file *, struct page *, int, size_t,
 			loff_t *, int);
 	unsigned long (*get_unmapped_area)(struct file *, unsigned long,
@@ -575,6 +606,9 @@ prototypes::
 	int (*setlease)(struct file *, long, struct file_lock **, void **);
 	long (*fallocate)(struct file *, int, loff_t, loff_t);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*show_fdinfo)(struct seq_file *m, struct file *f);
 	unsigned (*mmap_capabilities)(struct file *);
 	ssize_t (*copy_file_range)(struct file *, loff_t, struct file *,
@@ -583,8 +617,11 @@ prototypes::
 			struct file *file_out, loff_t pos_out,
 			loff_t len, unsigned int remap_flags);
 	int (*fadvise)(struct file *, loff_t, loff_t, int);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 locking rules:
 	All may block.
@@ -620,6 +657,9 @@ the lease within the individual filesystem to record the result of the
 operation
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ->fallocate implementation must be really careful to maintain page cache
 consistency when punching holes or performing other operations that invalidate
 page cache contents. Usually the filesystem needs to call
@@ -639,8 +679,11 @@ used. To block changes to file contents via a memory mapping during the
 operation, the filesystem must take mapping->invalidate_lock to coordinate
 with ->page_mkwrite.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dquot_operations
 ================
 
@@ -699,11 +742,15 @@ access:		yes
 =============	=========	===========================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ->fault() is called when a previously not present pte is about to be faulted
 in. The filesystem must find and return the page associated with the passed in
 "pgoff" in the vm_fault structure. If it is possible that the page may be
 truncated and/or invalidated, then the filesystem must lock invalidate_lock,
 then ensure the page is not already truncated (invalidate_lock will block
+<<<<<<< HEAD
 =======
 ->fault() is called when a previously not present pte is about
 to be faulted in. The filesystem must find and return the page associated
@@ -711,6 +758,8 @@ with the passed in "pgoff" in the vm_fault structure. If it is possible that
 the page may be truncated and/or invalidated, then the filesystem must lock
 the page, then ensure it is not already truncated (the page lock will block
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 subsequent truncate), and then return with VM_FAULT_LOCKED, and the page
 locked. The VM will unlock the page.
 
@@ -724,6 +773,9 @@ page table entry. Pointer to entry associated with the page is passed in
 should be calculated relative to "pte".
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ->page_mkwrite() is called when a previously read-only pte is about to become
 writeable. The filesystem again must ensure that there are no
 truncate/invalidate races or races with operations such as ->remap_file_range
@@ -732,6 +784,7 @@ mapping->invalidate_lock is suitable for proper serialization. If the page has
 been truncated, the filesystem should not look up a new page like the ->fault()
 handler, but simply return with VM_FAULT_NOPAGE, which will cause the VM to
 retry the fault.
+<<<<<<< HEAD
 =======
 ->page_mkwrite() is called when a previously read-only pte is
 about to become writeable. The filesystem again must ensure that there are
@@ -740,6 +793,8 @@ the page has been truncated, the filesystem should not look up a new page
 like the ->fault() handler, but simply return with VM_FAULT_NOPAGE, which
 will cause the VM to retry the fault.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ->pfn_mkwrite() is the same as page_mkwrite but when the pte is
 VM_PFNMAP or VM_MIXEDMAP with a page-less entry. Expected return is

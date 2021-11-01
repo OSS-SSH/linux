@@ -21,10 +21,14 @@ obj-$(CONFIG_PCMCIA)		+= pcmcia/
 
 obj-$(CONFIG_SCSI)		+= scsi_mod.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_SCSI_COMMON)	+= scsi_common.o
 =======
 obj-$(CONFIG_BLK_SCSI_REQUEST)	+= scsi_common.o
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_SCSI_COMMON)	+= scsi_common.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 obj-$(CONFIG_RAID_ATTRS)	+= raid_class.o
 
@@ -173,9 +177,13 @@ scsi_mod-y			+= scsi_trace.o scsi_logging.o
 scsi_mod-$(CONFIG_PM)		+= scsi_pm.o
 scsi_mod-$(CONFIG_SCSI_DH)	+= scsi_dh.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 scsi_mod-$(CONFIG_BLK_DEV_BSG)	+= scsi_bsg.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+scsi_mod-$(CONFIG_BLK_DEV_BSG)	+= scsi_bsg.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 hv_storvsc-y			:= storvsc_drv.o
 
@@ -192,10 +200,14 @@ zalon7xx-objs	:= zalon.o ncr53c8xx.o
 
 # Files generated that shall be removed upon make clean
 <<<<<<< HEAD
+<<<<<<< HEAD
 clean-files :=	53c700_d.h 53c700_u.h
 =======
 clean-files :=	53c700_d.h 53c700_u.h scsi_devinfo_tbl.c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+clean-files :=	53c700_d.h 53c700_u.h
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 $(obj)/53c700.o: $(obj)/53c700_d.h
 
@@ -204,6 +216,7 @@ $(obj)/scsi_sysfs.o: $(obj)/scsi_devinfo_tbl.c
 quiet_cmd_bflags = GEN     $@
 	cmd_bflags = sed -n 's/.*define *BLIST_\([A-Z0-9_]*\) *.*/BLIST_FLAG_NAME(\1),/p' $< > $@
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 $(obj)/scsi_devinfo_tbl.c: include/scsi/scsi_devinfo.h FORCE
 	$(call if_changed,bflags)
@@ -215,6 +228,13 @@ $(obj)/scsi_devinfo_tbl.c: include/scsi/scsi_devinfo.h
 	$(call if_changed,bflags)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(obj)/scsi_devinfo_tbl.c: include/scsi/scsi_devinfo.h FORCE
+	$(call if_changed,bflags)
+
+targets +=  scsi_devinfo_tbl.c
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # If you want to play with the firmware, uncomment
 # GENERATE_FIRMWARE := 1
 

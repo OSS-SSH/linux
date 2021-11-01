@@ -85,10 +85,14 @@ int mtk_clk_register_cpumuxes(struct device_node *node,
 	struct regmap *regmap;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	regmap = device_node_to_regmap(node);
 =======
 	regmap = syscon_node_to_regmap(node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	regmap = device_node_to_regmap(node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(regmap)) {
 		pr_err("Cannot find regmap for %pOF: %ld\n", node,
 		       PTR_ERR(regmap));

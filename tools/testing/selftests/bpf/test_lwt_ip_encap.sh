@@ -113,6 +113,9 @@ setup()
 	ip netns add "${NS3}"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	# rp_filter gets confused by what these tests are doing, so disable it
 	ip netns exec ${NS1} sysctl -wq net.ipv4.conf.all.rp_filter=0
 	ip netns exec ${NS2} sysctl -wq net.ipv4.conf.all.rp_filter=0
@@ -121,8 +124,11 @@ setup()
 	ip netns exec ${NS2} sysctl -wq net.ipv4.conf.default.rp_filter=0
 	ip netns exec ${NS3} sysctl -wq net.ipv4.conf.default.rp_filter=0
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ip link add veth1 type veth peer name veth2
 	ip link add veth3 type veth peer name veth4
 	ip link add veth5 type veth peer name veth6
@@ -248,6 +254,7 @@ setup()
 	ip -netns ${NS2} -6 route add ${IPv6_GRE}/128 dev veth7 via ${IPv6_8} ${VRF}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	# rp_filter gets confused by what these tests are doing, so disable it
 	ip netns exec ${NS1} sysctl -wq net.ipv4.conf.all.rp_filter=0
@@ -255,6 +262,8 @@ setup()
 	ip netns exec ${NS3} sysctl -wq net.ipv4.conf.all.rp_filter=0
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	TMPFILE=$(mktemp /tmp/test_lwt_ip_encap.XXXXXX)
 
 	sleep 1  # reduce flakiness

@@ -1187,6 +1187,7 @@ static int __init iw_cm_init(void)
 	ret = iwpm_init(RDMA_NL_IWCM);
 	if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 
 	iwcm_wq = alloc_ordered_workqueue("iw_cm_wq", 0);
@@ -1200,11 +1201,19 @@ static int __init iw_cm_init(void)
 	if (!iwcm_wq)
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+
+	iwcm_wq = alloc_ordered_workqueue("iw_cm_wq", 0);
+	if (!iwcm_wq)
+		goto err_alloc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iwcm_ctl_table_hdr = register_net_sysctl(&init_net, "net/iw_cm",
 						 iwcm_ctl_table);
 	if (!iwcm_ctl_table_hdr) {
 		pr_err("iw_cm: couldn't register sysctl paths\n");
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto err_sysctl;
 	}
@@ -1220,14 +1229,28 @@ err_alloc:
 =======
 		destroy_workqueue(iwcm_wq);
 		return -ENOMEM;
+=======
+		goto err_sysctl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
+	rdma_nl_register(RDMA_NL_IWCM, iwcm_nl_cb_table);
 	return 0;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+err_sysctl:
+	destroy_workqueue(iwcm_wq);
+err_alloc:
+	iwpm_exit(RDMA_NL_IWCM);
+	return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __exit iw_cm_cleanup(void)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rdma_nl_unregister(RDMA_NL_IWCM);
 	unregister_net_sysctl_table(iwcm_ctl_table_hdr);
@@ -1237,6 +1260,11 @@ static void __exit iw_cm_cleanup(void)
 	destroy_workqueue(iwcm_wq);
 	rdma_nl_unregister(RDMA_NL_IWCM);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rdma_nl_unregister(RDMA_NL_IWCM);
+	unregister_net_sysctl_table(iwcm_ctl_table_hdr);
+	destroy_workqueue(iwcm_wq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iwpm_exit(RDMA_NL_IWCM);
 }
 

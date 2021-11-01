@@ -462,6 +462,9 @@ static int bpf_fill_stxdw(struct bpf_test *self)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bpf_fill_long_jmp(struct bpf_test *self)
 {
 	unsigned int len = BPF_MAXINSNS;
@@ -497,8 +500,11 @@ static int bpf_fill_long_jmp(struct bpf_test *self)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct bpf_test tests[] = {
 	{
 		"TAX",
@@ -1956,6 +1962,9 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Register (non-)clobbering test, in the case where a 32-bit
 		 * JIT implements complex ALU64 operations via function calls.
@@ -2113,8 +2122,11 @@ static struct bpf_test tests[] = {
 	},
 #endif
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"check: missing ret",
 		.u.insns = {
 			BPF_STMT(BPF_LD | BPF_IMM, 1),
@@ -2560,6 +2572,9 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU_MOV_K: small negative",
 		.u.insns_int = {
 			BPF_ALU32_IMM(BPF_MOV, R0, -123),
@@ -2602,8 +2617,11 @@ static struct bpf_test tests[] = {
 		{ { 0, 0 } }
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU64_MOV_K: dst = 2",
 		.u.insns_int = {
 			BPF_ALU64_IMM(BPF_MOV, R0, 2),
@@ -2656,6 +2674,9 @@ static struct bpf_test tests[] = {
 		{ { 0, 0x1 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		"ALU64_MOV_K: small negative",
 		.u.insns_int = {
@@ -2698,8 +2719,11 @@ static struct bpf_test tests[] = {
 		{ },
 		{ { 0, 0xffffffff } }
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* BPF_ALU | BPF_ADD | BPF_X */
 	{
 		"ALU_ADD_X: 1 + 2 = 3",
@@ -3256,6 +3280,9 @@ static struct bpf_test tests[] = {
 		{ { 0, 2147483647 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		"ALU64_MUL_X: 64x64 multiply, low word",
 		.u.insns_int = {
@@ -3281,8 +3308,11 @@ static struct bpf_test tests[] = {
 		{ },
 		{ { 0, 0x2236d88f } }
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* BPF_ALU | BPF_MUL | BPF_K */
 	{
 		"ALU_MUL_K: 2 * 3 = 6",
@@ -3394,6 +3424,9 @@ static struct bpf_test tests[] = {
 		{ { 0, 0x1 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		"ALU64_MUL_K: 64x32 multiply, low word",
 		.u.insns_int = {
@@ -3417,8 +3450,11 @@ static struct bpf_test tests[] = {
 		{ },
 		{ { 0, 0xc28f5c28 } }
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* BPF_ALU | BPF_DIV | BPF_X */
 	{
 		"ALU_DIV_X: 6 / 2 = 3",
@@ -3774,6 +3810,9 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU_AND_K: Small immediate",
 		.u.insns_int = {
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x01020304),
@@ -3812,8 +3851,11 @@ static struct bpf_test tests[] = {
 		{ { 0, 1 } }
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU64_AND_K: 3 & 2 = 2",
 		.u.insns_int = {
 			BPF_LD_IMM64(R0, 3),
@@ -3837,10 +3879,14 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"ALU64_AND_K: 0x0000ffffffff0000 & 0x0 = 0x0000000000000000",
 =======
 		"ALU64_AND_K: 0x0000ffffffff0000 & 0x0 = 0x0000ffff00000000",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"ALU64_AND_K: 0x0000ffffffff0000 & 0x0 = 0x0000000000000000",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.u.insns_int = {
 			BPF_LD_IMM64(R2, 0x0000ffffffff0000LL),
 			BPF_LD_IMM64(R3, 0x0000000000000000LL),
@@ -3857,10 +3903,14 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"ALU64_AND_K: 0x0000ffffffff0000 & -1 = 0x0000ffffffff0000",
 =======
 		"ALU64_AND_K: 0x0000ffffffff0000 & -1 = 0x0000ffffffffffff",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"ALU64_AND_K: 0x0000ffffffff0000 & -1 = 0x0000ffffffff0000",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.u.insns_int = {
 			BPF_LD_IMM64(R2, 0x0000ffffffff0000LL),
 			BPF_LD_IMM64(R3, 0x0000ffffffff0000LL),
@@ -3892,6 +3942,9 @@ static struct bpf_test tests[] = {
 		{ { 0, 0x1 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		"ALU64_AND_K: Sign extension 1",
 		.u.insns_int = {
@@ -3924,8 +3977,11 @@ static struct bpf_test tests[] = {
 		{ },
 		{ { 0, 1 } }
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* BPF_ALU | BPF_OR | BPF_X */
 	{
 		"ALU_OR_X: 1 | 2 = 3",
@@ -4000,6 +4056,9 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU_OR_K: Small immediate",
 		.u.insns_int = {
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x01020304),
@@ -4038,8 +4097,11 @@ static struct bpf_test tests[] = {
 		{ { 0, 1 } }
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU64_OR_K: 1 | 2 = 3",
 		.u.insns_int = {
 			BPF_LD_IMM64(R0, 1),
@@ -4063,10 +4125,14 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"ALU64_OR_K: 0x0000ffffffff0000 | 0x0 = 0x0000ffffffff0000",
 =======
 		"ALU64_OR_K: 0x0000ffffffff0000 | 0x0 = 0x0000ffff00000000",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"ALU64_OR_K: 0x0000ffffffff0000 | 0x0 = 0x0000ffffffff0000",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.u.insns_int = {
 			BPF_LD_IMM64(R2, 0x0000ffffffff0000LL),
 			BPF_LD_IMM64(R3, 0x0000ffffffff0000LL),
@@ -4114,6 +4180,9 @@ static struct bpf_test tests[] = {
 		{ { 0, 0x1 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		"ALU64_OR_K: Sign extension 1",
 		.u.insns_int = {
@@ -4149,11 +4218,14 @@ static struct bpf_test tests[] = {
 	/* BPF_ALU | BPF_XOR | BPF_X */
 	{
 		"ALU_XOR_X: 5 ^ 6 = 3",
+<<<<<<< HEAD
 =======
 	/* BPF_ALU | BPF_XOR | BPF_X */
 	{
 		"ALU_XOR_X: 5 ^ 6 = 3",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.u.insns_int = {
 			BPF_LD_IMM64(R0, 5),
 			BPF_ALU32_IMM(BPF_MOV, R1, 6),
@@ -4225,6 +4297,9 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU_XOR_K: Small immediate",
 		.u.insns_int = {
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x01020304),
@@ -4263,8 +4338,11 @@ static struct bpf_test tests[] = {
 		{ { 0, 1 } }
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU64_XOR_K: 5 ^ 6 = 3",
 		.u.insns_int = {
 			BPF_LD_IMM64(R0, 5),
@@ -4277,10 +4355,14 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"ALU64_XOR_K: 1 ^ 0xffffffff = 0xfffffffe",
 =======
 		"ALU64_XOR_K: 1 & 0xffffffff = 0xfffffffe",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"ALU64_XOR_K: 1 ^ 0xffffffff = 0xfffffffe",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.u.insns_int = {
 			BPF_LD_IMM64(R0, 1),
 			BPF_ALU64_IMM(BPF_XOR, R0, 0xffffffff),
@@ -4339,6 +4421,9 @@ static struct bpf_test tests[] = {
 		{ { 0, 0x1 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		"ALU64_XOR_K: Sign extension 1",
 		.u.insns_int = {
@@ -4371,8 +4456,11 @@ static struct bpf_test tests[] = {
 		{ },
 		{ { 0, 1 } }
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* BPF_ALU | BPF_LSH | BPF_X */
 	{
 		"ALU_LSH_X: 1 << 1 = 2",
@@ -4400,6 +4488,9 @@ static struct bpf_test tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU_LSH_X: 0x12345678 << 12 = 0x45678000",
 		.u.insns_int = {
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x12345678),
@@ -4412,8 +4503,11 @@ static struct bpf_test tests[] = {
 		{ { 0, 0x45678000 } }
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"ALU64_LSH_X: 1 << 1 = 2",
 		.u.insns_int = {
 			BPF_LD_IMM64(R0, 1),
@@ -4438,6 +4532,7 @@ static struct bpf_test tests[] = {
 		{ { 0, 0x80000000 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{
 		"ALU64_LSH_X: Shift < 32, low word",
 		.u.insns_int = {
@@ -4446,16 +4541,25 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_REG(BPF_LSH, R0, R1),
 =======
 	/* BPF_ALU | BPF_LSH | BPF_K */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
-		"ALU_LSH_K: 1 << 1 = 2",
+		"ALU64_LSH_X: Shift < 32, low word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 1),
 			BPF_ALU32_IMM(BPF_LSH, R0, 1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 12),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xbcdef000 } }
 	},
@@ -4468,17 +4572,28 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_RSH, R0, 32),
 =======
 		{ { 0, 2 } },
+=======
+		{ { 0, 0xbcdef000 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU_LSH_K: 1 << 31 = 0x80000000",
+		"ALU64_LSH_X: Shift < 32, high word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 1),
 			BPF_ALU32_IMM(BPF_LSH, R0, 31),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 12),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x3456789a } }
 	},
@@ -4490,17 +4605,27 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_REG(BPF_LSH, R0, R1),
 =======
 		{ { 0, 0x80000000 } },
+=======
+		{ { 0, 0x3456789a } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_LSH_K: 1 << 1 = 2",
+		"ALU64_LSH_X: Shift > 32, low word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 1),
 			BPF_ALU64_IMM(BPF_LSH, R0, 1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 36),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0 } }
 	},
@@ -4513,17 +4638,28 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_RSH, R0, 32),
 =======
 		{ { 0, 2 } },
+=======
+		{ { 0, 0 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_LSH_K: 1 << 31 = 0x80000000",
+		"ALU64_LSH_X: Shift > 32, high word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 1),
 			BPF_ALU64_IMM(BPF_LSH, R0, 31),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 36),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x9abcdef0 } }
 	},
@@ -4535,19 +4671,28 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_REG(BPF_LSH, R0, R1),
 =======
 		{ { 0, 0x80000000 } },
+=======
+		{ { 0, 0x9abcdef0 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
-	/* BPF_ALU | BPF_RSH | BPF_X */
 	{
-		"ALU_RSH_X: 2 >> 1 = 1",
+		"ALU64_LSH_X: Shift == 32, low word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 2),
 			BPF_ALU32_IMM(BPF_MOV, R1, 1),
 			BPF_ALU32_REG(BPF_RSH, R0, R1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 32),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0 } }
 	},
@@ -4560,18 +4705,29 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_RSH, R0, 32),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 0 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU_RSH_X: 0x80000000 >> 31 = 1",
+		"ALU64_LSH_X: Shift == 32, high word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0x80000000),
 			BPF_ALU32_IMM(BPF_MOV, R1, 31),
 			BPF_ALU32_REG(BPF_RSH, R0, R1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 32),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x89abcdef } }
 	},
@@ -4583,18 +4739,28 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_REG(BPF_LSH, R0, R1),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 0x89abcdef } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_RSH_X: 2 >> 1 = 1",
+		"ALU64_LSH_X: Zero shift, low word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 2),
 			BPF_ALU32_IMM(BPF_MOV, R1, 1),
 			BPF_ALU64_REG(BPF_RSH, R0, R1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x89abcdef } }
 	},
@@ -4607,18 +4773,29 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_RSH, R0, 32),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 0x89abcdef } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_RSH_X: 0x80000000 >> 31 = 1",
+		"ALU64_LSH_X: Zero shift, high word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0x80000000),
 			BPF_ALU32_IMM(BPF_MOV, R1, 31),
 			BPF_ALU64_REG(BPF_RSH, R0, R1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0),
+			BPF_ALU64_REG(BPF_LSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x01234567 } }
 	},
@@ -4630,18 +4807,27 @@ static struct bpf_test tests[] = {
 			BPF_ALU32_IMM(BPF_LSH, R0, 1),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 0x01234567 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
-	/* BPF_ALU | BPF_RSH | BPF_K */
+	/* BPF_ALU | BPF_LSH | BPF_K */
 	{
-		"ALU_RSH_K: 2 >> 1 = 1",
+		"ALU_LSH_K: 1 << 1 = 2",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 2),
 			BPF_ALU32_IMM(BPF_RSH, R0, 1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 1),
+			BPF_ALU32_IMM(BPF_LSH, R0, 1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 2 } },
 	},
@@ -4652,17 +4838,26 @@ static struct bpf_test tests[] = {
 			BPF_ALU32_IMM(BPF_LSH, R0, 31),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 2 } },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU_RSH_K: 0x80000000 >> 31 = 1",
+		"ALU_LSH_K: 1 << 31 = 0x80000000",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0x80000000),
 			BPF_ALU32_IMM(BPF_RSH, R0, 31),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 1),
+			BPF_ALU32_IMM(BPF_LSH, R0, 31),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x80000000 } },
 	},
@@ -4673,17 +4868,26 @@ static struct bpf_test tests[] = {
 			BPF_ALU32_IMM(BPF_LSH, R0, 12),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 0x80000000 } },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_RSH_K: 2 >> 1 = 1",
+		"ALU_LSH_K: 0x12345678 << 12 = 0x45678000",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 2),
 			BPF_ALU64_IMM(BPF_RSH, R0, 1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x12345678),
+			BPF_ALU32_IMM(BPF_LSH, R0, 12),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x45678000 } }
 	},
@@ -4694,17 +4898,26 @@ static struct bpf_test tests[] = {
 			BPF_ALU32_IMM(BPF_LSH, R0, 0),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 0x45678000 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_RSH_K: 0x80000000 >> 31 = 1",
+		"ALU_LSH_K: 0x12345678 << 0 = 0x12345678",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0x80000000),
 			BPF_ALU64_IMM(BPF_RSH, R0, 31),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x12345678),
+			BPF_ALU32_IMM(BPF_LSH, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x12345678 } }
 	},
@@ -4715,19 +4928,27 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_LSH, R0, 1),
 =======
 		{ { 0, 1 } },
+=======
+		{ { 0, 0x12345678 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
-	/* BPF_ALU | BPF_ARSH | BPF_X */
 	{
-		"ALU_ARSH_X: 0xff00ff0000000000 >> 40 = 0xffffffffffff00ff",
+		"ALU64_LSH_K: 1 << 1 = 2",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0xff00ff0000000000LL),
 			BPF_ALU32_IMM(BPF_MOV, R1, 40),
 			BPF_ALU64_REG(BPF_ARSH, R0, R1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 1),
+			BPF_ALU64_IMM(BPF_LSH, R0, 1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 2 } },
 	},
@@ -4738,18 +4959,26 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_LSH, R0, 31),
 =======
 		{ { 0, 0xffff00ff } },
+=======
+		{ { 0, 2 } },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
-	/* BPF_ALU | BPF_ARSH | BPF_K */
 	{
-		"ALU_ARSH_K: 0xff00ff0000000000 >> 40 = 0xffffffffffff00ff",
+		"ALU64_LSH_K: 1 << 31 = 0x80000000",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0xff00ff0000000000LL),
 			BPF_ALU64_IMM(BPF_ARSH, R0, 40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 1),
+			BPF_ALU64_IMM(BPF_LSH, R0, 31),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x80000000 } },
 	},
@@ -4760,18 +4989,26 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_LSH, R0, 12),
 =======
 		{ { 0, 0xffff00ff } },
+=======
+		{ { 0, 0x80000000 } },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
-	/* BPF_ALU | BPF_NEG */
 	{
-		"ALU_NEG: -(3) = -3",
+		"ALU64_LSH_K: Shift < 32, low word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 3),
 			BPF_ALU32_IMM(BPF_NEG, R0, 0),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_LSH, R0, 12),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xbcdef000 } }
 	},
@@ -4783,17 +5020,27 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_RSH, R0, 32),
 =======
 		{ { 0, -3 } },
+=======
+		{ { 0, 0xbcdef000 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU_NEG: -(-3) = 3",
+		"ALU64_LSH_K: Shift < 32, high word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, -3),
 			BPF_ALU32_IMM(BPF_NEG, R0, 0),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_LSH, R0, 12),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x3456789a } }
 	},
@@ -4804,17 +5051,26 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_LSH, R0, 36),
 =======
 		{ { 0, 3 } },
+=======
+		{ { 0, 0x3456789a } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_NEG: -(3) = -3",
+		"ALU64_LSH_K: Shift > 32, low word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 3),
 			BPF_ALU64_IMM(BPF_NEG, R0, 0),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_LSH, R0, 36),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0 } }
 	},
@@ -4826,17 +5082,27 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_IMM(BPF_RSH, R0, 32),
 =======
 		{ { 0, -3 } },
+=======
+		{ { 0, 0 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ALU64_NEG: -(-3) = 3",
+		"ALU64_LSH_K: Shift > 32, high word",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, -3),
 			BPF_ALU64_IMM(BPF_NEG, R0, 0),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_LSH, R0, 36),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0x9abcdef0 } }
 	},
@@ -6305,6 +6571,1496 @@ static struct bpf_test tests[] = {
 			BPF_JMP32_IMM(BPF_JSET, R0, 0x3fffffff, 1),
 			BPF_JMP32_IMM(BPF_JSET, R0, 0x60000000, 1),
 			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		{ { 0, 0x9abcdef0 } }
+	},
+	{
+		"ALU64_LSH_K: Shift == 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_LSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+<<<<<<< HEAD
+		{ { 0, 0x40000000 } }
+	},
+	{
+		"JMP32_JSET_K: negative immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -123),
+			BPF_JMP32_IMM(BPF_JSET, R0, -1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		{ { 0, 0 } }
+	},
+	{
+		"ALU64_LSH_K: Shift == 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_LSH, R0, 32),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+<<<<<<< HEAD
+		{ { 0, -123 } }
+=======
+		{ { 0, 0x89abcdef } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	},
+	/* BPF_JMP32 | BPF_JSET | BPF_X */
+	{
+<<<<<<< HEAD
+		"JMP32_JSET_X",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 8),
+			BPF_ALU32_IMM(BPF_MOV, R1, 7),
+			BPF_JMP32_REG(BPF_JSET, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 8 | 2),
+			BPF_JMP32_REG(BPF_JNE, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		"ALU64_LSH_K: Zero shift",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_LSH, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+<<<<<<< HEAD
+		{ { 0, 8 } }
+	},
+	/* BPF_JMP32 | BPF_JGT | BPF_K */
+	{
+		"JMP32_JGT_K: Small immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 123),
+			BPF_JMP32_IMM(BPF_JGT, R0, 123, 1),
+			BPF_JMP32_IMM(BPF_JGT, R0, 122, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		{ { 0, 0x89abcdef } }
+	},
+	/* BPF_ALU | BPF_RSH | BPF_X */
+	{
+		"ALU_RSH_X: 2 >> 1 = 1",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 1),
+			BPF_ALU32_REG(BPF_RSH, R0, R1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+<<<<<<< HEAD
+		{ { 0, 123 } }
+	},
+	{
+		"JMP32_JGT_K: Large immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_JMP32_IMM(BPF_JGT, R0, 0xffffffff, 1),
+			BPF_JMP32_IMM(BPF_JGT, R0, 0xfffffffd, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		{ { 0, 1 } },
+	},
+	{
+		"ALU_RSH_X: 0x80000000 >> 31 = 1",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x80000000),
+			BPF_ALU32_IMM(BPF_MOV, R1, 31),
+			BPF_ALU32_REG(BPF_RSH, R0, R1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+<<<<<<< HEAD
+		{ { 0, 0xfffffffe } }
+=======
+		{ { 0, 1 } },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	},
+	/* BPF_JMP32 | BPF_JGT | BPF_X */
+	{
+<<<<<<< HEAD
+		"JMP32_JGT_X",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xffffffff),
+			BPF_JMP32_REG(BPF_JGT, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xfffffffd),
+			BPF_JMP32_REG(BPF_JGT, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		"ALU_RSH_X: 0x12345678 >> 20 = 0x123",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x12345678),
+			BPF_ALU32_IMM(BPF_MOV, R1, 20),
+			BPF_ALU32_REG(BPF_RSH, R0, R1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+<<<<<<< HEAD
+		{ { 0, 0xfffffffe } }
+	},
+	/* BPF_JMP32 | BPF_JGE | BPF_K */
+	{
+		"JMP32_JGE_K: Small immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 123),
+			BPF_JMP32_IMM(BPF_JGE, R0, 124, 1),
+			BPF_JMP32_IMM(BPF_JGE, R0, 123, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		{ { 0, (u32) cpu_to_le64(0x0123456789abcdefLL) } },
+=======
+		{ { 0, 0x123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	},
+	{
+		"ALU64_RSH_X: 2 >> 1 = 1",
+		.u.insns_int = {
+<<<<<<< HEAD
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_B, R10, -40, 0xff),
+			BPF_LDX_MEM(BPF_B, R0, R10, -40),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_LD_IMM64(R0, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 1),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1 } },
+	},
+	{
+		"ALU64_RSH_X: 0x80000000 >> 31 = 1",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x80000000),
+			BPF_ALU32_IMM(BPF_MOV, R1, 31),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1 } },
+	},
+	{
+		"ALU64_RSH_X: Shift < 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 12),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x56789abc } }
+	},
+	{
+		"ALU64_RSH_X: Shift < 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 12),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x00081234 } }
+	},
+	{
+		"ALU64_RSH_X: Shift > 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 36),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x08123456 } }
+	},
+	{
+		"ALU64_RSH_X: Shift > 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 36),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } }
+	},
+	{
+		"ALU64_RSH_X: Shift == 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 32),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x81234567 } }
+	},
+	{
+		"ALU64_RSH_X: Shift == 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 32),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } }
+	},
+	{
+		"ALU64_RSH_X: Zero shift, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x89abcdef } }
+	},
+	{
+		"ALU64_RSH_X: Zero shift, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0),
+			BPF_ALU64_REG(BPF_RSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x81234567 } }
+	},
+	/* BPF_ALU | BPF_RSH | BPF_K */
+	{
+		"ALU_RSH_K: 2 >> 1 = 1",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 2),
+			BPF_ALU32_IMM(BPF_RSH, R0, 1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1 } },
+	},
+	{
+		"ALU_RSH_K: 0x80000000 >> 31 = 1",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x80000000),
+			BPF_ALU32_IMM(BPF_RSH, R0, 31),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1 } },
+	},
+	{
+		"ALU_RSH_K: 0x12345678 >> 20 = 0x123",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x12345678),
+			BPF_ALU32_IMM(BPF_RSH, R0, 20),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x123 } }
+	},
+	{
+		"ALU_RSH_K: 0x12345678 >> 0 = 0x12345678",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x12345678),
+			BPF_ALU32_IMM(BPF_RSH, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x12345678 } }
+	},
+	{
+		"ALU64_RSH_K: 2 >> 1 = 1",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 2),
+			BPF_ALU64_IMM(BPF_RSH, R0, 1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1 } },
+	},
+	{
+		"ALU64_RSH_K: 0x80000000 >> 31 = 1",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x80000000),
+			BPF_ALU64_IMM(BPF_RSH, R0, 31),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1 } },
+	},
+	{
+		"ALU64_RSH_K: Shift < 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 12),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x56789abc } }
+	},
+	{
+		"ALU64_RSH_K: Shift < 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 12),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x00081234 } }
+	},
+	{
+		"ALU64_RSH_K: Shift > 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 36),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x08123456 } }
+	},
+	{
+		"ALU64_RSH_K: Shift > 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 36),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } }
+	},
+	{
+		"ALU64_RSH_K: Shift == 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x81234567 } }
+	},
+	{
+		"ALU64_RSH_K: Shift == 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } }
+	},
+	{
+		"ALU64_RSH_K: Zero shift",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x89abcdef } }
+	},
+	/* BPF_ALU | BPF_ARSH | BPF_X */
+	{
+		"ALU32_ARSH_X: -1234 >> 7 = -10",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -1234),
+			BPF_ALU32_IMM(BPF_MOV, R1, 7),
+			BPF_ALU32_REG(BPF_ARSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -10 } }
+	},
+	{
+		"ALU64_ARSH_X: 0xff00ff0000000000 >> 40 = 0xffffffffffff00ff",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0xff00ff0000000000LL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 40),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffff00ff } },
+	},
+	{
+		"ALU64_ARSH_X: Shift < 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 12),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x56789abc } }
+	},
+	{
+		"ALU64_ARSH_X: Shift < 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 12),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xfff81234 } }
+	},
+	{
+		"ALU64_ARSH_X: Shift > 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 36),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xf8123456 } }
+	},
+	{
+		"ALU64_ARSH_X: Shift > 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 36),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -1 } }
+	},
+	{
+		"ALU64_ARSH_X: Shift == 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 32),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x81234567 } }
+	},
+	{
+		"ALU64_ARSH_X: Shift == 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 32),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -1 } }
+	},
+	{
+		"ALU64_ARSH_X: Zero shift, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x89abcdef } }
+	},
+	{
+		"ALU64_ARSH_X: Zero shift, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0),
+			BPF_ALU64_REG(BPF_ARSH, R0, R1),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x81234567 } }
+	},
+	/* BPF_ALU | BPF_ARSH | BPF_K */
+	{
+		"ALU32_ARSH_K: -1234 >> 7 = -10",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -1234),
+			BPF_ALU32_IMM(BPF_ARSH, R0, 7),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -10 } }
+	},
+	{
+		"ALU32_ARSH_K: -1234 >> 0 = -1234",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -1234),
+			BPF_ALU32_IMM(BPF_ARSH, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -1234 } }
+	},
+	{
+		"ALU64_ARSH_K: 0xff00ff0000000000 >> 40 = 0xffffffffffff00ff",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0xff00ff0000000000LL),
+			BPF_ALU64_IMM(BPF_ARSH, R0, 40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffff00ff } },
+	},
+	{
+		"ALU64_ARSH_K: Shift < 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_RSH, R0, 12),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x56789abc } }
+	},
+	{
+		"ALU64_ARSH_K: Shift < 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_ARSH, R0, 12),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xfff81234 } }
+	},
+	{
+		"ALU64_ARSH_K: Shift > 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_ARSH, R0, 36),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xf8123456 } }
+	},
+	{
+		"ALU64_ARSH_K: Shift > 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0xf123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_ARSH, R0, 36),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -1 } }
+	},
+	{
+		"ALU64_ARSH_K: Shift == 32, low word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_ARSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x81234567 } }
+	},
+	{
+		"ALU64_ARSH_K: Shift == 32, high word",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_ARSH, R0, 32),
+			BPF_ALU64_IMM(BPF_RSH, R0, 32),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -1 } }
+	},
+	{
+		"ALU64_ARSH_K: Zero shift",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x8123456789abcdefLL),
+			BPF_ALU64_IMM(BPF_ARSH, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x89abcdef } }
+	},
+	/* BPF_ALU | BPF_NEG */
+	{
+		"ALU_NEG: -(3) = -3",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 3),
+			BPF_ALU32_IMM(BPF_NEG, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -3 } },
+	},
+	{
+		"ALU_NEG: -(-3) = 3",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -3),
+			BPF_ALU32_IMM(BPF_NEG, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 3 } },
+	},
+	{
+		"ALU64_NEG: -(3) = -3",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 3),
+			BPF_ALU64_IMM(BPF_NEG, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -3 } },
+	},
+	{
+		"ALU64_NEG: -(-3) = 3",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, -3),
+			BPF_ALU64_IMM(BPF_NEG, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 3 } },
+	},
+	/* BPF_ALU | BPF_END | BPF_FROM_BE */
+	{
+		"ALU_END_FROM_BE 16: 0x0123456789abcdef -> 0xcdef",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ENDIAN(BPF_FROM_BE, R0, 16),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0,  cpu_to_be16(0xcdef) } },
+	},
+	{
+		"ALU_END_FROM_BE 32: 0x0123456789abcdef -> 0x89abcdef",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ENDIAN(BPF_FROM_BE, R0, 32),
+			BPF_ALU64_REG(BPF_MOV, R1, R0),
+			BPF_ALU64_IMM(BPF_RSH, R1, 32),
+			BPF_ALU32_REG(BPF_ADD, R0, R1), /* R1 = 0 */
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, cpu_to_be32(0x89abcdef) } },
+	},
+	{
+		"ALU_END_FROM_BE 64: 0x0123456789abcdef -> 0x89abcdef",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ENDIAN(BPF_FROM_BE, R0, 64),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, (u32) cpu_to_be64(0x0123456789abcdefLL) } },
+	},
+	/* BPF_ALU | BPF_END | BPF_FROM_LE */
+	{
+		"ALU_END_FROM_LE 16: 0x0123456789abcdef -> 0xefcd",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ENDIAN(BPF_FROM_LE, R0, 16),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, cpu_to_le16(0xcdef) } },
+	},
+	{
+		"ALU_END_FROM_LE 32: 0x0123456789abcdef -> 0xefcdab89",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ENDIAN(BPF_FROM_LE, R0, 32),
+			BPF_ALU64_REG(BPF_MOV, R1, R0),
+			BPF_ALU64_IMM(BPF_RSH, R1, 32),
+			BPF_ALU32_REG(BPF_ADD, R0, R1), /* R1 = 0 */
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, cpu_to_le32(0x89abcdef) } },
+	},
+	{
+		"ALU_END_FROM_LE 64: 0x0123456789abcdef -> 0x67452301",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0x0123456789abcdefLL),
+			BPF_ENDIAN(BPF_FROM_LE, R0, 64),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, (u32) cpu_to_le64(0x0123456789abcdefLL) } },
+	},
+	/* BPF_ST(X) | BPF_MEM | BPF_B/H/W/DW */
+	{
+		"ST_MEM_B: Store/Load byte: max negative",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_B, R10, -40, 0xff),
+			BPF_LDX_MEM(BPF_B, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xff } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_B: Store/Load byte: max positive",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_H, R10, -40, 0x7f),
+			BPF_LDX_MEM(BPF_H, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x7f } },
+		.stack_depth = 40,
+	},
+	{
+		"STX_MEM_B: Store/Load byte: max negative",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0),
+			BPF_LD_IMM64(R1, 0xffLL),
+			BPF_STX_MEM(BPF_B, R10, R1, -40),
+			BPF_LDX_MEM(BPF_B, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xff } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_H: Store/Load half word: max negative",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_H, R10, -40, 0xffff),
+			BPF_LDX_MEM(BPF_H, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffff } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_H: Store/Load half word: max positive",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_H, R10, -40, 0x7fff),
+			BPF_LDX_MEM(BPF_H, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x7fff } },
+		.stack_depth = 40,
+	},
+	{
+		"STX_MEM_H: Store/Load half word: max negative",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0),
+			BPF_LD_IMM64(R1, 0xffffLL),
+			BPF_STX_MEM(BPF_H, R10, R1, -40),
+			BPF_LDX_MEM(BPF_H, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffff } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_W: Store/Load word: max negative",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_W, R10, -40, 0xffffffff),
+			BPF_LDX_MEM(BPF_W, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffffffff } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_W: Store/Load word: max positive",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_W, R10, -40, 0x7fffffff),
+			BPF_LDX_MEM(BPF_W, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x7fffffff } },
+		.stack_depth = 40,
+	},
+	{
+		"STX_MEM_W: Store/Load word: max negative",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0),
+			BPF_LD_IMM64(R1, 0xffffffffLL),
+			BPF_STX_MEM(BPF_W, R10, R1, -40),
+			BPF_LDX_MEM(BPF_W, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffffffff } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_DW: Store/Load double word: max negative",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_DW, R10, -40, 0xffffffff),
+			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffffffff } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_DW: Store/Load double word: max negative 2",
+		.u.insns_int = {
+			BPF_LD_IMM64(R2, 0xffff00000000ffffLL),
+			BPF_LD_IMM64(R3, 0xffffffffffffffffLL),
+			BPF_ST_MEM(BPF_DW, R10, -40, 0xffffffff),
+			BPF_LDX_MEM(BPF_DW, R2, R10, -40),
+			BPF_JMP_REG(BPF_JEQ, R2, R3, 2),
+			BPF_MOV32_IMM(R0, 2),
+			BPF_EXIT_INSN(),
+			BPF_MOV32_IMM(R0, 1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x1 } },
+		.stack_depth = 40,
+	},
+	{
+		"ST_MEM_DW: Store/Load double word: max positive",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_ST_MEM(BPF_DW, R10, -40, 0x7fffffff),
+			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x7fffffff } },
+		.stack_depth = 40,
+	},
+	{
+		"STX_MEM_DW: Store/Load double word: max negative",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0),
+			BPF_LD_IMM64(R1, 0xffffffffffffffffLL),
+			BPF_STX_MEM(BPF_DW, R10, R1, -40),
+			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0xffffffff } },
+		.stack_depth = 40,
+	},
+	{
+		"STX_MEM_DW: Store double word: first word in memory",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0),
+			BPF_LD_IMM64(R1, 0x0123456789abcdefLL),
+			BPF_STX_MEM(BPF_DW, R10, R1, -40),
+			BPF_LDX_MEM(BPF_W, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+#ifdef __BIG_ENDIAN
+		{ { 0, 0x01234567 } },
+#else
+		{ { 0, 0x89abcdef } },
+#endif
+		.stack_depth = 40,
+	},
+	{
+		"STX_MEM_DW: Store double word: second word in memory",
+		.u.insns_int = {
+			BPF_LD_IMM64(R0, 0),
+			BPF_LD_IMM64(R1, 0x0123456789abcdefLL),
+			BPF_STX_MEM(BPF_DW, R10, R1, -40),
+			BPF_LDX_MEM(BPF_W, R0, R10, -36),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+#ifdef __BIG_ENDIAN
+		{ { 0, 0x89abcdef } },
+#else
+		{ { 0, 0x01234567 } },
+#endif
+		.stack_depth = 40,
+	},
+	/* BPF_STX | BPF_ATOMIC | BPF_W/DW */
+	{
+		"STX_XADD_W: X + 1 + 1 + 1 + ...",
+		{ },
+		INTERNAL,
+		{ },
+		{ { 0, 4134 } },
+		.fill_helper = bpf_fill_stxw,
+	},
+	{
+		"STX_XADD_DW: X + 1 + 1 + 1 + ...",
+		{ },
+		INTERNAL,
+		{ },
+		{ { 0, 4134 } },
+		.fill_helper = bpf_fill_stxdw,
+	},
+	/*
+	 * Exhaustive tests of atomic operation variants.
+	 * Individual tests are expanded from template macros for all
+	 * combinations of ALU operation, word size and fetching.
+	 */
+#define BPF_ATOMIC_OP_TEST1(width, op, logic, old, update, result)	\
+{									\
+	"BPF_ATOMIC | " #width ", " #op ": Test: "			\
+		#old " " #logic " " #update " = " #result,		\
+	.u.insns_int = {						\
+		BPF_ALU32_IMM(BPF_MOV, R5, update),			\
+		BPF_ST_MEM(width, R10, -40, old),			\
+		BPF_ATOMIC_OP(width, op, R10, R5, -40),			\
+		BPF_LDX_MEM(width, R0, R10, -40),			\
+		BPF_EXIT_INSN(),					\
+	},								\
+	INTERNAL,							\
+	{ },								\
+	{ { 0, result } },						\
+	.stack_depth = 40,						\
+}
+#define BPF_ATOMIC_OP_TEST2(width, op, logic, old, update, result)	\
+{									\
+	"BPF_ATOMIC | " #width ", " #op ": Test side effects, r10: "	\
+		#old " " #logic " " #update " = " #result,		\
+	.u.insns_int = {						\
+		BPF_ALU64_REG(BPF_MOV, R1, R10),			\
+		BPF_ALU32_IMM(BPF_MOV, R0, update),			\
+		BPF_ST_MEM(BPF_W, R10, -40, old),			\
+		BPF_ATOMIC_OP(width, op, R10, R0, -40),			\
+		BPF_ALU64_REG(BPF_MOV, R0, R10),			\
+		BPF_ALU64_REG(BPF_SUB, R0, R1),				\
+		BPF_EXIT_INSN(),					\
+	},								\
+	INTERNAL,							\
+	{ },								\
+	{ { 0, 0 } },							\
+	.stack_depth = 40,						\
+}
+#define BPF_ATOMIC_OP_TEST3(width, op, logic, old, update, result)	\
+{									\
+	"BPF_ATOMIC | " #width ", " #op ": Test side effects, r0: "	\
+		#old " " #logic " " #update " = " #result,		\
+	.u.insns_int = {						\
+		BPF_ALU64_REG(BPF_MOV, R0, R10),			\
+		BPF_ALU32_IMM(BPF_MOV, R1, update),			\
+		BPF_ST_MEM(width, R10, -40, old),			\
+		BPF_ATOMIC_OP(width, op, R10, R1, -40),			\
+		BPF_ALU64_REG(BPF_SUB, R0, R10),			\
+		BPF_EXIT_INSN(),					\
+	},								\
+	INTERNAL,                                                       \
+	{ },                                                            \
+	{ { 0, 0 } },                                                   \
+	.stack_depth = 40,                                              \
+}
+#define BPF_ATOMIC_OP_TEST4(width, op, logic, old, update, result)	\
+{									\
+	"BPF_ATOMIC | " #width ", " #op ": Test fetch: "		\
+		#old " " #logic " " #update " = " #result,		\
+	.u.insns_int = {						\
+		BPF_ALU32_IMM(BPF_MOV, R3, update),			\
+		BPF_ST_MEM(width, R10, -40, old),			\
+		BPF_ATOMIC_OP(width, op, R10, R3, -40),			\
+		BPF_ALU64_REG(BPF_MOV, R0, R3),                         \
+		BPF_EXIT_INSN(),					\
+	},								\
+	INTERNAL,                                                       \
+	{ },                                                            \
+	{ { 0, (op) & BPF_FETCH ? old : update } },			\
+	.stack_depth = 40,                                              \
+}
+	/* BPF_ATOMIC | BPF_W: BPF_ADD */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	/* BPF_ATOMIC | BPF_W: BPF_ADD | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	/* BPF_ATOMIC | BPF_DW: BPF_ADD */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_ADD, +, 0x12, 0xab, 0xbd),
+	/* BPF_ATOMIC | BPF_DW: BPF_ADD | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_ADD | BPF_FETCH, +, 0x12, 0xab, 0xbd),
+	/* BPF_ATOMIC | BPF_W: BPF_AND */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_AND, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_AND, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_AND, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_AND, &, 0x12, 0xab, 0x02),
+	/* BPF_ATOMIC | BPF_W: BPF_AND | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	/* BPF_ATOMIC | BPF_DW: BPF_AND */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_AND, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_AND, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_AND, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_AND, &, 0x12, 0xab, 0x02),
+	/* BPF_ATOMIC | BPF_DW: BPF_AND | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_AND | BPF_FETCH, &, 0x12, 0xab, 0x02),
+	/* BPF_ATOMIC | BPF_W: BPF_OR */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_OR, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_OR, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_OR, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_OR, |, 0x12, 0xab, 0xbb),
+	/* BPF_ATOMIC | BPF_W: BPF_OR | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	/* BPF_ATOMIC | BPF_DW: BPF_OR */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_OR, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_OR, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_OR, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_OR, |, 0x12, 0xab, 0xbb),
+	/* BPF_ATOMIC | BPF_DW: BPF_OR | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_OR | BPF_FETCH, |, 0x12, 0xab, 0xbb),
+	/* BPF_ATOMIC | BPF_W: BPF_XOR */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	/* BPF_ATOMIC | BPF_W: BPF_XOR | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	/* BPF_ATOMIC | BPF_DW: BPF_XOR */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_XOR, ^, 0x12, 0xab, 0xb9),
+	/* BPF_ATOMIC | BPF_DW: BPF_XOR | BPF_FETCH */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_XOR | BPF_FETCH, ^, 0x12, 0xab, 0xb9),
+	/* BPF_ATOMIC | BPF_W: BPF_XCHG */
+	BPF_ATOMIC_OP_TEST1(BPF_W, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+	BPF_ATOMIC_OP_TEST2(BPF_W, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+	BPF_ATOMIC_OP_TEST3(BPF_W, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+	BPF_ATOMIC_OP_TEST4(BPF_W, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+	/* BPF_ATOMIC | BPF_DW: BPF_XCHG */
+	BPF_ATOMIC_OP_TEST1(BPF_DW, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+	BPF_ATOMIC_OP_TEST2(BPF_DW, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+	BPF_ATOMIC_OP_TEST3(BPF_DW, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+	BPF_ATOMIC_OP_TEST4(BPF_DW, BPF_XCHG, xchg, 0x12, 0xab, 0xab),
+#undef BPF_ATOMIC_OP_TEST1
+#undef BPF_ATOMIC_OP_TEST2
+#undef BPF_ATOMIC_OP_TEST3
+#undef BPF_ATOMIC_OP_TEST4
+	/* BPF_ATOMIC | BPF_W, BPF_CMPXCHG */
+	{
+		"BPF_ATOMIC | BPF_W, BPF_CMPXCHG: Test successful return",
+		.u.insns_int = {
+			BPF_ST_MEM(BPF_W, R10, -40, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R3, 0x89abcdef),
+			BPF_ATOMIC_OP(BPF_W, BPF_CMPXCHG, R10, R3, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x01234567 } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_W, BPF_CMPXCHG: Test successful store",
+		.u.insns_int = {
+			BPF_ST_MEM(BPF_W, R10, -40, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R3, 0x89abcdef),
+			BPF_ATOMIC_OP(BPF_W, BPF_CMPXCHG, R10, R3, -40),
+			BPF_LDX_MEM(BPF_W, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x89abcdef } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_W, BPF_CMPXCHG: Test failure return",
+		.u.insns_int = {
+			BPF_ST_MEM(BPF_W, R10, -40, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x76543210),
+			BPF_ALU32_IMM(BPF_MOV, R3, 0x89abcdef),
+			BPF_ATOMIC_OP(BPF_W, BPF_CMPXCHG, R10, R3, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x01234567 } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_W, BPF_CMPXCHG: Test failure store",
+		.u.insns_int = {
+			BPF_ST_MEM(BPF_W, R10, -40, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x76543210),
+			BPF_ALU32_IMM(BPF_MOV, R3, 0x89abcdef),
+			BPF_ATOMIC_OP(BPF_W, BPF_CMPXCHG, R10, R3, -40),
+			BPF_LDX_MEM(BPF_W, R0, R10, -40),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x01234567 } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_W, BPF_CMPXCHG: Test side effects",
+		.u.insns_int = {
+			BPF_ST_MEM(BPF_W, R10, -40, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x01234567),
+			BPF_ALU32_IMM(BPF_MOV, R3, 0x89abcdef),
+			BPF_ATOMIC_OP(BPF_W, BPF_CMPXCHG, R10, R3, -40),
+			BPF_ATOMIC_OP(BPF_W, BPF_CMPXCHG, R10, R3, -40),
+			BPF_ALU32_REG(BPF_MOV, R0, R3),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0x89abcdef } },
+		.stack_depth = 40,
+	},
+	/* BPF_ATOMIC | BPF_DW, BPF_CMPXCHG */
+	{
+		"BPF_ATOMIC | BPF_DW, BPF_CMPXCHG: Test successful return",
+		.u.insns_int = {
+			BPF_LD_IMM64(R1, 0x0123456789abcdefULL),
+			BPF_LD_IMM64(R2, 0xfecdba9876543210ULL),
+			BPF_ALU64_REG(BPF_MOV, R0, R1),
+			BPF_STX_MEM(BPF_DW, R10, R1, -40),
+			BPF_ATOMIC_OP(BPF_DW, BPF_CMPXCHG, R10, R2, -40),
+			BPF_JMP_REG(BPF_JNE, R0, R1, 1),
+			BPF_ALU64_REG(BPF_SUB, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_DW, BPF_CMPXCHG: Test successful store",
+		.u.insns_int = {
+			BPF_LD_IMM64(R1, 0x0123456789abcdefULL),
+			BPF_LD_IMM64(R2, 0xfecdba9876543210ULL),
+			BPF_ALU64_REG(BPF_MOV, R0, R1),
+			BPF_STX_MEM(BPF_DW, R10, R0, -40),
+			BPF_ATOMIC_OP(BPF_DW, BPF_CMPXCHG, R10, R2, -40),
+			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
+			BPF_JMP_REG(BPF_JNE, R0, R2, 1),
+			BPF_ALU64_REG(BPF_SUB, R0, R2),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_DW, BPF_CMPXCHG: Test failure return",
+		.u.insns_int = {
+			BPF_LD_IMM64(R1, 0x0123456789abcdefULL),
+			BPF_LD_IMM64(R2, 0xfecdba9876543210ULL),
+			BPF_ALU64_REG(BPF_MOV, R0, R1),
+			BPF_ALU64_IMM(BPF_ADD, R0, 1),
+			BPF_STX_MEM(BPF_DW, R10, R1, -40),
+			BPF_ATOMIC_OP(BPF_DW, BPF_CMPXCHG, R10, R2, -40),
+			BPF_JMP_REG(BPF_JNE, R0, R1, 1),
+			BPF_ALU64_REG(BPF_SUB, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_DW, BPF_CMPXCHG: Test failure store",
+		.u.insns_int = {
+			BPF_LD_IMM64(R1, 0x0123456789abcdefULL),
+			BPF_LD_IMM64(R2, 0xfecdba9876543210ULL),
+			BPF_ALU64_REG(BPF_MOV, R0, R1),
+			BPF_ALU64_IMM(BPF_ADD, R0, 1),
+			BPF_STX_MEM(BPF_DW, R10, R1, -40),
+			BPF_ATOMIC_OP(BPF_DW, BPF_CMPXCHG, R10, R2, -40),
+			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
+			BPF_JMP_REG(BPF_JNE, R0, R1, 1),
+			BPF_ALU64_REG(BPF_SUB, R0, R1),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } },
+		.stack_depth = 40,
+	},
+	{
+		"BPF_ATOMIC | BPF_DW, BPF_CMPXCHG: Test side effects",
+		.u.insns_int = {
+			BPF_LD_IMM64(R1, 0x0123456789abcdefULL),
+			BPF_LD_IMM64(R2, 0xfecdba9876543210ULL),
+			BPF_ALU64_REG(BPF_MOV, R0, R1),
+			BPF_STX_MEM(BPF_DW, R10, R1, -40),
+			BPF_ATOMIC_OP(BPF_DW, BPF_CMPXCHG, R10, R2, -40),
+			BPF_LD_IMM64(R0, 0xfecdba9876543210ULL),
+			BPF_JMP_REG(BPF_JNE, R0, R2, 1),
+			BPF_ALU64_REG(BPF_SUB, R0, R2),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 0 } },
+		.stack_depth = 40,
+	},
+	/* BPF_JMP32 | BPF_JEQ | BPF_K */
+	{
+		"JMP32_JEQ_K: Small immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 123),
+			BPF_JMP32_IMM(BPF_JEQ, R0, 321, 1),
+			BPF_JMP32_IMM(BPF_JEQ, R0, 123, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 123 } }
+	},
+	{
+		"JMP32_JEQ_K: Large immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 12345678),
+			BPF_JMP32_IMM(BPF_JEQ, R0, 12345678 & 0xffff, 1),
+			BPF_JMP32_IMM(BPF_JEQ, R0, 12345678, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 12345678 } }
+	},
+	{
+		"JMP32_JEQ_K: negative immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -123),
+			BPF_JMP32_IMM(BPF_JEQ, R0,  123, 1),
+			BPF_JMP32_IMM(BPF_JEQ, R0, -123, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -123 } }
+	},
+	/* BPF_JMP32 | BPF_JEQ | BPF_X */
+	{
+		"JMP32_JEQ_X",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1234),
+			BPF_ALU32_IMM(BPF_MOV, R1, 4321),
+			BPF_JMP32_REG(BPF_JEQ, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 1234),
+			BPF_JMP32_REG(BPF_JEQ, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1234 } }
+	},
+	/* BPF_JMP32 | BPF_JNE | BPF_K */
+	{
+		"JMP32_JNE_K: Small immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 123),
+			BPF_JMP32_IMM(BPF_JNE, R0, 123, 1),
+			BPF_JMP32_IMM(BPF_JNE, R0, 321, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 123 } }
+	},
+	{
+		"JMP32_JNE_K: Large immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 12345678),
+			BPF_JMP32_IMM(BPF_JNE, R0, 12345678, 1),
+			BPF_JMP32_IMM(BPF_JNE, R0, 12345678 & 0xffff, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 12345678 } }
+	},
+	{
+		"JMP32_JNE_K: negative immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -123),
+			BPF_JMP32_IMM(BPF_JNE, R0, -123, 1),
+			BPF_JMP32_IMM(BPF_JNE, R0,  123, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, -123 } }
+	},
+	/* BPF_JMP32 | BPF_JNE | BPF_X */
+	{
+		"JMP32_JNE_X",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1234),
+			BPF_ALU32_IMM(BPF_MOV, R1, 1234),
+			BPF_JMP32_REG(BPF_JNE, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 4321),
+			BPF_JMP32_REG(BPF_JNE, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1234 } }
+	},
+	/* BPF_JMP32 | BPF_JSET | BPF_K */
+	{
+		"JMP32_JSET_K: Small immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 1),
+			BPF_JMP32_IMM(BPF_JSET, R0, 2, 1),
+			BPF_JMP32_IMM(BPF_JSET, R0, 3, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+		{ { 0, 1 } }
+	},
+	{
+		"JMP32_JSET_K: Large immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x40000000),
+			BPF_JMP32_IMM(BPF_JSET, R0, 0x3fffffff, 1),
+			BPF_JMP32_IMM(BPF_JSET, R0, 0x60000000, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
@@ -6390,21 +8146,12 @@ static struct bpf_test tests[] = {
 			BPF_JMP32_IMM(BPF_JGE, R0, 124, 1),
 			BPF_JMP32_IMM(BPF_JGE, R0, 123, 1),
 			BPF_ALU32_IMM(BPF_MOV, R0, 0),
-=======
-		{ { 0, (u32) cpu_to_le64(0x0123456789abcdefLL) } },
-	},
-	/* BPF_ST(X) | BPF_MEM | BPF_B/H/W/DW */
-	{
-		"ST_MEM_B: Store/Load byte: max negative",
-		.u.insns_int = {
-			BPF_ALU32_IMM(BPF_MOV, R0, 1),
-			BPF_ST_MEM(BPF_B, R10, -40, 0xff),
-			BPF_LDX_MEM(BPF_B, R0, R10, -40),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 123 } }
 	},
@@ -6418,18 +8165,29 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ST_MEM_B: Store/Load byte: max positive",
+		"JMP32_JGE_K: Large immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 1),
 			BPF_ST_MEM(BPF_H, R10, -40, 0x7f),
 			BPF_LDX_MEM(BPF_H, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_JMP32_IMM(BPF_JGE, R0, 0xffffffff, 1),
+			BPF_JMP32_IMM(BPF_JGE, R0, 0xfffffffe, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xfffffffe } }
 	},
@@ -6446,19 +8204,33 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0x7f } },
 		.stack_depth = 40,
+=======
+		{ { 0, 0xfffffffe } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JGE | BPF_X */
 	{
-		"STX_MEM_B: Store/Load byte: max negative",
+		"JMP32_JGE_X",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0),
 			BPF_LD_IMM64(R1, 0xffLL),
 			BPF_STX_MEM(BPF_B, R10, R1, -40),
 			BPF_LDX_MEM(BPF_B, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xffffffff),
+			BPF_JMP32_REG(BPF_JGE, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xfffffffe),
+			BPF_JMP32_REG(BPF_JGE, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xfffffffe } }
 	},
@@ -6473,18 +8245,30 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 0xfffffffe } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JLT | BPF_K */
 	{
-		"ST_MEM_H: Store/Load half word: max negative",
+		"JMP32_JLT_K: Small immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 1),
 			BPF_ST_MEM(BPF_H, R10, -40, 0xffff),
 			BPF_LDX_MEM(BPF_H, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 123),
+			BPF_JMP32_IMM(BPF_JLT, R0, 123, 1),
+			BPF_JMP32_IMM(BPF_JLT, R0, 124, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 123 } }
 	},
@@ -6498,18 +8282,29 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ST_MEM_H: Store/Load half word: max positive",
+		"JMP32_JLT_K: Large immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 1),
 			BPF_ST_MEM(BPF_H, R10, -40, 0x7fff),
 			BPF_LDX_MEM(BPF_H, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_JMP32_IMM(BPF_JLT, R0, 0xfffffffd, 1),
+			BPF_JMP32_IMM(BPF_JLT, R0, 0xffffffff, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xfffffffe } }
 	},
@@ -6526,19 +8321,33 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0x7fff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 0xfffffffe } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JLT | BPF_X */
 	{
-		"STX_MEM_H: Store/Load half word: max negative",
+		"JMP32_JLT_X",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0),
 			BPF_LD_IMM64(R1, 0xffffLL),
 			BPF_STX_MEM(BPF_H, R10, R1, -40),
 			BPF_LDX_MEM(BPF_H, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xfffffffd),
+			BPF_JMP32_REG(BPF_JLT, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xffffffff),
+			BPF_JMP32_REG(BPF_JLT, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xfffffffe } }
 	},
@@ -6553,18 +8362,30 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 0xfffffffe } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JLE | BPF_K */
 	{
-		"ST_MEM_W: Store/Load word: max negative",
+		"JMP32_JLE_K: Small immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 1),
 			BPF_ST_MEM(BPF_W, R10, -40, 0xffffffff),
 			BPF_LDX_MEM(BPF_W, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 123),
+			BPF_JMP32_IMM(BPF_JLE, R0, 122, 1),
+			BPF_JMP32_IMM(BPF_JLE, R0, 123, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 123 } }
 	},
@@ -6578,18 +8399,29 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xffffffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ST_MEM_W: Store/Load word: max positive",
+		"JMP32_JLE_K: Large immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 1),
 			BPF_ST_MEM(BPF_W, R10, -40, 0x7fffffff),
 			BPF_LDX_MEM(BPF_W, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_JMP32_IMM(BPF_JLE, R0, 0xfffffffd, 1),
+			BPF_JMP32_IMM(BPF_JLE, R0, 0xfffffffe, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xfffffffe } }
 	},
@@ -6606,19 +8438,33 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0x7fffffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 0xfffffffe } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JLE | BPF_X */
 	{
-		"STX_MEM_W: Store/Load word: max negative",
+		"JMP32_JLE_X",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0),
 			BPF_LD_IMM64(R1, 0xffffffffLL),
 			BPF_STX_MEM(BPF_W, R10, R1, -40),
 			BPF_LDX_MEM(BPF_W, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, 0xfffffffe),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xfffffffd),
+			BPF_JMP32_REG(BPF_JLE, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, 0xfffffffe),
+			BPF_JMP32_REG(BPF_JLE, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, 0xfffffffe } }
 	},
@@ -6633,18 +8479,30 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xffffffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, 0xfffffffe } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JSGT | BPF_K */
 	{
-		"ST_MEM_DW: Store/Load double word: max negative",
+		"JMP32_JSGT_K: Small immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 1),
 			BPF_ST_MEM(BPF_DW, R10, -40, 0xffffffff),
 			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -123),
+			BPF_JMP32_IMM(BPF_JSGT, R0, -123, 1),
+			BPF_JMP32_IMM(BPF_JSGT, R0, -124, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -123 } }
 	},
@@ -6658,10 +8516,14 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xffffffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, -123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"ST_MEM_DW: Store/Load double word: max negative 2",
+		"JMP32_JSGT_K: Large immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R2, 0xffff00000000ffffLL),
 			BPF_LD_IMM64(R3, 0xffffffffffffffffLL),
 			BPF_ST_MEM(BPF_DW, R10, -40, 0xffffffff),
@@ -6671,10 +8533,17 @@ static struct bpf_test tests[] = {
 			BPF_EXIT_INSN(),
 			BPF_MOV32_IMM(R0, 1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_JMP32_IMM(BPF_JSGT, R0, -12345678, 1),
+			BPF_JMP32_IMM(BPF_JSGT, R0, -12345679, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -12345678 } }
 	},
@@ -6691,18 +8560,32 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0x1 } },
 		.stack_depth = 40,
+=======
+		{ { 0, -12345678 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JSGT | BPF_X */
 	{
-		"ST_MEM_DW: Store/Load double word: max positive",
+		"JMP32_JSGT_X",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 1),
 			BPF_ST_MEM(BPF_DW, R10, -40, 0x7fffffff),
 			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345678),
+			BPF_JMP32_REG(BPF_JSGT, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345679),
+			BPF_JMP32_REG(BPF_JSGT, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -12345678 } }
 	},
@@ -6717,19 +8600,31 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0x7fffffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, -12345678 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JSGE | BPF_K */
 	{
-		"STX_MEM_DW: Store/Load double word: max negative",
+		"JMP32_JSGE_K: Small immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_LD_IMM64(R0, 0),
 			BPF_LD_IMM64(R1, 0xffffffffffffffffLL),
 			BPF_STX_MEM(BPF_W, R10, R1, -40),
 			BPF_LDX_MEM(BPF_W, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -123),
+			BPF_JMP32_IMM(BPF_JSGE, R0, -122, 1),
+			BPF_JMP32_IMM(BPF_JSGE, R0, -123, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -123 } }
 	},
@@ -6743,20 +8638,30 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0xffffffff } },
 		.stack_depth = 40,
+=======
+		{ { 0, -123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
-	/* BPF_STX | BPF_ATOMIC | BPF_W/DW */
 	{
-		"STX_XADD_W: Test: 0x12 + 0x10 = 0x22",
+		"JMP32_JSGE_K: Large immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x12),
 			BPF_ST_MEM(BPF_W, R10, -40, 0x10),
 			BPF_ATOMIC_OP(BPF_W, BPF_ADD, R10, R0, -40),
 			BPF_LDX_MEM(BPF_W, R0, R10, -40),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_JMP32_IMM(BPF_JSGE, R0, -12345677, 1),
+			BPF_JMP32_IMM(BPF_JSGE, R0, -12345678, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -12345678 } }
 	},
@@ -6773,10 +8678,15 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0x22 } },
 		.stack_depth = 40,
+=======
+		{ { 0, -12345678 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JSGE | BPF_X */
 	{
-		"STX_XADD_W: Test side-effects, r10: 0x12 + 0x10 = 0x22",
+		"JMP32_JSGE_X",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU64_REG(BPF_MOV, R1, R10),
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x12),
 			BPF_ST_MEM(BPF_W, R10, -40, 0x10),
@@ -6784,10 +8694,19 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_REG(BPF_MOV, R0, R10),
 			BPF_ALU64_REG(BPF_SUB, R0, R1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345677),
+			BPF_JMP32_REG(BPF_JSGE, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345678),
+			BPF_JMP32_REG(BPF_JSGE, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -12345678 } }
 	},
@@ -6802,10 +8721,15 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0 } },
 		.stack_depth = 40,
+=======
+		{ { 0, -12345678 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JSLT | BPF_K */
 	{
-		"STX_XADD_W: Test side-effects, r0: 0x12 + 0x10 = 0x22",
+		"JMP32_JSLT_K: Small immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x12),
 			BPF_ST_MEM(BPF_W, R10, -40, 0x10),
 			BPF_ATOMIC_OP(BPF_W, BPF_ADD, R10, R0, -40),
@@ -6816,6 +8740,42 @@ static struct bpf_test tests[] = {
 		{ },
 <<<<<<< HEAD
 		{ { 0, -123 } }
+	},
+	{
+		"JMP32_JSLT_K: Large immediate",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_JMP32_IMM(BPF_JSLT, R0, -12345678, 1),
+			BPF_JMP32_IMM(BPF_JSLT, R0, -12345677, 1),
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -123),
+			BPF_JMP32_IMM(BPF_JSLT, R0, -123, 1),
+			BPF_JMP32_IMM(BPF_JSLT, R0, -122, 1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
+		INTERNAL,
+		{ },
+<<<<<<< HEAD
+		{ { 0, -12345678 } }
+	},
+	/* BPF_JMP32 | BPF_JSLT | BPF_X */
+	{
+		"JMP32_JSLT_X",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345678),
+			BPF_JMP32_REG(BPF_JSLT, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345677),
+			BPF_JMP32_REG(BPF_JSLT, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+=======
+		{ { 0, 0x12 } },
+		.stack_depth = 40,
+=======
+		{ { 0, -123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		"JMP32_JSLT_K: Large immediate",
@@ -6834,36 +8794,25 @@ static struct bpf_test tests[] = {
 	{
 		"JMP32_JSLT_X",
 		.u.insns_int = {
+<<<<<<< HEAD
+			BPF_ALU32_IMM(BPF_MOV, R0, 0x12),
+			BPF_ST_MEM(BPF_DW, R10, -40, 0x10),
+			BPF_ATOMIC_OP(BPF_DW, BPF_ADD, R10, R0, -40),
+			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
 			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
 			BPF_ALU32_IMM(BPF_MOV, R1, -12345678),
 			BPF_JMP32_REG(BPF_JSLT, R0, R1, 2),
 			BPF_ALU32_IMM(BPF_MOV, R1, -12345677),
 			BPF_JMP32_REG(BPF_JSLT, R0, R1, 1),
 			BPF_ALU32_IMM(BPF_MOV, R0, 0),
-=======
-		{ { 0, 0x12 } },
-		.stack_depth = 40,
-	},
-	{
-		"STX_XADD_W: X + 1 + 1 + 1 + ...",
-		{ },
-		INTERNAL,
-		{ },
-		{ { 0, 4134 } },
-		.fill_helper = bpf_fill_stxw,
-	},
-	{
-		"STX_XADD_DW: Test: 0x12 + 0x10 = 0x22",
-		.u.insns_int = {
-			BPF_ALU32_IMM(BPF_MOV, R0, 0x12),
-			BPF_ST_MEM(BPF_DW, R10, -40, 0x10),
-			BPF_ATOMIC_OP(BPF_DW, BPF_ADD, R10, R0, -40),
-			BPF_LDX_MEM(BPF_DW, R0, R10, -40),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -12345678 } }
 	},
@@ -6878,10 +8827,15 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0x22 } },
 		.stack_depth = 40,
+=======
+		{ { 0, -12345678 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JSLE | BPF_K */
 	{
-		"STX_XADD_DW: Test side-effects, r10: 0x12 + 0x10 = 0x22",
+		"JMP32_JSLE_K: Small immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU64_REG(BPF_MOV, R1, R10),
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x12),
 			BPF_ST_MEM(BPF_DW, R10, -40, 0x10),
@@ -6889,10 +8843,17 @@ static struct bpf_test tests[] = {
 			BPF_ALU64_REG(BPF_MOV, R0, R10),
 			BPF_ALU64_REG(BPF_SUB, R0, R1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -123),
+			BPF_JMP32_IMM(BPF_JSLE, R0, -124, 1),
+			BPF_JMP32_IMM(BPF_JSLE, R0, -123, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 <<<<<<< HEAD
 		{ { 0, -123 } }
 	},
@@ -6906,10 +8867,14 @@ static struct bpf_test tests[] = {
 =======
 		{ { 0, 0 } },
 		.stack_depth = 40,
+=======
+		{ { 0, -123 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
-		"STX_XADD_DW: Test side-effects, r0: 0x12 + 0x10 = 0x22",
+		"JMP32_JSLE_K: Large immediate",
 		.u.insns_int = {
+<<<<<<< HEAD
 			BPF_ALU32_IMM(BPF_MOV, R0, 0x12),
 			BPF_ST_MEM(BPF_DW, R10, -40, 0x10),
 			BPF_ATOMIC_OP(BPF_DW, BPF_ADD, R10, R0, -40),
@@ -6930,24 +8895,45 @@ static struct bpf_test tests[] = {
 			BPF_JMP32_REG(BPF_JSLE, R0, R1, 2),
 			BPF_ALU32_IMM(BPF_MOV, R1, -12345678),
 			BPF_JMP32_REG(BPF_JSLE, R0, R1, 1),
+=======
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_JMP32_IMM(BPF_JSLE, R0, -12345679, 1),
+			BPF_JMP32_IMM(BPF_JSLE, R0, -12345678, 1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			BPF_ALU32_IMM(BPF_MOV, R0, 0),
 			BPF_EXIT_INSN(),
 		},
 		INTERNAL,
 		{ },
 		{ { 0, -12345678 } }
+<<<<<<< HEAD
 =======
 		{ { 0, 0x12 } },
 		.stack_depth = 40,
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	/* BPF_JMP32 | BPF_JSLE | BPF_K */
 	{
-		"STX_XADD_DW: X + 1 + 1 + 1 + ...",
-		{ },
+		"JMP32_JSLE_X",
+		.u.insns_int = {
+			BPF_ALU32_IMM(BPF_MOV, R0, -12345678),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345679),
+			BPF_JMP32_REG(BPF_JSLE, R0, R1, 2),
+			BPF_ALU32_IMM(BPF_MOV, R1, -12345678),
+			BPF_JMP32_REG(BPF_JSLE, R0, R1, 1),
+			BPF_ALU32_IMM(BPF_MOV, R0, 0),
+			BPF_EXIT_INSN(),
+		},
 		INTERNAL,
 		{ },
+<<<<<<< HEAD
 		{ { 0, 4134 } },
 		.fill_helper = bpf_fill_stxdw,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{ { 0, -12345678 } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	/* BPF_JMP | BPF_EXIT */
 	{
@@ -7775,6 +9761,9 @@ static struct bpf_test tests[] = {
 		{ { 0, 1 } },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{	/* Mainly checking JIT here. */
 		"BPF_MAXINSNS: Very long conditional jump",
 		{ },
@@ -7783,8 +9772,11 @@ static struct bpf_test tests[] = {
 		{ { 0, 1 } },
 		.fill_helper = bpf_fill_long_jmp,
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		"JMP_JA: Jump, gap, jump, ...",
 		{ },
@@ -9202,10 +11194,14 @@ static int __run_one(const struct bpf_prog *fp, const void *data,
 
 	for (i = 0; i < runs; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = bpf_prog_run(fp, data);
 =======
 		ret = BPF_PROG_RUN(fp, data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = bpf_prog_run(fp, data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	finish = ktime_get_ns();
 	migrate_enable();
@@ -9226,6 +11222,9 @@ static int run_one(const struct bpf_prog *fp, struct bpf_test *test)
 		u32 ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * NOTE: Several sub-tests may be present, in which case
 		 * a zero {data_size, result} tuple indicates the end of
@@ -9234,9 +11233,12 @@ static int run_one(const struct bpf_prog *fp, struct bpf_test *test)
 		 */
 		if (i > 0 &&
 		    test->test[i].data_size == 0 &&
+<<<<<<< HEAD
 =======
 		if (test->test[i].data_size == 0 &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    test->test[i].result == 0)
 			break;
 
@@ -9583,6 +11585,9 @@ static __init int test_bpf(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct tail_call_test {
 	const char *descr;
 	struct bpf_insn insns[MAX_INSNS];
@@ -9822,6 +11827,7 @@ static __init int test_tail_calls(struct bpf_array *progs)
 	return err_cnt ? -EINVAL : 0;
 }
 
+<<<<<<< HEAD
 static int __init test_bpf_init(void)
 {
 	struct bpf_array *progs = NULL;
@@ -9829,6 +11835,11 @@ static int __init test_bpf_init(void)
 static int __init test_bpf_init(void)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init test_bpf_init(void)
+{
+	struct bpf_array *progs = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	ret = prepare_bpf_tests();
@@ -9841,6 +11852,9 @@ static int __init test_bpf_init(void)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = prepare_tail_call_tests(&progs);
 	if (ret)
 		return ret;
@@ -9849,8 +11863,11 @@ static int __init test_bpf_init(void)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return test_skb_segment();
 }
 

@@ -110,9 +110,13 @@ struct dc_link_settings {
 	bool use_link_rate_set;
 	uint8_t link_rate_set;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool dpcd_source_device_specific_field_support;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool dpcd_source_device_specific_field_support;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct dc_lane_settings {

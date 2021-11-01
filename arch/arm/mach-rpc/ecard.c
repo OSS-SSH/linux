@@ -1053,10 +1053,14 @@ static int ecard_drv_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ecard_drv_remove(struct device *dev)
 =======
 static int ecard_drv_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ecard_drv_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct expansion_card *ec = ECARD_DEV(dev);
 	struct ecard_driver *drv = ECARD_DRV(dev->driver);
@@ -1072,10 +1076,13 @@ static int ecard_drv_remove(struct device *dev)
 	barrier();
 	ec->irq_data = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

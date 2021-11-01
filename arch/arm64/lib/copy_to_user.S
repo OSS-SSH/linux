@@ -33,10 +33,14 @@
 
 	.macro strh1 reg, ptr, val
 <<<<<<< HEAD
+<<<<<<< HEAD
 	user_ldst 9997f, sttrh, \reg, \ptr, \val
 =======
 	user_ldst 9998f, sttrh, \reg, \ptr, \val
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	user_ldst 9997f, sttrh, \reg, \ptr, \val
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.endm
 
 	.macro ldr1 reg, ptr, val
@@ -45,10 +49,14 @@
 
 	.macro str1 reg, ptr, val
 <<<<<<< HEAD
+<<<<<<< HEAD
 	user_ldst 9997f, sttr, \reg, \ptr, \val
 =======
 	user_ldst 9998f, sttr, \reg, \ptr, \val
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	user_ldst 9997f, sttr, \reg, \ptr, \val
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.endm
 
 	.macro ldp1 reg1, reg2, ptr, val
@@ -56,6 +64,7 @@
 	.endm
 
 	.macro stp1 reg1, reg2, ptr, val
+<<<<<<< HEAD
 <<<<<<< HEAD
 	user_stp 9997f, \reg1, \reg2, \ptr, \val
 	.endm
@@ -67,12 +76,20 @@ SYM_FUNC_START(__arch_copy_to_user)
 	mov	srcin, x1
 =======
 	user_stp 9998f, \reg1, \reg2, \ptr, \val
+=======
+	user_stp 9997f, \reg1, \reg2, \ptr, \val
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.endm
 
 end	.req	x5
+srcin	.req	x15
 SYM_FUNC_START(__arch_copy_to_user)
 	add	end, x0, x2
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mov	srcin, x1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "copy_template.S"
 	mov	x0, #0
 	ret
@@ -82,14 +99,20 @@ EXPORT_SYMBOL(__arch_copy_to_user)
 	.section .fixup,"ax"
 	.align	2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 9997:	cmp	dst, dstin
 	b.ne	9998f
 	// Before being absolutely sure we couldn't copy anything, try harder
 	ldrb	tmp1w, [srcin]
 USER(9998f, sttrb tmp1w, [dst])
 	add	dst, dst, #1
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 9998:	sub	x0, end, dst			// bytes not copied
 	ret
 	.previous

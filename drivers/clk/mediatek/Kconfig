@@ -363,6 +363,7 @@ config COMMON_CLK_MT8167
 config COMMON_CLK_MT8167_AUDSYS
 	bool "Clock driver for MediaTek MT8167 audsys"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on COMMON_CLK_MT8167
 	default COMMON_CLK_MT8167
 =======
@@ -370,12 +371,17 @@ config COMMON_CLK_MT8167_AUDSYS
 	select COMMON_CLK_MEDIATEK
 	default ARCH_MEDIATEK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on COMMON_CLK_MT8167
+	default COMMON_CLK_MT8167
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports MediaTek MT8167 audsys clocks.
 
 config COMMON_CLK_MT8167_IMGSYS
 	bool "Clock driver for MediaTek MT8167 imgsys"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on COMMON_CLK_MT8167
 	default COMMON_CLK_MT8167
 =======
@@ -383,12 +389,17 @@ config COMMON_CLK_MT8167_IMGSYS
 	select COMMON_CLK_MEDIATEK
 	default ARCH_MEDIATEK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on COMMON_CLK_MT8167
+	default COMMON_CLK_MT8167
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports MediaTek MT8167 imgsys clocks.
 
 config COMMON_CLK_MT8167_MFGCFG
 	bool "Clock driver for MediaTek MT8167 mfgcfg"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on COMMON_CLK_MT8167
 	default COMMON_CLK_MT8167
 =======
@@ -396,24 +407,16 @@ config COMMON_CLK_MT8167_MFGCFG
 	select COMMON_CLK_MEDIATEK
 	default ARCH_MEDIATEK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on COMMON_CLK_MT8167
+	default COMMON_CLK_MT8167
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports MediaTek MT8167 mfgcfg clocks.
 
 config COMMON_CLK_MT8167_MMSYS
 	bool "Clock driver for MediaTek MT8167 mmsys"
 <<<<<<< HEAD
-	depends on COMMON_CLK_MT8167
-	default COMMON_CLK_MT8167
-=======
-	depends on (ARCH_MEDIATEK && ARM64) || COMPILE_TEST
-	select COMMON_CLK_MEDIATEK
-	default ARCH_MEDIATEK
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-	help
-	  This driver supports MediaTek MT8167 mmsys clocks.
-
-config COMMON_CLK_MT8167_VDECSYS
-	bool "Clock driver for MediaTek MT8167 vdecsys"
 <<<<<<< HEAD
 	depends on COMMON_CLK_MT8167
 	default COMMON_CLK_MT8167
@@ -422,6 +425,28 @@ config COMMON_CLK_MT8167_VDECSYS
 	select COMMON_CLK_MEDIATEK
 	default ARCH_MEDIATEK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on COMMON_CLK_MT8167
+	default COMMON_CLK_MT8167
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	help
+	  This driver supports MediaTek MT8167 mmsys clocks.
+
+config COMMON_CLK_MT8167_VDECSYS
+	bool "Clock driver for MediaTek MT8167 vdecsys"
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on COMMON_CLK_MT8167
+	default COMMON_CLK_MT8167
+=======
+	depends on (ARCH_MEDIATEK && ARM64) || COMPILE_TEST
+	select COMMON_CLK_MEDIATEK
+	default ARCH_MEDIATEK
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on COMMON_CLK_MT8167
+	default COMMON_CLK_MT8167
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports MediaTek MT8167 vdecsys clocks.
 
@@ -526,6 +551,9 @@ config COMMON_CLK_MT8183_VENCSYS
 	  This driver supports MediaTek MT8183 vencsys clocks.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config COMMON_CLK_MT8192
 	bool "Clock driver for MediaTek MT8192"
 	depends on ARM64 || COMPILE_TEST
@@ -606,8 +634,11 @@ config COMMON_CLK_MT8192_VENCSYS
 	help
 	  This driver supports MediaTek MT8192 vencsys clocks.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config COMMON_CLK_MT8516
 	bool "Clock driver for MediaTek MT8516"
 	depends on ARCH_MEDIATEK || COMPILE_TEST

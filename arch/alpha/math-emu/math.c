@@ -66,10 +66,14 @@ long do_alpha_fp_emul_imprecise(struct pt_regs *, unsigned long);
 long do_alpha_fp_emul(unsigned long);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int alpha_fp_emul_init_module(void)
 =======
 int init_module(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int alpha_fp_emul_init_module(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	save_emul_imprecise = alpha_fp_emul_imprecise;
 	save_emul = alpha_fp_emul;
@@ -78,6 +82,7 @@ int init_module(void)
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 module_init(alpha_fp_emul_init_module);
 
 static void alpha_fp_emul_cleanup_module(void)
@@ -85,14 +90,23 @@ static void alpha_fp_emul_cleanup_module(void)
 
 void cleanup_module(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_init(alpha_fp_emul_init_module);
+
+static void alpha_fp_emul_cleanup_module(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	alpha_fp_emul_imprecise = save_emul_imprecise;
 	alpha_fp_emul = save_emul;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 module_exit(alpha_fp_emul_cleanup_module);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_exit(alpha_fp_emul_cleanup_module);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #undef  alpha_fp_emul_imprecise
 #define alpha_fp_emul_imprecise		do_alpha_fp_emul_imprecise

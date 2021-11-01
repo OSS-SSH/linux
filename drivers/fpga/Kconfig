@@ -120,10 +120,14 @@ config XILINX_PR_DECOUPLER
 	help
 	  Say Y to enable drivers for Xilinx LogiCORE PR Decoupler
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  or Xilinx Dynamic Function eXchange AIX Shutdown Manager.
 =======
 	  or Xilinx Dynamic Function eXchnage AIX Shutdown Manager.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  or Xilinx Dynamic Function eXchange AIX Shutdown Manager.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  The PR Decoupler exists in the FPGA fabric to isolate one
 	  region of the FPGA from the busses while that region is
 	  being reprogrammed during partial reconfig.
@@ -239,6 +243,9 @@ config FPGA_MGR_ZYNQMP_FPGA
 	  on ZynqMP SoC.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config FPGA_MGR_VERSAL_FPGA
 	tristate "Xilinx Versal FPGA"
 	depends on ARCH_ZYNQMP || COMPILE_TEST
@@ -248,6 +255,9 @@ config FPGA_MGR_VERSAL_FPGA
 	  configure the programmable logic(PL).
 
 	  To compile this as a module, choose M here.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif # FPGA

@@ -173,12 +173,18 @@ static void etnaviv_iommuv2_restore_nonsec(struct etnaviv_gpu *gpu,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (gpu->mmu_context)
 		etnaviv_iommu_context_put(gpu->mmu_context);
 	gpu->mmu_context = etnaviv_iommu_context_get(context);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prefetch = etnaviv_buffer_config_mmuv2(gpu,
 				(u32)v2_context->mtlb_dma,
 				(u32)context->global->bad_page_dma);
@@ -200,12 +206,18 @@ static void etnaviv_iommuv2_restore_sec(struct etnaviv_gpu *gpu,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (gpu->mmu_context)
 		etnaviv_iommu_context_put(gpu->mmu_context);
 	gpu->mmu_context = etnaviv_iommu_context_get(context);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gpu_write(gpu, VIVS_MMUv2_PTA_ADDRESS_LOW,
 		  lower_32_bits(context->global->v2.pta_dma));
 	gpu_write(gpu, VIVS_MMUv2_PTA_ADDRESS_HIGH,

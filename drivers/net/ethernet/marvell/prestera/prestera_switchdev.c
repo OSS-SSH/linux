@@ -481,11 +481,16 @@ err_port_flood_set:
 
 int prestera_bridge_port_join(struct net_device *br_dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct prestera_port *port,
 			      struct netlink_ext_ack *extack)
 =======
 			      struct prestera_port *port)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct prestera_port *port,
+			      struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct prestera_switchdev *swdev = port->sw->swdev;
 	struct prestera_bridge_port *br_port;
@@ -506,13 +511,19 @@ int prestera_bridge_port_join(struct net_device *br_dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = switchdev_bridge_port_offload(br_port->dev, port->dev, NULL,
 					    NULL, NULL, false, extack);
 	if (err)
 		goto err_switchdev_offload;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bridge->vlan_enabled)
 		return 0;
 
@@ -524,10 +535,15 @@ int prestera_bridge_port_join(struct net_device *br_dev,
 
 err_port_join:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switchdev_bridge_port_unoffload(br_port->dev, NULL, NULL, NULL);
 err_switchdev_offload:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switchdev_bridge_port_unoffload(br_port->dev, NULL, NULL, NULL);
+err_switchdev_offload:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prestera_bridge_port_put(br_port);
 err_brport_create:
 	prestera_bridge_put(bridge);
@@ -603,10 +619,15 @@ void prestera_bridge_port_leave(struct net_device *br_dev,
 		prestera_bridge_1d_port_leave(br_port);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switchdev_bridge_port_unoffload(br_port->dev, NULL, NULL, NULL);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switchdev_bridge_port_unoffload(br_port->dev, NULL, NULL, NULL);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prestera_hw_port_learning_set(port, false);
 	prestera_hw_port_flood_set(port, BR_FLOOD | BR_MCAST_FLOOD, 0);
 	prestera_port_vid_stp_set(port, PRESTERA_VID_ALL, BR_STATE_FORWARDING);
@@ -772,10 +793,14 @@ prestera_fdb_offload_notify(struct prestera_port *port,
 			    struct switchdev_notifier_fdb_info *info)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info send_info = {};
 =======
 	struct switchdev_notifier_fdb_info send_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct switchdev_notifier_fdb_info send_info = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	send_info.addr = info->addr;
 	send_info.vid = info->vid;
@@ -1151,10 +1176,14 @@ static void prestera_fdb_event(struct prestera_switch *sw,
 			       struct prestera_event *evt, void *arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info info = {};
 =======
 	struct switchdev_notifier_fdb_info info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct switchdev_notifier_fdb_info info = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *dev = NULL;
 	struct prestera_port *port;
 	struct prestera_lag *lag;

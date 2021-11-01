@@ -13,9 +13,12 @@
 #include <linux/platform_device.h>
 #include <linux/soc/ixp4xx/qmgr.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <mach/hardware.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/soc/ixp4xx/cpu.h>
 
 static struct qmgr_regs __iomem *qmgr_regs;
@@ -151,6 +154,7 @@ static irqreturn_t qmgr_irq1_a0(int irq, void *pdev)
 	__raw_writel(0xFFFFFFFF, &qmgr_regs->irqstat[0]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	en_bitmap = __raw_readl(&qmgr_regs->irqen[0]);
 	while (en_bitmap) {
 		i = __fls(en_bitmap); /* number of the last "low" queue */
@@ -165,6 +169,14 @@ static irqreturn_t qmgr_irq1_a0(int irq, void *pdev)
 		src = qmgr_regs->irqsrc[i >> 3];
 		stat = qmgr_regs->stat1[i >> 3];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	en_bitmap = __raw_readl(&qmgr_regs->irqen[0]);
+	while (en_bitmap) {
+		i = __fls(en_bitmap); /* number of the last "low" queue */
+		en_bitmap &= ~BIT(i);
+		src = __raw_readl(&qmgr_regs->irqsrc[i >> 3]);
+		stat = __raw_readl(&qmgr_regs->stat1[i >> 3]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (src & 4) /* the IRQ condition is inverted */
 			stat = ~stat;
 		if (stat & BIT(src & 3)) {
@@ -185,11 +197,16 @@ static irqreturn_t qmgr_irq2_a0(int irq, void *pdev)
 	__raw_writel(0xFFFFFFFF, &qmgr_regs->irqstat[1]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	req_bitmap = __raw_readl(&qmgr_regs->irqen[1]) &
 		     __raw_readl(&qmgr_regs->statne_h);
 =======
 	req_bitmap = qmgr_regs->irqen[1] & qmgr_regs->statne_h;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req_bitmap = __raw_readl(&qmgr_regs->irqen[1]) &
+		     __raw_readl(&qmgr_regs->statne_h);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (req_bitmap) {
 		i = __fls(req_bitmap); /* number of the last "high" queue */
 		req_bitmap &= ~BIT(i);

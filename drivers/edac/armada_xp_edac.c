@@ -179,10 +179,14 @@ static void axp_mc_check(struct mem_ctl_info *mci)
 	if (cnt_dbe)
 		edac_mc_handle_error(HW_EVENT_ERR_UNCORRECTED, mci,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     cnt_dbe, /* error count */
 =======
 				     cnt_sbe, /* error count */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     cnt_dbe, /* error count */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     0, 0, 0, /* pfn, offset, syndrome */
 				     -1, -1, -1, /* top, mid, low layer */
 				     mci->ctl_name,

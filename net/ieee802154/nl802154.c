@@ -2227,11 +2227,15 @@ static void nl802154_post_doit(const struct genl_ops *ops, struct sk_buff *skb,
 			struct wpan_dev *wpan_dev = info->user_ptr[1];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dev_put(wpan_dev->netdev);
 =======
 			if (wpan_dev->netdev)
 				dev_put(wpan_dev->netdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_put(wpan_dev->netdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			dev_put(info->user_ptr[1]);
 		}

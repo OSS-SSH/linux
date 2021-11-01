@@ -1205,6 +1205,9 @@ int snd_pcm_lib_malloc_pages(struct snd_pcm_substream *substream, size_t size);
 int snd_pcm_lib_free_pages(struct snd_pcm_substream *substream);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int snd_pcm_set_managed_buffer(struct snd_pcm_substream *substream, int type,
 			       struct device *data, size_t size, size_t max);
 int snd_pcm_set_managed_buffer_all(struct snd_pcm *pcm, int type,
@@ -1247,6 +1250,7 @@ snd_pcm_set_fixed_buffer_all(struct snd_pcm *pcm, int type,
 {
 	return snd_pcm_set_managed_buffer_all(pcm, type, data, size, 0);
 }
+<<<<<<< HEAD
 =======
 void snd_pcm_set_managed_buffer(struct snd_pcm_substream *substream, int type,
 				struct device *data, size_t size, size_t max);
@@ -1254,6 +1258,8 @@ void snd_pcm_set_managed_buffer_all(struct snd_pcm *pcm, int type,
 				    struct device *data,
 				    size_t size, size_t max);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int _snd_pcm_lib_alloc_vmalloc_buffer(struct snd_pcm_substream *substream,
 				      size_t size, gfp_t gfp_flags);

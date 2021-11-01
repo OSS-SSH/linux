@@ -52,6 +52,7 @@ void __init setup_uv(void)
 	unsigned long uv_stor_base;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!is_prot_virt_host())
 		return;
 
@@ -75,6 +76,11 @@ void __init setup_uv(void)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!is_prot_virt_host())
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uv_stor_base = (unsigned long)memblock_alloc_try_nid(
 		uv_info.uv_base_stor_len, SZ_1M, SZ_2G,
 		MEMBLOCK_ALLOC_ACCESSIBLE, NUMA_NO_NODE);

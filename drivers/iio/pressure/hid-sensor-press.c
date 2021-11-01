@@ -14,34 +14,50 @@
 #include "../common/hid-sensors/hid-sensor-trigger.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	CHANNEL_SCAN_INDEX_PRESSURE,
 	CHANNEL_SCAN_INDEX_TIMESTAMP,
 };
+<<<<<<< HEAD
 =======
 #define CHANNEL_SCAN_INDEX_PRESSURE 0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct press_state {
 	struct hid_sensor_hub_callbacks callbacks;
 	struct hid_sensor_common common_attributes;
 	struct hid_sensor_hub_attribute_info press_attr;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
 		u32 press_data;
 		u64 timestamp __aligned(8);
 	} scan;
+<<<<<<< HEAD
 =======
 	u32 press_data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int scale_pre_decml;
 	int scale_post_decml;
 	int scale_precision;
 	int value_offset;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	s64 timestamp;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	s64 timestamp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const u32 press_sensitivity_addresses[] = {
@@ -60,12 +76,18 @@ static const struct iio_chan_spec press_channels[] = {
 		BIT(IIO_CHAN_INFO_HYSTERESIS),
 		.scan_index = CHANNEL_SCAN_INDEX_PRESSURE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	},
 	IIO_CHAN_SOFT_TIMESTAMP(CHANNEL_SCAN_INDEX_TIMESTAMP)
 
 =======
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	},
+	IIO_CHAN_SOFT_TIMESTAMP(CHANNEL_SCAN_INDEX_TIMESTAMP)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* Adjust channel real bits based on report descriptor */
@@ -179,6 +201,7 @@ static const struct iio_info press_info = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Function to push data to buffer */
 static void hid_sensor_push_data(struct iio_dev *indio_dev, const void *data,
@@ -189,6 +212,8 @@ static void hid_sensor_push_data(struct iio_dev *indio_dev, const void *data,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Callback handler to send event after all samples are received and captured */
 static int press_proc_event(struct hid_sensor_hub_device *hsdev,
 				unsigned usage_id,
@@ -199,6 +224,9 @@ static int press_proc_event(struct hid_sensor_hub_device *hsdev,
 
 	dev_dbg(&indio_dev->dev, "press_proc_event\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (atomic_read(&press_state->common_attributes.data_ready)) {
 		if (!press_state->timestamp)
 			press_state->timestamp = iio_get_time_ns(indio_dev);
@@ -206,12 +234,15 @@ static int press_proc_event(struct hid_sensor_hub_device *hsdev,
 		iio_push_to_buffers_with_timestamp(
 			indio_dev, &press_state->scan, press_state->timestamp);
 	}
+<<<<<<< HEAD
 =======
 	if (atomic_read(&press_state->common_attributes.data_ready))
 		hid_sensor_push_data(indio_dev,
 				&press_state->press_data,
 				sizeof(press_state->press_data));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -229,6 +260,7 @@ static int press_capture_sample(struct hid_sensor_hub_device *hsdev,
 	switch (usage_id) {
 	case HID_USAGE_SENSOR_ATMOSPHERIC_PRESSURE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		press_state->scan.press_data = *(u32 *)raw_data;
 		ret = 0;
 		break;
@@ -241,6 +273,15 @@ static int press_capture_sample(struct hid_sensor_hub_device *hsdev,
 		ret = 0;
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		press_state->scan.press_data = *(u32 *)raw_data;
+		ret = 0;
+		break;
+	case HID_USAGE_SENSOR_TIME_TIMESTAMP:
+		press_state->timestamp = hid_sensor_convert_timestamp(
+			&press_state->common_attributes, *(s64 *)raw_data);
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -307,12 +348,17 @@ static int hid_press_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	indio_dev->channels = devm_kmemdup(&pdev->dev, press_channels,
 					   sizeof(press_channels), GFP_KERNEL);
 =======
 	indio_dev->channels = kmemdup(press_channels, sizeof(press_channels),
 				      GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	indio_dev->channels = devm_kmemdup(&pdev->dev, press_channels,
+					   sizeof(press_channels), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!indio_dev->channels) {
 		dev_err(&pdev->dev, "failed to duplicate channels\n");
 		return -ENOMEM;
@@ -324,10 +370,14 @@ static int hid_press_probe(struct platform_device *pdev)
 	if (ret) {
 		dev_err(&pdev->dev, "failed to setup attributes\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto error_free_dev_mem;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	indio_dev->num_channels =
@@ -343,10 +393,14 @@ static int hid_press_probe(struct platform_device *pdev)
 	if (ret) {
 		dev_err(&pdev->dev, "trigger setup failed\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto error_free_dev_mem;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = iio_device_register(indio_dev);
@@ -372,10 +426,13 @@ error_iio_unreg:
 error_remove_trigger:
 	hid_sensor_remove_trigger(indio_dev, &press_state->common_attributes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 error_free_dev_mem:
 	kfree(indio_dev->channels);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -390,9 +447,12 @@ static int hid_press_remove(struct platform_device *pdev)
 	iio_device_unregister(indio_dev);
 	hid_sensor_remove_trigger(indio_dev, &press_state->common_attributes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kfree(indio_dev->channels);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

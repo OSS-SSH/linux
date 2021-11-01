@@ -3253,6 +3253,7 @@ static int __init gsm_init(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gsm_tty_driver = tty_alloc_driver(256, TTY_DRIVER_REAL_RAW |
 			TTY_DRIVER_DYNAMIC_DEV | TTY_DRIVER_HARDWARE_BREAK);
 	if (IS_ERR(gsm_tty_driver)) {
@@ -3264,6 +3265,13 @@ static int __init gsm_init(void)
 		pr_err("gsm_init: tty allocation failed.\n");
 		status = -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gsm_tty_driver = tty_alloc_driver(256, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_DYNAMIC_DEV | TTY_DRIVER_HARDWARE_BREAK);
+	if (IS_ERR(gsm_tty_driver)) {
+		pr_err("gsm_init: tty allocation failed.\n");
+		status = PTR_ERR(gsm_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err_unreg_ldisc;
 	}
 	gsm_tty_driver->driver_name	= "gsmtty";
@@ -3273,10 +3281,13 @@ static int __init gsm_init(void)
 	gsm_tty_driver->type		= TTY_DRIVER_TYPE_SERIAL;
 	gsm_tty_driver->subtype	= SERIAL_TYPE_NORMAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gsm_tty_driver->flags	= TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV
 						| TTY_DRIVER_HARDWARE_BREAK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gsm_tty_driver->init_termios	= tty_std_termios;
 	/* Fixme */
 	gsm_tty_driver->init_termios.c_lflag &= ~ECHO;
@@ -3292,10 +3303,14 @@ static int __init gsm_init(void)
 	return 0;
 err_put_driver:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(gsm_tty_driver);
 =======
 	put_tty_driver(gsm_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(gsm_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_unreg_ldisc:
 	tty_unregister_ldisc(&tty_ldisc_packet);
 	return status;
@@ -3306,10 +3321,14 @@ static void __exit gsm_exit(void)
 	tty_unregister_ldisc(&tty_ldisc_packet);
 	tty_unregister_driver(gsm_tty_driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(gsm_tty_driver);
 =======
 	put_tty_driver(gsm_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(gsm_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(gsm_init);

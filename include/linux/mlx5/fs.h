@@ -39,10 +39,15 @@
 #define MLX5_FS_DEFAULT_FLOW_TAG 0x0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MLX5_SET_CFG(p, f, v) MLX5_SET(create_flow_group_in, p, f, v)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MLX5_SET_CFG(p, f, v) MLX5_SET(create_flow_group_in, p, f, v)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	MLX5_FLOW_CONTEXT_ACTION_FWD_NEXT_PRIO	= 1 << 16,
 	MLX5_FLOW_CONTEXT_ACTION_ENCRYPT	= 1 << 17,

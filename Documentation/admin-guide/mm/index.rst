@@ -28,9 +28,13 @@ the Linux memory management.
    concepts
    cma_debugfs
 <<<<<<< HEAD
+<<<<<<< HEAD
    damon/index
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+   damon/index
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    hugetlbpage
    idle_page_tracking
    ksm

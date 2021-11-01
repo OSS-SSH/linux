@@ -481,11 +481,16 @@ static int set_user(struct cred *new)
 	 */
 	if (is_ucounts_overlimit(new->ucounts, UCOUNT_RLIMIT_NPROC, rlimit(RLIMIT_NPROC)) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 			new_user != INIT_USER &&
 			!capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN))
 =======
 			new_user != INIT_USER)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			new_user != INIT_USER &&
+			!capable(CAP_SYS_RESOURCE) && !capable(CAP_SYS_ADMIN))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		current->flags |= PF_NPROC_EXCEEDED;
 	else
 		current->flags &= ~PF_NPROC_EXCEEDED;
@@ -1852,9 +1857,12 @@ static int prctl_set_mm_exe_file(struct mm_struct *mm, unsigned int fd)
 {
 	struct fd exe;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct file *old_exe, *exe_file;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct inode *inode;
 	int err;
 
@@ -1877,6 +1885,7 @@ static int prctl_set_mm_exe_file(struct mm_struct *mm, unsigned int fd)
 	if (err)
 		goto exit;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = replace_mm_exe_file(mm, exe.file);
 exit:
@@ -1918,6 +1927,12 @@ exit_err:
 	fput(exe_file);
 	goto exit;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = replace_mm_exe_file(mm, exe.file);
+exit:
+	fdput(exe);
+	return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1976,6 +1991,7 @@ static int validate_prctl_map_addr(struct prctl_mm_map *prctl_map)
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	 * @brk should be after @end_data in traditional maps.
 	 */
@@ -1985,6 +2001,8 @@ static int validate_prctl_map_addr(struct prctl_mm_map *prctl_map)
 
 	/*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Neither we should allow to override limits if they set.
 	 */
 	if (check_data_rlimit(rlimit(RLIMIT_DATA), prctl_map->brk,

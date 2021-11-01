@@ -646,12 +646,17 @@ int qla4xxx_initialize_fw_cb(struct scsi_qla_host * ha)
 	init_fw_cb->rqq_consumer_idx = cpu_to_le16(ha->request_out);
 	init_fw_cb->compq_producer_idx = cpu_to_le16(ha->response_in);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	init_fw_cb->rqq_len = cpu_to_le16(REQUEST_QUEUE_DEPTH);
 	init_fw_cb->compq_len = cpu_to_le16(RESPONSE_QUEUE_DEPTH);
 =======
 	init_fw_cb->rqq_len = __constant_cpu_to_le16(REQUEST_QUEUE_DEPTH);
 	init_fw_cb->compq_len = __constant_cpu_to_le16(RESPONSE_QUEUE_DEPTH);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	init_fw_cb->rqq_len = cpu_to_le16(REQUEST_QUEUE_DEPTH);
+	init_fw_cb->compq_len = cpu_to_le16(RESPONSE_QUEUE_DEPTH);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	init_fw_cb->rqq_addr_lo = cpu_to_le32(LSDW(ha->request_dma));
 	init_fw_cb->rqq_addr_hi = cpu_to_le32(MSDW(ha->request_dma));
 	init_fw_cb->compq_addr_lo = cpu_to_le32(LSDW(ha->response_dma));
@@ -661,6 +666,7 @@ int qla4xxx_initialize_fw_cb(struct scsi_qla_host * ha)
 
 	/* Set up required options. */
 	init_fw_cb->fw_options |=
+<<<<<<< HEAD
 <<<<<<< HEAD
 		cpu_to_le16(FWOPT_SESSION_MODE |
 			    FWOPT_INITIATOR_MODE);
@@ -679,19 +685,27 @@ int qla4xxx_initialize_fw_cb(struct scsi_qla_host * ha)
 =======
 		__constant_cpu_to_le16(FWOPT_SESSION_MODE |
 				       FWOPT_INITIATOR_MODE);
+=======
+		cpu_to_le16(FWOPT_SESSION_MODE |
+			    FWOPT_INITIATOR_MODE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (is_qla80XX(ha))
 		init_fw_cb->fw_options |=
-		    __constant_cpu_to_le16(FWOPT_ENABLE_CRBDB);
+		    cpu_to_le16(FWOPT_ENABLE_CRBDB);
 
-	init_fw_cb->fw_options &= __constant_cpu_to_le16(~FWOPT_TARGET_MODE);
+	init_fw_cb->fw_options &= cpu_to_le16(~FWOPT_TARGET_MODE);
 
 	init_fw_cb->add_fw_options = 0;
 	init_fw_cb->add_fw_options |=
-			__constant_cpu_to_le16(ADFWOPT_SERIALIZE_TASK_MGMT);
+			cpu_to_le16(ADFWOPT_SERIALIZE_TASK_MGMT);
 	init_fw_cb->add_fw_options |=
+<<<<<<< HEAD
 			__constant_cpu_to_le16(ADFWOPT_AUTOCONN_DISABLE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cpu_to_le16(ADFWOPT_AUTOCONN_DISABLE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (qla4xxx_set_ifcb(ha, &mbox_cmd[0], &mbox_sts[0], init_fw_cb_dma)
 		!= QLA_SUCCESS) {
@@ -1636,10 +1650,14 @@ int qla4xxx_get_chap(struct scsi_qla_host *ha, char *username, char *password,
 	strlcpy(password, chap_table->secret, QL4_CHAP_MAX_SECRET_LEN);
 	strlcpy(username, chap_table->name, QL4_CHAP_MAX_NAME_LEN);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chap_table->cookie = cpu_to_le16(CHAP_VALID_COOKIE);
 =======
 	chap_table->cookie = __constant_cpu_to_le16(CHAP_VALID_COOKIE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chap_table->cookie = cpu_to_le16(CHAP_VALID_COOKIE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 exit_get_chap:
 	dma_pool_free(ha->chap_dma_pool, chap_table, chap_dma);
@@ -1682,10 +1700,14 @@ int qla4xxx_set_chap(struct scsi_qla_host *ha, char *username, char *password,
 	strncpy(chap_table->secret, password, MAX_CHAP_SECRET_LEN - 1);
 	strncpy(chap_table->name, username, MAX_CHAP_NAME_LEN - 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	chap_table->cookie = cpu_to_le16(CHAP_VALID_COOKIE);
 =======
 	chap_table->cookie = __constant_cpu_to_le16(CHAP_VALID_COOKIE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chap_table->cookie = cpu_to_le16(CHAP_VALID_COOKIE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (is_qla40XX(ha)) {
 		chap_size = MAX_CHAP_ENTRIES_40XX * sizeof(*chap_table);
@@ -1752,10 +1774,14 @@ int qla4xxx_get_uni_chap_at_index(struct scsi_qla_host *ha, char *username,
 	mutex_lock(&ha->chap_sem);
 	chap_table = (struct ql4_chap_table *)ha->chap_list + chap_index;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (chap_table->cookie != cpu_to_le16(CHAP_VALID_COOKIE)) {
 =======
 	if (chap_table->cookie != __constant_cpu_to_le16(CHAP_VALID_COOKIE)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (chap_table->cookie != cpu_to_le16(CHAP_VALID_COOKIE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rval = QLA_ERROR;
 		goto exit_unlock_uni_chap;
 	}
@@ -1819,10 +1845,14 @@ int qla4xxx_get_chap_index(struct scsi_qla_host *ha, char *username,
 		chap_table = (struct ql4_chap_table *)ha->chap_list + i;
 		if (chap_table->cookie !=
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    cpu_to_le16(CHAP_VALID_COOKIE)) {
 =======
 		    __constant_cpu_to_le16(CHAP_VALID_COOKIE)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    cpu_to_le16(CHAP_VALID_COOKIE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (i > MAX_RESRV_CHAP_IDX && free_index == -1)
 				free_index = i;
 			continue;
@@ -2144,16 +2174,21 @@ int qla4xxx_set_param_ddbentry(struct scsi_qla_host *ha,
 	if (conn->max_recv_dlength)
 		fw_ddb_entry->iscsi_max_rcv_data_seg_len =
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  cpu_to_le16((conn->max_recv_dlength / BYTE_UNITS));
 =======
 		  __constant_cpu_to_le16((conn->max_recv_dlength / BYTE_UNITS));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		  cpu_to_le16((conn->max_recv_dlength / BYTE_UNITS));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (sess->max_r2t)
 		fw_ddb_entry->iscsi_max_outsnd_r2t = cpu_to_le16(sess->max_r2t);
 
 	if (sess->first_burst)
 		fw_ddb_entry->iscsi_first_burst_len =
+<<<<<<< HEAD
 <<<<<<< HEAD
 		       cpu_to_le16((sess->first_burst / BYTE_UNITS));
 
@@ -2167,6 +2202,13 @@ int qla4xxx_set_param_ddbentry(struct scsi_qla_host *ha,
 		fw_ddb_entry->iscsi_max_burst_len =
 			__constant_cpu_to_le16((sess->max_burst / BYTE_UNITS));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       cpu_to_le16((sess->first_burst / BYTE_UNITS));
+
+	if (sess->max_burst)
+		fw_ddb_entry->iscsi_max_burst_len =
+			cpu_to_le16((sess->max_burst / BYTE_UNITS));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (sess->time2wait)
 		fw_ddb_entry->iscsi_def_time2wait =

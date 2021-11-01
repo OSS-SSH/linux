@@ -72,10 +72,14 @@ static LIST_HEAD(zcrypt_ops_list);
 debug_info_t *zcrypt_dbf_info;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Process a rescan of the transport layer.
  *
  * Returns 1, if the rescan has been processed, otherwise 0.
@@ -467,10 +471,14 @@ static void zcdn_destroy_all(void)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * zcrypt_read (): Not supported beyond zcrypt 1.3.1.
  *
  * This function is not supported beyond zcrypt 1.3.1.
@@ -482,10 +490,14 @@ static ssize_t zcrypt_read(struct file *filp, char __user *buf,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * zcrypt_write(): Not allowed.
  *
  * Write is is not allowed
@@ -497,10 +509,14 @@ static ssize_t zcrypt_write(struct file *filp, const char __user *buf,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * zcrypt_open(): Count number of users.
  *
  * Device open function to count number of users.
@@ -529,10 +545,14 @@ static int zcrypt_open(struct inode *inode, struct file *filp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * zcrypt_release(): Count number of users.
  *
  * Device close function to count number of users.
@@ -593,10 +613,14 @@ static inline struct zcrypt_queue *zcrypt_pick_queue(struct zcrypt_card *zc,
 						     unsigned int weight)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!zq || !try_module_get(zq->queue->ap_dev.device.driver->owner))
 =======
 	if (!zq || !try_module_get(zq->queue->ap_dev.drv->driver.owner))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!zq || !try_module_get(zq->queue->ap_dev.device.driver->owner))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 	zcrypt_queue_get(zq);
 	get_device(&zq->queue->ap_dev.device);
@@ -604,10 +628,14 @@ static inline struct zcrypt_queue *zcrypt_pick_queue(struct zcrypt_card *zc,
 	atomic_add(weight, &zq->load);
 	zq->request_count++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*pmod = zq->queue->ap_dev.device.driver->owner;
 =======
 	*pmod = zq->queue->ap_dev.drv->driver.owner;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*pmod = zq->queue->ap_dev.device.driver->owner;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return zq;
 }
 
@@ -2182,10 +2210,14 @@ static void zcdn_exit(void)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * zcrypt_api_init(): Module initialization.
  *
  * The module initialization code.
@@ -2224,10 +2256,14 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * zcrypt_api_exit(): Module termination.
  *
  * The module termination code.

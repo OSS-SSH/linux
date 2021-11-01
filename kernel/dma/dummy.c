@@ -23,10 +23,14 @@ static int dma_dummy_map_sg(struct device *dev, struct scatterlist *sgl,
 		unsigned long attrs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return -EINVAL;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dma_dummy_supported(struct device *hwdev, u64 mask)

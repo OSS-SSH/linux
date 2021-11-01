@@ -38,9 +38,13 @@
 #include "link_enc_cfg.h"
 #include "dc_dmub_srv.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "dal_asic_id.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "dal_asic_id.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CTX \
 	enc10->base.ctx
@@ -67,12 +71,18 @@
 			dm_write_reg(CTX, AUX_REG(reg_name), val)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef MIN
 #define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dcn31_link_encoder_set_dio_phy_mux(
 	struct link_encoder *enc,
 	enum encoder_type_select sel,
@@ -227,12 +237,17 @@ static const struct link_encoder_funcs dcn31_link_enc_funcs = {
 	.get_dig_frontend = dcn10_get_dig_frontend,
 	.get_dig_mode = dcn10_get_dig_mode,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.is_in_alt_mode = dcn31_link_encoder_is_in_alt_mode,
 	.get_max_link_cap = dcn31_link_encoder_get_max_link_cap,
 =======
 	.is_in_alt_mode = dcn20_link_encoder_is_in_alt_mode,
 	.get_max_link_cap = dcn20_link_encoder_get_max_link_cap,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.is_in_alt_mode = dcn31_link_encoder_is_in_alt_mode,
+	.get_max_link_cap = dcn31_link_encoder_get_max_link_cap,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.set_dio_phy_mux = dcn31_link_encoder_set_dio_phy_mux,
 };
 
@@ -421,6 +436,9 @@ void dcn31_link_encoder_disable_output(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool dcn31_link_encoder_is_in_alt_mode(struct link_encoder *enc)
 {
 	struct dcn10_link_encoder *enc10 = TO_DCN10_LINK_ENC(enc);
@@ -478,5 +496,8 @@ void dcn31_link_encoder_get_max_link_cap(struct link_encoder *enc,
 			link_settings->lane_count = MIN(LANE_COUNT_TWO, link_settings->lane_count);
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

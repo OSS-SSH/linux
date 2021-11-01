@@ -384,10 +384,14 @@ static u32 i9xx_cursor_ctl(const struct intel_crtc_state *crtc_state,
 		cntl |= MCURSOR_ROTATE_180;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Wa_22012358565:adl-p */
 =======
 	/* Wa_22012358565:adlp */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Wa_22012358565:adl-p */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (DISPLAY_VER(dev_priv) == 13)
 		cntl |= MCURSOR_ARB_SLOTS(1);
 
@@ -634,23 +638,34 @@ intel_legacy_cursor_update(struct drm_plane *_plane,
 	/*
 	 * When crtc is inactive or there is a modeset pending,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * wait for it to complete in the slowpath.
 	 * PSR2 selective fetch also requires the slow path as
 	 * PSR2 plane and transcoder registers can only be updated during
 	 * vblank.
+<<<<<<< HEAD
 =======
 	 * wait for it to complete in the slowpath
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * FIXME bigjoiner fastpath would be good
 	 */
 	if (!crtc_state->hw.active || intel_crtc_needs_modeset(crtc_state) ||
+<<<<<<< HEAD
 <<<<<<< HEAD
 	    crtc_state->update_pipe || crtc_state->bigjoiner ||
 	    crtc_state->enable_psr2_sel_fetch)
 =======
 	    crtc_state->update_pipe || crtc_state->bigjoiner)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    crtc_state->update_pipe || crtc_state->bigjoiner ||
+	    crtc_state->enable_psr2_sel_fetch)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto slow;
 
 	/*
@@ -818,10 +833,14 @@ intel_cursor_plane_create(struct drm_i915_private *dev_priv,
 		drm_plane_enable_fb_damage_clips(&cursor->base);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_plane_helper_add(cursor);
 =======
 	drm_plane_helper_add(&cursor->base, &intel_plane_helper_funcs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_plane_helper_add(cursor);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cursor;
 

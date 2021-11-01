@@ -93,9 +93,12 @@ obj-$(CONFIG_GPIO_MAX77650)		+= gpio-max77650.o
 obj-$(CONFIG_GPIO_MB86S7X)		+= gpio-mb86s7x.o
 obj-$(CONFIG_GPIO_MC33880)		+= gpio-mc33880.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 obj-$(CONFIG_GPIO_MC9S08DZ60)		+= gpio-mc9s08dz60.o
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_GPIO_MENZ127)		+= gpio-menz127.o
 obj-$(CONFIG_GPIO_MERRIFIELD)		+= gpio-merrifield.o
 obj-$(CONFIG_GPIO_ML_IOH)		+= gpio-ml-ioh.o
@@ -132,9 +135,13 @@ obj-$(CONFIG_GPIO_RDC321X)		+= gpio-rdc321x.o
 obj-$(CONFIG_GPIO_REALTEK_OTTO)		+= gpio-realtek-otto.o
 obj-$(CONFIG_GPIO_REG)			+= gpio-reg.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_GPIO_ROCKCHIP)	+= gpio-rockchip.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_GPIO_ROCKCHIP)	+= gpio-rockchip.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_ARCH_SA1100)		+= gpio-sa1100.o
 obj-$(CONFIG_GPIO_SAMA5D2_PIOBU)	+= gpio-sama5d2-piobu.o
 obj-$(CONFIG_GPIO_SCH311X)		+= gpio-sch311x.o
@@ -173,9 +180,13 @@ obj-$(CONFIG_GPIO_UNIPHIER)		+= gpio-uniphier.o
 obj-$(CONFIG_GPIO_VF610)		+= gpio-vf610.o
 obj-$(CONFIG_GPIO_VIPERBOARD)		+= gpio-viperboard.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_GPIO_VIRTIO)		+= gpio-virtio.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_GPIO_VIRTIO)		+= gpio-virtio.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_GPIO_VISCONTI)		+= gpio-visconti.o
 obj-$(CONFIG_GPIO_VR41XX)		+= gpio-vr41xx.o
 obj-$(CONFIG_GPIO_VX855)		+= gpio-vx855.o

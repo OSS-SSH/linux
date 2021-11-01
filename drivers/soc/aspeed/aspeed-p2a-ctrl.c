@@ -111,10 +111,14 @@ static int aspeed_p2a_mmap(struct file *file, struct vm_area_struct *vma)
 	prot = vma->vm_page_prot;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vma->vm_pgoff + vma_pages(vma) > ctrl->mem_size >> PAGE_SHIFT)
 =======
 	if (vma->vm_pgoff + vsize > ctrl->mem_base + ctrl->mem_size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (vma->vm_pgoff + vma_pages(vma) > ctrl->mem_size >> PAGE_SHIFT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	/* ast2400/2500 AHB accesses are not cache coherent */

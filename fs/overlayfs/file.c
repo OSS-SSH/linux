@@ -297,14 +297,20 @@ static ssize_t ovl_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = -EINVAL;
 	if (iocb->ki_flags & IOCB_DIRECT &&
 	    (!real.file->f_mapping->a_ops ||
 	     !real.file->f_mapping->a_ops->direct_IO))
 		goto out_fdput;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	old_cred = ovl_override_creds(file_inode(file)->i_sb);
 	if (is_sync_kiocb(iocb)) {
 		ret = vfs_iter_read(real.file, iter, &iocb->ki_pos,
@@ -330,10 +336,14 @@ out:
 	revert_creds(old_cred);
 	ovl_file_accessed(file);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_fdput:
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_fdput:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fdput(real);
 
 	return ret;
@@ -363,14 +373,20 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
 		goto out_unlock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = -EINVAL;
 	if (iocb->ki_flags & IOCB_DIRECT &&
 	    (!real.file->f_mapping->a_ops ||
 	     !real.file->f_mapping->a_ops->direct_IO))
 		goto out_fdput;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ovl_should_sync(OVL_FS(inode->i_sb)))
 		ifl &= ~(IOCB_DSYNC | IOCB_SYNC);
 
@@ -407,6 +423,9 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
 out:
 	revert_creds(old_cred);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_fdput:
 	fdput(real);
 
@@ -453,8 +472,11 @@ static ssize_t ovl_splice_write(struct pipe_inode_info *pipe, struct file *out,
 	/* Update size */
 	ovl_copyattr(realinode, inode);
 	revert_creds(old_cred);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fdput(real);
 
 out_unlock:
@@ -675,10 +697,14 @@ const struct file_operations ovl_file_operations = {
 	.flush		= ovl_flush,
 	.splice_read    = generic_file_splice_read,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.splice_write   = ovl_splice_write,
 =======
 	.splice_write   = iter_file_splice_write,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.splice_write   = ovl_splice_write,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.copy_file_range	= ovl_copy_file_range,
 	.remap_file_range	= ovl_remap_file_range,

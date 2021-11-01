@@ -661,10 +661,14 @@ static int drm_atomic_plane_check(const struct drm_plane_state *old_plane_state,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clips = __drm_plane_get_damage_clips(new_plane_state);
 =======
 	clips = drm_plane_get_damage_clips(new_plane_state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clips = __drm_plane_get_damage_clips(new_plane_state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	num_clips = drm_plane_get_damage_clips_count(new_plane_state);
 
 	/* Make sure damage clips are valid and inside the fb. */
@@ -728,10 +732,14 @@ static void drm_atomic_plane_print_state(struct drm_printer *p,
  * planes or CRTCs, and so on) it makes sense to model these as independent
  * objects. Drivers then need to do similar state tracking and commit ordering for
 <<<<<<< HEAD
+<<<<<<< HEAD
  * such private (since not exposed to userspace) objects as the atomic core and
 =======
  * such private (since not exposed to userpace) objects as the atomic core and
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * such private (since not exposed to userspace) objects as the atomic core and
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * helpers already provide for connectors, planes and CRTCs.
  *
  * To make this easier on drivers the atomic core provides some support to track

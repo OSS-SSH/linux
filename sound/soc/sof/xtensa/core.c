@@ -123,6 +123,7 @@ static void xtensa_stack(struct snd_sof_dev *sdev, void *oops, u32 *stack,
 	 */
 	for (i = 0; i < stack_words; i += 4) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hex_dump_to_buffer(stack + i, 16, 16, 4,
 				   buf, sizeof(buf), false);
 		dev_err(sdev->dev, "0x%08x: %s\n", stack_ptr + i * 4, buf);
@@ -131,6 +132,11 @@ static void xtensa_stack(struct snd_sof_dev *sdev, void *oops, u32 *stack,
 				   buf, sizeof(buf), false);
 		dev_err(sdev->dev, "0x%08x: %s\n", stack_ptr + i, buf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hex_dump_to_buffer(stack + i, 16, 16, 4,
+				   buf, sizeof(buf), false);
+		dev_err(sdev->dev, "0x%08x: %s\n", stack_ptr + i * 4, buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

@@ -1004,16 +1004,21 @@ static void ipu_irq_handle(struct ipu_soc *ipu, const int *regs, int num_regs)
 {
 	unsigned long status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, bit;
 =======
 	int i, bit, irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, bit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < num_regs; i++) {
 
 		status = ipu_cm_read(ipu, IPU_INT_STAT(regs[i]));
 		status &= ipu_cm_read(ipu, IPU_INT_CTRL(regs[i]));
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		for_each_set_bit(bit, &status, 32)
 			generic_handle_domain_irq(ipu->domain,
@@ -1026,6 +1031,11 @@ static void ipu_irq_handle(struct ipu_soc *ipu, const int *regs, int num_regs)
 				generic_handle_irq(irq);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for_each_set_bit(bit, &status, 32)
+			generic_handle_domain_irq(ipu->domain,
+						  regs[i] * 32 + bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

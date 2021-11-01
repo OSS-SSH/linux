@@ -412,10 +412,14 @@ fail_nomem:
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __exit gscps2_remove(struct parisc_device *dev)
 =======
 static int __exit gscps2_remove(struct parisc_device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit gscps2_remove(struct parisc_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct gscps2port *ps2port = dev_get_drvdata(&dev->dev);
 
@@ -430,9 +434,12 @@ static int __exit gscps2_remove(struct parisc_device *dev)
 	dev_set_drvdata(&dev->dev, NULL);
 	kfree(ps2port);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 

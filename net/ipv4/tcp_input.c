@@ -101,9 +101,13 @@ int sysctl_tcp_max_orphans __read_mostly = NR_FILE;
 #define FLAG_NO_CHALLENGE_ACK	0x8000 /* do not call tcp_send_challenge_ack()	*/
 #define FLAG_ACK_MAYBE_DELAYED	0x10000 /* Likely a delayed ACK */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define FLAG_DSACK_TLP		0x20000 /* DSACK for tail loss probe */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FLAG_DSACK_TLP		0x20000 /* DSACK for tail loss probe */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define FLAG_ACKED		(FLAG_DATA_ACKED|FLAG_SYN_ACKED)
 #define FLAG_NOT_DUP		(FLAG_DATA|FLAG_WIN_UPDATE|FLAG_ACKED)
@@ -459,6 +463,7 @@ static void tcp_sndbuf_expand(struct sock *sk)
 
 /* Slow part of check#2. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __tcp_grow_window(const struct sock *sk, const struct sk_buff *skb,
 			     unsigned int skbtruesize)
 {
@@ -472,6 +477,14 @@ static int __tcp_grow_window(const struct sock *sk, const struct sk_buff *skb)
 	/* Optimize this! */
 	int truesize = tcp_win_from_space(sk, skb->truesize) >> 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __tcp_grow_window(const struct sock *sk, const struct sk_buff *skb,
+			     unsigned int skbtruesize)
+{
+	struct tcp_sock *tp = tcp_sk(sk);
+	/* Optimize this! */
+	int truesize = tcp_win_from_space(sk, skbtruesize) >> 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int window = tcp_win_from_space(sk, sock_net(sk)->ipv4.sysctl_tcp_rmem[2]) >> 1;
 
 	while (tp->rcv_ssthresh <= window) {
@@ -485,6 +498,9 @@ static int __tcp_grow_window(const struct sock *sk, const struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Even if skb appears to have a bad len/truesize ratio, TCP coalescing
  * can play nice with us, as sk_buff and skb->head might be either
  * freed or shared with up to MAX_SKB_FRAGS segments.
@@ -506,9 +522,12 @@ static u32 truesize_adjust(bool adjust, const struct sk_buff *skb)
 
 static void tcp_grow_window(struct sock *sk, const struct sk_buff *skb,
 			    bool adjust)
+<<<<<<< HEAD
 =======
 static void tcp_grow_window(struct sock *sk, const struct sk_buff *skb)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tcp_sock *tp = tcp_sk(sk);
 	int room;
@@ -518,14 +537,19 @@ static void tcp_grow_window(struct sock *sk, const struct sk_buff *skb)
 	/* Check #1 */
 	if (room > 0 && !tcp_under_memory_pressure(sk)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned int truesize = truesize_adjust(adjust, skb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned int truesize = truesize_adjust(adjust, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int incr;
 
 		/* Check #2. Increase window, if skb with such overhead
 		 * will fit to rcvbuf in future.
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (tcp_win_from_space(sk, truesize) <= skb->len)
 			incr = 2 * tp->advmss;
@@ -537,6 +561,12 @@ static void tcp_grow_window(struct sock *sk, const struct sk_buff *skb)
 		else
 			incr = __tcp_grow_window(sk, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (tcp_win_from_space(sk, truesize) <= skb->len)
+			incr = 2 * tp->advmss;
+		else
+			incr = __tcp_grow_window(sk, skb, truesize);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (incr) {
 			incr = max_t(int, incr, 2 * skb->len);
@@ -831,10 +861,14 @@ static void tcp_event_data_recv(struct sock *sk, struct sk_buff *skb)
 
 	if (skb->len >= 128)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tcp_grow_window(sk, skb, true);
 =======
 		tcp_grow_window(sk, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tcp_grow_window(sk, skb, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Called to compute a smoothed rtt estimate. The data fed to this
@@ -1022,10 +1056,15 @@ static u32 tcp_dsack_seen(struct tcp_sock *tp, u32 start_seq,
 	if (seq_len > tp->mss_cache)
 		dup_segs = DIV_ROUND_UP(seq_len, tp->mss_cache);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (tp->tlp_high_seq && tp->tlp_high_seq == end_seq)
 		state->flag |= FLAG_DSACK_TLP;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (tp->tlp_high_seq && tp->tlp_high_seq == end_seq)
+		state->flag |= FLAG_DSACK_TLP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tp->dsack_dups += dup_segs;
 	/* Skip the DSACK if dup segs weren't retransmitted by sender */
@@ -1034,6 +1073,9 @@ static u32 tcp_dsack_seen(struct tcp_sock *tp, u32 start_seq,
 
 	tp->rx_opt.sack_ok |= TCP_DSACK_SEEN;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* We increase the RACK ordering window in rounds where we receive
 	 * DSACKs that may have been due to reordering causing RACK to trigger
 	 * a spurious fast recovery. Thus RACK ignores DSACKs that happen
@@ -1042,9 +1084,12 @@ static u32 tcp_dsack_seen(struct tcp_sock *tp, u32 start_seq,
 	 */
 	if (tp->reord_seen && !(state->flag & FLAG_DSACK_TLP))
 		tp->rack.dsack_seen = 1;
+<<<<<<< HEAD
 =======
 	tp->rack.dsack_seen = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	state->flag |= FLAG_DSACKING_ACK;
 	/* A spurious retransmission is delivered */
@@ -1383,10 +1428,14 @@ static u8 tcp_sacktag_one(struct sock *sk,
 		if (tp->undo_marker && tp->undo_retrans > 0 &&
 		    after(end_seq, tp->undo_marker))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			tp->undo_retrans = max_t(int, 0, tp->undo_retrans - pcount);
 =======
 			tp->undo_retrans--;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tp->undo_retrans = max_t(int, 0, tp->undo_retrans - pcount);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if ((sacked & TCPCB_SACKED_ACKED) &&
 		    before(start_seq, state->reord))
 				state->reord = start_seq;
@@ -3701,10 +3750,14 @@ static void tcp_process_tlp_ack(struct sock *sk, u32 ack, int flag)
 		/* TLP of new data has been acknowledged */
 		tp->tlp_high_seq = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (flag & FLAG_DSACK_TLP) {
 =======
 	} else if (flag & FLAG_DSACKING_ACK) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (flag & FLAG_DSACK_TLP) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* This DSACK means original and TLP probe arrived; no loss */
 		tp->tlp_high_seq = 0;
 	} else if (after(ack, tp->tlp_high_seq)) {
@@ -4324,11 +4377,17 @@ void tcp_reset(struct sock *sk, struct sk_buff *skb)
 	trace_tcp_receive_reset(sk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* mptcp can't tell us to ignore reset pkts,
 	 * so just ignore the return value of mptcp_incoming_options().
 	 */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* mptcp can't tell us to ignore reset pkts,
+	 * so just ignore the return value of mptcp_incoming_options().
+	 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sk_is_mptcp(sk))
 		mptcp_incoming_options(sk, skb);
 
@@ -4849,10 +4908,14 @@ coalesce_done:
 		 */
 		if (tcp_is_sack(tp))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			tcp_grow_window(sk, skb, true);
 =======
 			tcp_grow_window(sk, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tcp_grow_window(sk, skb, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree_skb_partial(skb, fragstolen);
 		skb = NULL;
 		goto add_sack;
@@ -4941,10 +5004,14 @@ end:
 		 */
 		if (tcp_is_sack(tp))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			tcp_grow_window(sk, skb, false);
 =======
 			tcp_grow_window(sk, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tcp_grow_window(sk, skb, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb_condense(skb);
 		skb_set_owner_r(skb, sk);
 	}
@@ -5032,6 +5099,9 @@ static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
 	int eaten;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If a subflow has been reset, the packet should not continue
 	 * to be processed, drop the packet.
 	 */
@@ -5039,10 +5109,13 @@ static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
 		__kfree_skb(skb);
 		return;
 	}
+<<<<<<< HEAD
 =======
 	if (sk_is_mptcp(sk))
 		mptcp_incoming_options(sk, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (TCP_SKB_CB(skb)->seq == TCP_SKB_CB(skb)->end_seq) {
 		__kfree_skb(skb);
@@ -5476,10 +5549,14 @@ static void tcp_new_space(struct sock *sk)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INDIRECT_CALL_1(sk->sk_write_space, sk_stream_write_space, sk);
 =======
 	sk->sk_write_space(sk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INDIRECT_CALL_1(sk->sk_write_space, sk_stream_write_space, sk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void tcp_check_space(struct sock *sk)
@@ -6027,12 +6104,17 @@ void tcp_init_transfer(struct sock *sk, int bpf_op, struct sk_buff *skb)
 	tp->snd_cwnd_stamp = tcp_jiffies32;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bpf_skops_established(sk, bpf_op, skb);
 	/* Initialize congestion control unless BPF initialized it already: */
 =======
 	icsk->icsk_ca_initialized = 0;
 	bpf_skops_established(sk, bpf_op, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bpf_skops_established(sk, bpf_op, skb);
+	/* Initialize congestion control unless BPF initialized it already: */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!icsk->icsk_ca_initialized)
 		tcp_init_congestion_control(sk);
 	tcp_init_buffer_space(sk);
@@ -6633,15 +6715,21 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
 	case TCP_LAST_ACK:
 		if (!before(TCP_SKB_CB(skb)->seq, tp->rcv_nxt)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* If a subflow has been reset, the packet should not
 			 * continue to be processed, drop the packet.
 			 */
 			if (sk_is_mptcp(sk) && !mptcp_incoming_options(sk, skb))
 				goto discard;
+<<<<<<< HEAD
 =======
 			if (sk_is_mptcp(sk))
 				mptcp_incoming_options(sk, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 		fallthrough;

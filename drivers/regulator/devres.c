@@ -206,6 +206,7 @@ struct regulator_dev *devm_regulator_register(struct device *dev,
 EXPORT_SYMBOL_GPL(devm_regulator_register);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int devm_rdev_match(struct device *dev, void *res, void *data)
 {
@@ -237,6 +238,8 @@ void devm_regulator_unregister(struct device *dev, struct regulator_dev *rdev)
 EXPORT_SYMBOL_GPL(devm_regulator_unregister);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct regulator_supply_alias_match {
 	struct device *dev;
 	const char *id;
@@ -300,6 +303,7 @@ int devm_regulator_register_supply_alias(struct device *dev, const char *id,
 EXPORT_SYMBOL_GPL(devm_regulator_register_supply_alias);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void devm_regulator_unregister_supply_alias(struct device *dev,
 						   const char *id)
 =======
@@ -317,6 +321,10 @@ static void devm_regulator_unregister_supply_alias(struct device *dev,
  */
 void devm_regulator_unregister_supply_alias(struct device *dev, const char *id)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void devm_regulator_unregister_supply_alias(struct device *dev,
+						   const char *id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct regulator_supply_alias_match match;
 	int rc;
@@ -330,9 +338,12 @@ void devm_regulator_unregister_supply_alias(struct device *dev, const char *id)
 		WARN_ON(rc);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(devm_regulator_unregister_supply_alias);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * devm_regulator_bulk_register_supply_alias - Managed register
@@ -385,6 +396,7 @@ err:
 EXPORT_SYMBOL_GPL(devm_regulator_bulk_register_supply_alias);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /**
  * devm_regulator_bulk_unregister_supply_alias - Managed unregister
@@ -411,6 +423,8 @@ void devm_regulator_bulk_unregister_supply_alias(struct device *dev,
 EXPORT_SYMBOL_GPL(devm_regulator_bulk_unregister_supply_alias);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct regulator_notifier_match {
 	struct regulator *regulator;
 	struct notifier_block *nb;

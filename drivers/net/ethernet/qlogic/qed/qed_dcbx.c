@@ -742,9 +742,12 @@ qed_dcbx_read_local_lldp_mib(struct qed_hwfn *p_hwfn, struct qed_ptt *p_ptt)
 {
 	struct qed_dcbx_mib_meta_data data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int rc = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&data, 0, sizeof(data));
 	data.addr = p_hwfn->mcp_info->port_addr + offsetof(struct public_port,
@@ -754,10 +757,14 @@ qed_dcbx_read_local_lldp_mib(struct qed_hwfn *p_hwfn, struct qed_ptt *p_ptt)
 	qed_memcpy_from(p_hwfn, p_ptt, data.lldp_local, data.addr, data.size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return rc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int
@@ -818,9 +825,12 @@ qed_dcbx_read_local_mib(struct qed_hwfn *p_hwfn, struct qed_ptt *p_ptt)
 {
 	struct qed_dcbx_mib_meta_data data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int rc = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&data, 0, sizeof(data));
 	data.addr = p_hwfn->mcp_info->port_addr +
@@ -830,10 +840,14 @@ qed_dcbx_read_local_mib(struct qed_hwfn *p_hwfn, struct qed_ptt *p_ptt)
 	qed_memcpy_from(p_hwfn, p_ptt, data.local_admin, data.addr, data.size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return rc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int qed_dcbx_read_mib(struct qed_hwfn *p_hwfn,

@@ -359,10 +359,14 @@ config AXP288_CHARGER
 config AXP288_FUEL_GAUGE
 	tristate "X-Powers AXP288 Fuel Gauge"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on MFD_AXP20X && IIO && IOSF_MBI
 =======
 	depends on MFD_AXP20X && IIO
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on MFD_AXP20X && IIO && IOSF_MBI
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say yes here to have support for X-Power power management IC (PMIC)
 	  Fuel Gauge. The device provides battery statistics and status
@@ -582,6 +586,9 @@ config CHARGER_MP2629
 	  functions on the systems.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config CHARGER_MT6360
 	tristate "Mediatek MT6360 Charger Driver"
 	depends on MFD_MT6360
@@ -593,8 +600,11 @@ config CHARGER_MT6360
 	  Average Input Current Regulation, Battery Temperature Sensing,
 	  Over-Temperature Protection, DPDM Detection for BC1.2.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config CHARGER_QCOM_SMBB
 	tristate "Qualcomm Switch-Mode Battery Charger and Boost"
 	depends on MFD_SPMI_PMIC || COMPILE_TEST
@@ -688,9 +698,13 @@ config CHARGER_SMB347
 	tristate "Summit Microelectronics SMB3XX Battery Charger"
 	depends on I2C
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on REGULATOR
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on REGULATOR
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select REGMAP_I2C
 	help
 	  Say Y to include support for Summit Microelectronics SMB345,
@@ -759,6 +773,9 @@ config CHARGER_CROS_USBPD
 	  that into power_supply properties.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config CHARGER_CROS_PCHG
 	tristate "ChromeOS EC based peripheral charger"
 	depends on MFD_CROS_EC_DEV
@@ -769,8 +786,11 @@ config CHARGER_CROS_PCHG
 	  the peripheral charge ports from the EC and converts that into
 	  power_supply properties.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config CHARGER_SC2731
 	tristate "Spreadtrum SC2731 charger driver"
 	depends on MFD_SC27XX_PMIC || COMPILE_TEST
@@ -818,10 +838,15 @@ config RN5T618_POWER
 	tristate "RN5T618 charger/fuel gauge support"
 	depends on MFD_RN5T618
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on RN5T618_ADC
 	depends on IIO
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on RN5T618_ADC
+	depends on IIO
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here to have support for RN5T618 PMIC family fuel gauge and charger.
 	  This driver can also be built as a module. If so, the module will be

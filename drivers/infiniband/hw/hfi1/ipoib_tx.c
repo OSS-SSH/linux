@@ -645,18 +645,27 @@ static int hfi1_ipoib_sdma_sleep(struct sdma_engine *sde,
 			list_add_tail(&txreq->list, &txq->tx_list);
 		if (list_empty(&txq->wait.list)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			struct hfi1_ibport *ibp = &sde->ppd->ibport_data;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct hfi1_ibport *ibp = &sde->ppd->ibport_data;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!atomic_xchg(&txq->no_desc, 1)) {
 				trace_hfi1_txq_queued(txq);
 				hfi1_ipoib_stop_txq(txq);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ibp->rvp.n_dmawait++;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ibp->rvp.n_dmawait++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			iowait_queue(pkts_sent, wait->iow, &sde->dmawait);
 		}
 
@@ -883,16 +892,22 @@ void hfi1_ipoib_tx_timeout(struct net_device *dev, unsigned int q)
 	u64 completed = atomic64_read(&txq->complete_txreqs);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dd_dev_info(priv->dd, "timeout txq %p q %u stopped %u stops %d no_desc %d ring_full %d\n",
 		    txq, q,
 =======
 	dd_dev_info(priv->dd, "timeout txq %llx q %u stopped %u stops %d no_desc %d ring_full %d\n",
 		    (unsigned long long)txq, q,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dd_dev_info(priv->dd, "timeout txq %p q %u stopped %u stops %d no_desc %d ring_full %d\n",
+		    txq, q,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    __netif_subqueue_stopped(dev, txq->q_idx),
 		    atomic_read(&txq->stops),
 		    atomic_read(&txq->no_desc),
 		    atomic_read(&txq->ring_full));
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dd_dev_info(priv->dd, "sde %p engine %u\n",
 		    txq->sde,
@@ -900,6 +915,10 @@ void hfi1_ipoib_tx_timeout(struct net_device *dev, unsigned int q)
 	dd_dev_info(priv->dd, "sde %llx engine %u\n",
 		    (unsigned long long)txq->sde,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dd_dev_info(priv->dd, "sde %p engine %u\n",
+		    txq->sde,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    txq->sde ? txq->sde->this_idx : 0);
 	dd_dev_info(priv->dd, "flow %x\n", txq->flow.as_int);
 	dd_dev_info(priv->dd, "sent %llu completed %llu used %llu\n",

@@ -35,10 +35,14 @@ config LEDS_TRIGGER_ONESHOT
 config LEDS_TRIGGER_DISK
 	bool "LED Disk Trigger"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on ATA
 =======
 	depends on IDE_GD_ATA || ATA
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on ATA
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This allows LEDs to be controlled by disk activity.
 	  If unsure, say Y.

@@ -104,10 +104,14 @@ for_each_frame:	tst	frame, mask		@ Check for address exceptions
 		mov	r1, loglvl
 		mov	r2, frame
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bl	_printk
 =======
 		bl	printk
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		bl	_printk
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 no_frame:	ldmfd	sp!, {r4 - r9, pc}
 ENDPROC(c_backtrace)
 		

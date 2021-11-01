@@ -16,10 +16,14 @@ description: |
 
   Layout differences of banks between T-PHY V1 (mt8173/mt2701) and
 <<<<<<< HEAD
+<<<<<<< HEAD
   T-PHY V2 (mt2712) / V3 (mt8195) when works on USB mode:
 =======
   T-PHY V2 (mt2712) when works on USB mode:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  T-PHY V2 (mt2712) / V3 (mt8195) when works on USB mode:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   -----------------------------------
   Version 1:
   port        offset    bank
@@ -39,10 +43,14 @@ description: |
               ...
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   Version 2/3:
 =======
   Version 2:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  Version 2/3:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   port        offset    bank
   u2 port0    0x0000    MISC
               0x0100    FMREG
@@ -68,11 +76,16 @@ description: |
   SPLLC shared by u3 ports and FMREG shared by u2 ports on V1 are put back
   into each port; a new bank MISC for u2 ports and CHIP for u3 ports are
 <<<<<<< HEAD
+<<<<<<< HEAD
   added on V2; the FMREG bank for slew rate calibration is not used anymore
   and reserved on V3;
 =======
   added on V2.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  added on V2; the FMREG bank for slew rate calibration is not used anymore
+  and reserved on V3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 properties:
   $nodename:
@@ -93,6 +106,7 @@ properties:
               - mediatek,mt7629-tphy
               - mediatek,mt8183-tphy
 <<<<<<< HEAD
+<<<<<<< HEAD
           - const: mediatek,generic-tphy-v2
       - items:
           - enum:
@@ -102,6 +116,13 @@ properties:
               - mediatek,mt8195-tphy
           - const: mediatek,generic-tphy-v2
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+          - const: mediatek,generic-tphy-v2
+      - items:
+          - enum:
+              - mediatek,mt8195-tphy
+          - const: mediatek,generic-tphy-v3
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - const: mediatek,mt2701-u3phy
         deprecated: true
       - const: mediatek,mt2712-u3phy
@@ -113,10 +134,14 @@ properties:
       Register shared by multiple ports, exclude port's private register.
       It is needed for T-PHY V1, such as mt2701 and mt8173, but not for
 <<<<<<< HEAD
+<<<<<<< HEAD
       T-PHY V2/V3, such as mt2712.
 =======
       T-PHY V2, such as mt2712.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      T-PHY V2/V3, such as mt2712.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     maxItems: 1
 
   "#address-cells":
@@ -223,6 +248,9 @@ patternProperties:
         type: boolean
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       mediatek,syscon-type:
         $ref: /schemas/types.yaml#/definitions/phandle-array
         maxItems: 1
@@ -239,8 +267,11 @@ patternProperties:
                 The third cell represents the index of config segment
               enum: [0, 1, 2, 3]
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     required:
       - reg
       - "#phy-cells"

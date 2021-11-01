@@ -311,10 +311,14 @@ static int devm_of_pci_get_host_bridge_resources(struct device *dev,
 	err = of_pci_range_parser_init(&parser, dev_node);
 	if (err)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return 0;
 =======
 		goto failed;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(dev, "Parsing ranges property...\n");
 	for_each_of_pci_range(&parser, &range) {

@@ -71,10 +71,14 @@ cflags-y += -Wa,-I$(srctree)/arch/$(ARCH)/include
 cflags-$(CONFIG_FRAME_POINTER) += -fno-optimize-sibling-calls
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ifneq ($(call cc-option,-mpacked-stack -mbackchain -msoft-float),)
 =======
 ifeq ($(call cc-option-yn,-mpacked-stack -mbackchain -msoft-float),y)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ifneq ($(call cc-option,-mpacked-stack -mbackchain -msoft-float),)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 cflags-$(CONFIG_PACK_STACK)  += -mpacked-stack -D__PACK_STACK
 aflags-$(CONFIG_PACK_STACK)  += -D__PACK_STACK
 endif
@@ -82,6 +86,7 @@ endif
 KBUILD_AFLAGS_DECOMPRESSOR += $(aflags-y)
 KBUILD_CFLAGS_DECOMPRESSOR += $(cflags-y)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ifneq ($(call cc-option,-mstack-size=8192 -mstack-guard=128),)
 cflags-$(CONFIG_CHECK_STACK) += -mstack-size=$(STACK_SIZE)
@@ -91,10 +96,16 @@ ifeq ($(call cc-option-yn,-mstack-size=8192 -mstack-guard=128),y)
 cflags-$(CONFIG_CHECK_STACK) += -mstack-size=$(STACK_SIZE)
 ifneq ($(call cc-option-yn,-mstack-size=8192),y)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ifneq ($(call cc-option,-mstack-size=8192 -mstack-guard=128),)
+cflags-$(CONFIG_CHECK_STACK) += -mstack-size=$(STACK_SIZE)
+ifeq ($(call cc-option,-mstack-size=8192),)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 cflags-$(CONFIG_CHECK_STACK) += -mstack-guard=$(CONFIG_STACK_GUARD)
 endif
 endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ifdef CONFIG_EXPOLINE
   ifneq ($(call cc-option,$(CC_FLAGS_MARCH) -mindirect-branch=thunk),)
@@ -109,6 +120,10 @@ endif
 ifdef CONFIG_EXPOLINE
   ifeq ($(call cc-option-yn,$(CC_FLAGS_MARCH) -mindirect-branch=thunk),y)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ifdef CONFIG_EXPOLINE
+  ifneq ($(call cc-option,$(CC_FLAGS_MARCH) -mindirect-branch=thunk),)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     CC_FLAGS_EXPOLINE := -mindirect-branch=thunk
     CC_FLAGS_EXPOLINE += -mfunction-return=thunk
     CC_FLAGS_EXPOLINE += -mindirect-branch-table
@@ -120,6 +135,7 @@ endif
 
 ifdef CONFIG_FUNCTION_TRACER
 <<<<<<< HEAD
+<<<<<<< HEAD
   ifeq ($(call cc-option,-mfentry -mnop-mcount),)
     # make use of hotpatch feature if the compiler supports it
     cc_hotpatch	:= -mhotpatch=0,3
@@ -130,6 +146,12 @@ ifdef CONFIG_FUNCTION_TRACER
     cc_hotpatch	:= -mhotpatch=0,3
     ifeq ($(call cc-option-yn,$(cc_hotpatch)),y)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  ifeq ($(call cc-option,-mfentry -mnop-mcount),)
+    # make use of hotpatch feature if the compiler supports it
+    cc_hotpatch	:= -mhotpatch=0,3
+    ifneq ($(call cc-option,$(cc_hotpatch)),)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       CC_FLAGS_FTRACE := $(cc_hotpatch)
       KBUILD_AFLAGS	+= -DCC_USING_HOTPATCH
       KBUILD_CFLAGS	+= -DCC_USING_HOTPATCH
@@ -165,11 +187,16 @@ KBUILD_IMAGE	:= $(boot)/bzImage
 
 install:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sh -x $(srctree)/$(boot)/install.sh $(KERNELRELEASE) $(KBUILD_IMAGE) \
 	      System.map "$(INSTALL_PATH)"
 =======
 	$(Q)$(MAKE) $(build)=$(boot) $@
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sh -x $(srctree)/$(boot)/install.sh $(KERNELRELEASE) $(KBUILD_IMAGE) \
+	      System.map "$(INSTALL_PATH)"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bzImage: vmlinux
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@

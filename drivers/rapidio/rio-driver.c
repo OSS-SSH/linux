@@ -113,10 +113,14 @@ static int rio_device_probe(struct device *dev)
  * the reference count.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void rio_device_remove(struct device *dev)
 =======
 static int rio_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void rio_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rio_dev *rdev = to_rio_dev(dev);
 	struct rio_driver *rdrv = rdev->driver;
@@ -129,10 +133,13 @@ static int rio_device_remove(struct device *dev)
 
 	rio_dev_put(rdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void rio_device_shutdown(struct device *dev)

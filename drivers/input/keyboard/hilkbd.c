@@ -317,6 +317,7 @@ static int __init hil_probe_chip(struct parisc_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __exit hil_remove_chip(struct parisc_device *dev)
 {
 	hil_keyb_exit();
@@ -327,6 +328,11 @@ static int __exit hil_remove_chip(struct parisc_device *dev)
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit hil_remove_chip(struct parisc_device *dev)
+{
+	hil_keyb_exit();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct parisc_device_id hil_tbl[] __initconst = {

@@ -655,11 +655,16 @@ static irqreturn_t snd_opti93x_interrupt(int irq, void *dev_id)
 #endif /* OPTi93X */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int snd_opti9xx_read_check(struct snd_card *card,
 				  struct snd_opti9xx *chip)
 =======
 static int snd_opti9xx_read_check(struct snd_opti9xx *chip)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int snd_opti9xx_read_check(struct snd_card *card,
+				  struct snd_opti9xx *chip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned char value;
 #ifdef OPTi93X
@@ -667,15 +672,21 @@ static int snd_opti9xx_read_check(struct snd_opti9xx *chip)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->res_mc_base =
 		devm_request_region(card->dev, chip->mc_base,
 				    chip->mc_base_size, "OPTi9xx MC");
 	if (!chip->res_mc_base)
+<<<<<<< HEAD
 =======
 	chip->res_mc_base = request_region(chip->mc_base, chip->mc_base_size,
 					   "OPTi9xx MC");
 	if (chip->res_mc_base == NULL)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 #ifndef OPTi93X
 	value = snd_opti9xx_read(chip, OPTi9XX_MC_REG(1));
@@ -684,15 +695,21 @@ static int snd_opti9xx_read_check(struct snd_opti9xx *chip)
 			return 0;
 #else	/* OPTi93X */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->res_mc_indir =
 		devm_request_region(card->dev, chip->mc_indir_index, 2,
 				    "OPTi93x MC");
 	if (!chip->res_mc_indir)
+<<<<<<< HEAD
 =======
 	chip->res_mc_indir = request_region(chip->mc_indir_index, 2,
 					    "OPTi93x MC");
 	if (chip->res_mc_indir == NULL)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 
 	spin_lock_irqsave(&chip->lock, flags);
@@ -706,6 +723,7 @@ static int snd_opti9xx_read_check(struct snd_opti9xx *chip)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	devm_release_resource(card->dev, chip->res_mc_indir);
 	chip->res_mc_indir = NULL;
 #endif	/* OPTi93X */
@@ -716,6 +734,12 @@ static int snd_opti9xx_read_check(struct snd_opti9xx *chip)
 #endif	/* OPTi93X */
 	release_and_free_resource(chip->res_mc_base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devm_release_resource(card->dev, chip->res_mc_indir);
+	chip->res_mc_indir = NULL;
+#endif	/* OPTi93X */
+	devm_release_resource(card->dev, chip->res_mc_base);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->res_mc_base = NULL;
 
 	return -ENODEV;
@@ -736,10 +760,14 @@ static int snd_card_opti9xx_detect(struct snd_card *card,
 			return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = snd_opti9xx_read_check(card, chip);
 =======
 		err = snd_opti9xx_read_check(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = snd_opti9xx_read_check(card, chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err == 0)
 			return 1;
 #ifdef OPTi93X
@@ -820,6 +848,7 @@ static int snd_card_opti9xx_pnp(struct snd_opti9xx *chip,
 #endif	/* CONFIG_PNP */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void snd_card_opti9xx_free(struct snd_card *card)
 {
@@ -838,6 +867,8 @@ static void snd_card_opti9xx_free(struct snd_card *card)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_opti9xx_probe(struct snd_card *card)
 {
 	static const long possible_ports[] = {0x530, 0xe80, 0xf40, 0x604, -1};
@@ -894,12 +925,17 @@ static int snd_opti9xx_probe(struct snd_card *card)
 #endif
 #ifdef OPTi93X
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = devm_request_irq(card->dev, irq, snd_opti93x_interrupt,
 				 0, DEV_NAME" - WSS", chip);
 =======
 	error = request_irq(irq, snd_opti93x_interrupt,
 			    0, DEV_NAME" - WSS", chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = devm_request_irq(card->dev, irq, snd_opti93x_interrupt,
+				 0, DEV_NAME" - WSS", chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0) {
 		snd_printk(KERN_ERR "opti9xx: can't grab IRQ %d\n", irq);
 		return error;
@@ -970,6 +1006,7 @@ static int snd_opti9xx_card_new(struct device *pdev, struct snd_card **cardp)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(pdev, index, id, THIS_MODULE,
 				sizeof(struct snd_opti9xx), &card);
 	if (err < 0)
@@ -981,6 +1018,12 @@ static int snd_opti9xx_card_new(struct device *pdev, struct snd_card **cardp)
 		return err;
 	card->private_free = snd_card_opti9xx_free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(pdev, index, id, THIS_MODULE,
+				sizeof(struct snd_opti9xx), &card);
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*cardp = card;
 	return 0;
 }
@@ -1058,6 +1101,7 @@ static int snd_opti9xx_isa_probe(struct device *devptr,
 
 	error = snd_card_opti9xx_detect(card, card->private_data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (error < 0)
 		return error;
 	error = snd_opti9xx_probe(card);
@@ -1066,18 +1110,23 @@ static int snd_opti9xx_isa_probe(struct device *devptr,
 =======
 	if (error < 0) {
 		snd_card_free(card);
+=======
+	if (error < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
-	}
 	error = snd_opti9xx_probe(card);
-	if (error < 0) {
-		snd_card_free(card);
+	if (error < 0)
 		return error;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_set_drvdata(devptr, card);
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_opti9xx_isa_remove(struct device *devptr,
@@ -1087,6 +1136,8 @@ static void snd_opti9xx_isa_remove(struct device *devptr,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int snd_opti9xx_suspend(struct snd_card *card)
 {
@@ -1132,9 +1183,12 @@ static struct isa_driver snd_opti9xx_driver = {
 	.match		= snd_opti9xx_isa_match,
 	.probe		= snd_opti9xx_isa_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_opti9xx_isa_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_opti9xx_isa_suspend,
 	.resume		= snd_opti9xx_isa_resume,
@@ -1174,13 +1228,17 @@ static int snd_opti9xx_pnp_probe(struct pnp_card_link *pcard,
 		break;
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		snd_card_free(card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 
 	error = snd_opti9xx_init(chip, hw);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (error)
 		return error;
@@ -1195,20 +1253,23 @@ static int snd_opti9xx_pnp_probe(struct pnp_card_link *pcard,
 =======
 	if (error) {
 		snd_card_free(card);
+=======
+	if (error)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
-	}
-	error = snd_opti9xx_read_check(chip);
+	error = snd_opti9xx_read_check(card, chip);
 	if (error) {
 		snd_printk(KERN_ERR "OPTI chip not found\n");
-		snd_card_free(card);
 		return error;
 	}
 	error = snd_opti9xx_probe(card);
-	if (error < 0) {
-		snd_card_free(card);
+	if (error < 0)
 		return error;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pnp_set_card_drvdata(pcard, card);
 	snd_opti9xx_pnp_is_probed = 1;
 	return 0;
@@ -1217,10 +1278,13 @@ static int snd_opti9xx_pnp_probe(struct pnp_card_link *pcard,
 static void snd_opti9xx_pnp_remove(struct pnp_card_link *pcard)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	snd_card_free(pnp_get_card_drvdata(pcard));
 	pnp_set_card_drvdata(pcard, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_opti9xx_pnp_is_probed = 0;
 }
 

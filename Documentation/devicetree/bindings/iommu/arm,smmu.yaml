@@ -53,10 +53,13 @@ properties:
           - const: marvell,ap806-smmu-500
           - const: arm,mmu-500
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       - description: NVIDIA SoCs that program two ARM MMU-500s identically
         items:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - description: NVIDIA SoCs that require memory controller interaction
           and may program multiple ARM MMU-500s identically with the memory
           controller interleaving translations between multiple instances
@@ -64,12 +67,17 @@ properties:
         items:
           - enum:
 <<<<<<< HEAD
+<<<<<<< HEAD
               - nvidia,tegra194-smmu
               - nvidia,tegra186-smmu
 =======
               - const: nvidia,tegra194-smmu
               - const: nvidia,tegra186-smmu
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              - nvidia,tegra194-smmu
+              - nvidia,tegra186-smmu
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: nvidia,smmu-500
       - items:
           - const: arm,mmu-500

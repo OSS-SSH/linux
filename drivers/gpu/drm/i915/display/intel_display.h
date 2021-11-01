@@ -562,9 +562,13 @@ intel_encoder_current_mode(struct intel_encoder *encoder);
 bool intel_phy_is_combo(struct drm_i915_private *dev_priv, enum phy phy);
 bool intel_phy_is_tc(struct drm_i915_private *dev_priv, enum phy phy);
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool intel_phy_is_snps(struct drm_i915_private *dev_priv, enum phy phy);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool intel_phy_is_snps(struct drm_i915_private *dev_priv, enum phy phy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum tc_port intel_port_to_tc(struct drm_i915_private *dev_priv,
 			      enum port port);
 int intel_get_pipe_from_crtc_id_ioctl(struct drm_device *dev, void *data,

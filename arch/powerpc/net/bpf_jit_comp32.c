@@ -201,10 +201,14 @@ void bpf_jit_emit_func_call_rel(u32 *image, struct codegen_context *ctx, u64 fun
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 out)
 =======
 static void bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 out)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 out)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/*
 	 * By now, the eBPF program has already setup parameters in r3-r6
@@ -266,12 +270,18 @@ static void bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 
 
 	EMIT(PPC_RAW_BCTR());
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* out: */
 	return 0;
 =======
 	/* out: */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* out: */
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Assemble the body code between the prologue & epilogue */
@@ -366,10 +376,14 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 				EMIT(PPC_RAW_ADDC(dst_reg, dst_reg, _R0));
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (imm >= 0 || (BPF_OP(code) == BPF_SUB && imm == 0x80000000))
 =======
 			if (imm >= 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (imm >= 0 || (BPF_OP(code) == BPF_SUB && imm == 0x80000000))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				EMIT(PPC_RAW_ADDZE(dst_reg_h, dst_reg_h));
 			else
 				EMIT(PPC_RAW_ADDME(dst_reg_h, dst_reg_h));
@@ -638,10 +652,14 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 			break;
 		case BPF_ALU | BPF_ARSH | BPF_X: /* (s32) dst >>= src */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			EMIT(PPC_RAW_SRAW(dst_reg, dst_reg, src_reg));
 =======
 			EMIT(PPC_RAW_SRAW(dst_reg_h, dst_reg, src_reg));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			EMIT(PPC_RAW_SRAW(dst_reg, dst_reg, src_reg));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		case BPF_ALU64 | BPF_ARSH | BPF_X: /* (s64) dst >>= src */
 			bpf_set_seen_register(ctx, tmp_reg);
@@ -757,14 +775,20 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * BPF_ST NOSPEC (speculation barrier)
 		 */
 		case BPF_ST | BPF_NOSPEC:
 			break;
 
 		/*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * BPF_ST(X)
 		 */
 		case BPF_STX | BPF_MEM | BPF_B: /* *(u8 *)(dst + off) = src */
@@ -1095,10 +1119,14 @@ cond_branch:
 			case BPF_JMP32 | BPF_JSET | BPF_K:
 				/* andi does not sign-extend the immediate */
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (imm >= 0 && imm < 32768) {
 =======
 				if (imm >= -32768 && imm < 32768) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (imm >= 0 && imm < 32768) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					/* PPC_ANDI is _only/always_ dot-form */
 					EMIT(PPC_RAW_ANDI(_R0, dst_reg, imm));
 				} else {
@@ -1116,12 +1144,18 @@ cond_branch:
 		case BPF_JMP | BPF_TAIL_CALL:
 			ctx->seen |= SEEN_TAILCALL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = bpf_jit_emit_tail_call(image, ctx, addrs[i + 1]);
 			if (ret < 0)
 				return ret;
 =======
 			bpf_jit_emit_tail_call(image, ctx, addrs[i + 1]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = bpf_jit_emit_tail_call(image, ctx, addrs[i + 1]);
+			if (ret < 0)
+				return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 
 		default:
@@ -1135,10 +1169,14 @@ cond_branch:
 		}
 		if (BPF_CLASS(code) == BPF_ALU && !fp->aux->verifier_zext &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    !insn_is_zext(&insn[i + 1]) && !(BPF_OP(code) == BPF_END && imm == 64))
 =======
 		    !insn_is_zext(&insn[i + 1]))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    !insn_is_zext(&insn[i + 1]) && !(BPF_OP(code) == BPF_END && imm == 64))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			EMIT(PPC_RAW_LI(dst_reg_h, 0));
 	}
 

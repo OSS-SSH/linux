@@ -277,10 +277,15 @@ static int opt3001_get_lux(struct opt3001 *opt, int *val, int *val2)
 				opt->result_ready,
 				msecs_to_jiffies(OPT3001_RESULT_READY_LONG));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret == 0)
 			return -ETIMEDOUT;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret == 0)
+			return -ETIMEDOUT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/* Sleep for result ready time */
 		timeout = (opt->int_time == OPT3001_INT_TIME_SHORT) ?
@@ -318,12 +323,16 @@ err:
 		opt->ok_to_ignore_lock = false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 =======
 	if (ret == 0)
 		return -ETIMEDOUT;
 	else if (ret < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 
 	if (opt->use_irq) {

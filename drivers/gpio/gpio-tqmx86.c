@@ -184,10 +184,14 @@ static void tqmx86_gpio_irq_handler(struct irq_desc *desc)
 	struct irq_chip *irq_chip = irq_desc_get_chip(desc);
 	unsigned long irq_bits;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i = 0;
 =======
 	int i = 0, child_irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 irq_status;
 
 	chained_irq_enter(irq_chip, desc);
@@ -196,6 +200,7 @@ static void tqmx86_gpio_irq_handler(struct irq_desc *desc)
 	tqmx86_gpio_write(gpio, irq_status, TQMX86_GPIIS);
 
 	irq_bits = irq_status;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for_each_set_bit(i, &irq_bits, TQMX86_NGPI)
 		generic_handle_domain_irq(gpio->chip.irq.domain,
@@ -207,6 +212,11 @@ static void tqmx86_gpio_irq_handler(struct irq_desc *desc)
 		generic_handle_irq(child_irq);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for_each_set_bit(i, &irq_bits, TQMX86_NGPI)
+		generic_handle_domain_irq(gpio->chip.irq.domain,
+					  i + TQMX86_NGPO);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_exit(irq_chip, desc);
 }
@@ -249,12 +259,17 @@ static int tqmx86_gpio_probe(struct platform_device *pdev)
 	int ret, irq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	irq = platform_get_irq_optional(pdev, 0);
 	if (irq < 0 && irq != -ENXIO)
 =======
 	irq = platform_get_irq(pdev, 0);
 	if (irq < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	irq = platform_get_irq_optional(pdev, 0);
+	if (irq < 0 && irq != -ENXIO)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return irq;
 
 	res = platform_get_resource(pdev, IORESOURCE_IO, 0);
@@ -294,10 +309,14 @@ static int tqmx86_gpio_probe(struct platform_device *pdev)
 	pm_runtime_enable(&pdev->dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (irq > 0) {
 =======
 	if (irq) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (irq > 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct irq_chip *irq_chip = &gpio->irq_chip;
 		u8 irq_status;
 

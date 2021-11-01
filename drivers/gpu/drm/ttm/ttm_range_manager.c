@@ -182,11 +182,17 @@ int ttm_range_man_fini(struct ttm_device *bdev,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!man)
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!man)
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ttm_resource_manager_set_used(man, false);
 
 	ret = ttm_resource_manager_evict_all(bdev, man);

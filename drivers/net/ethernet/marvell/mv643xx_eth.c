@@ -1612,14 +1612,20 @@ static void mv643xx_eth_get_drvinfo(struct net_device *dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mv643xx_eth_get_coalesce(struct net_device *dev,
 				    struct ethtool_coalesce *ec,
 				    struct kernel_ethtool_coalesce *kernel_coal,
 				    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 mv643xx_eth_get_coalesce(struct net_device *dev, struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mv643xx_eth_private *mp = netdev_priv(dev);
 
@@ -1630,14 +1636,20 @@ mv643xx_eth_get_coalesce(struct net_device *dev, struct ethtool_coalesce *ec)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mv643xx_eth_set_coalesce(struct net_device *dev,
 				    struct ethtool_coalesce *ec,
 				    struct kernel_ethtool_coalesce *kernel_coal,
 				    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 mv643xx_eth_set_coalesce(struct net_device *dev, struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mv643xx_eth_private *mp = netdev_priv(dev);
 
@@ -3075,10 +3087,14 @@ static const struct net_device_ops mv643xx_eth_netdev_ops = {
 	.ndo_set_mac_address	= mv643xx_eth_set_mac_address,
 	.ndo_validate_addr	= eth_validate_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= mv643xx_eth_ioctl,
 =======
 	.ndo_do_ioctl		= mv643xx_eth_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= mv643xx_eth_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= mv643xx_eth_change_mtu,
 	.ndo_set_features	= mv643xx_eth_set_features,
 	.ndo_tx_timeout		= mv643xx_eth_tx_timeout,

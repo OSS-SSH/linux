@@ -149,6 +149,9 @@ struct mlxsw_sp_port_mapping {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlxsw_sp_parsing {
 	refcount_t parsing_depth_ref;
 	u16 parsing_depth;
@@ -156,8 +159,11 @@ struct mlxsw_sp_parsing {
 	struct mutex lock; /* Protects parsing configuration */
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlxsw_sp {
 	struct mlxsw_sp_port **ports;
 	struct mlxsw_core *core;
@@ -184,9 +190,13 @@ struct mlxsw_sp {
 	struct mlxsw_sp_span *span;
 	struct mlxsw_sp_trap *trap;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mlxsw_sp_parsing parsing;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mlxsw_sp_parsing parsing;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct mlxsw_sp_switchdev_ops *switchdev_ops;
 	const struct mlxsw_sp_kvdl_ops *kvdl_ops;
 	const struct mlxsw_afa_ops *afa_ops;
@@ -667,12 +677,18 @@ struct mlxsw_sp_port *mlxsw_sp_port_lower_dev_hold(struct net_device *dev);
 void mlxsw_sp_port_dev_put(struct mlxsw_sp_port *mlxsw_sp_port);
 struct mlxsw_sp_port *mlxsw_sp_port_dev_lower_find_rcu(struct net_device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mlxsw_sp_parsing_depth_inc(struct mlxsw_sp *mlxsw_sp);
 void mlxsw_sp_parsing_depth_dec(struct mlxsw_sp *mlxsw_sp);
 int mlxsw_sp_parsing_vxlan_udp_dport_set(struct mlxsw_sp *mlxsw_sp,
 					 __be16 udp_dport);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* spectrum_dcb.c */
 #ifdef CONFIG_MLXSW_SPECTRUM_DCB

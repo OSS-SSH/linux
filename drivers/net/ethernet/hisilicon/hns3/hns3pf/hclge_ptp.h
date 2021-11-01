@@ -30,9 +30,13 @@
 #define HCLGE_PTP_TIME_ADJ_EN		BIT(0)
 #define HCLGE_PTP_CYCLE_QUO_REG		0x64
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HCLGE_PTP_CYCLE_QUO_MASK	GENMASK(7, 0)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HCLGE_PTP_CYCLE_QUO_MASK	GENMASK(7, 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGE_PTP_CYCLE_DEN_REG		0x68
 #define HCLGE_PTP_CYCLE_NUM_REG		0x6C
 #define HCLGE_PTP_CYCLE_CFG_REG		0x70
@@ -42,12 +46,16 @@
 #define HCLGE_PTP_CUR_TIME_NSEC_REG	0x7C
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HCLGE_PTP_CYCLE_ADJ_MAX		500000000
 =======
 #define HCLGE_PTP_CYCLE_ADJ_BASE	2
 #define HCLGE_PTP_CYCLE_ADJ_MAX		500000000
 #define HCLGE_PTP_CYCLE_ADJ_UNIT	100000000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HCLGE_PTP_CYCLE_ADJ_MAX		500000000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGE_PTP_SEC_H_OFFSET		32u
 #define HCLGE_PTP_SEC_L_MASK		GENMASK(31, 0)
 
@@ -56,14 +64,20 @@
 #define HCLGE_PTP_FLAG_RX_EN		2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hclge_ptp_cycle {
 	u32 quo;
 	u32 numer;
 	u32 den;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hclge_ptp {
 	struct hclge_dev *hdev;
 	struct ptp_clock *clock;
@@ -76,9 +90,13 @@ struct hclge_ptp {
 	u32 ptp_cfg;
 	u32 last_tx_seqid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hclge_ptp_cycle cycle;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hclge_ptp_cycle cycle;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long tx_start;
 	unsigned long tx_cnt;
 	unsigned long tx_skipped;
@@ -143,10 +161,14 @@ static inline struct hclge_dev *hclge_ptp_get_hdev(struct ptp_clock_info *info)
 
 bool hclge_ptp_set_tx_info(struct hnae3_handle *handle, struct sk_buff *skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void hclge_ptp_clean_tx_hwts(struct hclge_dev *hdev);
 =======
 void hclge_ptp_clean_tx_hwts(struct hclge_dev *dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hclge_ptp_clean_tx_hwts(struct hclge_dev *hdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hclge_ptp_get_rx_hwts(struct hnae3_handle *handle, struct sk_buff *skb,
 			   u32 nsec, u32 sec);
 int hclge_ptp_get_cfg(struct hclge_dev *hdev, struct ifreq *ifr);

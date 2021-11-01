@@ -1220,6 +1220,7 @@ static void rbd_dev_mapping_clear(struct rbd_device *rbd_dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void zero_bvec(struct bio_vec *bv)
 {
@@ -1233,6 +1234,8 @@ static void zero_bvec(struct bio_vec *bv)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void zero_bios(struct ceph_bio_iter *bio_pos, u32 off, u32 bytes)
 {
 	struct ceph_bio_iter it = *bio_pos;
@@ -1240,10 +1243,14 @@ static void zero_bios(struct ceph_bio_iter *bio_pos, u32 off, u32 bytes)
 	ceph_bio_iter_advance(&it, off);
 	ceph_bio_iter_advance_step(&it, bytes, ({
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memzero_bvec(&bv);
 =======
 		zero_bvec(&bv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memzero_bvec(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}));
 }
 
@@ -1254,10 +1261,14 @@ static void zero_bvecs(struct ceph_bvec_iter *bvec_pos, u32 off, u32 bytes)
 	ceph_bvec_iter_advance(&it, off);
 	ceph_bvec_iter_advance_step(&it, bytes, ({
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memzero_bvec(&bv);
 =======
 		zero_bvec(&bv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memzero_bvec(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}));
 }
 
@@ -3009,11 +3020,15 @@ static bool is_zero_bvecs(struct bio_vec *bvecs, u32 bytes)
 
 	ceph_bvec_iter_advance_step(&it, bytes, ({
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (memchr_inv(bvec_virt(&bv), 0, bv.bv_len))
 =======
 		if (memchr_inv(page_address(bv.bv_page) + bv.bv_offset, 0,
 			       bv.bv_len))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (memchr_inv(bvec_virt(&bv), 0, bv.bv_len))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return false;
 	}));
 	return true;
@@ -4116,10 +4131,13 @@ again:
 static bool rbd_quiesce_lock(struct rbd_device *rbd_dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	bool need_wait;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dout("%s rbd_dev %p\n", __func__, rbd_dev);
 	lockdep_assert_held_write(&rbd_dev->lock_rwsem);
 
@@ -4132,11 +4150,15 @@ static bool rbd_quiesce_lock(struct rbd_device *rbd_dev)
 	rbd_dev->lock_state = RBD_LOCK_STATE_RELEASING;
 	rbd_assert(!completion_done(&rbd_dev->releasing_wait));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (list_empty(&rbd_dev->running_list))
 		return true;
 
 	up_write(&rbd_dev->lock_rwsem);
 	wait_for_completion(&rbd_dev->releasing_wait);
+<<<<<<< HEAD
 =======
 	need_wait = !list_empty(&rbd_dev->running_list);
 	downgrade_write(&rbd_dev->lock_rwsem);
@@ -4144,6 +4166,8 @@ static bool rbd_quiesce_lock(struct rbd_device *rbd_dev)
 		wait_for_completion(&rbd_dev->releasing_wait);
 	up_read(&rbd_dev->lock_rwsem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	down_write(&rbd_dev->lock_rwsem);
 	if (rbd_dev->lock_state != RBD_LOCK_STATE_RELEASING)
@@ -4230,10 +4254,14 @@ static void rbd_handle_acquired_lock(struct rbd_device *rbd_dev, u8 struct_v,
 		down_write(&rbd_dev->lock_rwsem);
 		if (rbd_cid_equal(&cid, &rbd_dev->owner_cid)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dout("%s rbd_dev %p cid %llu-%llu == owner_cid\n",
 			     __func__, rbd_dev, cid.gid, cid.handle);
 		} else {
 			rbd_set_owner_cid(rbd_dev, &cid);
+<<<<<<< HEAD
 		}
 =======
 			/*
@@ -4246,6 +4274,9 @@ static void rbd_handle_acquired_lock(struct rbd_device *rbd_dev, u8 struct_v,
 
 		rbd_set_owner_cid(rbd_dev, &cid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		downgrade_write(&rbd_dev->lock_rwsem);
 	} else {
 		down_read(&rbd_dev->lock_rwsem);
@@ -4271,6 +4302,7 @@ static void rbd_handle_released_lock(struct rbd_device *rbd_dev, u8 struct_v,
 		down_write(&rbd_dev->lock_rwsem);
 		if (!rbd_cid_equal(&cid, &rbd_dev->owner_cid)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dout("%s rbd_dev %p cid %llu-%llu != owner_cid %llu-%llu\n",
 			     __func__, rbd_dev, cid.gid, cid.handle,
 			     rbd_dev->owner_cid.gid, rbd_dev->owner_cid.handle);
@@ -4279,14 +4311,20 @@ static void rbd_handle_released_lock(struct rbd_device *rbd_dev, u8 struct_v,
 		}
 =======
 			dout("%s rbd_dev %p unexpected owner, cid %llu-%llu != owner_cid %llu-%llu\n",
+=======
+			dout("%s rbd_dev %p cid %llu-%llu != owner_cid %llu-%llu\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     __func__, rbd_dev, cid.gid, cid.handle,
 			     rbd_dev->owner_cid.gid, rbd_dev->owner_cid.handle);
-			up_write(&rbd_dev->lock_rwsem);
-			return;
+		} else {
+			rbd_set_owner_cid(rbd_dev, &rbd_empty_cid);
 		}
+<<<<<<< HEAD
 
 		rbd_set_owner_cid(rbd_dev, &rbd_empty_cid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		downgrade_write(&rbd_dev->lock_rwsem);
 	} else {
 		down_read(&rbd_dev->lock_rwsem);
@@ -4995,9 +5033,13 @@ static int rbd_init_disk(struct rbd_device *rbd_dev)
 	}
 	disk->fops = &rbd_bd_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	disk->private_data = rbd_dev;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disk->private_data = rbd_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	blk_queue_flag_set(QUEUE_FLAG_NONROT, q);
 	/* QUEUE_FLAG_ADD_RANDOM is off by default for blk-mq */

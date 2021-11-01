@@ -783,10 +783,14 @@ void do_coredump(const kernel_siginfo_t *siginfo)
 		 */
 		mnt_userns = file_mnt_user_ns(cprm.file);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!uid_eq(i_uid_into_mnt(mnt_userns, inode),
 			    current_fsuid())) {
 			pr_info_ratelimited("Core dump to %s aborted: cannot preserve file owner\n",
 					    cn.corename);
+<<<<<<< HEAD
 			goto close_fail;
 		}
 		if ((inode->i_mode & 0677) != 0600) {
@@ -796,10 +800,19 @@ void do_coredump(const kernel_siginfo_t *siginfo)
 		}
 =======
 		if (!uid_eq(i_uid_into_mnt(mnt_userns, inode), current_fsuid()))
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto close_fail;
-		if ((inode->i_mode & 0677) != 0600)
+		}
+		if ((inode->i_mode & 0677) != 0600) {
+			pr_info_ratelimited("Core dump to %s aborted: cannot preserve file permissions\n",
+					    cn.corename);
 			goto close_fail;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!(cprm.file->f_mode & FMODE_CAN_WRITE))
 			goto close_fail;
 		if (do_truncate(mnt_userns, cprm.file->f_path.dentry,
@@ -1142,6 +1155,7 @@ int dump_vma_snapshot(struct coredump_params *cprm, int *vma_count,
 	mmap_write_unlock(mm);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (WARN_ON(i != *vma_count)) {
 		kvfree(*vma_meta);
 		return -EFAULT;
@@ -1150,6 +1164,12 @@ int dump_vma_snapshot(struct coredump_params *cprm, int *vma_count,
 	if (WARN_ON(i != *vma_count))
 		return -EFAULT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (WARN_ON(i != *vma_count)) {
+		kvfree(*vma_meta);
+		return -EFAULT;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*vma_data_size_ptr = vma_data_size;
 	return 0;

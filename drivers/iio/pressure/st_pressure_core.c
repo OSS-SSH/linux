@@ -10,6 +10,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/mutex.h>
 #include <linux/sysfs.h>
 #include <linux/iio/iio.h>
@@ -28,6 +29,13 @@
 #include <linux/iio/trigger.h>
 #include <linux/iio/buffer.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/mutex.h>
+#include <linux/sysfs.h>
+#include <linux/iio/iio.h>
+#include <linux/iio/sysfs.h>
+#include <linux/iio/trigger.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/unaligned.h>
 
 #include <linux/iio/common/st_sensors.h>
@@ -733,10 +741,14 @@ int st_press_common_probe(struct iio_dev *indio_dev)
 						  ST_PRESS_TRIGGER_OPS);
 		if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return err;
 =======
 			goto st_press_probe_trigger_error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = iio_device_register(indio_dev);
@@ -752,10 +764,13 @@ st_press_device_register_error:
 	if (press_data->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 st_press_probe_trigger_error:
 	st_press_deallocate_ring(indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 EXPORT_SYMBOL(st_press_common_probe);
@@ -768,10 +783,13 @@ void st_press_common_remove(struct iio_dev *indio_dev)
 	if (press_data->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	st_press_deallocate_ring(indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(st_press_common_remove);
 

@@ -441,6 +441,7 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
 	if (IS_ERR(hpriv->phy_regulator)) {
 		rc = PTR_ERR(hpriv->phy_regulator);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_out;
 =======
 		if (rc == -EPROBE_DEFER)
@@ -448,6 +449,9 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
 		rc = 0;
 		hpriv->phy_regulator = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (flags & AHCI_PLATFORM_GET_RESETS) {

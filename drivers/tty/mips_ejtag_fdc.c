@@ -1043,10 +1043,14 @@ err_destroy_ports:
 		tty_port_destroy(&dport->port);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(priv->driver);
 =======
 	put_tty_driver(priv->driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(priv->driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

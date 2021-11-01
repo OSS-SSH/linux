@@ -28,11 +28,16 @@ static void *xattr_alloc(struct f2fs_sb_info *sbi, int size, bool *is_inline)
 	if (likely(size == sbi->inline_xattr_slab_size)) {
 		*is_inline = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return f2fs_kmem_cache_alloc(sbi->inline_xattr_slab,
 					GFP_F2FS_ZERO, false, sbi);
 =======
 		return kmem_cache_zalloc(sbi->inline_xattr_slab, GFP_NOFS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return f2fs_kmem_cache_alloc(sbi->inline_xattr_slab,
+					GFP_F2FS_ZERO, false, sbi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	*is_inline = false;
 	return f2fs_kzalloc(sbi, size, GFP_NOFS);

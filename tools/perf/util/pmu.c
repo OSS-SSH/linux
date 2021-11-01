@@ -743,11 +743,15 @@ struct pmu_events_map *__weak pmu_events_map__find(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Suffix must be in form tok_{digits}, or tok{digits}, or same as pmu_name
  * to be valid.
  */
 static bool perf_pmu__valid_suffix(const char *pmu_name, char *tok)
+<<<<<<< HEAD
 {
 	const char *p;
 =======
@@ -755,6 +759,10 @@ static bool perf_pmu__valid_suffix(char *pmu_name, char *tok)
 {
 	char *p;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+{
+	const char *p;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (strncmp(pmu_name, tok, strlen(tok)))
 		return false;
@@ -763,6 +771,7 @@ static bool perf_pmu__valid_suffix(char *pmu_name, char *tok)
 	if (*p == 0)
 		return true;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (*p == '_')
 		++p;
@@ -782,6 +791,18 @@ static bool perf_pmu__valid_suffix(char *pmu_name, char *tok)
 	if (*p == 0 || !isdigit(*p))
 		return false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (*p == '_')
+		++p;
+
+	/* Ensure we end in a number */
+	while (1) {
+		if (!isdigit(*p))
+			return false;
+		if (*(++p) == 0)
+			break;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return true;
 }
@@ -813,6 +834,7 @@ bool pmu_uncore_alias_match(const char *pmu_name, const char *name)
 	 *	    "pmunameY".
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (1) {
 		char *next_tok = strtok_r(NULL, ",", &tmp);
 
@@ -828,12 +850,25 @@ bool pmu_uncore_alias_match(const char *pmu_name, const char *name)
 		name += strlen(tok);
 =======
 	for (; tok; name += strlen(tok), tok = strtok_r(NULL, ",", &tmp)) {
+=======
+	while (1) {
+		char *next_tok = strtok_r(NULL, ",", &tmp);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		name = strstr(name, tok);
-		if (!name || !perf_pmu__valid_suffix((char *)name, tok)) {
+		if (!name ||
+		    (!next_tok && !perf_pmu__valid_suffix(name, tok))) {
 			res = false;
 			goto out;
 		}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!next_tok)
+			break;
+		tok = next_tok;
+		name += strlen(tok);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	res = true;
@@ -868,11 +903,15 @@ void pmu_add_cpu_aliases_map(struct list_head *head, struct perf_pmu *pmu,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (pmu->is_uncore && pmu_uncore_alias_match(pname, name))
 =======
 		if (pmu_is_uncore(name) &&
 		    pmu_uncore_alias_match(pname, name))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (pmu->is_uncore && pmu_uncore_alias_match(pname, name))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto new_alias;
 
 		if (strcmp(pname, name))
@@ -956,10 +995,14 @@ static int pmu_add_sys_aliases_iter_fn(struct pmu_event *pe, void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void pmu_add_sys_aliases(struct list_head *head, struct perf_pmu *pmu)
 =======
 static void pmu_add_sys_aliases(struct list_head *head, struct perf_pmu *pmu)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void pmu_add_sys_aliases(struct list_head *head, struct perf_pmu *pmu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pmu_sys_event_iter_data idata = {
 		.head = head,
@@ -979,6 +1022,9 @@ perf_pmu__get_default_config(struct perf_pmu *pmu __maybe_unused)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 char * __weak
 pmu_find_real_name(const char *name)
 {
@@ -991,8 +1037,11 @@ pmu_find_alias_name(const char *name __maybe_unused)
 	return NULL;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int pmu_max_precise(const char *name)
 {
 	char path[PATH_MAX];
@@ -1007,16 +1056,23 @@ static int pmu_max_precise(const char *name)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct perf_pmu *pmu_lookup(const char *lookup_name)
 =======
 static struct perf_pmu *pmu_lookup(const char *name)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct perf_pmu *pmu_lookup(const char *lookup_name)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct perf_pmu *pmu;
 	LIST_HEAD(format);
 	LIST_HEAD(aliases);
 	__u32 type;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char *name = pmu_find_real_name(lookup_name);
 	bool is_hybrid = perf_pmu__hybrid_mounted(name);
 	char *alias_name;
@@ -1026,8 +1082,11 @@ static struct perf_pmu *pmu_lookup(const char *name)
 	 */
 	if (!strncmp(name, "cpu_", 4) && !is_hybrid)
 		return NULL;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The pmu data we store & need consists of the pmu
@@ -1053,6 +1112,9 @@ static struct perf_pmu *pmu_lookup(const char *name)
 	pmu->cpus = pmu_cpumask(name);
 	pmu->name = strdup(name);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!pmu->name)
 		goto err;
 
@@ -1063,17 +1125,24 @@ static struct perf_pmu *pmu_lookup(const char *name)
 			goto err;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pmu->type = type;
 	pmu->is_uncore = pmu_is_uncore(name);
 	if (pmu->is_uncore)
 		pmu->id = pmu_id(name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pmu->is_hybrid = is_hybrid;
 =======
 	pmu->is_hybrid = perf_pmu__hybrid_mounted(name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pmu->is_hybrid = is_hybrid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pmu->max_precise = pmu_max_precise(name);
 	pmu_add_cpu_aliases(&aliases, pmu);
 	pmu_add_sys_aliases(&aliases, pmu);
@@ -1092,19 +1161,26 @@ static struct perf_pmu *pmu_lookup(const char *name)
 
 	return pmu;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err:
 	if (pmu->name)
 		free(pmu->name);
 	free(pmu);
 	return NULL;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct perf_pmu *pmu_find(const char *name)
 {
 	struct perf_pmu *pmu;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	list_for_each_entry(pmu, &pmus, list) {
 		if (!strcmp(pmu->name, name) ||
@@ -1116,6 +1192,13 @@ static struct perf_pmu *pmu_find(const char *name)
 		if (!strcmp(pmu->name, name))
 			return pmu;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list_for_each_entry(pmu, &pmus, list) {
+		if (!strcmp(pmu->name, name) ||
+		    (pmu->alias_name && !strcmp(pmu->alias_name, name)))
+			return pmu;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return NULL;
 }
@@ -2010,11 +2093,17 @@ bool perf_pmu__has_hybrid(void)
 int perf_pmu__match(char *pattern, char *name, char *tok)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!name)
 		return -1;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!name)
+		return -1;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fnmatch(pattern, name, 0))
 		return -1;
 
@@ -2024,6 +2113,9 @@ int perf_pmu__match(char *pattern, char *name, char *tok)
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int perf_pmu__cpus_match(struct perf_pmu *pmu, struct perf_cpu_map *cpus,
 			 struct perf_cpu_map **mcpus_ptr,
@@ -2059,5 +2151,8 @@ int perf_pmu__cpus_match(struct perf_pmu *pmu, struct perf_cpu_map *cpus,
 	*ucpus_ptr = unmatched_cpus;
 	return 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

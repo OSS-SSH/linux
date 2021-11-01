@@ -43,13 +43,19 @@ struct renesas_sdhi_quirks {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct renesas_sdhi_of_data_with_quirks {
 	const struct renesas_sdhi_of_data *of_data;
 	const struct renesas_sdhi_quirks *quirks;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct tmio_mmc_dma {
 	enum dma_slave_buswidth dma_buswidth;
 	bool (*filter)(struct dma_chan *chan, void *arg);
@@ -87,11 +93,17 @@ struct renesas_sdhi {
 
 int renesas_sdhi_probe(struct platform_device *pdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       const struct tmio_mmc_dma_ops *dma_ops,
 		       const struct renesas_sdhi_of_data *of_data,
 		       const struct renesas_sdhi_quirks *quirks);
 =======
 		       const struct tmio_mmc_dma_ops *dma_ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       const struct tmio_mmc_dma_ops *dma_ops,
+		       const struct renesas_sdhi_of_data *of_data,
+		       const struct renesas_sdhi_quirks *quirks);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int renesas_sdhi_remove(struct platform_device *pdev);
 #endif

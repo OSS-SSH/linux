@@ -3332,9 +3332,13 @@ lpfc_mbx_process_link_up(struct lpfc_hba *phba, struct lpfc_mbx_read_top *la)
 		case LPFC_LINK_SPEED_64GHZ:
 		case LPFC_LINK_SPEED_128GHZ:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case LPFC_LINK_SPEED_256GHZ:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case LPFC_LINK_SPEED_256GHZ:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		default:
 			phba->fc_linkspeed = LPFC_LINK_SPEED_UNKNOWN;
@@ -3651,12 +3655,18 @@ lpfc_mbx_cmpl_read_topology(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
 		}
 		lpfc_mbx_process_link_up(phba, la);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (phba->cmf_active_mode != LPFC_CFG_OFF)
 			lpfc_cmf_signal_init(phba);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (attn_type == LPFC_ATT_LINK_DOWN ||
 		   attn_type == LPFC_ATT_UNEXP_WWPN) {
 		phba->fc_stat.LinkDown++;
@@ -4220,9 +4230,13 @@ lpfc_mbx_cmpl_ns_reg_login(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
 	struct lpfc_nodelist *ndlp = (struct lpfc_nodelist *)pmb->ctx_ndlp;
 	struct lpfc_vport *vport = pmb->vport;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int rc;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pmb->ctx_buf = NULL;
 	pmb->ctx_ndlp = NULL;
@@ -4299,6 +4313,9 @@ out:
 		lpfc_issue_els_scr(vport, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Link was bounced or a Fabric LOGO occurred.  Start EDC
 		 * with initial FW values provided the congestion mode is
 		 * not off.  Note that signals may or may not be supported
@@ -4314,6 +4331,7 @@ out:
 					"4220 EDC issue error x%x, Data: x%x\n",
 					rc, phba->cgn_init_reg_signal);
 		} else {
+<<<<<<< HEAD
 			lpfc_issue_els_rdf(vport, 0);
 		}
 =======
@@ -4321,6 +4339,10 @@ out:
 		    phba->sli4_hba.pc_sli4_params.mi_ver < LPFC_MIB3_SUPPORT)
 			lpfc_issue_els_rdf(vport, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			lpfc_issue_els_rdf(vport, 0);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	vport->fc_ns_retry = 0;
@@ -4537,6 +4559,9 @@ lpfc_nlp_counters(struct lpfc_vport *vport, int state, int count)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Register a node with backend if not already done */
 void
 lpfc_nlp_reg_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
@@ -4672,13 +4697,19 @@ lpfc_handle_adisc_state(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void
 lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 		       int old_state, int new_state)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Trap ADISC changes here */
 	if (new_state == NLP_STE_ADISC_ISSUE ||
 	    old_state == NLP_STE_ADISC_ISSUE) {
@@ -4686,8 +4717,11 @@ lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 		return;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (new_state == NLP_STE_UNMAPPED_NODE) {
 		ndlp->nlp_flag &= ~NLP_NODEV_REMOVE;
 		ndlp->nlp_type |= NLP_FC_NODE;
@@ -4697,6 +4731,7 @@ lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 	if (new_state == NLP_STE_NPR_NODE)
 		ndlp->nlp_flag &= ~NLP_RCV_PLOGI;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Reg/Unreg for FCP and NVME Transport interface */
 	if ((old_state == NLP_STE_MAPPED_NODE ||
@@ -4711,30 +4746,18 @@ lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 		lpfc_nlp_reg_node(vport, ndlp);
 =======
 	/* FCP and NVME Transport interface */
+=======
+	/* Reg/Unreg for FCP and NVME Transport interface */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((old_state == NLP_STE_MAPPED_NODE ||
 	     old_state == NLP_STE_UNMAPPED_NODE)) {
-		if (ndlp->rport &&
-		    lpfc_valid_xpt_node(ndlp)) {
-			vport->phba->nport_event_cnt++;
-			lpfc_unregister_remote_port(ndlp);
-		}
-
-		if (ndlp->nlp_fc4_type & NLP_FC4_NVME) {
-			vport->phba->nport_event_cnt++;
-			if (vport->phba->nvmet_support == 0) {
-				/* Start devloss if target. */
-				if (ndlp->nlp_type & NLP_NVME_TARGET)
-					lpfc_nvme_unregister_port(vport, ndlp);
-			} else {
-				/* NVMET has no upcall. */
-				lpfc_nlp_put(ndlp);
-			}
-		}
+		/* For nodes marked for ADISC, Handle unreg in ADISC cmpl */
+		if (!(ndlp->nlp_flag & NLP_NPR_ADISC))
+			lpfc_nlp_unreg_node(vport, ndlp);
 	}
 
-	/* FCP and NVME Transport interfaces */
-
 	if (new_state ==  NLP_STE_MAPPED_NODE ||
+<<<<<<< HEAD
 	    new_state == NLP_STE_UNMAPPED_NODE) {
 		if (lpfc_valid_xpt_node(ndlp)) {
 			vport->phba->nport_event_cnt++;
@@ -4765,6 +4788,10 @@ lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    new_state == NLP_STE_UNMAPPED_NODE)
+		lpfc_nlp_reg_node(vport, ndlp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((new_state ==  NLP_STE_MAPPED_NODE) &&
 		(vport->stat_data_enabled)) {

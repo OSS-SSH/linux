@@ -43,6 +43,7 @@ changed=$(
 count=0
 sort "$cur_ksyms_file" "$new_ksyms_file" | uniq -u |
 <<<<<<< HEAD
+<<<<<<< HEAD
 sed -n 's/^#define __KSYM_\(.*\) 1/\1/p' |
 while read sympath; do
 	if [ -z "$sympath" ]; then continue; fi
@@ -53,6 +54,12 @@ while read sympath; do
 	if [ -z "$sympath" ]; then continue; fi
 	depfile="include/ksym/${sympath}.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+sed -n 's/^#define __KSYM_\(.*\) 1/\1/p' |
+while read sympath; do
+	if [ -z "$sympath" ]; then continue; fi
+	depfile="include/ksym/${sympath}"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mkdir -p "$(dirname "$depfile")"
 	touch "$depfile"
 	# Filesystems with coarse time precision may create timestamps

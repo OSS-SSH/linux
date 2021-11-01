@@ -134,10 +134,14 @@ struct fib_info {
 	struct list_head	nh_list;
 	struct net		*fib_net;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refcount_t		fib_treeref;
 =======
 	int			fib_treeref;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	refcount_t		fib_treeref;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	refcount_t		fib_clntref;
 	unsigned int		fib_flags;
 	unsigned char		fib_dead;
@@ -602,8 +606,12 @@ int fib_nexthop_info(struct sk_buff *skb, const struct fib_nh_common *nh,
 		     u8 rt_family, unsigned char *flags, bool skip_oif);
 int fib_add_nexthop(struct sk_buff *skb, const struct fib_nh_common *nh,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    int nh_weight, u8 rt_family, u32 nh_tclassid);
 =======
 		    int nh_weight, u8 rt_family);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    int nh_weight, u8 rt_family, u32 nh_tclassid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif  /* _NET_FIB_H */

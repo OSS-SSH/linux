@@ -61,11 +61,17 @@ int nfc_proto_register(const struct nfc_protocol *nfc_proto)
 	write_unlock(&proto_tab_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rc)
 		proto_unregister(nfc_proto->proto);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rc)
+		proto_unregister(nfc_proto->proto);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 EXPORT_SYMBOL(nfc_proto_register);
@@ -86,10 +92,14 @@ int __init af_nfc_init(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __exit af_nfc_exit(void)
 =======
 void af_nfc_exit(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void __exit af_nfc_exit(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	sock_unregister(PF_NFC);
 }

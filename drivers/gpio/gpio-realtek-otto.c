@@ -197,9 +197,12 @@ static void realtek_gpio_irq_handler(struct irq_desc *desc)
 	unsigned int lines_done;
 	unsigned int port_pin_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long status;
 	int offset;
 
@@ -209,6 +212,7 @@ static void realtek_gpio_irq_handler(struct irq_desc *desc)
 		status = realtek_gpio_read_isr(ctrl, lines_done / 8);
 		port_pin_count = min(gc->ngpio - lines_done, 8U);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for_each_set_bit(offset, &status, port_pin_count)
 			generic_handle_domain_irq(gc->irq.domain, offset);
 =======
@@ -217,6 +221,10 @@ static void realtek_gpio_irq_handler(struct irq_desc *desc)
 			generic_handle_irq(irq);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for_each_set_bit(offset, &status, port_pin_count)
+			generic_handle_domain_irq(gc->irq.domain, offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(irq_chip, desc);

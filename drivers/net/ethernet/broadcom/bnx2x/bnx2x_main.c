@@ -12190,10 +12190,14 @@ static int bnx2x_get_hwinfo(struct bnx2x *bp)
 static void bnx2x_read_fwinfo(struct bnx2x *bp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char str_id[VENDOR_ID_LEN + 1];
 	unsigned int vpd_len, kw_len;
 	u8 *vpd_data;
 	int rodi;
+<<<<<<< HEAD
 
 	memset(bp->fw_ver, 0, sizeof(bp->fw_ver));
 
@@ -12261,46 +12265,39 @@ out_not_found:
 		vpd_data = vpd_extended_data;
 	} else
 		vpd_data = vpd_start;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	/* now vpd_data holds full vpd content in both cases */
+	memset(bp->fw_ver, 0, sizeof(bp->fw_ver));
 
-	rodi = pci_vpd_find_info_keyword(vpd_data, i, block_end,
-				   PCI_VPD_RO_KEYWORD_MFR_ID);
-	if (rodi < 0)
+	vpd_data = pci_vpd_alloc(bp->pdev, &vpd_len);
+	if (IS_ERR(vpd_data))
+		return;
+
+	rodi = pci_vpd_find_ro_info_keyword(vpd_data, vpd_len,
+					    PCI_VPD_RO_KEYWORD_MFR_ID, &kw_len);
+	if (rodi < 0 || kw_len != VENDOR_ID_LEN)
 		goto out_not_found;
-
-	len = pci_vpd_info_field_size(&vpd_data[rodi]);
-
-	if (len != VENDOR_ID_LEN)
-		goto out_not_found;
-
-	rodi += PCI_VPD_INFO_FLD_HDR_SIZE;
 
 	/* vendor specific info */
-	snprintf(str_id_reg, VENDOR_ID_LEN + 1, "%04x", PCI_VENDOR_ID_DELL);
-	snprintf(str_id_cap, VENDOR_ID_LEN + 1, "%04X", PCI_VENDOR_ID_DELL);
-	if (!strncmp(str_id_reg, &vpd_data[rodi], VENDOR_ID_LEN) ||
-	    !strncmp(str_id_cap, &vpd_data[rodi], VENDOR_ID_LEN)) {
-
-		rodi = pci_vpd_find_info_keyword(vpd_data, i, block_end,
-						PCI_VPD_RO_KEYWORD_VENDOR0);
-		if (rodi >= 0) {
-			len = pci_vpd_info_field_size(&vpd_data[rodi]);
-
-			rodi += PCI_VPD_INFO_FLD_HDR_SIZE;
-
-			if (len < 32 && (len + rodi) <= BNX2X_VPD_LEN) {
-				memcpy(bp->fw_ver, &vpd_data[rodi], len);
-				bp->fw_ver[len] = ' ';
-			}
+	snprintf(str_id, VENDOR_ID_LEN + 1, "%04x", PCI_VENDOR_ID_DELL);
+	if (!strncasecmp(str_id, &vpd_data[rodi], VENDOR_ID_LEN)) {
+		rodi = pci_vpd_find_ro_info_keyword(vpd_data, vpd_len,
+						    PCI_VPD_RO_KEYWORD_VENDOR0,
+						    &kw_len);
+		if (rodi >= 0 && kw_len < sizeof(bp->fw_ver)) {
+			memcpy(bp->fw_ver, &vpd_data[rodi], kw_len);
+			bp->fw_ver[kw_len] = ' ';
 		}
-		kfree(vpd_extended_data);
-		return;
 	}
 out_not_found:
+<<<<<<< HEAD
 	kfree(vpd_extended_data);
 	return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfree(vpd_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void bnx2x_set_modes_bitmap(struct bnx2x *bp)
@@ -13081,10 +13078,14 @@ static const struct net_device_ops bnx2x_netdev_ops = {
 	.ndo_set_mac_address	= bnx2x_change_mac_addr,
 	.ndo_validate_addr	= bnx2x_validate_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= bnx2x_ioctl,
 =======
 	.ndo_do_ioctl		= bnx2x_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= bnx2x_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= bnx2x_change_mtu,
 	.ndo_fix_features	= bnx2x_fix_features,
 	.ndo_set_features	= bnx2x_set_features,

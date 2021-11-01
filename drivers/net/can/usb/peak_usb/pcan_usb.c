@@ -64,10 +64,15 @@
 #define PCAN_USB_MSG_HEADER_LEN		2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PCAN_USB_MSG_TX_CAN		2	/* Tx msg is a CAN frame */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PCAN_USB_MSG_TX_CAN		2	/* Tx msg is a CAN frame */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* PCAN-USB adapter internal clock (MHz) */
 #define PCAN_USB_CRYSTAL_HZ		16000000
 
@@ -79,12 +84,18 @@
 #define PCAN_USB_STATUSLEN_DLC		(0xf)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* PCAN-USB 4.1 CAN Id tx extended flags */
 #define PCAN_USB_TX_SRR			0x01	/* SJA1000 SRR command */
 #define PCAN_USB_TX_AT			0x02	/* SJA1000 AT command */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* PCAN-USB error flags */
 #define PCAN_USB_ERROR_TXFULL		0x01
 #define PCAN_USB_ERROR_RXQOVR		0x02
@@ -130,11 +141,16 @@
 
 /* identify bus event packets with rx/tx error counters */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PCAN_USB_ERR_CNT_DEC		0x00	/* counters are decreasing */
 #define PCAN_USB_ERR_CNT_INC		0x80	/* counters are increasing */
 =======
 #define PCAN_USB_ERR_CNT		0x80
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PCAN_USB_ERR_CNT_DEC		0x00	/* counters are decreasing */
+#define PCAN_USB_ERR_CNT_INC		0x80	/* counters are increasing */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* private to PCAN-USB adapter */
 struct pcan_usb {
@@ -402,11 +418,16 @@ static int pcan_usb_get_device_id(struct peak_usb_device *dev, u32 *device_id)
 		netdev_err(dev->netdev, "getting device id failure: %d\n", err);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else
 		*device_id = args[0];
 =======
 	*device_id = args[0];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else
+		*device_id = args[0];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return err;
 }
@@ -468,16 +489,21 @@ static int pcan_usb_decode_error(struct pcan_usb_msg_context *mc, u8 n,
 	struct sk_buff *skb;
 	struct can_frame *cf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum can_state new_state = CAN_STATE_ERROR_ACTIVE;
 =======
 	enum can_state new_state;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum can_state new_state = CAN_STATE_ERROR_ACTIVE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* ignore this error until 1st ts received */
 	if (n == PCAN_USB_ERROR_QOVR)
 		if (!mc->pdev->time_ref.tick_count)
 			return 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* allocate an skb to store the error frame */
 	skb = alloc_can_err_skb(mc->netdev, &cf);
@@ -601,70 +627,60 @@ static int pcan_usb_decode_error(struct pcan_usb_msg_context *mc, u8 n,
 	if (mc->pdev->dev.can.state == new_state)
 		return 0;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* allocate an skb to store the error frame */
 	skb = alloc_can_err_skb(mc->netdev, &cf);
-	if (!skb)
-		return -ENOMEM;
 
-	switch (new_state) {
-	case CAN_STATE_BUS_OFF:
-		cf->can_id |= CAN_ERR_BUSOFF;
-		mc->pdev->dev.can.can_stats.bus_off++;
-		can_bus_off(mc->netdev);
-		break;
-
-	case CAN_STATE_ERROR_PASSIVE:
-		cf->can_id |= CAN_ERR_CRTL;
-		cf->data[1] = (mc->pdev->bec.txerr > mc->pdev->bec.rxerr) ?
-				CAN_ERR_CRTL_TX_PASSIVE :
-				CAN_ERR_CRTL_RX_PASSIVE;
-		cf->data[6] = mc->pdev->bec.txerr;
-		cf->data[7] = mc->pdev->bec.rxerr;
-
-		mc->pdev->dev.can.can_stats.error_passive++;
-		break;
-
-	case CAN_STATE_ERROR_WARNING:
-		cf->can_id |= CAN_ERR_CRTL;
-		cf->data[1] = (mc->pdev->bec.txerr > mc->pdev->bec.rxerr) ?
-				CAN_ERR_CRTL_TX_WARNING :
-				CAN_ERR_CRTL_RX_WARNING;
-		cf->data[6] = mc->pdev->bec.txerr;
-		cf->data[7] = mc->pdev->bec.rxerr;
-
-		mc->pdev->dev.can.can_stats.error_warning++;
-		break;
-
-	case CAN_STATE_ERROR_ACTIVE:
-		cf->can_id |= CAN_ERR_CRTL;
-		cf->data[1] = CAN_ERR_CRTL_ACTIVE;
-
-		/* sync local copies of rxerr/txerr counters */
-		mc->pdev->bec.txerr = 0;
-		mc->pdev->bec.rxerr = 0;
-		break;
-
-	default:
-		/* CAN_STATE_MAX (trick to handle other errors) */
-		if (n & PCAN_USB_ERROR_TXQFULL)
-			netdev_dbg(mc->netdev, "device Tx queue full)\n");
-
-		if (n & PCAN_USB_ERROR_RXQOVR) {
-			netdev_dbg(mc->netdev, "data overrun interrupt\n");
+	if (n & PCAN_USB_ERROR_RXQOVR) {
+		/* data overrun interrupt */
+		netdev_dbg(mc->netdev, "data overrun interrupt\n");
+		mc->netdev->stats.rx_over_errors++;
+		mc->netdev->stats.rx_errors++;
+		if (cf) {
 			cf->can_id |= CAN_ERR_CRTL;
 			cf->data[1] |= CAN_ERR_CRTL_RX_OVERFLOW;
-			mc->netdev->stats.rx_over_errors++;
-			mc->netdev->stats.rx_errors++;
 		}
-
-		cf->data[6] = mc->pdev->bec.txerr;
-		cf->data[7] = mc->pdev->bec.rxerr;
-
-		new_state = mc->pdev->dev.can.state;
-		break;
 	}
 
-	mc->pdev->dev.can.state = new_state;
+	if (n & PCAN_USB_ERROR_TXQFULL)
+		netdev_dbg(mc->netdev, "device Tx queue full)\n");
+
+	if (n & PCAN_USB_ERROR_BUS_OFF) {
+		new_state = CAN_STATE_BUS_OFF;
+	} else if (n & PCAN_USB_ERROR_BUS_HEAVY) {
+		new_state = ((mc->pdev->bec.txerr >= 128) ||
+			     (mc->pdev->bec.rxerr >= 128)) ?
+				CAN_STATE_ERROR_PASSIVE :
+				CAN_STATE_ERROR_WARNING;
+	} else {
+		new_state = CAN_STATE_ERROR_ACTIVE;
+	}
+
+	/* handle change of state */
+	if (new_state != mc->pdev->dev.can.state) {
+		enum can_state tx_state =
+			(mc->pdev->bec.txerr >= mc->pdev->bec.rxerr) ?
+				new_state : 0;
+		enum can_state rx_state =
+			(mc->pdev->bec.txerr <= mc->pdev->bec.rxerr) ?
+				new_state : 0;
+
+		can_change_state(mc->netdev, cf, tx_state, rx_state);
+
+		if (new_state == CAN_STATE_BUS_OFF) {
+			can_bus_off(mc->netdev);
+		} else if (cf && (cf->can_id & CAN_ERR_CRTL)) {
+			/* Supply TX/RX error counters in case of
+			 * controller error.
+			 */
+			cf->data[6] = mc->pdev->bec.txerr;
+			cf->data[7] = mc->pdev->bec.rxerr;
+		}
+	}
+
+	if (!skb)
+		return -ENOMEM;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (status_len & PCAN_USB_STATUSLEN_TIMESTAMP) {
@@ -691,6 +707,7 @@ static int pcan_usb_handle_bus_evt(struct pcan_usb_msg_context *mc, u8 ir)
 	/* acccording to the content of the packet */
 	switch (ir) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PCAN_USB_ERR_CNT_DEC:
 	case PCAN_USB_ERR_CNT_INC:
 
@@ -704,6 +721,14 @@ static int pcan_usb_handle_bus_evt(struct pcan_usb_msg_context *mc, u8 ir)
 		pdev->bec.rxerr = mc->ptr[0];
 		pdev->bec.txerr = mc->ptr[1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PCAN_USB_ERR_CNT_DEC:
+	case PCAN_USB_ERR_CNT_INC:
+
+		/* save rx/tx error counters from in the device context */
+		pdev->bec.rxerr = mc->ptr[1];
+		pdev->bec.txerr = mc->ptr[2];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	default:
@@ -796,9 +821,13 @@ static int pcan_usb_decode_data(struct pcan_usb_msg_context *mc, u8 status_len)
 	struct can_frame *cf;
 	struct skb_shared_hwtstamps *hwts;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 can_id_flags;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 can_id_flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	skb = alloc_can_skb(mc->netdev, &cf);
 	if (!skb)
@@ -809,22 +838,32 @@ static int pcan_usb_decode_data(struct pcan_usb_msg_context *mc, u8 status_len)
 			goto decode_failed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		can_id_flags = get_unaligned_le32(mc->ptr);
 		cf->can_id = can_id_flags >> 3 | CAN_EFF_FLAG;
 =======
 		cf->can_id = get_unaligned_le32(mc->ptr) >> 3 | CAN_EFF_FLAG;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		can_id_flags = get_unaligned_le32(mc->ptr);
+		cf->can_id = can_id_flags >> 3 | CAN_EFF_FLAG;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mc->ptr += 4;
 	} else {
 		if ((mc->ptr + 2) > mc->end)
 			goto decode_failed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		can_id_flags = get_unaligned_le16(mc->ptr);
 		cf->can_id = can_id_flags >> 5;
 =======
 		cf->can_id = get_unaligned_le16(mc->ptr) >> 5;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		can_id_flags = get_unaligned_le16(mc->ptr);
+		cf->can_id = can_id_flags >> 5;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mc->ptr += 2;
 	}
 
@@ -848,12 +887,18 @@ static int pcan_usb_decode_data(struct pcan_usb_msg_context *mc, u8 status_len)
 		memcpy(cf->data, mc->ptr, cf->len);
 		mc->ptr += rec_len;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Ignore next byte (client private id) if SRR bit is set */
 		if (can_id_flags & PCAN_USB_TX_SRR)
 			mc->ptr++;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* convert timestamp into kernel time */
@@ -932,6 +977,7 @@ static int pcan_usb_encode_msg(struct peak_usb_device *dev, struct sk_buff *skb,
 	struct net_device_stats *stats = &netdev->stats;
 	struct can_frame *cf = (struct can_frame *)skb->data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 can_id_flags = cf->can_id & CAN_ERR_MASK;
 	u8 *pc;
 
@@ -943,6 +989,13 @@ static int pcan_usb_encode_msg(struct peak_usb_device *dev, struct sk_buff *skb,
 	obuf[0] = 2;
 	obuf[1] = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 can_id_flags = cf->can_id & CAN_ERR_MASK;
+	u8 *pc;
+
+	obuf[0] = PCAN_USB_MSG_TX_CAN;
+	obuf[1] = 1;	/* only one CAN frame is stored in the packet */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pc = obuf + PCAN_USB_MSG_HEADER_LEN;
 
@@ -958,6 +1011,9 @@ static int pcan_usb_encode_msg(struct peak_usb_device *dev, struct sk_buff *skb,
 		pc++;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		can_id_flags <<= 3;
 
 		if (dev->can.ctrlmode & CAN_CTRLMODE_LOOPBACK)
@@ -967,14 +1023,20 @@ static int pcan_usb_encode_msg(struct peak_usb_device *dev, struct sk_buff *skb,
 			can_id_flags |= PCAN_USB_TX_AT;
 
 		put_unaligned_le32(can_id_flags, pc);
+<<<<<<< HEAD
 =======
 		put_unaligned_le32((cf->can_id & CAN_ERR_MASK) << 3, pc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pc += 4;
 	} else {
 		pc++;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		can_id_flags <<= 5;
 
 		if (dev->can.ctrlmode & CAN_CTRLMODE_LOOPBACK)
@@ -984,9 +1046,12 @@ static int pcan_usb_encode_msg(struct peak_usb_device *dev, struct sk_buff *skb,
 			can_id_flags |= PCAN_USB_TX_AT;
 
 		put_unaligned_le16(can_id_flags, pc);
+<<<<<<< HEAD
 =======
 		put_unaligned_le16((cf->can_id & CAN_ERR_MASK) << 5, pc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pc += 2;
 	}
 
@@ -997,12 +1062,18 @@ static int pcan_usb_encode_msg(struct peak_usb_device *dev, struct sk_buff *skb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* SRR bit needs a writer id (useless here) */
 	if (can_id_flags & PCAN_USB_TX_SRR)
 		*pc++ = 0x80;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	obuf[(*size)-1] = (u8)(stats->tx_packets & 0xff);
 
 	return 0;
@@ -1078,6 +1149,9 @@ static int pcan_usb_init(struct peak_usb_device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Since rev 4.1, PCAN-USB is able to make single-shot as well as
 	 * looped back frames.
 	 */
@@ -1091,8 +1165,11 @@ static int pcan_usb_init(struct peak_usb_device *dev)
 			 "Firmware update available. Please contact support@peak-system.com\n");
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_info(dev->netdev->dev.parent,
 		 "PEAK-System %s adapter hwrev %u serial %08X (%u channel)\n",
 		 pcan_usb.name, dev->device_rev, serial_number,

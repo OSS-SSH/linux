@@ -372,6 +372,9 @@ LIBBPF_0.5.0 {
 	global:
 		bpf_map__initial_value;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bpf_map__pin_path;
 		bpf_map_lookup_and_delete_elem_flags;
 		bpf_program__attach_kprobe_opts;
@@ -385,9 +388,12 @@ LIBBPF_0.5.0 {
 		btf__load_module_btf;
 		btf__load_vmlinux_btf;
 		btf_dump__dump_type_data;
+<<<<<<< HEAD
 =======
 		bpf_map_lookup_and_delete_elem_flags;
 		bpf_object__gen_loader;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		libbpf_set_strict_mode;
 } LIBBPF_0.4.0;

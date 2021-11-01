@@ -249,9 +249,12 @@ void panic(const char *fmt, ...)
 	 */
 	if (!_crash_kexec_post_notifiers) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		printk_safe_flush_on_panic();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__crash_kexec(NULL);
 
 		/*
@@ -276,10 +279,13 @@ void panic(const char *fmt, ...)
 	atomic_notifier_call_chain(&panic_notifier_list, 0, buf);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Call flush even twice. It tries harder with a single online CPU */
 	printk_safe_flush_on_panic();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kmsg_dump(KMSG_DUMP_PANIC);
 
 	/*

@@ -1042,10 +1042,14 @@ static void bbr_init(struct sock *sk)
 	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
 	bbr->rtt_cnt = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bbr->next_rtt_delivered = tp->delivered;
 =======
 	bbr->next_rtt_delivered = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bbr->next_rtt_delivered = tp->delivered;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bbr->prev_ca_state = TCP_CA_Open;
 	bbr->packet_conservation = 0;
 

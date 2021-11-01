@@ -142,6 +142,9 @@ static void mtu3_device_disable(struct mtu3 *mtu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mtu3_dev_power_on(struct mtu3 *mtu)
 {
 	void __iomem *ibase = mtu->ippc_base;
@@ -164,8 +167,11 @@ static void mtu3_dev_power_down(struct mtu3 *mtu)
 	mtu3_setbits(ibase, U3D_SSUSB_IP_PW_CTRL2, SSUSB_IP_DEV_PDN);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* reset U3D's device module. */
 static void mtu3_device_reset(struct mtu3 *mtu)
 {
@@ -253,19 +259,28 @@ static void mtu3_set_speed(struct mtu3 *mtu, enum usb_device_speed speed)
 		break;
 	case USB_SPEED_SUPER:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mtu3_setbits(mbase, U3D_POWER_MANAGEMENT, HS_ENABLE);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mtu3_setbits(mbase, U3D_POWER_MANAGEMENT, HS_ENABLE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mtu3_clrbits(mtu->ippc_base, SSUSB_U3_CTRL(0),
 			     SSUSB_U3_PORT_SSP_SPEED);
 		break;
 	case USB_SPEED_SUPER_PLUS:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		mtu3_setbits(mbase, U3D_POWER_MANAGEMENT, HS_ENABLE);
 		mtu3_setbits(mtu->ippc_base, SSUSB_U3_CTRL(0),
 =======
 			mtu3_setbits(mtu->ippc_base, SSUSB_U3_CTRL(0),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mtu3_setbits(mbase, U3D_POWER_MANAGEMENT, HS_ENABLE);
+		mtu3_setbits(mtu->ippc_base, SSUSB_U3_CTRL(0),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     SSUSB_U3_PORT_SSP_SPEED);
 		break;
 	default:
@@ -368,6 +383,7 @@ void mtu3_start(struct mtu3 *mtu)
 		mtu3_readl(mbase, U3D_DEVICE_CONTROL));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mtu3_dev_power_on(mtu);
 =======
 	mtu3_clrbits(mtu->ippc_base, U3D_SSUSB_IP_PW_CTRL2, SSUSB_IP_DEV_PDN);
@@ -377,6 +393,9 @@ void mtu3_start(struct mtu3 *mtu)
 	mtu3_clrbits(mtu->ippc_base, SSUSB_U2_CTRL(0), SSUSB_U2_PORT_PDN);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mtu3_dev_power_on(mtu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mtu3_csr_init(mtu);
 	mtu3_set_speed(mtu, mtu->speed);
 
@@ -399,6 +418,7 @@ void mtu3_stop(struct mtu3 *mtu)
 
 	mtu->is_active = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mtu3_dev_power_down(mtu);
 }
 
@@ -419,13 +439,33 @@ static void mtu3_dev_resume(struct mtu3 *mtu)
 	mtu3_dev_power_on(mtu);
 	mtu3_intr_enable(mtu);
 =======
+=======
+	mtu3_dev_power_down(mtu);
+}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (mtu->is_u3_ip)
-		mtu3_setbits(mtu->ippc_base, SSUSB_U3_CTRL(0), SSUSB_U3_PORT_PDN);
+static void mtu3_dev_suspend(struct mtu3 *mtu)
+{
+	if (!mtu->is_active)
+		return;
 
+<<<<<<< HEAD
 	mtu3_setbits(mtu->ippc_base, SSUSB_U2_CTRL(0), SSUSB_U2_PORT_PDN);
 	mtu3_setbits(mtu->ippc_base, U3D_SSUSB_IP_PW_CTRL2, SSUSB_IP_DEV_PDN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mtu3_intr_disable(mtu);
+	mtu3_dev_power_down(mtu);
+}
+
+static void mtu3_dev_resume(struct mtu3 *mtu)
+{
+	if (!mtu->is_active)
+		return;
+
+	mtu3_dev_power_on(mtu);
+	mtu3_intr_enable(mtu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* for non-ep0 */
@@ -749,6 +789,7 @@ static irqreturn_t mtu3_link_isr(struct mtu3 *mtu)
 	mtu->g.ep0->maxpacket = maxpkt;
 	mtu->ep0_state = MU3D_EP0_STATE_SETUP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mtu->connected = !!(udev_speed != USB_SPEED_UNKNOWN);
 
 	if (udev_speed == USB_SPEED_UNKNOWN) {
@@ -759,12 +800,21 @@ static irqreturn_t mtu3_link_isr(struct mtu3 *mtu)
 		mtu3_ep0_setup(mtu);
 	}
 =======
+=======
+	mtu->connected = !!(udev_speed != USB_SPEED_UNKNOWN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (udev_speed == USB_SPEED_UNKNOWN)
+	if (udev_speed == USB_SPEED_UNKNOWN) {
 		mtu3_gadget_disconnect(mtu);
-	else
+		pm_runtime_put(mtu->dev);
+	} else {
+		pm_runtime_get(mtu->dev);
 		mtu3_ep0_setup(mtu);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return IRQ_HANDLED;
 }
@@ -961,6 +1011,9 @@ int ssusb_gadget_init(struct ssusb_mtk *ssusb)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mtu->irq = platform_get_irq_byname_optional(pdev, "device");
 	if (mtu->irq < 0) {
 		if (mtu->irq == -EPROBE_DEFER)
@@ -971,11 +1024,14 @@ int ssusb_gadget_init(struct ssusb_mtk *ssusb)
 		if (mtu->irq < 0)
 			return mtu->irq;
 	}
+<<<<<<< HEAD
 =======
 	mtu->irq = platform_get_irq(pdev, 0);
 	if (mtu->irq < 0)
 		return mtu->irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_info(dev, "irq %d\n", mtu->irq);
 
 	mtu->mac_base = devm_platform_ioremap_resource_byname(pdev, "mac");
@@ -1051,6 +1107,9 @@ void ssusb_gadget_exit(struct ssusb_mtk *ssusb)
 	mtu3_hw_exit(mtu);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool ssusb_gadget_ip_sleep_check(struct ssusb_mtk *ssusb)
 {
@@ -1095,5 +1154,8 @@ int ssusb_gadget_resume(struct ssusb_mtk *ssusb, pm_message_t msg)
 
 	return 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

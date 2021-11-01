@@ -101,10 +101,14 @@ static void emac_get_strings(struct net_device *netdev, u32 stringset, u8 *data)
 	case ETH_SS_STATS:
 		for (i = 0; i < EMAC_STATS_LEN; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			strscpy(data, emac_ethtool_stat_strings[i],
 =======
 			strlcpy(data, emac_ethtool_stat_strings[i],
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			strscpy(data, emac_ethtool_stat_strings[i],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ETH_GSTRING_LEN);
 			data += ETH_GSTRING_LEN;
 		}

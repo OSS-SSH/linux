@@ -64,11 +64,17 @@ void ttm_mem_io_free(struct ttm_device *bdev,
 		     struct ttm_resource *mem)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!mem)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!mem)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!mem->bus.offset && !mem->bus.addr)
 		return;
 
@@ -147,9 +153,12 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 	struct ttm_resource_manager *src_man =
 		ttm_manager_type(bdev, src_mem->mem_type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct ttm_resource src_copy = *src_mem;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union {
 		struct ttm_kmap_iter_tt tt;
 		struct ttm_kmap_iter_linear_io io;
@@ -180,6 +189,7 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 
 	ttm_move_memcpy(bo, dst_mem->num_pages, dst_iter, src_iter);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (!src_iter->ops->maps_tt)
 		ttm_kmap_iter_linear_io_fini(&_src_iter.io, bdev, src_mem);
@@ -192,6 +202,13 @@ int ttm_bo_move_memcpy(struct ttm_buffer_object *bo,
 	if (!src_iter->ops->maps_tt)
 		ttm_kmap_iter_linear_io_fini(&_src_iter.io, bdev, &src_copy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (!src_iter->ops->maps_tt)
+		ttm_kmap_iter_linear_io_fini(&_src_iter.io, bdev, src_mem);
+	ttm_bo_move_sync_cleanup(bo, dst_mem);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_src_iter:
 	if (!dst_iter->ops->maps_tt)
 		ttm_kmap_iter_linear_io_fini(&_dst_iter.io, bdev, dst_mem);

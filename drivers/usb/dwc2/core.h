@@ -123,9 +123,13 @@ struct dwc2_hsotg_req;
  * @isochronous: Set if this is a isochronous ep
  * @send_zlp: Set if we need to send a zero-length packet.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @wedged: Set if ep is wedged.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @wedged: Set if ep is wedged.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @desc_list_dma: The DMA address of descriptor chain currently in use.
  * @desc_list: Pointer to descriptor DMA chain head currently in use.
  * @desc_count: Count of entries within the DMA descriptor chain of EP.
@@ -177,9 +181,13 @@ struct dwc2_hsotg_ep {
 	unsigned int            isochronous:1;
 	unsigned int            send_zlp:1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int            wedged:1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int            wedged:1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int            target_frame;
 #define TARGET_FRAME_INITIAL   0xFFFFFFFF
 	bool			frame_overrun;
@@ -392,11 +400,17 @@ enum dwc2_ep0_state {
  *			1 - Partial power down
  *			2 - Hibernation
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @no_clock_gating:	Specifies whether to avoid clock gating feature.
  *			0 - No (use clock gating)
  *			1 - Yes (avoid it)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @no_clock_gating:	Specifies whether to avoid clock gating feature.
+ *			0 - No (use clock gating)
+ *			1 - Yes (avoid it)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @lpm:		Enable LPM support.
  *			0 - No
  *			1 - Yes
@@ -495,9 +509,13 @@ struct dwc2_core_params {
 #define DWC2_POWER_DOWN_PARAM_PARTIAL		1
 #define DWC2_POWER_DOWN_PARAM_HIBERNATION	2
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool no_clock_gating;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool no_clock_gating;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	bool lpm;
 	bool lpm_clock_gating;

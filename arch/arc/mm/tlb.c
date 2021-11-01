@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * TLB Management (flush/create/diagnostics) for MMUv3 and MMUv4
  *
  * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
@@ -53,6 +54,12 @@
  *
  * Rahul Trivedi : Codito Technologies 2004
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * TLB Management (flush/create/diagnostics) for MMUv3 and MMUv4
+ *
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/module.h>
@@ -64,6 +71,7 @@
 #include <asm/mmu_context.h>
 #include <asm/mmu.h>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /*			Need for ARC MMU v2
@@ -108,6 +116,8 @@
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* A copy of the ASID from the PID reg is kept in asid_cache */
 DEFINE_PER_CPU(unsigned int, asid_cache) = MM_CTXT_FIRST_CYCLE;
 
@@ -130,6 +140,7 @@ static inline void __tlb_entry_erase(void)
 
 static void utlb_invalidate(void)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	write_aux_reg(ARC_REG_TLBCOMMAND, TLBIVUTLB);
 }
@@ -156,13 +167,17 @@ static void utlb_invalidate(void)
 		write_aux_reg(ARC_REG_TLBINDEX, 0xa);
 #endif
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	write_aux_reg(ARC_REG_TLBCOMMAND, TLBIVUTLB);
-#endif
-
 }
 
+<<<<<<< HEAD
 #if (CONFIG_ARC_MMU_VER < 4)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_ARC_MMU_V3
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline unsigned int tlb_entry_lkup(unsigned long vaddr_n_asid)
 {
@@ -194,10 +209,14 @@ static void tlb_entry_erase(unsigned int vaddr_n_asid)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void tlb_entry_insert(unsigned int pd0, phys_addr_t pd1)
 =======
 static void tlb_entry_insert(unsigned int pd0, pte_t pd1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void tlb_entry_insert(unsigned int pd0, phys_addr_t pd1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int idx;
 
@@ -228,10 +247,14 @@ static void tlb_entry_insert(unsigned int pd0, pte_t pd1)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #else	/* MMUv4 */
 =======
 #else	/* CONFIG_ARC_MMU_VER >= 4) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#else	/* MMUv4 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void tlb_entry_erase(unsigned int vaddr_n_asid)
 {
@@ -239,6 +262,7 @@ static void tlb_entry_erase(unsigned int vaddr_n_asid)
 	write_aux_reg(ARC_REG_TLBCOMMAND, TLBDeleteEntry);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void tlb_entry_insert(unsigned int pd0, phys_addr_t pd1)
 {
@@ -252,13 +276,22 @@ static void tlb_entry_insert(unsigned int pd0, phys_addr_t pd1)
 	}
 =======
 static void tlb_entry_insert(unsigned int pd0, pte_t pd1)
+=======
+static void tlb_entry_insert(unsigned int pd0, phys_addr_t pd1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	write_aux_reg(ARC_REG_TLBPD0, pd0);
-	write_aux_reg(ARC_REG_TLBPD1, pd1);
 
-	if (is_pae40_enabled())
+	if (!is_pae40_enabled()) {
+		write_aux_reg(ARC_REG_TLBPD1, pd1);
+	} else {
+		write_aux_reg(ARC_REG_TLBPD1, pd1 & 0xFFFFFFFF);
 		write_aux_reg(ARC_REG_TLBPD1HI, (u64)pd1 >> 32);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	write_aux_reg(ARC_REG_TLBCOMMAND, TLBInsertEntry);
 }
@@ -535,10 +568,14 @@ void create_tlb(struct vm_area_struct *vma, unsigned long vaddr, pte_t *ptep)
 	unsigned int asid_or_sasid, rwx;
 	unsigned long pd0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phys_addr_t pd1;
 =======
 	pte_t pd1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phys_addr_t pd1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * create_tlb() assumes that current->mm == vma->mm, since
@@ -548,9 +585,12 @@ void create_tlb(struct vm_area_struct *vma, unsigned long vaddr, pte_t *ptep)
 	 * Removing the assumption involves
 	 * -Using vma->mm->context{ASID,SASID}, as opposed to MMU reg.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	 * -Fix the TLB paranoid debug code to not trigger false negatives.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * -More importantly it makes this handler inconsistent with fast-path
 	 *  TLB Refill handler which always deals with "current"
 	 *
@@ -574,10 +614,13 @@ void create_tlb(struct vm_area_struct *vma, unsigned long vaddr, pte_t *ptep)
 	local_irq_save(flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	tlb_paranoid_check(asid_mm(vma->vm_mm, smp_processor_id()), vaddr);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vaddr &= PAGE_MASK;
 
 	/* update this PTE credentials */
@@ -688,6 +731,7 @@ void update_mmu_cache_pmd(struct vm_area_struct *vma, unsigned long addr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void pgtable_trans_huge_deposit(struct mm_struct *mm, pmd_t *pmdp,
 				pgtable_t pgtable)
@@ -727,6 +771,8 @@ pgtable_t pgtable_trans_huge_withdraw(struct mm_struct *mm, pmd_t *pmdp)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void local_flush_pmd_tlb_range(struct vm_area_struct *vma, unsigned long start,
 			       unsigned long end)
 {
@@ -758,6 +804,7 @@ void read_decode_mmu_bcr(void)
 	struct cpuinfo_arc_mmu *mmu = &cpuinfo_arc700[smp_processor_id()].mmu;
 	unsigned int tmp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct bcr_mmu_1_2 {
 #ifdef CONFIG_CPU_BIG_ENDIAN
@@ -768,6 +815,8 @@ void read_decode_mmu_bcr(void)
 	} *mmu2;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bcr_mmu_3 {
 #ifdef CONFIG_CPU_BIG_ENDIAN
 	unsigned int ver:8, ways:4, sets:4, res:3, sasid:1, pg_sz:4,
@@ -793,6 +842,9 @@ void read_decode_mmu_bcr(void)
 	mmu->ver = (tmp >> 24);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (is_isa_arcompact() && mmu->ver == 3) {
 		mmu3 = (struct bcr_mmu_3 *)&tmp;
 		mmu->pg_sz_k = 1 << (mmu3->pg_sz - 1);
@@ -801,6 +853,7 @@ void read_decode_mmu_bcr(void)
 		mmu->u_dtlb = mmu3->u_dtlb;
 		mmu->u_itlb = mmu3->u_itlb;
 		mmu->sasid = mmu3->sasid;
+<<<<<<< HEAD
 =======
 	if (is_isa_arcompact()) {
 		if (mmu->ver <= 2) {
@@ -820,6 +873,8 @@ void read_decode_mmu_bcr(void)
 			mmu->sasid = mmu3->sasid;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		mmu4 = (struct bcr_mmu_4 *)&tmp;
 		mmu->pg_sz_k = 1 << (mmu4->sz0 - 1);
@@ -846,12 +901,17 @@ char *arc_mmu_mumbojumbo(int cpu_id, char *buf, int len)
 
 	n += scnprintf(buf + n, len - n,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      "MMU [v%x]\t: %dk PAGE, %s, swalk %d lvl, JTLB %d (%dx%d), uDTLB %d, uITLB %d%s%s\n",
 		       p_mmu->ver, p_mmu->pg_sz_k, super_pg,  CONFIG_PGTABLE_LEVELS,
 =======
 		      "MMU [v%x]\t: %dk PAGE, %sJTLB %d (%dx%d), uDTLB %d, uITLB %d%s%s\n",
 		       p_mmu->ver, p_mmu->pg_sz_k, super_pg,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      "MMU [v%x]\t: %dk PAGE, %s, swalk %d lvl, JTLB %d (%dx%d), uDTLB %d, uITLB %d%s%s\n",
+		       p_mmu->ver, p_mmu->pg_sz_k, super_pg,  CONFIG_PGTABLE_LEVELS,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       p_mmu->sets * p_mmu->ways, p_mmu->sets, p_mmu->ways,
 		       p_mmu->u_dtlb, p_mmu->u_itlb,
 		       IS_AVAIL2(p_mmu->pae, ", PAE40 ", CONFIG_ARC_HAS_PAE40));
@@ -886,6 +946,7 @@ void arc_mmu_init(void)
 	/*
 	 * Ensure that MMU features assumed by kernel exist in hardware.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 *  - For older ARC700 cpus, only v3 supported
 	 *  - For HS cpus, v4 was baseline and v5 is backwards compatible
 	 *    (will run older software).
@@ -904,17 +965,27 @@ void arc_mmu_init(void)
 	 * still not work.
 	 * For HS cpus, MMUv4 was baseline and v5 is backwards compatible
 	 * (will run older software).
+=======
+	 *  - For older ARC700 cpus, only v3 supported
+	 *  - For HS cpus, v4 was baseline and v5 is backwards compatible
+	 *    (will run older software).
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-	if (is_isa_arcompact() && mmu->ver == CONFIG_ARC_MMU_VER)
+	if (is_isa_arcompact() && mmu->ver == 3)
 		compat = 1;
-	else if (is_isa_arcv2() && mmu->ver >= CONFIG_ARC_MMU_VER)
+	else if (is_isa_arcv2() && mmu->ver >= 4)
 		compat = 1;
 
+<<<<<<< HEAD
 	if (!compat) {
 		panic("MMU ver %d doesn't match kernel built for %d...\n",
 		      mmu->ver, CONFIG_ARC_MMU_VER);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!compat)
+		panic("MMU ver %d doesn't match kernel built for\n", mmu->ver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mmu->pg_sz_k != TO_KB(PAGE_SIZE))
 		panic("MMU pg size != PAGE_SIZE (%luk)\n", TO_KB(PAGE_SIZE));
@@ -927,6 +998,7 @@ void arc_mmu_init(void)
 	if (IS_ENABLED(CONFIG_ARC_HAS_PAE40) && !mmu->pae)
 		panic("Hardware doesn't support PAE40\n");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Enable the MMU with ASID 0 */
 	mmu_setup_asid(NULL, 0);
@@ -943,6 +1015,13 @@ void arc_mmu_init(void)
 	write_aux_reg(ARC_REG_SCRATCH_DATA0, swapper_pg_dir);
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Enable the MMU with ASID 0 */
+	mmu_setup_asid(NULL, 0);
+
+	/* cache the pgd pointer in MMU SCRATCH reg (ARCv2 only) */
+	mmu_setup_pgd(NULL, swapper_pg_dir);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pae40_exist_but_not_enab())
 		write_aux_reg(ARC_REG_TLBPD1HI, 0);
@@ -1038,6 +1117,7 @@ void do_tlb_overlap_fault(unsigned long cause, unsigned long address,
 	local_irq_restore(flags);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 /***********************************************************************
@@ -1077,3 +1157,5 @@ void tlb_paranoid_check(unsigned int mm_asid, unsigned long addr)
 }
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

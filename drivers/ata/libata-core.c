@@ -160,14 +160,20 @@ MODULE_LICENSE("GPL");
 MODULE_VERSION(DRV_VERSION);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool ata_dev_print_info(struct ata_device *dev)
 {
 	struct ata_eh_context *ehc = &dev->link->eh_context;
 
 	return ehc->i.flags & ATA_EHI_PRINTINFO;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static bool ata_sstatus_online(u32 sstatus)
 {
@@ -716,6 +722,7 @@ int ata_build_rw_tf(struct ata_taskfile *tf, struct ata_device *dev,
 			tf->device |= 1 << 7;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dev->flags & ATA_DFLAG_NCQ_PRIO_ENABLE &&
 		    class == IOPRIO_CLASS_RT)
 			tf->hob_nsect |= ATA_PRIO_HIGH << ATA_SHIFT_PRIO;
@@ -726,6 +733,11 @@ int ata_build_rw_tf(struct ata_taskfile *tf, struct ata_device *dev,
 						 ATA_SHIFT_PRIO;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (dev->flags & ATA_DFLAG_NCQ_PRIO_ENABLE &&
+		    class == IOPRIO_CLASS_RT)
+			tf->hob_nsect |= ATA_PRIO_HIGH << ATA_SHIFT_PRIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (dev->flags & ATA_DFLAG_LBA) {
 		tf->flags |= ATA_TFLAG_LBA;
 
@@ -1282,11 +1294,15 @@ static int ata_set_max_sectors(struct ata_device *dev, u64 new_sectors)
 static int ata_hpa_resize(struct ata_device *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool print_info = ata_dev_print_info(dev);
 =======
 	struct ata_eh_context *ehc = &dev->link->eh_context;
 	int print_info = ehc->i.flags & ATA_EHI_PRINTINFO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool print_info = ata_dev_print_info(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool unlock_hpa = ata_ignore_hpa || dev->flags & ATA_DFLAG_UNLOCK_HPA;
 	u64 sectors = ata_id_n_sectors(dev->id);
 	u64 native_sectors;
@@ -2043,6 +2059,9 @@ retry:
 				     buf, sectors * ATA_SECT_SIZE, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err_mask) {
 		if (dma) {
 			dev->horkage |= ATA_HORKAGE_NO_DMA_LOG;
@@ -2050,6 +2069,7 @@ retry:
 		}
 		ata_dev_err(dev, "Read log page 0x%02x failed, Emask 0x%x\n",
 			    (unsigned int)page, err_mask);
+<<<<<<< HEAD
 	}
 
 =======
@@ -2061,6 +2081,10 @@ retry:
 
 	DPRINTK("EXIT, err_mask=%x\n", err_mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err_mask;
 }
 
@@ -2090,6 +2114,7 @@ static bool ata_identify_page_supported(struct ata_device *dev, u8 page)
 	err = ata_read_log_page(dev, ATA_LOG_IDENTIFY_DEVICE, 0, ap->sector_buf,
 				1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err)
 		return false;
 =======
@@ -2100,6 +2125,10 @@ static bool ata_identify_page_supported(struct ata_device *dev, u8 page)
 		return false;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err)
+		return false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < ap->sector_buf[8]; i++) {
 		if (ap->sector_buf[9 + i] == page)
@@ -2164,6 +2193,7 @@ static void ata_dev_config_ncq_send_recv(struct ata_device *dev)
 	err_mask = ata_read_log_page(dev, ATA_LOG_NCQ_SEND_RECV,
 				     0, ap->sector_buf, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!err_mask) {
 =======
 	if (err_mask) {
@@ -2172,6 +2202,9 @@ static void ata_dev_config_ncq_send_recv(struct ata_device *dev)
 			    err_mask);
 	} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!err_mask) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u8 *cmds = dev->ncq_send_recv_cmds;
 
 		dev->flags |= ATA_DFLAG_NCQ_SEND_RECV;
@@ -2198,6 +2231,7 @@ static void ata_dev_config_ncq_non_data(struct ata_device *dev)
 	err_mask = ata_read_log_page(dev, ATA_LOG_NCQ_NON_DATA,
 				     0, ap->sector_buf, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!err_mask) {
 =======
 	if (err_mask) {
@@ -2206,6 +2240,9 @@ static void ata_dev_config_ncq_non_data(struct ata_device *dev)
 			    err_mask);
 	} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!err_mask) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u8 *cmds = dev->ncq_non_data_cmds;
 
 		memcpy(cmds, ap->sector_buf, ATA_LOG_NCQ_NON_DATA_SIZE);
@@ -2218,6 +2255,7 @@ static void ata_dev_config_ncq_prio(struct ata_device *dev)
 	unsigned int err_mask;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!(dev->flags & ATA_DFLAG_NCQ_PRIO_ENABLE)) {
 		dev->flags &= ~ATA_DFLAG_NCQ_PRIO;
@@ -2225,11 +2263,14 @@ static void ata_dev_config_ncq_prio(struct ata_device *dev)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err_mask = ata_read_log_page(dev,
 				     ATA_LOG_IDENTIFY_DEVICE,
 				     ATA_LOG_SATA_SETTINGS,
 				     ap->sector_buf,
 				     1);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err_mask)
 		goto not_supported;
@@ -2270,15 +2311,44 @@ static bool ata_dev_check_adapter(struct ata_device *dev,
 			    err_mask);
 		return;
 	}
+=======
+	if (err_mask)
+		goto not_supported;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (ap->sector_buf[ATA_LOG_NCQ_PRIO_OFFSET] & BIT(3)) {
-		dev->flags |= ATA_DFLAG_NCQ_PRIO;
-	} else {
-		dev->flags &= ~ATA_DFLAG_NCQ_PRIO;
-		ata_dev_dbg(dev, "SATA page does not support priority\n");
+	if (!(ap->sector_buf[ATA_LOG_NCQ_PRIO_OFFSET] & BIT(3)))
+		goto not_supported;
+
+	dev->flags |= ATA_DFLAG_NCQ_PRIO;
+
+	return;
+
+not_supported:
+	dev->flags &= ~ATA_DFLAG_NCQ_PRIO_ENABLE;
+	dev->flags &= ~ATA_DFLAG_NCQ_PRIO;
+}
+
+static bool ata_dev_check_adapter(struct ata_device *dev,
+				  unsigned short vendor_id)
+{
+	struct pci_dev *pcidev = NULL;
+	struct device *parent_dev = NULL;
+
+	for (parent_dev = dev->tdev.parent; parent_dev != NULL;
+	     parent_dev = parent_dev->parent) {
+		if (dev_is_pci(parent_dev)) {
+			pcidev = to_pci_dev(parent_dev);
+			if (pcidev->vendor == vendor_id)
+				return true;
+			break;
+		}
 	}
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ata_dev_config_ncq(struct ata_device *dev,
@@ -2300,6 +2370,9 @@ static int ata_dev_config_ncq(struct ata_device *dev,
 		return 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dev->horkage & ATA_HORKAGE_NO_NCQ_ON_ATI &&
 	    ata_dev_check_adapter(dev, PCI_VENDOR_ID_ATI)) {
@@ -2307,8 +2380,11 @@ static int ata_dev_config_ncq(struct ata_device *dev,
 		return 0;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ap->flags & ATA_FLAG_NCQ) {
 		hdepth = min(ap->scsi_host->can_queue, ATA_MAX_QUEUE);
 		dev->flags |= ATA_DFLAG_NCQ;
@@ -2439,6 +2515,7 @@ static void ata_dev_config_trusted(struct ata_device *dev)
 	err = ata_read_log_page(dev, ATA_LOG_IDENTIFY_DEVICE, ATA_LOG_SECURITY,
 			ap->sector_buf, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err)
 		return;
 =======
@@ -2448,6 +2525,10 @@ static void ata_dev_config_trusted(struct ata_device *dev)
 		return;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err)
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	trusted_cap = get_unaligned_le64(&ap->sector_buf[40]);
 	if (!(trusted_cap & (1ULL << 63))) {
@@ -2461,6 +2542,9 @@ static void ata_dev_config_trusted(struct ata_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ata_dev_config_lba(struct ata_device *dev)
 {
 	struct ata_port *ap = dev->link->ap;
@@ -2561,8 +2645,11 @@ static void ata_dev_print_features(struct ata_device *dev)
 		     dev->flags & ATA_DFLAG_NCQ_PRIO ? " NCQ-prio" : "");
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  *	ata_dev_configure - Configure the specified ATA/ATAPI device
  *	@dev: Target device to configure
@@ -2580,11 +2667,15 @@ int ata_dev_configure(struct ata_device *dev)
 {
 	struct ata_port *ap = dev->link->ap;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool print_info = ata_dev_print_info(dev);
 =======
 	struct ata_eh_context *ehc = &dev->link->eh_context;
 	int print_info = ehc->i.flags & ATA_EHI_PRINTINFO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool print_info = ata_dev_print_info(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const u16 *id = dev->id;
 	unsigned long xfer_mask;
 	unsigned int err_mask;
@@ -2712,11 +2803,15 @@ int ata_dev_configure(struct ata_device *dev)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* print device info to dmesg */
 		if (ata_msg_drv(ap) && print_info)
 			ata_dev_info(dev, "%s: %s, %s, max %s\n",
 				     revbuf, modelbuf, fwrevbuf,
 				     ata_mode_string(xfer_mask));
+<<<<<<< HEAD
 
 		if (ata_id_has_lba(id)) {
 			rc = ata_dev_config_lba(dev);
@@ -2742,50 +2837,18 @@ int ata_dev_configure(struct ata_device *dev)
 				    ata_id_has_flush_ext(id))
 					dev->flags |= ATA_DFLAG_FLUSH_EXT;
 			}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			/* config NCQ */
-			rc = ata_dev_config_ncq(dev, ncq_desc, sizeof(ncq_desc));
+		if (ata_id_has_lba(id)) {
+			rc = ata_dev_config_lba(dev);
 			if (rc)
 				return rc;
-
-			/* print device info to dmesg */
-			if (ata_msg_drv(ap) && print_info) {
-				ata_dev_info(dev, "%s: %s, %s, max %s\n",
-					     revbuf, modelbuf, fwrevbuf,
-					     ata_mode_string(xfer_mask));
-				ata_dev_info(dev,
-					     "%llu sectors, multi %u: %s %s\n",
-					(unsigned long long)dev->n_sectors,
-					dev->multi_count, lba_desc, ncq_desc);
-			}
 		} else {
-			/* CHS */
-
-			/* Default translation */
-			dev->cylinders	= id[1];
-			dev->heads	= id[3];
-			dev->sectors	= id[6];
-
-			if (ata_id_current_chs_valid(id)) {
-				/* Current CHS translation is valid. */
-				dev->cylinders = id[54];
-				dev->heads     = id[55];
-				dev->sectors   = id[56];
-			}
-
-			/* print device info to dmesg */
-			if (ata_msg_drv(ap) && print_info) {
-				ata_dev_info(dev, "%s: %s, %s, max %s\n",
-					     revbuf,	modelbuf, fwrevbuf,
-					     ata_mode_string(xfer_mask));
-				ata_dev_info(dev,
-					     "%llu sectors, multi %u, CHS %u/%u/%u\n",
-					     (unsigned long long)dev->n_sectors,
-					     dev->multi_count, dev->cylinders,
-					     dev->heads, dev->sectors);
-			}
+			ata_dev_config_chs(dev);
 		}
 
+<<<<<<< HEAD
 		/* Check and mark DevSlp capability. Get DevSlp timing variables
 		 * from SATA Settings page of Identify Device Data Log.
 		 */
@@ -2810,16 +2873,25 @@ int ata_dev_configure(struct ata_device *dev)
 				}
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ata_dev_config_devslp(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ata_dev_config_sense_reporting(dev);
 		ata_dev_config_zac(dev);
 		ata_dev_config_trusted(dev);
 		dev->cdb_len = 32;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		if (ata_msg_drv(ap) && print_info)
 			ata_dev_print_features(dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		if (ata_msg_drv(ap) && print_info)
+			ata_dev_print_features(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* ATAPI-specific feature tests */
@@ -4179,14 +4251,20 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 	{ "Samsung SSD 850*",		NULL,	ATA_HORKAGE_NO_NCQ_TRIM |
 						ATA_HORKAGE_ZERO_AFTER_TRIM, },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ "Samsung SSD 860*",		NULL,	ATA_HORKAGE_NO_NCQ_TRIM |
 						ATA_HORKAGE_ZERO_AFTER_TRIM |
 						ATA_HORKAGE_NO_NCQ_ON_ATI, },
 	{ "Samsung SSD 870*",		NULL,	ATA_HORKAGE_NO_NCQ_TRIM |
 						ATA_HORKAGE_ZERO_AFTER_TRIM |
 						ATA_HORKAGE_NO_NCQ_ON_ATI, },
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ "FCCT*M500*",			NULL,	ATA_HORKAGE_NO_NCQ_TRIM |
 						ATA_HORKAGE_ZERO_AFTER_TRIM, },
 
@@ -5811,10 +5889,14 @@ int ata_host_start(struct ata_host *host)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (host->ops && host->ops->host_stop)
 =======
 	if (host->ops->host_stop)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (host->ops && host->ops->host_stop)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		have_stop = 1;
 
 	if (have_stop) {
@@ -6346,10 +6428,15 @@ static int __init ata_parse_force_one(char **cur,
 		{ "noncqtrim",	.horkage_on	= ATA_HORKAGE_NO_NCQ_TRIM },
 		{ "ncqtrim",	.horkage_off	= ATA_HORKAGE_NO_NCQ_TRIM },
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{ "noncqati",	.horkage_on	= ATA_HORKAGE_NO_NCQ_ON_ATI },
 		{ "ncqati",	.horkage_off	= ATA_HORKAGE_NO_NCQ_ON_ATI },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{ "noncqati",	.horkage_on	= ATA_HORKAGE_NO_NCQ_ON_ATI },
+		{ "ncqati",	.horkage_off	= ATA_HORKAGE_NO_NCQ_ON_ATI },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ "dump_id",	.horkage_on	= ATA_HORKAGE_DUMP_ID },
 		{ "pio0",	.xfer_mask	= 1 << (ATA_SHIFT_PIO + 0) },
 		{ "pio1",	.xfer_mask	= 1 << (ATA_SHIFT_PIO + 1) },

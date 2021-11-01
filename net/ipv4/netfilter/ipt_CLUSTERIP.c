@@ -67,15 +67,22 @@ struct clusterip_net {
 	spinlock_t lock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool clusterip_deprecated_warning;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool clusterip_deprecated_warning;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PROC_FS
 	struct proc_dir_entry *procdir;
 	/* mutex protects the config->pde*/
 	struct mutex mutex;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int hook_users;
 };
 
@@ -86,8 +93,11 @@ static const struct nf_hook_ops cip_arp_ops = {
 	.pf = NFPROTO_ARP,
 	.hooknum = NF_ARP_OUT,
 	.priority = -1
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static unsigned int clusterip_net_id __read_mostly;
@@ -476,9 +486,13 @@ static int clusterip_tg_check(const struct xt_tgchk_param *par)
 {
 	struct ipt_clusterip_tgt_info *cipinfo = par->targinfo;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct clusterip_net *cn = clusterip_pernet(par->net);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct clusterip_net *cn = clusterip_pernet(par->net);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct ipt_entry *e = par->entryinfo;
 	struct clusterip_config *config;
 	int ret, i;
@@ -489,11 +503,17 @@ static int clusterip_tg_check(const struct xt_tgchk_param *par)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (cn->hook_users == UINT_MAX)
 		return -EOVERFLOW;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (cn->hook_users == UINT_MAX)
+		return -EOVERFLOW;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cipinfo->hash_mode != CLUSTERIP_HASHMODE_SIP &&
 	    cipinfo->hash_mode != CLUSTERIP_HASHMODE_SIP_SPT &&
 	    cipinfo->hash_mode != CLUSTERIP_HASHMODE_SIP_SPT_DPT) {
@@ -545,6 +565,9 @@ static int clusterip_tg_check(const struct xt_tgchk_param *par)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cn->hook_users == 0) {
 		ret = nf_register_net_hook(par->net, &cip_arp_ops);
 
@@ -559,6 +582,7 @@ static int clusterip_tg_check(const struct xt_tgchk_param *par)
 	cn->hook_users++;
 
 	if (!cn->clusterip_deprecated_warning) {
+<<<<<<< HEAD
 		pr_info("ipt_CLUSTERIP is deprecated and it will removed soon, "
 			"use xt_cluster instead\n");
 		cn->clusterip_deprecated_warning = true;
@@ -568,6 +592,11 @@ static int clusterip_tg_check(const struct xt_tgchk_param *par)
 			"use xt_cluster instead\n");
 		par->net->xt.clusterip_deprecated_warning = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_info("ipt_CLUSTERIP is deprecated and it will removed soon, "
+			"use xt_cluster instead\n");
+		cn->clusterip_deprecated_warning = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	cipinfo->config = config;
@@ -579,9 +608,13 @@ static void clusterip_tg_destroy(const struct xt_tgdtor_param *par)
 {
 	const struct ipt_clusterip_tgt_info *cipinfo = par->targinfo;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct clusterip_net *cn = clusterip_pernet(par->net);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct clusterip_net *cn = clusterip_pernet(par->net);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* if no more entries are referencing the config, remove it
 	 * from the list and destroy the proc entry */
@@ -591,12 +624,18 @@ static void clusterip_tg_destroy(const struct xt_tgdtor_param *par)
 
 	nf_ct_netns_put(par->net, par->family);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cn->hook_users--;
 
 	if (cn->hook_users == 0)
 		nf_unregister_net_hook(par->net, &cip_arp_ops);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_NETFILTER_XTABLES_COMPAT
@@ -661,6 +700,7 @@ static void arp_print(struct arp_payload *payload)
 
 static unsigned int
 <<<<<<< HEAD
+<<<<<<< HEAD
 clusterip_arp_mangle(void *priv, struct sk_buff *skb,
 		     const struct nf_hook_state *state)
 =======
@@ -668,6 +708,10 @@ arp_mangle(void *priv,
 	   struct sk_buff *skb,
 	   const struct nf_hook_state *state)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+clusterip_arp_mangle(void *priv, struct sk_buff *skb,
+		     const struct nf_hook_state *state)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct arphdr *arp = arp_hdr(skb);
 	struct arp_payload *payload;
@@ -718,6 +762,7 @@ arp_mangle(void *priv,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct nf_hook_ops cip_arp_ops = {
 	.hook = arp_mangle,
@@ -727,6 +772,8 @@ static const struct nf_hook_ops cip_arp_ops = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /***********************************************************************
  * PROC DIR HANDLING
  ***********************************************************************/
@@ -884,14 +931,18 @@ static int clusterip_net_init(struct net *net)
 {
 	struct clusterip_net *cn = clusterip_pernet(net);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	INIT_LIST_HEAD(&cn->configs);
 
 	spin_lock_init(&cn->lock);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #ifdef CONFIG_PROC_FS
 	cn->procdir = proc_mkdir("ipt_CLUSTERIP", net->proc_net);
@@ -906,6 +957,11 @@ static int clusterip_net_init(struct net *net)
 	if (!cn->procdir) {
 		nf_unregister_net_hook(net, &cip_arp_ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_PROC_FS
+	cn->procdir = proc_mkdir("ipt_CLUSTERIP", net->proc_net);
+	if (!cn->procdir) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("Unable to proc dir entry\n");
 		return -ENOMEM;
 	}
@@ -926,9 +982,12 @@ static void clusterip_net_exit(struct net *net)
 	mutex_unlock(&cn->mutex);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	nf_unregister_net_hook(net, &cip_arp_ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct pernet_operations clusterip_net_ops = {

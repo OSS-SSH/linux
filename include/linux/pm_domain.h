@@ -199,9 +199,13 @@ struct generic_pm_domain_data {
 	int cpu;
 	unsigned int performance_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int default_pstate;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int default_pstate;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int rpm_pstate;
 	ktime_t	next_wakeup;
 	void *data;

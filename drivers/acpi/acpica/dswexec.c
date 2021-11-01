@@ -562,6 +562,7 @@ acpi_status acpi_ds_exec_end_op(struct acpi_walk_state *walk_state)
 								node->object,
 								NULL);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (ACPI_FAILURE(status)) {
 					ACPI_EXCEPTION((AE_INFO, status,
 							"While writing to buffer field"));
@@ -573,6 +574,12 @@ acpi_status acpi_ds_exec_end_op(struct acpi_walk_state *walk_state)
 							"While writing to buffer field"));
 					}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (ACPI_FAILURE(status)) {
+					ACPI_EXCEPTION((AE_INFO, status,
+							"While writing to buffer field"));
+				}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 			ACPI_FREE(namepath);
 			status = AE_OK;

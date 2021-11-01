@@ -34,11 +34,15 @@
  */
 .macro __init_el2_timers
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mov	x0, #3				// Enable EL1 physical timers
 =======
 	mrs	x0, cnthctl_el2
 	orr	x0, x0, #3			// Enable EL1 physical timers
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mov	x0, #3				// Enable EL1 physical timers
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	msr	cnthctl_el2, x0
 	msr	cntvoff_el2, xzr		// Clear virtual offset
 .endm
@@ -155,6 +159,9 @@
 	cbz	x1, .Lskip_fgt_\@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mov	x0, xzr
 	mrs	x1, id_aa64dfr0_el1
 	ubfx	x1, x1, #ID_AA64DFR0_PMSVER_SHIFT, #4
@@ -166,10 +173,13 @@
 .Lset_fgt_\@:
 	msr_s	SYS_HDFGRTR_EL2, x0
 	msr_s	SYS_HDFGWTR_EL2, x0
+<<<<<<< HEAD
 =======
 	msr_s	SYS_HDFGRTR_EL2, xzr
 	msr_s	SYS_HDFGWTR_EL2, xzr
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	msr_s	SYS_HFGRTR_EL2, xzr
 	msr_s	SYS_HFGWTR_EL2, xzr
 	msr_s	SYS_HFGITR_EL2, xzr

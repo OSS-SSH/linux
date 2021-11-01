@@ -66,11 +66,16 @@
 	C(EMPTY_SORT_FIELD,	"Empty sort field"),			\
 	C(TOO_MANY_SORT_FIELDS,	"Too many sort fields (Max = 2)"),	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	C(INVALID_SORT_FIELD,	"Sort field must be a key or a val"),	\
 	C(INVALID_STR_OPERAND,	"String type can not be an operand in expression"),
 =======
 	C(INVALID_SORT_FIELD,	"Sort field must be a key or a val"),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	C(INVALID_SORT_FIELD,	"Sort field must be a key or a val"),	\
+	C(INVALID_STR_OPERAND,	"String type can not be an operand in expression"),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #undef C
 #define C(a, b)		HIST_ERR_##a
@@ -126,9 +131,13 @@ struct hist_field {
 	unsigned int			offset;
 	unsigned int                    is_signed;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long			buckets;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long			buckets;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char			*type;
 	struct hist_field		*operands[HIST_FIELD_OPERANDS_MAX];
 	struct hist_trigger_data	*hist_data;
@@ -228,6 +237,9 @@ static u64 hist_field_log2(struct hist_field *hist_field,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u64 hist_field_bucket(struct hist_field *hist_field,
 			     struct tracing_map_elt *elt,
 			     struct trace_buffer *buffer,
@@ -249,8 +261,11 @@ static u64 hist_field_bucket(struct hist_field *hist_field,
 	return val * buckets;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u64 hist_field_plus(struct hist_field *hist_field,
 			   struct tracing_map_elt *elt,
 			   struct trace_buffer *buffer,
@@ -351,9 +366,13 @@ enum hist_field_flags {
 	HIST_FIELD_FL_CPU		= 1 << 15,
 	HIST_FIELD_FL_ALIAS		= 1 << 16,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	HIST_FIELD_FL_BUCKET		= 1 << 17,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	HIST_FIELD_FL_BUCKET		= 1 << 17,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct var_defs {
@@ -522,11 +541,16 @@ struct hist_elt_data {
 	char *comm;
 	u64 *var_ref_vals;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char **field_var_str;
 	int n_field_var_str;
 =======
 	char *field_var_str[SYNTH_FIELDS_MAX];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char **field_var_str;
+	int n_field_var_str;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct snapshot_context {
@@ -1151,6 +1175,7 @@ static const char *hist_field_name(struct hist_field *field,
 		field_name = field->field->name;
 	else if (field->flags & HIST_FIELD_FL_LOG2 ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 field->flags & HIST_FIELD_FL_ALIAS ||
 		 field->flags & HIST_FIELD_FL_BUCKET)
 		field_name = hist_field_name(field->operands[0], ++level);
@@ -1162,6 +1187,13 @@ static const char *hist_field_name(struct hist_field *field,
 	else if (field->flags & HIST_FIELD_FL_CPU)
 		field_name = "cpu";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 field->flags & HIST_FIELD_FL_ALIAS ||
+		 field->flags & HIST_FIELD_FL_BUCKET)
+		field_name = hist_field_name(field->operands[0], ++level);
+	else if (field->flags & HIST_FIELD_FL_CPU)
+		field_name = "common_cpu";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (field->flags & HIST_FIELD_FL_EXPR ||
 		 field->flags & HIST_FIELD_FL_VAR_REF) {
 		if (field->system) {
@@ -1427,6 +1459,7 @@ static void hist_elt_data_free(struct hist_elt_data *elt_data)
 	unsigned int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < elt_data->n_field_var_str; i++)
 		kfree(elt_data->field_var_str[i]);
 
@@ -1437,6 +1470,13 @@ static void hist_elt_data_free(struct hist_elt_data *elt_data)
 		kfree(elt_data->field_var_str[i]);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < elt_data->n_field_var_str; i++)
+		kfree(elt_data->field_var_str[i]);
+
+	kfree(elt_data->field_var_str);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(elt_data->comm);
 	kfree(elt_data);
 }
@@ -1454,16 +1494,21 @@ static int hist_trigger_elt_data_alloc(struct tracing_map_elt *elt)
 	unsigned int size = TASK_COMM_LEN;
 	struct hist_elt_data *elt_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hist_field *hist_field;
 =======
 	struct hist_field *key_field;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hist_field *hist_field;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int i, n_str;
 
 	elt_data = kzalloc(sizeof(*elt_data), GFP_KERNEL);
 	if (!elt_data)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for_each_hist_field(i, hist_data) {
 		hist_field = hist_data->fields[i];
@@ -1475,6 +1520,12 @@ static int hist_trigger_elt_data_alloc(struct tracing_map_elt *elt)
 
 		if (key_field->flags & HIST_FIELD_FL_EXECNAME) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for_each_hist_field(i, hist_data) {
+		hist_field = hist_data->fields[i];
+
+		if (hist_field->flags & HIST_FIELD_FL_EXECNAME) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			elt_data->comm = kzalloc(size, GFP_KERNEL);
 			if (!elt_data->comm) {
 				kfree(elt_data);
@@ -1496,6 +1547,9 @@ static int hist_trigger_elt_data_alloc(struct tracing_map_elt *elt)
 	size = STR_VAR_LEN_MAX;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	elt_data->field_var_str = kcalloc(n_str, sizeof(char *), GFP_KERNEL);
 	if (!elt_data->field_var_str) {
 		hist_elt_data_free(elt_data);
@@ -1503,8 +1557,11 @@ static int hist_trigger_elt_data_alloc(struct tracing_map_elt *elt)
 	}
 	elt_data->n_field_var_str = n_str;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < n_str; i++) {
 		elt_data->field_var_str[i] = kzalloc(size, GFP_KERNEL);
 		if (!elt_data->field_var_str[i]) {
@@ -1549,10 +1606,15 @@ static const char *get_hist_field_flags(struct hist_field *hist_field)
 	else if (hist_field->flags & HIST_FIELD_FL_LOG2)
 		flags_str = "log2";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (hist_field->flags & HIST_FIELD_FL_BUCKET)
 		flags_str = "buckets";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (hist_field->flags & HIST_FIELD_FL_BUCKET)
+		flags_str = "buckets";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (hist_field->flags & HIST_FIELD_FL_TIMESTAMP_USECS)
 		flags_str = "usecs";
 
@@ -1674,12 +1736,18 @@ static void __destroy_hist_field(struct hist_field *hist_field)
 	kfree(hist_field->var.name);
 	kfree(hist_field->name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Can likely be a const */
 	kfree_const(hist_field->type);
 =======
 	kfree(hist_field->type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Can likely be a const */
+	kfree_const(hist_field->type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(hist_field->system);
 	kfree(hist_field->event_name);
@@ -1737,12 +1805,16 @@ static struct hist_field *create_hist_field(struct hist_trigger_data *hist_data,
 		hist_field->fn = hist_field_counter;
 		hist_field->size = sizeof(u64);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hist_field->type = "u64";
 =======
 		hist_field->type = kstrdup("u64", GFP_KERNEL);
 		if (!hist_field->type)
 			goto free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hist_field->type = "u64";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
@@ -1752,10 +1824,14 @@ static struct hist_field *create_hist_field(struct hist_trigger_data *hist_data,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flags & (HIST_FIELD_FL_LOG2 | HIST_FIELD_FL_BUCKET)) {
 		unsigned long fl = flags & ~(HIST_FIELD_FL_LOG2 | HIST_FIELD_FL_BUCKET);
 		hist_field->fn = flags & HIST_FIELD_FL_LOG2 ? hist_field_log2 :
 			hist_field_bucket;
+<<<<<<< HEAD
 		hist_field->operands[0] = create_hist_field(hist_data, field, fl, NULL);
 		hist_field->size = hist_field->operands[0]->size;
 		hist_field->type = kstrdup_const(hist_field->operands[0]->type, GFP_KERNEL);
@@ -1767,6 +1843,11 @@ static struct hist_field *create_hist_field(struct hist_trigger_data *hist_data,
 		hist_field->size = hist_field->operands[0]->size;
 		hist_field->type = kstrdup(hist_field->operands[0]->type, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hist_field->operands[0] = create_hist_field(hist_data, field, fl, NULL);
+		hist_field->size = hist_field->operands[0]->size;
+		hist_field->type = kstrdup_const(hist_field->operands[0]->type, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!hist_field->type)
 			goto free;
 		goto out;
@@ -1776,12 +1857,16 @@ static struct hist_field *create_hist_field(struct hist_trigger_data *hist_data,
 		hist_field->fn = hist_field_timestamp;
 		hist_field->size = sizeof(u64);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hist_field->type = "u64";
 =======
 		hist_field->type = kstrdup("u64", GFP_KERNEL);
 		if (!hist_field->type)
 			goto free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hist_field->type = "u64";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
@@ -1789,18 +1874,23 @@ static struct hist_field *create_hist_field(struct hist_trigger_data *hist_data,
 		hist_field->fn = hist_field_cpu;
 		hist_field->size = sizeof(int);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hist_field->type = "unsigned int";
 =======
 		hist_field->type = kstrdup("unsigned int", GFP_KERNEL);
 		if (!hist_field->type)
 			goto free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hist_field->type = "unsigned int";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
 	if (WARN_ON_ONCE(!field))
 		goto out;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Pointers to strings are just pointers and dangerous to dereference */
 	if (is_string_field(field) &&
@@ -1816,6 +1906,15 @@ static struct hist_field *create_hist_field(struct hist_trigger_data *hist_data,
 		hist_field->size = MAX_FILTER_STR_VAL;
 		hist_field->type = kstrdup(field->type, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Pointers to strings are just pointers and dangerous to dereference */
+	if (is_string_field(field) &&
+	    (field->filter_type != FILTER_PTR_STRING)) {
+		flags |= HIST_FIELD_FL_STRING;
+
+		hist_field->size = MAX_FILTER_STR_VAL;
+		hist_field->type = kstrdup_const(field->type, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!hist_field->type)
 			goto free;
 
@@ -1829,10 +1928,14 @@ static struct hist_field *create_hist_field(struct hist_trigger_data *hist_data,
 		hist_field->size = field->size;
 		hist_field->is_signed = field->is_signed;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hist_field->type = kstrdup_const(field->type, GFP_KERNEL);
 =======
 		hist_field->type = kstrdup(field->type, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hist_field->type = kstrdup_const(field->type, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!hist_field->type)
 			goto free;
 
@@ -1919,10 +2022,14 @@ static int init_var_ref(struct hist_field *ref_field,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ref_field->type = kstrdup_const(var_field->type, GFP_KERNEL);
 =======
 	ref_field->type = kstrdup(var_field->type, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ref_field->type = kstrdup_const(var_field->type, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ref_field->type) {
 		err = -ENOMEM;
 		goto free;
@@ -2081,10 +2188,14 @@ static struct hist_field *parse_var_ref(struct hist_trigger_data *hist_data,
 static struct ftrace_event_field *
 parse_field(struct hist_trigger_data *hist_data, struct trace_event_file *file,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    char *field_str, unsigned long *flags, unsigned long *buckets)
 =======
 	    char *field_str, unsigned long *flags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    char *field_str, unsigned long *flags, unsigned long *buckets)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ftrace_event_field *field = NULL;
 	char *field_name, *modifier, *str;
@@ -2112,6 +2223,9 @@ parse_field(struct hist_trigger_data *hist_data, struct trace_event_file *file,
 		else if (strcmp(modifier, "usecs") == 0)
 			*flags |= HIST_FIELD_FL_TIMESTAMP_USECS;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else if (strncmp(modifier, "bucket", 6) == 0) {
 			int ret;
 
@@ -2128,9 +2242,12 @@ parse_field(struct hist_trigger_data *hist_data, struct trace_event_file *file,
 			*flags |= HIST_FIELD_FL_BUCKET;
 		} else {
  error:
+<<<<<<< HEAD
 =======
 		else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			hist_err(tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(modifier));
 			field = ERR_PTR(-EINVAL);
 			goto out;
@@ -2143,15 +2260,22 @@ parse_field(struct hist_trigger_data *hist_data, struct trace_event_file *file,
 		if (*flags & HIST_FIELD_FL_TIMESTAMP_USECS)
 			hist_data->attrs->ts_in_usecs = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (strcmp(field_name, "common_cpu") == 0)
 =======
 	} else if (strcmp(field_name, "cpu") == 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (strcmp(field_name, "common_cpu") == 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*flags |= HIST_FIELD_FL_CPU;
 	else {
 		field = trace_find_event_field(file->event_call, field_name);
 		if (!field || !field->size) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * For backward compatibility, if field_name
 			 * was "cpu", then we treat this the same as
@@ -2165,11 +2289,14 @@ parse_field(struct hist_trigger_data *hist_data, struct trace_event_file *file,
 				field = ERR_PTR(-EINVAL);
 				goto out;
 			}
+<<<<<<< HEAD
 =======
 			hist_err(tr, HIST_ERR_FIELD_NOT_FOUND, errpos(field_name));
 			field = ERR_PTR(-EINVAL);
 			goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
  out:
@@ -2210,9 +2337,13 @@ static struct hist_field *parse_atom(struct hist_trigger_data *hist_data,
 	struct ftrace_event_field *field = NULL;
 	struct hist_field *hist_field = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long buckets = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long buckets = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	s = strchr(str, '.');
@@ -2251,10 +2382,14 @@ static struct hist_field *parse_atom(struct hist_trigger_data *hist_data,
 		str = s;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	field = parse_field(hist_data, file, str, flags, &buckets);
 =======
 	field = parse_field(hist_data, file, str, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	field = parse_field(hist_data, file, str, flags, &buckets);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(field)) {
 		ret = PTR_ERR(field);
 		goto out;
@@ -2266,9 +2401,13 @@ static struct hist_field *parse_atom(struct hist_trigger_data *hist_data,
 		goto out;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hist_field->buckets = buckets;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hist_field->buckets = buckets;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return hist_field;
  out:
@@ -2330,6 +2469,9 @@ static struct hist_field *parse_unary(struct hist_trigger_data *hist_data,
 		goto free;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (operand1->flags & HIST_FIELD_FL_STRING) {
 		/* String type can not be the operand of unary operator. */
 		hist_err(file->tr, HIST_ERR_INVALID_STR_OPERAND, errpos(str));
@@ -2337,8 +2479,11 @@ static struct hist_field *parse_unary(struct hist_trigger_data *hist_data,
 		ret = -EINVAL;
 		goto free;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	expr->flags |= operand1->flags &
 		(HIST_FIELD_FL_TIMESTAMP | HIST_FIELD_FL_TIMESTAMP_USECS);
@@ -2347,10 +2492,14 @@ static struct hist_field *parse_unary(struct hist_trigger_data *hist_data,
 	expr->operator = FIELD_OP_UNARY_MINUS;
 	expr->name = expr_str(expr, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	expr->type = kstrdup_const(operand1->type, GFP_KERNEL);
 =======
 	expr->type = kstrdup(operand1->type, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	expr->type = kstrdup_const(operand1->type, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!expr->type) {
 		ret = -ENOMEM;
 		goto free;
@@ -2445,13 +2594,19 @@ static struct hist_field *parse_expr(struct hist_trigger_data *hist_data,
 		goto free;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (operand1->flags & HIST_FIELD_FL_STRING) {
 		hist_err(file->tr, HIST_ERR_INVALID_STR_OPERAND, errpos(operand1_str));
 		ret = -EINVAL;
 		goto free;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* rest of string could be another expression e.g. b+c in a+b+c */
 	operand_flags = 0;
@@ -2462,13 +2617,19 @@ static struct hist_field *parse_expr(struct hist_trigger_data *hist_data,
 		goto free;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (operand2->flags & HIST_FIELD_FL_STRING) {
 		hist_err(file->tr, HIST_ERR_INVALID_STR_OPERAND, errpos(str));
 		ret = -EINVAL;
 		goto free;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = check_expr_operands(file->tr, operand1, operand2);
 	if (ret)
@@ -2491,10 +2652,14 @@ static struct hist_field *parse_expr(struct hist_trigger_data *hist_data,
 	expr->operands[0] = operand1;
 	expr->operands[1] = operand2;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The operand sizes should be the same, so just pick one */
 	expr->size = operand1->size;
 
+<<<<<<< HEAD
 	expr->operator = field_op;
 	expr->name = expr_str(expr, 0);
 	expr->type = kstrdup_const(operand1->type, GFP_KERNEL);
@@ -2503,6 +2668,11 @@ static struct hist_field *parse_expr(struct hist_trigger_data *hist_data,
 	expr->name = expr_str(expr, 0);
 	expr->type = kstrdup(operand1->type, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	expr->operator = field_op;
+	expr->name = expr_str(expr, 0);
+	expr->type = kstrdup_const(operand1->type, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!expr->type) {
 		ret = -ENOMEM;
 		goto free;
@@ -2648,10 +2818,14 @@ find_synthetic_field_var(struct hist_trigger_data *target_hist_data,
  * specify an event field in an action, which will be automatically
  * converted into a variable on their behalf.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * If a user specifies a field on an event that isn't the event the
  * histogram currently being defined (the target event histogram), the
  * only way that can be accomplished is if a new hist trigger is
@@ -2895,16 +3069,24 @@ static struct hist_field *create_var(struct hist_trigger_data *hist_data,
 	var->size = size;
 	var->var.name = kstrdup(name, GFP_KERNEL);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var->type = kstrdup_const(type, GFP_KERNEL);
 	if (!var->var.name || !var->type) {
 		kfree_const(var->type);
 		kfree(var->var.name);
 =======
 	var->type = kstrdup(type, GFP_KERNEL);
+=======
+	var->type = kstrdup_const(type, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!var->var.name || !var->type) {
+		kfree_const(var->type);
 		kfree(var->var.name);
+<<<<<<< HEAD
 		kfree(var->type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(var);
 		var = ERR_PTR(-ENOMEM);
 	}
@@ -3633,10 +3815,15 @@ trace_action_create_field_var(struct hist_trigger_data *hist_data,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!event)
 			goto free;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!event)
+			goto free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * At this point, we're looking at a field on another
 		 * event.  Because we can't modify a hist trigger on
@@ -3937,6 +4124,9 @@ static int create_val_field(struct hist_trigger_data *hist_data,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const char *no_comm = "(no comm)";
 
 static u64 hist_field_execname(struct hist_field *hist_field,
@@ -3972,8 +4162,11 @@ static void update_var_execname(struct hist_field *hist_field)
 	hist_field->fn = hist_field_execname;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int create_var_field(struct hist_trigger_data *hist_data,
 			    unsigned int val_idx,
 			    struct trace_event_file *file,
@@ -3999,11 +4192,17 @@ static int create_var_field(struct hist_trigger_data *hist_data,
 	ret = __create_val_field(hist_data, val_idx, file, var_name, expr_str, flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ret && hist_data->fields[val_idx]->flags & HIST_FIELD_FL_EXECNAME)
 		update_var_execname(hist_data->fields[val_idx]);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!ret && hist_data->fields[val_idx]->flags & HIST_FIELD_FL_EXECNAME)
+		update_var_execname(hist_data->fields[val_idx]);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ret && hist_data->fields[val_idx]->flags & HIST_FIELD_FL_STRING)
 		hist_data->fields[val_idx]->var_str_idx = hist_data->n_var_str++;
 
@@ -4781,10 +4980,13 @@ static inline void add_to_key(char *compound_key, void *key,
 		if (field->filter_type == FILTER_DYN_STRING)
 			size = *(u32 *)(rec + field->offset) >> 16;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		else if (field->filter_type == FILTER_PTR_STRING)
 			size = strlen(key);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else if (field->filter_type == FILTER_STATIC_STRING)
 			size = field->size;
 
@@ -4953,13 +5155,19 @@ static void hist_trigger_print_key(struct seq_file *m,
 			seq_printf(m, "%s: ~ 2^%-2llu", field_name,
 				   *(u64 *)(key + key_field->offset));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else if (key_field->flags & HIST_FIELD_FL_BUCKET) {
 			unsigned long buckets = key_field->buckets;
 			uval = *(u64 *)(key + key_field->offset);
 			seq_printf(m, "%s: ~ %llu-%llu", field_name,
 				   uval, uval + buckets -1);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else if (key_field->flags & HIST_FIELD_FL_STRING) {
 			seq_printf(m, "%s: %-50s", field_name,
 				   (char *)(key + key_field->offset));
@@ -5382,10 +5590,14 @@ static void hist_field_print(struct seq_file *m, struct hist_field *hist_field)
 
 	if (hist_field->flags & HIST_FIELD_FL_CPU)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		seq_puts(m, "common_cpu");
 =======
 		seq_puts(m, "cpu");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		seq_puts(m, "common_cpu");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (field_name) {
 		if (hist_field->flags & HIST_FIELD_FL_VAR_REF ||
 		    hist_field->flags & HIST_FIELD_FL_ALIAS)
@@ -5404,10 +5616,15 @@ static void hist_field_print(struct seq_file *m, struct hist_field *hist_field)
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hist_field->buckets)
 		seq_printf(m, "=%ld", hist_field->buckets);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (hist_field->buckets)
+		seq_printf(m, "=%ld", hist_field->buckets);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int event_hist_trigger_print(struct seq_file *m,

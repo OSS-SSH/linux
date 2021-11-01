@@ -46,6 +46,9 @@ how the user addresses are used by the kernel:
 1. User addresses not accessed by the kernel but used for address space
    management (e.g. ``mprotect()``, ``madvise()``). The use of valid
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    tagged pointers in this context is allowed with these exceptions:
 
    - ``brk()``, ``mmap()`` and the ``new_address`` argument to
@@ -64,6 +67,7 @@ how the user addresses are used by the kernel:
 
      NOTE: This behaviour changed in v5.14 and so some earlier kernels may
      incorrectly accept valid tagged pointers for this system call.
+<<<<<<< HEAD
 =======
    tagged pointers in this context is allowed with the exception of
    ``brk()``, ``mmap()`` and the ``new_address`` argument to
@@ -74,6 +78,8 @@ how the user addresses are used by the kernel:
    incorrectly accept valid tagged pointers for the ``brk()``,
    ``mmap()`` and ``mremap()`` system calls.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 2. User addresses accessed by the kernel (e.g. ``write()``). This ABI
    relaxation is disabled by default and the application thread needs to

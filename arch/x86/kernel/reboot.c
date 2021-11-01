@@ -389,6 +389,7 @@ static const struct dmi_system_id reboot_dmi_table[] __initconst = {
 	{	/* Handle problems with rebooting on the OptiPlex 990. */
 		.callback = set_pci_reboot,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.ident = "Dell OptiPlex 990 BIOS A0x",
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
@@ -400,6 +401,13 @@ static const struct dmi_system_id reboot_dmi_table[] __initconst = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
 			DMI_MATCH(DMI_PRODUCT_NAME, "OptiPlex 990"),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.ident = "Dell OptiPlex 990 BIOS A0x",
+		.matches = {
+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+			DMI_MATCH(DMI_PRODUCT_NAME, "OptiPlex 990"),
+			DMI_MATCH(DMI_BIOS_VERSION, "A0"),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		},
 	},
 	{	/* Handle problems with rebooting on Dell 300's */

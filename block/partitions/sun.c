@@ -66,9 +66,12 @@ int sun_partition(struct parsed_partitions *state)
 	struct sun_partition *p;
 	unsigned long spc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	char b[BDEVNAME_SIZE];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int use_vtoc;
 	int nparts;
 
@@ -80,10 +83,14 @@ int sun_partition(struct parsed_partitions *state)
 	if (be16_to_cpu(label->magic) != SUN_LABEL_MAGIC) {
 /*		printk(KERN_INFO "Dev %s Sun disklabel: bad magic %04x\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       state->disk->disk_name, be16_to_cpu(label->magic)); */
 =======
 		       bdevname(bdev, b), be16_to_cpu(label->magic)); */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       state->disk->disk_name, be16_to_cpu(label->magic)); */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		put_dev_sector(sect);
 		return 0;
 	}
@@ -94,10 +101,14 @@ int sun_partition(struct parsed_partitions *state)
 	if (csum) {
 		printk("Dev %s Sun disklabel: Csum bad, label corrupted\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       state->disk->disk_name);
 =======
 		       bdevname(state->bdev, b));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       state->disk->disk_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		put_dev_sector(sect);
 		return 0;
 	}

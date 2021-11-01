@@ -241,6 +241,9 @@ void __init setup_kuap(bool disabled)
 }
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int pud_clear_huge(pud_t *pud)
 {
@@ -251,5 +254,8 @@ int pmd_clear_huge(pmd_t *pmd)
 {
 	 return 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -43,6 +43,7 @@ static int adxl345_spi_probe(struct spi_device *spi)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int adxl345_spi_remove(struct spi_device *spi)
 {
@@ -50,6 +51,8 @@ static int adxl345_spi_remove(struct spi_device *spi)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct spi_device_id adxl345_spi_id[] = {
 	{ "adxl345", ADXL345 },
 	{ "adxl375", ADXL375 },
@@ -73,9 +76,12 @@ static struct spi_driver adxl345_spi_driver = {
 	},
 	.probe		= adxl345_spi_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= adxl345_spi_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= adxl345_spi_id,
 };
 

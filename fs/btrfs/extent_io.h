@@ -281,10 +281,14 @@ struct bio *btrfs_bio_alloc(u64 first_byte);
 struct bio *btrfs_io_bio_alloc(unsigned int nr_iovecs);
 struct bio *btrfs_bio_clone(struct bio *bio);
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct bio *btrfs_bio_clone_partial(struct bio *orig, u64 offset, u64 size);
 =======
 struct bio *btrfs_bio_clone_partial(struct bio *orig, int offset, int size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct bio *btrfs_bio_clone_partial(struct bio *orig, u64 offset, u64 size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 start,
 		      u64 length, u64 logical, struct page *page,

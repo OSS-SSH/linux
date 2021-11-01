@@ -21,9 +21,13 @@
 #include <linux/module.h>
 #include <linux/pm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/property.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/property.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/regmap.h>
 #include <linux/regulator/consumer.h>
 #include <linux/slab.h>
@@ -1226,6 +1230,7 @@ static int sx9310_init_compensation(struct iio_dev *indio_dev)
 
 static const struct sx9310_reg_default *
 <<<<<<< HEAD
+<<<<<<< HEAD
 sx9310_get_default_reg(struct device *dev, int idx,
 		       struct sx9310_reg_default *reg_def)
 {
@@ -1235,6 +1240,11 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 {
 	const struct device_node *np = data->client->dev.of_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+sx9310_get_default_reg(struct device *dev, int idx,
+		       struct sx9310_reg_default *reg_def)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 combined[SX9310_NUM_CHANNELS];
 	u32 start = 0, raw = 0, pos = 0;
 	unsigned long comb_mask = 0;
@@ -1242,6 +1252,7 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 	const char *res;
 
 	memcpy(reg_def, &sx9310_default_regs[idx], sizeof(*reg_def));
+<<<<<<< HEAD
 <<<<<<< HEAD
 	switch (reg_def->reg) {
 	case SX9310_REG_PROX_CTRL2:
@@ -1254,10 +1265,16 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 	case SX9310_REG_PROX_CTRL2:
 		if (of_property_read_bool(np, "semtech,cs0-ground")) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switch (reg_def->reg) {
+	case SX9310_REG_PROX_CTRL2:
+		if (device_property_read_bool(dev, "semtech,cs0-ground")) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg_def->def &= ~SX9310_REG_PROX_CTRL2_SHIELDEN_MASK;
 			reg_def->def |= SX9310_REG_PROX_CTRL2_SHIELDEN_GROUND;
 		}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		count = device_property_count_u32(dev, "semtech,combined-sensors");
 		if (count < 0 || count > ARRAY_SIZE(combined))
@@ -1282,18 +1299,19 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 			 * Either the property does not exist in the DT or the
 			 * number of entries is incorrect.
 			 */
+=======
+		count = device_property_count_u32(dev, "semtech,combined-sensors");
+		if (count < 0 || count > ARRAY_SIZE(combined))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
-		}
-		for (i = 0; i < count; i++) {
-			if (combined[i] >= SX9310_NUM_CHANNELS) {
-				/* Invalid sensor (invalid DT). */
-				break;
-			}
-			comb_mask |= BIT(combined[i]);
-		}
-		if (i < count)
+		ret = device_property_read_u32_array(dev, "semtech,combined-sensors",
+				combined, count);
+		if (ret)
 			break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+		for (i = 0; i < count; i++)
+			comb_mask |= BIT(combined[i]);
 
 		reg_def->def &= ~SX9310_REG_PROX_CTRL2_COMBMODE_MASK;
 		if (comb_mask == (BIT(3) | BIT(2) | BIT(1) | BIT(0)))
@@ -1308,10 +1326,14 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 		break;
 	case SX9310_REG_PROX_CTRL4:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = device_property_read_string(dev, "semtech,resolution", &res);
 =======
 		ret = of_property_read_string(np, "semtech,resolution", &res);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = device_property_read_string(dev, "semtech,resolution", &res);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			break;
 
@@ -1336,10 +1358,14 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 		break;
 	case SX9310_REG_PROX_CTRL5:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = device_property_read_u32(dev, "semtech,startup-sensor", &start);
 =======
 		ret = of_property_read_u32(np, "semtech,startup-sensor", &start);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = device_property_read_u32(dev, "semtech,startup-sensor", &start);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret) {
 			start = FIELD_GET(SX9310_REG_PROX_CTRL5_STARTUPSENS_MASK,
 					  reg_def->def);
@@ -1350,10 +1376,14 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 					   start);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = device_property_read_u32(dev, "semtech,proxraw-strength", &raw);
 =======
 		ret = of_property_read_u32(np, "semtech,proxraw-strength", &raw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = device_property_read_u32(dev, "semtech,proxraw-strength", &raw);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret) {
 			raw = FIELD_GET(SX9310_REG_PROX_CTRL5_RAWFILT_MASK,
 					reg_def->def);
@@ -1367,10 +1397,14 @@ sx9310_get_default_reg(struct sx9310_data *data, int idx,
 		break;
 	case SX9310_REG_PROX_CTRL7:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = device_property_read_u32(dev, "semtech,avg-pos-strength", &pos);
 =======
 		ret = of_property_read_u32(np, "semtech,avg-pos-strength", &pos);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = device_property_read_u32(dev, "semtech,avg-pos-strength", &pos);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			break;
 
@@ -1407,10 +1441,14 @@ static int sx9310_init_device(struct iio_dev *indio_dev)
 	/* Program some sane defaults. */
 	for (i = 0; i < ARRAY_SIZE(sx9310_default_regs); i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		initval = sx9310_get_default_reg(&indio_dev->dev, i, &tmp);
 =======
 		initval = sx9310_get_default_reg(data, i, &tmp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		initval = sx9310_get_default_reg(&indio_dev->dev, i, &tmp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = regmap_write(data->regmap, initval->reg, initval->def);
 		if (ret)
 			return ret;

@@ -81,10 +81,14 @@ static void amdgpu_pll_reduce_ratio(unsigned *nom, unsigned *den,
  * sure we stay within the limits.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void amdgpu_pll_get_fb_ref_div(struct amdgpu_device *adev, unsigned int nom,
 				      unsigned int den, unsigned int post_div,
 				      unsigned int fb_div_max, unsigned int ref_div_max,
 				      unsigned int *fb_div, unsigned int *ref_div)
+<<<<<<< HEAD
 {
 
 	/* limit reference * post divider to a maximum */
@@ -96,10 +100,20 @@ static void amdgpu_pll_get_fb_ref_div(struct amdgpu_device *adev, unsigned int n
 static void amdgpu_pll_get_fb_ref_div(unsigned nom, unsigned den, unsigned post_div,
 				      unsigned fb_div_max, unsigned ref_div_max,
 				      unsigned *fb_div, unsigned *ref_div)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+
 	/* limit reference * post divider to a maximum */
+<<<<<<< HEAD
 	ref_div_max = min(128 / post_div, ref_div_max);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adev->family == AMDGPU_FAMILY_SI)
+		ref_div_max = min(100 / post_div, ref_div_max);
+	else
+		ref_div_max = min(128 / post_div, ref_div_max);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* get matching reference and feedback divider */
 	*ref_div = min(max(DIV_ROUND_CLOSEST(den, post_div), 1u), ref_div_max);
@@ -127,11 +141,16 @@ static void amdgpu_pll_get_fb_ref_div(unsigned nom, unsigned den, unsigned post_
  * dot_clock = (ref_freq * feedback_div) / (ref_div * post_div)
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void amdgpu_pll_compute(struct amdgpu_device *adev,
 			struct amdgpu_pll *pll,
 =======
 void amdgpu_pll_compute(struct amdgpu_pll *pll,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void amdgpu_pll_compute(struct amdgpu_device *adev,
+			struct amdgpu_pll *pll,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			u32 freq,
 			u32 *dot_clock_p,
 			u32 *fb_div_p,
@@ -219,10 +238,14 @@ void amdgpu_pll_compute(struct amdgpu_pll *pll,
 	for (post_div = post_div_min; post_div <= post_div_max; ++post_div) {
 		unsigned diff;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		amdgpu_pll_get_fb_ref_div(adev, nom, den, post_div, fb_div_max,
 =======
 		amdgpu_pll_get_fb_ref_div(nom, den, post_div, fb_div_max,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		amdgpu_pll_get_fb_ref_div(adev, nom, den, post_div, fb_div_max,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					  ref_div_max, &fb_div, &ref_div);
 		diff = abs(target_clock - (pll->reference_freq * fb_div) /
 			(ref_div * post_div));
@@ -238,10 +261,14 @@ void amdgpu_pll_compute(struct amdgpu_pll *pll,
 
 	/* get the feedback and reference divider for the optimal value */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	amdgpu_pll_get_fb_ref_div(adev, nom, den, post_div, fb_div_max, ref_div_max,
 =======
 	amdgpu_pll_get_fb_ref_div(nom, den, post_div, fb_div_max, ref_div_max,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	amdgpu_pll_get_fb_ref_div(adev, nom, den, post_div, fb_div_max, ref_div_max,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  &fb_div, &ref_div);
 
 	/* reduce the numbers to a simpler ratio once more */

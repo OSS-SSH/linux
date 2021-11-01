@@ -78,6 +78,7 @@
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/atomic/atomic-arch-fallback.h>
 #include <linux/atomic/atomic-long.h>
 #include <linux/atomic/atomic-instrumented.h>
@@ -87,5 +88,10 @@
 
 #include <asm-generic/atomic-long.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/atomic/atomic-arch-fallback.h>
+#include <linux/atomic/atomic-long.h>
+#include <linux/atomic/atomic-instrumented.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _LINUX_ATOMIC_H */

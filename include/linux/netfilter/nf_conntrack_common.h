@@ -19,9 +19,13 @@ struct ip_conntrack_stat {
 	unsigned int expect_delete;
 	unsigned int search_restart;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int chaintoolong;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int chaintoolong;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define NFCT_INFOMASK	7UL

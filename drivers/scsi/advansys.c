@@ -7424,10 +7424,14 @@ static int asc_build_req(struct asc_board *boardp, struct scsi_cmnd *scp,
 	 * srb_tag '0' is used internally by the chip.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	srb_tag = scsi_cmd_to_rq(scp)->tag + 1;
 =======
 	srb_tag = scp->request->tag + 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	srb_tag = scsi_cmd_to_rq(scp)->tag + 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	asc_scsi_q->q2.srb_tag = srb_tag;
 
 	/*
@@ -7642,10 +7646,14 @@ adv_build_req(struct asc_board *boardp, struct scsi_cmnd *scp,
 	      adv_req_t **adv_reqpp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 srb_tag = scsi_cmd_to_rq(scp)->tag;
 =======
 	u32 srb_tag = scp->request->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 srb_tag = scsi_cmd_to_rq(scp)->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	adv_req_t *reqp;
 	ADV_SCSI_REQ_Q *scsiqp;
 	int ret;

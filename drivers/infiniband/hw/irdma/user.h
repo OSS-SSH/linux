@@ -103,10 +103,15 @@ enum irdma_flush_opcode {
 	FLUSH_LOC_LEN_ERR,
 	FLUSH_FATAL_ERR,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	FLUSH_RETRY_EXC_ERR,
 	FLUSH_MW_BIND_ERR,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	FLUSH_RETRY_EXC_ERR,
+	FLUSH_MW_BIND_ERR,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum irdma_cmpl_status {

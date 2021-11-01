@@ -486,9 +486,12 @@ static int scaler_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct resource	*regs_res;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct scaler_context *scaler;
 	int irq;
 	int ret, i;
@@ -502,11 +505,15 @@ static int scaler_probe(struct platform_device *pdev)
 
 	scaler->dev = dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	scaler->regs = devm_platform_ioremap_resource(pdev, 0);
 =======
 	regs_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	scaler->regs = devm_ioremap_resource(dev, regs_res);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	scaler->regs = devm_platform_ioremap_resource(pdev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(scaler->regs))
 		return PTR_ERR(scaler->regs);
 

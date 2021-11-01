@@ -79,11 +79,16 @@ struct sb1000_private {
 extern int sb1000_probe(struct net_device *dev);
 static int sb1000_open(struct net_device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sb1000_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 				 void __user *data, int cmd);
 =======
 static int sb1000_dev_ioctl (struct net_device *dev, struct ifreq *ifr, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int sb1000_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+				 void __user *data, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static netdev_tx_t sb1000_start_xmit(struct sk_buff *skb,
 				     struct net_device *dev);
 static irqreturn_t sb1000_interrupt(int irq, void *dev_id);
@@ -141,10 +146,14 @@ static const struct net_device_ops sb1000_netdev_ops = {
 	.ndo_open		= sb1000_open,
 	.ndo_start_xmit		= sb1000_start_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= sb1000_siocdevprivate,
 =======
 	.ndo_do_ioctl		= sb1000_dev_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= sb1000_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_stop		= sb1000_close,
 	.ndo_set_mac_address 	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
@@ -997,11 +1006,16 @@ sb1000_open(struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sb1000_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 				 void __user *data, int cmd)
 =======
 static int sb1000_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int sb1000_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+				 void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	char* name;
 	unsigned char version[2];
@@ -1026,10 +1040,14 @@ static int sb1000_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		stats[3] = dev->stats.rx_errors;
 		stats[4] = dev->stats.rx_dropped;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_to_user(data, stats, sizeof(stats)))
 =======
 		if(copy_to_user(ifr->ifr_data, stats, sizeof(stats)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(data, stats, sizeof(stats)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		status = 0;
 		break;
@@ -1038,10 +1056,14 @@ static int sb1000_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		if ((status = sb1000_get_firmware_version(ioaddr, name, version, 1)))
 			return status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_to_user(data, version, sizeof(version)))
 =======
 		if(copy_to_user(ifr->ifr_data, version, sizeof(version)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(data, version, sizeof(version)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		break;
 
@@ -1049,10 +1071,14 @@ static int sb1000_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		if ((status = sb1000_get_frequency(ioaddr, name, &frequency)))
 			return status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (put_user(frequency, (int __user *)data))
 =======
 		if(put_user(frequency, (int __user *) ifr->ifr_data))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (put_user(frequency, (int __user *)data))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		break;
 
@@ -1060,10 +1086,14 @@ static int sb1000_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		if (!capable(CAP_NET_ADMIN))
 			return -EPERM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (get_user(frequency, (int __user *)data))
 =======
 		if(get_user(frequency, (int __user *) ifr->ifr_data))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (get_user(frequency, (int __user *)data))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		if ((status = sb1000_set_frequency(ioaddr, name, frequency)))
 			return status;
@@ -1073,10 +1103,14 @@ static int sb1000_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		if ((status = sb1000_get_PIDs(ioaddr, name, PID)))
 			return status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_to_user(data, PID, sizeof(PID)))
 =======
 		if(copy_to_user(ifr->ifr_data, PID, sizeof(PID)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(data, PID, sizeof(PID)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		break;
 
@@ -1084,10 +1118,14 @@ static int sb1000_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		if (!capable(CAP_NET_ADMIN))
 			return -EPERM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_from_user(PID, data, sizeof(PID)))
 =======
 		if(copy_from_user(PID, ifr->ifr_data, sizeof(PID)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_from_user(PID, data, sizeof(PID)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		if ((status = sb1000_set_PIDs(ioaddr, name, PID)))
 			return status;

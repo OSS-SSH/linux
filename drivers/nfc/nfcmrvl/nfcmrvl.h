@@ -78,10 +78,14 @@ struct nfcmrvl_private {
 	enum nfcmrvl_phy phy;
 	/* Low level driver ops */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct nfcmrvl_if_ops *if_ops;
 =======
 	struct nfcmrvl_if_ops *if_ops;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct nfcmrvl_if_ops *if_ops;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct nfcmrvl_if_ops {
@@ -97,6 +101,7 @@ int nfcmrvl_nci_recv_frame(struct nfcmrvl_private *priv, struct sk_buff *skb);
 struct nfcmrvl_private *nfcmrvl_nci_register_dev(enum nfcmrvl_phy phy,
 				void *drv_data,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				const struct nfcmrvl_if_ops *ops,
 				struct device *dev,
 				const struct nfcmrvl_platform_data *pdata);
@@ -105,6 +110,11 @@ struct nfcmrvl_private *nfcmrvl_nci_register_dev(enum nfcmrvl_phy phy,
 				struct device *dev,
 				struct nfcmrvl_platform_data *pdata);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				const struct nfcmrvl_if_ops *ops,
+				struct device *dev,
+				const struct nfcmrvl_platform_data *pdata);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 void nfcmrvl_chip_reset(struct nfcmrvl_private *priv);

@@ -7,11 +7,17 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef _KERNEL_AUDIT_H_
 #define _KERNEL_AUDIT_H_
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifndef _KERNEL_AUDIT_H_
+#define _KERNEL_AUDIT_H_
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/fs.h>
 #include <linux/audit.h>
 #include <linux/skbuff.h>
@@ -338,7 +344,12 @@ extern int audit_filter(int msgtype, unsigned int listtype);
 extern void audit_ctl_lock(void);
 extern void audit_ctl_unlock(void);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

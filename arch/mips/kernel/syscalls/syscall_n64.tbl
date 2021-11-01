@@ -362,7 +362,12 @@
 445	n64	landlock_add_rule		sys_landlock_add_rule
 446	n64	landlock_restrict_self		sys_landlock_restrict_self
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 447 reserved for memfd_secret
 448	n64	process_mrelease		sys_process_mrelease
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# 447 reserved for memfd_secret
+448	n64	process_mrelease		sys_process_mrelease
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

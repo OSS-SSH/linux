@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RVU Admin Function Devlink
 =======
 /* Marvell OcteonTx2 RVU Devlink
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Marvell RVU Admin Function Devlink
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2020 Marvell.
  *
@@ -1369,6 +1373,9 @@ static void rvu_health_reporters_destroy(struct rvu *rvu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Devlink Params APIs */
 static int rvu_af_dl_dwrr_mtu_validate(struct devlink *devlink, u32 id,
 				       union devlink_param_value val,
@@ -1490,8 +1497,11 @@ static int rvu_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rvu_devlink_info_get(struct devlink *devlink, struct devlink_info_req *req,
 				struct netlink_ext_ack *extack)
 {
@@ -1501,10 +1511,15 @@ static int rvu_devlink_info_get(struct devlink *devlink, struct devlink_info_req
 static const struct devlink_ops rvu_devlink_ops = {
 	.info_get = rvu_devlink_info_get,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.eswitch_mode_get = rvu_devlink_eswitch_mode_get,
 	.eswitch_mode_set = rvu_devlink_eswitch_mode_set,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.eswitch_mode_get = rvu_devlink_eswitch_mode_get,
+	.eswitch_mode_set = rvu_devlink_eswitch_mode_set,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int rvu_register_dl(struct rvu *rvu)
@@ -1513,6 +1528,7 @@ int rvu_register_dl(struct rvu *rvu)
 	struct devlink *dl;
 	int err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dl = devlink_alloc(&rvu_devlink_ops, sizeof(struct rvu_devlink),
 			   rvu->dev);
@@ -1535,26 +1551,35 @@ int rvu_register_dl(struct rvu *rvu)
 		return -ENOMEM;
 
 	dl = devlink_alloc(&rvu_devlink_ops, sizeof(struct rvu_devlink));
+=======
+	dl = devlink_alloc(&rvu_devlink_ops, sizeof(struct rvu_devlink),
+			   rvu->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dl) {
 		dev_warn(rvu->dev, "devlink_alloc failed\n");
-		kfree(rvu_dl);
 		return -ENOMEM;
 	}
 
-	err = devlink_register(dl, rvu->dev);
+	err = devlink_register(dl);
 	if (err) {
 		dev_err(rvu->dev, "devlink register failed with error %d\n", err);
 		devlink_free(dl);
-		kfree(rvu_dl);
 		return err;
 	}
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rvu_dl = devlink_priv(dl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rvu_dl->dl = dl;
 	rvu_dl->rvu = rvu;
 	rvu->rvu_dl = rvu_dl;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = rvu_health_reporters_create(rvu);
 	if (err) {
 		dev_err(rvu->dev,
@@ -1579,9 +1604,12 @@ err_dl_health:
 	devlink_unregister(dl);
 	devlink_free(dl);
 	return err;
+<<<<<<< HEAD
 =======
 	return rvu_health_reporters_create(rvu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void rvu_unregister_dl(struct rvu *rvu)
@@ -1592,6 +1620,7 @@ void rvu_unregister_dl(struct rvu *rvu)
 	if (!dl)
 		return;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	devlink_params_unregister(dl, rvu_af_dl_params,
 				  ARRAY_SIZE(rvu_af_dl_params));
@@ -1604,4 +1633,11 @@ void rvu_unregister_dl(struct rvu *rvu)
 	devlink_free(dl);
 	kfree(rvu_dl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devlink_params_unregister(dl, rvu_af_dl_params,
+				  ARRAY_SIZE(rvu_af_dl_params));
+	rvu_health_reporters_destroy(rvu);
+	devlink_unregister(dl);
+	devlink_free(dl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

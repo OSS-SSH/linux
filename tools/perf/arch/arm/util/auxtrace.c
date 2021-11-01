@@ -9,16 +9,22 @@
 #include <linux/zalloc.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "../../../util/auxtrace.h"
 #include "../../../util/debug.h"
 #include "../../../util/evlist.h"
 #include "../../../util/pmu.h"
+<<<<<<< HEAD
 =======
 #include "../../util/auxtrace.h"
 #include "../../util/debug.h"
 #include "../../util/evlist.h"
 #include "../../util/pmu.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "cs-etm.h"
 #include "arm-spe.h"
 
@@ -115,6 +121,9 @@ struct auxtrace_record
 	return NULL;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if defined(__arm__)
 u64 compat_auxtrace_mmap__read_head(struct auxtrace_mmap *mm)
@@ -147,5 +156,8 @@ int compat_auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail)
 	return 0;
 }
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -52,10 +52,14 @@ xfs_attr3_rmt_blocks(
 	int		attrlen)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int buflen = XFS_ATTR3_RMT_BUF_SPACE(mp, mp->m_sb.sb_blocksize);
 		return (attrlen + buflen - 1) / buflen;
 	}
@@ -131,6 +135,7 @@ __xfs_attr3_rmt_read_verify(
 
 	/* no verification of non-crc buffers */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 		return 0;
 
@@ -143,6 +148,13 @@ __xfs_attr3_rmt_read_verify(
 	ptr = bp->b_addr;
 	bno = bp->b_bn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+		return 0;
+
+	ptr = bp->b_addr;
+	bno = xfs_buf_daddr(bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	len = BBTOB(bp->b_length);
 	ASSERT(len >= blksize);
 
@@ -204,6 +216,7 @@ xfs_attr3_rmt_write_verify(
 
 	/* no verification of non-crc buffers */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 		return;
 
@@ -216,6 +229,13 @@ xfs_attr3_rmt_write_verify(
 	ptr = bp->b_addr;
 	bno = bp->b_bn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+		return;
+
+	ptr = bp->b_addr;
+	bno = xfs_buf_daddr(bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	len = BBTOB(bp->b_length);
 	ASSERT(len >= blksize);
 
@@ -267,10 +287,14 @@ xfs_attr3_rmt_hdr_set(
 	struct xfs_attr3_rmt_hdr *rmt = ptr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 =======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	rmt->rm_magic = cpu_to_be32(XFS_ATTR3_RMT_MAGIC);
@@ -309,10 +333,14 @@ xfs_attr_rmtval_copyout(
 {
 	char		*src = bp->b_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_daddr_t	bno = xfs_buf_daddr(bp);
 =======
 	xfs_daddr_t	bno = bp->b_bn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_daddr_t	bno = xfs_buf_daddr(bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int		len = BBTOB(bp->b_length);
 	int		blksize = mp->m_attr_geo->blksize;
 
@@ -325,10 +353,14 @@ xfs_attr_rmtval_copyout(
 		byte_cnt = min(*valuelen, byte_cnt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_has_crc(mp)) {
 =======
 		if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (xfs_attr3_rmt_hdr_ok(src, ino, *offset,
 						  byte_cnt, bno)) {
 				xfs_alert(mp,
@@ -365,10 +397,14 @@ xfs_attr_rmtval_copyin(
 {
 	char		*dst = bp->b_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_daddr_t	bno = xfs_buf_daddr(bp);
 =======
 	xfs_daddr_t	bno = bp->b_bn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_daddr_t	bno = xfs_buf_daddr(bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int		len = BBTOB(bp->b_length);
 	int		blksize = mp->m_attr_geo->blksize;
 
@@ -709,10 +745,14 @@ xfs_attr_rmtval_invalidate(
  */
 int
 <<<<<<< HEAD
+<<<<<<< HEAD
 xfs_attr_rmtval_remove(
 =======
 __xfs_attr_rmtval_remove(
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+xfs_attr_rmtval_remove(
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_delattr_context	*dac)
 {
 	struct xfs_da_args		*args = dac->da_args;
@@ -737,9 +777,13 @@ __xfs_attr_rmtval_remove(
 	if (!done) {
 		dac->flags |= XFS_DAC_DEFER_FINISH;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		trace_xfs_attr_rmtval_remove_return(dac->dela_state, args->dp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		trace_xfs_attr_rmtval_remove_return(dac->dela_state, args->dp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EAGAIN;
 	}
 

@@ -688,12 +688,17 @@ static void ksz8_r_vlan_entries(struct ksz_device *dev, u16 addr)
 
 	ksz8_r_table(dev, TABLE_VLAN, addr, &data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addr *= 4;
 	for (i = 0; i < 4; i++) {
 =======
 	addr *= dev->phy_port_cnt;
 	for (i = 0; i < dev->phy_port_cnt; i++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addr *= 4;
+	for (i = 0; i < 4; i++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev->vlan_cache[addr + i].table[0] = (u16)data;
 		data >>= shifts[VLAN_TABLE];
 	}
@@ -708,10 +713,14 @@ static void ksz8_r_vlan_table(struct ksz_device *dev, u16 vid, u16 *vlan)
 
 	data = (u16 *)&buf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addr = vid / 4;
 =======
 	addr = vid / dev->phy_port_cnt;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addr = vid / 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	index = vid & 3;
 	ksz8_r_table(dev, TABLE_VLAN, addr, &buf);
 	*vlan = data[index];
@@ -726,10 +735,14 @@ static void ksz8_w_vlan_table(struct ksz_device *dev, u16 vid, u16 vlan)
 
 	data = (u16 *)&buf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addr = vid / 4;
 =======
 	addr = vid / dev->phy_port_cnt;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addr = vid / 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	index = vid & 3;
 	ksz8_r_table(dev, TABLE_VLAN, addr, &buf);
 	data[index] = vlan;
@@ -1133,6 +1146,9 @@ static int ksz8_port_vlan_filtering(struct dsa_switch *ds, int port, bool flag,
 		return -ENOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Discard packets with VID not enabled on the switch */
 	ksz_cfg(dev, S_MIRROR_CTRL, SW_VLAN_ENABLE, flag);
 
@@ -1154,6 +1170,7 @@ static void ksz8_port_enable_pvid(struct ksz_device *dev, int port, bool state)
 	}
 }
 
+<<<<<<< HEAD
 =======
 	ksz_cfg(dev, S_MIRROR_CTRL, SW_VLAN_ENABLE, flag);
 
@@ -1161,6 +1178,8 @@ static void ksz8_port_enable_pvid(struct ksz_device *dev, int port, bool state)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ksz8_port_vlan_add(struct dsa_switch *ds, int port,
 			      const struct switchdev_obj_port_vlan *vlan,
 			      struct netlink_ext_ack *extack)
@@ -1168,9 +1187,13 @@ static int ksz8_port_vlan_add(struct dsa_switch *ds, int port,
 	bool untagged = vlan->flags & BRIDGE_VLAN_INFO_UNTAGGED;
 	struct ksz_device *dev = ds->priv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ksz_port *p = &dev->ports[port];
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ksz_port *p = &dev->ports[port];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 data, new_pvid = 0;
 	u8 fid, member, valid;
 
@@ -1178,6 +1201,9 @@ static int ksz8_port_vlan_add(struct dsa_switch *ds, int port,
 		return -ENOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If a VLAN is added with untagged flag different from the
 	 * port's Remove Tag flag, we need to change the latter.
 	 * Ignore VID 0, which is always untagged.
@@ -1205,9 +1231,12 @@ static int ksz8_port_vlan_add(struct dsa_switch *ds, int port,
 		ksz_port_cfg(dev, port, P_TAG_CTRL, PORT_REMOVE_TAG, untagged);
 		p->remove_tag = untagged;
 	}
+<<<<<<< HEAD
 =======
 	ksz_port_cfg(dev, port, P_TAG_CTRL, PORT_REMOVE_TAG, untagged);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ksz8_r_vlan_table(dev, vlan->vid, &data);
 	ksz8_from_vlan(dev, data, &fid, &member, &valid);
@@ -1232,6 +1261,7 @@ static int ksz8_port_vlan_add(struct dsa_switch *ds, int port,
 
 		ksz_pread16(dev, port, REG_PORT_CTRL_VID, &vid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		vid &= ~VLAN_VID_MASK;
 		vid |= new_pvid;
 		ksz_pwrite16(dev, port, REG_PORT_CTRL_VID, vid);
@@ -1242,6 +1272,13 @@ static int ksz8_port_vlan_add(struct dsa_switch *ds, int port,
 		vid |= new_pvid;
 		ksz_pwrite16(dev, port, REG_PORT_CTRL_VID, vid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		vid &= ~VLAN_VID_MASK;
+		vid |= new_pvid;
+		ksz_pwrite16(dev, port, REG_PORT_CTRL_VID, vid);
+
+		ksz8_port_enable_pvid(dev, port, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -1251,6 +1288,7 @@ static int ksz8_port_vlan_del(struct dsa_switch *ds, int port,
 			      const struct switchdev_obj_port_vlan *vlan)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ksz_device *dev = ds->priv;
 	u16 data, pvid;
 =======
@@ -1258,6 +1296,10 @@ static int ksz8_port_vlan_del(struct dsa_switch *ds, int port,
 	struct ksz_device *dev = ds->priv;
 	u16 data, pvid, new_pvid = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ksz_device *dev = ds->priv;
+	u16 data, pvid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 fid, member, valid;
 
 	if (ksz_is_ksz88x3(dev))
@@ -1267,10 +1309,13 @@ static int ksz8_port_vlan_del(struct dsa_switch *ds, int port,
 	pvid = pvid & 0xFFF;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ksz_port_cfg(dev, port, P_TAG_CTRL, PORT_REMOVE_TAG, untagged);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ksz8_r_vlan_table(dev, vlan->vid, &data);
 	ksz8_from_vlan(dev, data, &fid, &member, &valid);
 
@@ -1282,6 +1327,7 @@ static int ksz8_port_vlan_del(struct dsa_switch *ds, int port,
 		valid = 0;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ksz8_to_vlan(dev, fid, member, valid, &data);
 	ksz8_w_vlan_table(dev, vlan->vid, data);
@@ -1298,6 +1344,13 @@ static int ksz8_port_vlan_del(struct dsa_switch *ds, int port,
 	if (new_pvid != pvid)
 		ksz_pwrite16(dev, port, REG_PORT_CTRL_VID, pvid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ksz8_to_vlan(dev, fid, member, valid, &data);
+	ksz8_w_vlan_table(dev, vlan->vid, data);
+
+	if (pvid == vlan->vid)
+		ksz8_port_enable_pvid(dev, port, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1531,11 +1584,17 @@ static int ksz8_setup(struct dsa_switch *ds)
 	ksz_cfg(dev, S_MIRROR_CTRL, SW_MIRROR_RX_TX, false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ksz_is_ksz88x3(dev))
 		ksz_cfg(dev, REG_SW_CTRL_19, SW_INS_TAG_ENABLE, true);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!ksz_is_ksz88x3(dev))
+		ksz_cfg(dev, REG_SW_CTRL_19, SW_INS_TAG_ENABLE, true);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* set broadcast storm protection 10% rate */
 	regmap_update_bits(dev->regmap[1], S_REPLACE_VID_CTRL,
 			   BROADCAST_STORM_RATE,
@@ -1819,6 +1878,9 @@ static int ksz8_switch_init(struct ksz_device *dev)
 	dev->ds->num_ports = dev->port_cnt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* We rely on software untagging on the CPU port, so that we
 	 * can support both tagged and untagged VLANs
 	 */
@@ -1829,8 +1891,11 @@ static int ksz8_switch_init(struct ksz_device *dev)
 	 */
 	dev->ds->vlan_filtering_is_global = true;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

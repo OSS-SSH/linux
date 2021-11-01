@@ -6,20 +6,30 @@
 #include <linux/xarray.h>
 #include <linux/hashtable.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/refcount.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/refcount.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "mapping.h"
 
 #define MAPPING_GRACE_PERIOD 2000
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static LIST_HEAD(shared_ctx_list);
 static DEFINE_MUTEX(shared_ctx_lock);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static LIST_HEAD(shared_ctx_list);
+static DEFINE_MUTEX(shared_ctx_lock);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mapping_ctx {
 	struct xarray xarray;
 	DECLARE_HASHTABLE(ht, 8);
@@ -31,12 +41,18 @@ struct mapping_ctx {
 	struct list_head pending_list;
 	spinlock_t pending_list_lock; /* Guards pending list */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 id;
 	u8 type;
 	struct list_head list;
 	refcount_t refcount;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct mapping_item {
@@ -223,6 +239,9 @@ mapping_create(size_t data_size, u32 max_id, bool delayed_removal)
 	xa_init_flags(&ctx->xarray, XA_FLAGS_ALLOC1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	refcount_set(&ctx->refcount, 1);
 	INIT_LIST_HEAD(&ctx->list);
 
@@ -253,14 +272,20 @@ mapping_create_for_id(u64 id, u8 type, size_t data_size, u32 max_id, bool delaye
 
 unlock:
 	mutex_unlock(&shared_ctx_lock);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ctx;
 }
 
 void mapping_destroy(struct mapping_ctx *ctx)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!refcount_dec_and_test(&ctx->refcount))
 		return;
 
@@ -268,8 +293,11 @@ void mapping_destroy(struct mapping_ctx *ctx)
 	list_del(&ctx->list);
 	mutex_unlock(&shared_ctx_lock);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mapping_flush_work(ctx);
 	xa_destroy(&ctx->xarray);
 	mutex_destroy(&ctx->lock);

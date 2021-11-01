@@ -14,8 +14,12 @@
 #define INGENIC_ADC_TOUCH_XD	7
 #define INGENIC_ADC_TOUCH_YD	8
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define INGENIC_ADC_AUX0	9
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define INGENIC_ADC_AUX0	9
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

@@ -108,10 +108,15 @@ static DEFINE_RAW_SPINLOCK(cpu_map_lock);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_STATIC_KEY_FALSE(needs_rmw_access);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEFINE_STATIC_KEY_FALSE(needs_rmw_access);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The GIC mapping of CPU interfaces does not necessarily match
  * the logical CPU numbering.  Let's use a mapping as returned
@@ -780,6 +785,9 @@ static int gic_pm_init(struct gic_chip_data *gic)
 
 #ifdef CONFIG_SMP
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void rmw_writeb(u8 bval, void __iomem *addr)
 {
 	static DEFINE_RAW_SPINLOCK(rmw_lock);
@@ -799,8 +807,11 @@ static void rmw_writeb(u8 bval, void __iomem *addr)
 	raw_spin_unlock_irqrestore(&rmw_lock, flags);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
 			    bool force)
 {
@@ -816,13 +827,19 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (static_branch_unlikely(&needs_rmw_access))
 		rmw_writeb(gic_cpu_map[cpu], reg);
 	else
 		writeb_relaxed(gic_cpu_map[cpu], reg);
+<<<<<<< HEAD
 =======
 	writeb_relaxed(gic_cpu_map[cpu], reg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	irq_data_update_effective_affinity(d, cpumask_of(cpu));
 
 	return IRQ_SET_MASK_OK_DONE;
@@ -1410,6 +1427,9 @@ static bool gic_check_eoimode(struct device_node *node, void __iomem **base)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool gic_enable_rmw_access(void *data)
 {
 	/*
@@ -1434,8 +1454,11 @@ static const struct gic_quirk gic_quirks[] = {
 	{ },
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int gic_of_setup(struct gic_chip_data *gic, struct device_node *node)
 {
 	if (!gic || !node)
@@ -1453,10 +1476,15 @@ static int gic_of_setup(struct gic_chip_data *gic, struct device_node *node)
 		gic->percpu_offset = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gic_enable_of_quirks(node, gic_quirks, gic);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gic_enable_of_quirks(node, gic_quirks, gic);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 error:

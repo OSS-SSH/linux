@@ -160,14 +160,20 @@ static int detect_quirks(struct snd_oxfw *oxfw, const struct ieee1394_device_id 
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (entry->vendor_id == OUI_APOGEE && entry->model_id == MODEL_DUET_FW) {
 		oxfw->quirks |= SND_OXFW_QUIRK_BLOCKING_TRANSMISSION |
 				SND_OXFW_QUIRK_IGNORE_NO_INFO_PACKET;
 	}
+<<<<<<< HEAD
 =======
 	if (entry->vendor_id == OUI_APOGEE && entry->model_id == MODEL_DUET_FW)
 		oxfw->quirks |= SND_OXFW_QUIRK_BLOCKING_TRANSMISSION;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * TASCAM FireOne has physical control and requires a pair of additional
@@ -190,6 +196,7 @@ static int detect_quirks(struct snd_oxfw *oxfw, const struct ieee1394_device_id 
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vendor == VENDOR_LOUD) {
 		// Mackie Onyx Satellite with base station has a quirk to report a wrong
 		// value in 'dbs' field of CIP header against its format information.
@@ -209,6 +216,18 @@ static int detect_quirks(struct snd_oxfw *oxfw, const struct ieee1394_device_id 
 		oxfw->quirks |= SND_OXFW_QUIRK_WRONG_DBS;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (vendor == VENDOR_LOUD) {
+		// Mackie Onyx Satellite with base station has a quirk to report a wrong
+		// value in 'dbs' field of CIP header against its format information.
+		oxfw->quirks |= SND_OXFW_QUIRK_WRONG_DBS;
+
+		// OXFW971-based models may transfer events by blocking method.
+		if (!(oxfw->quirks & SND_OXFW_QUIRK_JUMBO_PAYLOAD))
+			oxfw->quirks |= SND_OXFW_QUIRK_BLOCKING_TRANSMISSION;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

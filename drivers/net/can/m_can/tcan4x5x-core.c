@@ -106,9 +106,12 @@ static inline struct tcan4x5x_priv *cdev_to_priv(struct m_can_classdev *cdev)
 {
 	return container_of(cdev, struct tcan4x5x_priv, cdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void tcan4x5x_check_wake(struct tcan4x5x_priv *priv)
@@ -158,6 +161,7 @@ static u32 tcan4x5x_read_reg(struct m_can_classdev *cdev, int reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int tcan4x5x_read_fifo(struct m_can_classdev *cdev, int addr_offset,
 			      void *val, size_t val_count)
 {
@@ -166,14 +170,19 @@ static int tcan4x5x_read_fifo(struct m_can_classdev *cdev, int addr_offset,
 	return regmap_bulk_read(priv->regmap, TCAN4X5X_MRAM_START + addr_offset, val, val_count);
 =======
 static u32 tcan4x5x_read_fifo(struct m_can_classdev *cdev, int addr_offset)
+=======
+static int tcan4x5x_read_fifo(struct m_can_classdev *cdev, int addr_offset,
+			      void *val, size_t val_count)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tcan4x5x_priv *priv = cdev_to_priv(cdev);
-	u32 val;
 
-	regmap_read(priv->regmap, TCAN4X5X_MRAM_START + addr_offset, &val);
-
+<<<<<<< HEAD
 	return val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return regmap_bulk_read(priv->regmap, TCAN4X5X_MRAM_START + addr_offset, val, val_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int tcan4x5x_write_reg(struct m_can_classdev *cdev, int reg, int val)
@@ -184,6 +193,7 @@ static int tcan4x5x_write_reg(struct m_can_classdev *cdev, int reg, int val)
 }
 
 static int tcan4x5x_write_fifo(struct m_can_classdev *cdev,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			       int addr_offset, const void *val, size_t val_count)
 {
@@ -197,6 +207,13 @@ static int tcan4x5x_write_fifo(struct m_can_classdev *cdev,
 
 	return regmap_write(priv->regmap, TCAN4X5X_MRAM_START + addr_offset, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       int addr_offset, const void *val, size_t val_count)
+{
+	struct tcan4x5x_priv *priv = cdev_to_priv(cdev);
+
+	return regmap_bulk_write(priv->regmap, TCAN4X5X_MRAM_START + addr_offset, val, val_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int tcan4x5x_power_enable(struct regulator *reg, int enable)
@@ -259,12 +276,18 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
 
 	/* Zero out the MCAN buffers */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = m_can_init_ram(cdev);
 	if (ret)
 		return ret;
 =======
 	m_can_init_ram(cdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = m_can_init_ram(cdev);
+	if (ret)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);

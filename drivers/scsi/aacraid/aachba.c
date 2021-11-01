@@ -26,9 +26,12 @@
 #include <linux/blkdev.h>
 #include <linux/uaccess.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/highmem.h> /* For flush_kernel_dcache_page */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 
 #include <asm/unaligned.h>
@@ -1509,10 +1512,14 @@ static struct aac_srb * aac_scsi_common(struct fib * fib, struct scsi_cmnd * cmd
 	srbcmd->lun      = cpu_to_le32(cmd->device->lun);
 	srbcmd->flags    = cpu_to_le32(flag);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	timeout = scsi_cmd_to_rq(cmd)->timeout / HZ;
 =======
 	timeout = cmd->request->timeout/HZ;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	timeout = scsi_cmd_to_rq(cmd)->timeout / HZ;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (timeout == 0)
 		timeout = (dev->sa_firmware ? AAC_SA_TIMEOUT : AAC_ARC_TIMEOUT);
 	srbcmd->timeout  = cpu_to_le32(timeout);  // timeout in seconds

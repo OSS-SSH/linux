@@ -14,6 +14,7 @@
 #include "../locking/rtmutex_common.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_RCU_NOCB_CPU
 static cpumask_var_t rcu_nocb_mask; /* CPUs to have callbacks offloaded. */
@@ -49,6 +50,8 @@ static inline bool rcu_current_is_nocb_kthread(struct rcu_data *rdp)
 #endif /* #ifdef CONFIG_RCU_NOCB_CPU */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool rcu_rdp_is_offloaded(struct rcu_data *rdp)
 {
 	/*
@@ -350,10 +353,14 @@ void rcu_note_context_switch(bool preempt)
 	trace_rcu_utilization(TPS("Start context switch"));
 	lockdep_assert_irqs_disabled();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ONCE(!preempt && rcu_preempt_depth() > 0, "Voluntary context switch within RCU read-side critical section!");
 =======
 	WARN_ON_ONCE(!preempt && rcu_preempt_depth() > 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ONCE(!preempt && rcu_preempt_depth() > 0, "Voluntary context switch within RCU read-side critical section!");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rcu_preempt_depth() > 0 &&
 	    !t->rcu_read_unlock_special.b.blocked) {
 
@@ -413,31 +420,45 @@ static int rcu_preempt_blocked_readers_cgp(struct rcu_node *rnp)
 static void rcu_preempt_read_enter(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WRITE_ONCE(current->rcu_read_lock_nesting, READ_ONCE(current->rcu_read_lock_nesting) + 1);
 =======
 	current->rcu_read_lock_nesting++;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WRITE_ONCE(current->rcu_read_lock_nesting, READ_ONCE(current->rcu_read_lock_nesting) + 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int rcu_preempt_read_exit(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = READ_ONCE(current->rcu_read_lock_nesting) - 1;
 
 	WRITE_ONCE(current->rcu_read_lock_nesting, ret);
 	return ret;
+<<<<<<< HEAD
 =======
 	return --current->rcu_read_lock_nesting;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void rcu_preempt_depth_set(int val)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WRITE_ONCE(current->rcu_read_lock_nesting, val);
 =======
 	current->rcu_read_lock_nesting = val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WRITE_ONCE(current->rcu_read_lock_nesting, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -582,10 +603,14 @@ rcu_preempt_deferred_qs_irqrestore(struct task_struct *t, unsigned long flags)
 		if (IS_ENABLED(CONFIG_RCU_BOOST)) {
 			/* Snapshot ->boost_mtx ownership w/rnp->lock held. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			drop_boost_mutex = rt_mutex_owner(&rnp->boost_mtx.rtmutex) == t;
 =======
 			drop_boost_mutex = rt_mutex_owner(&rnp->boost_mtx) == t;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			drop_boost_mutex = rt_mutex_owner(&rnp->boost_mtx.rtmutex) == t;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (&t->rcu_node_entry == rnp->boost_tasks)
 				WRITE_ONCE(rnp->boost_tasks, np);
 		}
@@ -613,10 +638,14 @@ rcu_preempt_deferred_qs_irqrestore(struct task_struct *t, unsigned long flags)
 		/* Unboost if we were boosted. */
 		if (IS_ENABLED(CONFIG_RCU_BOOST) && drop_boost_mutex)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			rt_mutex_futex_unlock(&rnp->boost_mtx.rtmutex);
 =======
 			rt_mutex_futex_unlock(&rnp->boost_mtx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			rt_mutex_futex_unlock(&rnp->boost_mtx.rtmutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * If this was the last task on the expedited lists,
@@ -1114,10 +1143,14 @@ static int rcu_boost(struct rcu_node *rnp)
 	 */
 	t = container_of(tb, struct task_struct, rcu_node_entry);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rt_mutex_init_proxy_locked(&rnp->boost_mtx.rtmutex, t);
 =======
 	rt_mutex_init_proxy_locked(&rnp->boost_mtx, t);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rt_mutex_init_proxy_locked(&rnp->boost_mtx.rtmutex, t);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
 	/* Lock only for side effect: boosts task t's priority. */
 	rt_mutex_lock(&rnp->boost_mtx);
@@ -1513,6 +1546,7 @@ static void rcu_cleanup_after_idle(void)
 
 #endif /* #else #if !defined(CONFIG_RCU_FAST_NO_HZ) */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 #ifdef CONFIG_RCU_NOCB_CPU
@@ -2970,6 +3004,8 @@ static void show_rcu_nocb_state(struct rcu_data *rdp)
 #endif /* #else #ifdef CONFIG_RCU_NOCB_CPU */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Is this CPU a NO_HZ_FULL CPU that should ignore RCU so that the
  * grace-period kthread will do force_quiescent_state() processing?
@@ -3020,6 +3056,7 @@ static void noinstr rcu_dynticks_task_exit(void)
 static void rcu_dynticks_task_trace_enter(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_TASKS_TRACE_RCU
 	if (IS_ENABLED(CONFIG_TASKS_TRACE_RCU_READ_MB))
 		current->trc_reader_special.b.need_mb = true;
@@ -3030,11 +3067,18 @@ static void rcu_dynticks_task_trace_enter(void)
 		current->trc_reader_special.b.need_mb = true;
 #endif /* #ifdef CONFIG_TASKS_RCU_TRACE */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_TASKS_TRACE_RCU
+	if (IS_ENABLED(CONFIG_TASKS_TRACE_RCU_READ_MB))
+		current->trc_reader_special.b.need_mb = true;
+#endif /* #ifdef CONFIG_TASKS_TRACE_RCU */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Turn off heavyweight RCU tasks trace readers on idle/user exit. */
 static void rcu_dynticks_task_trace_exit(void)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 #ifdef CONFIG_TASKS_TRACE_RCU
 	if (IS_ENABLED(CONFIG_TASKS_TRACE_RCU_READ_MB))
@@ -3046,4 +3090,10 @@ static void rcu_dynticks_task_trace_exit(void)
 		current->trc_reader_special.b.need_mb = false;
 #endif /* #ifdef CONFIG_TASKS_RCU_TRACE */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_TASKS_TRACE_RCU
+	if (IS_ENABLED(CONFIG_TASKS_TRACE_RCU_READ_MB))
+		current->trc_reader_special.b.need_mb = false;
+#endif /* #ifdef CONFIG_TASKS_TRACE_RCU */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

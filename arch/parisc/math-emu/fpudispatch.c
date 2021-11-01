@@ -311,22 +311,32 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					fpregs[t+3] = fpregs[r1+3];
 					fpregs[t+2] = fpregs[r1+2];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					fallthrough;
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 					fallthrough;
+<<<<<<< HEAD
 =======
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					fpregs[t] = fpregs[r1];
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 3: /* FABS */
 				switch (fmt) {
 				    case 2: /* illegal */
@@ -337,6 +347,7 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					fpregs[t+3] = fpregs[r1+3];
 					fpregs[t+2] = fpregs[r1+2];
 <<<<<<< HEAD
+<<<<<<< HEAD
 					fallthrough;
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
@@ -345,15 +356,25 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					fallthrough;
+				    case 1: /* double */
+					fpregs[t+1] = fpregs[r1+1];
+					fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					/* copy and clear sign bit */
 					fpregs[t] = fpregs[r1] & 0x7fffffff;
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 6: /* FNEG */
 				switch (fmt) {
 				    case 2: /* illegal */
@@ -364,23 +385,33 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					fpregs[t+3] = fpregs[r1+3];
 					fpregs[t+2] = fpregs[r1+2];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					fallthrough;
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 					fallthrough;
+<<<<<<< HEAD
 =======
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					/* copy and invert sign bit */
 					fpregs[t] = fpregs[r1] ^ 0x80000000;
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 7: /* FNEGABS */
 				switch (fmt) {
 				    case 2: /* illegal */
@@ -391,6 +422,7 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					fpregs[t+3] = fpregs[r1+3];
 					fpregs[t+2] = fpregs[r1+2];
 <<<<<<< HEAD
+<<<<<<< HEAD
 					fallthrough;
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
@@ -399,15 +431,25 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					fallthrough;
+				    case 1: /* double */
+					fpregs[t+1] = fpregs[r1+1];
+					fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					/* copy and set sign bit */
 					fpregs[t] = fpregs[r1] | 0x80000000;
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 4: /* FSQRT */
 				switch (fmt) {
 				    case 0:
@@ -421,9 +463,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 5: /* FRND */
 				switch (fmt) {
 				    case 0:
@@ -438,10 +484,14 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 				}
 		} /* end of switch (subop) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		BUG();
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 1: /* class 1 */
 		df = extru(ir,fpdfpos,2); /* get dest format */
 		if ((df & 2) || (fmt & 2)) {
@@ -472,9 +522,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 1: /* FCNVXF */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -491,9 +545,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 2: /* FCNVFX */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -510,9 +568,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 3: /* FCNVFXT */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -529,9 +591,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 5: /* FCNVUF (PA2.0 only) */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -548,9 +614,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 6: /* FCNVFU (PA2.0 only) */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -567,9 +637,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 7: /* FCNVFUT (PA2.0 only) */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -586,6 +660,7 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 			case 4: /* undefined */
 				return(MAJOR_0C_EXCP);
@@ -597,6 +672,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 		} /* end of switch subop */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+			case 4: /* undefined */
+				return(MAJOR_0C_EXCP);
+		} /* end of switch subop */
+		BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 2: /* class 2 */
 		fpu_type_flags=fpregs[FPU_TYPE_FLAG_POS];
 		r2 = extru(ir, fpr2pos, 5) * sizeof(double)/sizeof(u_int);
@@ -675,9 +757,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 1: /* FTEST */
 				switch (fmt) {
 				    case 0:
@@ -698,6 +784,7 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 		    } /* end of switch subop */
 		} /* end of else for PA1.0 & PA1.1 */
@@ -706,6 +793,12 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 		    } /* end of switch subop */
 		} /* end of else for PA1.0 & PA1.1 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+		    } /* end of switch subop */
+		} /* end of else for PA1.0 & PA1.1 */
+		BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 3: /* class 3 */
 		r2 = extru(ir,fpr2pos,5) * sizeof(double)/sizeof(u_int);
 		if (r2 == 0)
@@ -729,9 +822,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 1: /* FSUB */
 				switch (fmt) {
 				    case 0:
@@ -745,9 +842,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 2: /* FMPY */
 				switch (fmt) {
 				    case 0:
@@ -761,9 +862,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 3: /* FDIV */
 				switch (fmt) {
 				    case 0:
@@ -777,9 +882,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 4: /* FREM */
 				switch (fmt) {
 				    case 0:
@@ -793,9 +902,13 @@ decode_0c(u_int ir, u_int class, u_int subop, u_int fpregs[])
 					return(MAJOR_0C_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} /* end of class 3 switch */
 	} /* end of switch(class) */
 
@@ -852,17 +965,25 @@ u_int fpregs[];
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 					fallthrough;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					fpregs[t] = fpregs[r1];
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 3: /* FABS */
 				switch (fmt) {
 				    case 2:
@@ -871,17 +992,25 @@ u_int fpregs[];
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 					fallthrough;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					fpregs[t] = fpregs[r1] & 0x7fffffff;
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 6: /* FNEG */
 				switch (fmt) {
 				    case 2:
@@ -890,17 +1019,25 @@ u_int fpregs[];
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 					fallthrough;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					fpregs[t] = fpregs[r1] ^ 0x80000000;
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 7: /* FNEGABS */
 				switch (fmt) {
 				    case 2:
@@ -909,17 +1046,25 @@ u_int fpregs[];
 				    case 1: /* double */
 					fpregs[t+1] = fpregs[r1+1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 					fallthrough;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    case 0: /* single */
 					fpregs[t] = fpregs[r1] | 0x80000000;
 					return(NOEXCEPTION);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 4: /* FSQRT */
 				switch (fmt) {
 				    case 0:
@@ -933,9 +1078,13 @@ u_int fpregs[];
 					return(MAJOR_0E_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 5: /* FRMD */
 				switch (fmt) {
 				    case 0:
@@ -950,10 +1099,14 @@ u_int fpregs[];
 				}
 		} /* end of switch (subop */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		BUG();
 =======
 	
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 1: /* class 1 */
 		df = extru(ir,fpdfpos,2); /* get dest format */
 		/*
@@ -982,9 +1135,13 @@ u_int fpregs[];
 					return(MAJOR_0E_EXCP);
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 1: /* FCNVXF */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -1001,9 +1158,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 2: /* FCNVFX */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -1020,9 +1181,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 3: /* FCNVFXT */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -1039,9 +1204,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 5: /* FCNVUF (PA2.0 only) */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -1058,9 +1227,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 6: /* FCNVFU (PA2.0 only) */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -1077,9 +1250,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 7: /* FCNVFUT (PA2.0 only) */
 				switch(fmt) {
 				    case 0: /* sgl/sgl */
@@ -1096,6 +1273,7 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 			case 4: /* undefined */
 				return(MAJOR_0C_EXCP);
@@ -1106,6 +1284,13 @@ u_int fpregs[];
 				return(MAJOR_0C_EXCP);
 		} /* end of switch subop */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+			case 4: /* undefined */
+				return(MAJOR_0C_EXCP);
+		} /* end of switch subop */
+		BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 2: /* class 2 */
 		/*
 		 * Be careful out there.
@@ -1182,9 +1367,13 @@ u_int fpregs[];
 		    } /* end of switch subop */
 		} /* end of else for PA1.0 & PA1.1 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 3: /* class 3 */
 		/*
 		 * Be careful out there.
@@ -1218,9 +1407,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 1: /* FSUB */
 				switch (fmt) {
 				    case 0:
@@ -1231,9 +1424,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 2: /* FMPY or XMPYU */
 				/*
 				 * check for integer multiply (x bit set)
@@ -1271,9 +1468,13 @@ u_int fpregs[];
 				    }
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 3: /* FDIV */
 				switch (fmt) {
 				    case 0:
@@ -1284,9 +1485,13 @@ u_int fpregs[];
 						&fpregs[t],status));
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				BUG();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				BUG();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case 4: /* FREM */
 				switch (fmt) {
 				    case 0:

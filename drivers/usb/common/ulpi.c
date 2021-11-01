@@ -79,20 +79,27 @@ static int ulpi_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ulpi_remove(struct device *dev)
 =======
 static int ulpi_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ulpi_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ulpi_driver *drv = to_ulpi_driver(dev->driver);
 
 	if (drv->remove)
 		drv->remove(to_ulpi_dev(dev));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct bus_type ulpi_bus = {

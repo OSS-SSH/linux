@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2012-2014, 2018-2021 Intel Corporation
 =======
  * Copyright (C) 2012-2014, 2018-2020 Intel Corporation
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2012-2014, 2018-2021 Intel Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
  * Copyright (C) 2015-2017 Intel Deutschland GmbH
  */
@@ -652,6 +656,7 @@ static int iwl_mvm_mac_ctxt_cmd_sta(struct iwl_mvm *mvm,
 	if (vif->bss_conf.he_support && !iwlwifi_mod_params.disable_11ax) {
 		cmd.filter_flags |= cpu_to_le32(MAC_FILTER_IN_11AX);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (vif->bss_conf.twt_requester && IWL_MVM_USE_TWT)
 			ctxt_sta->data_policy |= cpu_to_le32(TWT_SUPPORTED);
 		if (vif->bss_conf.twt_protected)
@@ -668,6 +673,16 @@ static int iwl_mvm_mac_ctxt_cmd_sta(struct iwl_mvm *mvm,
 					cpu_to_le32(PROTECTED_TWT_SUPPORTED);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (vif->bss_conf.twt_requester && IWL_MVM_USE_TWT)
+			ctxt_sta->data_policy |= cpu_to_le32(TWT_SUPPORTED);
+		if (vif->bss_conf.twt_protected)
+			ctxt_sta->data_policy |=
+				cpu_to_le32(PROTECTED_TWT_SUPPORTED);
+		if (vif->bss_conf.twt_broadcast)
+			ctxt_sta->data_policy |=
+				cpu_to_le32(BROADCAST_TWT_SUPPORTED);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 
@@ -1021,6 +1036,7 @@ int iwl_mvm_mac_ctxt_beacon_changed(struct iwl_mvm *mvm,
 
 #ifdef CONFIG_IWLWIFI_DEBUGFS
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mvm->beacon_inject_active) {
 		dev_kfree_skb(beacon);
 		return -EBUSY;
@@ -1029,6 +1045,12 @@ int iwl_mvm_mac_ctxt_beacon_changed(struct iwl_mvm *mvm,
 	if (mvm->beacon_inject_active)
 		return -EBUSY;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mvm->beacon_inject_active) {
+		dev_kfree_skb(beacon);
+		return -EBUSY;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	ret = iwl_mvm_mac_ctxt_send_beacon(mvm, vif, beacon);
@@ -1450,6 +1472,7 @@ void iwl_mvm_rx_stored_beacon_notif(struct iwl_mvm *mvm,
 	struct iwl_rx_packet *pkt = rxb_addr(rxb);
 	unsigned int pkt_len = iwl_rx_packet_payload_len(pkt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct iwl_stored_beacon_notif_common *sb = (void *)pkt->data;
 	struct ieee80211_rx_status rx_status;
 	struct sk_buff *skb;
@@ -1480,14 +1503,40 @@ void iwl_mvm_rx_stored_beacon_notif(struct iwl_mvm *mvm,
 
 =======
 	struct iwl_stored_beacon_notif *sb = (void *)pkt->data;
+=======
+	struct iwl_stored_beacon_notif_common *sb = (void *)pkt->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ieee80211_rx_status rx_status;
 	struct sk_buff *skb;
+	u8 *data;
 	u32 size = le32_to_cpu(sb->byte_count);
+	int ver = iwl_fw_lookup_cmd_ver(mvm->fw, PROT_OFFLOAD_GROUP,
+					STORED_BEACON_NTF, 0);
 
-	if (size == 0 || pkt_len < struct_size(sb, data, size))
+	if (size == 0)
 		return;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* handle per-version differences */
+	if (ver <= 2) {
+		struct iwl_stored_beacon_notif_v2 *sb_v2 = (void *)pkt->data;
+
+		if (pkt_len < struct_size(sb_v2, data, size))
+			return;
+
+		data = sb_v2->data;
+	} else {
+		struct iwl_stored_beacon_notif_v3 *sb_v3 = (void *)pkt->data;
+
+		if (pkt_len < struct_size(sb_v3, data, size))
+			return;
+
+		data = sb_v3->data;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	skb = alloc_skb(size, GFP_ATOMIC);
 	if (!skb) {
 		IWL_ERR(mvm, "alloc_skb failed\n");
@@ -1509,10 +1558,14 @@ void iwl_mvm_rx_stored_beacon_notif(struct iwl_mvm *mvm,
 
 	/* copy the data */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb_put_data(skb, data, size);
 =======
 	skb_put_data(skb, sb->data, size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	skb_put_data(skb, data, size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memcpy(IEEE80211_SKB_RXCB(skb), &rx_status, sizeof(rx_status));
 
 	/* pass it as regular rx to mac80211 */

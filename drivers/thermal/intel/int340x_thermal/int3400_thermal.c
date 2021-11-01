@@ -109,10 +109,14 @@ static struct attribute *imok_attr[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct attribute_group imok_attribute_group = {
 	.attrs = imok_attr,
 };
 
+<<<<<<< HEAD
 static const struct attribute_group data_attribute_group = {
 	.bin_attrs = data_attributes,
 =======
@@ -120,6 +124,10 @@ static const struct attribute_group data_attribute_group = {
 	.bin_attrs = data_attributes,
 	.attrs = imok_attr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct attribute_group data_attribute_group = {
+	.bin_attrs = data_attributes,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static ssize_t available_uuids_show(struct device *dev,
@@ -532,14 +540,20 @@ static int int3400_thermal_probe(struct platform_device *pdev)
 		goto free_rel_misc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (acpi_has_method(priv->adev->handle, "IMOK")) {
 		result = sysfs_create_group(&pdev->dev.kobj, &imok_attribute_group);
 		if (result)
 			goto free_imok;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (priv->data_vault) {
 		result = sysfs_create_group(&pdev->dev.kobj,
 					    &data_attribute_group);
@@ -564,10 +578,15 @@ free_sysfs:
 free_uuid:
 	sysfs_remove_group(&pdev->dev.kobj, &uuid_attribute_group);
 <<<<<<< HEAD
+<<<<<<< HEAD
 free_imok:
 	sysfs_remove_group(&pdev->dev.kobj, &imok_attribute_group);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+free_imok:
+	sysfs_remove_group(&pdev->dev.kobj, &imok_attribute_group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_rel_misc:
 	if (!priv->rel_misc_dev_res)
 		acpi_thermal_rel_misc_device_remove(priv->adev->handle);
@@ -597,9 +616,13 @@ static int int3400_thermal_remove(struct platform_device *pdev)
 		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
 	sysfs_remove_group(&pdev->dev.kobj, &uuid_attribute_group);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sysfs_remove_group(&pdev->dev.kobj, &imok_attribute_group);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sysfs_remove_group(&pdev->dev.kobj, &imok_attribute_group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	thermal_zone_device_unregister(priv->thermal);
 	kfree(priv->data_vault);
 	kfree(priv->trts);

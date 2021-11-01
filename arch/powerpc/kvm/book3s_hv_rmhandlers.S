@@ -256,6 +256,7 @@ kvm_novcpu_exit:
  */
 _GLOBAL(idle_kvm_start_guest)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mfcr	r5
 	mflr	r0
 	std	r5, 8(r1)	// Save CR in caller's frame
@@ -275,6 +276,18 @@ _GLOBAL(idle_kvm_start_guest)
 	std	r0,16(r4)
 	subi	r1,r4,STACK_FRAME_OVERHEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mfcr	r5
+	mflr	r0
+	std	r5, 8(r1)	// Save CR in caller's frame
+	std	r0, 16(r1)	// Save LR in caller's frame
+	// Create frame on emergency stack
+	ld	r4, PACAEMERGSP(r13)
+	stdu	r1, -SWITCH_FRAME_SIZE(r4)
+	// Switch to new frame on emergency stack
+	mr	r1, r4
+	std	r3, 32(r1)	// Save SRR1 wakeup value
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SAVE_NVGPRS(r1)
 
 	/*
@@ -327,12 +340,18 @@ kvm_unsplit_wakeup:
 kvm_secondary_got_guest:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	// About to go to guest, clear saved SRR1
 	li	r0, 0
 	std	r0, 32(r1)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Set HSTATE_DSCR(r13) to something sensible */
 	ld	r6, PACA_DSCR_DEFAULT(r13)
 	std	r6, HSTATE_DSCR(r13)
@@ -413,6 +432,7 @@ kvm_no_guest:
 	rlwimi	r4, r3, 0, LPCR_PECE0 | LPCR_PECE1
 	mtspr	SPRN_LPCR, r4
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// Return SRR1 wakeup value, or 0 if we went into the guest
 	ld	r3, 32(r1)
 	REST_NVGPRS(r1)
@@ -428,6 +448,14 @@ kvm_no_guest:
 	ld	r5, 8(r1)
 	ld	r1, 0(r1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	// Return SRR1 wakeup value, or 0 if we went into the guest
+	ld	r3, 32(r1)
+	REST_NVGPRS(r1)
+	ld	r1, 0(r1)	// Switch back to caller stack
+	ld	r0, 16(r1)	// Reload LR
+	ld	r5, 8(r1)	// Reload CR
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mtlr	r0
 	mtcr	r5
 	blr
@@ -1118,6 +1146,7 @@ END_FTR_SECTION_IFSET(CPU_FTR_HAS_PPR)
 	beq	kvmppc_hisi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
 	/* For softpatch interrupt, go off and do TM instruction emulation */
@@ -1126,6 +1155,8 @@ END_FTR_SECTION_IFSET(CPU_FTR_HAS_PPR)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* See if this is a leftover HDEC interrupt */
 	cmpwi	r12,BOOK3S_INTERRUPT_HV_DECREMENTER
 	bne	2f
@@ -1632,6 +1663,7 @@ maybe_reenter_guest:
 	b	guest_exit_cont
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
 /*
@@ -1670,6 +1702,8 @@ kvmppc_tm_emul:
 #endif /* CONFIG_PPC_TRANSACTIONAL_MEM */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Check whether an HDSI is an HPTE not found fault or something else.
  * If it is an HPTE not found fault that is due to the guest accessing
@@ -2614,10 +2648,14 @@ END_FTR_SECTION_IFCLR(CPU_FTR_P9_TM_HV_ASSIST)
 	mflr	r0
 	std	r0, PPC_LR_STKOFF(r1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	stdu	r1, -TM_FRAME_SIZE(r1)
 =======
 	stdu	r1, -PPC_MIN_STKFRM(r1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	stdu	r1, -TM_FRAME_SIZE(r1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Turn on TM. */
 	mfmsr	r8
@@ -2633,6 +2671,9 @@ END_FTR_SECTION_IFSET(CPU_FTR_P9_TM_XER_SO_BUG)
 	nop
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * It's possible that treclaim. may modify registers, if we have lost
 	 * track of fake-suspend state in the guest due to it using rfscv.
@@ -2651,13 +2692,19 @@ END_FTR_SECTION_IFSET(CPU_FTR_P9_TM_XER_SO_BUG)
 	stw	r12, 8(r1)
 	std	r1, HSTATE_HOST_R1(r13)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* We have to treclaim here because that's the only way to do S->N */
 	li	r3, TM_CAUSE_KVM_RESCHED
 	TRECLAIM(R3)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GET_PACA(r13)
 	ld	r1, HSTATE_HOST_R1(r13)
 	REST_GPR(2, r1)
@@ -2672,8 +2719,11 @@ END_FTR_SECTION_IFSET(CPU_FTR_P9_TM_XER_SO_BUG)
 	mtcr	r12
 	HMT_MEDIUM
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We were in fake suspend, so we are not going to save the
 	 * register state as the guest checkpointed state (since
@@ -2702,10 +2752,14 @@ END_FTR_SECTION_IFSET(CPU_FTR_P9_TM_XER_SO_BUG)
 	std	r6, VCPU_TFIAR(r9)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addi	r1, r1, TM_FRAME_SIZE
 =======
 	addi	r1, r1, PPC_MIN_STKFRM
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addi	r1, r1, TM_FRAME_SIZE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ld	r0, PPC_LR_STKOFF(r1)
 	mtlr	r0
 	blr

@@ -60,16 +60,22 @@ xfs_btree_fakeroot_dup_cursor(
 STATIC int
 xfs_btree_fakeroot_alloc_block(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*start_bno,
 	union xfs_btree_ptr		*new_bno,
 	int				*stat)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	union xfs_btree_ptr	*start_bno,
 	union xfs_btree_ptr	*new_bno,
 	int			*stat)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	ASSERT(0);
 	return -EFSCORRUPTED;
@@ -120,6 +126,7 @@ xfs_btree_fakeroot_init_ptr_from_cur(
 STATIC void
 xfs_btree_afakeroot_set_root(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*ptr,
 	int				inc)
@@ -128,6 +135,11 @@ xfs_btree_afakeroot_set_root(
 	union xfs_btree_ptr	*ptr,
 	int			inc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_ptr	*ptr,
+	int				inc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xbtree_afakeroot	*afake = cur->bc_ag.afake;
 

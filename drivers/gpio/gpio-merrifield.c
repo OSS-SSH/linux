@@ -360,6 +360,7 @@ static void mrfld_irq_handler(struct irq_desc *desc)
 		pending &= enabled;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for_each_set_bit(gpio, &pending, 32)
 			generic_handle_domain_irq(gc->irq.domain, base + gpio);
 =======
@@ -370,6 +371,10 @@ static void mrfld_irq_handler(struct irq_desc *desc)
 			generic_handle_irq(irq);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for_each_set_bit(gpio, &pending, 32)
+			generic_handle_domain_irq(gc->irq.domain, base + gpio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(irqchip, desc);

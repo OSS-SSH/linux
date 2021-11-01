@@ -348,12 +348,17 @@ static void dwmac4_dma_tx_chan_op_mode(void __iomem *ioaddr, int mode,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dwmac4_get_hw_feature(void __iomem *ioaddr,
 				 struct dma_features *dma_cap)
 =======
 static void dwmac4_get_hw_feature(void __iomem *ioaddr,
 				  struct dma_features *dma_cap)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dwmac4_get_hw_feature(void __iomem *ioaddr,
+				 struct dma_features *dma_cap)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 hw_cap = readl(ioaddr + GMAC_HW_FEATURE0);
 
@@ -443,10 +448,15 @@ static void dwmac4_get_hw_feature(void __iomem *ioaddr,
 	dma_cap->frpsel = (hw_cap & GMAC_HW_FEAT_FRPSEL) >> 10;
 	dma_cap->dvlan = (hw_cap & GMAC_HW_FEAT_DVLAN) >> 5;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	return 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Enable/disable TSO feature and set MSS */

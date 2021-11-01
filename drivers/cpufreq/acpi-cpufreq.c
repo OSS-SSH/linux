@@ -164,6 +164,7 @@ static ssize_t store_cpb(struct cpufreq_policy *policy, const char *buf,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 	set_boost(policy, val);
 	cpus_read_unlock();
@@ -172,6 +173,11 @@ static ssize_t store_cpb(struct cpufreq_policy *policy, const char *buf,
 	set_boost(policy, val);
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	set_boost(policy, val);
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return count;
 }
@@ -896,11 +902,17 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
 		!(policy_is_shared(policy) && policy->shared_type != CPUFREQ_SHARED_TYPE_ANY);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (perf->states[0].core_frequency * 1000 != freq_table[0].frequency)
 		pr_warn(FW_WARN "P-state 0 is not max freq\n");
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (perf->states[0].core_frequency * 1000 != freq_table[0].frequency)
+		pr_warn(FW_WARN "P-state 0 is not max freq\n");
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return result;
 
 err_unreg:
@@ -931,6 +943,7 @@ static int acpi_cpufreq_cpu_exit(struct cpufreq_policy *policy)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void acpi_cpufreq_cpu_ready(struct cpufreq_policy *policy)
 {
@@ -943,6 +956,8 @@ static void acpi_cpufreq_cpu_ready(struct cpufreq_policy *policy)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int acpi_cpufreq_resume(struct cpufreq_policy *policy)
 {
 	struct acpi_cpufreq_data *data = policy->driver_data;
@@ -971,9 +986,12 @@ static struct cpufreq_driver acpi_cpufreq_driver = {
 	.init		= acpi_cpufreq_cpu_init,
 	.exit		= acpi_cpufreq_cpu_exit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.ready		= acpi_cpufreq_cpu_ready,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.resume		= acpi_cpufreq_resume,
 	.name		= "acpi-cpufreq",
 	.attr		= acpi_cpufreq_attr,

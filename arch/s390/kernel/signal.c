@@ -534,6 +534,7 @@ void arch_do_signal_or_restart(struct pt_regs *regs, bool has_signal)
 	restore_saved_sigmask();
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 void do_notify_resume(struct pt_regs *regs)
@@ -542,3 +543,5 @@ void do_notify_resume(struct pt_regs *regs)
 	rseq_handle_notify_resume(NULL, regs);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

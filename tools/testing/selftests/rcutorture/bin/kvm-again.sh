@@ -143,10 +143,14 @@ then
 	usage
 fi
 <<<<<<< HEAD
+<<<<<<< HEAD
 rm -f "$rundir"/*/{console.log,console.log.diags,qemu_pid,qemu-pid,qemu-retval,Warnings,kvm-test-1-run.sh.out,kvm-test-1-run-qemu.sh.out,vmlinux} "$rundir"/log
 =======
 rm -f "$rundir"/*/{console.log,console.log.diags,qemu_pid,qemu-retval,Warnings,kvm-test-1-run.sh.out,kvm-test-1-run-qemu.sh.out,vmlinux} "$rundir"/log
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+rm -f "$rundir"/*/{console.log,console.log.diags,qemu_pid,qemu-pid,qemu-retval,Warnings,kvm-test-1-run.sh.out,kvm-test-1-run-qemu.sh.out,vmlinux} "$rundir"/log
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 touch "$rundir/log"
 echo $scriptname $args | tee -a "$rundir/log"
 echo $oldrun > "$rundir/re-run"
@@ -184,9 +188,13 @@ then
 	echo ---- Dryrun complete, directory: $rundir | tee -a "$rundir/log"
 else
 <<<<<<< HEAD
+<<<<<<< HEAD
 	( cd "$rundir"; sh $T/runbatches.sh ) | tee -a "$rundir/log"
 =======
 	( cd "$rundir"; sh $T/runbatches.sh )
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	( cd "$rundir"; sh $T/runbatches.sh ) | tee -a "$rundir/log"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kvm-end-run-stats.sh "$rundir" "$starttime"
 fi

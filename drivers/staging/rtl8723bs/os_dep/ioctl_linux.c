@@ -5,9 +5,12 @@
  *
  ******************************************************************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define _IOCTL_LINUX_C_
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/etherdevice.h>
 #include <drv_types.h>
@@ -33,6 +36,7 @@
 #define WEXT_CSCAN_HOME_DWELL_SECTION	'H'
 #define WEXT_CSCAN_TYPE_SECTION		'T'
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static u32 rtw_rates[] = {1000000, 2000000, 5500000, 11000000,
@@ -350,11 +354,14 @@ exit:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int wpa_set_auth_algs(struct net_device *dev, u32 value)
 {
 	struct adapter *padapter = rtw_netdev_priv(dev);
 	int ret = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if ((value & IW_AUTH_ALG_SHARED_KEY) && (value & IW_AUTH_ALG_OPEN_SYSTEM)) {
 		padapter->securitypriv.ndisencryptstatus = Ndis802_11Encryption1Enabled;
@@ -368,15 +375,26 @@ static int wpa_set_auth_algs(struct net_device *dev, u32 value)
 		padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_Auto;
 	} else if (value & WLAN_AUTH_SHARED_KEY)	{
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((value & IW_AUTH_ALG_SHARED_KEY) && (value & IW_AUTH_ALG_OPEN_SYSTEM)) {
+		padapter->securitypriv.ndisencryptstatus = Ndis802_11Encryption1Enabled;
+		padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeAutoSwitch;
+		padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_Auto;
+	} else if (value & IW_AUTH_ALG_SHARED_KEY)	{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		padapter->securitypriv.ndisencryptstatus = Ndis802_11Encryption1Enabled;
 
 		padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeShared;
 		padapter->securitypriv.dot11AuthAlgrthm = dot11AuthAlgrthm_Shared;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (value & IW_AUTH_ALG_OPEN_SYSTEM) {
 =======
 	} else if (value & WLAN_AUTH_OPEN) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (value & IW_AUTH_ALG_OPEN_SYSTEM) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* padapter->securitypriv.ndisencryptstatus = Ndis802_11EncryptionDisabled; */
 		if (padapter->securitypriv.ndisauthtype < Ndis802_11AuthModeWPAPSK) {
 			padapter->securitypriv.ndisauthtype = Ndis802_11AuthModeOpen;
@@ -437,10 +455,14 @@ static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, 
 		if (wep_key_len > 0) {
 			wep_key_len = wep_key_len <= 5 ? 5 : 13;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
 =======
 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, KeyMaterial);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pwep = kzalloc(wep_total_len, GFP_KERNEL);
 			if (!pwep) {
 				ret = -ENOMEM;
@@ -448,12 +470,17 @@ static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, 
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pwep->key_length = wep_key_len;
 			pwep->length = wep_total_len;
 =======
 			pwep->KeyLength = wep_key_len;
 			pwep->Length = wep_total_len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pwep->key_length = wep_key_len;
+			pwep->length = wep_total_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (wep_key_len == 13) {
 				padapter->securitypriv.dot11PrivacyAlgrthm = _WEP104_;
@@ -465,6 +492,7 @@ static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, 
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pwep->key_index = wep_key_idx;
 		pwep->key_index |= 0x80000000;
 
@@ -475,6 +503,12 @@ static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, 
 
 		memcpy(pwep->KeyMaterial,  param->u.crypt.key, pwep->KeyLength);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pwep->key_index = wep_key_idx;
+		pwep->key_index |= 0x80000000;
+
+		memcpy(pwep->key_material,  param->u.crypt.key, pwep->key_length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (param->u.crypt.set_tx) {
 			if (rtw_set_802_11_add_wep(padapter, pwep) == (u8)_FAIL)
@@ -489,12 +523,17 @@ static int wpa_set_encryption(struct net_device *dev, struct ieee_param *param, 
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->key_material, pwep->key_length);
 			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->key_length;
 =======
 			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->KeyMaterial, pwep->KeyLength);
 			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->KeyLength;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->key_material, pwep->key_length);
+			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->key_length;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtw_set_key(padapter, psecuritypriv, wep_key_idx, 0, true);
 		}
 
@@ -674,6 +713,7 @@ static int rtw_set_wpa_ie(struct adapter *padapter, char *pie, unsigned short ie
 			padapter->securitypriv.ndisencryptstatus = Ndis802_11Encryption1Enabled;
 			break;
 		}
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 		_clr_fwstate_(&padapter->mlmepriv, WIFI_UNDER_WPS);
@@ -2732,106 +2772,51 @@ static int rtw_dbg_port(struct net_device *dev,
 
 							int i;
 							u8 max_rx_rate;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-							max_rx_rate = (u8)extra_arg;
+		_clr_fwstate_(&padapter->mlmepriv, WIFI_UNDER_WPS);
+		{/* set wps_ie */
+			u16 cnt = 0;
+			u8 eid, wps_oui[4] = {0x0, 0x50, 0xf2, 0x04};
 
-							if (max_rx_rate < 0xc) { /*  max_rx_rate < MSC0 -> B or G -> disable HT */
-								pregistrypriv->ht_enable = 0;
-								for (i = 0; i < NumRates; i++) {
-									if (pmlmeext->datarate[i] > max_rx_rate)
-										pmlmeext->datarate[i] = 0xff;
-								}
+			while (cnt < ielen) {
+				eid = buf[cnt];
 
-							}
-							else if (max_rx_rate < 0x1c) { /*  mcs0~mcs15 */
-								u32 mcs_bitmap = 0x0;
+				if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&buf[cnt+2], wps_oui, 4))) {
+					padapter->securitypriv.wps_ie_len = ((buf[cnt+1]+2) < MAX_WPS_IE_LEN) ? (buf[cnt+1]+2):MAX_WPS_IE_LEN;
 
-								for (i = 0; i < ((max_rx_rate + 1) - 0xc); i++)
-									mcs_bitmap |= BIT(i);
+					memcpy(padapter->securitypriv.wps_ie, &buf[cnt], padapter->securitypriv.wps_ie_len);
 
-								set_mcs_rate_by_mask(pmlmeext->default_supported_mcs_set, mcs_bitmap);
-							}
-						}
-					}
+					set_fwstate(&padapter->mlmepriv, WIFI_UNDER_WPS);
+
+					cnt += buf[cnt+1]+2;
+
 					break;
-				case 0x1c: /* enable/disable driver control AMPDU Density for peer sta's rx */
-					{
-						if (arg == 0) {
-							padapter->driver_ampdu_spacing = 0xFF;
-						} else if (arg == 1) {
-
-							if (extra_arg > 0x07)
-								padapter->driver_ampdu_spacing = 0xFF;
-							else
-								padapter->driver_ampdu_spacing = extra_arg;
-						}
-					}
-					break;
-				case 0x23:
-					{
-						padapter->bNotifyChannelChange = extra_arg;
-						break;
-					}
-				case 0x24:
-					{
-						break;
-					}
-				case 0xaa:
-					{
-						if ((extra_arg & 0x7F) > 0x3F)
-							extra_arg = 0xFF;
-						padapter->fix_rate = extra_arg;
-					}
-					break;
-				case 0xdd:/* registers dump , 0 for mac reg, 1 for bb reg, 2 for rf reg */
-					{
-						if (extra_arg == 0)
-							mac_reg_dump(padapter);
-						else if (extra_arg == 1)
-							bb_reg_dump(padapter);
-						else if (extra_arg == 2)
-							rf_reg_dump(padapter);
-					}
-					break;
-
-				case 0xee:/* turn on/off dynamic funcs */
-					{
-						u32 odm_flag;
-
-						if (0xf == extra_arg) {
-							rtw_hal_get_def_var(padapter, HAL_DEF_DBG_DM_FUNC, &odm_flag);
-						} else {
-							/*extra_arg = 0  - disable all dynamic func
-								extra_arg = 1  - disable DIG
-								extra_arg = 2  - disable tx power tracking
-								extra_arg = 3  - turn on all dynamic func
-							*/
-							rtw_hal_set_def_var(padapter, HAL_DEF_DBG_DM_FUNC, &(extra_arg));
-							rtw_hal_get_def_var(padapter, HAL_DEF_DBG_DM_FUNC, &odm_flag);
-						}
-					}
-					break;
-
-				case 0xfd:
-					rtw_write8(padapter, 0xc50, arg);
-					rtw_write8(padapter, 0xc58, arg);
-					break;
-				case 0xfe:
-					break;
-				case 0xff:
-					{
-					}
-					break;
+				} else {
+					cnt += buf[cnt+1]+2; /* goto next */
+				}
 			}
-			break;
-		default:
-			break;
+		}
 	}
 
+	/* TKIP and AES disallow multicast packets until installing group key */
+	if (padapter->securitypriv.dot11PrivacyAlgrthm == _TKIP_ ||
+		padapter->securitypriv.dot11PrivacyAlgrthm == _TKIP_WTMIC_ ||
+		padapter->securitypriv.dot11PrivacyAlgrthm == _AES_)
+		/* WPS open need to enable multicast */
+		/*  check_fwstate(&padapter->mlmepriv, WIFI_UNDER_WPS) == true) */
+		rtw_hal_set_hwreg(padapter, HW_VAR_OFF_RCR_AM, null_addr);
 
-	return 0;
+exit:
 
+	kfree(buf);
+
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int wpa_set_param(struct net_device *dev, u8 name, u32 value)
@@ -3069,14 +3054,19 @@ static int rtw_set_encryption(struct net_device *dev, struct ieee_param *param, 
 		if (wep_key_len > 0) {
 			wep_key_len = wep_key_len <= 5 ? 5 : 13;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
 =======
 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, KeyMaterial);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pwep = kzalloc(wep_total_len, GFP_KERNEL);
 			if (!pwep)
 				goto exit;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 			pwep->key_length = wep_key_len;
 			pwep->length = wep_total_len;
@@ -3089,13 +3079,21 @@ static int rtw_set_encryption(struct net_device *dev, struct ieee_param *param, 
 =======
 			pwep->KeyLength = wep_key_len;
 			pwep->Length = wep_total_len;
+=======
+			pwep->key_length = wep_key_len;
+			pwep->length = wep_total_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		}
 
-		pwep->KeyIndex = wep_key_idx;
+		pwep->key_index = wep_key_idx;
 
+<<<<<<< HEAD
 		memcpy(pwep->KeyMaterial,  param->u.crypt.key, pwep->KeyLength);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memcpy(pwep->key_material,  param->u.crypt.key, pwep->key_length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (param->u.crypt.set_tx) {
 			psecuritypriv->dot11AuthAlgrthm = dot11AuthAlgrthm_Auto;
@@ -3104,10 +3102,14 @@ static int rtw_set_encryption(struct net_device *dev, struct ieee_param *param, 
 			psecuritypriv->dot118021XGrpPrivacy = _WEP40_;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (pwep->key_length == 13) {
 =======
 			if (pwep->KeyLength == 13) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (pwep->key_length == 13) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				psecuritypriv->dot11PrivacyAlgrthm = _WEP104_;
 				psecuritypriv->dot118021XGrpPrivacy = _WEP104_;
 			}
@@ -3116,6 +3118,7 @@ static int rtw_set_encryption(struct net_device *dev, struct ieee_param *param, 
 			psecuritypriv->dot11PrivacyKeyIndex = wep_key_idx;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->key_material, pwep->key_length);
 
 			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->key_length;
@@ -3123,15 +3126,23 @@ static int rtw_set_encryption(struct net_device *dev, struct ieee_param *param, 
 			rtw_ap_set_wep_key(padapter, pwep->key_material, pwep->key_length, wep_key_idx, 1);
 =======
 			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->KeyMaterial, pwep->KeyLength);
+=======
+			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->key_material, pwep->key_length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->KeyLength;
+			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->key_length;
 
+<<<<<<< HEAD
 			rtw_ap_set_wep_key(padapter, pwep->KeyMaterial, pwep->KeyLength, wep_key_idx, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			rtw_ap_set_wep_key(padapter, pwep->key_material, pwep->key_length, wep_key_idx, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			/* don't update "psecuritypriv->dot11PrivacyAlgrthm" and */
 			/* psecuritypriv->dot11PrivacyKeyIndex =keyid", but can rtw_set_key to cam */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->key_material, pwep->key_length);
 
@@ -3140,11 +3151,18 @@ static int rtw_set_encryption(struct net_device *dev, struct ieee_param *param, 
 			rtw_ap_set_wep_key(padapter, pwep->key_material, pwep->key_length, wep_key_idx, 0);
 =======
 			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->KeyMaterial, pwep->KeyLength);
+=======
+			memcpy(&(psecuritypriv->dot11DefKey[wep_key_idx].skey[0]), pwep->key_material, pwep->key_length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->KeyLength;
+			psecuritypriv->dot11DefKeylen[wep_key_idx] = pwep->key_length;
 
+<<<<<<< HEAD
 			rtw_ap_set_wep_key(padapter, pwep->KeyMaterial, pwep->KeyLength, wep_key_idx, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			rtw_ap_set_wep_key(padapter, pwep->key_material, pwep->key_length, wep_key_idx, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		goto exit;
@@ -3660,16 +3678,22 @@ static int rtw_set_hidden_ssid(struct net_device *dev, struct ieee_param *param,
 		ssid[ssid_len] = 0x0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcpy(pbss_network->ssid.ssid, (void *)ssid, ssid_len);
 		pbss_network->ssid.ssid_length = ssid_len;
 		memcpy(pbss_network_ext->ssid.ssid, (void *)ssid, ssid_len);
 		pbss_network_ext->ssid.ssid_length = ssid_len;
+<<<<<<< HEAD
 =======
 		memcpy(pbss_network->Ssid.Ssid, (void *)ssid, ssid_len);
 		pbss_network->Ssid.SsidLength = ssid_len;
 		memcpy(pbss_network_ext->Ssid.Ssid, (void *)ssid, ssid_len);
 		pbss_network_ext->Ssid.SsidLength = ssid_len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return ret;
@@ -3850,6 +3874,7 @@ static int rtw_hostapd_ioctl(struct net_device *dev, struct iw_point *p)
 	return ret;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*  copy from net/wireless/wext.c end */
 
@@ -4612,6 +4637,10 @@ exit:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*  copy from net/wireless/wext.c end */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int rtw_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 {
 	struct iwreq *wrq = (struct iwreq *)rq;
@@ -4625,11 +4654,14 @@ int rtw_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 		ret = rtw_hostapd_ioctl(dev, &wrq->u.data);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case SIOCDEVPRIVATE:
 		ret = rtw_ioctl_wext_private(dev, &wrq->u);
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		ret = -EOPNOTSUPP;
 		break;

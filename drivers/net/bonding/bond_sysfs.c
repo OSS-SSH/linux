@@ -340,6 +340,9 @@ static DEVICE_ATTR(peer_notif_delay, 0644,
 		   bonding_show_peer_notif_delay, bonding_sysfs_store_option);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Show the LACP activity and interval. */
 static ssize_t bonding_show_lacp_active(struct device *d,
 					struct device_attribute *attr,
@@ -358,12 +361,15 @@ static DEVICE_ATTR(lacp_active, 0644,
 static ssize_t bonding_show_lacp_rate(struct device *d,
 				      struct device_attribute *attr,
 				      char *buf)
+<<<<<<< HEAD
 =======
 /* Show the LACP interval. */
 static ssize_t bonding_show_lacp(struct device *d,
 				 struct device_attribute *attr,
 				 char *buf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct bonding *bond = to_bond(d);
 	const struct bond_opt_value *val;
@@ -374,10 +380,14 @@ static ssize_t bonding_show_lacp(struct device *d,
 }
 static DEVICE_ATTR(lacp_rate, 0644,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		   bonding_show_lacp_rate, bonding_sysfs_store_option);
 =======
 		   bonding_show_lacp, bonding_sysfs_store_option);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		   bonding_show_lacp_rate, bonding_sysfs_store_option);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static ssize_t bonding_show_min_links(struct device *d,
 				      struct device_attribute *attr,
@@ -764,9 +774,13 @@ static struct attribute *per_bond_attrs[] = {
 	&dev_attr_updelay.attr,
 	&dev_attr_peer_notif_delay.attr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	&dev_attr_lacp_active.attr,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_lacp_active.attr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	&dev_attr_lacp_rate.attr,
 	&dev_attr_ad_select.attr,
 	&dev_attr_xmit_hash_policy.attr,

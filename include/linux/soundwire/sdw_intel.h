@@ -8,6 +8,9 @@
 #include <linux/soundwire/sdw.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SDW_SHIM_BASE			0x2C000
 #define SDW_ALH_BASE			0x2C800
 #define SDW_LINK_BASE			0x30000
@@ -87,8 +90,11 @@
 #define SDW_ALH_STRMZCFG_DMAT		GENMASK(7, 0)
 #define SDW_ALH_STRMZCFG_CHN		GENMASK(19, 16)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct sdw_intel_stream_params_data: configuration passed during
  * the @params_stream callback, e.g. for interaction with DSP
@@ -199,10 +205,15 @@ struct sdw_intel_slave_id {
  * @shim_lock: mutex to handle concurrent rmw access to shared SHIM registers.
  * @shim_mask: flags to track initialization of SHIM shared registers
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @shim_base: sdw shim base.
  * @alh_base: sdw alh base.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @shim_base: sdw shim base.
+ * @alh_base: sdw alh base.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct sdw_intel_ctx {
 	int count;
@@ -216,10 +227,15 @@ struct sdw_intel_ctx {
 	struct mutex shim_lock; /* lock for access to shared SHIM registers */
 	u32 shim_mask;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 shim_base;
 	u32 alh_base;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 shim_base;
+	u32 alh_base;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -239,10 +255,15 @@ struct sdw_intel_ctx {
  * @clock_stop_quirks: mask array of possible behaviors requested by the
  * DSP driver. The quirks are common for all links for now.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @shim_base: sdw shim base.
  * @alh_base: sdw alh base.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @shim_base: sdw shim base.
+ * @alh_base: sdw alh base.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct sdw_intel_res {
 	int count;
@@ -255,10 +276,15 @@ struct sdw_intel_res {
 	u32 link_mask;
 	u32 clock_stop_quirks;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 shim_base;
 	u32 alh_base;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 shim_base;
+	u32 alh_base;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*

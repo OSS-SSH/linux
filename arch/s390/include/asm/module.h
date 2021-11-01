@@ -9,11 +9,15 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct mod_arch_syminfo {
 =======
 struct mod_arch_syminfo
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct mod_arch_syminfo {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long got_offset;
 	unsigned long plt_offset;
 	int got_initialized;
@@ -21,11 +25,15 @@ struct mod_arch_syminfo
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct mod_arch_specific {
 =======
 struct mod_arch_specific
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct mod_arch_specific {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Starting offset of got in the module core memory. */
 	unsigned long got_offset;
 	/* Starting offset of plt in the module core memory. */
@@ -39,6 +47,9 @@ struct mod_arch_specific
 	/* Additional symbol information (got and plt offsets). */
 	struct mod_arch_syminfo *syminfo;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_FUNCTION_TRACER
 	/* Start of memory reserved for ftrace hotpatch trampolines. */
 	struct ftrace_hotpatch_trampoline *trampolines_start;
@@ -47,8 +58,11 @@ struct mod_arch_specific
 	/* Next unused ftrace hotpatch trampoline slot. */
 	struct ftrace_hotpatch_trampoline *next_trampoline;
 #endif /* CONFIG_FUNCTION_TRACER */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif /* _ASM_S390_MODULE_H */

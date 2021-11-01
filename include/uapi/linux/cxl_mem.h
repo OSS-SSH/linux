@@ -51,10 +51,14 @@ enum { CXL_CMDS };
 static const struct {
 	const char *name;
 <<<<<<< HEAD
+<<<<<<< HEAD
 } cxl_command_names[] __attribute__((__unused__)) = { CXL_CMDS };
 =======
 } cxl_command_names[] = { CXL_CMDS };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+} cxl_command_names[] __attribute__((__unused__)) = { CXL_CMDS };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Here's how this actually breaks out:

@@ -99,10 +99,14 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
 		return ERR_PTR(-EINVAL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phdrs[0].p_type == PT_LOAD)
 =======
 	if (phdrs[0].p_type == PT_LOAD || phdrs[1].p_type == PT_LOAD)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (phdrs[0].p_type == PT_LOAD)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ERR_PTR(-EINVAL);
 
 	if ((phdrs[1].p_flags & QCOM_MDT_TYPE_MASK) != QCOM_MDT_TYPE_HASH)
@@ -171,10 +175,15 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
 		if (IS_ERR(metadata)) {
 			ret = PTR_ERR(metadata);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dev_err(dev, "error %d reading firmware %s metadata\n",
 				ret, fw_name);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_err(dev, "error %d reading firmware %s metadata\n",
+				ret, fw_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out;
 		}
 
@@ -183,12 +192,18 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
 		kfree(metadata);
 		if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			/* Invalid firmware metadata */
 			dev_err(dev, "error %d initializing firmware %s\n",
 				ret, fw_name);
 =======
 			dev_err(dev, "invalid firmware metadata\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			/* Invalid firmware metadata */
+			dev_err(dev, "error %d initializing firmware %s\n",
+				ret, fw_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out;
 		}
 	}
@@ -215,12 +230,18 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
 						     max_addr - min_addr);
 			if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				/* Unable to set up relocation */
 				dev_err(dev, "error %d setting up firmware %s\n",
 					ret, fw_name);
 =======
 				dev_err(dev, "unable to setup relocation\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				/* Unable to set up relocation */
+				dev_err(dev, "error %d setting up firmware %s\n",
+					ret, fw_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto out;
 			}
 		}
@@ -265,6 +286,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
 			/* Firmware is large enough to be non-split */
 			if (phdr->p_offset + phdr->p_filesz > fw->size) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				dev_err(dev, "file %s segment %d would be truncated\n",
 					fw_name, i);
 =======
@@ -272,6 +294,10 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
 					"failed to load segment %d from truncated file %s\n",
 					i, firmware);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dev_err(dev, "file %s segment %d would be truncated\n",
+					fw_name, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ret = -EINVAL;
 				break;
 			}
@@ -284,11 +310,16 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
 							ptr, phdr->p_filesz);
 			if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				dev_err(dev, "error %d loading %s\n",
 					ret, fw_name);
 =======
 				dev_err(dev, "failed to load %s\n", fw_name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dev_err(dev, "error %d loading %s\n",
+					ret, fw_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			}
 

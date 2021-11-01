@@ -74,6 +74,7 @@ void qxl_gem_prime_vunmap(struct drm_gem_object *obj,
 	qxl_bo_vunmap(bo);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 int qxl_gem_prime_mmap(struct drm_gem_object *obj,
@@ -82,3 +83,5 @@ int qxl_gem_prime_mmap(struct drm_gem_object *obj,
 	return -ENOSYS;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

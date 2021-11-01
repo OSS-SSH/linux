@@ -41,6 +41,7 @@ bool br_vlan_opts_eq_range(const struct net_bridge_vlan *v_curr,
 			   const struct net_bridge_vlan *range_end)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 range_mc_rtr = br_vlan_multicast_router(range_end);
 	u8 curr_mc_rtr = br_vlan_multicast_router(v_curr);
 
@@ -51,11 +52,22 @@ bool br_vlan_opts_eq_range(const struct net_bridge_vlan *v_curr,
 	return v_curr->state == range_end->state &&
 	       __vlan_tun_can_enter_range(v_curr, range_end);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 range_mc_rtr = br_vlan_multicast_router(range_end);
+	u8 curr_mc_rtr = br_vlan_multicast_router(v_curr);
+
+	return v_curr->state == range_end->state &&
+	       __vlan_tun_can_enter_range(v_curr, range_end) &&
+	       curr_mc_rtr == range_mc_rtr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 bool br_vlan_opts_fill(struct sk_buff *skb, const struct net_bridge_vlan *v)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (nla_put_u8(skb, BRIDGE_VLANDB_ENTRY_STATE, br_vlan_get_state(v)) ||
 	    !__vlan_tun_put(skb, v))
 		return false;
@@ -67,11 +79,14 @@ bool br_vlan_opts_fill(struct sk_buff *skb, const struct net_bridge_vlan *v)
 #endif
 
 	return true;
+<<<<<<< HEAD
 =======
 	return !nla_put_u8(skb, BRIDGE_VLANDB_ENTRY_STATE,
 			   br_vlan_get_state(v)) &&
 	       __vlan_tun_put(skb, v);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 size_t br_vlan_opts_nl_size(void)
@@ -79,14 +94,20 @@ size_t br_vlan_opts_nl_size(void)
 	return nla_total_size(sizeof(u8)) /* BRIDGE_VLANDB_ENTRY_STATE */
 	       + nla_total_size(0) /* BRIDGE_VLANDB_ENTRY_TUNNEL_INFO */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       + nla_total_size(sizeof(u32)) /* BRIDGE_VLANDB_TINFO_ID */
 #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
 	       + nla_total_size(sizeof(u8)) /* BRIDGE_VLANDB_ENTRY_MCAST_ROUTER */
 #endif
 	       + 0;
+<<<<<<< HEAD
 =======
 	       + nla_total_size(sizeof(u32)); /* BRIDGE_VLANDB_TINFO_ID */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int br_vlan_modify_state(struct net_bridge_vlan_group *vg,
@@ -213,6 +234,9 @@ static int br_vlan_process_one_opts(const struct net_bridge *br,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
 	if (tb[BRIDGE_VLANDB_ENTRY_MCAST_ROUTER]) {
 		u8 val;
@@ -225,8 +249,11 @@ static int br_vlan_process_one_opts(const struct net_bridge *br,
 	}
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -305,6 +332,9 @@ int br_vlan_process_options(const struct net_bridge *br,
 	return err;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool br_vlan_global_opts_can_enter_range(const struct net_bridge_vlan *v_curr,
 					 const struct net_bridge_vlan *r_end)
@@ -694,5 +724,8 @@ int br_vlan_rtm_process_global_options(struct net_device *dev,
 
 	return err;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

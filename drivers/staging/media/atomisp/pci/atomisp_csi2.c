@@ -29,11 +29,16 @@ static struct v4l2_mbus_framefmt *__csi2_get_format(struct
 	enum
 	v4l2_subdev_format_whence
 <<<<<<< HEAD
+<<<<<<< HEAD
 	which, unsigned int pad)
 {
 =======
 	which, unsigned int pad) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	which, unsigned int pad)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (which == V4L2_SUBDEV_FORMAT_TRY)
 		return v4l2_subdev_get_try_format(&csi2->subdev, sd_state,
 						  pad);

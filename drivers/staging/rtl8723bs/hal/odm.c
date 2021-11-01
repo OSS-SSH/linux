@@ -282,12 +282,15 @@ u32 TxScalingTable_Jaguar[TXSCALE_TABLE_SIZE] = {
 /* Remove Edca by Yu Chen */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 #define RxDefaultAnt1		0x65a9
 #define RxDefaultAnt2		0x569a
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void odm_CommonInfoSelfInit(struct dm_odm_t *pDM_Odm)
 {
 	pDM_Odm->bCckHighPower = (bool) PHY_QueryBBReg(pDM_Odm->Adapter, ODM_REG(CCK_RPT_FORMAT, pDM_Odm), ODM_BIT(CCK_RPT_FORMAT, pDM_Odm));
@@ -399,6 +402,9 @@ u32 ODM_Get_Rate_Bitmap(
 	case (ODM_WM_B|ODM_WM_N24G):
 	case (ODM_WM_G|ODM_WM_N24G):
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rssi_level == DM_RATR_STA_HIGH)
 			rate_bitmap = 0x000f0000;
 		else if (rssi_level == DM_RATR_STA_MIDDLE)
@@ -408,6 +414,7 @@ u32 ODM_Get_Rate_Bitmap(
 				rate_bitmap = 0x000ff015;
 			else
 				rate_bitmap = 0x000ff005;
+<<<<<<< HEAD
 =======
 		if (pDM_Odm->RFType == ODM_1T2R || pDM_Odm->RFType == ODM_1T1R) {
 			if (rssi_level == DM_RATR_STA_HIGH)
@@ -432,10 +439,13 @@ u32 ODM_Get_Rate_Bitmap(
 					rate_bitmap = 0x0f8ff005;
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 
 	default:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		rate_bitmap = 0x0fffffff;
 =======
@@ -444,6 +454,9 @@ u32 ODM_Get_Rate_Bitmap(
 		else
 			rate_bitmap = 0x0fffffff;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rate_bitmap = 0x0fffffff;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 
@@ -742,10 +755,14 @@ void odm_TXPowerTrackingInit(struct dm_odm_t *pDM_Odm)
 	pDM_Odm->RFCalibrateInfo.CCK_index = pDM_Odm->DefaultCckIndex;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (p = RF_PATH_A; p < MAX_RF_PATH; ++p) {
 =======
 	for (p = ODM_RF_PATH_A; p < MAX_RF_PATH; ++p) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (p = RF_PATH_A; p < MAX_RF_PATH; ++p) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pDM_Odm->BbSwingIdxOfdmBase[p] = pDM_Odm->DefaultOfdmIndex;
 		pDM_Odm->RFCalibrateInfo.OFDM_index[p] = pDM_Odm->DefaultOfdmIndex;
 		pDM_Odm->RFCalibrateInfo.DeltaPowerIndex[p] = 0;
@@ -764,10 +781,14 @@ void ODM_TXPowerTrackingCheck(struct dm_odm_t *pDM_Odm)
 
 	if (!pDM_Odm->RFCalibrateInfo.TM_Trigger) { /* at least delay 1 sec */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_T_METER_NEW, (BIT17 | BIT16), 0x03);
 =======
 		PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_T_METER_NEW, (BIT17 | BIT16), 0x03);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_T_METER_NEW, (BIT17 | BIT16), 0x03);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pDM_Odm->RFCalibrateInfo.TM_Trigger = 1;
 		return;
@@ -876,12 +897,15 @@ void ODM_CmnInfoInit(struct dm_odm_t *pDM_Odm, enum odm_cmninfo_e CmnInfo, u32 V
 		break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case ODM_CMNINFO_RF_TYPE:
 		pDM_Odm->RFType = (u8)Value;
 		break;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ODM_CMNINFO_PLATFORM:
 		pDM_Odm->SupportPlatform = (u8)Value;
 		break;
@@ -891,12 +915,15 @@ void ODM_CmnInfoInit(struct dm_odm_t *pDM_Odm, enum odm_cmninfo_e CmnInfo, u32 V
 		break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case ODM_CMNINFO_MP_TEST_CHIP:
 		pDM_Odm->bIsMPChip = (u8)Value;
 		break;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ODM_CMNINFO_IC_TYPE:
 		pDM_Odm->SupportICType = Value;
 		break;
@@ -1136,12 +1163,15 @@ void ODM_CmnInfoUpdate(struct dm_odm_t *pDM_Odm, u32 CmnInfo, u64 Value)
 		break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case ODM_CMNINFO_RF_TYPE:
 		pDM_Odm->RFType = (u8)Value;
 		break;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ODM_CMNINFO_WIFI_DIRECT:
 		pDM_Odm->bWIFI_Direct = (bool)Value;
 		break;

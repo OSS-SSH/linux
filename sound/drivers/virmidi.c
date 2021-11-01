@@ -76,12 +76,17 @@ static int snd_virmidi_probe(struct platform_device *devptr)
 	int dev = devptr->id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(struct snd_card_virmidi), &card);
 =======
 	err = snd_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
 			   sizeof(struct snd_card_virmidi), &card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(struct snd_card_virmidi), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 	vmidi = card->private_data;
@@ -100,10 +105,14 @@ static int snd_virmidi_probe(struct platform_device *devptr)
 		err = snd_virmidi_new(card, idx, &rmidi);
 		if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return err;
 =======
 			goto __nodev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rdev = rmidi->private_data;
 		vmidi->midi[idx] = rmidi;
 		strcpy(rmidi->name, "Virtual Raw MIDI");
@@ -115,6 +124,7 @@ static int snd_virmidi_probe(struct platform_device *devptr)
 	sprintf(card->longname, "Virtual MIDI Card %i", dev + 1);
 
 	err = snd_card_register(card);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err)
 		return err;
@@ -134,6 +144,12 @@ static int snd_virmidi_remove(struct platform_device *devptr)
 {
 	snd_card_free(platform_get_drvdata(devptr));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err)
+		return err;
+
+	platform_set_drvdata(devptr, card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -142,9 +158,12 @@ static int snd_virmidi_remove(struct platform_device *devptr)
 static struct platform_driver snd_virmidi_driver = {
 	.probe		= snd_virmidi_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_virmidi_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver		= {
 		.name	= SND_VIRMIDI_DRIVER,
 	},

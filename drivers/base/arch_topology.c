@@ -150,9 +150,13 @@ void topology_set_freq_scale(const struct cpumask *cpus, unsigned long cur_freq,
 
 DEFINE_PER_CPU(unsigned long, cpu_scale) = SCHED_CAPACITY_SCALE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_PER_CPU_SYMBOL_GPL(cpu_scale);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_PER_CPU_SYMBOL_GPL(cpu_scale);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void topology_set_cpu_scale(unsigned int cpu, unsigned long capacity)
 {
@@ -170,9 +174,13 @@ void topology_set_thermal_pressure(const struct cpumask *cpus,
 		WRITE_ONCE(per_cpu(thermal_pressure, cpu), th_pressure);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static ssize_t cpu_capacity_show(struct device *dev,
 				 struct device_attribute *attr,

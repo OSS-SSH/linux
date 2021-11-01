@@ -4,9 +4,13 @@
 // Copyright (C) 2015 Freescale Semiconductor, Inc. All Rights Reserved.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/clk.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/clk.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/device.h>
 #include <linux/err.h>
 #include <linux/init.h>
@@ -104,13 +108,19 @@ static irqreturn_t imx_snvs_pwrkey_interrupt(int irq, void *dev_id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void imx_snvs_pwrkey_disable_clk(void *data)
 {
 	clk_disable_unprepare(data);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void imx_snvs_pwrkey_act(void *pdata)
 {
 	struct pwrkey_drv_data *pd = pdata;
@@ -124,9 +134,13 @@ static int imx_snvs_pwrkey_probe(struct platform_device *pdev)
 	struct input_dev *input;
 	struct device_node *np;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct clk *clk;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct clk *clk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int error;
 	u32 vid;
 
@@ -151,6 +165,9 @@ static int imx_snvs_pwrkey_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clk = devm_clk_get_optional(&pdev->dev, NULL);
 	if (IS_ERR(clk)) {
 		dev_err(&pdev->dev, "Failed to get snvs clock (%pe)\n", clk);
@@ -173,8 +190,11 @@ static int imx_snvs_pwrkey_probe(struct platform_device *pdev)
 		return error;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pdata->wakeup = of_property_read_bool(np, "wakeup-source");
 
 	pdata->irq = platform_get_irq(pdev, 0);

@@ -413,10 +413,14 @@ static long lirc_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 				LIRC_CAN_SET_REC_CARRIER_RANGE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dev->s_wideband_receiver)
 =======
 		if (dev->s_learning_mode)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (dev->s_wideband_receiver)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			val |= LIRC_CAN_USE_WIDEBAND_RECEIVER;
 
 		if (dev->s_carrier_report)
@@ -524,6 +528,7 @@ static long lirc_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 
 	case LIRC_SET_WIDEBAND_RECEIVER:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!dev->s_wideband_receiver)
 			ret = -ENOTTY;
 		else
@@ -534,6 +539,12 @@ static long lirc_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		else
 			ret = dev->s_learning_mode(dev, !!val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!dev->s_wideband_receiver)
+			ret = -ENOTTY;
+		else
+			ret = dev->s_wideband_receiver(dev, !!val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case LIRC_SET_MEASURE_CARRIER_MODE:

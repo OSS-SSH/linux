@@ -601,10 +601,14 @@ do_gmbus_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs, int num,
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Display WA #0868: skl,bxt,kbl,cfl,glk */
 =======
 	/* Display WA #0868: skl,bxt,kbl,cfl,glk,cnl */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Display WA #0868: skl,bxt,kbl,cfl,glk */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_GEMINILAKE(dev_priv) || IS_BROXTON(dev_priv))
 		bxt_gmbus_clock_gating(dev_priv, false);
 	else if (HAS_PCH_SPT(dev_priv) || HAS_PCH_CNP(dev_priv))
@@ -718,10 +722,14 @@ timeout:
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Display WA #0868: skl,bxt,kbl,cfl,glk */
 =======
 	/* Display WA #0868: skl,bxt,kbl,cfl,glk,cnl */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Display WA #0868: skl,bxt,kbl,cfl,glk */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_GEMINILAKE(dev_priv) || IS_BROXTON(dev_priv))
 		bxt_gmbus_clock_gating(dev_priv, true);
 	else if (HAS_PCH_SPT(dev_priv) || HAS_PCH_CNP(dev_priv))

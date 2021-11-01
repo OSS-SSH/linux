@@ -1064,10 +1064,14 @@
 	extcon = <&usb2_id>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dwc3@7600000 {
 =======
 	usb@7600000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dwc3@7600000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		extcon = <&usb2_id>;
 		dr_mode = "otg";
 		maximum-speed = "high-speed";
@@ -1079,10 +1083,14 @@
 	extcon = <&usb3_id>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dwc3@6a00000 {
 =======
 	usb@6a00000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dwc3@6a00000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		extcon = <&usb3_id>;
 		dr_mode = "otg";
 	};

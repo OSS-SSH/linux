@@ -209,19 +209,27 @@
 
 	pinctrl_hvi3c3_default: hvi3c3_default {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		function = "I3C3";
 =======
 		function = "HVI3C3";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		function = "I3C3";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		groups = "HVI3C3";
 	};
 
 	pinctrl_hvi3c4_default: hvi3c4_default {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		function = "I3C4";
 =======
 		function = "HVI3C4";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		function = "I3C4";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		groups = "HVI3C4";
 	};
 

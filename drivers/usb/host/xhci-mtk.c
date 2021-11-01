@@ -57,6 +57,9 @@
 #define CTRL_U2_FORCE_PLL_STB	BIT(28)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* xHCI CSR */
 #define LS_EOF_CFG		0x930
 #define LSEOF_OFFSET		0x89
@@ -78,8 +81,11 @@
 
 #define XSEOF_OFFSET_MASK	GENMASK(11, 0)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* usb remote wakeup registers in syscon */
 
 /* mt8173 etc */
@@ -111,6 +117,9 @@ enum ssusb_uwk_vers {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * MT8195 has 4 controllers, the controller1~3's default SOF/ITP interval
  * is calculated from the frame counter clock 24M, but in fact, the clock
@@ -151,8 +160,11 @@ static void xhci_mtk_set_frame_interval(struct xhci_hcd_mtk *mtk)
 	writel(value, hcd->regs + SS_GEN2_EOF_CFG);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xhci_mtk_host_enable(struct xhci_hcd_mtk *mtk)
 {
 	struct mu3c_ippc_regs __iomem *ippc = mtk->ippc_regs;
@@ -183,6 +195,7 @@ static int xhci_mtk_host_enable(struct xhci_hcd_mtk *mtk)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* power on and enable all u2 ports except skipped ones */
 	for (i = 0; i < mtk->num_u2_ports; i++) {
 		if (BIT(i) & mtk->u2p_dis_msk)
@@ -192,6 +205,13 @@ static int xhci_mtk_host_enable(struct xhci_hcd_mtk *mtk)
 	/* power on and enable all u2 ports */
 	for (i = 0; i < mtk->num_u2_ports; i++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* power on and enable all u2 ports except skipped ones */
+	for (i = 0; i < mtk->num_u2_ports; i++) {
+		if (BIT(i) & mtk->u2p_dis_msk)
+			continue;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		value = readl(&ippc->u2_ctrl_p[i]);
 		value &= ~(CTRL_U2_PORT_PDN | CTRL_U2_PORT_DIS);
 		value |= CTRL_U2_PORT_HOST_SEL;
@@ -239,6 +259,7 @@ static int xhci_mtk_host_disable(struct xhci_hcd_mtk *mtk)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* power down all u2 ports except skipped ones */
 	for (i = 0; i < mtk->num_u2_ports; i++) {
 		if (BIT(i) & mtk->u2p_dis_msk)
@@ -248,6 +269,13 @@ static int xhci_mtk_host_disable(struct xhci_hcd_mtk *mtk)
 	/* power down all u2 ports */
 	for (i = 0; i < mtk->num_u2_ports; i++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* power down all u2 ports except skipped ones */
+	for (i = 0; i < mtk->num_u2_ports; i++) {
+		if (BIT(i) & mtk->u2p_dis_msk)
+			continue;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		value = readl(&ippc->u2_ctrl_p[i]);
 		value |= CTRL_U2_PORT_PDN;
 		writel(value, &ippc->u2_ctrl_p[i]);
@@ -445,11 +473,17 @@ static int xhci_mtk_setup(struct usb_hcd *hcd)
 		if (ret)
 			return ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		/* workaround only for mt8195 */
 		xhci_mtk_set_frame_interval(mtk);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		/* workaround only for mt8195 */
+		xhci_mtk_set_frame_interval(mtk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = xhci_gen_setup(hcd, xhci_mtk_quirks);
@@ -534,10 +568,15 @@ static int xhci_mtk_probe(struct platform_device *pdev)
 	of_property_read_u32(node, "mediatek,u3p-dis-msk",
 			     &mtk->u3p_dis_msk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	of_property_read_u32(node, "mediatek,u2p-dis-msk",
 			     &mtk->u2p_dis_msk);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	of_property_read_u32(node, "mediatek,u2p-dis-msk",
+			     &mtk->u2p_dis_msk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = usb_wakeup_of_property_parse(mtk, node);
 	if (ret) {
@@ -664,10 +703,14 @@ disable_ldos:
 
 disable_pm:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_runtime_put_noidle(dev);
 =======
 	pm_runtime_put_sync_autosuspend(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_put_noidle(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_disable(dev);
 	return ret;
 }
@@ -803,9 +846,13 @@ static const struct dev_pm_ops xhci_mtk_pm_ops = {
 static const struct of_device_id mtk_xhci_of_match[] = {
 	{ .compatible = "mediatek,mt8173-xhci"},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "mediatek,mt8195-xhci"},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "mediatek,mt8195-xhci"},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mtk-xhci"},
 	{ },
 };

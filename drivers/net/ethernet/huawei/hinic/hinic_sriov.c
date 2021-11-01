@@ -837,14 +837,20 @@ int hinic_ndo_set_vf_bw(struct net_device *netdev,
 			int vf, int min_tx_rate, int max_tx_rate)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static const u32 speeds[] = {
 		SPEED_10, SPEED_100, SPEED_1000, SPEED_10000,
 		SPEED_25000, SPEED_40000, SPEED_100000
 	};
+<<<<<<< HEAD
 =======
 	u32 speeds[] = {SPEED_10, SPEED_100, SPEED_1000, SPEED_10000,
 			SPEED_25000, SPEED_40000, SPEED_100000};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hinic_dev *nic_dev = netdev_priv(netdev);
 	struct hinic_port_cap port_cap = { 0 };
 	enum hinic_port_link_state link_state;

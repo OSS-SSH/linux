@@ -535,11 +535,16 @@ out:
 		mem_cgroup_sk_alloc(newsk);
 		if (newsk->sk_memcg && amt)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			mem_cgroup_charge_skmem(newsk->sk_memcg, amt,
 						GFP_KERNEL | __GFP_NOFAIL);
 =======
 			mem_cgroup_charge_skmem(newsk->sk_memcg, amt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			mem_cgroup_charge_skmem(newsk->sk_memcg, amt,
+						GFP_KERNEL | __GFP_NOFAIL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		release_sock(newsk);
 	}

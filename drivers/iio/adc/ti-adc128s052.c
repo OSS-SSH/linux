@@ -172,6 +172,9 @@ static int adc128_probe(struct spi_device *spi)
 
 	ret = iio_device_register(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto err_disable_regulator;
 
@@ -179,9 +182,12 @@ static int adc128_probe(struct spi_device *spi)
 
 err_disable_regulator:
 	regulator_disable(adc->reg);
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

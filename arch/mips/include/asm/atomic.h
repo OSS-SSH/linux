@@ -207,10 +207,14 @@ ATOMIC_OPS(atomic64, xor, s64, ^=, xor, lld, scd)
  */
 #define ATOMIC_SIP_OP(pfx, type, op, ll, sc)				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 static __inline__ type arch_##pfx##_sub_if_positive(type i, pfx##_t * v)	\
 =======
 static __inline__ int arch_##pfx##_sub_if_positive(type i, pfx##_t * v)	\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static __inline__ type arch_##pfx##_sub_if_positive(type i, pfx##_t * v)	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {									\
 	type temp, result;						\
 									\

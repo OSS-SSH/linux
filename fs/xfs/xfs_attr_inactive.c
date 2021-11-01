@@ -152,10 +152,14 @@ xfs_attr3_node_inactive(
 
 	xfs_da3_node_hdr_from_disk(dp->i_mount, &ichdr, bp->b_addr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	parent_blkno = xfs_buf_daddr(bp);
 =======
 	parent_blkno = bp->b_bn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	parent_blkno = xfs_buf_daddr(bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ichdr.count) {
 		xfs_trans_brelse(*trans, bp);
 		return 0;
@@ -182,10 +186,14 @@ xfs_attr3_node_inactive(
 
 		/* save for re-read later */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		child_blkno = xfs_buf_daddr(child_bp);
 =======
 		child_blkno = XFS_BUF_ADDR(child_bp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		child_blkno = xfs_buf_daddr(child_bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Invalidate the subtree, however we have to.
@@ -280,10 +288,14 @@ xfs_attr3_root_inactive(
 	if (error)
 		return error;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	blkno = xfs_buf_daddr(bp);
 =======
 	blkno = bp->b_bn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	blkno = xfs_buf_daddr(bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Invalidate the tree, even if the "tree" is only a single leaf block.

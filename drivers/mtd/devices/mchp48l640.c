@@ -230,10 +230,14 @@ static int mchp48l640_write(struct mtd_info *mtd, loff_t to, size_t len,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int mchp48l640_read_page(struct mtd_info *mtd, loff_t from, size_t len,
@@ -260,9 +264,13 @@ static int mchp48l640_read_page(struct mtd_info *mtd, loff_t from, size_t len,
 		*retlen += len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(cmd);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfree(cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 
 fail:
@@ -295,10 +303,14 @@ static int mchp48l640_read(struct mtd_info *mtd, loff_t from, size_t len,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct mchp48_caps mchp48l640_caps = {

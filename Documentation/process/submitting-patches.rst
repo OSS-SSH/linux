@@ -217,11 +217,15 @@ Morton (akpm@linux-foundation.org) serves as a maintainer of last resort.
 
 You should also normally choose at least one mailing list to receive a copy
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 of your patch set.  linux-kernel@vger.kernel.org should be used by default
 for all patches, but the volume on that list has caused a number of
 developers to tune it out.  Look in the MAINTAINERS file for a
 subsystem-specific list; your patch will probably get more attention there.
 Please do not spam unrelated lists, though.
+<<<<<<< HEAD
 =======
 of your patch set.  linux-kernel@vger.kernel.org functions as a list of
 last resort, but the volume on that list has caused a number of developers
@@ -229,6 +233,8 @@ to tune it out.  Look in the MAINTAINERS file for a subsystem-specific
 list; your patch will probably get more attention there.  Please do not
 spam unrelated lists, though.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Many kernel-related lists are hosted on vger.kernel.org; you can find a
 list of them at http://vger.kernel.org/vger-lists.html.  There are

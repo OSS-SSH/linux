@@ -610,6 +610,7 @@ static void qedi_scsi_completion(struct qedi_ctx *qedi,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!scsi_cmd_to_rq(sc_cmd)->q) {
 =======
 	if (!sc_cmd->request) {
@@ -621,6 +622,9 @@ static void qedi_scsi_completion(struct qedi_ctx *qedi,
 
 	if (!sc_cmd->request->q) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!scsi_cmd_to_rq(sc_cmd)->q) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		QEDI_WARN(&qedi->dbg_ctx,
 			  "request->q is NULL so request is not valid, sc_cmd=%p.\n",
 			  sc_cmd);
@@ -941,6 +945,7 @@ exit_fp_process:
 static void qedi_ring_doorbell(struct qedi_conn *qedi_conn)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	qedi_conn->ep->db_data.sq_prod = qedi_conn->ep->fw_sq_prod_idx;
 
 	/* wmb - Make sure fw idx is coherent */
@@ -959,6 +964,13 @@ static void qedi_ring_doorbell(struct qedi_conn *qedi_conn)
 	dbell.sq_prod = qedi_conn->ep->fw_sq_prod_idx;
 	writel(*(u32 *)&dbell, qedi_conn->ep->p_doorbell);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qedi_conn->ep->db_data.sq_prod = qedi_conn->ep->fw_sq_prod_idx;
+
+	/* wmb - Make sure fw idx is coherent */
+	wmb();
+	writel(*(u32 *)&qedi_conn->ep->db_data, qedi_conn->ep->p_doorbell);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Make sure fw write idx is coherent, and include both memory barriers
 	 * as a failsafe as for some architectures the call is the same but on

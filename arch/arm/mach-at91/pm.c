@@ -11,9 +11,13 @@
 #include <linux/of_address.h>
 #include <linux/of.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/of_fdt.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/of_fdt.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/of_platform.h>
 #include <linux/parser.h>
 #include <linux/suspend.h>
@@ -32,6 +36,9 @@
 #include "pm.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define BACKUP_DDR_PHY_CALIBRATION	(9)
 
 /**
@@ -74,13 +81,19 @@ struct at91_pm_sfrbu_regs {
  * @bu: backup unit mapped data (for backup mode)
  * @memcs: memory chip select
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct at91_soc_pm {
 	int (*config_shdwc_ws)(void __iomem *shdwc, u32 *mode, u32 *polarity);
 	int (*config_pmc_ws)(void __iomem *pmc, u32 mode, u32 polarity);
 	const struct of_device_id *ws_ids;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct at91_pm_bu *bu;
 	struct at91_pm_data data;
 	struct at91_pm_sfrbu_regs sfrbu_regs;
@@ -99,11 +112,14 @@ enum at91_pm_iomaps {
 
 #define AT91_PM_IOMAP(name)	BIT(AT91_PM_IOMAP_##name)
 
+<<<<<<< HEAD
 =======
 	struct at91_pm_data data;
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct at91_soc_pm soc_pm = {
 	.data = {
 		.standby_mode = AT91_PM_STANDBY,
@@ -142,6 +158,7 @@ static int at91_pm_valid_state(suspend_state_t state)
 static int canary = 0xA5A5A5A5;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static struct at91_pm_bu {
 	int suspended;
@@ -151,6 +168,8 @@ static struct at91_pm_bu {
 } *pm_bu;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct wakeup_source_info {
 	unsigned int pmc_fsmr_bit;
 	unsigned int shdwc_mr_bit;
@@ -190,6 +209,9 @@ static const struct of_device_id sam9x60_ws_ids[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id sama7g5_ws_ids[] = {
 	{ .compatible = "atmel,at91sam9x5-rtc",		.data = &ws_info[1] },
 	{ .compatible = "microchip,sama7g5-ohci",	.data = &ws_info[2] },
@@ -201,8 +223,11 @@ static const struct of_device_id sama7g5_ws_ids[] = {
 	{ /* sentinel */ }
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int at91_pm_config_ws(unsigned int pm_mode, bool set)
 {
 	const struct wakeup_source_info *wsi;
@@ -294,10 +319,15 @@ static int at91_sam9x60_config_pmc_ws(void __iomem *pmc, u32 mode, u32 polarity)
 static int at91_pm_begin(suspend_state_t state)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (state) {
 	case PM_SUSPEND_MEM:
 		soc_pm.data.mode = soc_pm.data.suspend_mode;
@@ -312,6 +342,9 @@ static int at91_pm_begin(suspend_state_t state)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = at91_pm_config_ws(soc_pm.data.mode, true);
 	if (ret)
 		return ret;
@@ -322,9 +355,12 @@ static int at91_pm_begin(suspend_state_t state)
 		soc_pm.bu->suspended = 0;
 
 	return 0;
+<<<<<<< HEAD
 =======
 	return at91_pm_config_ws(soc_pm.data.mode, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -383,6 +419,9 @@ extern u32 at91_pm_suspend_in_sram_sz;
 static int at91_suspend_finish(unsigned long val)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	if (soc_pm.data.mode == AT91_PM_BACKUP && soc_pm.data.ramc_phy) {
@@ -396,8 +435,11 @@ static int at91_suspend_finish(unsigned long val)
 				*((unsigned int *)soc_pm.memcs + (i - 1));
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	flush_cache_all();
 	outer_disable();
 
@@ -407,6 +449,9 @@ static int at91_suspend_finish(unsigned long val)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void at91_pm_switch_ba_to_vbat(void)
 {
 	unsigned int offset = offsetof(struct at91_pm_sfrbu_regs, pswbu);
@@ -432,6 +477,7 @@ static void at91_pm_switch_ba_to_vbat(void)
 		val = readl(soc_pm.data.sfrbu + offset);
 }
 
+<<<<<<< HEAD
 static void at91_pm_suspend(suspend_state_t state)
 {
 	if (soc_pm.data.mode == AT91_PM_BACKUP) {
@@ -442,6 +488,12 @@ static void at91_pm_suspend(suspend_state_t state)
 	if (soc_pm.data.mode == AT91_PM_BACKUP) {
 		pm_bu->suspended = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void at91_pm_suspend(suspend_state_t state)
+{
+	if (soc_pm.data.mode == AT91_PM_BACKUP) {
+		at91_pm_switch_ba_to_vbat();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		cpu_suspend(0, at91_suspend_finish);
 
@@ -665,6 +717,7 @@ static const struct of_device_id ramc_ids[] __initconst = {
 	{ .compatible = "atmel,at91sam9g45-ddramc", .data = &ramc_infos[2] },
 	{ .compatible = "atmel,sama5d3-ddramc", .data = &ramc_infos[3] },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "microchip,sama7g5-uddrc", },
 	{ /*sentinel*/ }
 };
@@ -681,12 +734,25 @@ static __init int at91_dt_ramc(bool phy_mandatory)
 
 static __init void at91_dt_ramc(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "microchip,sama7g5-uddrc", },
+	{ /*sentinel*/ }
+};
+
+static const struct of_device_id ramc_phy_ids[] __initconst = {
+	{ .compatible = "microchip,sama7g5-ddr3phy", },
+	{ /* Sentinel. */ },
+};
+
+static __init int at91_dt_ramc(bool phy_mandatory)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device_node *np;
 	const struct of_device_id *of_id;
 	int idx = 0;
 	void *standby = NULL;
 	const struct ramc_info *ramc;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int ret;
 
@@ -705,22 +771,39 @@ static __init void at91_dt_ramc(void)
 			soc_pm.data.memctrl = ramc->memctrl;
 		}
 =======
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for_each_matching_node_and_match(np, ramc_ids, &of_id) {
 		soc_pm.data.ramc[idx] = of_iomap(np, 0);
-		if (!soc_pm.data.ramc[idx])
-			panic(pr_fmt("unable to map ramc[%d] cpu registers\n"), idx);
+		if (!soc_pm.data.ramc[idx]) {
+			pr_err("unable to map ramc[%d] cpu registers\n", idx);
+			ret = -ENOMEM;
+			goto unmap_ramc;
+		}
 
 		ramc = of_id->data;
+<<<<<<< HEAD
 		if (!standby)
 			standby = ramc->idle;
 		soc_pm.data.memctrl = ramc->memctrl;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ramc) {
+			if (!standby)
+				standby = ramc->idle;
+			soc_pm.data.memctrl = ramc->memctrl;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		idx++;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!idx) {
 		pr_err("unable to find compatible ram controller node in dtb\n");
 		ret = -ENODEV;
@@ -742,6 +825,7 @@ static __init void at91_dt_ramc(void)
 		ret = -ENODEV;
 		goto unmap_ramc;
 	}
+<<<<<<< HEAD
 
 	if (!standby) {
 		pr_warn("ramc no standby function available\n");
@@ -760,14 +844,27 @@ unmap_ramc:
 =======
 	if (!idx)
 		panic(pr_fmt("unable to find compatible ram controller node in dtb\n"));
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!standby) {
 		pr_warn("ramc no standby function available\n");
-		return;
+		return 0;
 	}
 
 	at91_cpuidle_device.dev.platform_data = standby;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+
+unmap_ramc:
+	while (idx)
+		iounmap(soc_pm.data.ramc[--idx]);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void at91rm9200_idle(void)
@@ -843,6 +940,9 @@ static bool __init at91_is_pm_mode_active(int pm_mode)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __init at91_pm_backup_scan_memcs(unsigned long node,
 					    const char *uname, int depth,
 					    void *data)
@@ -871,12 +971,16 @@ static int __init at91_pm_backup_scan_memcs(unsigned long node,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __init at91_pm_backup_init(void)
 {
 	struct gen_pool *sram_pool;
 	struct device_node *np;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct platform_device *pdev;
 	int ret = -ENODEV, located = 0;
@@ -889,11 +993,19 @@ static int __init at91_pm_backup_init(void)
 
 	if (!IS_ENABLED(CONFIG_SOC_SAMA5D2))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct platform_device *pdev;
+	int ret = -ENODEV, located = 0;
+
+	if (!IS_ENABLED(CONFIG_SOC_SAMA5D2) &&
+	    !IS_ENABLED(CONFIG_SOC_SAMA7G5))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EPERM;
 
 	if (!at91_is_pm_mode_active(AT91_PM_BACKUP))
 		return 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	np = of_find_compatible_node(NULL, NULL, "atmel,sama5d2-securam");
 	if (!np)
@@ -912,16 +1024,25 @@ static int __init at91_pm_backup_init(void)
 	if (!np)
 		goto securam_fail_no_ref_dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	np = of_find_compatible_node(NULL, NULL, "atmel,sama5d2-securam");
+	if (!np)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pdev = of_find_device_by_node(np);
 	of_node_put(np);
 	if (!pdev) {
 		pr_warn("%s: failed to find securam device!\n", __func__);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto securam_fail_no_ref_dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	sram_pool = gen_pool_get(&pdev->dev, NULL);
@@ -931,18 +1052,26 @@ static int __init at91_pm_backup_init(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	soc_pm.bu = (void *)gen_pool_alloc(sram_pool, sizeof(struct at91_pm_bu));
 	if (!soc_pm.bu) {
 =======
 	pm_bu = (void *)gen_pool_alloc(sram_pool, sizeof(struct at91_pm_bu));
 	if (!pm_bu) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	soc_pm.bu = (void *)gen_pool_alloc(sram_pool, sizeof(struct at91_pm_bu));
+	if (!soc_pm.bu) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_warn("%s: unable to alloc securam!\n", __func__);
 		ret = -ENOMEM;
 		goto securam_fail;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	soc_pm.bu->suspended = 0;
 	soc_pm.bu->canary = __pa_symbol(&canary);
 	soc_pm.bu->resume = __pa_symbol(cpu_resume);
@@ -955,16 +1084,20 @@ static int __init at91_pm_backup_init(void)
 		soc_pm.bu->ddr_phy_calibration[0] = readl(soc_pm.data.ramc_phy +
 							  0x188);
 	}
+<<<<<<< HEAD
 =======
 	pm_bu->suspended = 0;
 	pm_bu->canary = __pa_symbol(&canary);
 	pm_bu->resume = __pa_symbol(cpu_resume);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 
 securam_fail:
 	put_device(&pdev->dev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return ret;
 }
@@ -1057,54 +1190,95 @@ static void __init at91_pm_modes_init(const u32 *maps, int len)
 securam_fail_no_ref_dev:
 	iounmap(soc_pm.data.sfrbu);
 	soc_pm.data.sfrbu = NULL;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
-}
-
-static void __init at91_pm_use_default_mode(int pm_mode)
-{
-	if (pm_mode != AT91_PM_ULP1 && pm_mode != AT91_PM_BACKUP)
-		return;
-
-	if (soc_pm.data.standby_mode == pm_mode)
-		soc_pm.data.standby_mode = AT91_PM_ULP0;
-	if (soc_pm.data.suspend_mode == pm_mode)
-		soc_pm.data.suspend_mode = AT91_PM_ULP0;
 }
 
 static const struct of_device_id atmel_shdwc_ids[] = {
 	{ .compatible = "atmel,sama5d2-shdwc" },
 	{ .compatible = "microchip,sam9x60-shdwc" },
+	{ .compatible = "microchip,sama7g5-shdwc" },
 	{ /* sentinel. */ }
 };
 
-static void __init at91_pm_modes_init(void)
+static void __init at91_pm_modes_init(const u32 *maps, int len)
 {
 	struct device_node *np;
-	int ret;
-
-	if (!at91_is_pm_mode_active(AT91_PM_BACKUP) &&
-	    !at91_is_pm_mode_active(AT91_PM_ULP1))
-		return;
-
-	np = of_find_matching_node(NULL, atmel_shdwc_ids);
-	if (!np) {
-		pr_warn("%s: failed to find shdwc!\n", __func__);
-		goto ulp1_default;
-	}
-
-	soc_pm.data.shdwc = of_iomap(np, 0);
-	of_node_put(np);
+	int ret, mode;
 
 	ret = at91_pm_backup_init();
 	if (ret) {
-		if (!at91_is_pm_mode_active(AT91_PM_ULP1))
-			goto unmap;
-		else
-			goto backup_default;
+		if (soc_pm.data.standby_mode == AT91_PM_BACKUP)
+			soc_pm.data.standby_mode = AT91_PM_ULP0;
+		if (soc_pm.data.suspend_mode == AT91_PM_BACKUP)
+			soc_pm.data.suspend_mode = AT91_PM_ULP0;
 	}
 
-	return;
+	if (maps[soc_pm.data.standby_mode] & AT91_PM_IOMAP(SHDWC) ||
+	    maps[soc_pm.data.suspend_mode] & AT91_PM_IOMAP(SHDWC)) {
+		np = of_find_matching_node(NULL, atmel_shdwc_ids);
+		if (!np) {
+			pr_warn("%s: failed to find shdwc!\n", __func__);
 
+			/* Use ULP0 if it doesn't needs SHDWC.*/
+			if (!(maps[AT91_PM_ULP0] & AT91_PM_IOMAP(SHDWC)))
+				mode = AT91_PM_ULP0;
+			else
+				mode = AT91_PM_STANDBY;
+
+			if (maps[soc_pm.data.standby_mode] & AT91_PM_IOMAP(SHDWC))
+				soc_pm.data.standby_mode = mode;
+			if (maps[soc_pm.data.suspend_mode] & AT91_PM_IOMAP(SHDWC))
+				soc_pm.data.suspend_mode = mode;
+		} else {
+			soc_pm.data.shdwc = of_iomap(np, 0);
+			of_node_put(np);
+		}
+	}
+
+	if (maps[soc_pm.data.standby_mode] & AT91_PM_IOMAP(SFRBU) ||
+	    maps[soc_pm.data.suspend_mode] & AT91_PM_IOMAP(SFRBU)) {
+		np = of_find_compatible_node(NULL, NULL, "atmel,sama5d2-sfrbu");
+		if (!np) {
+			pr_warn("%s: failed to find sfrbu!\n", __func__);
+
+			/*
+			 * Use ULP0 if it doesn't need SHDWC or if SHDWC
+			 * was already located.
+			 */
+			if (!(maps[AT91_PM_ULP0] & AT91_PM_IOMAP(SHDWC)) ||
+			    soc_pm.data.shdwc)
+				mode = AT91_PM_ULP0;
+			else
+				mode = AT91_PM_STANDBY;
+
+			if (maps[soc_pm.data.standby_mode] & AT91_PM_IOMAP(SFRBU))
+				soc_pm.data.standby_mode = mode;
+			if (maps[soc_pm.data.suspend_mode] & AT91_PM_IOMAP(SFRBU))
+				soc_pm.data.suspend_mode = mode;
+		} else {
+			soc_pm.data.sfrbu = of_iomap(np, 0);
+			of_node_put(np);
+		}
+	}
+
+	/* Unmap all unnecessary. */
+	if (soc_pm.data.shdwc &&
+	    !(maps[soc_pm.data.standby_mode] & AT91_PM_IOMAP(SHDWC) ||
+	      maps[soc_pm.data.suspend_mode] & AT91_PM_IOMAP(SHDWC))) {
+		iounmap(soc_pm.data.shdwc);
+		soc_pm.data.shdwc = NULL;
+	}
+
+	if (soc_pm.data.sfrbu &&
+	    !(maps[soc_pm.data.standby_mode] & AT91_PM_IOMAP(SFRBU) ||
+	      maps[soc_pm.data.suspend_mode] & AT91_PM_IOMAP(SFRBU))) {
+		iounmap(soc_pm.data.sfrbu);
+		soc_pm.data.sfrbu = NULL;
+	}
+
+<<<<<<< HEAD
 unmap:
 	iounmap(soc_pm.data.shdwc);
 	soc_pm.data.shdwc = NULL;
@@ -1113,6 +1287,9 @@ ulp1_default:
 backup_default:
 	at91_pm_use_default_mode(AT91_PM_BACKUP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct pmc_info {
@@ -1148,13 +1325,19 @@ static const struct pmc_info pmc_infos[] __initconst = {
 		.version = AT91_PMC_V2,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.mckr = 0x28,
 		.version = AT91_PMC_V2,
 	},
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct of_device_id atmel_pmc_ids[] __initconst = {
@@ -1171,9 +1354,13 @@ static const struct of_device_id atmel_pmc_ids[] __initconst = {
 	{ .compatible = "atmel,sama5d2-pmc", .data = &pmc_infos[1] },
 	{ .compatible = "microchip,sam9x60-pmc", .data = &pmc_infos[4] },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "microchip,sama7g5-pmc", .data = &pmc_infos[5] },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "microchip,sama7g5-pmc", .data = &pmc_infos[5] },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ /* sentinel */ },
 };
 
@@ -1262,10 +1449,15 @@ static void __init at91_pm_init(void (*pm_idle)(void))
 void __init at91rm9200_pm_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!IS_ENABLED(CONFIG_SOC_AT91RM9200))
 		return;
 
@@ -1278,12 +1470,18 @@ void __init at91rm9200_pm_init(void)
 	soc_pm.data.suspend_mode = AT91_PM_ULP0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = at91_dt_ramc(false);
 	if (ret)
 		return;
 =======
 	at91_dt_ramc();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = at91_dt_ramc(false);
+	if (ret)
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * AT91RM9200 SDRAM low-power mode cannot be used with self-refresh.
@@ -1299,27 +1497,39 @@ void __init sam9x60_pm_init(void)
 		AT91_PM_STANDBY, AT91_PM_ULP0, AT91_PM_ULP0_FAST, AT91_PM_ULP1,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static const int iomaps[] __initconst = {
 		[AT91_PM_ULP1]		= AT91_PM_IOMAP(SHDWC),
 	};
 	int ret;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!IS_ENABLED(CONFIG_SOC_SAM9X60))
 		return;
 
 	at91_pm_modes_validate(modes, ARRAY_SIZE(modes));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	at91_pm_modes_init(iomaps, ARRAY_SIZE(iomaps));
 	ret = at91_dt_ramc(false);
 	if (ret)
 		return;
 
+<<<<<<< HEAD
 =======
 	at91_pm_modes_init();
 	at91_dt_ramc();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	at91_pm_init(NULL);
 
 	soc_pm.ws_ids = sam9x60_ws_ids;
@@ -1329,10 +1539,15 @@ void __init sam9x60_pm_init(void)
 void __init at91sam9_pm_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!IS_ENABLED(CONFIG_SOC_AT91SAM9))
 		return;
 
@@ -1345,13 +1560,19 @@ void __init at91sam9_pm_init(void)
 	soc_pm.data.suspend_mode = AT91_PM_ULP0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = at91_dt_ramc(false);
 	if (ret)
 		return;
 
+<<<<<<< HEAD
 =======
 	at91_dt_ramc();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	at91_pm_init(at91sam9_idle);
 }
 
@@ -1361,22 +1582,32 @@ void __init sama5_pm_init(void)
 		AT91_PM_STANDBY, AT91_PM_ULP0, AT91_PM_ULP0_FAST,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!IS_ENABLED(CONFIG_SOC_SAMA5))
 		return;
 
 	at91_pm_modes_validate(modes, ARRAY_SIZE(modes));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = at91_dt_ramc(false);
 	if (ret)
 		return;
 
+<<<<<<< HEAD
 =======
 	at91_dt_ramc();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	at91_pm_init(NULL);
 }
 
@@ -1387,35 +1618,50 @@ void __init sama5d2_pm_init(void)
 		AT91_PM_BACKUP,
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static const u32 iomaps[] __initconst = {
 		[AT91_PM_ULP1]		= AT91_PM_IOMAP(SHDWC),
 		[AT91_PM_BACKUP]	= AT91_PM_IOMAP(SHDWC) |
 					  AT91_PM_IOMAP(SFRBU),
 	};
 	int ret;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!IS_ENABLED(CONFIG_SOC_SAMA5D2))
 		return;
 
 	at91_pm_modes_validate(modes, ARRAY_SIZE(modes));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	at91_pm_modes_init(iomaps, ARRAY_SIZE(iomaps));
 	ret = at91_dt_ramc(false);
 	if (ret)
 		return;
 
+<<<<<<< HEAD
 =======
 	at91_pm_modes_init();
 	at91_dt_ramc();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	at91_pm_init(NULL);
 
 	soc_pm.ws_ids = sama5d2_ws_ids;
 	soc_pm.config_shdwc_ws = at91_sama5d2_config_shdwc_ws;
 	soc_pm.config_pmc_ws = at91_sama5d2_config_pmc_ws;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	soc_pm.sfrbu_regs.pswbu.key = (0x4BD20C << 8);
 	soc_pm.sfrbu_regs.pswbu.ctrl = BIT(0);
@@ -1456,8 +1702,11 @@ void __init sama7_pm_init(void)
 	soc_pm.sfrbu_regs.pswbu.ctrl = BIT(0);
 	soc_pm.sfrbu_regs.pswbu.softsw = BIT(1);
 	soc_pm.sfrbu_regs.pswbu.state = BIT(2);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __init at91_pm_modes_select(char *str)

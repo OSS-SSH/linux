@@ -92,17 +92,24 @@ struct iomap {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline sector_t iomap_sector(const struct iomap *iomap, loff_t pos)
 =======
 static inline sector_t
 iomap_sector(struct iomap *iomap, loff_t pos)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline sector_t iomap_sector(const struct iomap *iomap, loff_t pos)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return (iomap->addr + pos - iomap->offset) >> SECTOR_SHIFT;
 }
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Returns the inline data pointer for logical offset @pos.
  */
 static inline void *iomap_inline_data(const struct iomap *iomap, loff_t pos)
@@ -121,8 +128,11 @@ static inline bool iomap_inline_data_valid(const struct iomap *iomap)
 }
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * When a filesystem sets page_ops in an iomap mapping it returns, page_prepare
  * and page_done will be called for each page written to.  This only applies to
  * buffered writes as unbuffered writes will not typically have pages
@@ -134,6 +144,7 @@ static inline bool iomap_inline_data_valid(const struct iomap *iomap)
  */
 struct iomap_page_ops {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*page_prepare)(struct inode *inode, loff_t pos, unsigned len);
 	void (*page_done)(struct inode *inode, loff_t pos, unsigned copied,
 			struct page *page);
@@ -143,6 +154,11 @@ struct iomap_page_ops {
 	void (*page_done)(struct inode *inode, loff_t pos, unsigned copied,
 			struct page *page, struct iomap *iomap);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*page_prepare)(struct inode *inode, loff_t pos, unsigned len);
+	void (*page_done)(struct inode *inode, loff_t pos, unsigned copied,
+			struct page *page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -156,9 +172,13 @@ struct iomap_page_ops {
 #define IOMAP_NOWAIT		(1 << 5) /* do not block */
 #define IOMAP_OVERWRITE_ONLY	(1 << 6) /* only pure overwrites allowed */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IOMAP_UNSHARE		(1 << 7) /* unshare_file_range */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IOMAP_UNSHARE		(1 << 7) /* unshare_file_range */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct iomap_ops {
 	/*
@@ -181,6 +201,9 @@ struct iomap_ops {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct iomap_iter - Iterate through a range of a file
  * @inode: Set at the start of the iteration and should not change.
@@ -193,6 +216,7 @@ struct iomap_ops {
  * @flags: Zero or more of the iomap_begin flags above.
  * @iomap: Map describing the I/O iteration
  * @srcmap: Source map for COW operations
+<<<<<<< HEAD
  */
 struct iomap_iter {
 	struct inode *inode;
@@ -239,14 +263,58 @@ static inline const struct iomap *iomap_iter_srcmap(const struct iomap_iter *i)
 =======
 /*
  * Main iomap iterator function.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
-typedef loff_t (*iomap_actor_t)(struct inode *inode, loff_t pos, loff_t len,
-		void *data, struct iomap *iomap, struct iomap *srcmap);
+struct iomap_iter {
+	struct inode *inode;
+	loff_t pos;
+	u64 len;
+	s64 processed;
+	unsigned flags;
+	struct iomap iomap;
+	struct iomap srcmap;
+};
 
+<<<<<<< HEAD
 loff_t iomap_apply(struct inode *inode, loff_t pos, loff_t length,
 		unsigned flags, const struct iomap_ops *ops, void *data,
 		iomap_actor_t actor);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int iomap_iter(struct iomap_iter *iter, const struct iomap_ops *ops);
+
+/**
+ * iomap_length - length of the current iomap iteration
+ * @iter: iteration structure
+ *
+ * Returns the length that the operation applies to for the current iteration.
+ */
+static inline u64 iomap_length(const struct iomap_iter *iter)
+{
+	u64 end = iter->iomap.offset + iter->iomap.length;
+
+	if (iter->srcmap.type != IOMAP_HOLE)
+		end = min(end, iter->srcmap.offset + iter->srcmap.length);
+	return min(iter->len, end - iter->pos);
+}
+
+/**
+ * iomap_iter_srcmap - return the source map for the current iomap iteration
+ * @i: iteration structure
+ *
+ * Write operations on file systems with reflink support might require a
+ * source and a destination map.  This function retourns the source map
+ * for a given operation, which may or may no be identical to the destination
+ * map in &i->iomap.
+ */
+static inline const struct iomap *iomap_iter_srcmap(const struct iomap_iter *i)
+{
+	if (i->srcmap.type != IOMAP_HOLE)
+		return &i->srcmap;
+	return &i->iomap;
+}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ssize_t iomap_file_buffered_write(struct kiocb *iocb, struct iov_iter *from,
 		const struct iomap_ops *ops);
@@ -344,12 +412,17 @@ struct iomap_dio_ops {
 	int (*end_io)(struct kiocb *iocb, ssize_t size, int error,
 		      unsigned flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	blk_qc_t (*submit_io)(const struct iomap_iter *iter, struct bio *bio,
 			      loff_t file_offset);
 =======
 	blk_qc_t (*submit_io)(struct inode *inode, struct iomap *iomap,
 			struct bio *bio, loff_t file_offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	blk_qc_t (*submit_io)(const struct iomap_iter *iter, struct bio *bio,
+			      loff_t file_offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*

@@ -2832,10 +2832,14 @@ static const struct net_device_ops gem_netdev_ops = {
 	.ndo_get_stats		= gem_get_stats,
 	.ndo_set_rx_mode	= gem_set_multicast,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= gem_ioctl,
 =======
 	.ndo_do_ioctl		= gem_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= gem_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout		= gem_tx_timeout,
 	.ndo_change_mtu		= gem_change_mtu,
 	.ndo_validate_addr	= eth_validate_addr,

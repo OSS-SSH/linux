@@ -44,10 +44,14 @@ struct vdpa_vq_state_split {
  */
 struct vdpa_vq_state_packed {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16	last_avail_counter:1;
 	u16	last_avail_idx:15;
 	u16	last_used_counter:1;
 	u16	last_used_idx:15;
+<<<<<<< HEAD
 };
 
 struct vdpa_vq_state {
@@ -68,6 +72,15 @@ struct vdpa_vq_state {
           struct vdpa_vq_state_packed packed;
      };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+};
+
+struct vdpa_vq_state {
+	union {
+		struct vdpa_vq_state_split split;
+		struct vdpa_vq_state_packed packed;
+	};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct vdpa_mgmt_dev;
@@ -80,9 +93,13 @@ struct vdpa_mgmt_dev;
  * @index: device index
  * @features_valid: were features initialized? for legacy guests
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @use_va: indicate whether virtual address must be used by this device
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @use_va: indicate whether virtual address must be used by this device
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @nvqs: maximum number of supported virtqueues
  * @mdev: management device pointer; caller must setup when registering device as part
  *	  of dev_add() mgmtdev ops callback before invoking _vdpa_register_device().
@@ -94,9 +111,13 @@ struct vdpa_device {
 	unsigned int index;
 	bool features_valid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool use_va;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool use_va;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int nvqs;
 	struct vdpa_mgmt_dev *mdev;
 };
@@ -113,6 +134,9 @@ struct vdpa_iova_range {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Corresponding file area for device memory mapping
  * @file: vma->vm_file for the mapping
  * @offset: mapping offset in the vm_file
@@ -123,8 +147,11 @@ struct vdpa_map_file {
 };
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct vdpa_config_ops - operations for configuring a vDPA device.
  * Note: vDPA device drivers are required to implement all of the
  * operations unless it is mentioned to be optional in the following
@@ -167,10 +194,14 @@ struct vdpa_map_file {
  *				@idx: virtqueue index
  *				@state: pointer to returned state (last_avail_idx)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @get_vq_notification:	Get the notification area for a virtqueue
 =======
  * @get_vq_notification: 	Get the notification area for a virtqueue
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @get_vq_notification:	Get the notification area for a virtqueue
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *				@vdev: vdpa device
  *				@idx: virtqueue index
  *				Returns the notifcation area
@@ -211,11 +242,17 @@ struct vdpa_map_file {
  *				@vdev: vdpa device
  *				@status: virtio device status
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @reset:			Reset device
  *				@vdev: vdpa device
  *				Returns integer: success (0) or error (< 0)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @reset:			Reset device
+ *				@vdev: vdpa device
+ *				Returns integer: success (0) or error (< 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @get_config_size:		Get the size of the configuration space
  *				@vdev: vdpa device
  *				Returns size_t: configuration size
@@ -301,9 +338,13 @@ struct vdpa_config_ops {
 	u8 (*get_status)(struct vdpa_device *vdev);
 	void (*set_status)(struct vdpa_device *vdev, u8 status);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*reset)(struct vdpa_device *vdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*reset)(struct vdpa_device *vdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size_t (*get_config_size)(struct vdpa_device *vdev);
 	void (*get_config)(struct vdpa_device *vdev, unsigned int offset,
 			   void *buf, unsigned int len);
@@ -316,10 +357,14 @@ struct vdpa_config_ops {
 	int (*set_map)(struct vdpa_device *vdev, struct vhost_iotlb *iotlb);
 	int (*dma_map)(struct vdpa_device *vdev, u64 iova, u64 size,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       u64 pa, u32 perm, void *opaque);
 =======
 		       u64 pa, u32 perm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       u64 pa, u32 perm, void *opaque);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*dma_unmap)(struct vdpa_device *vdev, u64 iova, u64 size);
 
 	/* Free device resources */
@@ -328,6 +373,7 @@ struct vdpa_config_ops {
 
 struct vdpa_device *__vdpa_alloc_device(struct device *parent,
 					const struct vdpa_config_ops *config,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					size_t size, const char *name,
 					bool use_va);
@@ -350,15 +396,37 @@ struct vdpa_device *__vdpa_alloc_device(struct device *parent,
 
 #define vdpa_alloc_device(dev_struct, member, parent, config, name)   \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					size_t size, const char *name,
+					bool use_va);
+
+/**
+ * vdpa_alloc_device - allocate and initilaize a vDPA device
+ *
+ * @dev_struct: the type of the parent structure
+ * @member: the name of struct vdpa_device within the @dev_struct
+ * @parent: the parent device
+ * @config: the bus operations that is supported by this device
+ * @name: name of the vdpa device
+ * @use_va: indicate whether virtual address must be used by this device
+ *
+ * Return allocated data structure or ERR_PTR upon error
+ */
+#define vdpa_alloc_device(dev_struct, member, parent, config, name, use_va)   \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  container_of(__vdpa_alloc_device( \
 				       parent, config, \
 				       sizeof(dev_struct) + \
 				       BUILD_BUG_ON_ZERO(offsetof( \
 <<<<<<< HEAD
+<<<<<<< HEAD
 				       dev_struct, member)), name, use_va), \
 =======
 				       dev_struct, member)), name), \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				       dev_struct, member)), name, use_va), \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       dev_struct, member)
 
 int vdpa_register_device(struct vdpa_device *vdev, int nvqs);
@@ -414,6 +482,7 @@ static inline struct device *vdpa_get_dma_dev(struct vdpa_device *vdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int vdpa_reset(struct vdpa_device *vdev)
 {
 	const struct vdpa_config_ops *ops = vdev->config;
@@ -422,16 +491,24 @@ static inline int vdpa_reset(struct vdpa_device *vdev)
 	return ops->reset(vdev);
 =======
 static inline void vdpa_reset(struct vdpa_device *vdev)
+=======
+static inline int vdpa_reset(struct vdpa_device *vdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-        const struct vdpa_config_ops *ops = vdev->config;
+	const struct vdpa_config_ops *ops = vdev->config;
 
 	vdev->features_valid = false;
+<<<<<<< HEAD
         ops->set_status(vdev, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ops->reset(vdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int vdpa_set_features(struct vdpa_device *vdev, u64 features)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	const struct vdpa_config_ops *ops = vdev->config;
 
@@ -446,17 +523,24 @@ static inline void vdpa_get_config(struct vdpa_device *vdev,
 	const struct vdpa_config_ops *ops = vdev->config;
 =======
         const struct vdpa_config_ops *ops = vdev->config;
+=======
+	const struct vdpa_config_ops *ops = vdev->config;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	vdev->features_valid = true;
-        return ops->set_features(vdev, features);
+	return ops->set_features(vdev, features);
 }
 
-
-static inline void vdpa_get_config(struct vdpa_device *vdev, unsigned offset,
-				   void *buf, unsigned int len)
+static inline void vdpa_get_config(struct vdpa_device *vdev,
+				   unsigned int offset, void *buf,
+				   unsigned int len)
 {
+<<<<<<< HEAD
         const struct vdpa_config_ops *ops = vdev->config;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct vdpa_config_ops *ops = vdev->config;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Config accesses aren't supposed to trigger before features are set.

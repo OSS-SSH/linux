@@ -28,6 +28,9 @@ typedef struct {
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * We use atomic64_read() here because the ASID for an 'mm_struct' can
  * be reallocated when scheduling one of its threads following a
  * rollover event (see new_context() and flush_context()). In this case,
@@ -52,6 +55,7 @@ typedef struct {
  * In this scenario, the barrier on CPU 0 and the dependency on CPU 1
  * ensure that the page-table walker on CPU 1 *must* see the invalid PTE
  * written by CPU 0.
+<<<<<<< HEAD
  */
 #define ASID(mm)	(atomic64_read(&(mm)->context.id) & 0xffff)
 =======
@@ -61,6 +65,10 @@ typedef struct {
  */
 #define ASID(mm)	((mm)->context.id.counter & 0xffff)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ */
+#define ASID(mm)	(atomic64_read(&(mm)->context.id) & 0xffff)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline bool arm64_kernel_unmapped_at_el0(void)
 {

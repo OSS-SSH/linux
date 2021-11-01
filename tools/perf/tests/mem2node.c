@@ -28,10 +28,14 @@ static unsigned long *get_bitmap(const char *str, int nbits)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bm = bitmap_zalloc(nbits);
 =======
 	bm = bitmap_alloc(nbits);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bm = bitmap_zalloc(nbits);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (map && bm) {
 		for (i = 0; i < map->nr; i++) {

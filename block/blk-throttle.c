@@ -179,11 +179,17 @@ struct throtl_grp {
 	unsigned long bio_cnt_reset_time;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t io_split_cnt[2];
 	atomic_t last_io_split_cnt[2];
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_t io_split_cnt[2];
+	atomic_t last_io_split_cnt[2];
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct blkg_rwstat stat_bytes;
 	struct blkg_rwstat stat_ios;
 };
@@ -784,10 +790,15 @@ static inline void throtl_start_new_slice_with_credit(struct throtl_grp *tg,
 	tg->io_disp[rw] = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_set(&tg->io_split_cnt[rw], 0);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_set(&tg->io_split_cnt[rw], 0);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Previous slice has expired. We must have trimmed it after last
 	 * bio dispatch. That means since start of last slice, we never used
@@ -811,11 +822,17 @@ static inline void throtl_start_new_slice(struct throtl_grp *tg, bool rw)
 	tg->slice_start[rw] = jiffies;
 	tg->slice_end[rw] = jiffies + tg->td->throtl_slice;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	atomic_set(&tg->io_split_cnt[rw], 0);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	atomic_set(&tg->io_split_cnt[rw], 0);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	throtl_log(&tg->service_queue,
 		   "[%c] new slice start=%lu end=%lu jiffies=%lu",
 		   rw == READ ? 'R' : 'W', tg->slice_start[rw],
@@ -1049,11 +1066,17 @@ static bool tg_may_dispatch(struct throtl_grp *tg, struct bio *bio,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iops_limit != UINT_MAX)
 		tg->io_disp[rw] += atomic_xchg(&tg->io_split_cnt[rw], 0);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (iops_limit != UINT_MAX)
+		tg->io_disp[rw] += atomic_xchg(&tg->io_split_cnt[rw], 0);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (tg_with_in_bps_limit(tg, bio, bps_limit, &bps_wait) &&
 	    tg_with_in_iops_limit(tg, bio, iops_limit, &iops_wait)) {
 		if (wait)
@@ -2076,9 +2099,13 @@ static void throtl_downgrade_check(struct throtl_grp *tg)
 
 	if (tg->iops[READ][LIMIT_LOW]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tg->last_io_disp[READ] += atomic_xchg(&tg->last_io_split_cnt[READ], 0);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tg->last_io_disp[READ] += atomic_xchg(&tg->last_io_split_cnt[READ], 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iops = tg->last_io_disp[READ] * HZ / elapsed_time;
 		if (iops >= tg->iops[READ][LIMIT_LOW])
 			tg->last_low_overflow_time[READ] = now;
@@ -2086,9 +2113,13 @@ static void throtl_downgrade_check(struct throtl_grp *tg)
 
 	if (tg->iops[WRITE][LIMIT_LOW]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tg->last_io_disp[WRITE] += atomic_xchg(&tg->last_io_split_cnt[WRITE], 0);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tg->last_io_disp[WRITE] += atomic_xchg(&tg->last_io_split_cnt[WRITE], 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iops = tg->last_io_disp[WRITE] * HZ / elapsed_time;
 		if (iops >= tg->iops[WRITE][LIMIT_LOW])
 			tg->last_low_overflow_time[WRITE] = now;
@@ -2208,6 +2239,9 @@ static inline void throtl_update_latency_buckets(struct throtl_data *td)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void blk_throtl_charge_bio_split(struct bio *bio)
 {
 	struct blkcg_gq *blkg = bio->bi_blkg;
@@ -2227,8 +2261,11 @@ void blk_throtl_charge_bio_split(struct bio *bio)
 	} while (parent);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool blk_throtl_bio(struct bio *bio)
 {
 	struct request_queue *q = bio->bi_bdev->bd_disk->queue;
@@ -2480,9 +2517,13 @@ void blk_throtl_exit(struct request_queue *q)
 {
 	BUG_ON(!q->td);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	del_timer_sync(&q->td->service_queue.pending_timer);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	del_timer_sync(&q->td->service_queue.pending_timer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	throtl_shutdown_wq(q);
 	blkcg_deactivate_policy(q, &blkcg_policy_throtl);
 	free_percpu(q->td->latency_buckets[READ]);

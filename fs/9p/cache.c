@@ -24,10 +24,14 @@ struct fscache_netfs v9fs_cache_netfs = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * v9fs_random_cachetag - Generate a random tag to be associated
  *			  with a new cache session.
  *
@@ -238,10 +242,14 @@ static void v9fs_vfs_readpage_complete(struct page *page, void *data,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * __v9fs_readpage_from_fscache - read a page from cache
  *
  * Returns 0 if the pages are in cache and a BIO is submitted,
@@ -277,10 +285,14 @@ int __v9fs_readpage_from_fscache(struct inode *inode, struct page *page)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * __v9fs_readpages_from_fscache - read multiple pages from cache
  *
  * Returns 0 if the pages are in cache and a BIO is submitted,
@@ -321,10 +333,14 @@ int __v9fs_readpages_from_fscache(struct inode *inode,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * __v9fs_readpage_to_fscache - write a page to the cache
  *
  */

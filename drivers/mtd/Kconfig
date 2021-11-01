@@ -46,6 +46,7 @@ config MTD_BLOCK
 	  devices performing that function.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  Note that mounting a JFFS2 filesystem doesn't require using mtdblock.
 	  It's possible to mount a rootfs using the MTD device on the "root="
 	  bootargs as "root=mtd2" or "root=mtd:name_of_device".
@@ -55,6 +56,11 @@ config MTD_BLOCK
 	  (although JFFS and JFFS2 don't actually use any of the functionality
 	  of the mtdblock device).
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  Note that mounting a JFFS2 filesystem doesn't require using mtdblock.
+	  It's possible to mount a rootfs using the MTD device on the "root="
+	  bootargs as "root=mtd2" or "root=mtd:name_of_device".
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	  Later, it may be extended to perform read/erase/modify/write cycles
 	  on flash chips to emulate a smaller block size. Needless to say,
@@ -77,11 +83,17 @@ config MTD_BLOCK_RO
 	  those, enable NFTL support (CONFIG_NFTL) instead.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 comment "Note that in some cases UBI block is preferred. See MTD_UBI_BLOCK."
 	depends on MTD_BLOCK || MTD_BLOCK_RO
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+comment "Note that in some cases UBI block is preferred. See MTD_UBI_BLOCK."
+	depends on MTD_BLOCK || MTD_BLOCK_RO
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config FTL
 	tristate "FTL (Flash Translation Layer) support"
 	depends on BLOCK

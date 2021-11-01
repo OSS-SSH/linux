@@ -2770,10 +2770,14 @@ static void vega20_set_fan_control_mode(struct pp_hwmgr *hwmgr, uint32_t mode)
 	switch (mode) {
 	case AMD_FAN_CTRL_NONE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		vega20_fan_ctrl_set_fan_speed_pwm(hwmgr, 255);
 =======
 		vega20_fan_ctrl_set_fan_speed_percent(hwmgr, 100);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		vega20_fan_ctrl_set_fan_speed_pwm(hwmgr, 255);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case AMD_FAN_CTRL_MANUAL:
 		if (PP_CAP(PHM_PlatformCaps_MicrocodeFanControl))
@@ -3248,21 +3252,30 @@ static int vega20_get_ppfeature_status(struct pp_hwmgr *hwmgr, char *buf)
 			return ret);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size += sysfs_emit_at(buf, size, "Current ppfeatures: 0x%016llx\n", features_enabled);
 	size += sysfs_emit_at(buf, size, "%-19s %-22s %s\n",
 =======
 	size += sprintf(buf + size, "Current ppfeatures: 0x%016llx\n", features_enabled);
 	size += sprintf(buf + size, "%-19s %-22s %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size += sysfs_emit_at(buf, size, "Current ppfeatures: 0x%016llx\n", features_enabled);
+	size += sysfs_emit_at(buf, size, "%-19s %-22s %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				output_title[0],
 				output_title[1],
 				output_title[2]);
 	for (i = 0; i < GNLD_FEATURES_MAX; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%-19s 0x%016llx %6s\n",
 =======
 		size += sprintf(buf + size, "%-19s 0x%016llx %6s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size += sysfs_emit_at(buf, size, "%-19s 0x%016llx %6s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					ppfeature_name[i],
 					1ULL << i,
 					(features_enabled & (1ULL << i)) ? "Y" : "N");
@@ -3386,20 +3399,28 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		if (vega20_get_sclks(hwmgr, &clocks)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
 =======
 			size += sprintf(buf + size, "0: %uMhz * (DPM disabled)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				now / 100);
 			break;
 		}
 
 		for (i = 0; i < clocks.num_levels; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz == now * 10) ? "*" : "");
 		break;
@@ -3412,20 +3433,28 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		if (vega20_get_memclocks(hwmgr, &clocks)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
 =======
 			size += sprintf(buf + size, "0: %uMhz * (DPM disabled)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				now / 100);
 			break;
 		}
 
 		for (i = 0; i < clocks.num_levels; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz == now * 10) ? "*" : "");
 		break;
@@ -3438,20 +3467,28 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		if (vega20_get_socclocks(hwmgr, &clocks)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
 =======
 			size += sprintf(buf + size, "0: %uMhz * (DPM disabled)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				now / 100);
 			break;
 		}
 
 		for (i = 0; i < clocks.num_levels; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz == now * 10) ? "*" : "");
 		break;
@@ -3464,10 +3501,14 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		for (i = 0; i < fclk_dpm_table->count; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				i, fclk_dpm_table->dpm_levels[i].value,
 				fclk_dpm_table->dpm_levels[i].value == (now / 100) ? "*" : "");
 		break;
@@ -3480,20 +3521,28 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		if (vega20_get_dcefclocks(hwmgr, &clocks)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
 =======
 			size += sprintf(buf + size, "0: %uMhz * (DPM disabled)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "0: %uMhz * (DPM disabled)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				now / 100);
 			break;
 		}
 
 		for (i = 0; i < clocks.num_levels; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz == now * 10) ? "*" : "");
 		break;
@@ -3508,10 +3557,14 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 			lane_width = pptable->PcieLaneCount[i];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %s %s %dMhz %s\n", i,
 =======
 			size += sprintf(buf + size, "%d: %s %s %dMhz %s\n", i,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %s %s %dMhz %s\n", i,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					(gen_speed == 0) ? "2.5GT/s," :
 					(gen_speed == 1) ? "5.0GT/s," :
 					(gen_speed == 2) ? "8.0GT/s," :
@@ -3533,6 +3586,7 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 		if (od8_settings[OD8_SETTING_GFXCLK_FMIN].feature_id &&
 		    od8_settings[OD8_SETTING_GFXCLK_FMAX].feature_id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size = sysfs_emit(buf, "%s:\n", "OD_SCLK");
 			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
 				od_table->GfxclkFmin);
@@ -3543,6 +3597,12 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 				od_table->GfxclkFmin);
 			size += sprintf(buf + size, "1: %10uMhz\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size = sysfs_emit(buf, "%s:\n", "OD_SCLK");
+			size += sysfs_emit_at(buf, size, "0: %10uMhz\n",
+				od_table->GfxclkFmin);
+			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od_table->GfxclkFmax);
 		}
 		break;
@@ -3550,12 +3610,17 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 	case OD_MCLK:
 		if (od8_settings[OD8_SETTING_UCLK_FMAX].feature_id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size = sysfs_emit(buf, "%s:\n", "OD_MCLK");
 			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
 =======
 			size = sprintf(buf, "%s:\n", "OD_MCLK");
 			size += sprintf(buf + size, "1: %10uMhz\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size = sysfs_emit(buf, "%s:\n", "OD_MCLK");
+			size += sysfs_emit_at(buf, size, "1: %10uMhz\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od_table->UclkFmax);
 		}
 
@@ -3569,6 +3634,7 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE2].feature_id &&
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE3].feature_id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size = sysfs_emit(buf, "%s:\n", "OD_VDDC_CURVE");
 			size += sysfs_emit_at(buf, size, "0: %10uMhz %10dmV\n",
 				od_table->GfxclkFreq1,
@@ -3580,13 +3646,21 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 =======
 			size = sprintf(buf, "%s:\n", "OD_VDDC_CURVE");
 			size += sprintf(buf + size, "0: %10uMhz %10dmV\n",
+=======
+			size = sysfs_emit(buf, "%s:\n", "OD_VDDC_CURVE");
+			size += sysfs_emit_at(buf, size, "0: %10uMhz %10dmV\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od_table->GfxclkFreq1,
 				od_table->GfxclkVolt1 / VOLTAGE_SCALE);
-			size += sprintf(buf + size, "1: %10uMhz %10dmV\n",
+			size += sysfs_emit_at(buf, size, "1: %10uMhz %10dmV\n",
 				od_table->GfxclkFreq2,
 				od_table->GfxclkVolt2 / VOLTAGE_SCALE);
+<<<<<<< HEAD
 			size += sprintf(buf + size, "2: %10uMhz %10dmV\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "2: %10uMhz %10dmV\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od_table->GfxclkFreq3,
 				od_table->GfxclkVolt3 / VOLTAGE_SCALE);
 		}
@@ -3594,6 +3668,7 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 		break;
 
 	case OD_RANGE:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		size = sysfs_emit(buf, "%s:\n", "OD_RANGE");
 
@@ -3607,16 +3682,27 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 		    od8_settings[OD8_SETTING_GFXCLK_FMAX].feature_id) {
 			size += sprintf(buf + size, "SCLK: %7uMhz %10uMhz\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size = sysfs_emit(buf, "%s:\n", "OD_RANGE");
+
+		if (od8_settings[OD8_SETTING_GFXCLK_FMIN].feature_id &&
+		    od8_settings[OD8_SETTING_GFXCLK_FMAX].feature_id) {
+			size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od8_settings[OD8_SETTING_GFXCLK_FMIN].min_value,
 				od8_settings[OD8_SETTING_GFXCLK_FMAX].max_value);
 		}
 
 		if (od8_settings[OD8_SETTING_UCLK_FMAX].feature_id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "MCLK: %7uMhz %10uMhz\n",
 =======
 			size += sprintf(buf + size, "MCLK: %7uMhz %10uMhz\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "MCLK: %7uMhz %10uMhz\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od8_settings[OD8_SETTING_UCLK_FMAX].min_value,
 				od8_settings[OD8_SETTING_UCLK_FMAX].max_value);
 		}
@@ -3627,6 +3713,7 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE1].feature_id &&
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE2].feature_id &&
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE3].feature_id) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "VDDC_CURVE_SCLK[0]: %7uMhz %10uMhz\n",
 				od8_settings[OD8_SETTING_GFXCLK_FREQ1].min_value,
@@ -3646,22 +3733,29 @@ static int vega20_print_clock_levels(struct pp_hwmgr *hwmgr,
 			size += sysfs_emit_at(buf, size, "VDDC_CURVE_VOLT[2]: %7dmV %11dmV\n",
 =======
 			size += sprintf(buf + size, "VDDC_CURVE_SCLK[0]: %7uMhz %10uMhz\n",
+=======
+			size += sysfs_emit_at(buf, size, "VDDC_CURVE_SCLK[0]: %7uMhz %10uMhz\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od8_settings[OD8_SETTING_GFXCLK_FREQ1].min_value,
 				od8_settings[OD8_SETTING_GFXCLK_FREQ1].max_value);
-			size += sprintf(buf + size, "VDDC_CURVE_VOLT[0]: %7dmV %11dmV\n",
+			size += sysfs_emit_at(buf, size, "VDDC_CURVE_VOLT[0]: %7dmV %11dmV\n",
 				od8_settings[OD8_SETTING_GFXCLK_VOLTAGE1].min_value,
 				od8_settings[OD8_SETTING_GFXCLK_VOLTAGE1].max_value);
-			size += sprintf(buf + size, "VDDC_CURVE_SCLK[1]: %7uMhz %10uMhz\n",
+			size += sysfs_emit_at(buf, size, "VDDC_CURVE_SCLK[1]: %7uMhz %10uMhz\n",
 				od8_settings[OD8_SETTING_GFXCLK_FREQ2].min_value,
 				od8_settings[OD8_SETTING_GFXCLK_FREQ2].max_value);
-			size += sprintf(buf + size, "VDDC_CURVE_VOLT[1]: %7dmV %11dmV\n",
+			size += sysfs_emit_at(buf, size, "VDDC_CURVE_VOLT[1]: %7dmV %11dmV\n",
 				od8_settings[OD8_SETTING_GFXCLK_VOLTAGE2].min_value,
 				od8_settings[OD8_SETTING_GFXCLK_VOLTAGE2].max_value);
-			size += sprintf(buf + size, "VDDC_CURVE_SCLK[2]: %7uMhz %10uMhz\n",
+			size += sysfs_emit_at(buf, size, "VDDC_CURVE_SCLK[2]: %7uMhz %10uMhz\n",
 				od8_settings[OD8_SETTING_GFXCLK_FREQ3].min_value,
 				od8_settings[OD8_SETTING_GFXCLK_FREQ3].max_value);
+<<<<<<< HEAD
 			size += sprintf(buf + size, "VDDC_CURVE_VOLT[2]: %7dmV %11dmV\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "VDDC_CURVE_VOLT[2]: %7dmV %11dmV\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				od8_settings[OD8_SETTING_GFXCLK_VOLTAGE3].min_value,
 				od8_settings[OD8_SETTING_GFXCLK_VOLTAGE3].max_value);
 		}
@@ -4111,10 +4205,14 @@ static int vega20_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size += sysfs_emit_at(buf, size, "%16s %s %s %s %s %s %s %s %s %s %s\n",
 =======
 	size += sprintf(buf + size, "%16s %s %s %s %s %s %s %s %s %s %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size += sysfs_emit_at(buf, size, "%16s %s %s %s %s %s %s %s %s %s %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			title[0], title[1], title[2], title[3], title[4], title[5],
 			title[6], title[7], title[8], title[9], title[10]);
 
@@ -4128,6 +4226,7 @@ static int vega20_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 				return result);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%2d %14s%s:\n",
 			i, profile_name[i], (i == hwmgr->power_profile_mode) ? "*" : " ");
 
@@ -4138,6 +4237,12 @@ static int vega20_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 
 		size += sprintf(buf + size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size += sysfs_emit_at(buf, size, "%2d %14s%s:\n",
+			i, profile_name[i], (i == hwmgr->power_profile_mode) ? "*" : " ");
+
+		size += sysfs_emit_at(buf, size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			" ",
 			0,
 			"GFXCLK",
@@ -4152,10 +4257,14 @@ static int vega20_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 			activity_monitor.Gfx_PD_Data_error_rate_coeff);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
 =======
 		size += sprintf(buf + size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size += sysfs_emit_at(buf, size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			" ",
 			1,
 			"SOCCLK",
@@ -4170,10 +4279,14 @@ static int vega20_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 			activity_monitor.Soc_PD_Data_error_rate_coeff);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
 =======
 		size += sprintf(buf + size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size += sysfs_emit_at(buf, size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			" ",
 			2,
 			"UCLK",
@@ -4188,10 +4301,14 @@ static int vega20_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 			activity_monitor.Mem_PD_Data_error_rate_coeff);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
 =======
 		size += sprintf(buf + size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size += sysfs_emit_at(buf, size, "%19s %d(%13s) %7d %7d %7d %7d %7d %7d %7d %7d %7d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			" ",
 			3,
 			"FCLK",
@@ -4540,12 +4657,17 @@ static const struct pp_hwmgr_func vega20_hwmgr_funcs = {
 	.disable_smc_firmware_ctf = vega20_thermal_disable_alert,
 	/* fan control related */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.get_fan_speed_pwm = vega20_fan_ctrl_get_fan_speed_pwm,
 	.set_fan_speed_pwm = vega20_fan_ctrl_set_fan_speed_pwm,
 =======
 	.get_fan_speed_percent = vega20_fan_ctrl_get_fan_speed_percent,
 	.set_fan_speed_percent = vega20_fan_ctrl_set_fan_speed_percent,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.get_fan_speed_pwm = vega20_fan_ctrl_get_fan_speed_pwm,
+	.set_fan_speed_pwm = vega20_fan_ctrl_set_fan_speed_pwm,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.get_fan_speed_info = vega20_fan_ctrl_get_fan_speed_info,
 	.get_fan_speed_rpm = vega20_fan_ctrl_get_fan_speed_rpm,
 	.set_fan_speed_rpm = vega20_fan_ctrl_set_fan_speed_rpm,

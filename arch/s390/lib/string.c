@@ -260,6 +260,9 @@ EXPORT_SYMBOL(strcmp);
 char *strrchr(const char *s, int c)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t len = __strend(s) - s;
 
 	do {
@@ -267,6 +270,7 @@ char *strrchr(const char *s, int c)
 			return (char *)s + len;
 	} while (--len >= 0);
 	return NULL;
+<<<<<<< HEAD
 =======
        size_t len = __strend(s) - s;
 
@@ -277,6 +281,8 @@ char *strrchr(const char *s, int c)
 	       } while (--len > 0);
        return NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(strrchr);
 #endif

@@ -52,14 +52,20 @@ MODULE_FIRMWARE("amdgpu/navi12_sdma.bin");
 MODULE_FIRMWARE("amdgpu/navi12_sdma1.bin");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_FIRMWARE("amdgpu/cyan_skillfish_sdma.bin");
 MODULE_FIRMWARE("amdgpu/cyan_skillfish_sdma1.bin");
 
 MODULE_FIRMWARE("amdgpu/cyan_skillfish2_sdma.bin");
 MODULE_FIRMWARE("amdgpu/cyan_skillfish2_sdma1.bin");
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SDMA1_REG_OFFSET 0x600
 #define SDMA0_HYP_DEC_REG_START 0x5880
 #define SDMA0_HYP_DEC_REG_END 0x5893
@@ -140,6 +146,9 @@ static const struct soc15_reg_golden golden_settings_sdma_nv12[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct soc15_reg_golden golden_settings_sdma_cyan_skillfish[] = {
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSDMA0_CHICKEN_BITS, 0xffbf1f0f, 0x03ab0107),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSDMA0_GB_ADDR_CONFIG, 0x001877ff, 0x00000044),
@@ -171,8 +180,11 @@ static const struct soc15_reg_golden golden_settings_sdma_cyan_skillfish[] = {
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSDMA1_UTCL1_PAGE, 0x007fffff, 0x004c5c00)
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u32 sdma_v5_0_get_reg_offset(struct amdgpu_device *adev, u32 instance, u32 internal_offset)
 {
 	u32 base;
@@ -224,13 +236,19 @@ static void sdma_v5_0_init_golden_registers(struct amdgpu_device *adev)
 						(const u32)ARRAY_SIZE(golden_settings_sdma_nv12));
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_CYAN_SKILLFISH:
 		soc15_program_register_sequence(adev,
 						golden_settings_sdma_cyan_skillfish,
 						(const u32)ARRAY_SIZE(golden_settings_sdma_cyan_skillfish));
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -252,10 +270,14 @@ static int sdma_v5_0_init_microcode(struct amdgpu_device *adev)
 {
 	const char *chip_name;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char fw_name[40];
 =======
 	char fw_name[30];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char fw_name[40];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err = 0, i;
 	struct amdgpu_firmware_info *info = NULL;
 	const struct common_firmware_header *header = NULL;
@@ -277,14 +299,20 @@ static int sdma_v5_0_init_microcode(struct amdgpu_device *adev)
 		chip_name = "navi12";
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_CYAN_SKILLFISH:
 		if (adev->apu_flags & AMD_APU_IS_CYAN_SKILLFISH2)
 			chip_name = "cyan_skillfish2";
 		else
 			chip_name = "cyan_skillfish";
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		BUG();
 	}

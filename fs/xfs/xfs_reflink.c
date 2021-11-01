@@ -760,10 +760,14 @@ xfs_reflink_recover_cow(
 	int			error = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_reflink(mp))
 =======
 	if (!xfs_sb_version_hasreflink(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	for_each_perag(mp, agno, pag) {
@@ -972,10 +976,14 @@ xfs_reflink_ag_has_free_space(
 	int			error = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_rmapbt(mp))
 =======
 	if (!xfs_sb_version_hasrmapbt(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_rmapbt(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	pag = xfs_perag_get(mp, agno);

@@ -232,6 +232,9 @@ switch_mm(struct mm_struct *prev, struct mm_struct *next,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline const struct cpumask *
 task_cpu_possible_mask(struct task_struct *p)
 {
@@ -245,8 +248,11 @@ task_cpu_possible_mask(struct task_struct *p)
 }
 #define task_cpu_possible_mask	task_cpu_possible_mask
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void verify_cpu_asid_bits(void);
 void post_ttbr_update_workaround(void);
 

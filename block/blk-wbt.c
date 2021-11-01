@@ -98,10 +98,14 @@ static void wb_timestamp(struct rq_wb *rwb, unsigned long *var)
 static bool wb_recent_wait(struct rq_wb *rwb)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct bdi_writeback *wb = &rwb->rqos.q->disk->bdi->wb;
 =======
 	struct bdi_writeback *wb = &rwb->rqos.q->backing_dev_info->wb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct bdi_writeback *wb = &rwb->rqos.q->disk->bdi->wb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return time_before(jiffies, wb->dirty_sleep + HZ);
 }
@@ -239,10 +243,14 @@ enum {
 static int latency_exceeded(struct rq_wb *rwb, struct blk_rq_stat *stat)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct backing_dev_info *bdi = rwb->rqos.q->disk->bdi;
 =======
 	struct backing_dev_info *bdi = rwb->rqos.q->backing_dev_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct backing_dev_info *bdi = rwb->rqos.q->disk->bdi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rq_depth *rqd = &rwb->rq_depth;
 	u64 thislat;
 
@@ -296,10 +304,14 @@ static int latency_exceeded(struct rq_wb *rwb, struct blk_rq_stat *stat)
 static void rwb_trace_step(struct rq_wb *rwb, const char *msg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct backing_dev_info *bdi = rwb->rqos.q->disk->bdi;
 =======
 	struct backing_dev_info *bdi = rwb->rqos.q->backing_dev_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct backing_dev_info *bdi = rwb->rqos.q->disk->bdi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rq_depth *rqd = &rwb->rq_depth;
 
 	trace_wbt_step(bdi, msg, rqd->scale_step, rwb->cur_win_nsec,
@@ -372,10 +384,14 @@ static void wb_timer_fn(struct blk_stat_callback *cb)
 	status = latency_exceeded(rwb, cb->stat);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	trace_wbt_timer(rwb->rqos.q->disk->bdi, status, rqd->scale_step,
 =======
 	trace_wbt_timer(rwb->rqos.q->backing_dev_info, status, rqd->scale_step,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_wbt_timer(rwb->rqos.q->disk->bdi, status, rqd->scale_step,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			inflight);
 
 	/*

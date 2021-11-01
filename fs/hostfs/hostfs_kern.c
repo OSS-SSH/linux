@@ -382,9 +382,13 @@ static const struct file_operations hostfs_file_fops = {
 	.llseek		= generic_file_llseek,
 	.splice_read	= generic_file_splice_read,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.splice_write	= iter_file_splice_write,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.splice_write	= iter_file_splice_write,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.read_iter	= generic_file_read_iter,
 	.write_iter	= generic_file_write_iter,
 	.mmap		= generic_file_mmap,

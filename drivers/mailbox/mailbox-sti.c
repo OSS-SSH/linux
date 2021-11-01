@@ -37,6 +37,7 @@
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct sti_mbox_device - STi Mailbox device data
 =======
  * STi Mailbox device data
@@ -46,6 +47,9 @@
  * This means that we have 128 channels per Mailbox
  * A channel an be used for TX or RX
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct sti_mbox_device - STi Mailbox device data
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @dev:	Device to which it is attached
  * @mbox:	Representation of a communication channel controller
@@ -54,13 +58,19 @@
  * @enabled:	Local copy of enabled channels
  * @lock:	Mutex protecting enabled status
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * An IP Mailbox is currently composed of 4 instances
  * Each instance is currently composed of 32 channels
  * This means that we have 128 channels per Mailbox
  * A channel an be used for TX or RX
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct sti_mbox_device {
 	struct device		*dev;
@@ -73,10 +83,14 @@ struct sti_mbox_device {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct sti_mbox_pdata - STi Mailbox platform specific configuration
 =======
  * STi Mailbox platform specific configuration
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct sti_mbox_pdata - STi Mailbox platform specific configuration
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @num_inst:	Maximum number of instances in one HW Mailbox
  * @num_chan:	Maximum number of channel per instance
@@ -88,10 +102,14 @@ struct sti_mbox_pdata {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct sti_channel - STi Mailbox allocated channel information
 =======
  * STi Mailbox allocated channel information
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct sti_channel - STi Mailbox allocated channel information
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @mdev:	Pointer to parent Mailbox device
  * @instance:	Instance number channel resides in

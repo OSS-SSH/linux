@@ -128,8 +128,13 @@ static inline bool ebt_invalid_target(int target)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int ebt_register_template(const struct ebt_table *t, int(*table_init)(struct net *net));
 void ebt_unregister_template(const struct ebt_table *t);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int ebt_register_template(const struct ebt_table *t, int(*table_init)(struct net *net));
+void ebt_unregister_template(const struct ebt_table *t);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

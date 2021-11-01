@@ -152,10 +152,14 @@ sparc_breakpoint (struct pt_regs *regs)
         printk ("TRAP: Entering kernel PC=%x, nPC=%x\n", regs->pc, regs->npc);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc);
 =======
 	force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef DEBUG_SPARC_BREAKPOINT
 	printk ("TRAP: Returning to space: PC=%x nPC=%x\n", regs->pc, regs->npc);

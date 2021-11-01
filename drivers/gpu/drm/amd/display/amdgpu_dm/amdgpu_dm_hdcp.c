@@ -80,19 +80,27 @@ static uint8_t *psp_get_srm(struct psp_context *psp, uint32_t *srm_version, uint
 	struct ta_hdcp_shared_memory *hdcp_cmd;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!psp->hdcp_context.context.initialized) {
 =======
 	if (!psp->hdcp_context.hdcp_initialized) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!psp->hdcp_context.context.initialized) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DRM_WARN("Failed to get hdcp srm. HDCP TA is not initialized.");
 		return NULL;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
 =======
 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.hdcp_shared_buf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memset(hdcp_cmd, 0, sizeof(struct ta_hdcp_shared_memory));
 
 	hdcp_cmd->cmd_id = TA_HDCP_COMMAND__HDCP_GET_SRM;
@@ -114,19 +122,27 @@ static int psp_set_srm(struct psp_context *psp, uint8_t *srm, uint32_t srm_size,
 	struct ta_hdcp_shared_memory *hdcp_cmd;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!psp->hdcp_context.context.initialized) {
 =======
 	if (!psp->hdcp_context.hdcp_initialized) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!psp->hdcp_context.context.initialized) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DRM_WARN("Failed to get hdcp srm. HDCP TA is not initialized.");
 		return -EINVAL;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
 =======
 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.hdcp_shared_buf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memset(hdcp_cmd, 0, sizeof(struct ta_hdcp_shared_memory));
 
 	memcpy(hdcp_cmd->in_msg.hdcp_set_srm.srm_buf, srm, srm_size);
@@ -431,19 +447,27 @@ static bool enable_assr(void *handle, struct dc_link *link)
 	bool res = true;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!psp->dtm_context.context.initialized) {
 =======
 	if (!psp->dtm_context.dtm_initialized) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!psp->dtm_context.context.initialized) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DRM_INFO("Failed to enable ASSR, DTM TA is not initialized.");
 		return false;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dtm_cmd = (struct ta_dtm_shared_memory *)psp->dtm_context.context.mem_context.shared_buf;
 =======
 	dtm_cmd = (struct ta_dtm_shared_memory *)psp->dtm_context.dtm_shared_buf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dtm_cmd = (struct ta_dtm_shared_memory *)psp->dtm_context.context.mem_context.shared_buf;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&psp->dtm_context.mutex);
 	memset(dtm_cmd, 0, sizeof(struct ta_dtm_shared_memory));
@@ -680,6 +704,7 @@ struct hdcp_workqueue *hdcp_create_workqueue(struct amdgpu_device *adev, struct 
 
 		hdcp_work[i].hdcp.config.psp.handle = &adev->psp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dc->ctx->dce_version == DCN_VERSION_3_1)
 			hdcp_work[i].hdcp.config.psp.caps.dtm_v3_supported = 1;
 =======
@@ -688,6 +713,10 @@ struct hdcp_workqueue *hdcp_create_workqueue(struct amdgpu_device *adev, struct 
 			hdcp_work[i].hdcp.config.psp.caps.opm_state_query_supported = false;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (dc->ctx->dce_version == DCN_VERSION_3_1)
+			hdcp_work[i].hdcp.config.psp.caps.dtm_v3_supported = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		hdcp_work[i].hdcp.config.ddc.handle = dc_get_link_at_index(dc, i);
 		hdcp_work[i].hdcp.config.ddc.funcs.write_i2c = lp_write_i2c;
 		hdcp_work[i].hdcp.config.ddc.funcs.read_i2c = lp_read_i2c;

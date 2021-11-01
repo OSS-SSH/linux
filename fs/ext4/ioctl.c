@@ -149,10 +149,14 @@ static long swap_inode_boot_loader(struct super_block *sb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_lock(inode->i_mapping);
 =======
 	down_write(&EXT4_I(inode)->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = filemap_write_and_wait(inode->i_mapping);
 	if (err)
 		goto err_out;
@@ -261,10 +265,14 @@ err_out1:
 
 err_out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_unlock(inode->i_mapping);
 =======
 	up_write(&EXT4_I(inode)->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_unlock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 journal_err_out:
 	unlock_two_nondirectories(inode, inode_bl);
 	iput(inode_bl);
@@ -1163,12 +1171,18 @@ resizefs_out:
 				goto pwsalt_err_exit;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			err = ext4_journal_get_write_access(handle, sb,
 							    sbi->s_sbh,
 							    EXT4_JTR_NONE);
 =======
 			err = ext4_journal_get_write_access(handle, sbi->s_sbh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			err = ext4_journal_get_write_access(handle, sb,
+							    sbi->s_sbh,
+							    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (err)
 				goto pwsalt_err_journal;
 			lock_buffer(sbi->s_sbh);

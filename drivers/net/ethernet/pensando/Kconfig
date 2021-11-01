@@ -21,10 +21,14 @@ config IONIC
 	tristate "Pensando Ethernet IONIC Support"
 	depends on 64BIT && PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 	depends on PTP_1588_CLOCK || !PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select NET_DEVLINK
 	select DIMLIB
 	help

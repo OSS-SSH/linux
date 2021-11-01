@@ -157,10 +157,13 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -634,6 +637,7 @@ static snd_pcm_uframes_t lpass_platform_pcmops_pointer(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int lpass_platform_pcmops_mmap(struct snd_soc_component *component,
 				      struct snd_pcm_substream *substream,
@@ -646,6 +650,8 @@ static int lpass_platform_pcmops_mmap(struct snd_soc_component *component,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static irqreturn_t lpass_dma_interrupt_handler(
 			struct snd_pcm_substream *substream,
 			struct lpass_data *drvdata,
@@ -794,6 +800,7 @@ static int lpass_platform_pcm_new(struct snd_soc_component *component,
 {
 	struct snd_pcm *pcm = soc_runtime->pcm;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size_t size = lpass_platform_pcm_hardware.buffer_bytes_max;
 
 	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
@@ -846,6 +853,12 @@ static void lpass_platform_pcm_free(struct snd_soc_component *component,
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size_t size = lpass_platform_pcm_hardware.buffer_bytes_max;
+
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+					    component->dev, size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
@@ -891,12 +904,16 @@ static const struct snd_soc_component_driver lpass_component_driver = {
 	.trigger	= lpass_platform_pcmops_trigger,
 	.pointer	= lpass_platform_pcmops_pointer,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.pcm_construct	= lpass_platform_pcm_new,
 =======
 	.mmap		= lpass_platform_pcmops_mmap,
 	.pcm_construct	= lpass_platform_pcm_new,
 	.pcm_destruct	= lpass_platform_pcm_free,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.pcm_construct	= lpass_platform_pcm_new,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.suspend		= lpass_platform_pcmops_suspend,
 	.resume			= lpass_platform_pcmops_resume,
 

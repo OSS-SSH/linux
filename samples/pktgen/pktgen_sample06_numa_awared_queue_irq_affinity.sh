@@ -101,6 +101,7 @@ for ((i = 0; i < $THREADS; i++)); do
 done
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Run if user hits control-c
 function print_result() {
 =======
@@ -111,6 +112,10 @@ if [ -z "$APPEND" ]; then
     echo "Done" >&2
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# Run if user hits control-c
+function print_result() {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     # Print results
     for ((i = 0; i < $THREADS; i++)); do
         thread=${cpu_array[$((i+F_THREAD))]}
@@ -119,6 +124,9 @@ if [ -z "$APPEND" ]; then
         cat /proc/net/pktgen/$dev | grep -A2 "Result:"
     done
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 # trap keyboard interrupt (Ctrl-C)
 trap true SIGINT
@@ -130,8 +138,11 @@ if [ -z "$APPEND" ]; then
     echo "Done" >&2
 
     print_result
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 else
     echo "Append mode: config done. Do more or use 'pg_ctrl start' to run"
 fi

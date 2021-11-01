@@ -7,11 +7,14 @@
  * Copyright (C) 2012 ARM Ltd.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 #include <stdarg.h>
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/compat.h>
 #include <linux/efi.h>
 #include <linux/elf.h>
@@ -64,10 +67,14 @@
 #if defined(CONFIG_STACKPROTECTOR) && !defined(CONFIG_STACKPROTECTOR_PER_TASK)
 #include <linux/stackprotector.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 unsigned long __stack_chk_guard __ro_after_init;
 =======
 unsigned long __stack_chk_guard __read_mostly;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+unsigned long __stack_chk_guard __ro_after_init;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXPORT_SYMBOL(__stack_chk_guard);
 #endif
 
@@ -171,10 +178,14 @@ static void print_pstate(struct pt_regs *regs)
 
 	if (compat_user_mode(regs)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		printk("pstate: %08llx (%c%c%c%c %c %s %s %c%c%c %cDIT %cSSBS)\n",
 =======
 		printk("pstate: %08llx (%c%c%c%c %c %s %s %c%c%c)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		printk("pstate: %08llx (%c%c%c%c %c %s %s %c%c%c %cDIT %cSSBS)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pstate,
 			pstate & PSR_AA32_N_BIT ? 'N' : 'n',
 			pstate & PSR_AA32_Z_BIT ? 'Z' : 'z',
@@ -186,21 +197,31 @@ static void print_pstate(struct pt_regs *regs)
 			pstate & PSR_AA32_A_BIT ? 'A' : 'a',
 			pstate & PSR_AA32_I_BIT ? 'I' : 'i',
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pstate & PSR_AA32_F_BIT ? 'F' : 'f',
 			pstate & PSR_AA32_DIT_BIT ? '+' : '-',
 			pstate & PSR_AA32_SSBS_BIT ? '+' : '-');
 =======
 			pstate & PSR_AA32_F_BIT ? 'F' : 'f');
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pstate & PSR_AA32_F_BIT ? 'F' : 'f',
+			pstate & PSR_AA32_DIT_BIT ? '+' : '-',
+			pstate & PSR_AA32_SSBS_BIT ? '+' : '-');
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		const char *btype_str = btypes[(pstate & PSR_BTYPE_MASK) >>
 					       PSR_BTYPE_SHIFT];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		printk("pstate: %08llx (%c%c%c%c %c%c%c%c %cPAN %cUAO %cTCO %cDIT %cSSBS BTYPE=%s)\n",
 =======
 		printk("pstate: %08llx (%c%c%c%c %c%c%c%c %cPAN %cUAO %cTCO BTYPE=%s)\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		printk("pstate: %08llx (%c%c%c%c %c%c%c%c %cPAN %cUAO %cTCO %cDIT %cSSBS BTYPE=%s)\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pstate,
 			pstate & PSR_N_BIT ? 'N' : 'n',
 			pstate & PSR_Z_BIT ? 'Z' : 'z',
@@ -214,10 +235,15 @@ static void print_pstate(struct pt_regs *regs)
 			pstate & PSR_UAO_BIT ? '+' : '-',
 			pstate & PSR_TCO_BIT ? '+' : '-',
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pstate & PSR_DIT_BIT ? '+' : '-',
 			pstate & PSR_SSBS_BIT ? '+' : '-',
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pstate & PSR_DIT_BIT ? '+' : '-',
+			pstate & PSR_SSBS_BIT ? '+' : '-',
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			btype_str);
 	}
 }
@@ -495,6 +521,9 @@ static void erratum_1418040_thread_switch(struct task_struct *prev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * __switch_to() checks current->thread.sctlr_user as an optimisation. Therefore
  * this function must be called with preemption disabled and the update to
@@ -502,6 +531,7 @@ static void erratum_1418040_thread_switch(struct task_struct *prev,
  * __switch_to() does not see the variable update before the SCTLR_EL1 one.
  */
 void update_sctlr_el1(u64 sctlr)
+<<<<<<< HEAD
 =======
 static void compat_thread_switch(struct task_struct *next)
 {
@@ -514,6 +544,8 @@ static void compat_thread_switch(struct task_struct *next)
 
 static void update_sctlr_el1(u64 sctlr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/*
 	 * EnIA must not be cleared while in the kernel as this is necessary for
@@ -525,6 +557,7 @@ static void update_sctlr_el1(u64 sctlr)
 	isb();
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 void set_task_sctlr_el1(u64 sctlr)
@@ -541,6 +574,8 @@ void set_task_sctlr_el1(u64 sctlr)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Thread switching.
  */
@@ -558,9 +593,12 @@ __notrace_funcgraph struct task_struct *__switch_to(struct task_struct *prev,
 	erratum_1418040_thread_switch(prev, next);
 	ptrauth_thread_switch_user(next);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	compat_thread_switch(next);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Complete any pending TLB or cache maintenance on this CPU in case
@@ -622,6 +660,9 @@ unsigned long arch_align_stack(unsigned long sp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_COMPAT
 int compat_elf_check_arch(const struct elf32_hdr *hdr)
 {
@@ -644,8 +685,11 @@ int compat_elf_check_arch(const struct elf32_hdr *hdr)
 }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Called from setup_new_exec() after (COMPAT_)SET_PERSONALITY.
  */
@@ -656,6 +700,9 @@ void arch_setup_new_exec(void)
 	if (is_compat_task()) {
 		mmflags = MMCF_AARCH32;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Restrict the CPU affinity mask for a 32-bit task so that
@@ -666,6 +713,7 @@ void arch_setup_new_exec(void)
 		 * at the point of execve(), although we try a bit harder to
 		 * honour the cpuset hierarchy.
 		 */
+<<<<<<< HEAD
 		if (static_branch_unlikely(&arm64_mismatched_32bit_el0))
 			force_compatible_cpus_allowed_ptr(current);
 	} else if (static_branch_unlikely(&arm64_mismatched_32bit_el0)) {
@@ -674,6 +722,12 @@ void arch_setup_new_exec(void)
 		if (static_branch_unlikely(&arm64_mismatched_32bit_el0))
 			set_tsk_thread_flag(current, TIF_NOTIFY_RESUME);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (static_branch_unlikely(&arm64_mismatched_32bit_el0))
+			force_compatible_cpus_allowed_ptr(current);
+	} else if (static_branch_unlikely(&arm64_mismatched_32bit_el0)) {
+		relax_compatible_cpus_allowed_ptr(current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	current->mm->context.flags = mmflags;

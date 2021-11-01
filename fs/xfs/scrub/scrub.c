@@ -240,10 +240,14 @@ static const struct xchk_meta_ops meta_scrub_ops[] = {
 		.setup	= xchk_setup_ag_iallocbt,
 		.scrub	= xchk_finobt,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has	= xfs_has_finobt,
 =======
 		.has	= xfs_sb_version_hasfinobt,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has	= xfs_has_finobt,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.repair	= xrep_notsupported,
 	},
 	[XFS_SCRUB_TYPE_RMAPBT] = {	/* rmapbt */
@@ -251,10 +255,14 @@ static const struct xchk_meta_ops meta_scrub_ops[] = {
 		.setup	= xchk_setup_ag_rmapbt,
 		.scrub	= xchk_rmapbt,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has	= xfs_has_rmapbt,
 =======
 		.has	= xfs_sb_version_hasrmapbt,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has	= xfs_has_rmapbt,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.repair	= xrep_notsupported,
 	},
 	[XFS_SCRUB_TYPE_REFCNTBT] = {	/* refcountbt */
@@ -262,10 +270,14 @@ static const struct xchk_meta_ops meta_scrub_ops[] = {
 		.setup	= xchk_setup_ag_refcountbt,
 		.scrub	= xchk_refcountbt,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has	= xfs_has_reflink,
 =======
 		.has	= xfs_sb_version_hasreflink,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has	= xfs_has_reflink,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.repair	= xrep_notsupported,
 	},
 	[XFS_SCRUB_TYPE_INODE] = {	/* inode record */
@@ -321,10 +333,14 @@ static const struct xchk_meta_ops meta_scrub_ops[] = {
 		.setup	= xchk_setup_rt,
 		.scrub	= xchk_rtbitmap,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has	= xfs_has_realtime,
 =======
 		.has	= xfs_sb_version_hasrealtime,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has	= xfs_has_realtime,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.repair	= xrep_notsupported,
 	},
 	[XFS_SCRUB_TYPE_RTSUM] = {	/* realtime summary */
@@ -332,10 +348,14 @@ static const struct xchk_meta_ops meta_scrub_ops[] = {
 		.setup	= xchk_setup_rt,
 		.scrub	= xchk_rtsummary,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.has	= xfs_has_realtime,
 =======
 		.has	= xfs_sb_version_hasrealtime,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.has	= xfs_has_realtime,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.repair	= xrep_notsupported,
 	},
 	[XFS_SCRUB_TYPE_UQUOTA] = {	/* user quota */
@@ -404,10 +424,14 @@ xchk_validate_inputs(
 		goto out;
 	/* Does this fs even support this type of metadata? */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ops->has && !ops->has(mp))
 =======
 	if (ops->has && !ops->has(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ops->has && !ops->has(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	error = -EINVAL;
@@ -440,6 +464,7 @@ xchk_validate_inputs(
 	if (sm->sm_flags & XFS_SCRUB_IFLAG_REPAIR) {
 		error = -EOPNOTSUPP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!xfs_has_crc(mp))
 			goto out;
 
@@ -452,6 +477,13 @@ xchk_validate_inputs(
 		error = -EROFS;
 		if (mp->m_flags & XFS_MOUNT_RDONLY)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!xfs_has_crc(mp))
+			goto out;
+
+		error = -EROFS;
+		if (xfs_is_readonly(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out;
 	}
 
@@ -497,11 +529,14 @@ xfs_scrub_metadata(
 		.file			= file,
 		.sm			= sm,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		.sa			= {
 			.agno		= NULLAGNUMBER,
 		},
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	struct xfs_mount		*mp = XFS_I(file_inode(file))->i_mount;
 	int				error = 0;
@@ -516,6 +551,7 @@ xfs_scrub_metadata(
 	/* Forbidden if we are shut down or mounted norecovery. */
 	error = -ESHUTDOWN;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 		goto out;
 	error = -ENOTRECOVERABLE;
@@ -526,6 +562,12 @@ xfs_scrub_metadata(
 	error = -ENOTRECOVERABLE;
 	if (mp->m_flags & XFS_MOUNT_NORECOVERY)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+		goto out;
+	error = -ENOTRECOVERABLE;
+	if (xfs_has_norecovery(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	error = xchk_validate_inputs(mp, sm);

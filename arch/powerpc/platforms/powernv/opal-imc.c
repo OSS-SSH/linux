@@ -14,17 +14,24 @@
 #include <linux/of_platform.h>
 #include <linux/crash_dump.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/opal.h>
 #include <asm/io.h>
 #include <asm/imc-pmu.h>
 #include <asm/cputhreads.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct dentry *imc_debugfs_parent;
 
@@ -64,10 +71,14 @@ static void export_imc_mode_and_cmd(struct device_node *node,
 	struct imc_mem_info *ptr = pmu_ptr->mem_info;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	imc_debugfs_parent = debugfs_create_dir("imc", arch_debugfs_dir);
 =======
 	imc_debugfs_parent = debugfs_create_dir("imc", powerpc_debugfs_root);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	imc_debugfs_parent = debugfs_create_dir("imc", arch_debugfs_dir);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (of_property_read_u32(node, "cb_offset", &cb_offset))
 		cb_offset = IMC_CNTL_BLK_OFFSET;
@@ -198,10 +209,14 @@ static void disable_nest_pmu_counters(void)
 	const struct cpumask *l_cpumask;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_node_with_cpus(nid) {
 		l_cpumask = cpumask_of_node(nid);
 		cpu = cpumask_first_and(l_cpumask, cpu_online_mask);
@@ -211,10 +226,14 @@ static void disable_nest_pmu_counters(void)
 				       get_hard_smp_processor_id(cpu));
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void disable_core_pmu_counters(void)
@@ -223,10 +242,14 @@ static void disable_core_pmu_counters(void)
 	int cpu, rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Disable the IMC Core functions */
 	cores_map = cpu_online_cores_map();
 	for_each_cpu(cpu, &cores_map) {
@@ -237,10 +260,14 @@ static void disable_core_pmu_counters(void)
 				__FUNCTION__, cpu);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int get_max_nest_dev(void)

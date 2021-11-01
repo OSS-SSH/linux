@@ -478,6 +478,9 @@ int led_compose_name(struct device *dev, struct led_init_data *init_data,
 }
 EXPORT_SYMBOL_GPL(led_compose_name);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum led_default_state led_init_default_state_get(struct fwnode_handle *fwnode)
 {
@@ -493,5 +496,8 @@ enum led_default_state led_init_default_state_get(struct fwnode_handle *fwnode)
 	return LEDS_DEFSTATE_OFF;
 }
 EXPORT_SYMBOL_GPL(led_init_default_state_get);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

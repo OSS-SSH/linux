@@ -24,6 +24,7 @@ enum {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct icl_procmon {
 	u32 dw1, dw9, dw10;
 } icl_procmon_values[] = {
@@ -32,6 +33,11 @@ static const struct cnl_procmon {
 	u32 dw1, dw9, dw10;
 } cnl_procmon_values[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct icl_procmon {
+	u32 dw1, dw9, dw10;
+} icl_procmon_values[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[PROCMON_0_85V_DOT_0] =
 		{ .dw1 = 0x00000000, .dw9 = 0x62AB67BB, .dw10 = 0x51914F96, },
 	[PROCMON_0_95V_DOT_0] =
@@ -44,6 +50,7 @@ static const struct cnl_procmon {
 		{ .dw1 = 0x00440000, .dw9 = 0x9A00AB25, .dw10 = 0x8AE38FF1, },
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static const struct icl_procmon *
 icl_get_procmon_ref_values(struct drm_i915_private *dev_priv, enum phy phy)
@@ -60,6 +67,12 @@ cnl_get_procmon_ref_values(struct drm_i915_private *dev_priv, enum phy phy)
 {
 	const struct cnl_procmon *procmon;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct icl_procmon *
+icl_get_procmon_ref_values(struct drm_i915_private *dev_priv, enum phy phy)
+{
+	const struct icl_procmon *procmon;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 val;
 
 	val = intel_de_read(dev_priv, ICL_PORT_COMP_DW3(phy));
@@ -68,6 +81,7 @@ cnl_get_procmon_ref_values(struct drm_i915_private *dev_priv, enum phy phy)
 		MISSING_CASE(val);
 		fallthrough;
 	case VOLTAGE_INFO_0_85V | PROCESS_INFO_DOT_0:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		procmon = &icl_procmon_values[PROCMON_0_85V_DOT_0];
 		break;
@@ -84,25 +98,33 @@ cnl_get_procmon_ref_values(struct drm_i915_private *dev_priv, enum phy phy)
 		procmon = &icl_procmon_values[PROCMON_1_05V_DOT_1];
 =======
 		procmon = &cnl_procmon_values[PROCMON_0_85V_DOT_0];
+=======
+		procmon = &icl_procmon_values[PROCMON_0_85V_DOT_0];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case VOLTAGE_INFO_0_95V | PROCESS_INFO_DOT_0:
-		procmon = &cnl_procmon_values[PROCMON_0_95V_DOT_0];
+		procmon = &icl_procmon_values[PROCMON_0_95V_DOT_0];
 		break;
 	case VOLTAGE_INFO_0_95V | PROCESS_INFO_DOT_1:
-		procmon = &cnl_procmon_values[PROCMON_0_95V_DOT_1];
+		procmon = &icl_procmon_values[PROCMON_0_95V_DOT_1];
 		break;
 	case VOLTAGE_INFO_1_05V | PROCESS_INFO_DOT_0:
-		procmon = &cnl_procmon_values[PROCMON_1_05V_DOT_0];
+		procmon = &icl_procmon_values[PROCMON_1_05V_DOT_0];
 		break;
 	case VOLTAGE_INFO_1_05V | PROCESS_INFO_DOT_1:
+<<<<<<< HEAD
 		procmon = &cnl_procmon_values[PROCMON_1_05V_DOT_1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		procmon = &icl_procmon_values[PROCMON_1_05V_DOT_1];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 
 	return procmon;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void icl_set_procmon_ref_values(struct drm_i915_private *dev_priv,
 				       enum phy phy)
@@ -113,13 +135,20 @@ static void icl_set_procmon_ref_values(struct drm_i915_private *dev_priv,
 	procmon = icl_get_procmon_ref_values(dev_priv, phy);
 =======
 static void cnl_set_procmon_ref_values(struct drm_i915_private *dev_priv,
+=======
+static void icl_set_procmon_ref_values(struct drm_i915_private *dev_priv,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       enum phy phy)
 {
-	const struct cnl_procmon *procmon;
+	const struct icl_procmon *procmon;
 	u32 val;
 
+<<<<<<< HEAD
 	procmon = cnl_get_procmon_ref_values(dev_priv, phy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	procmon = icl_get_procmon_ref_values(dev_priv, phy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	val = intel_de_read(dev_priv, ICL_PORT_COMP_DW1(phy));
 	val &= ~((0xff << 16) | 0xff);
@@ -149,6 +178,7 @@ static bool check_phy_reg(struct drm_i915_private *dev_priv,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool icl_verify_procmon_ref_values(struct drm_i915_private *dev_priv,
 					  enum phy phy)
 {
@@ -158,13 +188,20 @@ static bool icl_verify_procmon_ref_values(struct drm_i915_private *dev_priv,
 	procmon = icl_get_procmon_ref_values(dev_priv, phy);
 =======
 static bool cnl_verify_procmon_ref_values(struct drm_i915_private *dev_priv,
+=======
+static bool icl_verify_procmon_ref_values(struct drm_i915_private *dev_priv,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					  enum phy phy)
 {
-	const struct cnl_procmon *procmon;
+	const struct icl_procmon *procmon;
 	bool ret;
 
+<<<<<<< HEAD
 	procmon = cnl_get_procmon_ref_values(dev_priv, phy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	procmon = icl_get_procmon_ref_values(dev_priv, phy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = check_phy_reg(dev_priv, phy, ICL_PORT_COMP_DW1(phy),
 			    (0xff << 16) | 0xff, procmon->dw1);
@@ -176,6 +213,7 @@ static bool cnl_verify_procmon_ref_values(struct drm_i915_private *dev_priv,
 	return ret;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static bool cnl_combo_phy_enabled(struct drm_i915_private *dev_priv)
@@ -234,6 +272,8 @@ static void cnl_combo_phys_uninit(struct drm_i915_private *dev_priv)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool has_phy_misc(struct drm_i915_private *i915, enum phy phy)
 {
 	/*
@@ -344,10 +384,14 @@ static bool icl_combo_phy_verify_state(struct drm_i915_private *dev_priv,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret &= icl_verify_procmon_ref_values(dev_priv, phy);
 =======
 	ret &= cnl_verify_procmon_ref_values(dev_priv, phy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret &= icl_verify_procmon_ref_values(dev_priv, phy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (phy_is_master(dev_priv, phy)) {
 		ret &= check_phy_reg(dev_priv, phy, ICL_PORT_COMP_DW8(phy),
@@ -472,10 +516,14 @@ skip_phy_misc:
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		icl_set_procmon_ref_values(dev_priv, phy);
 =======
 		cnl_set_procmon_ref_values(dev_priv, phy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		icl_set_procmon_ref_values(dev_priv, phy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (phy_is_master(dev_priv, phy)) {
 			val = intel_de_read(dev_priv, ICL_PORT_COMP_DW8(phy));
@@ -535,6 +583,7 @@ skip_phy_misc:
 void intel_combo_phy_init(struct drm_i915_private *i915)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	icl_combo_phys_init(i915);
 =======
 	if (DISPLAY_VER(i915) >= 11)
@@ -542,10 +591,14 @@ void intel_combo_phy_init(struct drm_i915_private *i915)
 	else if (IS_CANNONLAKE(i915))
 		cnl_combo_phys_init(i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	icl_combo_phys_init(i915);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void intel_combo_phy_uninit(struct drm_i915_private *i915)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	icl_combo_phys_uninit(i915);
 =======
@@ -554,4 +607,7 @@ void intel_combo_phy_uninit(struct drm_i915_private *i915)
 	else if (IS_CANNONLAKE(i915))
 		cnl_combo_phys_uninit(i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	icl_combo_phys_uninit(i915);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

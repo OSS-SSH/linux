@@ -77,10 +77,13 @@ enum intel_platform {
 	INTEL_COFFEELAKE,
 	INTEL_COMETLAKE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* gen10 */
 	INTEL_CANNONLAKE,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* gen11 */
 	INTEL_ICELAKE,
 	INTEL_ELKHARTLAKE,
@@ -92,10 +95,15 @@ enum intel_platform {
 	INTEL_ALDERLAKE_S,
 	INTEL_ALDERLAKE_P,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INTEL_XEHPSDV,
 	INTEL_DG2,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INTEL_XEHPSDV,
+	INTEL_DG2,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INTEL_MAX_PLATFORMS
 };
 
@@ -112,6 +120,7 @@ enum intel_platform {
 #define INTEL_SUBPLATFORM_ULX	(1)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* ICL */
 #define INTEL_SUBPLATFORM_PORTF	(0)
 
@@ -124,6 +133,15 @@ enum intel_platform {
 #define INTEL_SUBPLATFORM_PORTF	(0)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* ICL */
+#define INTEL_SUBPLATFORM_PORTF	(0)
+
+/* DG2 */
+#define INTEL_SUBPLATFORM_G10	0
+#define INTEL_SUBPLATFORM_G11	1
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum intel_ppgtt_type {
 	INTEL_PPGTT_NONE = I915_GEM_PPGTT_NONE,
 	INTEL_PPGTT_ALIASING = I915_GEM_PPGTT_ALIASING,
@@ -146,10 +164,14 @@ enum intel_ppgtt_type {
 	func(has_logical_ring_contexts); \
 	func(has_logical_ring_elsq); \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	func(has_mslices); \
 =======
 	func(has_master_unit_irq); \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	func(has_mslices); \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	func(has_pooled_eu); \
 	func(has_rc6); \
 	func(has_rc6p); \
@@ -164,9 +186,13 @@ enum intel_ppgtt_type {
 	/* Keep in alphabetical order */ \
 	func(cursor_needs_physical); \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	func(has_cdclk_crawl); \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	func(has_cdclk_crawl); \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	func(has_dmc); \
 	func(has_ddi); \
 	func(has_dp_mst); \
@@ -189,15 +215,23 @@ enum intel_ppgtt_type {
 struct intel_device_info {
 	u8 graphics_ver;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 graphics_rel;
 	u8 media_ver;
 	u8 media_rel;
 
 =======
+=======
+	u8 graphics_rel;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 media_ver;
+	u8 media_rel;
 
+<<<<<<< HEAD
 	u8 gt; /* GT number, 0 if undefined */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_engine_mask_t platform_engine_mask; /* Engines supported by the HW */
 
 	enum intel_platform platform;
@@ -214,20 +248,28 @@ struct intel_device_info {
 	u32 display_mmio_offset;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 gt; /* GT number, 0 if undefined */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 gt; /* GT number, 0 if undefined */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 pipe_mask;
 	u8 cpu_transcoder_mask;
 
 	u8 abox_mask;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u8 has_cdclk_crawl;  /* does support CDCLK crawling */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DEFINE_FLAG(name) u8 name:1
 	DEV_INFO_FOR_EACH_FLAG(DEFINE_FLAG);
 #undef DEFINE_FLAG

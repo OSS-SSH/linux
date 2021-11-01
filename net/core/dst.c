@@ -50,11 +50,15 @@ void dst_init(struct dst_entry *dst, struct dst_ops *ops,
 {
 	dst->dev = dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_hold(dev);
 =======
 	if (dev)
 		dev_hold(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dst->ops = ops;
 	dst_init_metrics(dst, dst_default_metrics.metrics, true);
 	dst->expires = 0UL;
@@ -123,11 +127,15 @@ struct dst_entry *dst_destroy(struct dst_entry * dst)
 	if (dst->ops->destroy)
 		dst->ops->destroy(dst);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(dst->dev);
 =======
 	if (dst->dev)
 		dev_put(dst->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(dst->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lwtstate_put(dst->lwtstate);
 

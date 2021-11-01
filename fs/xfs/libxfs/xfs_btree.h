@@ -107,6 +107,7 @@ struct xfs_btree_ops {
 	/* update btree root pointer */
 	void	(*set_root)(struct xfs_btree_cur *cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    const union xfs_btree_ptr *nptr, int level_change);
 
 	/* block allocation / freeing */
@@ -119,6 +120,13 @@ struct xfs_btree_ops {
 	int	(*alloc_block)(struct xfs_btree_cur *cur,
 			       union xfs_btree_ptr *start_bno,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    const union xfs_btree_ptr *nptr, int level_change);
+
+	/* block allocation / freeing */
+	int	(*alloc_block)(struct xfs_btree_cur *cur,
+			       const union xfs_btree_ptr *start_bno,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       union xfs_btree_ptr *new_bno,
 			       int *stat);
 	int	(*free_block)(struct xfs_btree_cur *cur, struct xfs_buf *bp);
@@ -126,12 +134,17 @@ struct xfs_btree_ops {
 	/* update last record information */
 	void	(*update_lastrec)(struct xfs_btree_cur *cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  const struct xfs_btree_block *block,
 				  const union xfs_btree_rec *rec,
 =======
 				  struct xfs_btree_block *block,
 				  union xfs_btree_rec *rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  const struct xfs_btree_block *block,
+				  const union xfs_btree_rec *rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  int ptr, int reason);
 
 	/* records in block/level */
@@ -144,15 +157,20 @@ struct xfs_btree_ops {
 	/* init values of btree structures */
 	void	(*init_key_from_rec)(union xfs_btree_key *key,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     const union xfs_btree_rec *rec);
 =======
 				     union xfs_btree_rec *rec);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     const union xfs_btree_rec *rec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void	(*init_rec_from_cur)(struct xfs_btree_cur *cur,
 				     union xfs_btree_rec *rec);
 	void	(*init_ptr_from_cur)(struct xfs_btree_cur *cur,
 				     union xfs_btree_ptr *ptr);
 	void	(*init_high_key_from_rec)(union xfs_btree_key *key,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					  const union xfs_btree_rec *rec);
 
@@ -166,6 +184,13 @@ struct xfs_btree_ops {
 	int64_t (*key_diff)(struct xfs_btree_cur *cur,
 			      union xfs_btree_key *key);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  const union xfs_btree_rec *rec);
+
+	/* difference between key value and cursor value */
+	int64_t (*key_diff)(struct xfs_btree_cur *cur,
+			    const union xfs_btree_key *key);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Difference between key2 and key1 -- positive if key1 > key2,
@@ -173,17 +198,23 @@ struct xfs_btree_ops {
 	 */
 	int64_t (*diff_two_keys)(struct xfs_btree_cur *cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 const union xfs_btree_key *key1,
 				 const union xfs_btree_key *key2);
 =======
 				   union xfs_btree_key *key1,
 				   union xfs_btree_key *key2);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 const union xfs_btree_key *key1,
+				 const union xfs_btree_key *key2);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	const struct xfs_buf_ops	*buf_ops;
 
 	/* check that k1 is lower than k2 */
 	int	(*keys_inorder)(struct xfs_btree_cur *cur,
+<<<<<<< HEAD
 <<<<<<< HEAD
 				const union xfs_btree_key *k1,
 				const union xfs_btree_key *k2);
@@ -201,6 +232,15 @@ struct xfs_btree_ops {
 				union xfs_btree_rec *r1,
 				union xfs_btree_rec *r2);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				const union xfs_btree_key *k1,
+				const union xfs_btree_key *k2);
+
+	/* check that r1 is lower than r2 */
+	int	(*recs_inorder)(struct xfs_btree_cur *cur,
+				const union xfs_btree_rec *r1,
+				const union xfs_btree_rec *r2);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -464,10 +504,14 @@ void xfs_btree_log_recs(struct xfs_btree_cur *, struct xfs_buf *, int, int);
  * Helpers.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int xfs_btree_get_numrecs(const struct xfs_btree_block *block)
 =======
 static inline int xfs_btree_get_numrecs(struct xfs_btree_block *block)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int xfs_btree_get_numrecs(const struct xfs_btree_block *block)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return be16_to_cpu(block->bb_numrecs);
 }
@@ -479,10 +523,14 @@ static inline void xfs_btree_set_numrecs(struct xfs_btree_block *block,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int xfs_btree_get_level(const struct xfs_btree_block *block)
 =======
 static inline int xfs_btree_get_level(struct xfs_btree_block *block)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int xfs_btree_get_level(const struct xfs_btree_block *block)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return be16_to_cpu(block->bb_level);
 }
@@ -520,6 +568,7 @@ unsigned long long xfs_btree_calc_size(uint *limits, unsigned long long len);
  */
 typedef int (*xfs_btree_query_range_fn)(struct xfs_btree_cur *cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		const union xfs_btree_rec *rec, void *priv);
 
 int xfs_btree_query_range(struct xfs_btree_cur *cur,
@@ -531,6 +580,13 @@ int xfs_btree_query_range(struct xfs_btree_cur *cur,
 int xfs_btree_query_range(struct xfs_btree_cur *cur,
 		union xfs_btree_irec *low_rec, union xfs_btree_irec *high_rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		const union xfs_btree_rec *rec, void *priv);
+
+int xfs_btree_query_range(struct xfs_btree_cur *cur,
+		const union xfs_btree_irec *low_rec,
+		const union xfs_btree_irec *high_rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_btree_query_range_fn fn, void *priv);
 int xfs_btree_query_all(struct xfs_btree_cur *cur, xfs_btree_query_range_fn fn,
 		void *priv);
@@ -559,6 +615,7 @@ union xfs_btree_ptr *xfs_btree_ptr_addr(struct xfs_btree_cur *cur, int n,
 		struct xfs_btree_block *block);
 int xfs_btree_lookup_get_block(struct xfs_btree_cur *cur, int level,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		const union xfs_btree_ptr *pp, struct xfs_btree_block **blkp);
 struct xfs_btree_block *xfs_btree_get_block(struct xfs_btree_cur *cur,
 		int level, struct xfs_buf **bpp);
@@ -570,6 +627,13 @@ struct xfs_btree_block *xfs_btree_get_block(struct xfs_btree_cur *cur,
 		int level, struct xfs_buf **bpp);
 bool xfs_btree_ptr_is_null(struct xfs_btree_cur *cur, union xfs_btree_ptr *ptr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		const union xfs_btree_ptr *pp, struct xfs_btree_block **blkp);
+struct xfs_btree_block *xfs_btree_get_block(struct xfs_btree_cur *cur,
+		int level, struct xfs_buf **bpp);
+bool xfs_btree_ptr_is_null(struct xfs_btree_cur *cur,
+		const union xfs_btree_ptr *ptr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int64_t xfs_btree_diff_two_ptrs(struct xfs_btree_cur *cur,
 				const union xfs_btree_ptr *a,
 				const union xfs_btree_ptr *b);
@@ -581,6 +645,7 @@ void xfs_btree_get_keys(struct xfs_btree_cur *cur,
 union xfs_btree_key *xfs_btree_high_key_from_key(struct xfs_btree_cur *cur,
 		union xfs_btree_key *key);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int xfs_btree_has_record(struct xfs_btree_cur *cur,
 		const union xfs_btree_irec *low,
 		const union xfs_btree_irec *high, bool *exists);
@@ -588,6 +653,11 @@ int xfs_btree_has_record(struct xfs_btree_cur *cur,
 int xfs_btree_has_record(struct xfs_btree_cur *cur, union xfs_btree_irec *low,
 		union xfs_btree_irec *high, bool *exists);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int xfs_btree_has_record(struct xfs_btree_cur *cur,
+		const union xfs_btree_irec *low,
+		const union xfs_btree_irec *high, bool *exists);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool xfs_btree_has_more_records(struct xfs_btree_cur *cur);
 struct xfs_ifork *xfs_btree_ifork_ptr(struct xfs_btree_cur *cur);
 
@@ -611,6 +681,7 @@ xfs_btree_islastblock(
 void xfs_btree_set_ptr_null(struct xfs_btree_cur *cur,
 		union xfs_btree_ptr *ptr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int xfs_btree_get_buf_block(struct xfs_btree_cur *cur,
 		const union xfs_btree_ptr *ptr, struct xfs_btree_block **block,
 		struct xfs_buf **bpp);
@@ -622,6 +693,13 @@ int xfs_btree_get_buf_block(struct xfs_btree_cur *cur, union xfs_btree_ptr *ptr,
 void xfs_btree_set_sibling(struct xfs_btree_cur *cur,
 		struct xfs_btree_block *block, union xfs_btree_ptr *ptr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int xfs_btree_get_buf_block(struct xfs_btree_cur *cur,
+		const union xfs_btree_ptr *ptr, struct xfs_btree_block **block,
+		struct xfs_buf **bpp);
+void xfs_btree_set_sibling(struct xfs_btree_cur *cur,
+		struct xfs_btree_block *block, const union xfs_btree_ptr *ptr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int lr);
 void xfs_btree_init_block_cur(struct xfs_btree_cur *cur,
 		struct xfs_buf *bp, int level, int numrecs);
@@ -630,11 +708,16 @@ void xfs_btree_copy_ptrs(struct xfs_btree_cur *cur,
 		const union xfs_btree_ptr *src_ptr, int numptrs);
 void xfs_btree_copy_keys(struct xfs_btree_cur *cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		union xfs_btree_key *dst_key,
 		const union xfs_btree_key *src_key, int numkeys);
 =======
 		union xfs_btree_key *dst_key, union xfs_btree_key *src_key,
 		int numkeys);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		union xfs_btree_key *dst_key,
+		const union xfs_btree_key *src_key, int numkeys);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif	/* __XFS_BTREE_H__ */

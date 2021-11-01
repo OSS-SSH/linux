@@ -122,12 +122,15 @@ static int v9fs_file_lock(struct file *filp, int cmd, struct file_lock *fl)
 	p9_debug(P9_DEBUG_VFS, "filp: %p lock: %p\n", filp, fl);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* No mandatory locks */
 	if (__mandatory_lock(inode) && fl->fl_type != F_UNLCK)
 		return -ENOLCK;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((IS_SETLK(cmd) || IS_SETLKW(cmd)) && fl->fl_type != F_UNLCK) {
 		filemap_write_and_wait(inode->i_mapping);
 		invalidate_mapping_pages(&inode->i_data, 0, -1);
@@ -316,12 +319,15 @@ static int v9fs_file_lock_dotl(struct file *filp, int cmd, struct file_lock *fl)
 		 filp, cmd, fl, filp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* No mandatory locks */
 	if (__mandatory_lock(inode) && fl->fl_type != F_UNLCK)
 		goto out_err;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((IS_SETLK(cmd) || IS_SETLKW(cmd)) && fl->fl_type != F_UNLCK) {
 		filemap_write_and_wait(inode->i_mapping);
 		invalidate_mapping_pages(&inode->i_data, 0, -1);
@@ -334,9 +340,12 @@ static int v9fs_file_lock_dotl(struct file *filp, int cmd, struct file_lock *fl)
 	else
 		ret = -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 out_err:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -358,12 +367,15 @@ static int v9fs_file_flock_dotl(struct file *filp, int cmd,
 		 filp, cmd, fl, filp);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* No mandatory locks */
 	if (__mandatory_lock(inode) && fl->fl_type != F_UNLCK)
 		goto out_err;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(fl->fl_flags & FL_FLOCK))
 		goto out_err;
 
@@ -385,6 +397,7 @@ out_err:
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * v9fs_file_read_iter - read from a file
  * @iocb: The operation parameters
  * @to: The buffer to read into
@@ -400,6 +413,13 @@ out_err:
  */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * v9fs_file_read_iter - read from a file
+ * @iocb: The operation parameters
+ * @to: The buffer to read into
+ *
+ */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t
 v9fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
 {
@@ -422,6 +442,7 @@ v9fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * v9fs_file_write_iter - write to a file
  * @iocb: The operation parameters
  * @from: The data to write
@@ -432,6 +453,11 @@ v9fs_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
  * @count: size of buffer
  * @offset: offset at which to write data
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * v9fs_file_write_iter - write to a file
+ * @iocb: The operation parameters
+ * @from: The data to write
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  */
 static ssize_t
@@ -601,6 +627,7 @@ out_unlock:
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * v9fs_mmap_file_read_iter - read from a file
  * @iocb: The operation parameters
  * @to: The buffer to read into
@@ -611,6 +638,11 @@ out_unlock:
  * @count: size of buffer
  * @offset: offset at which to read data
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * v9fs_mmap_file_read_iter - read from a file
+ * @iocb: The operation parameters
+ * @to: The buffer to read into
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  */
 static ssize_t
@@ -622,6 +654,7 @@ v9fs_mmap_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * v9fs_mmap_file_write_iter - write to a file
  * @iocb: The operation parameters
  * @from: The data to write
@@ -632,6 +665,11 @@ v9fs_mmap_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
  * @count: size of buffer
  * @offset: offset at which to write data
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * v9fs_mmap_file_write_iter - write to a file
+ * @iocb: The operation parameters
+ * @from: The data to write
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  */
 static ssize_t
@@ -664,6 +702,7 @@ static void v9fs_mmap_vm_close(struct vm_area_struct *vma)
 
 	inode = file_inode(vma->vm_file);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_fdatawrite_wbc(inode->i_mapping, &wbc);
 =======
 
@@ -673,6 +712,9 @@ static void v9fs_mmap_vm_close(struct vm_area_struct *vma)
 	might_sleep();
 	sync_inode(inode, &wbc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_fdatawrite_wbc(inode->i_mapping, &wbc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 

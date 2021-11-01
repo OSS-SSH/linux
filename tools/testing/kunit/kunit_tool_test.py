@@ -158,6 +158,9 @@ class KUnitParserTest(unittest.TestCase):
 			result.status)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	def test_no_header(self):
 		empty_log = test_data_path('test_is_test_passed-no_tests_run_no_header.log')
 		with open(empty_log) as file:
@@ -168,12 +171,17 @@ class KUnitParserTest(unittest.TestCase):
 			kunit_parser.TestStatus.FAILURE_TO_PARSE_TESTS,
 			result.status)
 
+<<<<<<< HEAD
 	def test_no_tests(self):
 		empty_log = test_data_path('test_is_test_passed-no_tests_run_with_header.log')
 =======
 	def test_no_tests(self):
 		empty_log = test_data_path('test_is_test_passed-no_tests_run.log')
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	def test_no_tests(self):
+		empty_log = test_data_path('test_is_test_passed-no_tests_run_with_header.log')
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		with open(empty_log) as file:
 			result = kunit_parser.parse_run_tests(
 				kunit_parser.extract_tap_lines(file.readlines()))
@@ -189,10 +197,14 @@ class KUnitParserTest(unittest.TestCase):
 			result = kunit_parser.parse_run_tests(
 				kunit_parser.extract_tap_lines(file.readlines()))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		print_mock.assert_any_call(StrContains('could not parse test results!'))
 =======
 		print_mock.assert_any_call(StrContains('no tests run!'))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		print_mock.assert_any_call(StrContains('could not parse test results!'))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		print_mock.stop()
 		file.close()
 
@@ -329,10 +341,14 @@ class KUnitJsonTest(unittest.TestCase):
 
 	def test_no_tests_json(self):
 <<<<<<< HEAD
+<<<<<<< HEAD
 		result = self._json_for('test_is_test_passed-no_tests_run_with_header.log')
 =======
 		result = self._json_for('test_is_test_passed-no_tests_run.log')
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		result = self._json_for('test_is_test_passed-no_tests_run_with_header.log')
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		self.assertEqual(0, len(result['sub_groups']))
 
 class StrContains(str):
@@ -370,10 +386,14 @@ class KUnitMainTest(unittest.TestCase):
 		self.assertEqual(self.linux_source_mock.run_kernel.call_count, 1)
 		self.linux_source_mock.run_kernel.assert_called_once_with(
 <<<<<<< HEAD
+<<<<<<< HEAD
 			args=None, build_dir='.kunit', filter_glob='', timeout=300)
 =======
 			build_dir='.kunit', filter_glob='', timeout=300)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			args=None, build_dir='.kunit', filter_glob='', timeout=300)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
 
 	def test_run_passes_args_pass(self):
@@ -382,10 +402,14 @@ class KUnitMainTest(unittest.TestCase):
 		self.assertEqual(self.linux_source_mock.run_kernel.call_count, 1)
 		self.linux_source_mock.run_kernel.assert_called_once_with(
 <<<<<<< HEAD
+<<<<<<< HEAD
 			args=None, build_dir='.kunit', filter_glob='', timeout=300)
 =======
 			build_dir='.kunit', filter_glob='', timeout=300)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			args=None, build_dir='.kunit', filter_glob='', timeout=300)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
 
 	def test_exec_passes_args_fail(self):
@@ -421,6 +445,9 @@ class KUnitMainTest(unittest.TestCase):
 			self.assertNotEqual(call, mock.call(StrContains(' 0 tests run')))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	def test_run_raw_output_kunit(self):
 		self.linux_source_mock.run_kernel = mock.Mock(return_value=[])
 		kunit.main(['run', '--raw_output=kunit'], self.linux_source_mock)
@@ -438,17 +465,24 @@ class KUnitMainTest(unittest.TestCase):
 		self.linux_source_mock.run_kernel.assert_called_once_with(
 			args=None, build_dir='.kunit', filter_glob='filter_glob', timeout=300)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	def test_exec_timeout(self):
 		timeout = 3453
 		kunit.main(['exec', '--timeout', str(timeout)], self.linux_source_mock)
 		self.linux_source_mock.run_kernel.assert_called_once_with(
 <<<<<<< HEAD
+<<<<<<< HEAD
 			args=None, build_dir='.kunit', filter_glob='', timeout=timeout)
 =======
 			build_dir='.kunit', filter_glob='', timeout=timeout)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			args=None, build_dir='.kunit', filter_glob='', timeout=timeout)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
 
 	def test_run_timeout(self):
@@ -457,10 +491,14 @@ class KUnitMainTest(unittest.TestCase):
 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 1)
 		self.linux_source_mock.run_kernel.assert_called_once_with(
 <<<<<<< HEAD
+<<<<<<< HEAD
 			args=None, build_dir='.kunit', filter_glob='', timeout=timeout)
 =======
 			build_dir='.kunit', filter_glob='', timeout=timeout)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			args=None, build_dir='.kunit', filter_glob='', timeout=timeout)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
 
 	def test_run_builddir(self):
@@ -469,10 +507,14 @@ class KUnitMainTest(unittest.TestCase):
 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 1)
 		self.linux_source_mock.run_kernel.assert_called_once_with(
 <<<<<<< HEAD
+<<<<<<< HEAD
 			args=None, build_dir=build_dir, filter_glob='', timeout=300)
 =======
 			build_dir=build_dir, filter_glob='', timeout=300)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			args=None, build_dir=build_dir, filter_glob='', timeout=300)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
 
 	def test_config_builddir(self):
@@ -490,10 +532,14 @@ class KUnitMainTest(unittest.TestCase):
 		kunit.main(['exec', '--build_dir', build_dir], self.linux_source_mock)
 		self.linux_source_mock.run_kernel.assert_called_once_with(
 <<<<<<< HEAD
+<<<<<<< HEAD
 			args=None, build_dir=build_dir, filter_glob='', timeout=300)
 =======
 			build_dir=build_dir, filter_glob='', timeout=300)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			args=None, build_dir=build_dir, filter_glob='', timeout=300)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
 
 	@mock.patch.object(kunit_kernel, 'LinuxSourceTree')
@@ -519,6 +565,9 @@ class KUnitMainTest(unittest.TestCase):
 							qemu_config_path=None)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	def test_run_kernel_args(self):
 		kunit.main(['run', '--kernel_args=a=1', '--kernel_args=b=2'], self.linux_source_mock)
 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 1)
@@ -527,7 +576,10 @@ class KUnitMainTest(unittest.TestCase):
 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 if __name__ == '__main__':
 	unittest.main()

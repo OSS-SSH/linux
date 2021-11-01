@@ -203,14 +203,20 @@
 
 		dais = <&rsnd_port0	/* ak4613 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			&rsnd_port1	/* HDMI0  */
 #ifdef SOC_HAS_HDMI1
 			&rsnd_port2	/* HDMI1  */
 #endif
 			>;
+<<<<<<< HEAD
 =======
 			&rsnd_port1>;	/* HDMI0  */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	vbus0_usb2: regulator-vbus0-usb2 {
@@ -431,6 +437,9 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef SOC_HAS_HDMI1
 &hdmi1 {
 	status = "okay";
@@ -456,8 +465,11 @@
 };
 #endif /* SOC_HAS_HDMI1 */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &hscif1 {
 	pinctrl-0 = <&hscif1_pins>;
 	pinctrl-names = "default";
@@ -855,6 +867,9 @@
 			};
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef SOC_HAS_HDMI1
 		rsnd_port2: port@2 {
@@ -870,8 +885,11 @@
 			};
 		};
 #endif /* SOC_HAS_HDMI1 */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 
@@ -881,14 +899,20 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef SOC_HAS_SATA
 &sata {
 	status = "okay";
 };
 #endif /* SOC_HAS_SATA */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &scif1 {
 	pinctrl-0 = <&scif1_pins>;
 	pinctrl-names = "default";
@@ -1037,6 +1061,9 @@
 	status = "okay";
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef SOC_HAS_USB2_CH2
 &ehci2 {
@@ -1061,5 +1088,8 @@
 	status = "okay";
 };
 #endif /* SOC_HAS_USB2_CH2 */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

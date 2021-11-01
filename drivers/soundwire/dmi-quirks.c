@@ -17,6 +17,7 @@ struct adr_remap {
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Some TigerLake devices based on an initial Intel BIOS do not expose
  * the correct _ADR in the DSDT.
  * Remap the bad _ADR values to the ones reported by hardware
@@ -32,17 +33,26 @@ static const struct adr_remap intel_tgl_bios[] = {
 =======
  * HP Spectre 360 Convertible devices do not expose the correct _ADR
  * in the DSDT.
+=======
+ * Some TigerLake devices based on an initial Intel BIOS do not expose
+ * the correct _ADR in the DSDT.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Remap the bad _ADR values to the ones reported by hardware
  */
-static const struct adr_remap hp_spectre_360[] = {
+static const struct adr_remap intel_tgl_bios[] = {
 	{
-		0x000010025D070100,
-		0x000020025D071100
+		0x000010025D070100ull,
+		0x000020025D071100ull
 	},
 	{
+<<<<<<< HEAD
 		0x000110025d070100,
 		0x000120025D130800
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		0x000110025d070100ull,
+		0x000120025D130800ull
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{}
 };
@@ -54,6 +64,7 @@ static const struct adr_remap hp_spectre_360[] = {
 static const struct adr_remap dell_sku_0A3E[] = {
 	/* rt715 on link0 */
 	{
+<<<<<<< HEAD
 <<<<<<< HEAD
 		0x00020025d071100ull,
 		0x00021025d071500ull
@@ -70,17 +81,26 @@ static const struct adr_remap dell_sku_0A3E[] = {
 =======
 		0x00020025d071100,
 		0x00021025d071500
+=======
+		0x00020025d071100ull,
+		0x00021025d071500ull
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	/* rt711 on link1 */
 	{
-		0x000120025d130800,
-		0x000120025d071100,
+		0x000120025d130800ull,
+		0x000120025d071100ull,
 	},
 	/* rt1308 on link2 */
 	{
+<<<<<<< HEAD
 		0x000220025d071500,
 		0x000220025d130800
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		0x000220025d071500ull,
+		0x000220025d130800ull
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{}
 };
@@ -92,6 +112,9 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Spectre x360 Convertible"),
 		},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.driver_data = (void *)intel_tgl_bios,
 	},
 	{
@@ -101,9 +124,12 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "LAPBC"),
 		},
 		.driver_data = (void *)intel_tgl_bios,
+<<<<<<< HEAD
 =======
 		.driver_data = (void *)hp_spectre_360,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		.matches = {

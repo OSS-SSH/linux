@@ -68,6 +68,7 @@ test_llvm__fetch_bpf_obj(void **p_obj_buf,
 	/*
 	 * Skip this test if user's .perfconfig doesn't set [llvm] section
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * and clang is not found in $PATH
 	 */
 	if (!force && (!llvm_param.user_set_param &&
@@ -75,12 +76,18 @@ test_llvm__fetch_bpf_obj(void **p_obj_buf,
 		pr_debug("No clang, skip this test\n");
 =======
 	 * and clang is not found in $PATH, and this is not perf test -v
+=======
+	 * and clang is not found in $PATH
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-	if (!force && (verbose <= 0 &&
-		       !llvm_param.user_set_param &&
+	if (!force && (!llvm_param.user_set_param &&
 		       llvm__search_clang())) {
+<<<<<<< HEAD
 		pr_debug("No clang and no verbosive, skip this test\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_debug("No clang, skip this test\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return TEST_SKIP;
 	}
 

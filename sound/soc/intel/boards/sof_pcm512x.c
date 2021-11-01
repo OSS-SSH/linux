@@ -27,22 +27,33 @@
 #define SOF_PCM512X_SSP_CODEC(quirk)		((quirk) & GENMASK(3, 0))
 #define SOF_PCM512X_SSP_CODEC_MASK			(GENMASK(3, 0))
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SOF_PCM512X_ENABLE_SSP_CAPTURE		BIT(4)
 #define SOF_PCM512X_ENABLE_DMIC			BIT(5)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SOF_PCM512X_ENABLE_SSP_CAPTURE		BIT(4)
+#define SOF_PCM512X_ENABLE_DMIC			BIT(5)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define IDISP_CODEC_MASK	0x4
 
 /* Default: SSP5 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static unsigned long sof_pcm512x_quirk =
 	SOF_PCM512X_SSP_CODEC(5) |
 	SOF_PCM512X_ENABLE_SSP_CAPTURE |
 	SOF_PCM512X_ENABLE_DMIC;
+<<<<<<< HEAD
 =======
 static unsigned long sof_pcm512x_quirk = SOF_PCM512X_SSP_CODEC(5);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static bool is_legacy_cpu;
 
@@ -257,6 +268,7 @@ static struct snd_soc_dai_link *sof_card_dai_links_create(struct device *dev,
 	/*
 	 * capture only supported with specific versions of the Hifiberry DAC+
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 */
 	if (sof_pcm512x_quirk & SOF_PCM512X_ENABLE_SSP_CAPTURE)
 		links[id].dpcm_capture = 1;
@@ -264,6 +276,11 @@ static struct snd_soc_dai_link *sof_card_dai_links_create(struct device *dev,
 	 * links[id].dpcm_capture = 1;
 	 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 */
+	if (sof_pcm512x_quirk & SOF_PCM512X_ENABLE_SSP_CAPTURE)
+		links[id].dpcm_capture = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	links[id].no_pcm = 1;
 	links[id].cpus = &cpus[id];
 	links[id].num_cpus = 1;
@@ -399,11 +416,17 @@ static int sof_audio_probe(struct platform_device *pdev)
 	ssp_codec = sof_pcm512x_quirk & SOF_PCM512X_SSP_CODEC_MASK;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(sof_pcm512x_quirk & SOF_PCM512X_ENABLE_DMIC))
 		dmic_be_num = 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(sof_pcm512x_quirk & SOF_PCM512X_ENABLE_DMIC))
+		dmic_be_num = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* compute number of dai links */
 	sof_audio_card_pcm512x.num_links = 1 + dmic_be_num + hdmi_num;
 

@@ -163,10 +163,15 @@ DEFINE_PER_CPU(bool, fpsimd_context_busy);
 EXPORT_PER_CPU_SYMBOL(fpsimd_context_busy);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void fpsimd_bind_task_to_cpu(void);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void fpsimd_bind_task_to_cpu(void);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __get_cpu_fpsimd_context(void)
 {
 	bool busy = __this_cpu_xchg(fpsimd_context_busy, true);
@@ -517,16 +522,21 @@ void sve_alloc(struct task_struct *task)
 {
 	if (task->thread.sve_state) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memset(task->thread.sve_state, 0, sve_state_size(task));
 =======
 		memset(task->thread.sve_state, 0, sve_state_size(current));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memset(task->thread.sve_state, 0, sve_state_size(task));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
 	/* This is a small allocation (maximum ~8KB) and Should Not Fail. */
 	task->thread.sve_state =
 		kzalloc(sve_state_size(task), GFP_KERNEL);
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -536,6 +546,8 @@ void sve_alloc(struct task_struct *task)
 	 */
 	BUG_ON(!task->thread.sve_state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -956,12 +968,18 @@ void do_sve_acc(unsigned int esr, struct pt_regs *regs)
 
 	sve_alloc(current);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!current->thread.sve_state) {
 		force_sig(SIGKILL);
 		return;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	get_cpu_fpsimd_context();
 
@@ -1132,10 +1150,14 @@ void fpsimd_signal_preserve_current_state(void)
  * this function.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void fpsimd_bind_task_to_cpu(void)
 =======
 void fpsimd_bind_task_to_cpu(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void fpsimd_bind_task_to_cpu(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fpsimd_last_state_struct *last =
 		this_cpu_ptr(&fpsimd_last_state);

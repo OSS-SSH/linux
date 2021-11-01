@@ -62,9 +62,13 @@
 #define ISP176x_HC_ATL_IRQ_MASK_AND	0x32c
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ISP176x_HC_OTG_CTRL		0x374
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ISP176x_HC_OTG_CTRL		0x374
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ISP176x_HC_OTG_CTRL_SET		0x374
 #define ISP176x_HC_OTG_CTRL_CLEAR	0x376
 
@@ -184,6 +188,9 @@ enum isp176x_host_controller_fields {
 #define ISP176x_DC_IEBRST		BIT(0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ISP176x_HW_OTG_DISABLE_CLEAR	BIT(26)
 #define ISP176x_HW_SW_SEL_HC_DC_CLEAR	BIT(23)
 #define ISP176x_HW_VBUS_DRV_CLEAR	BIT(20)
@@ -199,8 +206,11 @@ enum isp176x_host_controller_fields {
 #define ISP176x_HW_DP_PULLDOWN		BIT(1)
 #define ISP176x_HW_DP_PULLUP		BIT(0)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ISP176x_DC_ENDPTYP_ISOC		0x01
 #define ISP176x_DC_ENDPTYP_BULK		0x02
 #define ISP176x_DC_ENDPTYP_INTERRUPT	0x03

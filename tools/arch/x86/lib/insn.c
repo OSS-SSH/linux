@@ -38,6 +38,7 @@
 
 #define __get_next(t, insn)	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	({ t r; memcpy(&r, insn->next_byte, sizeof(t)); insn->next_byte += sizeof(t); leXX_to_cpu(t, r); })
 
 #define __peek_nbyte_next(t, insn, n)	\
@@ -48,6 +49,12 @@
 #define __peek_nbyte_next(t, insn, n)	\
 	({ t r = *(t*)((insn)->next_byte + n); leXX_to_cpu(t, r); })
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	({ t r; memcpy(&r, insn->next_byte, sizeof(t)); insn->next_byte += sizeof(t); leXX_to_cpu(t, r); })
+
+#define __peek_nbyte_next(t, insn, n)	\
+	({ t r; memcpy(&r, (insn)->next_byte + n, sizeof(t)); leXX_to_cpu(t, r); })
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define get_next(t, insn)	\
 	({ if (unlikely(!validate_next(t, insn, 0))) goto err_out; __get_next(t, insn); })

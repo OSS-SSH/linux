@@ -123,10 +123,14 @@ bool of_gpio_need_valid_mask(const struct gpio_chip *gc)
 {
 	int size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct device_node *np = gc->of_node;
 =======
 	struct device_node *np = gc->of_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct device_node *np = gc->of_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	size = of_property_count_u32_elems(np,  "gpio-reserved-ranges");
 	if (size > 0 && size % 2 == 0)
@@ -135,10 +139,14 @@ bool of_gpio_need_valid_mask(const struct gpio_chip *gc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void of_gpio_flags_quirks(const struct device_node *np,
 =======
 static void of_gpio_flags_quirks(struct device_node *np,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void of_gpio_flags_quirks(const struct device_node *np,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 const char *propname,
 				 enum of_gpio_flags *flags,
 				 int index)
@@ -245,10 +253,14 @@ static void of_gpio_flags_quirks(struct device_node *np,
  * in flags for the GPIO.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct gpio_desc *of_get_named_gpiod_flags(const struct device_node *np,
 =======
 static struct gpio_desc *of_get_named_gpiod_flags(struct device_node *np,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct gpio_desc *of_get_named_gpiod_flags(const struct device_node *np,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     const char *propname, int index, enum of_gpio_flags *flags)
 {
 	struct of_phandle_args gpiospec;
@@ -288,10 +300,14 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int of_get_named_gpio_flags(const struct device_node *np, const char *list_name,
 =======
 int of_get_named_gpio_flags(struct device_node *np, const char *list_name,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int of_get_named_gpio_flags(const struct device_node *np, const char *list_name,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    int index, enum of_gpio_flags *flags)
 {
 	struct gpio_desc *desc;
@@ -320,10 +336,14 @@ EXPORT_SYMBOL_GPL(of_get_named_gpio_flags);
  * In case of error an ERR_PTR() is returned.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct gpio_desc *gpiod_get_from_of_node(const struct device_node *node,
 =======
 struct gpio_desc *gpiod_get_from_of_node(struct device_node *node,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct gpio_desc *gpiod_get_from_of_node(const struct device_node *node,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 const char *propname, int index,
 					 enum gpiod_flags dflags,
 					 const char *label)
@@ -394,10 +414,14 @@ static struct gpio_desc *of_find_spi_gpio(struct device *dev, const char *con_id
 {
 	char prop_name[32]; /* 32 is max size of property name */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct device_node *np = dev->of_node;
 =======
 	struct device_node *np = dev->of_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct device_node *np = dev->of_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct gpio_desc *desc;
 
 	/*
@@ -429,10 +453,14 @@ static struct gpio_desc *of_find_spi_cs_gpio(struct device *dev,
 					     unsigned long *flags)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct device_node *np = dev->of_node;
 =======
 	struct device_node *np = dev->of_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct device_node *np = dev->of_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!IS_ENABLED(CONFIG_SPI_MASTER))
 		return ERR_PTR(-ENOENT);
@@ -469,10 +497,14 @@ static struct gpio_desc *of_find_regulator_gpio(struct device *dev, const char *
 		"wlf,ldo2ena", /* WM8994 */
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct device_node *np = dev->of_node;
 =======
 	struct device_node *np = dev->of_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct device_node *np = dev->of_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct gpio_desc *desc;
 	int i;
 

@@ -14,10 +14,14 @@
 
 #ifndef BATADV_SOURCE_VERSION
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define BATADV_SOURCE_VERSION "2021.3"
 =======
 #define BATADV_SOURCE_VERSION "2021.2"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define BATADV_SOURCE_VERSION "2021.3"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /* B.A.T.M.A.N. parameters */

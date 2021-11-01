@@ -14,13 +14,19 @@
 #include <linux/mfd/sy7636a.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct sy7636a_data {
 	struct regmap *regmap;
 	struct gpio_desc *pgood_gpio;
 };
+<<<<<<< HEAD
 =======
 #define SY7636A_POLL_ENABLED_TIME 500
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int sy7636a_get_vcom_voltage_op(struct regulator_dev *rdev)
 {
@@ -43,6 +49,7 @@ static int sy7636a_get_vcom_voltage_op(struct regulator_dev *rdev)
 static int sy7636a_get_status(struct regulator_dev *rdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sy7636a_data *data = dev_get_drvdata(rdev->dev.parent);
 	int ret = 0;
 
@@ -53,6 +60,12 @@ static int sy7636a_get_status(struct regulator_dev *rdev)
 
 	ret = gpiod_get_value_cansleep(sy7636a->pgood_gpio);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct sy7636a_data *data = dev_get_drvdata(rdev->dev.parent);
+	int ret = 0;
+
+	ret = gpiod_get_value_cansleep(data->pgood_gpio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		dev_err(&rdev->dev, "Failed to read pgood gpio: %d\n", ret);
 
@@ -76,15 +89,19 @@ static const struct regulator_desc desc = {
 	.enable_reg = SY7636A_REG_OPERATION_MODE_CRL,
 	.enable_mask = SY7636A_OPERATION_MODE_CRL_ONOFF,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.poll_enabled_time = SY7636A_POLL_ENABLED_TIME,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.regulators_node = of_match_ptr("regulators"),
 	.of_match = of_match_ptr("vcom"),
 };
 
 static int sy7636a_regulator_probe(struct platform_device *pdev)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct regmap *regmap = dev_get_drvdata(pdev->dev.parent);
 	struct regulator_config config = { };
@@ -116,32 +133,46 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
 		dev_err(pdev->dev.parent, "Failed to initialize regulator: %d\n", ret);
 =======
 	struct sy7636a *sy7636a = dev_get_drvdata(pdev->dev.parent);
+=======
+	struct regmap *regmap = dev_get_drvdata(pdev->dev.parent);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct regulator_config config = { };
 	struct regulator_dev *rdev;
 	struct gpio_desc *gdp;
+	struct sy7636a_data *data;
 	int ret;
 
-	if (!sy7636a)
+	if (!regmap)
 		return -EPROBE_DEFER;
 
-	platform_set_drvdata(pdev, sy7636a);
-
-	gdp = devm_gpiod_get(sy7636a->dev, "epd-pwr-good", GPIOD_IN);
+	gdp = devm_gpiod_get(pdev->dev.parent, "epd-pwr-good", GPIOD_IN);
 	if (IS_ERR(gdp)) {
-		dev_err(sy7636a->dev, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
+		dev_err(pdev->dev.parent, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
 		return PTR_ERR(gdp);
 	}
 
-	sy7636a->pgood_gpio = gdp;
+	data = devm_kzalloc(&pdev->dev, sizeof(struct sy7636a_data), GFP_KERNEL);
+	if (!data)
+		return -ENOMEM;
 
-	ret = regmap_write(sy7636a->regmap, SY7636A_REG_POWER_ON_DELAY_TIME, 0x0);
+	data->regmap = regmap;
+	data->pgood_gpio = gdp;
+
+	platform_set_drvdata(pdev, data);
+
+	ret = regmap_write(regmap, SY7636A_REG_POWER_ON_DELAY_TIME, 0x0);
 	if (ret) {
+<<<<<<< HEAD
 		dev_err(sy7636a->dev, "Failed to initialize regulator: %d\n", ret);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_err(pdev->dev.parent, "Failed to initialize regulator: %d\n", ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	}
 
 	config.dev = &pdev->dev;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	config.dev->of_node = pdev->dev.parent->of_node;
 	config.regmap = regmap;
@@ -158,6 +189,14 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
 	if (IS_ERR(rdev)) {
 		dev_err(sy7636a->dev, "Failed to register %s regulator\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	config.dev->of_node = pdev->dev.parent->of_node;
+	config.regmap = regmap;
+
+	rdev = devm_regulator_register(&pdev->dev, &desc, &config);
+	if (IS_ERR(rdev)) {
+		dev_err(pdev->dev.parent, "Failed to register %s regulator\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pdev->name);
 		return PTR_ERR(rdev);
 	}

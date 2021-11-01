@@ -160,10 +160,14 @@ static int vfio_ccw_mdev_remove(struct mdev_device *mdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int vfio_ccw_mdev_open_device(struct mdev_device *mdev)
 =======
 static int vfio_ccw_mdev_open(struct mdev_device *mdev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int vfio_ccw_mdev_open_device(struct mdev_device *mdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vfio_ccw_private *private =
 		dev_get_drvdata(mdev_parent_dev(mdev));
@@ -199,10 +203,14 @@ out_unregister:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void vfio_ccw_mdev_close_device(struct mdev_device *mdev)
 =======
 static void vfio_ccw_mdev_release(struct mdev_device *mdev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void vfio_ccw_mdev_close_device(struct mdev_device *mdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vfio_ccw_private *private =
 		dev_get_drvdata(mdev_parent_dev(mdev));
@@ -647,12 +655,17 @@ static const struct mdev_parent_ops vfio_ccw_mdev_ops = {
 	.create			= vfio_ccw_mdev_create,
 	.remove			= vfio_ccw_mdev_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.open_device		= vfio_ccw_mdev_open_device,
 	.close_device		= vfio_ccw_mdev_close_device,
 =======
 	.open			= vfio_ccw_mdev_open,
 	.release		= vfio_ccw_mdev_release,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.open_device		= vfio_ccw_mdev_open_device,
+	.close_device		= vfio_ccw_mdev_close_device,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.read			= vfio_ccw_mdev_read,
 	.write			= vfio_ccw_mdev_write,
 	.ioctl			= vfio_ccw_mdev_ioctl,

@@ -762,6 +762,9 @@ static void buf_lo_before_scan(struct gfs2_jdesc *jd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define obsolete_rgrp_replay \
 "Replaying 0x%llx from jid=%d/0x%llx but we already have a bh!\n"
 #define obsolete_rgrp_replay2 \
@@ -788,8 +791,11 @@ static void obsolete_rgrp(struct gfs2_jdesc *jd, struct buffer_head *bh_log,
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int buf_lo_scan_elements(struct gfs2_jdesc *jd, u32 start,
 				struct gfs2_log_descriptor *ld, __be64 *ptr,
 				int pass)
@@ -829,6 +835,7 @@ static int buf_lo_scan_elements(struct gfs2_jdesc *jd, u32 start,
 				(struct gfs2_meta_header *)bh_ip->b_data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (mh->mh_type == cpu_to_be32(GFS2_METATYPE_RG))
 				obsolete_rgrp(jd, bh_log, blkno);
 
@@ -849,6 +856,11 @@ static int buf_lo_scan_elements(struct gfs2_jdesc *jd, u32 start,
 				}
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (mh->mh_type == cpu_to_be32(GFS2_METATYPE_RG))
+				obsolete_rgrp(jd, bh_log, blkno);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mark_buffer_dirty(bh_ip);
 		}
 		brelse(bh_log);

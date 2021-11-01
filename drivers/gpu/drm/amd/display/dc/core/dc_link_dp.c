@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Copyright 2015 Advanced Micro Devices, Inc.
  *
@@ -22,9 +25,12 @@
  *
  * Authors: AMD
  */
+<<<<<<< HEAD
 =======
 /* Copyright 2015 Advanced Micro Devices, Inc. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "dm_services.h"
 #include "dc.h"
 #include "dc_link_dp.h"
@@ -1268,6 +1274,7 @@ static inline void decide_8b_10b_training_settings(
 	 struct dc_link *link,
 	const struct dc_link_settings *link_setting,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct link_training_settings *lt_settings)
 {
 =======
@@ -1277,11 +1284,16 @@ static inline void decide_8b_10b_training_settings(
 	uint32_t lane;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct link_training_settings *lt_settings)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memset(lt_settings, '\0', sizeof(struct link_training_settings));
 
 	/* Initialize link settings */
 	lt_settings->link_settings.use_link_rate_set = link_setting->use_link_rate_set;
 	lt_settings->link_settings.link_rate_set = link_setting->link_rate_set;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	lt_settings->link_settings.link_rate = link_setting->link_rate;
 	lt_settings->link_settings.lane_count = link_setting->lane_count;
@@ -1300,6 +1312,10 @@ static inline void decide_8b_10b_training_settings(
 	/*@todo[vdevulap] move SS to LS, should not be handled by displaypath*/
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lt_settings->link_settings.link_rate = link_setting->link_rate;
+	lt_settings->link_settings.lane_count = link_setting->lane_count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* TODO hard coded to SS for now
 	 * lt_settings.link_settings.link_spread =
 	 * dal_display_path_is_ss_supported(
@@ -1307,6 +1323,7 @@ static inline void decide_8b_10b_training_settings(
 	 * LINK_SPREAD_05_DOWNSPREAD_30KHZ :
 	 * LINK_SPREAD_DISABLED;
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	lt_settings->link_settings.link_spread = link->dp_ss_off ?
 			LINK_SPREAD_DISABLED : LINK_SPREAD_05_DOWNSPREAD_30KHZ;
@@ -1360,20 +1377,54 @@ static void override_training_settings(
 	else
 		lt_settings->link_settings.link_spread = LINK_SPREAD_05_DOWNSPREAD_30KHZ;
 
+=======
+	lt_settings->link_settings.link_spread = link->dp_ss_off ?
+			LINK_SPREAD_DISABLED : LINK_SPREAD_05_DOWNSPREAD_30KHZ;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lt_settings->lttpr_mode = link->lttpr_mode;
+	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting);
+	lt_settings->eq_pattern_time = get_eq_training_aux_rd_interval(link, link_setting);
+	lt_settings->pattern_for_cr = decide_cr_training_pattern(link_setting);
+	lt_settings->pattern_for_eq = decide_eq_training_pattern(link, link_setting);
+	lt_settings->enhanced_framing = 1;
+	lt_settings->should_set_fec_ready = true;
+}
 
-	/* Initialize lane settings overrides */
+void dp_decide_training_settings(
+		struct dc_link *link,
+		const struct dc_link_settings *link_settings,
+		struct link_training_settings *lt_settings)
+{
+	if (dp_get_link_encoding_format(link_settings) == DP_8b_10b_ENCODING)
+		decide_8b_10b_training_settings(link, link_settings, lt_settings);
+}
+
+static void override_training_settings(
+		struct dc_link *link,
+		const struct dc_link_training_overrides *overrides,
+		struct link_training_settings *lt_settings)
+{
+	uint32_t lane;
+
+	/* Override link spread */
+	if (!link->dp_ss_off && overrides->downspread != NULL)
+		lt_settings->link_settings.link_spread = *overrides->downspread ?
+				LINK_SPREAD_05_DOWNSPREAD_30KHZ
+				: LINK_SPREAD_DISABLED;
+
+	/* Override lane settings */
 	if (overrides->voltage_swing != NULL)
 		lt_settings->voltage_swing = overrides->voltage_swing;
-
 	if (overrides->pre_emphasis != NULL)
 		lt_settings->pre_emphasis = overrides->pre_emphasis;
-
 	if (overrides->post_cursor2 != NULL)
 		lt_settings->post_cursor2 = overrides->post_cursor2;
+<<<<<<< HEAD
 
 	/* Initialize lane settings (VS/PE/PC2) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (lane = 0; lane < LANE_COUNT_DP_MAX; lane++) {
 		lt_settings->lane_settings[lane].VOLTAGE_SWING =
 			lt_settings->voltage_swing != NULL ?
@@ -1392,6 +1443,7 @@ static void override_training_settings(
 	/* Initialize training timings */
 	if (overrides->cr_pattern_time != NULL)
 		lt_settings->cr_pattern_time = *overrides->cr_pattern_time;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (overrides->eq_pattern_time != NULL)
@@ -1412,32 +1464,25 @@ static void override_training_settings(
 =======
 	else
 		lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (overrides->eq_pattern_time != NULL)
 		lt_settings->eq_pattern_time = *overrides->eq_pattern_time;
-	else
-		lt_settings->eq_pattern_time = get_eq_training_aux_rd_interval(link, link_setting);
 
 	if (overrides->pattern_for_cr != NULL)
 		lt_settings->pattern_for_cr = *overrides->pattern_for_cr;
-	else
-		lt_settings->pattern_for_cr = decide_cr_training_pattern(link_setting);
 	if (overrides->pattern_for_eq != NULL)
 		lt_settings->pattern_for_eq = *overrides->pattern_for_eq;
-	else
-		lt_settings->pattern_for_eq = decide_eq_training_pattern(link, link_setting);
 
 	if (overrides->enhanced_framing != NULL)
 		lt_settings->enhanced_framing = *overrides->enhanced_framing;
-	else
-		lt_settings->enhanced_framing = 1;
 
 	if (link->preferred_training_settings.fec_enable != NULL)
 		lt_settings->should_set_fec_ready = *link->preferred_training_settings.fec_enable;
-	else
-		lt_settings->should_set_fec_ready = true;
 }
 
+<<<<<<< HEAD
 void dp_decide_training_settings(
 		struct dc_link *link,
 		const struct dc_link_settings *link_settings,
@@ -1450,6 +1495,8 @@ void dp_decide_training_settings(
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 uint8_t dp_convert_to_count(uint8_t lttpr_repeater_count)
 {
 	switch (lttpr_repeater_count) {
@@ -1675,20 +1722,30 @@ bool dc_link_dp_perform_link_training_skip_aux(
 	const struct dc_link_settings *link_setting)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct link_training_settings lt_settings = {0};
 =======
 	struct link_training_settings lt_settings;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct link_training_settings lt_settings = {0};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dp_decide_training_settings(
 			link,
 			link_setting,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			&lt_settings);
 	override_training_settings(
 			link,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			&lt_settings);
+	override_training_settings(
+			link,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			&link->preferred_training_settings,
 			&lt_settings);
 
@@ -1729,6 +1786,7 @@ enum dc_status dpcd_configure_lttpr_mode(struct dc_link *link, struct link_train
 	enum dc_status status = DC_OK;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (lt_settings->lttpr_mode == LTTPR_MODE_TRANSPARENT)
 		status = configure_lttpr_mode_transparent(link);
 
@@ -1738,8 +1796,14 @@ enum dc_status dpcd_configure_lttpr_mode(struct dc_link *link, struct link_train
 	if (lt_settings->lttpr_mode == LTTPR_MODE_NON_TRANSPARENT)
 		status = configure_lttpr_mode_non_transparent(link, lt_settings);
 	else
+=======
+	if (lt_settings->lttpr_mode == LTTPR_MODE_TRANSPARENT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = configure_lttpr_mode_transparent(link);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	else if (lt_settings->lttpr_mode == LTTPR_MODE_NON_TRANSPARENT)
+		status = configure_lttpr_mode_non_transparent(link, lt_settings);
 
 	return status;
 }
@@ -1835,10 +1899,14 @@ enum link_training_result dc_link_dp_perform_link_training(
 {
 	enum link_training_result status = LINK_TRAINING_SUCCESS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct link_training_settings lt_settings = {0};
 =======
 	struct link_training_settings lt_settings;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct link_training_settings lt_settings = {0};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum dp_link_encoding encoding =
 			dp_get_link_encoding_format(link_settings);
 
@@ -1847,11 +1915,17 @@ enum link_training_result dc_link_dp_perform_link_training(
 			link,
 			link_settings,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			&lt_settings);
 	override_training_settings(
 			link,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			&lt_settings);
+	override_training_settings(
+			link,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			&link->preferred_training_settings,
 			&lt_settings);
 
@@ -1911,9 +1985,12 @@ bool perform_link_training_with_retries(
 	else
 		link_enc = link->link_enc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ASSERT(link_enc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* We need to do this before the link training to ensure the idle pattern in SST
 	 * mode will be sent right after the link training
@@ -1943,6 +2020,9 @@ bool perform_link_training_with_retries(
 			struct cp_psp *cp_psp = &stream->ctx->cp_psp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (cp_psp && cp_psp->funcs.enable_assr)
 				/* ASSR is bound to fail with unsigned PSP
 				 * verstage used during devlopment phase.
@@ -1950,6 +2030,7 @@ bool perform_link_training_with_retries(
 				 * perform eDP link training with right settings
 				 */
 				cp_psp->funcs.enable_assr(cp_psp->handle, link);
+<<<<<<< HEAD
 =======
 			if (cp_psp && cp_psp->funcs.enable_assr) {
 				if (!cp_psp->funcs.enable_assr(cp_psp->handle, link)) {
@@ -1961,6 +2042,8 @@ bool perform_link_training_with_retries(
 			} else
 				panel_mode = DP_PANEL_MODE_DEFAULT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 #endif
 
@@ -1990,6 +2073,9 @@ bool perform_link_training_with_retries(
 
 		/* Abort link training if failure due to sink being unplugged. */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (status == LINK_TRAINING_ABORT) {
 			enum dc_connection_type type = dc_connection_none;
 
@@ -1997,11 +2083,14 @@ bool perform_link_training_with_retries(
 			if (type == dc_connection_none)
 				break;
 		} else if (do_fallback) {
+<<<<<<< HEAD
 =======
 		if (status == LINK_TRAINING_ABORT)
 			break;
 		else if (do_fallback) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			decide_fallback_link_setting(*link_setting, &current_setting, status);
 			/* Fail link training if reduced link bandwidth no longer meets
 			 * stream requirements.
@@ -2083,10 +2172,14 @@ enum link_training_result dc_link_dp_sync_lt_attempt(
     struct dc_link_training_overrides *lt_overrides)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct link_training_settings lt_settings = {0};
 =======
 	struct link_training_settings lt_settings;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct link_training_settings lt_settings = {0};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum link_training_result lt_status = LINK_TRAINING_SUCCESS;
 	enum dp_panel_mode panel_mode = DP_PANEL_MODE_DEFAULT;
 	enum clock_source_id dp_cs_id = CLOCK_SOURCE_ID_EXTERNAL;
@@ -2094,6 +2187,9 @@ enum link_training_result dc_link_dp_sync_lt_attempt(
 
 	dp_decide_training_settings(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			link,
 			link_settings,
 			&lt_settings);
@@ -2101,6 +2197,7 @@ enum link_training_result dc_link_dp_sync_lt_attempt(
 			link,
 			lt_overrides,
 			&lt_settings);
+<<<<<<< HEAD
 =======
 		link,
 		link_settings,
@@ -2108,6 +2205,8 @@ enum link_training_result dc_link_dp_sync_lt_attempt(
 		&lt_settings);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Setup MST Mode */
 	if (lt_overrides->mst_enable)
 		set_dp_mst_mode(link, *lt_overrides->mst_enable);
@@ -3767,6 +3866,7 @@ bool dp_retrieve_lttpr_cap(struct dc_link *link)
 {
 	uint8_t lttpr_dpcd_data[6];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool vbios_lttpr_enable = link->dc->caps.vbios_lttpr_enable;
 	bool vbios_lttpr_interop = link->dc->caps.vbios_lttpr_aware;
 =======
@@ -3774,10 +3874,15 @@ bool dp_retrieve_lttpr_cap(struct dc_link *link)
 	bool vbios_lttpr_interop = false;
 	struct dc_bios *bios = link->dc->ctx->dc_bios;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool vbios_lttpr_enable = link->dc->caps.vbios_lttpr_enable;
+	bool vbios_lttpr_interop = link->dc->caps.vbios_lttpr_aware;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum dc_status status = DC_ERROR_UNEXPECTED;
 	bool is_lttpr_present = false;
 
 	memset(lttpr_dpcd_data, '\0', sizeof(lttpr_dpcd_data));
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/* Query BIOS to determine if LTTPR functionality is forced on by system */
@@ -3797,6 +3902,8 @@ bool dp_retrieve_lttpr_cap(struct dc_link *link)
 		vbios_lttpr_interop = (bp_query_result == BP_RESULT_OK) && !!is_vbios_interop_enabled;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Logic to determine LTTPR mode
@@ -4822,13 +4929,19 @@ enum dp_panel_mode dp_get_panel_mode(struct dc_link *link)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (link->dpcd_caps.panel_mode_edp &&
 		(link->connector_signal == SIGNAL_TYPE_EDP ||
 		 (link->connector_signal == SIGNAL_TYPE_DISPLAY_PORT &&
 		  link->is_internal_display))) {
+<<<<<<< HEAD
 =======
 	if (link->dpcd_caps.panel_mode_edp) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return DP_PANEL_MODE_EDP;
 	}
 
@@ -4970,6 +5083,9 @@ void dpcd_set_source_specific_data(struct dc_link *link)
 			uint8_t hblank_size = (uint8_t)link->dc->caps.min_horizontal_blanking_period;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (link->preferred_link_setting.dpcd_source_device_specific_field_support) {
 				result_write_min_hblank = core_link_write_dpcd(link,
 					DP_SOURCE_MINIMUM_HBLANK_SUPPORTED, (uint8_t *)(&hblank_size),
@@ -4980,6 +5096,7 @@ void dpcd_set_source_specific_data(struct dc_link *link)
 			} else {
 				DC_LOG_DC("Sink device does not support 00340h DPCD write. Skipping on purpose.\n");
 			}
+<<<<<<< HEAD
 		}
 
 =======
@@ -4988,6 +5105,10 @@ void dpcd_set_source_specific_data(struct dc_link *link)
 				sizeof(hblank_size));
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 							WPP_BIT_FLAG_DC_DETECTION_DP_CAPS,
 							"result=%u link_index=%u enum dce_version=%d DPCD=0x%04X min_hblank=%u branch_dev_id=0x%x branch_dev_name='%c%c%c%c%c%c'",
@@ -5108,12 +5229,16 @@ bool dc_link_set_default_brightness_aux(struct dc_link *link)
 	uint32_t default_backlight;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (link && link->dpcd_sink_ext_caps.bits.oled == 1) {
 =======
 	if (link &&
 		(link->dpcd_sink_ext_caps.bits.hdr_aux_backlight_control == 1 ||
 		link->dpcd_sink_ext_caps.bits.sdr_aux_backlight_control == 1)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (link && link->dpcd_sink_ext_caps.bits.oled == 1) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!dc_link_read_default_bl_aux(link, &default_backlight))
 			default_backlight = 150000;
 		// if < 5 nits or > 5000, it might be wrong readback

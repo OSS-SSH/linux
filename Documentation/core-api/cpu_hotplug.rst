@@ -3,6 +3,7 @@ CPU hotplug in the Kernel
 =========================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 :Date: September, 2021
 :Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
          Rusty Russell <rusty@rustcorp.com.au>,
@@ -18,6 +19,15 @@ CPU hotplug in the Kernel
           Ashok Raj <ashok.raj@intel.com>,
           Joel Schopp <jschopp@austin.ibm.com>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+:Date: September, 2021
+:Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+         Rusty Russell <rusty@rustcorp.com.au>,
+         Srivatsa Vaddagiri <vatsa@in.ibm.com>,
+         Ashok Raj <ashok.raj@intel.com>,
+         Joel Schopp <jschopp@austin.ibm.com>,
+	 Thomas Gleixner <tglx@linutronix.de>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Introduction
 ============
@@ -102,6 +112,7 @@ Never use anything other than ``cpumask_t`` to represent bitmap of CPUs.
 Using CPU hotplug
 =================
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 The kernel option *CONFIG_HOTPLUG_CPU* needs to be enabled. It is currently
 available on multiple architectures including ARM, MIPS, PowerPC and X86. The
@@ -111,6 +122,12 @@ The kernel option *CONFIG_HOTPLUG_CPU* needs to be enabled. It is currently
 available on multiple architectures including ARM, MIPS, PowerPC and X86. The
 configuration is done via the sysfs interface: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+The kernel option *CONFIG_HOTPLUG_CPU* needs to be enabled. It is currently
+available on multiple architectures including ARM, MIPS, PowerPC and X86. The
+configuration is done via the sysfs interface::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  $ ls -lh /sys/devices/system/cpu
  total 0
@@ -131,10 +148,14 @@ configuration is done via the sysfs interface: ::
 The files *offline*, *online*, *possible*, *present* represent the CPU masks.
 Each CPU folder contains an *online* file which controls the logical on (1) and
 <<<<<<< HEAD
+<<<<<<< HEAD
 off (0) state. To logically shutdown CPU4::
 =======
 off (0) state. To logically shutdown CPU4: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+off (0) state. To logically shutdown CPU4::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  $ echo 0 > /sys/devices/system/cpu/cpu4/online
   smpboot: CPU 4 is now offline
@@ -142,10 +163,14 @@ off (0) state. To logically shutdown CPU4: ::
 Once the CPU is shutdown, it will be removed from */proc/interrupts*,
 */proc/cpuinfo* and should also not be shown visible by the *top* command. To
 <<<<<<< HEAD
+<<<<<<< HEAD
 bring CPU4 back online::
 =======
 bring CPU4 back online: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bring CPU4 back online::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  $ echo 1 > /sys/devices/system/cpu/cpu4/online
  smpboot: Booting Node 0 Processor 4 APIC 0x1
@@ -168,9 +193,13 @@ The CPU hotplug coordination
 The offline case
 ----------------
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Once a CPU has been logically shutdown the teardown callbacks of registered
 hotplug states will be invoked, starting with ``CPUHP_ONLINE`` and terminating
 at state ``CPUHP_OFFLINE``. This includes:
@@ -186,6 +215,9 @@ at state ``CPUHP_OFFLINE``. This includes:
   ``__cpu_disable()`` to perform arch specific cleanup.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The CPU hotplug API
 ===================
@@ -660,6 +692,7 @@ ONLINE section for notifications on online and offline operation::
    ....
    remove_multi_state(state);
 
+<<<<<<< HEAD
 
 Testing of hotplug states
 =========================
@@ -758,6 +791,12 @@ another hotplug event.
 Testing of hotplug states
 =========================
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+Testing of hotplug states
+=========================
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 One way to verify whether a custom state is working as expected or not is to
 shutdown a CPU and then put it online again. It is also possible to put the CPU
 to certain state (for instance *CPUHP_AP_ONLINE*) and then go back to
@@ -765,10 +804,14 @@ to certain state (for instance *CPUHP_AP_ONLINE*) and then go back to
 which would lead to rollback to the online state.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 All registered states are enumerated in ``/sys/devices/system/cpu/hotplug/states`` ::
 =======
 All registered states are enumerated in ``/sys/devices/system/cpu/hotplug/states``: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+All registered states are enumerated in ``/sys/devices/system/cpu/hotplug/states`` ::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  $ tail /sys/devices/system/cpu/hotplug/states
  138: mm/vmscan:online
@@ -783,10 +826,14 @@ All registered states are enumerated in ``/sys/devices/system/cpu/hotplug/states
  169: online
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 To rollback CPU4 to ``lib/percpu_cnt:online`` and back online just issue::
 =======
 To rollback CPU4 to ``lib/percpu_cnt:online`` and back online just issue: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+To rollback CPU4 to ``lib/percpu_cnt:online`` and back online just issue::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   $ cat /sys/devices/system/cpu/cpu4/hotplug/state
   169
@@ -795,22 +842,31 @@ To rollback CPU4 to ``lib/percpu_cnt:online`` and back online just issue: ::
   140
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 It is important to note that the teardown callback of state 140 have been
 invoked. And now get back online::
 =======
 It is important to note that the teardown callbac of state 140 have been
 invoked. And now get back online: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+It is important to note that the teardown callback of state 140 have been
+invoked. And now get back online::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   $ echo 169 > /sys/devices/system/cpu/cpu4/hotplug/target
   $ cat /sys/devices/system/cpu/cpu4/hotplug/state
   169
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 With trace events enabled, the individual steps are visible, too::
 =======
 With trace events enabled, the individual steps are visible, too: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+With trace events enabled, the individual steps are visible, too::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   #  TASK-PID   CPU#    TIMESTAMP  FUNCTION
   #     | |       |        |         |
@@ -846,9 +902,13 @@ trace.
 Architecture's requirements
 ===========================
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The following functions and configurations are required:
 
 ``CONFIG_HOTPLUG_CPU``
@@ -871,6 +931,7 @@ The following functions and configurations are required:
 User Space Notification
 =======================
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 After CPU successfully onlined or offline udev events are sent. A udev rule like::
 
@@ -884,6 +945,14 @@ After CPU successfully onlined or offline udev events are sent. A udev rule like
 
 will receive all events. A script like: ::
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+After CPU successfully onlined or offline udev events are sent. A udev rule like::
+
+  SUBSYSTEM=="cpu", DRIVERS=="processor", DEVPATH=="/devices/system/cpu/*", RUN+="the_hotplug_receiver.sh"
+
+will receive all events. A script like::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   #!/bin/sh
 

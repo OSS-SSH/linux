@@ -9,9 +9,13 @@
 
 #define HCLGEVF_CMDQ_TX_TIMEOUT		30000
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HCLGEVF_CMDQ_CLEAR_WAIT_TIME	200
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HCLGEVF_CMDQ_CLEAR_WAIT_TIME	200
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGEVF_CMDQ_RX_INVLD_B		0
 #define HCLGEVF_CMDQ_RX_OUTVLD_B	1
 
@@ -270,6 +274,7 @@ struct hclgevf_cfg_tx_queue_pointer_cmd {
 #define HCLGEVF_TYPE_CRQ		0
 #define HCLGEVF_TYPE_CSQ		1
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HCLGEVF_NIC_CSQ_BASEADDR_L_REG	0x27000
 #define HCLGEVF_NIC_CSQ_BASEADDR_H_REG	0x27004
@@ -282,6 +287,8 @@ struct hclgevf_cfg_tx_queue_pointer_cmd {
 #define HCLGEVF_NIC_CRQ_TAIL_REG	0x27024
 #define HCLGEVF_NIC_CRQ_HEAD_REG	0x27028
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* this bit indicates that the driver is ready for hardware reset */
 #define HCLGEVF_NIC_SW_RST_RDY_B	16
@@ -313,14 +320,20 @@ struct hclgevf_dev_specs_1_cmd {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* capabilities bits map between imp firmware and local driver */
 struct hclgevf_caps_bit_map {
 	u16 imp_bit;
 	u16 local_bit;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void hclgevf_write_reg(void __iomem *base, u32 reg, u32 value)
 {
 	writel(value, base + reg);

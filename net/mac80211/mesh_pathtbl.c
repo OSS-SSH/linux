@@ -61,13 +61,19 @@ static struct mesh_table *mesh_table_alloc(void)
 	spin_lock_init(&newtbl->gates_lock);
 	spin_lock_init(&newtbl->walk_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rhashtable_init(&newtbl->rhead, &mesh_rht_params)) {
 		kfree(newtbl);
 		return NULL;
 	}
+<<<<<<< HEAD
 =======
 	rhashtable_init(&newtbl->rhead, &mesh_rht_params);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return newtbl;
 }

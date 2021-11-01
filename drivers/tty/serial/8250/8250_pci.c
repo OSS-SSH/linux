@@ -88,10 +88,14 @@ static void moan_device(const char *str, struct pci_dev *dev)
 static int
 setup_port(struct serial_private *priv, struct uart_8250_port *port,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	   u8 bar, unsigned int offset, int regshift)
 =======
 	   int bar, int offset, int regshift)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	   u8 bar, unsigned int offset, int regshift)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pci_dev *dev = priv->dev;
 
@@ -3841,14 +3845,20 @@ static const struct pci_device_id blacklist[] = {
 	{ PCI_VDEVICE(INTEL, 0x228a), },
 	{ PCI_VDEVICE(INTEL, 0x228c), },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ PCI_VDEVICE(INTEL, 0x4b96), },
 	{ PCI_VDEVICE(INTEL, 0x4b97), },
 	{ PCI_VDEVICE(INTEL, 0x4b98), },
 	{ PCI_VDEVICE(INTEL, 0x4b99), },
 	{ PCI_VDEVICE(INTEL, 0x4b9a), },
 	{ PCI_VDEVICE(INTEL, 0x4b9b), },
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ PCI_VDEVICE(INTEL, 0x9ce3), },
 	{ PCI_VDEVICE(INTEL, 0x9ce4), },
 
@@ -4010,9 +4020,13 @@ pciserial_init_ports(struct pci_dev *dev, const struct pciserial_board *board)
 			dev_dbg(&dev->dev, "Using MSI(-X) interrupts\n");
 			pci_set_master(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			uart.port.flags &= ~UPF_SHARE_IRQ;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			uart.port.flags &= ~UPF_SHARE_IRQ;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = pci_alloc_irq_vectors(dev, 1, 1, PCI_IRQ_ALL_TYPES);
 		} else {
 			dev_dbg(&dev->dev, "Using legacy interrupts\n");

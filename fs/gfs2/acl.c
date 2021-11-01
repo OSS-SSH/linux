@@ -58,10 +58,14 @@ static struct posix_acl *__gfs2_get_acl(struct inode *inode, int type)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct posix_acl *gfs2_get_acl(struct inode *inode, int type, bool rcu)
 =======
 struct posix_acl *gfs2_get_acl(struct inode *inode, int type)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *gfs2_get_acl(struct inode *inode, int type, bool rcu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct gfs2_inode *ip = GFS2_I(inode);
 	struct gfs2_holder gh;
@@ -69,11 +73,17 @@ struct posix_acl *gfs2_get_acl(struct inode *inode, int type)
 	struct posix_acl *acl;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!gfs2_glock_is_locked_by_me(ip->i_gl)) {
 		int ret = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED,
 					     LM_FLAG_ANY, &gh);

@@ -72,9 +72,13 @@ static int tegra186_mc_resume(struct tegra_mc *mc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_IOMMU_API)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if IS_ENABLED(CONFIG_IOMMU_API)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void tegra186_mc_client_sid_override(struct tegra_mc *mc,
 					    const struct tegra_mc_client *client,
 					    unsigned int sid)
@@ -113,9 +117,13 @@ static void tegra186_mc_client_sid_override(struct tegra_mc *mc,
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int tegra186_mc_probe_device(struct tegra_mc *mc, struct device *dev)
 {

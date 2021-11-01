@@ -9,9 +9,13 @@ Translations
 
    zh_CN/index
 <<<<<<< HEAD
+<<<<<<< HEAD
    zh_TW/index
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+   zh_TW/index
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    it_IT/index
    ko_KR/index
    ja_JP/index

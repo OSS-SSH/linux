@@ -395,6 +395,7 @@ struct txdesc_8723b {
 #define DESC8723B_RATEMCS6				0x12
 #define DESC8723B_RATEMCS7				0x13
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define DESC8723B_RATEMCS8				0x14
 #define DESC8723B_RATEMCS9				0x15
@@ -405,6 +406,8 @@ struct txdesc_8723b {
 #define DESC8723B_RATEMCS14		0x1a
 #define DESC8723B_RATEMCS15		0x1b
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define		RX_HAL_IS_CCK_RATE_8723B(pDesc)\
 			(GET_RX_STATUS_DESC_RX_RATE_8723B(pDesc) == DESC8723B_RATE1M ||\

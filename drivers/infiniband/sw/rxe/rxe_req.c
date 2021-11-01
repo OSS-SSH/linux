@@ -467,6 +467,7 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
 		       int paylen)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 
 	err = rxe_prepare(pkt, skb);
@@ -478,6 +479,11 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
 
 	err = rxe_prepare(pkt, skb, &crc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+
+	err = rxe_prepare(pkt, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -486,9 +492,12 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
 			u8 *tmp = &wqe->dma.inline_data[wqe->dma.sge_offset];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			crc = rxe_crc32(rxe, crc, tmp, paylen);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			memcpy(payload_addr(pkt), tmp, paylen);
 
 			wqe->dma.resid -= paylen;
@@ -497,11 +506,15 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
 			err = copy_data(qp->pd, 0, &wqe->dma,
 					payload_addr(pkt), paylen,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					RXE_FROM_MR_OBJ);
 =======
 					RXE_FROM_MR_OBJ,
 					&crc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					RXE_FROM_MR_OBJ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (err)
 				return err;
 		}
@@ -509,6 +522,7 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
 			u8 *pad = payload_addr(pkt) + paylen;
 
 			memset(pad, 0, bth_pad(pkt));
+<<<<<<< HEAD
 <<<<<<< HEAD
 		}
 	}
@@ -520,6 +534,10 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
 
 	*p = ~crc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

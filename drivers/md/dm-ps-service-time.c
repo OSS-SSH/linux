@@ -100,11 +100,17 @@ static int st_status(struct path_selector *ps, struct dm_path *path,
 			       pi->relative_throughput);
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case STATUSTYPE_IMA:
 			result[0] = '\0';
 			break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case STATUSTYPE_IMA:
+			result[0] = '\0';
+			break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

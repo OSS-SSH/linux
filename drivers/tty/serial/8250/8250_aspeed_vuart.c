@@ -330,9 +330,13 @@ static int aspeed_vuart_handle_irq(struct uart_port *port)
 	struct uart_8250_port *up = up_to_u8250p(port);
 	unsigned int iir, lsr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int space, count;
 
 	iir = serial_port_in(port, UART_IIR);
@@ -341,10 +345,14 @@ static int aspeed_vuart_handle_irq(struct uart_port *port)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irqsave(&port->lock, flags);
 =======
 	spin_lock(&port->lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_irqsave(&port->lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lsr = serial_port_in(port, UART_LSR);
 
@@ -379,10 +387,14 @@ static int aspeed_vuart_handle_irq(struct uart_port *port)
 		serial8250_tx_chars(up);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uart_unlock_and_check_sysrq_irqrestore(port, flags);
 =======
 	uart_unlock_and_check_sysrq(port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uart_unlock_and_check_sysrq_irqrestore(port, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 1;
 }

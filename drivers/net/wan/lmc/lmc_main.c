@@ -106,11 +106,16 @@ static void lmc_driver_timeout(struct net_device *dev, unsigned int txqueue);
  * LMCIOC* to control various bits of our world.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			      void __user *data, int cmd) /*fold00*/
 =======
 int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			      void __user *data, int cmd) /*fold00*/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
     lmc_softc_t *sc = dev_to_sc(dev);
     lmc_ctl_t ctl;
@@ -130,10 +135,14 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
          */
     case LMCIOCGINFO: /*fold01*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (copy_to_user(data, &sc->ictl, sizeof(lmc_ctl_t)))
 =======
 	if (copy_to_user(ifr->ifr_data, &sc->ictl, sizeof(lmc_ctl_t)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_to_user(data, &sc->ictl, sizeof(lmc_ctl_t)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 	else
 		ret = 0;
@@ -151,10 +160,14 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (copy_from_user(&ctl, data, sizeof(lmc_ctl_t))) {
 =======
 	if (copy_from_user(&ctl, ifr->ifr_data, sizeof(lmc_ctl_t))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_from_user(&ctl, data, sizeof(lmc_ctl_t))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 		break;
 	}
@@ -185,10 +198,14 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
 	    }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    if (copy_from_user(&new_type, data, sizeof(u16))) {
 =======
 	    if (copy_from_user(&new_type, ifr->ifr_data, sizeof(u16))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    if (copy_from_user(&new_type, data, sizeof(u16))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 		break;
 	    }
@@ -229,11 +246,15 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
         sc->lmc_xinfo.Magic1 = 0xDEADBEEF;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (copy_to_user(data, &sc->lmc_xinfo, sizeof(struct lmc_xinfo)))
 =======
         if (copy_to_user(ifr->ifr_data, &sc->lmc_xinfo,
 			 sizeof(struct lmc_xinfo)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_to_user(data, &sc->lmc_xinfo, sizeof(struct lmc_xinfo)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 	else
 		ret = 0;
@@ -267,6 +288,7 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
 	    }
 	    spin_unlock_irqrestore(&sc->lmc_lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    if (copy_to_user(data, &sc->lmc_device->stats,
 			     sizeof(sc->lmc_device->stats)) ||
 		copy_to_user(data + sizeof(sc->lmc_device->stats),
@@ -275,6 +297,11 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
 			     sizeof(sc->lmc_device->stats)) ||
 		copy_to_user(ifr->ifr_data + sizeof(sc->lmc_device->stats),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    if (copy_to_user(data, &sc->lmc_device->stats,
+			     sizeof(sc->lmc_device->stats)) ||
+		copy_to_user(data + sizeof(sc->lmc_device->stats),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     &sc->extra_stats, sizeof(sc->extra_stats)))
 		    ret = -EFAULT;
 	    else
@@ -310,10 +337,14 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (copy_from_user(&ctl, data, sizeof(lmc_ctl_t))) {
 =======
 	if (copy_from_user(&ctl, ifr->ifr_data, sizeof(lmc_ctl_t))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_from_user(&ctl, data, sizeof(lmc_ctl_t))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 		break;
 	}
@@ -346,6 +377,7 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
 #ifdef DEBUG
     case LMCIOCDUMPEVENTLOG:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (copy_to_user(data, &lmcEventLogIndex, sizeof(u32))) {
 		ret = -EFAULT;
 		break;
@@ -358,6 +390,13 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
 	}
 	if (copy_to_user(ifr->ifr_data + sizeof(u32), lmcEventLogBuf,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_to_user(data, &lmcEventLogIndex, sizeof(u32))) {
+		ret = -EFAULT;
+		break;
+	}
+	if (copy_to_user(data + sizeof(u32), lmcEventLogBuf,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 sizeof(lmcEventLogBuf)))
 		ret = -EFAULT;
 	else
@@ -386,10 +425,14 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
             netif_stop_queue(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    if (copy_from_user(&xc, data, sizeof(struct lmc_xilinx_control))) {
 =======
 	    if (copy_from_user(&xc, ifr->ifr_data, sizeof(struct lmc_xilinx_control))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    if (copy_from_user(&xc, data, sizeof(struct lmc_xilinx_control))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 		break;
 	    }
@@ -653,6 +696,7 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
         }
         break;
 <<<<<<< HEAD
+<<<<<<< HEAD
     default:
 	break;
 =======
@@ -661,6 +705,10 @@ int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
         ret = lmc_proto_ioctl (sc, ifr, cmd);
         break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    default:
+	break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     }
 
     return ret;
@@ -837,11 +885,16 @@ static const struct net_device_ops lmc_ops = {
 	.ndo_stop       = lmc_close,
 	.ndo_start_xmit = hdlc_start_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocwandev = hdlc_ioctl,
 	.ndo_siocdevprivate = lmc_siocdevprivate,
 =======
 	.ndo_do_ioctl   = lmc_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocwandev = hdlc_ioctl,
+	.ndo_siocdevprivate = lmc_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout = lmc_driver_timeout,
 	.ndo_get_stats  = lmc_get_stats,
 };

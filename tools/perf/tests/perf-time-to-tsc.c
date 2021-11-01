@@ -22,9 +22,13 @@
 #include "tests.h"
 #include "pmu.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "pmu-hybrid.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "pmu-hybrid.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CHECK__(x) {				\
 	while ((x) < 0) {			\
@@ -98,10 +102,14 @@ int test__perf_time_to_tsc(struct test *test __maybe_unused, int subtest __maybe
 	 * Init the second evsel here.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (perf_pmu__has_hybrid() && perf_pmu__hybrid_mounted("cpu_atom")) {
 =======
 	if (perf_pmu__has_hybrid()) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (perf_pmu__has_hybrid() && perf_pmu__hybrid_mounted("cpu_atom")) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		evsel = evsel__next(evsel);
 		evsel->core.attr.comm = 1;
 		evsel->core.attr.disabled = 1;

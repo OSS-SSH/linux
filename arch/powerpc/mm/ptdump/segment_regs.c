@@ -7,10 +7,14 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 =======
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void seg_show(struct seq_file *m, int i)
 {
@@ -46,6 +50,7 @@ static int sr_show(struct seq_file *m, void *v)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 DEFINE_SHOW_ATTRIBUTE(sr);
 
 static int __init sr_init(void)
@@ -68,6 +73,13 @@ static int __init sr_init(void)
 {
 	debugfs_create_file("segment_registers", 0400, powerpc_debugfs_root,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+DEFINE_SHOW_ATTRIBUTE(sr);
+
+static int __init sr_init(void)
+{
+	debugfs_create_file("segment_registers", 0400, arch_debugfs_dir,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    NULL, &sr_fops);
 	return 0;
 }

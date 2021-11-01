@@ -171,6 +171,7 @@ static int snd_card_als100_probe(int dev,
 	struct snd_opl3 *opl3;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = snd_devm_card_new(&pcard->card->dev,
 				  index[dev], id[dev], THIS_MODULE,
 				  sizeof(struct snd_card_als100), &card);
@@ -179,11 +180,17 @@ static int snd_card_als100_probe(int dev,
 			     index[dev], id[dev], THIS_MODULE,
 			     sizeof(struct snd_card_als100), &card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = snd_devm_card_new(&pcard->card->dev,
+				  index[dev], id[dev], THIS_MODULE,
+				  sizeof(struct snd_card_als100), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0)
 		return error;
 	acard = card->private_data;
 
 	error = snd_card_als100_pnp(dev, acard, pcard, pid);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (error)
 		return error;
@@ -193,6 +200,10 @@ static int snd_card_als100_probe(int dev,
 		return error;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (error)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pid->driver_data == SB_HW_DT019X)
 		dma16[dev] = -1;
@@ -203,6 +214,7 @@ static int snd_card_als100_probe(int dev,
 				  pid->driver_data,
 				  &chip);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (error < 0)
 		return error;
 =======
@@ -211,6 +223,10 @@ static int snd_card_als100_probe(int dev,
 		return error;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (error < 0)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acard->chip = chip;
 
 	if (pid->driver_data == SB_HW_DT019X) {
@@ -230,6 +246,7 @@ static int snd_card_als100_probe(int dev,
 
 	error = snd_sb16dsp_pcm(chip, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (error < 0)
 		return error;
 
@@ -239,15 +256,19 @@ static int snd_card_als100_probe(int dev,
 =======
 	if (error < 0) {
 		snd_card_free(card);
+=======
+	if (error < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
-	}
 
 	error = snd_sbmixer_new(chip);
-	if (error < 0) {
-		snd_card_free(card);
+	if (error < 0)
 		return error;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mpu_port[dev] > 0 && mpu_port[dev] != SNDRV_AUTO_PORT) {
 		int mpu_type = MPU401_HW_ALS100;
@@ -275,6 +296,7 @@ static int snd_card_als100_probe(int dev,
 		} else {
 			error = snd_opl3_timer_new(opl3, 0, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (error < 0)
 				return error;
 			error = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
@@ -283,18 +305,23 @@ static int snd_card_als100_probe(int dev,
 =======
 			if (error < 0) {
 				snd_card_free(card);
+=======
+			if (error < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return error;
-			}
 			error = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
-			if (error < 0) {
-				snd_card_free(card);
+			if (error < 0)
 				return error;
+<<<<<<< HEAD
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
 	error = snd_card_register(card);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (error < 0)
 		return error;
@@ -304,6 +331,10 @@ static int snd_card_als100_probe(int dev,
 		return error;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (error < 0)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pnp_set_card_drvdata(pcard, card);
 	return 0;
 }
@@ -330,6 +361,7 @@ static int snd_als100_pnp_detect(struct pnp_card_link *card,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void snd_als100_pnp_remove(struct pnp_card_link *pcard)
 {
@@ -338,6 +370,8 @@ static void snd_als100_pnp_remove(struct pnp_card_link *pcard)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int snd_als100_pnp_suspend(struct pnp_card_link *pcard, pm_message_t state)
 {
@@ -369,9 +403,12 @@ static struct pnp_card_driver als100_pnpc_driver = {
         .id_table       = snd_als100_pnpids,
         .probe          = snd_als100_pnp_detect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_als100_pnp_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_als100_pnp_suspend,
 	.resume		= snd_als100_pnp_resume,

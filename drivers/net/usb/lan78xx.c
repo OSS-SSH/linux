@@ -47,6 +47,9 @@
 #define MAX_RX_FIFO_SIZE		(12 * 1024)
 #define MAX_TX_FIFO_SIZE		(12 * 1024)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define FLOW_THRESHOLD(n)		((((n) + 511) / 512) & 0x7F)
 #define FLOW_CTRL_THRESHOLD(on, off)	((FLOW_THRESHOLD(on)  << 0) | \
@@ -60,8 +63,11 @@
 #define FLOW_OFF_SS			4096
 #define FLOW_OFF_HS			1024
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DEFAULT_BURST_CAP_SIZE		(MAX_TX_FIFO_SIZE)
 #define DEFAULT_BULK_IN_DELAY		(0x0800)
 #define MAX_SINGLE_PACKET_SIZE		(9000)
@@ -104,14 +110,20 @@
 #define STAT_UPDATE_TIMER		(1 * 1000)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* time to wait for MAC or FCT to stop (jiffies) */
 #define HW_DISABLE_TIMEOUT		(HZ / 10)
 
 /* time to wait between polling MAC or FCT state (ms) */
 #define HW_DISABLE_DELAY_MS		1
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* defines interrupts from interrupt EP */
 #define MAX_INT_EP			(32)
 #define INT_EP_INTEP			(31)
@@ -367,9 +379,13 @@ struct usb_context {
 #define EVENT_DEV_OPEN			8
 #define EVENT_STAT_UPDATE		9
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define EVENT_DEV_DISCONNECT		10
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define EVENT_DEV_DISCONNECT		10
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct statstage {
 	struct mutex			access_lock;	/* for stats access */
@@ -400,9 +416,12 @@ struct lan78xx_net {
 	struct sk_buff_head	txq;
 	struct sk_buff_head	done;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct sk_buff_head	rxq_pause;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sk_buff_head	txq_pend;
 
 	struct tasklet_struct	bh;
@@ -414,6 +433,7 @@ struct lan78xx_net {
 	struct usb_anchor	deferred;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mutex		dev_mutex; /* serialise open/stop wrt suspend/resume */
 	struct mutex		phy_mutex; /* for phy access */
 	unsigned int		pipe_in, pipe_out, pipe_intr;
@@ -421,6 +441,11 @@ struct lan78xx_net {
 	struct mutex		phy_mutex; /* for phy access */
 	unsigned		pipe_in, pipe_out, pipe_intr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mutex		dev_mutex; /* serialise open/stop wrt suspend/resume */
+	struct mutex		phy_mutex; /* for phy access */
+	unsigned int		pipe_in, pipe_out, pipe_intr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u32			hard_mtu;	/* count any extra framing */
 	size_t			rx_urb_size;	/* size for rx urbs */
@@ -431,11 +456,15 @@ struct lan78xx_net {
 	unsigned char		suspend_count;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int		maxpacket;
 =======
 	unsigned		maxpacket;
 	struct timer_list	delay;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int		maxpacket;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct timer_list	stat_monitor;
 
 	unsigned long		data[5];
@@ -469,6 +498,7 @@ MODULE_PARM_DESC(msg_level, "Override default message level");
 static int lan78xx_read_reg(struct lan78xx_net *dev, u32 index, u32 *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 *buf;
 	int ret;
 
@@ -481,6 +511,15 @@ static int lan78xx_read_reg(struct lan78xx_net *dev, u32 index, u32 *data)
 	int ret;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 *buf;
+	int ret;
+
+	if (test_bit(EVENT_DEV_DISCONNECT, &dev->flags))
+		return -ENODEV;
+
+	buf = kmalloc(sizeof(u32), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!buf)
 		return -ENOMEM;
 
@@ -492,10 +531,14 @@ static int lan78xx_read_reg(struct lan78xx_net *dev, u32 index, u32 *data)
 		le32_to_cpus(buf);
 		*data = *buf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (net_ratelimit()) {
 =======
 	} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (net_ratelimit()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		netdev_warn(dev->net,
 			    "Failed to read register index 0x%08x. ret = %d",
 			    index, ret);
@@ -509,6 +552,7 @@ static int lan78xx_read_reg(struct lan78xx_net *dev, u32 index, u32 *data)
 static int lan78xx_write_reg(struct lan78xx_net *dev, u32 index, u32 data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 *buf;
 	int ret;
 
@@ -521,6 +565,15 @@ static int lan78xx_write_reg(struct lan78xx_net *dev, u32 index, u32 data)
 	int ret;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 *buf;
+	int ret;
+
+	if (test_bit(EVENT_DEV_DISCONNECT, &dev->flags))
+		return -ENODEV;
+
+	buf = kmalloc(sizeof(u32), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!buf)
 		return -ENOMEM;
 
@@ -532,11 +585,16 @@ static int lan78xx_write_reg(struct lan78xx_net *dev, u32 index, u32 data)
 			      USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
 			      0, index, buf, 4, USB_CTRL_SET_TIMEOUT);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(ret < 0) &&
 	    net_ratelimit()) {
 =======
 	if (unlikely(ret < 0)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(ret < 0) &&
+	    net_ratelimit()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		netdev_warn(dev->net,
 			    "Failed to write register index 0x%08x. ret = %d",
 			    index, ret);
@@ -548,6 +606,9 @@ static int lan78xx_write_reg(struct lan78xx_net *dev, u32 index, u32 data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int lan78xx_update_reg(struct lan78xx_net *dev, u32 reg, u32 mask,
 			      u32 data)
 {
@@ -568,8 +629,11 @@ static int lan78xx_update_reg(struct lan78xx_net *dev, u32 reg, u32 mask,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int lan78xx_read_stats(struct lan78xx_net *dev,
 			      struct lan78xx_statstage *data)
 {
@@ -596,10 +660,14 @@ static int lan78xx_read_stats(struct lan78xx_net *dev,
 		src = (u32 *)stats;
 		dst = (u32 *)data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for (i = 0; i < sizeof(*stats) / sizeof(u32); i++) {
 =======
 		for (i = 0; i < sizeof(*stats)/sizeof(u32); i++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for (i = 0; i < sizeof(*stats) / sizeof(u32); i++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			le32_to_cpus(&src[i]);
 			dst[i] = src[i];
 		}
@@ -614,17 +682,23 @@ static int lan78xx_read_stats(struct lan78xx_net *dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define check_counter_rollover(struct1, dev_stats, member)		\
 	do {								\
 		if ((struct1)->member < (dev_stats).saved.member)	\
 			(dev_stats).rollover_count.member++;		\
 	} while (0)
+<<<<<<< HEAD
 =======
 #define check_counter_rollover(struct1, dev_stats, member) {	\
 	if (struct1->member < dev_stats.saved.member)		\
 		dev_stats.rollover_count.member++;		\
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void lan78xx_check_stat_rollover(struct lan78xx_net *dev,
 					struct lan78xx_statstage *stats)
@@ -951,6 +1025,7 @@ static int lan78xx_read_raw_otp(struct lan78xx_net *dev, u32 offset,
 	for (i = 0; i < length; i++) {
 		lan78xx_write_reg(dev, OTP_ADDR1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  ((offset + i) >> 8) & OTP_ADDR1_15_11);
 		lan78xx_write_reg(dev, OTP_ADDR2,
 				  ((offset + i) & OTP_ADDR2_10_3));
@@ -959,6 +1034,11 @@ static int lan78xx_read_raw_otp(struct lan78xx_net *dev, u32 offset,
 		lan78xx_write_reg(dev, OTP_ADDR2,
 					((offset + i) & OTP_ADDR2_10_3));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  ((offset + i) >> 8) & OTP_ADDR1_15_11);
+		lan78xx_write_reg(dev, OTP_ADDR2,
+				  ((offset + i) & OTP_ADDR2_10_3));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		lan78xx_write_reg(dev, OTP_FUNC_CMD, OTP_FUNC_CMD_READ_);
 		lan78xx_write_reg(dev, OTP_CMD_GO, OTP_CMD_GO_GO_);
@@ -1013,6 +1093,7 @@ static int lan78xx_write_raw_otp(struct lan78xx_net *dev, u32 offset,
 	for (i = 0; i < length; i++) {
 		lan78xx_write_reg(dev, OTP_ADDR1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  ((offset + i) >> 8) & OTP_ADDR1_15_11);
 		lan78xx_write_reg(dev, OTP_ADDR2,
 				  ((offset + i) & OTP_ADDR2_10_3));
@@ -1021,6 +1102,11 @@ static int lan78xx_write_raw_otp(struct lan78xx_net *dev, u32 offset,
 		lan78xx_write_reg(dev, OTP_ADDR2,
 					((offset + i) & OTP_ADDR2_10_3));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  ((offset + i) >> 8) & OTP_ADDR1_15_11);
+		lan78xx_write_reg(dev, OTP_ADDR2,
+				  ((offset + i) & OTP_ADDR2_10_3));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lan78xx_write_reg(dev, OTP_PRGM_DATA, data[i]);
 		lan78xx_write_reg(dev, OTP_TST_CMD, OTP_TST_CMD_PRGVRFY_);
 		lan78xx_write_reg(dev, OTP_CMD_GO, OTP_CMD_GO_GO_);
@@ -1078,10 +1164,14 @@ static int lan78xx_dataport_wait_not_busy(struct lan78xx_net *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netdev_warn(dev->net, "%s timed out", __func__);
 =======
 	netdev_warn(dev->net, "lan78xx_dataport_wait_not_busy timed out");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netdev_warn(dev->net, "%s timed out", __func__);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return -EIO;
 }
@@ -1095,10 +1185,14 @@ static int lan78xx_dataport_write(struct lan78xx_net *dev, u32 ram_select,
 
 	if (usb_autopm_get_interface(dev->intf) < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return 0;
 =======
 			return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&pdata->dataport_mutex);
 
@@ -1172,6 +1266,7 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
 		lan78xx_write_reg(dev, MAF_HI(i), 0);
 		lan78xx_write_reg(dev, MAF_LO(i),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  pdata->pfilter_table[i][1]);
 		lan78xx_write_reg(dev, MAF_HI(i),
 				  pdata->pfilter_table[i][0]);
@@ -1180,6 +1275,11 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
 		lan78xx_write_reg(dev, MAF_HI(i),
 					pdata->pfilter_table[i][0]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  pdata->pfilter_table[i][1]);
+		lan78xx_write_reg(dev, MAF_HI(i),
+				  pdata->pfilter_table[i][0]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	lan78xx_write_reg(dev, RFE_CTL, pdata->rfe_ctl);
@@ -1199,6 +1299,7 @@ static void lan78xx_set_multicast(struct net_device *netdev)
 
 	for (i = 0; i < DP_SEL_VHF_HASH_LEN; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pdata->mchash_table[i] = 0;
 
 	/* pfilter_table[0] has own HW address */
@@ -1212,6 +1313,14 @@ static void lan78xx_set_multicast(struct net_device *netdev)
 			pdata->pfilter_table[i][0] =
 			pdata->pfilter_table[i][1] = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pdata->mchash_table[i] = 0;
+
+	/* pfilter_table[0] has own HW address */
+	for (i = 1; i < NUM_OF_MAF; i++) {
+		pdata->pfilter_table[i][0] = 0;
+		pdata->pfilter_table[i][1] = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pdata->rfe_ctl |= RFE_CTL_BCAST_EN_;
@@ -1276,6 +1385,7 @@ static int lan78xx_update_flowcontrol(struct lan78xx_net *dev, u8 duplex,
 
 	if (dev->udev->speed == USB_SPEED_SUPER)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fct_flow = FLOW_CTRL_THRESHOLD(FLOW_ON_SS, FLOW_OFF_SS);
 	else if (dev->udev->speed == USB_SPEED_HIGH)
 		fct_flow = FLOW_CTRL_THRESHOLD(FLOW_ON_HS, FLOW_OFF_HS);
@@ -1284,6 +1394,11 @@ static int lan78xx_update_flowcontrol(struct lan78xx_net *dev, u8 duplex,
 	else if (dev->udev->speed == USB_SPEED_HIGH)
 		fct_flow = 0x211;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fct_flow = FLOW_CTRL_THRESHOLD(FLOW_ON_SS, FLOW_OFF_SS);
+	else if (dev->udev->speed == USB_SPEED_HIGH)
+		fct_flow = FLOW_CTRL_THRESHOLD(FLOW_ON_HS, FLOW_OFF_HS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	netif_dbg(dev, link, dev->net, "rx pause %s, tx pause %s",
 		  (cap & FLOW_CTRL_RX ? "enabled" : "disabled"),
@@ -1298,6 +1413,9 @@ static int lan78xx_update_flowcontrol(struct lan78xx_net *dev, u8 duplex,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int lan78xx_mac_reset(struct lan78xx_net *dev)
 {
 	unsigned long start_time = jiffies;
@@ -1344,22 +1462,30 @@ done:
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int lan78xx_link_reset(struct lan78xx_net *dev)
 {
 	struct phy_device *phydev = dev->net->phydev;
 	struct ethtool_link_ksettings ecmd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ladv, radv, ret, link;
 =======
 	int ladv, radv, ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ladv, radv, ret, link;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 buf;
 
 	/* clear LAN78xx interrupt status */
 	ret = lan78xx_write_reg(dev, INT_STS, INT_STS_PHY_INT_);
 	if (unlikely(ret < 0))
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return ret;
 
@@ -1380,24 +1506,30 @@ static int lan78xx_link_reset(struct lan78xx_net *dev)
 	} else if (link && !dev->link_on) {
 =======
 		return -EIO;
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	mutex_lock(&phydev->lock);
 	phy_read_status(phydev);
+	link = phydev->link;
+	mutex_unlock(&phydev->lock);
 
-	if (!phydev->link && dev->link_on) {
+	if (!link && dev->link_on) {
 		dev->link_on = false;
 
 		/* reset MAC */
-		ret = lan78xx_read_reg(dev, MAC_CR, &buf);
-		if (unlikely(ret < 0))
-			return -EIO;
-		buf |= MAC_CR_RST_;
-		ret = lan78xx_write_reg(dev, MAC_CR, buf);
-		if (unlikely(ret < 0))
-			return -EIO;
+		ret = lan78xx_mac_reset(dev);
+		if (ret < 0)
+			return ret;
 
 		del_timer(&dev->stat_monitor);
+<<<<<<< HEAD
 	} else if (phydev->link && !dev->link_on) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (link && !dev->link_on) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev->link_on = true;
 
 		phy_ethtool_ksettings_get(phydev, &ecmd);
@@ -1406,6 +1538,7 @@ static int lan78xx_link_reset(struct lan78xx_net *dev)
 			if (ecmd.base.speed == 1000) {
 				/* disable U2 */
 				ret = lan78xx_read_reg(dev, USB_CFG1, &buf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 				if (ret < 0)
 					return ret;
@@ -1432,19 +1565,36 @@ static int lan78xx_link_reset(struct lan78xx_net *dev)
 				if (ret < 0)
 					return ret;
 =======
+=======
+				if (ret < 0)
+					return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				buf &= ~USB_CFG1_DEV_U2_INIT_EN_;
 				ret = lan78xx_write_reg(dev, USB_CFG1, buf);
+				if (ret < 0)
+					return ret;
 				/* enable U1 */
 				ret = lan78xx_read_reg(dev, USB_CFG1, &buf);
+				if (ret < 0)
+					return ret;
 				buf |= USB_CFG1_DEV_U1_INIT_EN_;
 				ret = lan78xx_write_reg(dev, USB_CFG1, buf);
+				if (ret < 0)
+					return ret;
 			} else {
 				/* enable U1 & U2 */
 				ret = lan78xx_read_reg(dev, USB_CFG1, &buf);
+				if (ret < 0)
+					return ret;
 				buf |= USB_CFG1_DEV_U2_INIT_EN_;
 				buf |= USB_CFG1_DEV_U1_INIT_EN_;
 				ret = lan78xx_write_reg(dev, USB_CFG1, buf);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (ret < 0)
+					return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 
@@ -1463,10 +1613,15 @@ static int lan78xx_link_reset(struct lan78xx_net *dev)
 		ret = lan78xx_update_flowcontrol(dev, ecmd.base.duplex, ladv,
 						 radv);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret < 0)
 			return ret;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret < 0)
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!timer_pending(&dev->stat_monitor)) {
 			dev->delta = 1;
@@ -1478,10 +1633,14 @@ static int lan78xx_link_reset(struct lan78xx_net *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* some work can't be done in tasklets, so we use keventd
@@ -1518,6 +1677,7 @@ static void lan78xx_status(struct lan78xx_net *dev, struct urb *urb)
 			local_irq_enable();
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else {
 		netdev_warn(dev->net,
 			    "unexpected interrupt: 0x%08x\n", intdata);
@@ -1527,6 +1687,12 @@ static void lan78xx_status(struct lan78xx_net *dev, struct urb *urb)
 		netdev_warn(dev->net,
 			    "unexpected interrupt: 0x%08x\n", intdata);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else {
+		netdev_warn(dev->net,
+			    "unexpected interrupt: 0x%08x\n", intdata);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lan78xx_ethtool_get_eeprom_len(struct net_device *netdev)
@@ -1616,10 +1782,14 @@ static void lan78xx_get_wol(struct net_device *netdev,
 
 	if (usb_autopm_get_interface(dev->intf) < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return;
 =======
 			return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = lan78xx_read_reg(dev, USB_CFG0, &buf);
 	if (unlikely(ret < 0)) {
@@ -1734,6 +1904,7 @@ static int lan78xx_set_eee(struct net_device *net, struct ethtool_eee *edata)
 static u32 lan78xx_get_link(struct net_device *net)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 link;
 
 	mutex_lock(&net->phydev->lock);
@@ -1743,10 +1914,21 @@ static u32 lan78xx_get_link(struct net_device *net)
 
 	return link;
 =======
-	phy_read_status(net->phydev);
+=======
+	u32 link;
 
+	mutex_lock(&net->phydev->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	phy_read_status(net->phydev);
+	link = net->phydev->link;
+	mutex_unlock(&net->phydev->lock);
+
+<<<<<<< HEAD
 	return net->phydev->link;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return link;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void lan78xx_get_drvinfo(struct net_device *net,
@@ -2274,10 +2456,14 @@ static int lan8835_fixup(struct phy_device *phydev)
 	/* RGMII MAC TXC Delay Enable */
 	lan78xx_write_reg(dev, MAC_RGMII_ID,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  MAC_RGMII_ID_TXC_DELAY_EN_);
 =======
 				MAC_RGMII_ID_TXC_DELAY_EN_);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  MAC_RGMII_ID_TXC_DELAY_EN_);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* RGMII TX DLL Tune Adjust */
 	lan78xx_write_reg(dev, RGMII_TX_BYP_DLL, 0x3D00);
@@ -2542,21 +2728,31 @@ static int lan78xx_change_mtu(struct net_device *netdev, int new_mtu)
 	int old_hard_mtu = dev->hard_mtu;
 	int old_rx_urb_size = dev->rx_urb_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* no second zero-length packet read wanted after mtu-sized packets */
 	if ((ll_mtu % dev->maxpacket) == 0)
 		return -EDOM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = usb_autopm_get_interface(dev->intf);
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lan78xx_set_rx_max_frame_length(dev, new_mtu + VLAN_ETH_HLEN);
 
 	netdev->mtu = new_mtu;
@@ -2573,10 +2769,15 @@ static int lan78xx_change_mtu(struct net_device *netdev, int new_mtu)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usb_autopm_put_interface(dev->intf);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	usb_autopm_put_interface(dev->intf);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2734,6 +2935,9 @@ static void lan78xx_init_ltm(struct lan78xx_net *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int lan78xx_start_hw(struct lan78xx_net *dev, u32 reg, u32 hw_enable)
 {
 	return lan78xx_update_reg(dev, reg, hw_enable, hw_enable);
@@ -2884,6 +3088,7 @@ static int lan78xx_flush_rx_fifo(struct lan78xx_net *dev)
 	return lan78xx_flush_fifo(dev, FCT_RX_CTL, FCT_RX_CTL_RST_);
 }
 
+<<<<<<< HEAD
 static int lan78xx_reset(struct lan78xx_net *dev)
 {
 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
@@ -2902,23 +3107,35 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 	if (ret < 0)
 		return ret;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int lan78xx_reset(struct lan78xx_net *dev)
 {
 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
-	u32 buf;
-	int ret = 0;
 	unsigned long timeout;
+	int ret;
+	u32 buf;
 	u8 sig;
 
 	ret = lan78xx_read_reg(dev, HW_CFG, &buf);
+	if (ret < 0)
+		return ret;
+
 	buf |= HW_CFG_LRST_;
+
 	ret = lan78xx_write_reg(dev, HW_CFG, buf);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	timeout = jiffies + HZ;
 	do {
 		mdelay(1);
 		ret = lan78xx_read_reg(dev, HW_CFG, &buf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (ret < 0)
 			return ret;
@@ -2934,6 +3151,16 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 				    "timeout on completion of LiteReset");
 			return -EIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret < 0)
+			return ret;
+
+		if (time_after(jiffies, timeout)) {
+			netdev_warn(dev->net,
+				    "timeout on completion of LiteReset");
+			ret = -ETIMEDOUT;
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} while (buf & HW_CFG_LRST_);
 
@@ -2942,16 +3169,23 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 	/* save DEVID for later usage */
 	ret = lan78xx_read_reg(dev, ID_REV, &buf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 		return ret;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev->chipid = (buf & ID_REV_CHIP_ID_MASK_) >> 16;
 	dev->chiprev = buf & ID_REV_CHIP_REV_MASK_;
 
 	/* Respond to the IN token with a NAK */
 	ret = lan78xx_read_reg(dev, USB_CFG0, &buf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret < 0)
 		return ret;
@@ -2962,9 +3196,20 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 	if (ret < 0)
 		return ret;
 =======
+=======
+	if (ret < 0)
+		return ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	buf |= USB_CFG_BIR_;
+
 	ret = lan78xx_write_reg(dev, USB_CFG0, buf);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Init LTM */
 	lan78xx_init_ltm(dev);
@@ -2988,6 +3233,9 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 
 	ret = lan78xx_write_reg(dev, BURST_CAP, buf);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -3017,6 +3265,7 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 
 	/* set FIFO sizes */
 	buf = (MAX_RX_FIFO_SIZE - 512) / 512;
+<<<<<<< HEAD
 
 	ret = lan78xx_write_reg(dev, FCT_RX_FIFO_END, buf);
 	if (ret < 0)
@@ -3071,25 +3320,57 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 	ret = lan78xx_write_reg(dev, FCT_RX_FIFO_END, buf);
 
 	buf = (MAX_TX_FIFO_SIZE - 512) / 512;
+=======
+
+	ret = lan78xx_write_reg(dev, FCT_RX_FIFO_END, buf);
+	if (ret < 0)
+		return ret;
+
+	buf = (MAX_TX_FIFO_SIZE - 512) / 512;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = lan78xx_write_reg(dev, FCT_TX_FIFO_END, buf);
+	if (ret < 0)
+		return ret;
 
 	ret = lan78xx_write_reg(dev, INT_STS, INT_STS_CLEAR_ALL_);
+	if (ret < 0)
+		return ret;
+
 	ret = lan78xx_write_reg(dev, FLOW, 0);
+	if (ret < 0)
+		return ret;
+
 	ret = lan78xx_write_reg(dev, FCT_FLOW, 0);
+	if (ret < 0)
+		return ret;
 
 	/* Don't need rfe_ctl_lock during initialisation */
 	ret = lan78xx_read_reg(dev, RFE_CTL, &pdata->rfe_ctl);
+	if (ret < 0)
+		return ret;
+
 	pdata->rfe_ctl |= RFE_CTL_BCAST_EN_ | RFE_CTL_DA_PERFECT_;
+
 	ret = lan78xx_write_reg(dev, RFE_CTL, pdata->rfe_ctl);
+	if (ret < 0)
+		return ret;
 
 	/* Enable or disable checksum offload engines */
+<<<<<<< HEAD
 	lan78xx_set_features(dev->net, dev->net->features);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = lan78xx_set_features(dev->net, dev->net->features);
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lan78xx_set_multicast(dev->net);
 
 	/* reset PHY */
 	ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret < 0)
 		return ret;
@@ -3100,14 +3381,26 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 	if (ret < 0)
 		return ret;
 =======
+=======
+	if (ret < 0)
+		return ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	buf |= PMT_CTL_PHY_RST_;
+
 	ret = lan78xx_write_reg(dev, PMT_CTL, buf);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	timeout = jiffies + HZ;
 	do {
 		mdelay(1);
 		ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (ret < 0)
 			return ret;
@@ -3121,16 +3414,31 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 			netdev_warn(dev->net, "timeout waiting for PHY Reset");
 			return -EIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret < 0)
+			return ret;
+
+		if (time_after(jiffies, timeout)) {
+			netdev_warn(dev->net, "timeout waiting for PHY Reset");
+			ret = -ETIMEDOUT;
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} while ((buf & PMT_CTL_PHY_RST_) || !(buf & PMT_CTL_READY_));
 
 	ret = lan78xx_read_reg(dev, MAC_CR, &buf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret < 0)
 		return ret;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* LAN7801 only has RGMII mode */
 	if (dev->chipid == ID_REV_CHIP_ID_7801_)
 		buf &= ~MAC_CR_GMII_EN_;
@@ -3145,6 +3453,7 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 	}
 	ret = lan78xx_write_reg(dev, MAC_CR, buf);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 		return ret;
 =======
@@ -3157,10 +3466,15 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 	buf |= FCT_TX_CTL_EN_;
 	ret = lan78xx_write_reg(dev, FCT_TX_CTL, buf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = lan78xx_set_rx_max_frame_length(dev,
 					      dev->net->mtu + VLAN_ETH_HLEN);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return ret;
 =======
@@ -3174,6 +3488,9 @@ static int lan78xx_reset(struct lan78xx_net *dev)
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void lan78xx_init_stats(struct lan78xx_net *dev)
@@ -3208,6 +3525,7 @@ static int lan78xx_open(struct net_device *net)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netif_dbg(dev, ifup, dev->net, "open device");
 
 	ret = usb_autopm_get_interface(dev->intf);
@@ -3220,6 +3538,15 @@ static int lan78xx_open(struct net_device *net)
 	if (ret < 0)
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netif_dbg(dev, ifup, dev->net, "open device");
+
+	ret = usb_autopm_get_interface(dev->intf);
+	if (ret < 0)
+		return ret;
+
+	mutex_lock(&dev->dev_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	phy_start(net->phydev);
 
@@ -3236,6 +3563,9 @@ static int lan78xx_open(struct net_device *net)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = lan78xx_flush_rx_fifo(dev);
 	if (ret < 0)
 		goto done;
@@ -3250,8 +3580,11 @@ static int lan78xx_open(struct net_device *net)
 	if (ret < 0)
 		goto done;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lan78xx_init_stats(dev);
 
 	set_bit(EVENT_DEV_OPEN, &dev->flags);
@@ -3263,6 +3596,7 @@ static int lan78xx_open(struct net_device *net)
 	lan78xx_defer_kevent(dev, EVENT_LINK_RESET);
 done:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&dev->dev_mutex);
 
 	usb_autopm_put_interface(dev->intf);
@@ -3272,6 +3606,12 @@ done:
 
 out:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&dev->dev_mutex);
+
+	usb_autopm_put_interface(dev->intf);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -3289,6 +3629,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
 
 	/* maybe wait for deletions to finish. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (!skb_queue_empty(&dev->rxq) ||
 	       !skb_queue_empty(&dev->txq)) {
 		schedule_timeout(msecs_to_jiffies(UNLINK_TIMEOUT_MS));
@@ -3304,11 +3645,22 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
 		netif_dbg(dev, ifdown, dev->net,
 			  "waited for %d urb completions\n", temp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (!skb_queue_empty(&dev->rxq) ||
+	       !skb_queue_empty(&dev->txq)) {
+		schedule_timeout(msecs_to_jiffies(UNLINK_TIMEOUT_MS));
+		set_current_state(TASK_UNINTERRUPTIBLE);
+		netif_dbg(dev, ifdown, dev->net,
+			  "waited for %d urb completions", temp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	set_current_state(TASK_RUNNING);
 	dev->wait = NULL;
 	remove_wait_queue(&unlink_wakeup, &wait);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (!skb_queue_empty(&dev->done)) {
 		struct skb_data *entry;
@@ -3319,8 +3671,11 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
 		usb_free_urb(entry->urb);
 		dev_kfree_skb(skb);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lan78xx_stop(struct net_device *net)
@@ -3328,10 +3683,14 @@ static int lan78xx_stop(struct net_device *net)
 	struct lan78xx_net *dev = netdev_priv(net);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netif_dbg(dev, ifup, dev->net, "stop device");
 
 	mutex_lock(&dev->dev_mutex);
 
+<<<<<<< HEAD
 	if (timer_pending(&dev->stat_monitor))
 		del_timer_sync(&dev->stat_monitor);
 
@@ -3341,21 +3700,27 @@ static int lan78xx_stop(struct net_device *net)
 
 	lan78xx_terminate_urbs(dev);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (timer_pending(&dev->stat_monitor))
 		del_timer_sync(&dev->stat_monitor);
 
-	if (net->phydev)
-		phy_stop(net->phydev);
-
 	clear_bit(EVENT_DEV_OPEN, &dev->flags);
 	netif_stop_queue(net);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tasklet_kill(&dev->bh);
+
+	lan78xx_terminate_urbs(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	netif_info(dev, ifdown, dev->net,
 		   "stop stats: rx/tx %lu/%lu, errs %lu/%lu\n",
 		   net->stats.rx_packets, net->stats.tx_packets,
 		   net->stats.rx_errors, net->stats.tx_errors);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* ignore errors that occur stopping the Tx and Rx data paths */
 	lan78xx_stop_tx_path(dev);
@@ -3368,10 +3733,16 @@ static int lan78xx_stop(struct net_device *net)
 
 =======
 	lan78xx_terminate_urbs(dev);
+=======
+	/* ignore errors that occur stopping the Tx and Rx data paths */
+	lan78xx_stop_tx_path(dev);
+	lan78xx_stop_rx_path(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	if (net->phydev)
+		phy_stop(net->phydev);
 
 	usb_kill_urb(dev->urb_intr);
-
-	skb_queue_purge(&dev->rxq_pause);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* deferred work (task, timer, softirq) must also stop.
@@ -3379,11 +3750,15 @@ static int lan78xx_stop(struct net_device *net)
 	 * else workers could deadlock; so make workers a NOP.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clear_bit(EVENT_TX_HALT, &dev->flags);
 	clear_bit(EVENT_RX_HALT, &dev->flags);
 	clear_bit(EVENT_LINK_RESET, &dev->flags);
 	clear_bit(EVENT_STAT_UPDATE, &dev->flags);
 
+<<<<<<< HEAD
 	cancel_delayed_work_sync(&dev->wq);
 
 	usb_autopm_put_interface(dev->intf);
@@ -3392,12 +3767,18 @@ static int lan78xx_stop(struct net_device *net)
 
 =======
 	dev->flags = 0;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cancel_delayed_work_sync(&dev->wq);
-	tasklet_kill(&dev->bh);
 
 	usb_autopm_put_interface(dev->intf);
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&dev->dev_mutex);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3487,17 +3868,24 @@ static void tx_complete(struct urb *urb)
 		case -ECONNRESET:
 		case -ESHUTDOWN:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			netif_dbg(dev, tx_err, dev->net,
 				  "tx err interface gone %d\n",
 				  entry->urb->status);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			netif_dbg(dev, tx_err, dev->net,
+				  "tx err interface gone %d\n",
+				  entry->urb->status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 
 		case -EPROTO:
 		case -ETIME:
 		case -EILSEQ:
 			netif_stop_queue(dev->net);
+<<<<<<< HEAD
 <<<<<<< HEAD
 			netif_dbg(dev, tx_err, dev->net,
 				  "tx err queue stopped %d\n",
@@ -3513,6 +3901,16 @@ static void tx_complete(struct urb *urb)
 			netif_dbg(dev, tx_err, dev->net,
 				  "tx err %d\n", entry->urb->status);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			netif_dbg(dev, tx_err, dev->net,
+				  "tx err queue stopped %d\n",
+				  entry->urb->status);
+			break;
+		default:
+			netif_dbg(dev, tx_err, dev->net,
+				  "unknown tx err %d\n",
+				  entry->urb->status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 	}
@@ -3538,11 +3936,17 @@ lan78xx_start_xmit(struct sk_buff *skb, struct net_device *net)
 	struct sk_buff *skb2 = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (test_bit(EVENT_DEV_ASLEEP, &dev->flags))
 		schedule_delayed_work(&dev->wq, 0);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (test_bit(EVENT_DEV_ASLEEP, &dev->flags))
+		schedule_delayed_work(&dev->wq, 0);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (skb) {
 		skb_tx_timestamp(skb);
 		skb2 = lan78xx_tx_prep(dev, skb, GFP_ATOMIC);
@@ -3703,6 +4107,7 @@ static void lan78xx_skb_return(struct lan78xx_net *dev, struct sk_buff *skb)
 	int status;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (test_bit(EVENT_RX_PAUSED, &dev->flags)) {
 		skb_queue_tail(&dev->rxq_pause, skb);
@@ -3710,6 +4115,8 @@ static void lan78xx_skb_return(struct lan78xx_net *dev, struct sk_buff *skb)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev->net->stats.rx_packets++;
 	dev->net->stats.rx_bytes += skb->len;
 
@@ -3858,9 +4265,13 @@ static int rx_submit(struct lan78xx_net *dev, struct urb *urb, gfp_t flags)
 			break;
 		case -ENODEV:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case -ENOENT:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case -ENOENT:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			netif_dbg(dev, ifdown, dev->net, "device gone\n");
 			netif_device_detach(dev->net);
 			break;
@@ -4062,14 +4473,20 @@ gso_skb:
 		usb_autopm_put_interface_async(dev->intf);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case -ENODEV:
 	case -ENOENT:
 		netif_dbg(dev, tx_err, dev->net,
 			  "tx: submit urb err %d (disconnected?)", ret);
 		netif_device_detach(dev->net);
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		usb_autopm_put_interface_async(dev->intf);
 		netif_dbg(dev, tx_err, dev->net,
@@ -4087,6 +4504,7 @@ drop:
 			dev_kfree_skb_any(skb);
 		usb_free_urb(urb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else {
 		netif_dbg(dev, tx_queued, dev->net,
 			  "> tx, len %d, type 0x%x\n", length, skb->protocol);
@@ -4096,6 +4514,12 @@ drop:
 		netif_dbg(dev, tx_queued, dev->net,
 			  "> tx, len %d, type 0x%x\n", length, skb->protocol);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else {
+		netif_dbg(dev, tx_queued, dev->net,
+			  "> tx, len %d, type 0x%x\n", length, skb->protocol);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void lan78xx_rx_bh(struct lan78xx_net *dev)
@@ -4159,11 +4583,15 @@ static void lan78xx_bh(struct tasklet_struct *t)
 			lan78xx_tx_bh(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!test_bit(EVENT_RX_HALT, &dev->flags))
 =======
 		if (!timer_pending(&dev->delay) &&
 		    !test_bit(EVENT_RX_HALT, &dev->flags))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!test_bit(EVENT_RX_HALT, &dev->flags))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			lan78xx_rx_bh(dev);
 	}
 }
@@ -4176,33 +4604,43 @@ static void lan78xx_delayedwork(struct work_struct *work)
 	dev = container_of(work, struct lan78xx_net, wq.work);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test_bit(EVENT_DEV_DISCONNECT, &dev->flags))
 		return;
 
 	if (usb_autopm_get_interface(dev->intf) < 0)
 		return;
 
+<<<<<<< HEAD
 	if (test_bit(EVENT_TX_HALT, &dev->flags)) {
 		unlink_urbs(dev, &dev->txq);
 
 		status = usb_clear_halt(dev->udev, dev->pipe_out);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test_bit(EVENT_TX_HALT, &dev->flags)) {
 		unlink_urbs(dev, &dev->txq);
-		status = usb_autopm_get_interface(dev->intf);
-		if (status < 0)
-			goto fail_pipe;
+
 		status = usb_clear_halt(dev->udev, dev->pipe_out);
+<<<<<<< HEAD
 		usb_autopm_put_interface(dev->intf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (status < 0 &&
 		    status != -EPIPE &&
 		    status != -ESHUTDOWN) {
 			if (netif_msg_tx_err(dev))
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 fail_pipe:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				netdev_err(dev->net,
 					   "can't clear tx halt, status %d\n",
 					   status);
@@ -4213,27 +4651,34 @@ fail_pipe:
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (test_bit(EVENT_RX_HALT, &dev->flags)) {
 		unlink_urbs(dev, &dev->rxq);
 		status = usb_clear_halt(dev->udev, dev->pipe_in);
 =======
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test_bit(EVENT_RX_HALT, &dev->flags)) {
 		unlink_urbs(dev, &dev->rxq);
-		status = usb_autopm_get_interface(dev->intf);
-		if (status < 0)
-				goto fail_halt;
 		status = usb_clear_halt(dev->udev, dev->pipe_in);
+<<<<<<< HEAD
 		usb_autopm_put_interface(dev->intf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (status < 0 &&
 		    status != -EPIPE &&
 		    status != -ESHUTDOWN) {
 			if (netif_msg_rx_err(dev))
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 fail_halt:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				netdev_err(dev->net,
 					   "can't clear rx halt, status %d\n",
 					   status);
@@ -4248,6 +4693,7 @@ fail_halt:
 
 		clear_bit(EVENT_LINK_RESET, &dev->flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (lan78xx_link_reset(dev) < 0) {
 			netdev_info(dev->net, "link reset failed (%d)\n",
 				    ret);
@@ -4255,14 +4701,17 @@ fail_halt:
 		status = usb_autopm_get_interface(dev->intf);
 		if (status < 0)
 			goto skip_reset;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (lan78xx_link_reset(dev) < 0) {
-			usb_autopm_put_interface(dev->intf);
-skip_reset:
 			netdev_info(dev->net, "link reset failed (%d)\n",
 				    ret);
+<<<<<<< HEAD
 		} else {
 			usb_autopm_put_interface(dev->intf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -4277,10 +4726,15 @@ skip_reset:
 		dev->delta = min((dev->delta * 2), 50);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	usb_autopm_put_interface(dev->intf);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	usb_autopm_put_interface(dev->intf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void intr_complete(struct urb *urb)
@@ -4297,9 +4751,13 @@ static void intr_complete(struct urb *urb)
 	/* software-driven interface shutdown */
 	case -ENOENT:			/* urb killed */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case -ENODEV:			/* hardware gone */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case -ENODEV:			/* hardware gone */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case -ESHUTDOWN:		/* hardware gone */
 		netif_dbg(dev, ifdown, dev->net,
 			  "intr shutdown, code %d\n", status);
@@ -4313,6 +4771,7 @@ static void intr_complete(struct urb *urb)
 		break;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!netif_device_present(dev->net) ||
 	    !netif_running(dev->net)) {
@@ -4339,14 +4798,35 @@ static void intr_complete(struct urb *urb)
 	}
 =======
 	if (!netif_running(dev->net))
+=======
+	if (!netif_device_present(dev->net) ||
+	    !netif_running(dev->net)) {
+		netdev_warn(dev->net, "not submitting new status URB");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
+	}
 
 	memset(urb->transfer_buffer, 0, urb->transfer_buffer_length);
 	status = usb_submit_urb(urb, GFP_ATOMIC);
-	if (status != 0)
+
+	switch (status) {
+	case  0:
+		break;
+	case -ENODEV:
+	case -ENOENT:
+		netif_dbg(dev, timer, dev->net,
+			  "intr resubmit %d (disconnect?)", status);
+		netif_device_detach(dev->net);
+		break;
+	default:
 		netif_err(dev, timer, dev->net,
 			  "intr resubmit --> %d\n", status);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void lan78xx_disconnect(struct usb_interface *intf)
@@ -4362,6 +4842,9 @@ static void lan78xx_disconnect(struct usb_interface *intf)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	set_bit(EVENT_DEV_DISCONNECT, &dev->flags);
 
 	udev = interface_to_usbdev(intf);
@@ -4371,10 +4854,13 @@ static void lan78xx_disconnect(struct usb_interface *intf)
 
 	cancel_delayed_work_sync(&dev->wq);
 
+<<<<<<< HEAD
 =======
 	udev = interface_to_usbdev(intf);
 	net = dev->net;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phydev = net->phydev;
 
 	phy_unregister_fixup_for_uid(PHY_KSZ9031RNX, 0xfffffff0);
@@ -4386,6 +4872,7 @@ static void lan78xx_disconnect(struct usb_interface *intf)
 		fixed_phy_unregister(phydev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usb_scuttle_anchored_urbs(&dev->deferred);
 
 	if (timer_pending(&dev->stat_monitor))
@@ -4395,8 +4882,13 @@ static void lan78xx_disconnect(struct usb_interface *intf)
 
 	cancel_delayed_work_sync(&dev->wq);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_scuttle_anchored_urbs(&dev->deferred);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	if (timer_pending(&dev->stat_monitor))
+		del_timer_sync(&dev->stat_monitor);
 
 	lan78xx_unbind(dev, intf);
 
@@ -4437,10 +4929,14 @@ static const struct net_device_ops lan78xx_netdev_ops = {
 	.ndo_set_mac_address	= lan78xx_set_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= phy_do_ioctl_running,
 =======
 	.ndo_do_ioctl		= phy_do_ioctl_running,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= phy_do_ioctl_running,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode	= lan78xx_set_multicast,
 	.ndo_set_features	= lan78xx_set_features,
 	.ndo_vlan_rx_add_vid	= lan78xx_vlan_rx_add_vid,
@@ -4464,12 +4960,17 @@ static int lan78xx_probe(struct usb_interface *intf,
 	struct usb_device *udev;
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int maxp;
 	unsigned int period;
 =======
 	unsigned maxp;
 	unsigned period;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int maxp;
+	unsigned int period;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 *buf = NULL;
 
 	udev = interface_to_usbdev(intf);
@@ -4496,6 +4997,7 @@ static int lan78xx_probe(struct usb_interface *intf,
 	skb_queue_head_init(&dev->txq);
 	skb_queue_head_init(&dev->done);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb_queue_head_init(&dev->txq_pend);
 	mutex_init(&dev->phy_mutex);
 	mutex_init(&dev->dev_mutex);
@@ -4504,6 +5006,11 @@ static int lan78xx_probe(struct usb_interface *intf,
 	skb_queue_head_init(&dev->txq_pend);
 	mutex_init(&dev->phy_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	skb_queue_head_init(&dev->txq_pend);
+	mutex_init(&dev->phy_mutex);
+	mutex_init(&dev->dev_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tasklet_setup(&dev->bh, lan78xx_bh);
 	INIT_DELAYED_WORK(&dev->wq, lan78xx_delayedwork);
@@ -4650,6 +5157,7 @@ static u16 lan78xx_wakeframe_crc16(const u8 *buf, int len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int lan78xx_set_auto_suspend(struct lan78xx_net *dev)
 {
 	u32 buf;
@@ -4748,37 +5256,125 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		return ret;
 =======
 static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
+=======
+static int lan78xx_set_auto_suspend(struct lan78xx_net *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 buf;
-	int mask_index;
-	u16 crc;
-	u32 temp_wucsr;
-	u32 temp_pmt_ctl;
+	int ret;
+
+	ret = lan78xx_stop_tx_path(dev);
+	if (ret < 0)
+		return ret;
+
+	ret = lan78xx_stop_rx_path(dev);
+	if (ret < 0)
+		return ret;
+
+	/* auto suspend (selective suspend) */
+
+	ret = lan78xx_write_reg(dev, WUCSR, 0);
+	if (ret < 0)
+		return ret;
+	ret = lan78xx_write_reg(dev, WUCSR2, 0);
+	if (ret < 0)
+		return ret;
+	ret = lan78xx_write_reg(dev, WK_SRC, 0xFFF1FF1FUL);
+	if (ret < 0)
+		return ret;
+
+	/* set goodframe wakeup */
+
+	ret = lan78xx_read_reg(dev, WUCSR, &buf);
+	if (ret < 0)
+		return ret;
+
+	buf |= WUCSR_RFE_WAKE_EN_;
+	buf |= WUCSR_STORE_WAKE_;
+
+	ret = lan78xx_write_reg(dev, WUCSR, buf);
+	if (ret < 0)
+		return ret;
+
+	ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
+	if (ret < 0)
+		return ret;
+
+	buf &= ~PMT_CTL_RES_CLR_WKP_EN_;
+	buf |= PMT_CTL_RES_CLR_WKP_STS_;
+	buf |= PMT_CTL_PHY_WAKE_EN_;
+	buf |= PMT_CTL_WOL_EN_;
+	buf &= ~PMT_CTL_SUS_MODE_MASK_;
+	buf |= PMT_CTL_SUS_MODE_3_;
+
+	ret = lan78xx_write_reg(dev, PMT_CTL, buf);
+	if (ret < 0)
+		return ret;
+
+	ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
+	if (ret < 0)
+		return ret;
+
+	buf |= PMT_CTL_WUPS_MASK_;
+
+	ret = lan78xx_write_reg(dev, PMT_CTL, buf);
+	if (ret < 0)
+		return ret;
+
+	ret = lan78xx_start_rx_path(dev);
+
+	return ret;
+}
+
+static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
+{
 	const u8 ipv4_multicast[3] = { 0x01, 0x00, 0x5E };
 	const u8 ipv6_multicast[3] = { 0x33, 0x33 };
 	const u8 arp_type[2] = { 0x08, 0x06 };
+	u32 temp_pmt_ctl;
+	int mask_index;
+	u32 temp_wucsr;
+	u32 buf;
+	u16 crc;
+	int ret;
 
-	lan78xx_read_reg(dev, MAC_TX, &buf);
-	buf &= ~MAC_TX_TXEN_;
-	lan78xx_write_reg(dev, MAC_TX, buf);
-	lan78xx_read_reg(dev, MAC_RX, &buf);
-	buf &= ~MAC_RX_RXEN_;
-	lan78xx_write_reg(dev, MAC_RX, buf);
+	ret = lan78xx_stop_tx_path(dev);
+	if (ret < 0)
+		return ret;
+	ret = lan78xx_stop_rx_path(dev);
+	if (ret < 0)
+		return ret;
 
+<<<<<<< HEAD
 	lan78xx_write_reg(dev, WUCSR, 0);
 	lan78xx_write_reg(dev, WUCSR2, 0);
 	lan78xx_write_reg(dev, WK_SRC, 0xFFF1FF1FUL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = lan78xx_write_reg(dev, WUCSR, 0);
+	if (ret < 0)
+		return ret;
+	ret = lan78xx_write_reg(dev, WUCSR2, 0);
+	if (ret < 0)
+		return ret;
+	ret = lan78xx_write_reg(dev, WK_SRC, 0xFFF1FF1FUL);
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	temp_wucsr = 0;
 
 	temp_pmt_ctl = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = lan78xx_read_reg(dev, PMT_CTL, &temp_pmt_ctl);
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 	temp_pmt_ctl &= ~PMT_CTL_RES_CLR_WKP_EN_;
 	temp_pmt_ctl |= PMT_CTL_RES_CLR_WKP_STS_;
 
@@ -4795,6 +5391,16 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 	for (mask_index = 0; mask_index < NUM_OF_WUF_CFG; mask_index++)
 		lan78xx_write_reg(dev, WUF_CFG(mask_index), 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	temp_pmt_ctl &= ~PMT_CTL_RES_CLR_WKP_EN_;
+	temp_pmt_ctl |= PMT_CTL_RES_CLR_WKP_STS_;
+
+	for (mask_index = 0; mask_index < NUM_OF_WUF_CFG; mask_index++) {
+		ret = lan78xx_write_reg(dev, WUF_CFG(mask_index), 0);
+		if (ret < 0)
+			return ret;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mask_index = 0;
 	if (wol & WAKE_PHY) {
@@ -4824,15 +5430,22 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		/* set WUF_CFG & WUF_MASK for IPv4 Multicast */
 		crc = lan78xx_wakeframe_crc16(ipv4_multicast, 3);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = lan78xx_write_reg(dev, WUF_CFG(mask_index),
 =======
 		lan78xx_write_reg(dev, WUF_CFG(mask_index),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = lan78xx_write_reg(dev, WUF_CFG(mask_index),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					WUF_CFGX_EN_ |
 					WUF_CFGX_TYPE_MCAST_ |
 					(0 << WUF_CFGX_OFFSET_SHIFT_) |
 					(crc & WUF_CFGX_CRC16_MASK_));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0)
 			return ret;
 
@@ -4848,6 +5461,7 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		ret = lan78xx_write_reg(dev, WUF_MASK3(mask_index), 0);
 		if (ret < 0)
 			return ret;
+<<<<<<< HEAD
 
 =======
 
@@ -4856,20 +5470,30 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		lan78xx_write_reg(dev, WUF_MASK2(mask_index), 0);
 		lan78xx_write_reg(dev, WUF_MASK3(mask_index), 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mask_index++;
 
 		/* for IPv6 Multicast */
 		crc = lan78xx_wakeframe_crc16(ipv6_multicast, 2);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = lan78xx_write_reg(dev, WUF_CFG(mask_index),
 =======
 		lan78xx_write_reg(dev, WUF_CFG(mask_index),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = lan78xx_write_reg(dev, WUF_CFG(mask_index),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					WUF_CFGX_EN_ |
 					WUF_CFGX_TYPE_MCAST_ |
 					(0 << WUF_CFGX_OFFSET_SHIFT_) |
 					(crc & WUF_CFGX_CRC16_MASK_));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0)
 			return ret;
 
@@ -4885,6 +5509,7 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		ret = lan78xx_write_reg(dev, WUF_MASK3(mask_index), 0);
 		if (ret < 0)
 			return ret;
+<<<<<<< HEAD
 
 =======
 
@@ -4893,6 +5518,9 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		lan78xx_write_reg(dev, WUF_MASK2(mask_index), 0);
 		lan78xx_write_reg(dev, WUF_MASK3(mask_index), 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mask_index++;
 
 		temp_pmt_ctl |= PMT_CTL_WOL_EN_;
@@ -4914,15 +5542,22 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		 */
 		crc = lan78xx_wakeframe_crc16(arp_type, 2);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = lan78xx_write_reg(dev, WUF_CFG(mask_index),
 =======
 		lan78xx_write_reg(dev, WUF_CFG(mask_index),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = lan78xx_write_reg(dev, WUF_CFG(mask_index),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					WUF_CFGX_EN_ |
 					WUF_CFGX_TYPE_ALL_ |
 					(0 << WUF_CFGX_OFFSET_SHIFT_) |
 					(crc & WUF_CFGX_CRC16_MASK_));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0)
 			return ret;
 
@@ -4938,6 +5573,7 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		ret = lan78xx_write_reg(dev, WUF_MASK3(mask_index), 0);
 		if (ret < 0)
 			return ret;
+<<<<<<< HEAD
 
 =======
 
@@ -4946,6 +5582,9 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		lan78xx_write_reg(dev, WUF_MASK2(mask_index), 0);
 		lan78xx_write_reg(dev, WUF_MASK3(mask_index), 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mask_index++;
 
 		temp_pmt_ctl |= PMT_CTL_WOL_EN_;
@@ -4954,12 +5593,18 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = lan78xx_write_reg(dev, WUCSR, temp_wucsr);
 	if (ret < 0)
 		return ret;
 =======
 	lan78xx_write_reg(dev, WUCSR, temp_wucsr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = lan78xx_write_reg(dev, WUCSR, temp_wucsr);
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* when multiple WOL bits are set */
 	if (hweight_long((unsigned long)wol) > 1) {
@@ -4967,6 +5612,7 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 		temp_pmt_ctl &= ~PMT_CTL_SUS_MODE_MASK_;
 		temp_pmt_ctl |= PMT_CTL_SUS_MODE_0_;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = lan78xx_write_reg(dev, PMT_CTL, temp_pmt_ctl);
 	if (ret < 0)
@@ -4988,23 +5634,37 @@ static int lan78xx_set_suspend(struct lan78xx_net *dev, u32 wol)
 	return ret;
 =======
 	lan78xx_write_reg(dev, PMT_CTL, temp_pmt_ctl);
+=======
+	ret = lan78xx_write_reg(dev, PMT_CTL, temp_pmt_ctl);
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* clear WUPS */
-	lan78xx_read_reg(dev, PMT_CTL, &buf);
+	ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
+	if (ret < 0)
+		return ret;
+
 	buf |= PMT_CTL_WUPS_MASK_;
-	lan78xx_write_reg(dev, PMT_CTL, buf);
 
-	lan78xx_read_reg(dev, MAC_RX, &buf);
-	buf |= MAC_RX_RXEN_;
-	lan78xx_write_reg(dev, MAC_RX, buf);
+	ret = lan78xx_write_reg(dev, PMT_CTL, buf);
+	if (ret < 0)
+		return ret;
 
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = lan78xx_start_rx_path(dev);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lan78xx_suspend(struct usb_interface *intf, pm_message_t message)
 {
 	struct lan78xx_net *dev = usb_get_intfdata(intf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	bool dev_open;
 	int ret;
@@ -5024,15 +5684,32 @@ static int lan78xx_suspend(struct usb_interface *intf, pm_message_t message)
 
 	if (!dev->suspend_count++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool dev_open;
+	int ret;
+
+	mutex_lock(&dev->dev_mutex);
+
+	netif_dbg(dev, ifdown, dev->net,
+		  "suspending: pm event %#x", message.event);
+
+	dev_open = test_bit(EVENT_DEV_OPEN, &dev->flags);
+
+	if (dev_open) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_lock_irq(&dev->txq.lock);
 		/* don't autosuspend while transmitting */
 		if ((skb_queue_len(&dev->txq) ||
 		     skb_queue_len(&dev->txq_pend)) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    PMSG_IS_AUTO(message)) {
 =======
 			PMSG_IS_AUTO(message)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    PMSG_IS_AUTO(message)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			spin_unlock_irq(&dev->txq.lock);
 			ret = -EBUSY;
 			goto out;
@@ -5042,10 +5719,14 @@ static int lan78xx_suspend(struct usb_interface *intf, pm_message_t message)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* stop RX */
 		ret = lan78xx_stop_rx_path(dev);
 		if (ret < 0)
 			goto out;
+<<<<<<< HEAD
 
 		ret = lan78xx_flush_rx_fifo(dev);
 		if (ret < 0)
@@ -5068,12 +5749,26 @@ static int lan78xx_suspend(struct usb_interface *intf, pm_message_t message)
 
 		/* empty out the rx and queues */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		ret = lan78xx_flush_rx_fifo(dev);
+		if (ret < 0)
+			goto out;
+
+		/* stop Tx */
+		ret = lan78xx_stop_tx_path(dev);
+		if (ret < 0)
+			goto out;
+
+		/* empty out the Rx and Tx queues */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		netif_device_detach(dev->net);
 		lan78xx_terminate_urbs(dev);
 		usb_kill_urb(dev->urb_intr);
 
 		/* reattach */
 		netif_device_attach(dev->net);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 		del_timer(&dev->stat_monitor);
@@ -5175,66 +5870,119 @@ static bool lan78xx_submit_deferred_urbs(struct lan78xx_net *dev)
 	return pipe_halted;
 =======
 	}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (test_bit(EVENT_DEV_ASLEEP, &dev->flags)) {
 		del_timer(&dev->stat_monitor);
 
 		if (PMSG_IS_AUTO(message)) {
-			/* auto suspend (selective suspend) */
-			ret = lan78xx_read_reg(dev, MAC_TX, &buf);
-			buf &= ~MAC_TX_TXEN_;
-			ret = lan78xx_write_reg(dev, MAC_TX, buf);
-			ret = lan78xx_read_reg(dev, MAC_RX, &buf);
-			buf &= ~MAC_RX_RXEN_;
-			ret = lan78xx_write_reg(dev, MAC_RX, buf);
-
-			ret = lan78xx_write_reg(dev, WUCSR, 0);
-			ret = lan78xx_write_reg(dev, WUCSR2, 0);
-			ret = lan78xx_write_reg(dev, WK_SRC, 0xFFF1FF1FUL);
-
-			/* set goodframe wakeup */
-			ret = lan78xx_read_reg(dev, WUCSR, &buf);
-
-			buf |= WUCSR_RFE_WAKE_EN_;
-			buf |= WUCSR_STORE_WAKE_;
-
-			ret = lan78xx_write_reg(dev, WUCSR, buf);
-
-			ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
-
-			buf &= ~PMT_CTL_RES_CLR_WKP_EN_;
-			buf |= PMT_CTL_RES_CLR_WKP_STS_;
-
-			buf |= PMT_CTL_PHY_WAKE_EN_;
-			buf |= PMT_CTL_WOL_EN_;
-			buf &= ~PMT_CTL_SUS_MODE_MASK_;
-			buf |= PMT_CTL_SUS_MODE_3_;
-
-			ret = lan78xx_write_reg(dev, PMT_CTL, buf);
-
-			ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
-
-			buf |= PMT_CTL_WUPS_MASK_;
-
-			ret = lan78xx_write_reg(dev, PMT_CTL, buf);
-
-			ret = lan78xx_read_reg(dev, MAC_RX, &buf);
-			buf |= MAC_RX_RXEN_;
-			ret = lan78xx_write_reg(dev, MAC_RX, buf);
+			ret = lan78xx_set_auto_suspend(dev);
+			if (ret < 0)
+				goto out;
 		} else {
-			lan78xx_set_suspend(dev, pdata->wol);
+			struct lan78xx_priv *pdata;
+
+			pdata = (struct lan78xx_priv *)(dev->data[0]);
+			netif_carrier_off(dev->net);
+			ret = lan78xx_set_suspend(dev, pdata->wol);
+			if (ret < 0)
+				goto out;
 		}
+	} else {
+		/* Interface is down; don't allow WOL and PHY
+		 * events to wake up the host
+		 */
+		u32 buf;
+
+		set_bit(EVENT_DEV_ASLEEP, &dev->flags);
+
+		ret = lan78xx_write_reg(dev, WUCSR, 0);
+		if (ret < 0)
+			goto out;
+		ret = lan78xx_write_reg(dev, WUCSR2, 0);
+		if (ret < 0)
+			goto out;
+
+		ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
+		if (ret < 0)
+			goto out;
+
+		buf &= ~PMT_CTL_RES_CLR_WKP_EN_;
+		buf |= PMT_CTL_RES_CLR_WKP_STS_;
+		buf &= ~PMT_CTL_SUS_MODE_MASK_;
+		buf |= PMT_CTL_SUS_MODE_3_;
+
+		ret = lan78xx_write_reg(dev, PMT_CTL, buf);
+		if (ret < 0)
+			goto out;
+
+		ret = lan78xx_read_reg(dev, PMT_CTL, &buf);
+		if (ret < 0)
+			goto out;
+
+		buf |= PMT_CTL_WUPS_MASK_;
+
+		ret = lan78xx_write_reg(dev, PMT_CTL, buf);
+		if (ret < 0)
+			goto out;
 	}
 
 	ret = 0;
 out:
+	mutex_unlock(&dev->dev_mutex);
+
+	return ret;
+}
+
+static bool lan78xx_submit_deferred_urbs(struct lan78xx_net *dev)
+{
+	bool pipe_halted = false;
+	struct urb *urb;
+
+	while ((urb = usb_get_from_anchor(&dev->deferred))) {
+		struct sk_buff *skb = urb->context;
+		int ret;
+
+		if (!netif_device_present(dev->net) ||
+		    !netif_carrier_ok(dev->net) ||
+		    pipe_halted) {
+			usb_free_urb(urb);
+			dev_kfree_skb(skb);
+			continue;
+		}
+
+		ret = usb_submit_urb(urb, GFP_ATOMIC);
+
+		if (ret == 0) {
+			netif_trans_update(dev->net);
+			lan78xx_queue_skb(&dev->txq, skb, tx_start);
+		} else {
+			usb_free_urb(urb);
+			dev_kfree_skb(skb);
+
+			if (ret == -EPIPE) {
+				netif_stop_queue(dev->net);
+				pipe_halted = true;
+			} else if (ret == -ENODEV) {
+				netif_device_detach(dev->net);
+			}
+		}
+	}
+
+<<<<<<< HEAD
+	ret = 0;
+out:
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return pipe_halted;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lan78xx_resume(struct usb_interface *intf)
 {
 	struct lan78xx_net *dev = usb_get_intfdata(intf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	bool dev_open;
 	int ret;
@@ -5309,58 +6057,97 @@ static int lan78xx_resume(struct usb_interface *intf)
 =======
 	struct sk_buff *skb;
 	struct urb *res;
+=======
+	bool dev_open;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
-	u32 buf;
 
-	if (!timer_pending(&dev->stat_monitor)) {
-		dev->delta = 1;
-		mod_timer(&dev->stat_monitor,
-			  jiffies + STAT_UPDATE_TIMER);
-	}
+	mutex_lock(&dev->dev_mutex);
 
-	if (!--dev->suspend_count) {
-		/* resume interrupt URBs */
-		if (dev->urb_intr && test_bit(EVENT_DEV_OPEN, &dev->flags))
-				usb_submit_urb(dev->urb_intr, GFP_NOIO);
+	netif_dbg(dev, ifup, dev->net, "resuming device");
 
-		spin_lock_irq(&dev->txq.lock);
-		while ((res = usb_get_from_anchor(&dev->deferred))) {
-			skb = (struct sk_buff *)res->context;
-			ret = usb_submit_urb(res, GFP_ATOMIC);
+	dev_open = test_bit(EVENT_DEV_OPEN, &dev->flags);
+
+	if (dev_open) {
+		bool pipe_halted = false;
+
+		ret = lan78xx_flush_tx_fifo(dev);
+		if (ret < 0)
+			goto out;
+
+		if (dev->urb_intr) {
+			int ret = usb_submit_urb(dev->urb_intr, GFP_KERNEL);
+
 			if (ret < 0) {
-				dev_kfree_skb_any(skb);
-				usb_free_urb(res);
-				usb_autopm_put_interface_async(dev->intf);
-			} else {
-				netif_trans_update(dev->net);
-				lan78xx_queue_skb(&dev->txq, skb, tx_start);
+				if (ret == -ENODEV)
+					netif_device_detach(dev->net);
+
+			netdev_warn(dev->net, "Failed to submit intr URB");
 			}
 		}
 
+		spin_lock_irq(&dev->txq.lock);
+
+		if (netif_device_present(dev->net)) {
+			pipe_halted = lan78xx_submit_deferred_urbs(dev);
+
+			if (pipe_halted)
+				lan78xx_defer_kevent(dev, EVENT_TX_HALT);
+		}
+
 		clear_bit(EVENT_DEV_ASLEEP, &dev->flags);
+
 		spin_unlock_irq(&dev->txq.lock);
 
-		if (test_bit(EVENT_DEV_OPEN, &dev->flags)) {
-			if (!(skb_queue_len(&dev->txq) >= dev->tx_qlen))
-				netif_start_queue(dev->net);
-			tasklet_schedule(&dev->bh);
+		if (!pipe_halted &&
+		    netif_device_present(dev->net) &&
+		    (skb_queue_len(&dev->txq) < dev->tx_qlen))
+			netif_start_queue(dev->net);
+
+		ret = lan78xx_start_tx_path(dev);
+		if (ret < 0)
+			goto out;
+
+		tasklet_schedule(&dev->bh);
+
+		if (!timer_pending(&dev->stat_monitor)) {
+			dev->delta = 1;
+			mod_timer(&dev->stat_monitor,
+				  jiffies + STAT_UPDATE_TIMER);
 		}
+
+	} else {
+		clear_bit(EVENT_DEV_ASLEEP, &dev->flags);
 	}
 
 	ret = lan78xx_write_reg(dev, WUCSR2, 0);
+	if (ret < 0)
+		goto out;
 	ret = lan78xx_write_reg(dev, WUCSR, 0);
+	if (ret < 0)
+		goto out;
 	ret = lan78xx_write_reg(dev, WK_SRC, 0xFFF1FF1FUL);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = lan78xx_write_reg(dev, WUCSR2, WUCSR2_NS_RCD_ |
 					     WUCSR2_ARP_RCD_ |
 					     WUCSR2_IPV6_TCPSYN_RCD_ |
 					     WUCSR2_IPV4_TCPSYN_RCD_);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 		goto out;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = lan78xx_write_reg(dev, WUCSR, WUCSR_EEE_TX_WAKE_ |
 					    WUCSR_EEE_RX_WAKE_ |
@@ -5369,6 +6156,7 @@ static int lan78xx_resume(struct usb_interface *intf)
 					    WUCSR_WUFR_ |
 					    WUCSR_MPR_ |
 					    WUCSR_BCST_FR_);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret < 0)
 		goto out;
@@ -5379,18 +6167,27 @@ out:
 
 	return ret;
 =======
+=======
+	if (ret < 0)
+		goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	ret = lan78xx_read_reg(dev, MAC_TX, &buf);
-	buf |= MAC_TX_TXEN_;
-	ret = lan78xx_write_reg(dev, MAC_TX, buf);
+	ret = 0;
+out:
+	mutex_unlock(&dev->dev_mutex);
 
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lan78xx_reset_resume(struct usb_interface *intf)
 {
 	struct lan78xx_net *dev = usb_get_intfdata(intf);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int ret;
 
@@ -5406,13 +6203,26 @@ static int lan78xx_reset_resume(struct usb_interface *intf)
 
 	return ret;
 =======
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	lan78xx_reset(dev);
+	netif_dbg(dev, ifup, dev->net, "(reset) resuming device");
+
+	ret = lan78xx_reset(dev);
+	if (ret < 0)
+		return ret;
 
 	phy_start(dev->net->phydev);
 
+<<<<<<< HEAD
 	return lan78xx_resume(intf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = lan78xx_resume(intf);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct usb_device_id products[] = {

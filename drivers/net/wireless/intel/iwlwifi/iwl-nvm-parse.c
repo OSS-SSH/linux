@@ -550,11 +550,16 @@ static const struct ieee80211_sband_iftype_data iwl_he_capa[] = {
 					IEEE80211_HE_MAC_CAP2_32BIT_BA_BITMAP,
 				.mac_cap_info[3] =
 <<<<<<< HEAD
+<<<<<<< HEAD
 					IEEE80211_HE_MAC_CAP3_OMI_CONTROL |
 					IEEE80211_HE_MAC_CAP3_RX_CTRL_FRAME_TO_MULTIBSS,
 =======
 					IEEE80211_HE_MAC_CAP3_OMI_CONTROL,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					IEEE80211_HE_MAC_CAP3_OMI_CONTROL |
+					IEEE80211_HE_MAC_CAP3_RX_CTRL_FRAME_TO_MULTIBSS,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				.mac_cap_info[4] =
 					IEEE80211_HE_MAC_CAP4_AMSDU_IN_AMPDU |
 					IEEE80211_HE_MAC_CAP4_MULTI_TID_AGG_TX_QOS_B39,
@@ -574,11 +579,16 @@ static const struct ieee80211_sband_iftype_data iwl_he_capa[] = {
 					IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD,
 				.phy_cap_info[2] =
 <<<<<<< HEAD
+<<<<<<< HEAD
 					IEEE80211_HE_PHY_CAP2_NDP_4x_LTF_AND_3_2US |
 					IEEE80211_HE_PHY_CAP2_STBC_RX_UNDER_80MHZ,
 =======
 					IEEE80211_HE_PHY_CAP2_NDP_4x_LTF_AND_3_2US,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					IEEE80211_HE_PHY_CAP2_NDP_4x_LTF_AND_3_2US |
+					IEEE80211_HE_PHY_CAP2_STBC_RX_UNDER_80MHZ,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				.phy_cap_info[3] =
 					IEEE80211_HE_PHY_CAP3_DCM_MAX_CONST_TX_NO_DCM |
 					IEEE80211_HE_PHY_CAP3_DCM_MAX_TX_NSS_1 |
@@ -606,10 +616,15 @@ static const struct ieee80211_sband_iftype_data iwl_he_capa[] = {
 					IEEE80211_HE_PHY_CAP9_RX_FULL_BW_SU_USING_MU_WITH_NON_COMP_SIGB |
 					IEEE80211_HE_PHY_CAP9_NOMIMAL_PKT_PADDING_RESERVED,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				.phy_cap_info[10] =
 					IEEE80211_HE_PHY_CAP10_HE_MU_M1RU_MAX_LTF,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				.phy_cap_info[10] =
+					IEEE80211_HE_PHY_CAP10_HE_MU_M1RU_MAX_LTF,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			},
 			/*
 			 * Set default Tx/Rx HE MCS NSS Support field.
@@ -650,9 +665,13 @@ static const struct ieee80211_sband_iftype_data iwl_he_capa[] = {
 					IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD,
 				.phy_cap_info[2] =
 <<<<<<< HEAD
+<<<<<<< HEAD
 					IEEE80211_HE_PHY_CAP2_STBC_RX_UNDER_80MHZ |
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					IEEE80211_HE_PHY_CAP2_STBC_RX_UNDER_80MHZ |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					IEEE80211_HE_PHY_CAP2_NDP_4x_LTF_AND_3_2US,
 				.phy_cap_info[3] =
 					IEEE80211_HE_PHY_CAP3_DCM_MAX_CONST_TX_NO_DCM |
@@ -762,10 +781,15 @@ iwl_nvm_fixup_sband_iftd(struct iwl_trans *trans,
 
 	if ((tx_chains & rx_chains) == ANT_AB) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		iftype_data->he_cap.he_cap_elem.phy_cap_info[2] |=
 			IEEE80211_HE_PHY_CAP2_STBC_TX_UNDER_80MHZ;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		iftype_data->he_cap.he_cap_elem.phy_cap_info[2] |=
+			IEEE80211_HE_PHY_CAP2_STBC_TX_UNDER_80MHZ;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iftype_data->he_cap.he_cap_elem.phy_cap_info[5] |=
 			IEEE80211_HE_PHY_CAP5_BEAMFORMEE_NUM_SND_DIM_UNDER_80MHZ_2 |
 			IEEE80211_HE_PHY_CAP5_BEAMFORMEE_NUM_SND_DIM_ABOVE_80MHZ_2;
@@ -983,14 +1007,20 @@ static void iwl_set_hw_address_from_csr(struct iwl_trans *trans,
 					struct iwl_nvm_data *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le32 mac_addr0 = cpu_to_le32(iwl_read32(trans,
 						  CSR_MAC_ADDR0_STRAP(trans)));
 	__le32 mac_addr1 = cpu_to_le32(iwl_read32(trans,
 						  CSR_MAC_ADDR1_STRAP(trans)));
+<<<<<<< HEAD
 =======
 	__le32 mac_addr0 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR0_STRAP));
 	__le32 mac_addr1 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR1_STRAP));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iwl_flip_hw_address(mac_addr0, mac_addr1, data->hw_addr);
 	/*
@@ -1001,12 +1031,17 @@ static void iwl_set_hw_address_from_csr(struct iwl_trans *trans,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mac_addr0 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR0_OTP(trans)));
 	mac_addr1 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR1_OTP(trans)));
 =======
 	mac_addr0 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR0_OTP));
 	mac_addr1 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR1_OTP));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mac_addr0 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR0_OTP(trans)));
+	mac_addr1 = cpu_to_le32(iwl_read32(trans, CSR_MAC_ADDR1_OTP(trans)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iwl_flip_hw_address(mac_addr0, mac_addr1, data->hw_addr);
 }
@@ -1410,6 +1445,9 @@ iwl_parse_nvm_mcc_info(struct device *dev, const struct iwl_cfg *cfg,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Certain firmware versions might report no valid channels
 	 * if booted in RF-kill, i.e. not all calibrations etc. are
@@ -1429,8 +1467,11 @@ iwl_parse_nvm_mcc_info(struct device *dev, const struct iwl_cfg *cfg,
 			DBM_TO_MBM(IWL_DEFAULT_MAX_TX_POWER);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regd->n_reg_rules = valid_rules;
 
 	/*

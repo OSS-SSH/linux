@@ -101,15 +101,20 @@ static int is_xen_swiotlb_buffer(struct device *dev, dma_addr_t dma_addr)
 	 */
 	if (pfn_valid(PFN_DOWN(paddr)))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return is_swiotlb_buffer(dev, paddr);
 =======
 		return is_swiotlb_buffer(paddr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return is_swiotlb_buffer(dev, paddr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 static int xen_swiotlb_fixup(void *buf, unsigned long nslabs)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int rc;
 	unsigned int order = get_order(IO_TLB_SEGSIZE << IO_TLB_SHIFT);
@@ -128,30 +133,42 @@ static int xen_swiotlb_fixup(void *buf, unsigned long nslabs)
 =======
 	int i, rc;
 	int dma_bits;
+=======
+	int rc;
+	unsigned int order = get_order(IO_TLB_SEGSIZE << IO_TLB_SHIFT);
+	unsigned int i, dma_bits = order + PAGE_SHIFT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_addr_t dma_handle;
 	phys_addr_t p = virt_to_phys(buf);
 
-	dma_bits = get_order(IO_TLB_SEGSIZE << IO_TLB_SHIFT) + PAGE_SHIFT;
+	BUILD_BUG_ON(IO_TLB_SEGSIZE & (IO_TLB_SEGSIZE - 1));
+	BUG_ON(nslabs % IO_TLB_SEGSIZE);
 
 	i = 0;
 	do {
-		int slabs = min(nslabs - i, (unsigned long)IO_TLB_SEGSIZE);
-
 		do {
 			rc = xen_create_contiguous_region(
+<<<<<<< HEAD
 				p + (i << IO_TLB_SHIFT),
 				get_order(slabs << IO_TLB_SHIFT),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				p + (i << IO_TLB_SHIFT), order,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dma_bits, &dma_handle);
 		} while (rc && dma_bits++ < MAX_DMA_BITS);
 		if (rc)
 			return rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		i += IO_TLB_SEGSIZE;
 =======
 		i += slabs;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		i += IO_TLB_SEGSIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while (i < nslabs);
 	return 0;
 }
@@ -179,12 +196,16 @@ static const char *xen_swiotlb_error(enum xen_swiotlb_err err)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int xen_swiotlb_init(void)
 =======
 #define DEFAULT_NSLABS		ALIGN(SZ_64M >> IO_TLB_SHIFT, IO_TLB_SEGSIZE)
 
 int __ref xen_swiotlb_init(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int xen_swiotlb_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	enum xen_swiotlb_err m_ret = XEN_SWIOTLB_UNKNOWN;
 	unsigned long bytes = swiotlb_size_or_default();
@@ -194,10 +215,14 @@ int __ref xen_swiotlb_init(void)
 	char *start;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (io_tlb_default_mem.nslabs) {
 =======
 	if (io_tlb_default_mem != NULL) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (io_tlb_default_mem.nslabs) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_warn("swiotlb buffer already initialized\n");
 		return -EEXIST;
 	}
@@ -219,10 +244,14 @@ retry:
 	}
 	if (!start)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit;
 =======
 		goto error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto exit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (order != get_order(bytes)) {
 		pr_warn("Warning: only able to allocate %ld MB for software IO TLB\n",
 			(PAGE_SIZE << order) >> 20);
@@ -246,6 +275,7 @@ retry:
 	return 0;
 error:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (nslabs > 1024 && repeat--) {
 		/* Min is 2MB */
 		nslabs = max(1024UL, ALIGN(nslabs >> 1, IO_TLB_SEGSIZE));
@@ -257,15 +287,22 @@ exit:
 	pr_err("%s (rc:%d)\n", xen_swiotlb_error(m_ret), rc);
 =======
 	if (repeat--) {
+=======
+	if (nslabs > 1024 && repeat--) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Min is 2MB */
-		nslabs = max(1024UL, (nslabs >> 1));
-		pr_info("Lowering to %luMB\n",
-			(nslabs << IO_TLB_SHIFT) >> 20);
+		nslabs = max(1024UL, ALIGN(nslabs >> 1, IO_TLB_SEGSIZE));
+		bytes = nslabs << IO_TLB_SHIFT;
+		pr_info("Lowering to %luMB\n", bytes >> 20);
 		goto retry;
 	}
+exit:
 	pr_err("%s (rc:%d)\n", xen_swiotlb_error(m_ret), rc);
+<<<<<<< HEAD
 	free_pages((unsigned long)start, order);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -283,6 +320,7 @@ retry:
 	 * Get IO TLB memory from any location.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	start = memblock_alloc(PAGE_ALIGN(bytes),
 			       IO_TLB_SEGSIZE << IO_TLB_SHIFT);
 	if (!start)
@@ -294,6 +332,13 @@ retry:
 		panic("%s: Failed to allocate %lu bytes align=0x%lx\n",
 		      __func__, PAGE_ALIGN(bytes), PAGE_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	start = memblock_alloc(PAGE_ALIGN(bytes),
+			       IO_TLB_SEGSIZE << IO_TLB_SHIFT);
+	if (!start)
+		panic("%s: Failed to allocate %lu bytes\n",
+		      __func__, PAGE_ALIGN(bytes));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * And replace that memory with pages under 4GB.
@@ -301,6 +346,7 @@ retry:
 	rc = xen_swiotlb_fixup(start, nslabs);
 	if (rc) {
 		memblock_free(__pa(start), PAGE_ALIGN(bytes));
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (nslabs > 1024 && repeat--) {
 			/* Min is 2MB */
@@ -310,6 +356,11 @@ retry:
 			/* Min is 2MB */
 			nslabs = max(1024UL, (nslabs >> 1));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (nslabs > 1024 && repeat--) {
+			/* Min is 2MB */
+			nslabs = max(1024UL, ALIGN(nslabs >> 1, IO_TLB_SEGSIZE));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bytes = nslabs << IO_TLB_SHIFT;
 			pr_info("Lowering to %luMB\n", bytes >> 20);
 			goto retry;
@@ -318,10 +369,14 @@ retry:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (swiotlb_init_with_tbl(start, nslabs, true))
 =======
 	if (swiotlb_init_with_tbl(start, nslabs, false))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (swiotlb_init_with_tbl(start, nslabs, true))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		panic("Cannot allocate SWIOTLB buffer");
 	swiotlb_set_max_segment(PAGE_SIZE);
 }
@@ -442,10 +497,14 @@ static dma_addr_t xen_swiotlb_map_page(struct device *dev, struct page *page,
 	    !range_straddles_page_boundary(phys, size) &&
 		!xen_arch_need_swiotlb(dev, phys, dev_addr) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		!is_swiotlb_force_bounce(dev))
 =======
 		swiotlb_force != SWIOTLB_FORCE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		!is_swiotlb_force_bounce(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto done;
 
 	/*
@@ -581,10 +640,14 @@ out_unmap:
 	xen_swiotlb_unmap_sg(dev, sgl, i, dir, attrs | DMA_ATTR_SKIP_CPU_SYNC);
 	sg_dma_len(sgl) = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return -EIO;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -623,10 +686,14 @@ static int
 xen_swiotlb_dma_supported(struct device *hwdev, u64 mask)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return xen_phys_to_dma(hwdev, io_tlb_default_mem.end - 1) <= mask;
 =======
 	return xen_phys_to_dma(hwdev, io_tlb_default_mem->end - 1) <= mask;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return xen_phys_to_dma(hwdev, io_tlb_default_mem.end - 1) <= mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 const struct dma_map_ops xen_swiotlb_dma_ops = {

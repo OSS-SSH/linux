@@ -141,9 +141,12 @@ typedef u64 gen8_pte_t;
 enum i915_cache_level;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct drm_i915_file_private;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_i915_gem_object;
 struct i915_fence_reg;
 struct i915_vma;
@@ -224,6 +227,7 @@ struct i915_address_space {
 	struct drm_i915_private *i915;
 	struct device *dma;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * Every address space belongs to a struct file - except for the global
@@ -236,6 +240,8 @@ struct i915_address_space {
 	 */
 	struct drm_i915_file_private *file;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 total;		/* size addr space maps (ex. 2GB for ggtt) */
 	u64 reserved;		/* size addr space reserved */
 
@@ -303,6 +309,9 @@ struct i915_address_space {
 	void (*cleanup)(struct i915_address_space *vm);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*foreach)(struct i915_address_space *vm,
 			u64 start, u64 length,
 			void (*fn)(struct i915_address_space *vm,
@@ -310,8 +319,11 @@ struct i915_address_space {
 				   void *data),
 			void *data);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct i915_vma_ops vma_ops;
 
 	I915_SELFTEST_DECLARE(struct fault_attr fault_attr);

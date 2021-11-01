@@ -11,9 +11,13 @@
 #include <asm/firmware.h>
 #include <asm/feature-fixups.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/extable.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/extable.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef __ASSEMBLY__
 
@@ -264,10 +268,14 @@ n:
 /* Be careful, this will clobber the lr register. */
 #define LOAD_REG_ADDR_PIC(reg, name)		\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4;			\
 =======
 	bl	0f;				\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4;			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0:	mflr	reg;				\
 	addis	reg,reg,(name - 0b)@ha;		\
 	addi	reg,reg,(name - 0b)@l;
@@ -761,6 +769,7 @@ END_FTR_SECTION_NESTED(CPU_FTR_CELL_TB_BUG, CPU_FTR_CELL_TB_BUG, 96)
 #endif /*  __ASSEMBLY__ */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * Helper macro for exception table entries
@@ -773,6 +782,8 @@ END_FTR_SECTION_NESTED(CPU_FTR_CELL_TB_BUG, CPU_FTR_CELL_TB_BUG, 96)
 	stringify_in_c(.previous)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SOFT_MASK_TABLE(_start, _end)		\
 	stringify_in_c(.section __soft_mask_table,"a";)\
 	stringify_in_c(.balign 8;)		\

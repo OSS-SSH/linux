@@ -138,6 +138,9 @@
 #define		AT91_PMC_H32MXDIV	BIT(24)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define	AT91_PMC_MCR_V2		0x30				/* Master Clock Register [SAMA7G5 only] */
 #define		AT91_PMC_MCR_V2_ID_MSK	(0xF)
 #define			AT91_PMC_MCR_V2_ID(_id)		((_id) & AT91_PMC_MCR_V2_ID_MSK)
@@ -164,8 +167,11 @@
 #define			AT91_PMC_MCR_V2_CSS_ETHPLL	(10 << 16)
 #define		AT91_PMC_MCR_V2_EN	(1 << 28)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define AT91_PMC_XTALF		0x34			/* Main XTAL Frequency Register [SAMA7G5 only] */
 
 #define	AT91_PMC_USB		0x38			/* USB Clock Register [some SAM9 only] */

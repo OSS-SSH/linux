@@ -61,6 +61,7 @@ void pci_save_ptm_state(struct pci_dev *dev)
 
 	save_state = pci_find_saved_ext_cap(dev, PCI_EXT_CAP_ID_PTM);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!save_state)
 		return;
 =======
@@ -69,6 +70,10 @@ void pci_save_ptm_state(struct pci_dev *dev)
 		return;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!save_state)
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cap = (u16 *)&save_state->cap.data[0];
 	pci_read_config_word(dev, ptm + PCI_PTM_CTRL, cap);
@@ -210,6 +215,9 @@ int pci_enable_ptm(struct pci_dev *dev, u8 *granularity)
 }
 EXPORT_SYMBOL(pci_enable_ptm);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool pcie_ptm_enabled(struct pci_dev *dev)
 {
@@ -219,5 +227,8 @@ bool pcie_ptm_enabled(struct pci_dev *dev)
 	return dev->ptm_enabled;
 }
 EXPORT_SYMBOL(pcie_ptm_enabled);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

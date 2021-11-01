@@ -802,11 +802,15 @@ int arch_add_memory(int nid, u64 start, u64 size,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
 =======
 void arch_remove_memory(int nid, u64 start, u64 size,
 			struct vmem_altmap *altmap)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long start_pfn = start >> PAGE_SHIFT;
 	unsigned long nr_pages = size >> PAGE_SHIFT;

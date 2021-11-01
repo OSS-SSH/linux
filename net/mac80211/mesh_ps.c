@@ -3,9 +3,13 @@
  * Copyright 2012-2013, Marco Porsch <marco.porsch@s2005.tu-chemnitz.de>
  * Copyright 2012-2013, cozybit Inc.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2021 Intel Corporation
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2021 Intel Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include "mesh.h"
@@ -593,10 +597,14 @@ void ieee80211_mps_frame_release(struct sta_info *sta,
 	/* only transmit to PS STA with announced, non-zero awake window */
 	if (test_sta_flag(sta, WLAN_STA_PS_STA) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    (!elems->awake_window || !get_unaligned_le16(elems->awake_window)))
 =======
 	    (!elems->awake_window || !le16_to_cpu(*elems->awake_window)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    (!elems->awake_window || !get_unaligned_le16(elems->awake_window)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (!test_sta_flag(sta, WLAN_STA_MPSP_OWNER))

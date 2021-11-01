@@ -758,10 +758,14 @@ EXPORT_SYMBOL(drm_kms_helper_poll_disable);
  * @dev: drm_device
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This function initializes and then also enables output polling support for
 =======
  * This function intializes and then also enables output polling support for
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This function initializes and then also enables output polling support for
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dev. Drivers which do not have reliable hotplug support in hardware can use
  * this helper infrastructure to regularly poll such connectors for changes in
  * their connection state.

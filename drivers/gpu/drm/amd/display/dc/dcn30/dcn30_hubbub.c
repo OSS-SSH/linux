@@ -452,9 +452,13 @@ static const struct hubbub_funcs hubbub30_funcs = {
 	.force_pstate_change_control = hubbub3_force_pstate_change_control,
 	.init_watermarks = hubbub3_init_watermarks,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.hubbub_read_state = hubbub2_read_state,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.hubbub_read_state = hubbub2_read_state,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 void hubbub3_construct(struct dcn20_hubbub *hubbub3,

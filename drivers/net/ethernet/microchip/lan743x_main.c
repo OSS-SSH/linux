@@ -2680,10 +2680,14 @@ static const struct net_device_ops lan743x_netdev_ops = {
 	.ndo_stop		= lan743x_netdev_close,
 	.ndo_start_xmit		= lan743x_netdev_xmit_frame,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= lan743x_netdev_ioctl,
 =======
 	.ndo_do_ioctl		= lan743x_netdev_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= lan743x_netdev_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode	= lan743x_netdev_set_multicast,
 	.ndo_change_mtu		= lan743x_netdev_change_mtu,
 	.ndo_get_stats64	= lan743x_netdev_get_stats64,

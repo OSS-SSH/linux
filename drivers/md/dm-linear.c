@@ -107,9 +107,13 @@ static void linear_status(struct dm_target *ti, status_type_t type,
 {
 	struct linear_c *lc = (struct linear_c *) ti->private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size_t sz = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size_t sz = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (type) {
 	case STATUSTYPE_INFO:
@@ -118,6 +122,9 @@ static void linear_status(struct dm_target *ti, status_type_t type,
 
 	case STATUSTYPE_TABLE:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DMEMIT("%s %llu", lc->dev->name, (unsigned long long)lc->start);
 		break;
 
@@ -125,10 +132,13 @@ static void linear_status(struct dm_target *ti, status_type_t type,
 		DMEMIT_TARGET_NAME_VERSION(ti->type);
 		DMEMIT(",device_name=%s,start=%llu;", lc->dev->name,
 		       (unsigned long long)lc->start);
+<<<<<<< HEAD
 =======
 		snprintf(result, maxlen, "%s %llu", lc->dev->name,
 				(unsigned long long)lc->start);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 }

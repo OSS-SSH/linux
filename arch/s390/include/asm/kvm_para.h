@@ -25,6 +25,9 @@
 #include <asm/diag.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HYPERCALL_FMT_0
 #define HYPERCALL_FMT_1 , "0" (r2)
 #define HYPERCALL_FMT_2 , "d" (r3) HYPERCALL_FMT_1
@@ -98,6 +101,7 @@ GENERATE_KVM_HYPERCALL_FUNC(3)
 GENERATE_KVM_HYPERCALL_FUNC(4)
 GENERATE_KVM_HYPERCALL_FUNC(5)
 GENERATE_KVM_HYPERCALL_FUNC(6)
+<<<<<<< HEAD
 =======
 static inline long __kvm_hypercall0(unsigned long nr)
 {
@@ -256,6 +260,8 @@ static inline long kvm_hypercall6(unsigned long nr, unsigned long p1,
 	return __kvm_hypercall6(nr, p1, p2, p3, p4, p5, p6);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* kvm on s390 is always paravirtualization enabled */
 static inline int kvm_para_available(void)

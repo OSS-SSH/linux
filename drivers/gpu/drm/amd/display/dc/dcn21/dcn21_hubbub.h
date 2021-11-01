@@ -109,6 +109,9 @@
 	HUBBUB_SF(DCN_VM_AGP_BOT, AGP_BOT, mask_sh), \
 	HUBBUB_SF(DCN_VM_AGP_TOP, AGP_TOP, mask_sh), \
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	HUBBUB_SF(DCN_VM_AGP_BASE, AGP_BASE, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_ADDR_MSB, DCN_VM_FAULT_ADDR_MSB, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_ADDR_LSB, DCN_VM_FAULT_ADDR_LSB, mask_sh), \
@@ -122,9 +125,12 @@
 	HUBBUB_SF(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_TABLE_LEVEL, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_PIPE, mask_sh), \
 	HUBBUB_SF(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_INTERRUPT_STATUS, mask_sh)
+<<<<<<< HEAD
 =======
 	HUBBUB_SF(DCN_VM_AGP_BASE, AGP_BASE, mask_sh)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void dcn21_dchvm_init(struct hubbub *hubbub);
 int hubbub21_init_dchub(struct hubbub *hubbub,

@@ -2,10 +2,14 @@
  * This file is part of the Emulex Linux Device Driver for         *
  * Fibre Channel Host Bus Adapters.                                *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2017-2021 Broadcom. All Rights Reserved. The term *
 =======
  * Copyright (C) 2017-2019 Broadcom. All Rights Reserved. The term *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2017-2021 Broadcom. All Rights Reserved. The term *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.     *
  * Copyright (C) 2010-2015 Emulex.  All rights reserved.           *
  * EMULEX and SLI are trademarks of Emulex.                        *
@@ -48,9 +52,13 @@
 #define LPFC_BSG_VENDOR_RAS_SET_CONFIG		19
 #define LPFC_BSG_VENDOR_GET_TRUNK_INFO		20
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define LPFC_BSG_VENDOR_GET_CGNBUF_INFO		21
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define LPFC_BSG_VENDOR_GET_CGNBUF_INFO		21
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct set_ct_event {
 	uint32_t command;
@@ -395,6 +403,9 @@ struct get_trunk_info_req {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct get_cgnbuf_info_req {
 	uint32_t command;
 	uint32_t read_size;
@@ -402,8 +413,11 @@ struct get_cgnbuf_info_req {
 #define LPFC_BSG_CGN_RESET_STAT		1
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* driver only */
 #define SLI_CONFIG_NOT_HANDLED		0
 #define SLI_CONFIG_HANDLED		1

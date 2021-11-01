@@ -30,9 +30,13 @@ $(targets:%=$(obj)/%.dbg): KBUILD_AFLAGS = $(KBUILD_AFLAGS_32)
 
 obj-y += vdso32_wrapper.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 targets += vdso32.lds
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+targets += vdso32.lds
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 CPPFLAGS_vdso32.lds += -P -C -U$(ARCH)
 
 # Disable gcov profiling, ubsan and kasan for VDSO code
@@ -40,9 +44,13 @@ GCOV_PROFILE := n
 UBSAN_SANITIZE := n
 KASAN_SANITIZE := n
 <<<<<<< HEAD
+<<<<<<< HEAD
 KCSAN_SANITIZE := n
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+KCSAN_SANITIZE := n
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # Force dependency (incbin is bad)
 $(obj)/vdso32_wrapper.o : $(obj)/vdso32.so

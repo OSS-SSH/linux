@@ -4053,12 +4053,18 @@ static int sky2_set_pauseparam(struct net_device *dev,
 
 static int sky2_get_coalesce(struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct ethtool_coalesce *ecmd,
 			     struct kernel_ethtool_coalesce *kernel_coal,
 			     struct netlink_ext_ack *extack)
 =======
 			     struct ethtool_coalesce *ecmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *ecmd,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct sky2_port *sky2 = netdev_priv(dev);
 	struct sky2_hw *hw = sky2->hw;
@@ -4094,12 +4100,18 @@ static int sky2_get_coalesce(struct net_device *dev,
 /* Note: this affect both ports */
 static int sky2_set_coalesce(struct net_device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct ethtool_coalesce *ecmd,
 			     struct kernel_ethtool_coalesce *kernel_coal,
 			     struct netlink_ext_ack *extack)
 =======
 			     struct ethtool_coalesce *ecmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *ecmd,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct sky2_port *sky2 = netdev_priv(dev);
 	struct sky2_hw *hw = sky2->hw;
@@ -4706,10 +4718,14 @@ static const struct net_device_ops sky2_netdev_ops[2] = {
 	.ndo_stop		= sky2_close,
 	.ndo_start_xmit		= sky2_xmit_frame,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= sky2_ioctl,
 =======
 	.ndo_do_ioctl		= sky2_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= sky2_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= sky2_set_mac_address,
 	.ndo_set_rx_mode	= sky2_set_multicast,
@@ -4727,10 +4743,14 @@ static const struct net_device_ops sky2_netdev_ops[2] = {
 	.ndo_stop		= sky2_close,
 	.ndo_start_xmit		= sky2_xmit_frame,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= sky2_ioctl,
 =======
 	.ndo_do_ioctl		= sky2_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= sky2_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= sky2_set_mac_address,
 	.ndo_set_rx_mode	= sky2_set_multicast,
@@ -4905,10 +4925,14 @@ static int sky2_test_msi(struct sky2_hw *hw)
 static const char *sky2_name(u8 chipid, char *buf, int sz)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const char *const name[] = {
 =======
 	const char *name[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const char *const name[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"XL",		/* 0xb3 */
 		"EC Ultra", 	/* 0xb4 */
 		"Extreme",	/* 0xb5 */

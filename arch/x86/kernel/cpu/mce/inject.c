@@ -236,10 +236,14 @@ static void __maybe_unused raise_mce(struct mce *m)
 		int cpu;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpus_read_lock();
 =======
 		get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpumask_copy(mce_inject_cpumask, cpu_online_mask);
 		cpumask_clear_cpu(get_cpu(), mce_inject_cpumask);
 		for_each_online_cpu(cpu) {
@@ -274,10 +278,14 @@ static void __maybe_unused raise_mce(struct mce *m)
 		raise_local();
 		put_cpu();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpus_read_unlock();
 =======
 		put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		preempt_disable();
 		raise_local();
@@ -538,10 +546,14 @@ static void do_inject(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!cpu_online(cpu))
 		goto err;
 
@@ -566,10 +578,14 @@ static void do_inject(void)
 
 err:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 }
 

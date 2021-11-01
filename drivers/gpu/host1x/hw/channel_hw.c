@@ -48,6 +48,9 @@ static void trace_write_gather(struct host1x_cdma *cdma, struct host1x_bo *bo,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void submit_wait(struct host1x_cdma *cdma, u32 id, u32 threshold,
 			u32 next_class)
 {
@@ -81,15 +84,19 @@ static void submit_wait(struct host1x_cdma *cdma, u32 id, u32 threshold,
 }
 
 static void submit_gathers(struct host1x_job *job, u32 job_syncpt_base)
+<<<<<<< HEAD
 =======
 static void submit_gathers(struct host1x_job *job)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct host1x_cdma *cdma = &job->channel->cdma;
 #if HOST1X_HW < 6
 	struct device *dev = job->channel->dev;
 #endif
 	unsigned int i;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	u32 threshold;
 
@@ -131,33 +138,52 @@ static void submit_gathers(struct host1x_job *job)
 				host1x_cdma_push(cdma, op1, op2);
 			}
 =======
+=======
+	u32 threshold;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	for (i = 0; i < job->num_gathers; i++) {
-		struct host1x_job_gather *g = &job->gathers[i];
-		dma_addr_t addr = g->base + g->offset;
-		u32 op2, op3;
+	for (i = 0; i < job->num_cmds; i++) {
+		struct host1x_job_cmd *cmd = &job->cmds[i];
 
-		op2 = lower_32_bits(addr);
-		op3 = upper_32_bits(addr);
+		if (cmd->is_wait) {
+			if (cmd->wait.relative)
+				threshold = job_syncpt_base + cmd->wait.threshold;
+			else
+				threshold = cmd->wait.threshold;
 
-		trace_write_gather(cdma, g->bo, g->offset, g->words);
-
-		if (op3 != 0) {
-#if HOST1X_HW >= 6
-			u32 op1 = host1x_opcode_gather_wide(g->words);
-			u32 op4 = HOST1X_OPCODE_NOP;
-
-			host1x_cdma_push_wide(cdma, op1, op2, op3, op4);
-#else
-			dev_err(dev, "invalid gather for push buffer %pad\n",
-				&addr);
-			continue;
-#endif
+			submit_wait(cdma, cmd->wait.id, threshold, cmd->wait.next_class);
 		} else {
-			u32 op1 = host1x_opcode_gather(g->words);
+			struct host1x_job_gather *g = &cmd->gather;
 
+			dma_addr_t addr = g->base + g->offset;
+			u32 op2, op3;
+
+			op2 = lower_32_bits(addr);
+			op3 = upper_32_bits(addr);
+
+			trace_write_gather(cdma, g->bo, g->offset, g->words);
+
+			if (op3 != 0) {
+#if HOST1X_HW >= 6
+				u32 op1 = host1x_opcode_gather_wide(g->words);
+				u32 op4 = HOST1X_OPCODE_NOP;
+
+				host1x_cdma_push_wide(cdma, op1, op2, op3, op4);
+#else
+				dev_err(dev, "invalid gather for push buffer %pad\n",
+					&addr);
+				continue;
+#endif
+			} else {
+				u32 op1 = host1x_opcode_gather(g->words);
+
+<<<<<<< HEAD
 			host1x_cdma_push(cdma, op1, op2);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				host1x_cdma_push(cdma, op1, op2);
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -205,10 +231,14 @@ static int channel_submit(struct host1x_job *job)
 
 	trace_host1x_channel_submit(dev_name(ch->dev),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    job->num_cmds, job->num_relocs,
 =======
 				    job->num_gathers, job->num_relocs,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    job->num_cmds, job->num_relocs,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    job->syncpt->id, job->syncpt_incrs);
 
 	/* before error checks, return current max */
@@ -264,10 +294,14 @@ static int channel_submit(struct host1x_job *job)
 				 HOST1X_OPCODE_NOP);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	submit_gathers(job, syncval - user_syncpt_incrs);
 =======
 	submit_gathers(job);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	submit_gathers(job, syncval - user_syncpt_incrs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* end CDMA submit & stash pinned hMems into sync queue */
 	host1x_cdma_end(&ch->cdma, job);
@@ -278,10 +312,14 @@ static int channel_submit(struct host1x_job *job)
 	err = host1x_intr_add_action(host, sp, syncval,
 				     HOST1X_INTR_ACTION_SUBMIT_COMPLETE, ch,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     completed_waiter, &job->waiter);
 =======
 				     completed_waiter, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     completed_waiter, &job->waiter);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	completed_waiter = NULL;
 	WARN(err, "Failed to set submit complete interrupt");
 

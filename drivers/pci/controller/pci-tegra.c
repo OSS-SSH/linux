@@ -373,6 +373,7 @@ struct tegra_pcie_port {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct tegra_pcie_bus {
 	struct list_head list;
@@ -380,6 +381,8 @@ struct tegra_pcie_bus {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void afi_writel(struct tegra_pcie *pcie, u32 value,
 			      unsigned long offset)
 {
@@ -768,10 +771,14 @@ static int tegra_pcie_map_irq(const struct pci_dev *pdev, u8 slot, u8 pin)
 static irqreturn_t tegra_pcie_isr(int irq, void *arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const char * const err_msg[] = {
 =======
 	const char *err_msg[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const char * const err_msg[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"Unknown",
 		"AXI slave error",
 		"AXI decode error",
@@ -1561,6 +1568,7 @@ static void tegra_pcie_msi_irq(struct irq_desc *desc)
 			unsigned int offset = find_first_bit(&reg, 32);
 			unsigned int index = i * 32 + offset;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			int ret;
 
 			ret = generic_handle_domain_irq(msi->domain->parent, index);
@@ -1573,6 +1581,12 @@ static void tegra_pcie_msi_irq(struct irq_desc *desc)
 				generic_handle_irq(irq);
 			} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			int ret;
+
+			ret = generic_handle_domain_irq(msi->domain->parent, index);
+			if (ret) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				/*
 				 * that's weird who triggered this?
 				 * just clear it
@@ -2208,10 +2222,14 @@ static int tegra_pcie_parse_dt(struct tegra_pcie *pcie)
 
 		rp->base = devm_pci_remap_cfg_resource(dev, &rp->regs);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(rp->base)) {
 			err = PTR_ERR(rp->base);
 			goto err_node_put;
 		}
+<<<<<<< HEAD
 
 		label = devm_kasprintf(dev, GFP_KERNEL, "pex-reset-%u", index);
 		if (!label) {
@@ -2226,6 +2244,13 @@ static int tegra_pcie_parse_dt(struct tegra_pcie *pcie)
 			dev_err(dev, "failed to create reset GPIO label\n");
 			return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		label = devm_kasprintf(dev, GFP_KERNEL, "pex-reset-%u", index);
+		if (!label) {
+			err = -ENOMEM;
+			goto err_node_put;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/*
@@ -2244,11 +2269,16 @@ static int tegra_pcie_parse_dt(struct tegra_pcie *pcie)
 				dev_err(dev, "failed to get reset GPIO: %ld\n",
 					PTR_ERR(rp->reset_gpio));
 <<<<<<< HEAD
+<<<<<<< HEAD
 				err = PTR_ERR(rp->reset_gpio);
 				goto err_node_put;
 =======
 				return PTR_ERR(rp->reset_gpio);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				err = PTR_ERR(rp->reset_gpio);
+				goto err_node_put;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 
@@ -2580,10 +2610,14 @@ static void *tegra_pcie_ports_seq_start(struct seq_file *s, loff_t *pos)
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	seq_puts(s, "Index  Status\n");
 =======
 	seq_printf(s, "Index  Status\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	seq_puts(s, "Index  Status\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return seq_list_start(&pcie->ports, *pos);
 }
@@ -2621,6 +2655,7 @@ static int tegra_pcie_ports_seq_show(struct seq_file *s, void *v)
 
 	if (up)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		seq_puts(s, "up");
 
 	if (active) {
@@ -2633,16 +2668,23 @@ static int tegra_pcie_ports_seq_show(struct seq_file *s, void *v)
 	seq_puts(s, "\n");
 =======
 		seq_printf(s, "up");
+=======
+		seq_puts(s, "up");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (active) {
 		if (up)
-			seq_printf(s, ", ");
+			seq_puts(s, ", ");
 
-		seq_printf(s, "active");
+		seq_puts(s, "active");
 	}
 
+<<<<<<< HEAD
 	seq_printf(s, "\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	seq_puts(s, "\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

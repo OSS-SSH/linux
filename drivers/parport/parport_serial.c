@@ -607,12 +607,16 @@ static int parport_register(struct pci_dev *dev, const struct pci_device_id *id)
                                         def.) */
 		/* TODO: test if sharing interrupts works */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		irq = pci_irq_vector(dev, 0);
 		if (irq < 0)
 			return irq;
 		if (irq == 0)
 			irq = PARPORT_IRQ_NONE;
 		if (irq == PARPORT_IRQ_NONE) {
+<<<<<<< HEAD
 			dev_dbg(&dev->dev,
 				"PCI parallel port detected: I/O at %#lx(%#lx)\n",
 				io_lo, io_hi);
@@ -624,6 +628,11 @@ static int parport_register(struct pci_dev *dev, const struct pci_device_id *id)
 				io_lo, io_hi);
 			irq = PARPORT_IRQ_NONE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(&dev->dev,
+				"PCI parallel port detected: I/O at %#lx(%#lx)\n",
+				io_lo, io_hi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			dev_dbg(&dev->dev,
 				"PCI parallel port detected: I/O at %#lx(%#lx), IRQ %d\n",

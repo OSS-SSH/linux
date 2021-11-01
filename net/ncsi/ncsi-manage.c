@@ -690,6 +690,9 @@ static int set_one_vid(struct ncsi_dev_priv *ndp, struct ncsi_channel *nc,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY)
 
 static int ncsi_oem_keep_phy_intel(struct ncsi_cmd_arg *nca)
@@ -719,8 +722,11 @@ static int ncsi_oem_keep_phy_intel(struct ncsi_cmd_arg *nca)
 
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_NCSI_OEM_CMD_GET_MAC)
 
 /* NCSI OEM Command APIs */
@@ -733,10 +739,14 @@ static int ncsi_oem_gma_handler_bcm(struct ncsi_cmd_arg *nca)
 
 	memset(data, 0, NCSI_OEM_BCM_CMD_GMA_LEN);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*(unsigned int *)data = ntohl((__force __be32)NCSI_OEM_MFR_BCM_ID);
 =======
 	*(unsigned int *)data = ntohl(NCSI_OEM_MFR_BCM_ID);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*(unsigned int *)data = ntohl((__force __be32)NCSI_OEM_MFR_BCM_ID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data[5] = NCSI_OEM_BCM_CMD_GMA;
 
 	nca->data = data;
@@ -761,10 +771,14 @@ static int ncsi_oem_gma_handler_mlx(struct ncsi_cmd_arg *nca)
 
 	memset(&u, 0, sizeof(u));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u.data_u32[0] = ntohl((__force __be32)NCSI_OEM_MFR_MLX_ID);
 =======
 	u.data_u32[0] = ntohl(NCSI_OEM_MFR_MLX_ID);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u.data_u32[0] = ntohl((__force __be32)NCSI_OEM_MFR_MLX_ID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u.data_u8[5] = NCSI_OEM_MLX_CMD_GMA;
 	u.data_u8[6] = NCSI_OEM_MLX_CMD_GMA_PARAM;
 
@@ -788,10 +802,14 @@ static int ncsi_oem_smaf_mlx(struct ncsi_cmd_arg *nca)
 
 	memset(&u, 0, sizeof(u));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u.data_u32[0] = ntohl((__force __be32)NCSI_OEM_MFR_MLX_ID);
 =======
 	u.data_u32[0] = ntohl(NCSI_OEM_MFR_MLX_ID);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u.data_u32[0] = ntohl((__force __be32)NCSI_OEM_MFR_MLX_ID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u.data_u8[5] = NCSI_OEM_MLX_CMD_SMAF;
 	u.data_u8[6] = NCSI_OEM_MLX_CMD_SMAF_PARAM;
 	memcpy(&u.data_u8[MLX_SMAF_MAC_ADDR_OFFSET],
@@ -811,6 +829,9 @@ static int ncsi_oem_smaf_mlx(struct ncsi_cmd_arg *nca)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ncsi_oem_gma_handler_intel(struct ncsi_cmd_arg *nca)
 {
 	unsigned char data[NCSI_OEM_INTEL_CMD_GMA_LEN];
@@ -833,8 +854,11 @@ static int ncsi_oem_gma_handler_intel(struct ncsi_cmd_arg *nca)
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* OEM Command handlers initialization */
 static struct ncsi_oem_gma_handler {
 	unsigned int	mfr_id;
@@ -842,11 +866,16 @@ static struct ncsi_oem_gma_handler {
 } ncsi_oem_gma_handlers[] = {
 	{ NCSI_OEM_MFR_BCM_ID, ncsi_oem_gma_handler_bcm },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ NCSI_OEM_MFR_MLX_ID, ncsi_oem_gma_handler_mlx },
 	{ NCSI_OEM_MFR_INTEL_ID, ncsi_oem_gma_handler_intel }
 =======
 	{ NCSI_OEM_MFR_MLX_ID, ncsi_oem_gma_handler_mlx }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ NCSI_OEM_MFR_MLX_ID, ncsi_oem_gma_handler_mlx },
+	{ NCSI_OEM_MFR_INTEL_ID, ncsi_oem_gma_handler_intel }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int ncsi_gma_handler(struct ncsi_cmd_arg *nca, unsigned int mf_id)
@@ -1467,6 +1496,9 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
 
 		nd->state = ncsi_dev_state_probe_gvi;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ENABLED(CONFIG_NCSI_OEM_CMD_KEEP_PHY))
 			nd->state = ncsi_dev_state_probe_keep_phy;
 		break;
@@ -1482,11 +1514,16 @@ static void ncsi_probe_channel(struct ncsi_dev_priv *ndp)
 			goto error;
 
 		nd->state = ncsi_dev_state_probe_gvi;
+<<<<<<< HEAD
 		break;
 #endif /* CONFIG_NCSI_OEM_CMD_KEEP_PHY */
 =======
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+#endif /* CONFIG_NCSI_OEM_CMD_KEEP_PHY */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ncsi_dev_state_probe_gvi:
 	case ncsi_dev_state_probe_gc:
 	case ncsi_dev_state_probe_gls:

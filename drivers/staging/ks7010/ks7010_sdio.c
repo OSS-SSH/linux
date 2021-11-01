@@ -940,6 +940,7 @@ static void ks7010_private_init(struct ks_wlan_private *priv,
 
 	/* sleep mode */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_set(&priv->sleepstatus.status, 0);
 	atomic_set(&priv->sleepstatus.doze_request, 0);
 	atomic_set(&priv->sleepstatus.wakeup_request, 0);
@@ -948,6 +949,11 @@ static void ks7010_private_init(struct ks_wlan_private *priv,
 	atomic_set(&priv->sleepstatus.wakeup_request, 0);
 	atomic_set(&priv->sleepstatus.wakeup_request, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_set(&priv->sleepstatus.status, 0);
+	atomic_set(&priv->sleepstatus.doze_request, 0);
+	atomic_set(&priv->sleepstatus.wakeup_request, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	trx_device_init(priv);
 	hostif_init(priv);

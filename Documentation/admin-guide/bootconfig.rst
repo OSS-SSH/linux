@@ -179,10 +179,14 @@ loader passes the correct initrd file size. If by any chance, the boot
 loader passes a longer size, the kernel fails to find the bootconfig data.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 To do this operation, Linux kernel provides ``bootconfig`` command under
 =======
 To do this operation, Linux kernel provides "bootconfig" command under
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+To do this operation, Linux kernel provides ``bootconfig`` command under
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 tools/bootconfig, which allows admin to apply or delete the config file
 to/from initrd image. You can build it by the following command::
 
@@ -201,6 +205,9 @@ Then add "bootconfig" on the normal kernel command line to tell the
 kernel to look for the bootconfig at the end of the initrd file.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Kernel parameters via Boot Config
 =================================
@@ -238,8 +245,11 @@ The final kernel cmdline will be the following::
  root="01234567-89ab-cdef-0123-456789abcd" ro bootconfig -- splash quiet
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Config File Limitation
 ======================
 

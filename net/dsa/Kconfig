@@ -19,6 +19,7 @@ if NET_DSA
 # Drivers must select the appropriate tagging format(s)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config NET_DSA_TAG_8021Q
 	tristate
@@ -31,6 +32,8 @@ config NET_DSA_TAG_8021Q
 	  Drivers which use these helpers should select this as dependency.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config NET_DSA_TAG_AR9331
 	tristate "Tag driver for Atheros AR9331 SoC with built-in switch"
 	help
@@ -115,10 +118,13 @@ config NET_DSA_TAG_RTL4_A
 config NET_DSA_TAG_OCELOT
 	tristate "Tag driver for Ocelot family of switches, using NPI port"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	depends on MSCC_OCELOT_SWITCH_LIB || \
 		   (MSCC_OCELOT_SWITCH_LIB=n && COMPILE_TEST)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select PACKING
 	help
 	  Say Y or M if you want to enable NPI tagging for the Ocelot switches
@@ -131,11 +137,14 @@ config NET_DSA_TAG_OCELOT
 config NET_DSA_TAG_OCELOT_8021Q
 	tristate "Tag driver for Ocelot family of switches, using VLAN"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	depends on MSCC_OCELOT_SWITCH_LIB || \
 	          (MSCC_OCELOT_SWITCH_LIB=n && COMPILE_TEST)
 	select NET_DSA_TAG_8021Q
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y or M if you want to enable support for tagging frames with a
 	  custom VLAN-based header. Frames that require timestamping, such as
@@ -159,9 +168,12 @@ config NET_DSA_TAG_LAN9303
 config NET_DSA_TAG_SJA1105
 	tristate "Tag driver for NXP SJA1105 switches"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select NET_DSA_TAG_8021Q
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select PACKING
 	help
 	  Say Y or M if you want to enable support for tagging frames with the

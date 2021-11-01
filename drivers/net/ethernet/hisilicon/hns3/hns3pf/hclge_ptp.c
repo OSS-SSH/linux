@@ -6,6 +6,9 @@
 #include "hnae3.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hclge_ptp_get_cycle(struct hclge_dev *hdev)
 {
 	struct hclge_ptp *ptp = hdev->ptp;
@@ -27,11 +30,14 @@ static int hclge_ptp_adjfreq(struct ptp_clock_info *ptp, s32 ppb)
 {
 	struct hclge_dev *hdev = hclge_ptp_get_hdev(ptp);
 	struct hclge_ptp_cycle *cycle = &hdev->ptp->cycle;
+<<<<<<< HEAD
 =======
 static int hclge_ptp_adjfreq(struct ptp_clock_info *ptp, s32 ppb)
 {
 	struct hclge_dev *hdev = hclge_ptp_get_hdev(ptp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 adj_val, adj_base, diff;
 	unsigned long flags;
 	bool is_neg = false;
@@ -43,10 +49,14 @@ static int hclge_ptp_adjfreq(struct ptp_clock_info *ptp, s32 ppb)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	adj_base = (u64)cycle->quo * (u64)cycle->den + (u64)cycle->numer;
 =======
 	adj_base = HCLGE_PTP_CYCLE_ADJ_BASE * HCLGE_PTP_CYCLE_ADJ_UNIT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	adj_base = (u64)cycle->quo * (u64)cycle->den + (u64)cycle->numer;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	adj_val = adj_base * ppb;
 	diff = div_u64(adj_val, 1000000000ULL);
 
@@ -57,6 +67,7 @@ static int hclge_ptp_adjfreq(struct ptp_clock_info *ptp, s32 ppb)
 
 	/* This clock cycle is defined by three part: quotient, numerator
 	 * and denominator. For example, 2.5ns, the quotient is 2,
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * denominator is fixed to ptp->cycle.den, and numerator
 	 * is 0.5 * ptp->cycle.den.
@@ -71,15 +82,24 @@ static int hclge_ptp_adjfreq(struct ptp_clock_info *ptp, s32 ppb)
 =======
 	 * denominator is fixed to HCLGE_PTP_CYCLE_ADJ_UNIT, and numerator
 	 * is 0.5 * HCLGE_PTP_CYCLE_ADJ_UNIT.
+=======
+	 * denominator is fixed to ptp->cycle.den, and numerator
+	 * is 0.5 * ptp->cycle.den.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-	quo = div_u64_rem(adj_val, HCLGE_PTP_CYCLE_ADJ_UNIT, &numerator);
+	quo = div_u64_rem(adj_val, cycle->den, &numerator);
 
 	spin_lock_irqsave(&hdev->ptp->lock, flags);
-	writel(quo, hdev->ptp->io_base + HCLGE_PTP_CYCLE_QUO_REG);
+	writel(quo & HCLGE_PTP_CYCLE_QUO_MASK,
+	       hdev->ptp->io_base + HCLGE_PTP_CYCLE_QUO_REG);
 	writel(numerator, hdev->ptp->io_base + HCLGE_PTP_CYCLE_NUM_REG);
+<<<<<<< HEAD
 	writel(HCLGE_PTP_CYCLE_ADJ_UNIT,
 	       hdev->ptp->io_base + HCLGE_PTP_CYCLE_DEN_REG);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	writel(cycle->den, hdev->ptp->io_base + HCLGE_PTP_CYCLE_DEN_REG);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writel(HCLGE_PTP_CYCLE_ADJ_EN,
 	       hdev->ptp->io_base + HCLGE_PTP_CYCLE_CFG_REG);
 	spin_unlock_irqrestore(&hdev->ptp->lock, flags);
@@ -517,12 +537,18 @@ int hclge_ptp_init(struct hclge_dev *hdev)
 		if (ret)
 			return ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ret = hclge_ptp_get_cycle(hdev);
 		if (ret)
 			return ret;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = hclge_ptp_int_en(hdev, true);

@@ -121,10 +121,14 @@ static irqreturn_t mpc8xxx_gpio_irq_cascade(int irq, void *data)
 		& gc->read_reg(mpc8xxx_gc->regs + GPIO_IMR);
 	for_each_set_bit(i, &mask, 32)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(mpc8xxx_gc->irq, 31 - i);
 =======
 		generic_handle_irq(irq_linear_revmap(mpc8xxx_gc->irq, 31 - i));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(mpc8xxx_gc->irq, 31 - i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return IRQ_HANDLED;
 }
@@ -337,10 +341,14 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 				 BGPIOF_BIG_ENDIAN);
 		if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return ret;
 =======
 			goto err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_dbg(&pdev->dev, "GPIO registers are LITTLE endian\n");
 	} else {
 		ret = bgpio_init(gc, &pdev->dev, 4,
@@ -351,10 +359,14 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 				 | BGPIOF_BIG_ENDIAN_BYTE_ORDER);
 		if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return ret;
 =======
 			goto err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_dbg(&pdev->dev, "GPIO registers are BIG endian\n");
 	}
 
@@ -393,6 +405,7 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 		gc->write_reg(mpc8xxx_gc->regs + GPIO_IBE, 0xffffffff);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = devm_gpiochip_add_data(&pdev->dev, gc, mpc8xxx_gc);
 	if (ret) {
 		dev_err(&pdev->dev,
@@ -405,6 +418,13 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 			"GPIO chip registration failed with status %d\n", ret);
 		goto err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_gpiochip_add_data(&pdev->dev, gc, mpc8xxx_gc);
+	if (ret) {
+		dev_err(&pdev->dev,
+			"GPIO chip registration failed with status %d\n", ret);
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mpc8xxx_gc->irqn = platform_get_irq(pdev, 0);
@@ -426,10 +446,14 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 	ret = devm_request_irq(&pdev->dev, mpc8xxx_gc->irqn,
 			       mpc8xxx_gpio_irq_cascade,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			       IRQF_NO_THREAD | IRQF_SHARED, "gpio-cascade",
 =======
 			       IRQF_SHARED, "gpio-cascade",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       IRQF_NO_THREAD | IRQF_SHARED, "gpio-cascade",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       mpc8xxx_gc);
 	if (ret) {
 		dev_err(&pdev->dev,
@@ -441,10 +465,14 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 	return 0;
 err:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	irq_domain_remove(mpc8xxx_gc->irq);
 =======
 	iounmap(mpc8xxx_gc->regs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	irq_domain_remove(mpc8xxx_gc->irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -458,11 +486,14 @@ static int mpc8xxx_remove(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gpiochip_remove(&mpc8xxx_gc->gc);
 	iounmap(mpc8xxx_gc->regs);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

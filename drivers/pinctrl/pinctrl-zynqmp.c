@@ -867,6 +867,7 @@ static int zynqmp_pinctrl_probe(struct platform_device *pdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int zynqmp_pinctrl_remove(struct platform_device *pdev)
 {
@@ -878,6 +879,8 @@ static int zynqmp_pinctrl_remove(struct platform_device *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id zynqmp_pinctrl_of_match[] = {
 	{ .compatible = "xlnx,zynqmp-pinctrl" },
 	{ }
@@ -891,9 +894,12 @@ static struct platform_driver zynqmp_pinctrl_driver = {
 	},
 	.probe = zynqmp_pinctrl_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = zynqmp_pinctrl_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_platform_driver(zynqmp_pinctrl_driver);
 

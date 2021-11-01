@@ -9,10 +9,15 @@
 #define _ASM_X86_KFENCE_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef MODULE
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifndef MODULE
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/bug.h>
 #include <linux/kfence.h>
 
@@ -72,8 +77,13 @@ static inline bool kfence_protect_page(unsigned long addr, bool protect)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* !MODULE */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* !MODULE */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _ASM_X86_KFENCE_H */

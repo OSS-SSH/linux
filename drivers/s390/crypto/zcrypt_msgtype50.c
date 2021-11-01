@@ -40,10 +40,14 @@ MODULE_DESCRIPTION("Cryptographic Accelerator (message type 50), " \
 MODULE_LICENSE("GPL");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * The type 50 message family is associated with a CEXxA cards.
  *
  * The four members of the family are described below.
@@ -141,10 +145,14 @@ struct type50_crb3_msg {
 } __packed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * The type 80 response family is associated with a CEXxA cards.
  *
  * Note that all unsigned char arrays are right-justified and left-padded
@@ -197,10 +205,14 @@ unsigned int get_rsa_crt_fc(struct ica_rsa_modexpo_crt *crt, int *fcode)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Convert a ICAMEX message to a type50 MEX message.
  *
  * @zq: crypto queue pointer
@@ -268,10 +280,14 @@ static int ICAMEX_msg_to_type50MEX_msg(struct zcrypt_queue *zq,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Convert a ICACRT message to a type50 CRT message.
  *
  * @zq: crypto queue pointer
@@ -363,10 +379,14 @@ static int ICACRT_msg_to_type50CRT_msg(struct zcrypt_queue *zq,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Copy results from a type 80 reply message back to user space.
  *
  * @zq: crypto device pointer
@@ -439,10 +459,14 @@ static int convert_response_cex2a(struct zcrypt_queue *zq,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * This function is called from the AP bus code after a crypto request
  * "msg" has finished with the reply message "reply".
  * It is called from tasklet context.
@@ -482,10 +506,14 @@ out:
 static atomic_t zcrypt_step = ATOMIC_INIT(0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * The request distributor calls this function if it picked the CEXxA
  * device to handle a modexpo request.
  * @zq: pointer to zcrypt_queue structure that identifies the
@@ -531,10 +559,14 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * The request distributor calls this function if it picked the CEXxA
  * device to handle a modexpo_crt request.
  * @zq: pointer to zcrypt_queue structure that identifies the
@@ -580,10 +612,14 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * The crypto operations for message type 50.
  */
 static struct zcrypt_ops zcrypt_msgtype50_ops = {

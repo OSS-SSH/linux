@@ -248,18 +248,24 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	max98360a: audio-codec-0 {
 		compatible = "maxim,max98360a";
 =======
 	max98357a: audio-codec-0 {
 		compatible = "maxim,max98357a";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	max98360a: audio-codec-0 {
+		compatible = "maxim,max98360a";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pinctrl-names = "default";
 		pinctrl-0 = <&amp_en>;
 		sdmode-gpios = <&tlmm 23 GPIO_ACTIVE_HIGH>;
 		#sound-dai-cells = <0>;
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	panel: panel {
@@ -278,6 +284,8 @@
 	};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pwmleds {
 		compatible = "pwm-leds";
 		keyboard_backlight: keyboard-backlight {
@@ -320,6 +328,9 @@
 
 			sound_multimedia1_codec: codec {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				sound-dai = <&max98360a>;
 			};
 		};
@@ -333,9 +344,12 @@
 
 			codec {
 				sound-dai = <&mdss_dp>;
+<<<<<<< HEAD
 =======
 				sound-dai = <&max98357a>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 	};
@@ -691,6 +705,9 @@ edp_brij_i2c: &i2c2 {
 			};
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		aux-bus {
 			panel: panel {
@@ -706,8 +723,11 @@ edp_brij_i2c: &i2c2 {
 				};
 			};
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 
@@ -811,12 +831,18 @@ hp_i2c: &i2c9 {
 		qcom,playback-sd-lines = <0>;
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hdmi@5 {
 		reg = <LPASS_DP_RX>;
 	};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &mdp {
@@ -828,6 +854,9 @@ hp_i2c: &i2c9 {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &mdss_dp {
 	status = "okay";
 	pinctrl-names = "default";
@@ -837,8 +866,11 @@ hp_i2c: &i2c9 {
 	vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &pm6150_adc {
 	charger-thermistor@4f {
 		reg = <ADC5_AMUX_THM3_100K_PU>;

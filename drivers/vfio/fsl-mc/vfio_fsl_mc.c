@@ -20,6 +20,7 @@
 static struct fsl_mc_driver vfio_fsl_mc_driver;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int vfio_fsl_mc_open_device(struct vfio_device *core_vdev)
 {
 	struct vfio_fsl_mc_device *vdev =
@@ -101,6 +102,12 @@ unlock:
 static int vfio_fsl_mc_regions_init(struct vfio_fsl_mc_device *vdev)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int vfio_fsl_mc_open_device(struct vfio_device *core_vdev)
+{
+	struct vfio_fsl_mc_device *vdev =
+		container_of(core_vdev, struct vfio_fsl_mc_device, vdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fsl_mc_device *mc_dev = vdev->mc_dev;
 	int count = mc_dev->obj_desc.region_count;
 	int i;
@@ -143,6 +150,7 @@ static void vfio_fsl_mc_regions_cleanup(struct vfio_fsl_mc_device *vdev)
 	kfree(vdev->regions);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 static void vfio_fsl_mc_close_device(struct vfio_device *core_vdev)
@@ -187,28 +195,32 @@ out:
 
 	return ret;
 }
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-static void vfio_fsl_mc_release(struct vfio_device *core_vdev)
+static void vfio_fsl_mc_close_device(struct vfio_device *core_vdev)
 {
 	struct vfio_fsl_mc_device *vdev =
 		container_of(core_vdev, struct vfio_fsl_mc_device, vdev);
+	struct fsl_mc_device *mc_dev = vdev->mc_dev;
+	struct device *cont_dev = fsl_mc_cont_dev(&mc_dev->dev);
+	struct fsl_mc_device *mc_cont = to_fsl_mc_device(cont_dev);
 	int ret;
 
-	mutex_lock(&vdev->reflck->lock);
+	vfio_fsl_mc_regions_cleanup(vdev);
 
-	if (!(--vdev->refcnt)) {
-		struct fsl_mc_device *mc_dev = vdev->mc_dev;
-		struct device *cont_dev = fsl_mc_cont_dev(&mc_dev->dev);
-		struct fsl_mc_device *mc_cont = to_fsl_mc_device(cont_dev);
+	/* reset the device before cleaning up the interrupts */
+	ret = dprc_reset_container(mc_cont->mc_io, 0, mc_cont->mc_handle,
+				   mc_cont->obj_desc.id,
+				   DPRC_RESET_OPTION_NON_RECURSIVE);
 
-		vfio_fsl_mc_regions_cleanup(vdev);
+	if (WARN_ON(ret))
+		dev_warn(&mc_cont->dev,
+			 "VFIO_FLS_MC: reset device has failed (%d)\n", ret);
 
-		/* reset the device before cleaning up the interrupts */
-		ret = dprc_reset_container(mc_cont->mc_io, 0,
-		      mc_cont->mc_handle,
-			  mc_cont->obj_desc.id,
-			  DPRC_RESET_OPTION_NON_RECURSIVE);
+	vfio_fsl_mc_irqs_cleanup(vdev);
 
+<<<<<<< HEAD
 		if (ret) {
 			dev_warn(&mc_cont->dev, "VFIO_FLS_MC: reset device has failed (%d)\n",
 				 ret);
@@ -222,6 +234,9 @@ static void vfio_fsl_mc_release(struct vfio_device *core_vdev)
 
 	mutex_unlock(&vdev->reflck->lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fsl_mc_cleanup_irq_pool(mc_cont);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static long vfio_fsl_mc_ioctl(struct vfio_device *core_vdev,
@@ -539,12 +554,17 @@ static int vfio_fsl_mc_mmap(struct vfio_device *core_vdev,
 static const struct vfio_device_ops vfio_fsl_mc_ops = {
 	.name		= "vfio-fsl-mc",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.open_device	= vfio_fsl_mc_open_device,
 	.close_device	= vfio_fsl_mc_close_device,
 =======
 	.open		= vfio_fsl_mc_open,
 	.release	= vfio_fsl_mc_release,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.open_device	= vfio_fsl_mc_open_device,
+	.close_device	= vfio_fsl_mc_close_device,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ioctl		= vfio_fsl_mc_ioctl,
 	.read		= vfio_fsl_mc_read,
 	.write		= vfio_fsl_mc_write,
@@ -665,10 +685,14 @@ static int vfio_fsl_mc_probe(struct fsl_mc_device *mc_dev)
 	mutex_init(&vdev->igate);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (is_fsl_mc_bus_dprc(mc_dev))
 		ret = vfio_assign_device_set(&vdev->vdev, &mc_dev->dev);
 	else
 		ret = vfio_assign_device_set(&vdev->vdev, mc_dev->dev.parent);
+<<<<<<< HEAD
 	if (ret)
 		goto out_uninit;
 
@@ -677,13 +701,19 @@ static int vfio_fsl_mc_probe(struct fsl_mc_device *mc_dev)
 		goto out_uninit;
 =======
 	ret = vfio_fsl_mc_reflck_attach(vdev);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
-		goto out_kfree;
+		goto out_uninit;
 
 	ret = vfio_fsl_mc_init_device(vdev);
 	if (ret)
+<<<<<<< HEAD
 		goto out_reflck;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_uninit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = vfio_register_group_dev(&vdev->vdev);
 	if (ret) {
@@ -691,6 +721,7 @@ static int vfio_fsl_mc_probe(struct fsl_mc_device *mc_dev)
 		goto out_device;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/*
@@ -700,6 +731,8 @@ static int vfio_fsl_mc_probe(struct fsl_mc_device *mc_dev)
 	 * safe to be after the vfio device is made live.
 	 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = vfio_fsl_mc_scan_container(mc_dev);
 	if (ret)
 		goto out_group_dev;
@@ -711,6 +744,7 @@ out_group_dev:
 out_device:
 	vfio_fsl_uninit_device(vdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_uninit:
 	vfio_uninit_group_dev(&vdev->vdev);
 =======
@@ -718,6 +752,10 @@ out_reflck:
 	vfio_fsl_mc_reflck_put(vdev->reflck);
 out_kfree:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_uninit:
+	vfio_uninit_group_dev(&vdev->vdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(vdev);
 out_group_put:
 	vfio_iommu_group_put(group, dev);
@@ -735,12 +773,17 @@ static int vfio_fsl_mc_remove(struct fsl_mc_device *mc_dev)
 	dprc_remove_devices(mc_dev, NULL, 0);
 	vfio_fsl_uninit_device(vdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	vfio_uninit_group_dev(&vdev->vdev);
 =======
 	vfio_fsl_mc_reflck_put(vdev->reflck);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	vfio_uninit_group_dev(&vdev->vdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(vdev);
 	vfio_iommu_group_put(mc_dev->dev.iommu_group, dev);
 

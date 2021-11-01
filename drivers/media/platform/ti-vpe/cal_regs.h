@@ -73,6 +73,7 @@
 #define CAL_CSI2_VC_IRQENABLE(m)	(0x318U + (m) * 0x80U)
 #define CAL_CSI2_VC_IRQSTATUS(m)	(0x328U + (m) * 0x80U)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CAL_CSI2_CTX(phy, csi2_ctx)	(0x330U + (phy) * 0x80U + (csi2_ctx) * 4)
 #define CAL_CSI2_STATUS(phy, csi2_ctx)	(0x350U + (phy) * 0x80U + (csi2_ctx) * 4)
 =======
@@ -93,6 +94,10 @@
 #define CAL_CSI2_STATUS6(m)		(0x368U + (m) * 0x80U)
 #define CAL_CSI2_STATUS7(m)		(0x36cU + (m) * 0x80U)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CAL_CSI2_CTX(phy, csi2_ctx)	(0x330U + (phy) * 0x80U + (csi2_ctx) * 4)
+#define CAL_CSI2_STATUS(phy, csi2_ctx)	(0x350U + (phy) * 0x80U + (csi2_ctx) * 4)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* CAL CSI2 PHY register offsets */
 #define CAL_CSI2_PHY_REG0		0x000
@@ -145,11 +150,16 @@
 #define CAL_HL_IRQ_EOI_LINE_NUMBER_EOI0			0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CAL_HL_IRQ_WDMA_END_MASK(m)		BIT(m)
 #define CAL_HL_IRQ_WDMA_START_MASK(m)		BIT(m)
 =======
 #define CAL_HL_IRQ_MASK(m)			BIT(m)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CAL_HL_IRQ_WDMA_END_MASK(m)		BIT(m)
+#define CAL_HL_IRQ_WDMA_START_MASK(m)		BIT(m)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CAL_HL_IRQ_OCPO_ERR_MASK		BIT(6)
 
@@ -430,12 +440,16 @@
 #define CAL_CSI2_TIMING_FORCE_RX_MODE_IO1_MASK		BIT(15)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CAL_CSI2_VC_IRQ_FS_IRQ_MASK(n)			BIT(0 + ((n) * 8))
 #define CAL_CSI2_VC_IRQ_FE_IRQ_MASK(n)			BIT(1 + ((n) * 8))
 #define CAL_CSI2_VC_IRQ_LS_IRQ_MASK(n)			BIT(2 + ((n) * 8))
 #define CAL_CSI2_VC_IRQ_LE_IRQ_MASK(n)			BIT(3 + ((n) * 8))
 #define CAL_CSI2_VC_IRQ_CS_IRQ_MASK(n)			BIT(4 + ((n) * 8))
 #define CAL_CSI2_VC_IRQ_ECC_CORRECTION_IRQ_MASK(n)	BIT(5 + ((n) * 8))
+<<<<<<< HEAD
 
 #define CAL_CSI2_CTX_DT_MASK		GENMASK(5, 0)
 #define CAL_CSI2_CTX_DT_DISABLED	0
@@ -468,6 +482,12 @@
 
 #define CAL_CSI2_CTX_DT_MASK		GENMASK(5, 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#define CAL_CSI2_CTX_DT_MASK		GENMASK(5, 0)
+#define CAL_CSI2_CTX_DT_DISABLED	0
+#define CAL_CSI2_CTX_DT_ANY		1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CAL_CSI2_CTX_VC_MASK		GENMASK(7, 6)
 #define CAL_CSI2_CTX_CPORT_MASK		GENMASK(12, 8)
 #define CAL_CSI2_CTX_ATT_MASK		BIT(13)

@@ -664,9 +664,13 @@ qla2x00_load_ram(scsi_qla_host_t *vha, dma_addr_t req_dma, uint32_t risc_addr,
 
 #define	NVME_ENABLE_FLAG	BIT_3
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define	EDIF_HW_SUPPORT		BIT_10
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define	EDIF_HW_SUPPORT		BIT_10
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * qla2x00_execute_fw
@@ -744,10 +748,14 @@ again:
 
 		mcp->out_mb |= MBX_4 | MBX_3 | MBX_2 | MBX_1 | MBX_11;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mcp->in_mb |= MBX_5 | MBX_3 | MBX_2 | MBX_1;
 =======
 		mcp->in_mb |= MBX_3 | MBX_2 | MBX_1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mcp->in_mb |= MBX_5 | MBX_3 | MBX_2 | MBX_1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		mcp->mb[1] = LSW(risc_addr);
 		mcp->out_mb |= MBX_1;
@@ -804,14 +812,20 @@ again:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_QLA28XX(ha) && (mcp->mb[5] & EDIF_HW_SUPPORT)) {
 		ha->flags.edif_hw = 1;
 		ql_log(ql_log_info, vha, 0xffff,
 		    "%s: edif HW\n", __func__);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 done:
 	ql_dbg(ql_dbg_mbx + ql_dbg_verbose, vha, 0x1028,
 	    "Done %s.\n", __func__);
@@ -1148,6 +1162,9 @@ qla2x00_get_fw_version(scsi_qla_host_t *vha)
 			vha->flags.nvme2_enabled = 1;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (IS_QLA28XX(ha) && ha->flags.edif_hw && ql2xsecenable &&
 		    (ha->fw_attributes_ext[0] & FW_ATTR_EXT0_EDIF)) {
@@ -1155,8 +1172,11 @@ qla2x00_get_fw_version(scsi_qla_host_t *vha)
 			ql_log(ql_log_info, vha, 0xffff,
 			       "%s: edif is enabled\n", __func__);
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (IS_QLA27XX(ha) || IS_QLA28XX(ha)) {
@@ -3259,10 +3279,14 @@ qla24xx_abort_command(srb_t *sp)
 		req = sp->qpair->req;
 	else
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return QLA_ERR_NO_QPAIR;
 =======
 		return QLA_FUNCTION_FAILED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return QLA_ERR_NO_QPAIR;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ql2xasynctmfenable)
 		return qla24xx_async_abort_command(sp);
@@ -3276,10 +3300,14 @@ qla24xx_abort_command(srb_t *sp)
 	if (handle == req->num_outstanding_cmds) {
 		/* Command not found. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return QLA_ERR_NOT_FOUND;
 =======
 		return QLA_FUNCTION_FAILED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return QLA_ERR_NOT_FOUND;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	abt = dma_pool_zalloc(ha->s_dma_pool, GFP_KERNEL, &abt_dma);
@@ -4071,12 +4099,18 @@ qla24xx_report_id_acquisition(scsi_qla_host_t *vha,
 				fcport->n2n_flag = 1;
 				fcport->keep_nport_handle = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				fcport->login_retry = vha->hw->login_retry_count;
 				fcport->fc4_type = FS_FC4TYPE_FCP;
 				if (vha->flags.nvme_enabled)
 					fcport->fc4_type |= FS_FC4TYPE_NVME;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				if (wwn_to_u64(vha->port_name) >
 				    wwn_to_u64(fcport->port_name)) {
@@ -4215,6 +4249,9 @@ qla24xx_report_id_acquisition(scsi_qla_host_t *vha,
 			fcport->d_id.b.al_pa =
 				rptid_entry->u.f2.remote_nport_id[0];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/*
 			 * For the case where remote port sending PRLO, FW
@@ -4225,8 +4262,11 @@ qla24xx_report_id_acquisition(scsi_qla_host_t *vha,
 			 */
 			if (atomic_read(&fcport->state) == FCS_ONLINE)
 				qlt_schedule_sess_for_deletion(fcport);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -5002,10 +5042,14 @@ qla24xx_get_port_login_templ(scsi_qla_host_t *vha, dma_addr_t buf_dma,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PUREX_CMD_COUNT	4
 =======
 #define PUREX_CMD_COUNT	2
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PUREX_CMD_COUNT	4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int
 qla25xx_set_els_cmds_supported(scsi_qla_host_t *vha)
 {
@@ -5014,9 +5058,13 @@ qla25xx_set_els_cmds_supported(scsi_qla_host_t *vha)
 	mbx_cmd_t *mcp = &mc;
 	uint8_t *els_cmd_map;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint8_t active_cnt = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint8_t active_cnt = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_addr_t els_cmd_map_dma;
 	uint8_t cmd_opcode[PUREX_CMD_COUNT];
 	uint8_t i, index, purex_bit;
@@ -5039,6 +5087,9 @@ qla25xx_set_els_cmds_supported(scsi_qla_host_t *vha)
 
 	/* List of Purex ELS */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ql2xrdpenable) {
 		cmd_opcode[active_cnt] = ELS_RDP;
 		active_cnt++;
@@ -5051,6 +5102,7 @@ qla25xx_set_els_cmds_supported(scsi_qla_host_t *vha)
 		cmd_opcode[active_cnt] = ELS_AUTH_ELS;
 		active_cnt++;
 	}
+<<<<<<< HEAD
 
 	for (i = 0; i < active_cnt; i++) {
 =======
@@ -5059,6 +5111,10 @@ qla25xx_set_els_cmds_supported(scsi_qla_host_t *vha)
 
 	for (i = 0; i < PUREX_CMD_COUNT; i++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	for (i = 0; i < active_cnt; i++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		index = cmd_opcode[i] / 8;
 		purex_bit = cmd_opcode[i] % 8;
 		els_cmd_map[index] |= 1 << purex_bit;
@@ -6669,14 +6725,20 @@ int __qla24xx_parse_gpdb(struct scsi_qla_host *vha, fc_port_t *fcport,
 	fcport->d_id.b.rsvd_1 = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ql_dbg(ql_dbg_disc, vha, 0x2062,
 	     "%8phC SVC Param w3 %02x%02x",
 	     fcport->port_name,
 	     pd->prli_svc_param_word_3[1],
 	     pd->prli_svc_param_word_3[0]);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (NVME_TARGET(vha->hw, fcport)) {
 		fcport->port_type = FCT_NVME;
 		if ((pd->prli_svc_param_word_3[0] & BIT_5) == 0)

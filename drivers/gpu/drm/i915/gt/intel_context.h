@@ -17,9 +17,13 @@
 #include "intel_ring_types.h"
 #include "intel_timeline_types.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "i915_trace.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "i915_trace.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CE_TRACE(ce, fmt, ...) do {					\
 	const struct intel_context *ce__ = (ce);			\
@@ -35,11 +39,17 @@ void intel_context_init(struct intel_context *ce,
 void intel_context_fini(struct intel_context *ce);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void i915_context_module_exit(void);
 int i915_context_module_init(void);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void i915_context_module_exit(void);
+int i915_context_module_init(void);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct intel_context *
 intel_context_create(struct intel_engine_cs *engine);
 
@@ -80,6 +90,9 @@ intel_context_is_pinned(struct intel_context *ce)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void intel_context_cancel_request(struct intel_context *ce,
 						struct i915_request *rq)
 {
@@ -87,8 +100,11 @@ static inline void intel_context_cancel_request(struct intel_context *ce,
 	return ce->ops->cancel_request(ce, rq);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * intel_context_unlock_pinned - Releases the earlier locking of 'pinned' status
  * @ce - the context
@@ -134,6 +150,9 @@ static inline void __intel_context_pin(struct intel_context *ce)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __intel_context_do_unpin(struct intel_context *ce, int sub);
 
 static inline void intel_context_sched_disable_unpin(struct intel_context *ce)
@@ -160,9 +179,12 @@ static inline void intel_context_unpin(struct intel_context *ce)
 		}
 	}
 }
+<<<<<<< HEAD
 =======
 void intel_context_unpin(struct intel_context *ce);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void intel_context_enter_engine(struct intel_context *ce);
 void intel_context_exit_engine(struct intel_context *ce);
@@ -225,6 +247,7 @@ int intel_context_prepare_remote_request(struct intel_context *ce,
 struct i915_request *intel_context_create_request(struct intel_context *ce);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct i915_request *
 intel_context_find_active_request(struct intel_context *ce);
 =======
@@ -233,6 +256,10 @@ static inline struct intel_ring *__intel_context_ring_size(u64 sz)
 	return u64_to_ptr(struct intel_ring, sz);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct i915_request *
+intel_context_find_active_request(struct intel_context *ce);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline bool intel_context_is_barrier(const struct intel_context *ce)
 {
@@ -275,6 +302,9 @@ static inline bool intel_context_set_banned(struct intel_context *ce)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool intel_context_ban(struct intel_context *ce,
 				     struct i915_request *rq)
 {
@@ -287,8 +317,11 @@ static inline bool intel_context_ban(struct intel_context *ce,
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool
 intel_context_force_single_submission(const struct intel_context *ce)
 {

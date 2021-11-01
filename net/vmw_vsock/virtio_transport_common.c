@@ -77,16 +77,22 @@ virtio_transport_alloc_pkt(struct virtio_vsock_pkt_info *info,
 
 		if (msg_data_left(info->msg) == 0 &&
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    info->type == VIRTIO_VSOCK_TYPE_SEQPACKET) {
 			pkt->hdr.flags |= cpu_to_le32(VIRTIO_VSOCK_SEQ_EOM);
 
 			if (info->msg->msg_flags & MSG_EOR)
 				pkt->hdr.flags |= cpu_to_le32(VIRTIO_VSOCK_SEQ_EOR);
 		}
+<<<<<<< HEAD
 =======
 		    info->type == VIRTIO_VSOCK_TYPE_SEQPACKET)
 			pkt->hdr.flags |= cpu_to_le32(VIRTIO_VSOCK_SEQ_EOR);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	trace_virtio_transport_alloc_pkt(src_cid, src_port,
@@ -467,6 +473,7 @@ static int virtio_transport_seqpacket_do_dequeue(struct vsock_sock *vsk,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOM) {
 			msg_ready = true;
 			vvs->msg_count--;
@@ -478,6 +485,14 @@ static int virtio_transport_seqpacket_do_dequeue(struct vsock_sock *vsk,
 			msg_ready = true;
 			vvs->msg_count--;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOM) {
+			msg_ready = true;
+			vvs->msg_count--;
+
+			if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOR)
+				msg->msg_flags |= MSG_EOR;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		virtio_transport_dec_rx_pkt(vvs, pkt);
@@ -1048,10 +1063,14 @@ virtio_transport_recv_enqueue(struct vsock_sock *vsk,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOM)
 =======
 	if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOR)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOM)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vvs->msg_count++;
 
 	/* Try to copy small packets into the buffer of last packet queued,
@@ -1067,6 +1086,7 @@ virtio_transport_recv_enqueue(struct vsock_sock *vsk,
 		/* If there is space in the last packet queued, we copy the
 		 * new packet in its buffer. We avoid this if the last packet
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * queued has VIRTIO_VSOCK_SEQ_EOM set, because this is
 		 * delimiter of SEQPACKET message, so 'pkt' is the first packet
 		 * of a new message.
@@ -1081,6 +1101,14 @@ virtio_transport_recv_enqueue(struct vsock_sock *vsk,
 		if ((pkt->len <= last_pkt->buf_len - last_pkt->len) &&
 		    !(le32_to_cpu(last_pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOR)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * queued has VIRTIO_VSOCK_SEQ_EOM set, because this is
+		 * delimiter of SEQPACKET message, so 'pkt' is the first packet
+		 * of a new message.
+		 */
+		if ((pkt->len <= last_pkt->buf_len - last_pkt->len) &&
+		    !(le32_to_cpu(last_pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOM)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			memcpy(last_pkt->buf + last_pkt->len, pkt->buf,
 			       pkt->len);
 			last_pkt->len += pkt->len;
@@ -1111,11 +1139,17 @@ virtio_transport_recv_connected(struct sock *sk,
 		sk->sk_data_ready(sk);
 		return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case VIRTIO_VSOCK_OP_CREDIT_REQUEST:
 		virtio_transport_send_credit_update(vsk);
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case VIRTIO_VSOCK_OP_CREDIT_REQUEST:
+		virtio_transport_send_credit_update(vsk);
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case VIRTIO_VSOCK_OP_CREDIT_UPDATE:
 		sk->sk_write_space(sk);
 		break;

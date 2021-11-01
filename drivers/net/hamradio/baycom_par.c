@@ -381,10 +381,14 @@ static int par96_close(struct net_device *dev)
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int baycom_ioctl(struct net_device *dev, void __user *data,
 =======
 static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int baycom_ioctl(struct net_device *dev, void __user *data,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct hdlcdrv_ioctl *hi, int cmd);
 
 /* --------------------------------------------------------------------- */
@@ -413,10 +417,14 @@ static int baycom_setmode(struct baycom_state *bc, const char *modestr)
 /* --------------------------------------------------------------------- */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int baycom_ioctl(struct net_device *dev, void __user *data,
 =======
 static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int baycom_ioctl(struct net_device *dev, void __user *data,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct hdlcdrv_ioctl *hi, int cmd)
 {
 	struct baycom_state *bc;
@@ -437,10 +445,14 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
 	case HDLCDRVCTL_GETMODE:
 		strcpy(hi->data.modename, bc->options ? "par96" : "picpar");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
 =======
 		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		return 0;
 
@@ -453,10 +465,14 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
 	case HDLCDRVCTL_MODELIST:
 		strcpy(hi->data.modename, "par96,picpar");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
 =======
 		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(data, hi, sizeof(struct hdlcdrv_ioctl)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		return 0;
 
@@ -466,10 +482,14 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (copy_from_user(&bi, data, sizeof(bi)))
 =======
 	if (copy_from_user(&bi, ifr->ifr_data, sizeof(bi)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_from_user(&bi, data, sizeof(bi)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 	switch (bi.cmd) {
 	default:
@@ -485,10 +505,14 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
 
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (copy_to_user(data, &bi, sizeof(bi)))
 =======
 	if (copy_to_user(ifr->ifr_data, &bi, sizeof(bi)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_to_user(data, &bi, sizeof(bi)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 	return 0;
 

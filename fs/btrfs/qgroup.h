@@ -299,10 +299,14 @@ int btrfs_qgroup_trace_extent_nolock(
  * transaction committing, but not now as qgroup accounting will be wrong again.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
 =======
 int btrfs_qgroup_trace_extent_post(struct btrfs_fs_info *fs_info,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct btrfs_qgroup_extent_record *qrecord);
 
 /*

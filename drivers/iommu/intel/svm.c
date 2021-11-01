@@ -32,10 +32,13 @@ static void intel_svm_drain_prq(struct device *dev, u32 pasid);
 #define to_intel_svm_dev(handle) container_of(handle, struct intel_svm_dev, sva)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define PRQ_ORDER 0
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEFINE_XARRAY_ALLOC(pasid_private_array);
 static int pasid_private_add(ioasid_t pasid, void *priv)
 {
@@ -520,11 +523,14 @@ static void load_pasid(struct mm_struct *mm, u32 pasid)
 	mutex_lock(&mm->context.lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Synchronize with READ_ONCE in update_pasid(). */
 	smp_store_release(&mm->pasid, pasid);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Update PASID MSR on all CPUs running the mm's tasks. */
 	on_each_cpu_mask(mm_cpumask(mm), _load_pasid, NULL, true);
 
@@ -682,9 +688,12 @@ static int intel_svm_unbind_mm(struct device *dev, u32 pasid)
 
 			if (list_empty(&svm->devs)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				intel_svm_free_pasid(mm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (svm->notifier.ops) {
 					mmu_notifier_unregister(&svm->notifier, mm);
 					/* Clear mm's pasid. */
@@ -700,10 +709,15 @@ static int intel_svm_unbind_mm(struct device *dev, u32 pasid)
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Drop a PASID reference and free it if no reference. */
 		intel_svm_free_pasid(mm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Drop a PASID reference and free it if no reference. */
+		intel_svm_free_pasid(mm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 out:
 	return ret;
@@ -739,10 +753,13 @@ struct page_req_dsc {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define PRQ_RING_MASK	((0x1000 << PRQ_ORDER) - 0x20)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool is_canonical_address(u64 addr)
 {
 	int shift = 64 - (__VIRTUAL_MASK_SHIFT + 1);
@@ -813,6 +830,9 @@ prq_retry:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * A work in IO page fault workqueue may try to lock pasid_mutex now.
 	 * Holding pasid_mutex while waiting in iopf_queue_flush_dev() for
@@ -824,11 +844,16 @@ prq_retry:
 	 */
 	lockdep_assert_held(&pasid_mutex);
 	mutex_unlock(&pasid_mutex);
+<<<<<<< HEAD
 	iopf_queue_flush_dev(dev);
 	mutex_lock(&pasid_mutex);
 =======
 	iopf_queue_flush_dev(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iopf_queue_flush_dev(dev);
+	mutex_lock(&pasid_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Perform steps described in VT-d spec CH7.10 to drain page

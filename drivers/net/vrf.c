@@ -858,19 +858,26 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
 	struct neighbour *neigh;
 	bool is_v6gw = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret = -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	nf_reset_ct(skb);
 
 	/* Be paranoid, rather than too clever. */
 	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb = skb_expand_head(skb, hh_len);
 		if (!skb) {
 			dev->stats.tx_errors++;
 			return -ENOMEM;
+<<<<<<< HEAD
 		}
 =======
 		struct sk_buff *skb2;
@@ -886,6 +893,9 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
 		consume_skb(skb);
 		skb = skb2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	rcu_read_lock_bh();
@@ -893,10 +903,15 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
 	neigh = ip_neigh_for_gw(rt, skb, &is_v6gw);
 	if (!IS_ERR(neigh)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int ret;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sock_confirm_neigh(skb, neigh);
 		/* if crossing protocols, can not use the cached header */
 		ret = neigh_output(neigh, skb, is_v6gw);
@@ -906,6 +921,7 @@ static int vrf_finish_output(struct net *net, struct sock *sk, struct sk_buff *s
 
 	rcu_read_unlock_bh();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vrf_tx_error(skb->dev, skb);
 	return -EINVAL;
 =======
@@ -913,6 +929,10 @@ err:
 	vrf_tx_error(skb->dev, skb);
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vrf_tx_error(skb->dev, skb);
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int vrf_output(struct net *net, struct sock *sk, struct sk_buff *skb)
@@ -1389,10 +1409,15 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
 	bool is_ndisc = ipv6_ndisc_frame(skb);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nf_reset_ct(skb);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nf_reset_ct(skb);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* loopback, multicast & non-ND link-local traffic; do not push through
 	 * packet taps again. Reset pkt_type for upper layers to process skb.
 	 * For strict packets with a source LLA, determine the dst using the
@@ -1456,10 +1481,15 @@ static struct sk_buff *vrf_ip_rcv(struct net_device *vrf_dev,
 	IPCB(skb)->flags |= IPSKB_L3SLAVE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nf_reset_ct(skb);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nf_reset_ct(skb);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ipv4_is_multicast(ip_hdr(skb)->daddr))
 		goto out;
 

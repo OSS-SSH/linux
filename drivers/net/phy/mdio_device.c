@@ -180,6 +180,9 @@ static int mdio_remove(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mdio_shutdown(struct device *dev)
 {
 	struct mdio_device *mdiodev = to_mdio_device(dev);
@@ -190,8 +193,11 @@ static void mdio_shutdown(struct device *dev)
 		mdiodrv->shutdown(mdiodev);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * mdio_driver_register - register an mdio_driver with the MDIO layer
  * @drv: new mdio_driver to register
@@ -207,9 +213,13 @@ int mdio_driver_register(struct mdio_driver *drv)
 	mdiodrv->driver.probe = mdio_probe;
 	mdiodrv->driver.remove = mdio_remove;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mdiodrv->driver.shutdown = mdio_shutdown;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mdiodrv->driver.shutdown = mdio_shutdown;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	retval = driver_register(&mdiodrv->driver);
 	if (retval) {

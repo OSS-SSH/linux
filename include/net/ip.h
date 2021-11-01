@@ -437,20 +437,28 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
 						    bool forwarding)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct rtable *rt = container_of(dst, struct rtable, dst);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct rtable *rt = container_of(dst, struct rtable, dst);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net *net = dev_net(dst->dev);
 	unsigned int mtu;
 
 	if (net->ipv4.sysctl_ip_fwd_use_pmtu ||
 	    ip_mtu_locked(dst) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !forwarding) {
 		mtu = rt->rt_pmtu;
 		if (mtu && time_before(jiffies, rt->dst.expires))
 			goto out;
 	}
+<<<<<<< HEAD
 
 	/* 'forwarding = true' case should always honour route mtu */
 	mtu = dst_metric_raw(dst, RTAX_MTU);
@@ -475,6 +483,23 @@ out:
 	if (!mtu)
 		mtu = min(READ_ONCE(dst->dev->mtu), IP_MAX_MTU);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* 'forwarding = true' case should always honour route mtu */
+	mtu = dst_metric_raw(dst, RTAX_MTU);
+	if (mtu)
+		goto out;
+
+	mtu = READ_ONCE(dst->dev->mtu);
+
+	if (unlikely(ip_mtu_locked(dst))) {
+		if (rt->rt_uses_gateway && mtu > 576)
+			mtu = 576;
+	}
+
+out:
+	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
 }

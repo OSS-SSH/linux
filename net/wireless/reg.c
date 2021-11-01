@@ -172,16 +172,22 @@ enum nl80211_dfs_regions reg_get_dfs_region(struct wiphy *wiphy)
 	const struct ieee80211_regdomain *regd = NULL;
 	const struct ieee80211_regdomain *wiphy_regd = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum nl80211_dfs_regions dfs_region;
 
 	rcu_read_lock();
 	regd = get_cfg80211_regdom();
 	dfs_region = regd->dfs_region;
+<<<<<<< HEAD
 =======
 
 	rcu_read_lock();
 	regd = get_cfg80211_regdom();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!wiphy)
 		goto out;
@@ -191,13 +197,19 @@ enum nl80211_dfs_regions reg_get_dfs_region(struct wiphy *wiphy)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (wiphy->regulatory_flags & REGULATORY_WIPHY_SELF_MANAGED) {
 		dfs_region = wiphy_regd->dfs_region;
 		goto out;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (wiphy_regd->dfs_region == regd->dfs_region)
 		goto out;
 
@@ -210,10 +222,14 @@ out:
 	rcu_read_unlock();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return dfs_region;
 =======
 	return regd->dfs_region;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return dfs_region;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void rcu_free_regdom(const struct ieee80211_regdomain *r)

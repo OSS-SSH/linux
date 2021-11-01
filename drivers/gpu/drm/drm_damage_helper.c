@@ -35,6 +35,7 @@
 #include <drm/drm_device.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /**
  * DOC: overview
@@ -75,6 +76,8 @@
  */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void convert_clip_rect_to_rect(const struct drm_clip_rect *src,
 				      struct drm_mode_rect *dest,
 				      uint32_t num_clips, uint32_t src_inc)
@@ -91,6 +94,7 @@ static void convert_clip_rect_to_rect(const struct drm_clip_rect *src,
 }
 
 /**
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
  * drm_plane_enable_fb_damage_clips - Enables plane fb damage clips property.
@@ -110,6 +114,8 @@ EXPORT_SYMBOL(drm_plane_enable_fb_damage_clips);
 
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_atomic_helper_check_plane_damage - Verify plane damage on atomic_check.
  * @state: The driver state object.
  * @plane_state: Plane state for which to verify damage.
@@ -177,10 +183,14 @@ int drm_atomic_helper_dirtyfb(struct drm_framebuffer *fb,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * When called from ioctl, we are interruptible, but not when called
 =======
 	 * When called from ioctl, we are interruptable, but not when called
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * When called from ioctl, we are interruptible, but not when called
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * internally (ie. defio worker)
 	 */
 	drm_modeset_acquire_init(&ctx,
@@ -293,10 +303,14 @@ drm_atomic_helper_damage_iter_init(struct drm_atomic_helper_damage_iter *iter,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iter->clips = (struct drm_rect *)drm_plane_get_damage_clips(state);
 =======
 	iter->clips = drm_helper_get_plane_damage_clips(state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iter->clips = (struct drm_rect *)drm_plane_get_damage_clips(state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iter->num_clips = drm_plane_get_damage_clips_count(state);
 
 	/* Round down for x1/y1 and round up for x2/y2 to catch all pixels */

@@ -151,10 +151,15 @@ struct evsel {
 		struct bperf_follower_bpf *follower_skel;
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long		open_flags;
 	int			precise_ip_original;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long		open_flags;
+	int			precise_ip_original;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct perf_missing_features {
@@ -217,11 +222,17 @@ struct evsel *evsel__clone(struct evsel *orig);
 struct evsel *evsel__newtp_idx(const char *sys, const char *name, int idx);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int copy_config_terms(struct list_head *dst, struct list_head *src);
 void free_config_terms(struct list_head *config_terms);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int copy_config_terms(struct list_head *dst, struct list_head *src);
+void free_config_terms(struct list_head *config_terms);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Returns pointer with encoded error via <linux/err.h> interface.
  */
@@ -298,6 +309,9 @@ int evsel__open(struct evsel *evsel, struct perf_cpu_map *cpus,
 		struct perf_thread_map *threads);
 void evsel__close(struct evsel *evsel);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int evsel__prepare_open(struct evsel *evsel, struct perf_cpu_map *cpus,
 		struct perf_thread_map *threads);
 bool evsel__detect_missing_features(struct evsel *evsel);
@@ -310,8 +324,11 @@ bool evsel__ignore_missing_thread(struct evsel *evsel,
 				  struct perf_thread_map *threads,
 				  int thread, int err);
 bool evsel__precise_ip_fallback(struct evsel *evsel);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct perf_sample;
 

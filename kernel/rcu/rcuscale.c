@@ -488,10 +488,14 @@ retry:
 		cur_ops->gp_barrier();
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	writer_n_durations[me] = i_max + 1;
 =======
 	writer_n_durations[me] = i_max;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	writer_n_durations[me] = i_max + 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	torture_kthread_stopping("rcu_scale_writer");
 	return 0;
 }
@@ -566,10 +570,14 @@ rcu_scale_cleanup(void)
 			if (!wdpp)
 				continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			for (j = 0; j < writer_n_durations[i]; j++) {
 =======
 			for (j = 0; j <= writer_n_durations[i]; j++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			for (j = 0; j < writer_n_durations[i]; j++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				wdp = &wdpp[j];
 				pr_alert("%s%s %4d writer-duration: %5d %llu\n",
 					scale_type, SCALE_FLAG,

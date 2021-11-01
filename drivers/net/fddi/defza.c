@@ -1505,6 +1505,7 @@ err_out_resource:
 
 err_out_kfree:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_err("%s: initialization failure, aborting!\n", fp->name);
 	free_netdev(dev);
 =======
@@ -1512,6 +1513,10 @@ err_out_kfree:
 
 	pr_err("%s: initialization failure, aborting!\n", fp->name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_err("%s: initialization failure, aborting!\n", fp->name);
+	free_netdev(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

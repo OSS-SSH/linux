@@ -84,12 +84,17 @@ int f2fs_init_casefolded_name(const struct inode *dir,
 
 	if (IS_CASEFOLDED(dir)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fname->cf_name.name = f2fs_kmem_cache_alloc(f2fs_cf_name_slab,
 					GFP_NOFS, false, F2FS_SB(sb));
 =======
 		fname->cf_name.name = kmem_cache_alloc(f2fs_cf_name_slab,
 								GFP_NOFS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fname->cf_name.name = f2fs_kmem_cache_alloc(f2fs_cf_name_slab,
+					GFP_NOFS, false, F2FS_SB(sb));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!fname->cf_name.name)
 			return -ENOMEM;
 		fname->cf_name.len = utf8_casefold(sb->s_encoding,
@@ -1006,9 +1011,13 @@ int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
 	struct blk_plug plug;
 	bool readdir_ra = sbi->readdir_ra == 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool found_valid_dirent = false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool found_valid_dirent = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err = 0;
 
 	bit_pos = ((unsigned long)ctx->pos % d->max);
@@ -1024,6 +1033,9 @@ int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
 		de = &d->dentry[bit_pos];
 		if (de->name_len == 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (found_valid_dirent || !bit_pos) {
 				printk_ratelimited(
 					"%sF2FS-fs (%s): invalid namelen(0), ino:%u, run fsck to fix.",
@@ -1031,6 +1043,7 @@ int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
 					le32_to_cpu(de->ino));
 				set_sbi_flag(sbi, SBI_NEED_FSCK);
 			}
+<<<<<<< HEAD
 			bit_pos++;
 			ctx->pos = start_pos + bit_pos;
 =======
@@ -1042,6 +1055,10 @@ int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
 				le32_to_cpu(de->ino));
 			set_sbi_flag(sbi, SBI_NEED_FSCK);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			bit_pos++;
+			ctx->pos = start_pos + bit_pos;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		}
 
@@ -1085,9 +1102,13 @@ int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
 
 		ctx->pos = start_pos + bit_pos;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		found_valid_dirent = true;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		found_valid_dirent = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 out:
 	if (readdir_ra)

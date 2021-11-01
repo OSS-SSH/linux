@@ -15,6 +15,7 @@ fi
 
 cat <<EOF |
 <<<<<<< HEAD
+<<<<<<< HEAD
 linux/atomic/atomic-instrumented.h
 linux/atomic/atomic-long.h
 linux/atomic/atomic-arch-fallback.h
@@ -23,6 +24,11 @@ asm-generic/atomic-instrumented.h
 asm-generic/atomic-long.h
 linux/atomic-arch-fallback.h
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+linux/atomic/atomic-instrumented.h
+linux/atomic/atomic-long.h
+linux/atomic/atomic-arch-fallback.h
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EOF
 while read header; do
 	OLDSUM="$(tail -n 1 ${LINUXDIR}/include/${header})"

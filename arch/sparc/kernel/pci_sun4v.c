@@ -487,10 +487,14 @@ static int dma_4v_map_sg(struct device *dev, struct scatterlist *sglist,
 	iommu = dev->archdata.iommu;
 	if (nelems == 0 || !iommu)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EINVAL;
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atu = iommu->atu;
 
 	prot = HV_PCI_MAP_ATTR_READ;
@@ -599,9 +603,12 @@ static int dma_4v_map_sg(struct device *dev, struct scatterlist *sglist,
 	if (outcount < incount) {
 		outs = sg_next(outs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		outs->dma_address = DMA_MAPPING_ERROR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		outs->dma_length = 0;
 	}
 
@@ -619,9 +626,12 @@ iommu_map_failed:
 					     IOMMU_ERROR_CODE);
 			/* XXX demap? XXX */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			s->dma_address = DMA_MAPPING_ERROR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			s->dma_length = 0;
 		}
 		if (s == outs)
@@ -630,10 +640,14 @@ iommu_map_failed:
 	local_irq_restore(flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return -EINVAL;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void dma_4v_unmap_sg(struct device *dev, struct scatterlist *sglist,

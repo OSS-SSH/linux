@@ -13,6 +13,7 @@ struct xfs_mount;
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * Flags for log structure
  */
@@ -24,6 +25,8 @@ struct xfs_mount;
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * get client id from packed copy.
  *
  * this hack is here because the xlog_pack code copies four bytes
@@ -51,9 +54,12 @@ enum xlog_iclog_state {
 	XLOG_STATE_CALLBACK,	/* Callback functions now */
 	XLOG_STATE_DIRTY,	/* Dirty IC log, not ready for ACTIVE status */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	XLOG_STATE_IOERROR,	/* IO error happened in sync'ing log */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define XLOG_STATE_STRINGS \
@@ -63,6 +69,9 @@ enum xlog_iclog_state {
 	{ XLOG_STATE_DONE_SYNC,	"XLOG_STATE_DONE_SYNC" }, \
 	{ XLOG_STATE_CALLBACK,	"XLOG_STATE_CALLBACK" }, \
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ XLOG_STATE_DIRTY,	"XLOG_STATE_DIRTY" }
 
 /*
@@ -74,10 +83,13 @@ enum xlog_iclog_state {
 #define XLOG_ICL_STRINGS \
 	{ XLOG_ICL_NEED_FLUSH,	"XLOG_ICL_NEED_FLUSH" }, \
 	{ XLOG_ICL_NEED_FUA,	"XLOG_ICL_NEED_FUA" }
+<<<<<<< HEAD
 =======
 	{ XLOG_STATE_DIRTY,	"XLOG_STATE_DIRTY" }, \
 	{ XLOG_STATE_IOERROR,	"XLOG_STATE_IOERROR" }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 /*
@@ -164,11 +176,14 @@ enum xlog_iclog_state {
 #define XLOG_COVER_OPS		5
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define XLOG_ICL_NEED_FLUSH	(1 << 0)	/* iclog needs REQ_PREFLUSH */
 #define XLOG_ICL_NEED_FUA	(1 << 1)	/* iclog needs REQ_FUA */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Ticket reservation region accounting */ 
 #define XLOG_TIC_LEN_MAX	15
 
@@ -268,9 +283,13 @@ struct xfs_cil_ctx {
 	xfs_lsn_t		start_lsn;	/* first LSN of chkpt commit */
 	xfs_lsn_t		commit_lsn;	/* chkpt commit record lsn */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xlog_in_core	*commit_iclog;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xlog_in_core	*commit_iclog;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xlog_ticket	*ticket;	/* chkpt ticket */
 	int			nvecs;		/* number of regions */
 	int			space_used;	/* aggregate size of regions */
@@ -280,9 +299,13 @@ struct xfs_cil_ctx {
 	struct list_head	committing;	/* ctx committing list */
 	struct work_struct	discard_endio_work;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct work_struct	push_work;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct work_struct	push_work;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -306,9 +329,13 @@ struct xfs_cil {
 	struct list_head	xc_cil;
 	spinlock_t		xc_cil_lock;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct workqueue_struct	*xc_push_wq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct workqueue_struct	*xc_push_wq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct rw_semaphore	xc_ctx_lock ____cacheline_aligned_in_smp;
 	struct xfs_cil_ctx	*xc_ctx;
@@ -316,17 +343,25 @@ struct xfs_cil {
 	spinlock_t		xc_push_lock ____cacheline_aligned_in_smp;
 	xfs_csn_t		xc_push_seq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool			xc_push_commit_stable;
 	struct list_head	xc_committing;
 	wait_queue_head_t	xc_commit_wait;
 	wait_queue_head_t	xc_start_wait;
 	xfs_csn_t		xc_current_sequence;
 =======
+=======
+	bool			xc_push_commit_stable;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	xc_committing;
 	wait_queue_head_t	xc_commit_wait;
+	wait_queue_head_t	xc_start_wait;
 	xfs_csn_t		xc_current_sequence;
+<<<<<<< HEAD
 	struct work_struct	xc_push_work;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wait_queue_head_t	xc_push_wait;	/* background push throttle */
 } ____cacheline_aligned_in_smp;
 
@@ -444,10 +479,14 @@ struct xlog {
 	struct workqueue_struct	*l_ioend_workqueue; /* for I/O completions */
 	struct delayed_work	l_work;		/* background flush work */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	long			l_opstate;	/* operational state */
 =======
 	uint			l_flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	long			l_opstate;	/* operational state */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint			l_quotaoffs_flag; /* XFS_DQ_*, for QUOTAOFFs */
 	struct list_head	*l_buf_cancel_table;
 	int			l_iclog_hsize;  /* size of iclog header */
@@ -497,17 +536,26 @@ struct xlog {
 
 	uint32_t		l_iclog_roundoff;/* padding roundoff */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Users of log incompat features should take a read lock. */
 	struct rw_semaphore	l_incompat_users;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Users of log incompat features should take a read lock. */
+	struct rw_semaphore	l_incompat_users;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define XLOG_BUF_CANCEL_BUCKET(log, blkno) \
 	((log)->l_buf_cancel_table + ((uint64_t)blkno % XLOG_BC_TABLE_SIZE))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Bits for operational state
  */
@@ -534,10 +582,13 @@ xlog_is_shutdown(struct xlog *log)
 {
 	return test_bit(XLOG_IO_ERROR, &log->l_opstate);
 }
+<<<<<<< HEAD
 =======
 #define XLOG_FORCED_SHUTDOWN(log) \
 	(unlikely((log)->l_flags & XLOG_IO_ERROR))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* common routines */
 extern int
@@ -572,6 +623,7 @@ xlog_write_adv_cnt(void **ptr, int *len, int *off, size_t bytes)
 void	xlog_print_tic_res(struct xfs_mount *mp, struct xlog_ticket *ticket);
 void	xlog_print_trans(struct xfs_trans *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int	xlog_write(struct xlog *log, struct xfs_cil_ctx *ctx,
 		struct xfs_log_vec *log_vector, struct xlog_ticket *tic,
 		uint optype);
@@ -593,6 +645,18 @@ void	xfs_log_ticket_regrant(struct xlog *log, struct xlog_ticket *ticket);
 
 int xlog_state_release_iclog(struct xlog *log, struct xlog_in_core *iclog);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int	xlog_write(struct xlog *log, struct xfs_cil_ctx *ctx,
+		struct xfs_log_vec *log_vector, struct xlog_ticket *tic,
+		uint optype);
+void	xfs_log_ticket_ungrant(struct xlog *log, struct xlog_ticket *ticket);
+void	xfs_log_ticket_regrant(struct xlog *log, struct xlog_ticket *ticket);
+
+void xlog_state_switch_iclogs(struct xlog *log, struct xlog_in_core *iclog,
+		int eventual_size);
+int xlog_state_release_iclog(struct xlog *log, struct xlog_in_core *iclog,
+		xfs_lsn_t log_tail_lsn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * When we crack an atomic LSN, we sample it first so that the value will not
@@ -659,19 +723,29 @@ bool	xlog_cil_empty(struct xlog *log);
 void	xlog_cil_commit(struct xlog *log, struct xfs_trans *tp,
 			xfs_csn_t *commit_seq, bool regrant);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void	xlog_cil_set_ctx_write_state(struct xfs_cil_ctx *ctx,
 			struct xlog_in_core *iclog);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void	xlog_cil_set_ctx_write_state(struct xfs_cil_ctx *ctx,
+			struct xlog_in_core *iclog);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * CIL force routines
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void xlog_cil_flush(struct xlog *log);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void xlog_cil_flush(struct xlog *log);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 xfs_lsn_t xlog_cil_force_seq(struct xlog *log, xfs_csn_t sequence);
 
 static inline void

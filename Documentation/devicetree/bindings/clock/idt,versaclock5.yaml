@@ -31,6 +31,9 @@ description: |
     4 -- OUT4
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   The idt,shutdown and idt,output-enable-active properties control the
   SH (en_global_shutdown) and SP bits of the Primary Source and Shutdown
   Register, respectively. Their behavior is summarized by the following
@@ -45,8 +48,11 @@ description: |
 
   The case where SH and SP are both 1 is likely not very interesting.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 maintainers:
   - Luca Ceresoli <luca@lucaceresoli.net>
 
@@ -82,6 +88,9 @@ properties:
     description: Optional load capacitor for XTAL1 and XTAL2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   idt,shutdown:
     $ref: /schemas/types.yaml#/definitions/uint32
     enum: [0, 1]
@@ -102,8 +111,11 @@ properties:
       low. This corresponds to the SP bit of the Primary Source and
       Shutdown Register.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 patternProperties:
   "^OUT[1-4]$":
     type: object
@@ -131,10 +143,15 @@ required:
   - reg
   - '#clock-cells'
 <<<<<<< HEAD
+<<<<<<< HEAD
   - idt,shutdown
   - idt,output-enable-active
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  - idt,shutdown
+  - idt,output-enable-active
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 allOf:
   - if:
@@ -185,12 +202,18 @@ examples:
             clock-names = "xin";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             /* Set the SD/OE pin's settings */
             idt,shutdown = <0>;
             idt,output-enable-active = <0>;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             OUT1 {
                 idt,mode = <VC5_CMOSD>;
                 idt,voltage-microvolt = <1800000>;

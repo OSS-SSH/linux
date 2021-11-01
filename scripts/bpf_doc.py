@@ -548,9 +548,13 @@ class PrinterHelpers(Printer):
             'struct socket',
             'struct file',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'struct bpf_timer',
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+            'struct bpf_timer',
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     ]
     known_types = {
             '...',
@@ -599,9 +603,13 @@ class PrinterHelpers(Printer):
             'struct socket',
             'struct file',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'struct bpf_timer',
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+            'struct bpf_timer',
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     }
     mapped_types = {
             'u8': '__u8',

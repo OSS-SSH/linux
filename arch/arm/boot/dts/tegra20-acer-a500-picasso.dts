@@ -2,9 +2,13 @@
 /dts-v1/;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <dt-bindings/input/atmel-maxtouch.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <dt-bindings/input/atmel-maxtouch.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <dt-bindings/input/gpio-keys.h>
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/thermal/thermal.h>
@@ -459,10 +463,14 @@
 			vdd-supply  = <&vdd_3v3_sys>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			atmel,wakeup-method = <ATMEL_MXT_WAKEUP_I2C_SCL>;
 =======
 			atmel,wakeup-method = <1>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			atmel,wakeup-method = <ATMEL_MXT_WAKEUP_I2C_SCL>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		gyroscope@68 {
@@ -491,11 +499,17 @@
 					interrupts = <TEGRA_GPIO(S, 7) IRQ_TYPE_EDGE_RISING>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 					vdd-supply   = <&vdd_1v8_sys>;
 					vddio-supply = <&vdd_1v8_sys>;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					vdd-supply   = <&vdd_1v8_sys>;
+					vddio-supply = <&vdd_1v8_sys>;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					mount-matrix =	 "0",  "1",  "0",
 							 "1",  "0",  "0",
 							 "0",  "0", "-1";
@@ -708,12 +722,18 @@
 			reg = <0x4c>;
 			vcc-supply = <&vdd_3v3_sys>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			interrupt-parent = <&gpio>;
 			interrupts = <TEGRA_GPIO(N, 6) IRQ_TYPE_EDGE_FALLING>;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			#thermal-sensor-cells = <1>;
 		};
 	};
@@ -741,9 +761,12 @@
 		nvidia,xcvr-lsfslew = <2>;
 		nvidia,xcvr-lsrslew = <2>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		vbus-supply = <&vdd_vbus1>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	usb@c5008000 {
@@ -756,10 +779,14 @@
 		nvidia,xcvr-lsfslew = <2>;
 		nvidia,xcvr-lsrslew = <2>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		vbus-supply = <&vdd_5v0_sys>;
 =======
 		vbus-supply = <&vdd_vbus3>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		vbus-supply = <&vdd_5v0_sys>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	brcm_wifi_pwrseq: wifi-pwrseq {
@@ -1020,6 +1047,7 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	vdd_vbus1: regulator@4 {
 		compatible = "regulator-fixed";
@@ -1044,6 +1072,8 @@
 	};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sound {
 		compatible = "nvidia,tegra-audio-wm8903-picasso",
 			     "nvidia,tegra-audio-wm8903";
@@ -1076,6 +1106,9 @@
 
 	thermal-zones {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * NCT1008 has two sensors:
 		 *
@@ -1089,6 +1122,7 @@
 		 * The CPU zone is intended to protect silicon from damage.
 		 */
 
+<<<<<<< HEAD
 		skin-thermal {
 			polling-delay-passive = <1000>; /* milliseconds */
 			polling-delay = <5000>; /* milliseconds */
@@ -1119,12 +1153,41 @@
 				};
 			};
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skin-thermal {
 			polling-delay-passive = <1000>; /* milliseconds */
-			polling-delay = <0>; /* milliseconds */
+			polling-delay = <5000>; /* milliseconds */
 
 			thermal-sensors = <&nct1008 0>;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+			trips {
+				trip0: skin-alert {
+					/* start throttling at 60C */
+					temperature = <60000>;
+					hysteresis = <200>;
+					type = "passive";
+				};
+
+				trip1: skin-crit {
+					/* shut down at 70C */
+					temperature = <70000>;
+					hysteresis = <2000>;
+					type = "critical";
+				};
+			};
+
+			cooling-maps {
+				map0 {
+					trip = <&trip0>;
+					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+				};
+			};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		cpu-thermal {
@@ -1135,6 +1198,7 @@
 
 			trips {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				trip2: cpu-alert {
 					/* throttle at 85C until temperature drops to 84.8C */
 					temperature = <85000>;
@@ -1143,10 +1207,16 @@
 					/* start throttling at 60C */
 					temperature = <60000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				trip2: cpu-alert {
+					/* throttle at 85C until temperature drops to 84.8C */
+					temperature = <85000>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					hysteresis = <200>;
 					type = "passive";
 				};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 				trip3: cpu-crit {
 					/* shut down at 90C */
@@ -1156,6 +1226,11 @@
 					/* shut down at 70C */
 					temperature = <70000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				trip3: cpu-crit {
+					/* shut down at 90C */
+					temperature = <90000>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					hysteresis = <2000>;
 					type = "critical";
 				};
@@ -1163,12 +1238,17 @@
 
 			cooling-maps {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				map1 {
 					trip = <&trip2>;
 =======
 				map0 {
 					trip = <&trip0>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				map1 {
+					trip = <&trip2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
 							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
 				};

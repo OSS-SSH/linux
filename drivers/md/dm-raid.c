@@ -3672,6 +3672,9 @@ static void raid_status(struct dm_target *ti, status_type_t type,
 			DMEMIT(" %s %s", __get_dev_name(rs->dev[i].meta_dev),
 					 __get_dev_name(rs->dev[i].data_dev));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case STATUSTYPE_IMA:
@@ -3711,8 +3714,11 @@ static void raid_status(struct dm_target *ti, status_type_t type,
 		}
 		DMEMIT(";");
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

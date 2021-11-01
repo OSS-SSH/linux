@@ -13,10 +13,14 @@
 /* Current ACPICA subsystem version in YYYYMMDD format */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ACPI_CA_VERSION                 0x20210730
 =======
 #define ACPI_CA_VERSION                 0x20210604
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ACPI_CA_VERSION                 0x20210730
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <acpi/acconfig.h>
 #include <acpi/actypes.h>

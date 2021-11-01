@@ -351,6 +351,7 @@ static int console_msg_format = MSG_FORMAT_DEFAULT;
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* syslog_lock protects syslog_* variables and write access to clear_seq. */
 static DEFINE_MUTEX(syslog_lock);
 =======
@@ -362,6 +363,10 @@ enum log_flags {
 /* syslog_lock protects syslog_* variables and write access to clear_seq. */
 static DEFINE_RAW_SPINLOCK(syslog_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* syslog_lock protects syslog_* variables and write access to clear_seq. */
+static DEFINE_MUTEX(syslog_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_PRINTK
 DECLARE_WAIT_QUEUE_HEAD(log_wait);
@@ -738,6 +743,7 @@ static ssize_t devkmsg_read(struct file *file, char __user *buf,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!prb_read_valid(prb, atomic64_read(&user->seq), r)) {
 		if (file->f_flags & O_NONBLOCK) {
 			ret = -EAGAIN;
@@ -746,23 +752,30 @@ static ssize_t devkmsg_read(struct file *file, char __user *buf,
 
 =======
 	printk_safe_enter_irq();
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!prb_read_valid(prb, atomic64_read(&user->seq), r)) {
 		if (file->f_flags & O_NONBLOCK) {
 			ret = -EAGAIN;
-			printk_safe_exit_irq();
 			goto out;
 		}
 
+<<<<<<< HEAD
 		printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = wait_event_interruptible(log_wait,
 				prb_read_valid(prb, atomic64_read(&user->seq), r));
 		if (ret)
 			goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		printk_safe_enter_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (r->info->seq != atomic64_read(&user->seq)) {
@@ -770,9 +783,12 @@ static ssize_t devkmsg_read(struct file *file, char __user *buf,
 		atomic64_set(&user->seq, r->info->seq);
 		ret = -EPIPE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
@@ -783,9 +799,12 @@ static ssize_t devkmsg_read(struct file *file, char __user *buf,
 
 	atomic64_set(&user->seq, r->info->seq + 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (len > count) {
 		ret = -EINVAL;
@@ -821,9 +840,12 @@ static loff_t devkmsg_llseek(struct file *file, loff_t offset, int whence)
 		return -ESPIPE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_enter_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (whence) {
 	case SEEK_SET:
 		/* the first record */
@@ -845,9 +867,12 @@ static loff_t devkmsg_llseek(struct file *file, loff_t offset, int whence)
 		ret = -EINVAL;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -863,9 +888,12 @@ static __poll_t devkmsg_poll(struct file *file, poll_table *wait)
 	poll_wait(file, &log_wait, wait);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_enter_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (prb_read_valid_info(prb, atomic64_read(&user->seq), &info, NULL)) {
 		/* return error when data has vanished underneath us */
 		if (info.seq != atomic64_read(&user->seq))
@@ -874,9 +902,12 @@ static __poll_t devkmsg_poll(struct file *file, poll_table *wait)
 			ret = EPOLLIN|EPOLLRDNORM;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -910,12 +941,16 @@ static int devkmsg_open(struct inode *inode, struct file *file)
 			&user->text_buf[0], sizeof(user->text_buf));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic64_set(&user->seq, prb_first_valid_seq(prb));
 =======
 	printk_safe_enter_irq();
 	atomic64_set(&user->seq, prb_first_valid_seq(prb));
 	printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic64_set(&user->seq, prb_first_valid_seq(prb));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	file->private_data = user;
 	return 0;
@@ -1082,11 +1117,14 @@ static inline void log_buf_add_cpu(void) {}
 static void __init set_percpu_data_ready(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_init();
 	/* Make sure we set this flag only after printk_safe() init is done */
 	barrier();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__printk_percpu_data_ready = true;
 }
 
@@ -1125,9 +1163,13 @@ void __init setup_log_buf(int early)
 	struct printk_info info;
 	struct printk_record r;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int text_size;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int text_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size_t new_descs_size;
 	size_t new_infos_size;
 	unsigned long flags;
@@ -1189,10 +1231,14 @@ void __init setup_log_buf(int early)
 		 new_infos);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	local_irq_save(flags);
 =======
 	printk_safe_enter_irqsave(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	local_irq_save(flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	log_buf_len = new_log_buf_len;
 	log_buf = new_log_buf;
@@ -1200,6 +1246,9 @@ void __init setup_log_buf(int early)
 
 	free = __LOG_BUF_LEN;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prb_for_each_record(0, &printk_rb_static, seq, &r) {
 		text_size = add_to_rb(&printk_rb_dynamic, &r);
 		if (text_size > free)
@@ -1207,6 +1256,7 @@ void __init setup_log_buf(int early)
 		else
 			free -= text_size;
 	}
+<<<<<<< HEAD
 
 	prb = &printk_rb_dynamic;
 
@@ -1227,16 +1277,30 @@ void __init setup_log_buf(int early)
 =======
 	prb_for_each_record(0, &printk_rb_static, seq, &r)
 		free -= add_to_rb(&printk_rb_dynamic, &r);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	/*
-	 * This is early enough that everything is still running on the
-	 * boot CPU and interrupts are disabled. So no new messages will
-	 * appear during the transition to the dynamic buffer.
-	 */
 	prb = &printk_rb_dynamic;
 
+<<<<<<< HEAD
 	printk_safe_exit_irqrestore(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	local_irq_restore(flags);
+
+	/*
+	 * Copy any remaining messages that might have appeared from
+	 * NMI context after copying but before switching to the
+	 * dynamic buffer.
+	 */
+	prb_for_each_record(seq, &printk_rb_static, seq, &r) {
+		text_size = add_to_rb(&printk_rb_dynamic, &r);
+		if (text_size > free)
+			free = 0;
+		else
+			free -= text_size;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (seq != prb_next_seq(&printk_rb_static)) {
 		pr_err("dropped %llu messages\n",
@@ -1250,6 +1314,7 @@ void __init setup_log_buf(int early)
 
 err_free_descs:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memblock_free_ptr(new_descs, new_descs_size);
 err_free_log_buf:
 	memblock_free_ptr(new_log_buf, new_log_buf_len);
@@ -1258,6 +1323,11 @@ err_free_log_buf:
 err_free_log_buf:
 	memblock_free(__pa(new_log_buf), new_log_buf_len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memblock_free_ptr(new_descs, new_descs_size);
+err_free_log_buf:
+	memblock_free_ptr(new_log_buf, new_log_buf_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool __read_mostly ignore_loglevel;
@@ -1565,9 +1635,13 @@ static u64 find_first_fitting_seq(u64 start_seq, u64 max_seq, size_t size,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* The caller is responsible for making sure @size is greater than 0. */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* The caller is responsible for making sure @size is greater than 0. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int syslog_print(char __user *buf, int size)
 {
 	struct printk_info info;
@@ -1575,9 +1649,13 @@ static int syslog_print(char __user *buf, int size)
 	char *text;
 	int len = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 seq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 seq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	text = kmalloc(CONSOLE_LOG_MAX, GFP_KERNEL);
 	if (!text)
@@ -1586,6 +1664,9 @@ static int syslog_print(char __user *buf, int size)
 	prb_rec_init_rd(&r, &info, text, CONSOLE_LOG_MAX);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&syslog_lock);
 
 	/*
@@ -1608,6 +1689,7 @@ static int syslog_print(char __user *buf, int size)
 	 * that the first record is always available.
 	 */
 	do {
+<<<<<<< HEAD
 		size_t n;
 		size_t skip;
 		int err;
@@ -1617,17 +1699,20 @@ static int syslog_print(char __user *buf, int size)
 
 =======
 	while (size > 0) {
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		size_t n;
 		size_t skip;
+		int err;
 
-		printk_safe_enter_irq();
-		raw_spin_lock(&syslog_lock);
-		if (!prb_read_valid(prb, syslog_seq, &r)) {
-			raw_spin_unlock(&syslog_lock);
-			printk_safe_exit_irq();
+		if (!prb_read_valid(prb, syslog_seq, &r))
 			break;
+<<<<<<< HEAD
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (r.info->seq != syslog_seq) {
 			/* message is gone, move to next valid one */
 			syslog_seq = r.info->seq;
@@ -1655,23 +1740,32 @@ static int syslog_print(char __user *buf, int size)
 		} else
 			n = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		raw_spin_unlock(&syslog_lock);
 		printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!n)
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mutex_unlock(&syslog_lock);
 		err = copy_to_user(buf, text + skip, n);
 		mutex_lock(&syslog_lock);
 
 		if (err) {
+<<<<<<< HEAD
 =======
 		if (copy_to_user(buf, text + skip, n)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!len)
 				len = -EFAULT;
 			break;
@@ -1681,6 +1775,7 @@ static int syslog_print(char __user *buf, int size)
 		size -= n;
 		buf += n;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} while (size);
 out:
 	mutex_unlock(&syslog_lock);
@@ -1688,6 +1783,11 @@ out:
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} while (size);
+out:
+	mutex_unlock(&syslog_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(text);
 	return len;
 }
@@ -1707,9 +1807,12 @@ static int syslog_print_all(char __user *buf, int size, bool clear)
 
 	time = printk_time;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_enter_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Find first record that fits, including all following records,
 	 * into the user-provided buffer for this dump.
@@ -1731,17 +1834,23 @@ static int syslog_print_all(char __user *buf, int size, bool clear)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (copy_to_user(buf + len, text, textlen))
 			len = -EFAULT;
 		else
 			len += textlen;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		printk_safe_enter_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (len < 0)
 			break;
@@ -1749,17 +1858,24 @@ static int syslog_print_all(char __user *buf, int size, bool clear)
 
 	if (clear) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_lock(&syslog_lock);
 		latched_seq_write(&clear_seq, seq);
 		mutex_unlock(&syslog_lock);
 	}
 =======
 		raw_spin_lock(&syslog_lock);
+=======
+		mutex_lock(&syslog_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		latched_seq_write(&clear_seq, seq);
-		raw_spin_unlock(&syslog_lock);
+		mutex_unlock(&syslog_lock);
 	}
+<<<<<<< HEAD
 	printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(text);
 	return len;
@@ -1767,6 +1883,7 @@ static int syslog_print_all(char __user *buf, int size, bool clear)
 
 static void syslog_clear(void)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	mutex_lock(&syslog_lock);
 	latched_seq_write(&clear_seq, prb_next_seq(prb));
@@ -1790,6 +1907,11 @@ static u64 read_syslog_seq_irq(void)
 
 	return seq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_lock(&syslog_lock);
+	latched_seq_write(&clear_seq, prb_next_seq(prb));
+	mutex_unlock(&syslog_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int do_syslog(int type, char __user *buf, int len, int source)
@@ -1816,6 +1938,7 @@ int do_syslog(int type, char __user *buf, int len, int source)
 		if (!access_ok(buf, len))
 			return -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 		error = wait_event_interruptible(log_wait,
@@ -1823,6 +1946,8 @@ int do_syslog(int type, char __user *buf, int len, int source)
 		if (error)
 			return error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = syslog_print(buf, len);
 		break;
 	/* Read/clear last kernel messages */
@@ -1869,6 +1994,7 @@ int do_syslog(int type, char __user *buf, int len, int source)
 	/* Number of chars in the log buffer */
 	case SYSLOG_ACTION_SIZE_UNREAD:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_lock(&syslog_lock);
 		if (!prb_read_valid_info(prb, syslog_seq, &info, NULL)) {
 			/* No unread messages. */
@@ -1881,6 +2007,12 @@ int do_syslog(int type, char __user *buf, int len, int source)
 			raw_spin_unlock(&syslog_lock);
 			printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mutex_lock(&syslog_lock);
+		if (!prb_read_valid_info(prb, syslog_seq, &info, NULL)) {
+			/* No unread messages. */
+			mutex_unlock(&syslog_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 0;
 		}
 		if (info.seq != syslog_seq) {
@@ -1909,11 +2041,15 @@ int do_syslog(int type, char __user *buf, int len, int source)
 			error -= syslog_partial;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_unlock(&syslog_lock);
 =======
 		raw_spin_unlock(&syslog_lock);
 		printk_safe_exit_irq();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mutex_unlock(&syslog_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	/* Size of the log buffer */
 	case SYSLOG_ACTION_SIZE_BUFFER:
@@ -2117,6 +2253,9 @@ static void call_console_drivers(const char *ext_text, size_t ext_len,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Recursion is tracked separately on each CPU. If NMIs are supported, an
  * additional NMI context per CPU is also separately tracked. Until per-CPU
@@ -2187,8 +2326,11 @@ static u8 *__printk_recursion_counter(void)
 		local_irq_restore(flags);		\
 	} while (0)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int printk_delay_msec __read_mostly;
 
 static inline void printk_delay(void)
@@ -2211,6 +2353,7 @@ static inline u32 printk_caller_id(void)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * printk_parse_prefix - Parse level and control flags.
  *
  * @text:     The terminated text message.
@@ -2223,11 +2366,19 @@ static inline u32 printk_caller_id(void)
  * @level:    A pointer to the current level value, will be updated.
  * @lflags:   A pointer to the current log flags, will be updated.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * printk_parse_prefix - Parse level and control flags.
+ *
+ * @text:     The terminated text message.
+ * @level:    A pointer to the current level value, will be updated.
+ * @flags:    A pointer to the current printk_info flags, will be updated.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @level may be NULL if the caller is not interested in the parsed value.
  * Otherwise the variable pointed to by @level must be set to
  * LOGLEVEL_DEFAULT in order to be updated with the parsed value.
  *
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @flags may be NULL if the caller is not interested in the parsed value.
  * Otherwise the variable pointed to by @flags will be OR'd with the parsed
@@ -2235,16 +2386,25 @@ static inline u32 printk_caller_id(void)
  * @lflags may be NULL if the caller is not interested in the parsed value.
  * Otherwise the variable pointed to by @lflags will be OR'd with the parsed
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @flags may be NULL if the caller is not interested in the parsed value.
+ * Otherwise the variable pointed to by @flags will be OR'd with the parsed
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * value.
  *
  * Return: The length of the parsed level and control flags.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 u16 printk_parse_prefix(const char *text, int *level,
 			enum printk_info_flags *flags)
 =======
 static u16 parse_prefix(char *text, int *level, enum log_flags *lflags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u16 printk_parse_prefix(const char *text, int *level,
+			enum printk_info_flags *flags)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u16 prefix_len = 0;
 	int kern_level;
@@ -2261,12 +2421,17 @@ static u16 parse_prefix(char *text, int *level, enum log_flags *lflags)
 			break;
 		case 'c':	/* KERN_CONT */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (flags)
 				*flags |= LOG_CONT;
 =======
 			if (lflags)
 				*lflags |= LOG_CONT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (flags)
+				*flags |= LOG_CONT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		prefix_len += 2;
@@ -2277,6 +2442,7 @@ static u16 parse_prefix(char *text, int *level, enum log_flags *lflags)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u16 printk_sprint(char *text, u16 size, int facility,
 			 enum printk_info_flags *flags, const char *fmt,
 			 va_list args)
@@ -2284,6 +2450,11 @@ static u16 printk_sprint(char *text, u16 size, int facility,
 static u16 printk_sprint(char *text, u16 size, int facility, enum log_flags *lflags,
 			 const char *fmt, va_list args)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u16 printk_sprint(char *text, u16 size, int facility,
+			 enum printk_info_flags *flags, const char *fmt,
+			 va_list args)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u16 text_len;
 
@@ -2293,10 +2464,14 @@ static u16 printk_sprint(char *text, u16 size, int facility, enum log_flags *lfl
 	if (text_len && text[text_len - 1] == '\n') {
 		text_len--;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*flags |= LOG_NEWLINE;
 =======
 		*lflags |= LOG_NEWLINE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*flags |= LOG_NEWLINE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Strip log level and control flags. */
@@ -2304,10 +2479,14 @@ static u16 printk_sprint(char *text, u16 size, int facility, enum log_flags *lfl
 		u16 prefix_len;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		prefix_len = printk_parse_prefix(text, NULL, NULL);
 =======
 		prefix_len = parse_prefix(text, NULL, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		prefix_len = printk_parse_prefix(text, NULL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (prefix_len) {
 			text_len -= prefix_len;
 			memmove(text, text + prefix_len, text_len);
@@ -2325,6 +2504,7 @@ int vprintk_store(int facility, int level,
 	const u32 caller_id = printk_caller_id();
 	struct prb_reserved_entry e;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum printk_info_flags flags = 0;
 	struct printk_record r;
 	unsigned long irqflags;
@@ -2337,13 +2517,22 @@ int vprintk_store(int facility, int level,
 	int ret = 0;
 =======
 	enum log_flags lflags = 0;
+=======
+	enum printk_info_flags flags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct printk_record r;
+	unsigned long irqflags;
 	u16 trunc_msg_len = 0;
 	char prefix_buf[8];
+	u8 *recursion_ptr;
 	u16 reserve_size;
 	va_list args2;
 	u16 text_len;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 ts_nsec;
 
 	/*
@@ -2355,11 +2544,17 @@ int vprintk_store(int facility, int level,
 	ts_nsec = local_clock();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!printk_enter_irqsave(recursion_ptr, irqflags))
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!printk_enter_irqsave(recursion_ptr, irqflags))
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * The sprintf needs to come first since the syslog prefix might be
 	 * passed in as a parameter. An extra byte must be reserved so that
@@ -2376,15 +2571,20 @@ int vprintk_store(int facility, int level,
 	/* Extract log level or control flags. */
 	if (facility == 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		printk_parse_prefix(&prefix_buf[0], &level, &flags);
 =======
 		parse_prefix(&prefix_buf[0], &level, &lflags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		printk_parse_prefix(&prefix_buf[0], &level, &flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (level == LOGLEVEL_DEFAULT)
 		level = default_message_loglevel;
 
 	if (dev_info)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		flags |= LOG_NEWLINE;
 
@@ -2398,16 +2598,23 @@ int vprintk_store(int facility, int level,
 			if (flags & LOG_NEWLINE) {
 =======
 		lflags |= LOG_NEWLINE;
+=======
+		flags |= LOG_NEWLINE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (lflags & LOG_CONT) {
+	if (flags & LOG_CONT) {
 		prb_rec_init_wr(&r, reserve_size);
 		if (prb_reserve_in_last(&e, prb, &r, caller_id, LOG_LINE_MAX)) {
 			text_len = printk_sprint(&r.text_buf[r.info->text_len], reserve_size,
-						 facility, &lflags, fmt, args);
+						 facility, &flags, fmt, args);
 			r.info->text_len += text_len;
 
+<<<<<<< HEAD
 			if (lflags & LOG_NEWLINE) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (flags & LOG_NEWLINE) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				r.info->flags |= LOG_NEWLINE;
 				prb_final_commit(&e);
 			} else {
@@ -2415,11 +2622,16 @@ int vprintk_store(int facility, int level,
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = text_len;
 			goto out;
 =======
 			return text_len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = text_len;
+			goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -2436,6 +2648,7 @@ int vprintk_store(int facility, int level,
 		prb_rec_init_wr(&r, reserve_size + trunc_msg_len);
 		if (!prb_reserve(&e, prb, &r))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto out;
 	}
 
@@ -2448,16 +2661,27 @@ int vprintk_store(int facility, int level,
 	/* fill message */
 	text_len = printk_sprint(&r.text_buf[0], reserve_size, facility, &lflags, fmt, args);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto out;
+	}
+
+	/* fill message */
+	text_len = printk_sprint(&r.text_buf[0], reserve_size, facility, &flags, fmt, args);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (trunc_msg_len)
 		memcpy(&r.text_buf[text_len], trunc_msg, trunc_msg_len);
 	r.info->text_len = text_len + trunc_msg_len;
 	r.info->facility = facility;
 	r.info->level = level & 7;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	r.info->flags = flags & 0x1f;
 =======
 	r.info->flags = lflags & 0x1f;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r.info->flags = flags & 0x1f;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	r.info->ts_nsec = ts_nsec;
 	r.info->caller_id = caller_id;
 	if (dev_info)
@@ -2465,22 +2689,32 @@ int vprintk_store(int facility, int level,
 
 	/* A message without a trailing newline can be continued. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(flags & LOG_NEWLINE))
 =======
 	if (!(lflags & LOG_NEWLINE))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(flags & LOG_NEWLINE))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		prb_commit(&e);
 	else
 		prb_final_commit(&e);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = text_len + trunc_msg_len;
 out:
 	printk_exit_irqrestore(recursion_ptr, irqflags);
 	return ret;
+<<<<<<< HEAD
 =======
 	return (text_len + trunc_msg_len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 asmlinkage int vprintk_emit(int facility, int level,
@@ -2490,9 +2724,12 @@ asmlinkage int vprintk_emit(int facility, int level,
 	int printed_len;
 	bool in_sched = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Suppress unimportant messages after panic happens */
 	if (unlikely(suppress_printk))
@@ -2507,12 +2744,16 @@ asmlinkage int vprintk_emit(int facility, int level,
 	printk_delay();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	printed_len = vprintk_store(facility, level, dev_info, fmt, args);
 =======
 	printk_safe_enter_irqsave(flags);
 	printed_len = vprintk_store(facility, level, dev_info, fmt, args);
 	printk_safe_exit_irqrestore(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	printed_len = vprintk_store(facility, level, dev_info, fmt, args);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* If called from the scheduler, we can not call up(). */
 	if (!in_sched) {
@@ -2544,6 +2785,7 @@ int vprintk_default(const char *fmt, va_list args)
 EXPORT_SYMBOL_GPL(vprintk_default);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 asmlinkage __visible int _printk(const char *fmt, ...)
 =======
 /**
@@ -2569,6 +2811,9 @@ asmlinkage __visible int _printk(const char *fmt, ...)
  */
 asmlinkage __visible int printk(const char *fmt, ...)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+asmlinkage __visible int _printk(const char *fmt, ...)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	va_list args;
 	int r;
@@ -2580,10 +2825,14 @@ asmlinkage __visible int printk(const char *fmt, ...)
 	return r;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL(_printk);
 =======
 EXPORT_SYMBOL(printk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL(_printk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else /* CONFIG_PRINTK */
 
@@ -2770,6 +3019,9 @@ MODULE_PARM_DESC(console_suspend, "suspend console during suspend"
 	" and hibernate operations");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool printk_console_no_auto_verbose;
 
 void console_verbose(void)
@@ -2782,8 +3034,11 @@ EXPORT_SYMBOL_GPL(console_verbose);
 module_param_named(console_no_auto_verbose, printk_console_no_auto_verbose, bool, 0644);
 MODULE_PARM_DESC(console_no_auto_verbose, "Disable console loglevel raise to highest on oops/panic/etc");
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * suspend_console - suspend the console subsystem
  *
@@ -2926,9 +3181,13 @@ void console_unlock(void)
 	struct printk_info info;
 	struct printk_record r;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 __maybe_unused next_seq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 __maybe_unused next_seq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (console_suspended) {
 		up_console_sem();
@@ -2969,6 +3228,7 @@ again:
 	for (;;) {
 		size_t ext_len = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int handover;
 		size_t len;
 
@@ -2977,6 +3237,11 @@ again:
 
 		printk_safe_enter_irqsave(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int handover;
+		size_t len;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 skip:
 		if (!prb_read_valid(prb, console_seq, &r))
 			break;
@@ -3027,21 +3292,30 @@ skip:
 		 * finish. This task can not be preempted if there is a
 		 * waiter waiting to take over.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 *
 		 * Interrupts are disabled because the hand over to a waiter
 		 * must not be interrupted until the hand over is completed
 		 * (@console_waiter is cleared).
+<<<<<<< HEAD
 		 */
 		printk_safe_enter_irqsave(flags);
 =======
 		 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 */
+		printk_safe_enter_irqsave(flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		console_lock_spinning_enable();
 
 		stop_critical_timings();	/* don't trace print latency */
 		call_console_drivers(ext_text, ext_len, text, len);
 		start_critical_timings();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		handover = console_lock_spinning_disable_and_check();
 		printk_safe_exit_irqrestore(flags);
@@ -3055,11 +3329,18 @@ skip:
 
 		printk_safe_exit_irqrestore(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		handover = console_lock_spinning_disable_and_check();
+		printk_safe_exit_irqrestore(flags);
+		if (handover)
+			return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (do_cond_resched)
 			cond_resched();
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Get consistent value of the next-to-be-used sequence number. */
 	next_seq = console_seq;
@@ -3069,6 +3350,12 @@ skip:
 	console_locked = 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Get consistent value of the next-to-be-used sequence number. */
+	next_seq = console_seq;
+
+	console_locked = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	up_console_sem();
 
 	/*
@@ -3078,12 +3365,16 @@ skip:
 	 * flush, no worries.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	retry = prb_read_valid(prb, next_seq, NULL);
 =======
 	retry = prb_read_valid(prb, console_seq, NULL);
 	printk_safe_exit_irqrestore(flags);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	retry = prb_read_valid(prb, next_seq, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (retry && console_trylock())
 		goto again;
 }
@@ -3146,6 +3437,7 @@ void console_flush_on_panic(enum con_flush_mode mode)
 	console_may_schedule = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mode == CONSOLE_REPLAY_ALL)
 		console_seq = prb_first_valid_seq(prb);
 =======
@@ -3157,6 +3449,10 @@ void console_flush_on_panic(enum con_flush_mode mode)
 		printk_safe_exit_irqrestore(flags);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mode == CONSOLE_REPLAY_ALL)
+		console_seq = prb_first_valid_seq(prb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	console_unlock();
 }
 
@@ -3292,9 +3588,12 @@ static int try_enable_new_console(struct console *newcon, bool user_specified)
 void register_console(struct console *newcon)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct console *bcon = NULL;
 	int err;
 
@@ -3400,6 +3699,7 @@ void register_console(struct console *newcon)
 
 		/* Get a consistent copy of @syslog_seq. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_lock(&syslog_lock);
 		console_seq = syslog_seq;
 		mutex_unlock(&syslog_lock);
@@ -3408,6 +3708,11 @@ void register_console(struct console *newcon)
 		console_seq = syslog_seq;
 		raw_spin_unlock_irqrestore(&syslog_lock, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mutex_lock(&syslog_lock);
+		console_seq = syslog_seq;
+		mutex_unlock(&syslog_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	console_unlock();
 	console_sysfs_notify();
@@ -3635,10 +3940,14 @@ int vprintk_deferred(const char *fmt, va_list args)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int _printk_deferred(const char *fmt, ...)
 =======
 int printk_deferred(const char *fmt, ...)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int _printk_deferred(const char *fmt, ...)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	va_list args;
 	int r;
@@ -3822,9 +4131,12 @@ bool kmsg_dump_get_line(struct kmsg_dump_iter *iter, bool syslog,
 	unsigned int line_count;
 	struct printk_record r;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size_t l = 0;
 	bool ret = false;
 
@@ -3832,9 +4144,12 @@ bool kmsg_dump_get_line(struct kmsg_dump_iter *iter, bool syslog,
 		iter->cur_seq = min_seq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_enter_irqsave(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prb_rec_init_rd(&r, &info, line, size);
 
 	/* Read text or count text lines? */
@@ -3856,9 +4171,12 @@ bool kmsg_dump_get_line(struct kmsg_dump_iter *iter, bool syslog,
 	ret = true;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_exit_irqrestore(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (len)
 		*len = l;
 	return ret;
@@ -3891,9 +4209,12 @@ bool kmsg_dump_get_buffer(struct kmsg_dump_iter *iter, bool syslog,
 	struct printk_info info;
 	struct printk_record r;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 seq;
 	u64 next_seq;
 	size_t len = 0;
@@ -3907,9 +4228,12 @@ bool kmsg_dump_get_buffer(struct kmsg_dump_iter *iter, bool syslog,
 		iter->cur_seq = min_seq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_enter_irqsave(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (prb_read_valid_info(prb, iter->cur_seq, &info, NULL)) {
 		if (info.seq != iter->cur_seq) {
 			/* messages are gone, move to first available one */
@@ -3919,6 +4243,7 @@ bool kmsg_dump_get_buffer(struct kmsg_dump_iter *iter, bool syslog,
 
 	/* last entry */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iter->cur_seq >= iter->next_seq)
 		goto out;
 =======
@@ -3927,6 +4252,10 @@ bool kmsg_dump_get_buffer(struct kmsg_dump_iter *iter, bool syslog,
 		goto out;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (iter->cur_seq >= iter->next_seq)
+		goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Find first record that fits, including all following records,
@@ -3959,9 +4288,12 @@ bool kmsg_dump_get_buffer(struct kmsg_dump_iter *iter, bool syslog,
 	iter->next_seq = next_seq;
 	ret = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_exit_irqrestore(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	if (len_out)
 		*len_out = len;
@@ -3980,6 +4312,7 @@ EXPORT_SYMBOL_GPL(kmsg_dump_get_buffer);
 void kmsg_dump_rewind(struct kmsg_dump_iter *iter)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iter->cur_seq = latched_seq_read_nolock(&clear_seq);
 	iter->next_seq = prb_next_seq(prb);
 =======
@@ -3990,6 +4323,10 @@ void kmsg_dump_rewind(struct kmsg_dump_iter *iter)
 	iter->next_seq = prb_next_seq(prb);
 	printk_safe_exit_irqrestore(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iter->cur_seq = latched_seq_read_nolock(&clear_seq);
+	iter->next_seq = prb_next_seq(prb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(kmsg_dump_rewind);
 

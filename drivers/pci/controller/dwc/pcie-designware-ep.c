@@ -126,10 +126,14 @@ static u8 dw_pcie_ep_find_capability(struct dw_pcie_ep *ep, u8 func_no, u8 cap)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 =======
 static int dw_pcie_ep_write_header(struct pci_epc *epc, u8 func_no,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct pci_epf_header *hdr)
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
@@ -207,10 +211,14 @@ static int dw_pcie_ep_outbound_atu(struct dw_pcie_ep *ep, u8 func_no,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 =======
 static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 struct pci_epf_bar *epf_bar)
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
@@ -226,10 +234,14 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 =======
 static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      struct pci_epf_bar *epf_bar)
 {
 	int ret;
@@ -289,10 +301,14 @@ static int dw_pcie_find_index(struct dw_pcie_ep *ep, phys_addr_t addr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void dw_pcie_ep_unmap_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 =======
 static void dw_pcie_ep_unmap_addr(struct pci_epc *epc, u8 func_no,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void dw_pcie_ep_unmap_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  phys_addr_t addr)
 {
 	int ret;
@@ -309,6 +325,7 @@ static void dw_pcie_ep_unmap_addr(struct pci_epc *epc, u8 func_no,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_map_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 			       phys_addr_t addr, u64 pci_addr, size_t size)
 =======
@@ -316,6 +333,10 @@ static int dw_pcie_ep_map_addr(struct pci_epc *epc, u8 func_no,
 			       phys_addr_t addr,
 			       u64 pci_addr, size_t size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_map_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+			       phys_addr_t addr, u64 pci_addr, size_t size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
@@ -331,10 +352,14 @@ static int dw_pcie_ep_map_addr(struct pci_epc *epc, u8 func_no,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_get_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
 =======
 static int dw_pcie_ep_get_msi(struct pci_epc *epc, u8 func_no)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_get_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
@@ -359,11 +384,16 @@ static int dw_pcie_ep_get_msi(struct pci_epc *epc, u8 func_no)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_set_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 			      u8 interrupts)
 =======
 static int dw_pcie_ep_set_msi(struct pci_epc *epc, u8 func_no, u8 interrupts)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_set_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+			      u8 interrupts)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
@@ -389,10 +419,14 @@ static int dw_pcie_ep_set_msi(struct pci_epc *epc, u8 func_no, u8 interrupts)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
 =======
 static int dw_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
@@ -417,12 +451,17 @@ static int dw_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 			       u16 interrupts, enum pci_barno bir, u32 offset)
 =======
 static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u16 interrupts,
 			       enum pci_barno bir, u32 offset)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+			       u16 interrupts, enum pci_barno bir, u32 offset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
@@ -458,10 +497,14 @@ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u16 interrupts,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dw_pcie_ep_raise_irq(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 =======
 static int dw_pcie_ep_raise_irq(struct pci_epc *epc, u8 func_no,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dw_pcie_ep_raise_irq(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				enum pci_epc_irq_type type, u16 interrupt_num)
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
@@ -494,10 +537,14 @@ static int dw_pcie_ep_start(struct pci_epc *epc)
 
 static const struct pci_epc_features*
 <<<<<<< HEAD
+<<<<<<< HEAD
 dw_pcie_ep_get_features(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
 =======
 dw_pcie_ep_get_features(struct pci_epc *epc, u8 func_no)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dw_pcie_ep_get_features(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
 
@@ -573,10 +620,14 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
 	msg_addr = ((u64)msg_addr_upper) << 32 |
 			(msg_addr_lower & ~aligned_offset);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
 =======
 	ret = dw_pcie_ep_map_addr(epc, func_no, ep->msi_mem_phys, msg_addr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  epc->mem->window.page_size);
 	if (ret)
 		return ret;
@@ -584,10 +635,14 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
 	writel(msg_data | (interrupt_num - 1), ep->msi_mem + aligned_offset);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
 =======
 	dw_pcie_ep_unmap_addr(epc, func_no, ep->msi_mem_phys);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -649,10 +704,14 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
 
 	aligned_offset = msg_addr & (epc->mem->window.page_size - 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
 =======
 	ret = dw_pcie_ep_map_addr(epc, func_no, ep->msi_mem_phys,  msg_addr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  epc->mem->window.page_size);
 	if (ret)
 		return ret;
@@ -660,10 +719,14 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
 	writel(msg_data, ep->msi_mem + aligned_offset);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
 =======
 	dw_pcie_ep_unmap_addr(epc, func_no, ep->msi_mem_phys);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

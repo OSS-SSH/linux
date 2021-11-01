@@ -1441,6 +1441,7 @@ static int iocg_wake_fn(struct wait_queue_entry *wq_entry, unsigned mode,
 
 	iocg_commit_bio(ctx->iocg, wait->bio, wait->abs_cost, cost);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wait->committed = true;
 
 	/*
@@ -1453,17 +1454,23 @@ static int iocg_wake_fn(struct wait_queue_entry *wq_entry, unsigned mode,
 	default_wake_function(wq_entry, mode, flags, key);
 	list_del_init_careful(&wq_entry->entry);
 =======
+=======
+	wait->committed = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * autoremove_wake_function() removes the wait entry only when it
-	 * actually changed the task state.  We want the wait always
-	 * removed.  Remove explicitly and use default_wake_function().
+	 * actually changed the task state. We want the wait always removed.
+	 * Remove explicitly and use default_wake_function(). Note that the
+	 * order of operations is important as finish_wait() tests whether
+	 * @wq_entry is removed without grabbing the lock.
 	 */
-	list_del_init(&wq_entry->entry);
-	wait->committed = true;
-
 	default_wake_function(wq_entry, mode, flags, key);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list_del_init_careful(&wq_entry->entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3002,6 +3009,7 @@ static void ioc_pd_free(struct blkg_policy_data *pd)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool ioc_pd_stat(struct blkg_policy_data *pd, struct seq_file *s)
 {
 	struct ioc_gq *iocg = pd_to_iocg(pd);
@@ -3011,19 +3019,26 @@ static bool ioc_pd_stat(struct blkg_policy_data *pd, struct seq_file *s)
 		return false;
 =======
 static size_t ioc_pd_stat(struct blkg_policy_data *pd, char *buf, size_t size)
+=======
+static bool ioc_pd_stat(struct blkg_policy_data *pd, struct seq_file *s)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ioc_gq *iocg = pd_to_iocg(pd);
 	struct ioc *ioc = iocg->ioc;
-	size_t pos = 0;
 
 	if (!ioc->enabled)
+<<<<<<< HEAD
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (iocg->level == 0) {
 		unsigned vp10k = DIV64_U64_ROUND_CLOSEST(
 			ioc->vtime_base_rate * 10000,
 			VTIME_PER_USEC);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		seq_printf(s, " cost.vrate=%u.%02u", vp10k / 100, vp10k % 100);
 	}
@@ -3039,12 +3054,15 @@ static size_t ioc_pd_stat(struct blkg_policy_data *pd, char *buf, size_t size)
 =======
 		pos += scnprintf(buf + pos, size - pos, " cost.vrate=%u.%02u",
 				  vp10k / 100, vp10k % 100);
+=======
+		seq_printf(s, " cost.vrate=%u.%02u", vp10k / 100, vp10k % 100);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
-	pos += scnprintf(buf + pos, size - pos, " cost.usage=%llu",
-			 iocg->last_stat.usage_us);
+	seq_printf(s, " cost.usage=%llu", iocg->last_stat.usage_us);
 
 	if (blkcg_debug_stats)
+<<<<<<< HEAD
 		pos += scnprintf(buf + pos, size - pos,
 				 " cost.wait=%llu cost.indebt=%llu cost.indelay=%llu",
 				 iocg->last_stat.wait_us,
@@ -3053,6 +3071,13 @@ static size_t ioc_pd_stat(struct blkg_policy_data *pd, char *buf, size_t size)
 
 	return pos;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		seq_printf(s, " cost.wait=%llu cost.indebt=%llu cost.indelay=%llu",
+			iocg->last_stat.wait_us,
+			iocg->last_stat.indebt_us,
+			iocg->last_stat.indelay_us);
+	return true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u64 ioc_weight_prfill(struct seq_file *sf, struct blkg_policy_data *pd,
@@ -3099,15 +3124,20 @@ static ssize_t ioc_weight_write(struct kernfs_open_file *of, char *buf,
 			return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		spin_lock_irq(&blkcg->lock);
 =======
 		spin_lock(&blkcg->lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spin_lock_irq(&blkcg->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iocc->dfl_weight = v * WEIGHT_ONE;
 		hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node) {
 			struct ioc_gq *iocg = blkg_to_iocg(blkg);
 
 			if (iocg) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 				spin_lock(&iocg->ioc->lock);
 				ioc_now(iocg->ioc, &now);
@@ -3118,13 +3148,20 @@ static ssize_t ioc_weight_write(struct kernfs_open_file *of, char *buf,
 		spin_unlock_irq(&blkcg->lock);
 =======
 				spin_lock_irq(&iocg->ioc->lock);
+=======
+				spin_lock(&iocg->ioc->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ioc_now(iocg->ioc, &now);
 				weight_updated(iocg, &now);
-				spin_unlock_irq(&iocg->ioc->lock);
+				spin_unlock(&iocg->ioc->lock);
 			}
 		}
+<<<<<<< HEAD
 		spin_unlock(&blkcg->lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spin_unlock_irq(&blkcg->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		return nbytes;
 	}

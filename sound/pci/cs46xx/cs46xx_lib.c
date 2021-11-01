@@ -1122,12 +1122,16 @@ static int snd_cs46xx_playback_hw_params(struct snd_pcm_substream *substream,
 		if (runtime->dma_area != cpcm->hw_buf.area)
 			snd_pcm_lib_free_pages(substream);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		snd_pcm_set_runtime_buffer(substream, &cpcm->hw_buf);
 =======
 		runtime->dma_area = cpcm->hw_buf.area;
 		runtime->dma_addr = cpcm->hw_buf.addr;
 		runtime->dma_bytes = cpcm->hw_buf.bytes;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		snd_pcm_set_runtime_buffer(substream, &cpcm->hw_buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 #ifdef CONFIG_SND_CS46XX_NEW_DSP
@@ -1148,6 +1152,7 @@ static int snd_cs46xx_playback_hw_params(struct snd_pcm_substream *substream,
 
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (runtime->dma_area == cpcm->hw_buf.area)
 			snd_pcm_set_runtime_buffer(substream, NULL);
 =======
@@ -1157,6 +1162,10 @@ static int snd_cs46xx_playback_hw_params(struct snd_pcm_substream *substream,
 			runtime->dma_bytes = 0;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (runtime->dma_area == cpcm->hw_buf.area)
+			snd_pcm_set_runtime_buffer(substream, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = snd_pcm_lib_malloc_pages(substream, params_buffer_bytes(hw_params));
 		if (err < 0) {
 #ifdef CONFIG_SND_CS46XX_NEW_DSP
@@ -1206,12 +1215,16 @@ static int snd_cs46xx_playback_hw_free(struct snd_pcm_substream *substream)
 		snd_pcm_lib_free_pages(substream);
     
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_pcm_set_runtime_buffer(substream, NULL);
 =======
 	runtime->dma_area = NULL;
 	runtime->dma_addr = 0;
 	runtime->dma_bytes = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snd_pcm_set_runtime_buffer(substream, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1301,6 +1314,7 @@ static int snd_cs46xx_capture_hw_params(struct snd_pcm_substream *substream,
 		if (runtime->dma_area != chip->capt.hw_buf.area)
 			snd_pcm_lib_free_pages(substream);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		snd_pcm_set_runtime_buffer(substream, &chip->capt.hw_buf);
 		substream->ops = &snd_cs46xx_capture_ops;
 	} else {
@@ -1318,6 +1332,13 @@ static int snd_cs46xx_capture_hw_params(struct snd_pcm_substream *substream,
 			runtime->dma_bytes = 0;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		snd_pcm_set_runtime_buffer(substream, &chip->capt.hw_buf);
+		substream->ops = &snd_cs46xx_capture_ops;
+	} else {
+		if (runtime->dma_area == chip->capt.hw_buf.area)
+			snd_pcm_set_runtime_buffer(substream, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = snd_pcm_lib_malloc_pages(substream, params_buffer_bytes(hw_params));
 		if (err < 0)
 			return err;
@@ -1335,12 +1356,16 @@ static int snd_cs46xx_capture_hw_free(struct snd_pcm_substream *substream)
 	if (runtime->dma_area != chip->capt.hw_buf.area)
 		snd_pcm_lib_free_pages(substream);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_pcm_set_runtime_buffer(substream, NULL);
 =======
 	runtime->dma_area = NULL;
 	runtime->dma_addr = 0;
 	runtime->dma_bytes = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snd_pcm_set_runtime_buffer(substream, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1891,6 +1916,7 @@ int snd_cs46xx_pcm_iec958(struct snd_cs46xx *chip, int device)
  *  Mixer routines
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void snd_cs46xx_mixer_free_ac97_bus(struct snd_ac97_bus *bus)
 {
@@ -1900,6 +1926,8 @@ static void snd_cs46xx_mixer_free_ac97_bus(struct snd_ac97_bus *bus)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void snd_cs46xx_mixer_free_ac97(struct snd_ac97 *ac97)
 {
 	struct snd_cs46xx *chip = ac97->private_data;
@@ -2516,9 +2544,12 @@ int snd_cs46xx_mixer(struct snd_cs46xx *chip, int spdif_device)
 	if (err < 0)
 		return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	chip->ac97_bus->private_free = snd_cs46xx_mixer_free_ac97_bus;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (cs46xx_detect_codec(chip, CS46XX_PRIMARY_CODEC_INDEX) < 0)
 		return -ENXIO;
@@ -2945,6 +2976,7 @@ static void snd_cs46xx_hw_stop(struct snd_cs46xx *chip)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void snd_cs46xx_free(struct snd_card *card)
 {
 	struct snd_cs46xx *chip = card->private_data;
@@ -2953,12 +2985,21 @@ static void snd_cs46xx_free(struct snd_card *card)
 #endif
 =======
 static int snd_cs46xx_free(struct snd_cs46xx *chip)
+=======
+static void snd_cs46xx_free(struct snd_card *card)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	struct snd_cs46xx *chip = card->private_data;
+#ifdef CONFIG_SND_CS46XX_NEW_DSP
 	int idx;
+<<<<<<< HEAD
 
 	if (snd_BUG_ON(!chip))
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (chip->active_ctrl)
 		chip->active_ctrl(chip, 1);
@@ -2971,6 +3012,7 @@ static int snd_cs46xx_free(struct snd_cs46xx *chip)
 	snd_cs46xx_proc_done(chip);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_cs46xx_hw_stop(chip);
 =======
 	if (chip->region.idx[0].resource)
@@ -2979,10 +3021,14 @@ static int snd_cs46xx_free(struct snd_cs46xx *chip)
 	if (chip->irq >= 0)
 		free_irq(chip->irq, chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snd_cs46xx_hw_stop(chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (chip->active_ctrl)
 		chip->active_ctrl(chip, -chip->amplifier);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	for (idx = 0; idx < 5; idx++) {
@@ -2993,6 +3039,8 @@ static int snd_cs46xx_free(struct snd_cs46xx *chip)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_SND_CS46XX_NEW_DSP
 	if (chip->dsp_spos_instance) {
 		cs46xx_dsp_spos_destroy(chip);
@@ -3003,6 +3051,7 @@ static int snd_cs46xx_free(struct snd_cs46xx *chip)
 #else
 	vfree(chip->ba1);
 #endif
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	
@@ -3020,6 +3069,8 @@ static int snd_cs46xx_dev_free(struct snd_device *device)
 	struct snd_cs46xx *chip = device->device_data;
 	return snd_cs46xx_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -3919,6 +3970,7 @@ SIMPLE_DEV_PM_OPS(snd_cs46xx_pm, snd_cs46xx_suspend, snd_cs46xx_resume);
 int snd_cs46xx_create(struct snd_card *card,
 		      struct pci_dev *pci,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      int external_amp, int thinkpad)
 {
 	struct snd_cs46xx *chip = card->private_data;
@@ -3928,10 +3980,16 @@ int snd_cs46xx_create(struct snd_card *card,
 {
 	struct snd_cs46xx *chip;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      int external_amp, int thinkpad)
+{
+	struct snd_cs46xx *chip = card->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err, idx;
 	struct snd_cs46xx_region *region;
 	struct cs_card_type *cp;
 	u16 ss_card, ss_vendor;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	
 	/* enable PCI device */
@@ -3943,20 +4001,23 @@ int snd_cs46xx_create(struct snd_card *card,
 	static const struct snd_device_ops ops = {
 		.dev_free =	snd_cs46xx_dev_free,
 	};
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
-	*rchip = NULL;
-
 	/* enable PCI device */
-	err = pci_enable_device(pci);
+	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
 	if (chip == NULL) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&chip->reg_lock);
 #ifdef CONFIG_SND_CS46XX_NEW_DSP
 	mutex_init(&chip->spos_mutex);
@@ -3965,12 +4026,18 @@ int snd_cs46xx_create(struct snd_card *card,
 	chip->pci = pci;
 	chip->irq = -1;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = pci_request_regions(pci, "CS46xx");
 	if (err < 0)
 		return err;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->ba0_addr = pci_resource_start(pci, 0);
 	chip->ba1_addr = pci_resource_start(pci, 1);
 	if (chip->ba0_addr == 0 || chip->ba0_addr == (unsigned long)~0 ||
@@ -3979,9 +4046,12 @@ int snd_cs46xx_create(struct snd_card *card,
 			"wrong address(es) - ba0 = 0x%lx, ba1 = 0x%lx\n",
 			   chip->ba0_addr, chip->ba1_addr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	    	snd_cs46xx_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    	return -ENOMEM;
 	}
 
@@ -4054,6 +4124,7 @@ int snd_cs46xx_create(struct snd_card *card,
 	for (idx = 0; idx < 5; idx++) {
 		region = &chip->region.idx[idx];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		region->remap_addr = devm_ioremap(&pci->dev, region->base,
 						  region->size);
 		if (region->remap_addr == NULL) {
@@ -4075,10 +4146,18 @@ int snd_cs46xx_create(struct snd_card *card,
 				"%s ioremap problem\n", region->name);
 			snd_cs46xx_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		region->remap_addr = devm_ioremap(&pci->dev, region->base,
+						  region->size);
+		if (region->remap_addr == NULL) {
+			dev_err(chip->card->dev,
+				"%s ioremap problem\n", region->name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOMEM;
 		}
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (devm_request_irq(&pci->dev, pci->irq, snd_cs46xx_interrupt,
 			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
@@ -4089,10 +4168,16 @@ int snd_cs46xx_create(struct snd_card *card,
 		dev_err(chip->card->dev, "unable to grab IRQ %d\n", pci->irq);
 		snd_cs46xx_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (devm_request_irq(&pci->dev, pci->irq, snd_cs46xx_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
+		dev_err(chip->card->dev, "unable to grab IRQ %d\n", pci->irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	card->private_free = snd_cs46xx_free;
 
@@ -4106,37 +4191,38 @@ int snd_cs46xx_create(struct snd_card *card,
 	if (err < 0)
 		return err;
 =======
+=======
+	card->private_free = snd_cs46xx_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_SND_CS46XX_NEW_DSP
 	chip->dsp_spos_instance = cs46xx_dsp_spos_create(chip);
-	if (chip->dsp_spos_instance == NULL) {
-		snd_cs46xx_free(chip);
+	if (!chip->dsp_spos_instance)
 		return -ENOMEM;
-	}
 #endif
 
 	err = snd_cs46xx_chip_init(chip);
-	if (err < 0) {
-		snd_cs46xx_free(chip);
+	if (err < 0)
 		return err;
-	}
-
-	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
-	if (err < 0) {
-		snd_cs46xx_free(chip);
-		return err;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
 	snd_cs46xx_proc_init(card, chip);
 
 #ifdef CONFIG_PM_SLEEP
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->saved_regs = devm_kmalloc_array(&pci->dev,
 					      ARRAY_SIZE(saved_regs),
 					      sizeof(*chip->saved_regs),
 					      GFP_KERNEL);
 	if (!chip->saved_regs)
+<<<<<<< HEAD
 		return -ENOMEM;
 #endif
 
@@ -4147,13 +4233,17 @@ int snd_cs46xx_create(struct snd_card *card,
 					 GFP_KERNEL);
 	if (!chip->saved_regs) {
 		snd_cs46xx_free(chip);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
-	}
 #endif
 
 	chip->active_ctrl(chip, -1); /* disable CLKRUN */
+<<<<<<< HEAD
 
 	*rchip = chip;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }

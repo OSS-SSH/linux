@@ -138,6 +138,9 @@ config COMPILE_TEST
 	  drivers to be distributed.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config WERROR
 	bool "Compile the kernel with warnings as errors"
 	default COMPILE_TEST
@@ -152,8 +155,11 @@ config WERROR
 
 	  If in doubt, say Y.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config UAPI_HEADER_TEST
 	bool "Compile test UAPI headers"
 	depends on HEADERS_INSTALL && CC_CAN_LINK
@@ -793,6 +799,9 @@ config PRINTK_SAFE_LOG_BUF_SHIFT
 		     12 =>   4 KB for each CPU
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config PRINTK_INDEX
 	bool "Printk indexing debugfs interface"
 	depends on PRINTK && DEBUG_FS
@@ -807,8 +816,11 @@ config PRINTK_INDEX
 
 	  There is no additional runtime cost to printk with this enabled.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #
 # Architectures with an unreliable sched_clock() should select this:
 #
@@ -1544,6 +1556,7 @@ config PRINTK
 	  strongly discouraged.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config PRINTK_NMI
 	def_bool y
@@ -1551,6 +1564,8 @@ config PRINTK_NMI
 	depends on HAVE_NMI
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config BUG
 	bool "BUG() support" if EXPERT
 	default y
@@ -1885,9 +1900,12 @@ config SLUB_DEBUG
 	bool "Enable SLUB debugging support" if EXPERT
 	depends on SLUB && SYSFS
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select STACKDEPOT if STACKTRACE_SUPPORT
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  SLUB has extensive debug support features. Disabling these can
 	  result in significant savings in code size. This also disables

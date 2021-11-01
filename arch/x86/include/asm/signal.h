@@ -30,9 +30,13 @@ typedef struct {
 
 #ifndef CONFIG_COMPAT
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define compat_sigset_t compat_sigset_t
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define compat_sigset_t compat_sigset_t
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 typedef sigset_t compat_sigset_t;
 #endif
 

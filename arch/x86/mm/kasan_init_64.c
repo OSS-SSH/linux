@@ -50,11 +50,15 @@ static void __init kasan_populate_pmd(pmd_t *pmd, unsigned long addr,
 			if (p && pmd_set_huge(pmd, __pa(p), PAGE_KERNEL))
 				return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			memblock_free_ptr(p, PMD_SIZE);
 =======
 			else if (p)
 				memblock_free(__pa(p), PMD_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			memblock_free_ptr(p, PMD_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		p = early_alloc(PAGE_SIZE, nid, true);
@@ -91,11 +95,15 @@ static void __init kasan_populate_pud(pud_t *pud, unsigned long addr,
 			if (p && pud_set_huge(pud, __pa(p), PAGE_KERNEL))
 				return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			memblock_free_ptr(p, PUD_SIZE);
 =======
 			else if (p)
 				memblock_free(__pa(p), PUD_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			memblock_free_ptr(p, PUD_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		p = early_alloc(PAGE_SIZE, nid, true);

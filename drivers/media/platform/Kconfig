@@ -566,10 +566,14 @@ config VIDEO_QCOM_VENUS
 	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
 	select QCOM_MDT_LOADER if ARCH_QCOM
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select QCOM_SCM
 =======
 	select QCOM_SCM if ARCH_QCOM
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select QCOM_SCM
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select VIDEOBUF2_DMA_CONTIG
 	select V4L2_MEM2MEM_DEV
 	help

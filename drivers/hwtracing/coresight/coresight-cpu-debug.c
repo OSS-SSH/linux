@@ -589,6 +589,7 @@ static int debug_probe(struct amba_device *adev, const struct amba_id *id)
 	drvdata->base = base;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 	per_cpu(debug_drvdata, drvdata->cpu) = drvdata;
 	ret = smp_call_function_single(drvdata->cpu, debug_init_arch_data,
@@ -601,6 +602,13 @@ static int debug_probe(struct amba_device *adev, const struct amba_id *id)
 				       drvdata, 1);
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	per_cpu(debug_drvdata, drvdata->cpu) = drvdata;
+	ret = smp_call_function_single(drvdata->cpu, debug_init_arch_data,
+				       drvdata, 1);
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret) {
 		dev_err(dev, "CPU%d debug arch init failed\n", drvdata->cpu);

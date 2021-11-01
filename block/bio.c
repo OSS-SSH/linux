@@ -26,13 +26,19 @@
 #include "blk-rq-qos.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bio_alloc_cache {
 	struct bio_list		free_list;
 	unsigned int		nr;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct biovec_slab {
 	int nr_vecs;
 	char *name;
@@ -255,6 +261,9 @@ void bio_init(struct bio *bio, struct bio_vec *table,
 	      unsigned short max_vecs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bio->bi_next = NULL;
 	bio->bi_bdev = NULL;
 	bio->bi_opf = 0;
@@ -283,6 +292,7 @@ void bio_init(struct bio *bio, struct bio_vec *table,
 #endif
 	bio->bi_vcnt = 0;
 
+<<<<<<< HEAD
 	atomic_set(&bio->__bi_remaining, 1);
 	atomic_set(&bio->__bi_cnt, 1);
 
@@ -291,12 +301,18 @@ void bio_init(struct bio *bio, struct bio_vec *table,
 	bio->bi_pool = NULL;
 =======
 	memset(bio, 0, sizeof(*bio));
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_set(&bio->__bi_remaining, 1);
 	atomic_set(&bio->__bi_cnt, 1);
 
-	bio->bi_io_vec = table;
 	bio->bi_max_vecs = max_vecs;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bio->bi_io_vec = table;
+	bio->bi_pool = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(bio_init);
 
@@ -541,6 +557,7 @@ EXPORT_SYMBOL(bio_kmalloc);
 void zero_fill_bio(struct bio *bio)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct bio_vec bv;
 	struct bvec_iter iter;
 
@@ -558,6 +575,13 @@ void zero_fill_bio(struct bio *bio)
 		bvec_kunmap_irq(data, &flags);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct bio_vec bv;
+	struct bvec_iter iter;
+
+	bio_for_each_segment(bv, bio, iter)
+		memzero_bvec(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(zero_fill_bio);
 
@@ -645,6 +669,9 @@ void guard_bio_eod(struct bio *bio)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ALLOC_CACHE_MAX		512
 #define ALLOC_CACHE_SLACK	 64
 
@@ -692,8 +719,11 @@ static void bio_alloc_cache_destroy(struct bio_set *bs)
 	free_percpu(bs->cache);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * bio_put - release a reference to a bio
  * @bio:   bio to release reference to
@@ -704,6 +734,7 @@ static void bio_alloc_cache_destroy(struct bio_set *bs)
  **/
 void bio_put(struct bio *bio)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (unlikely(bio_flagged(bio, BIO_REFFED))) {
 		BIO_BUG_ON(!atomic_read(&bio->__bi_cnt));
@@ -726,14 +757,34 @@ void bio_put(struct bio *bio)
 	if (!bio_flagged(bio, BIO_REFFED))
 		bio_free(bio);
 	else {
+=======
+	if (unlikely(bio_flagged(bio, BIO_REFFED))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		BIO_BUG_ON(!atomic_read(&bio->__bi_cnt));
+		if (!atomic_dec_and_test(&bio->__bi_cnt))
+			return;
+	}
 
+<<<<<<< HEAD
 		/*
 		 * last put frees it
 		 */
 		if (atomic_dec_and_test(&bio->__bi_cnt))
 			bio_free(bio);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (bio_flagged(bio, BIO_PERCPU_CACHE)) {
+		struct bio_alloc_cache *cache;
+
+		bio_uninit(bio);
+		cache = per_cpu_ptr(bio->bi_pool->cache, get_cpu());
+		bio_list_add_head(&cache->free_list, bio);
+		if (++cache->nr > ALLOC_CACHE_MAX + ALLOC_CACHE_SLACK)
+			bio_alloc_cache_prune(cache, ALLOC_CACHE_SLACK);
+		put_cpu();
+	} else {
+		bio_free(bio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 EXPORT_SYMBOL(bio_put);
@@ -1103,6 +1154,9 @@ static int bio_iov_bvec_set_append(struct bio *bio, struct iov_iter *iter)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void bio_put_pages(struct page **pages, size_t size, size_t off)
 {
 	size_t i, nr = DIV_ROUND_UP(size + (off & ~PAGE_MASK), PAGE_SIZE);
@@ -1111,8 +1165,11 @@ static void bio_put_pages(struct page **pages, size_t size, size_t off)
 		put_page(pages[i]);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PAGE_PTRS_PER_BVEC     (sizeof(struct bio_vec) / sizeof(struct page *))
 
 /**
@@ -1158,14 +1215,20 @@ static int __bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter)
 				put_page(page);
 		} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (WARN_ON_ONCE(bio_full(bio, len))) {
 				bio_put_pages(pages + i, left, offset);
 				return -EINVAL;
 			}
+<<<<<<< HEAD
 =======
 			if (WARN_ON_ONCE(bio_full(bio, len)))
                                 return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__bio_add_page(bio, page, len, offset);
 		}
 		offset = 0;
@@ -1211,9 +1274,13 @@ static int __bio_iov_append_get_pages(struct bio *bio, struct iov_iter *iter)
 		if (bio_add_hw_page(q, bio, page, len, offset,
 				max_append_sectors, &same_page) != len) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			bio_put_pages(pages + i, left, offset);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			bio_put_pages(pages + i, left, offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = -EINVAL;
 			break;
 		}
@@ -1337,6 +1404,7 @@ void bio_copy_data_iter(struct bio *dst, struct bvec_iter *dst_iter,
 			struct bio *src, struct bvec_iter *src_iter)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (src_iter->bi_size && dst_iter->bi_size) {
 		struct bio_vec src_bv = bio_iter_iovec(src, *src_iter);
 		struct bio_vec dst_bv = bio_iter_iovec(dst, *dst_iter);
@@ -1351,24 +1419,25 @@ void bio_copy_data_iter(struct bio *dst, struct bvec_iter *dst_iter,
 	void *src_p, *dst_p;
 	unsigned bytes;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (src_iter->bi_size && dst_iter->bi_size) {
-		src_bv = bio_iter_iovec(src, *src_iter);
-		dst_bv = bio_iter_iovec(dst, *dst_iter);
+		struct bio_vec src_bv = bio_iter_iovec(src, *src_iter);
+		struct bio_vec dst_bv = bio_iter_iovec(dst, *dst_iter);
+		unsigned int bytes = min(src_bv.bv_len, dst_bv.bv_len);
+		void *src_buf;
 
-		bytes = min(src_bv.bv_len, dst_bv.bv_len);
-
-		src_p = kmap_atomic(src_bv.bv_page);
-		dst_p = kmap_atomic(dst_bv.bv_page);
-
-		memcpy(dst_p + dst_bv.bv_offset,
-		       src_p + src_bv.bv_offset,
-		       bytes);
-
+<<<<<<< HEAD
 		kunmap_atomic(dst_p);
 		kunmap_atomic(src_p);
 
 		flush_dcache_page(dst_bv.bv_page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		src_buf = bvec_kmap_local(&src_bv);
+		memcpy_to_bvec(&dst_bv, src_buf);
+		kunmap_local(src_buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		bio_advance_iter_single(src, src_iter, bytes);
 		bio_advance_iter_single(dst, dst_iter, bytes);
@@ -1543,10 +1612,14 @@ again:
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bio->bi_bdev && bio_flagged(bio, BIO_TRACKED))
 =======
 	if (bio->bi_bdev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (bio->bi_bdev && bio_flagged(bio, BIO_TRACKED))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rq_qos_done_bio(bio->bi_bdev->bd_disk->queue, bio);
 
 	if (bio->bi_bdev && bio_flagged(bio, BIO_TRACE_COMPLETION)) {
@@ -1625,6 +1698,7 @@ EXPORT_SYMBOL(bio_split);
  * @offset:	number of sectors to trim from the front of @bio
  * @size:	size we want to trim @bio to, in sectors
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * This function is typically used for bios that are cloned and submitted
  * to the underlying device in parts.
@@ -1635,13 +1709,24 @@ void bio_trim(struct bio *bio, sector_t offset, sector_t size)
 			 offset + size > bio->bi_iter.bi_size))
 		return;
 =======
+=======
+ *
+ * This function is typically used for bios that are cloned and submitted
+ * to the underlying device in parts.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
-void bio_trim(struct bio *bio, int offset, int size)
+void bio_trim(struct bio *bio, sector_t offset, sector_t size)
 {
+<<<<<<< HEAD
 	/* 'bio' is a cloned bio which we need to trim to match
 	 * the given offset and size.
 	 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (WARN_ON_ONCE(offset > BIO_MAX_SECTORS || size > BIO_MAX_SECTORS ||
+			 offset + size > bio->bi_iter.bi_size))
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	size <<= 9;
 	if (offset == 0 && size == bio->bi_iter.bi_size)
@@ -1653,9 +1738,12 @@ void bio_trim(struct bio *bio, int offset, int size)
 	if (bio_integrity(bio))
 		bio_integrity_trim(bio);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(bio_trim);
 
@@ -1679,9 +1767,13 @@ int biovec_init_pool(mempool_t *pool, int pool_entries)
 void bioset_exit(struct bio_set *bs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bio_alloc_cache_destroy(bs);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bio_alloc_cache_destroy(bs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bs->rescue_workqueue)
 		destroy_workqueue(bs->rescue_workqueue);
 	bs->rescue_workqueue = NULL;
@@ -1744,6 +1836,9 @@ int bioset_init(struct bio_set *bs,
 		goto bad;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flags & BIOSET_NEED_RESCUER) {
 		bs->rescue_workqueue = alloc_workqueue("bioset",
 							WQ_MEM_RECLAIM, 0);
@@ -1756,6 +1851,7 @@ int bioset_init(struct bio_set *bs,
 			goto bad;
 		cpuhp_state_add_instance_nocalls(CPUHP_BIO_DEAD, &bs->cpuhp_dead);
 	}
+<<<<<<< HEAD
 =======
 	if (!(flags & BIOSET_NEED_RESCUER))
 		return 0;
@@ -1764,6 +1860,8 @@ int bioset_init(struct bio_set *bs,
 	if (!bs->rescue_workqueue)
 		goto bad;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 bad:
@@ -1791,6 +1889,9 @@ int bioset_init_from_src(struct bio_set *bs, struct bio_set *src)
 EXPORT_SYMBOL(bioset_init_from_src);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * bio_alloc_kiocb - Allocate a bio from bio_set based on kiocb
  * @kiocb:	kiocb describing the IO
@@ -1831,8 +1932,11 @@ struct bio *bio_alloc_kiocb(struct kiocb *kiocb, unsigned short nr_vecs,
 }
 EXPORT_SYMBOL_GPL(bio_alloc_kiocb);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __init init_bio(void)
 {
 	int i;
@@ -1848,11 +1952,17 @@ static int __init init_bio(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpuhp_setup_state_multi(CPUHP_BIO_DEAD, "block/bio:dead", NULL,
 					bio_cpu_dead);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpuhp_setup_state_multi(CPUHP_BIO_DEAD, "block/bio:dead", NULL,
+					bio_cpu_dead);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bioset_init(&fs_bio_set, BIO_POOL_SIZE, 0, BIOSET_NEED_BVECS))
 		panic("bio: can't allocate bios\n");
 

@@ -169,6 +169,9 @@ static bool iwl_mvm_te_check_disconnect(struct iwl_mvm *mvm,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vif->bss_conf.assoc) {
 		/*
 		 * When not associated, this will be called from
@@ -179,8 +182,11 @@ static bool iwl_mvm_te_check_disconnect(struct iwl_mvm *mvm,
 				       NULL);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iwl_mvm_connection_loss(mvm, vif, errmsg);
 	return true;
 }
@@ -260,6 +266,9 @@ static void iwl_mvm_te_check_trigger(struct iwl_mvm *mvm,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void iwl_mvm_p2p_roc_finished(struct iwl_mvm *mvm)
 {
 	/*
@@ -272,8 +281,11 @@ static void iwl_mvm_p2p_roc_finished(struct iwl_mvm *mvm)
 		iwl_mvm_roc_finished(mvm);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Handles a FW notification for an event that is known to the driver.
  *
@@ -326,11 +338,15 @@ static void iwl_mvm_te_handle_notif(struct iwl_mvm *mvm,
 		case NL80211_IFTYPE_P2P_DEVICE:
 			ieee80211_remain_on_channel_expired(mvm->hw);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			iwl_mvm_p2p_roc_finished(mvm);
 =======
 			set_bit(IWL_MVM_STATUS_NEED_FLUSH_P2P, &mvm->status);
 			iwl_mvm_roc_finished(mvm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			iwl_mvm_p2p_roc_finished(mvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		case NL80211_IFTYPE_STATION:
 			/*
@@ -674,19 +690,27 @@ static bool __iwl_mvm_remove_time_event(struct iwl_mvm *mvm,
 {
 	u32 id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct iwl_mvm_vif *mvmvif;
 =======
 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(te_data->vif);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct iwl_mvm_vif *mvmvif;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum nl80211_iftype iftype;
 
 	if (!te_data->vif)
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mvmvif = iwl_mvm_vif_from_mac80211(te_data->vif);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mvmvif = iwl_mvm_vif_from_mac80211(te_data->vif);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iftype = te_data->vif->type;
 
 	/*
@@ -715,11 +739,15 @@ static bool __iwl_mvm_remove_time_event(struct iwl_mvm *mvm,
 			iwl_mvm_cancel_session_protection(mvm, mvmvif, id);
 			if (iftype == NL80211_IFTYPE_P2P_DEVICE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				iwl_mvm_p2p_roc_finished(mvm);
 =======
 				set_bit(IWL_MVM_STATUS_NEED_FLUSH_P2P, &mvm->status);
 				iwl_mvm_roc_finished(mvm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				iwl_mvm_p2p_roc_finished(mvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 		return false;
@@ -887,11 +915,15 @@ void iwl_mvm_rx_session_protect_notif(struct iwl_mvm *mvm,
 		mvmvif->time_event_data.id = SESSION_PROTECT_CONF_MAX_ID;
 		ieee80211_remain_on_channel_expired(mvm->hw);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		iwl_mvm_p2p_roc_finished(mvm);
 =======
 		set_bit(IWL_MVM_STATUS_NEED_FLUSH_P2P, &mvm->status);
 		iwl_mvm_roc_finished(mvm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		iwl_mvm_p2p_roc_finished(mvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (le32_to_cpu(notif->start)) {
 		if (WARN_ON(mvmvif->time_event_data.id !=
 				le32_to_cpu(notif->conf_id)))
@@ -1053,6 +1085,7 @@ void iwl_mvm_stop_roc(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
 			iwl_mvm_cancel_session_protection(mvm, mvmvif,
 							  mvmvif->time_event_data.id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			iwl_mvm_p2p_roc_finished(mvm);
 		} else {
 			iwl_mvm_remove_aux_roc_te(mvm, mvmvif,
@@ -1062,14 +1095,21 @@ void iwl_mvm_stop_roc(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
 
 =======
 			set_bit(IWL_MVM_STATUS_NEED_FLUSH_P2P, &mvm->status);
+=======
+			iwl_mvm_p2p_roc_finished(mvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			iwl_mvm_remove_aux_roc_te(mvm, mvmvif,
 						  &mvmvif->time_event_data);
+			iwl_mvm_roc_finished(mvm);
 		}
 
+<<<<<<< HEAD
 		iwl_mvm_roc_finished(mvm);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
@@ -1084,6 +1124,7 @@ void iwl_mvm_stop_roc(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
 	if (te_data->vif->type == NL80211_IFTYPE_P2P_DEVICE) {
 		iwl_mvm_remove_time_event(mvm, mvmvif, te_data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		iwl_mvm_p2p_roc_finished(mvm);
 	} else {
 		iwl_mvm_remove_aux_roc_te(mvm, mvmvif, te_data);
@@ -1091,12 +1132,19 @@ void iwl_mvm_stop_roc(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
 	}
 =======
 		set_bit(IWL_MVM_STATUS_NEED_FLUSH_P2P, &mvm->status);
+=======
+		iwl_mvm_p2p_roc_finished(mvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		iwl_mvm_remove_aux_roc_te(mvm, mvmvif, te_data);
+		iwl_mvm_roc_finished(mvm);
 	}
+<<<<<<< HEAD
 
 	iwl_mvm_roc_finished(mvm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void iwl_mvm_remove_csa_period(struct iwl_mvm *mvm,

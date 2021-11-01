@@ -80,6 +80,7 @@ int esw_acl_egress_lgcy_setup(struct mlx5_eswitch *esw,
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vport->egress.legacy.drop_counter) {
 		drop_counter = vport->egress.legacy.drop_counter;
 	} else if (MLX5_CAP_ESW_EGRESS_ACL(esw->dev, flow_counter)) {
@@ -92,12 +93,22 @@ int esw_acl_egress_lgcy_setup(struct mlx5_eswitch *esw,
 		}
 =======
 	if (MLX5_CAP_ESW_EGRESS_ACL(esw->dev, flow_counter)) {
+=======
+	if (vport->egress.legacy.drop_counter) {
+		drop_counter = vport->egress.legacy.drop_counter;
+	} else if (MLX5_CAP_ESW_EGRESS_ACL(esw->dev, flow_counter)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drop_counter = mlx5_fc_create(esw->dev, false);
-		if (IS_ERR(drop_counter))
+		if (IS_ERR(drop_counter)) {
 			esw_warn(esw->dev,
 				 "vport[%d] configure egress drop rule counter err(%ld)\n",
 				 vport->vport, PTR_ERR(drop_counter));
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			drop_counter = NULL;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vport->egress.legacy.drop_counter = drop_counter;
 	}
 
@@ -137,10 +148,14 @@ int esw_acl_egress_lgcy_setup(struct mlx5_eswitch *esw,
 
 	/* Attach egress drop flow counter */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (drop_counter) {
 =======
 	if (!IS_ERR_OR_NULL(drop_counter)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (drop_counter) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		flow_act.action |= MLX5_FLOW_CONTEXT_ACTION_COUNT;
 		drop_ctr_dst.type = MLX5_FLOW_DESTINATION_TYPE_COUNTER;
 		drop_ctr_dst.counter_id = mlx5_fc_id(drop_counter);
@@ -180,10 +195,14 @@ void esw_acl_egress_lgcy_cleanup(struct mlx5_eswitch *esw,
 
 clean_drop_counter:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (vport->egress.legacy.drop_counter) {
 =======
 	if (!IS_ERR_OR_NULL(vport->egress.legacy.drop_counter)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (vport->egress.legacy.drop_counter) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mlx5_fc_destroy(esw->dev, vport->egress.legacy.drop_counter);
 		vport->egress.legacy.drop_counter = NULL;
 	}

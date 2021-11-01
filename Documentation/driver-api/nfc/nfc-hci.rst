@@ -182,10 +182,14 @@ The llc must be registered with nfc before it can be used. Do that by
 calling::
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nfc_llc_register(const char *name, const struct nfc_llc_ops *ops);
 =======
 	nfc_llc_register(const char *name, struct nfc_llc_ops *ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nfc_llc_register(const char *name, const struct nfc_llc_ops *ops);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Again, note that the llc does not handle the physical link. It is thus very
 easy to mix any physical link with any llc for a given chip driver.

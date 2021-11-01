@@ -392,6 +392,7 @@ static int rxe_post_srq_recv(struct ib_srq *ibsrq, const struct ib_recv_wr *wr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int rxe_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init,
 			 struct ib_udata *udata)
 {
@@ -409,19 +410,33 @@ static struct ib_qp *rxe_create_qp(struct ib_pd *ibpd,
 	struct rxe_pd *pd = to_rpd(ibpd);
 	struct rxe_qp *qp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int rxe_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init,
+			 struct ib_udata *udata)
+{
+	int err;
+	struct rxe_dev *rxe = to_rdev(ibqp->device);
+	struct rxe_pd *pd = to_rpd(ibqp->pd);
+	struct rxe_qp *qp = to_rqp(ibqp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rxe_create_qp_resp __user *uresp = NULL;
 
 	if (udata) {
 		if (udata->outlen < sizeof(*uresp))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return -EINVAL;
 =======
 			return ERR_PTR(-EINVAL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uresp = udata->outbuf;
 	}
 
 	if (init->create_flags)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return -EOPNOTSUPP;
 
@@ -435,28 +450,32 @@ static struct ib_qp *rxe_create_qp(struct ib_pd *ibpd,
 
 =======
 		return ERR_PTR(-EOPNOTSUPP);
+=======
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = rxe_qp_chk_init(rxe, init);
 	if (err)
-		goto err1;
-
-	qp = rxe_alloc(&rxe->qp_pool);
-	if (!qp) {
-		err = -ENOMEM;
-		goto err1;
-	}
+		return err;
 
 	if (udata) {
+<<<<<<< HEAD
 		if (udata->inlen) {
 			err = -EINVAL;
 			goto err2;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (udata->inlen)
+			return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qp->is_user = true;
 	} else {
 		qp->is_user = false;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = rxe_add_to_pool(&rxe->qp_pool, qp);
 	if (err)
@@ -475,20 +494,29 @@ qp_init:
 	return err;
 =======
 	rxe_add_index(qp);
-
-	err = rxe_qp_from_init(rxe, qp, pd, init, uresp, ibpd, udata);
+=======
+	err = rxe_add_to_pool(&rxe->qp_pool, qp);
 	if (err)
-		goto err3;
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	return &qp->ibqp;
+	rxe_add_index(qp);
+	err = rxe_qp_from_init(rxe, qp, pd, init, uresp, ibqp->pd, udata);
+	if (err)
+		goto qp_init;
 
-err3:
+	return 0;
+
+qp_init:
 	rxe_drop_index(qp);
-err2:
 	rxe_drop_ref(qp);
+<<<<<<< HEAD
 err1:
 	return ERR_PTR(err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int rxe_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
@@ -1191,9 +1219,13 @@ static const struct ib_device_ops rxe_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_cq, rxe_cq, ibcq),
 	INIT_RDMA_OBJ_SIZE(ib_pd, rxe_pd, ibpd),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_RDMA_OBJ_SIZE(ib_qp, rxe_qp, ibqp),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_RDMA_OBJ_SIZE(ib_qp, rxe_qp, ibqp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_RDMA_OBJ_SIZE(ib_srq, rxe_srq, ibsrq),
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, rxe_ucontext, ibuc),
 	INIT_RDMA_OBJ_SIZE(ib_mw, rxe_mw, ibmw),
@@ -1204,9 +1236,12 @@ int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
 	int err;
 	struct ib_device *dev = &rxe->ib_dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct crypto_shash *tfm;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strscpy(dev->node_desc, "rxe", sizeof(dev->node_desc));
 
@@ -1226,6 +1261,7 @@ int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = rxe_icrc_init(rxe);
 	if (err)
 		return err;
@@ -1238,6 +1274,11 @@ int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
 	}
 	rxe->tfm = tfm;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = rxe_icrc_init(rxe);
+	if (err)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = ib_register_device(dev, ibdev_name, NULL);
 	if (err)

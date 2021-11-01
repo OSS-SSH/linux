@@ -32,10 +32,14 @@ enum dm_queue_mode {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 typedef enum { STATUSTYPE_INFO, STATUSTYPE_TABLE, STATUSTYPE_IMA } status_type_t;
 =======
 typedef enum { STATUSTYPE_INFO, STATUSTYPE_TABLE } status_type_t;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+typedef enum { STATUSTYPE_INFO, STATUSTYPE_TABLE, STATUSTYPE_IMA } status_type_t;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 union map_info {
 	void *ptr;
@@ -156,9 +160,12 @@ typedef size_t (*dm_dax_copy_iter_fn)(struct dm_target *ti, pgoff_t pgoff,
 typedef int (*dm_dax_zero_page_range_fn)(struct dm_target *ti, pgoff_t pgoff,
 		size_t nr_pages);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define PAGE_SECTORS (PAGE_SIZE / 512)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void dm_error(const char *message);
 
@@ -611,12 +618,18 @@ void dm_destroy_keyslot_manager(struct blk_keyslot_manager *ksm);
 			  0 : scnprintf(result + sz, maxlen - sz, x))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DMEMIT_TARGET_NAME_VERSION(y) \
 		DMEMIT("target_name=%s,target_version=%u.%u.%u", \
 		       (y)->name, (y)->version[0], (y)->version[1], (y)->version[2])
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Definitions of return values from target end_io function.
  */

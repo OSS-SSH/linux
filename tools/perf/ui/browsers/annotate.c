@@ -126,6 +126,7 @@ static void annotate_browser__write(struct ui_browser *browser, void *entry, int
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int is_fused(struct annotate_browser *ab, struct disasm_line *cursor)
 {
 	struct disasm_line *pos = list_prev_entry(cursor, al.node);
@@ -142,13 +143,27 @@ static int is_fused(struct annotate_browser *ab, struct disasm_line *cursor)
 		return 0;
 =======
 static bool is_fused(struct annotate_browser *ab, struct disasm_line *cursor)
+=======
+static int is_fused(struct annotate_browser *ab, struct disasm_line *cursor)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct disasm_line *pos = list_prev_entry(cursor, al.node);
 	const char *name;
+	int diff = 1;
+
+	while (pos && pos->al.offset == -1) {
+		pos = list_prev_entry(pos, al.node);
+		if (!ab->opts->hide_src_code)
+			diff++;
+	}
 
 	if (!pos)
+<<<<<<< HEAD
 		return false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ins__is_lock(&pos->ins))
 		name = pos->ops.locked.ins.name;
@@ -156,6 +171,7 @@ static bool is_fused(struct annotate_browser *ab, struct disasm_line *cursor)
 		name = pos->ins.name;
 
 	if (!name || !cursor->ins.name)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return 0;
 
@@ -167,6 +183,13 @@ static bool is_fused(struct annotate_browser *ab, struct disasm_line *cursor)
 
 	return ins__is_fused(ab->arch, name, cursor->ins.name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+
+	if (ins__is_fused(ab->arch, name, cursor->ins.name))
+		return diff;
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void annotate_browser__draw_current_jump(struct ui_browser *browser)
@@ -181,9 +204,13 @@ static void annotate_browser__draw_current_jump(struct ui_browser *browser)
 	u8 pcnt_width = annotation__pcnt_width(notes);
 	int width;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int diff = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int diff = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* PLT symbols contain external offsets */
 	if (strstr(sym->name, "@plt"))
@@ -235,6 +262,7 @@ static void annotate_browser__draw_current_jump(struct ui_browser *browser)
 				 from, to);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	diff = is_fused(ab, cursor);
 	if (diff > 0) {
 		ui_browser__mark_fused(browser,
@@ -247,6 +275,13 @@ static void annotate_browser__draw_current_jump(struct ui_browser *browser)
 				       from - 1,
 				       to > from);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	diff = is_fused(ab, cursor);
+	if (diff > 0) {
+		ui_browser__mark_fused(browser,
+				       pcnt_width + 3 + notes->widths.addr + width,
+				       from - diff, diff, to > from);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1004,9 +1039,13 @@ int symbol__tui_annotate(struct map_symbol *ms, struct evsel *evsel,
 	if (err) {
 		char msg[BUFSIZ];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ms->map->dso->annotate_warned = true;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ms->map->dso->annotate_warned = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		symbol__strerror_disassemble(ms, err, msg, sizeof(msg));
 		ui__error("Couldn't annotate %s:\n%s", sym->name, msg);
 		goto out_free_offsets;

@@ -73,11 +73,17 @@ extern "C" {
 #define DRM_VMW_GB_SURFACE_REF_EXT      28
 #define DRM_VMW_MSG                     29
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DRM_VMW_MKSSTAT_RESET           30
 #define DRM_VMW_MKSSTAT_ADD             31
 #define DRM_VMW_MKSSTAT_REMOVE          32
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DRM_VMW_MKSSTAT_RESET           30
+#define DRM_VMW_MKSSTAT_ADD             31
+#define DRM_VMW_MKSSTAT_REMOVE          32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*************************************************************************/
 /**
@@ -1243,6 +1249,9 @@ struct drm_vmw_msg_arg {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct drm_vmw_mksstat_add_arg
  *
@@ -1281,8 +1290,11 @@ struct drm_vmw_mksstat_remove_arg {
 	__u64 id;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(__cplusplus)
 }
 #endif

@@ -77,6 +77,7 @@ static s32 __led_brightness_to_intensity(struct v4l2_ctrl *ctrl,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int v4l2_flash_set_led_brightness(struct v4l2_flash *v4l2_flash,
 					 struct v4l2_ctrl *ctrl)
 {
@@ -88,6 +89,13 @@ static void v4l2_flash_set_led_brightness(struct v4l2_flash *v4l2_flash,
 {
 	struct v4l2_ctrl **ctrls = v4l2_flash->ctrls;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int v4l2_flash_set_led_brightness(struct v4l2_flash *v4l2_flash,
+					 struct v4l2_ctrl *ctrl)
+{
+	struct v4l2_ctrl **ctrls = v4l2_flash->ctrls;
+	struct led_classdev *led_cdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum led_brightness brightness;
 
 	if (has_flash_op(v4l2_flash, intensity_to_led_brightness))
@@ -111,6 +119,7 @@ static void v4l2_flash_set_led_brightness(struct v4l2_flash *v4l2_flash,
 	if (ctrl == ctrls[TORCH_INTENSITY]) {
 		if (ctrls[LED_MODE]->val != V4L2_FLASH_LED_MODE_TORCH)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return 0;
 
 		if (WARN_ON_ONCE(!v4l2_flash->fled_cdev))
@@ -127,14 +136,26 @@ static void v4l2_flash_set_led_brightness(struct v4l2_flash *v4l2_flash,
 	return led_set_brightness_sync(led_cdev, brightness);
 =======
 			return;
+=======
+			return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		led_set_brightness_sync(&v4l2_flash->fled_cdev->led_cdev,
-					brightness);
+		if (WARN_ON_ONCE(!v4l2_flash->fled_cdev))
+			return -EINVAL;
+
+		led_cdev = &v4l2_flash->fled_cdev->led_cdev;
 	} else {
-		led_set_brightness_sync(v4l2_flash->iled_cdev,
-					brightness);
+		if (WARN_ON_ONCE(!v4l2_flash->iled_cdev))
+			return -EINVAL;
+
+		led_cdev = v4l2_flash->iled_cdev;
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return led_set_brightness_sync(led_cdev, brightness);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int v4l2_flash_update_led_brightness(struct v4l2_flash *v4l2_flash,
@@ -154,10 +175,14 @@ static int v4l2_flash_update_led_brightness(struct v4l2_flash *v4l2_flash,
 		if (ctrls[LED_MODE]->val != V4L2_FLASH_LED_MODE_TORCH)
 			return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (WARN_ON_ONCE(!v4l2_flash->fled_cdev))
 			return -EINVAL;
 
+<<<<<<< HEAD
 		led_cdev = &v4l2_flash->fled_cdev->led_cdev;
 	} else {
 		if (WARN_ON_ONCE(!v4l2_flash->iled_cdev))
@@ -167,6 +192,13 @@ static int v4l2_flash_update_led_brightness(struct v4l2_flash *v4l2_flash,
 		led_cdev = &v4l2_flash->fled_cdev->led_cdev;
 	} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		led_cdev = &v4l2_flash->fled_cdev->led_cdev;
+	} else {
+		if (WARN_ON_ONCE(!v4l2_flash->iled_cdev))
+			return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		led_cdev = v4l2_flash->iled_cdev;
 	}
 
@@ -197,14 +229,20 @@ static int v4l2_flash_g_volatile_ctrl(struct v4l2_ctrl *c)
 	case V4L2_CID_FLASH_INDICATOR_INTENSITY:
 		return v4l2_flash_update_led_brightness(v4l2_flash, c);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!fled_cdev)
 		return -EINVAL;
 
 	switch (c->id) {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case V4L2_CID_FLASH_INTENSITY:
 		ret = led_update_flash_brightness(fled_cdev);
 		if (ret < 0)
@@ -241,16 +279,23 @@ static int v4l2_flash_s_ctrl(struct v4l2_ctrl *c)
 	struct v4l2_flash *v4l2_flash = v4l2_ctrl_to_v4l2_flash(c);
 	struct led_classdev_flash *fled_cdev = v4l2_flash->fled_cdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct led_classdev *led_cdev;
 =======
 	struct led_classdev *led_cdev = fled_cdev ? &fled_cdev->led_cdev : NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct led_classdev *led_cdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct v4l2_ctrl **ctrls = v4l2_flash->ctrls;
 	bool external_strobe;
 	int ret = 0;
 
 	switch (c->id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case V4L2_CID_FLASH_TORCH_INTENSITY:
 	case V4L2_CID_FLASH_INDICATOR_INTENSITY:
 		return v4l2_flash_set_led_brightness(v4l2_flash, c);
@@ -262,8 +307,11 @@ static int v4l2_flash_s_ctrl(struct v4l2_ctrl *c)
 	led_cdev = &fled_cdev->led_cdev;
 
 	switch (c->id) {
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case V4L2_CID_FLASH_LED_MODE:
 		switch (c->val) {
 		case V4L2_FLASH_LED_MODE_NONE:
@@ -295,6 +343,7 @@ static int v4l2_flash_s_ctrl(struct v4l2_ctrl *c)
 				return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return v4l2_flash_set_led_brightness(v4l2_flash,
 							     ctrls[TORCH_INTENSITY]);
 =======
@@ -302,6 +351,10 @@ static int v4l2_flash_s_ctrl(struct v4l2_ctrl *c)
 							ctrls[TORCH_INTENSITY]);
 			return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return v4l2_flash_set_led_brightness(v4l2_flash,
+							     ctrls[TORCH_INTENSITY]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case V4L2_CID_FLASH_STROBE_SOURCE:
@@ -338,12 +391,15 @@ static int v4l2_flash_s_ctrl(struct v4l2_ctrl *c)
 		 */
 		return led_set_flash_brightness(fled_cdev, c->val);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case V4L2_CID_FLASH_TORCH_INTENSITY:
 	case V4L2_CID_FLASH_INDICATOR_INTENSITY:
 		v4l2_flash_set_led_brightness(v4l2_flash, c);
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return -EINVAL;
@@ -556,12 +612,16 @@ static int __sync_device_with_v4l2_controls(struct v4l2_flash *v4l2_flash)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ctrls[TORCH_INTENSITY]) {
 		ret = v4l2_flash_set_led_brightness(v4l2_flash,
 						    ctrls[TORCH_INTENSITY]);
 		if (ret < 0)
 			return ret;
 	}
+<<<<<<< HEAD
 
 	if (ctrls[INDICATOR_INTENSITY]) {
 		ret = v4l2_flash_set_led_brightness(v4l2_flash,
@@ -578,13 +638,24 @@ static int __sync_device_with_v4l2_controls(struct v4l2_flash *v4l2_flash)
 	if (ctrls[TORCH_INTENSITY])
 		v4l2_flash_set_led_brightness(v4l2_flash,
 					      ctrls[TORCH_INTENSITY]);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (ctrls[INDICATOR_INTENSITY])
-		v4l2_flash_set_led_brightness(v4l2_flash,
-						ctrls[INDICATOR_INTENSITY]);
+	if (ctrls[INDICATOR_INTENSITY]) {
+		ret = v4l2_flash_set_led_brightness(v4l2_flash,
+						    ctrls[INDICATOR_INTENSITY]);
+		if (ret < 0)
+			return ret;
+	}
 
 	if (ctrls[FLASH_TIMEOUT]) {
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (WARN_ON_ONCE(!fled_cdev))
+			return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = led_set_flash_timeout(fled_cdev,
 					ctrls[FLASH_TIMEOUT]->val);
 		if (ret < 0)
@@ -593,11 +664,17 @@ static int __sync_device_with_v4l2_controls(struct v4l2_flash *v4l2_flash)
 
 	if (ctrls[FLASH_INTENSITY]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (WARN_ON_ONCE(!fled_cdev))
 			return -EINVAL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (WARN_ON_ONCE(!fled_cdev))
+			return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = led_set_flash_brightness(fled_cdev,
 					ctrls[FLASH_INTENSITY]->val);
 		if (ret < 0)

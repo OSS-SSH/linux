@@ -46,9 +46,13 @@ struct ehci_caps {
 #define HCS_PPC(p)		((p)&(1 << 4))	/* true: port power control */
 #define HCS_N_PORTS(p)		(((p)>>0)&0xf)	/* bits 3:0, ports on HC */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HCS_N_PORTS_MAX		15		/* N_PORTS valid 0x1-0xF */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HCS_N_PORTS_MAX		15		/* N_PORTS valid 0x1-0xF */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u32		hcc_params;      /* HCCPARAMS - offset 0x8 */
 /* EHCI 1.1 addendum */
@@ -131,6 +135,7 @@ struct ehci_regs {
 #define FLAG_CF		(1<<0)		/* true: we'll support "high speed" */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	union {
 		/* PORTSC: offset 0x44 */
 		u32	port_status[HCS_N_PORTS_MAX];	/* up to N_PORTS */
@@ -138,6 +143,11 @@ struct ehci_regs {
 	/* PORTSC: offset 0x44 */
 	u32		port_status[0];	/* up to N_PORTS */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	union {
+		/* PORTSC: offset 0x44 */
+		u32	port_status[HCS_N_PORTS_MAX];	/* up to N_PORTS */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* EHCI 1.1 addendum */
 #define PORTSC_SUSPEND_STS_ACK 0
 #define PORTSC_SUSPEND_STS_NYET 1
@@ -175,11 +185,15 @@ struct ehci_regs {
 #define PORT_CONNECT	(1<<0)		/* device connected */
 #define PORT_RWC_BITS   (PORT_CSC | PORT_PEC | PORT_OCC)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct {
 			u32	reserved3[9];
 			/* USBMODE: offset 0x68 */
 			u32	usbmode;	/* USB Device mode */
 		};
+<<<<<<< HEAD
 =======
 
 	u32		reserved3[9];
@@ -187,27 +201,37 @@ struct ehci_regs {
 	/* USBMODE: offset 0x68 */
 	u32		usbmode;	/* USB Device mode */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define USBMODE_SDIS	(1<<3)		/* Stream disable */
 #define USBMODE_BE	(1<<2)		/* BE/LE endianness select */
 #define USBMODE_CM_HC	(3<<0)		/* host controller mode */
 #define USBMODE_CM_IDLE	(0<<0)		/* idle state */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	};
 =======
 
 	u32		reserved4[6];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Moorestown has some non-standard registers, partially due to the fact that
  * its EHCI controller has both TT and LPM support. HOSTPCx are extensions to
  * PORTSCx
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union {
 		struct {
 			u32	reserved4;
 			/* HOSTPC: offset 0x84 */
 			u32	hostpc[HCS_N_PORTS_MAX];
+<<<<<<< HEAD
 #define HOSTPC_PHCD	(1<<22)		/* Phy clock disable */
 #define HOSTPC_PSPD	(3<<25)		/* Port speed detection */
 		};
@@ -220,11 +244,22 @@ struct ehci_regs {
 =======
 	/* HOSTPC: offset 0x84 */
 	u32		hostpc[0];	/* HOSTPC extension */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HOSTPC_PHCD	(1<<22)		/* Phy clock disable */
 #define HOSTPC_PSPD	(3<<25)		/* Port speed detection */
+		};
 
+		/* Broadcom-proprietary USB_EHCI_INSNREG00 @ 0x80 */
+		u32	brcm_insnreg[4];
+	};
+
+<<<<<<< HEAD
 	u32		reserved5[17];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32		reserved5[2];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* USBMODE_EX: offset 0xc8 */
 	u32		usbmode_ex;	/* USB Device mode extension */

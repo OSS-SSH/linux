@@ -40,21 +40,32 @@
 #define DPSW_CMDID_CLEAR_IRQ_STATUS         DPSW_CMD_ID(0x017)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DPSW_CMDID_SET_REFLECTION_IF        DPSW_CMD_ID(0x022)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DPSW_CMDID_SET_REFLECTION_IF        DPSW_CMD_ID(0x022)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DPSW_CMDID_IF_SET_TCI               DPSW_CMD_ID(0x030)
 #define DPSW_CMDID_IF_SET_STP               DPSW_CMD_ID(0x031)
 
 #define DPSW_CMDID_IF_GET_COUNTER           DPSW_CMD_V2(0x034)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DPSW_CMDID_IF_ADD_REFLECTION        DPSW_CMD_ID(0x037)
 #define DPSW_CMDID_IF_REMOVE_REFLECTION     DPSW_CMD_ID(0x038)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DPSW_CMDID_IF_ADD_REFLECTION        DPSW_CMD_ID(0x037)
+#define DPSW_CMDID_IF_REMOVE_REFLECTION     DPSW_CMD_ID(0x038)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DPSW_CMDID_IF_ENABLE                DPSW_CMD_ID(0x03D)
 #define DPSW_CMDID_IF_DISABLE               DPSW_CMD_ID(0x03E)
 
@@ -545,6 +556,9 @@ struct dpsw_cmd_acl_entry {
 	__le64 key_iova;
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct dpsw_cmd_set_reflection_if {
 	__le16 if_id;
@@ -559,7 +573,10 @@ struct dpsw_cmd_if_reflection {
 	/* only 2 bits from the LSB */
 	u8 filter;
 };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #pragma pack(pop)
 #endif /* __FSL_DPSW_CMD_H */

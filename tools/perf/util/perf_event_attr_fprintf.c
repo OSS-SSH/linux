@@ -138,11 +138,17 @@ int perf_event_attr__fprintf(FILE *fp, struct perf_event_attr *attr,
 	PRINT_ATTRf(text_poke, p_unsigned);
 	PRINT_ATTRf(build_id, p_unsigned);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	PRINT_ATTRf(inherit_thread, p_unsigned);
 	PRINT_ATTRf(remove_on_exec, p_unsigned);
 	PRINT_ATTRf(sigtrap, p_unsigned);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	PRINT_ATTRf(inherit_thread, p_unsigned);
+	PRINT_ATTRf(remove_on_exec, p_unsigned);
+	PRINT_ATTRf(sigtrap, p_unsigned);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	PRINT_ATTRn("{ wakeup_events, wakeup_watermark }", wakeup_events, p_unsigned);
 	PRINT_ATTRf(bp_type, p_unsigned);
@@ -157,10 +163,14 @@ int perf_event_attr__fprintf(FILE *fp, struct perf_event_attr *attr,
 	PRINT_ATTRf(sample_max_stack, p_unsigned);
 	PRINT_ATTRf(aux_sample_size, p_unsigned);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	PRINT_ATTRf(sig_data, p_unsigned);
 =======
 	PRINT_ATTRf(text_poke, p_unsigned);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	PRINT_ATTRf(sig_data, p_unsigned);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }

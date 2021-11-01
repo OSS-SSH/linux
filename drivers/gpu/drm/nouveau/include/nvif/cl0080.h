@@ -5,11 +5,16 @@
 struct nv_device_v0 {
 	__u8  version;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__u8  priv;
 	__u8  pad02[6];
 =======
 	__u8  pad01[7];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__u8  priv;
+	__u8  pad02[6];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u64 device;	/* device identifier, ~0 for client default */
 };
 

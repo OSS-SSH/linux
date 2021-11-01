@@ -349,6 +349,9 @@
 #define WFPM_CTRL_REG			0xA03030
 #define WFPM_GP2			0xA030B4
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* DBGI SRAM Register details */
 #define DBGI_SRAM_TARGET_ACCESS_CFG			0x00A2E14C
@@ -356,8 +359,11 @@
 #define DBGI_SRAM_TARGET_ACCESS_RDATA_LSB		0x00A2E154
 #define DBGI_SRAM_TARGET_ACCESS_RDATA_MSB		0x00A2E158
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	ENABLE_WFPM = BIT(31),
 	WFPM_AUX_CTL_AUX_IF_MAC_OWNER_MSK	= 0x80000000,

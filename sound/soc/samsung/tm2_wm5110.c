@@ -127,10 +127,14 @@ static int tm2_aif1_hw_params(struct snd_pcm_substream *substream,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct snd_soc_ops tm2_aif1_ops = {
 =======
 static struct snd_soc_ops tm2_aif1_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct snd_soc_ops tm2_aif1_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.hw_params = tm2_aif1_hw_params,
 };
 
@@ -205,10 +209,14 @@ static int tm2_aif2_hw_free(struct snd_pcm_substream *substream)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct snd_soc_ops tm2_aif2_ops = {
 =======
 static struct snd_soc_ops tm2_aif2_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct snd_soc_ops tm2_aif2_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.hw_params = tm2_aif2_hw_params,
 	.hw_free = tm2_aif2_hw_free,
 };
@@ -263,10 +271,14 @@ static int tm2_hdmi_hw_params(struct snd_pcm_substream *substream,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct snd_soc_ops tm2_hdmi_ops = {
 =======
 static struct snd_soc_ops tm2_hdmi_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct snd_soc_ops tm2_hdmi_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.hw_params = tm2_hdmi_hw_params,
 };
 

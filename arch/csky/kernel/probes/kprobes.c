@@ -284,11 +284,15 @@ int __kprobes kprobe_fault_handler(struct pt_regs *regs, unsigned int trapnr)
 		 */
 		regs->pc = (unsigned long) cur->addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		BUG_ON(!instruction_pointer(regs));
 =======
 		if (!instruction_pointer(regs))
 			BUG();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUG_ON(!instruction_pointer(regs));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (kcb->kprobe_status == KPROBE_REENTER)
 			restore_previous_kprobe(kcb);

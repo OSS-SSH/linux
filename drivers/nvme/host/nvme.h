@@ -12,9 +12,12 @@
 #include <linux/kref.h>
 #include <linux/blk-mq.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/lightnvm.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/sed-opal.h>
 #include <linux/fault-inject.h>
 #include <linux/rcupdate.h>
@@ -52,6 +55,7 @@ extern struct workqueue_struct *nvme_reset_wq;
 extern struct workqueue_struct *nvme_delete_wq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 enum {
 	NVME_NS_LBA		= 0,
@@ -59,6 +63,8 @@ enum {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * List of workarounds for devices that required behavior not specified in
  * the standard.
@@ -100,6 +106,7 @@ enum nvme_quirks {
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	 * Supports the LighNVM command set if indicated in vs[1].
 	 */
@@ -107,6 +114,8 @@ enum nvme_quirks {
 
 	/*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Set MEDIUM priority on SQ creation
 	 */
 	NVME_QUIRK_MEDIUM_PRIO_SQ		= (1 << 7),
@@ -159,14 +168,20 @@ enum nvme_quirks {
 	 */
 	NVME_QUIRK_DMA_ADDRESS_BITS_48		= (1 << 16),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The controller requires the command_id value be be limited, so skip
 	 * encoding the generation sequence number.
 	 */
 	NVME_QUIRK_SKIP_CID_GEN			= (1 << 17),
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -177,9 +192,13 @@ struct nvme_request {
 	struct nvme_command	*cmd;
 	union nvme_result	result;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8			genctr;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8			genctr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8			retries;
 	u8			flags;
 	u16			status;
@@ -472,9 +491,12 @@ struct nvme_ns {
 #endif
 	struct list_head siblings;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct nvm_dev *ndev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct kref kref;
 	struct nvme_ns_head *head;
 
@@ -493,9 +515,13 @@ struct nvme_ns {
 #define NVME_NS_ANA_PENDING	2
 #define NVME_NS_FORCE_RO	3
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define NVME_NS_READY		4
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define NVME_NS_READY		4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct cdev		cdev;
 	struct device		cdev_device;
@@ -527,6 +553,9 @@ struct nvme_ctrl_ops {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * nvme command_id is constructed as such:
  * | xxxx | xxxxxxxxxxxx |
@@ -570,8 +599,11 @@ static inline struct request *nvme_cid_to_rq(struct blk_mq_tags *tags,
 	return blk_mq_tag_to_rq(tags, nvme_tag_from_cid(command_id));
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_FAULT_INJECTION_DEBUG_FS
 void nvme_fault_inject_init(struct nvme_fault_inject *fault_inj,
 			    const char *dev_name);
@@ -670,11 +702,16 @@ static inline void nvme_put_ctrl(struct nvme_ctrl *ctrl)
 static inline bool nvme_is_aen_req(u16 qid, __u16 command_id)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return !qid &&
 		nvme_tag_from_cid(command_id) >= NVME_AQ_BLK_MQ_DEPTH;
 =======
 	return !qid && command_id >= NVME_AQ_BLK_MQ_DEPTH;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return !qid &&
+		nvme_tag_from_cid(command_id) >= NVME_AQ_BLK_MQ_DEPTH;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void nvme_complete_rq(struct request *req);
@@ -796,6 +833,7 @@ void nvme_mpath_uninit(struct nvme_ctrl *ctrl);
 void nvme_mpath_stop(struct nvme_ctrl *ctrl);
 bool nvme_mpath_clear_current_path(struct nvme_ns *ns);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void nvme_mpath_revalidate_paths(struct nvme_ns *ns);
 void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl);
 void nvme_mpath_shutdown_disk(struct nvme_ns_head *head);
@@ -810,6 +848,11 @@ static inline void nvme_mpath_check_last_path(struct nvme_ns *ns)
 		kblockd_schedule_work(&head->requeue_work);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nvme_mpath_revalidate_paths(struct nvme_ns *ns);
+void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl);
+void nvme_mpath_shutdown_disk(struct nvme_ns_head *head);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline void nvme_trace_bio_complete(struct request *req)
 {
@@ -856,6 +899,7 @@ static inline bool nvme_mpath_clear_current_path(struct nvme_ns *ns)
 	return false;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
 {
 }
@@ -869,6 +913,15 @@ static inline void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl)
 }
 static inline void nvme_mpath_check_last_path(struct nvme_ns *ns)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
+{
+}
+static inline void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl)
+{
+}
+static inline void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 }
 static inline void nvme_trace_bio_complete(struct request *req)
@@ -927,6 +980,7 @@ static inline int nvme_update_zone_info(struct nvme_ns *ns, unsigned lbaf)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_NVM
 int nvme_nvm_register(struct nvme_ns *ns, char *disk_name, int node);
@@ -949,6 +1003,8 @@ static inline int nvme_nvm_ioctl(struct nvme_ns *ns, unsigned int cmd,
 #endif /* CONFIG_NVM */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct nvme_ns *nvme_get_ns_from_dev(struct device *dev)
 {
 	return dev_to_disk(dev)->private_data;
@@ -981,11 +1037,17 @@ struct nvme_ns *nvme_find_get_ns(struct nvme_ctrl *ctrl, unsigned nsid);
 void nvme_put_ns(struct nvme_ns *ns);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool nvme_multi_css(struct nvme_ctrl *ctrl)
 {
 	return (ctrl->ctrl_config & NVME_CC_CSS_MASK) == NVME_CC_CSS_CSI;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _NVME_H */

@@ -20,12 +20,16 @@ properties:
 
   compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     enum:
       - allwinner,sun6i-a31-dma
       - allwinner,sun8i-a23-dma
       - allwinner,sun8i-a83t-dma
       - allwinner,sun8i-h3-dma
       - allwinner,sun8i-v3s-dma
+<<<<<<< HEAD
 =======
     oneOf:
       - const: allwinner,sun6i-a31-dma
@@ -34,6 +38,8 @@ properties:
       - const: allwinner,sun8i-h3-dma
       - const: allwinner,sun8i-v3s-dma
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg:
     maxItems: 1

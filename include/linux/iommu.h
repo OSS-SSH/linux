@@ -41,9 +41,13 @@ struct notifier_block;
 struct iommu_sva;
 struct iommu_fault_event;
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct iommu_dma_cookie;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct iommu_dma_cookie;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* iommu fault flags */
 #define IOMMU_FAULT_READ	0x0
@@ -65,9 +69,13 @@ struct iommu_domain_geometry {
 					      implementation              */
 #define __IOMMU_DOMAIN_PT	(1U << 2)  /* Domain is identity mapped   */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __IOMMU_DOMAIN_DMA_FQ	(1U << 3)  /* DMA-API uses flush queue    */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __IOMMU_DOMAIN_DMA_FQ	(1U << 3)  /* DMA-API uses flush queue    */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * This are the possible domain-types
@@ -81,10 +89,15 @@ struct iommu_domain_geometry {
  *				  This flag allows IOMMU drivers to implement
  *				  certain optimizations for these domains
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	IOMMU_DOMAIN_DMA_FQ	- As above, but definitely using batched TLB
  *				  invalidation.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *	IOMMU_DOMAIN_DMA_FQ	- As above, but definitely using batched TLB
+ *				  invalidation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #define IOMMU_DOMAIN_BLOCKED	(0U)
 #define IOMMU_DOMAIN_IDENTITY	(__IOMMU_DOMAIN_PT)
@@ -92,11 +105,17 @@ struct iommu_domain_geometry {
 #define IOMMU_DOMAIN_DMA	(__IOMMU_DOMAIN_PAGING |	\
 				 __IOMMU_DOMAIN_DMA_API)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IOMMU_DOMAIN_DMA_FQ	(__IOMMU_DOMAIN_PAGING |	\
 				 __IOMMU_DOMAIN_DMA_API |	\
 				 __IOMMU_DOMAIN_DMA_FQ)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IOMMU_DOMAIN_DMA_FQ	(__IOMMU_DOMAIN_PAGING |	\
+				 __IOMMU_DOMAIN_DMA_API |	\
+				 __IOMMU_DOMAIN_DMA_FQ)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct iommu_domain {
 	unsigned type;
@@ -105,6 +124,7 @@ struct iommu_domain {
 	iommu_fault_handler_t handler;
 	void *handler_token;
 	struct iommu_domain_geometry geometry;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct iommu_dma_cookie *iova_cookie;
 };
@@ -119,6 +139,16 @@ static inline bool iommu_is_dma_domain(struct iommu_domain *domain)
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct iommu_dma_cookie *iova_cookie;
+};
+
+static inline bool iommu_is_dma_domain(struct iommu_domain *domain)
+{
+	return domain->type & __IOMMU_DOMAIN_DMA_API;
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum iommu_cap {
 	IOMMU_CAP_CACHE_COHERENCY,	/* IOMMU can enforce cache coherent DMA
 					   transactions */
@@ -191,6 +221,7 @@ enum iommu_dev_features {
  * @end: IOVA representing the end of the range to be flushed (inclusive)
  * @pgsize: The interval at which to perform the flush
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @freelist: Removed pages to free after sync
  * @queued: Indicates that the flush will be queued
  *
@@ -206,6 +237,17 @@ enum iommu_dev_features {
  * ->unmap() function in struct iommu_ops before eventually being passed
  * into ->iotlb_sync().
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @freelist: Removed pages to free after sync
+ * @queued: Indicates that the flush will be queued
+ *
+ * This structure is intended to be updated by multiple calls to the
+ * ->unmap() function in struct iommu_ops before eventually being passed
+ * into ->iotlb_sync(). Drivers can add pages to @freelist to be freed after
+ * ->iotlb_sync() or ->iotlb_flush_all() have cleared all cached references to
+ * them. @queued is set to indicate when ->iotlb_flush_all() will be called
+ * later instead of ->iotlb_sync(), so drivers may optimise accordingly.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct iommu_iotlb_gather {
 	unsigned long		start;
@@ -213,9 +255,13 @@ struct iommu_iotlb_gather {
 	size_t			pgsize;
 	struct page		*freelist;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool			queued;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool			queued;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -227,6 +273,7 @@ struct iommu_iotlb_gather {
  * @detach_dev: detach device from an iommu domain
  * @map: map a physically contiguous memory region to an iommu domain
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @map_pages: map a physically contiguous set of pages of the same size to
  *             an iommu domain.
  * @unmap: unmap a physically contiguous memory region from an iommu domain
@@ -234,6 +281,12 @@ struct iommu_iotlb_gather {
 =======
  * @unmap: unmap a physically contiguous memory region from an iommu domain
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @map_pages: map a physically contiguous set of pages of the same size to
+ *             an iommu domain.
+ * @unmap: unmap a physically contiguous memory region from an iommu domain
+ * @unmap_pages: unmap a number of pages of the same size from an iommu domain
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @flush_iotlb_all: Synchronously flush all hardware TLBs for this domain
  * @iotlb_sync_map: Sync mappings created recently using @map to the hardware
  * @iotlb_sync: Flush all queued ranges from the hardware TLBs and empty flush
@@ -283,6 +336,7 @@ struct iommu_ops {
 	int (*map)(struct iommu_domain *domain, unsigned long iova,
 		   phys_addr_t paddr, size_t size, int prot, gfp_t gfp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*map_pages)(struct iommu_domain *domain, unsigned long iova,
 			 phys_addr_t paddr, size_t pgsize, size_t pgcount,
 			 int prot, gfp_t gfp, size_t *mapped);
@@ -295,6 +349,16 @@ struct iommu_ops {
 	size_t (*unmap)(struct iommu_domain *domain, unsigned long iova,
 		     size_t size, struct iommu_iotlb_gather *iotlb_gather);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*map_pages)(struct iommu_domain *domain, unsigned long iova,
+			 phys_addr_t paddr, size_t pgsize, size_t pgcount,
+			 int prot, gfp_t gfp, size_t *mapped);
+	size_t (*unmap)(struct iommu_domain *domain, unsigned long iova,
+		     size_t size, struct iommu_iotlb_gather *iotlb_gather);
+	size_t (*unmap_pages)(struct iommu_domain *domain, unsigned long iova,
+			      size_t pgsize, size_t pgcount,
+			      struct iommu_iotlb_gather *iotlb_gather);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*flush_iotlb_all)(struct iommu_domain *domain);
 	void (*iotlb_sync_map)(struct iommu_domain *domain, unsigned long iova,
 			       size_t size);
@@ -479,11 +543,15 @@ extern size_t iommu_unmap_fast(struct iommu_domain *domain,
 			       unsigned long iova, size_t size,
 			       struct iommu_iotlb_gather *iotlb_gather);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern ssize_t iommu_map_sg(struct iommu_domain *domain, unsigned long iova,
 		struct scatterlist *sg, unsigned int nents, int prot);
 extern ssize_t iommu_map_sg_atomic(struct iommu_domain *domain,
 				   unsigned long iova, struct scatterlist *sg,
 				   unsigned int nents, int prot);
+<<<<<<< HEAD
 =======
 extern size_t iommu_map_sg(struct iommu_domain *domain, unsigned long iova,
 			   struct scatterlist *sg,unsigned int nents, int prot);
@@ -491,6 +559,8 @@ extern size_t iommu_map_sg_atomic(struct iommu_domain *domain,
 				  unsigned long iova, struct scatterlist *sg,
 				  unsigned int nents, int prot);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern phys_addr_t iommu_iova_to_phys(struct iommu_domain *domain, dma_addr_t iova);
 extern void iommu_set_fault_handler(struct iommu_domain *domain,
 			iommu_fault_handler_t handler, void *token);
@@ -549,11 +619,15 @@ int iommu_set_pgtable_quirks(struct iommu_domain *domain,
 		unsigned long quirks);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void iommu_set_dma_strict(void);
 =======
 void iommu_set_dma_strict(bool val);
 bool iommu_get_dma_strict(struct iommu_domain *domain);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void iommu_set_dma_strict(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int report_iommu_fault(struct iommu_domain *domain, struct device *dev,
 			      unsigned long iova, int flags);
@@ -574,6 +648,9 @@ static inline void iommu_iotlb_sync(struct iommu_domain *domain,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * iommu_iotlb_gather_is_disjoint - Checks whether a new range is disjoint
  *
@@ -628,22 +705,29 @@ static inline void iommu_iotlb_gather_add_range(struct iommu_iotlb_gather *gathe
  * pages, or with page size/table level hints which cannot be gathered if they
  * differ.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void iommu_iotlb_gather_add_page(struct iommu_domain *domain,
 					       struct iommu_iotlb_gather *gather,
 					       unsigned long iova, size_t size)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long start = iova, end = start + size - 1;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If the new page is disjoint from the current range or is mapped at
 	 * a different granularity, then sync the TLB so that the gather
 	 * structure can be rewritten.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if ((gather->pgsize && gather->pgsize != size) ||
 	    iommu_iotlb_gather_is_disjoint(gather, iova, size))
@@ -663,13 +747,25 @@ static inline bool iommu_iotlb_gather_queued(struct iommu_iotlb_gather *gather)
 			iommu_iotlb_sync(domain, gather);
 		gather->pgsize = size;
 	}
+=======
+	if ((gather->pgsize && gather->pgsize != size) ||
+	    iommu_iotlb_gather_is_disjoint(gather, iova, size))
+		iommu_iotlb_sync(domain, gather);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (gather->end < end)
-		gather->end = end;
+	gather->pgsize = size;
+	iommu_iotlb_gather_add_range(gather, iova, size);
+}
 
+<<<<<<< HEAD
 	if (gather->start > start)
 		gather->start = start;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline bool iommu_iotlb_gather_queued(struct iommu_iotlb_gather *gather)
+{
+	return gather && gather->queued;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* PCI device grouping function */
@@ -830,6 +926,7 @@ static inline size_t iommu_unmap_fast(struct iommu_domain *domain,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline ssize_t iommu_map_sg(struct iommu_domain *domain,
 				   unsigned long iova, struct scatterlist *sg,
 				   unsigned int nents, int prot)
@@ -846,16 +943,25 @@ static inline ssize_t iommu_map_sg_atomic(struct iommu_domain *domain,
 static inline size_t iommu_map_sg(struct iommu_domain *domain,
 				  unsigned long iova, struct scatterlist *sg,
 				  unsigned int nents, int prot)
+=======
+static inline ssize_t iommu_map_sg(struct iommu_domain *domain,
+				   unsigned long iova, struct scatterlist *sg,
+				   unsigned int nents, int prot)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	return 0;
+	return -ENODEV;
 }
 
-static inline size_t iommu_map_sg_atomic(struct iommu_domain *domain,
+static inline ssize_t iommu_map_sg_atomic(struct iommu_domain *domain,
 				  unsigned long iova, struct scatterlist *sg,
 				  unsigned int nents, int prot)
 {
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -ENODEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void iommu_flush_iotlb_all(struct iommu_domain *domain)
@@ -1036,13 +1142,19 @@ static inline void iommu_iotlb_gather_add_page(struct iommu_domain *domain,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool iommu_iotlb_gather_queued(struct iommu_iotlb_gather *gather)
 {
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void iommu_device_unregister(struct iommu_device *iommu)
 {
 }

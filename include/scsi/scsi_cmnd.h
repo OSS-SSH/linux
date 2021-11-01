@@ -112,11 +112,14 @@ struct scsi_cmnd {
 				   size */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct request *request;	/* The command we are
 				   	   working on */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned char *sense_buffer;
 				/* obtained by REQUEST SENSE when
 				 * CHECK CONDITION is received on original
@@ -146,6 +149,7 @@ struct scsi_cmnd {
 	unsigned long state;	/* Command completion state */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int extra_len;	/* length of alignment and padding */
 };
 
@@ -161,6 +165,17 @@ static inline struct request *scsi_cmd_to_rq(struct scsi_cmnd *scmd)
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int extra_len;	/* length of alignment and padding */
+};
+
+/* Variant of blk_mq_rq_from_pdu() that verifies the type of its argument. */
+static inline struct request *scsi_cmd_to_rq(struct scsi_cmnd *scmd)
+{
+	return blk_mq_rq_from_pdu(scmd);
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Return the driver private allocation behind the command.
  * Only works if cmd_size is set in the host template.
@@ -174,12 +189,18 @@ static inline void *scsi_cmd_priv(struct scsi_cmnd *cmd)
 static inline struct scsi_driver *scsi_cmd_to_driver(struct scsi_cmnd *cmd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
 
 	return *(struct scsi_driver **)rq->rq_disk->private_data;
 =======
 	return *(struct scsi_driver **)cmd->request->rq_disk->private_data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(cmd);
+
+	return *(struct scsi_driver **)rq->rq_disk->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 extern void scsi_finish_command(struct scsi_cmnd *cmd);
@@ -242,6 +263,9 @@ static inline int scsi_sg_copy_to_buffer(struct scsi_cmnd *cmd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline sector_t scsi_get_sector(struct scsi_cmnd *scmd)
 {
 	return blk_rq_pos(scsi_cmd_to_rq(scmd));
@@ -261,8 +285,11 @@ static inline unsigned int scsi_logical_block_count(struct scsi_cmnd *scmd)
 	return blk_rq_bytes(scsi_cmd_to_rq(scmd)) >> shift;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The operations below are hints that tell the controller driver how
  * to handle I/Os with DIF or similar types of protection information.
@@ -326,6 +353,7 @@ static inline unsigned char scsi_get_prot_type(struct scsi_cmnd *scmd)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline u32 scsi_prot_ref_tag(struct scsi_cmnd *scmd)
 {
 	struct request *rq = blk_mq_rq_from_pdu(scmd);
@@ -336,6 +364,13 @@ static inline sector_t scsi_get_lba(struct scsi_cmnd *scmd)
 {
 	return blk_rq_pos(scmd->request);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline u32 scsi_prot_ref_tag(struct scsi_cmnd *scmd)
+{
+	struct request *rq = blk_mq_rq_from_pdu(scmd);
+
+	return t10_pi_ref_tag(rq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline unsigned int scsi_prot_interval(struct scsi_cmnd *scmd)

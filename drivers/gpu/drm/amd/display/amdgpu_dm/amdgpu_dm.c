@@ -619,9 +619,13 @@ static void dm_dcn_vertical_interrupt0_high_irq(void *interrupt_params)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DMUB_TRACE_MAX_READ 64
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DMUB_TRACE_MAX_READ 64
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * dm_dmub_outbox1_low_irq() - Handles Outbox interrupt
  * @interrupt_params: used for determining the Outbox instance
@@ -630,9 +634,12 @@ static void dm_dcn_vertical_interrupt0_high_irq(void *interrupt_params)
  * event handler.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define DMUB_TRACE_MAX_READ 64
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dm_dmub_outbox1_low_irq(void *interrupt_params)
 {
 	struct dmub_notification notify;
@@ -1006,10 +1013,15 @@ static void mmhub_read_system_context(struct amdgpu_device *adev, struct dc_phy_
 	PHYSICAL_ADDRESS_LOC page_table_start, page_table_end, page_table_base;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset(pa_config, 0, sizeof(*pa_config));
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memset(pa_config, 0, sizeof(*pa_config));
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	logical_addr_low  = min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18;
 	pt_base = amdgpu_gmc_pd_addr(adev->gart.bo);
 
@@ -1057,6 +1069,7 @@ static void mmhub_read_system_context(struct amdgpu_device *adev, struct dc_phy_
 #endif
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void vblank_control_worker(struct work_struct *work)
 {
 	struct vblank_control_work *vblank_work =
@@ -1067,6 +1080,12 @@ static void event_mall_stutter(struct work_struct *work)
 
 	struct vblank_workqueue *vblank_work = container_of(work, struct vblank_workqueue, mall_work);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void vblank_control_worker(struct work_struct *work)
+{
+	struct vblank_control_work *vblank_work =
+		container_of(work, struct vblank_control_work, work);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct amdgpu_display_manager *dm = vblank_work->dm;
 
 	mutex_lock(&dm->dc_lock);
@@ -1081,6 +1100,9 @@ static void event_mall_stutter(struct work_struct *work)
 	DRM_DEBUG_KMS("Allow idle optimizations (MALL): %d\n", dm->active_vblank_irq_count == 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Control PSR based on vblank requirements from OS */
 	if (vblank_work->stream && vblank_work->stream->link) {
 		if (vblank_work->enable) {
@@ -1091,6 +1113,7 @@ static void event_mall_stutter(struct work_struct *work)
 			   vblank_work->acrtc->dm_irq_params.allow_psr_entry) {
 			amdgpu_dm_psr_enable(vblank_work->stream);
 		}
+<<<<<<< HEAD
 	}
 
 	mutex_unlock(&dm->dc_lock);
@@ -1115,14 +1138,21 @@ static struct vblank_workqueue *vblank_create_workqueue(struct amdgpu_device *ad
 	if (ZERO_OR_NULL_PTR(vblank_work)) {
 		kfree(vblank_work);
 		return NULL;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
-	for (i = 0; i < max_caps; i++)
-		INIT_WORK(&vblank_work[i].mall_work, event_mall_stutter);
+	mutex_unlock(&dm->dc_lock);
 
-	return vblank_work;
+	dc_stream_release(vblank_work->stream);
+
+	kfree(vblank_work);
 }
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 static int amdgpu_dm_init(struct amdgpu_device *adev)
 {
@@ -1157,9 +1187,13 @@ static int amdgpu_dm_init(struct amdgpu_device *adev)
 	init_data.asic_id.pci_revision_id = adev->pdev->revision;
 	init_data.asic_id.hw_internal_rev = adev->external_rev_id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	init_data.asic_id.chip_id = adev->pdev->device;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	init_data.asic_id.chip_id = adev->pdev->device;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	init_data.asic_id.vram_width = adev->gmc.vram_width;
 	/* TODO: initialize init_data.asic_id.vram_type here!!!! */
@@ -1248,10 +1282,14 @@ static int amdgpu_dm_init(struct amdgpu_device *adev)
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((adev->flags & AMD_IS_APU) && (adev->asic_type >= CHIP_CARRIZO)) {
 =======
 	if (adev->apu_flags) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((adev->flags & AMD_IS_APU) && (adev->asic_type >= CHIP_CARRIZO)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct dc_phy_addr_space_config pa_config;
 
 		mmhub_read_system_context(adev, &pa_config);
@@ -1274,6 +1312,7 @@ static int amdgpu_dm_init(struct amdgpu_device *adev)
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	if (adev->dm.dc->caps.max_links > 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		adev->dm.vblank_control_workqueue =
 			create_singlethread_workqueue("dm_vblank_control_workqueue");
 		if (!adev->dm.vblank_control_workqueue)
@@ -1286,6 +1325,12 @@ static int amdgpu_dm_init(struct amdgpu_device *adev)
 		else
 			DRM_DEBUG_DRIVER("amdgpu: vblank_workqueue init done %p.\n", adev->dm.vblank_workqueue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		adev->dm.vblank_control_workqueue =
+			create_singlethread_workqueue("dm_vblank_control_workqueue");
+		if (!adev->dm.vblank_control_workqueue)
+			DRM_ERROR("amdgpu: failed to initialize vblank_workqueue.\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 #endif
 
@@ -1359,6 +1404,9 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	if (adev->dm.vblank_control_workqueue) {
 		destroy_workqueue(adev->dm.vblank_control_workqueue);
@@ -1366,8 +1414,11 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
 	}
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < adev->dm.display_indexes_num; i++) {
 		drm_encoder_cleanup(&adev->dm.mst_encoders[i].base);
 	}
@@ -1392,6 +1443,7 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	if (adev->dm.vblank_workqueue) {
@@ -1402,6 +1454,8 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dc_dmub_srv_destroy(&adev->dm.dc->ctx->dmub_srv);
 
 	if (dc_enable_dmub_notifications(adev->dm.dc)) {
@@ -1618,9 +1672,13 @@ static int dm_dmub_sw_init(struct amdgpu_device *adev)
 
 	hdr = (const struct dmcub_firmware_header_v1_0 *)adev->dm.dmub_fw->data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	adev->dm.dmcub_fw_version = le32_to_cpu(hdr->header.ucode_version);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	adev->dm.dmcub_fw_version = le32_to_cpu(hdr->header.ucode_version);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
 		adev->firmware.ucode[AMDGPU_UCODE_ID_DMCUB].ucode_id =
@@ -1635,9 +1693,12 @@ static int dm_dmub_sw_init(struct amdgpu_device *adev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	adev->dm.dmcub_fw_version = le32_to_cpu(hdr->header.ucode_version);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	adev->dm.dmub_srv = kzalloc(sizeof(*adev->dm.dmub_srv), GFP_KERNEL);
 	dmub_srv = adev->dm.dmub_srv;
@@ -1799,9 +1860,13 @@ static int dm_late_init(void *handle)
 
 	params.set = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	params.backlight_ramping_override = false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	params.backlight_ramping_override = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	params.backlight_ramping_start = 0xCCCC;
 	params.backlight_ramping_reduction = 0xCCCCCCCC;
 	params.backlight_lut_array_size = 16;
@@ -2493,9 +2558,13 @@ static void update_connector_ext_caps(struct amdgpu_dm_connector *aconnector)
 		50, 51, 52, 53, 55, 56, 57, 58, 59, 61, 62, 63, 65, 66, 68, 69,
 		71, 72, 74, 75, 77, 79, 81, 82, 84, 86, 88, 90, 92, 94, 96, 98};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!aconnector || !aconnector->dc_link)
 		return;
@@ -2508,6 +2577,9 @@ static void update_connector_ext_caps(struct amdgpu_dm_connector *aconnector)
 	adev = drm_to_adev(conn_base->dev);
 	dm = &adev->dm;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < dm->num_of_edps; i++) {
 		if (link == dm->backlight_link[i])
 			break;
@@ -2515,14 +2587,18 @@ static void update_connector_ext_caps(struct amdgpu_dm_connector *aconnector)
 	if (i >= dm->num_of_edps)
 		return;
 	caps = &dm->backlight_caps[i];
+<<<<<<< HEAD
 =======
 	caps = &dm->backlight_caps;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	caps->ext_caps = &aconnector->dc_link->dpcd_sink_ext_caps;
 	caps->aux_support = false;
 	max_cll = conn_base->hdr_sink_metadata.hdmi_type1.max_cll;
 	min_cll = conn_base->hdr_sink_metadata.hdmi_type1.min_cll;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (caps->ext_caps->bits.oled == 1 /*||
 	    caps->ext_caps->bits.sdr_aux_backlight_control == 1 ||
@@ -2532,6 +2608,11 @@ static void update_connector_ext_caps(struct amdgpu_dm_connector *aconnector)
 	    caps->ext_caps->bits.sdr_aux_backlight_control == 1 ||
 	    caps->ext_caps->bits.hdr_aux_backlight_control == 1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (caps->ext_caps->bits.oled == 1 /*||
+	    caps->ext_caps->bits.sdr_aux_backlight_control == 1 ||
+	    caps->ext_caps->bits.hdr_aux_backlight_control == 1*/)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		caps->aux_support = true;
 
 	if (amdgpu_backlight == 0)
@@ -3524,11 +3605,16 @@ static int amdgpu_dm_mode_config_init(struct amdgpu_device *adev)
 	defined(CONFIG_BACKLIGHT_CLASS_DEVICE_MODULE)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm,
 					    int bl_idx)
 =======
 static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm,
+					    int bl_idx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 #if defined(CONFIG_ACPI)
 	struct amdgpu_dm_backlight_caps caps;
@@ -3536,14 +3622,19 @@ static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm)
 	memset(&caps, 0, sizeof(caps));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dm->backlight_caps[bl_idx].caps_valid)
 =======
 	if (dm->backlight_caps.caps_valid)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dm->backlight_caps[bl_idx].caps_valid)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	amdgpu_acpi_get_backlight_caps(&caps);
 	if (caps.caps_valid) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dm->backlight_caps[bl_idx].caps_valid = true;
 		if (caps.aux_support)
@@ -3564,23 +3655,31 @@ static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm)
 	dm->backlight_caps[bl_idx].max_input_signal = AMDGPU_DM_DEFAULT_MAX_BACKLIGHT;
 =======
 		dm->backlight_caps.caps_valid = true;
+=======
+		dm->backlight_caps[bl_idx].caps_valid = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (caps.aux_support)
 			return;
-		dm->backlight_caps.min_input_signal = caps.min_input_signal;
-		dm->backlight_caps.max_input_signal = caps.max_input_signal;
+		dm->backlight_caps[bl_idx].min_input_signal = caps.min_input_signal;
+		dm->backlight_caps[bl_idx].max_input_signal = caps.max_input_signal;
 	} else {
-		dm->backlight_caps.min_input_signal =
+		dm->backlight_caps[bl_idx].min_input_signal =
 				AMDGPU_DM_DEFAULT_MIN_BACKLIGHT;
-		dm->backlight_caps.max_input_signal =
+		dm->backlight_caps[bl_idx].max_input_signal =
 				AMDGPU_DM_DEFAULT_MAX_BACKLIGHT;
 	}
 #else
-	if (dm->backlight_caps.aux_support)
+	if (dm->backlight_caps[bl_idx].aux_support)
 		return;
 
+<<<<<<< HEAD
 	dm->backlight_caps.min_input_signal = AMDGPU_DM_DEFAULT_MIN_BACKLIGHT;
 	dm->backlight_caps.max_input_signal = AMDGPU_DM_DEFAULT_MAX_BACKLIGHT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dm->backlight_caps[bl_idx].min_input_signal = AMDGPU_DM_DEFAULT_MIN_BACKLIGHT;
+	dm->backlight_caps[bl_idx].max_input_signal = AMDGPU_DM_DEFAULT_MAX_BACKLIGHT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 }
 
@@ -3632,6 +3731,7 @@ static u32 convert_brightness_to_user(const struct amdgpu_dm_backlight_caps *cap
 
 static int amdgpu_dm_backlight_set_level(struct amdgpu_display_manager *dm,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 int bl_idx,
 					 u32 user_brightness)
 {
@@ -3658,34 +3758,31 @@ static int amdgpu_dm_backlight_set_level(struct amdgpu_display_manager *dm,
 		if (!rc)
 			DRM_DEBUG("DM: Failed to update backlight on eDP[%d]\n", bl_idx);
 =======
+=======
+					 int bl_idx,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 u32 user_brightness)
 {
 	struct amdgpu_dm_backlight_caps caps;
-	struct dc_link *link[AMDGPU_DM_MAX_NUM_EDP];
-	u32 brightness[AMDGPU_DM_MAX_NUM_EDP];
+	struct dc_link *link;
+	u32 brightness;
 	bool rc;
-	int i;
 
-	amdgpu_dm_update_backlight_caps(dm);
-	caps = dm->backlight_caps;
+	amdgpu_dm_update_backlight_caps(dm, bl_idx);
+	caps = dm->backlight_caps[bl_idx];
 
-	for (i = 0; i < dm->num_of_edps; i++) {
-		dm->brightness[i] = user_brightness;
-		brightness[i] = convert_brightness_from_user(&caps, dm->brightness[i]);
-		link[i] = (struct dc_link *)dm->backlight_link[i];
-	}
+	dm->brightness[bl_idx] = user_brightness;
+	brightness = convert_brightness_from_user(&caps, dm->brightness[bl_idx]);
+	link = (struct dc_link *)dm->backlight_link[bl_idx];
 
 	/* Change brightness based on AUX property */
 	if (caps.aux_support) {
-		for (i = 0; i < dm->num_of_edps; i++) {
-			rc = dc_link_set_backlight_level_nits(link[i], true, brightness[i],
-				AUX_BL_DEFAULT_TRANSITION_TIME_MS);
-			if (!rc) {
-				DRM_DEBUG("DM: Failed to update backlight via AUX on eDP[%d]\n", i);
-				break;
-			}
-		}
+		rc = dc_link_set_backlight_level_nits(link, true, brightness,
+						      AUX_BL_DEFAULT_TRANSITION_TIME_MS);
+		if (!rc)
+			DRM_DEBUG("DM: Failed to update backlight via AUX on eDP[%d]\n", bl_idx);
 	} else {
+<<<<<<< HEAD
 		for (i = 0; i < dm->num_of_edps; i++) {
 			rc = dc_link_set_backlight_level(dm->backlight_link[i], brightness[i], 0);
 			if (!rc) {
@@ -3694,6 +3791,11 @@ static int amdgpu_dm_backlight_set_level(struct amdgpu_display_manager *dm,
 			}
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rc = dc_link_set_backlight_level(link, brightness, 0);
+		if (!rc)
+			DRM_DEBUG("DM: Failed to update backlight on eDP[%d]\n", bl_idx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return rc ? 0 : 1;
@@ -3702,6 +3804,7 @@ static int amdgpu_dm_backlight_set_level(struct amdgpu_display_manager *dm,
 static int amdgpu_dm_backlight_update_status(struct backlight_device *bd)
 {
 	struct amdgpu_display_manager *dm = bl_get_data(bd);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int i;
 
@@ -3716,10 +3819,22 @@ static int amdgpu_dm_backlight_update_status(struct backlight_device *bd)
 
 	amdgpu_dm_backlight_set_level(dm, bd->props.brightness);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i;
+
+	for (i = 0; i < dm->num_of_edps; i++) {
+		if (bd == dm->backlight_dev[i])
+			break;
+	}
+	if (i >= AMDGPU_DM_MAX_NUM_EDP)
+		i = 0;
+	amdgpu_dm_backlight_set_level(dm, i, bd->props.brightness);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static u32 amdgpu_dm_backlight_get_level(struct amdgpu_display_manager *dm,
 					 int bl_idx)
@@ -3733,20 +3848,29 @@ static u32 amdgpu_dm_backlight_get_level(struct amdgpu_display_manager *dm,
 	if (caps.aux_support) {
 =======
 static u32 amdgpu_dm_backlight_get_level(struct amdgpu_display_manager *dm)
+=======
+static u32 amdgpu_dm_backlight_get_level(struct amdgpu_display_manager *dm,
+					 int bl_idx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct amdgpu_dm_backlight_caps caps;
+	struct dc_link *link = (struct dc_link *)dm->backlight_link[bl_idx];
 
-	amdgpu_dm_update_backlight_caps(dm);
-	caps = dm->backlight_caps;
+	amdgpu_dm_update_backlight_caps(dm, bl_idx);
+	caps = dm->backlight_caps[bl_idx];
 
 	if (caps.aux_support) {
+<<<<<<< HEAD
 		struct dc_link *link = (struct dc_link *)dm->backlight_link[0];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u32 avg, peak;
 		bool rc;
 
 		rc = dc_link_get_backlight_level_nits(link, &avg, &peak);
 		if (!rc)
+<<<<<<< HEAD
 <<<<<<< HEAD
 			return dm->brightness[bl_idx];
 		return convert_brightness_to_user(&caps, avg);
@@ -3757,13 +3881,20 @@ static u32 amdgpu_dm_backlight_get_level(struct amdgpu_display_manager *dm)
 			return dm->brightness[bl_idx];
 =======
 			return dm->brightness[0];
+=======
+			return dm->brightness[bl_idx];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return convert_brightness_to_user(&caps, avg);
 	} else {
-		int ret = dc_link_get_backlight_level(dm->backlight_link[0]);
+		int ret = dc_link_get_backlight_level(link);
 
 		if (ret == DC_ERROR_UNEXPECTED)
+<<<<<<< HEAD
 			return dm->brightness[0];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return dm->brightness[bl_idx];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return convert_brightness_to_user(&caps, ret);
 	}
 }
@@ -3771,6 +3902,7 @@ static u32 amdgpu_dm_backlight_get_level(struct amdgpu_display_manager *dm)
 static int amdgpu_dm_backlight_get_brightness(struct backlight_device *bd)
 {
 	struct amdgpu_display_manager *dm = bl_get_data(bd);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int i;
 
@@ -3785,6 +3917,17 @@ static int amdgpu_dm_backlight_get_brightness(struct backlight_device *bd)
 
 	return amdgpu_dm_backlight_get_level(dm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i;
+
+	for (i = 0; i < dm->num_of_edps; i++) {
+		if (bd == dm->backlight_dev[i])
+			break;
+	}
+	if (i >= AMDGPU_DM_MAX_NUM_EDP)
+		i = 0;
+	return amdgpu_dm_backlight_get_level(dm, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct backlight_ops amdgpu_dm_backlight_ops = {
@@ -3799,6 +3942,7 @@ amdgpu_dm_register_backlight_device(struct amdgpu_display_manager *dm)
 	char bl_name[16];
 	struct backlight_properties props = { 0 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	amdgpu_dm_update_backlight_caps(dm, dm->num_of_edps);
 	dm->brightness[dm->num_of_edps] = AMDGPU_MAX_BL_LEVEL;
@@ -3809,12 +3953,18 @@ amdgpu_dm_register_backlight_device(struct amdgpu_display_manager *dm)
 	for (i = 0; i < dm->num_of_edps; i++)
 		dm->brightness[i] = AMDGPU_MAX_BL_LEVEL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	amdgpu_dm_update_backlight_caps(dm, dm->num_of_edps);
+	dm->brightness[dm->num_of_edps] = AMDGPU_MAX_BL_LEVEL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	props.max_brightness = AMDGPU_MAX_BL_LEVEL;
 	props.brightness = AMDGPU_MAX_BL_LEVEL;
 	props.type = BACKLIGHT_RAW;
 
 	snprintf(bl_name, sizeof(bl_name), "amdgpu_bl%d",
+<<<<<<< HEAD
 <<<<<<< HEAD
 		 adev_to_drm(dm->adev)->primary->index + dm->num_of_edps);
 
@@ -3827,23 +3977,33 @@ amdgpu_dm_register_backlight_device(struct amdgpu_display_manager *dm)
 	if (IS_ERR(dm->backlight_dev[dm->num_of_edps]))
 =======
 		 adev_to_drm(dm->adev)->primary->index);
+=======
+		 adev_to_drm(dm->adev)->primary->index + dm->num_of_edps);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	dm->backlight_dev = backlight_device_register(bl_name,
-						      adev_to_drm(dm->adev)->dev,
-						      dm,
-						      &amdgpu_dm_backlight_ops,
-						      &props);
+	dm->backlight_dev[dm->num_of_edps] = backlight_device_register(bl_name,
+								       adev_to_drm(dm->adev)->dev,
+								       dm,
+								       &amdgpu_dm_backlight_ops,
+								       &props);
 
+<<<<<<< HEAD
 	if (IS_ERR(dm->backlight_dev))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(dm->backlight_dev[dm->num_of_edps]))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DRM_ERROR("DM: Backlight registration failed!\n");
 	else
 		DRM_DEBUG_DRIVER("DM: Registered Backlight device: %s\n", bl_name);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static int initialize_plane(struct amdgpu_display_manager *dm,
@@ -3901,6 +4061,7 @@ static void register_backlight_device(struct amdgpu_display_manager *dm,
 		 * is better then a black screen.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!dm->backlight_dev[dm->num_of_edps])
 			amdgpu_dm_register_backlight_device(dm);
 
@@ -3911,6 +4072,12 @@ static void register_backlight_device(struct amdgpu_display_manager *dm,
 
 		if (dm->backlight_dev) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!dm->backlight_dev[dm->num_of_edps])
+			amdgpu_dm_register_backlight_device(dm);
+
+		if (dm->backlight_dev[dm->num_of_edps]) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dm->backlight_link[dm->num_of_edps] = link;
 			dm->num_of_edps++;
 		}
@@ -4980,10 +5147,14 @@ fill_gfx9_plane_attributes_from_modifiers(struct amdgpu_device *adev,
 {
 	const uint64_t modifier = afb->base.modifier;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret = 0;
 =======
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fill_gfx9_tiling_info_from_modifier(adev, tiling_info, modifier);
 	tiling_info->gfx9.swizzle = modifier_gfx9_swizzle_mode(modifier);
@@ -5002,6 +5173,7 @@ fill_gfx9_plane_attributes_from_modifiers(struct amdgpu_device *adev,
 	ret = validate_dcc(adev, format, rotation, tiling_info, dcc, address, plane_size);
 	if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		drm_dbg_kms(adev_to_drm(adev), "validate_dcc: returned error: %d\n", ret);
 
 	return ret;
@@ -5010,6 +5182,11 @@ fill_gfx9_plane_attributes_from_modifiers(struct amdgpu_device *adev,
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		drm_dbg_kms(adev_to_drm(adev), "validate_dcc: returned error: %d\n", ret);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int
@@ -6237,10 +6414,14 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	struct amdgpu_display_manager *dm = &adev->dm;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct vblank_control_work *work;
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct vblank_control_work *work;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	int rc = 0;
 
@@ -6266,6 +6447,9 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dm->vblank_control_workqueue) {
 		work = kzalloc(sizeof(*work), GFP_ATOMIC);
 		if (!work)
@@ -6283,6 +6467,7 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
 
 		queue_work(dm->vblank_control_workqueue, &work->work);
 	}
+<<<<<<< HEAD
 =======
 	spin_lock_irqsave(&dm->vblank_lock, flags);
 	dm->vblank_workqueue->dm = dm;
@@ -6291,6 +6476,8 @@ static inline int dm_set_vblank(struct drm_crtc *crtc, bool enable)
 	spin_unlock_irqrestore(&dm->vblank_lock, flags);
 	schedule_work(&dm->vblank_workqueue->mall_work);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	return 0;
@@ -6465,9 +6652,13 @@ static void amdgpu_dm_connector_destroy(struct drm_connector *connector)
 	struct amdgpu_device *adev = drm_to_adev(connector->dev);
 	struct amdgpu_display_manager *dm = &adev->dm;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Call only if mst_mgr was iniitalized before since it's not done
@@ -6479,11 +6670,15 @@ static void amdgpu_dm_connector_destroy(struct drm_connector *connector)
 #if defined(CONFIG_BACKLIGHT_CLASS_DEVICE) ||\
 	defined(CONFIG_BACKLIGHT_CLASS_DEVICE_MODULE)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < dm->num_of_edps; i++) {
 		if ((link == dm->backlight_link[i]) && dm->backlight_dev[i]) {
 			backlight_device_unregister(dm->backlight_dev[i]);
 			dm->backlight_dev[i] = NULL;
 		}
+<<<<<<< HEAD
 =======
 
 	if ((link->connector_signal & (SIGNAL_TYPE_EDP | SIGNAL_TYPE_LVDS)) &&
@@ -6492,6 +6687,8 @@ static void amdgpu_dm_connector_destroy(struct drm_connector *connector)
 		backlight_device_unregister(dm->backlight_dev);
 		dm->backlight_dev = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 #endif
 
@@ -7057,11 +7254,16 @@ const struct drm_encoder_helper_funcs amdgpu_dm_encoder_helper_funcs = {
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 static int dm_update_mst_vcpi_slots_for_dsc(struct drm_atomic_state *state,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    struct dc_state *dc_state,
 					    struct dsc_mst_fairness_vars *vars)
 =======
 					    struct dc_state *dc_state)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    struct dc_state *dc_state,
+					    struct dsc_mst_fairness_vars *vars)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dc_stream_state *stream = NULL;
 	struct drm_connector *connector;
@@ -7069,10 +7271,14 @@ static int dm_update_mst_vcpi_slots_for_dsc(struct drm_atomic_state *state,
 	struct amdgpu_dm_connector *aconnector;
 	struct dm_connector_state *dm_conn_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, j, clock;
 =======
 	int i, j, clock, bpp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, j, clock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int vcpi, pbn_div, pbn = 0;
 
 	for_each_new_connector_in_state(state, connector, new_con_state, i) {
@@ -7112,6 +7318,7 @@ static int dm_update_mst_vcpi_slots_for_dsc(struct drm_atomic_state *state,
 
 		pbn_div = dm_mst_get_pbn_divider(stream->link);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		clock = stream->timing.pix_clk_100hz / 10;
 		/* pbn is calculated by compute_mst_dsc_configs_for_state*/
 		for (j = 0; j < dc_state->stream_count; j++) {
@@ -7126,6 +7333,17 @@ static int dm_update_mst_vcpi_slots_for_dsc(struct drm_atomic_state *state,
 		clock = stream->timing.pix_clk_100hz / 10;
 		pbn = drm_dp_calc_pbn_mode(clock, bpp, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clock = stream->timing.pix_clk_100hz / 10;
+		/* pbn is calculated by compute_mst_dsc_configs_for_state*/
+		for (j = 0; j < dc_state->stream_count; j++) {
+			if (vars[j].aconnector == aconnector) {
+				pbn = vars[j].pbn;
+				break;
+			}
+		}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vcpi = drm_dp_mst_atomic_enable_dsc(state,
 						    aconnector->port,
 						    pbn, pbn_div,
@@ -7805,6 +8023,9 @@ static void amdgpu_dm_connector_add_common_modes(struct drm_encoder *encoder,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void amdgpu_set_panel_orientation(struct drm_connector *connector)
 {
 	struct drm_encoder *encoder;
@@ -7831,8 +8052,11 @@ static void amdgpu_set_panel_orientation(struct drm_connector *connector)
 						       native_mode->vdisplay);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void amdgpu_dm_connector_ddc_get_modes(struct drm_connector *connector,
 					      struct edid *edid)
 {
@@ -7862,10 +8086,15 @@ static void amdgpu_dm_connector_ddc_get_modes(struct drm_connector *connector,
 		 */
 		amdgpu_dm_update_freesync_caps(connector, edid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		amdgpu_set_panel_orientation(connector);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		amdgpu_set_panel_orientation(connector);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		amdgpu_dm_connector->num_modes = 0;
 	}
@@ -7904,14 +8133,20 @@ static uint add_fs_modes(struct amdgpu_dm_connector *aconnector)
 	 * 48,72,96 - Multiples of 24
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static const uint32_t common_rates[] = {
 		23976, 24000, 25000, 29970, 30000,
 		48000, 50000, 60000, 72000, 96000
 	};
+<<<<<<< HEAD
 =======
 	const uint32_t common_rates[] = { 23976, 24000, 25000, 29970, 30000,
 					 48000, 50000, 60000, 72000, 96000 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Find mode with highest refresh rate with the same resolution
@@ -8383,6 +8618,9 @@ static bool is_content_protection_different(struct drm_connector_state *state,
 		state->content_protection = DRM_MODE_CONTENT_PROTECTION_DESIRED;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Stream removed and re-enabled
 	 *
 	 * Can sometimes overlap with the HPD case,
@@ -8403,10 +8641,13 @@ static bool is_content_protection_different(struct drm_connector_state *state,
 	 * Only start HDCP if the display is connected/enabled.
 	 * update_hdcp flag will be set to false until the next
 	 * HPD comes in.
+<<<<<<< HEAD
 =======
 	/* Check if something is connected/enabled, otherwise we start hdcp but nothing is connected/enabled
 	 * hot-plug, headless s3, dpms
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * Handles:	DESIRED -> DESIRED (Special case)
 	 */
@@ -8991,6 +9232,9 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
 	if ((planes_count || acrtc_state->active_planes == 0) &&
 		acrtc_state->stream) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 		/*
 		 * If PSR or idle optimizations are enabled then flush out
@@ -9000,8 +9244,11 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
 			flush_workqueue(dm->vblank_control_workqueue);
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bundle->stream_update.stream = acrtc_state->stream;
 		if (new_pcrtc_state->mode_changed) {
 			bundle->stream_update.src = acrtc_state->stream->src;
@@ -9071,12 +9318,16 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
 				!acrtc_state->stream->link->psr_settings.psr_feature_enabled)
 			amdgpu_dm_link_setup_psr(acrtc_state->stream);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Decrement skip count when PSR is enabled and we're doing fast updates. */
 		if (acrtc_state->update_type == UPDATE_TYPE_FAST &&
 		    acrtc_state->stream->link->psr_settings.psr_feature_enabled) {
 			struct amdgpu_dm_connector *aconn =
 				(struct amdgpu_dm_connector *)acrtc_state->stream->dm_stream_context;
+<<<<<<< HEAD
 
 			if (aconn->psr_skip_count > 0)
 				aconn->psr_skip_count--;
@@ -9097,6 +9348,16 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
 			else
 				amdgpu_dm_psr_enable(acrtc_state->stream);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+			if (aconn->psr_skip_count > 0)
+				aconn->psr_skip_count--;
+
+			/* Allow PSR when skip count is 0. */
+			acrtc_attach->dm_irq_params.allow_psr_entry = !aconn->psr_skip_count;
+		} else {
+			acrtc_attach->dm_irq_params.allow_psr_entry = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		mutex_unlock(&dm->dc_lock);
@@ -9346,17 +9607,25 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
 	if (dc_state) {
 		/* if there mode set or reset, disable eDP PSR */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mode_set_reset_required) {
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 			if (dm->vblank_control_workqueue)
 				flush_workqueue(dm->vblank_control_workqueue);
 #endif
+<<<<<<< HEAD
 			amdgpu_dm_psr_disable_all(dm);
 		}
 =======
 		if (mode_set_reset_required)
 			amdgpu_dm_psr_disable_all(dm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			amdgpu_dm_psr_disable_all(dm);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		dm_enable_per_frame_crtc_master_sync(dc_state);
 		mutex_lock(&dm->dc_lock);
@@ -9594,15 +9863,21 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
 	defined(CONFIG_BACKLIGHT_CLASS_DEVICE_MODULE)
 	/* restore the backlight level */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < dm->num_of_edps; i++) {
 		if (dm->backlight_dev[i] &&
 		    (amdgpu_dm_backlight_get_level(dm, i) != dm->brightness[i]))
 			amdgpu_dm_backlight_set_level(dm, i, dm->brightness[i]);
 	}
+<<<<<<< HEAD
 =======
 	if (dm->backlight_dev)
 		amdgpu_dm_backlight_set_level(dm, dm->brightness[0]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	/*
 	 * send vblank event on all events not handled in flip and
@@ -10016,15 +10291,21 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
 			   is_freesync_video_mode(&new_crtc_state->mode,
 						  aconnector)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct drm_display_mode *high_mode;
 
 			high_mode = get_highest_refresh_rate_mode(aconnector, false);
 			if (!drm_mode_equal(&new_crtc_state->mode, high_mode)) {
 				set_freesync_fixed_config(dm_new_crtc_state);
 			}
+<<<<<<< HEAD
 =======
 			set_freesync_fixed_config(dm_new_crtc_state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		ret = dm_atomic_get_state(state, &dm_state);
@@ -10623,11 +10904,17 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
 	bool lock_and_validation_needed = false;
 	struct dm_crtc_state *dm_old_crtc_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	struct dsc_mst_fairness_vars vars[MAX_PIPES];
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_DRM_AMD_DC_DCN)
+	struct dsc_mst_fairness_vars vars[MAX_PIPES];
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	trace_amdgpu_dm_atomic_check_begin(state);
 
@@ -10859,6 +11146,7 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!compute_mst_dsc_configs_for_state(state, dm_state->context, vars))
 			goto fail;
 
@@ -10869,6 +11157,12 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
 
 		ret = dm_update_mst_vcpi_slots_for_dsc(state, dm_state->context);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!compute_mst_dsc_configs_for_state(state, dm_state->context, vars))
+			goto fail;
+
+		ret = dm_update_mst_vcpi_slots_for_dsc(state, dm_state->context, vars);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			goto fail;
 #endif
@@ -10885,11 +11179,16 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
 		status = dc_validate_global_state(dc, dm_state->context, false);
 		if (status != DC_OK) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			drm_dbg_atomic(dev,
 				       "DC global validation failure: %s (%d)",
 =======
 			DC_LOG_WARNING("DC global validation failure: %s (%d)",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			drm_dbg_atomic(dev,
+				       "DC global validation failure: %s (%d)",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       dc_status_to_str(status), status);
 			ret = -EINVAL;
 			goto fail;
@@ -10987,6 +11286,9 @@ static bool is_dp_capable_without_timing_msa(struct dc *dc,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool dm_edid_parser_send_cea(struct amdgpu_display_manager *dm,
 		unsigned int offset,
 		unsigned int total_length,
@@ -11045,18 +11347,24 @@ static bool dm_edid_parser_send_cea(struct amdgpu_display_manager *dm,
 }
 
 static bool parse_edid_cea_dmcu(struct amdgpu_display_manager *dm,
+<<<<<<< HEAD
 =======
 static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint8_t *edid_ext, int len,
 		struct amdgpu_hdmi_vsdb_info *vsdb_info)
 {
 	int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct amdgpu_device *adev = drm_to_adev(aconnector->base.dev);
 	struct dc *dc = adev->dm.dc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* send extension block to DMCU for parsing */
 	for (i = 0; i < len; i += 8) {
@@ -11065,10 +11373,14 @@ static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
 
 		/* send 8 bytes a time */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!dc_edid_parser_send_cea(dm->dc, i, len, &edid_ext[i], 8))
 =======
 		if (!dc_edid_parser_send_cea(dc, i, len, &edid_ext[i], 8))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!dc_edid_parser_send_cea(dm->dc, i, len, &edid_ext[i], 8))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return false;
 
 		if (i+8 == len) {
@@ -11076,10 +11388,14 @@ static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
 			int version, min_rate, max_rate;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			res = dc_edid_parser_recv_amd_vsdb(dm->dc, &version, &min_rate, &max_rate);
 =======
 			res = dc_edid_parser_recv_amd_vsdb(dc, &version, &min_rate, &max_rate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			res = dc_edid_parser_recv_amd_vsdb(dm->dc, &version, &min_rate, &max_rate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (res) {
 				/* amd vsdb found */
 				vsdb_info->freesync_supported = 1;
@@ -11094,10 +11410,14 @@ static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
 
 		/* check for ack*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 		res = dc_edid_parser_recv_cea_ack(dm->dc, &offset);
 =======
 		res = dc_edid_parser_recv_cea_ack(dc, &offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		res = dc_edid_parser_recv_cea_ack(dm->dc, &offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!res)
 			return false;
 	}
@@ -11106,6 +11426,9 @@ static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool parse_edid_cea_dmub(struct amdgpu_display_manager *dm,
 		uint8_t *edid_ext, int len,
 		struct amdgpu_hdmi_vsdb_info *vsdb_info)
@@ -11134,8 +11457,11 @@ static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
 		return parse_edid_cea_dmcu(&adev->dm, edid_ext, len, vsdb_info);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int parse_hdmi_amd_vsdb(struct amdgpu_dm_connector *aconnector,
 		struct edid *edid, struct amdgpu_hdmi_vsdb_info *vsdb_info)
 {

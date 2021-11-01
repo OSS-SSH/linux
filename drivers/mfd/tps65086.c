@@ -25,9 +25,13 @@ static const struct mfd_cell tps65086_cells[] = {
 	{ .name = "tps65086-regulator", },
 	{ .name = "tps65086-gpio", },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .name = "tps65086-reset", },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .name = "tps65086-reset", },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct regmap_range tps65086_yes_ranges[] = {
@@ -105,6 +109,9 @@ static int tps65086_probe(struct i2c_client *client,
 		 (version & TPS65086_DEVICEID_REV_MASK) >> 6);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (tps->irq > 0) {
 		ret = regmap_add_irq_chip(tps->regmap, tps->irq, IRQF_ONESHOT, 0,
 					  &tps65086_irq_chip, &tps->irq_data);
@@ -112,6 +119,7 @@ static int tps65086_probe(struct i2c_client *client,
 			dev_err(tps->dev, "Failed to register IRQ chip\n");
 			return ret;
 		}
+<<<<<<< HEAD
 =======
 	ret = regmap_add_irq_chip(tps->regmap, tps->irq, IRQF_ONESHOT, 0,
 				  &tps65086_irq_chip, &tps->irq_data);
@@ -119,11 +127,14 @@ static int tps65086_probe(struct i2c_client *client,
 		dev_err(tps->dev, "Failed to register IRQ chip\n");
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = mfd_add_devices(tps->dev, PLATFORM_DEVID_AUTO, tps65086_cells,
 			      ARRAY_SIZE(tps65086_cells), NULL, 0,
 			      regmap_irq_get_domain(tps->irq_data));
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret && tps->irq > 0)
 		regmap_del_irq_chip(tps->irq, tps->irq_data);
@@ -131,12 +142,17 @@ static int tps65086_probe(struct i2c_client *client,
 	return ret;
 =======
 	if (ret) {
+=======
+	if (ret && tps->irq > 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		regmap_del_irq_chip(tps->irq, tps->irq_data);
-		return ret;
-	}
 
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int tps65086_remove(struct i2c_client *client)
@@ -144,11 +160,16 @@ static int tps65086_remove(struct i2c_client *client)
 	struct tps65086 *tps = i2c_get_clientdata(client);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (tps->irq > 0)
 		regmap_del_irq_chip(tps->irq, tps->irq_data);
 =======
 	regmap_del_irq_chip(tps->irq, tps->irq_data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (tps->irq > 0)
+		regmap_del_irq_chip(tps->irq, tps->irq_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

@@ -9,9 +9,13 @@
 #include <linux/if_vlan.h>
 #include <linux/kfifo.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <net/devlink.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <net/devlink.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "hclge_cmd.h"
 #include "hclge_ptp.h"
@@ -42,6 +46,9 @@
 #define HCLGE_VECTOR_VF_OFFSET		0x100000
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGE_NIC_CSQ_BASEADDR_L_REG	0x27000
 #define HCLGE_NIC_CSQ_BASEADDR_H_REG	0x27004
 #define HCLGE_NIC_CSQ_DEPTH_REG		0x27008
@@ -53,6 +60,7 @@
 #define HCLGE_NIC_CRQ_TAIL_REG		0x27024
 #define HCLGE_NIC_CRQ_HEAD_REG		0x27028
 
+<<<<<<< HEAD
 =======
 #define HCLGE_CMDQ_TX_ADDR_L_REG	0x27000
 #define HCLGE_CMDQ_TX_ADDR_H_REG	0x27004
@@ -65,15 +73,20 @@
 #define HCLGE_CMDQ_RX_TAIL_REG		0x27024
 #define HCLGE_CMDQ_RX_HEAD_REG		0x27028
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGE_CMDQ_INTR_STS_REG		0x27104
 #define HCLGE_CMDQ_INTR_EN_REG		0x27108
 #define HCLGE_CMDQ_INTR_GEN_REG		0x2710C
 
 /* bar registers for common func */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HCLGE_VECTOR0_OTER_EN_REG	0x20600
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGE_GRO_EN_REG		0x28000
 #define HCLGE_RXD_ADV_LAYOUT_EN_REG	0x28008
 
@@ -215,9 +228,13 @@ enum HLCGE_PORT_TYPE {
 #define HCLGE_VECTOR0_IMP_RD_POISON_B	5U
 #define HCLGE_VECTOR0_ALL_MSIX_ERR_B	6U
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HCLGE_TRIGGER_IMP_RESET_B	7U
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HCLGE_TRIGGER_IMP_RESET_B	7U
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HCLGE_MAC_DEFAULT_FRAME \
 	(ETH_HLEN + ETH_FCS_LEN + 2 * VLAN_HLEN + ETH_DATA_LEN)
@@ -953,9 +970,13 @@ struct hclge_dev {
 	enum HCLGE_FD_ACTIVE_RULE_TYPE fd_active_type;
 	u8 fd_en;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool gro_en;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool gro_en;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u16 wanted_umv_size;
 	/* max available unicast mac vlan space */
@@ -973,9 +994,13 @@ struct hclge_dev {
 	struct irq_affinity_notify affinity_notify;
 	struct hclge_ptp *ptp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct devlink *devlink;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct devlink *devlink;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* VPort level vlan tag configuration for TX direction */
@@ -1088,13 +1113,19 @@ struct hclge_vport {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hclge_speed_bit_map {
 	u32 speed;
 	u32 speed_bit;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hclge_set_vport_promisc_mode(struct hclge_vport *vport, bool en_uc_pmc,
 				 bool en_mc_pmc, bool en_bc_pmc);
 int hclge_add_uc_addr_common(struct hclge_vport *vport,

@@ -2038,6 +2038,7 @@ static int isp_subdev_notifier_complete(struct v4l2_async_notifier *async)
 
 	ret = media_entity_enum_init(&isp->crashed, &isp->media_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret) {
 		mutex_unlock(&isp->media_dev.graph_mutex);
 		return ret;
@@ -2046,6 +2047,12 @@ static int isp_subdev_notifier_complete(struct v4l2_async_notifier *async)
 	if (ret)
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret) {
+		mutex_unlock(&isp->media_dev.graph_mutex);
+		return ret;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	list_for_each_entry(sd, &v4l2_dev->subdevs, list) {
 		if (sd->notifier != &isp->notifier)

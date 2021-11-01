@@ -141,19 +141,25 @@ static void pageunmap_range(struct dev_pagemap *pgmap, int range_id)
 	struct range *range = &pgmap->ranges[range_id];
 	struct page *first_page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int nid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* make sure to access a memmap that was actually initialized */
 	first_page = pfn_to_page(pfn_first(pgmap, range_id));
 
 	/* pages are dead and unused, undo the arch mapping */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	nid = page_to_nid(first_page);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mem_hotplug_begin();
 	remove_pfn_range_from_zone(page_zone(first_page), PHYS_PFN(range->start),
 				   PHYS_PFN(range_len(range)));
@@ -162,10 +168,14 @@ static void pageunmap_range(struct dev_pagemap *pgmap, int range_id)
 			       PHYS_PFN(range_len(range)), NULL);
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		arch_remove_memory(range->start, range_len(range),
 =======
 		arch_remove_memory(nid, range->start, range_len(range),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		arch_remove_memory(range->start, range_len(range),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				pgmap_altmap(pgmap));
 		kasan_remove_zero_shadow(__va(range->start), range_len(range));
 	}

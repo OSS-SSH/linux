@@ -436,6 +436,7 @@ static int setup_frame32(struct ksignal *ksig, struct pt_regs *regs,
 
 	if (!wsaved) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err |= raw_copy_in_user((u32 __user *)sf,
 					(u32 __user *)(regs->u_regs[UREG_FP]),
 					sizeof(struct reg_window32));
@@ -444,6 +445,11 @@ static int setup_frame32(struct ksignal *ksig, struct pt_regs *regs,
 				    (u32 __user *)(regs->u_regs[UREG_FP]),
 				    sizeof(struct reg_window32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err |= raw_copy_in_user((u32 __user *)sf,
+					(u32 __user *)(regs->u_regs[UREG_FP]),
+					sizeof(struct reg_window32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		struct reg_window *rp;
 
@@ -574,6 +580,7 @@ static int setup_rt_frame32(struct ksignal *ksig, struct pt_regs *regs,
 
 	if (!wsaved) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err |= raw_copy_in_user((u32 __user *)sf,
 					(u32 __user *)(regs->u_regs[UREG_FP]),
 					sizeof(struct reg_window32));
@@ -582,6 +589,11 @@ static int setup_rt_frame32(struct ksignal *ksig, struct pt_regs *regs,
 				    (u32 __user *)(regs->u_regs[UREG_FP]),
 				    sizeof(struct reg_window32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err |= raw_copy_in_user((u32 __user *)sf,
+					(u32 __user *)(regs->u_regs[UREG_FP]),
+					sizeof(struct reg_window32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		struct reg_window *rp;
 
@@ -758,6 +770,9 @@ out:
 	return ret;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Compile-time assertions for siginfo_t offsets. Check NSIG* as well, as
@@ -795,5 +810,8 @@ static_assert(offsetof(compat_siginfo_t, si_perf_data)	== 0x10);
 static_assert(offsetof(compat_siginfo_t, si_perf_type)	== 0x14);
 static_assert(offsetof(compat_siginfo_t, si_band)	== 0x0c);
 static_assert(offsetof(compat_siginfo_t, si_fd)		== 0x10);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

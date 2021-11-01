@@ -151,11 +151,16 @@ pid_t f_getown(struct file *filp)
 {
 	pid_t pid = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	read_lock_irq(&filp->f_owner.lock);
 =======
 	read_lock(&filp->f_owner.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	read_lock_irq(&filp->f_owner.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_lock();
 	if (pid_task(filp->f_owner.pid, filp->f_owner.pid_type)) {
 		pid = pid_vnr(filp->f_owner.pid);
@@ -164,10 +169,14 @@ pid_t f_getown(struct file *filp)
 	}
 	rcu_read_unlock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	read_unlock_irq(&filp->f_owner.lock);
 =======
 	read_unlock(&filp->f_owner.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	read_unlock_irq(&filp->f_owner.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return pid;
 }
 
@@ -218,10 +227,14 @@ static int f_getown_ex(struct file *filp, unsigned long arg)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	read_lock_irq(&filp->f_owner.lock);
 =======
 	read_lock(&filp->f_owner.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	read_lock_irq(&filp->f_owner.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_lock();
 	if (pid_task(filp->f_owner.pid, filp->f_owner.pid_type))
 		owner.pid = pid_vnr(filp->f_owner.pid);
@@ -245,10 +258,14 @@ static int f_getown_ex(struct file *filp, unsigned long arg)
 		break;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	read_unlock_irq(&filp->f_owner.lock);
 =======
 	read_unlock(&filp->f_owner.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	read_unlock_irq(&filp->f_owner.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!ret) {
 		ret = copy_to_user(owner_p, &owner, sizeof(owner));
@@ -267,6 +284,7 @@ static int f_getowner_uids(struct file *filp, unsigned long arg)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	read_lock_irq(&filp->f_owner.lock);
 	src[0] = from_kuid(user_ns, filp->f_owner.uid);
 	src[1] = from_kuid(user_ns, filp->f_owner.euid);
@@ -277,6 +295,12 @@ static int f_getowner_uids(struct file *filp, unsigned long arg)
 	src[1] = from_kuid(user_ns, filp->f_owner.euid);
 	read_unlock(&filp->f_owner.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	read_lock_irq(&filp->f_owner.lock);
+	src[0] = from_kuid(user_ns, filp->f_owner.uid);
+	src[1] = from_kuid(user_ns, filp->f_owner.euid);
+	read_unlock_irq(&filp->f_owner.lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err  = put_user(src[0], &dst[0]);
 	err |= put_user(src[1], &dst[1]);
@@ -394,12 +418,17 @@ static long do_fcntl(int fd, unsigned int cmd, unsigned long arg,
 	case F_OFD_SETLK:
 	case F_OFD_SETLKW:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fallthrough;
 #endif
 =======
 #endif
 		fallthrough;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fallthrough;
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case F_SETLK:
 	case F_SETLKW:
 		if (copy_from_user(&flock, argp, sizeof(flock)))
@@ -1033,9 +1062,13 @@ static void kill_fasync_rcu(struct fasync_struct *fa, int sig, int band)
 	while (fa) {
 		struct fown_struct *fown;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned long flags;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (fa->magic != FASYNC_MAGIC) {
 			printk(KERN_ERR "kill_fasync: bad magic number in "
@@ -1043,10 +1076,14 @@ static void kill_fasync_rcu(struct fasync_struct *fa, int sig, int band)
 			return;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		read_lock_irqsave(&fa->fa_lock, flags);
 =======
 		read_lock(&fa->fa_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		read_lock_irqsave(&fa->fa_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (fa->fa_file) {
 			fown = &fa->fa_file->f_owner;
 			/* Don't send SIGURG to processes which have not set a
@@ -1056,10 +1093,14 @@ static void kill_fasync_rcu(struct fasync_struct *fa, int sig, int band)
 				send_sigio(fown, fa->fa_fd, band);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		read_unlock_irqrestore(&fa->fa_lock, flags);
 =======
 		read_unlock(&fa->fa_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		read_unlock_irqrestore(&fa->fa_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fa = rcu_dereference(fa->fa_next);
 	}
 }
@@ -1091,11 +1132,16 @@ static int __init fcntl_init(void)
 
 	fasync_cache = kmem_cache_create("fasync_cache",
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 sizeof(struct fasync_struct), 0,
 					 SLAB_PANIC | SLAB_ACCOUNT, NULL);
 =======
 		sizeof(struct fasync_struct), 0, SLAB_PANIC, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 sizeof(struct fasync_struct), 0,
+					 SLAB_PANIC | SLAB_ACCOUNT, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

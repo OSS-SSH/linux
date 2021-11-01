@@ -97,10 +97,14 @@ static const struct drm_gem_object_funcs drm_gem_vram_object_funcs;
  * it's used to program the hardware's scanout engine for framebuffers, set
  * the cursor overlay's image for a mouse cursor, or use it as input to the
 <<<<<<< HEAD
+<<<<<<< HEAD
  * hardware's drawing engine.
 =======
  * hardware's draing engine.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * hardware's drawing engine.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * To access a buffer object's memory from the DRM driver, call
  * drm_gem_vram_vmap(). It maps the buffer into kernel address
@@ -1017,6 +1021,7 @@ static void drm_vram_mm_cleanup(struct drm_vram_mm *vmm)
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct drm_vram_mm *drm_vram_helper_alloc_mm(struct drm_device *dev, uint64_t vram_base,
 						    size_t vram_size)
 =======
@@ -1024,6 +1029,10 @@ static struct drm_vram_mm *drm_vram_helper_alloc_mm(struct drm_device *dev, uint
 struct drm_vram_mm *drm_vram_helper_alloc_mm(
 	struct drm_device *dev, uint64_t vram_base, size_t vram_size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct drm_vram_mm *drm_vram_helper_alloc_mm(struct drm_device *dev, uint64_t vram_base,
+						    size_t vram_size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 
@@ -1046,6 +1055,7 @@ err_kfree:
 	return ERR_PTR(ret);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 static void drm_vram_helper_release_mm(struct drm_device *dev)
 =======
@@ -1053,6 +1063,10 @@ EXPORT_SYMBOL(drm_vram_helper_alloc_mm);
 
 void drm_vram_helper_release_mm(struct drm_device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+static void drm_vram_helper_release_mm(struct drm_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!dev->vram_mm)
 		return;
@@ -1062,9 +1076,12 @@ void drm_vram_helper_release_mm(struct drm_device *dev)
 	dev->vram_mm = NULL;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL(drm_vram_helper_release_mm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void drm_vram_mm_release(struct drm_device *dev, void *ptr)
 {

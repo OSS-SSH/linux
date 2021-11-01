@@ -272,10 +272,15 @@ patternProperties:
   "^cubietech,.*":
     description: Cubietech, Ltd.
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^cui,.*":
     description: CUI Devices
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^cui,.*":
+    description: CUI Devices
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^cypress,.*":
     description: Cypress Semiconductor Corporation
   "^cznic,.*":
@@ -345,10 +350,15 @@ patternProperties:
   "^einfochips,.*":
     description: Einfochips
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^eink,.*":
     description: E Ink Corporation
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^eink,.*":
+    description: E Ink Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^elan,.*":
     description: Elan Microelectronic Corp.
   "^element14,.*":
@@ -574,10 +584,15 @@ patternProperties:
   "^itead,.*":
     description: ITEAD Intelligent Systems Co.Ltd
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^itian,.*":
     description: ITian Corporation
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^itian,.*":
+    description: ITian Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^iwave,.*":
     description: iWave Systems Technologies Pvt. Ltd.
   "^jdi,.*":
@@ -751,10 +766,15 @@ patternProperties:
   "^mitsubishi,.*":
     description: Mitsubishi Electric Corporation
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^mntre,.*":
     description: MNT Research GmbH
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^mntre,.*":
+    description: MNT Research GmbH
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^modtronix,.*":
     description: Modtronix Engineering
   "^mosaixtech,.*":
@@ -957,10 +977,15 @@ patternProperties:
   "^qiaodian,.*":
     description: QiaoDian XianShi Corporation
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^qishenglong,.*":
     description: Shenzhen QiShenglong Industrialist Co., Ltd.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^qishenglong,.*":
+    description: Shenzhen QiShenglong Industrialist Co., Ltd.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^qnap,.*":
     description: QNAP Systems, Inc.
   "^radxa,.*":
@@ -1092,10 +1117,15 @@ patternProperties:
   "^sitronix,.*":
     description: Sitronix Technology Corporation
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^skov,.*":
     description: SKOV A/S
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^skov,.*":
+    description: SKOV A/S
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^skyworks,.*":
     description: Skyworks Solutions, Inc.
   "^smartlabs,.*":
@@ -1142,12 +1172,18 @@ patternProperties:
     description: ST-Ericsson
     deprecated: true
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^storlink,.*":
     description: StorLink Semiconductors, Inc.
   "^storm,.*":
     description: Storm Semiconductor, Inc.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^summit,.*":
     description: Summit microelectronics
   "^sunchip,.*":
@@ -1181,10 +1217,15 @@ patternProperties:
   "^technologic,.*":
     description: Technologic Systems
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^teltonika,.*":
     description: Teltonika Networks
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^teltonika,.*":
+    description: Teltonika Networks
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^tempo,.*":
     description: Tempo Semiconductor
   "^techstar,.*":
@@ -1208,10 +1249,15 @@ patternProperties:
   "^topeet,.*":
     description: Topeet
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^topic,.*":
     description: Topic Embedded Systems
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^topic,.*":
+    description: Topic Embedded Systems
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^toppoly,.*":
     description: TPO (deprecated, use tpo)
     deprecated: true
@@ -1232,10 +1278,15 @@ patternProperties:
   "^tq,.*":
     description: TQ-Systems GmbH
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^traverse,.*":
     description: Traverse Technologies Australia Pty Ltd
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^traverse,.*":
+    description: Traverse Technologies Australia Pty Ltd
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^tronfy,.*":
     description: Tronfy
   "^tronsmart,.*":
@@ -1321,10 +1372,15 @@ patternProperties:
   "^wi2wi,.*":
     description: Wi2Wi, Inc.
 <<<<<<< HEAD
+<<<<<<< HEAD
   "^wiligear,.*":
     description: Wiligear, Ltd.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  "^wiligear,.*":
+    description: Wiligear, Ltd.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^winbond,.*":
     description: Winbond Electronics corp.
   "^winstar,.*":

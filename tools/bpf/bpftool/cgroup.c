@@ -502,11 +502,16 @@ static int do_help(int argc, char **argv)
 		"       " HELP_SPEC_ATTACH_FLAGS "\n"
 		"       " HELP_SPEC_PROGRAM "\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"       " HELP_SPEC_OPTIONS " |\n"
 		"                    {-f|--bpffs} }\n"
 =======
 		"       " HELP_SPEC_OPTIONS "\n"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-f|--bpffs} }\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"",
 		bin_name, argv[-2]);
 

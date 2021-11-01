@@ -8,18 +8,27 @@
 
 #include <linux/irq_work.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/kref.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/kref.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/list.h>
 #include <linux/spinlock.h>
 #include <linux/types.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "intel_engine_types.h"
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "intel_engine_types.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Rather than have every client wait upon all user interrupts,
  * with the herd waking after every interrupt and each doing the
@@ -39,9 +48,13 @@
  */
 struct intel_breadcrumbs {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct kref ref;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kref ref;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_t active;
 
 	spinlock_t signalers_lock; /* protects the list of signalers */
@@ -56,6 +69,7 @@ struct intel_breadcrumbs {
 
 	/* Not all breadcrumbs are attached to physical HW */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_engine_mask_t	engine_mask;
 	struct intel_engine_cs *irq_engine;
 	bool	(*irq_enable)(struct intel_breadcrumbs *b);
@@ -63,6 +77,12 @@ struct intel_breadcrumbs {
 =======
 	struct intel_engine_cs *irq_engine;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_engine_mask_t	engine_mask;
+	struct intel_engine_cs *irq_engine;
+	bool	(*irq_enable)(struct intel_breadcrumbs *b);
+	void	(*irq_disable)(struct intel_breadcrumbs *b);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif /* __INTEL_BREADCRUMBS_TYPES__ */

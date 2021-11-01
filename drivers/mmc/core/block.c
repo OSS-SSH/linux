@@ -29,9 +29,13 @@
 #include <linux/hdreg.h>
 #include <linux/kdev_t.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/kref.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/kref.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/blkdev.h>
 #include <linux/cdev.h>
 #include <linux/mutex.h>
@@ -102,13 +106,19 @@ static DEFINE_IDA(mmc_blk_ida);
 static DEFINE_IDA(mmc_rpmb_ida);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mmc_blk_busy_data {
 	struct mmc_card *card;
 	u32 status;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * There is one mmc_blk_data per slot.
  */
@@ -124,10 +134,14 @@ struct mmc_blk_data {
 #define MMC_BLK_REL_WR	(1 << 1)	/* MMC Reliable write support */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct kref	kref;
 =======
 	unsigned int	usage;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kref	kref;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int	read_only;
 	unsigned int	part_type;
 	unsigned int	reset_done;
@@ -144,10 +158,13 @@ struct mmc_blk_data {
 	 */
 	unsigned int	part_curr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct device_attribute force_ro;
 	struct device_attribute power_ro_lock;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int	area_type;
 
 	/* debugfs files (only in main mmc_blk_data) */
@@ -201,6 +218,7 @@ static struct mmc_blk_data *mmc_blk_get(struct gendisk *disk)
 	mutex_lock(&open_lock);
 	md = disk->private_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (md && !kref_get_unless_zero(&md->kref))
 		md = NULL;
 =======
@@ -209,6 +227,10 @@ static struct mmc_blk_data *mmc_blk_get(struct gendisk *disk)
 	if (md)
 		md->usage++;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (md && !kref_get_unless_zero(&md->kref))
+		md = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&open_lock);
 
 	return md;
@@ -220,6 +242,7 @@ static inline int mmc_get_devidx(struct gendisk *disk)
 	return devidx;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void mmc_blk_kref_release(struct kref *ref)
 {
@@ -242,18 +265,31 @@ static void mmc_blk_put(struct mmc_blk_data *md)
 	kref_put(&md->kref, mmc_blk_kref_release);
 =======
 static void mmc_blk_put(struct mmc_blk_data *md)
+=======
+static void mmc_blk_kref_release(struct kref *ref)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	mutex_lock(&open_lock);
-	md->usage--;
-	if (md->usage == 0) {
-		int devidx = mmc_get_devidx(md->disk);
+	struct mmc_blk_data *md = container_of(ref, struct mmc_blk_data, kref);
+	int devidx;
 
-		ida_simple_remove(&mmc_blk_ida, devidx);
-		put_disk(md->disk);
-		kfree(md);
-	}
+	devidx = mmc_get_devidx(md->disk);
+	ida_simple_remove(&mmc_blk_ida, devidx);
+
+	mutex_lock(&open_lock);
+	md->disk->private_data = NULL;
 	mutex_unlock(&open_lock);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	put_disk(md->disk);
+	kfree(md);
+}
+
+static void mmc_blk_put(struct mmc_blk_data *md)
+{
+	kref_put(&md->kref, mmc_blk_kref_release);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t power_ro_lock_show(struct device *dev,
@@ -322,11 +358,17 @@ out_put:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEVICE_ATTR(ro_lock_until_next_power_on, 0,
 		power_ro_lock_show, power_ro_lock_store);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEVICE_ATTR(ro_lock_until_next_power_on, 0,
+		power_ro_lock_show, power_ro_lock_store);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t force_ro_show(struct device *dev, struct device_attribute *attr,
 			     char *buf)
 {
@@ -360,6 +402,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEVICE_ATTR(force_ro, 0644, force_ro_show, force_ro_store);
 
 static struct attribute *mmc_disk_attrs[] = {
@@ -398,8 +443,11 @@ static const struct attribute_group *mmc_disk_attr_groups[] = {
 	NULL,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mmc_blk_open(struct block_device *bdev, fmode_t mode)
 {
 	struct mmc_blk_data *md = mmc_blk_get(bdev->bd_disk);
@@ -505,6 +553,7 @@ static int mmc_blk_ioctl_copy_to_user(struct mmc_ioc_cmd __user *ic_ptr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int card_busy_detect(struct mmc_card *card, unsigned int timeout_ms,
 			    u32 *resp_errs)
@@ -543,6 +592,8 @@ static int card_busy_detect(struct mmc_card *card, unsigned int timeout_ms,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 			       struct mmc_blk_ioc_data *idata)
 {
@@ -640,9 +691,13 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 
 	mmc_wait_for_req(card->host, &mrq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(&idata->ic.response, cmd.resp, sizeof(cmd.resp));
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memcpy(&idata->ic.response, cmd.resp, sizeof(cmd.resp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (cmd.error) {
 		dev_err(mmc_dev(card->host), "%s: cmd error %d\n",
@@ -693,21 +748,29 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 		usleep_range(idata->ic.postsleep_min_us, idata->ic.postsleep_max_us);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	memcpy(&(idata->ic.response), cmd.resp, sizeof(cmd.resp));
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (idata->rpmb || (cmd.flags & MMC_RSP_R1B) == MMC_RSP_R1B) {
 		/*
 		 * Ensure RPMB/R1B command has completed by polling CMD13
 		 * "Send Status".
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = mmc_poll_for_busy(card, MMC_BLK_TIMEOUT_MS, false,
 					MMC_BUSY_IO);
 =======
 		err = card_busy_detect(card, MMC_BLK_TIMEOUT_MS, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = mmc_poll_for_busy(card, MMC_BLK_TIMEOUT_MS, false,
+					MMC_BUSY_IO);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return err;
@@ -895,6 +958,9 @@ static int mmc_blk_compat_ioctl(struct block_device *bdev, fmode_t mode,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mmc_blk_alternative_gpt_sector(struct gendisk *disk,
 					  sector_t *sector)
 {
@@ -915,8 +981,11 @@ static int mmc_blk_alternative_gpt_sector(struct gendisk *disk,
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct block_device_operations mmc_bdops = {
 	.open			= mmc_blk_open,
 	.release		= mmc_blk_release,
@@ -927,9 +996,13 @@ static const struct block_device_operations mmc_bdops = {
 	.compat_ioctl		= mmc_blk_compat_ioctl,
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.alternative_gpt_sector	= mmc_blk_alternative_gpt_sector,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.alternative_gpt_sector	= mmc_blk_alternative_gpt_sector,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int mmc_blk_part_switch_pre(struct mmc_card *card,
@@ -1766,10 +1839,14 @@ static int mmc_blk_fix_state(struct mmc_card *card, struct request *req)
 	mmc_blk_send_stop(card, timeout);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = mmc_poll_for_busy(card, timeout, false, MMC_BUSY_IO);
 =======
 	err = card_busy_detect(card, timeout, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = mmc_poll_for_busy(card, timeout, false, MMC_BUSY_IO);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mmc_retune_release(card->host);
 
@@ -1985,6 +2062,9 @@ static inline bool mmc_blk_rq_error(struct mmc_blk_request *brq)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mmc_blk_busy_cb(void *cb_data, bool *busy)
 {
 	struct mmc_blk_busy_data *data = cb_data;
@@ -2002,6 +2082,7 @@ static int mmc_blk_busy_cb(void *cb_data, bool *busy)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int mmc_blk_card_busy(struct mmc_card *card, struct request *req)
 {
 	struct mmc_queue_req *mqrq = req_to_mmc_queue_req(req);
@@ -2012,39 +2093,59 @@ static int mmc_blk_card_busy(struct mmc_card *card, struct request *req)
 	struct mmc_queue_req *mqrq = req_to_mmc_queue_req(req);
 	u32 status = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int mmc_blk_card_busy(struct mmc_card *card, struct request *req)
+{
+	struct mmc_queue_req *mqrq = req_to_mmc_queue_req(req);
+	struct mmc_blk_busy_data cb_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (mmc_host_is_spi(card->host) || rq_data_dir(req) == READ)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cb_data.card = card;
 	cb_data.status = 0;
 	err = __mmc_poll_for_busy(card, MMC_BLK_TIMEOUT_MS, &mmc_blk_busy_cb,
 				  &cb_data);
+<<<<<<< HEAD
 =======
 	err = card_busy_detect(card, MMC_BLK_TIMEOUT_MS, &status);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Do not assume data transferred correctly if there are any error bits
 	 * set.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (cb_data.status & mmc_blk_stop_err_bits(&mqrq->brq)) {
 =======
 	if (status & mmc_blk_stop_err_bits(&mqrq->brq)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (cb_data.status & mmc_blk_stop_err_bits(&mqrq->brq)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mqrq->brq.data.bytes_xfered = 0;
 		err = err ? err : -EIO;
 	}
 
 	/* Copy the exception bit so it will be seen later on */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mmc_card_mmc(card) && cb_data.status & R1_EXCEPTION_EVENT)
 =======
 	if (mmc_card_mmc(card) && status & R1_EXCEPTION_EVENT)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mmc_card_mmc(card) && cb_data.status & R1_EXCEPTION_EVENT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mqrq->brq.cmd.resp[0] |= R1_EXCEPTION_EVENT;
 
 	return err;
@@ -2462,11 +2563,16 @@ static struct mmc_blk_data *mmc_blk_alloc_req(struct mmc_card *card,
 					      bool default_ro,
 					      const char *subname,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					      int area_type,
 					      unsigned int part_type)
 =======
 					      int area_type)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      int area_type,
+					      unsigned int part_type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mmc_blk_data *md;
 	int devidx, ret;
@@ -2511,6 +2617,7 @@ static struct mmc_blk_data *mmc_blk_alloc_req(struct mmc_card *card,
 	INIT_LIST_HEAD(&md->part);
 	INIT_LIST_HEAD(&md->rpmbs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kref_init(&md->kref);
 
 	md->queue.blkdata = md;
@@ -2519,6 +2626,12 @@ static struct mmc_blk_data *mmc_blk_alloc_req(struct mmc_card *card,
 	md->usage = 1;
 	md->queue.blkdata = md;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kref_init(&md->kref);
+
+	md->queue.blkdata = md;
+	md->part_type = part_type;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	md->disk->major	= MMC_BLOCK_MAJOR;
 	md->disk->minors = perdev_minors;
@@ -2572,12 +2685,18 @@ static struct mmc_blk_data *mmc_blk_alloc_req(struct mmc_card *card,
 		cap_str, md->read_only ? "(ro)" : "");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* used in ->open, must be set before add_disk: */
 	if (area_type == MMC_BLK_DATA_AREA_MAIN)
 		dev_set_drvdata(&card->dev, md);
 	device_add_disk(md->parent, md->disk, mmc_disk_attr_groups);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return md;
 
  err_kfree:
@@ -2608,10 +2727,14 @@ static struct mmc_blk_data *mmc_blk_alloc(struct mmc_card *card)
 
 	return mmc_blk_alloc_req(card, &card->dev, size, false, NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					MMC_BLK_DATA_AREA_MAIN, 0);
 =======
 					MMC_BLK_DATA_AREA_MAIN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					MMC_BLK_DATA_AREA_MAIN, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int mmc_blk_alloc_part(struct mmc_card *card,
@@ -2626,6 +2749,7 @@ static int mmc_blk_alloc_part(struct mmc_card *card,
 
 	part_md = mmc_blk_alloc_req(card, disk_to_dev(md->disk), size, default_ro,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    subname, area_type, part_type);
 	if (IS_ERR(part_md))
 		return PTR_ERR(part_md);
@@ -2635,6 +2759,11 @@ static int mmc_blk_alloc_part(struct mmc_card *card,
 		return PTR_ERR(part_md);
 	part_md->part_type = part_type;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    subname, area_type, part_type);
+	if (IS_ERR(part_md))
+		return PTR_ERR(part_md);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_add(&part_md->part, &md->part);
 
 	return 0;
@@ -2836,6 +2965,9 @@ static int mmc_blk_alloc_parts(struct mmc_card *card, struct mmc_blk_data *md)
 static void mmc_blk_remove_req(struct mmc_blk_data *md)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Flush remaining requests and free queues. It is freeing the queue
 	 * that stops new requests from being accepted.
@@ -2843,6 +2975,7 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
 	del_gendisk(md->disk);
 	mmc_cleanup_queue(&md->queue);
 	mmc_blk_put(md);
+<<<<<<< HEAD
 =======
 	struct mmc_card *card;
 
@@ -2866,6 +2999,8 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
 		mmc_blk_put(md);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mmc_blk_remove_parts(struct mmc_card *card,
@@ -2889,6 +3024,7 @@ static void mmc_blk_remove_parts(struct mmc_card *card,
 	}
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int mmc_add_disk(struct mmc_blk_data *md)
@@ -2937,6 +3073,8 @@ force_ro_fail:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_FS
 
 static int mmc_dbg_card_status_get(void *data, u64 *val)
@@ -3103,10 +3241,14 @@ static void mmc_blk_remove_debugfs(struct mmc_card *card,
 static int mmc_blk_probe(struct mmc_card *card)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mmc_blk_data *md;
 =======
 	struct mmc_blk_data *md, *part_md;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mmc_blk_data *md;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	/*
@@ -3135,6 +3277,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dev_set_drvdata(&card->dev, md);
 
@@ -3149,6 +3292,8 @@ static int mmc_blk_probe(struct mmc_card *card)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Add two debugfs entries */
 	mmc_blk_add_debugfs(card, md);
 

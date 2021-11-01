@@ -304,9 +304,13 @@ config DRM_TI_SN65DSI86
 	select DRM_MIPI_DSI
 	select AUXILIARY_BUS
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select DRM_DP_AUX_BUS
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select DRM_DP_AUX_BUS
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Texas Instruments SN65DSI86 DSI to eDP Bridge driver
 

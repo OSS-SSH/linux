@@ -11,6 +11,7 @@
 #include "intel_context.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void
 intel_context_set_watchdog_us(struct intel_context *ce, u64 timeout_us)
 {
@@ -25,6 +26,12 @@ intel_context_set_watchdog_us(struct intel_context *ce, u64 timeout_us)
 	ce->watchdog.timeout_us = timeout_us;
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void
+intel_context_set_watchdog_us(struct intel_context *ce, u64 timeout_us)
+{
+	ce->watchdog.timeout_us = timeout_us;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #endif /* INTEL_CONTEXT_PARAM_H */

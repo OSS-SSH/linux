@@ -8,6 +8,9 @@
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Some platforms have unusual ways of mapping PCI revision ID to GT/display
  * steppings.  E.g., in some cases a higher PCI revision may translate to a
  * lower stepping of the GT and/or display IP.  This file provides lookup
@@ -17,6 +20,7 @@
  * Also note that some revisions/steppings may have been set aside as
  * placeholders but never materialized in real hardware; in those cases there
  * may be jumps in the revision IDs or stepping values in the tables below.
+<<<<<<< HEAD
  */
 
 /*
@@ -39,13 +43,30 @@ static const struct intel_step_info kbl_revids[] = {
  * steppings in some cases.  So rather than test against the revision ID
  * directly, let's map that into our own range of increasing ID's that we
  * can test against in a regular manner.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
+/*
+ * Some platforms always have the same stepping value for GT and display;
+ * use a macro to define these to make it easier to identify the platforms
+ * where the two steppings can deviate.
+ */
+#define COMMON_STEP(x)  .gt_step = STEP_##x, .display_step = STEP_##x
 
-/* FIXME: what about REVID_E0 */
+static const struct intel_step_info skl_revids[] = {
+	[0x6] = { COMMON_STEP(G0) },
+	[0x7] = { COMMON_STEP(H0) },
+	[0x9] = { COMMON_STEP(J0) },
+	[0xA] = { COMMON_STEP(I1) },
+};
+
 static const struct intel_step_info kbl_revids[] = {
+<<<<<<< HEAD
 	[0] = { .gt_step = STEP_A0, .display_step = STEP_A0 },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[1] = { .gt_step = STEP_B0, .display_step = STEP_B0 },
 	[2] = { .gt_step = STEP_C0, .display_step = STEP_B0 },
 	[3] = { .gt_step = STEP_D0, .display_step = STEP_B0 },
@@ -56,6 +77,9 @@ static const struct intel_step_info kbl_revids[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_step_info bxt_revids[] = {
 	[0xA] = { COMMON_STEP(C0) },
 	[0xB] = { COMMON_STEP(C0) },
@@ -77,9 +101,12 @@ static const struct intel_step_info jsl_ehl_revids[] = {
 };
 
 static const struct intel_step_info tgl_uy_revids[] = {
+<<<<<<< HEAD
 =======
 static const struct intel_step_info tgl_uy_revid_step_tbl[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[0] = { .gt_step = STEP_A0, .display_step = STEP_A0 },
 	[1] = { .gt_step = STEP_B0, .display_step = STEP_C0 },
 	[2] = { .gt_step = STEP_B1, .display_step = STEP_C0 },
@@ -88,15 +115,22 @@ static const struct intel_step_info tgl_uy_revid_step_tbl[] = {
 
 /* Same GT stepping between tgl_uy_revids and tgl_revids don't mean the same HW */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct intel_step_info tgl_revids[] = {
 =======
 static const struct intel_step_info tgl_revid_step_tbl[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct intel_step_info tgl_revids[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[0] = { .gt_step = STEP_A0, .display_step = STEP_B0 },
 	[1] = { .gt_step = STEP_B0, .display_step = STEP_D0 },
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_step_info rkl_revids[] = {
 	[0] = { COMMON_STEP(A0) },
 	[1] = { COMMON_STEP(B0) },
@@ -109,9 +143,12 @@ static const struct intel_step_info dg1_revids[] = {
 };
 
 static const struct intel_step_info adls_revids[] = {
+<<<<<<< HEAD
 =======
 static const struct intel_step_info adls_revid_step_tbl[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[0x0] = { .gt_step = STEP_A0, .display_step = STEP_A0 },
 	[0x1] = { .gt_step = STEP_A0, .display_step = STEP_A2 },
 	[0x4] = { .gt_step = STEP_B0, .display_step = STEP_B0 },
@@ -120,10 +157,14 @@ static const struct intel_step_info adls_revid_step_tbl[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct intel_step_info adlp_revids[] = {
 =======
 static const struct intel_step_info adlp_revid_step_tbl[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct intel_step_info adlp_revids[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[0x0] = { .gt_step = STEP_A0, .display_step = STEP_A0 },
 	[0x4] = { .gt_step = STEP_B0, .display_step = STEP_B0 },
 	[0x8] = { .gt_step = STEP_C0, .display_step = STEP_C0 },
@@ -131,6 +172,9 @@ static const struct intel_step_info adlp_revid_step_tbl[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_step_info xehpsdv_revids[] = {
 	[0x0] = { .gt_step = STEP_A0 },
 	[0x1] = { .gt_step = STEP_A1 },
@@ -151,8 +195,11 @@ static const struct intel_step_info dg2_g11_revid_step_tbl[] = {
 	[0x5] = { .gt_step = STEP_B1, .display_step = STEP_C0 },
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_step_init(struct drm_i915_private *i915)
 {
 	const struct intel_step_info *revids = NULL;
@@ -161,6 +208,9 @@ void intel_step_init(struct drm_i915_private *i915)
 	struct intel_step_info step = {};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_DG2_G10(i915)) {
 		revids = dg2_g10_revid_step_tbl;
 		size = ARRAY_SIZE(dg2_g10_revid_step_tbl);
@@ -173,6 +223,7 @@ void intel_step_init(struct drm_i915_private *i915)
 	} else if (IS_ALDERLAKE_P(i915)) {
 		revids = adlp_revids;
 		size = ARRAY_SIZE(adlp_revids);
+<<<<<<< HEAD
 	} else if (IS_ALDERLAKE_S(i915)) {
 		revids = adls_revids;
 		size = ARRAY_SIZE(adls_revids);
@@ -210,19 +261,45 @@ void intel_step_init(struct drm_i915_private *i915)
 	if (IS_ALDERLAKE_P(i915)) {
 		revids = adlp_revid_step_tbl;
 		size = ARRAY_SIZE(adlp_revid_step_tbl);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (IS_ALDERLAKE_S(i915)) {
-		revids = adls_revid_step_tbl;
-		size = ARRAY_SIZE(adls_revid_step_tbl);
+		revids = adls_revids;
+		size = ARRAY_SIZE(adls_revids);
+	} else if (IS_DG1(i915)) {
+		revids = dg1_revids;
+		size = ARRAY_SIZE(dg1_revids);
+	} else if (IS_ROCKETLAKE(i915)) {
+		revids = rkl_revids;
+		size = ARRAY_SIZE(rkl_revids);
 	} else if (IS_TGL_U(i915) || IS_TGL_Y(i915)) {
-		revids = tgl_uy_revid_step_tbl;
-		size = ARRAY_SIZE(tgl_uy_revid_step_tbl);
+		revids = tgl_uy_revids;
+		size = ARRAY_SIZE(tgl_uy_revids);
 	} else if (IS_TIGERLAKE(i915)) {
-		revids = tgl_revid_step_tbl;
-		size = ARRAY_SIZE(tgl_revid_step_tbl);
+		revids = tgl_revids;
+		size = ARRAY_SIZE(tgl_revids);
+	} else if (IS_JSL_EHL(i915)) {
+		revids = jsl_ehl_revids;
+		size = ARRAY_SIZE(jsl_ehl_revids);
+	} else if (IS_ICELAKE(i915)) {
+		revids = icl_revids;
+		size = ARRAY_SIZE(icl_revids);
+	} else if (IS_GEMINILAKE(i915)) {
+		revids = glk_revids;
+		size = ARRAY_SIZE(glk_revids);
+	} else if (IS_BROXTON(i915)) {
+		revids = bxt_revids;
+		size = ARRAY_SIZE(bxt_revids);
 	} else if (IS_KABYLAKE(i915)) {
 		revids = kbl_revids;
 		size = ARRAY_SIZE(kbl_revids);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (IS_SKYLAKE(i915)) {
+		revids = skl_revids;
+		size = ARRAY_SIZE(skl_revids);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Not using the stepping scheme for the platform yet. */
@@ -262,6 +339,9 @@ void intel_step_init(struct drm_i915_private *i915)
 	RUNTIME_INFO(i915)->step = step;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define STEP_NAME_CASE(name)	\
 	case STEP_##name:	\
@@ -276,5 +356,8 @@ const char *intel_step_name(enum intel_step step)
 		return "**";
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

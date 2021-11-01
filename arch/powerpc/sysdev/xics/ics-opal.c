@@ -63,6 +63,7 @@ static void ics_opal_unmask_irq(struct irq_data *d)
 static unsigned int ics_opal_startup(struct irq_data *d)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PCI_MSI
 	/*
@@ -76,6 +77,8 @@ static unsigned int ics_opal_startup(struct irq_data *d)
 
 	/* unmask it */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ics_opal_unmask_irq(d);
 	return 0;
 }
@@ -137,10 +140,14 @@ static int ics_opal_set_affinity(struct irq_data *d,
 	server = ics_opal_mangle_server(wanted_server);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_debug("ics-hal: set-affinity irq %d [hw 0x%x] server: 0x%x/0x%x\n",
 =======
 	pr_devel("ics-hal: set-affinity irq %d [hw 0x%x] server: 0x%x/0x%x\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("ics-hal: set-affinity irq %d [hw 0x%x] server: 0x%x/0x%x\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 d->irq, hw_irq, wanted_server, server);
 
 	rc = opal_set_xive(hw_irq, server, priority);
@@ -165,17 +172,21 @@ static struct irq_chip ics_opal_irq_chip = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int ics_opal_map(struct ics *ics, unsigned int virq);
 static void ics_opal_mask_unknown(struct ics *ics, unsigned long vec);
 static long ics_opal_get_server(struct ics *ics, unsigned long vec);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ics_opal_host_match(struct ics *ics, struct device_node *node)
 {
 	return 1;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int ics_opal_check(struct ics *ics, unsigned int hw_irq)
 {
@@ -192,6 +203,10 @@ static int ics_opal_map(struct ics *ics, unsigned int virq)
 {
 	unsigned int hw_irq = (unsigned int)virq_to_hw(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int ics_opal_check(struct ics *ics, unsigned int hw_irq)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int64_t rc;
 	__be16 server;
 	int8_t priority;
@@ -205,11 +220,14 @@ static int ics_opal_map(struct ics *ics, unsigned int virq)
 		return -ENXIO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	irq_set_chip_and_handler(virq, &ics_opal_irq_chip, handle_fasteoi_irq);
 	irq_set_chip_data(virq, &ics_hal);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -241,6 +259,9 @@ static long ics_opal_get_server(struct ics *ics, unsigned long vec)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Only one global & state struct ics */
 static struct ics ics_hal = {
 	.check		= ics_opal_check,
@@ -250,8 +271,11 @@ static struct ics ics_hal = {
 	.chip		= &ics_opal_irq_chip,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int __init ics_opal_init(void)
 {
 	if (!firmware_has_feature(FW_FEATURE_OPAL))

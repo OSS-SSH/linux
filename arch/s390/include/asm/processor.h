@@ -27,10 +27,15 @@
 #define _CIF_DEDICATED_CPU	BIT(CIF_DEDICATED_CPU)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define RESTART_FLAG_CTLREGS	_AC(1 << 0, U)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define RESTART_FLAG_CTLREGS	_AC(1 << 0, U)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef __ASSEMBLY__
 
 #include <linux/cpumask.h>

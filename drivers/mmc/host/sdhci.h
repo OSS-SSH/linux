@@ -518,9 +518,13 @@ struct sdhci_host {
 	unsigned int max_clk;	/* Max possible freq (MHz) */
 	unsigned int timeout_clk;	/* Timeout freq (KHz) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 max_timeout_count;	/* Vendor specific max timeout count */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 max_timeout_count;	/* Vendor specific max timeout count */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int clk_mul;	/* Clock Muliplier value */
 
 	unsigned int clock;	/* Current clock (MHz) */

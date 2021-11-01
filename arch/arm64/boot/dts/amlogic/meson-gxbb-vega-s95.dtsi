@@ -5,9 +5,13 @@
 
 #include "meson-gxbb.dtsi"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <dt-bindings/sound/meson-aiu.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <dt-bindings/sound/meson-aiu.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 / {
 	compatible = "tronsmart,vega-s95", "amlogic,meson-gxbb";
@@ -22,6 +26,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spdif_dit: audio-codec-0 {
 		#sound-dai-cells = <0>;
 		compatible = "linux,spdif-dit";
@@ -29,8 +36,11 @@
 		sound-name-prefix = "DIT";
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	leds {
 		compatible = "gpio-leds";
 
@@ -112,6 +122,9 @@
 		clock-names = "ext_clock";
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sound {
 		compatible = "amlogic,gx-sound-card";
@@ -165,8 +178,11 @@
 	status = "okay";
 	pinctrl-0 = <&spdif_out_y_pins>;
 	pinctrl-names = "default";
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &cec_AO {

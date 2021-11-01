@@ -256,10 +256,14 @@ static int ishtp_cl_bus_match(struct device *dev, struct device_driver *drv)
  * Return: Return value from driver remove() call.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ishtp_cl_device_remove(struct device *dev)
 =======
 static int ishtp_cl_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ishtp_cl_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ishtp_cl_device *device = to_ishtp_cl_device(dev);
 	struct ishtp_cl_driver *driver = to_ishtp_cl_driver(dev->driver);
@@ -272,10 +276,13 @@ static int ishtp_cl_device_remove(struct device *dev)
 	if (driver->remove)
 		driver->remove(device);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -322,6 +329,7 @@ static int ishtp_cl_device_resume(struct device *dev)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * When ISH needs hard reset, it is done asynchrnously, hence bus
@@ -331,6 +339,8 @@ static int ishtp_cl_device_resume(struct device *dev)
 		return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	driver = to_ishtp_cl_driver(dev->driver);
 	if (driver && driver->driver.pm) {
 		if (driver->driver.pm->resume)
@@ -861,6 +871,9 @@ EXPORT_SYMBOL(ishtp_device);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ishtp_wait_resume() - Wait for IPC resume
  *
  * Wait for IPC resume
@@ -883,8 +896,11 @@ bool ishtp_wait_resume(struct ishtp_device *dev)
 EXPORT_SYMBOL_GPL(ishtp_wait_resume);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ishtp_get_pci_device() - Return PCI device dev pointer
  * This interface is used to return PCI device pointer
  * from ishtp_cl_device instance.

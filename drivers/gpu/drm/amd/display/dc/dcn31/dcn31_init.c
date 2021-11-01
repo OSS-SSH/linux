@@ -94,17 +94,24 @@ static const struct hw_sequencer_funcs dcn31_funcs = {
 	.get_vupdate_offset_from_vsync = dcn10_get_vupdate_offset_from_vsync,
 	.calc_vupdate_position = dcn10_calc_vupdate_position,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.apply_idle_power_optimizations = dcn30_apply_idle_power_optimizations,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.set_backlight_level = dcn21_set_backlight_level,
 	.set_abm_immediate_disable = dcn21_set_abm_immediate_disable,
 	.set_pipe = dcn21_set_pipe,
 	.z10_restore = dcn31_z10_restore,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.z10_save_init = dcn31_z10_save_init,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.z10_save_init = dcn31_z10_save_init,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.is_abm_supported = dcn31_is_abm_supported,
 	.set_disp_pattern_generator = dcn30_set_disp_pattern_generator,
 	.update_visual_confirm_color = dcn20_update_visual_confirm_color,

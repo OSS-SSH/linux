@@ -280,9 +280,12 @@ static const struct of_device_id mpc5xxx_can_table[];
 static int mpc5xxx_can_probe(struct platform_device *ofdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	const struct of_device_id *match;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct mpc5xxx_can_data *data;
 	struct device_node *np = ofdev->dev.of_node;
 	struct net_device *dev;
@@ -293,6 +296,7 @@ static int mpc5xxx_can_probe(struct platform_device *ofdev)
 	int err = -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data = of_device_get_match_data(&ofdev->dev);
 	if (!data)
 		return -EINVAL;
@@ -302,6 +306,11 @@ static int mpc5xxx_can_probe(struct platform_device *ofdev)
 		return -EINVAL;
 	data = match->data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	data = of_device_get_match_data(&ofdev->dev);
+	if (!data)
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	base = of_iomap(np, 0);
 	if (!base) {
@@ -329,9 +338,12 @@ static int mpc5xxx_can_probe(struct platform_device *ofdev)
 	clock_name = of_get_property(np, "fsl,mscan-clock-source", NULL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	BUG_ON(!data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->type = data->type;
 	priv->can.clock.freq = data->get_clock(ofdev, clock_name,
 					       &mscan_clksrc);

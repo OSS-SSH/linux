@@ -167,9 +167,13 @@ const char * const edac_mem_types[] = {
 	[MEM_NVDIMM]	= "Non-volatile-RAM",
 	[MEM_WIO2]	= "Wide-IO-2",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[MEM_HBM2]	= "High-bandwidth-memory-Gen2",
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[MEM_HBM2]	= "High-bandwidth-memory-Gen2",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 EXPORT_SYMBOL_GPL(edac_mem_types);
 

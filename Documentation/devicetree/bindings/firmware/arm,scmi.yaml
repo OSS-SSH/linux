@@ -35,12 +35,18 @@ properties:
         items:
           - const: arm,scmi-smc
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - description: SCMI compliant firmware with SCMI Virtio transport.
                      The virtio transport only supports a single device.
         items:
           - const: arm,scmi-virtio
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   interrupts:
     description:
@@ -180,9 +186,13 @@ patternProperties:
       supports a dedicated communication channel for a particular protocol,
       then the corresponding transport properties must be present.
 <<<<<<< HEAD
+<<<<<<< HEAD
       The virtio transport does not support a dedicated communication channel.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      The virtio transport does not support a dedicated communication channel.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
     properties:
       reg:
@@ -207,9 +217,12 @@ patternProperties:
 required:
   - compatible
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   - shmem
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 if:
   properties:
@@ -224,9 +237,13 @@ then:
   required:
     - mboxes
 <<<<<<< HEAD
+<<<<<<< HEAD
     - shmem
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    - shmem
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 else:
   if:
@@ -238,9 +255,13 @@ else:
     required:
       - arm,smc-id
 <<<<<<< HEAD
+<<<<<<< HEAD
       - shmem
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      - shmem
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 examples:
   - |

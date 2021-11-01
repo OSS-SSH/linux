@@ -81,6 +81,9 @@ struct msm_gpu_fault_info {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct msm_gpu_devfreq - devfreq related state
  */
@@ -115,8 +118,11 @@ struct msm_gpu_devfreq {
 	unsigned long idle_freq;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct msm_gpu {
 	const char *name;
 	struct drm_device *dev;
@@ -147,6 +153,9 @@ struct msm_gpu {
 	struct list_head active_list;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/**
 	 * active_submits:
 	 *
@@ -160,8 +169,11 @@ struct msm_gpu {
 	/** lock: protects active_submits and idle/active transitions */
 	struct mutex active_lock;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* does gpu need hw_init? */
 	bool needs_hw_init;
 
@@ -205,6 +217,7 @@ struct msm_gpu {
 	struct drm_gem_object *memptrs_bo;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct msm_gpu_devfreq devfreq;
 =======
 	struct {
@@ -213,6 +226,9 @@ struct msm_gpu {
 		ktime_t time;
 	} devfreq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct msm_gpu_devfreq devfreq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	uint32_t suspend_count;
 
@@ -265,6 +281,9 @@ struct msm_gpu_perfcntr {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The number of priority levels provided by drm gpu scheduler.  The
  * DRM_SCHED_PRIORITY_KERNEL priority level is treated specially in some
@@ -373,6 +392,7 @@ static inline int msm_gpu_convert_priority(struct msm_gpu *gpu, int prio,
  * @ref:       reference count
  * @entity:    the submit job-queue
  */
+<<<<<<< HEAD
 struct msm_gpu_submitqueue {
 	int id;
 	u32 flags;
@@ -385,15 +405,23 @@ struct msm_gpu_submitqueue {
 	struct kref ref;
 	struct drm_sched_entity *entity;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct msm_gpu_submitqueue {
 	int id;
 	u32 flags;
-	u32 prio;
+	u32 ring_nr;
 	int faults;
 	struct msm_file_private *ctx;
 	struct list_head node;
+	struct idr fence_idr;
+	struct mutex lock;
 	struct kref ref;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct drm_sched_entity *entity;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct msm_gpu_state_bo {
@@ -481,6 +509,9 @@ static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
 int msm_gpu_pm_suspend(struct msm_gpu *gpu);
 int msm_gpu_pm_resume(struct msm_gpu *gpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
 struct msm_gpu_submitqueue *msm_submitqueue_get(struct msm_file_private *ctx,
@@ -515,9 +546,12 @@ void msm_devfreq_resume(struct msm_gpu *gpu);
 void msm_devfreq_suspend(struct msm_gpu *gpu);
 void msm_devfreq_active(struct msm_gpu *gpu);
 void msm_devfreq_idle(struct msm_gpu *gpu);
+<<<<<<< HEAD
 =======
 void msm_gpu_resume_devfreq(struct msm_gpu *gpu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int msm_gpu_hw_init(struct msm_gpu *gpu);
 

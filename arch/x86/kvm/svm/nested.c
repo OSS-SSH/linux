@@ -155,6 +155,9 @@ void recalc_intercepts(struct vcpu_svm *svm)
 	for (i = 0; i < MAX_INTERCEPT; i++)
 		c->intercepts[i] |= g->intercepts[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* If SMI is not intercepted, ignore guest SMI intercept as well  */
 	if (!intercept_smi)
@@ -162,8 +165,11 @@ void recalc_intercepts(struct vcpu_svm *svm)
 
 	vmcb_set_intercept(c, INTERCEPT_VMLOAD);
 	vmcb_set_intercept(c, INTERCEPT_VMSAVE);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void copy_vmcb_control_area(struct vmcb_control_area *dst,
@@ -315,12 +321,17 @@ static bool nested_vmcb_valid_sregs(struct kvm_vcpu *vcpu,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void nested_load_control_from_vmcb12(struct vcpu_svm *svm,
 				     struct vmcb_control_area *control)
 =======
 static void nested_load_control_from_vmcb12(struct vcpu_svm *svm,
 					    struct vmcb_control_area *control)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nested_load_control_from_vmcb12(struct vcpu_svm *svm,
+				     struct vmcb_control_area *control)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	copy_vmcb_control_area(&svm->nested.ctl, control);
 
@@ -515,14 +526,20 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12
 static void nested_vmcb02_prepare_control(struct vcpu_svm *svm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const u32 int_ctl_vmcb01_bits =
 		V_INTR_MASKING_MASK | V_GIF_MASK | V_GIF_ENABLE_MASK;
 
 	const u32 int_ctl_vmcb12_bits = V_TPR_MASK | V_IRQ_INJECTION_BITS_MASK;
 
+<<<<<<< HEAD
 =======
 	const u32 mask = V_INTR_MASKING_MASK | V_GIF_ENABLE_MASK | V_GIF_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct kvm_vcpu *vcpu = &svm->vcpu;
 
 	/*
@@ -535,10 +552,14 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm)
 	 * avic_physical_id.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ON(kvm_apicv_activated(svm->vcpu.kvm));
 =======
 	WARN_ON(svm->vmcb01.ptr->control.int_ctl & AVIC_ENABLE_MASK);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(kvm_apicv_activated(svm->vcpu.kvm));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Copied from vmcb01.  msrpm_base can be overwritten later.  */
 	svm->vmcb->control.nested_ctl = svm->vmcb01.ptr->control.nested_ctl;
@@ -559,6 +580,7 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm)
 
 	svm->vmcb->control.int_ctl             =
 <<<<<<< HEAD
+<<<<<<< HEAD
 		(svm->nested.ctl.int_ctl & int_ctl_vmcb12_bits) |
 		(svm->vmcb01.ptr->control.int_ctl & int_ctl_vmcb01_bits);
 
@@ -568,6 +590,11 @@ static void nested_vmcb02_prepare_control(struct vcpu_svm *svm)
 
 	svm->vmcb->control.virt_ext            = svm->nested.ctl.virt_ext;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		(svm->nested.ctl.int_ctl & int_ctl_vmcb12_bits) |
+		(svm->vmcb01.ptr->control.int_ctl & int_ctl_vmcb01_bits);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	svm->vmcb->control.int_vector          = svm->nested.ctl.int_vector;
 	svm->vmcb->control.int_state           = svm->nested.ctl.int_state;
 	svm->vmcb->control.event_inj           = svm->nested.ctl.event_inj;
@@ -602,10 +629,14 @@ static void nested_svm_copy_common_state(struct vmcb *from_vmcb, struct vmcb *to
 
 int enter_svm_guest_mode(struct kvm_vcpu *vcpu, u64 vmcb12_gpa,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 struct vmcb *vmcb12, bool from_vmrun)
 =======
 			 struct vmcb *vmcb12)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 struct vmcb *vmcb12, bool from_vmrun)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vcpu_svm *svm = to_svm(vcpu);
 	int ret;
@@ -636,10 +667,14 @@ int enter_svm_guest_mode(struct kvm_vcpu *vcpu, u64 vmcb12_gpa,
 
 	ret = nested_svm_load_cr3(&svm->vcpu, vmcb12->save.cr3,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  nested_npt_enabled(svm), from_vmrun);
 =======
 				  nested_npt_enabled(svm), true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  nested_npt_enabled(svm), from_vmrun);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -647,11 +682,17 @@ int enter_svm_guest_mode(struct kvm_vcpu *vcpu, u64 vmcb12_gpa,
 		vcpu->arch.mmu->inject_page_fault = svm_inject_page_fault_nested;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!from_vmrun)
 		kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!from_vmrun)
+		kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	svm_set_gif(svm, true);
 
 	return 0;
@@ -666,13 +707,19 @@ int nested_svm_vmrun(struct kvm_vcpu *vcpu)
 	u64 vmcb12_gpa;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!svm->nested.hsave_msr) {
 		kvm_inject_gp(vcpu, 0);
 		return 1;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (is_smm(vcpu)) {
 		kvm_queue_exception(vcpu, UD_VECTOR);
 		return 1;
@@ -706,6 +753,7 @@ int nested_svm_vmrun(struct kvm_vcpu *vcpu)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	/* Clear internal status */
@@ -713,6 +761,8 @@ int nested_svm_vmrun(struct kvm_vcpu *vcpu)
 	kvm_clear_interrupt_queue(vcpu);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Since vmcb01 is not in use, we can use it to store some of the L1
 	 * state.
@@ -729,10 +779,14 @@ int nested_svm_vmrun(struct kvm_vcpu *vcpu)
 	svm->nested.nested_run_pending = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (enter_svm_guest_mode(vcpu, vmcb12_gpa, vmcb12, true))
 =======
 	if (enter_svm_guest_mode(vcpu, vmcb12_gpa, vmcb12))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (enter_svm_guest_mode(vcpu, vmcb12_gpa, vmcb12, true))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_exit_err;
 
 	if (nested_svm_vmrun_msrpm(svm))
@@ -755,6 +809,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Copy state save area fields which are handled by VMRUN */
 void svm_copy_vmrun_state(struct vmcb_save_area *to_save,
 			  struct vmcb_save_area *from_save)
@@ -777,9 +834,12 @@ void svm_copy_vmrun_state(struct vmcb_save_area *to_save,
 }
 
 void svm_copy_vmloadsave_state(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
+<<<<<<< HEAD
 =======
 void nested_svm_vmloadsave(struct vmcb *from_vmcb, struct vmcb *to_vmcb)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	to_vmcb->save.fs = from_vmcb->save.fs;
 	to_vmcb->save.gs = from_vmcb->save.gs;
@@ -1443,6 +1503,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
 	svm->nested.vmcb12_gpa = kvm_state->hdr.svm.vmcb_pa;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	svm_copy_vmrun_state(&svm->vmcb01.ptr->save, save);
 	nested_load_control_from_vmcb12(svm, ctl);
 
@@ -1465,13 +1526,18 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
 	svm->vmcb01.ptr->save.rip = save->rip;
 	svm->vmcb01.ptr->save.cpl = 0;
 
+=======
+	svm_copy_vmrun_state(&svm->vmcb01.ptr->save, save);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nested_load_control_from_vmcb12(svm, ctl);
 
 	svm_switch_vmcb(svm, &svm->nested.vmcb02);
-
 	nested_vmcb02_prepare_control(svm);
+<<<<<<< HEAD
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
 	ret = 0;
 out_free:

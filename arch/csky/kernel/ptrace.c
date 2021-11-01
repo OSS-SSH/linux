@@ -100,11 +100,16 @@ static int gpr_set(struct task_struct *target,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* BIT(0) of regs.sr is Condition Code/Carry bit */
 	regs.sr = (regs.sr & BIT(0)) | (task_pt_regs(target)->sr & ~BIT(0));
 =======
 	regs.sr = task_pt_regs(target)->sr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* BIT(0) of regs.sr is Condition Code/Carry bit */
+	regs.sr = (regs.sr & BIT(0)) | (task_pt_regs(target)->sr & ~BIT(0));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_CPU_HAS_HILO
 	regs.dcsr = task_pt_regs(target)->dcsr;
 #endif

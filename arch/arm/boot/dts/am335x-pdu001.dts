@@ -495,6 +495,7 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 &mac_sw {
 	pinctrl-names = "default";
 	pinctrl-0 = <&cpsw_default>;
@@ -506,17 +507,22 @@
 	pinctrl-0 = <&davinci_mdio_default>;
 =======
 &mac {
+=======
+&mac_sw {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pinctrl-names = "default";
 	pinctrl-0 = <&cpsw_default>;
-	dual_emac;			/* no switch, two distinct MACs */
 	status = "okay";
 };
 
-&davinci_mdio {
+&davinci_mdio_sw {
 	pinctrl-names = "default";
 	pinctrl-0 = <&davinci_mdio_default>;
+<<<<<<< HEAD
 	status = "okay";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ethphy0: ethernet-phy@0 {
 		reg = <0>;
@@ -527,6 +533,7 @@
 	};
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 &cpsw_port1 {
 	phy-handle = <&ethphy0>;
@@ -540,16 +547,23 @@
 	ti,dual-emac-pvid = <2>;
 =======
 &cpsw_emac0 {
+=======
+&cpsw_port1 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-handle = <&ethphy0>;
 	phy-mode = "mii";
-	dual_emac_res_vlan = <1>;
+	ti,dual-emac-pvid = <1>;
 };
 
-&cpsw_emac1 {
+&cpsw_port2 {
 	phy-handle = <&ethphy1>;
 	phy-mode = "mii";
+<<<<<<< HEAD
 	dual_emac_res_vlan = <2>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ti,dual-emac-pvid = <2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &tscadc {

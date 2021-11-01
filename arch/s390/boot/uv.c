@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <asm/uv.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/boot_data.h>
 #include <asm/facility.h>
 #include <asm/sections.h>
@@ -8,11 +11,14 @@
 #include "boot.h"
 #include "uv.h"
 
+<<<<<<< HEAD
 =======
 #include <asm/facility.h>
 #include <asm/sections.h>
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* will be used in arch/s390/kernel/uv.c */
 #ifdef CONFIG_PROTECTED_VIRTUALIZATION_GUEST
 int __bootdata_preserved(prot_virt_guest);
@@ -58,6 +64,7 @@ void uv_query_info(void)
 
 #if IS_ENABLED(CONFIG_KVM)
 <<<<<<< HEAD
+<<<<<<< HEAD
 void adjust_to_uv_max(unsigned long *vmax)
 {
 	if (is_prot_virt_host() && uv_info.max_sec_stor_addr)
@@ -89,26 +96,42 @@ void sanitize_prot_virt_host(void)
 	prot_virt_host = is_prot_virt_host_capable();
 =======
 static bool has_uv_sec_stor_limit(void)
+=======
+void adjust_to_uv_max(unsigned long *vmax)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	/*
-	 * keep these conditions in line with setup_uv()
-	 */
-	if (!is_prot_virt_host())
-		return false;
-
-	if (is_prot_virt_guest())
-		return false;
-
-	if (!test_facility(158))
-		return false;
-
-	return !!uv_info.max_sec_stor_addr;
+	if (is_prot_virt_host() && uv_info.max_sec_stor_addr)
+		*vmax = min_t(unsigned long, *vmax, uv_info.max_sec_stor_addr);
 }
 
-void adjust_to_uv_max(unsigned long *vmax)
+static int is_prot_virt_host_capable(void)
 {
+	/* disable if no prot_virt=1 given on command-line */
+	if (!is_prot_virt_host())
+		return 0;
+	/* disable if protected guest virtualization is enabled */
+	if (is_prot_virt_guest())
+		return 0;
+	/* disable if no hardware support */
+	if (!test_facility(158))
+		return 0;
+	/* disable if kdump */
+	if (oldmem_data.start)
+		return 0;
+	/* disable if stand-alone dump */
+	if (ipl_block_valid && is_ipl_block_dump())
+		return 0;
+	return 1;
+}
+
+void sanitize_prot_virt_host(void)
+{
+<<<<<<< HEAD
 	if (has_uv_sec_stor_limit())
 		*vmax = min_t(unsigned long, *vmax, uv_info.max_sec_stor_addr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prot_virt_host = is_prot_virt_host_capable();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif

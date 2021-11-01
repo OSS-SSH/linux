@@ -73,6 +73,9 @@ that the `rm() <rm_>`_ tool can be used to delete them. Note that the
 instance unusable.  The ``binder-control`` device will be deleted when the
 binderfs instance is unmounted and all references to it have been dropped.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Binder features
 ---------------
@@ -86,5 +89,8 @@ Example::
 
         cat /dev/binderfs/features/oneway_spam_detection
         1
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

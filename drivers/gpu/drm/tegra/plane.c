@@ -5,9 +5,13 @@
 
 #include <linux/iommu.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/interconnect.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/interconnect.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <drm/drm_atomic.h>
 #include <drm/drm_atomic_helper.h>
@@ -69,11 +73,17 @@ tegra_plane_atomic_duplicate_state(struct drm_plane *plane)
 	copy->reflect_y = state->reflect_y;
 	copy->opaque = state->opaque;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	copy->total_peak_memory_bandwidth = state->total_peak_memory_bandwidth;
 	copy->peak_memory_bandwidth = state->peak_memory_bandwidth;
 	copy->avg_memory_bandwidth = state->avg_memory_bandwidth;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	copy->total_peak_memory_bandwidth = state->total_peak_memory_bandwidth;
+	copy->peak_memory_bandwidth = state->peak_memory_bandwidth;
+	copy->avg_memory_bandwidth = state->avg_memory_bandwidth;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < 2; i++)
 		copy->blending[i] = state->blending[i];
@@ -255,6 +265,9 @@ void tegra_plane_cleanup_fb(struct drm_plane *plane,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int tegra_plane_calculate_memory_bandwidth(struct drm_plane_state *state)
 {
 	struct tegra_plane_state *tegra_state = to_tegra_plane_state(state);
@@ -327,8 +340,11 @@ static int tegra_plane_calculate_memory_bandwidth(struct drm_plane_state *state)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int tegra_plane_state_add(struct tegra_plane *plane,
 			  struct drm_plane_state *state)
 {
@@ -348,12 +364,18 @@ int tegra_plane_state_add(struct tegra_plane *plane,
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = tegra_plane_calculate_memory_bandwidth(state);
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tegra = to_dc_state(crtc_state);
 
 	tegra->planes |= WIN_A_ACT_REQ << plane->index;
@@ -739,6 +761,9 @@ int tegra_plane_setup_legacy_state(struct tegra_plane *tegra,
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const char * const tegra_plane_icc_names[TEGRA_DC_LEGACY_PLANES_NUM] = {
 	"wina", "winb", "winc", NULL, NULL, NULL, "cursor",
@@ -776,5 +801,8 @@ int tegra_plane_interconnect_init(struct tegra_plane *plane)
 
 	return 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

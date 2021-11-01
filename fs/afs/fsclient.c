@@ -457,12 +457,16 @@ void afs_fs_fetch_data(struct afs_operation *op)
 	__be32 *bp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
 =======
 	if (upper_32_bits(req->pos) ||
 	    upper_32_bits(req->len) ||
 	    upper_32_bits(req->pos + req->len))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return afs_fs_fetch_data64(op);
 
 	_enter("");
@@ -1118,12 +1122,16 @@ void afs_fs_store_data(struct afs_operation *op)
 	       (unsigned long long)op->store.i_size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
 =======
 	if (upper_32_bits(op->store.pos) ||
 	    upper_32_bits(op->store.size) ||
 	    upper_32_bits(op->store.i_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return afs_fs_store_data64(op);
 
 	call = afs_alloc_flat_call(op->net, &afs_RXFSStoreData,
@@ -1238,10 +1246,14 @@ static void afs_fs_setattr_size(struct afs_operation *op)
 
 	ASSERT(attr->ia_valid & ATTR_SIZE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
 =======
 	if (upper_32_bits(attr->ia_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return afs_fs_setattr_size64(op);
 
 	call = afs_alloc_flat_call(op->net, &afs_RXFSStoreData_as_Status,
@@ -1670,6 +1682,7 @@ static int afs_deliver_fs_get_capabilities(struct afs_call *call)
 
 		count = ntohl(call->tmp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		call->count = count;
 		call->count2 = count;
 		if (count == 0) {
@@ -1685,20 +1698,35 @@ static int afs_deliver_fs_get_capabilities(struct afs_call *call)
 
 =======
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		call->count = count;
 		call->count2 = count;
-		afs_extract_discard(call, count * sizeof(__be32));
+		if (count == 0) {
+			call->unmarshall = 4;
+			call->tmp = 0;
+			break;
+		}
+
+		/* Extract the first word of the capabilities to call->tmp */
+		afs_extract_to_tmp(call);
 		call->unmarshall++;
 		fallthrough;
 
+<<<<<<< HEAD
 		/* Extract capabilities words */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 2:
 		ret = afs_extract_data(call, false);
 		if (ret < 0)
 			return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		afs_extract_discard(call, (count - 1) * sizeof(__be32));
 		call->unmarshall++;
 		fallthrough;
@@ -1708,9 +1736,12 @@ static int afs_deliver_fs_get_capabilities(struct afs_call *call)
 		ret = afs_extract_data(call, false);
 		if (ret < 0)
 			return ret;
+<<<<<<< HEAD
 =======
 		/* TODO: Examine capabilities */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		call->unmarshall++;
 		break;

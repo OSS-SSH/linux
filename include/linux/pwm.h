@@ -405,10 +405,14 @@ void *pwm_get_chip_data(struct pwm_device *pwm);
 
 int pwmchip_add(struct pwm_chip *chip);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void pwmchip_remove(struct pwm_chip *chip);
 =======
 int pwmchip_remove(struct pwm_chip *chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void pwmchip_remove(struct pwm_chip *chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int devm_pwmchip_add(struct device *dev, struct pwm_chip *chip);
 

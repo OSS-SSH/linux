@@ -667,14 +667,20 @@ void bfq_bfqq_move(struct bfq_data *bfqd, struct bfq_queue *bfqq,
 	bfqg_and_blkg_put(bfqq_group(bfqq));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (entity->parent &&
 	    entity->parent->last_bfqq_created == bfqq)
 		entity->parent->last_bfqq_created = NULL;
 	else if (bfqd->last_bfqq_created == bfqq)
 		bfqd->last_bfqq_created = NULL;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	entity->parent = bfqg->my_entity;
 	entity->sched_data = &bfqg->sched_data;
 	/* pin down bfqg and its associated blkg  */

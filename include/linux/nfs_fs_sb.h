@@ -63,9 +63,13 @@ struct nfs_client {
 	u32			cl_minorversion;/* NFSv4 minorversion */
 	unsigned int		cl_nconnect;	/* Number of connections */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int		cl_max_connect; /* max number of xprts allowed */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int		cl_max_connect; /* max number of xprts allowed */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char *		cl_principal;  /* used for machine cred */
 
 #if IS_ENABLED(CONFIG_NFS_V4)

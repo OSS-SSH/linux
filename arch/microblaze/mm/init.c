@@ -266,6 +266,7 @@ asmlinkage void __init mmu_init(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* This is only called until mem_init is done. */
 void __init *early_get_page(void)
@@ -280,6 +281,8 @@ void __init *early_get_page(void)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void * __ref zalloc_maybe_bootmem(size_t size, gfp_t mask)
 {
 	void *p;

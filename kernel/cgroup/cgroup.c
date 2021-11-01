@@ -69,6 +69,9 @@
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * To avoid confusing the compiler (and generating warnings) with code
  * that attempts to access what would be a 0-element array (i.e. sized
  * to a potentially empty array when CGROUP_SUBSYS_COUNT == 0), this
@@ -77,8 +80,11 @@
 #define CGROUP_HAS_SUBSYS_CONFIG	(CGROUP_SUBSYS_COUNT > 0)
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * cgroup_mutex is the master lock.  Any modification to cgroup or its
  * hierarchy must be performed while holding it.
  *
@@ -260,10 +266,14 @@ static int cgroup_addrm_files(struct cgroup_subsys_state *css,
 bool cgroup_ssid_enabled(int ssid)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!CGROUP_HAS_SUBSYS_CONFIG)
 =======
 	if (CGROUP_SUBSYS_COUNT == 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!CGROUP_HAS_SUBSYS_CONFIG)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	return static_key_enabled(cgroup_subsys_enabled_key[ssid]);
@@ -488,10 +498,14 @@ static struct cgroup_subsys_state *cgroup_css(struct cgroup *cgrp,
 					      struct cgroup_subsys *ss)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (CGROUP_HAS_SUBSYS_CONFIG && ss)
 =======
 	if (ss)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (CGROUP_HAS_SUBSYS_CONFIG && ss)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rcu_dereference_check(cgrp->subsys[ss->id],
 					lockdep_is_held(&cgroup_mutex));
 	else
@@ -570,11 +584,17 @@ struct cgroup_subsys_state *cgroup_e_css(struct cgroup *cgrp,
 	struct cgroup_subsys_state *css;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!CGROUP_HAS_SUBSYS_CONFIG)
 		return NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!CGROUP_HAS_SUBSYS_CONFIG)
+		return NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	do {
 		css = cgroup_css(cgrp, ss);
 
@@ -603,11 +623,17 @@ struct cgroup_subsys_state *cgroup_get_e_css(struct cgroup *cgrp,
 	struct cgroup_subsys_state *css;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!CGROUP_HAS_SUBSYS_CONFIG)
 		return NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!CGROUP_HAS_SUBSYS_CONFIG)
+		return NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_lock();
 
 	do {
@@ -679,10 +705,14 @@ struct cgroup_subsys_state *of_css(struct kernfs_open_file *of)
 	 * be and stay valid until the enclosing operation is complete.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (CGROUP_HAS_SUBSYS_CONFIG && cft->ss)
 =======
 	if (cft->ss)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (CGROUP_HAS_SUBSYS_CONFIG && cft->ss)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rcu_dereference_raw(cgrp->subsys[cft->ss->id]);
 	else
 		return &cgrp->self;
@@ -731,10 +761,14 @@ EXPORT_SYMBOL_GPL(of_css);
 #define do_each_subsys_mask(ss, ssid, ss_mask) do {			\
 	unsigned long __ss_mask = (ss_mask);				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!CGROUP_HAS_SUBSYS_CONFIG) {				\
 =======
 	if (!CGROUP_SUBSYS_COUNT) { /* to avoid spurious gcc warning */	\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!CGROUP_HAS_SUBSYS_CONFIG) {				\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		(ssid) = 0;						\
 		break;							\
 	}								\
@@ -2209,9 +2243,12 @@ static void cgroup_kill_sb(struct super_block *sb)
 	 * If @root doesn't have any children, start killing it.
 	 * This prevents new mounts by disabling percpu_ref_tryget_live().
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	 * cgroup_mount() may wait for @root's release.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * And don't kill the default root.
 	 */
@@ -2423,10 +2460,14 @@ struct task_struct *cgroup_taskset_next(struct cgroup_taskset *tset,
 	struct task_struct *task = tset->cur_task;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (CGROUP_HAS_SUBSYS_CONFIG && &cset->mg_node != tset->csets) {
 =======
 	while (&cset->mg_node != tset->csets) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (CGROUP_HAS_SUBSYS_CONFIG && &cset->mg_node != tset->csets) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!task)
 			task = list_first_entry(&cset->mg_tasks,
 						struct task_struct, cg_list);
@@ -4698,10 +4739,14 @@ void css_task_iter_start(struct cgroup_subsys_state *css, unsigned int flags,
 	it->flags = flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (CGROUP_HAS_SUBSYS_CONFIG && it->ss)
 =======
 	if (it->ss)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (CGROUP_HAS_SUBSYS_CONFIG && it->ss)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		it->cset_pos = &css->cgroup->e_csets[css->ss->id];
 	else
 		it->cset_pos = &css->cgroup->cset_links;
@@ -6617,6 +6662,7 @@ int cgroup_parse_float(const char *input, unsigned dec_shift, s64 *v)
 #ifdef CONFIG_SOCK_CGROUP_DATA
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void cgroup_sk_alloc(struct sock_cgroup_data *skcd)
 {
 	struct cgroup *cgroup;
@@ -6648,19 +6694,23 @@ void cgroup_sk_alloc_disable(void)
 
 #endif
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void cgroup_sk_alloc(struct sock_cgroup_data *skcd)
 {
-	if (cgroup_sk_alloc_disabled) {
-		skcd->no_refcnt = 1;
-		return;
-	}
-
-	/* Don't associate the sock with unrelated interrupted task's cgroup. */
-	if (in_interrupt())
-		return;
+	struct cgroup *cgroup;
 
 	rcu_read_lock();
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Don't associate the sock with unrelated interrupted task's cgroup. */
+	if (in_interrupt()) {
+		cgroup = &cgrp_dfl_root.cgrp;
+		cgroup_get(cgroup);
+		goto out;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (true) {
 		struct css_set *cset;
@@ -6668,15 +6718,20 @@ void cgroup_sk_alloc(struct sock_cgroup_data *skcd)
 		cset = task_css_set(current);
 		if (likely(cgroup_tryget(cset->dfl_cgrp))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cgroup = cset->dfl_cgrp;
 =======
 			skcd->val = (unsigned long)cset->dfl_cgrp;
 			cgroup_bpf_get(cset->dfl_cgrp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cgroup = cset->dfl_cgrp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 		cpu_relax();
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 out:
 	skcd->cgroup = cgroup;
@@ -6684,12 +6739,20 @@ out:
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out:
+	skcd->cgroup = cgroup;
+	cgroup_bpf_get(cgroup);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_unlock();
 }
 
 void cgroup_sk_clone(struct sock_cgroup_data *skcd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cgroup *cgrp = sock_cgroup_ptr(skcd);
 
 	/*
@@ -6699,6 +6762,7 @@ void cgroup_sk_clone(struct sock_cgroup_data *skcd)
 	 */
 	cgroup_get(cgrp);
 	cgroup_bpf_get(cgrp);
+<<<<<<< HEAD
 =======
 	if (skcd->val) {
 		if (skcd->no_refcnt)
@@ -6712,6 +6776,8 @@ void cgroup_sk_clone(struct sock_cgroup_data *skcd)
 		cgroup_bpf_get(sock_cgroup_ptr(skcd));
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void cgroup_sk_free(struct sock_cgroup_data *skcd)
@@ -6719,10 +6785,13 @@ void cgroup_sk_free(struct sock_cgroup_data *skcd)
 	struct cgroup *cgrp = sock_cgroup_ptr(skcd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (skcd->no_refcnt)
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cgroup_bpf_put(cgrp);
 	cgroup_put(cgrp);
 }

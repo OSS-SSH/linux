@@ -725,6 +725,9 @@ The function name to use when creating the function directory is "uac2".
 The uac2 function provides these attributes in its function directory:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	================ ====================================================
 	c_chmask         capture channel mask
 	c_srate          capture sampling rate
@@ -747,6 +750,7 @@ The uac2 function provides these attributes in its function directory:
 	req_number       the number of pre-allocated request for both capture
 	                 and playback
 	================ ====================================================
+<<<<<<< HEAD
 =======
 	=============== ====================================================
 	c_chmask	capture channel mask
@@ -761,6 +765,8 @@ The uac2 function provides these attributes in its function directory:
 			and playback
 	=============== ====================================================
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The attributes have sane default values.
 
@@ -930,6 +936,9 @@ The function name to use when creating the function directory is "uac1".
 The uac1 function provides these attributes in its function directory:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	================ ====================================================
 	c_chmask         capture channel mask
 	c_srate          capture sampling rate
@@ -950,6 +959,7 @@ The uac1 function provides these attributes in its function directory:
 	req_number       the number of pre-allocated request for both capture
 	                 and playback
 	================ ====================================================
+<<<<<<< HEAD
 =======
 	========== ====================================================
 	c_chmask   capture channel mask
@@ -962,6 +972,8 @@ The uac1 function provides these attributes in its function directory:
 		   and playback
 	========== ====================================================
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The attributes have sane default values.
 

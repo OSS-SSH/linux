@@ -33,10 +33,14 @@ int hw_sm750_map(struct sm750_dev *sm750_dev, struct pci_dev *pdev)
 	ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sm750_dev->vidreg_start = pci_resource_start(pdev, 1);
 =======
 	sm750_dev->vidreg_start  = pci_resource_start(pdev, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sm750_dev->vidreg_start = pci_resource_start(pdev, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sm750_dev->vidreg_size = SZ_2M;
 
 	pr_info("mmio phyAddr = %lx\n", sm750_dev->vidreg_start);
@@ -55,12 +59,17 @@ int hw_sm750_map(struct sm750_dev *sm750_dev, struct pci_dev *pdev)
 
 	/* now map mmio and vidmem */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sm750_dev->pvReg =
 		ioremap(sm750_dev->vidreg_start, sm750_dev->vidreg_size);
 =======
 	sm750_dev->pvReg = ioremap(sm750_dev->vidreg_start,
 				   sm750_dev->vidreg_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sm750_dev->pvReg =
+		ioremap(sm750_dev->vidreg_start, sm750_dev->vidreg_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!sm750_dev->pvReg) {
 		pr_err("mmio failed\n");
 		ret = -EFAULT;
@@ -88,12 +97,17 @@ int hw_sm750_map(struct sm750_dev *sm750_dev, struct pci_dev *pdev)
 
 	/* reserve the vidmem space of smi adaptor */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sm750_dev->pvMem =
 		ioremap_wc(sm750_dev->vidmem_start, sm750_dev->vidmem_size);
 =======
 	sm750_dev->pvMem = ioremap_wc(sm750_dev->vidmem_start,
 				      sm750_dev->vidmem_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sm750_dev->pvMem =
+		ioremap_wc(sm750_dev->vidmem_start, sm750_dev->vidmem_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!sm750_dev->pvMem) {
 		pr_err("Map video memory failed\n");
 		ret = -EFAULT;
@@ -113,12 +127,17 @@ int hw_sm750_inithw(struct sm750_dev *sm750_dev, struct pci_dev *pdev)
 	if (parm->chip_clk == 0)
 		parm->chip_clk = (sm750_get_chip_type() == SM750LE) ?
 <<<<<<< HEAD
+<<<<<<< HEAD
 					       DEFAULT_SM750LE_CHIP_CLOCK :
 					       DEFAULT_SM750_CHIP_CLOCK;
 =======
 						DEFAULT_SM750LE_CHIP_CLOCK :
 						DEFAULT_SM750_CHIP_CLOCK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					       DEFAULT_SM750LE_CHIP_CLOCK :
+					       DEFAULT_SM750_CHIP_CLOCK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (parm->mem_clk == 0)
 		parm->mem_clk = parm->chip_clk;
@@ -153,12 +172,17 @@ int hw_sm750_inithw(struct sm750_dev *sm750_dev, struct pci_dev *pdev)
 
 		val = peek32(PANEL_DISPLAY_CTRL) &
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      ~(PANEL_DISPLAY_CTRL_DUAL_DISPLAY |
 			PANEL_DISPLAY_CTRL_DOUBLE_PIXEL);
 =======
 			~(PANEL_DISPLAY_CTRL_DUAL_DISPLAY |
 			  PANEL_DISPLAY_CTRL_DOUBLE_PIXEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      ~(PANEL_DISPLAY_CTRL_DUAL_DISPLAY |
+			PANEL_DISPLAY_CTRL_DOUBLE_PIXEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		switch (sm750_dev->pnltype) {
 		case sm750_24TFT:
 			break;
@@ -306,12 +330,16 @@ int hw_sm750_crtc_setMode(struct lynxfb_crtc *crtc,
 	/* set timing */
 	modparm.pixel_clock = ps_to_hz(var->pixclock);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	modparm.vertical_sync_polarity =
 		(var->sync & FB_SYNC_HOR_HIGH_ACT) ? POS : NEG;
 	modparm.horizontal_sync_polarity =
 		(var->sync & FB_SYNC_VERT_HIGH_ACT) ? POS : NEG;
 	modparm.clock_phase_polarity =
 		(var->sync & FB_SYNC_COMP_HIGH_ACT) ? POS : NEG;
+<<<<<<< HEAD
 =======
 	modparm.vertical_sync_polarity = (var->sync & FB_SYNC_HOR_HIGH_ACT)
 					 ? POS : NEG;
@@ -320,6 +348,8 @@ int hw_sm750_crtc_setMode(struct lynxfb_crtc *crtc,
 	modparm.clock_phase_polarity = (var->sync & FB_SYNC_COMP_HIGH_ACT)
 				       ? POS : NEG;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	modparm.horizontal_display_end = var->xres;
 	modparm.horizontal_sync_width = var->hsync_len;
 	modparm.horizontal_sync_start = var->xres + var->right_margin;
@@ -348,10 +378,14 @@ int hw_sm750_crtc_setMode(struct lynxfb_crtc *crtc,
 		/* set pitch, offset, width, start address, etc... */
 		poke32(PANEL_FB_ADDRESS,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       crtc->o_screen & PANEL_FB_ADDRESS_ADDRESS_MASK);
 =======
 		       crtc->oScreen & PANEL_FB_ADDRESS_ADDRESS_MASK);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       crtc->o_screen & PANEL_FB_ADDRESS_ADDRESS_MASK);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		reg = var->xres * (var->bits_per_pixel >> 3);
 		/*
@@ -361,14 +395,19 @@ int hw_sm750_crtc_setMode(struct lynxfb_crtc *crtc,
 		reg = ALIGN(reg, crtc->line_pad);
 		reg = (reg << PANEL_FB_WIDTH_WIDTH_SHIFT) &
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      PANEL_FB_WIDTH_WIDTH_MASK;
 =======
 		       PANEL_FB_WIDTH_WIDTH_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      PANEL_FB_WIDTH_WIDTH_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg |= (fix->line_length & PANEL_FB_WIDTH_OFFSET_MASK);
 		poke32(PANEL_FB_WIDTH, reg);
 
 		reg = ((var->xres - 1) << PANEL_WINDOW_WIDTH_WIDTH_SHIFT) &
+<<<<<<< HEAD
 <<<<<<< HEAD
 		      PANEL_WINDOW_WIDTH_WIDTH_MASK;
 		reg |= (var->xoffset & PANEL_WINDOW_WIDTH_X_MASK);
@@ -384,6 +423,14 @@ int hw_sm750_crtc_setMode(struct lynxfb_crtc *crtc,
 		reg = (var->yres_virtual - 1) <<
 		      PANEL_WINDOW_HEIGHT_HEIGHT_SHIFT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      PANEL_WINDOW_WIDTH_WIDTH_MASK;
+		reg |= (var->xoffset & PANEL_WINDOW_WIDTH_X_MASK);
+		poke32(PANEL_WINDOW_WIDTH, reg);
+
+		reg = (var->yres_virtual - 1)
+		      << PANEL_WINDOW_HEIGHT_HEIGHT_SHIFT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg &= PANEL_WINDOW_HEIGHT_HEIGHT_MASK;
 		reg |= (var->yoffset & PANEL_WINDOW_HEIGHT_Y_MASK);
 		poke32(PANEL_WINDOW_HEIGHT, reg);
@@ -392,10 +439,14 @@ int hw_sm750_crtc_setMode(struct lynxfb_crtc *crtc,
 
 		reg = ((var->yres - 1) << PANEL_PLANE_BR_BOTTOM_SHIFT) &
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      PANEL_PLANE_BR_BOTTOM_MASK;
 =======
 		       PANEL_PLANE_BR_BOTTOM_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      PANEL_PLANE_BR_BOTTOM_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg |= ((var->xres - 1) & PANEL_PLANE_BR_RIGHT_MASK);
 		poke32(PANEL_PLANE_BR, reg);
 
@@ -405,10 +456,14 @@ int hw_sm750_crtc_setMode(struct lynxfb_crtc *crtc,
 	} else {
 		/* not implemented now */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		poke32(CRT_FB_ADDRESS, crtc->o_screen);
 =======
 		poke32(CRT_FB_ADDRESS, crtc->oScreen);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		poke32(CRT_FB_ADDRESS, crtc->o_screen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = var->xres * (var->bits_per_pixel >> 3);
 		/*
 		 * crtc->channel is not equal to par->index on numeric,
@@ -431,6 +486,7 @@ exit:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int hw_sm750_setColReg(struct lynxfb_crtc *crtc, ushort index, ushort red,
 		       ushort green, ushort blue)
 {
@@ -441,6 +497,12 @@ int hw_sm750_setColReg(struct lynxfb_crtc *crtc, ushort index,
 {
 	static unsigned int add[] = {PANEL_PALETTE_RAM, CRT_PALETTE_RAM};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int hw_sm750_setColReg(struct lynxfb_crtc *crtc, ushort index, ushort red,
+		       ushort green, ushort blue)
+{
+	static unsigned int add[] = { PANEL_PALETTE_RAM, CRT_PALETTE_RAM };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	poke32(add[crtc->channel] + index * 4,
 	       (red << 16) | (green << 8) | blue);
@@ -576,10 +638,14 @@ int hw_sm750le_deWait(void)
 	int i = 0x10000000;
 	unsigned int mask = DE_STATE2_DE_STATUS_BUSY | DE_STATE2_DE_FIFO_EMPTY |
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    DE_STATE2_DE_MEM_FIFO_EMPTY;
 =======
 		DE_STATE2_DE_MEM_FIFO_EMPTY;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    DE_STATE2_DE_MEM_FIFO_EMPTY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (i--) {
 		unsigned int val = peek32(DE_STATE2);
@@ -597,12 +663,17 @@ int hw_sm750_deWait(void)
 	int i = 0x10000000;
 	unsigned int mask = SYSTEM_CTRL_DE_STATUS_BUSY |
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    SYSTEM_CTRL_DE_FIFO_EMPTY |
 			    SYSTEM_CTRL_DE_MEM_FIFO_EMPTY;
 =======
 		SYSTEM_CTRL_DE_FIFO_EMPTY |
 		SYSTEM_CTRL_DE_MEM_FIFO_EMPTY;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    SYSTEM_CTRL_DE_FIFO_EMPTY |
+			    SYSTEM_CTRL_DE_MEM_FIFO_EMPTY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (i--) {
 		unsigned int val = peek32(SYSTEM_CTRL);
@@ -629,6 +700,7 @@ int hw_sm750_pan_display(struct lynxfb_crtc *crtc,
 	total = var->yoffset * info->fix.line_length +
 		((var->xoffset * var->bits_per_pixel) >> 3);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	total += crtc->o_screen;
 	if (crtc->channel == sm750_primary) {
 		poke32(PANEL_FB_ADDRESS,
@@ -640,15 +712,22 @@ int hw_sm750_pan_display(struct lynxfb_crtc *crtc,
 			       (total & CRT_FB_ADDRESS_ADDRESS_MASK));
 =======
 	total += crtc->oScreen;
+=======
+	total += crtc->o_screen;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (crtc->channel == sm750_primary) {
 		poke32(PANEL_FB_ADDRESS,
 		       peek32(PANEL_FB_ADDRESS) |
-		       (total & PANEL_FB_ADDRESS_ADDRESS_MASK));
+			       (total & PANEL_FB_ADDRESS_ADDRESS_MASK));
 	} else {
 		poke32(CRT_FB_ADDRESS,
 		       peek32(CRT_FB_ADDRESS) |
+<<<<<<< HEAD
 		       (total & CRT_FB_ADDRESS_ADDRESS_MASK));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       (total & CRT_FB_ADDRESS_ADDRESS_MASK));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return 0;
 }

@@ -486,10 +486,14 @@ static int ab8500_handle_hierarchical_line(struct ab8500 *ab8500,
 			line += 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		handle_nested_irq(irq_find_mapping(ab8500->domain, line));
 =======
 		handle_nested_irq(irq_create_mapping(ab8500->domain, line));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		handle_nested_irq(irq_find_mapping(ab8500->domain, line));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;

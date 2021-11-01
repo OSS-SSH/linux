@@ -175,6 +175,9 @@ static int gen_74x164_remove(struct spi_device *spi)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct spi_device_id gen_74x164_spi_ids[] = {
 	{ .name = "74hc595" },
 	{ .name = "74lvc594" },
@@ -182,8 +185,11 @@ static const struct spi_device_id gen_74x164_spi_ids[] = {
 };
 MODULE_DEVICE_TABLE(spi, gen_74x164_spi_ids);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id gen_74x164_dt_ids[] = {
 	{ .compatible = "fairchild,74hc595" },
 	{ .compatible = "nxp,74lvc594" },
@@ -199,9 +205,13 @@ static struct spi_driver gen_74x164_driver = {
 	.probe		= gen_74x164_probe,
 	.remove		= gen_74x164_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.id_table	= gen_74x164_spi_ids,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.id_table	= gen_74x164_spi_ids,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_spi_driver(gen_74x164_driver);
 

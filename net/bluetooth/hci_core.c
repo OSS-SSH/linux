@@ -1344,14 +1344,20 @@ int hci_inquiry(void __user *arg)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Restrict maximum inquiry length to 60 seconds */
 	if (ir.length > 60) {
 		err = -EINVAL;
 		goto done;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hci_dev_lock(hdev);
 	if (inquiry_cache_age(hdev) > INQUIRY_CACHE_AGE_MAX ||
 	    inquiry_cache_empty(hdev) || ir.flags & IREQ_CACHE_FLUSH) {
@@ -1728,9 +1734,13 @@ int hci_dev_do_close(struct hci_dev *hdev)
 {
 	bool auto_off;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	BT_DBG("%s %p", hdev->name, hdev);
 
@@ -1741,6 +1751,9 @@ int hci_dev_do_close(struct hci_dev *hdev)
 	hci_req_sync_lock(hdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!hci_dev_test_flag(hdev, HCI_UNREGISTER) &&
 	    !hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
 	    test_bit(HCI_UP, &hdev->flags)) {
@@ -1749,6 +1762,7 @@ int hci_dev_do_close(struct hci_dev *hdev)
 			err = hdev->shutdown(hdev);
 	}
 
+<<<<<<< HEAD
 	if (!test_and_clear_bit(HCI_UP, &hdev->flags)) {
 		cancel_delayed_work_sync(&hdev->cmd_timer);
 		hci_req_sync_unlock(hdev);
@@ -1759,6 +1773,12 @@ int hci_dev_do_close(struct hci_dev *hdev)
 		hci_req_sync_unlock(hdev);
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!test_and_clear_bit(HCI_UP, &hdev->flags)) {
+		cancel_delayed_work_sync(&hdev->cmd_timer);
+		hci_req_sync_unlock(hdev);
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	hci_leds_update_powered(hdev, false);
@@ -1827,6 +1847,7 @@ int hci_dev_do_close(struct hci_dev *hdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!hci_dev_test_flag(hdev, HCI_UNREGISTER) &&
 	    !hci_dev_test_flag(hdev, HCI_USER_CHANNEL) &&
@@ -1837,6 +1858,8 @@ int hci_dev_do_close(struct hci_dev *hdev)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* flush cmd  work */
 	flush_work(&hdev->cmd_work);
 
@@ -1877,10 +1900,14 @@ int hci_dev_do_close(struct hci_dev *hdev)
 
 	hci_dev_put(hdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return err;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int hci_dev_close(__u16 dev)
@@ -3787,6 +3814,7 @@ done:
 
 /* Alloc HCI device */
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
 {
 	struct hci_dev *hdev;
@@ -3801,11 +3829,25 @@ struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
 	hdev = kzalloc(alloc_size, GFP_KERNEL);
 =======
 struct hci_dev *hci_alloc_dev(void)
+=======
+struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hci_dev *hdev;
+	unsigned int alloc_size;
 
+<<<<<<< HEAD
 	hdev = kzalloc(sizeof(*hdev), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	alloc_size = sizeof(*hdev);
+	if (sizeof_priv) {
+		/* Fixme: May need ALIGN-ment? */
+		alloc_size += sizeof_priv;
+	}
+
+	hdev = kzalloc(alloc_size, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!hdev)
 		return NULL;
 
@@ -3920,10 +3962,14 @@ struct hci_dev *hci_alloc_dev(void)
 	return hdev;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL(hci_alloc_dev_priv);
 =======
 EXPORT_SYMBOL(hci_alloc_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL(hci_alloc_dev_priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Free HCI device */
 void hci_free_dev(struct hci_dev *hdev)
@@ -4051,19 +4097,25 @@ EXPORT_SYMBOL(hci_register_dev);
 void hci_unregister_dev(struct hci_dev *hdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int id;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	BT_DBG("%p name %s bus %d", hdev, hdev->name, hdev->bus);
 
 	hci_dev_set_flag(hdev, HCI_UNREGISTER);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	id = hdev->id;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	write_lock(&hci_dev_list_lock);
 	list_del(&hdev->list);
 	write_unlock(&hci_dev_list_lock);
@@ -4099,6 +4151,9 @@ void hci_unregister_dev(struct hci_dev *hdev)
 
 	device_del(&hdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Actual cleanup is deferred until hci_release_dev(). */
 	hci_dev_put(hdev);
 }
@@ -4107,9 +4162,12 @@ EXPORT_SYMBOL(hci_unregister_dev);
 /* Release HCI device */
 void hci_release_dev(struct hci_dev *hdev)
 {
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	debugfs_remove_recursive(hdev->debugfs);
 	kfree_const(hdev->hw_info);
 	kfree_const(hdev->fw_info);
@@ -4135,6 +4193,7 @@ void hci_release_dev(struct hci_dev *hdev)
 	hci_dev_unlock(hdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ida_simple_remove(&hci_index_ida, hdev->id);
 	kfree(hdev);
 }
@@ -4146,6 +4205,12 @@ EXPORT_SYMBOL(hci_release_dev);
 }
 EXPORT_SYMBOL(hci_unregister_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ida_simple_remove(&hci_index_ida, hdev->id);
+	kfree(hdev);
+}
+EXPORT_SYMBOL(hci_release_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Suspend HCI device */
 int hci_suspend_dev(struct hci_dev *hdev)

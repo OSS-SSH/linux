@@ -18,11 +18,14 @@
 #include "helpers.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Our sigaltstack scratch space. */
 static unsigned char altstack_data[SIGSTKSZ];
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sethandler(int sig, void (*handler)(int, siginfo_t *, void *),
 		       int flags)
 {
@@ -108,11 +111,16 @@ int main()
 {
 	stack_t stack = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Our sigaltstack scratch space. */
 		.ss_sp = malloc(sizeof(char) * SIGSTKSZ),
 =======
 		.ss_sp = altstack_data,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Our sigaltstack scratch space. */
+		.ss_sp = malloc(sizeof(char) * SIGSTKSZ),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ss_size = SIGSTKSZ,
 	};
 	if (sigaltstack(&stack, NULL) != 0)
@@ -242,8 +250,12 @@ int main()
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	free(stack.ss_sp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free(stack.ss_sp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }

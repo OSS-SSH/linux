@@ -12,9 +12,12 @@
 #include <linux/clk.h>
 #include <linux/delay.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/version.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/dma-buf.h>
 #include <linux/of_graph.h>
 
@@ -444,9 +447,12 @@ static struct drm_simple_display_pipe_funcs pl111_display_funcs = {
 	.disable = pl111_display_disable,
 	.update = pl111_display_update,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.prepare_fb = drm_gem_simple_display_pipe_prepare_fb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int pl111_clk_div_choose_div(struct clk_hw *hw, unsigned long rate,

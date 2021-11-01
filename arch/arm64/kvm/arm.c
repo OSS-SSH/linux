@@ -7,9 +7,13 @@
 #include <linux/bug.h>
 #include <linux/cpu_pm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/entry-kvm.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/entry-kvm.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/errno.h>
 #include <linux/err.h>
 #include <linux/kvm_host.h>
@@ -20,9 +24,13 @@
 #include <linux/mman.h>
 #include <linux/sched.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/kmemleak.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/kmemleak.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kvm.h>
 #include <linux/kvm_irqfd.h>
 #include <linux/irqbypass.h>
@@ -51,12 +59,15 @@
 #include <kvm/arm_psci.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef REQUIRES_VIRT
 __asm__(".arch_extension	virt");
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static enum kvm_mode kvm_mode = KVM_MODE_DEFAULT;
 DEFINE_STATIC_KEY_FALSE(kvm_protected_mode_initialized);
 
@@ -106,6 +117,9 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
 		break;
 	case KVM_CAP_ARM_MTE:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mutex_lock(&kvm->lock);
 		if (!system_supports_mte() || kvm->created_vcpus) {
 			r = -EINVAL;
@@ -114,12 +128,15 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
 			kvm->arch.mte_enabled = true;
 		}
 		mutex_unlock(&kvm->lock);
+<<<<<<< HEAD
 =======
 		if (!system_supports_mte() || kvm->created_vcpus)
 			return -EINVAL;
 		r = 0;
 		kvm->arch.mte_enabled = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		r = -EINVAL;
@@ -594,10 +611,14 @@ static void update_vmid(struct kvm_vmid *vmid)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WRITE_ONCE(vmid->vmid, kvm_next_vmid);
 =======
 	vmid->vmid = kvm_next_vmid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WRITE_ONCE(vmid->vmid, kvm_next_vmid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kvm_next_vmid++;
 	kvm_next_vmid &= (1 << kvm_get_vmid_bits()) - 1;
 
@@ -742,6 +763,9 @@ static bool vcpu_mode_is_bad_32bit(struct kvm_vcpu *vcpu)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * kvm_vcpu_exit_request - returns true if the VCPU should *not* enter the guest
  * @vcpu:	The VCPU pointer
  * @ret:	Pointer to write optional return code
@@ -781,8 +805,11 @@ static bool kvm_vcpu_exit_request(struct kvm_vcpu *vcpu, int *ret)
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * kvm_arch_vcpu_ioctl_run - the main VCPU run function to execute guest code
  * @vcpu:	The VCPU pointer
  *
@@ -826,12 +853,18 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 		 * Check conditions before entering the guest
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = xfer_to_guest_mode_handle_work(vcpu);
 		if (!ret)
 			ret = 1;
 =======
 		cond_resched();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = xfer_to_guest_mode_handle_work(vcpu);
+		if (!ret)
+			ret = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		update_vmid(&vcpu->arch.hw_mmu->vmid);
 
@@ -851,6 +884,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 		kvm_vgic_flush_hwstate(vcpu);
 
 		/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		 * Exit if we have a signal pending so that we can deliver the
@@ -878,6 +912,8 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 
 		/*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * Ensure we set mode to IN_GUEST_MODE after we disable
 		 * interrupts and before the final VCPU requests check.
 		 * See the comment in kvm_vcpu_exiting_guest_mode() and
@@ -886,11 +922,15 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
 =======
 		if (ret <= 0 || need_new_vmid_gen(&vcpu->arch.hw_mmu->vmid) ||
 		    kvm_request_pending(vcpu)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			vcpu->mode = OUTSIDE_GUEST_MODE;
 			isb(); /* Ensure work in x_flush_hwstate is committed */
 			kvm_pmu_sync_hwstate(vcpu);
@@ -1117,10 +1157,14 @@ static int kvm_vcpu_set_target(struct kvm_vcpu *vcpu,
 {
 	unsigned int i, ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 phys_target = kvm_target_cpu();
 =======
 	int phys_target = kvm_target_cpu();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 phys_target = kvm_target_cpu();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (init->target != phys_target)
 		return -EINVAL;
@@ -1190,9 +1234,13 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
 
 	vcpu_reset_hcr(vcpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vcpu->arch.cptr_el2 = CPTR_EL2_DEFAULT;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vcpu->arch.cptr_el2 = CPTR_EL2_DEFAULT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Handle the "start in power-off" case.
@@ -1305,6 +1353,9 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * We could owe a reset due to PSCI. Handle the pending reset
 		 * here to ensure userspace register accesses are ordered after
@@ -1313,8 +1364,11 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 		if (kvm_check_request(KVM_REQ_VCPU_RESET, vcpu))
 			kvm_reset_vcpu(vcpu);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ioctl == KVM_SET_ONE_REG)
 			r = kvm_arm_set_reg(vcpu, &reg);
 		else
@@ -1797,6 +1851,7 @@ static bool init_psci_relay(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int init_common_resources(void)
 {
@@ -1804,6 +1859,8 @@ static int init_common_resources(void)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int init_subsystems(void)
 {
 	int err = 0;
@@ -2058,6 +2115,7 @@ static void _kvm_host_prot_finalize(void *discard)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int finalize_hyp_mode(void)
 {
 	if (!is_protected_kvm_enabled())
@@ -2079,13 +2137,14 @@ static inline int pkvm_mark_hyp(phys_addr_t start, phys_addr_t end)
 	pkvm_mark_hyp(__pa_symbol(__section##_start),	\
 			__pa_symbol(__section##_end))
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int finalize_hyp_mode(void)
 {
-	int cpu, ret;
-
 	if (!is_protected_kvm_enabled())
 		return 0;
 
+<<<<<<< HEAD
 	ret = pkvm_mark_hyp_section(__hyp_idmap_text);
 	if (ret)
 		return ret;
@@ -2121,6 +2180,14 @@ static int finalize_hyp_mode(void)
 			return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/*
+	 * Exclude HYP BSS from kmemleak so that it doesn't get peeked
+	 * at, which would end badly once the section is inaccessible.
+	 * None of other sections should ever be introspected.
+	 */
+	kmemleak_free_part(__hyp_bss_start, __hyp_bss_end - __hyp_bss_start);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Flip the static key upfront as that may no longer be possible
@@ -2133,6 +2200,7 @@ static int finalize_hyp_mode(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void check_kvm_target_cpu(void *ret)
 {
@@ -2140,6 +2208,8 @@ static void check_kvm_target_cpu(void *ret)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct kvm_vcpu *kvm_mpidr_to_vcpu(struct kvm *kvm, unsigned long mpidr)
 {
 	struct kvm_vcpu *vcpu;
@@ -2200,9 +2270,12 @@ int kvm_arch_init(void *opaque)
 {
 	int err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret, cpu;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool in_hyp_mode;
 
 	if (!is_hyp_mode_available()) {
@@ -2218,6 +2291,7 @@ int kvm_arch_init(void *opaque)
 			 "Only trusted guests should be used on this system.\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = kvm_set_ipa_limit();
 =======
 	for_each_online_cpu(cpu) {
@@ -2230,6 +2304,9 @@ int kvm_arch_init(void *opaque)
 
 	err = init_common_resources();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = kvm_set_ipa_limit();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 

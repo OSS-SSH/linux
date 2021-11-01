@@ -287,6 +287,7 @@ static union iucv_param *iucv_param_irq[NR_CPUS];
 static inline int __iucv_call_b2f0(int command, union iucv_param *parm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int cc;
 
 	asm volatile(
@@ -304,10 +305,12 @@ static inline int __iucv_call_b2f0(int command, union iucv_param *parm)
 	register unsigned long reg0 asm ("0");
 	register unsigned long reg1 asm ("1");
 	int ccode;
+=======
+	int cc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	reg0 = command;
-	reg1 = (unsigned long)parm;
 	asm volatile(
+<<<<<<< HEAD
 		"	.long 0xb2f01000\n"
 		"	ipm	%0\n"
 		"	srl	%0,28\n"
@@ -315,6 +318,18 @@ static inline int __iucv_call_b2f0(int command, union iucv_param *parm)
 		:  "m" (*parm) : "cc");
 	return ccode;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"	lgr	0,%[reg0]\n"
+		"	lgr	1,%[reg1]\n"
+		"	.long	0xb2f01000\n"
+		"	ipm	%[cc]\n"
+		"	srl	%[cc],28\n"
+		: [cc] "=&d" (cc), "+m" (*parm)
+		: [reg0] "d" ((unsigned long)command),
+		  [reg1] "d" ((unsigned long)parm)
+		: "cc", "0", "1");
+	return cc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int iucv_call_b2f0(int command, union iucv_param *parm)
@@ -336,6 +351,7 @@ static inline int iucv_call_b2f0(int command, union iucv_param *parm)
 static int __iucv_query_maxconn(void *param, unsigned long *max_pathid)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long reg1 = (unsigned long)param;
 	int cc;
 
@@ -355,17 +371,28 @@ static int __iucv_query_maxconn(void *param, unsigned long *max_pathid)
 	register unsigned long reg0 asm ("0");
 	register unsigned long reg1 asm ("1");
 	int ccode;
+=======
+	unsigned long reg1 = (unsigned long)param;
+	int cc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	reg0 = IUCV_QUERY;
-	reg1 = (unsigned long) param;
 	asm volatile (
+		"	lghi	0,%[cmd]\n"
+		"	lgr	1,%[reg1]\n"
 		"	.long	0xb2f01000\n"
-		"	ipm	%0\n"
-		"	srl	%0,28\n"
-		: "=d" (ccode), "+d" (reg0), "+d" (reg1) : : "cc");
+		"	ipm	%[cc]\n"
+		"	srl	%[cc],28\n"
+		"	lgr	%[reg1],1\n"
+		: [cc] "=&d" (cc), [reg1] "+&d" (reg1)
+		: [cmd] "K" (IUCV_QUERY)
+		: "cc", "0", "1");
 	*max_pathid = reg1;
+<<<<<<< HEAD
 	return ccode;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return cc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int iucv_query_maxconn(void)
@@ -535,10 +562,14 @@ static void iucv_setmask_mp(void)
 	int cpu;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_online_cpu(cpu)
 		/* Enable all cpus with a declared buffer. */
 		if (cpumask_test_cpu(cpu, &iucv_buffer_cpumask) &&
@@ -546,10 +577,14 @@ static void iucv_setmask_mp(void)
 			smp_call_function_single(cpu, iucv_allow_cpu,
 						 NULL, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -583,10 +618,14 @@ static int iucv_enable(void)
 	int cpu, rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = -ENOMEM;
 	alloc_size = iucv_max_pathid * sizeof(struct iucv_path);
 	iucv_path_table = kzalloc(alloc_size, GFP_KERNEL);
@@ -600,19 +639,27 @@ static int iucv_enable(void)
 		/* No cpu could declare an iucv buffer. */
 		goto out;
 <<<<<<< HEAD
-	cpus_read_unlock();
-=======
-	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-	return 0;
-out:
-	kfree(iucv_path_table);
-	iucv_path_table = NULL;
 <<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	return 0;
+out:
+	kfree(iucv_path_table);
+	iucv_path_table = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -626,6 +673,7 @@ out:
 static void iucv_disable(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 	on_each_cpu(iucv_retrieve_cpu, NULL, 1);
 	kfree(iucv_path_table);
@@ -638,6 +686,13 @@ static void iucv_disable(void)
 	iucv_path_table = NULL;
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	on_each_cpu(iucv_retrieve_cpu, NULL, 1);
+	kfree(iucv_path_table);
+	iucv_path_table = NULL;
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int iucv_cpu_dead(unsigned int cpu)
@@ -847,10 +902,14 @@ static int iucv_reboot_event(struct notifier_block *this,
 		return NOTIFY_DONE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	on_each_cpu_mask(&iucv_irq_cpumask, iucv_block_cpu, NULL, 1);
 	preempt_disable();
 	for (i = 0; i < iucv_max_pathid; i++) {
@@ -859,10 +918,14 @@ static int iucv_reboot_event(struct notifier_block *this,
 	}
 	preempt_enable();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iucv_disable();
 	return NOTIFY_DONE;
 }
@@ -1706,6 +1769,9 @@ struct iucv_message_pending {
 	u32 ipmsgid;
 	u32 iptrgcls;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
 		union {
 			u32 iprmmsg1_u32;
@@ -1716,6 +1782,7 @@ struct iucv_message_pending {
 			u8  iprmmsg2[4];
 		} ln1msg2;
 	} rmmsg;
+<<<<<<< HEAD
 =======
 	union {
 		u32 iprmmsg1_u32;
@@ -1726,6 +1793,8 @@ struct iucv_message_pending {
 		u8  iprmmsg2[4];
 	} ln1msg2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 res1[3];
 	u32 ipbfln2f;
 	u8  ippollfg;
@@ -1744,6 +1813,7 @@ static void iucv_message_pending(struct iucv_irq_data *data)
 		msg.class = imp->iptrgcls;
 		if (imp->ipflags1 & IUCV_IPRMDATA) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			memcpy(msg.rmmsg, &imp->rmmsg, 8);
 			msg.length = 8;
 		} else
@@ -1754,6 +1824,12 @@ static void iucv_message_pending(struct iucv_irq_data *data)
 		} else
 			msg.length = imp->ln1msg2.ipbfln1f;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			memcpy(msg.rmmsg, &imp->rmmsg, 8);
+			msg.length = 8;
+		} else
+			msg.length = imp->rmmsg.ln1msg2.ipbfln1f;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		msg.reply_size = imp->ipbfln2f;
 		path->handler->message_pending(path, &msg);
 	}

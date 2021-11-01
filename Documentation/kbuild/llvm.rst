@@ -39,10 +39,14 @@ A single Clang compiler binary will typically contain all supported backends,
 which can help simplify cross compiling. ::
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	make ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu-
 =======
 	ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- make CC=clang
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	make ARCH=arm64 CC=clang CROSS_COMPILE=aarch64-linux-gnu-
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ``CROSS_COMPILE`` is not used to prefix the Clang compiler binary, instead
 ``CROSS_COMPILE`` is used to set a command line flag: ``--target=<triple>``. For
@@ -65,6 +69,9 @@ They can be enabled individually. The full list of the parameters: ::
 	  HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar HOSTLD=ld.lld
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The integrated assembler is enabled by default. You can pass ``LLVM_IAS=0`` to
 disable it.
 
@@ -86,10 +93,13 @@ If ``LLVM_IAS=0`` is specified, ``CROSS_COMPILE`` is also used to derive
 ``--prefix=<path>`` to search for the GNU assembler and linker. ::
 
 	make ARCH=arm64 LLVM=1 LLVM_IAS=0 CROSS_COMPILE=aarch64-linux-gnu-
+<<<<<<< HEAD
 =======
 Currently, the integrated assembler is disabled by default. You can pass
 ``LLVM_IAS=1`` to enable it.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Supported Architectures
 -----------------------
@@ -140,6 +150,7 @@ Getting Help
 
 - `Website <https://clangbuiltlinux.github.io/>`_
 <<<<<<< HEAD
+<<<<<<< HEAD
 - `Mailing List <https://lore.kernel.org/llvm/>`_: <llvm@lists.linux.dev>
 - `Old Mailing List Archives <https://groups.google.com/g/clang-built-linux>`_
 - `Issue Tracker <https://github.com/ClangBuiltLinux/linux/issues>`_
@@ -149,6 +160,12 @@ Getting Help
 - `Issue Tracker <https://github.com/ClangBuiltLinux/linux/issues>`_
 - IRC: #clangbuiltlinux on chat.freenode.net
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+- `Mailing List <https://lore.kernel.org/llvm/>`_: <llvm@lists.linux.dev>
+- `Old Mailing List Archives <https://groups.google.com/g/clang-built-linux>`_
+- `Issue Tracker <https://github.com/ClangBuiltLinux/linux/issues>`_
+- IRC: #clangbuiltlinux on irc.libera.chat
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - `Telegram <https://t.me/ClangBuiltLinux>`_: @ClangBuiltLinux
 - `Wiki <https://github.com/ClangBuiltLinux/linux/wiki>`_
 - `Beginner Bugs <https://github.com/ClangBuiltLinux/linux/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22>`_

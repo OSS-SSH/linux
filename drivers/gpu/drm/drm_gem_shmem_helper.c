@@ -369,10 +369,14 @@ static void drm_gem_shmem_vunmap_locked(struct drm_gem_shmem_object *shmem,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * drm_gem_shmem_vunmap - Unmap a virtual mapping for a shmem GEM object
 =======
  * drm_gem_shmem_vunmap - Unmap a virtual mapping fo a shmem GEM object
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * drm_gem_shmem_vunmap - Unmap a virtual mapping for a shmem GEM object
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @shmem: shmem GEM object
  * @map: Kernel virtual address where the SHMEM GEM object was mapped
  *
@@ -510,20 +514,28 @@ int drm_gem_shmem_dumb_create(struct drm_file *file, struct drm_device *dev,
 	if (!args->pitch || !args->size) {
 		args->pitch = min_pitch;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		args->size = PAGE_ALIGN(args->pitch * args->height);
 =======
 		args->size = args->pitch * args->height;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		args->size = PAGE_ALIGN(args->pitch * args->height);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/* ensure sane minimum values */
 		if (args->pitch < min_pitch)
 			args->pitch = min_pitch;
 		if (args->size < args->pitch * args->height)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			args->size = PAGE_ALIGN(args->pitch * args->height);
 =======
 			args->size = args->pitch * args->height;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			args->size = PAGE_ALIGN(args->pitch * args->height);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	shmem = drm_gem_shmem_create_with_handle(file, dev, args->size, &args->handle);

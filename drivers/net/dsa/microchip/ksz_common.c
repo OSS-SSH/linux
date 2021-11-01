@@ -420,6 +420,7 @@ int ksz_switch_register(struct ksz_device *dev,
 							 &port_num))
 					continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (!(dev->port_mask & BIT(port_num))) {
 					of_node_put(port);
 					return -EINVAL;
@@ -428,6 +429,12 @@ int ksz_switch_register(struct ksz_device *dev,
 				if (!(dev->port_mask & BIT(port_num)))
 					return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (!(dev->port_mask & BIT(port_num))) {
+					of_node_put(port);
+					return -EINVAL;
+				}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				of_get_phy_mode(port,
 						&dev->ports[port_num].interface);
 			}
@@ -455,6 +462,7 @@ void ksz_switch_remove(struct ksz_device *dev)
 {
 	/* timer started */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dev->mib_read_interval) {
 		dev->mib_read_interval = 0;
 		cancel_delayed_work_sync(&dev->mib_read);
@@ -463,6 +471,12 @@ void ksz_switch_remove(struct ksz_device *dev)
 	if (dev->mib_read_interval)
 		cancel_delayed_work_sync(&dev->mib_read);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dev->mib_read_interval) {
+		dev->mib_read_interval = 0;
+		cancel_delayed_work_sync(&dev->mib_read);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev->dev_ops->exit(dev);
 	dsa_unregister_switch(dev->ds);

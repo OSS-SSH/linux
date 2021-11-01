@@ -54,12 +54,18 @@ patternProperties:
     properties:
       compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
         items:
           - const: qcom,pm8008-gpio
           - const: qcom,spmi-gpio
 =======
         const: qcom,pm8008-gpio
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        items:
+          - const: qcom,pm8008-gpio
+          - const: qcom,spmi-gpio
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
       reg:
         description: Peripheral address of one of the two GPIO peripherals.
@@ -68,11 +74,17 @@ patternProperties:
       gpio-controller: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       gpio-ranges:
         maxItems: 1
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      gpio-ranges:
+        maxItems: 1
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       interrupt-controller: true
 
       "#interrupt-cells":
@@ -88,9 +100,13 @@ patternProperties:
       - interrupt-controller
       - "#gpio-cells"
 <<<<<<< HEAD
+<<<<<<< HEAD
       - gpio-ranges
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      - gpio-ranges
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - "#interrupt-cells"
 
     additionalProperties: false
@@ -124,6 +140,7 @@ examples:
         interrupts = <32 IRQ_TYPE_EDGE_RISING>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         pm8008_gpios: gpio@c000 {
           compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
           reg = <0xc000>;
@@ -135,6 +152,13 @@ examples:
           reg = <0xc000>;
           gpio-controller;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        pm8008_gpios: gpio@c000 {
+          compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
+          reg = <0xc000>;
+          gpio-controller;
+          gpio-ranges = <&pm8008_gpios 0 0 2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           #gpio-cells = <2>;
           interrupt-controller;
           #interrupt-cells = <2>;

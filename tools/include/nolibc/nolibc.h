@@ -1032,10 +1032,14 @@ struct sys_stat_struct {
  *   - the system call is performed by calling "syscall"
  *   - syscall return comes in v0, and register a3 needs to be checked to know
 <<<<<<< HEAD
+<<<<<<< HEAD
  *     if an error occurred, in which case errno is in v0.
 =======
  *     if an error occured, in which case errno is in v0.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *     if an error occurred, in which case errno is in v0.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   - the arguments are cast to long and assigned into the target registers
  *     which are then simply passed as registers to the asm code, so that we
  *     don't have to experience issues with register constraints.
@@ -2249,6 +2253,9 @@ unsigned int sleep(unsigned int seconds)
 
 static __attribute__((unused))
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int msleep(unsigned int msecs)
 {
 	struct timeval my_timeval = { msecs / 1000, (msecs % 1000) * 1000 };
@@ -2262,8 +2269,11 @@ int msleep(unsigned int msecs)
 }
 
 static __attribute__((unused))
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int stat(const char *path, struct stat *buf)
 {
 	int ret = sys_stat(path, buf);

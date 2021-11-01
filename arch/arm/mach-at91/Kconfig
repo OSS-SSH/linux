@@ -58,6 +58,9 @@ config SOC_SAMA5D4
 	  Select this if you are using one of Microchip's SAMA5D4 family SoC.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config SOC_SAMA7G5
 	bool "SAMA7G5 family"
 	depends on ARCH_MULTI_V7
@@ -68,8 +71,11 @@ config SOC_SAMA7G5
 	help
 	  Select this if you are using one of Microchip's SAMA7G5 family SoC.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config SOC_AT91RM9200
 	bool "AT91RM9200"
 	depends on ARCH_MULTI_V4T
@@ -205,6 +211,9 @@ config ATMEL_PM
 	bool
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config SOC_SAMA7
 	bool
 	select ARM_GIC
@@ -213,6 +222,9 @@ config SOC_SAMA7
 	select MEMORY
 	select SOC_SAM_V7
 	select SRAM if PM
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif

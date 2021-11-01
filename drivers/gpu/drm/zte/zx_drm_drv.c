@@ -76,6 +76,7 @@ static int zx_drm_bind(struct device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * We will manage irq handler on our own.  In this case, irq_enabled
@@ -84,6 +85,8 @@ static int zx_drm_bind(struct device *dev)
 	drm->irq_enabled = true;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drm_mode_config_reset(drm);
 	drm_kms_helper_poll_init(drm);
 

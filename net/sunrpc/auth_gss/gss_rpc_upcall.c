@@ -161,10 +161,14 @@ static struct rpc_clnt *get_gssp_clnt(struct sunrpc_net *sn)
 	clnt = sn->gssp_clnt;
 	if (clnt)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		refcount_inc(&clnt->cl_count);
 =======
 		atomic_inc(&clnt->cl_count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		refcount_inc(&clnt->cl_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&sn->gssp_lock);
 	return clnt;
 }

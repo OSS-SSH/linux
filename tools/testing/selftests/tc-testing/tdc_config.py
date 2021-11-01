@@ -18,9 +18,13 @@ NAMES = {
           'DEV2': '',
           'DUMMY': 'dummy1',
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  'ETH': 'eth0',
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  'ETH': 'eth0',
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           'BATCH_FILE': './batch.txt',
           'BATCH_DIR': 'tmp',
           # Length of time in seconds to wait before terminating a command

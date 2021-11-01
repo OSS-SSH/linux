@@ -15,6 +15,9 @@ suggerimenti che aumenteranno significativamente le probabilità di vedere le
 vostre patch accettate.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Questo documento contiene un vasto numero di suggerimenti concisi. Per maggiori
 dettagli su come funziona il processo di sviluppo del kernel leggete
 Documentation/translations/it_IT/process/development-process.rst. Leggete anche
@@ -22,6 +25,7 @@ Documentation/translations/it_IT/process/submit-checklist.rst per una lista di
 punti da verificare prima di inviare del codice. Se state inviando un driver,
 allora leggete anche
 Documentation/translations/it_IT/process/submitting-drivers.rst; per delle patch
+<<<<<<< HEAD
 relative alle associazioni per Device Tree leggete
 Documentation/translations/it_IT/process/submitting-patches.rst.
 =======
@@ -34,6 +38,10 @@ allora leggete anche :doc:`submitting-drivers`; per delle patch
 relative alle associazioni per Device Tree leggete
 :doc:`submitting-patches`.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+relative alle associazioni per Device Tree leggete
+Documentation/translations/it_IT/process/submitting-patches.rst.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Questa documentazione assume che sappiate usare ``git`` per preparare le patch.
 Se non siete pratici di ``git``, allora è bene che lo impariate;
@@ -206,10 +214,14 @@ ed integrate.
 
 Controllate che la vostra patch non violi lo stile del codice, maggiori
 <<<<<<< HEAD
+<<<<<<< HEAD
 dettagli sono disponibili in Documentation/translations/it_IT/process/coding-style.rst.
 =======
 dettagli sono disponibili in :ref:`Documentation/translations/it_IT/process/coding-style.rst <it_codingstyle>`.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dettagli sono disponibili in Documentation/translations/it_IT/process/coding-style.rst.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Non farlo porta semplicemente a una perdita di tempo da parte dei revisori e
 voi vedrete la vostra patch rifiutata, probabilmente senza nemmeno essere stata
 letta.
@@ -247,6 +259,9 @@ manutentore per il sottosistema su cui state lavorando, allora Andrew Morton
 (akpm@linux-foundation.org) sarà la vostra ultima possibilità.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Normalmente, dovreste anche scegliere una lista di discussione a cui inviare la
 vostra serie di patch. La lista di discussione linux-kernel@vger.kernel.org
 dovrebbe essere usata per inviare tutte le patch, ma il traffico è tale per cui
@@ -254,6 +269,7 @@ diversi sviluppatori la trascurano. Guardate nel file MAINTAINERS per trovare la
 lista di discussione dedicata ad un sottosistema; probabilmente lì la vostra
 patch riceverà molta più attenzione. Tuttavia, per favore, non spammate le liste
 di discussione che non sono interessate al vostro lavoro.
+<<<<<<< HEAD
 =======
 Normalmente, dovreste anche scegliere una lista di discussione a cui inviare
 la vostra serie di patch.  La lista di discussione linux-kernel@vger.kernel.org
@@ -263,6 +279,8 @@ la lista di discussione dedicata ad un sottosistema; probabilmente lì la vostra
 patch riceverà molta più attenzione.  Tuttavia, per favore, non spammate le
 liste di discussione che non sono interessate al vostro lavoro.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Molte delle liste di discussione relative al kernel vengono ospitate su
 vger.kernel.org; potete trovare un loro elenco alla pagina
@@ -284,10 +302,14 @@ distribuzioni di prendere la patch e renderla disponibile ai loro utenti;
 in questo caso, ovviamente, la patch non dovrebbe essere inviata su alcuna
 lista di discussione pubblica. Leggete anche
 <<<<<<< HEAD
+<<<<<<< HEAD
 Documentation/admin-guide/security-bugs.rst.
 =======
 :doc:`/admin-guide/security-bugs`.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Documentation/admin-guide/security-bugs.rst.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Patch che correggono bachi importanti su un kernel già rilasciato, dovrebbero
 essere inviate ai manutentori dei kernel stabili aggiungendo la seguente riga::
@@ -296,6 +318,7 @@ essere inviate ai manutentori dei kernel stabili aggiungendo la seguente riga::
 
 nella vostra patch, nell'area dedicata alle firme (notate, NON come destinatario
 delle e-mail).  In aggiunta a questo file, dovreste leggere anche
+<<<<<<< HEAD
 <<<<<<< HEAD
 Documentation/translations/it_IT/process/stable-kernel-rules.rst.
 =======
@@ -306,6 +329,9 @@ l'ultima parola su quali patch dovrebbero essere aggiunte ai kernel stabili.
 La rete di manutentori, in particolare, non vorrebbe vedere i singoli
 sviluppatori aggiungere alle loro patch delle righe come quella sopracitata.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Documentation/translations/it_IT/process/stable-kernel-rules.rst.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Se le modifiche hanno effetti sull'interfaccia con lo spazio utente, per favore
 inviate una patch per le pagine man ai manutentori di suddette pagine (elencati
@@ -365,10 +391,14 @@ Eccezione: se il vostro servizio di posta storpia le patch, allora qualcuno
 potrebbe chiedervi di rinviarle come allegato MIME.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Leggete Documentation/translations/it_IT/process/email-clients.rst
 =======
 Leggete :doc:`/translations/it_IT/process/email-clients`
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Leggete Documentation/translations/it_IT/process/email-clients.rst
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 per dei suggerimenti sulla configurazione del programmi di posta elettronica
 per l'invio di patch intatte.
 
@@ -390,10 +420,14 @@ in questo caso, rispondete con educazione e concentratevi sul problema che
 hanno evidenziato.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Leggete Documentation/translations/it_IT/process/email-clients.rst per
 =======
 Leggete :doc:`/translations/it_IT/process/email-clients` per
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Leggete Documentation/translations/it_IT/process/email-clients.rst per
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 le raccomandazioni sui programmi di posta elettronica e l'etichetta da usare
 sulle liste di discussione.
 
@@ -412,6 +446,9 @@ rinviare le modifiche o sollecitare i revisori - probabilmente anche di più
 durante la finestra d'integrazione.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Potete anche rinviare la patch, o la serie di patch, dopo un paio di settimane
 aggiungendo la parola "RESEND" nel titolo::
 
@@ -422,8 +459,11 @@ della vostra patch, o serie di patch - "RESEND" si applica solo alla
 sottomissione di patch, o serie di patch, che non hanno subito modifiche
 dall'ultima volta che sono state inviate.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Aggiungete PATCH nell'oggetto
 -----------------------------
 
@@ -851,11 +891,15 @@ No!!!! Basta gigantesche bombe patch alle persone sulla lista linux-kernel@vger.
   <https://lore.kernel.org/r/20050711.125305.08322243.davem@davemloft.net>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Kernel Documentation/translations/it_IT/process/coding-style.rst.
 =======
 Kernel Documentation/translations/it_IT/process/coding-style.rst:
   :ref:`Documentation/translations/it_IT/process/coding-style.rst <it_codingstyle>`
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Kernel Documentation/translations/it_IT/process/coding-style.rst.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 E-mail di Linus Torvalds sul formato canonico di una patch:
   <https://lore.kernel.org/r/Pine.LNX.4.58.0504071023190.28951@ppc970.osdl.org>

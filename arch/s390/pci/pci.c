@@ -93,10 +93,14 @@ void zpci_remove_reserved_devices(void)
 
 	list_for_each_entry_safe(zdev, tmp, &remove, entry)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		zpci_device_reserved(zdev);
 =======
 		zpci_zdev_put(zdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zpci_device_reserved(zdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int pci_domain_nr(struct pci_bus *bus)
@@ -118,23 +122,33 @@ int zpci_register_ioat(struct zpci_dev *zdev, u8 dmaas,
 	u64 req = ZPCI_CREATE_REQ(zdev->fh, dmaas, ZPCI_MOD_FC_REG_IOAT);
 	struct zpci_fib fib = {0};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 cc, status;
 =======
 	u8 status;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 cc, status;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	WARN_ON_ONCE(iota & 0x3fff);
 	fib.pba = base;
 	fib.pal = limit;
 	fib.iota = iota | ZPCI_IOTA_RTTO_FLAG;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cc = zpci_mod_fc(req, &fib, &status);
 	if (cc)
 		zpci_dbg(3, "reg ioat fid:%x, cc:%d, status:%d\n", zdev->fid, cc, status);
 	return cc;
+<<<<<<< HEAD
 =======
 	return zpci_mod_fc(req, &fib, &status) ? -EIO : 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Modify PCI: Unregister I/O address translation parameters */
@@ -146,6 +160,7 @@ int zpci_unregister_ioat(struct zpci_dev *zdev, u8 dmaas)
 
 	cc = zpci_mod_fc(req, &fib, &status);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (cc)
 		zpci_dbg(3, "unreg ioat fid:%x, cc:%d, status:%d\n", zdev->fid, cc, status);
 	return cc;
@@ -154,6 +169,11 @@ int zpci_unregister_ioat(struct zpci_dev *zdev, u8 dmaas)
 		cc = 0;
 	return cc ? -EIO : 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (cc)
+		zpci_dbg(3, "unreg ioat fid:%x, cc:%d, status:%d\n", zdev->fid, cc, status);
+	return cc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Modify PCI: Set PCI function measurement parameters */
@@ -582,17 +602,23 @@ static void zpci_cleanup_bus_resources(struct zpci_dev *zdev)
 int pcibios_add_device(struct pci_dev *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct zpci_dev *zdev = to_zpci(pdev);
 	struct resource *res;
 	int i;
 
 	/* The pdev has a reference to the zdev via its bus */
 	zpci_zdev_get(zdev);
+<<<<<<< HEAD
 =======
 	struct resource *res;
 	int i;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (pdev->is_physfn)
 		pdev->no_vf_scan = 1;
 
@@ -613,6 +639,7 @@ int pcibios_add_device(struct pci_dev *pdev)
 void pcibios_release_device(struct pci_dev *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct zpci_dev *zdev = to_zpci(pdev);
 
 	zpci_unmap_resources(pdev);
@@ -620,6 +647,12 @@ void pcibios_release_device(struct pci_dev *pdev)
 =======
 	zpci_unmap_resources(pdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zpci_dev *zdev = to_zpci(pdev);
+
+	zpci_unmap_resources(pdev);
+	zpci_zdev_put(zdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int pcibios_enable_device(struct pci_dev *pdev, int mask)
@@ -691,6 +724,7 @@ void zpci_free_domain(int domain)
 int zpci_enable_device(struct zpci_dev *zdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 fh = zdev->fh;
 	int rc = 0;
 
@@ -715,12 +749,24 @@ out_dma:
 	clp_disable_fh(zdev);
 out:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 fh = zdev->fh;
+	int rc = 0;
+
+	if (clp_enable_fh(zdev, &fh, ZPCI_NR_DMA_SPACES))
+		rc = -EIO;
+	else
+		zdev->fh = fh;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
 int zpci_disable_device(struct zpci_dev *zdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 fh = zdev->fh;
 	int cc, rc = 0;
 
@@ -740,6 +786,7 @@ int zpci_disable_device(struct zpci_dev *zdev)
 		rc = -EIO;
 	}
 	return rc;
+<<<<<<< HEAD
 =======
 	zpci_dma_exit_device(zdev);
 	/*
@@ -748,6 +795,8 @@ int zpci_disable_device(struct zpci_dev *zdev)
 	 */
 	return clp_disable_fh(zdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -807,6 +856,9 @@ error:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool zpci_is_device_configured(struct zpci_dev *zdev)
 {
 	enum zpci_state state = zdev->state;
@@ -815,8 +867,11 @@ bool zpci_is_device_configured(struct zpci_dev *zdev)
 		state != ZPCI_FN_STATE_STANDBY;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * zpci_scan_configured_device() - Scan a freshly configured zpci_dev
  * @zdev: The zpci_dev to be configured
@@ -869,13 +924,19 @@ int zpci_deconfigure_device(struct zpci_dev *zdev)
 		zpci_bus_remove_device(zdev, false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (zdev->dma_table) {
 		rc = zpci_dma_exit_device(zdev);
 		if (rc)
 			return rc;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (zdev_enabled(zdev)) {
 		rc = zpci_disable_device(zdev);
 		if (rc)
@@ -892,6 +953,9 @@ int zpci_deconfigure_device(struct zpci_dev *zdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * zpci_device_reserved() - Mark device as resverved
  * @zdev: the zpci_dev that was reserved
@@ -917,8 +981,11 @@ void zpci_device_reserved(struct zpci_dev *zdev)
 	zpci_zdev_put(zdev);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void zpci_release_device(struct kref *kref)
 {
 	struct zpci_dev *zdev = container_of(kref, struct zpci_dev, kref);
@@ -928,10 +995,15 @@ void zpci_release_device(struct kref *kref)
 		zpci_bus_remove_device(zdev, false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (zdev->dma_table)
 		zpci_dma_exit_device(zdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (zdev->dma_table)
+		zpci_dma_exit_device(zdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (zdev_enabled(zdev))
 		zpci_disable_device(zdev);
 
@@ -944,6 +1016,9 @@ void zpci_release_device(struct kref *kref)
 		if (zdev->has_hp_slot)
 			zpci_exit_slot(zdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_lock(&zpci_list_lock);
 		list_del(&zdev->entry);
 		spin_unlock(&zpci_list_lock);
@@ -952,9 +1027,12 @@ void zpci_release_device(struct kref *kref)
 	case ZPCI_FN_STATE_RESERVED:
 		if (zdev->has_resources)
 			zpci_cleanup_bus_resources(zdev);
+<<<<<<< HEAD
 =======
 		zpci_cleanup_bus_resources(zdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		zpci_bus_device_unregister(zdev);
 		zpci_destroy_iommu(zdev);
 		fallthrough;
@@ -962,12 +1040,15 @@ void zpci_release_device(struct kref *kref)
 		break;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	spin_lock(&zpci_list_lock);
 	list_del(&zdev->entry);
 	spin_unlock(&zpci_list_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zpci_dbg(3, "rem fid:%x\n", zdev->fid);
 	kfree(zdev);
 }
@@ -1022,9 +1103,12 @@ static void zpci_mem_exit(void)
 
 static unsigned int s390_pci_probe __initdata = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static unsigned int s390_pci_no_mio __initdata;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned int s390_pci_force_floating __initdata;
 static unsigned int s390_pci_initialized;
 
@@ -1036,10 +1120,14 @@ char * __init pcibios_setup(char *str)
 	}
 	if (!strcmp(str, "nomio")) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		S390_lowcore.machine_flags &= ~MACHINE_FLAG_PCI_MIO;
 =======
 		s390_pci_no_mio = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		S390_lowcore.machine_flags &= ~MACHINE_FLAG_PCI_MIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 	}
 	if (!strcmp(str, "force_floating")) {
@@ -1071,10 +1159,14 @@ static int __init pci_base_init(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (MACHINE_HAS_PCI_MIO) {
 =======
 	if (test_facility(153) && !s390_pci_no_mio) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (MACHINE_HAS_PCI_MIO) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		static_branch_enable(&have_mio);
 		ctl_set_bit(2, 5);
 	}

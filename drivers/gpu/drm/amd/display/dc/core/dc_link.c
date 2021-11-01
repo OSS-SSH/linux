@@ -542,9 +542,13 @@ static void link_disconnect_sink(struct dc_link *link)
 
 	link->dpcd_sink_count = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//link->dpcd_caps.dpcd_rev.raw = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	//link->dpcd_caps.dpcd_rev.raw = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void link_disconnect_remap(struct dc_sink *prev_sink, struct dc_link *link)
@@ -747,9 +751,13 @@ static bool detect_dp(struct dc_link *link,
 								audio_support);
 		link->dpcd_caps.dongle_type = sink_caps->dongle_type;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		link->dpcd_caps.dpcd_rev.raw = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		link->dpcd_caps.dpcd_rev.raw = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return true;
@@ -1672,14 +1680,20 @@ struct dc_link *link_create(const struct link_init_data *init_params)
 		goto construct_fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Must use preferred_link_setting, not reported_link_cap or verified_link_cap,
 	 * since struct preferred_link_setting won't be reset after S3.
 	 */
 	link->preferred_link_setting.dpcd_source_device_specific_field_support = true;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return link;
 
 construct_fail:
@@ -2596,6 +2610,7 @@ static struct abm *get_abm_from_stream_res(const struct dc_link *link)
 int dc_link_get_backlight_level(const struct dc_link *link)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct abm *abm = get_abm_from_stream_res(link);
 	struct panel_cntl *panel_cntl = link->panel_cntl;
 	struct dc  *dc = link->ctx->dc;
@@ -2613,13 +2628,28 @@ int dc_link_get_backlight_level(const struct dc_link *link)
 		return DC_ERROR_UNEXPECTED;
 =======
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct abm *abm = get_abm_from_stream_res(link);
+	struct panel_cntl *panel_cntl = link->panel_cntl;
+	struct dc  *dc = link->ctx->dc;
+	struct dmcu *dmcu = dc->res_pool->dmcu;
+	bool fw_set_brightness = true;
 
-	if (abm == NULL || abm->funcs->get_current_backlight == NULL)
-		return DC_ERROR_UNEXPECTED;
+	if (dmcu)
+		fw_set_brightness = dmcu->funcs->is_dmcu_initialized(dmcu);
 
+<<<<<<< HEAD
 	return (int) abm->funcs->get_current_backlight(abm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!fw_set_brightness && panel_cntl->funcs->get_current_backlight)
+		return panel_cntl->funcs->get_current_backlight(panel_cntl);
+	else if (abm != NULL && abm->funcs->get_current_backlight != NULL)
+		return (int) abm->funcs->get_current_backlight(abm);
+	else
+		return DC_ERROR_UNEXPECTED;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int dc_link_get_target_backlight_pwm(const struct dc_link *link)
@@ -3545,6 +3575,7 @@ void dc_link_enable_hpd_filter(struct dc_link *link, bool enable)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 uint32_t dc_bandwidth_in_kbps_from_timing(
 	const struct dc_crtc_timing *timing)
@@ -3602,6 +3633,8 @@ uint32_t dc_bandwidth_in_kbps_from_timing(
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dc_link_set_drive_settings(struct dc *dc,
 				struct link_training_settings *lt_settings,
 				const struct dc_link *link)
@@ -3808,6 +3841,9 @@ bool dc_link_should_enable_fec(const struct dc_link *link)
 	return ret;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 uint32_t dc_bandwidth_in_kbps_from_timing(
 		const struct dc_crtc_timing *timing)
@@ -3863,5 +3899,8 @@ uint32_t dc_bandwidth_in_kbps_from_timing(
 	return kbps;
 
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

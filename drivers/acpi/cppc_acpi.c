@@ -1009,6 +1009,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cppc_get_perf(int cpunum, enum cppc_regs reg_idx, u64 *perf)
 {
 	struct cpc_desc *cpc_desc = per_cpu(cpc_desc_ptr, cpunum);
@@ -1026,16 +1027,21 @@ static int cppc_get_perf(int cpunum, enum cppc_regs reg_idx, u64 *perf)
  * Return: 0 for success, -EIO otherwise.
  */
 int cppc_get_desired_perf(int cpunum, u64 *desired_perf)
+=======
+static int cppc_get_perf(int cpunum, enum cppc_regs reg_idx, u64 *perf)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpc_desc *cpc_desc = per_cpu(cpc_desc_ptr, cpunum);
-	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpunum);
-	struct cpc_register_resource *desired_reg;
-	struct cppc_pcc_data *pcc_ss_data = NULL;
+	struct cpc_register_resource *reg = &cpc_desc->cpc_regs[reg_idx];
 
-	desired_reg = &cpc_desc->cpc_regs[DESIRED_PERF];
-
+<<<<<<< HEAD
 	if (CPC_IN_PCC(desired_reg)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (CPC_IN_PCC(reg)) {
+		int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpunum);
+		struct cppc_pcc_data *pcc_ss_data = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int ret = 0;
 
 		if (pcc_ss_id < 0)
@@ -1047,10 +1053,14 @@ int cppc_get_desired_perf(int cpunum, u64 *desired_perf)
 
 		if (send_pcc_cmd(pcc_ss_id, CMD_READ) >= 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cpc_read(cpunum, reg, perf);
 =======
 			cpc_read(cpunum, desired_reg, desired_perf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cpc_read(cpunum, reg, perf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else
 			ret = -EIO;
 
@@ -1059,6 +1069,7 @@ int cppc_get_desired_perf(int cpunum, u64 *desired_perf)
 		return ret;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	cpc_read(cpunum, reg, perf);
 
@@ -1093,13 +1104,43 @@ int cppc_get_nominal_perf(int cpunum, u64 *nominal_perf)
 /**
 =======
 	cpc_read(cpunum, desired_reg, desired_perf);
+=======
+	cpc_read(cpunum, reg, perf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
+}
+
+/**
+ * cppc_get_desired_perf - Get the desired performance register value.
+ * @cpunum: CPU from which to get desired performance.
+ * @desired_perf: Return address.
+ *
+ * Return: 0 for success, -EIO otherwise.
+ */
+int cppc_get_desired_perf(int cpunum, u64 *desired_perf)
+{
+	return cppc_get_perf(cpunum, DESIRED_PERF, desired_perf);
 }
 EXPORT_SYMBOL_GPL(cppc_get_desired_perf);
 
 /**
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * cppc_get_nominal_perf - Get the nominal performance register value.
+ * @cpunum: CPU from which to get nominal performance.
+ * @nominal_perf: Return address.
+ *
+ * Return: 0 for success, -EIO otherwise.
+ */
+int cppc_get_nominal_perf(int cpunum, u64 *nominal_perf)
+{
+	return cppc_get_perf(cpunum, NOMINAL_PERF, nominal_perf);
+}
+
+/**
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * cppc_get_perf_caps - Get a CPU's performance capabilities.
  * @cpunum: CPU from which to get capabilities info.
  * @perf_caps: ptr to cppc_perf_caps. See cppc_acpi.h

@@ -1,9 +1,13 @@
 /* SPDX-License-Identifier: GPL-2.0 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <basic_asm.h>
 =======
 #include <ppc-asm.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <basic_asm.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/unistd.h>
 
 	.text
@@ -31,6 +35,9 @@ FUNC_START(getppid_tm_suspended)
 	li	r3, -1
 	blr
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 .macro scv level
@@ -66,5 +73,8 @@ FUNC_START(getppid_scv_tm_suspended)
 	li	r3, -1
 	POP_BASIC_STACK(0)
 	blr
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

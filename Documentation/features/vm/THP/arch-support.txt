@@ -23,10 +23,14 @@
     |      parisc: | TODO |
     |     powerpc: |  ok  |
 <<<<<<< HEAD
+<<<<<<< HEAD
     |       riscv: |  ok  |
 =======
     |       riscv: | TODO |
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    |       riscv: |  ok  |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     |        s390: |  ok  |
     |          sh: |  ..  |
     |       sparc: |  ok  |

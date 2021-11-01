@@ -294,6 +294,7 @@ readpage_async_filler(void *data, struct page *page)
 {
 	struct nfs_readdesc *desc = data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct inode *inode = page_file_mapping(page)->host;
 	unsigned int rsize = NFS_SERVER(inode)->rsize;
 	struct nfs_page *new;
@@ -302,6 +303,12 @@ readpage_async_filler(void *data, struct page *page)
 	struct nfs_page *new;
 	unsigned int len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct inode *inode = page_file_mapping(page)->host;
+	unsigned int rsize = NFS_SERVER(inode)->rsize;
+	struct nfs_page *new;
+	unsigned int len, aligned_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int error;
 
 	len = nfs_page_length(page);
@@ -309,12 +316,18 @@ readpage_async_filler(void *data, struct page *page)
 		return nfs_return_empty_page(page);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	aligned_len = min_t(unsigned int, ALIGN(len, rsize), PAGE_SIZE);
 
 	new = nfs_create_request(desc->ctx, page, 0, aligned_len);
 =======
 	new = nfs_create_request(desc->ctx, page, 0, len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	aligned_len = min_t(unsigned int, ALIGN(len, rsize), PAGE_SIZE);
+
+	new = nfs_create_request(desc->ctx, page, 0, aligned_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(new))
 		goto out_error;
 

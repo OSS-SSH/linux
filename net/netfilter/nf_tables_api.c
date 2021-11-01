@@ -781,9 +781,13 @@ static void nf_tables_table_notify(const struct nft_ctx *ctx, int event)
 	struct nftables_pernet *nft_net;
 	struct sk_buff *skb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 flags = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 flags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!ctx->report &&
@@ -795,6 +799,7 @@ static void nf_tables_table_notify(const struct nft_ctx *ctx, int event)
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
 		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
 
@@ -804,6 +809,13 @@ static void nf_tables_table_notify(const struct nft_ctx *ctx, int event)
 	err = nf_tables_fill_table_info(skb, ctx->net, ctx->portid, ctx->seq,
 					event, 0, ctx->family, ctx->table);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
+		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
+
+	err = nf_tables_fill_table_info(skb, ctx->net, ctx->portid, ctx->seq,
+					event, flags, ctx->family, ctx->table);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0) {
 		kfree_skb(skb);
 		goto err;
@@ -1576,9 +1588,13 @@ static void nf_tables_chain_notify(const struct nft_ctx *ctx, int event)
 	struct nftables_pernet *nft_net;
 	struct sk_buff *skb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 flags = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 flags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!ctx->report &&
@@ -1590,6 +1606,7 @@ static void nf_tables_chain_notify(const struct nft_ctx *ctx, int event)
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
 		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
 
@@ -1599,6 +1616,13 @@ static void nf_tables_chain_notify(const struct nft_ctx *ctx, int event)
 	err = nf_tables_fill_chain_info(skb, ctx->net, ctx->portid, ctx->seq,
 					event, 0, ctx->family, ctx->table,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
+		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
+
+	err = nf_tables_fill_chain_info(skb, ctx->net, ctx->portid, ctx->seq,
+					event, flags, ctx->family, ctx->table,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					ctx->chain);
 	if (err < 0) {
 		kfree_skb(skb);
@@ -2891,11 +2915,15 @@ static int nf_tables_fill_rule_info(struct sk_buff *skb, struct net *net,
 				    const struct nft_table *table,
 				    const struct nft_chain *chain,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    const struct nft_rule *rule, u64 handle)
 =======
 				    const struct nft_rule *rule,
 				    const struct nft_rule *prule)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    const struct nft_rule *rule, u64 handle)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nlmsghdr *nlh;
 	const struct nft_expr *expr, *next;
@@ -2916,6 +2944,7 @@ static int nf_tables_fill_rule_info(struct sk_buff *skb, struct net *net,
 		goto nla_put_failure;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (event != NFT_MSG_DELRULE && handle) {
 		if (nla_put_be64(skb, NFTA_RULE_POSITION, cpu_to_be64(handle),
 =======
@@ -2923,6 +2952,10 @@ static int nf_tables_fill_rule_info(struct sk_buff *skb, struct net *net,
 		if (nla_put_be64(skb, NFTA_RULE_POSITION,
 				 cpu_to_be64(prule->handle),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (event != NFT_MSG_DELRULE && handle) {
+		if (nla_put_be64(skb, NFTA_RULE_POSITION, cpu_to_be64(handle),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 NFTA_RULE_PAD))
 			goto nla_put_failure;
 	}
@@ -2959,6 +2992,7 @@ static void nf_tables_rule_notify(const struct nft_ctx *ctx,
 {
 	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct nft_rule *prule;
 	struct sk_buff *skb;
 	u64 handle = 0;
@@ -2966,6 +3000,12 @@ static void nf_tables_rule_notify(const struct nft_ctx *ctx,
 =======
 	struct sk_buff *skb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct nft_rule *prule;
+	struct sk_buff *skb;
+	u64 handle = 0;
+	u16 flags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!ctx->report &&
@@ -2977,6 +3017,9 @@ static void nf_tables_rule_notify(const struct nft_ctx *ctx,
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (event == NFT_MSG_NEWRULE &&
 	    !list_is_first(&rule->list, &ctx->chain->rules) &&
 	    !list_is_last(&rule->list, &ctx->chain->rules)) {
@@ -2988,6 +3031,7 @@ static void nf_tables_rule_notify(const struct nft_ctx *ctx,
 	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
 		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
 
+<<<<<<< HEAD
 	err = nf_tables_fill_rule_info(skb, ctx->net, ctx->portid, ctx->seq,
 				       event, flags, ctx->family, ctx->table,
 				       ctx->chain, rule, handle);
@@ -2996,6 +3040,11 @@ static void nf_tables_rule_notify(const struct nft_ctx *ctx,
 				       event, 0, ctx->family, ctx->table,
 				       ctx->chain, rule, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = nf_tables_fill_rule_info(skb, ctx->net, ctx->portid, ctx->seq,
+				       event, flags, ctx->family, ctx->table,
+				       ctx->chain, rule, handle);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0) {
 		kfree_skb(skb);
 		goto err;
@@ -3022,9 +3071,13 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
 	const struct nft_rule *rule, *prule;
 	unsigned int s_idx = cb->args[0];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 handle;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 handle;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	prule = NULL;
 	list_for_each_entry_rcu(rule, &chain->rules, list) {
@@ -3037,23 +3090,33 @@ static int __nf_tables_dump_rules(struct sk_buff *skb,
 					sizeof(cb->args) - sizeof(cb->args[0]));
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (prule)
 			handle = prule->handle;
 		else
 			handle = 0;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (nf_tables_fill_rule_info(skb, net, NETLINK_CB(cb->skb).portid,
 					cb->nlh->nlmsg_seq,
 					NFT_MSG_NEWRULE,
 					NLM_F_MULTI | NLM_F_APPEND,
 					table->family,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					table, chain, rule, handle) < 0)
 =======
 					table, chain, rule, prule) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					table, chain, rule, handle) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 1;
 
 		nl_dump_check_consistent(cb, nlmsg_hdr(skb));
@@ -3217,10 +3280,14 @@ static int nf_tables_getrule(struct sk_buff *skb, const struct nfnl_info *info,
 	err = nf_tables_fill_rule_info(skb2, net, NETLINK_CB(skb).portid,
 				       info->nlh->nlmsg_seq, NFT_MSG_NEWRULE, 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				       family, table, chain, rule, 0);
 =======
 				       family, table, chain, rule, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				       family, table, chain, rule, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		goto err_fill_rule_info;
 
@@ -3481,17 +3548,24 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
 
 	if (info->nlh->nlmsg_flags & NLM_F_REPLACE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = nft_delrule(&ctx, old_rule);
 		if (err < 0)
 			goto err_destroy_flow_rule;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		trans = nft_trans_rule_add(&ctx, NFT_MSG_NEWRULE, rule);
 		if (trans == NULL) {
 			err = -ENOMEM;
 			goto err_destroy_flow_rule;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		err = nft_delrule(&ctx, old_rule);
@@ -3501,6 +3575,8 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
 		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_add_tail_rcu(&rule->list, &old_rule->list);
 	} else {
 		trans = nft_trans_rule_add(&ctx, NFT_MSG_NEWRULE, rule);
@@ -3534,11 +3610,16 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
 
 err_destroy_flow_rule:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (flow)
 		nft_flow_rule_destroy(flow);
 =======
 	nft_flow_rule_destroy(flow);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (flow)
+		nft_flow_rule_destroy(flow);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_release_rule:
 	nf_tables_rule_release(&ctx, rule);
 err_release_expr:
@@ -4035,6 +4116,7 @@ static void nf_tables_set_notify(const struct nft_ctx *ctx,
 {
 	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 portid = ctx->portid;
 	struct sk_buff *skb;
 	u16 flags = 0;
@@ -4042,6 +4124,11 @@ static void nf_tables_set_notify(const struct nft_ctx *ctx,
 	struct sk_buff *skb;
 	u32 portid = ctx->portid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 portid = ctx->portid;
+	struct sk_buff *skb;
+	u16 flags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!ctx->report &&
@@ -4053,13 +4140,19 @@ static void nf_tables_set_notify(const struct nft_ctx *ctx,
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
 		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
 
 	err = nf_tables_fill_set(skb, ctx, set, event, flags);
+<<<<<<< HEAD
 =======
 	err = nf_tables_fill_set(skb, ctx, set, event, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0) {
 		kfree_skb(skb);
 		goto err;
@@ -4441,10 +4534,14 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
 		size = ops->privsize(nla, &desc);
 	alloc_size = sizeof(*set) + size + udlen;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (alloc_size < size || alloc_size > INT_MAX)
 =======
 	if (alloc_size < size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (alloc_size < size || alloc_size > INT_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 	set = kvzalloc(alloc_size, GFP_KERNEL);
 	if (!set)
@@ -5340,19 +5437,27 @@ static void nf_tables_setelem_notify(const struct nft_ctx *ctx,
 				     const struct nft_set *set,
 				     const struct nft_set_elem *elem,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     int event)
 =======
 				     int event, u16 flags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     int event)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nftables_pernet *nft_net;
 	struct net *net = ctx->net;
 	u32 portid = ctx->portid;
 	struct sk_buff *skb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 flags = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 flags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!ctx->report && !nfnetlink_has_listeners(net, NFNLGRP_NFTABLES))
@@ -5363,11 +5468,17 @@ static void nf_tables_setelem_notify(const struct nft_ctx *ctx,
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
 		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
+		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = nf_tables_fill_setelem_info(skb, ctx, 0, portid, event, flags,
 					  set, elem);
 	if (err < 0) {
@@ -7044,10 +7155,14 @@ static int nf_tables_delobj(struct sk_buff *skb, const struct nfnl_info *info,
 void nft_obj_notify(struct net *net, const struct nft_table *table,
 		    struct nft_object *obj, u32 portid, u32 seq, int event,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    u16 flags, int family, int report, gfp_t gfp)
 =======
 		    int family, int report, gfp_t gfp)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    u16 flags, int family, int report, gfp_t gfp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nftables_pernet *nft_net = nft_pernet(net);
 	struct sk_buff *skb;
@@ -7073,6 +7188,7 @@ void nft_obj_notify(struct net *net, const struct nft_table *table,
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = nf_tables_fill_obj_info(skb, net, portid, seq, event,
 				      flags & (NLM_F_CREATE | NLM_F_EXCL),
 				      family, table, obj, false);
@@ -7080,6 +7196,11 @@ void nft_obj_notify(struct net *net, const struct nft_table *table,
 	err = nf_tables_fill_obj_info(skb, net, portid, seq, event, 0, family,
 				      table, obj, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = nf_tables_fill_obj_info(skb, net, portid, seq, event,
+				      flags & (NLM_F_CREATE | NLM_F_EXCL),
+				      family, table, obj, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0) {
 		kfree_skb(skb);
 		goto err;
@@ -7097,10 +7218,14 @@ static void nf_tables_obj_notify(const struct nft_ctx *ctx,
 {
 	nft_obj_notify(ctx->net, ctx->table, obj, ctx->portid, ctx->seq, event,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       ctx->flags, ctx->family, ctx->report, GFP_KERNEL);
 =======
 		       ctx->family, ctx->report, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       ctx->flags, ctx->family, ctx->report, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -7882,9 +8007,13 @@ static void nf_tables_flowtable_notify(struct nft_ctx *ctx,
 	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
 	struct sk_buff *skb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 flags = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 flags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!ctx->report &&
@@ -7896,6 +8025,7 @@ static void nf_tables_flowtable_notify(struct nft_ctx *ctx,
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
 		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
 
@@ -7905,6 +8035,13 @@ static void nf_tables_flowtable_notify(struct nft_ctx *ctx,
 	err = nf_tables_fill_flowtable_info(skb, ctx->net, ctx->portid,
 					    ctx->seq, event, 0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ctx->flags & (NLM_F_CREATE | NLM_F_EXCL))
+		flags |= ctx->flags & (NLM_F_CREATE | NLM_F_EXCL);
+
+	err = nf_tables_fill_flowtable_info(skb, ctx->net, ctx->portid,
+					    ctx->seq, event, flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    ctx->family, flowtable, hook_list);
 	if (err < 0) {
 		kfree_skb(skb);
@@ -8594,6 +8731,9 @@ static int nf_tables_commit_audit_alloc(struct list_head *adl,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nf_tables_commit_audit_free(struct list_head *adl)
 {
 	struct nft_audit_data *adp, *adn;
@@ -8604,8 +8744,11 @@ static void nf_tables_commit_audit_free(struct list_head *adl)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nf_tables_commit_audit_collect(struct list_head *adl,
 					   struct nft_table *table, u32 op)
 {
@@ -8671,9 +8814,13 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
 		if (ret) {
 			nf_tables_commit_chain_prepare_cancel(net);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			nf_tables_commit_audit_free(&adl);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			nf_tables_commit_audit_free(&adl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return ret;
 		}
 		if (trans->msg_type == NFT_MSG_NEWRULE ||
@@ -8684,9 +8831,13 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
 			if (ret < 0) {
 				nf_tables_commit_chain_prepare_cancel(net);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				nf_tables_commit_audit_free(&adl);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				nf_tables_commit_audit_free(&adl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return ret;
 			}
 		}
@@ -8792,10 +8943,14 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
 			nf_tables_setelem_notify(&trans->ctx, te->set,
 						 &te->elem,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						 NFT_MSG_NEWSETELEM);
 =======
 						 NFT_MSG_NEWSETELEM, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 NFT_MSG_NEWSETELEM);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			nft_trans_destroy(trans);
 			break;
 		case NFT_MSG_DELSETELEM:
@@ -8804,10 +8959,14 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
 			nf_tables_setelem_notify(&trans->ctx, te->set,
 						 &te->elem,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						 NFT_MSG_DELSETELEM);
 =======
 						 NFT_MSG_DELSETELEM, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 NFT_MSG_DELSETELEM);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			nft_setelem_remove(net, te->set, &te->elem);
 			if (!nft_setelem_is_catchall(te->set, &te->elem)) {
 				atomic_dec(&te->set->nelems);
@@ -9765,9 +9924,12 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
 		nf_tables_chain_destroy(&ctx);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	list_del(&table->list);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nf_tables_table_destroy(&ctx);
 }
 
@@ -9781,10 +9943,15 @@ static void __nft_release_tables(struct net *net)
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		list_del(&table->list);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		list_del(&table->list);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__nft_release_table(net, table);
 	}
 }
@@ -9793,6 +9960,7 @@ static int nft_rcv_nl_event(struct notifier_block *this, unsigned long event,
 			    void *ptr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nft_table *table, *to_delete[8];
 	struct nftables_pernet *nft_net;
 	struct netlink_notify *n = ptr;
@@ -9800,17 +9968,25 @@ static int nft_rcv_nl_event(struct notifier_block *this, unsigned long event,
 	unsigned int deleted;
 	bool restart = false;
 =======
+=======
+	struct nft_table *table, *to_delete[8];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nftables_pernet *nft_net;
 	struct netlink_notify *n = ptr;
-	struct nft_table *table, *nt;
 	struct net *net = n->net;
+<<<<<<< HEAD
 	bool release = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int deleted;
+	bool restart = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (event != NETLINK_URELEASE || n->protocol != NETLINK_NETFILTER)
 		return NOTIFY_DONE;
 
 	nft_net = nft_pernet(net);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	deleted = 0;
 	mutex_lock(&nft_net->commit_mutex);
@@ -9818,15 +9994,24 @@ again:
 =======
 	mutex_lock(&nft_net->commit_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	deleted = 0;
+	mutex_lock(&nft_net->commit_mutex);
+again:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(table, &nft_net->tables, list) {
 		if (nft_table_has_owner(table) &&
 		    n->portid == table->nlpid) {
 			__nft_release_hook(net, table);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			list_del_rcu(&table->list);
 			to_delete[deleted++] = table;
 			if (deleted >= ARRAY_SIZE(to_delete))
 				break;
+<<<<<<< HEAD
 		}
 	}
 	if (deleted) {
@@ -9839,16 +10024,27 @@ again:
 			goto again;
 =======
 			release = true;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
-	if (release) {
+	if (deleted) {
+		restart = deleted >= ARRAY_SIZE(to_delete);
 		synchronize_rcu();
+<<<<<<< HEAD
 		list_for_each_entry_safe(table, nt, &nft_net->tables, list) {
 			if (nft_table_has_owner(table) &&
 			    n->portid == table->nlpid)
 				__nft_release_table(net, table);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		while (deleted)
+			__nft_release_table(net, to_delete[--deleted]);
+
+		if (restart)
+			goto again;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	mutex_unlock(&nft_net->commit_mutex);
 

@@ -278,9 +278,13 @@ static int digital_tg_listen_mdaa(struct nfc_digital_dev *ddev, u8 rf_tech)
 {
 	struct digital_tg_mdaa_params *params;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int rc;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	params = kzalloc(sizeof(*params), GFP_KERNEL);
 	if (!params)
@@ -296,16 +300,22 @@ static int digital_tg_listen_mdaa(struct nfc_digital_dev *ddev, u8 rf_tech)
 	params->sc = DIGITAL_SENSF_FELICA_SC;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = digital_send_cmd(ddev, DIGITAL_CMD_TG_LISTEN_MDAA, NULL, params,
 			      500, digital_tg_recv_atr_req, NULL);
 	if (rc)
 		kfree(params);
 
 	return rc;
+<<<<<<< HEAD
 =======
 	return digital_send_cmd(ddev, DIGITAL_CMD_TG_LISTEN_MDAA, NULL, params,
 				500, digital_tg_recv_atr_req, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int digital_tg_listen_md(struct nfc_digital_dev *ddev, u8 rf_tech)
@@ -746,10 +756,14 @@ exit:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct nfc_ops digital_nfc_ops = {
 =======
 static struct nfc_ops digital_nfc_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nfc_ops digital_nfc_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.dev_up = digital_dev_up,
 	.dev_down = digital_dev_down,
 	.start_poll = digital_start_poll,
@@ -763,10 +777,14 @@ static struct nfc_ops digital_nfc_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct nfc_digital_dev *nfc_digital_allocate_device(const struct nfc_digital_ops *ops,
 =======
 struct nfc_digital_dev *nfc_digital_allocate_device(struct nfc_digital_ops *ops,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct nfc_digital_dev *nfc_digital_allocate_device(const struct nfc_digital_ops *ops,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    __u32 supported_protocols,
 					    __u32 driver_capabilities,
 					    int tx_headroom, int tx_tailroom)

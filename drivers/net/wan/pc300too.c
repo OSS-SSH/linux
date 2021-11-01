@@ -175,6 +175,7 @@ static int pc300_close(struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pc300_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 				void __user *data, int cmd)
 {
@@ -188,6 +189,11 @@ static int pc300_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	port_t *port = dev_to_port(dev);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pc300_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+				void __user *data, int cmd)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef DEBUG_RINGS
 	if (cmd == SIOCDEVPRIVATE) {
 		sca_dump_rings(dev);
@@ -195,6 +201,9 @@ static int pc300_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	}
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -EOPNOTSUPP;
 }
 
@@ -205,6 +214,7 @@ static int pc300_ioctl(struct net_device *dev, struct if_settings *ifs)
 	sync_serial_settings __user *line = ifs->ifs_ifsu.sync;
 	int new_type;
 	port_t *port = dev_to_port(dev);
+<<<<<<< HEAD
 
 	if (ifs->type == IF_GET_IFACE) {
 		ifs->type = port->iface;
@@ -219,6 +229,13 @@ static int pc300_ioctl(struct net_device *dev, struct if_settings *ifs)
 		if (ifr->ifr_settings.size < size) {
 			ifr->ifr_settings.size = size; /* data size wanted */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (ifs->type == IF_GET_IFACE) {
+		ifs->type = port->iface;
+		if (ifs->size < size) {
+			ifs->size = size; /* data size wanted */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOBUFS;
 		}
 		if (copy_to_user(line, &port->settings, size))
@@ -227,6 +244,7 @@ static int pc300_ioctl(struct net_device *dev, struct if_settings *ifs)
 	}
 
 	if (port->card->type == PC300_X21 &&
+<<<<<<< HEAD
 <<<<<<< HEAD
 	    (ifs->type == IF_IFACE_SYNC_SERIAL ||
 	     ifs->type == IF_IFACE_X21))
@@ -246,20 +264,28 @@ static int pc300_ioctl(struct net_device *dev, struct if_settings *ifs)
 =======
 	    (ifr->ifr_settings.type == IF_IFACE_SYNC_SERIAL ||
 	     ifr->ifr_settings.type == IF_IFACE_X21))
+=======
+	    (ifs->type == IF_IFACE_SYNC_SERIAL ||
+	     ifs->type == IF_IFACE_X21))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		new_type = IF_IFACE_X21;
 
 	else if (port->card->type == PC300_RSV &&
-		 (ifr->ifr_settings.type == IF_IFACE_SYNC_SERIAL ||
-		  ifr->ifr_settings.type == IF_IFACE_V35))
+		 (ifs->type == IF_IFACE_SYNC_SERIAL ||
+		  ifs->type == IF_IFACE_V35))
 		new_type = IF_IFACE_V35;
 
 	else if (port->card->type == PC300_RSV &&
-		 ifr->ifr_settings.type == IF_IFACE_V24)
+		 ifs->type == IF_IFACE_V24)
 		new_type = IF_IFACE_V24;
 
 	else
+<<<<<<< HEAD
 		return hdlc_ioctl(dev, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return hdlc_ioctl(dev, ifs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!capable(CAP_NET_ADMIN))
 		return -EPERM;
@@ -315,11 +341,16 @@ static const struct net_device_ops pc300_ops = {
 	.ndo_stop       = pc300_close,
 	.ndo_start_xmit = hdlc_start_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocwandev = pc300_ioctl,
 	.ndo_siocdevprivate = pc300_siocdevprivate,
 =======
 	.ndo_do_ioctl   = pc300_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocwandev = pc300_ioctl,
+	.ndo_siocdevprivate = pc300_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int pc300_pci_init_one(struct pci_dev *pdev,

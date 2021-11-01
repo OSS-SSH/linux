@@ -313,6 +313,9 @@ struct drm_mode_set_plane {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct drm_mode_get_plane - Get plane metadata.
  *
@@ -355,6 +358,7 @@ struct drm_mode_get_plane {
 	 * @format_type_ptr: Pointer to ``__u32`` array of formats that are
 	 * supported by the plane. These formats do not require modifiers.
 	 */
+<<<<<<< HEAD
 =======
 struct drm_mode_get_plane {
 	__u32 plane_id;
@@ -367,6 +371,8 @@ struct drm_mode_get_plane {
 
 	__u32 count_format_types;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u64 format_type_ptr;
 };
 
@@ -555,6 +561,9 @@ struct drm_mode_get_connector {
 #define DRM_MODE_PROP_ATOMIC        0x80000000
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct drm_mode_property_enum - Description for an enum/bitfield entry.
  * @value: numeric value for this enum entry.
@@ -562,14 +571,20 @@ struct drm_mode_get_connector {
  *
  * See struct drm_property_enum for details.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_mode_property_enum {
 	__u64 value;
 	char name[DRM_PROP_NAME_LEN];
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct drm_mode_get_property - Get property metadata.
  *
@@ -601,6 +616,7 @@ struct drm_mode_property_enum {
  * @enum_blob_ptr and set @count_enum_blobs to its capacity. Calling the ioctl
  * again will fill the arrays.
  */
+<<<<<<< HEAD
 struct drm_mode_get_property {
 	/** @values_ptr: Pointer to a ``__u64`` array. */
 	__u64 values_ptr;
@@ -627,18 +643,39 @@ struct drm_mode_get_property {
 	__u32 count_values;
 	/** @count_enum_blobs: Number of elements in @enum_blob_ptr. */
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_mode_get_property {
-	__u64 values_ptr; /* values and blob lengths */
-	__u64 enum_blob_ptr; /* enum and blob id ptrs */
+	/** @values_ptr: Pointer to a ``__u64`` array. */
+	__u64 values_ptr;
+	/** @enum_blob_ptr: Pointer to a struct drm_mode_property_enum array. */
+	__u64 enum_blob_ptr;
 
+	/**
+	 * @prop_id: Object ID of the property which should be retrieved. Set
+	 * by the caller.
+	 */
 	__u32 prop_id;
+	/**
+	 * @flags: ``DRM_MODE_PROP_*`` bitfield. See &drm_property.flags for
+	 * a definition of the flags.
+	 */
 	__u32 flags;
+	/**
+	 * @name: Symbolic property name. User-space should use this field to
+	 * recognize properties.
+	 */
 	char name[DRM_PROP_NAME_LEN];
 
+	/** @count_values: Number of elements in @values_ptr. */
 	__u32 count_values;
+<<<<<<< HEAD
 	/* This is only used to count enum values, not blobs. The _blobs is
 	 * simply because of a historical reason, i.e. backwards compat. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/** @count_enum_blobs: Number of elements in @enum_blob_ptr. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32 count_enum_blobs;
 };
 

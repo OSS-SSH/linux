@@ -7,19 +7,29 @@ JDIR		=  pmu-events/arch/$(SRCARCH)
 JSON		=  $(shell [ -d $(JDIR) ] &&				\
 			find $(JDIR) -name '*.json' -o -name 'mapfile.csv')
 <<<<<<< HEAD
+<<<<<<< HEAD
 JDIR_TEST	=  pmu-events/arch/test
 JSON_TEST	=  $(shell [ -d $(JDIR_TEST) ] &&			\
 			find $(JDIR_TEST) -name '*.json')
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+JDIR_TEST	=  pmu-events/arch/test
+JSON_TEST	=  $(shell [ -d $(JDIR_TEST) ] &&			\
+			find $(JDIR_TEST) -name '*.json')
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #
 # Locate/process JSON files in pmu-events/arch/
 # directory and create tables in pmu-events.c.
 #
 <<<<<<< HEAD
+<<<<<<< HEAD
 $(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS)
 =======
 $(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JEVENTS)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(OUTPUT)pmu-events/pmu-events.c: $(JSON) $(JSON_TEST) $(JEVENTS)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(Q)$(call echo-cmd,gen)$(JEVENTS) $(SRCARCH) pmu-events/arch $(OUTPUT)pmu-events/pmu-events.c $(V)

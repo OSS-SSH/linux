@@ -252,11 +252,15 @@ static int flow_offload_eth_src(struct net *net,
 			    &val, &mask);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(dev);
 =======
 	if (dev)
 		dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1102,9 +1106,13 @@ static void nf_flow_table_block_offload_init(struct flow_block_offload *bo,
 	bo->binder_type	= FLOW_BLOCK_BINDER_TYPE_CLSACT_INGRESS;
 	bo->extack	= extack;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bo->cb_list_head = &flowtable->flow_block.cb_list;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bo->cb_list_head = &flowtable->flow_block.cb_list;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&bo->cb_list);
 }
 

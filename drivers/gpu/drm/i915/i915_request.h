@@ -286,6 +286,9 @@ struct i915_request {
 	} watchdog;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Requests may need to be stalled when using GuC submission waiting for
 	 * certain GuC operations to complete. If that is the case, stalled
@@ -303,8 +306,11 @@ struct i915_request {
 #define	GUC_PRIO_FINI	0xfe
 	u8 guc_prio;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	I915_SELFTEST_DECLARE(struct {
 		struct list_head link;
 		unsigned long delay;
@@ -373,12 +379,16 @@ int i915_request_await_dma_fence(struct i915_request *rq,
 				 struct dma_fence *fence);
 int i915_request_await_execution(struct i915_request *rq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 struct dma_fence *fence);
 =======
 				 struct dma_fence *fence,
 				 void (*hook)(struct i915_request *rq,
 					      struct dma_fence *signal));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 struct dma_fence *fence);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void i915_request_add(struct i915_request *rq);
 
@@ -638,10 +648,14 @@ i915_request_active_timeline(const struct i915_request *rq)
 	 */
 	return rcu_dereference_protected(rq->timeline,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 lockdep_is_held(&rq->engine->sched_engine->lock));
 =======
 					 lockdep_is_held(&rq->engine->active.lock));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 lockdep_is_held(&rq->engine->sched_engine->lock));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline u32
@@ -670,6 +684,9 @@ i915_request_active_engine(struct i915_request *rq,
 			   struct intel_engine_cs **active);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void i915_request_notify_execute_cb_imm(struct i915_request *rq);
 
 enum i915_request_state {
@@ -685,6 +702,9 @@ enum i915_request_state i915_test_request_state(struct i915_request *rq);
 void i915_request_module_exit(void);
 int i915_request_module_init(void);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* I915_REQUEST_H */

@@ -151,14 +151,19 @@ static int superhyway_device_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void superhyway_device_remove(struct device *dev)
 =======
 static int superhyway_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void superhyway_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct superhyway_device *shyway_dev = to_superhyway_device(dev);
 	struct superhyway_driver *shyway_drv = to_superhyway_driver(dev->driver);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (shyway_drv->remove)
 		shyway_drv->remove(shyway_dev);
@@ -170,6 +175,10 @@ static int superhyway_device_remove(struct device *dev)
 
 	return -ENODEV;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (shyway_drv->remove)
+		shyway_drv->remove(shyway_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

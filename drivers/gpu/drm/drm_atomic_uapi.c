@@ -49,10 +49,14 @@
  * SET_PROPERTY IOCTLs. Plus interface functions for compatibility helpers and
  * drivers which have special needs to construct their own atomic updates, e.g.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * for load detect or similar.
 =======
  * for load detect or similiar.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * for load detect or similar.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 /**
@@ -758,10 +762,14 @@ static int drm_atomic_connector_set_property(struct drm_connector *connector,
 		 * tries to change the link_status from GOOD to BAD, driver
 		 * silently rejects it and returns a 0. This prevents userspace
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * from accidentally breaking  the display when it restores the
 =======
 		 * from accidently breaking  the display when it restores the
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * from accidentally breaking  the display when it restores the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * state.
 		 */
 		if (state->link_status != DRM_LINK_STATUS_GOOD)
@@ -1073,10 +1081,14 @@ int drm_atomic_set_property(struct drm_atomic_state *state,
  *
  * Explicit fencing allows userspace to control the buffer synchronization
 <<<<<<< HEAD
+<<<<<<< HEAD
  * between devices. A Fence or a group of fences are transferred to/from
 =======
  * between devices. A Fence or a group of fences are transfered to/from
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * between devices. A Fence or a group of fences are transferred to/from
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * userspace using Sync File fds and there are two DRM properties for that.
  * IN_FENCE_FD on each DRM Plane to send fences to the kernel and
  * OUT_FENCE_PTR on each DRM CRTC to receive fences from the kernel.

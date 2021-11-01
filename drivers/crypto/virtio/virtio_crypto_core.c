@@ -188,6 +188,7 @@ static int virtcrypto_init_vqs(struct virtio_crypto *vi)
 		goto err_free;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 	virtcrypto_set_affinity(vi);
 	cpus_read_unlock();
@@ -196,6 +197,11 @@ static int virtcrypto_init_vqs(struct virtio_crypto *vi)
 	virtcrypto_set_affinity(vi);
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	virtcrypto_set_affinity(vi);
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 

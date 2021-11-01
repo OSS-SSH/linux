@@ -1030,10 +1030,14 @@ static void ftl_add_mtd(struct mtd_blktrans_ops *tr, struct mtd_info *mtd)
 		partition->mbd.tr = tr;
 		partition->mbd.devnum = -1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!add_mtd_blktrans_dev(&partition->mbd))
 =======
 		if (!add_mtd_blktrans_dev((void *)partition))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!add_mtd_blktrans_dev(&partition->mbd))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return;
 	}
 

@@ -533,6 +533,7 @@ static int at8031_register_regulators(struct phy_device *phydev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static bool at803x_match_phy_id(struct phy_device *phydev, u32 phy_id)
 {
@@ -541,6 +542,8 @@ static bool at803x_match_phy_id(struct phy_device *phydev, u32 phy_id)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int at803x_parse_dt(struct phy_device *phydev)
 {
 	struct device_node *node = phydev->mdio.dev.of_node;
@@ -606,12 +609,17 @@ static int at803x_parse_dt(struct phy_device *phydev)
 		 *   the AR8030 too.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (phydev->drv->phy_id == ATH8030_PHY_ID ||
 		    phydev->drv->phy_id == ATH8035_PHY_ID) {
 =======
 		if (at803x_match_phy_id(phydev, ATH8030_PHY_ID) ||
 		    at803x_match_phy_id(phydev, ATH8035_PHY_ID)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (phydev->drv->phy_id == ATH8030_PHY_ID ||
+		    phydev->drv->phy_id == ATH8035_PHY_ID) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			priv->clk_25m_reg &= AT8035_CLK_OUT_MASK;
 			priv->clk_25m_mask &= AT8035_CLK_OUT_MASK;
 		}
@@ -640,10 +648,14 @@ static int at803x_parse_dt(struct phy_device *phydev)
 	 * options.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phydev->drv->phy_id == ATH8031_PHY_ID) {
 =======
 	if (at803x_match_phy_id(phydev, ATH8031_PHY_ID)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (phydev->drv->phy_id == ATH8031_PHY_ID) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (of_property_read_bool(node, "qca,keep-pll-enabled"))
 			priv->flags |= AT803X_KEEP_PLL_ENABLED;
 
@@ -689,10 +701,14 @@ static int at803x_probe(struct phy_device *phydev)
 	 * the PHY capabilities from the fiber side.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phydev->drv->phy_id == ATH8031_PHY_ID) {
 =======
 	if (at803x_match_phy_id(phydev, ATH8031_PHY_ID)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (phydev->drv->phy_id == ATH8031_PHY_ID) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		phy_lock_mdio_bus(phydev);
 		ret = at803x_write_page(phydev, AT803X_PAGE_COPPER);
 		phy_unlock_mdio_bus(phydev);
@@ -726,10 +742,14 @@ static int at803x_get_features(struct phy_device *phydev)
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phydev->drv->phy_id != ATH8031_PHY_ID)
 =======
 	if (!at803x_match_phy_id(phydev, ATH8031_PHY_ID))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (phydev->drv->phy_id != ATH8031_PHY_ID)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	/* AR8031/AR8033 have different status registers
@@ -841,10 +861,14 @@ static int at803x_config_init(struct phy_device *phydev)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phydev->drv->phy_id == ATH8031_PHY_ID) {
 =======
 	if (at803x_match_phy_id(phydev, ATH8031_PHY_ID)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (phydev->drv->phy_id == ATH8031_PHY_ID) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = at8031_pll_config(phydev);
 		if (ret < 0)
 			return ret;

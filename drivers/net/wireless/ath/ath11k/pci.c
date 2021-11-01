@@ -934,17 +934,23 @@ static int ath11k_pci_claim(struct ath11k_pci *ab_pci, struct pci_dev *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dma_set_mask_and_coherent(&pdev->dev,
 					DMA_BIT_MASK(ATH11K_PCI_DMA_MASK));
 =======
 	ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(ATH11K_PCI_DMA_MASK));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dma_set_mask_and_coherent(&pdev->dev,
+					DMA_BIT_MASK(ATH11K_PCI_DMA_MASK));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		ath11k_err(ab, "failed to set pci dma mask to %d: %d\n",
 			   ATH11K_PCI_DMA_MASK, ret);
 		goto release_region;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	ret = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(ATH11K_PCI_DMA_MASK));
@@ -955,6 +961,8 @@ static int ath11k_pci_claim(struct ath11k_pci *ab_pci, struct pci_dev *pdev)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_set_master(pdev);
 
 	ab->mem_len = pci_resource_len(pdev, ATH11K_PCI_BAR_NUM);

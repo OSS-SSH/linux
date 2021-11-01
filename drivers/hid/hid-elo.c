@@ -229,9 +229,13 @@ static int elo_probe(struct hid_device *hdev, const struct hid_device_id *id)
 	struct elo_priv *priv;
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct usb_device *udev;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct usb_device *udev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
 	if (!priv)
@@ -239,11 +243,16 @@ static int elo_probe(struct hid_device *hdev, const struct hid_device_id *id)
 
 	INIT_DELAYED_WORK(&priv->work, elo_work);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	udev = interface_to_usbdev(to_usb_interface(hdev->dev.parent));
 	priv->usbdev = usb_get_dev(udev);
 =======
 	priv->usbdev = interface_to_usbdev(to_usb_interface(hdev->dev.parent));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	udev = interface_to_usbdev(to_usb_interface(hdev->dev.parent));
+	priv->usbdev = usb_get_dev(udev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hid_set_drvdata(hdev, priv);
 
@@ -275,10 +284,15 @@ static void elo_remove(struct hid_device *hdev)
 	struct elo_priv *priv = hid_get_drvdata(hdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usb_put_dev(priv->usbdev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	usb_put_dev(priv->usbdev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hid_hw_stop(hdev);
 	cancel_delayed_work_sync(&priv->work);
 	kfree(priv);

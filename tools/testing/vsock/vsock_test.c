@@ -283,9 +283,13 @@ static void test_stream_msg_peek_server(const struct test_opts *opts)
 
 #define MESSAGES_CNT 7
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MSG_EOR_IDX (MESSAGES_CNT / 2)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MSG_EOR_IDX (MESSAGES_CNT / 2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
 {
 	int fd;
@@ -299,10 +303,14 @@ static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
 	/* Send several messages, one with MSG_EOR flag */
 	for (int i = 0; i < MESSAGES_CNT; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		send_byte(fd, 1, (i == MSG_EOR_IDX) ? MSG_EOR : 0);
 =======
 		send_byte(fd, 1, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		send_byte(fd, 1, (i == MSG_EOR_IDX) ? MSG_EOR : 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	control_writeln("SENDDONE");
 	close(fd);
@@ -333,13 +341,19 @@ static void test_seqpacket_msg_bounds_server(const struct test_opts *opts)
 			exit(EXIT_FAILURE);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if ((i == MSG_EOR_IDX) ^ !!(msg.msg_flags & MSG_EOR)) {
 			perror("MSG_EOR");
 			exit(EXIT_FAILURE);
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	close(fd);

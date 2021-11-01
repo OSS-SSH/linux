@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *   fs/cifs/smb2pdu.c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (C) International Business Machines  Corp., 2009, 2013
  *                 Etersoft, 2012
@@ -2402,10 +2405,14 @@ create_sd_buf(umode_t mode, bool set_owner, unsigned int *len)
 	/* Ship the ACL for now. we will copy it into buf later. */
 	aclptr = ptr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ptr += sizeof(struct smb3_acl);
 =======
 	ptr += sizeof(struct cifs_acl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ptr += sizeof(struct smb3_acl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* create one ACE to hold the mode embedded in reserved special SID */
 	acelen = setup_special_mode_ACE((struct cifs_ace *)ptr, (__u64)mode);
@@ -2431,6 +2438,7 @@ create_sd_buf(umode_t mode, bool set_owner, unsigned int *len)
 	acl.AclSize = cpu_to_le16(acl_size);
 	acl.AceCount = cpu_to_le16(ace_count);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(aclptr, &acl, sizeof(struct smb3_acl));
 
 	buf->ccontext.DataLength = cpu_to_le32(ptr - (__u8 *)&buf->sd);
@@ -2441,6 +2449,12 @@ create_sd_buf(umode_t mode, bool set_owner, unsigned int *len)
 	buf->ccontext.DataLength = cpu_to_le32(ptr - (__u8 *)&buf->sd);
 	*len = ptr - (__u8 *)buf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memcpy(aclptr, &acl, sizeof(struct smb3_acl));
+
+	buf->ccontext.DataLength = cpu_to_le32(ptr - (__u8 *)&buf->sd);
+	*len = roundup(ptr - (__u8 *)buf, 8);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return buf;
 }

@@ -223,6 +223,7 @@
 	pinctrl-0 = <&pinctrl_enet_novena>;
 	phy-mode = "rgmii";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phy-handle = <&ethphy>;
 	phy-reset-gpios = <&gpio3 23 GPIO_ACTIVE_LOW>;
 	status = "okay";
@@ -248,21 +249,36 @@
 		};
 	};
 =======
+=======
+	phy-handle = <&ethphy>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-reset-gpios = <&gpio3 23 GPIO_ACTIVE_LOW>;
-	rxc-skew-ps = <3000>;
-	rxdv-skew-ps = <0>;
-	txc-skew-ps = <3000>;
-	txen-skew-ps = <0>;
-	rxd0-skew-ps = <0>;
-	rxd1-skew-ps = <0>;
-	rxd2-skew-ps = <0>;
-	rxd3-skew-ps = <0>;
-	txd0-skew-ps = <3000>;
-	txd1-skew-ps = <3000>;
-	txd2-skew-ps = <3000>;
-	txd3-skew-ps = <3000>;
 	status = "okay";
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ethphy: ethernet-phy {
+			compatible = "ethernet-phy-ieee802.3-c22";
+			rxc-skew-ps = <3000>;
+			rxdv-skew-ps = <0>;
+			txc-skew-ps = <3000>;
+			txen-skew-ps = <0>;
+			rxd0-skew-ps = <0>;
+			rxd1-skew-ps = <0>;
+			rxd2-skew-ps = <0>;
+			rxd3-skew-ps = <0>;
+			txd0-skew-ps = <3000>;
+			txd1-skew-ps = <3000>;
+			txd2-skew-ps = <3000>;
+			txd3-skew-ps = <3000>;
+		};
+	};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &hdmi {

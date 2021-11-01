@@ -457,12 +457,18 @@ static void nicvf_get_regs(struct net_device *dev,
 
 static int nicvf_get_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct ethtool_coalesce *cmd,
 			      struct kernel_ethtool_coalesce *kernel_coal,
 			      struct netlink_ext_ack *extack)
 =======
 			      struct ethtool_coalesce *cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct ethtool_coalesce *cmd,
+			      struct kernel_ethtool_coalesce *kernel_coal,
+			      struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nicvf *nic = netdev_priv(netdev);
 

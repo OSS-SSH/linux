@@ -11,9 +11,13 @@
 #include <linux/miscdevice.h>
 #include <linux/mutex.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/wait.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/wait.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/nfc/nci_core.h>
 
 enum virtual_ncidev_mode {
@@ -32,9 +36,13 @@ enum virtual_ncidev_mode {
 
 static enum virtual_ncidev_mode state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DECLARE_WAIT_QUEUE_HEAD(wq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DECLARE_WAIT_QUEUE_HEAD(wq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct miscdevice miscdev;
 static struct sk_buff *send_buff;
 static struct nci_dev *ndev;
@@ -70,18 +78,26 @@ static int virtual_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
 	send_buff = skb_copy(skb, GFP_KERNEL);
 	mutex_unlock(&nci_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wake_up_interruptible(&wq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	wake_up_interruptible(&wq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct nci_ops virtual_nci_ops = {
 =======
 static struct nci_ops virtual_nci_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nci_ops virtual_nci_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.open = virtual_nci_open,
 	.close = virtual_nci_close,
 	.send = virtual_nci_send
@@ -94,6 +110,7 @@ static ssize_t virtual_ncidev_read(struct file *file, char __user *buf,
 
 	mutex_lock(&nci_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	while (!send_buff) {
 		mutex_unlock(&nci_mutex);
 		if (wait_event_interruptible(wq, send_buff))
@@ -104,6 +121,13 @@ static ssize_t virtual_ncidev_read(struct file *file, char __user *buf,
 		mutex_unlock(&nci_mutex);
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (!send_buff) {
+		mutex_unlock(&nci_mutex);
+		if (wait_event_interruptible(wq, send_buff))
+			return -EFAULT;
+		mutex_lock(&nci_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	actual_len = min_t(size_t, count, send_buff->len);
@@ -195,10 +219,14 @@ static long virtual_ncidev_ioctl(struct file *flip, unsigned int cmd,
 				 unsigned long arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct nfc_dev *nfc_dev = ndev->nfc_dev;
 =======
 	struct nfc_dev *nfc_dev = ndev->nfc_dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct nfc_dev *nfc_dev = ndev->nfc_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void __user *p = (void __user *)arg;
 
 	if (cmd != IOCTL_GET_NCIDEV_IDX)

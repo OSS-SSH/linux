@@ -34,11 +34,16 @@ enum ta_command_xgmi {
 	TA_COMMAND_XGMI__GET_HIVE_ID			= 0x02,
 	TA_COMMAND_XGMI__GET_GET_TOPOLOGY_INFO		= 0x03,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	TA_COMMAND_XGMI__SET_TOPOLOGY_INFO		= 0x04,
 	TA_COMMAND_XGMI__GET_PEER_LINKS			= 0x0B
 =======
 	TA_COMMAND_XGMI__SET_TOPOLOGY_INFO		= 0x04
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TA_COMMAND_XGMI__SET_TOPOLOGY_INFO		= 0x04,
+	TA_COMMAND_XGMI__GET_PEER_LINKS			= 0x0B
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* XGMI related enumerations */
@@ -81,13 +86,19 @@ struct ta_xgmi_node_info {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ta_xgmi_peer_link_info {
 	uint64_t				node_id;
 	uint8_t					num_links;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ta_xgmi_cmd_initialize_output {
 	uint32_t	status;
 };
@@ -111,13 +122,19 @@ struct ta_xgmi_cmd_get_topology_info_output {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ta_xgmi_cmd_get_peer_link_info_output {
 	uint32_t			num_nodes;
 	struct ta_xgmi_peer_link_info	nodes[TA_XGMI__MAX_CONNECTED_NODES];
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ta_xgmi_cmd_set_topology_info_input {
 	uint32_t			num_nodes;
 	struct ta_xgmi_node_info	nodes[TA_XGMI__MAX_CONNECTED_NODES];
@@ -137,9 +154,13 @@ union ta_xgmi_cmd_output {
 	struct ta_xgmi_cmd_get_hive_id_output		get_hive_id;
 	struct ta_xgmi_cmd_get_topology_info_output	get_topology_info;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ta_xgmi_cmd_get_peer_link_info_output	get_link_info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ta_xgmi_cmd_get_peer_link_info_output	get_link_info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 /**********************************************************/
 
@@ -148,11 +169,16 @@ struct ta_xgmi_shared_memory {
 	uint32_t			resp_id;
 	enum ta_xgmi_status		xgmi_status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint8_t				flag_extend_link_record;
 	uint8_t				reserved0[3];
 =======
 	uint32_t			reserved;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint8_t				flag_extend_link_record;
+	uint8_t				reserved0[3];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union ta_xgmi_cmd_input		xgmi_in_message;
 	union ta_xgmi_cmd_output	xgmi_out_message;
 };

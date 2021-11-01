@@ -155,9 +155,13 @@
 	SRI(CURSOR_CONTROL, CURSOR0_, id),\
 	SRI(OBUF_MEM_PWR_CTRL, DSCL, id),\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SRI(DSCL_MEM_PWR_STATUS, DSCL, id), \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SRI(DSCL_MEM_PWR_STATUS, DSCL, id), \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SRI(DSCL_MEM_PWR_CTRL, DSCL, id)
 
 #define DPP_REG_LIST_DCN30(id)\
@@ -168,10 +172,13 @@
 	SRI(CM_MEM_PWR_CTRL2, CM, id), \
 	SRI(CM_MEM_PWR_STATUS2, CM, id), \
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	SRI(DSCL_MEM_PWR_STATUS, DSCL, id), \
 	SRI(DSCL_MEM_PWR_CTRL, DSCL, id), \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SRI(CM_BLNDGAM_RAMA_START_SLOPE_CNTL_B, CM, id),\
 	SRI(CM_BLNDGAM_RAMA_START_SLOPE_CNTL_G, CM, id),\
 	SRI(CM_BLNDGAM_RAMA_START_SLOPE_CNTL_R, CM, id),\

@@ -82,9 +82,13 @@ dr_rule_create_collision_entry(struct mlx5dr_matcher *matcher,
 
 	ste->ste_chain_location = orig_ste->ste_chain_location;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ste->htbl->pointing_ste = orig_ste->htbl->pointing_ste;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ste->htbl->pointing_ste = orig_ste->htbl->pointing_ste;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* In collision entry, all members share the same miss_list_head */
 	ste->htbl->miss_list = mlx5dr_ste_get_miss_list(orig_ste);
@@ -190,11 +194,17 @@ dr_rule_rehash_handle_collision(struct mlx5dr_matcher *matcher,
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Update collision pointing STE */
 	new_ste->htbl->pointing_ste = col_ste->htbl->pointing_ste;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Update collision pointing STE */
+	new_ste->htbl->pointing_ste = col_ste->htbl->pointing_ste;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* In collision entry, all members share the same miss_list_head */
 	new_ste->htbl->miss_list = mlx5dr_ste_get_miss_list(col_ste);
 
@@ -223,10 +233,14 @@ static void dr_rule_rehash_copy_ste_ctrl(struct mlx5dr_matcher *matcher,
 	new_ste->ste_chain_location = cur_ste->ste_chain_location;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (new_ste->next_htbl)
 =======
 	if (!mlx5dr_ste_is_last_in_rule(nic_matcher, new_ste->ste_chain_location))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (new_ste->next_htbl)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		new_ste->next_htbl->pointing_ste = new_ste;
 
 	/* We need to copy the refcount since this ste
@@ -234,6 +248,7 @@ static void dr_rule_rehash_copy_ste_ctrl(struct mlx5dr_matcher *matcher,
 	 */
 	new_ste->refcount = cur_ste->refcount;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Link old STEs rule to the new ste */
 	mlx5dr_rule_set_last_member(cur_ste->rule_rx_tx, new_ste, false);
@@ -243,6 +258,10 @@ static void dr_rule_rehash_copy_ste_ctrl(struct mlx5dr_matcher *matcher,
 	INIT_LIST_HEAD(&new_ste->rule_list);
 	list_splice_tail_init(&cur_ste->rule_list, &new_ste->rule_list);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Link old STEs rule to the new ste */
+	mlx5dr_rule_set_last_member(cur_ste->rule_rx_tx, new_ste, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct mlx5dr_ste *
@@ -424,10 +443,14 @@ dr_rule_rehash_htbl(struct mlx5dr_rule *rule,
 	mlx5dr_ste_set_formatted_ste(dmn->ste_ctx,
 				     dmn->info.caps.gvmi,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     nic_dmn->type,
 =======
 				     nic_dmn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     nic_dmn->type,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     new_htbl,
 				     formatted_ste,
 				     &info);
@@ -605,6 +628,7 @@ free_action_members:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void mlx5dr_rule_set_last_member(struct mlx5dr_rule_rx_tx *nic_rule,
 				 struct mlx5dr_ste *ste,
 				 bool force)
@@ -659,17 +683,66 @@ int mlx5dr_rule_get_reverse_rule_members(struct mlx5dr_ste **ste_arr,
  */
 void mlx5dr_rule_update_rule_member(struct mlx5dr_ste *ste,
 				    struct mlx5dr_ste *new_ste)
+=======
+void mlx5dr_rule_set_last_member(struct mlx5dr_rule_rx_tx *nic_rule,
+				 struct mlx5dr_ste *ste,
+				 bool force)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct mlx5dr_rule_member *rule_mem;
+	/* Update rule member is usually done for the last STE or during rule
+	 * creation to recover from mid-creation failure (for this peruse the
+	 * force flag is used)
+	 */
+	if (ste->next_htbl && !force)
+		return;
 
+<<<<<<< HEAD
 	list_for_each_entry(rule_mem, &ste->rule_list, use_ste_list)
 		rule_mem->ste = new_ste;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Update is required since each rule keeps track of its last STE */
+	ste->rule_rx_tx = nic_rule;
+	nic_rule->last_rule_ste = ste;
+}
+
+static struct mlx5dr_ste *dr_rule_get_pointed_ste(struct mlx5dr_ste *curr_ste)
+{
+	struct mlx5dr_ste *first_ste;
+
+	first_ste = list_first_entry(mlx5dr_ste_get_miss_list(curr_ste),
+				     struct mlx5dr_ste, miss_list_node);
+
+	return first_ste->htbl->pointing_ste;
+}
+
+int mlx5dr_rule_get_reverse_rule_members(struct mlx5dr_ste **ste_arr,
+					 struct mlx5dr_ste *curr_ste,
+					 int *num_of_stes)
+{
+	bool first = false;
+
+	*num_of_stes = 0;
+
+	if (!curr_ste)
+		return -ENOENT;
+
+	/* Iterate from last to first */
+	while (!first) {
+		first = curr_ste->ste_chain_location == 1;
+		ste_arr[*num_of_stes] = curr_ste;
+		*num_of_stes += 1;
+		curr_ste = dr_rule_get_pointed_ste(curr_ste);
+	}
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void dr_rule_clean_rule_members(struct mlx5dr_rule *rule,
 				       struct mlx5dr_rule_rx_tx *nic_rule)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mlx5dr_ste *ste_arr[DR_RULE_MAX_STES + DR_ACTION_MAX_STES];
 	struct mlx5dr_ste *curr_ste = nic_rule->last_rule_ste;
@@ -683,9 +756,15 @@ static void dr_rule_clean_rule_members(struct mlx5dr_rule *rule,
 =======
 	struct mlx5dr_rule_member *rule_mem;
 	struct mlx5dr_rule_member *tmp_mem;
+=======
+	struct mlx5dr_ste *ste_arr[DR_RULE_MAX_STES + DR_ACTION_MAX_STES];
+	struct mlx5dr_ste *curr_ste = nic_rule->last_rule_ste;
+	int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (list_empty(&nic_rule->rule_members_list))
+	if (mlx5dr_rule_get_reverse_rule_members(ste_arr, curr_ste, &i))
 		return;
+<<<<<<< HEAD
 	list_for_each_entry_safe(rule_mem, tmp_mem, &nic_rule->rule_members_list, list) {
 		list_del(&rule_mem->list);
 		list_del(&rule_mem->use_ste_list);
@@ -693,6 +772,11 @@ static void dr_rule_clean_rule_members(struct mlx5dr_rule *rule,
 		kvfree(rule_mem);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	while (i--)
+		mlx5dr_ste_put(ste_arr[i], rule->matcher, nic_rule->nic_matcher);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u16 dr_get_bits_per_mask(u16 byte_mask)
@@ -713,23 +797,32 @@ static bool dr_rule_need_enlarge_hash(struct mlx5dr_ste_htbl *htbl,
 {
 	struct mlx5dr_ste_htbl_ctrl *ctrl = &htbl->ctrl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int threshold;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int threshold;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dmn->info.max_log_sw_icm_sz <= htbl->chunk_size)
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!mlx5dr_ste_htbl_may_grow(htbl))
 =======
 	if (!ctrl->may_grow)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!mlx5dr_ste_htbl_may_grow(htbl))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	if (dr_get_bits_per_mask(htbl->byte_mask) * BITS_PER_BYTE <= htbl->chunk_size)
 		return false;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	threshold = mlx5dr_ste_htbl_increase_threshold(htbl);
 	if (ctrl->num_of_collisions >= threshold &&
@@ -738,11 +831,17 @@ static bool dr_rule_need_enlarge_hash(struct mlx5dr_ste_htbl *htbl,
 	if (ctrl->num_of_collisions >= ctrl->increase_threshold &&
 	    (ctrl->num_of_valid_entries - ctrl->num_of_collisions) >= ctrl->increase_threshold)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	threshold = mlx5dr_ste_htbl_increase_threshold(htbl);
+	if (ctrl->num_of_collisions >= threshold &&
+	    (ctrl->num_of_valid_entries - ctrl->num_of_collisions) >= threshold)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 
 	return false;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int dr_rule_add_member(struct mlx5dr_rule_rx_tx *nic_rule,
@@ -766,6 +865,8 @@ static int dr_rule_add_member(struct mlx5dr_rule_rx_tx *nic_rule,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dr_rule_handle_action_stes(struct mlx5dr_rule *rule,
 				      struct mlx5dr_rule_rx_tx *nic_rule,
 				      struct list_head *send_ste_list,
@@ -781,10 +882,14 @@ static int dr_rule_handle_action_stes(struct mlx5dr_rule *rule,
 	u8 *curr_hw_ste, *prev_hw_ste;
 	struct mlx5dr_ste *action_ste;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, k;
 =======
 	int i, k, ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, k;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Two cases:
 	 * 1. num_of_builders is equal to new_hw_ste_arr_sz, the action in the ste
@@ -792,10 +897,13 @@ static int dr_rule_handle_action_stes(struct mlx5dr_rule *rule,
 	 *    to support the action.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (num_of_builders == new_hw_ste_arr_sz)
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = num_of_builders, k = 0; i < new_hw_ste_arr_sz; i++, k++) {
 		curr_hw_ste = hw_ste_arr + i * DR_STE_SIZE;
@@ -809,12 +917,18 @@ static int dr_rule_handle_action_stes(struct mlx5dr_rule *rule,
 		mlx5dr_ste_get(action_ste);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		action_ste->htbl->pointing_ste = last_ste;
 		last_ste->next_htbl = action_ste->htbl;
 		last_ste = action_ste;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* While free ste we go over the miss list, so add this ste to the list */
 		list_add_tail(&action_ste->miss_list_node,
 			      mlx5dr_ste_get_miss_list(action_ste));
@@ -829,6 +943,7 @@ static int dr_rule_handle_action_stes(struct mlx5dr_rule *rule,
 						     prev_hw_ste,
 						     action_ste->htbl);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		mlx5dr_rule_set_last_member(nic_rule, action_ste, true);
 
@@ -839,12 +954,18 @@ static int dr_rule_handle_action_stes(struct mlx5dr_rule *rule,
 			goto free_ste_info;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		mlx5dr_rule_set_last_member(nic_rule, action_ste, true);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mlx5dr_send_fill_and_append_ste_send_info(action_ste, DR_STE_SIZE, 0,
 							  curr_hw_ste,
 							  ste_info_arr[k],
 							  send_ste_list, false);
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	last_ste->next_htbl = NULL;
 
@@ -856,6 +977,12 @@ static int dr_rule_handle_action_stes(struct mlx5dr_rule *rule,
 free_ste_info:
 	kfree(ste_info_arr[k]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	last_ste->next_htbl = NULL;
+
+	return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_exit:
 	mlx5dr_ste_put(action_ste, matcher, nic_matcher);
 	return -ENOMEM;
@@ -975,6 +1102,7 @@ again:
 						  ste_location, send_ste_list);
 			if (!new_htbl) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				mlx5dr_err(dmn, "Failed creating rehash table, htbl-log_size: %d\n",
 					   cur_htbl->chunk_size);
 				mlx5dr_htbl_put(cur_htbl);
@@ -983,6 +1111,11 @@ again:
 				mlx5dr_err(dmn, "Failed creating rehash table, htbl-log_size: %d\n",
 					   cur_htbl->chunk_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				mlx5dr_err(dmn, "Failed creating rehash table, htbl-log_size: %d\n",
+					   cur_htbl->chunk_size);
+				mlx5dr_htbl_put(cur_htbl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			} else {
 				cur_htbl = new_htbl;
 			}
@@ -1150,19 +1283,27 @@ static enum mlx5dr_ipv dr_rule_get_ipv(struct mlx5dr_match_spec *spec)
 
 static bool dr_rule_skip(enum mlx5dr_domain_type domain,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 enum mlx5dr_domain_nic_type nic_type,
 =======
 			 enum mlx5dr_ste_entry_type ste_type,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 enum mlx5dr_domain_nic_type nic_type,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 struct mlx5dr_match_param *mask,
 			 struct mlx5dr_match_param *value,
 			 u32 flow_source)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool rx = nic_type == DR_DOMAIN_NIC_TYPE_RX;
 =======
 	bool rx = ste_type == MLX5DR_STE_TYPE_RX;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool rx = nic_type == DR_DOMAIN_NIC_TYPE_RX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (domain != MLX5DR_DOMAIN_TYPE_FDB)
 		return false;
@@ -1208,12 +1349,16 @@ dr_rule_create_rule_nic(struct mlx5dr_rule *rule,
 	nic_dmn = nic_matcher->nic_tbl->nic_dmn;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dr_rule_skip(dmn->type, nic_dmn->type, &matcher->mask, param,
 =======
 	INIT_LIST_HEAD(&nic_rule->rule_members_list);
 
 	if (dr_rule_skip(dmn->type, nic_dmn->ste_type, &matcher->mask, param,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dr_rule_skip(dmn->type, nic_dmn->type, &matcher->mask, param,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 rule->flow_source))
 		return 0;
 
@@ -1268,6 +1413,7 @@ dr_rule_create_rule_nic(struct mlx5dr_rule *rule,
 		cur_htbl = ste->next_htbl;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mlx5dr_ste_get(ste);
 		mlx5dr_rule_set_last_member(nic_rule, ste, true);
 =======
@@ -1280,6 +1426,10 @@ dr_rule_create_rule_nic(struct mlx5dr_rule *rule,
 
 		mlx5dr_ste_get(ste);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mlx5dr_ste_get(ste);
+		mlx5dr_rule_set_last_member(nic_rule, ste, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Connect actions */
@@ -1305,10 +1455,13 @@ dr_rule_create_rule_nic(struct mlx5dr_rule *rule,
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 free_ste:
 	mlx5dr_ste_put(ste, matcher, nic_matcher);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_rule:
 	dr_rule_clean_rule_members(rule, nic_rule);
 	/* Clean all ste_info's */

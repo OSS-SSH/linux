@@ -1804,10 +1804,14 @@ scsih_change_queue_depth(struct scsi_device *sdev, int qdepth)
 	 * is disabled.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ioc->enable_sdev_max_qd || ioc->is_gen35_ioc)
 =======
 	if (ioc->enable_sdev_max_qd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ioc->enable_sdev_max_qd || ioc->is_gen35_ioc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto not_sata;
 
 	sas_device_priv_data = sdev->hostdata;
@@ -2662,10 +2666,14 @@ scsih_slave_configure(struct scsi_device *sdev)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		qdepth = ioc->max_nvme_qd;
 =======
 		qdepth = MPT3SAS_NVME_QUEUE_DEPTH;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		qdepth = ioc->max_nvme_qd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ds = "NVMe";
 		sdev_printk(KERN_INFO, sdev,
 			"%s: handle(0x%04x), wwid(0x%016llx), port(%d)\n",
@@ -2718,11 +2726,16 @@ scsih_slave_configure(struct scsi_device *sdev)
 	sas_device->volume_wwid = volume_wwid;
 	if (sas_device->device_info & MPI2_SAS_DEVICE_INFO_SSP_TARGET) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		qdepth = (sas_device->port_type > 1) ?
 			ioc->max_wideport_qd : ioc->max_narrowport_qd;
 =======
 		qdepth = MPT3SAS_SAS_QUEUE_DEPTH;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		qdepth = (sas_device->port_type > 1) ?
+			ioc->max_wideport_qd : ioc->max_narrowport_qd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ssp_target = 1;
 		if (sas_device->device_info &
 				MPI2_SAS_DEVICE_INFO_SEP) {
@@ -2735,10 +2748,14 @@ scsih_slave_configure(struct scsi_device *sdev)
 			ds = "SSP";
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		qdepth = ioc->max_sata_qd;
 =======
 		qdepth = MPT3SAS_SATA_QUEUE_DEPTH;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		qdepth = ioc->max_sata_qd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (sas_device->device_info & MPI2_SAS_DEVICE_INFO_STP_TARGET)
 			ds = "STP";
 		else if (sas_device->device_info &
@@ -3322,10 +3339,14 @@ scsih_abort(struct scsi_cmnd *scmd)
 	    "scmd(0x%p), outstanding for %u ms & timeout %u ms\n",
 	    scmd, jiffies_to_msecs(jiffies - scmd->jiffies_at_alloc),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    (scsi_cmd_to_rq(scmd)->timeout / HZ) * 1000);
 =======
 	    (scmd->request->timeout / HZ) * 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    (scsi_cmd_to_rq(scmd)->timeout / HZ) * 1000);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	_scsih_tm_display_info(ioc, scmd);
 
 	sas_device_priv_data = scmd->device->hostdata;
@@ -5069,6 +5090,7 @@ _scsih_setup_eedp(struct MPT3SAS_ADAPTER *ioc, struct scsi_cmnd *scmd,
 {
 	u16 eedp_flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Mpi25SCSIIORequest_t *mpi_request_3v =
 	   (Mpi25SCSIIORequest_t *)mpi_request;
 
@@ -5097,47 +5119,39 @@ _scsih_setup_eedp(struct MPT3SAS_ADAPTER *ioc, struct scsi_cmnd *scmd,
 =======
 	unsigned char prot_op = scsi_get_prot_op(scmd);
 	unsigned char prot_type = scsi_get_prot_type(scmd);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	Mpi25SCSIIORequest_t *mpi_request_3v =
 	   (Mpi25SCSIIORequest_t *)mpi_request;
 
-	if (prot_type == SCSI_PROT_DIF_TYPE0 || prot_op == SCSI_PROT_NORMAL)
-		return;
-
-	if (prot_op ==  SCSI_PROT_READ_STRIP)
+	switch (scsi_get_prot_op(scmd)) {
+	case SCSI_PROT_READ_STRIP:
 		eedp_flags = MPI2_SCSIIO_EEDPFLAGS_CHECK_REMOVE_OP;
-	else if (prot_op ==  SCSI_PROT_WRITE_INSERT)
+		break;
+	case SCSI_PROT_WRITE_INSERT:
 		eedp_flags = MPI2_SCSIIO_EEDPFLAGS_INSERT_OP;
-	else
+		break;
+	default:
 		return;
-
-	switch (prot_type) {
-	case SCSI_PROT_DIF_TYPE1:
-	case SCSI_PROT_DIF_TYPE2:
-
-		/*
-		* enable ref/guard checking
-		* auto increment ref tag
-		*/
-		eedp_flags |= MPI2_SCSIIO_EEDPFLAGS_INC_PRI_REFTAG |
-		    MPI2_SCSIIO_EEDPFLAGS_CHECK_REFTAG |
-		    MPI2_SCSIIO_EEDPFLAGS_CHECK_GUARD;
-		mpi_request->CDB.EEDP32.PrimaryReferenceTag =
-		    cpu_to_be32(t10_pi_ref_tag(scmd->request));
-		break;
-
-	case SCSI_PROT_DIF_TYPE3:
-
-		/*
-		* enable guard checking
-		*/
-		eedp_flags |= MPI2_SCSIIO_EEDPFLAGS_CHECK_GUARD;
-
-		break;
 	}
 
+	if (scmd->prot_flags & SCSI_PROT_GUARD_CHECK)
+		eedp_flags |= MPI2_SCSIIO_EEDPFLAGS_CHECK_GUARD;
+
+	if (scmd->prot_flags & SCSI_PROT_REF_CHECK) {
+		eedp_flags |= MPI2_SCSIIO_EEDPFLAGS_INC_PRI_REFTAG |
+			MPI2_SCSIIO_EEDPFLAGS_CHECK_REFTAG;
+		mpi_request->CDB.EEDP32.PrimaryReferenceTag =
+			cpu_to_be32(scsi_prot_ref_tag(scmd));
+	}
+
+<<<<<<< HEAD
 	mpi_request_3v->EEDPBlockSize =
 	    cpu_to_le16(scmd->device->sector_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mpi_request_3v->EEDPBlockSize = cpu_to_le16(scsi_prot_interval(scmd));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ioc->is_gen35_ioc)
 		eedp_flags |= MPI25_SCSIIO_EEDPFLAGS_APPTAG_DISABLE_MODE;
@@ -5191,10 +5205,14 @@ scsih_qcmd(struct Scsi_Host *shost, struct scsi_cmnd *scmd)
 	struct MPT3SAS_TARGET *sas_target_priv_data;
 	struct _raid_device *raid_device;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(scmd);
 =======
 	struct request *rq = scmd->request;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(scmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int class;
 	Mpi25SCSIIORequest_t *mpi_request;
 	struct _pcie_device *pcie_device = NULL;
@@ -7425,12 +7443,18 @@ _scsih_add_device(struct MPT3SAS_ADAPTER *ioc, u16 handle, u8 phy_num,
 	/* get device name */
 	sas_device->device_name = le64_to_cpu(sas_device_pg0.DeviceName);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sas_device->port_type = sas_device_pg0.MaxPortConnections;
 	ioc_info(ioc,
 	    "handle(0x%0x) sas_address(0x%016llx) port_type(0x%0x)\n",
 	    handle, sas_device->sas_address, sas_device->port_type);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ioc->wait_for_discovery_to_complete)
 		_scsih_sas_device_init_add(ioc, sas_device);
@@ -9665,6 +9689,9 @@ _scsih_prep_device_scan(struct MPT3SAS_ADAPTER *ioc)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * _scsih_update_device_qdepth - Update QD during Reset.
  * @ioc: per adapter object
  *
@@ -9701,8 +9728,11 @@ _scsih_update_device_qdepth(struct MPT3SAS_ADAPTER *ioc)
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * _scsih_mark_responding_sas_device - mark a sas_devices as responding
  * @ioc: per adapter object
  * @sas_device_pg0: SAS Device page 0
@@ -10754,10 +10784,15 @@ _mpt3sas_fw_work(struct MPT3SAS_ADAPTER *ioc, struct fw_event_work *fw_event)
 		_scsih_del_dirty_vphy(ioc);
 		_scsih_del_dirty_port_entries(ioc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ioc->is_gen35_ioc)
 			_scsih_update_device_qdepth(ioc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ioc->is_gen35_ioc)
+			_scsih_update_device_qdepth(ioc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		_scsih_scan_for_devices_after_reset(ioc);
 		/*
 		 * If diag reset has occurred during the driver load
@@ -10828,11 +10863,15 @@ _mpt3sas_fw_work(struct MPT3SAS_ADAPTER *ioc, struct fw_event_work *fw_event)
 		_scsih_pcie_topology_change_event(ioc, fw_event);
 		ioc->current_event = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return;
 =======
 			return;
 	break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 out:
 	fw_event_work_put(fw_event);
@@ -11287,6 +11326,7 @@ static void scsih_remove(struct pci_dev *pdev)
 	ioc->remove_host = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pci_device_is_present(pdev)) {
 		mpt3sas_base_pause_mq_polling(ioc);
 		_scsih_flush_running_cmds(ioc);
@@ -11295,6 +11335,12 @@ static void scsih_remove(struct pci_dev *pdev)
 	if (!pci_device_is_present(pdev))
 		_scsih_flush_running_cmds(ioc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!pci_device_is_present(pdev)) {
+		mpt3sas_base_pause_mq_polling(ioc);
+		_scsih_flush_running_cmds(ioc);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	_scsih_fw_event_cleanup_queue(ioc);
 
@@ -11390,6 +11436,7 @@ scsih_shutdown(struct pci_dev *pdev)
 	ioc->remove_host = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pci_device_is_present(pdev)) {
 		mpt3sas_base_pause_mq_polling(ioc);
 		_scsih_flush_running_cmds(ioc);
@@ -11398,6 +11445,12 @@ scsih_shutdown(struct pci_dev *pdev)
 	if (!pci_device_is_present(pdev))
 		_scsih_flush_running_cmds(ioc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!pci_device_is_present(pdev)) {
+		mpt3sas_base_pause_mq_polling(ioc);
+		_scsih_flush_running_cmds(ioc);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	_scsih_fw_event_cleanup_queue(ioc);
 
@@ -11418,15 +11471,21 @@ scsih_shutdown(struct pci_dev *pdev)
 	_scsih_ir_shutdown(ioc);
 	_scsih_nvme_shutdown(ioc);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mpt3sas_base_mask_interrupts(ioc);
 	ioc->shost_recovery = 1;
 	mpt3sas_base_make_ioc_ready(ioc, SOFT_RESET);
 	ioc->shost_recovery = 0;
 	mpt3sas_base_free_irq(ioc);
 	mpt3sas_base_disable_msix(ioc);
+<<<<<<< HEAD
 =======
 	mpt3sas_base_detach(ioc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -11912,10 +11971,14 @@ static int scsih_map_queues(struct Scsi_Host *shost)
 	struct MPT3SAS_ADAPTER *ioc =
 	    (struct MPT3SAS_ADAPTER *)shost->hostdata;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct blk_mq_queue_map *map;
 	int i, qoff, offset;
 	int nr_msix_vectors = ioc->iopoll_q_start_index;
 	int iopoll_q_count = ioc->reply_queue_count - nr_msix_vectors;
+<<<<<<< HEAD
 
 	if (shost->nr_hw_queues == 1)
 		return 0;
@@ -11948,13 +12011,45 @@ static int scsih_map_queues(struct Scsi_Host *shost)
 	}
 	return 0;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (ioc->shost->nr_hw_queues == 1)
+	if (shost->nr_hw_queues == 1)
 		return 0;
 
+<<<<<<< HEAD
 	return blk_mq_pci_map_queues(&shost->tag_set.map[HCTX_TYPE_DEFAULT],
 	    ioc->pdev, ioc->high_iops_queues);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0, qoff = 0; i < shost->nr_maps; i++) {
+		map = &shost->tag_set.map[i];
+		map->nr_queues = 0;
+		offset = 0;
+		if (i == HCTX_TYPE_DEFAULT) {
+			map->nr_queues =
+			    nr_msix_vectors - ioc->high_iops_queues;
+			offset = ioc->high_iops_queues;
+		} else if (i == HCTX_TYPE_POLL)
+			map->nr_queues = iopoll_q_count;
+
+		if (!map->nr_queues)
+			BUG_ON(i == HCTX_TYPE_DEFAULT);
+
+		/*
+		 * The poll queue(s) doesn't have an IRQ (and hence IRQ
+		 * affinity), so use the regular blk-mq cpu mapping
+		 */
+		map->queue_offset = qoff;
+		if (i != HCTX_TYPE_POLL)
+			blk_mq_pci_map_queues(map, ioc->pdev, offset);
+		else
+			blk_mq_map_queues(map);
+
+		qoff += map->nr_queues;
+	}
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* shost template for SAS 2.0 HBA devices */
@@ -12026,9 +12121,13 @@ static struct scsi_host_template mpt3sas_driver_template = {
 	.cmd_size			= sizeof(struct scsiio_tracker),
 	.map_queues			= scsih_map_queues,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.mq_poll			= mpt3sas_blk_mq_poll,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.mq_poll			= mpt3sas_blk_mq_poll,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* raid transport support for SAS 3.0 HBA devices */
@@ -12126,9 +12225,13 @@ _scsih_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	int rv;
 	u16 hba_mpi_version;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int iopoll_q_count = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int iopoll_q_count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Determine in which MPI version class this pci device belongs */
 	hba_mpi_version = _scsih_determine_hba_mpi_version(pdev);
@@ -12377,13 +12480,19 @@ _scsih_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	shost->host_tagset = 0;
 
 	if (ioc->is_gen35_ioc && host_tagset_enable)
 		shost->host_tagset = 1;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ioc->is_driver_loading = 1;
 	if ((mpt3sas_base_attach(ioc))) {
 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
@@ -12407,6 +12516,7 @@ _scsih_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		ioc->hide_drives = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	shost->nr_hw_queues = 1;
 
 	if (shost->host_tagset) {
@@ -12420,16 +12530,23 @@ _scsih_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 =======
 	shost->host_tagset = 0;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	shost->nr_hw_queues = 1;
 
-	if (ioc->is_gen35_ioc && ioc->reply_queue_count > 1 &&
-	    host_tagset_enable && ioc->smp_affinity_enable) {
-
-		shost->host_tagset = 1;
+	if (shost->host_tagset) {
 		shost->nr_hw_queues =
 		    ioc->reply_queue_count - ioc->high_iops_queues;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		iopoll_q_count =
+		    ioc->reply_queue_count - ioc->iopoll_q_start_index;
+
+		shost->nr_maps = iopoll_q_count ? 3 : 1;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_info(&ioc->pdev->dev,
 		    "Max SCSIIO MPT commands: %d shared with nr_hw_queues = %d\n",
 		    shost->can_queue, shost->nr_hw_queues);
@@ -12554,9 +12671,13 @@ scsih_pci_error_detected(struct pci_dev *pdev, pci_channel_state_t state)
 		ioc->pci_error_recovery = 1;
 		mpt3sas_base_stop_watchdog(ioc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mpt3sas_base_pause_mq_polling(ioc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mpt3sas_base_pause_mq_polling(ioc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		_scsih_flush_running_cmds(ioc);
 		return PCI_ERS_RESULT_DISCONNECT;
 	}

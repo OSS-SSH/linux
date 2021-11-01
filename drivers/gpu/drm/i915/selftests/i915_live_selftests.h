@@ -27,9 +27,13 @@ selftest(gt_pm, intel_gt_pm_live_selftests)
 selftest(gt_heartbeat, intel_heartbeat_live_selftests)
 selftest(requests, i915_request_live_selftests)
 <<<<<<< HEAD
+<<<<<<< HEAD
 selftest(migrate, intel_migrate_live_selftests)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+selftest(migrate, intel_migrate_live_selftests)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 selftest(active, i915_active_live_selftests)
 selftest(objects, i915_gem_object_live_selftests)
 selftest(mman, i915_gem_mman_live_selftests)
@@ -42,6 +46,7 @@ selftest(evict, i915_gem_evict_live_selftests)
 selftest(hugepages, i915_gem_huge_page_live_selftests)
 selftest(gem_contexts, i915_gem_context_live_selftests)
 <<<<<<< HEAD
+<<<<<<< HEAD
 selftest(client, i915_gem_client_blt_live_selftests)
 selftest(gem_migrate, i915_gem_migrate_live_selftests)
 =======
@@ -49,6 +54,10 @@ selftest(gem_execbuf, i915_gem_execbuffer_live_selftests)
 selftest(blt, i915_gem_object_blt_live_selftests)
 selftest(client, i915_gem_client_blt_live_selftests)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+selftest(client, i915_gem_client_blt_live_selftests)
+selftest(gem_migrate, i915_gem_migrate_live_selftests)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 selftest(reset, intel_reset_live_selftests)
 selftest(memory_region, intel_memory_region_live_selftests)
 selftest(hangcheck, intel_hangcheck_live_selftests)
@@ -56,8 +65,12 @@ selftest(execlists, intel_execlists_live_selftests)
 selftest(ring_submission, intel_ring_submission_live_selftests)
 selftest(perf, i915_perf_live_selftests)
 <<<<<<< HEAD
+<<<<<<< HEAD
 selftest(slpc, intel_slpc_live_selftests)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+selftest(slpc, intel_slpc_live_selftests)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Here be dragons: keep last to run last! */
 selftest(late_gt_pm, intel_gt_pm_late_selftests)

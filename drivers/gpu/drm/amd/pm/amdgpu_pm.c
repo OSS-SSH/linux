@@ -2006,16 +2006,22 @@ static struct amdgpu_device_attr amdgpu_device_attrs[] = {
 	AMDGPU_DEVICE_ATTR_RW(power_dpm_state,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
 	AMDGPU_DEVICE_ATTR_RW(power_dpm_force_performance_level,	ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	AMDGPU_DEVICE_ATTR_RO(pp_num_states,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
 	AMDGPU_DEVICE_ATTR_RO(pp_cur_state,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
 	AMDGPU_DEVICE_ATTR_RW(pp_force_state,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
 	AMDGPU_DEVICE_ATTR_RW(pp_table,					ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
+<<<<<<< HEAD
 =======
 	AMDGPU_DEVICE_ATTR_RO(pp_num_states,				ATTR_FLAG_BASIC),
 	AMDGPU_DEVICE_ATTR_RO(pp_cur_state,				ATTR_FLAG_BASIC),
 	AMDGPU_DEVICE_ATTR_RW(pp_force_state,				ATTR_FLAG_BASIC),
 	AMDGPU_DEVICE_ATTR_RW(pp_table,					ATTR_FLAG_BASIC),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	AMDGPU_DEVICE_ATTR_RW(pp_dpm_sclk,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
 	AMDGPU_DEVICE_ATTR_RW(pp_dpm_mclk,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
 	AMDGPU_DEVICE_ATTR_RW(pp_dpm_socclk,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
@@ -2102,14 +2108,20 @@ static int default_attr_update(struct amdgpu_device *adev, struct amdgpu_device_
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (asic_type) {
 	case CHIP_ARCTURUS:
 	case CHIP_ALDEBARAN:
 		/* the Mi series card does not support standalone mclk/socclk/fclk level setting */
+<<<<<<< HEAD
 =======
 	if (asic_type == CHIP_ARCTURUS) {
 		/* Arcturus does not support standalone mclk/socclk/fclk level setting */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (DEVICE_ATTR_IS(pp_dpm_mclk) ||
 		    DEVICE_ATTR_IS(pp_dpm_socclk) ||
 		    DEVICE_ATTR_IS(pp_dpm_fclk)) {
@@ -2117,11 +2129,17 @@ static int default_attr_update(struct amdgpu_device *adev, struct amdgpu_device_
 			dev_attr->store = NULL;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		break;
 	default:
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+	default:
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (DEVICE_ATTR_IS(pp_dpm_dcefclk)) {
@@ -2400,10 +2418,14 @@ static ssize_t amdgpu_hwmon_get_pwm1_enable(struct device *dev,
 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%u\n", pwm_mode);
 =======
 	return sprintf(buf, "%u\n", pwm_mode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%u\n", pwm_mode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t amdgpu_hwmon_set_pwm1_enable(struct device *dev,
@@ -2449,10 +2471,14 @@ static ssize_t amdgpu_hwmon_get_pwm1_min(struct device *dev,
 					 char *buf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%i\n", 0);
 =======
 	return sprintf(buf, "%i\n", 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%i\n", 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t amdgpu_hwmon_get_pwm1_max(struct device *dev,
@@ -2460,10 +2486,14 @@ static ssize_t amdgpu_hwmon_get_pwm1_max(struct device *dev,
 					 char *buf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%i\n", 255);
 =======
 	return sprintf(buf, "%i\n", 255);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%i\n", 255);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t amdgpu_hwmon_set_pwm1(struct device *dev,
@@ -2502,6 +2532,7 @@ static ssize_t amdgpu_hwmon_set_pwm1(struct device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adev->powerplay.pp_funcs->set_fan_speed_pwm)
 		err = amdgpu_dpm_set_fan_speed_pwm(adev, value);
 =======
@@ -2510,6 +2541,10 @@ static ssize_t amdgpu_hwmon_set_pwm1(struct device *dev,
 	if (adev->powerplay.pp_funcs->set_fan_speed_percent)
 		err = amdgpu_dpm_set_fan_speed_percent(adev, value);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adev->powerplay.pp_funcs->set_fan_speed_pwm)
+		err = amdgpu_dpm_set_fan_speed_pwm(adev, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		err = -EINVAL;
 
@@ -2542,12 +2577,17 @@ static ssize_t amdgpu_hwmon_get_pwm1(struct device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adev->powerplay.pp_funcs->get_fan_speed_pwm)
 		err = amdgpu_dpm_get_fan_speed_pwm(adev, &speed);
 =======
 	if (adev->powerplay.pp_funcs->get_fan_speed_percent)
 		err = amdgpu_dpm_get_fan_speed_percent(adev, &speed);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adev->powerplay.pp_funcs->get_fan_speed_pwm)
+		err = amdgpu_dpm_get_fan_speed_pwm(adev, &speed);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		err = -EINVAL;
 
@@ -2558,12 +2598,16 @@ static ssize_t amdgpu_hwmon_get_pwm1(struct device *dev,
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%i\n", speed);
 =======
 	speed = (speed * 255) / 100;
 
 	return sprintf(buf, "%i\n", speed);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%i\n", speed);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t amdgpu_hwmon_get_fan1_input(struct device *dev,
@@ -2597,10 +2641,14 @@ static ssize_t amdgpu_hwmon_get_fan1_input(struct device *dev,
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%i\n", speed);
 =======
 	return sprintf(buf, "%i\n", speed);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%i\n", speed);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t amdgpu_hwmon_get_fan1_min(struct device *dev,
@@ -2698,10 +2746,14 @@ static ssize_t amdgpu_hwmon_get_fan1_target(struct device *dev,
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%i\n", rpm);
 =======
 	return sprintf(buf, "%i\n", rpm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%i\n", rpm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t amdgpu_hwmon_set_fan1_target(struct device *dev,
@@ -2784,10 +2836,14 @@ static ssize_t amdgpu_hwmon_get_fan1_enable(struct device *dev,
 	pm_runtime_put_autosuspend(adev_to_drm(adev)->dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%i\n", pwm_mode == AMD_FAN_CTRL_AUTO ? 0 : 1);
 =======
 	return sprintf(buf, "%i\n", pwm_mode == AMD_FAN_CTRL_AUTO ? 0 : 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%i\n", pwm_mode == AMD_FAN_CTRL_AUTO ? 0 : 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t amdgpu_hwmon_set_fan1_enable(struct device *dev,
@@ -2958,10 +3014,14 @@ static ssize_t amdgpu_hwmon_show_power_cap_min(struct device *dev,
 					 char *buf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%i\n", 0);
 =======
 	return sprintf(buf, "%i\n", 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "%i\n", 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -3237,11 +3297,17 @@ static ssize_t amdgpu_hwmon_show_mclk_label(struct device *dev,
  * - fan[1-\*]_enable: Enable or disable the sensors.1: Enable 0: Disable
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * NOTE: DO NOT set the fan speed via "pwm1" and "fan[1-\*]_target" interfaces at the same time.
  *       That will get the former one overridden.
  *
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * NOTE: DO NOT set the fan speed via "pwm1" and "fan[1-\*]_target" interfaces at the same time.
+ *       That will get the former one overridden.
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * hwmon interfaces for GPU clocks:
  *
  * - freq1_input: the gfx/compute clock in hertz
@@ -3418,20 +3484,28 @@ static umode_t hwmon_attributes_visible(struct kobject *kobj,
 	if (!is_support_sw_smu(adev)) {
 		/* mask fan attributes if we have no bindings for this asic to expose */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((!adev->powerplay.pp_funcs->get_fan_speed_pwm &&
 =======
 		if ((!adev->powerplay.pp_funcs->get_fan_speed_percent &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((!adev->powerplay.pp_funcs->get_fan_speed_pwm &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     attr == &sensor_dev_attr_pwm1.dev_attr.attr) || /* can't query fan */
 		    (!adev->powerplay.pp_funcs->get_fan_control_mode &&
 		     attr == &sensor_dev_attr_pwm1_enable.dev_attr.attr)) /* can't query state */
 			effective_mode &= ~S_IRUGO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((!adev->powerplay.pp_funcs->set_fan_speed_pwm &&
 =======
 		if ((!adev->powerplay.pp_funcs->set_fan_speed_percent &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((!adev->powerplay.pp_funcs->set_fan_speed_pwm &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     attr == &sensor_dev_attr_pwm1.dev_attr.attr) || /* can't manage fan */
 		    (!adev->powerplay.pp_funcs->set_fan_control_mode &&
 		     attr == &sensor_dev_attr_pwm1_enable.dev_attr.attr)) /* can't manage state */
@@ -3456,12 +3530,17 @@ static umode_t hwmon_attributes_visible(struct kobject *kobj,
 	if (!is_support_sw_smu(adev)) {
 		/* hide max/min values if we can't both query and manage the fan */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((!adev->powerplay.pp_funcs->set_fan_speed_pwm &&
 		     !adev->powerplay.pp_funcs->get_fan_speed_pwm) &&
 =======
 		if ((!adev->powerplay.pp_funcs->set_fan_speed_percent &&
 		     !adev->powerplay.pp_funcs->get_fan_speed_percent) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((!adev->powerplay.pp_funcs->set_fan_speed_pwm &&
+		     !adev->powerplay.pp_funcs->get_fan_speed_pwm) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     (!adev->powerplay.pp_funcs->set_fan_speed_rpm &&
 		     !adev->powerplay.pp_funcs->get_fan_speed_rpm) &&
 		    (attr == &sensor_dev_attr_pwm1_max.dev_attr.attr ||

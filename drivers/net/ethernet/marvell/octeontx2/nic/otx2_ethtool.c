@@ -1,18 +1,25 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RVU Ethernet driver
  *
  * Copyright (C) 2020 Marvell.
  *
 =======
 /* Marvell OcteonTx2 RVU Ethernet driver
+=======
+/* Marvell RVU Ethernet driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2020 Marvell International Ltd.
+ * Copyright (C) 2020 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/pci.h>
@@ -27,12 +34,17 @@
 #include "otx2_ptp.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DRV_NAME	"rvu-nicpf"
 #define DRV_VF_NAME	"rvu-nicvf"
 =======
 #define DRV_NAME	"octeontx2-nicpf"
 #define DRV_VF_NAME	"octeontx2-nicvf"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DRV_NAME	"rvu-nicpf"
+#define DRV_VF_NAME	"rvu-nicvf"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct otx2_stat {
 	char name[ETH_GSTRING_LEN];
@@ -46,11 +58,14 @@ struct otx2_stat {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Physical link config */
 #define OTX2_ETHTOOL_SUPPORTED_MODES 0x638CCBF //110001110001100110010111111
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum link_mode {
 	OTX2_MODE_SUPPORTED,
 	OTX2_MODE_ADVERTISED
@@ -314,15 +329,20 @@ static int otx2_set_channels(struct net_device *dev,
 				       channel->rx_count);
 	if (err)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 =======
 		goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pfvf->hw.rx_queues = channel->rx_count;
 	pfvf->hw.tx_queues = channel->tx_count;
 	pfvf->qset.cq_cnt = pfvf->hw.tx_queues +  pfvf->hw.rx_queues;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (if_up)
 		err = dev->netdev_ops->ndo_open(dev);
@@ -331,6 +351,10 @@ fail:
 	if (if_up)
 		dev->netdev_ops->ndo_open(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (if_up)
+		err = dev->netdev_ops->ndo_open(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	netdev_info(dev, "Setting num Tx rings to %d, Rx rings to %d success\n",
 		    pfvf->hw.tx_queues, pfvf->hw.rx_queues);
@@ -435,15 +459,20 @@ static int otx2_set_ringparam(struct net_device *netdev,
 
 	if (if_up)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return netdev->netdev_ops->ndo_open(netdev);
 =======
 		netdev->netdev_ops->ndo_open(netdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return netdev->netdev_ops->ndo_open(netdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 
 static int otx2_get_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			     struct ethtool_coalesce *cmd,
 			     struct kernel_ethtool_coalesce *kernel_coal,
@@ -451,6 +480,11 @@ static int otx2_get_coalesce(struct net_device *netdev,
 =======
 			     struct ethtool_coalesce *cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *cmd,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct otx2_nic *pfvf = netdev_priv(netdev);
 	struct otx2_hw *hw = &pfvf->hw;
@@ -465,12 +499,18 @@ static int otx2_get_coalesce(struct net_device *netdev,
 
 static int otx2_set_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct ethtool_coalesce *ec,
 			     struct kernel_ethtool_coalesce *kernel_coal,
 			     struct netlink_ext_ack *extack)
 =======
 			     struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *ec,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct otx2_nic *pfvf = netdev_priv(netdev);
 	struct otx2_hw *hw = &pfvf->hw;
@@ -687,9 +727,13 @@ static int otx2_get_rxnfc(struct net_device *dev,
 			  struct ethtool_rxnfc *nfc, u32 *rules)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool ntuple = !!(dev->features & NETIF_F_NTUPLE);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool ntuple = !!(dev->features & NETIF_F_NTUPLE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct otx2_nic *pfvf = netdev_priv(dev);
 	int ret = -EOPNOTSUPP;
 
@@ -700,10 +744,14 @@ static int otx2_get_rxnfc(struct net_device *dev,
 		break;
 	case ETHTOOL_GRXCLSRLCNT:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (netif_running(dev) && ntuple) {
 			nfc->rule_cnt = pfvf->flow_cfg->nr_flows;
 			ret = 0;
 		}
+<<<<<<< HEAD
 		break;
 	case ETHTOOL_GRXCLSRULE:
 		if (netif_running(dev) && ntuple)
@@ -715,13 +763,21 @@ static int otx2_get_rxnfc(struct net_device *dev,
 =======
 		nfc->rule_cnt = pfvf->flow_cfg->nr_flows;
 		ret = 0;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case ETHTOOL_GRXCLSRULE:
-		ret = otx2_get_flow(pfvf, nfc,  nfc->fs.location);
+		if (netif_running(dev) && ntuple)
+			ret = otx2_get_flow(pfvf, nfc,  nfc->fs.location);
 		break;
 	case ETHTOOL_GRXCLSRLALL:
+<<<<<<< HEAD
 		ret = otx2_get_all_flows(pfvf, nfc, rules);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (netif_running(dev) && ntuple)
+			ret = otx2_get_all_flows(pfvf, nfc, rules);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case ETHTOOL_GRXFH:
 		return otx2_get_rss_hash_opts(pfvf, nfc);
@@ -756,6 +812,7 @@ static int otx2_set_rxnfc(struct net_device *dev, struct ethtool_rxnfc *nfc)
 	return ret;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int otx2vf_get_rxnfc(struct net_device *dev,
@@ -794,6 +851,8 @@ static int otx2vf_set_rxnfc(struct net_device *dev, struct ethtool_rxnfc *nfc)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u32 otx2_get_rxfh_key_size(struct net_device *netdev)
 {
 	struct otx2_nic *pfvf = netdev_priv(netdev);
@@ -1180,10 +1239,13 @@ static void otx2_get_link_mode_info(u64 link_mode_bmap,
 	u8 bit;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	link_mode_bmap = link_mode_bmap & OTX2_ETHTOOL_SUPPORTED_MODES;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_set_bit(bit, (unsigned long *)&link_mode_bmap, 27) {
 		/* SGMII mode is set */
 		if (bit == 0)
@@ -1424,12 +1486,17 @@ static const struct ethtool_ops otx2vf_ethtool_ops = {
 	.set_channels		= otx2_set_channels,
 	.get_channels		= otx2_get_channels,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.get_rxnfc		= otx2_get_rxnfc,
 	.set_rxnfc              = otx2_set_rxnfc,
 =======
 	.get_rxnfc		= otx2vf_get_rxnfc,
 	.set_rxnfc              = otx2vf_set_rxnfc,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.get_rxnfc		= otx2_get_rxnfc,
+	.set_rxnfc              = otx2_set_rxnfc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.get_rxfh_key_size	= otx2_get_rxfh_key_size,
 	.get_rxfh_indir_size	= otx2_get_rxfh_indir_size,
 	.get_rxfh		= otx2_get_rxfh,

@@ -2,17 +2,25 @@
 #include <linux/kmod.h>
 #include <linux/netdevice.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/inetdevice.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/inetdevice.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/etherdevice.h>
 #include <linux/rtnetlink.h>
 #include <linux/net_tstamp.h>
 #include <linux/wireless.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/if_bridge.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/if_bridge.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/dsa.h>
 #include <net/wext.h>
 
@@ -33,6 +41,7 @@ static int dev_ifname(struct net *net, struct ifreq *ifr)
 	return netdev_get_name(net, ifr->ifr_name, ifr->ifr_ifindex);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static gifconf_func_t *gifconf_list[NPROTO];
@@ -56,11 +65,14 @@ int register_gifconf(unsigned int family, gifconf_func_t *gifconf)
 EXPORT_SYMBOL(register_gifconf);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  *	Perform a SIOCGIFCONF call. This structure will change
  *	size eventually, and there is nothing I can do about it.
  *	Thus we will need a 'compatibility mode'.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 int dev_ifconf(struct net *net, struct ifconf __user *uifc)
 {
@@ -162,53 +174,109 @@ static int dev_setifmap(struct net_device *dev, struct ifreq *ifr)
 =======
 
 int dev_ifconf(struct net *net, struct ifconf *ifc, int size)
+=======
+int dev_ifconf(struct net *net, struct ifconf __user *uifc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_device *dev;
-	char __user *pos;
-	int len;
-	int total;
-	int i;
+	void __user *pos;
+	size_t size;
+	int len, total = 0, done;
 
-	/*
-	 *	Fetch the caller's info block.
-	 */
+	/* both the ifconf and the ifreq structures are slightly different */
+	if (in_compat_syscall()) {
+		struct compat_ifconf ifc32;
 
-	pos = ifc->ifc_buf;
-	len = ifc->ifc_len;
+		if (copy_from_user(&ifc32, uifc, sizeof(struct compat_ifconf)))
+			return -EFAULT;
 
-	/*
-	 *	Loop over the interfaces, and write an info block for each.
-	 */
+		pos = compat_ptr(ifc32.ifcbuf);
+		len = ifc32.ifc_len;
+		size = sizeof(struct compat_ifreq);
+	} else {
+		struct ifconf ifc;
 
-	total = 0;
-	for_each_netdev(net, dev) {
-		for (i = 0; i < NPROTO; i++) {
-			if (gifconf_list[i]) {
-				int done;
-				if (!pos)
-					done = gifconf_list[i](dev, NULL, 0, size);
-				else
-					done = gifconf_list[i](dev, pos + total,
-							       len - total, size);
-				if (done < 0)
-					return -EFAULT;
-				total += done;
-			}
-		}
+		if (copy_from_user(&ifc, uifc, sizeof(struct ifconf)))
+			return -EFAULT;
+
+		pos = ifc.ifc_buf;
+		len = ifc.ifc_len;
+		size = sizeof(struct ifreq);
 	}
 
-	/*
-	 *	All done.  Write the updated control block back to the caller.
-	 */
-	ifc->ifc_len = total;
+	/* Loop over the interfaces, and write an info block for each. */
+	rtnl_lock();
+	for_each_netdev(net, dev) {
+		if (!pos)
+			done = inet_gifconf(dev, NULL, 0, size);
+		else
+			done = inet_gifconf(dev, pos + total,
+					    len - total, size);
+		if (done < 0) {
+			rtnl_unlock();
+			return -EFAULT;
+		}
+		total += done;
+	}
+	rtnl_unlock();
 
-	/*
-	 * 	Both BSD and Solaris return 0 here, so we do too.
-	 */
+	return put_user(total, &uifc->ifc_len);
+}
+
+static int dev_getifmap(struct net_device *dev, struct ifreq *ifr)
+{
+	struct ifmap *ifmap = &ifr->ifr_map;
+
+	if (in_compat_syscall()) {
+		struct compat_ifmap *cifmap = (struct compat_ifmap *)ifmap;
+
+		cifmap->mem_start = dev->mem_start;
+		cifmap->mem_end   = dev->mem_end;
+		cifmap->base_addr = dev->base_addr;
+		cifmap->irq       = dev->irq;
+		cifmap->dma       = dev->dma;
+		cifmap->port      = dev->if_port;
+
+		return 0;
+	}
+
+	ifmap->mem_start  = dev->mem_start;
+	ifmap->mem_end    = dev->mem_end;
+	ifmap->base_addr  = dev->base_addr;
+	ifmap->irq        = dev->irq;
+	ifmap->dma        = dev->dma;
+	ifmap->port       = dev->if_port;
+
 	return 0;
 }
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dev_setifmap(struct net_device *dev, struct ifreq *ifr)
+{
+	struct compat_ifmap *cifmap = (struct compat_ifmap *)&ifr->ifr_map;
+
+	if (!dev->netdev_ops->ndo_set_config)
+		return -EOPNOTSUPP;
+
+	if (in_compat_syscall()) {
+		struct ifmap ifmap = {
+			.mem_start  = cifmap->mem_start,
+			.mem_end    = cifmap->mem_end,
+			.base_addr  = cifmap->base_addr,
+			.irq        = cifmap->irq,
+			.dma        = cifmap->dma,
+			.port       = cifmap->port,
+		};
+
+		return dev->netdev_ops->ndo_set_config(dev, &ifmap);
+	}
+
+	return dev->netdev_ops->ndo_set_config(dev, &ifr->ifr_map);
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  *	Perform the SIOCxIFxxx calls, inside rcu_read_lock()
  */
@@ -240,6 +308,7 @@ static int dev_ifsioc_locked(struct net *net, struct ifreq *ifr, unsigned int cm
 
 	case SIOCGIFMAP:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return dev_getifmap(dev, ifr);
 =======
 		ifr->ifr_map.mem_start = dev->mem_start;
@@ -250,6 +319,9 @@ static int dev_ifsioc_locked(struct net *net, struct ifreq *ifr, unsigned int cm
 		ifr->ifr_map.port      = dev->if_port;
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return dev_getifmap(dev, ifr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	case SIOCGIFINDEX:
 		ifr->ifr_ifindex = dev->ifindex;
@@ -331,16 +403,22 @@ static int net_hwtstamp_validate(struct ifreq *ifr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dev_eth_ioctl(struct net_device *dev,
 			 struct ifreq *ifr, unsigned int cmd)
 =======
 static int dev_do_ioctl(struct net_device *dev,
 			struct ifreq *ifr, unsigned int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dev_eth_ioctl(struct net_device *dev,
+			 struct ifreq *ifr, unsigned int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct net_device_ops *ops = dev->netdev_ops;
 	int err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = dsa_ndo_eth_ioctl(dev, ifr, cmd);
 	if (err == 0 || err != -EOPNOTSUPP)
@@ -351,13 +429,20 @@ static int dev_do_ioctl(struct net_device *dev,
 			err = ops->ndo_eth_ioctl(dev, ifr, cmd);
 =======
 	err = dsa_ndo_do_ioctl(dev, ifr, cmd);
+=======
+	err = dsa_ndo_eth_ioctl(dev, ifr, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err == 0 || err != -EOPNOTSUPP)
 		return err;
 
-	if (ops->ndo_do_ioctl) {
+	if (ops->ndo_eth_ioctl) {
 		if (netif_device_present(dev))
+<<<<<<< HEAD
 			err = ops->ndo_do_ioctl(dev, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			err = ops->ndo_eth_ioctl(dev, ifr, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else
 			err = -ENODEV;
 	}
@@ -366,6 +451,9 @@ static int dev_do_ioctl(struct net_device *dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dev_siocbond(struct net_device *dev,
 			struct ifreq *ifr, unsigned int cmd)
 {
@@ -410,6 +498,7 @@ static int dev_siocwandev(struct net_device *dev, struct if_settings *ifs)
 	return -EOPNOTSUPP;
 }
 
+<<<<<<< HEAD
 /*
  *	Perform the SIOCxIFxxx calls, inside rtnl_lock()
  */
@@ -421,6 +510,13 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, void __user *data,
  */
 static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+ *	Perform the SIOCxIFxxx calls, inside rtnl_lock()
+ */
+static int dev_ifsioc(struct net *net, struct ifreq *ifr, void __user *data,
+		      unsigned int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err;
 	struct net_device *dev = __dev_get_by_name(net, ifr->ifr_name);
@@ -458,6 +554,7 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 
 	case SIOCSIFMAP:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return dev_setifmap(dev, ifr);
 =======
 		if (ops->ndo_set_config) {
@@ -467,6 +564,9 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 		}
 		return -EOPNOTSUPP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return dev_setifmap(dev, ifr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	case SIOCADDMULTI:
 		if (!ops->ndo_set_rx_mode ||
@@ -494,6 +594,9 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 		return dev_change_name(dev, ifr->ifr_newname);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOCWANDEV:
 		return dev_siocwandev(dev, &ifr->ifr_settings);
 
@@ -510,8 +613,11 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 		rtnl_lock();
 		return err;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOCSHWTSTAMP:
 		err = net_hwtstamp_validate(ifr);
 		if (err)
@@ -523,6 +629,9 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 	 */
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (cmd >= SIOCDEVPRIVATE &&
 		    cmd <= SIOCDEVPRIVATE + 15)
 			return dev_siocdevprivate(dev, ifr, data, cmd);
@@ -534,15 +643,19 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 		    cmd == SIOCGHWTSTAMP) {
 			err = dev_eth_ioctl(dev, ifr, cmd);
 		} else if (cmd == SIOCBONDENSLAVE ||
+<<<<<<< HEAD
 =======
 		if ((cmd >= SIOCDEVPRIVATE &&
 		    cmd <= SIOCDEVPRIVATE + 15) ||
 		    cmd == SIOCBONDENSLAVE ||
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    cmd == SIOCBONDRELEASE ||
 		    cmd == SIOCBONDSETHWADDR ||
 		    cmd == SIOCBONDSLAVEINFOQUERY ||
 		    cmd == SIOCBONDINFOQUERY ||
+<<<<<<< HEAD
 <<<<<<< HEAD
 		    cmd == SIOCBONDCHANGEACTIVE) {
 			err = dev_siocbond(dev, ifr, cmd);
@@ -558,6 +671,10 @@ static int dev_ifsioc(struct net *net, struct ifreq *ifr, unsigned int cmd)
 		    cmd == SIOCWANDEV) {
 			err = dev_do_ioctl(dev, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    cmd == SIOCBONDCHANGEACTIVE) {
+			err = dev_siocbond(dev, ifr, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else
 			err = -EINVAL;
 
@@ -611,11 +728,16 @@ EXPORT_SYMBOL(dev_load);
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr,
 	      void __user *data, bool *need_copyout)
 =======
 int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr, bool *need_copyout)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr,
+	      void __user *data, bool *need_copyout)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 	char *colon;
@@ -667,10 +789,14 @@ int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr, bool *need_c
 		dev_load(net, ifr->ifr_name);
 		rtnl_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = dev_ethtool(net, ifr, data);
 =======
 		ret = dev_ethtool(net, ifr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = dev_ethtool(net, ifr, data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtnl_unlock();
 		if (colon)
 			*colon = ':';
@@ -690,10 +816,14 @@ int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr, bool *need_c
 			return -EPERM;
 		rtnl_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = dev_ifsioc(net, ifr, data, cmd);
 =======
 		ret = dev_ifsioc(net, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = dev_ifsioc(net, ifr, data, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtnl_unlock();
 		if (colon)
 			*colon = ':';
@@ -740,10 +870,14 @@ int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr, bool *need_c
 		dev_load(net, ifr->ifr_name);
 		rtnl_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = dev_ifsioc(net, ifr, data, cmd);
 =======
 		ret = dev_ifsioc(net, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = dev_ifsioc(net, ifr, data, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtnl_unlock();
 		if (need_copyout)
 			*need_copyout = false;
@@ -769,10 +903,14 @@ int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr, bool *need_c
 			dev_load(net, ifr->ifr_name);
 			rtnl_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = dev_ifsioc(net, ifr, data, cmd);
 =======
 			ret = dev_ifsioc(net, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = dev_ifsioc(net, ifr, data, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtnl_unlock();
 			return ret;
 		}

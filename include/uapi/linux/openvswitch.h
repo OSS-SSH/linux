@@ -71,10 +71,15 @@ enum ovs_datapath_cmd {
  * %OVS_DP_CMD_NEW requests. A value of zero indicates that upcalls should
  * not be sent.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @OVS_DP_ATTR_PER_CPU_PIDS: Per-cpu array of PIDs for upcalls when
  * OVS_DP_F_DISPATCH_UPCALL_PER_CPU feature is set.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @OVS_DP_ATTR_PER_CPU_PIDS: Per-cpu array of PIDs for upcalls when
+ * OVS_DP_F_DISPATCH_UPCALL_PER_CPU feature is set.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @OVS_DP_ATTR_STATS: Statistics about packets that have passed through the
  * datapath.  Always present in notifications.
  * @OVS_DP_ATTR_MEGAFLOW_STATS: Statistics about mega flow masks usage for the
@@ -93,11 +98,17 @@ enum ovs_datapath_attr {
 	OVS_DP_ATTR_PAD,
 	OVS_DP_ATTR_MASKS_CACHE_SIZE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	OVS_DP_ATTR_PER_CPU_PIDS,   /* Netlink PIDS to receive upcalls in
 				     * per-cpu dispatch mode
 				     */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	OVS_DP_ATTR_PER_CPU_PIDS,   /* Netlink PIDS to receive upcalls in
+				     * per-cpu dispatch mode
+				     */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__OVS_DP_ATTR_MAX
 };
 
@@ -139,11 +150,17 @@ struct ovs_vport_stats {
 #define OVS_DP_F_TC_RECIRC_SHARING	(1 << 2)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Allow per-cpu dispatch of upcalls */
 #define OVS_DP_F_DISPATCH_UPCALL_PER_CPU	(1 << 3)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Allow per-cpu dispatch of upcalls */
+#define OVS_DP_F_DISPATCH_UPCALL_PER_CPU	(1 << 3)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Fixed logical ports. */
 #define OVSP_LOCAL      ((__u32)0)
 

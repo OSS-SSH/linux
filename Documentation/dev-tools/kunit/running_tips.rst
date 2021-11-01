@@ -81,6 +81,9 @@ file ``.kunitconfig``, you can just pass in the dir, e.g.
 	options, so handling that would be tricky.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Setting kernel commandline parameters
 -------------------------------------
 
@@ -91,14 +94,18 @@ You can use ``--kernel_args`` to pass arbitrary kernel arguments, e.g.
 	$ ./tools/testing/kunit/kunit.py run --kernel_args=param=42 --kernel_args=param2=false
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Generating code coverage reports under UML
 ------------------------------------------
 
 .. note::
 	TODO(brendanhiggins@google.com): There are various issues with UML and
 	versions of gcc 7 and up. You're likely to run into missing ``.gcda``
+<<<<<<< HEAD
 <<<<<<< HEAD
 	files or compile errors.
 =======
@@ -116,6 +123,9 @@ Generating code coverage reports under UML
 	``exit()``.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	files or compile errors.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 This is different from the "normal" way of getting coverage information that is
 documented in Documentation/dev-tools/gcov.rst.

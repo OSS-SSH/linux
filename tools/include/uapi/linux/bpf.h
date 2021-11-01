@@ -85,10 +85,14 @@ struct bpf_lpm_trie_key {
 struct bpf_cgroup_storage_key {
 	__u64	cgroup_inode_id;	/* cgroup inode id */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__u32	attach_type;		/* program attach type (enum bpf_attach_type) */
 =======
 	__u32	attach_type;		/* program attach type */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__u32	attach_type;		/* program attach type (enum bpf_attach_type) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 union bpf_iter_link_info {
@@ -329,11 +333,14 @@ union bpf_iter_link_info {
  *			*data_in* and *data_out* must be NULL.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *		**BPF_PROG_TYPE_XDP**
  *			*ctx_in* and *ctx_out* must be NULL.
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *		**BPF_PROG_TYPE_RAW_TRACEPOINT**,
  *		**BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE**
  *
@@ -1004,9 +1011,13 @@ enum bpf_attach_type {
 	BPF_SK_REUSEPORT_SELECT,
 	BPF_SK_REUSEPORT_SELECT_OR_MIGRATE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BPF_PERF_EVENT,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BPF_PERF_EVENT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__MAX_BPF_ATTACH_TYPE
 };
 
@@ -1021,9 +1032,13 @@ enum bpf_link_type {
 	BPF_LINK_TYPE_NETNS = 5,
 	BPF_LINK_TYPE_XDP = 6,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BPF_LINK_TYPE_PERF_EVENT = 7,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BPF_LINK_TYPE_PERF_EVENT = 7,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	MAX_BPF_LINK_TYPE,
 };
@@ -1465,6 +1480,9 @@ union bpf_attr {
 				__u32		iter_info_len;	/* iter_info length */
 			};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct {
 				/* black box user-provided value passed through
 				 * to BPF program at the execution time and
@@ -1472,8 +1490,11 @@ union bpf_attr {
 				 */
 				__u64		bpf_cookie;
 			} perf_event;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 	} link_create;
 
@@ -3275,10 +3296,14 @@ union bpf_attr {
  *	Description
  *		Select a **SO_REUSEPORT** socket from a
 <<<<<<< HEAD
+<<<<<<< HEAD
  *		**BPF_MAP_TYPE_REUSEPORT_SOCKARRAY** *map*.
 =======
  *		**BPF_MAP_TYPE_REUSEPORT_ARRAY** *map*.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		**BPF_MAP_TYPE_REUSEPORT_SOCKARRAY** *map*.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *		It checks the selected socket is matching the incoming
  *		request in the socket buffer.
  *	Return
@@ -4810,6 +4835,9 @@ union bpf_attr {
  * 	Return
  * 		A syscall result.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * long bpf_timer_init(struct bpf_timer *timer, struct bpf_map *map, u64 flags)
  *	Description
@@ -4901,8 +4929,11 @@ union bpf_attr {
  *		Get the struct pt_regs associated with **task**.
  *	Return
  *		A pointer to struct pt_regs.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #define __BPF_FUNC_MAPPER(FN)		\
 	FN(unspec),			\
@@ -5075,6 +5106,9 @@ union bpf_attr {
 	FN(btf_find_by_name_kind),	\
 	FN(sys_close),			\
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	FN(timer_init),			\
 	FN(timer_set_callback),		\
 	FN(timer_start),		\
@@ -5082,8 +5116,11 @@ union bpf_attr {
 	FN(get_func_ip),		\
 	FN(get_attach_cookie),		\
 	FN(task_pt_regs),		\
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* */
 
 /* integer value in 'imm' field of BPF_CALL instruction selects which helper
@@ -6211,13 +6248,19 @@ struct bpf_spin_lock {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bpf_timer {
 	__u64 :64;
 	__u64 :64;
 } __attribute__((aligned(8)));
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bpf_sysctl {
 	__u32	write;		/* Sysctl is being read (= 0) or written (= 1).
 				 * Allows 1,2,4-byte read, but no write.

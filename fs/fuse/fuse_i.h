@@ -150,6 +150,7 @@ struct fuse_inode {
 	spinlock_t lock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/**
 	 * Can't take inode lock in fault path (leads to circular dependency).
@@ -159,6 +160,8 @@ struct fuse_inode {
 	struct rw_semaphore i_mmap_sem;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_FUSE_DAX
 	/*
 	 * Dax specific inode data
@@ -493,9 +496,13 @@ struct fuse_dev {
 struct fuse_fs_context {
 	int fd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct file *file;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct file *file;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int rootmode;
 	kuid_t user_id;
 	kgid_t group_id;
@@ -523,6 +530,9 @@ struct fuse_fs_context {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct fuse_sync_bucket {
 	/* count is a possible scalability bottleneck */
 	atomic_t count;
@@ -530,8 +540,11 @@ struct fuse_sync_bucket {
 	struct rcu_head rcu;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * A Fuse connection.
  *
@@ -825,11 +838,17 @@ struct fuse_conn {
 	/** List of filesystems using this connection */
 	struct list_head mounts;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* New writepages go into this bucket */
 	struct fuse_sync_bucket __rcu *curr_bucket;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* New writepages go into this bucket */
+	struct fuse_sync_bucket __rcu *curr_bucket;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -934,6 +953,9 @@ static inline void fuse_page_descs_length_init(struct fuse_page_desc *descs,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void fuse_sync_bucket_dec(struct fuse_sync_bucket *bucket)
 {
 	/* Need RCU protection to prevent use after free after the decrement */
@@ -943,8 +965,11 @@ static inline void fuse_sync_bucket_dec(struct fuse_sync_bucket *bucket)
 	rcu_read_unlock();
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /** Device operations */
 extern const struct file_operations fuse_dev_operations;
 
@@ -1252,10 +1277,14 @@ extern const struct xattr_handler *fuse_no_acl_xattr_handlers[];
 
 struct posix_acl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct posix_acl *fuse_get_acl(struct inode *inode, int type, bool rcu);
 =======
 struct posix_acl *fuse_get_acl(struct inode *inode, int type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *fuse_get_acl(struct inode *inode, int type, bool rcu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int fuse_set_acl(struct user_namespace *mnt_userns, struct inode *inode,
 		 struct posix_acl *acl, int type);
 

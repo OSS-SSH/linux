@@ -191,6 +191,7 @@ static int berlin_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = berlin_pwm_config(chip, pwm, state->duty_cycle, state->period);
 	if (err)
 		return err;
@@ -202,6 +203,11 @@ static int berlin_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 			return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = berlin_pwm_config(chip, pwm, state->duty_cycle, state->period);
+	if (err)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!enabled)
 		return berlin_pwm_enable(chip, pwm);

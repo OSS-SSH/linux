@@ -2,10 +2,14 @@
 /* Copyright (c) 2014      Protonic Holland,
  *                         David Jander
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2014-2021 Pengutronix,
 =======
  * Copyright (C) 2014-2017 Pengutronix,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2014-2021 Pengutronix,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *                         Marc Kleine-Budde <kernel@pengutronix.de>
  */
 
@@ -179,6 +183,7 @@ int can_rx_offload_irq_offload_timestamp(struct can_rx_offload *offload,
 					 u64 pending)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int i;
 	int received = 0;
 =======
@@ -187,6 +192,10 @@ int can_rx_offload_irq_offload_timestamp(struct can_rx_offload *offload,
 
 	__skb_queue_head_init(&skb_queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i;
+	int received = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = offload->mb_first;
 	     can_rx_offload_le(offload, i, offload->mb_last);
@@ -200,6 +209,7 @@ int can_rx_offload_irq_offload_timestamp(struct can_rx_offload *offload,
 		if (IS_ERR_OR_NULL(skb))
 			continue;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		__skb_queue_add_sort(&offload->skb_irq_queue, skb,
 				     can_rx_offload_compare);
@@ -229,6 +239,14 @@ int can_rx_offload_irq_offload_timestamp(struct can_rx_offload *offload,
 
 	return skb_queue_len(&skb_queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__skb_queue_add_sort(&offload->skb_irq_queue, skb,
+				     can_rx_offload_compare);
+		received++;
+	}
+
+	return received;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_irq_offload_timestamp);
 
@@ -245,6 +263,7 @@ int can_rx_offload_irq_offload_fifo(struct can_rx_offload *offload)
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__skb_queue_tail(&offload->skb_irq_queue, skb);
 		received++;
 	}
@@ -258,6 +277,12 @@ int can_rx_offload_irq_offload_fifo(struct can_rx_offload *offload)
 		can_rx_offload_schedule(offload);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__skb_queue_tail(&offload->skb_irq_queue, skb);
+		received++;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return received;
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_irq_offload_fifo);
@@ -267,9 +292,12 @@ int can_rx_offload_queue_sorted(struct can_rx_offload *offload,
 {
 	struct can_rx_offload_cb *cb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (skb_queue_len(&offload->skb_queue) >
 	    offload->skb_queue_len_max) {
@@ -281,6 +309,7 @@ int can_rx_offload_queue_sorted(struct can_rx_offload *offload,
 	cb->timestamp = timestamp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__skb_queue_add_sort(&offload->skb_irq_queue, skb,
 			     can_rx_offload_compare);
 =======
@@ -290,6 +319,10 @@ int can_rx_offload_queue_sorted(struct can_rx_offload *offload,
 
 	can_rx_offload_schedule(offload);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__skb_queue_add_sort(&offload->skb_irq_queue, skb,
+			     can_rx_offload_compare);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -329,17 +362,24 @@ int can_rx_offload_queue_tail(struct can_rx_offload *offload,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__skb_queue_tail(&offload->skb_irq_queue, skb);
 =======
 	skb_queue_tail(&offload->skb_queue, skb);
 	can_rx_offload_schedule(offload);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__skb_queue_tail(&offload->skb_irq_queue, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_queue_tail);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void can_rx_offload_irq_finish(struct can_rx_offload *offload)
 {
 	unsigned long flags;
@@ -384,8 +424,11 @@ void can_rx_offload_threaded_irq_finish(struct can_rx_offload *offload)
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_threaded_irq_finish);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int can_rx_offload_init_queue(struct net_device *dev,
 				     struct can_rx_offload *offload,
 				     unsigned int weight)
@@ -397,9 +440,13 @@ static int can_rx_offload_init_queue(struct net_device *dev,
 	offload->skb_queue_len_max *= 4;
 	skb_queue_head_init(&offload->skb_queue);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__skb_queue_head_init(&offload->skb_irq_queue);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__skb_queue_head_init(&offload->skb_irq_queue);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	netif_napi_add(dev, &offload->napi, can_rx_offload_napi_poll, weight);
 
@@ -462,8 +509,12 @@ void can_rx_offload_del(struct can_rx_offload *offload)
 	netif_napi_del(&offload->napi);
 	skb_queue_purge(&offload->skb_queue);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__skb_queue_purge(&offload->skb_irq_queue);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__skb_queue_purge(&offload->skb_irq_queue);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_del);

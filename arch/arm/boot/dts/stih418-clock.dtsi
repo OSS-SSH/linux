@@ -40,10 +40,13 @@
 
 				clocks = <&clk_sysin>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 				clock-output-names = "clockgen-a9-pll-odf";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 
@@ -79,6 +82,7 @@
 			clk_s_a0_pll: clk-s-a0-pll {
 				#clock-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				compatible = "st,clkgen-pll0-a0";
 
 				clocks = <&clk_sysin>;
@@ -88,26 +92,34 @@
 				compatible = "st,flexgen", "st,flexgen-stih410-a0";
 =======
 				compatible = "st,clkgen-pll0";
+=======
+				compatible = "st,clkgen-pll0-a0";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				clocks = <&clk_sysin>;
-
-				clock-output-names = "clk-s-a0-pll-ofd-0";
 			};
 
 			clk_s_a0_flexgen: clk-s-a0-flexgen {
+<<<<<<< HEAD
 				compatible = "st,flexgen";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				compatible = "st,flexgen", "st,flexgen-stih410-a0";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				#clock-cells = <1>;
 
 				clocks = <&clk_s_a0_pll 0>,
 					 <&clk_sysin>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 				clock-output-names = "clk-ic-lmi0",
 						     "clk-ic-lmi1";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 
@@ -118,6 +130,7 @@
 
 			clocks = <&clk_sysin>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 			clock-output-names = "clk-s-c0-fs0-ch0",
@@ -125,6 +138,8 @@
 					     "clk-s-c0-fs0-ch2",
 					     "clk-s-c0-fs0-ch3";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		clk_s_c0: clockgen-c@9103000 {
@@ -133,6 +148,7 @@
 
 			clk_s_c0_pll0: clk-s-c0-pll0 {
 				#clock-cells = <1>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 				compatible = "st,clkgen-pll0-c0";
 
@@ -144,10 +160,16 @@
 
 				clock-output-names = "clk-s-c0-pll0-odf-0";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				compatible = "st,clkgen-pll0-c0";
+
+				clocks = <&clk_sysin>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			clk_s_c0_pll1: clk-s-c0-pll1 {
 				#clock-cells = <1>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 				compatible = "st,clkgen-pll1-c0";
 
@@ -159,15 +181,24 @@
 
 				clock-output-names = "clk-s-c0-pll1-odf-0";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				compatible = "st,clkgen-pll1-c0";
+
+				clocks = <&clk_sysin>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			clk_s_c0_flexgen: clk-s-c0-flexgen {
 				#clock-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				compatible = "st,flexgen", "st,flexgen-stih418-c0";
 =======
 				compatible = "st,flexgen";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				compatible = "st,flexgen", "st,flexgen-stih418-c0";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				clocks = <&clk_s_c0_pll0 0>,
 					 <&clk_s_c0_pll1 0>,
@@ -177,6 +208,7 @@
 					 <&clk_s_c0_quadfs 3>,
 					 <&clk_sysin>;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 				clock-output-names = "clk-icn-gpu",
@@ -223,6 +255,8 @@
 						     "clk-avsp-hevc";
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				/*
 				 * ARM Peripheral clock for timers
 				 */
@@ -243,6 +277,7 @@
 		clk_s_d0_quadfs: clk-s-d0-quadfs@9104000 {
 			#clock-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			compatible = "st,quadfs-d0";
 			reg = <0x9104000 0x1000>;
 
@@ -258,6 +293,12 @@
 					     "clk-s-d0-fs0-ch2",
 					     "clk-s-d0-fs0-ch3";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			compatible = "st,quadfs-d0";
+			reg = <0x9104000 0x1000>;
+
+			clocks = <&clk_sysin>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		clockgen-d0@9104000 {
@@ -267,16 +308,21 @@
 			clk_s_d0_flexgen: clk-s-d0-flexgen {
 				#clock-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				compatible = "st,flexgen", "st,flexgen-stih410-d0";
 =======
 				compatible = "st,flexgen-audio", "st,flexgen";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				compatible = "st,flexgen", "st,flexgen-stih410-d0";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				clocks = <&clk_s_d0_quadfs 0>,
 					 <&clk_s_d0_quadfs 1>,
 					 <&clk_s_d0_quadfs 2>,
 					 <&clk_s_d0_quadfs 3>,
 					 <&clk_sysin>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -287,11 +333,14 @@
 						     "clk-pcmr10-master",
 						     "clk-usb2-phy";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 
 		clk_s_d2_quadfs: clk-s-d2-quadfs@9106000 {
 			#clock-cells = <1>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			compatible = "st,quadfs-d2";
 			reg = <0x9106000 0x1000>;
@@ -308,6 +357,12 @@
 					     "clk-s-d2-fs0-ch2",
 					     "clk-s-d2-fs0-ch3";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			compatible = "st,quadfs-d2";
+			reg = <0x9106000 0x1000>;
+
+			clocks = <&clk_sysin>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		clockgen-d2@9106000 {
@@ -317,10 +372,14 @@
 			clk_s_d2_flexgen: clk-s-d2-flexgen {
 				#clock-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				compatible = "st,flexgen", "st,flexgen-stih418-d2";
 =======
 				compatible = "st,flexgen-video", "st,flexgen";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				compatible = "st,flexgen", "st,flexgen-stih418-d2";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				clocks = <&clk_s_d2_quadfs 0>,
 					 <&clk_s_d2_quadfs 1>,
@@ -329,6 +388,7 @@
 					 <&clk_sysin>,
 					 <&clk_sysin>,
 					 <&clk_tmdsout_hdmi>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -356,11 +416,14 @@
 						     "", "", "", "", "",
 						     "", "clk-vp9";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 
 		clk_s_d3_quadfs: clk-s-d3-quadfs@9107000 {
 			#clock-cells = <1>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			compatible = "st,quadfs-d3";
 			reg = <0x9107000 0x1000>;
@@ -377,6 +440,12 @@
 					     "clk-s-d3-fs0-ch2",
 					     "clk-s-d3-fs0-ch3";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			compatible = "st,quadfs-d3";
+			reg = <0x9107000 0x1000>;
+
+			clocks = <&clk_sysin>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		clockgen-d3@9107000 {
@@ -386,16 +455,21 @@
 			clk_s_d3_flexgen: clk-s-d3-flexgen {
 				#clock-cells = <1>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				compatible = "st,flexgen", "st,flexgen-stih407-d3";
 =======
 				compatible = "st,flexgen";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				compatible = "st,flexgen", "st,flexgen-stih407-d3";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				clocks = <&clk_s_d3_quadfs 0>,
 					 <&clk_s_d3_quadfs 1>,
 					 <&clk_s_d3_quadfs 2>,
 					 <&clk_s_d3_quadfs 3>,
 					 <&clk_sysin>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -408,6 +482,8 @@
 						     "clk-lpc-0",
 						     "clk-lpc-1";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 	};

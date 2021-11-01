@@ -124,10 +124,14 @@ static const char * const arc_pmu_ev_hw_map[] = {
 #define CACHE_OP_UNSUPPORTED	0xffff
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const unsigned int arc_pmu_cache_map[C(MAX)][C(OP_MAX)][C(RESULT_MAX)] = {
 =======
 static const unsigned arc_pmu_cache_map[C(MAX)][C(OP_MAX)][C(RESULT_MAX)] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const unsigned int arc_pmu_cache_map[C(MAX)][C(OP_MAX)][C(RESULT_MAX)] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[C(L1D)] = {
 		[C(OP_READ)] = {
 			[C(RESULT_ACCESS)]	= PERF_COUNT_ARC_LDC,

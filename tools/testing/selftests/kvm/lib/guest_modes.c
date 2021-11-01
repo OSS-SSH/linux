@@ -23,6 +23,9 @@ void guest_modes_append_default(void)
 	}
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef __s390x__
 	{
 		int kvm_fd, vm_fd;
@@ -39,8 +42,11 @@ void guest_modes_append_default(void)
 			guest_mode_append(VM_MODE_P47V64_4K, true, true);
 	}
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void for_each_guest_mode(void (*func)(enum vm_guest_mode, void *), void *arg)

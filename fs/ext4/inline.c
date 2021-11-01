@@ -8,9 +8,13 @@
 #include <linux/fiemap.h>
 #include <linux/iversion.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/backing-dev.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/backing-dev.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "ext4_jbd2.h"
 #include "ext4.h"
@@ -269,11 +273,16 @@ static int ext4_create_inline_data(handle_t *handle,
 
 	BUFFER_TRACE(is.iloc.bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = ext4_journal_get_write_access(handle, inode->i_sb, is.iloc.bh,
 					      EXT4_JTR_NONE);
 =======
 	error = ext4_journal_get_write_access(handle, is.iloc.bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = ext4_journal_get_write_access(handle, inode->i_sb, is.iloc.bh,
+					      EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error)
 		goto out;
 
@@ -360,11 +369,16 @@ static int ext4_update_inline_data(handle_t *handle, struct inode *inode,
 
 	BUFFER_TRACE(is.iloc.bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = ext4_journal_get_write_access(handle, inode->i_sb, is.iloc.bh,
 					      EXT4_JTR_NONE);
 =======
 	error = ext4_journal_get_write_access(handle, is.iloc.bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = ext4_journal_get_write_access(handle, inode->i_sb, is.iloc.bh,
+					      EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error)
 		goto out;
 
@@ -442,11 +456,16 @@ static int ext4_destroy_inline_data_nolock(handle_t *handle,
 
 	BUFFER_TRACE(is.iloc.bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = ext4_journal_get_write_access(handle, inode->i_sb, is.iloc.bh,
 					      EXT4_JTR_NONE);
 =======
 	error = ext4_journal_get_write_access(handle, is.iloc.bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = ext4_journal_get_write_access(handle, inode->i_sb, is.iloc.bh,
+					      EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error)
 		goto out;
 
@@ -613,10 +632,14 @@ retry:
 
 	if (!ret && ext4_should_journal_data(inode)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = ext4_walk_page_buffers(handle, inode, page_buffers(page),
 =======
 		ret = ext4_walk_page_buffers(handle, page_buffers(page),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = ext4_walk_page_buffers(handle, inode, page_buffers(page),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					     from, to, NULL,
 					     do_journal_get_write_access);
 	}
@@ -706,11 +729,16 @@ int ext4_try_to_write_inline_data(struct address_space *mapping,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ext4_journal_get_write_access(handle, inode->i_sb, iloc.bh,
 					    EXT4_JTR_NONE);
 =======
 	ret = ext4_journal_get_write_access(handle, iloc.bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = ext4_journal_get_write_access(handle, inode->i_sb, iloc.bh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto out;
 
@@ -757,6 +785,7 @@ convert:
 int ext4_write_inline_data_end(struct inode *inode, loff_t pos, unsigned len,
 			       unsigned copied, struct page *page)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	handle_t *handle = ext4_journal_current_handle();
 	int no_expand;
@@ -837,39 +866,90 @@ out:
 	return ret ? ret : copied;
 =======
 	int ret, no_expand;
+=======
+	handle_t *handle = ext4_journal_current_handle();
+	int no_expand;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *kaddr;
 	struct ext4_iloc iloc;
+	int ret = 0, ret2;
 
-	if (unlikely(copied < len)) {
-		if (!PageUptodate(page)) {
-			copied = 0;
+	if (unlikely(copied < len) && !PageUptodate(page))
+		copied = 0;
+
+	if (likely(copied)) {
+		ret = ext4_get_inode_loc(inode, &iloc);
+		if (ret) {
+			unlock_page(page);
+			put_page(page);
+			ext4_std_error(inode->i_sb, ret);
 			goto out;
 		}
+		ext4_write_lock_xattr(inode, &no_expand);
+		BUG_ON(!ext4_has_inline_data(inode));
+
+		/*
+		 * ei->i_inline_off may have changed since
+		 * ext4_write_begin() called
+		 * ext4_try_to_write_inline_data()
+		 */
+		(void) ext4_find_inline_data_nolock(inode);
+
+		kaddr = kmap_atomic(page);
+		ext4_write_inline_data(inode, &iloc, kaddr, pos, copied);
+		kunmap_atomic(kaddr);
+		SetPageUptodate(page);
+		/* clear page dirty so that writepages wouldn't work for us. */
+		ClearPageDirty(page);
+
+		ext4_write_unlock_xattr(inode, &no_expand);
+		brelse(iloc.bh);
+
+		/*
+		 * It's important to update i_size while still holding page
+		 * lock: page writeout could otherwise come in and zero
+		 * beyond i_size.
+		 */
+		ext4_update_inode_size(inode, pos + copied);
 	}
+	unlock_page(page);
+	put_page(page);
 
-	ret = ext4_get_inode_loc(inode, &iloc);
-	if (ret) {
-		ext4_std_error(inode->i_sb, ret);
-		copied = 0;
-		goto out;
-	}
-
-	ext4_write_lock_xattr(inode, &no_expand);
-	BUG_ON(!ext4_has_inline_data(inode));
-
-	kaddr = kmap_atomic(page);
-	ext4_write_inline_data(inode, &iloc, kaddr, pos, len);
-	kunmap_atomic(kaddr);
-	SetPageUptodate(page);
-	/* clear page dirty so that writepages wouldn't work for us. */
-	ClearPageDirty(page);
-
-	ext4_write_unlock_xattr(inode, &no_expand);
-	brelse(iloc.bh);
-	mark_inode_dirty(inode);
+	/*
+	 * Don't mark the inode dirty under page lock. First, it unnecessarily
+	 * makes the holding time of page lock longer. Second, it forces lock
+	 * ordering of page lock and transaction start for journaling
+	 * filesystems.
+	 */
+	if (likely(copied))
+		mark_inode_dirty(inode);
 out:
+<<<<<<< HEAD
 	return copied;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/*
+	 * If we didn't copy as much data as expected, we need to trim back
+	 * size of xattr containing inline data.
+	 */
+	if (pos + len > inode->i_size && ext4_can_truncate(inode))
+		ext4_orphan_add(handle, inode);
+
+	ret2 = ext4_journal_stop(handle);
+	if (!ret)
+		ret = ret2;
+	if (pos + len > inode->i_size) {
+		ext4_truncate_failed_write(inode);
+		/*
+		 * If truncate failed early the inode might still be
+		 * on the orphan list; we need to make sure the inode
+		 * is removed from the orphan list in that case.
+		 */
+		if (inode->i_nlink)
+			ext4_orphan_del(NULL, inode);
+	}
+	return ret ? ret : copied;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct buffer_head *
@@ -1032,11 +1112,16 @@ retry_journal:
 			goto out_release_page;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ext4_journal_get_write_access(handle, inode->i_sb, iloc.bh,
 					    EXT4_JTR_NONE);
 =======
 	ret = ext4_journal_get_write_access(handle, iloc.bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = ext4_journal_get_write_access(handle, inode->i_sb, iloc.bh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto out_release_page;
 
@@ -1055,6 +1140,7 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 int ext4_da_write_inline_data_end(struct inode *inode, loff_t pos,
@@ -1095,6 +1181,8 @@ int ext4_da_write_inline_data_end(struct inode *inode, loff_t pos,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef INLINE_DIR_DEBUG
 void ext4_show_inline_dir(struct inode *dir, struct buffer_head *bh,
 			  void *inline_start, int inline_size)
@@ -1145,11 +1233,16 @@ static int ext4_add_dirent_to_inline(handle_t *handle,
 
 	BUFFER_TRACE(iloc->bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, dir->i_sb, iloc->bh,
 					    EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, iloc->bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, dir->i_sb, iloc->bh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 	ext4_insert_dentry(dir, inode, de, inline_size, fname);
@@ -1345,11 +1438,16 @@ static int ext4_convert_inline_data_nolock(handle_t *handle,
 
 	lock_buffer(data_bh);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = ext4_journal_get_create_access(handle, inode->i_sb, data_bh,
 					       EXT4_JTR_NONE);
 =======
 	error = ext4_journal_get_create_access(handle, data_bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = ext4_journal_get_create_access(handle, inode->i_sb, data_bh,
+					       EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error) {
 		unlock_buffer(data_bh);
 		error = -EIO;
@@ -1834,11 +1932,16 @@ int ext4_delete_inline_entry(handle_t *handle,
 
 	BUFFER_TRACE(bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ext4_journal_get_write_access(handle, dir->i_sb, bh,
 					    EXT4_JTR_NONE);
 =======
 	err = ext4_journal_get_write_access(handle, bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, dir->i_sb, bh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto out;
 
@@ -2035,6 +2138,9 @@ int ext4_inline_data_truncate(struct inode *inode, int *has_inline)
 
 	if (i_size < inline_size) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * if there's inline data to truncate and this file was
 		 * converted to extents after that inline data was written,
@@ -2053,8 +2159,11 @@ retry:
 				goto out_error;
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Clear the content in the xattr space. */
 		if (inline_size > EXT4_MIN_INLINE_DATA_SIZE) {
 			if ((err = ext4_xattr_ibody_find(inode, &i, &is)) != 0)

@@ -28,10 +28,14 @@ static DEFINE_MUTEX(bcma_buses_mutex);
 static int bcma_bus_match(struct device *dev, struct device_driver *drv);
 static int bcma_device_probe(struct device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void bcma_device_remove(struct device *dev);
 =======
 static int bcma_device_remove(struct device *dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void bcma_device_remove(struct device *dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bcma_device_uevent(struct device *dev, struct kobj_uevent_env *env);
 
 static ssize_t manuf_show(struct device *dev, struct device_attribute *attr, char *buf)
@@ -241,9 +245,13 @@ EXPORT_SYMBOL(bcma_core_irq);
 void bcma_prepare_core(struct bcma_bus *bus, struct bcma_device *core)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	device_initialize(&core->dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	device_initialize(&core->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	core->dev.release = bcma_release_core_dev;
 	core->dev.bus = &bcma_bus_type;
 	dev_set_name(&core->dev, "bcma%d:%d", bus->num, core->core_index);
@@ -286,6 +294,7 @@ static void bcma_register_core(struct bcma_bus *bus, struct bcma_device *core)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = device_add(&core->dev);
 	if (err) {
 		bcma_err(bus, "Could not register dev for core 0x%03X\n",
@@ -297,6 +306,12 @@ static void bcma_register_core(struct bcma_bus *bus, struct bcma_device *core)
 			 core->id.id);
 		put_device(&core->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = device_add(&core->dev);
+	if (err) {
+		bcma_err(bus, "Could not register dev for core 0x%03X\n",
+			 core->id.id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 	core->dev_registered = true;
@@ -388,10 +403,14 @@ void bcma_unregister_cores(struct bcma_bus *bus)
 	list_for_each_entry_safe(core, tmp, &bus->cores, list) {
 		list_del(&core->list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		put_device(&core->dev);
 =======
 		kfree(core);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		put_device(&core->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -634,10 +653,14 @@ static int bcma_device_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void bcma_device_remove(struct device *dev)
 =======
 static int bcma_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void bcma_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct bcma_device *core = container_of(dev, struct bcma_device, dev);
 	struct bcma_driver *adrv = container_of(dev->driver, struct bcma_driver,
@@ -647,10 +670,13 @@ static int bcma_device_remove(struct device *dev)
 		adrv->remove(core);
 	put_device(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int bcma_device_uevent(struct device *dev, struct kobj_uevent_env *env)

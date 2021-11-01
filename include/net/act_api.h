@@ -59,6 +59,9 @@ struct tc_action {
 			      TCA_ACT_HW_STATS_DELAYED)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Reserve 16 bits for user-space. See TCA_ACT_FLAGS_NO_PERCPU_STATS. */
 #define TCA_ACT_FLAGS_USER_BITS 16
 #define TCA_ACT_FLAGS_USER_MASK 0xffff
@@ -67,8 +70,11 @@ struct tc_action {
 #define TCA_ACT_FLAGS_REPLACE	(1U << (TCA_ACT_FLAGS_USER_BITS + 2))
 #define TCA_ACT_FLAGS_NO_RTNL	(1U << (TCA_ACT_FLAGS_USER_BITS + 3))
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Update lastuse only if needed, to avoid dirtying a cache line.
  * We use a temp variable to avoid fetching jiffies twice.
  */
@@ -111,12 +117,17 @@ struct tc_action_ops {
 	int     (*lookup)(struct net *net, struct tc_action **a, u32 index);
 	int     (*init)(struct net *net, struct nlattr *nla,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			struct nlattr *est, struct tc_action **act,
 			struct tcf_proto *tp,
 =======
 			struct nlattr *est, struct tc_action **act, int ovr,
 			int bind, bool rtnl_held, struct tcf_proto *tp,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct nlattr *est, struct tc_action **act,
+			struct tcf_proto *tp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			u32 flags, struct netlink_ext_ack *extack);
 	int     (*walk)(struct net *, struct sk_buff *,
 			struct netlink_callback *, int,
@@ -196,6 +207,7 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
 		    int nr_actions, struct tcf_result *res);
 int tcf_action_init(struct net *net, struct tcf_proto *tp, struct nlattr *nla,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    struct nlattr *est,
 		    struct tc_action *actions[], int init_res[], size_t *attr_size,
 		    u32 flags, struct netlink_ext_ack *extack);
@@ -206,10 +218,17 @@ struct tc_action_ops *tc_action_load_ops(struct nlattr *nla, bool police,
 		    bool rtnl_held, struct netlink_ext_ack *extack);
 struct tc_action_ops *tc_action_load_ops(char *name, struct nlattr *nla,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    struct nlattr *est,
+		    struct tc_action *actions[], int init_res[], size_t *attr_size,
+		    u32 flags, struct netlink_ext_ack *extack);
+struct tc_action_ops *tc_action_load_ops(struct nlattr *nla, bool police,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 bool rtnl_held,
 					 struct netlink_ext_ack *extack);
 struct tc_action *tcf_action_init_1(struct net *net, struct tcf_proto *tp,
 				    struct nlattr *nla, struct nlattr *est,
+<<<<<<< HEAD
 <<<<<<< HEAD
 				    struct tc_action_ops *a_o, int *init_res,
 				    u32 flags, struct netlink_ext_ack *extack);
@@ -219,6 +238,10 @@ struct tc_action *tcf_action_init_1(struct net *net, struct tcf_proto *tp,
 				    bool rtnl_held,
 				    struct netlink_ext_ack *extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    struct tc_action_ops *a_o, int *init_res,
+				    u32 flags, struct netlink_ext_ack *extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int tcf_action_dump(struct sk_buff *skb, struct tc_action *actions[], int bind,
 		    int ref, bool terse);
 int tcf_action_dump_old(struct sk_buff *skb, struct tc_action *a, int, int);

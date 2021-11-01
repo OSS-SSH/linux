@@ -453,10 +453,14 @@ int inet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 	 */
 	err = BPF_CGROUP_RUN_PROG_INET_BIND_LOCK(sk, uaddr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						 CGROUP_INET4_BIND, &flags);
 =======
 						 BPF_CGROUP_INET4_BIND, &flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 CGROUP_INET4_BIND, &flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -786,10 +790,14 @@ int inet_getname(struct socket *sock, struct sockaddr *uaddr,
 		sin->sin_addr.s_addr = inet->inet_daddr;
 		BPF_CGROUP_RUN_SA_PROG_LOCK(sk, (struct sockaddr *)sin,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    CGROUP_INET4_GETPEERNAME,
 =======
 					    BPF_CGROUP_INET4_GETPEERNAME,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    CGROUP_INET4_GETPEERNAME,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    NULL);
 	} else {
 		__be32 addr = inet->inet_rcv_saddr;
@@ -799,10 +807,14 @@ int inet_getname(struct socket *sock, struct sockaddr *uaddr,
 		sin->sin_addr.s_addr = addr;
 		BPF_CGROUP_RUN_SA_PROG_LOCK(sk, (struct sockaddr *)sin,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    CGROUP_INET4_GETSOCKNAME,
 =======
 					    BPF_CGROUP_INET4_GETSOCKNAME,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    CGROUP_INET4_GETSOCKNAME,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    NULL);
 	}
 	memset(sin->sin_zero, 0, sizeof(sin->sin_zero));
@@ -966,6 +978,7 @@ int inet_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 	case SIOCGIFDSTADDR:
 	case SIOCGIFPFLAGS:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (get_user_ifreq(&ifr, NULL, p))
 			return -EFAULT;
 		err = devinet_ioctl(net, cmd, &ifr);
@@ -976,6 +989,12 @@ int inet_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 		err = devinet_ioctl(net, cmd, &ifr);
 		if (!err && copy_to_user(p, &ifr, sizeof(struct ifreq)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (get_user_ifreq(&ifr, NULL, p))
+			return -EFAULT;
+		err = devinet_ioctl(net, cmd, &ifr);
+		if (!err && put_user_ifreq(&ifr, p))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = -EFAULT;
 		break;
 
@@ -986,10 +1005,14 @@ int inet_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 	case SIOCSIFPFLAGS:
 	case SIOCSIFFLAGS:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (get_user_ifreq(&ifr, NULL, p))
 =======
 		if (copy_from_user(&ifr, p, sizeof(struct ifreq)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (get_user_ifreq(&ifr, NULL, p))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		err = devinet_ioctl(net, cmd, &ifr);
 		break;

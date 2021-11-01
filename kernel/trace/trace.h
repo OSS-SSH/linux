@@ -127,13 +127,19 @@ struct kprobe_trace_entry_head {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct eprobe_trace_entry_head {
 	struct trace_entry	ent;
 	unsigned int		type;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct kretprobe_trace_entry_head {
 	struct trace_entry	ent;
 	unsigned long		func;
@@ -1398,6 +1404,7 @@ event_trigger_unlock_commit(struct trace_event_file *file,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /**
  * event_trigger_unlock_commit_regs - handle triggers and finish event commit
@@ -1432,6 +1439,8 @@ event_trigger_unlock_commit_regs(struct trace_event_file *file,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define FILTER_PRED_INVALID	((unsigned short)-1)
 #define FILTER_PRED_IS_RIGHT	(1 << 15)
 #define FILTER_PRED_FOLD	(1 << 15)
@@ -1552,6 +1561,9 @@ extern int register_trigger_cmds(void);
 extern void clear_event_triggers(struct trace_array *tr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	EVENT_TRIGGER_FL_PROBE		= BIT(0),
 };
@@ -1560,11 +1572,14 @@ struct event_trigger_data {
 	unsigned long			count;
 	int				ref;
 	int				flags;
+<<<<<<< HEAD
 =======
 struct event_trigger_data {
 	unsigned long			count;
 	int				ref;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct event_trigger_ops	*ops;
 	struct event_command		*cmd_ops;
 	struct event_filter __rcu	*filter;
@@ -1973,6 +1988,9 @@ static inline bool is_good_name(const char *name)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Convert certain expected symbols into '_' when generating event names */
 static inline void sanitize_event_name(char *name)
 {
@@ -1981,8 +1999,11 @@ static inline void sanitize_event_name(char *name)
 			*name = '_';
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * This is a generic way to read and write a u64 value from a file in tracefs.
  *

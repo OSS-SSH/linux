@@ -213,6 +213,9 @@ static unsigned int decode_compactedbits(unsigned int lobits,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int get_compacted_la_distance(unsigned int lclusterbits,
 				     unsigned int encodebits,
 				     unsigned int vcnt, u8 *in, int i)
@@ -238,6 +241,7 @@ static int get_compacted_la_distance(unsigned int lclusterbits,
 	return d1;
 }
 
+<<<<<<< HEAD
 static int unpack_compacted_index(struct z_erofs_maprecorder *m,
 				  unsigned int amortizedshift,
 				  unsigned int eofs, bool lookahead)
@@ -246,6 +250,11 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
 				  unsigned int amortizedshift,
 				  unsigned int eofs)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+				  unsigned int amortizedshift,
+				  unsigned int eofs, bool lookahead)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct erofs_inode *const vi = EROFS_I(m->inode);
 	const unsigned int lclusterbits = vi->z_logical_clusterbits;
@@ -275,13 +284,19 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
 	if (type == Z_EROFS_VLE_CLUSTER_TYPE_NONHEAD) {
 		m->clusterofs = 1 << lclusterbits;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* figure out lookahead_distance: delta[1] if needed */
 		if (lookahead)
 			m->delta[1] = get_compacted_la_distance(lclusterbits,
 						encodebits, vcnt, in, i);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (lo & Z_EROFS_VLE_DI_D0_CBLKCNT) {
 			if (!big_pcluster) {
 				DBG_BUGON(1);
@@ -353,10 +368,14 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
 
 static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    unsigned long lcn, bool lookahead)
 =======
 					    unsigned long lcn)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    unsigned long lcn, bool lookahead)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct inode *const inode = m->inode;
 	struct erofs_inode *const vi = EROFS_I(inode);
@@ -383,11 +402,16 @@ static int compacted_load_cluster_from_disk(struct z_erofs_maprecorder *m,
 		compacted_4b_initial = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((vi->z_advise & Z_EROFS_ADVISE_COMPACTED_2B) &&
 	    compacted_4b_initial < totalidx)
 =======
 	if (vi->z_advise & Z_EROFS_ADVISE_COMPACTED_2B)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((vi->z_advise & Z_EROFS_ADVISE_COMPACTED_2B) &&
+	    compacted_4b_initial < totalidx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		compacted_2b = rounddown(totalidx - compacted_4b_initial, 16);
 	else
 		compacted_2b = 0;
@@ -413,6 +437,7 @@ out:
 	if (err)
 		return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return unpack_compacted_index(m, amortizedshift, erofs_blkoff(pos),
 				      lookahead);
 }
@@ -426,6 +451,14 @@ static int z_erofs_load_cluster_from_disk(struct z_erofs_maprecorder *m,
 static int z_erofs_load_cluster_from_disk(struct z_erofs_maprecorder *m,
 					  unsigned int lcn)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return unpack_compacted_index(m, amortizedshift, erofs_blkoff(pos),
+				      lookahead);
+}
+
+static int z_erofs_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+					  unsigned int lcn, bool lookahead)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const unsigned int datamode = EROFS_I(m->inode)->datalayout;
 
@@ -434,10 +467,14 @@ static int z_erofs_load_cluster_from_disk(struct z_erofs_maprecorder *m,
 
 	if (datamode == EROFS_INODE_FLAT_COMPRESSION)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return compacted_load_cluster_from_disk(m, lcn, lookahead);
 =======
 		return compacted_load_cluster_from_disk(m, lcn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return compacted_load_cluster_from_disk(m, lcn, lookahead);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return -EINVAL;
 }
@@ -461,10 +498,14 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
 	/* load extent head logical cluster if needed */
 	lcn -= lookback_distance;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = z_erofs_load_cluster_from_disk(m, lcn, false);
 =======
 	err = z_erofs_load_cluster_from_disk(m, lcn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = z_erofs_load_cluster_from_disk(m, lcn, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -516,10 +557,14 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = z_erofs_load_cluster_from_disk(m, lcn, false);
 =======
 	err = z_erofs_load_cluster_from_disk(m, lcn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = z_erofs_load_cluster_from_disk(m, lcn, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -568,6 +613,9 @@ err_bonus_cblkcnt:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int z_erofs_get_extent_decompressedlen(struct z_erofs_maprecorder *m)
 {
 	struct inode *inode = m->inode;
@@ -610,8 +658,11 @@ static int z_erofs_get_extent_decompressedlen(struct z_erofs_maprecorder *m)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int z_erofs_map_blocks_iter(struct inode *inode,
 			    struct erofs_map_blocks *map,
 			    int flags)
@@ -646,10 +697,14 @@ int z_erofs_map_blocks_iter(struct inode *inode,
 	endoff = ofs & ((1 << lclusterbits) - 1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = z_erofs_load_cluster_from_disk(&m, initial_lcn, false);
 =======
 	err = z_erofs_load_cluster_from_disk(&m, initial_lcn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = z_erofs_load_cluster_from_disk(&m, initial_lcn, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto unmap_out;
 
@@ -700,14 +755,20 @@ int z_erofs_map_blocks_iter(struct inode *inode,
 	if (err)
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (flags & EROFS_GET_BLOCKS_FIEMAP) {
 		err = z_erofs_get_extent_decompressedlen(&m);
 		if (!err)
 			map->m_flags |= EROFS_MAP_FULL_MAPPED;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unmap_out:
 	if (m.kaddr)
 		kunmap_atomic(m.kaddr);
@@ -724,6 +785,9 @@ out:
 	return err;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int z_erofs_iomap_begin_report(struct inode *inode, loff_t offset,
 				loff_t length, unsigned int flags,
@@ -762,5 +826,8 @@ static int z_erofs_iomap_begin_report(struct inode *inode, loff_t offset,
 const struct iomap_ops z_erofs_iomap_report_ops = {
 	.iomap_begin = z_erofs_iomap_begin_report,
 };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

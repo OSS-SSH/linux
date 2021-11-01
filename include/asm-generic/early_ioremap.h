@@ -20,6 +20,7 @@ extern void early_iounmap(void __iomem *addr, unsigned long size);
 extern void early_memunmap(void *addr, unsigned long size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * Weak function called by early_ioremap_reset(). It does nothing, but
@@ -28,6 +29,8 @@ extern void early_memunmap(void *addr, unsigned long size);
 extern void early_ioremap_shutdown(void);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_GENERIC_EARLY_IOREMAP) && defined(CONFIG_MMU)
 /* Arch-specific initialization */
 extern void early_ioremap_init(void);

@@ -41,12 +41,17 @@ static ssize_t online_show(struct device *dev,
 			   char *buf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct zcrypt_queue *zq = dev_get_drvdata(dev);
 	struct ap_queue *aq = to_ap_queue(dev);
 =======
 	struct ap_queue *aq = to_ap_queue(dev);
 	struct zcrypt_queue *zq = aq->private;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zcrypt_queue *zq = dev_get_drvdata(dev);
+	struct ap_queue *aq = to_ap_queue(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int online = aq->config && zq->online ? 1 : 0;
 
 	return scnprintf(buf, PAGE_SIZE, "%d\n", online);
@@ -57,12 +62,17 @@ static ssize_t online_store(struct device *dev,
 			    const char *buf, size_t count)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct zcrypt_queue *zq = dev_get_drvdata(dev);
 	struct ap_queue *aq = to_ap_queue(dev);
 =======
 	struct ap_queue *aq = to_ap_queue(dev);
 	struct zcrypt_queue *zq = aq->private;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zcrypt_queue *zq = dev_get_drvdata(dev);
+	struct ap_queue *aq = to_ap_queue(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct zcrypt_card *zc = zq->zcard;
 	int online;
 
@@ -94,10 +104,14 @@ static ssize_t load_show(struct device *dev,
 			 char *buf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct zcrypt_queue *zq = dev_get_drvdata(dev);
 =======
 	struct zcrypt_queue *zq = to_ap_queue(dev)->private;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zcrypt_queue *zq = dev_get_drvdata(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return scnprintf(buf, PAGE_SIZE, "%d\n", atomic_read(&zq->load));
 }
@@ -185,10 +199,14 @@ int zcrypt_queue_register(struct zcrypt_queue *zq)
 
 	spin_lock(&zcrypt_list_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zc = dev_get_drvdata(&zq->queue->card->ap_dev.device);
 =======
 	zc = zq->queue->card->private;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zc = dev_get_drvdata(&zq->queue->card->ap_dev.device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zcrypt_card_get(zc);
 	zq->zcard = zc;
 	zq->online = 1;	/* New devices are online by default. */

@@ -136,18 +136,26 @@ static void parse_extended(struct parsed_partitions *state,
 	unsigned char *data;
 	sector_t this_sector, this_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sector_t sector_size;
 =======
 	sector_t sector_size = bdev_logical_block_size(state->bdev) / 512;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sector_t sector_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int loopct = 0;		/* number of links followed
 				   without finding a data partition */
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sector_size = queue_logical_block_size(state->disk->queue) / 512;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sector_size = queue_logical_block_size(state->disk->queue) / 512;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	this_sector = first_sector;
 	this_size = first_size;
 
@@ -588,10 +596,14 @@ static struct {
 int msdos_partition(struct parsed_partitions *state)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sector_t sector_size;
 =======
 	sector_t sector_size = bdev_logical_block_size(state->bdev) / 512;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sector_t sector_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	Sector sect;
 	unsigned char *data;
 	struct msdos_partition *p;
@@ -600,9 +612,13 @@ int msdos_partition(struct parsed_partitions *state)
 	u32 disksig;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sector_size = queue_logical_block_size(state->disk->queue) / 512;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sector_size = queue_logical_block_size(state->disk->queue) / 512;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data = read_part_sector(state, 0, &sect);
 	if (!data)
 		return -1;

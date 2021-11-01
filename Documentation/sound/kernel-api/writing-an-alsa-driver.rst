@@ -3369,10 +3369,14 @@ without losing data.
 
 This callback is optional. If you do not set ``drain`` in the struct
 <<<<<<< HEAD
+<<<<<<< HEAD
 snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
 =======
 snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 instead.
 
 Miscellaneous Devices
@@ -4177,6 +4181,9 @@ module license as GPL, etc., otherwise the system is shown as “tainted”.
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Device-Managed Resources
 ========================
 
@@ -4210,8 +4217,11 @@ the card in that way.  Mixing up with the normal and the managed
 resources may screw up the release order.
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 How To Put Your Driver Into ALSA Tree
 =====================================
 

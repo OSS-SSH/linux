@@ -2803,6 +2803,7 @@ static int get_ms_information(struct scsi_cmnd *srb, struct rtsx_chip *chip)
 
 	if (dev_info_id == 0x15) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		buf_len = 0x3C;
 		data_len = 0x3A;
 	} else {
@@ -2813,6 +2814,12 @@ static int get_ms_information(struct scsi_cmnd *srb, struct rtsx_chip *chip)
 	} else {
 		buf_len = 0x6A;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		buf_len = 0x3C;
+		data_len = 0x3A;
+	} else {
+		buf_len = 0x6C;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		data_len = 0x6A;
 	}
 
@@ -2863,6 +2870,7 @@ static int get_ms_information(struct scsi_cmnd *srb, struct rtsx_chip *chip)
 
 	rtsx_stor_set_xfer_buf(buf, buf_len, srb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	scsi_set_resid(srb, scsi_bufflen(srb) - buf_len);
 =======
 
@@ -2871,6 +2879,9 @@ static int get_ms_information(struct scsi_cmnd *srb, struct rtsx_chip *chip)
 	else
 		scsi_set_resid(srb, scsi_bufflen(srb) - 0x6C);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	scsi_set_resid(srb, scsi_bufflen(srb) - buf_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(buf);
 	return STATUS_SUCCESS;

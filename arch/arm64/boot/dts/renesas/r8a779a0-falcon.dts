@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Device Tree Source for the Falcon CPU and BreakOut boards with R-Car V3U
 =======
  * Device Tree Source for the Falcon CPU and BreakOut boards
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Device Tree Source for the Falcon CPU and BreakOut boards with R-Car V3U
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2020 Renesas Electronics Corp.
  */

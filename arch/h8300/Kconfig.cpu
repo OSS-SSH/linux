@@ -45,9 +45,12 @@ config H8300_H8MAX
 	select H83069
 	select RAMKERNEL
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select HAVE_IDE
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  H8MAX Evaluation Board Support
 	  More Information. (Japanese Only)

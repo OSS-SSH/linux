@@ -122,10 +122,15 @@ hash_ipmark4_uadt(struct ip_set *set, struct nlattr *tb[],
 	e.mark = ntohl(nla_get_be32(tb[IPSET_ATTR_MARK]));
 	e.mark &= h->markmask;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (e.mark == 0 && e.ip == 0)
 		return -IPSET_ERR_HASH_ELEM;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (e.mark == 0 && e.ip == 0)
+		return -IPSET_ERR_HASH_ELEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (adt == IPSET_TEST ||
 	    !(tb[IPSET_ATTR_IP_TO] || tb[IPSET_ATTR_CIDR])) {
@@ -139,6 +144,7 @@ hash_ipmark4_uadt(struct ip_set *set, struct nlattr *tb[],
 		if (ret)
 			return ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ip > ip_to) {
 			if (e.mark == 0 && ip_to == 0)
 				return -IPSET_ERR_HASH_ELEM;
@@ -148,6 +154,13 @@ hash_ipmark4_uadt(struct ip_set *set, struct nlattr *tb[],
 		if (ip > ip_to)
 			swap(ip, ip_to);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ip > ip_to) {
+			if (e.mark == 0 && ip_to == 0)
+				return -IPSET_ERR_HASH_ELEM;
+			swap(ip, ip_to);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (tb[IPSET_ATTR_CIDR]) {
 		u8 cidr = nla_get_u8(tb[IPSET_ATTR_CIDR]);
 
@@ -157,11 +170,17 @@ hash_ipmark4_uadt(struct ip_set *set, struct nlattr *tb[],
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (((u64)ip_to - ip + 1) > IPSET_MAX_RANGE)
 		return -ERANGE;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (((u64)ip_to - ip + 1) > IPSET_MAX_RANGE)
+		return -ERANGE;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (retried)
 		ip = ntohl(h->next.ip);
 	for (; ip <= ip_to; ip++) {

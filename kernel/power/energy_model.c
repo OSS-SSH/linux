@@ -171,12 +171,18 @@ static int em_create_perf_table(struct device *dev, struct em_perf_domain *pd,
 	fmax = (u64) table[nr_states - 1].frequency;
 	for (i = 0; i < nr_states; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned long power_res = em_scale_power(table[i].power);
 
 		table[i].cost = div64_u64(fmax * power_res,
 =======
 		table[i].cost = div64_u64(fmax * table[i].power,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned long power_res = em_scale_power(table[i].power);
+
+		table[i].cost = div64_u64(fmax * power_res,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					  table[i].frequency);
 	}
 

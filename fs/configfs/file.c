@@ -92,13 +92,19 @@ static ssize_t configfs_read_iter(struct kiocb *iocb, struct iov_iter *to)
 	pr_debug("%s: count = %zd, pos = %lld, buf = %s\n",
 		 __func__, iov_iter_count(to), iocb->ki_pos, buffer->page);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (iocb->ki_pos >= buffer->count)
 		goto out;
 	retval = copy_to_iter(buffer->page + iocb->ki_pos,
 			      buffer->count - iocb->ki_pos, to);
+<<<<<<< HEAD
 =======
 	retval = copy_to_iter(buffer->page, buffer->count, to);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iocb->ki_pos += retval;
 	if (retval == 0)
 		retval = -EFAULT;
@@ -170,13 +176,19 @@ static ssize_t configfs_bin_read_iter(struct kiocb *iocb, struct iov_iter *to)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (iocb->ki_pos >= buffer->bin_buffer_size)
 		goto out;
 	retval = copy_to_iter(buffer->bin_buffer + iocb->ki_pos,
 			      buffer->bin_buffer_size - iocb->ki_pos, to);
+<<<<<<< HEAD
 =======
 	retval = copy_to_iter(buffer->bin_buffer, buffer->bin_buffer_size, to);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iocb->ki_pos += retval;
 	if (retval == 0)
 		retval = -EFAULT;
@@ -186,9 +198,13 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Fill @buffer with data coming from @from. */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Fill @buffer with data coming from @from. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int fill_write_buffer(struct configfs_buffer *buffer,
 			     struct iov_iter *from)
 {
@@ -233,10 +249,14 @@ static ssize_t configfs_write_iter(struct kiocb *iocb, struct iov_iter *from)
 	struct file *file = iocb->ki_filp;
 	struct configfs_buffer *buffer = file->private_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int len;
 =======
 	ssize_t len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&buffer->mutex);
 	len = fill_write_buffer(buffer, from);
@@ -295,12 +315,18 @@ static ssize_t configfs_bin_write_iter(struct kiocb *iocb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	len = copy_from_iter(buffer->bin_buffer + iocb->ki_pos,
 			     buffer->bin_buffer_size - iocb->ki_pos, from);
 	iocb->ki_pos += len;
 =======
 	len = copy_from_iter(buffer->bin_buffer, buffer->bin_buffer_size, from);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	len = copy_from_iter(buffer->bin_buffer + iocb->ki_pos,
+			     buffer->bin_buffer_size - iocb->ki_pos, from);
+	iocb->ki_pos += len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	mutex_unlock(&buffer->mutex);
 	return len ? : -EFAULT;

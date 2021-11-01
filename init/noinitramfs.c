@@ -11,9 +11,13 @@
 #include <linux/syscalls.h>
 #include <linux/init_syscalls.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/umh.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/umh.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Create a simple rootfs that is similar to the default initramfs
@@ -23,9 +27,13 @@ static int __init default_rootfs(void)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	usermodehelper_enable();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	usermodehelper_enable();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = init_mkdir("/dev", 0755);
 	if (err < 0)
 		goto out;

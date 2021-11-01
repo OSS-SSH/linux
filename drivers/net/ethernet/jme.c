@@ -735,6 +735,7 @@ jme_make_new_rx_buf(struct jme_adapter *jme, int i)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mapping = dma_map_page(&jme->pdev->dev, virt_to_page(skb->data),
 			       offset_in_page(skb->data), skb_tailroom(skb),
 			       DMA_FROM_DEVICE);
@@ -745,11 +746,18 @@ jme_make_new_rx_buf(struct jme_adapter *jme, int i)
 			       PCI_DMA_FROMDEVICE);
 	if (unlikely(pci_dma_mapping_error(jme->pdev, mapping))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mapping = dma_map_page(&jme->pdev->dev, virt_to_page(skb->data),
+			       offset_in_page(skb->data), skb_tailroom(skb),
+			       DMA_FROM_DEVICE);
+	if (unlikely(dma_mapping_error(&jme->pdev->dev, mapping))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_kfree_skb(skb);
 		return -ENOMEM;
 	}
 
 	if (likely(rxbi->mapping))
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dma_unmap_page(&jme->pdev->dev, rxbi->mapping, rxbi->len,
 			       DMA_FROM_DEVICE);
@@ -757,6 +765,10 @@ jme_make_new_rx_buf(struct jme_adapter *jme, int i)
 		pci_unmap_page(jme->pdev, rxbi->mapping,
 			       rxbi->len, PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&jme->pdev->dev, rxbi->mapping, rxbi->len,
+			       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rxbi->skb = skb;
 	rxbi->len = skb_tailroom(skb);
@@ -773,6 +785,7 @@ jme_free_rx_buf(struct jme_adapter *jme, int i)
 
 	if (rxbi->skb) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_unmap_page(&jme->pdev->dev, rxbi->mapping, rxbi->len,
 			       DMA_FROM_DEVICE);
 =======
@@ -781,6 +794,10 @@ jme_free_rx_buf(struct jme_adapter *jme, int i)
 				 rxbi->len,
 				 PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&jme->pdev->dev, rxbi->mapping, rxbi->len,
+			       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_kfree_skb(rxbi->skb);
 		rxbi->skb = NULL;
 		rxbi->mapping = 0;
@@ -1023,6 +1040,7 @@ jme_alloc_and_feed_skb(struct jme_adapter *jme, int idx)
 
 	skb = rxbi->skb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_sync_single_for_cpu(&jme->pdev->dev, rxbi->mapping, rxbi->len,
 				DMA_FROM_DEVICE);
 
@@ -1041,6 +1059,14 @@ jme_alloc_and_feed_skb(struct jme_adapter *jme, int idx)
 						rxbi->len,
 						PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_cpu(&jme->pdev->dev, rxbi->mapping, rxbi->len,
+				DMA_FROM_DEVICE);
+
+	if (unlikely(jme_make_new_rx_buf(jme, idx))) {
+		dma_sync_single_for_device(&jme->pdev->dev, rxbi->mapping,
+					   rxbi->len, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		++(NET_STAT(jme).rx_dropped);
 	} else {
@@ -1480,6 +1506,7 @@ static void jme_tx_clean_tasklet(struct tasklet_struct *t)
 				txdesc[(i + j) & (mask)].dw[0] = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				dma_unmap_page(&jme->pdev->dev,
 					       ttxbi->mapping, ttxbi->len,
 					       DMA_TO_DEVICE);
@@ -1489,6 +1516,11 @@ static void jme_tx_clean_tasklet(struct tasklet_struct *t)
 						 ttxbi->len,
 						 PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dma_unmap_page(&jme->pdev->dev,
+					       ttxbi->mapping, ttxbi->len,
+					       DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				ttxbi->mapping = 0;
 				ttxbi->len = 0;
@@ -1999,6 +2031,7 @@ jme_fill_tx_map(struct pci_dev *pdev,
 	dma_addr_t dmaaddr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dmaaddr = dma_map_page(&pdev->dev, page, page_offset, len,
 			       DMA_TO_DEVICE);
 
@@ -2012,15 +2045,23 @@ jme_fill_tx_map(struct pci_dev *pdev,
 				page_offset,
 				len,
 				PCI_DMA_TODEVICE);
+=======
+	dmaaddr = dma_map_page(&pdev->dev, page, page_offset, len,
+			       DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (unlikely(pci_dma_mapping_error(pdev, dmaaddr)))
+	if (unlikely(dma_mapping_error(&pdev->dev, dmaaddr)))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	pci_dma_sync_single_for_device(pdev,
 				       dmaaddr,
 				       len,
 				       PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_device(&pdev->dev, dmaaddr, len, DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	txdesc->dw[0] = 0;
 	txdesc->dw[1] = 0;
@@ -2046,6 +2087,7 @@ static void jme_drop_tx_map(struct jme_adapter *jme, int startidx, int count)
 	for (j = 0 ; j < count ; j++) {
 		ctxbi = txbi + ((startidx + j + 2) & (mask));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_unmap_page(&jme->pdev->dev, ctxbi->mapping, ctxbi->len,
 			       DMA_TO_DEVICE);
 =======
@@ -2054,6 +2096,10 @@ static void jme_drop_tx_map(struct jme_adapter *jme, int startidx, int count)
 				ctxbi->len,
 				PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&jme->pdev->dev, ctxbi->mapping, ctxbi->len,
+			       DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ctxbi->mapping = 0;
 		ctxbi->len = 0;
@@ -2448,14 +2494,20 @@ jme_get_regs(struct net_device *netdev, struct ethtool_regs *regs, void *p)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int jme_get_coalesce(struct net_device *netdev,
 			    struct ethtool_coalesce *ecmd,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 jme_get_coalesce(struct net_device *netdev, struct ethtool_coalesce *ecmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct jme_adapter *jme = netdev_priv(netdev);
 
@@ -2492,14 +2544,20 @@ jme_get_coalesce(struct net_device *netdev, struct ethtool_coalesce *ecmd)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int jme_set_coalesce(struct net_device *netdev,
 			    struct ethtool_coalesce *ecmd,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 jme_set_coalesce(struct net_device *netdev, struct ethtool_coalesce *ecmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct jme_adapter *jme = netdev_priv(netdev);
 	struct dynpcc_info *dpi = &(jme->dpi);
@@ -2921,6 +2979,7 @@ jme_pci_dma64(struct pci_dev *pdev)
 {
 	if (pdev->device == PCI_DEVICE_ID_JMICRON_JMC250 &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    !dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64)))
 		return 1;
 
@@ -2934,16 +2993,24 @@ jme_pci_dma64(struct pci_dev *pdev)
 	    !pci_set_dma_mask(pdev, DMA_BIT_MASK(64)))
 		if (!pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64)))
 			return 1;
+=======
+	    !dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64)))
+		return 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pdev->device == PCI_DEVICE_ID_JMICRON_JMC250 &&
-	    !pci_set_dma_mask(pdev, DMA_BIT_MASK(40)))
-		if (!pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(40)))
-			return 1;
+	    !dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(40)))
+		return 1;
 
+<<<<<<< HEAD
 	if (!pci_set_dma_mask(pdev, DMA_BIT_MASK(32)))
 		if (!pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32)))
 			return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32)))
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return -1;
 }
@@ -2975,10 +3042,14 @@ static const struct net_device_ops jme_netdev_ops = {
 	.ndo_stop		= jme_close,
 	.ndo_validate_addr	= eth_validate_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= jme_ioctl,
 =======
 	.ndo_do_ioctl		= jme_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= jme_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_start_xmit		= jme_start_xmit,
 	.ndo_set_mac_address	= jme_set_macaddr,
 	.ndo_set_rx_mode	= jme_set_multi,

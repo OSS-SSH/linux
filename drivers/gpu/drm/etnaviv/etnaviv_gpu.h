@@ -102,9 +102,13 @@ struct etnaviv_gpu {
 	struct drm_gpu_scheduler sched;
 	bool initialized;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool fe_running;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool fe_running;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* 'ring'-buffer: */
 	struct etnaviv_cmdbuf buffer;

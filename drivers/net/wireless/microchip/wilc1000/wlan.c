@@ -1128,6 +1128,7 @@ int wilc_wlan_start(struct wilc *wilc)
 	acquire_bus(wilc, WILC_BUS_ACQUIRE_ONLY);
 	ret = wilc->hif_func->hif_write_reg(wilc, WILC_VMM_CORE_CFG, reg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret)
 		goto release;
 
@@ -1137,24 +1138,17 @@ int wilc_wlan_start(struct wilc *wilc)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret)
+		goto release;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reg = 0;
 	if (wilc->io_type == WILC_HIF_SDIO && wilc->dev_irq_num)
 		reg |= WILC_HAVE_SDIO_IRQ_GPIO;
 
 	ret = wilc->hif_func->hif_write_reg(wilc, WILC_GP_REG_1, reg);
 <<<<<<< HEAD
-	if (ret)
-		goto release;
-=======
-	if (ret) {
-		release_bus(wilc, WILC_BUS_RELEASE_ONLY);
-		return ret;
-	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-
-	wilc->hif_func->hif_sync_ext(wilc, NUM_INT_EXT);
-
-	ret = wilc->hif_func->hif_read_reg(wilc, WILC_CHIPID, &chipid);
 <<<<<<< HEAD
 	if (ret)
 		goto release;
@@ -1164,6 +1158,28 @@ int wilc_wlan_start(struct wilc *wilc)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret)
+		goto release;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	wilc->hif_func->hif_sync_ext(wilc, NUM_INT_EXT);
+
+	ret = wilc->hif_func->hif_read_reg(wilc, WILC_CHIPID, &chipid);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (ret)
+		goto release;
+=======
+	if (ret) {
+		release_bus(wilc, WILC_BUS_RELEASE_ONLY);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret)
+		goto release;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	wilc->hif_func->hif_read_reg(wilc, WILC_GLB_RESET_0, &reg);
 	if ((reg & BIT(10)) == BIT(10)) {
@@ -1176,6 +1192,7 @@ int wilc_wlan_start(struct wilc *wilc)
 	ret = wilc->hif_func->hif_write_reg(wilc, WILC_GLB_RESET_0, reg);
 	wilc->hif_func->hif_read_reg(wilc, WILC_GLB_RESET_0, &reg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 release:
 	release_bus(wilc, WILC_BUS_RELEASE_ONLY);
@@ -1183,6 +1200,11 @@ release:
 	release_bus(wilc, WILC_BUS_RELEASE_ONLY);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+release:
+	release_bus(wilc, WILC_BUS_RELEASE_ONLY);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1197,11 +1219,15 @@ int wilc_wlan_stop(struct wilc *wilc, struct wilc_vif *vif)
 	if (ret) {
 		netdev_err(vif->ndev, "Error while reading reg\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto release;
 =======
 		release_bus(wilc, WILC_BUS_RELEASE_ALLOW_SLEEP);
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto release;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = wilc->hif_func->hif_write_reg(wilc, WILC_GP_REG_0,
@@ -1209,28 +1235,37 @@ int wilc_wlan_stop(struct wilc *wilc, struct wilc_vif *vif)
 	if (ret) {
 		netdev_err(vif->ndev, "Error while writing reg\n");
 <<<<<<< HEAD
-		goto release;
-=======
-		release_bus(wilc, WILC_BUS_RELEASE_ALLOW_SLEEP);
-		return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-	}
-
-	ret = wilc->hif_func->hif_read_reg(wilc, WILC_FW_HOST_COMM, &reg);
-	if (ret) {
-		netdev_err(vif->ndev, "Error while reading reg\n");
 <<<<<<< HEAD
 		goto release;
 =======
 		release_bus(wilc, WILC_BUS_RELEASE_ALLOW_SLEEP);
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto release;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	}
+
+	ret = wilc->hif_func->hif_read_reg(wilc, WILC_FW_HOST_COMM, &reg);
+	if (ret) {
+		netdev_err(vif->ndev, "Error while reading reg\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto release;
+=======
+		release_bus(wilc, WILC_BUS_RELEASE_ALLOW_SLEEP);
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto release;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	reg = BIT(0);
 
 	ret = wilc->hif_func->hif_write_reg(wilc, WILC_FW_HOST_COMM, reg);
 	if (ret) {
 		netdev_err(vif->ndev, "Error while writing reg\n");
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto release;
 	}
@@ -1243,12 +1278,21 @@ release:
 =======
 		release_bus(wilc, WILC_BUS_RELEASE_ALLOW_SLEEP);
 		return ret;
+=======
+		goto release;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
+	ret = 0;
+release:
 	release_bus(wilc, WILC_BUS_RELEASE_ALLOW_SLEEP);
 
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void wilc_wlan_cleanup(struct net_device *dev)

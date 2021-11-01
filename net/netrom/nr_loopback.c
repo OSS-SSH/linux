@@ -60,11 +60,15 @@ static void nr_loopback_timer(struct timer_list *unused)
 			kfree_skb(skb);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_put(dev);
 =======
 		if (dev != NULL)
 			dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_put(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!skb_queue_empty(&loopback_queue) && !nr_loopback_running())
 			mod_timer(&loopback_timer, jiffies + 10);

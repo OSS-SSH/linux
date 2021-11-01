@@ -46,10 +46,14 @@ struct nfc_mei_phy {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern const struct nfc_phy_ops mei_phy_ops;
 =======
 extern struct nfc_phy_ops mei_phy_ops;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern const struct nfc_phy_ops mei_phy_ops;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct nfc_mei_phy *nfc_mei_phy_alloc(struct mei_cl_device *device);
 void nfc_mei_phy_free(struct nfc_mei_phy *phy);

@@ -615,10 +615,14 @@ page_flags_test(int section, int node, int zone, int last_cpupid,
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flags &= PAGEFLAGS_MASK;
 =======
 	flags &= BIT(NR_PAGEFLAGS) - 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flags &= PAGEFLAGS_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flags) {
 		page_flags |= flags;
 		snprintf(cmp_buf + size, BUF_SIZE - size, "%s", name);
@@ -680,6 +684,7 @@ flags(void)
 			cmp_buffer);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flags = VM_READ | VM_EXEC | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC;
 	test("read|exec|mayread|maywrite|mayexec", "%pGv", &flags);
 =======
@@ -687,6 +692,10 @@ flags(void)
 			| VM_DENYWRITE;
 	test("read|exec|mayread|maywrite|mayexec|denywrite", "%pGv", &flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flags = VM_READ | VM_EXEC | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC;
+	test("read|exec|mayread|maywrite|mayexec", "%pGv", &flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	gfp = GFP_TRANSHUGE;
 	test("GFP_TRANSHUGE", "%pGg", &gfp);

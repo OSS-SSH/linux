@@ -407,6 +407,9 @@ static const struct of_device_id eeprom_93xx46_of_table[] = {
 MODULE_DEVICE_TABLE(of, eeprom_93xx46_of_table);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct spi_device_id eeprom_93xx46_spi_ids[] = {
 	{ .name = "eeprom-93xx46",
 	  .driver_data = (kernel_ulong_t)&at93c46_data, },
@@ -424,8 +427,11 @@ static const struct spi_device_id eeprom_93xx46_spi_ids[] = {
 };
 MODULE_DEVICE_TABLE(spi, eeprom_93xx46_spi_ids);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int eeprom_93xx46_probe_dt(struct spi_device *spi)
 {
 	const struct of_device_id *of_id =
@@ -576,9 +582,13 @@ static struct spi_driver eeprom_93xx46_driver = {
 	.probe		= eeprom_93xx46_probe,
 	.remove		= eeprom_93xx46_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.id_table	= eeprom_93xx46_spi_ids,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.id_table	= eeprom_93xx46_spi_ids,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_spi_driver(eeprom_93xx46_driver);

@@ -321,6 +321,7 @@ Examples for low-level BPF:
   drop: ret #0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 **(Accelerated) VLAN w/ id 10**::
 
@@ -330,6 +331,8 @@ Examples for low-level BPF:
   drop: ret #0
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 **icmp random packet sampling, 1 in 4**::
 
   ldh [12]
@@ -362,6 +365,9 @@ Examples for low-level BPF:
   good: ret #0x7fff0000   /* SECCOMP_RET_ALLOW */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Examples for low-level BPF extension:
 
 **Packet for interface index 13**::
@@ -378,8 +384,11 @@ Examples for low-level BPF extension:
   ret #-1
   drop: ret #0
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The above example code can be placed into a file (here called "foo"), and
 then be passed to the bpf_asm tool for generating opcodes, output that xt_bpf
 and cls_bpf understands and can directly be loaded with. Example with above
@@ -652,12 +661,17 @@ converted by the kernel into the new instruction set representation and run
 in the eBPF interpreter. For in-kernel handlers, this all works transparently
 by using bpf_prog_create() for setting up the filter, resp.
 <<<<<<< HEAD
+<<<<<<< HEAD
 bpf_prog_destroy() for destroying it. The function
 bpf_prog_run(filter, ctx) transparently invokes eBPF interpreter or JITed
 =======
 bpf_prog_destroy() for destroying it. The macro
 BPF_PROG_RUN(filter, ctx) transparently invokes eBPF interpreter or JITed
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bpf_prog_destroy() for destroying it. The function
+bpf_prog_run(filter, ctx) transparently invokes eBPF interpreter or JITed
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 code to run the filter. 'filter' is a pointer to struct bpf_prog that we
 got from bpf_prog_create(), and 'ctx' the given context (e.g.
 skb pointer). All constraints and restrictions from bpf_check_classic() apply

@@ -243,6 +243,9 @@ int kvmppc_rtas_hcall(struct kvm_vcpu *vcpu)
 	 */
 	orig_rets = args.rets;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (be32_to_cpu(args.nargs) >= ARRAY_SIZE(args.args)) {
 		/*
 		 * Don't overflow our args array: ensure there is room for
@@ -254,8 +257,11 @@ int kvmppc_rtas_hcall(struct kvm_vcpu *vcpu)
 		rc = -EINVAL;
 		goto fail;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	args.rets = &args.args[be32_to_cpu(args.nargs)];
 
 	mutex_lock(&vcpu->kvm->arch.rtas_token_lock);
@@ -284,6 +290,9 @@ fail:
 	/*
 	 * We only get here if the guest has called RTAS with a bogus
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * args pointer or nargs/nret values that would overflow the
 	 * array. That means we can't get to the args, and so we can't
 	 * fail the RTAS call. So fail right out to userspace, which
@@ -295,11 +304,14 @@ fail:
 	 * errors to the guest rather than failing to host userspace.
 	 * However old guests that don't test for failure could then
 	 * continue silently after errors, so for now we won't do this.
+<<<<<<< HEAD
 =======
 	 * args pointer. That means we can't get to the args, and so we
 	 * can't fail the RTAS call. So fail right out to userspace,
 	 * which should kill the guest.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	return rc;
 }

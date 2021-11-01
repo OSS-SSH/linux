@@ -291,11 +291,15 @@ int __init mbi_init(struct fwnode_handle *fwnode, struct irq_domain *parent)
 			goto err_free_mbi;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mbi_ranges[n].bm = bitmap_zalloc(mbi_ranges[n].nr_spis, GFP_KERNEL);
 =======
 		mbi_ranges[n].bm = kcalloc(BITS_TO_LONGS(mbi_ranges[n].nr_spis),
 					   sizeof(long), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mbi_ranges[n].bm = bitmap_zalloc(mbi_ranges[n].nr_spis, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!mbi_ranges[n].bm) {
 			ret = -ENOMEM;
 			goto err_free_mbi;
@@ -334,10 +338,14 @@ err_free_mbi:
 	if (mbi_ranges) {
 		for (n = 0; n < mbi_range_nr; n++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			bitmap_free(mbi_ranges[n].bm);
 =======
 			kfree(mbi_ranges[n].bm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			bitmap_free(mbi_ranges[n].bm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(mbi_ranges);
 	}
 

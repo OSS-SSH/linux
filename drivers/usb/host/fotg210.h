@@ -684,6 +684,7 @@ static inline unsigned fotg210_read_frame_index(struct fotg210_hcd *fotg210)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define fotg210_itdlen(urb, desc, t) ({			\
 	usb_pipein((urb)->pipe) ?				\
@@ -691,6 +692,8 @@ static inline unsigned fotg210_read_frame_index(struct fotg210_hcd *fotg210)
 	FOTG210_ITD_LENGTH(t);					\
 })
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*-------------------------------------------------------------------------*/
 
 #endif /* __LINUX_FOTG210_H */

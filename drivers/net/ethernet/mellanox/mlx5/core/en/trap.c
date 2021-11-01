@@ -38,10 +38,14 @@ static void mlx5e_init_trap_rq(struct mlx5e_trap *t, struct mlx5e_params *params
 
 	rq->wq_type      = params->rq_wq_type;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rq->pdev         = t->pdev;
 =======
 	rq->pdev         = mdev->device;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rq->pdev         = t->pdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rq->netdev       = priv->netdev;
 	rq->priv         = priv;
 	rq->clock        = &mdev->clock;
@@ -97,6 +101,7 @@ static int mlx5e_create_trap_direct_rq_tir(struct mlx5_core_dev *mdev, struct ml
 					   u32 rqn)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mlx5e_tir_builder *builder;
 	int err;
 
@@ -112,13 +117,16 @@ static int mlx5e_create_trap_direct_rq_tir(struct mlx5_core_dev *mdev, struct ml
 	void *tirc;
 	int inlen;
 	u32 *in;
+=======
+	struct mlx5e_tir_builder *builder;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
-	inlen = MLX5_ST_SZ_BYTES(create_tir_in);
-	in = kvzalloc(inlen, GFP_KERNEL);
-	if (!in)
+	builder = mlx5e_tir_builder_alloc(false);
+	if (!builder)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	tirc = MLX5_ADDR_OF(create_tir_in, in, ctx);
 	MLX5_SET(tirc, tirc, transport_domain, mdev->mlx5e_res.hw_objs.td.tdn);
 	MLX5_SET(tirc, tirc, rx_hash_fn, MLX5_RX_HASH_FN_NONE);
@@ -127,15 +135,22 @@ static int mlx5e_create_trap_direct_rq_tir(struct mlx5_core_dev *mdev, struct ml
 	err = mlx5e_create_tir(mdev, tir, in);
 	kvfree(in);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5e_tir_builder_build_inline(builder, mdev->mlx5e_res.hw_objs.td.tdn, rqn);
+	err = mlx5e_tir_init(tir, builder, mdev, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	return err;
-}
+	mlx5e_tir_builder_free(builder);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void mlx5e_destroy_trap_direct_rq_tir(struct mlx5_core_dev *mdev, struct mlx5e_tir *tir)
 {
 	mlx5e_destroy_tir(mdev, tir);
+=======
+	return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
@@ -195,10 +210,14 @@ err_napi_del:
 void mlx5e_close_trap(struct mlx5e_trap *trap)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlx5e_tir_destroy(&trap->tir);
 =======
 	mlx5e_destroy_trap_direct_rq_tir(trap->mdev, &trap->tir);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5e_tir_destroy(&trap->tir);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlx5e_close_trap_rq(&trap->rq);
 	netif_napi_del(&trap->napi);
 	kvfree(trap);

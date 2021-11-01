@@ -8,9 +8,13 @@
 /dts-v1/;
 #include "sama5d4.dtsi"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <dt-bindings/input/input.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <dt-bindings/input/input.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 / {
 	model = "Atmel SAMA5D4 Xplained";
@@ -43,6 +47,7 @@
 			};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			spi0: spi@f8010000 {
 				cs-gpios = <&pioC 3 0>, <0>, <0>, <0>;
@@ -55,6 +60,8 @@
 			};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			i2c0: i2c@f8014000 {
 				i2c-digital-filter;
 				status = "okay";
@@ -98,10 +105,15 @@
 
 			spi1: spi@fc018000 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				pinctrl-names = "default";
 				pinctrl-0 = <&pinctrl_spi0_cs>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_spi0_cs>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				cs-gpios = <&pioB 21 0>;
 				status = "okay";
 			};
@@ -160,6 +172,9 @@
 							<AT91_PIOE 1 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
 					};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					pinctrl_spi0_cs: spi0_cs_default {
 						atmel,pins =
 							<AT91_PIOB 21 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
@@ -173,8 +188,11 @@
 						atmel,pins =
 							<AT91_PIOE 4 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 					};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				};
 			};
 		};
@@ -274,10 +292,14 @@
 			label = "pb_user1";
 			gpios = <&pioE 8 GPIO_ACTIVE_HIGH>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			linux,code = <KEY_PROG1>;
 =======
 			linux,code = <0x100>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			linux,code = <KEY_PROG1>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			wakeup-source;
 		};
 	};
@@ -285,10 +307,15 @@
 	leds {
 		compatible = "gpio-leds";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_gpio_leds>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpio_leds>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = "okay";
 
 		d8 {
@@ -316,10 +343,15 @@
 	vcc_mmc1_reg: fixedregulator_mmc1 {
 		compatible = "regulator-fixed";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_vcc_mmc1_reg>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_vcc_mmc1_reg>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gpio = <&pioE 4 GPIO_ACTIVE_LOW>;
 		regulator-name = "VDD MCI1";
 		regulator-min-microvolt = <3300000>;

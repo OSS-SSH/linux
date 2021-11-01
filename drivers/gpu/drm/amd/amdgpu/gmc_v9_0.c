@@ -54,12 +54,18 @@
 #include "umc_v6_1.h"
 #include "umc_v6_0.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "umc_v6_7.h"
 #include "hdp_v4_0.h"
 #include "mca_v3_0.h"
 =======
 #include "hdp_v4_0.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "umc_v6_7.h"
+#include "hdp_v4_0.h"
+#include "mca_v3_0.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "ivsrcid/vmc/irqsrcs_vmc_1_0.h"
 
@@ -512,9 +518,13 @@ static int gmc_v9_0_process_interrupt(struct amdgpu_device *adev,
 {
 	bool retry_fault = !!(entry->src_data[1] & 0x80);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool write_fault = !!(entry->src_data[1] & 0x20);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool write_fault = !!(entry->src_data[1] & 0x20);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t status = 0, cid = 0, rw = 0;
 	struct amdgpu_task_info task_info;
 	struct amdgpu_vmhub *hub;
@@ -546,10 +556,14 @@ static int gmc_v9_0_process_interrupt(struct amdgpu_device *adev,
 		 * tables
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (amdgpu_vm_handle_fault(adev, entry->pasid, addr, write_fault))
 =======
 		if (amdgpu_vm_handle_fault(adev, entry->pasid, addr))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (amdgpu_vm_handle_fault(adev, entry->pasid, addr, write_fault))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 1;
 	}
 
@@ -1183,6 +1197,9 @@ static void gmc_v9_0_set_umc_funcs(struct amdgpu_device *adev)
 		adev->umc.ras_funcs = &umc_v6_1_ras_funcs;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_ALDEBARAN:
 		adev->umc.max_ras_err_cnt_per_query = UMC_V6_7_TOTAL_CHANNEL_NUM;
 		adev->umc.channel_inst_num = UMC_V6_7_CHANNEL_INSTANCE_NUM;
@@ -1195,8 +1212,11 @@ static void gmc_v9_0_set_umc_funcs(struct amdgpu_device *adev)
 		else
 			adev->umc.channel_idx_tbl = &umc_v6_7_channel_idx_tbl_second[0][0];
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -1246,6 +1266,9 @@ static void gmc_v9_0_set_hdp_ras_funcs(struct amdgpu_device *adev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void gmc_v9_0_set_mca_funcs(struct amdgpu_device *adev)
 {
 	switch (adev->asic_type) {
@@ -1258,8 +1281,11 @@ static void gmc_v9_0_set_mca_funcs(struct amdgpu_device *adev)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int gmc_v9_0_early_init(void *handle)
 {
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
@@ -1282,9 +1308,13 @@ static int gmc_v9_0_early_init(void *handle)
 	gmc_v9_0_set_gfxhub_funcs(adev);
 	gmc_v9_0_set_hdp_ras_funcs(adev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gmc_v9_0_set_mca_funcs(adev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gmc_v9_0_set_mca_funcs(adev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	adev->gmc.shared_aperture_start = 0x2000000000000000ULL;
 	adev->gmc.shared_aperture_end =
@@ -1497,10 +1527,15 @@ static int gmc_v9_0_sw_init(void *handle)
 
 	adev->mmhub.funcs->init(adev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adev->mca.funcs)
 		adev->mca.funcs->init(adev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adev->mca.funcs)
+		adev->mca.funcs->init(adev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_init(&adev->gmc.invalidate_lock);
 
@@ -1818,10 +1853,15 @@ static int gmc_v9_0_hw_fini(void *handle)
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gmc_v9_0_gart_disable(adev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gmc_v9_0_gart_disable(adev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (amdgpu_sriov_vf(adev)) {
 		/* full access mode, so don't touch any GMC register */
 		DRM_DEBUG("For SRIOV client, shouldn't do anything.\n");
@@ -1831,9 +1871,12 @@ static int gmc_v9_0_hw_fini(void *handle)
 	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gmc_v9_0_gart_disable(adev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

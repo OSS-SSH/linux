@@ -65,6 +65,7 @@ static unsigned long clk_divider_gate_recalc_rate(struct clk_hw *hw,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int clk_divider_determine_rate(struct clk_hw *hw,
 				      struct clk_rate_request *req)
 {
@@ -75,6 +76,12 @@ static long clk_divider_round_rate(struct clk_hw *hw, unsigned long rate,
 {
 	return clk_divider_ops.round_rate(hw, rate, prate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int clk_divider_determine_rate(struct clk_hw *hw,
+				      struct clk_rate_request *req)
+{
+	return clk_divider_ops.determine_rate(hw, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int clk_divider_gate_set_rate(struct clk_hw *hw, unsigned long rate,
@@ -162,19 +169,27 @@ static int clk_divider_is_enabled(struct clk_hw *hw)
 static const struct clk_ops clk_divider_gate_ro_ops = {
 	.recalc_rate = clk_divider_gate_recalc_rate_ro,
 <<<<<<< HEAD
-	.determine_rate = clk_divider_determine_rate,
-=======
-	.round_rate = clk_divider_round_rate,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-};
-
-static const struct clk_ops clk_divider_gate_ops = {
-	.recalc_rate = clk_divider_gate_recalc_rate,
 <<<<<<< HEAD
 	.determine_rate = clk_divider_determine_rate,
 =======
 	.round_rate = clk_divider_round_rate,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.determine_rate = clk_divider_determine_rate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+};
+
+static const struct clk_ops clk_divider_gate_ops = {
+	.recalc_rate = clk_divider_gate_recalc_rate,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.determine_rate = clk_divider_determine_rate,
+=======
+	.round_rate = clk_divider_round_rate,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.determine_rate = clk_divider_determine_rate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.set_rate = clk_divider_gate_set_rate,
 	.enable = clk_divider_enable,
 	.disable = clk_divider_disable,

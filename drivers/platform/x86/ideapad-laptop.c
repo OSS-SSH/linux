@@ -42,9 +42,13 @@ static const char *const ideapad_wmi_fnesc_events[] = {
 	"26CAB2E5-5CF1-46AE-AAC3-4A12B6BA50E6", /* Yoga 3 */
 	"56322276-8493-4CE8-A783-98C991274F5E", /* Yoga 700 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"8FC0DE0C-B4E4-43FD-B0F3-8871711C1294", /* Legion 5 */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	"8FC0DE0C-B4E4-43FD-B0F3-8871711C1294", /* Legion 5 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -1464,15 +1468,22 @@ static void ideapad_wmi_notify(u32 value, void *context)
 {
 	struct ideapad_private *priv = context;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long result;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long result;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (value) {
 	case 128:
 		ideapad_input_report(priv, value);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 208:
 		if (!eval_hals(priv->adev->handle, &result)) {
 			bool state = test_bit(HALS_FNLOCK_STATE_BIT, &result);
@@ -1480,8 +1491,11 @@ static void ideapad_wmi_notify(u32 value, void *context)
 			exec_sals(priv->adev->handle, state ? SALS_FNLOCK_ON : SALS_FNLOCK_OFF);
 		}
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		dev_info(&priv->platform_device->dev,
 			 "Unknown WMI event: %u\n", value);

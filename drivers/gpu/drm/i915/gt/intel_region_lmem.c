@@ -10,11 +10,16 @@
 #include "gem/i915_gem_lmem.h"
 #include "gem/i915_gem_region.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "gem/i915_gem_ttm.h"
 #include "gt/intel_gt.h"
 =======
 #include "intel_region_lmem.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "gem/i915_gem_ttm.h"
+#include "gt/intel_gt.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int init_fake_lmem_bar(struct intel_memory_region *mem)
 {
@@ -113,10 +118,14 @@ static const struct intel_memory_region_ops intel_region_lmem_ops = {
 	.init = region_lmem_init,
 	.release = region_lmem_release,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.init_object = __i915_gem_ttm_object_init,
 =======
 	.init_object = __i915_gem_lmem_object_init,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.init_object = __i915_gem_ttm_object_init,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct intel_memory_region *
@@ -167,10 +176,14 @@ static bool get_legacy_lowmem_region(struct intel_uncore *uncore,
 				     u64 *start, u32 *size)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!IS_DG1_GT_STEP(uncore->i915, STEP_A0, STEP_C0))
 =======
 	if (!IS_DG1_REVID(uncore->i915, DG1_REVID_A0, DG1_REVID_B0))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!IS_DG1_GT_STEP(uncore->i915, STEP_A0, STEP_C0))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	*start = 0;

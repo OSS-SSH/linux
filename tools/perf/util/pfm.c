@@ -100,10 +100,14 @@ int parse_libpfm_events_option(const struct option *opt, const char *str,
 
 		if (grp_evt > -1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			evsel__set_leader(evsel, grp_leader);
 =======
 			evsel->leader = grp_leader;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			evsel__set_leader(evsel, grp_leader);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			grp_leader->core.nr_members++;
 			grp_evt++;
 		}

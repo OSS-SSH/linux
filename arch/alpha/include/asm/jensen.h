@@ -112,29 +112,41 @@ __EXTERN_INLINE void jensen_set_hae(unsigned long addr)
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 __EXTERN_INLINE unsigned int jensen_local_inb(unsigned long addr)
 =======
 static inline unsigned int jensen_local_inb(unsigned long addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__EXTERN_INLINE unsigned int jensen_local_inb(unsigned long addr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return 0xff & *(vuip)((addr << 9) + EISA_VL82C106);
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 __EXTERN_INLINE void jensen_local_outb(u8 b, unsigned long addr)
 =======
 static inline void jensen_local_outb(u8 b, unsigned long addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__EXTERN_INLINE void jensen_local_outb(u8 b, unsigned long addr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	*(vuip)((addr << 9) + EISA_VL82C106) = b;
 	mb();
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 __EXTERN_INLINE unsigned int jensen_bus_inb(unsigned long addr)
 =======
 static inline unsigned int jensen_bus_inb(unsigned long addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__EXTERN_INLINE unsigned int jensen_bus_inb(unsigned long addr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	long result;
 
@@ -144,10 +156,14 @@ static inline unsigned int jensen_bus_inb(unsigned long addr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 __EXTERN_INLINE void jensen_bus_outb(u8 b, unsigned long addr)
 =======
 static inline void jensen_bus_outb(u8 b, unsigned long addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__EXTERN_INLINE void jensen_bus_outb(u8 b, unsigned long addr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	jensen_set_hae(0);
 	*(vuip)((addr << 7) + EISA_IO + 0x00) = b * 0x01010101;

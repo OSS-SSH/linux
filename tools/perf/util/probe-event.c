@@ -180,6 +180,7 @@ struct map *get_target_map(const char *target, struct nsinfo *nsi, bool user)
 
 		map = dso__new_map(target);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (map && map->dso) {
 			nsinfo__put(map->dso->nsinfo);
 			map->dso->nsinfo = nsinfo__get(nsi);
@@ -188,6 +189,12 @@ struct map *get_target_map(const char *target, struct nsinfo *nsi, bool user)
 		if (map && map->dso)
 			map->dso->nsinfo = nsinfo__get(nsi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (map && map->dso) {
+			nsinfo__put(map->dso->nsinfo);
+			map->dso->nsinfo = nsinfo__get(nsi);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return map;
 	} else {
 		return kernel_get_module_map(target);
@@ -245,12 +252,17 @@ static void clear_probe_trace_events(struct probe_trace_event *tevs, int ntevs)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool kprobe_blacklist__listed(u64 address);
 static bool kprobe_warn_out_range(const char *symbol, u64 address)
 =======
 static bool kprobe_blacklist__listed(unsigned long address);
 static bool kprobe_warn_out_range(const char *symbol, unsigned long address)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static bool kprobe_blacklist__listed(u64 address);
+static bool kprobe_warn_out_range(const char *symbol, u64 address)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct map *map;
 	bool ret = false;
@@ -411,11 +423,15 @@ static int find_alternative_probe_point(struct debuginfo *dinfo,
 			pp->function, address);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = debuginfo__find_probe_point(dinfo, address, result);
 =======
 	ret = debuginfo__find_probe_point(dinfo, (unsigned long)address,
 					  result);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = debuginfo__find_probe_point(dinfo, address, result);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret <= 0)
 		ret = (!ret) ? -ENOENT : ret;
 	else {
@@ -604,10 +620,14 @@ static void debuginfo_cache__exit(void)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int get_text_start_address(const char *exec, u64 *address,
 =======
 static int get_text_start_address(const char *exec, unsigned long *address,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int get_text_start_address(const char *exec, u64 *address,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  struct nsinfo *nsi)
 {
 	Elf *elf;
@@ -653,10 +673,14 @@ static int find_perf_probe_point_from_dwarf(struct probe_trace_point *tp,
 {
 	struct debuginfo *dinfo = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 stext = 0;
 =======
 	unsigned long stext = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 stext = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 addr = tp->address;
 	int ret = -ENOENT;
 
@@ -685,11 +709,15 @@ static int find_perf_probe_point_from_dwarf(struct probe_trace_point *tp,
 	dinfo = debuginfo_cache__open(tp->module, verbose <= 0);
 	if (dinfo)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = debuginfo__find_probe_point(dinfo, addr, pp);
 =======
 		ret = debuginfo__find_probe_point(dinfo,
 						 (unsigned long)addr, pp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = debuginfo__find_probe_point(dinfo, addr, pp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		ret = -ENOENT;
 
@@ -705,10 +733,14 @@ error:
 /* Adjust symbol name and address */
 static int post_process_probe_trace_point(struct probe_trace_point *tp,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					   struct map *map, u64 offs)
 =======
 					   struct map *map, unsigned long offs)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					   struct map *map, u64 offs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct symbol *sym;
 	u64 addr = tp->address - offs;
@@ -752,10 +784,14 @@ post_process_offline_probe_trace_events(struct probe_trace_event *tevs,
 {
 	struct map *map;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 stext = 0;
 =======
 	unsigned long stext = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 stext = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, ret = 0;
 
 	/* Prepare a map for offline binary */
@@ -782,10 +818,14 @@ static int add_exec_to_probe_trace_events(struct probe_trace_event *tevs,
 {
 	int i, ret = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 stext = 0;
 =======
 	unsigned long stext = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 stext = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!exec)
 		return 0;
@@ -831,10 +871,14 @@ post_process_module_probe_trace_events(struct probe_trace_event *tevs,
 	for (i = 0; i < ntevs; i++) {
 		ret = post_process_probe_trace_point(&tevs[i].point,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						map, text_offs);
 =======
 						map, (unsigned long)text_offs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						map, text_offs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0)
 			break;
 		tevs[i].point.module =
@@ -1579,10 +1623,14 @@ static int parse_perf_probe_point(char *arg, struct perf_probe_event *pev)
 		 */
 		if (tmp && !strncmp(tmp, "0x", 2)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pp->abs_address = strtoull(pp->function, &tmp, 0);
 =======
 			pp->abs_address = strtoul(pp->function, &tmp, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pp->abs_address = strtoull(pp->function, &tmp, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (*tmp != '\0') {
 				semantic_error("Invalid absolute address.\n");
 				return -EINVAL;
@@ -1958,10 +2006,14 @@ int parse_probe_trace_command(const char *cmd, struct probe_trace_event *tev)
 			argc -= 1;
 		} else
 <<<<<<< HEAD
+<<<<<<< HEAD
 			tp->address = strtoull(fmt1_str, NULL, 0);
 =======
 			tp->address = strtoul(fmt1_str, NULL, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tp->address = strtoull(fmt1_str, NULL, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/* Only the symbol-based probe has offset */
 		tp->symbol = strdup(fmt1_str);
@@ -2208,10 +2260,14 @@ synthesize_uprobe_trace_def(struct probe_trace_point *tp, struct strbuf *buf)
 
 	/* Use the tp->address for uprobes */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = strbuf_addf(buf, "%s:0x%" PRIx64, tp->module, tp->address);
 =======
 	err = strbuf_addf(buf, "%s:0x%lx", tp->module, tp->address);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = strbuf_addf(buf, "%s:0x%" PRIx64, tp->module, tp->address);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (err >= 0 && tp->ref_ctr_offset) {
 		if (!uprobe_ref_ctr_is_supported())
@@ -2227,10 +2283,14 @@ synthesize_kprobe_trace_def(struct probe_trace_point *tp, struct strbuf *buf)
 	if (!strncmp(tp->symbol, "0x", 2)) {
 		/* Absolute address. See try_to_find_absolute_address() */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return strbuf_addf(buf, "%s%s0x%" PRIx64, tp->module ?: "",
 =======
 		return strbuf_addf(buf, "%s%s0x%lx", tp->module ?: "",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return strbuf_addf(buf, "%s%s0x%" PRIx64, tp->module ?: "",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  tp->module ? ":" : "", tp->address);
 	} else {
 		return strbuf_addf(buf, "%s%s%s+%lu", tp->module ?: "",
@@ -2330,10 +2390,14 @@ static int convert_to_perf_probe_point(struct probe_trace_point *tp,
 		pp->offset = tp->offset;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = e_snprintf(buf, 128, "0x%" PRIx64, tp->address);
 =======
 		ret = e_snprintf(buf, 128, "0x%" PRIx64, (u64)tp->address);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = e_snprintf(buf, 128, "0x%" PRIx64, tp->address);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0)
 			return ret;
 		pp->function = strdup(buf);
@@ -2515,12 +2579,17 @@ void clear_probe_trace_event(struct probe_trace_event *tev)
 struct kprobe_blacklist_node {
 	struct list_head list;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 start;
 	u64 end;
 =======
 	unsigned long start;
 	unsigned long end;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 start;
+	u64 end;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char *symbol;
 };
 
@@ -2566,10 +2635,14 @@ static int kprobe_blacklist__load(struct list_head *blacklist)
 		INIT_LIST_HEAD(&node->list);
 		list_add_tail(&node->list, blacklist);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (sscanf(buf, "0x%" PRIx64 "-0x%" PRIx64, &node->start, &node->end) != 2) {
 =======
 		if (sscanf(buf, "0x%lx-0x%lx", &node->start, &node->end) != 2) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (sscanf(buf, "0x%" PRIx64 "-0x%" PRIx64, &node->start, &node->end) != 2) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = -EINVAL;
 			break;
 		}
@@ -2586,10 +2659,14 @@ static int kprobe_blacklist__load(struct list_head *blacklist)
 			break;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_debug2("Blacklist: 0x%" PRIx64 "-0x%" PRIx64 ", %s\n",
 =======
 		pr_debug2("Blacklist: 0x%lx-0x%lx, %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_debug2("Blacklist: 0x%" PRIx64 "-0x%" PRIx64 ", %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  node->start, node->end, node->symbol);
 		ret++;
 	}
@@ -2602,11 +2679,15 @@ static int kprobe_blacklist__load(struct list_head *blacklist)
 
 static struct kprobe_blacklist_node *
 <<<<<<< HEAD
+<<<<<<< HEAD
 kprobe_blacklist__find_by_address(struct list_head *blacklist, u64 address)
 =======
 kprobe_blacklist__find_by_address(struct list_head *blacklist,
 				  unsigned long address)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+kprobe_blacklist__find_by_address(struct list_head *blacklist, u64 address)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct kprobe_blacklist_node *node;
 
@@ -2635,10 +2716,14 @@ static void kprobe_blacklist__release(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool kprobe_blacklist__listed(u64 address)
 =======
 static bool kprobe_blacklist__listed(unsigned long address)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static bool kprobe_blacklist__listed(u64 address)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return !!kprobe_blacklist__find_by_address(&kprobe_blacklist, address);
 }
@@ -3307,10 +3392,14 @@ static int try_to_find_absolute_address(struct perf_probe_event *pev,
 	 * invalid.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (asprintf(&tp->symbol, "0x%" PRIx64, tp->address) < 0)
 =======
 	if (asprintf(&tp->symbol, "0x%lx", tp->address) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (asprintf(&tp->symbol, "0x%" PRIx64, tp->address) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto errout;
 
 	/* For kprobe, check range */
@@ -3322,10 +3411,14 @@ static int try_to_find_absolute_address(struct perf_probe_event *pev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (asprintf(&tp->realname, "abs_%" PRIx64, tp->address) < 0)
 =======
 	if (asprintf(&tp->realname, "abs_%lx", tp->address) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (asprintf(&tp->realname, "abs_%" PRIx64, tp->address) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto errout;
 
 	if (pev->target) {

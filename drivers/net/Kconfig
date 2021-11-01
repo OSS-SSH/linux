@@ -432,6 +432,7 @@ config MHI_NET
 	tristate "MHI network driver"
 	depends on MHI_BUS
 <<<<<<< HEAD
+<<<<<<< HEAD
 	help
 	  This is the network driver for MHI bus.  It can be used with
 	  QCOM based WWAN modems for IP or QMAP/rmnet protocol (like SDX55).
@@ -442,6 +443,12 @@ config MHI_NET
 	  This is the network driver for MHI bus.  It can be used with
 	  QCOM based WWAN modems (like SDX55).  Say Y or M.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	help
+	  This is the network driver for MHI bus.  It can be used with
+	  QCOM based WWAN modems for IP or QMAP/rmnet protocol (like SDX55).
+	  Say Y or M.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 endif # NET_CORE
 
@@ -491,10 +498,15 @@ config NET_SB1000
 source "drivers/net/phy/Kconfig"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 source "drivers/net/mctp/Kconfig"
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+source "drivers/net/mctp/Kconfig"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "drivers/net/mdio/Kconfig"
 
 source "drivers/net/pcs/Kconfig"
@@ -562,12 +574,17 @@ config VMXNET3
 	depends on PCI && INET
 	depends on !(PAGE_SIZE_64KB || ARM64_64K_PAGES || \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     IA64_PAGE_SIZE_64KB || PARISC_PAGE_SIZE_64KB || \
 		     PPC_64K_PAGES)
 =======
 		     IA64_PAGE_SIZE_64KB || MICROBLAZE_64K_PAGES || \
 		     PARISC_PAGE_SIZE_64KB || PPC_64K_PAGES)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     IA64_PAGE_SIZE_64KB || PARISC_PAGE_SIZE_64KB || \
+		     PPC_64K_PAGES)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports VMware's vmxnet3 virtual ethernet NIC.
 	  To compile this driver as a module, choose M here: the
@@ -622,6 +639,9 @@ config NET_FAILOVER
 	  datapath when the VF is unplugged.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config NETDEV_LEGACY_INIT
 	bool
 	depends on ISA
@@ -629,6 +649,9 @@ config NETDEV_LEGACY_INIT
 	  Drivers that call netdev_boot_setup_check() should select this
 	  symbol, everything else no longer needs it.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif # NETDEVICES

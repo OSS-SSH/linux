@@ -423,9 +423,13 @@ int kfd_init_apertures(struct kfd_process *process)
 			case CHIP_BEIGE_GOBY:
 			case CHIP_YELLOW_CARP:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			case CHIP_CYAN_SKILLFISH:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			case CHIP_CYAN_SKILLFISH:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				kfd_init_apertures_v9(pdd, id);
 				break;
 			default:

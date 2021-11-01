@@ -100,6 +100,7 @@ struct aw2 {
  * FUNCTION DECLARATIONS
  ********************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int snd_aw2_create(struct snd_card *card, struct pci_dev *pci);
 static int snd_aw2_probe(struct pci_dev *pci,
 			 const struct pci_device_id *pci_id);
@@ -111,6 +112,11 @@ static int snd_aw2_probe(struct pci_dev *pci,
 			 const struct pci_device_id *pci_id);
 static void snd_aw2_remove(struct pci_dev *pci);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int snd_aw2_create(struct snd_card *card, struct pci_dev *pci);
+static int snd_aw2_probe(struct pci_dev *pci,
+			 const struct pci_device_id *pci_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_aw2_pcm_playback_open(struct snd_pcm_substream *substream);
 static int snd_aw2_pcm_playback_close(struct snd_pcm_substream *substream);
 static int snd_aw2_pcm_capture_open(struct snd_pcm_substream *substream);
@@ -164,9 +170,12 @@ static struct pci_driver aw2_driver = {
 	.id_table = snd_aw2_ids,
 	.probe = snd_aw2_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_aw2_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_pci_driver(aw2_driver);
@@ -206,6 +215,7 @@ static const struct snd_kcontrol_new aw2_control = {
 
 /* component-destructor */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void snd_aw2_free(struct snd_card *card)
 {
 	struct aw2 *chip = card->private_data;
@@ -214,11 +224,15 @@ static void snd_aw2_free(struct snd_card *card)
 	snd_aw2_saa7146_free(&chip->saa7146);
 =======
 static int snd_aw2_dev_free(struct snd_device *device)
+=======
+static void snd_aw2_free(struct snd_card *card)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct aw2 *chip = device->device_data;
+	struct aw2 *chip = card->private_data;
 
 	/* Free hardware */
 	snd_aw2_saa7146_free(&chip->saa7146);
+<<<<<<< HEAD
 
 	/* release the irq */
 	if (chip->irq >= 0)
@@ -233,10 +247,13 @@ static int snd_aw2_dev_free(struct snd_device *device)
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* chip-specific constructor */
 static int snd_aw2_create(struct snd_card *card,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			  struct pci_dev *pci)
 {
@@ -247,18 +264,20 @@ static int snd_aw2_create(struct snd_card *card,
 	err = pcim_enable_device(pci);
 =======
 			  struct pci_dev *pci, struct aw2 **rchip)
+=======
+			  struct pci_dev *pci)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct aw2 *chip;
+	struct aw2 *chip = card->private_data;
 	int err;
-	static const struct snd_device_ops ops = {
-		.dev_free = snd_aw2_dev_free,
-	};
-
-	*rchip = NULL;
 
 	/* initialize the PCI entry */
+<<<<<<< HEAD
 	err = pci_enable_device(pci);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = pcim_enable_device(pci);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 	pci_set_master(pci);
@@ -266,6 +285,7 @@ static int snd_aw2_create(struct snd_card *card,
 	/* check PCI availability (32bit DMA) */
 	if (dma_set_mask_and_coherent(&pci->dev, DMA_BIT_MASK(32))) {
 		dev_err(card->dev, "Impossible to set 32bit mask DMA\n");
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return -ENXIO;
 	}
@@ -279,6 +299,10 @@ static int snd_aw2_create(struct snd_card *card,
 		return -ENOMEM;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENXIO;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* initialize the stuff */
 	chip->card = card;
@@ -286,6 +310,7 @@ static int snd_aw2_create(struct snd_card *card,
 	chip->irq = -1;
 
 	/* (1) PCI resource allocation */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = pcim_iomap_regions(pci, 1 << 0, "Audiowerk2");
 	if (err < 0)
@@ -297,9 +322,13 @@ static int snd_aw2_create(struct snd_card *card,
 	if (err < 0) {
 		pci_disable_device(pci);
 		kfree(chip);
+=======
+	err = pcim_iomap_regions(pci, 1 << 0, "Audiowerk2");
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 	chip->iobase_phys = pci_resource_start(pci, 0);
+<<<<<<< HEAD
 	chip->iobase_virt =
 		ioremap(chip->iobase_phys,
 				pci_resource_len(pci, 0));
@@ -312,10 +341,14 @@ static int snd_aw2_create(struct snd_card *card,
 		return -ENOMEM;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chip->iobase_virt = pcim_iomap_table(pci)[0];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* (2) initialization of the chip hardware */
 	snd_aw2_saa7146_setup(&chip->saa7146, chip->iobase_virt);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (devm_request_irq(&pci->dev, pci->irq, snd_aw2_saa7146_interrupt,
 			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
@@ -330,10 +363,16 @@ static int snd_aw2_create(struct snd_card *card,
 		pci_disable_device(chip->pci);
 		kfree(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (devm_request_irq(&pci->dev, pci->irq, snd_aw2_saa7146_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
+		dev_err(card->dev, "Cannot grab irq %d\n", pci->irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	card->private_free = snd_aw2_free;
 =======
@@ -350,6 +389,9 @@ static int snd_aw2_create(struct snd_card *card,
 
 	*rchip = chip;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	card->private_free = snd_aw2_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_info(card->dev,
 		 "Audiowerk 2 sound card (saa7146 chipset) detected and managed\n");
@@ -375,6 +417,7 @@ static int snd_aw2_probe(struct pci_dev *pci,
 
 	/* (2) Create card instance */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
@@ -388,16 +431,23 @@ static int snd_aw2_probe(struct pci_dev *pci,
 =======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*chip), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
+	chip = card->private_data;
 
 	/* (3) Create main component */
-	err = snd_aw2_create(card, pci, &chip);
-	if (err < 0) {
-		snd_card_free(card);
+	err = snd_aw2_create(card, pci);
+	if (err < 0)
 		return err;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* initialize mutex */
 	mutex_init(&chip->mtx);
@@ -416,6 +466,7 @@ static int snd_aw2_probe(struct pci_dev *pci,
 	/* (6) Register card instance */
 	err = snd_card_register(card);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 =======
@@ -424,6 +475,10 @@ static int snd_aw2_probe(struct pci_dev *pci,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* (7) Set PCI driver data */
 	pci_set_drvdata(pci, card);
@@ -433,6 +488,7 @@ static int snd_aw2_probe(struct pci_dev *pci,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* destructor */
 static void snd_aw2_remove(struct pci_dev *pci)
@@ -441,6 +497,8 @@ static void snd_aw2_remove(struct pci_dev *pci)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* open callback */
 static int snd_aw2_pcm_playback_open(struct snd_pcm_substream *substream)
 {

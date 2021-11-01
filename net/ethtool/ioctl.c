@@ -8,9 +8,13 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/compat.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/compat.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <linux/types.h>
 #include <linux/capability.h>
@@ -28,9 +32,13 @@
 #include <linux/sched/signal.h>
 #include <linux/net.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pm_runtime.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/devlink.h>
 #include <net/xdp_sock_drv.h>
 #include <net/flow_offload.h>
@@ -816,6 +824,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static noinline_for_stack int
 ethtool_rxnfc_copy_from_compat(struct ethtool_rxnfc *rxnfc,
 			       const struct compat_ethtool_rxnfc __user *useraddr,
@@ -930,8 +941,11 @@ static int ethtool_rxnfc_copy_to_user(void __user *useraddr,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static noinline_for_stack int ethtool_set_rxnfc(struct net_device *dev,
 						u32 cmd, void __user *useraddr)
 {
@@ -951,10 +965,14 @@ static noinline_for_stack int ethtool_set_rxnfc(struct net_device *dev,
 			     sizeof(info.data));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ethtool_rxnfc_copy_from_user(&info, useraddr, info_size))
 =======
 	if (copy_from_user(&info, useraddr, info_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ethtool_rxnfc_copy_from_user(&info, useraddr, info_size))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
 	rc = dev->ethtool_ops->set_rxnfc(dev, &info);
@@ -963,10 +981,14 @@ static noinline_for_stack int ethtool_set_rxnfc(struct net_device *dev,
 
 	if (cmd == ETHTOOL_SRXCLSRLINS &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    ethtool_rxnfc_copy_to_user(useraddr, &info, info_size, NULL))
 =======
 	    copy_to_user(useraddr, &info, info_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    ethtool_rxnfc_copy_to_user(useraddr, &info, info_size, NULL))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
 	return 0;
@@ -993,10 +1015,14 @@ static noinline_for_stack int ethtool_get_rxnfc(struct net_device *dev,
 			     sizeof(info.data));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ethtool_rxnfc_copy_from_user(&info, useraddr, info_size))
 =======
 	if (copy_from_user(&info, useraddr, info_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ethtool_rxnfc_copy_from_user(&info, useraddr, info_size))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
 	/* If FLOW_RSS was requested then user-space must be using the
@@ -1005,10 +1031,14 @@ static noinline_for_stack int ethtool_get_rxnfc(struct net_device *dev,
 	if (cmd == ETHTOOL_GRXFH && info.flow_type & FLOW_RSS) {
 		info_size = sizeof(info);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ethtool_rxnfc_copy_from_user(&info, useraddr, info_size))
 =======
 		if (copy_from_user(&info, useraddr, info_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ethtool_rxnfc_copy_from_user(&info, useraddr, info_size))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		/* Since malicious users may modify the original data,
 		 * we need to check whether FLOW_RSS is still requested.
@@ -1035,6 +1065,7 @@ static noinline_for_stack int ethtool_get_rxnfc(struct net_device *dev,
 		goto err_out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ethtool_rxnfc_copy_to_user(useraddr, &info, info_size, rule_buf);
 =======
 	ret = -EFAULT;
@@ -1050,6 +1081,9 @@ static noinline_for_stack int ethtool_get_rxnfc(struct net_device *dev,
 	ret = 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = ethtool_rxnfc_copy_to_user(useraddr, &info, info_size, rule_buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_out:
 	kfree(rule_buf);
 
@@ -1660,20 +1694,29 @@ static noinline_for_stack int ethtool_get_coalesce(struct net_device *dev,
 {
 	struct ethtool_coalesce coalesce = { .cmd = ETHTOOL_GCOALESCE };
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct kernel_ethtool_coalesce kernel_coalesce = {};
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kernel_ethtool_coalesce kernel_coalesce = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	if (!dev->ethtool_ops->get_coalesce)
 		return -EOPNOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dev->ethtool_ops->get_coalesce(dev, &coalesce, &kernel_coalesce,
 					     NULL);
 =======
 	ret = dev->ethtool_ops->get_coalesce(dev, &coalesce);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dev->ethtool_ops->get_coalesce(dev, &coalesce, &kernel_coalesce,
+					     NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -1741,6 +1784,7 @@ static noinline_for_stack int ethtool_set_coalesce(struct net_device *dev,
 						   void __user *useraddr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct kernel_ethtool_coalesce kernel_coalesce = {};
 	struct ethtool_coalesce coalesce;
 	int ret;
@@ -1754,13 +1798,24 @@ static noinline_for_stack int ethtool_set_coalesce(struct net_device *dev,
 		return ret;
 
 =======
+=======
+	struct kernel_ethtool_coalesce kernel_coalesce = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ethtool_coalesce coalesce;
 	int ret;
 
-	if (!dev->ethtool_ops->set_coalesce)
+	if (!dev->ethtool_ops->set_coalesce && !dev->ethtool_ops->get_coalesce)
 		return -EOPNOTSUPP;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dev->ethtool_ops->get_coalesce(dev, &coalesce, &kernel_coalesce,
+					     NULL);
+	if (ret)
+		return ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (copy_from_user(&coalesce, useraddr, sizeof(coalesce)))
 		return -EFAULT;
 
@@ -1768,11 +1823,16 @@ static noinline_for_stack int ethtool_set_coalesce(struct net_device *dev,
 		return -EOPNOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dev->ethtool_ops->set_coalesce(dev, &coalesce, &kernel_coalesce,
 					     NULL);
 =======
 	ret = dev->ethtool_ops->set_coalesce(dev, &coalesce);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dev->ethtool_ops->set_coalesce(dev, &coalesce, &kernel_coalesce,
+					     NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ret)
 		ethtool_notify(dev, ETHTOOL_MSG_COALESCE_NTF, NULL);
 	return ret;
@@ -2756,6 +2816,7 @@ static int ethtool_set_fecparam(struct net_device *dev, void __user *useraddr)
 /* The main entry point in this file.  Called from net/core/dev_ioctl.c */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int dev_ethtool(struct net *net, struct ifreq *ifr, void __user *useraddr)
 {
 	struct net_device *dev = __dev_get_by_name(net, ifr->ifr_name);
@@ -2765,15 +2826,24 @@ int dev_ethtool(struct net *net, struct ifreq *ifr)
 	struct net_device *dev = __dev_get_by_name(net, ifr->ifr_name);
 	void __user *useraddr = ifr->ifr_data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int dev_ethtool(struct net *net, struct ifreq *ifr, void __user *useraddr)
+{
+	struct net_device *dev = __dev_get_by_name(net, ifr->ifr_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 ethcmd, sub_cmd;
 	int rc;
 	netdev_features_t old_features;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!dev)
 =======
 	if (!dev || !netif_device_present(dev))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 
 	if (copy_from_user(&ethcmd, useraddr, sizeof(ethcmd)))
@@ -2830,6 +2900,9 @@ int dev_ethtool(struct net *net, struct ifreq *ifr)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dev->dev.parent)
 		pm_runtime_get_sync(dev->dev.parent);
 
@@ -2838,6 +2911,7 @@ int dev_ethtool(struct net *net, struct ifreq *ifr)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (dev->ethtool_ops->begin) {
 		rc = dev->ethtool_ops->begin(dev);
 		if (rc < 0)
@@ -2848,6 +2922,12 @@ int dev_ethtool(struct net *net, struct ifreq *ifr)
 		if (rc  < 0)
 			return rc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dev->ethtool_ops->begin) {
+		rc = dev->ethtool_ops->begin(dev);
+		if (rc < 0)
+			goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	old_features = dev->features;
 
@@ -3067,11 +3147,17 @@ int dev_ethtool(struct net *net, struct ifreq *ifr)
 	if (old_features != dev->features)
 		netdev_features_change(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out:
 	if (dev->dev.parent)
 		pm_runtime_put(dev->dev.parent);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out:
+	if (dev->dev.parent)
+		pm_runtime_put(dev->dev.parent);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rc;
 }

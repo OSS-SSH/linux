@@ -29,6 +29,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	soc {
 		bus@c4000000 {
 			flash@0,0 {
@@ -38,6 +41,7 @@
 				 * 16 MB of Flash
 				 */
 				reg = <0 0x00000000 0x1000000>;
+<<<<<<< HEAD
 
 				partitions {
 					compatible = "fixed-partitions";
@@ -83,12 +87,15 @@
 		 * 16 MB of Flash
 		 */
 		reg = <0x50000000 0x1000000>;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		partitions {
-			compatible = "fixed-partitions";
-			#address-cells = <1>;
-			#size-cells = <1>;
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = <1>;
+					#size-cells = <1>;
 
+<<<<<<< HEAD
 			partition@0 {
 				label = "RedBoot";
 				reg = <0x00000000 0x00080000>;
@@ -119,6 +126,39 @@
 				reg = <0x00fff000 0x0001000>;
 				read-only;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					partition@0 {
+						label = "RedBoot";
+						reg = <0x00000000 0x00080000>;
+						read-only;
+					};
+					partition@80000 {
+						label = "zImage";
+						reg = <0x00080000 0x00100000>;
+						read-only;
+					};
+					partition@180000 {
+						label = "ramdisk";
+						reg = <0x00180000 0x00300000>;
+						read-only;
+					};
+					partition@480000 {
+						label = "User";
+						reg = <0x00480000 0x00b60000>;
+						read-only;
+					};
+					partition@fe0000 {
+						label = "FIS directory";
+						reg = <0x00fe0000 0x001f000>;
+						read-only;
+					};
+					partition@fff000 {
+						label = "RedBoot config";
+						reg = <0x00fff000 0x0001000>;
+						read-only;
+					};
+				};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 	};

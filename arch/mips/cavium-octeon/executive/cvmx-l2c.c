@@ -282,10 +282,14 @@ uint64_t cvmx_l2c_read_perf(uint32_t counter)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @INTERNAL
  * Helper function use to fault in cache lines for L2 cache locking
  *
@@ -580,10 +584,14 @@ union __cvmx_l2c_tag {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @INTERNAL
  * Function to read a L2C tag.  This code make the current core
  * the 'debug core' for the L2.  This code must only be executed by
@@ -773,6 +781,7 @@ int cvmx_l2c_get_cache_size_bytes(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Return log base 2 of the number of sets in the L2 cache
 =======
@@ -780,6 +789,10 @@ int cvmx_l2c_get_cache_size_bytes(void)
  * Return log base 2 of the number of sets in the L2 cache
  * Returns
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+ * Return log base 2 of the number of sets in the L2 cache
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int cvmx_l2c_get_set_bits(void)
 {
@@ -871,10 +884,14 @@ int cvmx_l2c_get_num_assoc(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Flush a line from the L2 cache
  * This should only be called from one core at a time, as this routine
  * sets the core to the 'debug' core in order to flush the line.

@@ -84,6 +84,9 @@ enum ct_entry_type {
 	CT_TYPE_NFT,
 	CT_TYPE_POST_CT,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	_CT_TYPE_MAX,
 };
 
@@ -102,8 +105,11 @@ enum nfp_nfp_layer_name {
 	FLOW_PAY_GENEVE_OPT,
 
 	_FLOW_PAY_LAYERS_MAX
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -250,6 +256,9 @@ int nfp_fl_ct_del_flow(struct nfp_fl_ct_map_entry *ct_map_ent);
 int nfp_fl_ct_handle_nft_flow(enum tc_setup_type type, void *type_data,
 			      void *cb_priv);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * nfp_fl_ct_stats() - Handle flower stats callbacks for ct flows
@@ -258,6 +267,9 @@ int nfp_fl_ct_handle_nft_flow(enum tc_setup_type type, void *type_data,
  */
 int nfp_fl_ct_stats(struct flow_cls_offload *flow,
 		    struct nfp_fl_ct_map_entry *ct_map_ent);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

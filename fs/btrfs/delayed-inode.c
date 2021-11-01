@@ -7,9 +7,12 @@
 #include <linux/slab.h>
 #include <linux/iversion.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/sched/mm.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "misc.h"
 #include "delayed-inode.h"
 #include "disk-io.h"
@@ -676,6 +679,7 @@ static void btrfs_delayed_inode_release_metadata(struct btrfs_fs_info *fs_info,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Insert a single delayed item or a batch of delayed items that have consecutive
  * keys if they exist.
  */
@@ -772,101 +776,102 @@ out:
 =======
  * This helper will insert some continuous items into the same leaf according
  * to the free space of the leaf.
+=======
+ * Insert a single delayed item or a batch of delayed items that have consecutive
+ * keys if they exist.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
-static int btrfs_batch_insert_items(struct btrfs_root *root,
-				    struct btrfs_path *path,
-				    struct btrfs_delayed_item *item)
+static int btrfs_insert_delayed_item(struct btrfs_trans_handle *trans,
+				     struct btrfs_root *root,
+				     struct btrfs_path *path,
+				     struct btrfs_delayed_item *first_item)
 {
-	struct btrfs_delayed_item *curr, *next;
-	int free_space;
-	int total_size = 0;
-	struct extent_buffer *leaf;
-	char *data_ptr;
-	struct btrfs_key *keys;
-	u32 *data_size;
-	struct list_head head;
-	int slot;
+	LIST_HEAD(batch);
+	struct btrfs_delayed_item *curr;
+	struct btrfs_delayed_item *next;
+	const int max_size = BTRFS_LEAF_DATA_SIZE(root->fs_info);
+	int total_size;
 	int nitems;
-	int i;
-	int ret = 0;
+	char *ins_data = NULL;
+	struct btrfs_key *ins_keys;
+	u32 *ins_sizes;
+	int ret;
 
-	BUG_ON(!path->nodes[0]);
+	list_add_tail(&first_item->tree_list, &batch);
+	nitems = 1;
+	total_size = first_item->data_len + sizeof(struct btrfs_item);
+	curr = first_item;
 
-	leaf = path->nodes[0];
-	free_space = btrfs_leaf_free_space(leaf);
-	INIT_LIST_HEAD(&head);
+	while (true) {
+		int next_size;
 
-	next = item;
-	nitems = 0;
+		next = __btrfs_next_delayed_item(curr);
+		if (!next || !btrfs_is_continuous_delayed_item(curr, next))
+			break;
+
+		next_size = next->data_len + sizeof(struct btrfs_item);
+		if (total_size + next_size > max_size)
+			break;
+
+		list_add_tail(&next->tree_list, &batch);
+		nitems++;
+		total_size += next_size;
+		curr = next;
+	}
+
+	if (nitems == 1) {
+		ins_keys = &first_item->key;
+		ins_sizes = &first_item->data_len;
+	} else {
+		int i = 0;
+
+		ins_data = kmalloc(nitems * sizeof(u32) +
+				   nitems * sizeof(struct btrfs_key), GFP_NOFS);
+		if (!ins_data) {
+			ret = -ENOMEM;
+			goto out;
+		}
+		ins_sizes = (u32 *)ins_data;
+		ins_keys = (struct btrfs_key *)(ins_data + nitems * sizeof(u32));
+		list_for_each_entry(curr, &batch, tree_list) {
+			ins_keys[i] = curr->key;
+			ins_sizes[i] = curr->data_len;
+			i++;
+		}
+	}
+
+	ret = btrfs_insert_empty_items(trans, root, path, ins_keys, ins_sizes,
+				       nitems);
+	if (ret)
+		goto out;
+
+	list_for_each_entry(curr, &batch, tree_list) {
+		char *data_ptr;
+
+		data_ptr = btrfs_item_ptr(path->nodes[0], path->slots[0], char);
+		write_extent_buffer(path->nodes[0], &curr->data,
+				    (unsigned long)data_ptr, curr->data_len);
+		path->slots[0]++;
+	}
 
 	/*
-	 * count the number of the continuous items that we can insert in batch
+	 * Now release our path before releasing the delayed items and their
+	 * metadata reservations, so that we don't block other tasks for more
+	 * time than needed.
 	 */
-	while (total_size + next->data_len + sizeof(struct btrfs_item) <=
-	       free_space) {
-		total_size += next->data_len + sizeof(struct btrfs_item);
-		list_add_tail(&next->tree_list, &head);
-		nitems++;
+	btrfs_release_path(path);
 
-		curr = next;
-		next = __btrfs_next_delayed_item(curr);
-		if (!next)
-			break;
-
-		if (!btrfs_is_continuous_delayed_item(curr, next))
-			break;
-	}
-
-	if (!nitems) {
-		ret = 0;
-		goto out;
-	}
-
-	keys = kmalloc_array(nitems, sizeof(struct btrfs_key), GFP_NOFS);
-	if (!keys) {
-		ret = -ENOMEM;
-		goto out;
-	}
-
-	data_size = kmalloc_array(nitems, sizeof(u32), GFP_NOFS);
-	if (!data_size) {
-		ret = -ENOMEM;
-		goto error;
-	}
-
-	/* get keys of all the delayed items */
-	i = 0;
-	list_for_each_entry(next, &head, tree_list) {
-		keys[i] = next->key;
-		data_size[i] = next->data_len;
-		i++;
-	}
-
-	/* insert the keys of the items */
-	setup_items_for_insert(root, path, keys, data_size, nitems);
-
-	/* insert the dir index items */
-	slot = path->slots[0];
-	list_for_each_entry_safe(curr, next, &head, tree_list) {
-		data_ptr = btrfs_item_ptr(leaf, slot, char);
-		write_extent_buffer(leaf, &curr->data,
-				    (unsigned long)data_ptr,
-				    curr->data_len);
-		slot++;
-
-		btrfs_delayed_item_release_metadata(root, curr);
-
+	list_for_each_entry_safe(curr, next, &batch, tree_list) {
 		list_del(&curr->tree_list);
+		btrfs_delayed_item_release_metadata(root, curr);
 		btrfs_release_delayed_item(curr);
 	}
-
-error:
-	kfree(data_size);
-	kfree(keys);
 out:
+	kfree(ins_data);
 	return ret;
 }
 
+<<<<<<< HEAD
 /*
  * This helper can just do simple insertion that needn't extend item for new
  * data, such as directory name index insertion, inode insertion.
@@ -905,11 +910,14 @@ static int btrfs_insert_delayed_item(struct btrfs_trans_handle *trans,
  * to insert those items into the same leaf.
  */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int btrfs_insert_delayed_items(struct btrfs_trans_handle *trans,
 				      struct btrfs_path *path,
 				      struct btrfs_root *root,
 				      struct btrfs_delayed_node *node)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int ret = 0;
 
@@ -928,30 +936,24 @@ static int btrfs_insert_delayed_items(struct btrfs_trans_handle *trans,
 
 =======
 	struct btrfs_delayed_item *curr, *prev;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
-do_again:
-	mutex_lock(&node->mutex);
-	curr = __btrfs_first_delayed_insertion_item(node);
-	if (!curr)
-		goto insert_end;
+	while (ret == 0) {
+		struct btrfs_delayed_item *curr;
 
-	ret = btrfs_insert_delayed_item(trans, root, path, curr);
-	if (ret < 0) {
-		btrfs_release_path(path);
-		goto insert_end;
+		mutex_lock(&node->mutex);
+		curr = __btrfs_first_delayed_insertion_item(node);
+		if (!curr) {
+			mutex_unlock(&node->mutex);
+			break;
+		}
+		ret = btrfs_insert_delayed_item(trans, root, path, curr);
+		mutex_unlock(&node->mutex);
 	}
 
-	prev = curr;
-	curr = __btrfs_next_delayed_item(prev);
-	if (curr && btrfs_is_continuous_delayed_item(prev, curr)) {
-		/* insert the continuous items into the same leaf */
-		path->slots[0]++;
-		btrfs_batch_insert_items(root, path, curr);
-	}
-	btrfs_release_delayed_item(prev);
-	btrfs_mark_buffer_dirty(path->nodes[0]);
-
+<<<<<<< HEAD
 	btrfs_release_path(path);
 	mutex_unlock(&node->mutex);
 	goto do_again;
@@ -959,6 +961,8 @@ do_again:
 insert_end:
 	mutex_unlock(&node->mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1032,9 +1036,12 @@ static int btrfs_delete_delayed_items(struct btrfs_trans_handle *trans,
 {
 	struct btrfs_delayed_item *curr, *prev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int nofs_flag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 do_again:
@@ -1044,12 +1051,16 @@ do_again:
 		goto delete_fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = btrfs_search_slot(trans, root, &curr->key, path, -1, 1);
 =======
 	nofs_flag = memalloc_nofs_save();
 	ret = btrfs_search_slot(trans, root, &curr->key, path, -1, 1);
 	memalloc_nofs_restore(nofs_flag);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = btrfs_search_slot(trans, root, &curr->key, path, -1, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		goto delete_fail;
 	else if (ret > 0) {
@@ -1119,9 +1130,12 @@ static int __btrfs_update_delayed_inode(struct btrfs_trans_handle *trans,
 	struct btrfs_inode_item *inode_item;
 	struct extent_buffer *leaf;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int nofs_flag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int mod;
 	int ret;
 
@@ -1135,12 +1149,16 @@ static int __btrfs_update_delayed_inode(struct btrfs_trans_handle *trans,
 		mod = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = btrfs_lookup_inode(trans, root, path, &key, mod);
 =======
 	nofs_flag = memalloc_nofs_save();
 	ret = btrfs_lookup_inode(trans, root, path, &key, mod);
 	memalloc_nofs_restore(nofs_flag);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = btrfs_lookup_inode(trans, root, path, &key, mod);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret > 0)
 		ret = -ENOENT;
 	if (ret < 0)
@@ -1198,12 +1216,16 @@ search:
 	key.offset = -1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = btrfs_search_slot(trans, root, &key, path, -1, 1);
 =======
 	nofs_flag = memalloc_nofs_save();
 	ret = btrfs_search_slot(trans, root, &key, path, -1, 1);
 	memalloc_nofs_restore(nofs_flag);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = btrfs_search_slot(trans, root, &key, path, -1, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		goto err_out;
 	ASSERT(ret);
@@ -1847,10 +1869,15 @@ static void fill_stack_inode_item(struct btrfs_trans_handle *trans,
 				  struct inode *inode)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 flags;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 flags;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	btrfs_set_stack_inode_uid(inode_item, i_uid_read(inode));
 	btrfs_set_stack_inode_gid(inode_item, i_gid_read(inode));
 	btrfs_set_stack_inode_size(inode_item, BTRFS_I(inode)->disk_i_size);
@@ -1864,12 +1891,18 @@ static void fill_stack_inode_item(struct btrfs_trans_handle *trans,
 	btrfs_set_stack_inode_transid(inode_item, trans->transid);
 	btrfs_set_stack_inode_rdev(inode_item, inode->i_rdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flags = btrfs_inode_combine_flags(BTRFS_I(inode)->flags,
 					  BTRFS_I(inode)->ro_flags);
 	btrfs_set_stack_inode_flags(inode_item, flags);
 =======
 	btrfs_set_stack_inode_flags(inode_item, BTRFS_I(inode)->flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flags = btrfs_inode_combine_flags(BTRFS_I(inode)->flags,
+					  BTRFS_I(inode)->ro_flags);
+	btrfs_set_stack_inode_flags(inode_item, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	btrfs_set_stack_inode_block_group(inode_item, 0);
 
 	btrfs_set_stack_timespec_sec(&inode_item->atime,
@@ -1928,11 +1961,16 @@ int btrfs_fill_inode(struct inode *inode, u32 *rdev)
 	inode->i_rdev = 0;
 	*rdev = btrfs_stack_inode_rdev(inode_item);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btrfs_inode_split_flags(btrfs_stack_inode_flags(inode_item),
 				&BTRFS_I(inode)->flags, &BTRFS_I(inode)->ro_flags);
 =======
 	BTRFS_I(inode)->flags = btrfs_stack_inode_flags(inode_item);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btrfs_inode_split_flags(btrfs_stack_inode_flags(inode_item),
+				&BTRFS_I(inode)->flags, &BTRFS_I(inode)->ro_flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	inode->i_atime.tv_sec = btrfs_stack_timespec_sec(&inode_item->atime);
 	inode->i_atime.tv_nsec = btrfs_stack_timespec_nsec(&inode_item->atime);

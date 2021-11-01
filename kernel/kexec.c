@@ -20,6 +20,7 @@
 #include "kexec_internal.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int kimage_alloc_init(struct kimage **rimage, unsigned long entry,
 			     unsigned long nr_segments,
 			     struct kexec_segment *segments,
@@ -45,6 +46,11 @@ static int kimage_alloc_init(struct kimage **rimage, unsigned long entry,
 			     unsigned long nr_segments,
 			     struct kexec_segment __user *segments,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int kimage_alloc_init(struct kimage **rimage, unsigned long entry,
+			     unsigned long nr_segments,
+			     struct kexec_segment *segments,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     unsigned long flags)
 {
 	int ret;
@@ -65,6 +71,7 @@ static int kimage_alloc_init(struct kimage **rimage, unsigned long entry,
 
 	image->start = entry;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	image->nr_segments = nr_segments;
 	memcpy(image->segment, segments, nr_segments * sizeof(*segments));
 =======
@@ -73,6 +80,10 @@ static int kimage_alloc_init(struct kimage **rimage, unsigned long entry,
 	if (ret)
 		goto out_free_image;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	image->nr_segments = nr_segments;
+	memcpy(image->segment, segments, nr_segments * sizeof(*segments));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (kexec_on_panic) {
 		/* Enable special crash kernel control page alloc policy. */
@@ -116,16 +127,23 @@ out_free_image:
 
 static int do_kexec_load(unsigned long entry, unsigned long nr_segments,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct kexec_segment *segments, unsigned long flags)
 =======
 		struct kexec_segment __user *segments, unsigned long flags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct kexec_segment *segments, unsigned long flags)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct kimage **dest_image, *image;
 	unsigned long i;
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Because we write directly to the reserved memory region when loading
 	 * crash kernels we need a mutex here to prevent multiple crash kernels
@@ -137,8 +155,11 @@ static int do_kexec_load(unsigned long entry, unsigned long nr_segments,
 	if (!mutex_trylock(&kexec_mutex))
 		return -EBUSY;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flags & KEXEC_ON_CRASH) {
 		dest_image = &kexec_crash_image;
 		if (kexec_crash_image)
@@ -151,11 +172,16 @@ static int do_kexec_load(unsigned long entry, unsigned long nr_segments,
 		/* Uninstall image */
 		kimage_free(xchg(dest_image, NULL));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = 0;
 		goto out_unlock;
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = 0;
+		goto out_unlock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (flags & KEXEC_ON_CRASH) {
 		/*
@@ -169,10 +195,14 @@ static int do_kexec_load(unsigned long entry, unsigned long nr_segments,
 	ret = kimage_alloc_init(&image, entry, nr_segments, segments, flags);
 	if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_unlock;
 =======
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_unlock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (flags & KEXEC_PRESERVE_CONTEXT)
 		image->preserve_context = 1;
@@ -210,10 +240,15 @@ out:
 
 	kimage_free(image);
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_unlock:
 	mutex_unlock(&kexec_mutex);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_unlock:
+	mutex_unlock(&kexec_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -280,11 +315,16 @@ SYSCALL_DEFINE4(kexec_load, unsigned long, entry, unsigned long, nr_segments,
 		struct kexec_segment __user *, segments, unsigned long, flags)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct kexec_segment *ksegments;
 	unsigned long result;
 =======
 	int result;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kexec_segment *ksegments;
+	unsigned long result;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	result = kexec_load_check(nr_segments, flags);
 	if (result)
@@ -295,6 +335,7 @@ SYSCALL_DEFINE4(kexec_load, unsigned long, entry, unsigned long, nr_segments,
 		((flags & KEXEC_ARCH_MASK) != KEXEC_ARCH_DEFAULT))
 		return -EINVAL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ksegments = memdup_user(segments, nr_segments * sizeof(ksegments[0]));
 	if (IS_ERR(ksegments))
@@ -318,6 +359,14 @@ SYSCALL_DEFINE4(kexec_load, unsigned long, entry, unsigned long, nr_segments,
 
 	mutex_unlock(&kexec_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ksegments = memdup_user(segments, nr_segments * sizeof(ksegments[0]));
+	if (IS_ERR(ksegments))
+		return PTR_ERR(ksegments);
+
+	result = do_kexec_load(entry, nr_segments, ksegments, flags);
+	kfree(ksegments);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return result;
 }
@@ -330,10 +379,14 @@ COMPAT_SYSCALL_DEFINE4(kexec_load, compat_ulong_t, entry,
 {
 	struct compat_kexec_segment in;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct kexec_segment *ksegments;
 =======
 	struct kexec_segment out, __user *ksegments;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kexec_segment *ksegments;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long i, result;
 
 	result = kexec_load_check(nr_segments, flags);
@@ -347,11 +400,15 @@ COMPAT_SYSCALL_DEFINE4(kexec_load, compat_ulong_t, entry,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ksegments = kmalloc_array(nr_segments, sizeof(ksegments[0]),
 			GFP_KERNEL);
 	if (!ksegments)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	for (i = 0; i < nr_segments; i++) {
 		result = copy_from_user(&in, &segments[i], sizeof(in));
 		if (result)
@@ -369,37 +426,29 @@ fail:
 	kfree(ksegments);
 =======
 	ksegments = compat_alloc_user_space(nr_segments * sizeof(out));
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < nr_segments; i++) {
 		result = copy_from_user(&in, &segments[i], sizeof(in));
 		if (result)
-			return -EFAULT;
+			goto fail;
 
-		out.buf   = compat_ptr(in.buf);
-		out.bufsz = in.bufsz;
-		out.mem   = in.mem;
-		out.memsz = in.memsz;
-
-		result = copy_to_user(&ksegments[i], &out, sizeof(out));
-		if (result)
-			return -EFAULT;
+		ksegments[i].buf   = compat_ptr(in.buf);
+		ksegments[i].bufsz = in.bufsz;
+		ksegments[i].mem   = in.mem;
+		ksegments[i].memsz = in.memsz;
 	}
-
-	/* Because we write directly to the reserved memory
-	 * region when loading crash kernels we need a mutex here to
-	 * prevent multiple crash  kernels from attempting to load
-	 * simultaneously, and to prevent a crash kernel from loading
-	 * over the top of a in use crash kernel.
-	 *
-	 * KISS: always take the mutex.
-	 */
-	if (!mutex_trylock(&kexec_mutex))
-		return -EBUSY;
 
 	result = do_kexec_load(entry, nr_segments, ksegments, flags);
 
+<<<<<<< HEAD
 	mutex_unlock(&kexec_mutex);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+fail:
+	kfree(ksegments);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return result;
 }
 #endif

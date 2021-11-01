@@ -1631,10 +1631,14 @@ static struct rc_dev *mceusb_init_rc_dev(struct mceusb_dev *ir)
 	}
 	if (ir->flags.rx2 > 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rc->s_wideband_receiver = mceusb_set_rx_wideband;
 =======
 		rc->s_learning_mode = mceusb_set_rx_wideband;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rc->s_wideband_receiver = mceusb_set_rx_wideband;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc->s_carrier_report = mceusb_set_rx_carrier_report;
 	}
 	rc->driver_name = DRIVER_NAME;

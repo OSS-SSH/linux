@@ -32,10 +32,15 @@ void psample_group_take(struct psample_group *group);
 void psample_group_put(struct psample_group *group);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct sk_buff;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct sk_buff;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_PSAMPLE)
 
 void psample_sample_packet(struct psample_group *group, struct sk_buff *skb,

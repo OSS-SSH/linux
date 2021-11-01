@@ -798,9 +798,13 @@ static const struct net_device_ops hostap_netdev_ops = {
 	.ndo_stop		= prism2_close,
 	.ndo_do_ioctl		= hostap_ioctl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= hostap_siocdevprivate,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= hostap_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address	= prism2_set_mac_address,
 	.ndo_set_rx_mode	= hostap_set_multicast_list,
 	.ndo_tx_timeout 	= prism2_tx_timeout,
@@ -814,9 +818,13 @@ static const struct net_device_ops hostap_mgmt_netdev_ops = {
 	.ndo_stop		= prism2_close,
 	.ndo_do_ioctl		= hostap_ioctl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= hostap_siocdevprivate,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= hostap_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address	= prism2_set_mac_address,
 	.ndo_set_rx_mode	= hostap_set_multicast_list,
 	.ndo_tx_timeout 	= prism2_tx_timeout,
@@ -830,9 +838,13 @@ static const struct net_device_ops hostap_master_ops = {
 	.ndo_stop		= prism2_close,
 	.ndo_do_ioctl		= hostap_ioctl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= hostap_siocdevprivate,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= hostap_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address	= prism2_set_mac_address,
 	.ndo_set_rx_mode	= hostap_set_multicast_list,
 	.ndo_tx_timeout 	= prism2_tx_timeout,

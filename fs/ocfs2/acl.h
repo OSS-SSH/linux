@@ -17,10 +17,14 @@ struct ocfs2_acl_entry {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct posix_acl *ocfs2_iop_get_acl(struct inode *inode, int type, bool rcu);
 =======
 struct posix_acl *ocfs2_iop_get_acl(struct inode *inode, int type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *ocfs2_iop_get_acl(struct inode *inode, int type, bool rcu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ocfs2_iop_set_acl(struct user_namespace *mnt_userns, struct inode *inode,
 		      struct posix_acl *acl, int type);
 extern int ocfs2_acl_chmod(struct inode *, struct buffer_head *);

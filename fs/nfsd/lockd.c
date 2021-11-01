@@ -26,6 +26,7 @@
  */
 static __be32
 <<<<<<< HEAD
+<<<<<<< HEAD
 nlm_fopen(struct svc_rqst *rqstp, struct nfs_fh *f, struct file **filp,
 		int mode)
 {
@@ -36,6 +37,13 @@ nlm_fopen(struct svc_rqst *rqstp, struct nfs_fh *f, struct file **filp)
 {
 	__be32		nfserr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+nlm_fopen(struct svc_rqst *rqstp, struct nfs_fh *f, struct file **filp,
+		int mode)
+{
+	__be32		nfserr;
+	int		access;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct svc_fh	fh;
 
 	/* must initialize before using! but maxsize doesn't matter */
@@ -45,12 +53,18 @@ nlm_fopen(struct svc_rqst *rqstp, struct nfs_fh *f, struct file **filp)
 	fh.fh_export = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	access = (mode == O_WRONLY) ? NFSD_MAY_WRITE : NFSD_MAY_READ;
 	access |= NFSD_MAY_LOCK;
 	nfserr = nfsd_open(rqstp, &fh, S_IFREG, access, filp);
 =======
 	nfserr = nfsd_open(rqstp, &fh, S_IFREG, NFSD_MAY_LOCK, filp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	access = (mode == O_WRONLY) ? NFSD_MAY_WRITE : NFSD_MAY_READ;
+	access |= NFSD_MAY_LOCK;
+	nfserr = nfsd_open(rqstp, &fh, S_IFREG, access, filp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fh_put(&fh);
  	/* We return nlm error codes as nlm doesn't know
 	 * about nfsd, but nfsd does know about nlm..

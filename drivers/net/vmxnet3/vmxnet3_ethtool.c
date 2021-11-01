@@ -2,10 +2,14 @@
  * Linux driver for VMware's vmxnet3 ethernet NIC.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
 =======
  * Copyright (C) 2008-2020, VMware, Inc. All Rights Reserved.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -31,12 +35,18 @@
 
 #include "vmxnet3_int.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/vxlan.h>
 #include <net/geneve.h>
 
 #define VXLAN_UDP_PORT 8472
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct vmxnet3_stat_desc {
 	char desc[ETH_GSTRING_LEN];
@@ -274,10 +284,15 @@ netdev_features_t vmxnet3_features_check(struct sk_buff *skb,
 	    skb->encapsulation && skb->ip_summed == CHECKSUM_PARTIAL) {
 		u8 l4_proto = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u16 port;
 		struct udphdr *udph;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		u16 port;
+		struct udphdr *udph;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		switch (vlan_get_protocol(skb)) {
 		case htons(ETH_P_IP):
@@ -291,6 +306,9 @@ netdev_features_t vmxnet3_features_check(struct sk_buff *skb,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		switch (l4_proto) {
 		case IPPROTO_UDP:
 			udph = udp_hdr(skb);
@@ -303,12 +321,17 @@ netdev_features_t vmxnet3_features_check(struct sk_buff *skb,
 			}
 			break;
 		default:
+<<<<<<< HEAD
 			return features & ~(NETIF_F_CSUM_MASK | NETIF_F_GSO_MASK);
 		}
 =======
 		if (l4_proto != IPPROTO_UDP)
 			return features & ~(NETIF_F_CSUM_MASK | NETIF_F_GSO_MASK);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return features & ~(NETIF_F_CSUM_MASK | NETIF_F_GSO_MASK);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return features;
 }
@@ -803,12 +826,18 @@ vmxnet3_get_rss_hash_opts(struct vmxnet3_adapter *adapter,
 	case AH_V6_FLOW:
 	case ESP_V6_FLOW:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (VMXNET3_VERSION_GE_6(adapter) &&
 		    (rss_fields & VMXNET3_RSS_FIELDS_ESPIP6))
 			info->data |= RXH_L4_B_0_1 | RXH_L4_B_2_3;
 		fallthrough;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SCTP_V6_FLOW:
 	case IPV6_FLOW:
 		info->data |= RXH_IP_SRC | RXH_IP_DST;
@@ -894,6 +923,9 @@ vmxnet3_set_rss_hash_opt(struct net_device *netdev,
 	case AH_V6_FLOW:
 	case AH_ESP_V6_FLOW:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!VMXNET3_VERSION_GE_6(adapter))
 			return -EOPNOTSUPP;
 		if (!(nfc->data & RXH_IP_SRC) ||
@@ -910,8 +942,11 @@ vmxnet3_set_rss_hash_opt(struct net_device *netdev,
 			return -EINVAL;
 		}
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SCTP_V4_FLOW:
 	case SCTP_V6_FLOW:
 		if (!(nfc->data & RXH_IP_SRC) ||
@@ -1075,14 +1110,20 @@ vmxnet3_set_rss(struct net_device *netdev, const u32 *p, const u8 *key,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int vmxnet3_get_coalesce(struct net_device *netdev,
 				struct ethtool_coalesce *ec,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 vmxnet3_get_coalesce(struct net_device *netdev, struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vmxnet3_adapter *adapter = netdev_priv(netdev);
 
@@ -1117,14 +1158,20 @@ vmxnet3_get_coalesce(struct net_device *netdev, struct ethtool_coalesce *ec)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int vmxnet3_set_coalesce(struct net_device *netdev,
 				struct ethtool_coalesce *ec,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 vmxnet3_set_coalesce(struct net_device *netdev, struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vmxnet3_adapter *adapter = netdev_priv(netdev);
 	struct Vmxnet3_DriverShared *shared = adapter->shared;

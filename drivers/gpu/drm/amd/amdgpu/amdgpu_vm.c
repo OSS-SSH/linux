@@ -89,6 +89,9 @@ struct amdgpu_prt_cb {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * amdgpu_vm_set_pasid - manage pasid and vm ptr mapping
  *
@@ -129,8 +132,11 @@ int amdgpu_vm_set_pasid(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * vm eviction_lock can be taken in MMU notifiers. Make sure no reclaim-FS
  * happens while holding this lock anywhere to prevent deadlocks when
@@ -930,10 +936,14 @@ static int amdgpu_vm_pt_create(struct amdgpu_device *adev,
 	bp.byte_align = AMDGPU_GPU_PAGE_SIZE;
 	bp.domain = AMDGPU_GEM_DOMAIN_VRAM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bp.domain = amdgpu_bo_get_preferred_domain(adev, bp.domain);
 =======
 	bp.domain = amdgpu_bo_get_preferred_pin_domain(adev, bp.domain);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bp.domain = amdgpu_bo_get_preferred_domain(adev, bp.domain);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bp.flags = AMDGPU_GEM_CREATE_VRAM_CONTIGUOUS |
 		AMDGPU_GEM_CREATE_CPU_GTT_USWC;
 
@@ -1226,10 +1236,14 @@ int amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job,
 
 	if (vm_flush_needed || pasid_mapping_needed) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		r = amdgpu_fence_emit(ring, &fence, NULL, 0);
 =======
 		r = amdgpu_fence_emit(ring, &fence, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		r = amdgpu_fence_emit(ring, &fence, NULL, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (r)
 			return r;
 	}
@@ -2916,9 +2930,12 @@ long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout)
  * @adev: amdgpu_device pointer
  * @vm: requested vm
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * @pasid: Process address space identifier
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Init @vm fields.
  *
@@ -2926,10 +2943,14 @@ long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout)
  * 0 for success, error for failure.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm)
 =======
 int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm, u32 pasid)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct amdgpu_bo *root_bo;
 	struct amdgpu_bo_vm *root;
@@ -3004,6 +3025,7 @@ int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm, u32 pasid)
 	amdgpu_bo_unreserve(vm->root.bo);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (pasid) {
 		unsigned long flags;
@@ -3019,6 +3041,8 @@ int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm, u32 pasid)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_KFIFO(vm->faults);
 
 	return 0;
@@ -3075,9 +3099,12 @@ static int amdgpu_vm_check_clean_reserved(struct amdgpu_device *adev,
  * @adev: amdgpu_device pointer
  * @vm: requested vm
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * @pasid: pasid to use
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This only works on GFX VMs that don't have any BOs added and no
  * page tables allocated yet.
@@ -3086,9 +3113,12 @@ static int amdgpu_vm_check_clean_reserved(struct amdgpu_device *adev,
  * - use_cpu_for_update
  * - pte_supports_ats
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * - pasid (old PASID is released, because compute manages its own PASIDs)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Reinitializes the page directory to reflect the changed ATS
  * setting.
@@ -3097,11 +3127,15 @@ static int amdgpu_vm_check_clean_reserved(struct amdgpu_device *adev,
  * 0 for success, -errno for errors.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
 =======
 int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 			   u32 pasid)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	bool pte_support_ats = (adev->asic_type == CHIP_RAVEN);
 	int r;
@@ -3115,6 +3149,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 	if (r)
 		goto unreserve_bo;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (pasid) {
@@ -3131,6 +3166,8 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check if PD needs to be reinitialized and do it before
 	 * changing any other state, in case it fails.
 	 */
@@ -3141,10 +3178,14 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 				       false);
 		if (r)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto unreserve_bo;
 =======
 			goto free_idr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto unreserve_bo;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Update VM state */
@@ -3162,10 +3203,14 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 					AMDGPU_FENCE_OWNER_UNDEFINED, true);
 		if (r)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto unreserve_bo;
 =======
 			goto free_idr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto unreserve_bo;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
 	} else {
@@ -3175,6 +3220,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 	vm->last_update = NULL;
 	vm->is_compute_context = true;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Free the shadow bo for compute VM */
 	amdgpu_bo_unref(&to_amdgpu_bo_vm(vm->root.bo)->shadow);
@@ -3196,14 +3242,14 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 		vm->pasid = 0;
 	}
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Free the shadow bo for compute VM */
 	amdgpu_bo_unref(&to_amdgpu_bo_vm(vm->root.bo)->shadow);
 
-	if (pasid)
-		vm->pasid = pasid;
-
 	goto unreserve_bo;
 
+<<<<<<< HEAD
 free_idr:
 	if (pasid) {
 		unsigned long flags;
@@ -3213,6 +3259,8 @@ free_idr:
 		spin_unlock_irqrestore(&adev->vm_manager.pasid_lock, flags);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unreserve_bo:
 	amdgpu_bo_unreserve(vm->root.bo);
 	return r;
@@ -3229,6 +3277,7 @@ unreserve_bo:
 void amdgpu_vm_release_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	amdgpu_vm_set_pasid(adev, vm, 0);
 =======
 	if (vm->pasid) {
@@ -3240,6 +3289,9 @@ void amdgpu_vm_release_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
 	}
 	vm->pasid = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	amdgpu_vm_set_pasid(adev, vm, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vm->is_compute_context = false;
 }
 
@@ -3264,6 +3316,7 @@ void amdgpu_vm_fini(struct amdgpu_device *adev, struct amdgpu_vm *vm)
 	root = amdgpu_bo_ref(vm->root.bo);
 	amdgpu_bo_reserve(root, true);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	amdgpu_vm_set_pasid(adev, vm, 0);
 =======
 	if (vm->pasid) {
@@ -3276,6 +3329,9 @@ void amdgpu_vm_fini(struct amdgpu_device *adev, struct amdgpu_vm *vm)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	amdgpu_vm_set_pasid(adev, vm, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_fence_wait(vm->last_unlocked, false);
 	dma_fence_put(vm->last_unlocked);
 
@@ -3358,11 +3414,15 @@ void amdgpu_vm_manager_init(struct amdgpu_device *adev)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xa_init_flags(&adev->vm_manager.pasids, XA_FLAGS_LOCK_IRQ);
 =======
 	idr_init(&adev->vm_manager.pasid_idr);
 	spin_lock_init(&adev->vm_manager.pasid_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xa_init_flags(&adev->vm_manager.pasids, XA_FLAGS_LOCK_IRQ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -3375,12 +3435,17 @@ void amdgpu_vm_manager_init(struct amdgpu_device *adev)
 void amdgpu_vm_manager_fini(struct amdgpu_device *adev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ON(!xa_empty(&adev->vm_manager.pasids));
 	xa_destroy(&adev->vm_manager.pasids);
 =======
 	WARN_ON(!idr_is_empty(&adev->vm_manager.pasid_idr));
 	idr_destroy(&adev->vm_manager.pasid_idr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(!xa_empty(&adev->vm_manager.pasids));
+	xa_destroy(&adev->vm_manager.pasids);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	amdgpu_vmid_mgr_fini(adev);
 }
@@ -3450,6 +3515,7 @@ void amdgpu_vm_get_task_info(struct amdgpu_device *adev, u32 pasid,
 	unsigned long flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xa_lock_irqsave(&adev->vm_manager.pasids, flags);
 
 	vm = xa_load(&adev->vm_manager.pasids, pasid);
@@ -3459,13 +3525,20 @@ void amdgpu_vm_get_task_info(struct amdgpu_device *adev, u32 pasid,
 	xa_unlock_irqrestore(&adev->vm_manager.pasids, flags);
 =======
 	spin_lock_irqsave(&adev->vm_manager.pasid_lock, flags);
+=======
+	xa_lock_irqsave(&adev->vm_manager.pasids, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	vm = idr_find(&adev->vm_manager.pasid_idr, pasid);
+	vm = xa_load(&adev->vm_manager.pasids, pasid);
 	if (vm)
 		*task_info = vm->task_info;
 
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&adev->vm_manager.pasid_lock, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xa_unlock_irqrestore(&adev->vm_manager.pasids, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -3494,19 +3567,27 @@ void amdgpu_vm_set_task_info(struct amdgpu_vm *vm)
  * @pasid: PASID of the VM
  * @addr: Address of the fault
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @write_fault: true is write fault, false is read fault
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @write_fault: true is write fault, false is read fault
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Try to gracefully handle a VM fault. Return true if the fault was handled and
  * shouldn't be reported any more.
  */
 bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    uint64_t addr, bool write_fault)
 =======
 			    uint64_t addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    uint64_t addr, bool write_fault)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	bool is_compute_context = false;
 	struct amdgpu_bo *root;
@@ -3516,12 +3597,17 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
 	int r;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xa_lock_irqsave(&adev->vm_manager.pasids, irqflags);
 	vm = xa_load(&adev->vm_manager.pasids, pasid);
 =======
 	spin_lock_irqsave(&adev->vm_manager.pasid_lock, irqflags);
 	vm = idr_find(&adev->vm_manager.pasid_idr, pasid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xa_lock_irqsave(&adev->vm_manager.pasids, irqflags);
+	vm = xa_load(&adev->vm_manager.pasids, pasid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vm) {
 		root = amdgpu_bo_ref(vm->root.bo);
 		is_compute_context = vm->is_compute_context;
@@ -3529,10 +3615,14 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
 		root = NULL;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xa_unlock_irqrestore(&adev->vm_manager.pasids, irqflags);
 =======
 	spin_unlock_irqrestore(&adev->vm_manager.pasid_lock, irqflags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xa_unlock_irqrestore(&adev->vm_manager.pasids, irqflags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!root)
 		return false;
@@ -3541,10 +3631,14 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
 
 	if (is_compute_context &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    !svm_range_restore_pages(adev, pasid, addr, write_fault)) {
 =======
 	    !svm_range_restore_pages(adev, pasid, addr)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    !svm_range_restore_pages(adev, pasid, addr, write_fault)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		amdgpu_bo_unref(&root);
 		return true;
 	}
@@ -3555,6 +3649,7 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
 
 	/* Double check that the VM still exists */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xa_lock_irqsave(&adev->vm_manager.pasids, irqflags);
 	vm = xa_load(&adev->vm_manager.pasids, pasid);
 	if (vm && vm->root.bo != root)
@@ -3567,6 +3662,13 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
 		vm = NULL;
 	spin_unlock_irqrestore(&adev->vm_manager.pasid_lock, irqflags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xa_lock_irqsave(&adev->vm_manager.pasids, irqflags);
+	vm = xa_load(&adev->vm_manager.pasids, pasid);
+	if (vm && vm->root.bo != root)
+		vm = NULL;
+	xa_unlock_irqrestore(&adev->vm_manager.pasids, irqflags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!vm)
 		goto error_unlock;
 

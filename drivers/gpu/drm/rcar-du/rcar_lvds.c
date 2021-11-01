@@ -64,9 +64,12 @@ struct rcar_lvds {
 
 	struct drm_bridge *next_bridge;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct drm_connector connector;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_panel *panel;
 
 	void __iomem *mmio;
@@ -84,17 +87,21 @@ struct rcar_lvds {
 	container_of(b, struct rcar_lvds, bridge)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define connector_to_rcar_lvds(c) \
 	container_of(c, struct rcar_lvds, connector)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void rcar_lvds_write(struct rcar_lvds *lvds, u32 reg, u32 data)
 {
 	iowrite32(data, lvds->mmio + reg);
 }
 
 /* -----------------------------------------------------------------------------
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
  * Connector & Panel
@@ -157,6 +164,8 @@ static const struct drm_connector_funcs rcar_lvds_conn_funcs = {
 
 /* -----------------------------------------------------------------------------
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * PLL Setup
  */
 
@@ -593,6 +602,7 @@ static void __rcar_lvds_atomic_enable(struct drm_bridge *bridge,
 	lvdcr0 |= LVDCR0_LVRES;
 	rcar_lvds_write(lvds, LVDCR0, lvdcr0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	if (lvds->panel) {
@@ -600,6 +610,8 @@ static void __rcar_lvds_atomic_enable(struct drm_bridge *bridge,
 		drm_panel_enable(lvds->panel);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void rcar_lvds_atomic_enable(struct drm_bridge *bridge,
@@ -622,6 +634,7 @@ static void rcar_lvds_atomic_disable(struct drm_bridge *bridge,
 	struct rcar_lvds *lvds = bridge_to_rcar_lvds(bridge);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (lvds->panel) {
 		drm_panel_disable(lvds->panel);
@@ -629,6 +642,8 @@ static void rcar_lvds_atomic_disable(struct drm_bridge *bridge,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcar_lvds_write(lvds, LVDCR0, 0);
 	rcar_lvds_write(lvds, LVDCR1, 0);
 	rcar_lvds_write(lvds, LVDPLLCR, 0);
@@ -664,6 +679,7 @@ static int rcar_lvds_attach(struct drm_bridge *bridge,
 {
 	struct rcar_lvds *lvds = bridge_to_rcar_lvds(bridge);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (!lvds->next_bridge)
 		return 0;
@@ -684,11 +700,13 @@ static int rcar_lvds_attach(struct drm_bridge *bridge,
 		DRM_ERROR("Fix bridge driver to make connector optional!");
 		return -EINVAL;
 	}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	/* Otherwise if we have a panel, create a connector. */
-	if (!lvds->panel)
+	if (!lvds->next_bridge)
 		return 0;
 
+<<<<<<< HEAD
 	ret = drm_connector_init(bridge->dev, connector, &rcar_lvds_conn_funcs,
 				 DRM_MODE_CONNECTOR_LVDS);
 	if (ret < 0)
@@ -706,14 +724,21 @@ static int rcar_lvds_attach(struct drm_bridge *bridge,
 static void rcar_lvds_detach(struct drm_bridge *bridge)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return drm_bridge_attach(bridge->encoder, lvds->next_bridge, bridge,
+				 flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct drm_bridge_funcs rcar_lvds_bridge_ops = {
 	.attach = rcar_lvds_attach,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.detach = rcar_lvds_detach,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
 	.atomic_reset = drm_atomic_helper_bridge_reset,
@@ -731,6 +756,9 @@ bool rcar_lvds_dual_link(struct drm_bridge *bridge)
 EXPORT_SYMBOL_GPL(rcar_lvds_dual_link);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool rcar_lvds_is_connected(struct drm_bridge *bridge)
 {
 	struct rcar_lvds *lvds = bridge_to_rcar_lvds(bridge);
@@ -739,8 +767,11 @@ bool rcar_lvds_is_connected(struct drm_bridge *bridge)
 }
 EXPORT_SYMBOL_GPL(rcar_lvds_is_connected);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* -----------------------------------------------------------------------------
  * Probe & Remove
  */
@@ -798,10 +829,14 @@ static int rcar_lvds_parse_dt_companion(struct rcar_lvds *lvds)
 		 * encoder, and odd pixels from the companion encoder.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (lvds->next_bridge->timings &&
 =======
 		if (lvds->next_bridge && lvds->next_bridge->timings &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (lvds->next_bridge->timings &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    lvds->next_bridge->timings->dual_link)
 			lvds->link_type = RCAR_LVDS_DUAL_LINK_EVEN_ODD_PIXELS;
 		else
@@ -854,6 +889,9 @@ static int rcar_lvds_parse_dt(struct rcar_lvds *lvds)
 		goto done;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (lvds->panel) {
 		lvds->next_bridge = devm_drm_panel_bridge_add(lvds->dev,
 							      lvds->panel);
@@ -863,8 +901,11 @@ static int rcar_lvds_parse_dt(struct rcar_lvds *lvds)
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (lvds->info->quirks & RCAR_LVDS_QUIRK_DUAL_LINK)
 		ret = rcar_lvds_parse_dt_companion(lvds);
 
@@ -894,6 +935,7 @@ static struct clk *rcar_lvds_get_clock(struct rcar_lvds *lvds, const char *name,
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_err_probe(lvds->dev, PTR_ERR(clk), "failed to get %s clock\n",
 		      name ? name : "module");
 =======
@@ -901,6 +943,10 @@ static struct clk *rcar_lvds_get_clock(struct rcar_lvds *lvds, const char *name,
 		dev_err(lvds->dev, "failed to get %s clock\n",
 			name ? name : "module");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_err_probe(lvds->dev, PTR_ERR(clk), "failed to get %s clock\n",
+		      name ? name : "module");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return clk;
 }
@@ -979,9 +1025,12 @@ static int rcar_lvds_probe(struct platform_device *pdev)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	lvds->bridge.driver_private = lvds;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lvds->bridge.funcs = &rcar_lvds_bridge_ops;
 	lvds->bridge.of_node = pdev->dev.of_node;
 

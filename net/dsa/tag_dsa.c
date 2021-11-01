@@ -46,9 +46,13 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/dsa/mv88e6xxx.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/dsa/mv88e6xxx.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/etherdevice.h>
 #include <linux/list.h>
 #include <linux/slab.h>
@@ -131,6 +135,7 @@ static struct sk_buff *dsa_xmit_ll(struct sk_buff *skb, struct net_device *dev,
 {
 	struct dsa_port *dp = dsa_slave_to_port(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 tag_dev, tag_port;
 	enum dsa_cmd cmd;
 	u8 *dsa_header;
@@ -163,19 +168,47 @@ static struct sk_buff *dsa_xmit_ll(struct sk_buff *skb, struct net_device *dev,
 		dsa_header[0] = (cmd << 6) | 0x20 | tag_dev;
 		dsa_header[1] = tag_port << 3;
 =======
+=======
+	u8 tag_dev, tag_port;
+	enum dsa_cmd cmd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 *dsa_header;
+
+	if (skb->offload_fwd_mark) {
+		struct dsa_switch_tree *dst = dp->ds->dst;
+
+		cmd = DSA_CMD_FORWARD;
+
+		/* When offloading forwarding for a bridge, inject FORWARD
+		 * packets on behalf of a virtual switch device with an index
+		 * past the physical switches.
+		 */
+		tag_dev = dst->last_switch + 1 + dp->bridge_num;
+		tag_port = 0;
+	} else {
+		cmd = DSA_CMD_FROM_CPU;
+		tag_dev = dp->ds->index;
+		tag_port = dp->index;
+	}
 
 	if (skb->protocol == htons(ETH_P_8021Q)) {
 		if (extra) {
 			skb_push(skb, extra);
-			memmove(skb->data, skb->data + extra, 2 * ETH_ALEN);
+			dsa_alloc_etype_header(skb, extra);
 		}
 
+<<<<<<< HEAD
 		/* Construct tagged FROM_CPU DSA tag from 802.1Q tag. */
 		dsa_header = skb->data + 2 * ETH_ALEN + extra;
 		dsa_header[0] = (DSA_CMD_FROM_CPU << 6) | 0x20 | dp->ds->index;
 		dsa_header[1] = dp->index << 3;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Construct tagged DSA tag from 802.1Q tag. */
+		dsa_header = dsa_etype_header_pos_tx(skb) + extra;
+		dsa_header[0] = (cmd << 6) | 0x20 | tag_dev;
+		dsa_header[1] = tag_port << 3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Move CFI field from byte 2 to byte 1. */
 		if (dsa_header[2] & 0x10) {
@@ -184,11 +217,15 @@ static struct sk_buff *dsa_xmit_ll(struct sk_buff *skb, struct net_device *dev,
 		}
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct net_device *br = dp->bridge_dev;
 		u16 vid;
 
 		vid = br ? MV88E6XXX_VID_BRIDGED : MV88E6XXX_VID_STANDALONE;
 
+<<<<<<< HEAD
 		skb_push(skb, DSA_HLEN + extra);
 		dsa_alloc_etype_header(skb, DSA_HLEN + extra);
 
@@ -210,6 +247,18 @@ static struct sk_buff *dsa_xmit_ll(struct sk_buff *skb, struct net_device *dev,
 		dsa_header[2] = 0x00;
 		dsa_header[3] = 0x00;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		skb_push(skb, DSA_HLEN + extra);
+		dsa_alloc_etype_header(skb, DSA_HLEN + extra);
+
+		/* Construct DSA header from untagged frame. */
+		dsa_header = dsa_etype_header_pos_tx(skb) + extra;
+
+		dsa_header[0] = (cmd << 6) | tag_dev;
+		dsa_header[1] = tag_port << 3;
+		dsa_header[2] = vid >> 8;
+		dsa_header[3] = vid & 0xff;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return skb;
@@ -219,26 +268,36 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 				  u8 extra)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool trap = false, trunk = false;
 	int source_device, source_port;
 =======
 	int source_device, source_port;
 	bool trunk = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool trap = false, trunk = false;
+	int source_device, source_port;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum dsa_code code;
 	enum dsa_cmd cmd;
 	u8 *dsa_header;
 
 	/* The ethertype field is part of the DSA header. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dsa_header = dsa_etype_header_pos_rx(skb);
 =======
 	dsa_header = skb->data - 2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_header = dsa_etype_header_pos_rx(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cmd = dsa_header[0] >> 6;
 	switch (cmd) {
 	case DSA_CMD_FORWARD:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		trunk = !!(dsa_header[1] & 4);
 =======
@@ -246,6 +305,9 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 
 		trunk = !!(dsa_header[1] & 7);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		trunk = !!(dsa_header[1] & 4);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case DSA_CMD_TO_CPU:
@@ -264,9 +326,12 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 			 * already been done by hardware.
 			 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			skb->offload_fwd_mark = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		case DSA_CODE_MGMT_TRAP:
 		case DSA_CODE_IGMP_MLD_TRAP:
@@ -275,9 +340,13 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 			 * forwarded by hardware, so don't mark them.
 			 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			trap = true;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			trap = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		default:
 			/* Reserved code, this could be anything. Drop
@@ -312,6 +381,9 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* When using LAG offload, skb->dev is not a DSA slave interface,
 	 * so we cannot call dsa_default_offload_fwd_mark and we need to
 	 * special-case it.
@@ -321,8 +393,11 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 	else if (!trap)
 		dsa_default_offload_fwd_mark(skb);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If the 'tagged' bit is set; convert the DSA tag to a 802.1Q
 	 * tag, and delete the ethertype (extra) if applicable. If the
 	 * 'tagged' bit is cleared; delete the DSA tag, and ethertype
@@ -358,6 +433,7 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 
 		if (extra)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dsa_strip_etype_header(skb, extra);
 	} else {
 		skb_pull_rcsum(skb, DSA_HLEN);
@@ -372,6 +448,12 @@ static struct sk_buff *dsa_rcv_ll(struct sk_buff *skb, struct net_device *dev,
 			skb->data - ETH_HLEN - DSA_HLEN - extra,
 			2 * ETH_ALEN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dsa_strip_etype_header(skb, extra);
+	} else {
+		skb_pull_rcsum(skb, DSA_HLEN);
+		dsa_strip_etype_header(skb, DSA_HLEN + extra);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return skb;
@@ -385,11 +467,15 @@ static struct sk_buff *dsa_xmit(struct sk_buff *skb, struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct sk_buff *dsa_rcv(struct sk_buff *skb, struct net_device *dev)
 =======
 static struct sk_buff *dsa_rcv(struct sk_buff *skb, struct net_device *dev,
 			       struct packet_type *pt)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *dsa_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (unlikely(!pskb_may_pull(skb, DSA_HLEN)))
 		return NULL;
@@ -422,10 +508,14 @@ static struct sk_buff *edsa_xmit(struct sk_buff *skb, struct net_device *dev)
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	edsa_header = dsa_etype_header_pos_tx(skb);
 =======
 	edsa_header = skb->data + 2 * ETH_ALEN;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	edsa_header = dsa_etype_header_pos_tx(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	edsa_header[0] = (ETH_P_EDSA >> 8) & 0xff;
 	edsa_header[1] = ETH_P_EDSA & 0xff;
 	edsa_header[2] = 0x00;
@@ -434,11 +524,15 @@ static struct sk_buff *edsa_xmit(struct sk_buff *skb, struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct sk_buff *edsa_rcv(struct sk_buff *skb, struct net_device *dev)
 =======
 static struct sk_buff *edsa_rcv(struct sk_buff *skb, struct net_device *dev,
 				struct packet_type *pt)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *edsa_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (unlikely(!pskb_may_pull(skb, EDSA_HLEN)))
 		return NULL;

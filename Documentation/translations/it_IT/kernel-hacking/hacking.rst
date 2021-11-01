@@ -91,10 +91,14 @@ esclusivamente a notificare la presa in carico dell'interruzione,
 programmare una 'interruzione software' per l'esecuzione e quindi terminare.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Potete dire d'essere in una interruzione hardware perché in_hardirq()
 =======
 Potete dire d'essere in una interruzione hardware perché :c:func:`in_irq()`
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Potete dire d'essere in una interruzione hardware perché in_hardirq()
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ritorna vero.
 
 .. warning::
@@ -639,10 +643,14 @@ Definita in ``include/linux/export.h``
 Questa è una variate di `EXPORT_SYMBOL()` che permette di specificare uno
 spazio dei nomi. Lo spazio dei nomi è documentato in
 <<<<<<< HEAD
+<<<<<<< HEAD
 Documentation/translations/it_IT/core-api/symbol-namespaces.rst.
 =======
 :doc:`../core-api/symbol-namespaces`
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Documentation/translations/it_IT/core-api/symbol-namespaces.rst.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 :c:func:`EXPORT_SYMBOL_NS_GPL()`
 --------------------------------
@@ -652,10 +660,14 @@ Definita in ``include/linux/export.h``
 Questa è una variate di `EXPORT_SYMBOL_GPL()` che permette di specificare uno
 spazio dei nomi. Lo spazio dei nomi è documentato in
 <<<<<<< HEAD
+<<<<<<< HEAD
 Documentation/translations/it_IT/core-api/symbol-namespaces.rst.
 =======
 :doc:`../core-api/symbol-namespaces`
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Documentation/translations/it_IT/core-api/symbol-namespaces.rst.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Procedure e convenzioni
 =======================

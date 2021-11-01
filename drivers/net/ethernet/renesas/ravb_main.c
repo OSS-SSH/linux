@@ -30,9 +30,13 @@
 #include <linux/spinlock.h>
 #include <linux/sys_soc.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/reset.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/reset.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/div64.h>
 
@@ -182,16 +186,24 @@ static int ravb_tx_free(struct net_device *ndev, int q, bool free_txed_only)
 	struct ravb_private *priv = netdev_priv(ndev);
 	struct net_device_stats *stats = &priv->stats[q];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int num_tx_desc = priv->num_tx_desc;
 	struct ravb_tx_desc *desc;
 	unsigned int entry;
 	int free_num = 0;
 =======
 	int num_tx_desc = priv->num_tx_desc;
+=======
+	unsigned int num_tx_desc = priv->num_tx_desc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ravb_tx_desc *desc;
+	unsigned int entry;
 	int free_num = 0;
+<<<<<<< HEAD
 	int entry;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 size;
 
 	for (; priv->cur_tx[q] - priv->dirty_tx[q] > 0; priv->dirty_tx[q]++) {
@@ -227,6 +239,7 @@ static int ravb_tx_free(struct net_device *ndev, int q, bool free_txed_only)
 	return free_num;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void ravb_rx_ring_free(struct net_device *ndev, int q)
 {
@@ -271,25 +284,48 @@ static void ravb_ring_free(struct net_device *ndev, int q)
 	int num_tx_desc = priv->num_tx_desc;
 	int ring_size;
 	int i;
+=======
+static void ravb_rx_ring_free(struct net_device *ndev, int q)
+{
+	struct ravb_private *priv = netdev_priv(ndev);
+	unsigned int ring_size;
+	unsigned int i;
 
-	if (priv->rx_ring[q]) {
-		for (i = 0; i < priv->num_rx_ring[q]; i++) {
-			struct ravb_ex_rx_desc *desc = &priv->rx_ring[q][i];
+	if (!priv->rx_ring[q])
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			if (!dma_mapping_error(ndev->dev.parent,
-					       le32_to_cpu(desc->dptr)))
-				dma_unmap_single(ndev->dev.parent,
-						 le32_to_cpu(desc->dptr),
-						 RX_BUF_SZ,
-						 DMA_FROM_DEVICE);
-		}
-		ring_size = sizeof(struct ravb_ex_rx_desc) *
-			    (priv->num_rx_ring[q] + 1);
-		dma_free_coherent(ndev->dev.parent, ring_size, priv->rx_ring[q],
-				  priv->rx_desc_dma[q]);
-		priv->rx_ring[q] = NULL;
+	for (i = 0; i < priv->num_rx_ring[q]; i++) {
+		struct ravb_ex_rx_desc *desc = &priv->rx_ring[q][i];
+
+		if (!dma_mapping_error(ndev->dev.parent,
+				       le32_to_cpu(desc->dptr)))
+			dma_unmap_single(ndev->dev.parent,
+					 le32_to_cpu(desc->dptr),
+					 RX_BUF_SZ,
+					 DMA_FROM_DEVICE);
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ring_size = sizeof(struct ravb_ex_rx_desc) *
+		    (priv->num_rx_ring[q] + 1);
+	dma_free_coherent(ndev->dev.parent, ring_size, priv->rx_ring[q],
+			  priv->rx_desc_dma[q]);
+	priv->rx_ring[q] = NULL;
+}
+
+/* Free skb's and DMA buffers for Ethernet AVB */
+static void ravb_ring_free(struct net_device *ndev, int q)
+{
+	struct ravb_private *priv = netdev_priv(ndev);
+	const struct ravb_hw_info *info = priv->info;
+	unsigned int num_tx_desc = priv->num_tx_desc;
+	unsigned int ring_size;
+	unsigned int i;
+
+	info->rx_ring_free(ndev, q);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (priv->tx_ring[q]) {
 		ravb_tx_free(ndev, q, false);
@@ -321,6 +357,7 @@ static void ravb_ring_free(struct net_device *ndev, int q)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ravb_rx_ring_format(struct net_device *ndev, int q)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
@@ -331,16 +368,15 @@ static void ravb_rx_ring_format(struct net_device *ndev, int q)
 =======
 /* Format skb and descriptor buffer for Ethernet AVB */
 static void ravb_ring_format(struct net_device *ndev, int q)
+=======
+static void ravb_rx_ring_format(struct net_device *ndev, int q)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ravb_private *priv = netdev_priv(ndev);
-	int num_tx_desc = priv->num_tx_desc;
 	struct ravb_ex_rx_desc *rx_desc;
-	struct ravb_tx_desc *tx_desc;
-	struct ravb_desc *desc;
-	int rx_ring_size = sizeof(*rx_desc) * priv->num_rx_ring[q];
-	int tx_ring_size = sizeof(*tx_desc) * priv->num_tx_ring[q] *
-			   num_tx_desc;
+	unsigned int rx_ring_size = sizeof(*rx_desc) * priv->num_rx_ring[q];
 	dma_addr_t dma_addr;
+<<<<<<< HEAD
 	int i;
 
 	priv->cur_rx[q] = 0;
@@ -348,6 +384,9 @@ static void ravb_ring_format(struct net_device *ndev, int q)
 	priv->dirty_rx[q] = 0;
 	priv->dirty_tx[q] = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(priv->rx_ring[q], 0, rx_ring_size);
 	/* Build RX ring buffer */
@@ -370,6 +409,9 @@ static void ravb_ring_format(struct net_device *ndev, int q)
 	rx_desc->dptr = cpu_to_le32((u32)priv->rx_desc_dma[q]);
 	rx_desc->die_dt = DT_LINKFIX; /* type */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Format skb and descriptor buffer for Ethernet AVB */
@@ -390,8 +432,11 @@ static void ravb_ring_format(struct net_device *ndev, int q)
 	priv->dirty_tx[q] = 0;
 
 	info->rx_ring_format(ndev, q);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(priv->tx_ring[q], 0, tx_ring_size);
 	/* Build TX ring buffer */
@@ -418,6 +463,9 @@ static void ravb_ring_format(struct net_device *ndev, int q)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void *ravb_alloc_rx_desc(struct net_device *ndev, int q)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
@@ -431,12 +479,16 @@ static void *ravb_alloc_rx_desc(struct net_device *ndev, int q)
 	return priv->rx_ring[q];
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Init skb and descriptor buffer for Ethernet AVB */
 static int ravb_ring_init(struct net_device *ndev, int q)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 	unsigned int num_tx_desc = priv->num_tx_desc;
@@ -449,6 +501,13 @@ static int ravb_ring_init(struct net_device *ndev, int q)
 	int ring_size;
 	int i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+	unsigned int num_tx_desc = priv->num_tx_desc;
+	unsigned int ring_size;
+	struct sk_buff *skb;
+	unsigned int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Allocate RX and TX skb rings */
 	priv->rx_skb[q] = kcalloc(priv->num_rx_ring[q],
@@ -460,10 +519,14 @@ static int ravb_ring_init(struct net_device *ndev, int q)
 
 	for (i = 0; i < priv->num_rx_ring[q]; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		skb = netdev_alloc_skb(ndev, info->max_rx_len);
 =======
 		skb = netdev_alloc_skb(ndev, RX_BUF_SZ + RAVB_ALIGN - 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		skb = netdev_alloc_skb(ndev, info->max_rx_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!skb)
 			goto error;
 		ravb_set_buffer_align(skb);
@@ -480,6 +543,7 @@ static int ravb_ring_init(struct net_device *ndev, int q)
 
 	/* Allocate all RX descriptors. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!info->alloc_rx_desc(ndev, q))
 =======
 	ring_size = sizeof(struct ravb_ex_rx_desc) * (priv->num_rx_ring[q] + 1);
@@ -488,6 +552,9 @@ static int ravb_ring_init(struct net_device *ndev, int q)
 					      GFP_KERNEL);
 	if (!priv->rx_ring[q])
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!info->alloc_rx_desc(ndev, q))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto error;
 
 	priv->dirty_rx[q] = 0;
@@ -510,11 +577,15 @@ error:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ravb_rcar_emac_init(struct net_device *ndev)
 =======
 /* E-MAC init function */
 static void ravb_emac_init(struct net_device *ndev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ravb_rcar_emac_init(struct net_device *ndev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Receive frame limit set register */
 	ravb_write(ndev, ndev->mtu + ETH_HLEN + VLAN_HLEN + ETH_FCS_LEN, RFLR);
@@ -541,6 +612,7 @@ static void ravb_emac_init(struct net_device *ndev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* E-MAC init function */
 static void ravb_emac_init(struct net_device *ndev)
 {
@@ -557,28 +629,28 @@ static void ravb_rcar_dmac_init(struct net_device *ndev)
 =======
 /* Device init function for Ethernet AVB */
 static int ravb_dmac_init(struct net_device *ndev)
+=======
+/* E-MAC init function */
+static void ravb_emac_init(struct net_device *ndev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ravb_private *priv = netdev_priv(ndev);
-	int error;
+	const struct ravb_hw_info *info = priv->info;
 
-	/* Set CONFIG mode */
-	error = ravb_config(ndev);
-	if (error)
-		return error;
+	info->emac_init(ndev);
+}
 
-	error = ravb_ring_init(ndev, RAVB_BE);
-	if (error)
-		return error;
-	error = ravb_ring_init(ndev, RAVB_NC);
-	if (error) {
-		ravb_ring_free(ndev, RAVB_BE);
-		return error;
-	}
-
+<<<<<<< HEAD
 	/* Descriptor format */
 	ravb_ring_format(ndev, RAVB_BE);
 	ravb_ring_format(ndev, RAVB_NC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ravb_rcar_dmac_init(struct net_device *ndev)
+{
+	struct ravb_private *priv = netdev_priv(ndev);
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Set AVB RX */
 	ravb_write(ndev,
@@ -592,10 +664,14 @@ static int ravb_dmac_init(struct net_device *ndev)
 
 	/* Interrupt init: */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->multi_irqs) {
 =======
 	if (priv->chip_id == RCAR_GEN3) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->multi_irqs) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Clear DIL.DPLx */
 		ravb_write(ndev, 0, DIL);
 		/* Set queue specific interrupt */
@@ -610,6 +686,9 @@ static int ravb_dmac_init(struct net_device *ndev)
 	/* Frame transmitted, timestamp FIFO updated */
 	ravb_write(ndev, TIC_FTE0 | TIC_FTE1 | TIC_TFUE, TIC);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Device init function for Ethernet AVB */
@@ -638,8 +717,11 @@ static int ravb_dmac_init(struct net_device *ndev)
 	ravb_ring_format(ndev, RAVB_NC);
 
 	info->dmac_init(ndev);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Setting the control will start the AVB-DMAC process. */
 	ravb_modify(ndev, CCC, CCC_OPC, CCC_OPC_OPERATION);
@@ -701,6 +783,7 @@ static void ravb_rx_csum(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool ravb_rcar_rx(struct net_device *ndev, int *quota, int q)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
@@ -711,6 +794,12 @@ static bool ravb_rx(struct net_device *ndev, int *quota, int q)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static bool ravb_rcar_rx(struct net_device *ndev, int *quota, int q)
+{
+	struct ravb_private *priv = netdev_priv(ndev);
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int entry = priv->cur_rx[q] % priv->num_rx_ring[q];
 	int boguscnt = (priv->dirty_rx[q] + priv->num_rx_ring[q]) -
 			priv->cur_rx[q];
@@ -796,12 +885,16 @@ static bool ravb_rx(struct net_device *ndev, int *quota, int q)
 
 		if (!priv->rx_skb[q][entry]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			skb = netdev_alloc_skb(ndev, info->max_rx_len);
 =======
 			skb = netdev_alloc_skb(ndev,
 					       RX_BUF_SZ +
 					       RAVB_ALIGN - 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			skb = netdev_alloc_skb(ndev, info->max_rx_len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!skb)
 				break;	/* Better luck next round. */
 			ravb_set_buffer_align(skb);
@@ -828,6 +921,9 @@ static bool ravb_rx(struct net_device *ndev, int *quota, int q)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Packet receive function for Ethernet AVB */
 static bool ravb_rx(struct net_device *ndev, int *quota, int q)
 {
@@ -837,8 +933,11 @@ static bool ravb_rx(struct net_device *ndev, int *quota, int q)
 	return info->receive(ndev, quota, q);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ravb_rcv_snd_disable(struct net_device *ndev)
 {
 	/* Disable TX and RX */
@@ -951,9 +1050,13 @@ static bool ravb_queue_interrupt(struct net_device *ndev, int q)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 ris0 = ravb_read(ndev, RIS0);
 	u32 ric0 = ravb_read(ndev, RIC0);
 	u32 tis  = ravb_read(ndev, TIS);
@@ -963,10 +1066,14 @@ static bool ravb_queue_interrupt(struct net_device *ndev, int q)
 		if (napi_schedule_prep(&priv->napi[q])) {
 			/* Mask RX and TX interrupts */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (!info->multi_irqs) {
 =======
 			if (priv->chip_id == RCAR_GEN2) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!info->multi_irqs) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ravb_write(ndev, ric0 & ~BIT(q), RIC0);
 				ravb_write(ndev, tic & ~BIT(q), TIC);
 			} else {
@@ -1110,9 +1217,13 @@ static int ravb_poll(struct napi_struct *napi, int budget)
 	struct net_device *ndev = napi->dev;
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 	int q = napi - priv->napi;
 	int mask = BIT(q);
@@ -1125,10 +1236,14 @@ static int ravb_poll(struct napi_struct *napi, int budget)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Processing TX Descriptor Ring */
 =======
 	/* Processing RX Descriptor Ring */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Processing TX Descriptor Ring */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&priv->lock, flags);
 	/* Clear TX interrupt */
 	ravb_write(ndev, ~(mask | TIS_RESERVED), TIS);
@@ -1141,10 +1256,14 @@ static int ravb_poll(struct napi_struct *napi, int budget)
 	/* Re-enable RX/TX interrupts */
 	spin_lock_irqsave(&priv->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!info->multi_irqs) {
 =======
 	if (priv->chip_id == RCAR_GEN2) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!info->multi_irqs) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_modify(ndev, RIC0, mask, mask);
 		ravb_modify(ndev, TIC,  mask, mask);
 	} else {
@@ -1169,9 +1288,13 @@ static void ravb_adjust_link(struct net_device *ndev)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct phy_device *phydev = ndev->phydev;
 	bool new_state = false;
 	unsigned long flags;
@@ -1187,10 +1310,14 @@ static void ravb_adjust_link(struct net_device *ndev)
 			new_state = true;
 			priv->speed = phydev->speed;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			info->set_rate(ndev);
 =======
 			ravb_set_rate(ndev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			info->set_rate(ndev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		if (!priv->link) {
 			ravb_modify(ndev, ECMR, ECMR_TXF, 0);
@@ -1354,6 +1481,7 @@ static const char ravb_gstrings_stats[][ETH_GSTRING_LEN] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ravb_get_sset_count(struct net_device *netdev, int sset)
 {
 	struct ravb_private *priv = netdev_priv(netdev);
@@ -1365,12 +1493,21 @@ static int ravb_get_sset_count(struct net_device *netdev, int sset)
 =======
 #define RAVB_STATS_LEN	ARRAY_SIZE(ravb_gstrings_stats)
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ravb_get_sset_count(struct net_device *netdev, int sset)
 {
+	struct ravb_private *priv = netdev_priv(netdev);
+	const struct ravb_hw_info *info = priv->info;
+
 	switch (sset) {
 	case ETH_SS_STATS:
+<<<<<<< HEAD
 		return RAVB_STATS_LEN;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return info->stats_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -EOPNOTSUPP;
 	}
@@ -1408,6 +1545,7 @@ static void ravb_get_ethtool_stats(struct net_device *ndev,
 static void ravb_get_strings(struct net_device *ndev, u32 stringset, u8 *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ravb_private *priv = netdev_priv(ndev);
 	const struct ravb_hw_info *info = priv->info;
 
@@ -1419,6 +1557,14 @@ static void ravb_get_strings(struct net_device *ndev, u32 stringset, u8 *data)
 	case ETH_SS_STATS:
 		memcpy(data, ravb_gstrings_stats, sizeof(ravb_gstrings_stats));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ravb_private *priv = netdev_priv(ndev);
+	const struct ravb_hw_info *info = priv->info;
+
+	switch (stringset) {
+	case ETH_SS_STATS:
+		memcpy(data, info->gstrings_stats, info->gstrings_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 }
@@ -1439,9 +1585,13 @@ static int ravb_set_ringparam(struct net_device *ndev,
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int error;
 
 	if (ring->tx_pending > BE_TX_RING_MAX ||
@@ -1456,10 +1606,14 @@ static int ravb_set_ringparam(struct net_device *ndev,
 		netif_device_detach(ndev);
 		/* Stop PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (info->no_ptp_cfg_active)
 =======
 		if (priv->chip_id == RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (info->no_ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ravb_ptp_stop(ndev);
 		/* Wait for DMA stopping */
 		error = ravb_stop_dma(ndev);
@@ -1492,10 +1646,14 @@ static int ravb_set_ringparam(struct net_device *ndev,
 
 		/* Initialise PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (info->no_ptp_cfg_active)
 =======
 		if (priv->chip_id == RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (info->no_ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ravb_ptp_init(ndev, priv->pdev);
 
 		netif_device_attach(ndev);
@@ -1587,9 +1745,13 @@ static int ravb_open(struct net_device *ndev)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct platform_device *pdev = priv->pdev;
 	struct device *dev = &pdev->dev;
 	int error;
@@ -1598,10 +1760,14 @@ static int ravb_open(struct net_device *ndev)
 	napi_enable(&priv->napi[RAVB_NC]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!info->multi_irqs) {
 =======
 	if (priv->chip_id == RCAR_GEN2) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!info->multi_irqs) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = request_irq(ndev->irq, ravb_interrupt, IRQF_SHARED,
 				    ndev->name, ndev);
 		if (error) {
@@ -1643,10 +1809,14 @@ static int ravb_open(struct net_device *ndev)
 
 	/* Initialise PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->no_ptp_cfg_active)
 =======
 	if (priv->chip_id == RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->no_ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_ptp_init(ndev, priv->pdev);
 
 	netif_tx_start_all_queues(ndev);
@@ -1661,6 +1831,7 @@ static int ravb_open(struct net_device *ndev)
 out_ptp_stop:
 	/* Stop PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->no_ptp_cfg_active)
 		ravb_ptp_stop(ndev);
 out_free_irq_nc_tx:
@@ -1671,6 +1842,12 @@ out_free_irq_nc_tx:
 out_free_irq_nc_tx:
 	if (priv->chip_id == RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->no_ptp_cfg_active)
+		ravb_ptp_stop(ndev);
+out_free_irq_nc_tx:
+	if (!info->multi_irqs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_free_irq;
 	free_irq(priv->tx_irqs[RAVB_NC], ndev);
 out_free_irq_nc_rx:
@@ -1709,9 +1886,13 @@ static void ravb_tx_timeout_work(struct work_struct *work)
 	struct ravb_private *priv = container_of(work, struct ravb_private,
 						 work);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *ndev = priv->ndev;
 	int error;
 
@@ -1719,10 +1900,14 @@ static void ravb_tx_timeout_work(struct work_struct *work)
 
 	/* Stop PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->no_ptp_cfg_active)
 =======
 	if (priv->chip_id == RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->no_ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_ptp_stop(ndev);
 
 	/* Wait for DMA stopping */
@@ -1758,10 +1943,14 @@ static void ravb_tx_timeout_work(struct work_struct *work)
 out:
 	/* Initialise PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->no_ptp_cfg_active)
 =======
 	if (priv->chip_id == RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->no_ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_ptp_init(ndev, priv->pdev);
 
 	netif_tx_start_all_queues(ndev);
@@ -1772,10 +1961,14 @@ static netdev_tx_t ravb_start_xmit(struct sk_buff *skb, struct net_device *ndev)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int num_tx_desc = priv->num_tx_desc;
 =======
 	int num_tx_desc = priv->num_tx_desc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int num_tx_desc = priv->num_tx_desc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 q = skb_get_queue_mapping(skb);
 	struct ravb_tstamp_skb *ts_skb;
 	struct ravb_tx_desc *desc;
@@ -1916,9 +2109,13 @@ static struct net_device_stats *ravb_get_stats(struct net_device *ndev)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device_stats *nstats, *stats0, *stats1;
 
 	nstats = &ndev->stats;
@@ -1926,10 +2123,14 @@ static struct net_device_stats *ravb_get_stats(struct net_device *ndev)
 	stats1 = &priv->stats[RAVB_NC];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->tx_counters) {
 =======
 	if (priv->chip_id == RCAR_GEN3) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->tx_counters) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nstats->tx_dropped += ravb_read(ndev, TROCR);
 		ravb_write(ndev, 0, TROCR);	/* (write clear) */
 	}
@@ -1971,9 +2172,13 @@ static int ravb_close(struct net_device *ndev)
 	struct device_node *np = ndev->dev.parent->of_node;
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ravb_tstamp_skb *ts_skb, *ts_skb2;
 
 	netif_tx_stop_all_queues(ndev);
@@ -1985,10 +2190,14 @@ static int ravb_close(struct net_device *ndev)
 
 	/* Stop PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->no_ptp_cfg_active)
 =======
 	if (priv->chip_id == RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->no_ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_ptp_stop(ndev);
 
 	/* Set the config mode to stop the AVB-DMAC's processes */
@@ -2012,10 +2221,14 @@ static int ravb_close(struct net_device *ndev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->multi_irqs) {
 =======
 	if (priv->chip_id != RCAR_GEN2) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->multi_irqs) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		free_irq(priv->tx_irqs[RAVB_NC], ndev);
 		free_irq(priv->rx_irqs[RAVB_NC], ndev);
 		free_irq(priv->tx_irqs[RAVB_BE], ndev);
@@ -2159,12 +2372,17 @@ static void ravb_set_rx_csum(struct net_device *ndev, bool enable)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ravb_set_features_rx_csum(struct net_device *ndev,
 				     netdev_features_t features)
 =======
 static int ravb_set_features(struct net_device *ndev,
 			     netdev_features_t features)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int ravb_set_features_rx_csum(struct net_device *ndev,
+				     netdev_features_t features)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	netdev_features_t changed = ndev->features ^ features;
 
@@ -2177,6 +2395,9 @@ static int ravb_set_features(struct net_device *ndev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ravb_set_features(struct net_device *ndev,
 			     netdev_features_t features)
 {
@@ -2186,8 +2407,11 @@ static int ravb_set_features(struct net_device *ndev,
 	return info->set_rx_csum_feature(ndev, features);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct net_device_ops ravb_netdev_ops = {
 	.ndo_open		= ravb_open,
 	.ndo_stop		= ravb_close,
@@ -2197,10 +2421,14 @@ static const struct net_device_ops ravb_netdev_ops = {
 	.ndo_set_rx_mode	= ravb_set_rx_mode,
 	.ndo_tx_timeout		= ravb_tx_timeout,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= ravb_do_ioctl,
 =======
 	.ndo_do_ioctl		= ravb_do_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= ravb_do_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= ravb_change_mtu,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= eth_mac_addr,
@@ -2253,6 +2481,9 @@ static int ravb_mdio_release(struct ravb_private *priv)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct ravb_hw_info ravb_gen3_hw_info = {
 	.rx_ring_free = ravb_rx_ring_free,
 	.rx_ring_format = ravb_rx_ring_format,
@@ -2293,6 +2524,7 @@ static const struct ravb_hw_info ravb_gen2_hw_info = {
 	.no_ptp_cfg_active = 1,
 };
 
+<<<<<<< HEAD
 static const struct of_device_id ravb_match_table[] = {
 	{ .compatible = "renesas,etheravb-r8a7790", .data = &ravb_gen2_hw_info },
 	{ .compatible = "renesas,etheravb-r8a7794", .data = &ravb_gen2_hw_info },
@@ -2307,6 +2539,14 @@ static const struct of_device_id ravb_match_table[] = {
 	{ .compatible = "renesas,etheravb-r8a7795", .data = (void *)RCAR_GEN3 },
 	{ .compatible = "renesas,etheravb-rcar-gen3", .data = (void *)RCAR_GEN3 },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct of_device_id ravb_match_table[] = {
+	{ .compatible = "renesas,etheravb-r8a7790", .data = &ravb_gen2_hw_info },
+	{ .compatible = "renesas,etheravb-r8a7794", .data = &ravb_gen2_hw_info },
+	{ .compatible = "renesas,etheravb-rcar-gen2", .data = &ravb_gen2_hw_info },
+	{ .compatible = "renesas,etheravb-r8a7795", .data = &ravb_gen3_hw_info },
+	{ .compatible = "renesas,etheravb-rcar-gen3", .data = &ravb_gen3_hw_info },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ }
 };
 MODULE_DEVICE_TABLE(of, ravb_match_table);
@@ -2340,6 +2580,7 @@ static void ravb_set_config_mode(struct net_device *ndev)
 {
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 
 	if (info->no_ptp_cfg_active) {
@@ -2347,6 +2588,11 @@ static void ravb_set_config_mode(struct net_device *ndev)
 
 	if (priv->chip_id == RCAR_GEN2) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+
+	if (info->no_ptp_cfg_active) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_modify(ndev, CCC, CCC_OPC, CCC_OPC_CONFIG);
 		/* Set CSEL value */
 		ravb_modify(ndev, CCC, CCC_CSEL, CCC_CSEL_HPB);
@@ -2357,6 +2603,7 @@ static void ravb_set_config_mode(struct net_device *ndev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct soc_device_attribute ravb_delay_mode_quirk_match[] = {
 	{ .soc_id = "r8a774c0" },
@@ -2366,6 +2613,8 @@ static const struct soc_device_attribute ravb_delay_mode_quirk_match[] = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Set tx and rx clock internal delay modes */
 static void ravb_parse_delay_mode(struct device_node *np, struct net_device *ndev)
 {
@@ -2397,6 +2646,7 @@ static void ravb_parse_delay_mode(struct device_node *np, struct net_device *nde
 	if (priv->phy_interface == PHY_INTERFACE_MODE_RGMII_ID ||
 	    priv->phy_interface == PHY_INTERFACE_MODE_RGMII_TXID) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		priv->txcidm = 1;
 		priv->rgmii_override = 1;
 =======
@@ -2407,6 +2657,10 @@ static void ravb_parse_delay_mode(struct device_node *np, struct net_device *nde
 			priv->rgmii_override = 1;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		priv->txcidm = 1;
+		priv->rgmii_override = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -2426,6 +2680,7 @@ static int ravb_probe(struct platform_device *pdev)
 {
 	struct device_node *np = pdev->dev.of_node;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info;
 	struct reset_control *rstc;
 	struct ravb_private *priv;
@@ -2433,6 +2688,11 @@ static int ravb_probe(struct platform_device *pdev)
 	struct ravb_private *priv;
 	enum ravb_chip_id chip_id;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info;
+	struct reset_control *rstc;
+	struct ravb_private *priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *ndev;
 	int error, irq, q;
 	struct resource *res;
@@ -2445,18 +2705,25 @@ static int ravb_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rstc = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
 	if (IS_ERR(rstc))
 		return dev_err_probe(&pdev->dev, PTR_ERR(rstc),
 				     "failed to get cpg reset\n");
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ndev = alloc_etherdev_mqs(sizeof(struct ravb_private),
 				  NUM_TX_QUEUE, NUM_RX_QUEUE);
 	if (!ndev)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	info = of_device_get_match_data(&pdev->dev);
 
@@ -2471,14 +2738,25 @@ static int ravb_probe(struct platform_device *pdev)
 =======
 	ndev->features = NETIF_F_RXCSUM;
 	ndev->hw_features = NETIF_F_RXCSUM;
+=======
+	info = of_device_get_match_data(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	ndev->features = info->net_features;
+	ndev->hw_features = info->net_hw_features;
+
+	reset_control_deassert(rstc);
 	pm_runtime_enable(&pdev->dev);
 	pm_runtime_get_sync(&pdev->dev);
 
+<<<<<<< HEAD
 	chip_id = (enum ravb_chip_id)of_device_get_match_data(&pdev->dev);
 
 	if (chip_id == RCAR_GEN3)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->multi_irqs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		irq = platform_get_irq_byname(pdev, "ch22");
 	else
 		irq = platform_get_irq(pdev, 0);
@@ -2492,10 +2770,15 @@ static int ravb_probe(struct platform_device *pdev)
 
 	priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	priv->info = info;
 	priv->rstc = rstc;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	priv->info = info;
+	priv->rstc = rstc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->ndev = ndev;
 	priv->pdev = pdev;
 	priv->num_tx_ring[RAVB_BE] = BE_TX_RING_SIZE;
@@ -2523,10 +2806,14 @@ static int ravb_probe(struct platform_device *pdev)
 		of_property_read_bool(np, "renesas,ether-link-active-low");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->multi_irqs) {
 =======
 	if (chip_id == RCAR_GEN3) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->multi_irqs) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		irq = platform_get_irq_byname(pdev, "ch24");
 		if (irq < 0) {
 			error = irq;
@@ -2552,10 +2839,13 @@ static int ravb_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	priv->chip_id = chip_id;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->clk = devm_clk_get(&pdev->dev, NULL);
 	if (IS_ERR(priv->clk)) {
 		error = PTR_ERR(priv->clk);
@@ -2573,16 +2863,22 @@ static int ravb_probe(struct platform_device *pdev)
 	ndev->min_mtu = ETH_MIN_MTU;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* FIXME: R-Car Gen2 has 4byte alignment restriction for tx buffer
 	 * Use two descriptor to handle such situation. First descriptor to
 	 * handle aligned data buffer and second descriptor to handle the
 	 * overflow data because of alignment.
 	 */
 	priv->num_tx_desc = info->aligned_tx ? 2 : 1;
+<<<<<<< HEAD
 =======
 	priv->num_tx_desc = chip_id == RCAR_GEN2 ?
 		NUM_TX_DESC_GEN2 : NUM_TX_DESC_GEN3;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Set function */
 	ndev->netdev_ops = &ravb_netdev_ops;
@@ -2600,10 +2896,14 @@ static int ravb_probe(struct platform_device *pdev)
 	ravb_modify(ndev, GCCR, GCCR_LTI, GCCR_LTI);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->internal_delay) {
 =======
 	if (priv->chip_id != RCAR_GEN2) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->internal_delay) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_parse_delay_mode(np, ndev);
 		ravb_set_delay_mode(ndev);
 	}
@@ -2628,10 +2928,14 @@ static int ravb_probe(struct platform_device *pdev)
 
 	/* Initialise PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->ptp_cfg_active)
 =======
 	if (chip_id != RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_ptp_init(ndev, pdev);
 
 	/* Debug message level */
@@ -2680,10 +2984,14 @@ out_dma_free:
 
 	/* Stop PTP Clock driver */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->ptp_cfg_active)
 =======
 	if (chip_id != RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_ptp_stop(ndev);
 out_disable_refclk:
 	clk_disable_unprepare(priv->refclk);
@@ -2693,9 +3001,13 @@ out_release:
 	pm_runtime_put(&pdev->dev);
 	pm_runtime_disable(&pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	reset_control_assert(rstc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	reset_control_assert(rstc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return error;
 }
 
@@ -2703,6 +3015,7 @@ static int ravb_remove(struct platform_device *pdev)
 {
 	struct net_device *ndev = platform_get_drvdata(pdev);
 	struct ravb_private *priv = netdev_priv(ndev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 
@@ -2713,6 +3026,12 @@ static int ravb_remove(struct platform_device *pdev)
 	/* Stop PTP Clock driver */
 	if (priv->chip_id != RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+
+	/* Stop PTP Clock driver */
+	if (info->ptp_cfg_active)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_ptp_stop(ndev);
 
 	clk_disable_unprepare(priv->refclk);
@@ -2728,9 +3047,13 @@ static int ravb_remove(struct platform_device *pdev)
 	ravb_mdio_release(priv);
 	pm_runtime_disable(&pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	reset_control_assert(priv->rstc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	reset_control_assert(priv->rstc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free_netdev(ndev);
 	platform_set_drvdata(pdev, NULL);
 
@@ -2800,9 +3123,13 @@ static int __maybe_unused ravb_resume(struct device *dev)
 	struct net_device *ndev = dev_get_drvdata(dev);
 	struct ravb_private *priv = netdev_priv(ndev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct ravb_hw_info *info = priv->info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ravb_hw_info *info = priv->info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	/* If WoL is enabled set reset mode to rearm the WoL logic */
@@ -2826,10 +3153,14 @@ static int __maybe_unused ravb_resume(struct device *dev)
 	ravb_modify(ndev, GCCR, GCCR_LTI, GCCR_LTI);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info->internal_delay)
 =======
 	if (priv->chip_id != RCAR_GEN2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info->internal_delay)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ravb_set_delay_mode(ndev);
 
 	/* Restore descriptor base address table */

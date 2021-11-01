@@ -92,6 +92,7 @@ static void pq2ads_pci_irq_demux(struct irq_desc *desc)
 
 		for (bit = 0; pend != 0; ++bit, pend <<= 1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (pend & 0x80000000)
 				generic_handle_domain_irq(priv->host, bit);
 =======
@@ -100,6 +101,10 @@ static void pq2ads_pci_irq_demux(struct irq_desc *desc)
 				generic_handle_irq(virq);
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (pend & 0x80000000)
+				generic_handle_domain_irq(priv->host, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }

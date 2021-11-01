@@ -73,10 +73,14 @@ static int snd_ad1848_probe(struct device *dev, unsigned int n)
 	int error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
 =======
 	error = snd_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0)
 		return error;
 
@@ -85,15 +89,20 @@ static int snd_ad1848_probe(struct device *dev, unsigned int n)
 			0, &chip);
 	if (error < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 =======
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	card->private_data = chip;
 
 	error = snd_wss_pcm(chip, 0);
 	if (error < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return error;
 
@@ -107,6 +116,13 @@ static int snd_ad1848_probe(struct device *dev, unsigned int n)
 	if (error < 0)
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+
+	error = snd_wss_mixer(chip);
+	if (error < 0)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strscpy(card->driver, "AD1848", sizeof(card->driver));
 	strscpy(card->shortname, chip->pcm->name, sizeof(card->shortname));
@@ -122,6 +138,7 @@ static int snd_ad1848_probe(struct device *dev, unsigned int n)
 
 	error = snd_card_register(card);
 	if (error < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return error;
 
@@ -141,6 +158,12 @@ static void snd_ad1848_remove(struct device *dev, unsigned int n)
 {
 	snd_card_free(dev_get_drvdata(dev));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+
+	dev_set_drvdata(dev, card);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM
@@ -169,9 +192,12 @@ static struct isa_driver snd_ad1848_driver = {
 	.match		= snd_ad1848_match,
 	.probe		= snd_ad1848_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_ad1848_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_ad1848_suspend,
 	.resume		= snd_ad1848_resume,

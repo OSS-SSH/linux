@@ -18,14 +18,20 @@
 #define	_LINUX_RBTREE_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/rbtree_types.h>
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/rbtree_types.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kernel.h>
 #include <linux/stddef.h>
 #include <linux/rcupdate.h>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define rb_parent(r)   ((struct rb_node *)((r)->__rb_parent_color & ~3))
 
@@ -45,6 +51,10 @@ struct rb_root {
 
 #define RB_ROOT	(struct rb_root) { NULL, }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define rb_parent(r)   ((struct rb_node *)((r)->__rb_parent_color & ~3))
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define	rb_entry(ptr, type, member) container_of(ptr, type, member)
 
 #define RB_EMPTY_ROOT(root)  (READ_ONCE((root)->rb_node) == NULL)
@@ -123,6 +133,7 @@ static inline void rb_link_node_rcu(struct rb_node *node, struct rb_node *parent
 	     pos = n)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * Leftmost-cached rbtrees.
@@ -142,6 +153,8 @@ struct rb_root_cached {
 #define RB_ROOT_CACHED (struct rb_root_cached) { {NULL, }, NULL }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Same as rb_first(), but O(1) */
 #define rb_first_cached(root) (root)->rb_leftmost
 

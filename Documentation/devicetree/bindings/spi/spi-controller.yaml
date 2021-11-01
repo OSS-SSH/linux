@@ -80,6 +80,7 @@ properties:
       The SPI controller acts as a slave, instead of a master.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   slave:
 =======
 allOf:
@@ -99,6 +100,9 @@ allOf:
 patternProperties:
   "^slave$":
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  slave:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     type: object
 
     properties:
@@ -110,9 +114,13 @@ patternProperties:
       - compatible
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 patternProperties:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+patternProperties:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^.*@[0-9a-f]+$":
     type: object
 
@@ -189,6 +197,9 @@ patternProperties:
       - reg
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 allOf:
   - if:
       not:
@@ -203,8 +214,11 @@ allOf:
         "#address-cells":
           const: 0
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 additionalProperties: true
 
 examples:

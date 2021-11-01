@@ -78,6 +78,7 @@ union fp_state {
 #define FP_SIZE (sizeof(union fp_state) / sizeof(int))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct crunch_state {
 	unsigned int	mvdx[16][2];
@@ -88,6 +89,8 @@ struct crunch_state {
 #define CRUNCH_SIZE	sizeof(struct crunch_state)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #endif

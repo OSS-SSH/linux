@@ -114,6 +114,7 @@ static u32 get_pf2vf_offset(u32 i)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static u32 get_vintmsk_offset(u32 i)
 {
@@ -121,6 +122,8 @@ static u32 get_vintmsk_offset(u32 i)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void adf_enable_error_correction(struct adf_accel_dev *accel_dev)
 {
 	struct adf_hw_device_data *hw_device = accel_dev->hw_device;
@@ -165,6 +168,7 @@ static void adf_enable_ints(struct adf_accel_dev *accel_dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int adf_enable_pf2vf_comms(struct adf_accel_dev *accel_dev)
 {
 	spin_lock_init(&accel_dev->pf.vf2pf_ints_lock);
@@ -173,6 +177,12 @@ static int adf_enable_pf2vf_comms(struct adf_accel_dev *accel_dev)
 static int adf_pf_enable_vf2pf_comms(struct adf_accel_dev *accel_dev)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int adf_enable_pf2vf_comms(struct adf_accel_dev *accel_dev)
+{
+	spin_lock_init(&accel_dev->pf.vf2pf_ints_lock);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -206,10 +216,13 @@ void adf_init_hw_data_c62x(struct adf_hw_device_data *hw_data)
 	hw_data->get_etr_bar_id = get_etr_bar_id;
 	hw_data->get_misc_bar_id = get_misc_bar_id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	hw_data->get_pf2vf_offset = get_pf2vf_offset;
 	hw_data->get_vintmsk_offset = get_vintmsk_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hw_data->get_admin_info = adf_gen2_get_admin_info;
 	hw_data->get_arb_info = adf_gen2_get_arb_info;
 	hw_data->get_sku = get_sku;
@@ -219,14 +232,18 @@ void adf_init_hw_data_c62x(struct adf_hw_device_data *hw_data)
 	hw_data->exit_admin_comms = adf_exit_admin_comms;
 	hw_data->configure_iov_threads = configure_iov_threads;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	hw_data->disable_iov = adf_disable_sriov;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hw_data->send_admin_init = adf_send_admin_init;
 	hw_data->init_arb = adf_init_arb;
 	hw_data->exit_arb = adf_exit_arb;
 	hw_data->get_arb_mapping = adf_get_arbiter_mapping;
 	hw_data->enable_ints = adf_enable_ints;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	hw_data->reset_device = adf_reset_flr;
 	hw_data->set_ssm_wdtimer = adf_gen2_set_ssm_wdtimer;
@@ -237,10 +254,19 @@ void adf_init_hw_data_c62x(struct adf_hw_device_data *hw_data)
 
 =======
 	hw_data->enable_vf2pf_comms = adf_pf_enable_vf2pf_comms;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hw_data->reset_device = adf_reset_flr;
-	hw_data->min_iov_compat_ver = ADF_PFVF_COMPATIBILITY_VERSION;
 	hw_data->set_ssm_wdtimer = adf_gen2_set_ssm_wdtimer;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hw_data->get_pf2vf_offset = get_pf2vf_offset;
+	hw_data->enable_pfvf_comms = adf_enable_pf2vf_comms;
+	hw_data->disable_iov = adf_disable_sriov;
+	hw_data->min_iov_compat_ver = ADF_PFVF_COMPAT_THIS_VERSION;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	adf_gen2_init_hw_csr_ops(&hw_data->csr_ops);
 }
 

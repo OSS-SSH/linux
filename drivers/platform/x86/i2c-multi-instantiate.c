@@ -33,6 +33,7 @@ struct i2c_multi_inst_data {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int i2c_multi_inst_count(struct acpi_resource *ares, void *data)
 {
@@ -60,6 +61,8 @@ static int i2c_multi_inst_count_resources(struct acpi_device *adev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int i2c_multi_inst_probe(struct platform_device *pdev)
 {
 	struct i2c_multi_inst_data *multi;
@@ -80,10 +83,14 @@ static int i2c_multi_inst_probe(struct platform_device *pdev)
 
 	/* Count number of clients to instantiate */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = i2c_acpi_client_count(adev);
 =======
 	ret = i2c_multi_inst_count_resources(adev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = i2c_acpi_client_count(adev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 

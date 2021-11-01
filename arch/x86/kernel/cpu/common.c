@@ -80,14 +80,20 @@ EXPORT_SYMBOL(smp_num_siblings);
 DEFINE_PER_CPU_READ_MOSTLY(u16, cpu_llc_id) = BAD_APICID;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u16 get_llc_id(unsigned int cpu)
 {
 	return per_cpu(cpu_llc_id, cpu);
 }
 EXPORT_SYMBOL_GPL(get_llc_id);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* correctly size the local cpu masks */
 void __init setup_cpu_local_masks(void)
 {
@@ -330,9 +336,13 @@ static __always_inline void setup_smap(struct cpuinfo_x86 *c)
 		cr4_set_bits(X86_CR4_SMAP);
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 		clear_cpu_cap(c, X86_FEATURE_SMAP);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clear_cpu_cap(c, X86_FEATURE_SMAP);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cr4_clear_bits(X86_CR4_SMAP);
 #endif
 	}

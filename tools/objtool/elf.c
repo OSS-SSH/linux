@@ -287,6 +287,7 @@ static int read_sections(struct elf *elf)
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (sec->sh.sh_flags & SHF_EXECINSTR)
 			elf->text_size += sec->sh.sh_size;
@@ -296,6 +297,11 @@ static int read_sections(struct elf *elf)
 		if (sec->sh.sh_flags & SHF_EXECINSTR)
 			elf->text_size += sec->len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		if (sec->sh.sh_flags & SHF_EXECINSTR)
+			elf->text_size += sec->sh.sh_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		list_add_tail(&sec->list, &elf->sections);
 		elf_hash_add(section, &sec->hash, sec->idx);
@@ -516,9 +522,13 @@ int elf_add_reloc(struct elf *elf, struct section *sec, unsigned long offset,
 	elf_hash_add(reloc, &reloc->hash, reloc_hash(reloc));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sec->reloc->sh.sh_size += sec->reloc->sh.sh_entsize;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sec->reloc->sh.sh_size += sec->reloc->sh.sh_entsize;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sec->reloc->changed = true;
 
 	return 0;
@@ -745,12 +755,17 @@ static int elf_add_string(struct elf *elf, struct section *strtab, char *str)
 	data->d_align = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	len = strtab->sh.sh_size;
 	strtab->sh.sh_size += data->d_size;
 =======
 	len = strtab->len;
 	strtab->len += data->d_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	len = strtab->sh.sh_size;
+	strtab->sh.sh_size += data->d_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	strtab->changed = true;
 
 	return len;
@@ -806,6 +821,7 @@ struct symbol *elf_create_undef_symbol(struct elf *elf, const char *name)
 	data->d_type = ELF_T_SYM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sym->idx = symtab->sh.sh_size / sizeof(sym->sym);
 
 	symtab->sh.sh_size += data->d_size;
@@ -814,6 +830,11 @@ struct symbol *elf_create_undef_symbol(struct elf *elf, const char *name)
 
 	symtab->len += data->d_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sym->idx = symtab->sh.sh_size / sizeof(sym->sym);
+
+	symtab->sh.sh_size += data->d_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	symtab->changed = true;
 
 	symtab_shndx = find_section_by_name(elf, ".symtab_shndx");
@@ -836,10 +857,14 @@ struct symbol *elf_create_undef_symbol(struct elf *elf, const char *name)
 		data->d_type = ELF_T_WORD;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		symtab_shndx->sh.sh_size += 4;
 =======
 		symtab_shndx->len += 4;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		symtab_shndx->sh.sh_size += 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		symtab_shndx->changed = true;
 	}
 
@@ -881,9 +906,12 @@ struct section *elf_create_section(struct elf *elf, const char *name,
 
 	sec->idx = elf_ndxscn(s);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	sec->len = size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sec->changed = true;
 
 	sec->data = elf_newdata(s);
@@ -1008,6 +1036,7 @@ static struct section *elf_create_reloc_section(struct elf *elf,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int elf_rebuild_rel_reloc_section(struct section *sec)
 {
 	struct reloc *reloc;
@@ -1018,21 +1047,29 @@ static int elf_rebuild_rel_reloc_section(struct section *sec)
 	buf = malloc(sec->sh.sh_size);
 =======
 static int elf_rebuild_rel_reloc_section(struct section *sec, int nr)
+=======
+static int elf_rebuild_rel_reloc_section(struct section *sec)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct reloc *reloc;
-	int idx = 0, size;
+	int idx = 0;
 	void *buf;
 
 	/* Allocate a buffer for relocations */
+<<<<<<< HEAD
 	size = nr * sizeof(GElf_Rel);
 	buf = malloc(size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	buf = malloc(sec->sh.sh_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!buf) {
 		perror("malloc");
 		return -1;
 	}
 
 	sec->data->d_buf = buf;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	sec->data->d_size = sec->sh.sh_size;
 	sec->data->d_type = ELF_T_REL;
@@ -1044,24 +1081,36 @@ static int elf_rebuild_rel_reloc_section(struct section *sec, int nr)
 	sec->sh.sh_size = size;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sec->data->d_size = sec->sh.sh_size;
+	sec->data->d_type = ELF_T_REL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	idx = 0;
 	list_for_each_entry(reloc, &sec->reloc_list, list) {
 		reloc->rel.r_offset = reloc->offset;
 		reloc->rel.r_info = GELF_R_INFO(reloc->sym->idx, reloc->type);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!gelf_update_rel(sec->data, idx, &reloc->rel)) {
 			WARN_ELF("gelf_update_rel");
 			return -1;
 		}
+<<<<<<< HEAD
 =======
 		gelf_update_rel(sec->data, idx, &reloc->rel);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		idx++;
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int elf_rebuild_rela_reloc_section(struct section *sec)
 {
@@ -1073,21 +1122,29 @@ static int elf_rebuild_rela_reloc_section(struct section *sec)
 	buf = malloc(sec->sh.sh_size);
 =======
 static int elf_rebuild_rela_reloc_section(struct section *sec, int nr)
+=======
+static int elf_rebuild_rela_reloc_section(struct section *sec)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct reloc *reloc;
-	int idx = 0, size;
+	int idx = 0;
 	void *buf;
 
 	/* Allocate a buffer for relocations with addends */
+<<<<<<< HEAD
 	size = nr * sizeof(GElf_Rela);
 	buf = malloc(size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	buf = malloc(sec->sh.sh_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!buf) {
 		perror("malloc");
 		return -1;
 	}
 
 	sec->data->d_buf = buf;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	sec->data->d_size = sec->sh.sh_size;
 	sec->data->d_type = ELF_T_RELA;
@@ -1099,19 +1156,30 @@ static int elf_rebuild_rela_reloc_section(struct section *sec, int nr)
 	sec->sh.sh_size = size;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sec->data->d_size = sec->sh.sh_size;
+	sec->data->d_type = ELF_T_RELA;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	idx = 0;
 	list_for_each_entry(reloc, &sec->reloc_list, list) {
 		reloc->rela.r_offset = reloc->offset;
 		reloc->rela.r_addend = reloc->addend;
 		reloc->rela.r_info = GELF_R_INFO(reloc->sym->idx, reloc->type);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!gelf_update_rela(sec->data, idx, &reloc->rela)) {
 			WARN_ELF("gelf_update_rela");
 			return -1;
 		}
+<<<<<<< HEAD
 =======
 		gelf_update_rela(sec->data, idx, &reloc->rela);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		idx++;
 	}
 
@@ -1120,6 +1188,7 @@ static int elf_rebuild_rela_reloc_section(struct section *sec, int nr)
 
 static int elf_rebuild_reloc_section(struct elf *elf, struct section *sec)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	switch (sec->sh.sh_type) {
 	case SHT_REL:  return elf_rebuild_rel_reloc_section(sec);
@@ -1136,6 +1205,11 @@ static int elf_rebuild_reloc_section(struct elf *elf, struct section *sec)
 	case SHT_REL:  return elf_rebuild_rel_reloc_section(sec, nr);
 	case SHT_RELA: return elf_rebuild_rela_reloc_section(sec, nr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switch (sec->sh.sh_type) {
+	case SHT_REL:  return elf_rebuild_rel_reloc_section(sec);
+	case SHT_RELA: return elf_rebuild_rela_reloc_section(sec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:       return -1;
 	}
 }
@@ -1196,6 +1270,7 @@ int elf_write(struct elf *elf)
 	list_for_each_entry(sec, &elf->sections, list) {
 		if (sec->changed) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			if (sec->base &&
 			    elf_rebuild_reloc_section(elf, sec)) {
@@ -1204,6 +1279,8 @@ int elf_write(struct elf *elf)
 			}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			s = elf_getscn(elf->elf, sec->idx);
 			if (!s) {
 				WARN_ELF("elf_getscn");
@@ -1215,14 +1292,20 @@ int elf_write(struct elf *elf)
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (sec->base &&
 			    elf_rebuild_reloc_section(elf, sec)) {
 				WARN("elf_rebuild_reloc_section");
 				return -1;
 			}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sec->changed = false;
 			elf->changed = true;
 		}

@@ -209,6 +209,7 @@ config TQM8560
 	select CPM2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config SBC8548
 	bool "Wind River SBC8548"
@@ -217,6 +218,8 @@ config SBC8548
 	  This option enables support for the Wind River SBC8548 board
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config PPA8548
 	bool "Prodrive PPA8548"
 	help

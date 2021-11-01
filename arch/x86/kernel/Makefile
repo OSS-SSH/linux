@@ -137,11 +137,14 @@ obj-$(CONFIG_SWIOTLB)			+= pci-swiotlb.o
 obj-$(CONFIG_OF)			+= devicetree.o
 obj-$(CONFIG_UPROBES)			+= uprobes.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 obj-y					+= sysfb.o
 obj-$(CONFIG_X86_SYSFB)			+= sysfb_simplefb.o
 obj-$(CONFIG_EFI)			+= sysfb_efi.o
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 obj-$(CONFIG_PERF_EVENTS)		+= perf_regs.o
 obj-$(CONFIG_TRACING)			+= tracepoint.o

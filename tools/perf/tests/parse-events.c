@@ -7,14 +7,20 @@
 #include "debug.h"
 #include "pmu.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "pmu-hybrid.h"
 #include <dirent.h>
 #include <errno.h>
 #include "fncache.h"
+<<<<<<< HEAD
 =======
 #include <dirent.h>
 #include <errno.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -1604,6 +1610,9 @@ static int test__hybrid_raw1(struct evlist *evlist)
 	struct evsel *evsel = evlist__first(evlist);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!perf_pmu__hybrid_mounted("cpu_atom")) {
 		TEST_ASSERT_VAL("wrong number of entries", 1 == evlist->core.nr_entries);
 		TEST_ASSERT_VAL("wrong type", PERF_TYPE_RAW == evsel->core.attr.type);
@@ -1611,8 +1620,11 @@ static int test__hybrid_raw1(struct evlist *evlist)
 		return 0;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	TEST_ASSERT_VAL("wrong number of entries", 2 == evlist->core.nr_entries);
 	TEST_ASSERT_VAL("wrong type", PERF_TYPE_RAW == evsel->core.attr.type);
 	TEST_ASSERT_VAL("wrong config", 0x1a == evsel->core.attr.config);
@@ -1638,6 +1650,7 @@ static int test__hybrid_cache_event(struct evlist *evlist)
 	struct evsel *evsel = evlist__first(evlist);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	TEST_ASSERT_VAL("wrong number of entries", 1 == evlist->core.nr_entries);
 	TEST_ASSERT_VAL("wrong type", PERF_TYPE_HW_CACHE == evsel->core.attr.type);
 	TEST_ASSERT_VAL("wrong config", 0x2 == (evsel->core.attr.config & 0xffffffff));
@@ -1650,6 +1663,11 @@ static int test__hybrid_cache_event(struct evlist *evlist)
 	TEST_ASSERT_VAL("wrong type", PERF_TYPE_HW_CACHE == evsel->core.attr.type);
 	TEST_ASSERT_VAL("wrong config", 0x10002 == (evsel->core.attr.config & 0xffffffff));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TEST_ASSERT_VAL("wrong number of entries", 1 == evlist->core.nr_entries);
+	TEST_ASSERT_VAL("wrong type", PERF_TYPE_HW_CACHE == evsel->core.attr.type);
+	TEST_ASSERT_VAL("wrong config", 0x2 == (evsel->core.attr.config & 0xffffffff));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2052,10 +2070,14 @@ static struct evlist_test test__hybrid_events[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name  = "cpu_core/LLC-loads/",
 =======
 		.name  = "cpu_core/LLC-loads/,cpu_atom/LLC-load-misses/",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.name  = "cpu_core/LLC-loads/",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.check = test__hybrid_cache_event,
 		.id    = 8,
 	},
@@ -2218,6 +2240,9 @@ static int test_pmu_events(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool test_alias(char **event, char **alias)
 {
 	char path[PATH_MAX];
@@ -2303,11 +2328,14 @@ int test__parse_events(struct test *test __maybe_unused, int subtest __maybe_unu
 {
 	int ret1, ret2 = 0;
 	char *event, *alias;
+<<<<<<< HEAD
 =======
 int test__parse_events(struct test *test __maybe_unused, int subtest __maybe_unused)
 {
 	int ret1, ret2 = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define TEST_EVENTS(tests)				\
 do {							\
@@ -2333,6 +2361,9 @@ do {							\
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test_alias(&event, &alias)) {
 		int ret = test_pmu_events_alias(event, alias);
 
@@ -2342,8 +2373,11 @@ do {							\
 			return ret;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret1 = test_terms(test__terms, ARRAY_SIZE(test__terms));
 	if (!ret2)
 		ret2 = ret1;

@@ -169,6 +169,7 @@ config SOFT_WATCHDOG_PRETIMEOUT
 	  is purely software, e.g. the panic governor will stall it!
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config BD70528_WATCHDOG
 	tristate "ROHM BD70528 PMIC Watchdog"
@@ -183,6 +184,8 @@ config BD70528_WATCHDOG
 	  which will be called bd70528_wdt.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config BD957XMUF_WATCHDOG
 	tristate "ROHM BD9576MUF and BD9573MUF PMIC Watchdog"
 	depends on MFD_ROHM_BD957XMUF
@@ -491,9 +494,13 @@ config IXP4XX_WATCHDOG
 	tristate "IXP4xx Watchdog"
 	depends on ARCH_IXP4XX
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select WATCHDOG_CORE
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select WATCHDOG_CORE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here if to include support for the watchdog timer
 	  in the Intel IXP4xx network processors. This driver can
@@ -1685,10 +1692,14 @@ config WDT_MTX1
 config SIBYTE_WDOG
 	tristate "Sibyte SoC hardware watchdog"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on CPU_SB1
 =======
 	depends on CPU_SB1 || (MIPS && COMPILE_TEST)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on CPU_SB1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Watchdog driver for the built in watchdog hardware in Sibyte
 	  SoC processors.  There are apparently two watchdog timers

@@ -15,9 +15,12 @@
 #include <asm/sun3xprom.h>
 #include <asm/idprom.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/segment.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/sun3ints.h>
 #include <asm/openprom.h>
 #include <asm/machines.h>

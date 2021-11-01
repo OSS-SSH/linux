@@ -92,6 +92,9 @@
 #define R_390_NUM	61
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	HWCAP_NR_ESAN3		= 0,
 	HWCAP_NR_ZARCH		= 1,
@@ -118,6 +121,7 @@ enum {
 	HWCAP_NR_SIE		= 22,
 	HWCAP_NR_MAX
 };
+<<<<<<< HEAD
 
 /* Bits present in AT_HWCAP. */
 #define HWCAP_ESAN3		BIT(HWCAP_NR_ESAN3)
@@ -168,6 +172,33 @@ enum {
 /* Internal bits, not exposed via elf */
 #define HWCAP_INT_SIE		1UL
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+/* Bits present in AT_HWCAP. */
+#define HWCAP_ESAN3		BIT(HWCAP_NR_ESAN3)
+#define HWCAP_ZARCH		BIT(HWCAP_NR_ZARCH)
+#define HWCAP_STFLE		BIT(HWCAP_NR_STFLE)
+#define HWCAP_MSA		BIT(HWCAP_NR_MSA)
+#define HWCAP_LDISP		BIT(HWCAP_NR_LDISP)
+#define HWCAP_EIMM		BIT(HWCAP_NR_EIMM)
+#define HWCAP_DFP		BIT(HWCAP_NR_DFP)
+#define HWCAP_HPAGE		BIT(HWCAP_NR_HPAGE)
+#define HWCAP_ETF3EH		BIT(HWCAP_NR_ETF3EH)
+#define HWCAP_HIGH_GPRS		BIT(HWCAP_NR_HIGH_GPRS)
+#define HWCAP_TE		BIT(HWCAP_NR_TE)
+#define HWCAP_VXRS		BIT(HWCAP_NR_VXRS)
+#define HWCAP_VXRS_BCD		BIT(HWCAP_NR_VXRS_BCD)
+#define HWCAP_VXRS_EXT		BIT(HWCAP_NR_VXRS_EXT)
+#define HWCAP_GS		BIT(HWCAP_NR_GS)
+#define HWCAP_VXRS_EXT2		BIT(HWCAP_NR_VXRS_EXT2)
+#define HWCAP_VXRS_PDE		BIT(HWCAP_NR_VXRS_PDE)
+#define HWCAP_SORT		BIT(HWCAP_NR_SORT)
+#define HWCAP_DFLT		BIT(HWCAP_NR_DFLT)
+#define HWCAP_VXRS_PDE2		BIT(HWCAP_NR_VXRS_PDE2)
+#define HWCAP_NNPA		BIT(HWCAP_NR_NNPA)
+#define HWCAP_PCI_MIO		BIT(HWCAP_NR_PCI_MIO)
+#define HWCAP_SIE		BIT(HWCAP_NR_SIE)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * These are used to set parameters in the core dumps.
@@ -264,12 +295,15 @@ extern unsigned long elf_hwcap;
 #define ELF_HWCAP (elf_hwcap)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Internal hardware capabilities, not exposed via elf */
 
 extern unsigned long int_hwcap;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* This yields a string that ld.so will use to load implementation
    specific libraries for optimization.  This is more specific in
    intent than poking at uname or /proc/cpuinfo.

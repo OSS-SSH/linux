@@ -475,10 +475,13 @@ static void raid1_end_write_request(struct bio *bio)
 		 * When the device is faulty, it is not necessary to
 		 * handle write error.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		 * For failfast, this is the only remaining device,
 		 * We need to retry the write without FailFast.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
 		if (!test_bit(Faulty, &rdev->flags))
 			set_bit(R1BIO_WriteError, &r1_bio->state);
@@ -1335,9 +1338,13 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 	int first_clone;
 	int max_sectors;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool write_behind = false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool write_behind = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mddev_is_clustered(mddev) &&
 	     md_cluster_ops->area_resyncing(mddev, WRITE,
@@ -1391,6 +1398,9 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 	for (i = 0;  i < disks; i++) {
 		struct md_rdev *rdev = rcu_dereference(conf->mirrors[i].rdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * The write-behind io is only attempted on drives marked as
@@ -1400,8 +1410,11 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 		if (rdev && test_bit(WriteMostly, &rdev->flags))
 			write_behind = true;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
 			atomic_inc(&rdev->nr_pending);
 			blocked_rdev = rdev;
@@ -1476,6 +1489,9 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * When using a bitmap, we may call alloc_behind_master_bio below.
 	 * alloc_behind_master_bio allocates a copy of the data payload a page
@@ -1485,8 +1501,11 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 	if (write_behind && bitmap)
 		max_sectors = min_t(int, max_sectors,
 				    BIO_MAX_VECS * (PAGE_SIZE >> 9));
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (max_sectors < bio_sectors(bio)) {
 		struct bio *split = bio_split(bio, max_sectors,
 					      GFP_NOIO, &conf->bio_split);

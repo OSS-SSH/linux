@@ -1,6 +1,7 @@
 cat <<EOF
 static __always_inline bool
 <<<<<<< HEAD
+<<<<<<< HEAD
 arch_${atomic}_dec_unless_positive(${atomic}_t *v)
 {
 	${int} c = arch_${atomic}_read(v);
@@ -9,15 +10,24 @@ ${arch}${atomic}_dec_unless_positive(${atomic}_t *v)
 {
 	${int} c = ${arch}${atomic}_read(v);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+arch_${atomic}_dec_unless_positive(${atomic}_t *v)
+{
+	${int} c = arch_${atomic}_read(v);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	do {
 		if (unlikely(c > 0))
 			return false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} while (!arch_${atomic}_try_cmpxchg(v, &c, c - 1));
 =======
 	} while (!${arch}${atomic}_try_cmpxchg(v, &c, c - 1));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} while (!arch_${atomic}_try_cmpxchg(v, &c, c - 1));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return true;
 }

@@ -32,9 +32,13 @@
 #include <linux/lockd/lockd.h>
 #include <linux/kthread.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/exportfs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/exportfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define NLMDBG_FACILITY		NLMDBG_SVCLOCK
 
@@ -400,6 +404,7 @@ nlmsvc_release_lockowner(struct nlm_lock *lock)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void nlmsvc_locks_copy_lock(struct file_lock *new, struct file_lock *fl)
 {
@@ -418,15 +423,20 @@ static const struct file_lock_operations nlmsvc_lock_ops = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void nlmsvc_locks_init_private(struct file_lock *fl, struct nlm_host *host,
 						pid_t pid)
 {
 	fl->fl_owner = nlmsvc_find_lockowner(host, pid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (fl->fl_owner != NULL)
 		fl->fl_ops = &nlmsvc_lock_ops;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -499,6 +509,7 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
 {
 	struct nlm_block	*block = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct inode		*inode = nlmsvc_file_inode(file);
 	int			error;
 	int			mode;
@@ -508,26 +519,41 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
 	dprintk("lockd: nlmsvc_lock(%s/%ld, ty=%d, pi=%d, %Ld-%Ld, bl=%d)\n",
 				inode->i_sb->s_id, inode->i_ino,
 =======
+=======
+	struct inode		*inode = nlmsvc_file_inode(file);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			error;
+	int			mode;
+	int			async_block = 0;
 	__be32			ret;
 
 	dprintk("lockd: nlmsvc_lock(%s/%ld, ty=%d, pi=%d, %Ld-%Ld, bl=%d)\n",
+<<<<<<< HEAD
 				locks_inode(file->f_file)->i_sb->s_id,
 				locks_inode(file->f_file)->i_ino,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				inode->i_sb->s_id, inode->i_ino,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				lock->fl.fl_type, lock->fl.fl_pid,
 				(long long)lock->fl.fl_start,
 				(long long)lock->fl.fl_end,
 				wait);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (inode->i_sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS) {
 		async_block = wait;
 		wait = 0;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Lock file against concurrent access */
 	mutex_lock(&file->f_mutex);
 	/* Get existing block (in case client is busy-waiting)
@@ -572,11 +598,16 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
 	if (!wait)
 		lock->fl.fl_flags &= ~FL_SLEEP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mode = lock_to_openmode(&lock->fl);
 	error = vfs_lock_file(file->f_file[mode], F_SETLK, &lock->fl, NULL);
 =======
 	error = vfs_lock_file(file->f_file, F_SETLK, &lock->fl, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mode = lock_to_openmode(&lock->fl);
+	error = vfs_lock_file(file->f_file[mode], F_SETLK, &lock->fl, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lock->fl.fl_flags &= ~FL_SLEEP;
 
 	dprintk("lockd: vfs_lock_file returned %d\n", error);
@@ -593,10 +624,14 @@ nlmsvc_lock(struct svc_rqst *rqstp, struct nlm_file *file,
 			if (wait)
 				break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = async_block ? nlm_lck_blocked : nlm_lck_denied;
 =======
 			ret = nlm_lck_denied;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = async_block ? nlm_lck_blocked : nlm_lck_denied;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out;
 		case FILE_LOCK_DEFERRED:
 			if (wait)
@@ -634,13 +669,18 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
 {
 	int			error;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int			mode;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__be32			ret;
 	struct nlm_lockowner	*test_owner;
 
 	dprintk("lockd: nlmsvc_testlock(%s/%ld, ty=%d, %Ld-%Ld)\n",
+<<<<<<< HEAD
 <<<<<<< HEAD
 				nlmsvc_file_inode(file)->i_sb->s_id,
 				nlmsvc_file_inode(file)->i_ino,
@@ -648,6 +688,10 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
 				locks_inode(file->f_file)->i_sb->s_id,
 				locks_inode(file->f_file)->i_ino,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				nlmsvc_file_inode(file)->i_sb->s_id,
+				nlmsvc_file_inode(file)->i_ino,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				lock->fl.fl_type,
 				(long long)lock->fl.fl_start,
 				(long long)lock->fl.fl_end);
@@ -661,11 +705,16 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
 	test_owner = (struct nlm_lockowner *)lock->fl.fl_owner;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mode = lock_to_openmode(&lock->fl);
 	error = vfs_test_lock(file->f_file[mode], &lock->fl);
 =======
 	error = vfs_test_lock(file->f_file, &lock->fl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mode = lock_to_openmode(&lock->fl);
+	error = vfs_test_lock(file->f_file[mode], &lock->fl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error) {
 		/* We can't currently deal with deferred test requests */
 		if (error == FILE_LOCK_DEFERRED)
@@ -687,10 +736,14 @@ nlmsvc_testlock(struct svc_rqst *rqstp, struct nlm_file *file,
 	conflock->len = strlen(conflock->caller);
 	conflock->oh.len = 0;		/* don't return OH info */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	conflock->svid = lock->fl.fl_pid;
 =======
 	conflock->svid = ((struct nlm_lockowner *)lock->fl.fl_owner)->pid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	conflock->svid = lock->fl.fl_pid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	conflock->fl.fl_type = lock->fl.fl_type;
 	conflock->fl.fl_start = lock->fl.fl_start;
 	conflock->fl.fl_end = lock->fl.fl_end;
@@ -716,6 +769,7 @@ __be32
 nlmsvc_unlock(struct net *net, struct nlm_file *file, struct nlm_lock *lock)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int	error = 0;
 
 	dprintk("lockd: nlmsvc_unlock(%s/%ld, pi=%d, %Ld-%Ld)\n",
@@ -728,6 +782,13 @@ nlmsvc_unlock(struct net *net, struct nlm_file *file, struct nlm_lock *lock)
 				locks_inode(file->f_file)->i_sb->s_id,
 				locks_inode(file->f_file)->i_ino,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int	error = 0;
+
+	dprintk("lockd: nlmsvc_unlock(%s/%ld, pi=%d, %Ld-%Ld)\n",
+				nlmsvc_file_inode(file)->i_sb->s_id,
+				nlmsvc_file_inode(file)->i_ino,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				lock->fl.fl_pid,
 				(long long)lock->fl.fl_start,
 				(long long)lock->fl.fl_end);
@@ -737,15 +798,21 @@ nlmsvc_unlock(struct net *net, struct nlm_file *file, struct nlm_lock *lock)
 
 	lock->fl.fl_type = F_UNLCK;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (file->f_file[O_RDONLY])
 		error = vfs_lock_file(file->f_file[O_RDONLY], F_SETLK,
 					&lock->fl, NULL);
 	if (file->f_file[O_WRONLY])
 		error = vfs_lock_file(file->f_file[O_WRONLY], F_SETLK,
 					&lock->fl, NULL);
+<<<<<<< HEAD
 =======
 	error = vfs_lock_file(file->f_file, F_SETLK, &lock->fl, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return (error < 0)? nlm_lck_denied_nolocks : nlm_granted;
 }
@@ -763,6 +830,7 @@ nlmsvc_cancel_blocked(struct net *net, struct nlm_file *file, struct nlm_lock *l
 	struct nlm_block	*block;
 	int status = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int mode;
 
 	dprintk("lockd: nlmsvc_cancel(%s/%ld, pi=%d, %Ld-%Ld)\n",
@@ -774,6 +842,13 @@ nlmsvc_cancel_blocked(struct net *net, struct nlm_file *file, struct nlm_lock *l
 				locks_inode(file->f_file)->i_sb->s_id,
 				locks_inode(file->f_file)->i_ino,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int mode;
+
+	dprintk("lockd: nlmsvc_cancel(%s/%ld, pi=%d, %Ld-%Ld)\n",
+				nlmsvc_file_inode(file)->i_sb->s_id,
+				nlmsvc_file_inode(file)->i_ino,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				lock->fl.fl_pid,
 				(long long)lock->fl.fl_start,
 				(long long)lock->fl.fl_end);
@@ -786,11 +861,16 @@ nlmsvc_cancel_blocked(struct net *net, struct nlm_file *file, struct nlm_lock *l
 	mutex_unlock(&file->f_mutex);
 	if (block != NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mode = lock_to_openmode(&lock->fl);
 		vfs_cancel_lock(block->b_file->f_file[mode],
 =======
 		vfs_cancel_lock(block->b_file->f_file,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mode = lock_to_openmode(&lock->fl);
+		vfs_cancel_lock(block->b_file->f_file[mode],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				&block->b_call->a_args.lock.fl);
 		status = nlmsvc_unlink_block(block);
 		nlmsvc_release_block(block);
@@ -875,6 +955,9 @@ nlmsvc_notify_blocked(struct file_lock *fl)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static fl_owner_t nlmsvc_get_owner(fl_owner_t owner)
 {
 	return nlmsvc_get_lockowner(owner);
@@ -885,6 +968,7 @@ static void nlmsvc_put_owner(fl_owner_t owner)
 	nlmsvc_put_lockowner(owner);
 }
 
+<<<<<<< HEAD
 const struct lock_manager_operations nlmsvc_lock_operations = {
 	.lm_notify = nlmsvc_notify_blocked,
 	.lm_grant = nlmsvc_grant_deferred,
@@ -895,6 +979,13 @@ const struct lock_manager_operations nlmsvc_lock_operations = {
 	.lm_notify = nlmsvc_notify_blocked,
 	.lm_grant = nlmsvc_grant_deferred,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const struct lock_manager_operations nlmsvc_lock_operations = {
+	.lm_notify = nlmsvc_notify_blocked,
+	.lm_grant = nlmsvc_grant_deferred,
+	.lm_get_owner = nlmsvc_get_owner,
+	.lm_put_owner = nlmsvc_put_owner,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -914,9 +1005,13 @@ nlmsvc_grant_blocked(struct nlm_block *block)
 	struct nlm_file		*file = block->b_file;
 	struct nlm_lock		*lock = &block->b_call->a_args.lock;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int			mode;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			error;
 	loff_t			fl_start, fl_end;
 
@@ -943,11 +1038,16 @@ nlmsvc_grant_blocked(struct nlm_block *block)
 	fl_start = lock->fl.fl_start;
 	fl_end = lock->fl.fl_end;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mode = lock_to_openmode(&lock->fl);
 	error = vfs_lock_file(file->f_file[mode], F_SETLK, &lock->fl, NULL);
 =======
 	error = vfs_lock_file(file->f_file, F_SETLK, &lock->fl, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mode = lock_to_openmode(&lock->fl);
+	error = vfs_lock_file(file->f_file[mode], F_SETLK, &lock->fl, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lock->fl.fl_flags &= ~FL_SLEEP;
 	lock->fl.fl_start = fl_start;
 	lock->fl.fl_end = fl_end;

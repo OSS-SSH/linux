@@ -353,9 +353,13 @@ struct nsim_bus_dev {
 	struct list_head list;
 	unsigned int port_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int num_queues; /* Number of queues for each port on this bus */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int num_queues; /* Number of queues for each port on this bus */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net *initial_net; /* Purpose of this is to carry net pointer
 				  * during the probe time only.
 				  */
@@ -366,9 +370,13 @@ struct nsim_bus_dev {
 	/* Lock for devlink->reload_enabled in netdevsim module */
 	struct mutex nsim_bus_reload_lock;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool in_reload;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool in_reload;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool init;
 };
 

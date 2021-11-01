@@ -42,9 +42,13 @@
 #include <linux/slab.h>
 #include <linux/jhash.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/siphash.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/siphash.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/net_namespace.h>
 #include <net/snmp.h>
 #include <net/ipv6.h>
@@ -1489,6 +1493,9 @@ static u32 rt6_exception_hash(const struct in6_addr *dst,
 			      const struct in6_addr *src)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static siphash_key_t rt6_exception_key __read_mostly;
 	struct {
 		struct in6_addr dst;
@@ -1497,6 +1504,7 @@ static u32 rt6_exception_hash(const struct in6_addr *dst,
 		.dst = *dst,
 	};
 	u64 val;
+<<<<<<< HEAD
 
 	net_get_random_once(&rt6_exception_key, sizeof(rt6_exception_key));
 
@@ -1510,16 +1518,23 @@ static u32 rt6_exception_hash(const struct in6_addr *dst,
 =======
 	static u32 seed __read_mostly;
 	u32 val;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	net_get_random_once(&seed, sizeof(seed));
-	val = jhash2((const u32 *)dst, sizeof(*dst)/sizeof(u32), seed);
+	net_get_random_once(&rt6_exception_key, sizeof(rt6_exception_key));
 
 #ifdef CONFIG_IPV6_SUBTREES
 	if (src)
-		val = jhash2((const u32 *)src, sizeof(*src)/sizeof(u32), val);
+		combined.src = *src;
 #endif
+<<<<<<< HEAD
 	return hash_32(val, FIB6_EXCEPTION_BUCKET_SIZE_SHIFT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	val = siphash(&combined, sizeof(combined), &rt6_exception_key);
+
+	return hash_64(val, FIB6_EXCEPTION_BUCKET_SIZE_SHIFT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Helper function to find the cached rt in the hash table
@@ -1675,9 +1690,13 @@ static int rt6_insert_exception(struct rt6_info *nrt,
 	struct rt6_exception *rt6_ex;
 	struct fib6_nh *nh = res->nh;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int max_depth;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int max_depth;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err = 0;
 
 	spin_lock_bh(&rt6_exception_lock);
@@ -1733,12 +1752,18 @@ static int rt6_insert_exception(struct rt6_info *nrt,
 	net->ipv6.rt6_stats->fib_rt_cache++;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Randomize max depth to avoid some side channels attacks. */
 	max_depth = FIB6_MAX_DEPTH + prandom_u32_max(FIB6_MAX_DEPTH);
 	while (bucket->depth > max_depth)
 =======
 	if (bucket->depth > FIB6_MAX_DEPTH)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Randomize max depth to avoid some side channels attacks. */
+	max_depth = FIB6_MAX_DEPTH + prandom_u32_max(FIB6_MAX_DEPTH);
+	while (bucket->depth > max_depth)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rt6_exception_remove_oldest(bucket);
 
 out:
@@ -3237,6 +3262,7 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
 INDIRECT_CALLABLE_SCOPE unsigned int ip6_mtu(const struct dst_entry *dst)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ip6_dst_mtu_maybe_forward(dst, false);
 =======
 	struct inet6_dev *idev;
@@ -3259,6 +3285,9 @@ out:
 
 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ip6_dst_mtu_maybe_forward(dst, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_INDIRECT_CALLABLE(ip6_mtu);
 
@@ -3684,11 +3713,15 @@ out:
 		lwtstate_put(fib6_nh->fib_nh_lws);
 		fib6_nh->fib_nh_lws = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_put(dev);
 =======
 		if (dev)
 			dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_put(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return err;
@@ -3813,10 +3846,14 @@ static struct fib6_info *ip6_route_info_create(struct fib6_config *cfg,
 		/* Do not leave garbage there. */
 		rt->fib6_metrics = (struct dst_metrics *)&dst_default_metrics;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_free;
 =======
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (cfg->fc_flags & RTF_ADDRCONF)
@@ -5737,11 +5774,16 @@ static int rt6_fill_node(struct net *net, struct sk_buff *skb,
 
 		if (fib_add_nexthop(skb, &rt->fib6_nh->nh_common,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    rt->fib6_nh->fib_nh_weight, AF_INET6,
 				    0) < 0)
 =======
 				    rt->fib6_nh->fib_nh_weight, AF_INET6) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    rt->fib6_nh->fib_nh_weight, AF_INET6,
+				    0) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto nla_put_failure;
 
 		list_for_each_entry_safe(sibling, next_sibling,
@@ -5749,10 +5791,14 @@ static int rt6_fill_node(struct net *net, struct sk_buff *skb,
 			if (fib_add_nexthop(skb, &sibling->fib6_nh->nh_common,
 					    sibling->fib6_nh->fib_nh_weight,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    AF_INET6, 0) < 0)
 =======
 					    AF_INET6) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    AF_INET6, 0) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto nla_put_failure;
 		}
 
@@ -6695,10 +6741,14 @@ int __init ip6_route_init(void)
 	ip6_dst_ops_template.kmem_cachep =
 		kmem_cache_create("ip6_dst_cache", sizeof(struct rt6_info), 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT, NULL);
 =======
 				  SLAB_HWCACHE_ALIGN, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ip6_dst_ops_template.kmem_cachep)
 		goto out;
 

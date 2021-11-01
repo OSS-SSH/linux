@@ -233,6 +233,9 @@ int gsi_channel_stop(struct gsi *gsi, u32 channel_id);
 void gsi_channel_reset(struct gsi *gsi, u32 channel_id, bool doorbell);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * gsi_suspend() - Prepare the GSI subsystem for suspend
  * @gsi:	GSI pointer
@@ -262,10 +265,13 @@ int gsi_channel_suspend(struct gsi *gsi, u32 channel_id);
  * For IPA v4.0+, the stopped channel is started again.
  */
 int gsi_channel_resume(struct gsi *gsi, u32 channel_id);
+<<<<<<< HEAD
 =======
 int gsi_channel_suspend(struct gsi *gsi, u32 channel_id, bool stop);
 int gsi_channel_resume(struct gsi *gsi, u32 channel_id, bool start);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * gsi_init() - Initialize the GSI subsystem

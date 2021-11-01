@@ -234,9 +234,12 @@
 
 #define HDA_DSP_REG_ADSPIS2_SNDW	BIT(5)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HDA_DSP_REG_SNDW_WAKE_STS      0x2C192
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Intel HD Audio Inter-Processor Communication Registers */
 #define HDA_DSP_IPC_BASE		0x40
@@ -696,9 +699,13 @@ int hda_sdw_startup(struct snd_sof_dev *sdev);
 void hda_sdw_int_enable(struct snd_sof_dev *sdev, bool enable);
 void hda_sdw_process_wakeen(struct snd_sof_dev *sdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool hda_common_check_sdw_irq(struct snd_sof_dev *sdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool hda_common_check_sdw_irq(struct snd_sof_dev *sdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else
 
@@ -745,14 +752,20 @@ static inline void hda_sdw_process_wakeen(struct snd_sof_dev *sdev)
 {
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline bool hda_common_check_sdw_irq(struct snd_sof_dev *sdev)
 {
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /* common dai driver */

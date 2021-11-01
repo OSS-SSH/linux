@@ -18,12 +18,18 @@ properties:
 
       - items:
 <<<<<<< HEAD
+<<<<<<< HEAD
           - enum:
               - renesas,usbhs-r7s9210   # RZ/A2
               - renesas,usbhs-r9a07g044 # RZ/G2{L,LC}
 =======
           - const: renesas,usbhs-r7s9210 # RZ/A2
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+          - enum:
+              - renesas,usbhs-r7s9210   # RZ/A2
+              - renesas,usbhs-r9a07g044 # RZ/G2{L,LC}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: renesas,rza2-usbhs
 
       - items:
@@ -66,11 +72,16 @@ properties:
 
   interrupts:
 <<<<<<< HEAD
+<<<<<<< HEAD
     minItems: 1
     maxItems: 4
 =======
     maxItems: 1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    minItems: 1
+    maxItems: 4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   renesas,buswait:
     $ref: /schemas/types.yaml#/definitions/uint32
@@ -120,6 +131,9 @@ required:
   - interrupts
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 allOf:
   - if:
       properties:
@@ -139,8 +153,11 @@ allOf:
         interrupts:
           maxItems: 1
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 additionalProperties: false
 
 examples:

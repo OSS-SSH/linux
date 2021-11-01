@@ -49,10 +49,15 @@ struct omap_drm_private {
 	struct dispc_device *dispc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool irq_enabled;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool irq_enabled;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int num_pipes;
 	struct omap_drm_pipeline pipes[8];
 	struct omap_drm_pipeline *channels[8];

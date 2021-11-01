@@ -505,6 +505,7 @@ static struct qcom_icc_desc sc7180_system_noc = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int qnoc_probe(struct platform_device *pdev)
 {
@@ -599,6 +600,8 @@ static int qnoc_remove(struct platform_device *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id qnoc_of_match[] = {
 	{ .compatible = "qcom,sc7180-aggre1-noc",
 	  .data = &sc7180_aggre1_noc},
@@ -632,12 +635,17 @@ MODULE_DEVICE_TABLE(of, qnoc_of_match);
 
 static struct platform_driver qnoc_driver = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.probe = qcom_icc_rpmh_probe,
 	.remove = qcom_icc_rpmh_remove,
 =======
 	.probe = qnoc_probe,
 	.remove = qnoc_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.probe = qcom_icc_rpmh_probe,
+	.remove = qcom_icc_rpmh_remove,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.name = "qnoc-sc7180",
 		.of_match_table = qnoc_of_match,

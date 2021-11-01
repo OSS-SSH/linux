@@ -580,11 +580,16 @@ static int sh_cmt_start(struct sh_cmt_channel *ch, unsigned long flag)
 
 	/* setup timeout if no clockevent */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ch->cmt->num_channels == 1 &&
 	    flag == FLAG_CLOCKSOURCE && (!(ch->flags & FLAG_CLOCKEVENT)))
 =======
 	if ((flag == FLAG_CLOCKSOURCE) && (!(ch->flags & FLAG_CLOCKEVENT)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ch->cmt->num_channels == 1 &&
+	    flag == FLAG_CLOCKSOURCE && (!(ch->flags & FLAG_CLOCKEVENT)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__sh_cmt_set_next(ch, ch->max_match_value);
  out:
 	raw_spin_unlock_irqrestore(&ch->lock, flags);
@@ -627,6 +632,7 @@ static u64 sh_cmt_clocksource_read(struct clocksource *cs)
 {
 	struct sh_cmt_channel *ch = cs_to_sh_cmt(cs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 has_wrapped;
 
 	if (ch->cmt->num_channels == 1) {
@@ -648,20 +654,32 @@ static u64 sh_cmt_clocksource_read(struct clocksource *cs)
 	return sh_cmt_get_counter(ch, &has_wrapped);
 =======
 	unsigned long flags;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 has_wrapped;
-	u64 value;
-	u32 raw;
 
-	raw_spin_lock_irqsave(&ch->lock, flags);
-	value = ch->total_cycles;
-	raw = sh_cmt_get_counter(ch, &has_wrapped);
+	if (ch->cmt->num_channels == 1) {
+		unsigned long flags;
+		u64 value;
+		u32 raw;
 
-	if (unlikely(has_wrapped))
-		raw += ch->match_value + 1;
-	raw_spin_unlock_irqrestore(&ch->lock, flags);
+		raw_spin_lock_irqsave(&ch->lock, flags);
+		value = ch->total_cycles;
+		raw = sh_cmt_get_counter(ch, &has_wrapped);
 
+		if (unlikely(has_wrapped))
+			raw += ch->match_value + 1;
+		raw_spin_unlock_irqrestore(&ch->lock, flags);
+
+		return value + raw;
+	}
+
+<<<<<<< HEAD
 	return value + raw;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sh_cmt_get_counter(ch, &has_wrapped);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int sh_cmt_clocksource_enable(struct clocksource *cs)
@@ -725,10 +743,14 @@ static int sh_cmt_register_clocksource(struct sh_cmt_channel *ch,
 	cs->suspend = sh_cmt_clocksource_suspend;
 	cs->resume = sh_cmt_clocksource_resume;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cs->mask = CLOCKSOURCE_MASK(ch->cmt->info->width);
 =======
 	cs->mask = CLOCKSOURCE_MASK(sizeof(u64) * 8);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cs->mask = CLOCKSOURCE_MASK(ch->cmt->info->width);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cs->flags = CLOCK_SOURCE_IS_CONTINUOUS;
 
 	dev_info(&ch->cmt->pdev->dev, "ch%u: used as clock source\n",

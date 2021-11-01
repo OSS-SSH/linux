@@ -843,6 +843,9 @@ static const struct attribute_group uncore_pmu_attr_group = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void uncore_get_alias_name(char *pmu_name, struct intel_uncore_pmu *pmu)
 {
 	struct intel_uncore_type *type = pmu->type;
@@ -855,8 +858,11 @@ void uncore_get_alias_name(char *pmu_name, struct intel_uncore_pmu *pmu)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void uncore_get_pmu_name(struct intel_uncore_pmu *pmu)
 {
 	struct intel_uncore_type *type = pmu->type;
@@ -867,6 +873,7 @@ static void uncore_get_pmu_name(struct intel_uncore_pmu *pmu)
 	 */
 	if (!type->name) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		uncore_get_alias_name(pmu->name, pmu);
 =======
 		if (type->num_boxes == 1)
@@ -876,6 +883,9 @@ static void uncore_get_pmu_name(struct intel_uncore_pmu *pmu)
 				type->type_id, type->box_ids[pmu->pmu_idx]);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		uncore_get_alias_name(pmu->name, pmu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
@@ -885,6 +895,9 @@ static void uncore_get_pmu_name(struct intel_uncore_pmu *pmu)
 		else
 			sprintf(pmu->name, "uncore");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/*
 		 * Use the box ID from the discovery table if applicable.
@@ -892,11 +905,14 @@ static void uncore_get_pmu_name(struct intel_uncore_pmu *pmu)
 		sprintf(pmu->name, "uncore_%s_%d", type->name,
 			type->box_ids ? type->box_ids[pmu->pmu_idx] : pmu->pmu_idx);
 	}
+<<<<<<< HEAD
 =======
 	} else
 		sprintf(pmu->name, "uncore_%s_%d", type->name, pmu->pmu_idx);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int uncore_pmu_register(struct intel_uncore_pmu *pmu)
@@ -1693,9 +1709,13 @@ struct intel_uncore_init_fun {
 	int	(*pci_init)(void);
 	void	(*mmio_init)(void);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool	use_discovery;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool	use_discovery;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct intel_uncore_init_fun nhm_uncore_init __initconst = {
@@ -1799,6 +1819,9 @@ static const struct intel_uncore_init_fun snr_uncore_init __initconst = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_uncore_init_fun spr_uncore_init __initconst = {
 	.cpu_init = spr_uncore_cpu_init,
 	.pci_init = spr_uncore_pci_init,
@@ -1806,8 +1829,11 @@ static const struct intel_uncore_init_fun spr_uncore_init __initconst = {
 	.use_discovery = true,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_uncore_init_fun generic_uncore_init __initconst = {
 	.cpu_init = intel_uncore_generic_uncore_cpu_init,
 	.pci_init = intel_uncore_generic_uncore_pci_init,
@@ -1853,9 +1879,13 @@ static const struct x86_cpu_id intel_uncore_match[] __initconst = {
 	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,		&adl_uncore_init),
 	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,		&adl_uncore_init),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X,	&spr_uncore_init),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X,	&spr_uncore_init),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	X86_MATCH_INTEL_FAM6_MODEL(ATOM_TREMONT_D,	&snr_uncore_init),
 	{},
 };
@@ -1880,6 +1910,7 @@ static int __init intel_uncore_init(void)
 		else
 			return -ENODEV;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else {
 		uncore_init = (struct intel_uncore_init_fun *)id->driver_data;
 		if (uncore_no_discover && uncore_init->use_discovery)
@@ -1891,6 +1922,15 @@ static int __init intel_uncore_init(void)
 	} else
 		uncore_init = (struct intel_uncore_init_fun *)id->driver_data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else {
+		uncore_init = (struct intel_uncore_init_fun *)id->driver_data;
+		if (uncore_no_discover && uncore_init->use_discovery)
+			return -ENODEV;
+		if (uncore_init->use_discovery && !intel_uncore_has_discovery_tables())
+			return -ENODEV;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (uncore_init->pci_init) {
 		pret = uncore_init->pci_init();

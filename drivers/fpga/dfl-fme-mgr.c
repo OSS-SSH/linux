@@ -253,6 +253,7 @@ static int fme_mgr_write_complete(struct fpga_manager *mgr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static enum fpga_mgr_states fme_mgr_state(struct fpga_manager *mgr)
 {
@@ -260,6 +261,8 @@ static enum fpga_mgr_states fme_mgr_state(struct fpga_manager *mgr)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u64 fme_mgr_status(struct fpga_manager *mgr)
 {
 	struct fme_mgr_priv *priv = mgr->priv;
@@ -272,9 +275,12 @@ static const struct fpga_manager_ops fme_mgr_ops = {
 	.write = fme_mgr_write,
 	.write_complete = fme_mgr_write_complete,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.state = fme_mgr_state,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.status = fme_mgr_status,
 };
 

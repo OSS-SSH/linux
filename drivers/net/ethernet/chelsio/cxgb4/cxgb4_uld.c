@@ -582,11 +582,17 @@ void t4_uld_clean_up(struct adapter *adap)
 	unsigned int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!is_uld(adap))
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!is_uld(adap))
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&uld_mutex);
 	for (i = 0; i < CXGB4_ULD_MAX; i++) {
 		if (!adap->uld[i].handle)

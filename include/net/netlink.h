@@ -886,10 +886,14 @@ static inline int nlmsg_validate_deprecated(const struct nlmsghdr *nlh,
 static inline int nlmsg_report(const struct nlmsghdr *nlh)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return nlh ? !!(nlh->nlmsg_flags & NLM_F_ECHO) : 0;
 =======
 	return !!(nlh->nlmsg_flags & NLM_F_ECHO);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return nlh ? !!(nlh->nlmsg_flags & NLM_F_ECHO) : 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

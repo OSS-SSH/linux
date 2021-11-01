@@ -404,6 +404,7 @@ static int rpmhpd_power_off(struct generic_pm_domain *domain)
 {
 	struct rpmhpd *pd = domain_to_rpmhpd(domain);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	mutex_lock(&rpmhpd_lock);
@@ -417,6 +418,13 @@ static int rpmhpd_power_off(struct generic_pm_domain *domain)
 	ret = rpmhpd_aggregate_corner(pd, pd->level[0]);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	mutex_lock(&rpmhpd_lock);
+
+	ret = rpmhpd_aggregate_corner(pd, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ret)
 		pd->enabled = false;
 

@@ -570,14 +570,20 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
 	etnaviv_gpu_update_clock(gpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gpu->fe_running = false;
 	gpu->exec_state = -1;
 	if (gpu->mmu_context)
 		etnaviv_iommu_context_put(gpu->mmu_context);
 	gpu->mmu_context = NULL;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -623,14 +629,20 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
 		pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_TX;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Disable SE, RA and TX clock gating on affected core revisions. */
 	if (etnaviv_is_model_rev(gpu, GC7000, 0x6202))
 		pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_SE |
 		       VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA |
 		       VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_TX;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_HZ;
 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_EZ;
 
@@ -650,6 +662,7 @@ void etnaviv_gpu_start_fe(struct etnaviv_gpu *gpu, u32 address, u16 prefetch)
 			  VIVS_MMUv2_SEC_COMMAND_CONTROL_PREFETCH(prefetch));
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	gpu->fe_running = true;
 }
@@ -668,20 +681,29 @@ static void etnaviv_gpu_start_fe_idleloop(struct etnaviv_gpu *gpu,
 	address = etnaviv_cmdbuf_get_va(&gpu->buffer,
 					&gpu->mmu_context->cmdbuf_mapping);
 =======
+=======
+
+	gpu->fe_running = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
-static void etnaviv_gpu_start_fe_idleloop(struct etnaviv_gpu *gpu)
+static void etnaviv_gpu_start_fe_idleloop(struct etnaviv_gpu *gpu,
+					  struct etnaviv_iommu_context *context)
 {
-	u32 address = etnaviv_cmdbuf_get_va(&gpu->buffer,
-				&gpu->mmu_context->cmdbuf_mapping);
 	u16 prefetch;
+	u32 address;
 
 	/* setup the MMU */
-	etnaviv_iommu_restore(gpu, gpu->mmu_context);
+	etnaviv_iommu_restore(gpu, context);
 
 	/* Start command processor */
 	prefetch = etnaviv_buffer_init(gpu);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	address = etnaviv_cmdbuf_get_va(&gpu->buffer,
+					&gpu->mmu_context->cmdbuf_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	etnaviv_gpu_start_fe(gpu, address, prefetch);
 }
@@ -865,9 +887,12 @@ int etnaviv_gpu_init(struct etnaviv_gpu *gpu)
 	mutex_lock(&gpu->lock);
 	etnaviv_gpu_hw_init(gpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gpu->exec_state = -1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&gpu->lock);
 
 	pm_runtime_mark_last_busy(gpu->dev);
@@ -1093,10 +1118,13 @@ void etnaviv_gpu_recover_hang(struct etnaviv_gpu *gpu)
 
 	etnaviv_gpu_hw_init(gpu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gpu->exec_state = -1;
 	gpu->mmu_context = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_unlock(&gpu->lock);
 	pm_runtime_mark_last_busy(gpu->dev);
@@ -1409,12 +1437,16 @@ struct dma_fence *etnaviv_gpu_submit(struct etnaviv_gem_submit *submit)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!gpu->fe_running)
 		etnaviv_gpu_start_fe_idleloop(gpu, submit->mmu_context);
 
 	if (submit->prev_mmu_context)
 		etnaviv_iommu_context_put(submit->prev_mmu_context);
 	submit->prev_mmu_context = etnaviv_iommu_context_get(gpu->mmu_context);
+<<<<<<< HEAD
 =======
 	if (!gpu->mmu_context) {
 		etnaviv_iommu_context_get(submit->mmu_context);
@@ -1425,6 +1457,8 @@ struct dma_fence *etnaviv_gpu_submit(struct etnaviv_gem_submit *submit)
 		submit->prev_mmu_context = gpu->mmu_context;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (submit->nr_pmrs) {
 		gpu->event[event[1]].sync_point = &sync_point_perfmon_sample_pre;
@@ -1627,10 +1661,14 @@ int etnaviv_gpu_wait_idle(struct etnaviv_gpu *gpu, unsigned int timeout_ms)
 static int etnaviv_gpu_hw_suspend(struct etnaviv_gpu *gpu)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (gpu->initialized && gpu->fe_running) {
 =======
 	if (gpu->initialized && gpu->mmu_context) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (gpu->initialized && gpu->fe_running) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Replace the last WAIT with END */
 		mutex_lock(&gpu->lock);
 		etnaviv_buffer_end(gpu);
@@ -1644,11 +1682,15 @@ static int etnaviv_gpu_hw_suspend(struct etnaviv_gpu *gpu)
 		etnaviv_gpu_wait_idle(gpu, 100);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		gpu->fe_running = false;
 =======
 		etnaviv_iommu_context_put(gpu->mmu_context);
 		gpu->mmu_context = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gpu->fe_running = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	gpu->exec_state = -1;
@@ -1797,11 +1839,17 @@ static void etnaviv_gpu_unbind(struct device *dev, struct device *master,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (gpu->mmu_context)
 		etnaviv_iommu_context_put(gpu->mmu_context);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (gpu->mmu_context)
+		etnaviv_iommu_context_put(gpu->mmu_context);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (gpu->initialized) {
 		etnaviv_cmdbuf_free(&gpu->buffer);
 		etnaviv_iommu_global_fini(gpu);

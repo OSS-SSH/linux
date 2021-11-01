@@ -59,10 +59,15 @@ static const struct of_device_id rk_spdif_match[] __maybe_unused = {
 	{ .compatible = "rockchip,rk3399-spdif",
 	  .data = (void *)RK_SPDIF_RK3366 },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "rockchip,rk3568-spdif",
 	  .data = (void *)RK_SPDIF_RK3366 },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "rockchip,rk3568-spdif",
+	  .data = (void *)RK_SPDIF_RK3366 },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{},
 };
 MODULE_DEVICE_TABLE(of, rk_spdif_match);
@@ -109,12 +114,17 @@ static int __maybe_unused rk_spdif_runtime_resume(struct device *dev)
 
 static int rk_spdif_hw_params(struct snd_pcm_substream *substream,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct snd_pcm_hw_params *params,
 			      struct snd_soc_dai *dai)
 =======
 				  struct snd_pcm_hw_params *params,
 				  struct snd_soc_dai *dai)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct snd_pcm_hw_params *params,
+			      struct snd_soc_dai *dai)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rk_spdif_dev *spdif = snd_soc_dai_get_drvdata(dai);
 	unsigned int val = SPDIF_CFGR_HALFWORD_ENABLE;
@@ -148,6 +158,7 @@ static int rk_spdif_hw_params(struct snd_pcm_substream *substream,
 
 	ret = regmap_update_bits(spdif->regmap, SPDIF_CFGR,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 SPDIF_CFGR_CLK_DIV_MASK |
 				 SPDIF_CFGR_HALFWORD_ENABLE |
 				 SDPIF_CFGR_VDW_MASK, val);
@@ -156,16 +167,25 @@ static int rk_spdif_hw_params(struct snd_pcm_substream *substream,
 		SDPIF_CFGR_VDW_MASK,
 		val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 SPDIF_CFGR_CLK_DIV_MASK |
+				 SPDIF_CFGR_HALFWORD_ENABLE |
+				 SDPIF_CFGR_VDW_MASK, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
 
 static int rk_spdif_trigger(struct snd_pcm_substream *substream,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    int cmd, struct snd_soc_dai *dai)
 =======
 				int cmd, struct snd_soc_dai *dai)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    int cmd, struct snd_soc_dai *dai)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rk_spdif_dev *spdif = snd_soc_dai_get_drvdata(dai);
 	int ret;
@@ -176,21 +196,28 @@ static int rk_spdif_trigger(struct snd_pcm_substream *substream,
 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
 		ret = regmap_update_bits(spdif->regmap, SPDIF_DMACR,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 SPDIF_DMACR_TDE_ENABLE |
 					 SPDIF_DMACR_TDL_MASK,
 					 SPDIF_DMACR_TDE_ENABLE |
 					 SPDIF_DMACR_TDL(16));
+<<<<<<< HEAD
 =======
 				   SPDIF_DMACR_TDE_ENABLE |
 				   SPDIF_DMACR_TDL_MASK,
 				   SPDIF_DMACR_TDE_ENABLE |
 				   SPDIF_DMACR_TDL(16));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (ret != 0)
 			return ret;
 
 		ret = regmap_update_bits(spdif->regmap, SPDIF_XFER,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					 SPDIF_XFER_TXS_START,
 					 SPDIF_XFER_TXS_START);
@@ -198,11 +225,16 @@ static int rk_spdif_trigger(struct snd_pcm_substream *substream,
 				   SPDIF_XFER_TXS_START,
 				   SPDIF_XFER_TXS_START);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 SPDIF_XFER_TXS_START,
+					 SPDIF_XFER_TXS_START);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case SNDRV_PCM_TRIGGER_SUSPEND:
 	case SNDRV_PCM_TRIGGER_STOP:
 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
 		ret = regmap_update_bits(spdif->regmap, SPDIF_DMACR,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					 SPDIF_DMACR_TDE_ENABLE,
 					 SPDIF_DMACR_TDE_DISABLE);
@@ -210,11 +242,16 @@ static int rk_spdif_trigger(struct snd_pcm_substream *substream,
 				   SPDIF_DMACR_TDE_ENABLE,
 				   SPDIF_DMACR_TDE_DISABLE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 SPDIF_DMACR_TDE_ENABLE,
+					 SPDIF_DMACR_TDE_DISABLE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (ret != 0)
 			return ret;
 
 		ret = regmap_update_bits(spdif->regmap, SPDIF_XFER,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					 SPDIF_XFER_TXS_START,
 					 SPDIF_XFER_TXS_STOP);
@@ -222,6 +259,10 @@ static int rk_spdif_trigger(struct snd_pcm_substream *substream,
 				   SPDIF_XFER_TXS_START,
 				   SPDIF_XFER_TXS_STOP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 SPDIF_XFER_TXS_START,
+					 SPDIF_XFER_TXS_STOP);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		ret = -EINVAL;
@@ -290,9 +331,13 @@ static bool rk_spdif_rd_reg(struct device *dev, unsigned int reg)
 	case SPDIF_INTSR:
 	case SPDIF_XFER:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SPDIF_SMPDR:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SPDIF_SMPDR:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 	default:
 		return false;
@@ -305,9 +350,13 @@ static bool rk_spdif_volatile_reg(struct device *dev, unsigned int reg)
 	case SPDIF_INTSR:
 	case SPDIF_SDBLR:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SPDIF_SMPDR:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SPDIF_SMPDR:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 	default:
 		return false;
@@ -342,10 +391,14 @@ static int rk_spdif_probe(struct platform_device *pdev)
 		if (IS_ERR(grf)) {
 			dev_err(&pdev->dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"rockchip_spdif missing 'rockchip,grf'\n");
 =======
 				"rockchip_spdif missing 'rockchip,grf' \n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				"rockchip_spdif missing 'rockchip,grf'\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return PTR_ERR(grf);
 		}
 

@@ -133,10 +133,14 @@ xfs_eof_alignment(
 		 * increased from the strip unit size to the stripe width.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (mp->m_swidth && xfs_has_swalloc(mp))
 =======
 		if (mp->m_swidth && (mp->m_flags & XFS_MOUNT_SWALLOC))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (mp->m_swidth && xfs_has_swalloc(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			align = mp->m_swidth;
 		else if (mp->m_dalign)
 			align = mp->m_dalign;
@@ -739,10 +743,14 @@ xfs_direct_write_iomap_begin(
 	ASSERT(flags & (IOMAP_WRITE | IOMAP_ZERO));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	/*
@@ -883,10 +891,14 @@ xfs_buffered_write_iomap_begin(
 	int			error = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	/* we can't use delayed allocations when using extent size hints */
@@ -1007,10 +1019,14 @@ xfs_buffered_write_iomap_begin(
 		 * We clean up any extra preallocation when the file is closed.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_has_allocsize(mp))
 =======
 		if (mp->m_flags & XFS_MOUNT_ALLOCSIZE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_allocsize(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			prealloc_blocks = mp->m_allocsize_blocks;
 		else
 			prealloc_blocks = xfs_iomap_prealloc_size(ip, allocfork,
@@ -1081,6 +1097,7 @@ found_cow:
 		if (error)
 			return error;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return xfs_bmbt_to_iomap(ip, iomap, &cmap, IOMAP_F_SHARED);
 	}
 
@@ -1093,6 +1110,13 @@ found_cow:
 	}
 	return xfs_bmbt_to_iomap(ip, iomap, &cmap, IOMAP_F_SHARED);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return xfs_bmbt_to_iomap(ip, iomap, &cmap, IOMAP_F_SHARED);
+	}
+
+	xfs_trim_extent(&cmap, offset_fsb, imap.br_startoff - offset_fsb);
+	return xfs_bmbt_to_iomap(ip, iomap, &cmap, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out_unlock:
 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
@@ -1152,10 +1176,14 @@ xfs_buffered_write_iomap_end(
 		error = xfs_bmap_punch_delalloc_range(ip, start_fsb,
 					       end_fsb - start_fsb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (error && !xfs_is_shutdown(mp)) {
 =======
 		if (error && !XFS_FORCED_SHUTDOWN(mp)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (error && !xfs_is_shutdown(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_alert(mp, "%s: unable to clean up ino %lld",
 				__func__, ip->i_ino);
 			return error;
@@ -1191,10 +1219,14 @@ xfs_read_iomap_begin(
 	ASSERT(!(flags & (IOMAP_WRITE | IOMAP_ZERO)));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	error = xfs_ilock_for_iomap(ip, flags, &lockmode);
@@ -1236,10 +1268,14 @@ xfs_seek_iomap_begin(
 	unsigned		lockmode;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	lockmode = xfs_ilock_data_map_shared(ip);
@@ -1322,10 +1358,14 @@ xfs_xattr_iomap_begin(
 	unsigned		lockmode;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	lockmode = xfs_ilock_attr_map_shared(ip);

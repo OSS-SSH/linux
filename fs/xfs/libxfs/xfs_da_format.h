@@ -790,10 +790,14 @@ struct xfs_attr3_rmt_hdr {
 
 #define XFS_ATTR3_RMT_BUF_SPACE(mp, bufsize)	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	((bufsize) - (xfs_has_crc((mp)) ? \
 =======
 	((bufsize) - (xfs_sb_version_hascrc(&(mp)->m_sb) ? \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	((bufsize) - (xfs_has_crc((mp)) ? \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sizeof(struct xfs_attr3_rmt_hdr) : 0))
 
 /* Number of bytes in a directory block. */

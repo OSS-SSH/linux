@@ -16,6 +16,7 @@
 #include <media/rc-core.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DRIVER_NAME		"rc-loopback"
 #define RXMASK_NARROWBAND	0x1
 #define RXMASK_WIDEBAND		0x2
@@ -27,6 +28,11 @@
 
 static bool debug;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DRIVER_NAME		"rc-loopback"
+#define RXMASK_NARROWBAND	0x1
+#define RXMASK_WIDEBAND		0x2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct loopback_dev {
 	struct rc_dev *dev;
@@ -35,10 +41,14 @@ struct loopback_dev {
 	u32 txduty;
 	bool idle;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool wideband;
 =======
 	bool learning;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool wideband;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool carrierreport;
 	u32 rxcarriermin;
 	u32 rxcarriermax;
@@ -50,6 +60,7 @@ static int loop_set_tx_mask(struct rc_dev *dev, u32 mask)
 {
 	struct loopback_dev *lodev = dev->priv;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if ((mask & (RXMASK_NARROWBAND | RXMASK_WIDEBAND)) != mask) {
 		dev_dbg(&dev->dev, "invalid tx mask: %u\n", mask);
@@ -65,6 +76,14 @@ static int loop_set_tx_mask(struct rc_dev *dev, u32 mask)
 
 	dprintk("setting tx mask: %u\n", mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((mask & (RXMASK_NARROWBAND | RXMASK_WIDEBAND)) != mask) {
+		dev_dbg(&dev->dev, "invalid tx mask: %u\n", mask);
+		return 2;
+	}
+
+	dev_dbg(&dev->dev, "setting tx mask: %u\n", mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lodev->txmask = mask;
 	return 0;
 }
@@ -74,10 +93,14 @@ static int loop_set_tx_carrier(struct rc_dev *dev, u32 carrier)
 	struct loopback_dev *lodev = dev->priv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_dbg(&dev->dev, "setting tx carrier: %u\n", carrier);
 =======
 	dprintk("setting tx carrier: %u\n", carrier);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_dbg(&dev->dev, "setting tx carrier: %u\n", carrier);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lodev->txcarrier = carrier;
 	return 0;
 }
@@ -87,6 +110,7 @@ static int loop_set_tx_duty_cycle(struct rc_dev *dev, u32 duty_cycle)
 	struct loopback_dev *lodev = dev->priv;
 
 	if (duty_cycle < 1 || duty_cycle > 99) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dev_dbg(&dev->dev, "invalid duty cycle: %u\n", duty_cycle);
 		return -EINVAL;
@@ -100,6 +124,13 @@ static int loop_set_tx_duty_cycle(struct rc_dev *dev, u32 duty_cycle)
 
 	dprintk("setting duty cycle: %u\n", duty_cycle);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_dbg(&dev->dev, "invalid duty cycle: %u\n", duty_cycle);
+		return -EINVAL;
+	}
+
+	dev_dbg(&dev->dev, "setting duty cycle: %u\n", duty_cycle);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lodev->txduty = duty_cycle;
 	return 0;
 }
@@ -109,6 +140,7 @@ static int loop_set_rx_carrier_range(struct rc_dev *dev, u32 min, u32 max)
 	struct loopback_dev *lodev = dev->priv;
 
 	if (min < 1 || min > max) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dev_dbg(&dev->dev, "invalid rx carrier range %u to %u\n", min, max);
 		return -EINVAL;
@@ -122,6 +154,13 @@ static int loop_set_rx_carrier_range(struct rc_dev *dev, u32 min, u32 max)
 
 	dprintk("setting rx carrier range %u to %u\n", min, max);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_dbg(&dev->dev, "invalid rx carrier range %u to %u\n", min, max);
+		return -EINVAL;
+	}
+
+	dev_dbg(&dev->dev, "setting rx carrier range %u to %u\n", min, max);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lodev->rxcarriermin = min;
 	lodev->rxcarriermax = max;
 	return 0;
@@ -137,6 +176,7 @@ static int loop_tx_ir(struct rc_dev *dev, unsigned *txbuf, unsigned count)
 	if (lodev->txcarrier < lodev->rxcarriermin ||
 	    lodev->txcarrier > lodev->rxcarriermax) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_dbg(&dev->dev, "ignoring tx, carrier out of range\n");
 		goto out;
 	}
@@ -150,17 +190,24 @@ static int loop_tx_ir(struct rc_dev *dev, unsigned *txbuf, unsigned count)
 		dev_dbg(&dev->dev, "ignoring tx, rx mask mismatch\n");
 =======
 		dprintk("ignoring tx, carrier out of range\n");
+=======
+		dev_dbg(&dev->dev, "ignoring tx, carrier out of range\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
-	if (lodev->learning)
-		rxmask = RXMASK_LEARNING;
+	if (lodev->wideband)
+		rxmask = RXMASK_WIDEBAND;
 	else
-		rxmask = RXMASK_REGULAR;
+		rxmask = RXMASK_NARROWBAND;
 
 	if (!(rxmask & lodev->txmask)) {
+<<<<<<< HEAD
 		dprintk("ignoring tx, rx mask mismatch\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_dbg(&dev->dev, "ignoring tx, rx mask mismatch\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
@@ -168,6 +215,9 @@ static int loop_tx_ir(struct rc_dev *dev, unsigned *txbuf, unsigned count)
 		rawir.pulse = i % 2 ? false : true;
 		rawir.duration = txbuf[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ir_raw_event_store_with_filter(dev, &rawir);
 	}
@@ -178,10 +228,13 @@ static int loop_tx_ir(struct rc_dev *dev, unsigned *txbuf, unsigned count)
 		rawir.carrier = lodev->txcarrier;
 
 		ir_raw_event_store(dev, &rawir);
+<<<<<<< HEAD
 =======
 		if (rawir.duration)
 			ir_raw_event_store_with_filter(dev, &rawir);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Fake a silence long enough to cause us to go idle */
@@ -201,14 +254,19 @@ static void loop_set_idle(struct rc_dev *dev, bool enable)
 
 	if (lodev->idle != enable) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_dbg(&dev->dev, "%sing idle mode\n", enable ? "enter" : "exit");
 =======
 		dprintk("%sing idle mode\n", enable ? "enter" : "exit");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_dbg(&dev->dev, "%sing idle mode\n", enable ? "enter" : "exit");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lodev->idle = enable;
 	}
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int loop_set_wideband_receiver(struct rc_dev *dev, int enable)
 {
@@ -226,6 +284,15 @@ static int loop_set_learning_mode(struct rc_dev *dev, int enable)
 		dprintk("%sing learning mode\n", enable ? "enter" : "exit");
 		lodev->learning = !!enable;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int loop_set_wideband_receiver(struct rc_dev *dev, int enable)
+{
+	struct loopback_dev *lodev = dev->priv;
+
+	if (lodev->wideband != enable) {
+		dev_dbg(&dev->dev, "using %sband receiver\n", enable ? "wide" : "narrow");
+		lodev->wideband = !!enable;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -237,10 +304,14 @@ static int loop_set_carrier_report(struct rc_dev *dev, int enable)
 
 	if (lodev->carrierreport != enable) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_dbg(&dev->dev, "%sabling carrier reports\n", enable ? "en" : "dis");
 =======
 		dprintk("%sabling carrier reports\n", enable ? "en" : "dis");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_dbg(&dev->dev, "%sabling carrier reports\n", enable ? "en" : "dis");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lodev->carrierreport = !!enable;
 	}
 
@@ -289,6 +360,7 @@ static int __init loop_init(void)
 
 	rc = rc_allocate_device(RC_DRIVER_IR_RAW);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!rc)
 		return -ENOMEM;
 =======
@@ -297,6 +369,10 @@ static int __init loop_init(void)
 		return -ENOMEM;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!rc)
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rc->device_name		= "rc-core loopback device";
 	rc->input_phys		= "rc-core/virtual";
@@ -309,6 +385,7 @@ static int __init loop_init(void)
 	rc->allowed_wakeup_protocols = RC_PROTO_BIT_ALL_IR_ENCODER;
 	rc->encode_wakeup	= true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc->timeout		= IR_DEFAULT_TIMEOUT;
 	rc->min_timeout		= 1;
 	rc->max_timeout		= IR_MAX_TIMEOUT;
@@ -317,6 +394,11 @@ static int __init loop_init(void)
 	rc->min_timeout		= 1;
 	rc->max_timeout		= UINT_MAX;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc->timeout		= IR_DEFAULT_TIMEOUT;
+	rc->min_timeout		= 1;
+	rc->max_timeout		= IR_MAX_TIMEOUT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc->rx_resolution	= 1;
 	rc->tx_resolution	= 1;
 	rc->s_tx_mask		= loop_set_tx_mask;
@@ -325,6 +407,7 @@ static int __init loop_init(void)
 	rc->s_rx_carrier_range	= loop_set_rx_carrier_range;
 	rc->tx_ir		= loop_tx_ir;
 	rc->s_idle		= loop_set_idle;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rc->s_wideband_receiver	= loop_set_wideband_receiver;
 	rc->s_carrier_report	= loop_set_carrier_report;
@@ -338,25 +421,40 @@ static int __init loop_init(void)
 
 	loopdev.txmask		= RXMASK_REGULAR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc->s_wideband_receiver	= loop_set_wideband_receiver;
+	rc->s_carrier_report	= loop_set_carrier_report;
+	rc->s_wakeup_filter	= loop_set_wakeup_filter;
+
+	loopdev.txmask		= RXMASK_NARROWBAND;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	loopdev.txcarrier	= 36000;
 	loopdev.txduty		= 50;
 	loopdev.rxcarriermin	= 1;
 	loopdev.rxcarriermax	= ~0;
 	loopdev.idle		= true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	loopdev.wideband	= false;
 =======
 	loopdev.learning	= false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	loopdev.wideband	= false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	loopdev.carrierreport	= false;
 
 	ret = rc_register_device(rc);
 	if (ret < 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_err(&rc->dev, "rc_dev registration failed\n");
 =======
 		printk(KERN_ERR DRIVER_NAME ": rc_dev registration failed\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_err(&rc->dev, "rc_dev registration failed\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc_free_device(rc);
 		return ret;
 	}
@@ -374,11 +472,14 @@ module_init(loop_init);
 module_exit(loop_exit);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 module_param(debug, bool, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(debug, "Enable debug messages");
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_DESCRIPTION("Loopback device for rc-core debugging");
 MODULE_AUTHOR("David Härdeman <david@hardeman.nu>");
 MODULE_LICENSE("GPL");

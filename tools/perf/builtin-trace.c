@@ -708,6 +708,9 @@ static size_t syscall_arg__scnprintf_char_array(char *bf, size_t size, struct sy
 static const char *bpf_cmd[] = {
 	"MAP_CREATE", "MAP_LOOKUP_ELEM", "MAP_UPDATE_ELEM", "MAP_DELETE_ELEM",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	"MAP_GET_NEXT_KEY", "PROG_LOAD", "OBJ_PIN", "OBJ_GET", "PROG_ATTACH",
 	"PROG_DETACH", "PROG_TEST_RUN", "PROG_GET_NEXT_ID", "MAP_GET_NEXT_ID",
 	"PROG_GET_FD_BY_ID", "MAP_GET_FD_BY_ID", "OBJ_GET_INFO_BY_FD",
@@ -717,9 +720,12 @@ static const char *bpf_cmd[] = {
 	"MAP_UPDATE_BATCH", "MAP_DELETE_BATCH", "LINK_CREATE", "LINK_UPDATE",
 	"LINK_GET_FD_BY_ID", "LINK_GET_NEXT_ID", "ENABLE_STATS", "ITER_CREATE",
 	"LINK_DETACH", "PROG_BIND_MAP",
+<<<<<<< HEAD
 =======
 	"MAP_GET_NEXT_KEY", "PROG_LOAD",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 static DEFINE_STRARRAY(bpf_cmd, "BPF_");
 
@@ -2279,6 +2285,9 @@ static void *syscall__augmented_args(struct syscall *sc, struct perf_sample *sam
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void syscall__exit(struct syscall *sc)
 {
 	if (!sc)
@@ -2287,8 +2296,11 @@ static void syscall__exit(struct syscall *sc)
 	free(sc->arg_fmt);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int trace__sys_enter(struct trace *trace, struct evsel *evsel,
 			    union perf_event *event __maybe_unused,
 			    struct perf_sample *sample)
@@ -3119,6 +3131,9 @@ static struct evsel *evsel__new_pgfault(u64 config)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void evlist__free_syscall_tp_fields(struct evlist *evlist)
 {
 	struct evsel *evsel;
@@ -3134,8 +3149,11 @@ static void evlist__free_syscall_tp_fields(struct evlist *evlist)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void trace__handle_event(struct trace *trace, union perf_event *event, struct perf_sample *sample)
 {
 	const u32 type = event->header.type;
@@ -4172,10 +4190,14 @@ out_disable:
 out_delete_evlist:
 	trace__symbols__exit(trace);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	evlist__free_syscall_tp_fields(evlist);
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	evlist__free_syscall_tp_fields(evlist);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	evlist__delete(evlist);
 	cgroup__put(trace->cgroup);
 	trace->evlist = NULL;
@@ -4251,10 +4273,14 @@ static int trace__replay(struct trace *trace)
 	trace->multiple_threads = true;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	session = perf_session__new(&data, &trace->tool);
 =======
 	session = perf_session__new(&data, false, &trace->tool);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	session = perf_session__new(&data, &trace->tool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session))
 		return PTR_ERR(session);
 
@@ -4686,11 +4712,17 @@ do_concat:
 	}
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	free(strace_groups_dir);
 	free(lists[0]);
 	free(lists[1]);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free(strace_groups_dir);
+	free(lists[0]);
+	free(lists[1]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sep)
 		*sep = ',';
 
@@ -4757,6 +4789,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void trace__exit(struct trace *trace)
 {
 	int i;
@@ -4772,8 +4807,11 @@ static void trace__exit(struct trace *trace)
 	zfree(&trace->perfconfig_events);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int cmd_trace(int argc, const char **argv)
 {
 	const char *trace_usage[] = {
@@ -5209,9 +5247,13 @@ out_close:
 		fclose(trace.output);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	trace__exit(&trace);
 =======
 	zfree(&trace.perfconfig_events);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace__exit(&trace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }

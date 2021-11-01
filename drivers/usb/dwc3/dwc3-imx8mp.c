@@ -153,6 +153,7 @@ static int dwc3_imx8mp_probe(struct platform_device *pdev)
 	dwc3_imx->irq = irq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	err = devm_request_threaded_irq(dev, irq, NULL, dwc3_imx8mp_interrupt,
 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
@@ -162,6 +163,8 @@ static int dwc3_imx8mp_probe(struct platform_device *pdev)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_set_active(dev);
 	pm_runtime_enable(dev);
 	err = pm_runtime_get_sync(dev);
@@ -190,6 +193,9 @@ static int dwc3_imx8mp_probe(struct platform_device *pdev)
 	of_node_put(dwc3_np);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = devm_request_threaded_irq(dev, irq, NULL, dwc3_imx8mp_interrupt,
 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
 	if (err) {
@@ -197,8 +203,11 @@ static int dwc3_imx8mp_probe(struct platform_device *pdev)
 		goto depopulate;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	device_set_wakeup_capable(dev, true);
 	pm_runtime_put(dev);
 

@@ -581,15 +581,21 @@ static int do_dump(int argc, char **argv)
 
 	if (!btf) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		btf = btf__load_from_kernel_by_id_split(btf_id, base_btf);
 		err = libbpf_get_error(btf);
 =======
 		err = btf__get_from_id(btf_id, &btf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		btf = btf__load_from_kernel_by_id_split(btf_id, base_btf);
+		err = libbpf_get_error(btf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			p_err("get btf by id (%u): %s", btf_id, strerror(err));
 			goto done;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		if (!btf) {
@@ -598,6 +604,8 @@ static int do_dump(int argc, char **argv)
 			goto done;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (dump_c) {
@@ -994,11 +1002,16 @@ static int do_help(int argc, char **argv)
 		"       " HELP_SPEC_MAP "\n"
 		"       " HELP_SPEC_PROGRAM "\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"       " HELP_SPEC_OPTIONS " |\n"
 		"                    {-B|--base-btf} }\n"
 =======
 		"       " HELP_SPEC_OPTIONS "\n"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-B|--base-btf} }\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"",
 		bin_name, "btf");
 

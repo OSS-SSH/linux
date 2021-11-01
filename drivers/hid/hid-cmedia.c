@@ -2,14 +2,20 @@
 /*
  * HID driver for CMedia CM6533 audio jack controls
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * and HS100B mute buttons
  *
  * Copyright (C) 2015 Ben Chen <ben_chen@bizlinktech.com>
  * Copyright (C) 2021 Thomas Weißschuh <linux@weissschuh.net>
+<<<<<<< HEAD
 =======
  *
  * Copyright (C) 2015 Ben Chen <ben_chen@bizlinktech.com>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/device.h>
@@ -19,11 +25,16 @@
 
 MODULE_AUTHOR("Ben Chen");
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_AUTHOR("Thomas Weißschuh");
 MODULE_DESCRIPTION("CM6533 HID jack controls and HS100B mute button");
 =======
 MODULE_DESCRIPTION("CM6533 HID jack controls");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+MODULE_AUTHOR("Thomas Weißschuh");
+MODULE_DESCRIPTION("CM6533 HID jack controls and HS100B mute button");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_LICENSE("GPL");
 
 #define CM6533_JD_TYPE_COUNT      1
@@ -31,6 +42,9 @@ MODULE_LICENSE("GPL");
 #define CM6533_JD_SFX_OFFSET	  8
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HS100B_RDESC_ORIG_SIZE   60
 
 /* Fixed report descriptor of HS-100B audio chip
@@ -70,8 +84,11 @@ static __u8 hs100b_rdesc_fixed[] = {
 	0xC0                /*  End Collection                  */
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
 *
 *CM6533 audio jack HID raw events:
@@ -211,6 +228,7 @@ static struct hid_driver cmhid_driver = {
 	.input_mapping = cmhid_input_mapping,
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 static __u8 *cmhid_hs100b_report_fixup(struct hid_device *hid, __u8 *rdesc,
 				       unsigned int *rsize)
@@ -261,3 +279,51 @@ module_exit(cmedia_exit);
 module_hid_driver(cmhid_driver);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+static __u8 *cmhid_hs100b_report_fixup(struct hid_device *hid, __u8 *rdesc,
+				       unsigned int *rsize)
+{
+	if (*rsize == HS100B_RDESC_ORIG_SIZE) {
+		hid_info(hid, "Fixing CMedia HS-100B report descriptor\n");
+		rdesc = hs100b_rdesc_fixed;
+		*rsize = sizeof(hs100b_rdesc_fixed);
+	}
+	return rdesc;
+}
+
+static const struct hid_device_id cmhid_hs100b_devices[] = {
+	{ HID_USB_DEVICE(USB_VENDOR_ID_CMEDIA, USB_DEVICE_ID_CMEDIA_HS100B) },
+	{ }
+};
+MODULE_DEVICE_TABLE(hid, cmhid_hs100b_devices);
+
+static struct hid_driver cmhid_hs100b_driver = {
+	.name = "cmedia_hs100b",
+	.id_table = cmhid_hs100b_devices,
+	.report_fixup = cmhid_hs100b_report_fixup,
+};
+
+static int cmedia_init(void)
+{
+	int ret;
+
+	ret = hid_register_driver(&cmhid_driver);
+	if (ret)
+		return ret;
+
+	ret = hid_register_driver(&cmhid_hs100b_driver);
+	if (ret)
+		hid_unregister_driver(&cmhid_driver);
+
+	return ret;
+}
+module_init(cmedia_init);
+
+static void cmedia_exit(void)
+{
+		hid_unregister_driver(&cmhid_driver);
+		hid_unregister_driver(&cmhid_hs100b_driver);
+}
+module_exit(cmedia_exit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

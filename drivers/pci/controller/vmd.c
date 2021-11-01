@@ -12,9 +12,13 @@
 #include <linux/msi.h>
 #include <linux/pci.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/pci-acpi.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pci-acpi.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/pci-ecam.h>
 #include <linux/srcu.h>
 #include <linux/rculist.h>
@@ -452,6 +456,9 @@ static struct pci_ops vmd_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ACPI
 static struct acpi_device *vmd_acpi_find_companion(struct pci_dev *pci_dev)
 {
@@ -502,8 +509,11 @@ static inline void vmd_acpi_begin(void) { }
 static inline void vmd_acpi_end(void) { }
 #endif /* CONFIG_ACPI */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void vmd_attach_resources(struct vmd_dev *vmd)
 {
 	vmd->dev->resource[VMD_MEMBAR1].child = &vmd->resources[1];
@@ -805,10 +815,15 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
 		dev_set_msi_domain(&vmd->bus->dev, vmd->irq_domain);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vmd_acpi_begin();
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vmd_acpi_begin();
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_scan_child_bus(vmd->bus);
 	pci_assign_unassigned_bus_resources(vmd->bus);
 
@@ -823,10 +838,15 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
 	pci_bus_add_devices(vmd->bus);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vmd_acpi_end();
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vmd_acpi_end();
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	WARN(sysfs_create_link(&vmd->dev->dev.kobj, &vmd->bus->dev.kobj,
 			       "domain"), "Can't create symlink to domain\n");
 	return 0;

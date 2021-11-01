@@ -77,9 +77,12 @@ static int pnp_registered;
 struct snd_card_cs4236 {
 	struct snd_wss *chip;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct resource *res_sb_port;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PNP
 	struct pnp_dev *wss;
 	struct pnp_dev *ctrl;
@@ -313,6 +316,7 @@ static int snd_card_cs423x_pnpc(int dev, struct snd_card_cs4236 *acard,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void snd_card_cs4236_free(struct snd_card *card)
 {
@@ -322,12 +326,15 @@ static void snd_card_cs4236_free(struct snd_card *card)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_cs423x_card_new(struct device *pdev, int dev,
 			       struct snd_card **cardp)
 {
 	struct snd_card *card;
 	int err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = snd_devm_card_new(pdev, index[dev], id[dev], THIS_MODULE,
 				sizeof(struct snd_card_cs4236), &card);
@@ -340,6 +347,12 @@ static int snd_cs423x_card_new(struct device *pdev, int dev,
 		return err;
 	card->private_free = snd_card_cs4236_free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(pdev, index[dev], id[dev], THIS_MODULE,
+				sizeof(struct snd_card_cs4236), &card);
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*cardp = card;
 	return 0;
 }
@@ -354,12 +367,17 @@ static int snd_cs423x_probe(struct snd_card *card, int dev)
 	acard = card->private_data;
 	if (sb_port[dev] > 0 && sb_port[dev] != SNDRV_AUTO_PORT) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!devm_request_region(card->dev, sb_port[dev], 16,
 					 IDENT " SB")) {
 =======
 		acard->res_sb_port = request_region(sb_port[dev], 16, IDENT " SB");
 		if (!acard->res_sb_port) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!devm_request_region(card->dev, sb_port[dev], 16,
+					 IDENT " SB")) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			printk(KERN_ERR IDENT ": unable to register SB port at 0x%lx\n", sb_port[dev]);
 			return -EBUSY;
 		}
@@ -467,6 +485,7 @@ static int snd_cs423x_isa_probe(struct device *pdev,
 		return err;
 	err = snd_cs423x_probe(card, dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 =======
@@ -476,10 +495,15 @@ static int snd_cs423x_isa_probe(struct device *pdev,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_set_drvdata(pdev, card);
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_cs423x_isa_remove(struct device *pdev,
@@ -489,6 +513,8 @@ static void snd_cs423x_isa_remove(struct device *pdev,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int snd_cs423x_suspend(struct snd_card *card)
 {
@@ -522,9 +548,12 @@ static struct isa_driver cs423x_isa_driver = {
 	.match		= snd_cs423x_isa_match,
 	.probe		= snd_cs423x_isa_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_cs423x_isa_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_cs423x_isa_suspend,
 	.resume		= snd_cs423x_isa_resume,
@@ -569,6 +598,7 @@ static int snd_cs423x_pnpbios_detect(struct pnp_dev *pdev,
 	if (err < 0) {
 		printk(KERN_ERR "PnP BIOS detection failed for " IDENT "\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 	}
 	err = snd_cs423x_probe(card, dev);
@@ -576,19 +606,24 @@ static int snd_cs423x_pnpbios_detect(struct pnp_dev *pdev,
 		return err;
 =======
 		snd_card_free(card);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
 	}
 	err = snd_cs423x_probe(card, dev);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pnp_set_drvdata(pdev, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_cs423x_pnp_remove(struct pnp_dev *pdev)
@@ -597,6 +632,8 @@ static void snd_cs423x_pnp_remove(struct pnp_dev *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int snd_cs423x_pnp_suspend(struct pnp_dev *pdev, pm_message_t state)
 {
@@ -614,9 +651,12 @@ static struct pnp_driver cs423x_pnp_driver = {
 	.id_table = snd_cs423x_pnpbiosids,
 	.probe = snd_cs423x_pnpbios_detect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_cs423x_pnp_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_cs423x_pnp_suspend,
 	.resume		= snd_cs423x_pnp_resume,
@@ -645,6 +685,7 @@ static int snd_cs423x_pnpc_detect(struct pnp_card_link *pcard,
 		printk(KERN_ERR "isapnp detection failed and probing for " IDENT
 		       " is not supported\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return res;
 	}
 	res = snd_cs423x_probe(card, dev);
@@ -652,19 +693,24 @@ static int snd_cs423x_pnpc_detect(struct pnp_card_link *pcard,
 		return res;
 =======
 		snd_card_free(card);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return res;
 	}
 	res = snd_cs423x_probe(card, dev);
-	if (res < 0) {
-		snd_card_free(card);
+	if (res < 0)
 		return res;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pnp_set_card_drvdata(pcard, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_cs423x_pnpc_remove(struct pnp_card_link *pcard)
@@ -674,6 +720,8 @@ static void snd_cs423x_pnpc_remove(struct pnp_card_link *pcard)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int snd_cs423x_pnpc_suspend(struct pnp_card_link *pcard, pm_message_t state)
 {
@@ -692,9 +740,12 @@ static struct pnp_card_driver cs423x_pnpc_driver = {
 	.id_table = snd_cs423x_pnpids,
 	.probe = snd_cs423x_pnpc_detect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_cs423x_pnpc_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_cs423x_pnpc_suspend,
 	.resume		= snd_cs423x_pnpc_resume,

@@ -937,27 +937,37 @@ int mmc_execute_tuning(struct mmc_card *card)
 
 	err = host->ops->execute_tuning(host, opcode);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!err) {
 		mmc_retune_clear(host);
 		mmc_retune_enable(host);
 		return 0;
 	}
+<<<<<<< HEAD
 
 	/* Only print error when we don't check for card removal */
 	if (!host->detect_change)
 		pr_err("%s: tuning execution failed: %d\n",
 			mmc_hostname(host), err);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (err) {
+	/* Only print error when we don't check for card removal */
+	if (!host->detect_change)
 		pr_err("%s: tuning execution failed: %d\n",
 			mmc_hostname(host), err);
+<<<<<<< HEAD
 	} else {
 		host->retune_now = 0;
 		host->need_retune = 0;
 		mmc_retune_enable(host);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return err;
 }
@@ -2163,6 +2173,9 @@ int mmc_detect_card_removed(struct mmc_host *host)
 EXPORT_SYMBOL(mmc_detect_card_removed);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mmc_card_alternative_gpt_sector(struct mmc_card *card, sector_t *gpt_sector)
 {
 	unsigned int boot_sectors_num;
@@ -2198,8 +2211,11 @@ int mmc_card_alternative_gpt_sector(struct mmc_card *card, sector_t *gpt_sector)
 }
 EXPORT_SYMBOL(mmc_card_alternative_gpt_sector);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void mmc_rescan(struct work_struct *work)
 {
 	struct mmc_host *host =

@@ -12,9 +12,13 @@
 #include <linux/fs_context.h>
 #include <linux/fs_parser.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/dax.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/dax.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "xattr.h"
 
 #define CREATE_TRACE_POINTS
@@ -360,10 +364,15 @@ enum {
 	Opt_acl,
 	Opt_cache_strategy,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Opt_dax,
 	Opt_dax_enum,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	Opt_dax,
+	Opt_dax_enum,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	Opt_err
 };
 
@@ -375,20 +384,29 @@ static const struct constant_table erofs_param_cache_strategy[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct constant_table erofs_dax_param_enums[] = {
 	{"always",	EROFS_MOUNT_DAX_ALWAYS},
 	{"never",	EROFS_MOUNT_DAX_NEVER},
 	{}
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct fs_parameter_spec erofs_fs_parameters[] = {
 	fsparam_flag_no("user_xattr",	Opt_user_xattr),
 	fsparam_flag_no("acl",		Opt_acl),
 	fsparam_enum("cache_strategy",	Opt_cache_strategy,
 		     erofs_param_cache_strategy),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fsparam_flag("dax",             Opt_dax),
 	fsparam_enum("dax",		Opt_dax_enum, erofs_dax_param_enums),
 	{}
@@ -419,11 +437,14 @@ static bool erofs_fc_set_dax_mode(struct fs_context *fc, unsigned int mode)
 #endif
 }
 
+<<<<<<< HEAD
 =======
 	{}
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int erofs_fc_parse_param(struct fs_context *fc,
 				struct fs_parameter *param)
 {
@@ -464,6 +485,9 @@ static int erofs_fc_parse_param(struct fs_context *fc,
 #endif
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case Opt_dax:
 		if (!erofs_fc_set_dax_mode(fc, EROFS_MOUNT_DAX_ALWAYS))
 			return -EINVAL;
@@ -472,8 +496,11 @@ static int erofs_fc_parse_param(struct fs_context *fc,
 		if (!erofs_fc_set_dax_mode(fc, result.uint_32))
 			return -EINVAL;
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -ENOPARAM;
 	}
@@ -493,10 +520,14 @@ static int erofs_managed_cache_releasepage(struct page *page, gfp_t gfp_mask)
 
 	if (PagePrivate(page))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = erofs_try_to_free_cached_page(page);
 =======
 		ret = erofs_try_to_free_cached_page(mapping, page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = erofs_try_to_free_cached_page(page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -563,21 +594,31 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
 
 	sb->s_fs_info = sbi;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sbi->dax_dev = fs_dax_get_by_bdev(sb->s_bdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sbi->dax_dev = fs_dax_get_by_bdev(sb->s_bdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = erofs_read_superblock(sb);
 	if (err)
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test_opt(ctx, DAX_ALWAYS) &&
 	    !dax_supported(sbi->dax_dev, sb->s_bdev, EROFS_BLKSIZ, 0, bdev_nr_sectors(sb->s_bdev))) {
 		errorfc(fc, "DAX unsupported by block device. Turning off DAX.");
 		clear_opt(ctx, DAX_ALWAYS);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sb->s_flags |= SB_RDONLY | SB_NOATIME;
 	sb->s_maxbytes = MAX_LFS_FILESIZE;
 	sb->s_time_gran = 1;
@@ -688,9 +729,13 @@ static void erofs_kill_sb(struct super_block *sb)
 	if (!sbi)
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fs_put_dax(sbi->dax_dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fs_put_dax(sbi->dax_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(sbi);
 	sb->s_fs_info = NULL;
 }
@@ -794,12 +839,17 @@ static int erofs_statfs(struct dentry *dentry, struct kstatfs *buf)
 static int erofs_show_options(struct seq_file *seq, struct dentry *root)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct erofs_sb_info *sbi = EROFS_SB(root->d_sb);
 	struct erofs_fs_context *ctx = &sbi->ctx;
 =======
 	struct erofs_sb_info *sbi __maybe_unused = EROFS_SB(root->d_sb);
 	struct erofs_fs_context *ctx __maybe_unused = &sbi->ctx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct erofs_sb_info *sbi = EROFS_SB(root->d_sb);
+	struct erofs_fs_context *ctx = &sbi->ctx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_EROFS_FS_XATTR
 	if (test_opt(ctx, XATTR_USER))
@@ -822,12 +872,18 @@ static int erofs_show_options(struct seq_file *seq, struct dentry *root)
 		seq_puts(seq, ",cache_strategy=readaround");
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test_opt(ctx, DAX_ALWAYS))
 		seq_puts(seq, ",dax=always");
 	if (test_opt(ctx, DAX_NEVER))
 		seq_puts(seq, ",dax=never");
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

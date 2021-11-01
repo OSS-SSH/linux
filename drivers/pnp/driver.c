@@ -124,10 +124,14 @@ fail:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void pnp_device_remove(struct device *dev)
 =======
 static int pnp_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void pnp_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pnp_dev *pnp_dev = to_pnp_dev(dev);
 	struct pnp_driver *drv = pnp_dev->driver;
@@ -144,9 +148,12 @@ static int pnp_device_remove(struct device *dev)
 
 	pnp_device_detach(pnp_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void pnp_device_shutdown(struct device *dev)

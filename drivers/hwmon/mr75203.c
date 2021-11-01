@@ -18,9 +18,13 @@
 #include <linux/regmap.h>
 #include <linux/reset.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/units.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/units.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* PVT Common register */
 #define PVT_IP_CONFIG	0x04
@@ -42,9 +46,12 @@
 #define CLK_SYS_CYCLES_MAX	514
 #define CLK_SYS_CYCLES_MIN	2
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HZ_PER_MHZ		1000000L
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define SDIF_DISABLE	0x04
 

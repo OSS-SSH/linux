@@ -553,10 +553,14 @@ cpuid_feature_cap_perfmon_field(u64 features, int field, u64 cap)
 
 	/* Treat IMPLEMENTATION DEFINED functionality as unimplemented */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (val == ID_AA64DFR0_PMUVER_IMP_DEF)
 =======
 	if (val == 0xf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (val == ID_AA64DFR0_PMUVER_IMP_DEF)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val = 0;
 
 	if (val > cap) {
@@ -607,10 +611,14 @@ static inline bool id_aa64pfr0_32bit_el1(u64 pfr0)
 	u32 val = cpuid_feature_extract_unsigned_field(pfr0, ID_AA64PFR0_EL1_SHIFT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return val == ID_AA64PFR0_ELx_32BIT_64BIT;
 =======
 	return val == ID_AA64PFR0_EL1_32BIT_64BIT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return val == ID_AA64PFR0_ELx_32BIT_64BIT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline bool id_aa64pfr0_32bit_el0(u64 pfr0)
@@ -618,10 +626,14 @@ static inline bool id_aa64pfr0_32bit_el0(u64 pfr0)
 	u32 val = cpuid_feature_extract_unsigned_field(pfr0, ID_AA64PFR0_EL0_SHIFT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return val == ID_AA64PFR0_ELx_32BIT_64BIT;
 =======
 	return val == ID_AA64PFR0_EL0_32BIT_64BIT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return val == ID_AA64PFR0_ELx_32BIT_64BIT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline bool id_aa64pfr0_sve(u64 pfr0)
@@ -670,11 +682,16 @@ static inline bool system_supports_4kb_granule(void)
 						ID_AA64MMFR0_TGRAN4_SHIFT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return (val >= ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN) &&
 	       (val <= ID_AA64MMFR0_TGRAN4_SUPPORTED_MAX);
 =======
 	return val == ID_AA64MMFR0_TGRAN4_SUPPORTED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return (val >= ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN) &&
+	       (val <= ID_AA64MMFR0_TGRAN4_SUPPORTED_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline bool system_supports_64kb_granule(void)
@@ -687,11 +704,16 @@ static inline bool system_supports_64kb_granule(void)
 						ID_AA64MMFR0_TGRAN64_SHIFT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return (val >= ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN) &&
 	       (val <= ID_AA64MMFR0_TGRAN64_SUPPORTED_MAX);
 =======
 	return val == ID_AA64MMFR0_TGRAN64_SUPPORTED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return (val >= ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN) &&
+	       (val <= ID_AA64MMFR0_TGRAN64_SUPPORTED_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline bool system_supports_16kb_granule(void)
@@ -704,11 +726,16 @@ static inline bool system_supports_16kb_granule(void)
 						ID_AA64MMFR0_TGRAN16_SHIFT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return (val >= ID_AA64MMFR0_TGRAN16_SUPPORTED_MIN) &&
 	       (val <= ID_AA64MMFR0_TGRAN16_SUPPORTED_MAX);
 =======
 	return val == ID_AA64MMFR0_TGRAN16_SUPPORTED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return (val >= ID_AA64MMFR0_TGRAN16_SUPPORTED_MIN) &&
+	       (val <= ID_AA64MMFR0_TGRAN16_SUPPORTED_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline bool system_supports_mixed_endian_el0(void)
@@ -809,6 +836,9 @@ static inline u32 id_aa64mmfr0_parange_to_phys_shift(int parange)
 {
 	switch (parange) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ID_AA64MMFR0_PARANGE_32: return 32;
 	case ID_AA64MMFR0_PARANGE_36: return 36;
 	case ID_AA64MMFR0_PARANGE_40: return 40;
@@ -816,6 +846,7 @@ static inline u32 id_aa64mmfr0_parange_to_phys_shift(int parange)
 	case ID_AA64MMFR0_PARANGE_44: return 44;
 	case ID_AA64MMFR0_PARANGE_48: return 48;
 	case ID_AA64MMFR0_PARANGE_52: return 52;
+<<<<<<< HEAD
 =======
 	case 0: return 32;
 	case 1: return 36;
@@ -825,6 +856,8 @@ static inline u32 id_aa64mmfr0_parange_to_phys_shift(int parange)
 	case 5: return 48;
 	case 6: return 52;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * A future PE could use a value unknown to the kernel.
 	 * However, by the "D10.1.4 Principles of the ID scheme

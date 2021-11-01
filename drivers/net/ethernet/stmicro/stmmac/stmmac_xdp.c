@@ -35,6 +35,7 @@ static int stmmac_xdp_enable_pool(struct stmmac_priv *priv,
 
 	if (need_update) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		napi_disable(&ch->rx_napi);
 		napi_disable(&ch->tx_napi);
 		stmmac_disable_rx_queue(priv, queue);
@@ -45,11 +46,18 @@ static int stmmac_xdp_enable_pool(struct stmmac_priv *priv,
 		napi_disable(&ch->rx_napi);
 		napi_disable(&ch->tx_napi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		napi_disable(&ch->rx_napi);
+		napi_disable(&ch->tx_napi);
+		stmmac_disable_rx_queue(priv, queue);
+		stmmac_disable_tx_queue(priv, queue);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	set_bit(queue, priv->af_xdp_zc_qps);
 
 	if (need_update) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		stmmac_enable_rx_queue(priv, queue);
 		stmmac_enable_tx_queue(priv, queue);
@@ -59,6 +67,11 @@ static int stmmac_xdp_enable_pool(struct stmmac_priv *priv,
 		stmmac_enable_rx_queue(priv, queue);
 		stmmac_enable_tx_queue(priv, queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		stmmac_enable_rx_queue(priv, queue);
+		stmmac_enable_tx_queue(priv, queue);
+		napi_enable(&ch->rxtx_napi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = stmmac_xsk_wakeup(priv->dev, queue, XDP_WAKEUP_RX);
 		if (err)
@@ -86,6 +99,7 @@ static int stmmac_xdp_disable_pool(struct stmmac_priv *priv, u16 queue)
 
 	if (need_update) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		napi_disable(&ch->rxtx_napi);
 		stmmac_disable_rx_queue(priv, queue);
 		stmmac_disable_tx_queue(priv, queue);
@@ -96,6 +110,12 @@ static int stmmac_xdp_disable_pool(struct stmmac_priv *priv, u16 queue)
 		synchronize_rcu();
 		napi_disable(&ch->rxtx_napi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		napi_disable(&ch->rxtx_napi);
+		stmmac_disable_rx_queue(priv, queue);
+		stmmac_disable_tx_queue(priv, queue);
+		synchronize_rcu();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	xsk_pool_dma_unmap(pool, STMMAC_RX_DMA_ATTR);
@@ -103,6 +123,7 @@ static int stmmac_xdp_disable_pool(struct stmmac_priv *priv, u16 queue)
 	clear_bit(queue, priv->af_xdp_zc_qps);
 
 	if (need_update) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		stmmac_enable_rx_queue(priv, queue);
 		stmmac_enable_tx_queue(priv, queue);
@@ -114,6 +135,12 @@ static int stmmac_xdp_disable_pool(struct stmmac_priv *priv, u16 queue)
 		stmmac_enable_rx_queue(priv, queue);
 		stmmac_enable_tx_queue(priv, queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		stmmac_enable_rx_queue(priv, queue);
+		stmmac_enable_tx_queue(priv, queue);
+		napi_enable(&ch->rx_napi);
+		napi_enable(&ch->tx_napi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;

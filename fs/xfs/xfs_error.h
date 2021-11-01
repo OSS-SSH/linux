@@ -76,6 +76,9 @@ extern int xfs_errortag_clearall(struct xfs_mount *mp);
 #define		XFS_PTAG_VERIFIER_ERROR		0x00000100
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define XFS_PTAG_STRINGS \
 	{ XFS_NO_PTAG,			"none" }, \
 	{ XFS_PTAG_IFLUSH,		"iflush" }, \
@@ -88,6 +91,9 @@ extern int xfs_errortag_clearall(struct xfs_mount *mp);
 	{ XFS_PTAG_FSBLOCK_ZERO,	"fsb_zero" }, \
 	{ XFS_PTAG_VERIFIER_ERROR,	"verifier" }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif	/* __XFS_ERROR_H__ */

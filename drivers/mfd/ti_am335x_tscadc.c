@@ -176,6 +176,7 @@ static	int ti_tscadc_probe(struct platform_device *pdev)
 
 	err = platform_get_irq(pdev, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		goto ret;
 	else
@@ -185,6 +186,11 @@ static	int ti_tscadc_probe(struct platform_device *pdev)
 		goto ret;
 	} else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		goto ret;
+	else
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tscadc->irq = err;
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);

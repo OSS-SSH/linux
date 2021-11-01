@@ -303,10 +303,14 @@ void sort__setup_elide(FILE *fp);
 void perf_hpp__set_elide(int idx, bool elide);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 char *sort_help(const char *prefix);
 =======
 const char *sort_help(const char *prefix);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+char *sort_help(const char *prefix);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int report_parse_ignore_callees_opt(const struct option *opt, const char *arg, int unset);
 

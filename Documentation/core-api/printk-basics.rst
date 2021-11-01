@@ -108,6 +108,7 @@ Function reference
 ==================
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .. kernel-doc:: include/linux/printk.h
    :functions: printk pr_emerg pr_alert pr_crit pr_err pr_warn pr_notice pr_info
 =======
@@ -117,4 +118,8 @@ Function reference
 .. kernel-doc:: include/linux/printk.h
    :functions: pr_emerg pr_alert pr_crit pr_err pr_warn pr_notice pr_info
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. kernel-doc:: include/linux/printk.h
+   :functions: printk pr_emerg pr_alert pr_crit pr_err pr_warn pr_notice pr_info
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       pr_fmt pr_debug pr_devel pr_cont

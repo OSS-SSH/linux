@@ -11,6 +11,7 @@
 
 /* DL dir Aggregation support mask */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DL_AGGR BIT(9)
 
 /* UL dir Aggregation support mask */
@@ -21,6 +22,12 @@
 /* UL dir Aggregation support mask */
 #define UL_AGGR BIT(22)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DL_AGGR BIT(9)
+
+/* UL dir Aggregation support mask */
+#define UL_AGGR BIT(8)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* UL flow credit support mask */
 #define UL_FLOW_CREDIT BIT(21)

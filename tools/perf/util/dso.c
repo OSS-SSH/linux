@@ -1155,6 +1155,7 @@ struct map *dso__new_map(const char *name)
 	struct dso *dso = dso__new(name);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dso) {
 		map = map__new2(0, dso);
 		dso__put(dso);
@@ -1163,6 +1164,12 @@ struct map *dso__new_map(const char *name)
 	if (dso)
 		map = map__new2(0, dso);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dso) {
+		map = map__new2(0, dso);
+		dso__put(dso);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return map;
 }
@@ -1355,6 +1362,9 @@ void dso__set_build_id(struct dso *dso, struct build_id *bid)
 bool dso__build_id_equal(const struct dso *dso, struct build_id *bid)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dso->bid.size > bid->size && dso->bid.size == BUILD_ID_SIZE) {
 		/*
 		 * For the backward compatibility, it allows a build-id has
@@ -1365,8 +1375,11 @@ bool dso__build_id_equal(const struct dso *dso, struct build_id *bid)
 				    dso->bid.size - bid->size);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dso->bid.size == bid->size &&
 	       memcmp(dso->bid.data, bid->data, dso->bid.size) == 0;
 }

@@ -49,10 +49,15 @@ int br_dev_queue_push_xmit(struct net *net, struct sock *sk, struct sk_buff *skb
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	br_switchdev_frame_set_offload_fwd_mark(skb);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	br_switchdev_frame_set_offload_fwd_mark(skb);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_queue_xmit(skb);
 
 	return 0;
@@ -82,13 +87,19 @@ static void __br_forward(const struct net_bridge_port *to,
 	int br_hook;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Mark the skb for forwarding offload early so that br_handle_vlan()
 	 * can know whether to pop the VLAN header on egress or keep it.
 	 */
 	nbp_switchdev_frame_mark_tx_fwd_offload(to, skb);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vg = nbp_vlan_group_rcu(to);
 	skb = br_handle_vlan(to->br, to, vg, skb);
 	if (!skb)
@@ -188,10 +199,15 @@ static struct net_bridge_port *maybe_deliver(
 		return prev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nbp_switchdev_frame_mark_tx_fwd_to_hwdom(p, skb);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nbp_switchdev_frame_mark_tx_fwd_to_hwdom(p, skb);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!prev)
 		goto out;
 
@@ -286,6 +302,7 @@ static void maybe_deliver_addr(struct net_bridge_port *p, struct sk_buff *skb,
 void br_multicast_flood(struct net_bridge_mdb_entry *mdst,
 			struct sk_buff *skb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			struct net_bridge_mcast *brmctx,
 			bool local_rcv, bool local_orig)
 {
@@ -295,11 +312,17 @@ void br_multicast_flood(struct net_bridge_mdb_entry *mdst,
 	struct net_device *dev = BR_INPUT_SKB_CB(skb)->brdev;
 	struct net_bridge *br = netdev_priv(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct net_bridge_mcast *brmctx,
+			bool local_rcv, bool local_orig)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_bridge_port *prev = NULL;
 	struct net_bridge_port_group *p;
 	bool allow_mode_include = true;
 	struct hlist_node *rp;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rp = br_multicast_get_first_rport_node(brmctx, skb);
 
@@ -313,6 +336,13 @@ void br_multicast_flood(struct net_bridge_mdb_entry *mdst,
 		p = rcu_dereference(mdst->ports);
 		if (br_multicast_should_handle_mode(br, mdst->addr.proto) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rp = br_multicast_get_first_rport_node(brmctx, skb);
+
+	if (mdst) {
+		p = rcu_dereference(mdst->ports);
+		if (br_multicast_should_handle_mode(brmctx, mdst->addr.proto) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    br_multicast_is_star_g(&mdst->addr))
 			allow_mode_include = false;
 	} else {

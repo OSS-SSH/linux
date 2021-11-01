@@ -185,6 +185,7 @@ static void watchdog_smp_panic(int cpu, u64 tb)
 	wd_smp_unlock(&flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	printk_safe_flush();
 	/*
@@ -192,6 +193,8 @@ static void watchdog_smp_panic(int cpu, u64 tb)
 	 * before anything actually goes out to console.
 	 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sysctl_hardlockup_all_cpu_backtrace)
 		trigger_allbutself_cpu_backtrace();
 

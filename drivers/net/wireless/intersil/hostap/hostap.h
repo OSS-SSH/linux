@@ -94,10 +94,15 @@ extern const struct ethtool_ops prism2_ethtool_ops;
 
 int hostap_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int hostap_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			  void __user *data, int cmd);
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int hostap_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			  void __user *data, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* HOSTAP_H */

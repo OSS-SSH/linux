@@ -10,9 +10,13 @@
 #include <linux/module.h>
 #include <linux/pci.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pm_runtime.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/topology.h>
 #include <linux/uacce.h>
 #include "hpre.h"
@@ -86,6 +90,9 @@
 #define HPRE_SVA_DISABLE_READY		(BIT(4) | BIT(8))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* clock gate */
 #define HPRE_CLKGATE_CTL		0x301a10
 #define HPRE_PEH_CFG_AUTO_GATE		0x301a2c
@@ -96,8 +103,11 @@
 #define HPRE_CLUSTER_DYN_CTL_EN		BIT(0)
 #define HPRE_CORE_GATE_EN		(BIT(30) | BIT(31))
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HPRE_AM_OOO_SHUTDOWN_ENB	0x301044
 #define HPRE_AM_OOO_SHUTDOWN_ENABLE	BIT(0)
 #define HPRE_WR_MSI_PORT		BIT(2)
@@ -435,6 +445,9 @@ static void hpre_close_sva_prefetch(struct hisi_qm *qm)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void hpre_enable_clock_gate(struct hisi_qm *qm)
 {
 	u32 val;
@@ -483,8 +496,11 @@ static void hpre_disable_clock_gate(struct hisi_qm *qm)
 	writel(val, qm->io_base + HPRE_CORE_SHB_CFG);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
 {
 	struct device *dev = &qm->pdev->dev;
@@ -492,11 +508,17 @@ static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* disabel dynamic clock gate before sram init */
 	hpre_disable_clock_gate(qm);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* disabel dynamic clock gate before sram init */
+	hpre_disable_clock_gate(qm);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writel(HPRE_QM_USR_CFG_MASK, qm->io_base + QM_ARUSER_M_CFG_ENABLE);
 	writel(HPRE_QM_USR_CFG_MASK, qm->io_base + QM_AWUSER_M_CFG_ENABLE);
 	writel_relaxed(HPRE_QM_AXI_CFG_MASK, qm->io_base + QM_AXI_M_CFG);
@@ -548,10 +570,15 @@ static int hpre_set_user_domain_and_cache(struct hisi_qm *qm)
 	hpre_config_pasid(qm);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hpre_enable_clock_gate(qm);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hpre_enable_clock_gate(qm);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -675,20 +702,30 @@ static ssize_t hpre_ctrl_debug_read(struct file *filp, char __user *buf,
 {
 	struct hpre_debugfs_file *file = filp->private_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hisi_qm *qm = hpre_file_to_qm(file);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hisi_qm *qm = hpre_file_to_qm(file);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char tbuf[HPRE_DBGFS_VAL_MAX_LEN];
 	u32 val;
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = hisi_qm_get_dfx_access(qm);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irq(&file->lock);
 	switch (file->type) {
 	case HPRE_CLEAR_ENABLE:
@@ -698,6 +735,7 @@ static ssize_t hpre_ctrl_debug_read(struct file *filp, char __user *buf,
 		val = hpre_cluster_inqry_read(file);
 		break;
 	default:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto err_input;
 	}
@@ -714,11 +752,24 @@ err_input:
 =======
 		spin_unlock_irq(&file->lock);
 		return -EINVAL;
+=======
+		goto err_input;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	spin_unlock_irq(&file->lock);
+
+	hisi_qm_put_dfx_access(qm);
 	ret = snprintf(tbuf, HPRE_DBGFS_VAL_MAX_LEN, "%u\n", val);
 	return simple_read_from_buffer(buf, count, pos, tbuf, ret);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+err_input:
+	spin_unlock_irq(&file->lock);
+	hisi_qm_put_dfx_access(qm);
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t hpre_ctrl_debug_write(struct file *filp, const char __user *buf,
@@ -726,9 +777,13 @@ static ssize_t hpre_ctrl_debug_write(struct file *filp, const char __user *buf,
 {
 	struct hpre_debugfs_file *file = filp->private_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hisi_qm *qm = hpre_file_to_qm(file);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hisi_qm *qm = hpre_file_to_qm(file);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char tbuf[HPRE_DBGFS_VAL_MAX_LEN];
 	unsigned long val;
 	int len, ret;
@@ -749,12 +804,18 @@ static ssize_t hpre_ctrl_debug_write(struct file *filp, const char __user *buf,
 		return -EFAULT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = hisi_qm_get_dfx_access(qm);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irq(&file->lock);
 	switch (file->type) {
 	case HPRE_CLEAR_ENABLE:
@@ -772,6 +833,7 @@ static ssize_t hpre_ctrl_debug_write(struct file *filp, const char __user *buf,
 		goto err_input;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	ret = count;
 
@@ -780,12 +842,18 @@ err_input:
 	hisi_qm_put_dfx_access(qm);
 =======
 	spin_unlock_irq(&file->lock);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	return count;
+	ret = count;
 
 err_input:
 	spin_unlock_irq(&file->lock);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hisi_qm_put_dfx_access(qm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -826,6 +894,9 @@ DEFINE_DEBUGFS_ATTRIBUTE(hpre_atomic64_ops, hpre_debugfs_atomic64_get,
 			 hpre_debugfs_atomic64_set, "%llu\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hpre_com_regs_show(struct seq_file *s, void *unused)
 {
 	hisi_qm_regs_dump(s, s->private);
@@ -844,8 +915,11 @@ static int hpre_cluster_regs_show(struct seq_file *s, void *unused)
 
 DEFINE_SHOW_ATTRIBUTE(hpre_cluster_regs);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hpre_create_debugfs_file(struct hisi_qm *qm, struct dentry *dir,
 				    enum hpre_ctrl_dbgfs_file type, int indx)
 {
@@ -884,15 +958,22 @@ static int hpre_pf_comm_regs_debugfs_init(struct hisi_qm *qm)
 	regset->nregs = ARRAY_SIZE(hpre_com_dfx_regs);
 	regset->base = qm->io_base;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regset->dev = dev;
 
 	debugfs_create_file("regs", 0444, qm->debug.debug_root,
 			    regset, &hpre_com_regs_fops);
+<<<<<<< HEAD
 
 =======
 
 	debugfs_create_regset32("regs", 0444,  qm->debug.debug_root, regset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -919,6 +1000,7 @@ static int hpre_cluster_debugfs_init(struct hisi_qm *qm)
 		regset->nregs = ARRAY_SIZE(hpre_cluster_dfx_regs);
 		regset->base = qm->io_base + hpre_cluster_offsets[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		regset->dev = dev;
 
 		debugfs_create_file("regs", 0444, tmp_d, regset,
@@ -927,6 +1009,12 @@ static int hpre_cluster_debugfs_init(struct hisi_qm *qm)
 
 		debugfs_create_regset32("regs", 0444, tmp_d, regset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		regset->dev = dev;
+
+		debugfs_create_file("regs", 0444, tmp_d, regset,
+				    &hpre_cluster_regs_fops);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = hpre_create_debugfs_file(qm, tmp_d, HPRE_CLUSTER_CTRL,
 					       i + HPRE_CLUSTER_CTRL);
 		if (ret)
@@ -1179,10 +1267,15 @@ static int hpre_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hisi_qm_pm_init(qm);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hisi_qm_pm_init(qm);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 err_with_alg_register:
@@ -1207,9 +1300,13 @@ static void hpre_remove(struct pci_dev *pdev)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hisi_qm_pm_uninit(qm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hisi_qm_pm_uninit(qm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hisi_qm_wait_task_finish(qm, &hpre_devices);
 	hisi_qm_alg_unregister(qm, &hpre_devices);
 	if (qm->fun_type == QM_HW_PF && qm->vfs_num) {
@@ -1233,12 +1330,18 @@ static void hpre_remove(struct pci_dev *pdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct dev_pm_ops hpre_pm_ops = {
 	SET_RUNTIME_PM_OPS(hisi_qm_suspend, hisi_qm_resume, NULL)
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pci_error_handlers hpre_err_handler = {
 	.error_detected		= hisi_qm_dev_err_detected,
 	.slot_reset		= hisi_qm_dev_slot_reset,
@@ -1256,9 +1359,13 @@ static struct pci_driver hpre_pci_driver = {
 	.err_handler		= &hpre_err_handler,
 	.shutdown		= hisi_qm_dev_shutdown,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.driver.pm		= &hpre_pm_ops,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.driver.pm		= &hpre_pm_ops,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void hpre_register_debugfs(void)

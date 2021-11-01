@@ -383,10 +383,14 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
 			    u32 handle, struct route4_head *head,
 			    struct nlattr **tb, struct nlattr *est, int new,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    u32 flags, struct netlink_ext_ack *extack)
 =======
 			    bool ovr, struct netlink_ext_ack *extack)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    u32 flags, struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 id = 0, to = 0, nhandle = 0x8000;
 	struct route4_filter *fp;
@@ -395,10 +399,14 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = tcf_exts_validate(net, tp, tb, est, &f->exts, flags, extack);
 =======
 	err = tcf_exts_validate(net, tp, tb, est, &f->exts, ovr, true, extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = tcf_exts_validate(net, tp, tb, est, &f->exts, flags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -473,12 +481,17 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
 static int route4_change(struct net *net, struct sk_buff *in_skb,
 			 struct tcf_proto *tp, unsigned long base, u32 handle,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 struct nlattr **tca, void **arg, u32 flags,
 			 struct netlink_ext_ack *extack)
 =======
 			 struct nlattr **tca, void **arg, bool ovr,
 			 bool rtnl_held, struct netlink_ext_ack *extack)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 struct nlattr **tca, void **arg, u32 flags,
+			 struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct route4_head *head = rtnl_dereference(tp->root);
 	struct route4_filter __rcu **fp;
@@ -524,10 +537,14 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
 
 	err = route4_set_parms(net, tp, base, f, handle, head, tb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			       tca[TCA_RATE], new, flags, extack);
 =======
 			       tca[TCA_RATE], new, ovr, extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       tca[TCA_RATE], new, flags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		goto errout;
 

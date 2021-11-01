@@ -280,6 +280,9 @@ static int cros_ec_host_command_proto_query(struct cros_ec_device *ec_dev,
 
 	ret = send_command(ec_dev, msg);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Send command once again when timeout occurred.
 	 * Fingerprint MCU (FPMCU) is restarted during system boot which
@@ -289,8 +292,11 @@ static int cros_ec_host_command_proto_query(struct cros_ec_device *ec_dev,
 	 */
 	if (ret == -ETIMEDOUT)
 		ret = send_command(ec_dev, msg);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret < 0) {
 		dev_dbg(ec_dev->dev,

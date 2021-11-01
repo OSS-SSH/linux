@@ -1518,6 +1518,9 @@ iwl_dump_ini_special_mem_iter(struct iwl_fw_runtime *fwrt,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 iwl_dump_ini_dbgi_sram_iter(struct iwl_fw_runtime *fwrt,
 			    struct iwl_dump_ini_region_data *reg_data,
@@ -1549,8 +1552,11 @@ iwl_dump_ini_dbgi_sram_iter(struct iwl_fw_runtime *fwrt,
 	return sizeof(*range) + le32_to_cpu(range->range_data_size);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int iwl_dump_ini_fw_pkt_iter(struct iwl_fw_runtime *fwrt,
 				    struct iwl_dump_ini_region_data *reg_data,
 				    void *range_ptr, int idx)
@@ -1582,10 +1588,14 @@ iwl_dump_ini_mem_fill_header(struct iwl_fw_runtime *fwrt,
 	dump->header.version = cpu_to_le32(IWL_INI_DUMP_VER);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return dump->data;
 =======
 	return dump->ranges;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return dump->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1650,10 +1660,14 @@ iwl_dump_ini_mon_fill_header(struct iwl_fw_runtime *fwrt,
 	data->header.version = cpu_to_le32(IWL_INI_DUMP_VER);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return data->data;
 =======
 	return data->ranges;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return data->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void *
@@ -1690,10 +1704,14 @@ iwl_dump_ini_err_table_fill_header(struct iwl_fw_runtime *fwrt,
 	dump->version = reg->err_table.version;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return dump->data;
 =======
 	return dump->ranges;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return dump->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void *
@@ -1709,10 +1727,14 @@ iwl_dump_ini_special_mem_fill_header(struct iwl_fw_runtime *fwrt,
 	dump->version = reg->special_mem.version;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return dump->data;
 =======
 	return dump->ranges;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return dump->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u32 iwl_dump_ini_mem_ranges(struct iwl_fw_runtime *fwrt,
@@ -2240,14 +2262,20 @@ static const struct iwl_dump_ini_mem_ops iwl_dump_ini_region_ops[] = {
 		.fill_range = iwl_dump_ini_special_mem_iter,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[IWL_FW_INI_REGION_DBGI_SRAM] = {
 		.get_num_of_ranges = iwl_dump_ini_mem_ranges,
 		.get_size = iwl_dump_ini_mem_get_size,
 		.fill_mem_hdr = iwl_dump_ini_mem_fill_header,
 		.fill_range = iwl_dump_ini_dbgi_sram_iter,
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static u32 iwl_dump_ini_trigger(struct iwl_fw_runtime *fwrt,
@@ -2381,10 +2409,14 @@ static void iwl_fw_error_dump(struct iwl_fw_runtime *fwrt,
 
 	if (dump_data->monitor_only)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dump_mask &= BIT(IWL_FW_ERROR_DUMP_FW_MONITOR);
 =======
 		dump_mask &= IWL_FW_ERROR_DUMP_FW_MONITOR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dump_mask &= BIT(IWL_FW_ERROR_DUMP_FW_MONITOR);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fw_error_dump.trans_ptr = iwl_trans_dump_data(fwrt->trans, dump_mask);
 	file_len = le32_to_cpu(dump_file->file_len);
@@ -2594,6 +2626,7 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
 IWL_EXPORT_SYMBOL(iwl_fw_dbg_collect);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int iwl_fw_dbg_ini_collect(struct iwl_fw_runtime *fwrt,
 			   struct iwl_fwrt_dump_data *dump_data)
@@ -2641,6 +2674,8 @@ int iwl_fw_dbg_ini_collect(struct iwl_fw_runtime *fwrt,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int iwl_fw_dbg_collect_trig(struct iwl_fw_runtime *fwrt,
 			    struct iwl_fw_dbg_trigger_tlv *trigger,
 			    const char *fmt, ...)
@@ -2770,6 +2805,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int iwl_fw_dbg_ini_collect(struct iwl_fw_runtime *fwrt,
 			   struct iwl_fwrt_dump_data *dump_data,
 			   bool sync)
@@ -2822,8 +2860,11 @@ int iwl_fw_dbg_ini_collect(struct iwl_fw_runtime *fwrt,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void iwl_fw_error_dump_wk(struct work_struct *work)
 {
 	struct iwl_fwrt_wk_data *wks =

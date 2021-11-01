@@ -718,6 +718,7 @@ static void tegra_spi_deinit_dma_param(struct tegra_spi_data *tspi,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
 {
 	struct tegra_spi_data *tspi = spi_master_get_devdata(spi->master);
@@ -732,6 +733,14 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi,
 {
 	struct tegra_spi_data *tspi = spi_master_get_devdata(spi->master);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
+{
+	struct tegra_spi_data *tspi = spi_master_get_devdata(spi->master);
+	struct spi_delay *setup = &spi->cs_setup;
+	struct spi_delay *hold = &spi->cs_hold;
+	struct spi_delay *inactive = &spi->cs_inactive;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 setup_dly, hold_dly, inactive_dly;
 	u32 setup_hold;
 	u32 spi_cs_timing;

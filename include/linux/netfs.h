@@ -103,9 +103,13 @@ struct netfs_cache_resources {
 	void				*cache_priv;
 	void				*cache_priv2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int			debug_id;	/* Cookie debug ID */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int			debug_id;	/* Cookie debug ID */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -142,9 +146,12 @@ struct netfs_read_request {
 	void			*netfs_priv;	/* Private data for the netfs */
 	unsigned int		debug_id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int		cookie_debug_id;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_t		nr_rd_ops;	/* Number of read ops in progress */
 	atomic_t		nr_wr_ops;	/* Number of write ops in progress */
 	size_t			submitted;	/* Amount submitted for I/O so far */

@@ -106,14 +106,18 @@ static void ioc3_irq_handler(struct irq_desc *desc)
 	struct ioc3 __iomem *regs = ipd->regs;
 	u32 pending, mask;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pending = readl(&regs->sio_ir);
 	mask = readl(&regs->sio_ies);
 	pending &= mask; /* Mask off not enabled interrupts */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (pending)
 		generic_handle_domain_irq(domain, __ffs(pending));
@@ -128,6 +132,12 @@ static void ioc3_irq_handler(struct irq_desc *desc)
 		spurious_interrupt();
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (pending)
+		generic_handle_domain_irq(domain, __ffs(pending));
+	else
+		spurious_interrupt();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

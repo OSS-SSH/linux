@@ -825,6 +825,9 @@ static int wacom_intuos_inout(struct wacom_wac *wacom)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool touch_is_muted(struct wacom_wac *wacom_wac)
 {
 	return wacom_wac->probe_complete &&
@@ -832,8 +835,11 @@ static inline bool touch_is_muted(struct wacom_wac *wacom_wac)
 	       !wacom_wac->shared->is_touch_on;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool report_touch_events(struct wacom_wac *wacom)
 {
 	return (touch_arbitration ? !wacom->shared->stylus_in_proximity : 1);
@@ -1536,6 +1542,7 @@ static int wacom_24hdt_irq(struct wacom_wac *wacom)
 	int y_offset = 2;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (touch_is_muted(wacom) && !wacom->shared->touch_down)
 		return 0;
 =======
@@ -1545,6 +1552,10 @@ static int wacom_24hdt_irq(struct wacom_wac *wacom)
 			return 0;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (touch_is_muted(wacom) && !wacom->shared->touch_down)
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (wacom->features.type == WACOM_27QHDT) {
 		current_num_contacts = data[63];
@@ -2003,6 +2014,7 @@ static void wacom_wac_pad_usage_mapping(struct hid_device *hdev,
 		features->device_type |= WACOM_DEVICETYPE_PAD;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case WACOM_HID_WD_MUTE_DEVICE:
 		/* softkey touch switch */
 		wacom_wac->is_soft_touch_switch = true;
@@ -2016,14 +2028,24 @@ static void wacom_wac_pad_usage_mapping(struct hid_device *hdev,
 		 * order to process the usages when we receive them, we set
 =======
 	case WACOM_HID_WD_TOUCHONOFF:
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case WACOM_HID_WD_MUTE_DEVICE:
+		/* softkey touch switch */
+		wacom_wac->is_soft_touch_switch = true;
+		fallthrough;
+	case WACOM_HID_WD_TOUCHONOFF:
 		/*
-		 * This usage, which is used to mute touch events, comes
-		 * from the pad packet, but is reported on the touch
+		 * These two usages, which are used to mute touch events, come
+		 * from the pad packet, but are reported on the touch
 		 * interface. Because the touch interface may not have
 		 * been created yet, we cannot call wacom_map_usage(). In
+<<<<<<< HEAD
 		 * order to process this usage when we receive it, we set
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * order to process the usages when we receive them, we set
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * the usage type and code directly.
 		 */
 		wacom_wac->has_mute_touch_switch = true;
@@ -2563,11 +2585,15 @@ static void wacom_wac_finger_slot(struct wacom_wac *wacom_wac,
 		    report_touch_events(wacom_wac);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (touch_is_muted(wacom_wac)) {
 =======
 	if (wacom_wac->shared->has_mute_touch_switch &&
 	    !wacom_wac->shared->is_touch_on) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (touch_is_muted(wacom_wac)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!wacom_wac->shared->touch_down)
 			return;
 		prox = false;
@@ -2582,6 +2608,9 @@ static void wacom_wac_finger_slot(struct wacom_wac *wacom_wac,
 
 		slot = input_mt_get_slot_by_key(input, hid_data->id);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (slot < 0) {
 			return;
 		} else {
@@ -2594,8 +2623,11 @@ static void wacom_wac_finger_slot(struct wacom_wac *wacom_wac,
 			}
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		input_mt_slot(input, slot);
 		input_mt_report_slot_state(input, MT_TOOL_FINGER, prox);
 	}
@@ -2627,11 +2659,17 @@ static void wacom_wac_finger_event(struct hid_device *hdev,
 	struct wacom_features *features = &wacom->wacom_wac.features;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (touch_is_muted(wacom_wac) && !wacom_wac->shared->touch_down)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (touch_is_muted(wacom_wac) && !wacom_wac->shared->touch_down)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (wacom_wac->is_invalid_bt_frame)
 		return;
 
@@ -2682,11 +2720,17 @@ static void wacom_wac_finger_pre_report(struct hid_device *hdev,
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (touch_is_muted(wacom_wac) && !wacom_wac->shared->touch_down)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (touch_is_muted(wacom_wac) && !wacom_wac->shared->touch_down)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wacom_wac->is_invalid_bt_frame = false;
 
 	for (i = 0; i < report->maxfield; i++) {
@@ -2739,12 +2783,18 @@ static void wacom_wac_finger_report(struct hid_device *hdev,
 	unsigned touch_max = wacom_wac->features.touch_max;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* if there was nothing to process, don't send an empty sync */
 	if (wacom_wac->hid_data.num_expected == 0)
 		return;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If more packets of data are expected, give us a chance to
 	 * process them rather than immediately syncing a partial
 	 * update.
@@ -3899,11 +3949,16 @@ int wacom_setup_touch_input_capabilities(struct input_dev *input_dev,
 			input_dev->evbit[0] |= BIT_MASK(EV_SW);
 			__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			wacom_wac->has_mute_touch_switch = true;
 			wacom_wac->is_soft_touch_switch = true;
 =======
 			wacom_wac->shared->has_mute_touch_switch = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			wacom_wac->has_mute_touch_switch = true;
+			wacom_wac->is_soft_touch_switch = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		fallthrough;
 
@@ -4790,14 +4845,20 @@ static const struct wacom_features wacom_features_0x393 =
 	  INTUOSP2S_BT, WACOM_INTUOS3_RES, WACOM_INTUOS3_RES, 7,
 	  .touch_max = 10 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct wacom_features wacom_features_0x3c6 =
 	{ "Wacom Intuos BT S", 15200, 9500, 4095, 63,
 	  INTUOSHT3_BT, WACOM_INTUOS_RES, WACOM_INTUOS_RES, 4 };
 static const struct wacom_features wacom_features_0x3c8 =
 	{ "Wacom Intuos BT M", 21600, 13500, 4095, 63,
 	  INTUOSHT3_BT, WACOM_INTUOS_RES, WACOM_INTUOS_RES, 4 };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct wacom_features wacom_features_HID_ANY_ID =
 	{ "Wacom HID", .type = HID_GENERIC, .oVid = HID_ANY_ID, .oPid = HID_ANY_ID };
@@ -4972,10 +5033,15 @@ const struct hid_device_id wacom_ids[] = {
 	{ USB_DEVICE_WACOM(0x37B) },
 	{ BT_DEVICE_WACOM(0x393) },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ BT_DEVICE_WACOM(0x3c6) },
 	{ BT_DEVICE_WACOM(0x3c8) },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ BT_DEVICE_WACOM(0x3c6) },
+	{ BT_DEVICE_WACOM(0x3c8) },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ USB_DEVICE_WACOM(0x4001) },
 	{ USB_DEVICE_WACOM(0x4004) },
 	{ USB_DEVICE_WACOM(0x5000) },

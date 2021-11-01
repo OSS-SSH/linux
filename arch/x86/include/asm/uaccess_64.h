@@ -59,6 +59,7 @@ raw_copy_to_user(void __user *dst, const void *src, unsigned long size)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static __always_inline __must_check
 unsigned long raw_copy_in_user(void __user *dst, const void __user *src, unsigned long size)
@@ -68,6 +69,8 @@ unsigned long raw_copy_in_user(void __user *dst, const void __user *src, unsigne
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern long __copy_user_nocache(void *dst, const void __user *src,
 				unsigned size, int zerorest);
 

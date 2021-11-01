@@ -361,11 +361,14 @@ int blkdev_report_zones_ioctl(struct block_device *bdev, fmode_t mode,
 		return -ENOTTY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!capable(CAP_SYS_ADMIN))
 		return -EACCES;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (copy_from_user(&rep, argp, sizeof(struct blk_zone_report)))
 		return -EFAULT;
 
@@ -425,11 +428,14 @@ int blkdev_zone_mgmt_ioctl(struct block_device *bdev, fmode_t mode,
 		return -ENOTTY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!capable(CAP_SYS_ADMIN))
 		return -EACCES;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(mode & FMODE_WRITE))
 		return -EBADF;
 

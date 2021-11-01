@@ -504,6 +504,7 @@ static int atmel_tcb_pwm_remove(struct platform_device *pdev)
 {
 	struct atmel_tcb_pwm_chip *tcbpwm = platform_get_drvdata(pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	pwmchip_remove(&tcbpwm->chip);
 =======
@@ -513,6 +514,10 @@ static int atmel_tcb_pwm_remove(struct platform_device *pdev)
 	if (err < 0)
 		return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	pwmchip_remove(&tcbpwm->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	clk_disable_unprepare(tcbpwm->slow_clk);
 	clk_put(tcbpwm->slow_clk);

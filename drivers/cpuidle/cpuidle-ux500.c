@@ -118,10 +118,14 @@ static int dbx500_cpuidle_probe(struct platform_device *pdev)
 static struct platform_driver dbx500_cpuidle_plat_driver = {
 	.driver = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.name = "db8500-cpuidle",
 =======
 		.name = "cpuidle-dbx500",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.name = "db8500-cpuidle",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	.probe = dbx500_cpuidle_probe,
 };

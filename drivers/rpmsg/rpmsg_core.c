@@ -531,6 +531,7 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void rpmsg_dev_remove(struct device *dev)
 {
 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
@@ -540,14 +541,20 @@ static void rpmsg_dev_remove(struct device *dev)
 		rpdev->ops->announce_destroy(rpdev);
 =======
 static int rpmsg_dev_remove(struct device *dev)
+=======
+static void rpmsg_dev_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
 	struct rpmsg_driver *rpdrv = to_rpmsg_driver(rpdev->dev.driver);
-	int err = 0;
 
 	if (rpdev->ops->announce_destroy)
+<<<<<<< HEAD
 		err = rpdev->ops->announce_destroy(rpdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rpdev->ops->announce_destroy(rpdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (rpdrv->remove)
 		rpdrv->remove(rpdev);
@@ -557,10 +564,13 @@ static int rpmsg_dev_remove(struct device *dev)
 	if (rpdev->ept)
 		rpmsg_destroy_ept(rpdev->ept);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct bus_type rpmsg_bus = {

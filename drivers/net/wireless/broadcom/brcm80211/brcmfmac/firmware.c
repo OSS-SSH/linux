@@ -432,10 +432,13 @@ struct brcmf_fw {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void brcmf_fw_request_done(const struct firmware *fw, void *ctx);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_EFI
 /* In some cases the EFI-var stored nvram contains "ccode=ALL" or "ccode=XV"
  * to specify "worldwide" compatible settings, but these 2 ccode-s do not work
@@ -598,6 +601,9 @@ static int brcmf_fw_complete_request(const struct firmware *fw,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static char *brcm_alt_fw_path(const char *path, const char *board_type)
 {
 	char alt_path[BRCMF_FW_NAME_LEN];
@@ -618,14 +624,18 @@ static char *brcm_alt_fw_path(const char *path, const char *board_type)
 	return kstrdup(alt_path, GFP_KERNEL);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int brcmf_fw_request_firmware(const struct firmware **fw,
 				     struct brcmf_fw *fwctx)
 {
 	struct brcmf_fw_item *cur = &fwctx->req->items[fwctx->curpos];
 	int ret;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Files can be board-specific, first try a board-specific path */
 	if (cur->type == BRCMF_FW_TYPE_NVRAM && fwctx->req->board_type) {
@@ -639,26 +649,34 @@ static int brcmf_fw_request_firmware(const struct firmware **fw,
 		kfree(alt_path);
 =======
 	/* nvram files are board-specific, first try a board-specific path */
+=======
+	/* Files can be board-specific, first try a board-specific path */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cur->type == BRCMF_FW_TYPE_NVRAM && fwctx->req->board_type) {
-		char alt_path[BRCMF_FW_NAME_LEN];
+		char *alt_path;
 
-		strlcpy(alt_path, cur->path, BRCMF_FW_NAME_LEN);
-		/* strip .txt at the end */
-		alt_path[strlen(alt_path) - 4] = 0;
-		strlcat(alt_path, ".", BRCMF_FW_NAME_LEN);
-		strlcat(alt_path, fwctx->req->board_type, BRCMF_FW_NAME_LEN);
-		strlcat(alt_path, ".txt", BRCMF_FW_NAME_LEN);
+		alt_path = brcm_alt_fw_path(cur->path, fwctx->req->board_type);
+		if (!alt_path)
+			goto fallback;
 
 		ret = request_firmware(fw, alt_path, fwctx->dev);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kfree(alt_path);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret == 0)
 			return ret;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 fallback:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+fallback:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return request_firmware(fw, cur->path, fwctx->dev);
 }
 
@@ -683,6 +701,9 @@ static void brcmf_fw_request_done(const struct firmware *fw, void *ctx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void brcmf_fw_request_done_alt_path(const struct firmware *fw, void *ctx)
 {
 	struct brcmf_fw *fwctx = ctx;
@@ -699,8 +720,11 @@ static void brcmf_fw_request_done_alt_path(const struct firmware *fw, void *ctx)
 		brcmf_fw_request_done(fw, ctx);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool brcmf_fw_request_is_valid(struct brcmf_fw_request *req)
 {
 	struct brcmf_fw_item *item;
@@ -723,9 +747,13 @@ int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
 	struct brcmf_fw_item *first = &req->items[0];
 	struct brcmf_fw *fwctx;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char *alt_path;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char *alt_path;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	brcmf_dbg(TRACE, "enter: dev=%s\n", dev_name(dev));
@@ -744,6 +772,9 @@ int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
 	fwctx->done = fw_cb;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* First try alternative board-specific path if any */
 	alt_path = brcm_alt_fw_path(first->path, fwctx->req->board_type);
 	if (alt_path) {
@@ -756,11 +787,14 @@ int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
 					      fwctx->dev, GFP_KERNEL, fwctx,
 					      brcmf_fw_request_done);
 	}
+<<<<<<< HEAD
 =======
 	ret = request_firmware_nowait(THIS_MODULE, true, first->path,
 				      fwctx->dev, GFP_KERNEL, fwctx,
 				      brcmf_fw_request_done);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		brcmf_fw_request_done(NULL, fwctx);
 

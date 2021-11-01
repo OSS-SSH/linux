@@ -85,9 +85,13 @@ static const char version[] = "NET3 PLIP version 2.4-parport gniibe@mri.co.jp\n"
 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/compat.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/compat.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/types.h>
@@ -155,11 +159,16 @@ static int plip_hard_header_cache(const struct neighbour *neigh,
 static int plip_open(struct net_device *dev);
 static int plip_close(struct net_device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int plip_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			       void __user *data, int cmd);
 =======
 static int plip_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int plip_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			       void __user *data, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int plip_preempt(void *handle);
 static void plip_wakeup(void *handle);
 
@@ -275,10 +284,14 @@ static const struct net_device_ops plip_netdev_ops = {
 	.ndo_stop		 = plip_close,
 	.ndo_start_xmit		 = plip_tx_packet,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	 = plip_siocdevprivate,
 =======
 	.ndo_do_ioctl		 = plip_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	 = plip_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address	 = eth_mac_addr,
 	.ndo_validate_addr	 = eth_validate_addr,
 };
@@ -1221,11 +1234,16 @@ plip_wakeup(void *handle)
 
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 plip_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 		    void __user *data, int cmd)
 =======
 plip_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+plip_siocdevprivate(struct net_device *dev, struct ifreq *rq,
+		    void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_local *nl = netdev_priv(dev);
 	struct plipconf *pc = (struct plipconf *) &rq->ifr_ifru;
@@ -1234,11 +1252,17 @@ plip_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 		return -EOPNOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (in_compat_syscall())
 		return -EOPNOTSUPP;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (in_compat_syscall())
+		return -EOPNOTSUPP;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch(pc->pcmd) {
 	case PLIP_GET_TIMEOUT:
 		pc->trigger = nl->trigger;

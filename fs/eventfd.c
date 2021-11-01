@@ -26,10 +26,13 @@
 #include <linux/uio.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 DEFINE_PER_CPU(int, eventfd_wake_count);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEFINE_IDA(eventfd_ida);
 
 struct eventfd_ctx {
@@ -71,6 +74,7 @@ __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
 	 * through waitqueue wakeup handlers. If the caller users potentially
 	 * nested waitqueues with custom wakeup handlers, then it should
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * check eventfd_signal_allowed() before calling this function. If
 	 * it returns false, the eventfd_signal() call should be deferred to a
 	 * safe context.
@@ -83,24 +87,36 @@ __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
 =======
 	 * check eventfd_signal_count() before calling this function. If
 	 * it returns true, the eventfd_signal() call should be deferred to a
+=======
+	 * check eventfd_signal_allowed() before calling this function. If
+	 * it returns false, the eventfd_signal() call should be deferred to a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * safe context.
 	 */
-	if (WARN_ON_ONCE(this_cpu_read(eventfd_wake_count)))
+	if (WARN_ON_ONCE(current->in_eventfd_signal))
 		return 0;
 
 	spin_lock_irqsave(&ctx->wqh.lock, flags);
+<<<<<<< HEAD
 	this_cpu_inc(eventfd_wake_count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	current->in_eventfd_signal = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ULLONG_MAX - ctx->count < n)
 		n = ULLONG_MAX - ctx->count;
 	ctx->count += n;
 	if (waitqueue_active(&ctx->wqh))
 		wake_up_locked_poll(&ctx->wqh, EPOLLIN);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	current->in_eventfd_signal = 0;
 =======
 	this_cpu_dec(eventfd_wake_count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	current->in_eventfd_signal = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&ctx->wqh.lock, flags);
 
 	return n;

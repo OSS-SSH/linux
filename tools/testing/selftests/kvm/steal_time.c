@@ -11,9 +11,12 @@
 #include <pthread.h>
 #include <linux/kernel.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <sys/syscall.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/kvm.h>
 #include <asm/kvm_para.h>
 
@@ -24,9 +27,12 @@
 #define NR_VCPUS		4
 #define ST_GPA_BASE		(1 << 30)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define MIN_RUN_DELAY_NS	200000UL
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void *st_gva[NR_VCPUS];
 static uint64_t guest_stolen_time[NR_VCPUS];
@@ -125,19 +131,27 @@ struct st_time {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int64_t smccc(uint32_t func, uint64_t arg)
 =======
 static int64_t smccc(uint32_t func, uint32_t arg)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int64_t smccc(uint32_t func, uint64_t arg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long ret;
 
 	asm volatile(
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"mov	w0, %w1\n"
 =======
 		"mov	x0, %1\n"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"mov	w0, %w1\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"mov	x1, %2\n"
 		"hvc	#0\n"
 		"mov	%0, x0\n"
@@ -232,6 +246,7 @@ static void steal_time_dump(struct kvm_vm *vm, uint32_t vcpuid)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static long get_run_delay(void)
 {
@@ -248,6 +263,8 @@ static long get_run_delay(void)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void *do_steal_time(void *arg)
 {
 	struct timespec ts, stop;
@@ -338,10 +355,14 @@ int main(int ac, char **av)
 		pthread_create(&thread, &attr, do_steal_time, NULL);
 		do
 <<<<<<< HEAD
+<<<<<<< HEAD
 			sched_yield();
 =======
 			pthread_yield();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			sched_yield();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		while (get_run_delay() - run_delay < MIN_RUN_DELAY_NS);
 		pthread_join(thread, NULL);
 		run_delay = get_run_delay() - run_delay;

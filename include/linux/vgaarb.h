@@ -34,10 +34,15 @@
 #include <video/vga.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct pci_dev;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct pci_dev;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Legacy VGA regions */
 #define VGA_RSRC_NONE	       0x00
 #define VGA_RSRC_LEGACY_IO     0x01
@@ -48,6 +53,9 @@ struct pci_dev;
 #define VGA_RSRC_NORMAL_MEM    0x08
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_VGA_ARB
 void vga_set_legacy_decoding(struct pci_dev *pdev, unsigned int decodes);
 int vga_get(struct pci_dev *pdev, unsigned int rsrc, int interruptible);
@@ -58,6 +66,7 @@ int vga_remove_vgacon(struct pci_dev *pdev);
 int vga_client_register(struct pci_dev *pdev,
 		unsigned int (*set_decode)(struct pci_dev *pdev, bool state));
 #else /* CONFIG_VGA_ARB */
+<<<<<<< HEAD
 static inline void vga_set_legacy_decoding(struct pci_dev *pdev,
 		unsigned int decodes)
 {
@@ -125,6 +134,37 @@ extern int vga_get(struct pci_dev *pdev, unsigned int rsrc, int interruptible);
 static inline int vga_get(struct pci_dev *pdev, unsigned int rsrc, int interruptible) { return 0; }
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void vga_set_legacy_decoding(struct pci_dev *pdev,
+		unsigned int decodes)
+{
+};
+static inline int vga_get(struct pci_dev *pdev, unsigned int rsrc,
+		int interruptible)
+{
+	return 0;
+}
+static inline void vga_put(struct pci_dev *pdev, unsigned int rsrc)
+{
+}
+static inline struct pci_dev *vga_default_device(void)
+{
+	return NULL;
+}
+static inline void vga_set_default_device(struct pci_dev *pdev)
+{
+}
+static inline int vga_remove_vgacon(struct pci_dev *pdev)
+{
+	return 0;
+}
+static inline int vga_client_register(struct pci_dev *pdev,
+		unsigned int (*set_decode)(struct pci_dev *pdev, bool state))
+{
+	return 0;
+}
+#endif /* CONFIG_VGA_ARB */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * vga_get_interruptible
@@ -157,6 +197,7 @@ static inline int vga_get_uninterruptible(struct pci_dev *pdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void vga_client_unregister(struct pci_dev *pdev)
 {
 	vga_client_register(pdev, NULL);
@@ -166,8 +207,13 @@ static inline void vga_client_unregister(struct pci_dev *pdev)
 extern void vga_put(struct pci_dev *pdev, unsigned int rsrc);
 #else
 static inline void vga_put(struct pci_dev *pdev, unsigned int rsrc)
+=======
+static inline void vga_client_unregister(struct pci_dev *pdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	vga_client_register(pdev, NULL);
 }
+<<<<<<< HEAD
 #endif
 
 
@@ -206,5 +252,7 @@ static inline int vga_client_register(struct pci_dev *pdev, void *cookie,
 }
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* LINUX_VGA_H */

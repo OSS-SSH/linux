@@ -127,6 +127,7 @@ struct netfront_queue {
 	/*
 	 * {tx,rx}_skbs store outstanding skbuffs. Free tx_skb entries
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * are linked from tx_skb_freelist through tx_link.
 	 */
 	struct sk_buff *tx_skbs[NET_TX_RING_SIZE];
@@ -146,14 +147,26 @@ struct netfront_queue {
 		unsigned long link;
 	} tx_skbs[NET_TX_RING_SIZE];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * are linked from tx_skb_freelist through tx_link.
+	 */
+	struct sk_buff *tx_skbs[NET_TX_RING_SIZE];
+	unsigned short tx_link[NET_TX_RING_SIZE];
+#define TX_LINK_NONE 0xffff
+#define TX_PENDING   0xfffe
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	grant_ref_t gref_tx_head;
 	grant_ref_t grant_tx_ref[NET_TX_RING_SIZE];
 	struct page *grant_tx_page[NET_TX_RING_SIZE];
 	unsigned tx_skb_freelist;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int tx_pend_queue;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int tx_pend_queue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spinlock_t   rx_lock ____cacheline_aligned_in_smp;
 	struct xen_netif_rx_front_ring rx;
@@ -187,11 +200,17 @@ struct netfront_info {
 	bool netfront_xdp_enabled;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Is device behaving sane? */
 	bool broken;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Is device behaving sane? */
+	bool broken;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_t rx_gso_checksum_fixup;
 };
 
@@ -200,6 +219,7 @@ struct netfront_rx_info {
 	struct xen_netif_extra_info extras[XEN_NETIF_EXTRA_TYPE_MAX - 1];
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void skb_entry_set_link(union skb_entry *list, unsigned short id)
@@ -214,10 +234,13 @@ static int skb_entry_is_link(const union skb_entry *list)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Access macros for acquiring freeing slots in tx_skbs[].
  */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void add_id_to_list(unsigned *head, unsigned short *list,
 			   unsigned short id)
@@ -237,17 +260,28 @@ static unsigned short get_id_from_list(unsigned *head, unsigned short *list)
 =======
 static void add_id_to_freelist(unsigned *head, union skb_entry *list,
 			       unsigned short id)
+=======
+static void add_id_to_list(unsigned *head, unsigned short *list,
+			   unsigned short id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	skb_entry_set_link(&list[id], *head);
+	list[id] = *head;
 	*head = id;
 }
 
-static unsigned short get_id_from_freelist(unsigned *head,
-					   union skb_entry *list)
+static unsigned short get_id_from_list(unsigned *head, unsigned short *list)
 {
 	unsigned int id = *head;
+<<<<<<< HEAD
 	*head = list[id].link;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (id != TX_LINK_NONE) {
+		*head = list[id];
+		list[id] = TX_LINK_NONE;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return id;
 }
 
@@ -404,10 +438,14 @@ static int xennet_open(struct net_device *dev)
 	struct netfront_queue *queue = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!np->queues || np->broken)
 =======
 	if (!np->queues)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!np->queues || np->broken)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 
 	for (i = 0; i < num_queues; ++i) {
@@ -436,20 +474,28 @@ static void xennet_tx_buf_gc(struct netfront_queue *queue)
 	struct sk_buff *skb;
 	bool more_to_do;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct device *dev = &queue->info->netdev->dev;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct device *dev = &queue->info->netdev->dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	BUG_ON(!netif_carrier_ok(queue->info->netdev));
 
 	do {
 		prod = queue->tx.sring->rsp_prod;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (RING_RESPONSE_PROD_OVERFLOW(&queue->tx, prod)) {
 			dev_alert(dev, "Illegal number of responses %u\n",
 				  prod - queue->tx.rsp_cons);
 			goto err;
 		}
+<<<<<<< HEAD
 		rmb(); /* Ensure we see responses up to 'rp'. */
 
 		for (cons = queue->tx.rsp_cons; cons != prod; cons++) {
@@ -481,23 +527,45 @@ static void xennet_tx_buf_gc(struct netfront_queue *queue)
 					  "Grant still in use by backend domain\n");
 				goto err;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rmb(); /* Ensure we see responses up to 'rp'. */
 
 		for (cons = queue->tx.rsp_cons; cons != prod; cons++) {
-			struct xen_netif_tx_response *txrsp;
+			struct xen_netif_tx_response txrsp;
 
-			txrsp = RING_GET_RESPONSE(&queue->tx, cons);
-			if (txrsp->status == XEN_NETIF_RSP_NULL)
+			RING_COPY_RESPONSE(&queue->tx, cons, &txrsp);
+			if (txrsp.status == XEN_NETIF_RSP_NULL)
 				continue;
 
-			id  = txrsp->id;
-			skb = queue->tx_skbs[id].skb;
+			id = txrsp.id;
+			if (id >= RING_SIZE(&queue->tx)) {
+				dev_alert(dev,
+					  "Response has incorrect id (%u)\n",
+					  id);
+				goto err;
+			}
+			if (queue->tx_link[id] != TX_PENDING) {
+				dev_alert(dev,
+					  "Response for inactive request\n");
+				goto err;
+			}
+
+			queue->tx_link[id] = TX_LINK_NONE;
+			skb = queue->tx_skbs[id];
+			queue->tx_skbs[id] = NULL;
 			if (unlikely(gnttab_query_foreign_access(
 				queue->grant_tx_ref[id]) != 0)) {
+<<<<<<< HEAD
 				pr_alert("%s: warning -- grant still in use by backend domain\n",
 					 __func__);
 				BUG();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dev_alert(dev,
+					  "Grant still in use by backend domain\n");
+				goto err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 			gnttab_end_foreign_access_ref(
 				queue->grant_tx_ref[id], GNTMAP_readonly);
@@ -506,10 +574,14 @@ static void xennet_tx_buf_gc(struct netfront_queue *queue)
 			queue->grant_tx_ref[id] = GRANT_INVALID_REF;
 			queue->grant_tx_page[id] = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			add_id_to_list(&queue->tx_skb_freelist, queue->tx_link, id);
 =======
 			add_id_to_freelist(&queue->tx_skb_freelist, queue->tx_skbs, id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			add_id_to_list(&queue->tx_skb_freelist, queue->tx_link, id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_kfree_skb_irq(skb);
 		}
 
@@ -520,14 +592,20 @@ static void xennet_tx_buf_gc(struct netfront_queue *queue)
 
 	xennet_maybe_wake_tx(queue);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return;
 
  err:
 	queue->info->broken = true;
 	dev_alert(dev, "Disabled for further use\n");
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct xennet_gnttab_make_txreq {
@@ -535,11 +613,16 @@ struct xennet_gnttab_make_txreq {
 	struct sk_buff *skb;
 	struct page *page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xen_netif_tx_request *tx;      /* Last request on ring page */
 	struct xen_netif_tx_request tx_local; /* Last request local copy*/
 =======
 	struct xen_netif_tx_request *tx; /* Last request */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xen_netif_tx_request *tx;      /* Last request on ring page */
+	struct xen_netif_tx_request tx_local; /* Last request local copy*/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int size;
 };
 
@@ -556,10 +639,14 @@ static void xennet_tx_setup_grant(unsigned long gfn, unsigned int offset,
 	struct sk_buff *skb = info->skb;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	id = get_id_from_list(&queue->tx_skb_freelist, queue->tx_link);
 =======
 	id = get_id_from_freelist(&queue->tx_skb_freelist, queue->tx_skbs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	id = get_id_from_list(&queue->tx_skb_freelist, queue->tx_link);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tx = RING_GET_REQUEST(&queue->tx, queue->tx.req_prod_pvt++);
 	ref = gnttab_claim_grant_reference(&queue->gref_tx_head);
 	WARN_ON_ONCE(IS_ERR_VALUE((unsigned long)(int)ref));
@@ -567,6 +654,7 @@ static void xennet_tx_setup_grant(unsigned long gfn, unsigned int offset,
 	gnttab_grant_foreign_access_ref(ref, queue->info->xbdev->otherend_id,
 					gfn, GNTMAP_readonly);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	queue->tx_skbs[id] = skb;
 	queue->grant_tx_page[id] = page;
@@ -601,34 +689,44 @@ static struct xen_netif_tx_request *xennet_make_first_txreq(
 	return info->tx;
 =======
 	queue->tx_skbs[id].skb = skb;
+=======
+	queue->tx_skbs[id] = skb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	queue->grant_tx_page[id] = page;
 	queue->grant_tx_ref[id] = ref;
 
-	tx->id = id;
-	tx->gref = ref;
-	tx->offset = offset;
-	tx->size = len;
-	tx->flags = 0;
+	info->tx_local.id = id;
+	info->tx_local.gref = ref;
+	info->tx_local.offset = offset;
+	info->tx_local.size = len;
+	info->tx_local.flags = 0;
+
+	*tx = info->tx_local;
+
+	/*
+	 * Put the request in the pending queue, it will be set to be pending
+	 * when the producer index is about to be raised.
+	 */
+	add_id_to_list(&queue->tx_pend_queue, queue->tx_link, id);
 
 	info->tx = tx;
-	info->size += tx->size;
+	info->size += info->tx_local.size;
 }
 
 static struct xen_netif_tx_request *xennet_make_first_txreq(
-	struct netfront_queue *queue, struct sk_buff *skb,
-	struct page *page, unsigned int offset, unsigned int len)
+	struct xennet_gnttab_make_txreq *info,
+	unsigned int offset, unsigned int len)
 {
-	struct xennet_gnttab_make_txreq info = {
-		.queue = queue,
-		.skb = skb,
-		.page = page,
-		.size = 0,
-	};
+	info->size = 0;
 
-	gnttab_for_one_grant(page, offset, len, xennet_tx_setup_grant, &info);
+	gnttab_for_one_grant(info->page, offset, len, xennet_tx_setup_grant, info);
 
+<<<<<<< HEAD
 	return info.tx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return info->tx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void xennet_make_one_txreq(unsigned long gfn, unsigned int offset,
@@ -641,6 +739,7 @@ static void xennet_make_one_txreq(unsigned long gfn, unsigned int offset,
 	xennet_tx_setup_grant(gfn, offset, len, data);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void xennet_make_txreqs(
 	struct xennet_gnttab_make_txreq *info,
@@ -660,11 +759,19 @@ static struct xen_netif_tx_request *xennet_make_txreqs(
 	};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void xennet_make_txreqs(
+	struct xennet_gnttab_make_txreq *info,
+	struct page *page,
+	unsigned int offset, unsigned int len)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Skip unused frames from start of page */
 	page += offset >> PAGE_SHIFT;
 	offset &= ~PAGE_MASK;
 
 	while (len) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		info->page = page;
 		info->size = 0;
@@ -680,18 +787,25 @@ static struct xen_netif_tx_request *xennet_make_txreqs(
 =======
 		info.page = page;
 		info.size = 0;
+=======
+		info->page = page;
+		info->size = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		gnttab_foreach_grant_in_range(page, offset, len,
 					      xennet_make_one_txreq,
-					      &info);
+					      info);
 
 		page++;
 		offset = 0;
-		len -= info.size;
+		len -= info->size;
 	}
+<<<<<<< HEAD
 
 	return info.tx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -739,6 +853,9 @@ static u16 xennet_select_queue(struct net_device *dev, struct sk_buff *skb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void xennet_mark_tx_pending(struct netfront_queue *queue)
 {
 	unsigned int i;
@@ -748,8 +865,11 @@ static void xennet_mark_tx_pending(struct netfront_queue *queue)
 		queue->tx_link[i] = TX_PENDING;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xennet_xdp_xmit_one(struct net_device *dev,
 			       struct netfront_queue *queue,
 			       struct xdp_frame *xdpf)
@@ -757,11 +877,15 @@ static int xennet_xdp_xmit_one(struct net_device *dev,
 	struct netfront_info *np = netdev_priv(dev);
 	struct netfront_stats *tx_stats = this_cpu_ptr(np->tx_stats);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xennet_gnttab_make_txreq info = {
 		.queue = queue,
 		.skb = NULL,
 		.page = virt_to_page(xdpf->data),
 	};
+<<<<<<< HEAD
 	int notify;
 
 	xennet_make_first_txreq(&info,
@@ -771,14 +895,20 @@ static int xennet_xdp_xmit_one(struct net_device *dev,
 	xennet_mark_tx_pending(queue);
 
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int notify;
 
-	xennet_make_first_txreq(queue, NULL,
-				virt_to_page(xdpf->data),
+	xennet_make_first_txreq(&info,
 				offset_in_page(xdpf->data),
 				xdpf->len);
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xennet_mark_tx_pending(queue);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RING_PUSH_REQUESTS_AND_CHECK_NOTIFY(&queue->tx, notify);
 	if (notify)
 		notify_remote_via_irq(queue->tx_irq);
@@ -804,10 +934,15 @@ static int xennet_xdp_xmit(struct net_device *dev, int n,
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(np->broken))
 		return -ENODEV;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(np->broken))
+		return -ENODEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(flags & ~XDP_XMIT_FLAGS_MASK))
 		return -EINVAL;
 
@@ -836,10 +971,14 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 	struct netfront_info *np = netdev_priv(dev);
 	struct netfront_stats *tx_stats = this_cpu_ptr(np->tx_stats);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xen_netif_tx_request *first_tx;
 =======
 	struct xen_netif_tx_request *tx, *first_tx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xen_netif_tx_request *first_tx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int i;
 	int notify;
 	int slots;
@@ -849,9 +988,13 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 	unsigned long flags;
 	struct netfront_queue *queue = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xennet_gnttab_make_txreq info = { };
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xennet_gnttab_make_txreq info = { };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int num_queues = dev->real_num_tx_queues;
 	u16 queue_index;
 	struct sk_buff *nskb;
@@ -860,10 +1003,15 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 	if (num_queues < 1)
 		goto drop;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(np->broken))
 		goto drop;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(np->broken))
+		goto drop;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Determine which queue to transmit this SKB on */
 	queue_index = skb_get_queue_mapping(skb);
 	queue = &np->queues[queue_index];
@@ -915,20 +1063,27 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 
 	/* First request for the linear area. */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	info.queue = queue;
 	info.skb = skb;
 	info.page = page;
 	first_tx = xennet_make_first_txreq(&info, offset, len);
 	offset += info.tx_local.size;
+<<<<<<< HEAD
 =======
 	first_tx = tx = xennet_make_first_txreq(queue, skb,
 						page, offset, len);
 	offset += tx->size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (offset == PAGE_SIZE) {
 		page++;
 		offset = 0;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	len -= info.tx_local.size;
 
@@ -941,14 +1096,22 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 		first_tx->flags |= XEN_NETTXF_data_validated;
 =======
 	len -= tx->size;
+=======
+	len -= info.tx_local.size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (skb->ip_summed == CHECKSUM_PARTIAL)
 		/* local packet? */
-		tx->flags |= XEN_NETTXF_csum_blank | XEN_NETTXF_data_validated;
+		first_tx->flags |= XEN_NETTXF_csum_blank |
+				   XEN_NETTXF_data_validated;
 	else if (skb->ip_summed == CHECKSUM_UNNECESSARY)
 		/* remote but checksummed. */
+<<<<<<< HEAD
 		tx->flags |= XEN_NETTXF_data_validated;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		first_tx->flags |= XEN_NETTXF_data_validated;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Optional extra info after the first request. */
 	if (skb_shinfo(skb)->gso_size) {
@@ -958,10 +1121,14 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 			RING_GET_REQUEST(&queue->tx, queue->tx.req_prod_pvt++);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		first_tx->flags |= XEN_NETTXF_extra_info;
 =======
 		tx->flags |= XEN_NETTXF_extra_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		first_tx->flags |= XEN_NETTXF_extra_info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		gso->u.gso.size = skb_shinfo(skb)->gso_size;
 		gso->u.gso.type = (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6) ?
@@ -976,19 +1143,27 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 
 	/* Requests for the rest of the linear area. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xennet_make_txreqs(&info, page, offset, len);
 =======
 	tx = xennet_make_txreqs(queue, tx, skb, page, offset, len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xennet_make_txreqs(&info, page, offset, len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Requests for all the frags. */
 	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		xennet_make_txreqs(&info, skb_frag_page(frag),
 =======
 		tx = xennet_make_txreqs(queue, tx, skb, skb_frag_page(frag),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		xennet_make_txreqs(&info, skb_frag_page(frag),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					skb_frag_off(frag),
 					skb_frag_size(frag));
 	}
@@ -1000,10 +1175,15 @@ static netdev_tx_t xennet_start_xmit(struct sk_buff *skb, struct net_device *dev
 	skb_tx_timestamp(skb);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xennet_mark_tx_pending(queue);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xennet_mark_tx_pending(queue);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RING_PUSH_REQUESTS_AND_CHECK_NOTIFY(&queue->tx, notify);
 	if (notify)
 		notify_remote_via_irq(queue->tx_irq);
@@ -1062,10 +1242,14 @@ static int xennet_get_extras(struct netfront_queue *queue,
 
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xen_netif_extra_info extra;
 =======
 	struct xen_netif_extra_info *extra;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xen_netif_extra_info extra;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct device *dev = &queue->info->netdev->dev;
 	RING_IDX cons = queue->rx.rsp_cons;
 	int err = 0;
@@ -1082,6 +1266,7 @@ static int xennet_get_extras(struct netfront_queue *queue,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		RING_COPY_RESPONSE(&queue->rx, ++cons, &extra);
 
 		if (unlikely(!extra.type ||
@@ -1095,27 +1280,38 @@ static int xennet_get_extras(struct netfront_queue *queue,
 =======
 		extra = (struct xen_netif_extra_info *)
 			RING_GET_RESPONSE(&queue->rx, ++cons);
+=======
+		RING_COPY_RESPONSE(&queue->rx, ++cons, &extra);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		if (unlikely(!extra->type ||
-			     extra->type >= XEN_NETIF_EXTRA_TYPE_MAX)) {
+		if (unlikely(!extra.type ||
+			     extra.type >= XEN_NETIF_EXTRA_TYPE_MAX)) {
 			if (net_ratelimit())
 				dev_warn(dev, "Invalid extra type: %d\n",
-					extra->type);
+					 extra.type);
 			err = -EINVAL;
 		} else {
+<<<<<<< HEAD
 			memcpy(&extras[extra->type - 1], extra,
 			       sizeof(*extra));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			extras[extra.type - 1] = extra;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		skb = xennet_get_rx_skb(queue, cons);
 		ref = xennet_get_rx_ref(queue, cons);
 		xennet_move_rx_slot(queue, skb, ref);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} while (extra.flags & XEN_NETIF_EXTRA_FLAG_MORE);
 =======
 	} while (extra->flags & XEN_NETIF_EXTRA_FLAG_MORE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} while (extra.flags & XEN_NETIF_EXTRA_FLAG_MORE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	queue->rx.rsp_cons = cons;
 	return err;
@@ -1174,10 +1370,14 @@ static int xennet_get_responses(struct netfront_queue *queue,
 				bool *need_xdp_flush)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xen_netif_rx_response *rx = &rinfo->rx, rx_local;
 =======
 	struct xen_netif_rx_response *rx = &rinfo->rx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xen_netif_rx_response *rx = &rinfo->rx, rx_local;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int max = XEN_NETIF_NR_SLOTS_MIN + (rx->status <= RX_COPY_THRESHOLD);
 	RING_IDX cons = queue->rx.rsp_cons;
 	struct sk_buff *skb = xennet_get_rx_skb(queue, cons);
@@ -1262,11 +1462,16 @@ next:
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		RING_COPY_RESPONSE(&queue->rx, cons + slots, &rx_local);
 		rx = &rx_local;
 =======
 		rx = RING_GET_RESPONSE(&queue->rx, cons + slots);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		RING_COPY_RESPONSE(&queue->rx, cons + slots, &rx_local);
+		rx = &rx_local;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb = xennet_get_rx_skb(queue, cons + slots);
 		ref = xennet_get_rx_ref(queue, cons + slots);
 		slots++;
@@ -1322,6 +1527,7 @@ static int xennet_fill_frags(struct netfront_queue *queue,
 
 	while ((nskb = __skb_dequeue(list))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct xen_netif_rx_response rx;
 		skb_frag_t *nfrag = &skb_shinfo(nskb)->frags[0];
 
@@ -1333,6 +1539,13 @@ static int xennet_fill_frags(struct netfront_queue *queue,
 		skb_frag_t *nfrag = &skb_shinfo(nskb)->frags[0];
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct xen_netif_rx_response rx;
+		skb_frag_t *nfrag = &skb_shinfo(nskb)->frags[0];
+
+		RING_COPY_RESPONSE(&queue->rx, ++cons, &rx);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (skb_shinfo(skb)->nr_frags == MAX_SKB_FRAGS) {
 			unsigned int pull_to = NETFRONT_SKB_CB(skb)->pull_to;
 
@@ -1348,10 +1561,14 @@ static int xennet_fill_frags(struct netfront_queue *queue,
 		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
 				skb_frag_page(nfrag),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				rx.offset, rx.status, PAGE_SIZE);
 =======
 				rx->offset, rx->status, PAGE_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				rx.offset, rx.status, PAGE_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		skb_shinfo(nskb)->nr_frags = 0;
 		kfree_skb(nskb);
@@ -1446,6 +1663,9 @@ static int xennet_poll(struct napi_struct *napi, int budget)
 
 	rp = queue->rx.sring->rsp_prod;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (RING_RESPONSE_PROD_OVERFLOW(&queue->rx, rp)) {
 		dev_alert(&dev->dev, "Illegal number of responses %u\n",
 			  rp - queue->rx.rsp_cons);
@@ -1453,18 +1673,25 @@ static int xennet_poll(struct napi_struct *napi, int budget)
 		spin_unlock(&queue->rx_lock);
 		return 0;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rmb(); /* Ensure we see queued responses up to 'rp'. */
 
 	i = queue->rx.rsp_cons;
 	work_done = 0;
 	while ((i != rp) && (work_done < budget)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		RING_COPY_RESPONSE(&queue->rx, i, rx);
 =======
 		memcpy(rx, RING_GET_RESPONSE(&queue->rx, i), sizeof(*rx));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		RING_COPY_RESPONSE(&queue->rx, i, rx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memset(extras, 0, sizeof(rinfo.extras));
 
 		err = xennet_get_responses(queue, &rinfo, rp, &tmpq,
@@ -1590,6 +1817,7 @@ static void xennet_release_tx_bufs(struct netfront_queue *queue)
 	for (i = 0; i < NET_TX_RING_SIZE; i++) {
 		/* Skip over entries which are actually freelist references */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!queue->tx_skbs[i])
 			continue;
 
@@ -1601,6 +1829,13 @@ static void xennet_release_tx_bufs(struct netfront_queue *queue)
 
 		skb = queue->tx_skbs[i].skb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!queue->tx_skbs[i])
+			continue;
+
+		skb = queue->tx_skbs[i];
+		queue->tx_skbs[i] = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		get_page(queue->grant_tx_page[i]);
 		gnttab_end_foreign_access(queue->grant_tx_ref[i],
 					  GNTMAP_readonly,
@@ -1608,10 +1843,14 @@ static void xennet_release_tx_bufs(struct netfront_queue *queue)
 		queue->grant_tx_page[i] = NULL;
 		queue->grant_tx_ref[i] = GRANT_INVALID_REF;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		add_id_to_list(&queue->tx_skb_freelist, queue->tx_link, i);
 =======
 		add_id_to_freelist(&queue->tx_skb_freelist, queue->tx_skbs, i);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		add_id_to_list(&queue->tx_skb_freelist, queue->tx_link, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_kfree_skb_irq(skb);
 	}
 }
@@ -1692,11 +1931,17 @@ static irqreturn_t xennet_tx_interrupt(int irq, void *dev_id)
 	unsigned long flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (queue->info->broken)
 		return IRQ_HANDLED;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (queue->info->broken)
+		return IRQ_HANDLED;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&queue->tx_lock, flags);
 	xennet_tx_buf_gc(queue);
 	spin_unlock_irqrestore(&queue->tx_lock, flags);
@@ -1710,11 +1955,17 @@ static irqreturn_t xennet_rx_interrupt(int irq, void *dev_id)
 	struct net_device *dev = queue->info->netdev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (queue->info->broken)
 		return IRQ_HANDLED;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (queue->info->broken)
+		return IRQ_HANDLED;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (likely(netif_carrier_ok(dev) &&
 		   RING_HAS_UNCONSUMED_RESPONSES(&queue->rx)))
 		napi_schedule(&queue->napi);
@@ -1737,12 +1988,18 @@ static void xennet_poll_controller(struct net_device *dev)
 	unsigned int num_queues = dev->real_num_tx_queues;
 	unsigned int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (info->broken)
 		return;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < num_queues; ++i)
 		xennet_interrupt(0, &info->queues[i]);
 }
@@ -1815,13 +2072,19 @@ static int xennet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
 static int xennet_xdp(struct net_device *dev, struct netdev_bpf *xdp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct netfront_info *np = netdev_priv(dev);
 
 	if (np->broken)
 		return -ENODEV;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (xdp->command) {
 	case XDP_SETUP_PROG:
 		return xennet_xdp_set(dev, xdp->prog, xdp->extack);
@@ -2196,6 +2459,7 @@ static int xennet_init_queue(struct netfront_queue *queue)
 		 devid, queue->id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Initialise tx_skb_freelist as a free chain containing every entry. */
 	queue->tx_skb_freelist = 0;
 	queue->tx_pend_queue = TX_LINK_NONE;
@@ -2207,13 +2471,21 @@ static int xennet_init_queue(struct netfront_queue *queue)
 	queue->tx_link[NET_TX_RING_SIZE - 1] = TX_LINK_NONE;
 =======
 	/* Initialise tx_skbs as a free chain containing every entry. */
+=======
+	/* Initialise tx_skb_freelist as a free chain containing every entry. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	queue->tx_skb_freelist = 0;
+	queue->tx_pend_queue = TX_LINK_NONE;
 	for (i = 0; i < NET_TX_RING_SIZE; i++) {
-		skb_entry_set_link(&queue->tx_skbs[i], i+1);
+		queue->tx_link[i] = i + 1;
 		queue->grant_tx_ref[i] = GRANT_INVALID_REF;
 		queue->grant_tx_page[i] = NULL;
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	queue->tx_link[NET_TX_RING_SIZE - 1] = TX_LINK_NONE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Clear out rx_skbs */
 	for (i = 0; i < NET_RX_RING_SIZE; i++) {
@@ -2483,11 +2755,17 @@ static int talk_to_netback(struct xenbus_device *dev,
 		xennet_destroy_queues(info);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* For the case of a reconnect reset the "broken" indicator. */
 	info->broken = false;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* For the case of a reconnect reset the "broken" indicator. */
+	info->broken = false;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = xennet_create_queues(info, &num_queues);
 	if (err < 0) {
 		xenbus_dev_fatal(dev, err, "creating queues");

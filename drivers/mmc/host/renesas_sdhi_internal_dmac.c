@@ -16,9 +16,13 @@
 #include <linux/mod_devicetable.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/of_device.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/of_device.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/pagemap.h>
 #include <linux/scatterlist.h>
 #include <linux/sys_soc.h>
@@ -97,10 +101,14 @@ static struct renesas_sdhi_scc rcar_gen3_scc_taps[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct renesas_sdhi_of_data of_data_rza2 = {
 =======
 static const struct renesas_sdhi_of_data of_rza2_compatible = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct renesas_sdhi_of_data of_data_rza2 = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tmio_flags	= TMIO_MMC_HAS_IDLE_WAIT | TMIO_MMC_CLK_ACTUAL |
 			  TMIO_MMC_HAVE_CBSY,
 	.tmio_ocr_mask	= MMC_VDD_32_33,
@@ -116,14 +124,20 @@ static const struct renesas_sdhi_of_data of_rza2_compatible = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct renesas_sdhi_of_data_with_quirks of_rza2_compatible = {
 	.of_data	= &of_data_rza2,
 };
 
 static const struct renesas_sdhi_of_data of_data_rcar_gen3 = {
+<<<<<<< HEAD
 =======
 static const struct renesas_sdhi_of_data of_rcar_gen3_compatible = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tmio_flags	= TMIO_MMC_HAS_IDLE_WAIT | TMIO_MMC_CLK_ACTUAL |
 			  TMIO_MMC_HAVE_CBSY | TMIO_MMC_MIN_RCAR2,
 	.capabilities	= MMC_CAP_SD_HIGHSPEED | MMC_CAP_SDIO_IRQ |
@@ -139,6 +153,9 @@ static const struct renesas_sdhi_of_data of_rcar_gen3_compatible = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const u8 r8a7796_es13_calib_table[2][SDHI_CALIB_TABLE_MAX] = {
 	{ 3,  3,  3,  3,  3,  3,  3,  4,  4,  5,  6,  7,  8,  9, 10, 15,
 	 16, 16, 16, 16, 16, 16, 17, 18, 18, 19, 20, 21, 22, 23, 24, 25 },
@@ -240,6 +257,7 @@ static const struct renesas_sdhi_of_data_with_quirks of_rcar_gen3_compatible = {
 	.of_data = &of_data_rcar_gen3,
 };
 
+<<<<<<< HEAD
 static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
@@ -250,12 +268,21 @@ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
 	{ .compatible = "renesas,sdhi-r8a77980", .data = &of_r8a77980_compatible, },
 	{ .compatible = "renesas,sdhi-r8a77990", .data = &of_r8a77990_compatible, },
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
-	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_rcar_gen3_compatible, },
+	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
 	{ .compatible = "renesas,sdhi-r8a7796", .data = &of_rcar_gen3_compatible, },
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
+	{ .compatible = "renesas,sdhi-r8a77965", .data = &of_r8a77965_compatible, },
+	{ .compatible = "renesas,sdhi-r8a77980", .data = &of_r8a77980_compatible, },
+	{ .compatible = "renesas,sdhi-r8a77990", .data = &of_r8a77990_compatible, },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "renesas,rcar-gen3-sdhi", .data = &of_rcar_gen3_compatible, },
 	{},
 };
@@ -535,6 +562,7 @@ static const struct soc_device_attribute soc_dma_quirks[] = {
 static int renesas_sdhi_internal_dmac_probe(struct platform_device *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct soc_device_attribute *attr;
 	const struct renesas_sdhi_of_data_with_quirks *of_data_quirks;
 	const struct renesas_sdhi_quirks *quirks;
@@ -557,16 +585,38 @@ static int renesas_sdhi_internal_dmac_probe(struct platform_device *pdev)
 	if (soc)
 		global_flags |= (unsigned long)soc->data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct soc_device_attribute *attr;
+	const struct renesas_sdhi_of_data_with_quirks *of_data_quirks;
+	const struct renesas_sdhi_quirks *quirks;
+	struct device *dev = &pdev->dev;
+
+	of_data_quirks = of_device_get_match_data(&pdev->dev);
+	quirks = of_data_quirks->quirks;
+
+	attr = soc_device_match(soc_dma_quirks);
+	if (attr)
+		global_flags |= (unsigned long)attr->data;
+
+	attr = soc_device_match(sdhi_quirks_match);
+	if (attr)
+		quirks = attr->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* value is max of SD_SECCNT. Confirmed by HW engineers */
 	dma_set_max_seg_size(dev, 0xffffffff);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return renesas_sdhi_probe(pdev, &renesas_sdhi_internal_dmac_dma_ops,
 				  of_data_quirks->of_data, quirks);
 =======
 	return renesas_sdhi_probe(pdev, &renesas_sdhi_internal_dmac_dma_ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return renesas_sdhi_probe(pdev, &renesas_sdhi_internal_dmac_dma_ops,
+				  of_data_quirks->of_data, quirks);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct dev_pm_ops renesas_sdhi_internal_dmac_dev_pm_ops = {

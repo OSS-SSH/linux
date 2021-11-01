@@ -161,6 +161,7 @@ exit:
 EXPORT_SYMBOL_GPL(pnv_pci_set_power_state);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int pnv_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
 {
@@ -230,6 +231,8 @@ void pnv_teardown_msi_irqs(struct pci_dev *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Nicely print the contents of the PE State Tables (PEST). */
 static void pnv_pci_dump_pest(__be64 pestA[], __be64 pestB[], int pest_size)
 {

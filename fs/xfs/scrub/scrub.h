@@ -28,10 +28,14 @@ struct xchk_meta_ops {
 
 	/* Decide if we even have this piece of metadata. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool		(*has)(struct xfs_mount *);
 =======
 	bool		(*has)(struct xfs_sb *);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool		(*has)(struct xfs_mount *);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* type describing required/allowed inputs */
 	enum xchk_type	type;
@@ -40,9 +44,12 @@ struct xchk_meta_ops {
 /* Buffer pointers and btree cursors for an entire AG. */
 struct xchk_ag {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	xfs_agnumber_t		agno;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_perag	*pag;
 
 	/* AG btree roots */

@@ -429,6 +429,7 @@ int efx_xdp_tx_buffers(struct efx_nic *efx, int n, struct xdp_frame **xdpfs,
 	int space;
 	int cpu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i = 0;
 
 	if (unlikely(n && !xdpfs))
@@ -440,18 +441,30 @@ int efx_xdp_tx_buffers(struct efx_nic *efx, int n, struct xdp_frame **xdpfs,
 	if (unlikely(cpu >= efx->xdp_tx_queue_count))
 =======
 	int i;
+=======
+	int i = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	cpu = raw_smp_processor_id();
+	if (unlikely(n && !xdpfs))
+		return -EINVAL;
+	if (unlikely(!n))
+		return 0;
 
+<<<<<<< HEAD
 	if (!efx->xdp_tx_queue_count ||
 	    unlikely(cpu >= efx->xdp_tx_queue_count))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpu = raw_smp_processor_id();
+	if (unlikely(cpu >= efx->xdp_tx_queue_count))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	tx_queue = efx->xdp_tx_queues[cpu];
 	if (unlikely(!tx_queue))
 		return -EINVAL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_DEDICATED)
 		HARD_TX_LOCK(efx->net_dev, tx_queue->core_txq, cpu);
@@ -471,6 +484,19 @@ int efx_xdp_tx_buffers(struct efx_nic *efx, int n, struct xdp_frame **xdpfs,
 	if (!n)
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_DEDICATED)
+		HARD_TX_LOCK(efx->net_dev, tx_queue->core_txq, cpu);
+
+	/* If we're borrowing net stack queues we have to handle stop-restart
+	 * or we might block the queue and it will be considered as frozen
+	 */
+	if (efx->xdp_txq_queues_mode == EFX_XDP_TX_QUEUES_BORROWED) {
+		if (netif_tx_queue_stopped(tx_queue->core_txq))
+			goto unlock;
+		efx_tx_maybe_stop_queue(tx_queue);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Check for available space. We should never need multiple
 	 * descriptors per frame.
@@ -511,12 +537,18 @@ int efx_xdp_tx_buffers(struct efx_nic *efx, int n, struct xdp_frame **xdpfs,
 		efx_nic_push_buffers(tx_queue);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unlock:
 	if (efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_DEDICATED)
 		HARD_TX_UNLOCK(efx->net_dev, tx_queue->core_txq);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return i == 0 ? -EIO : i;
 }
 

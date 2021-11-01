@@ -10,11 +10,14 @@
  * This file handles the architecture-dependent parts of process handling..
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 #include <stdarg.h>
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/errno.h>
 #include <linux/export.h>
 #include <linux/sched.h>
@@ -462,10 +465,14 @@ static unsigned long clone_stackframe(unsigned long csp, unsigned long psp)
 	distance = fp - psp;
 	rval = (csp - distance);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (raw_copy_in_user((void __user *)rval, (void __user *)psp, distance))
 =======
 	if (copy_in_user((void __user *) rval, (void __user *) psp, distance))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (raw_copy_in_user((void __user *)rval, (void __user *)psp, distance))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rval = 0;
 	else if (!stack_64bit) {
 		if (put_user(((u32)csp),
@@ -526,10 +533,14 @@ void synchronize_user_stack(void)
 static void stack_unaligned(unsigned long sp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *) sp);
 =======
 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *) sp, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *) sp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const char uwfault32[] = KERN_INFO \

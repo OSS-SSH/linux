@@ -256,6 +256,9 @@ static int amdgpu_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_str
 		return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Workaround for Thunk bug creating PROT_NONE,MAP_PRIVATE mappings
 	 * for debugger access to invisible VRAM. Should have used MAP_SHARED
 	 * instead. Clearing VM_MAYWRITE prevents the mapping from ever
@@ -265,8 +268,11 @@ static int amdgpu_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_str
 	    !(vma->vm_flags & (VM_READ | VM_WRITE | VM_EXEC)))
 		vma->vm_flags &= ~VM_MAYWRITE;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return drm_gem_ttm_mmap(obj, vma);
 }
 
@@ -345,11 +351,15 @@ retry:
 				     initial_domain,
 				     flags, ttm_bo_type_device, resv, &gobj);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r && r != -ERESTARTSYS) {
 		if (flags & AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED) {
 			flags &= ~AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
 			goto retry;
 		}
+<<<<<<< HEAD
 
 		if (initial_domain == AMDGPU_GEM_DOMAIN_VRAM) {
 			initial_domain |= AMDGPU_GEM_DOMAIN_GTT;
@@ -364,16 +374,20 @@ retry:
 				flags &= ~AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
 				goto retry;
 			}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			if (initial_domain == AMDGPU_GEM_DOMAIN_VRAM) {
-				initial_domain |= AMDGPU_GEM_DOMAIN_GTT;
-				goto retry;
-			}
-			DRM_DEBUG("Failed to allocate GEM object (%llu, %d, %llu, %d)\n",
-				  size, initial_domain, args->in.alignment, r);
+		if (initial_domain == AMDGPU_GEM_DOMAIN_VRAM) {
+			initial_domain |= AMDGPU_GEM_DOMAIN_GTT;
+			goto retry;
 		}
+<<<<<<< HEAD
 		return r;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DRM_DEBUG("Failed to allocate GEM object (%llu, %d, %llu, %d)\n",
+				size, initial_domain, args->in.alignment, r);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (flags & AMDGPU_GEM_CREATE_VM_ALWAYS_VALID) {
@@ -857,11 +871,16 @@ int amdgpu_gem_op_ioctl(struct drm_device *dev, void *data,
 	}
 	case AMDGPU_GEM_OP_SET_PLACEMENT:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (robj->tbo.base.import_attach &&
 		    args->value & AMDGPU_GEM_DOMAIN_VRAM) {
 =======
 		if (robj->prime_shared_count && (args->value & AMDGPU_GEM_DOMAIN_VRAM)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (robj->tbo.base.import_attach &&
+		    args->value & AMDGPU_GEM_DOMAIN_VRAM) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			r = -EINVAL;
 			amdgpu_bo_unreserve(robj);
 			break;
@@ -927,10 +946,14 @@ int amdgpu_mode_dumb_create(struct drm_file *file_priv,
 	args->size = (u64)args->pitch * args->height;
 	args->size = ALIGN(args->size, PAGE_SIZE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	domain = amdgpu_bo_get_preferred_domain(adev,
 =======
 	domain = amdgpu_bo_get_preferred_pin_domain(adev,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	domain = amdgpu_bo_get_preferred_domain(adev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				amdgpu_display_supported_domains(adev, flags));
 	r = amdgpu_gem_object_create(adev, args->size, 0, domain, flags,
 				     ttm_bo_type_device, NULL, &gobj);

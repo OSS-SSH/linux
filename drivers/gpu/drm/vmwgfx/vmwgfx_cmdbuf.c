@@ -359,11 +359,15 @@ static void vmw_cmdbuf_ctx_submit(struct vmw_cmdbuf_man *man,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		list_move_tail(&entry->list, &ctx->hw_submitted);
 =======
 		list_del(&entry->list);
 		list_add_tail(&entry->list, &ctx->hw_submitted);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		list_move_tail(&entry->list, &ctx->hw_submitted);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ctx->num_hw_submitted++;
 	}
 
@@ -521,10 +525,14 @@ static void vmw_cmdbuf_work_func(struct work_struct *work)
 		container_of(work, struct vmw_cmdbuf_man, work);
 	struct vmw_cmdbuf_header *entry, *next;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t dummy = 0;
 =======
 	uint32_t dummy;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t dummy = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool send_fence = false;
 	struct list_head restart_head[SVGA_CB_CONTEXT_MAX];
 	int i;
@@ -811,10 +819,14 @@ static int vmw_cmdbuf_alloc_space(struct vmw_cmdbuf_man *man,
 	struct vmw_cmdbuf_alloc_info info;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	info.page_size = PFN_UP(size);
 =======
 	info.page_size = PAGE_ALIGN(size) >> PAGE_SHIFT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	info.page_size = PFN_UP(size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	info.node = node;
 	info.done = false;
 
@@ -1285,11 +1297,16 @@ int vmw_cmdbuf_set_pool_size(struct vmw_cmdbuf_man *man, size_t size)
 	 */
 	man->default_size = VMW_CMDBUF_INLINE_SIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_info(&dev_priv->drm,
 		 "Using command buffers with %s pool.\n",
 =======
 	DRM_INFO("Using command buffers with %s pool.\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_info(&dev_priv->drm,
+		 "Using command buffers with %s pool.\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 (man->using_mob) ? "MOB" : "DMA");
 
 	return 0;

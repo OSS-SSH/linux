@@ -124,6 +124,7 @@ struct ib_sa_query {
 #define IB_SA_QUERY_OPA			0x00000004
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct ib_sa_service_query {
 	void (*callback)(int, struct ib_sa_service_rec *, void *);
@@ -132,6 +133,8 @@ struct ib_sa_service_query {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ib_sa_path_query {
 	void (*callback)(int, struct sa_path_rec *, void *);
 	void *context;
@@ -506,6 +509,7 @@ static const struct ib_field mcmember_rec_table[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define SERVICE_REC_FIELD(field) \
 	.struct_offset_bytes = offsetof(struct ib_sa_service_rec, field),	\
@@ -556,6 +560,8 @@ static const struct ib_field service_rec_table[] = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CLASSPORTINFO_REC_FIELD(field) \
 	.struct_offset_bytes = offsetof(struct ib_class_port_info, field),	\
 	.struct_size_bytes   = sizeof_field(struct ib_class_port_info, field),	\
@@ -1365,9 +1371,13 @@ static int send_mad(struct ib_sa_query *query, unsigned long timeout_ms,
 	unsigned long flags;
 	int ret, id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const int nmbr_sa_query_retries = 10;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int nmbr_sa_query_retries = 10;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	xa_lock_irqsave(&queries, flags);
 	ret = __xa_alloc(&queries, &id, query, xa_limit_32b, gfp_mask);
@@ -1376,6 +1386,9 @@ static int send_mad(struct ib_sa_query *query, unsigned long timeout_ms,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	query->mad_buf->timeout_ms  = timeout_ms / nmbr_sa_query_retries;
 	query->mad_buf->retries = nmbr_sa_query_retries;
 	if (!query->mad_buf->timeout_ms) {
@@ -1383,9 +1396,12 @@ static int send_mad(struct ib_sa_query *query, unsigned long timeout_ms,
 		query->mad_buf->timeout_ms = 1;
 		query->mad_buf->retries = timeout_ms;
 	}
+<<<<<<< HEAD
 =======
 	query->mad_buf->timeout_ms  = timeout_ms;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	query->mad_buf->context[0] = query;
 	query->id = id;
 
@@ -1655,6 +1671,7 @@ err1:
 EXPORT_SYMBOL(ib_sa_path_rec_get);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void ib_sa_service_rec_callback(struct ib_sa_query *sa_query,
 				    int status,
@@ -1780,6 +1797,8 @@ err1:
 EXPORT_SYMBOL(ib_sa_service_rec_query);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ib_sa_mcmember_rec_callback(struct ib_sa_query *sa_query,
 					int status,
 					struct ib_sa_mad *mad)

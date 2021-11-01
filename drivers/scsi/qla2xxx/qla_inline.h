@@ -479,6 +479,9 @@ bool qla_pci_disconnected(struct scsi_qla_host *vha,
 	return ret;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline bool
 fcport_is_smaller(fc_port_t *fcport)
@@ -495,5 +498,8 @@ fcport_is_bigger(fc_port_t *fcport)
 {
 	return !fcport_is_smaller(fcport);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

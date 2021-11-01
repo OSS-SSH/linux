@@ -17,10 +17,15 @@
 #include <linux/regmap.h>
 #include <linux/iio/iio.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/iio/driver.h>
 #include <linux/iio/machine.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/iio/driver.h>
+#include <linux/iio/machine.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 
 #define RN5T618_ADC_CONVERSION_TIMEOUT   (msecs_to_jiffies(500))
@@ -195,6 +200,9 @@ static const struct iio_chan_spec rn5t618_adc_iio_channels[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct iio_map rn5t618_maps[] = {
 	IIO_MAP("VADP", "rn5t618-power", "vadp"),
 	IIO_MAP("VUSB", "rn5t618-power", "vusb"),
@@ -208,8 +216,11 @@ static void unregister_map(void *data)
 	iio_map_array_unregister(iio_dev);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rn5t618_adc_probe(struct platform_device *pdev)
 {
 	int ret;
@@ -261,6 +272,9 @@ static int rn5t618_adc_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = iio_map_array_register(iio_dev, rn5t618_maps);
 	if (ret < 0)
 		return ret;
@@ -269,8 +283,11 @@ static int rn5t618_adc_probe(struct platform_device *pdev)
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return devm_iio_device_register(adc->dev, iio_dev);
 }
 

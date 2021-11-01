@@ -61,13 +61,19 @@ MODULE_LICENSE("GPL");
 #define ACER_WMID_SET_THREEG_METHODID		11
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ACER_WMID_SET_GAMING_LED_METHODID 2
 #define ACER_WMID_GET_GAMING_LED_METHODID 4
 #define ACER_WMID_SET_GAMING_FAN_BEHAVIOR 14
 #define ACER_WMID_SET_GAMING_MISC_SETTING_METHODID 22
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Acer ACPI method GUIDs
  */
@@ -77,9 +83,13 @@ MODULE_LICENSE("GPL");
 #define WMID_GUID2		"95764E09-FB56-4E83-B31A-37761F60994A"
 #define WMID_GUID3		"61EF69EA-865C-4BC3-A502-A0DEBA0CB531"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define WMID_GUID4		"7A4DDFE7-5B5D-40B4-8595-4408E0CC7F56"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define WMID_GUID4		"7A4DDFE7-5B5D-40B4-8595-4408E0CC7F56"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Acer ACPI event GUIDs
@@ -94,9 +104,13 @@ enum acer_wmi_event_ids {
 	WMID_HOTKEY_EVENT = 0x1,
 	WMID_ACCEL_OR_KBD_DOCK_EVENT = 0x5,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WMID_GAMING_TURBO_KEY_EVENT = 0x7,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WMID_GAMING_TURBO_KEY_EVENT = 0x7,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct key_entry acer_wmi_keymap[] __initconst = {
@@ -232,11 +246,17 @@ struct hotkey_function_type_aa {
 #define ACER_CAP_SET_FUNCTION_MODE	BIT(5)
 #define ACER_CAP_KBD_DOCK		BIT(6)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ACER_CAP_TURBO_OC     BIT(7)
 #define ACER_CAP_TURBO_LED     BIT(8)
 #define ACER_CAP_TURBO_FAN     BIT(9)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ACER_CAP_TURBO_OC     BIT(7)
+#define ACER_CAP_TURBO_LED     BIT(8)
+#define ACER_CAP_TURBO_FAN     BIT(9)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Interface type flags
@@ -324,11 +344,17 @@ struct quirk_entry {
 	s8 brightness;
 	u8 bluetooth;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 turbo;
 	u8 cpu_fans;
 	u8 gpu_fans;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 turbo;
+	u8 cpu_fans;
+	u8 gpu_fans;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct quirk_entry *quirks;
@@ -341,12 +367,18 @@ static void __init set_quirks(void)
 	if (quirks->brightness)
 		interface->capability |= ACER_CAP_BRIGHTNESS;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (quirks->turbo)
 		interface->capability |= ACER_CAP_TURBO_OC | ACER_CAP_TURBO_LED
 					 | ACER_CAP_TURBO_FAN;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __init dmi_matched(const struct dmi_system_id *dmi)
@@ -376,14 +408,20 @@ static struct quirk_entry quirk_acer_travelmate_2490 = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct quirk_entry quirk_acer_predator_ph315_53 = {
 	.turbo = 1,
 	.cpu_fans = 1,
 	.gpu_fans = 1,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* This AMW0 laptop has no bluetooth */
 static struct quirk_entry quirk_medion_md_98300 = {
 	.wireless = 1,
@@ -553,6 +591,9 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.callback = dmi_matched,
 		.ident = "Acer Predator PH315-53",
 		.matches = {
@@ -562,8 +603,11 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
 		.driver_data = &quirk_acer_predator_ph315_53,
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.callback = set_force_caps,
 		.ident = "Acer Aspire Switch 10E SW3-016",
 		.matches = {
@@ -1402,6 +1446,9 @@ static struct wmi_interface wmid_v2_interface = {
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * WMID Gaming interface
  */
 
@@ -1510,8 +1557,11 @@ static void WMID_gaming_set_fan_mode(u8 fan_mode)
 }
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Generic Device (interface-independent)
  */
 
@@ -1744,6 +1794,9 @@ static int acer_gsensor_event(void)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *  Predator series turbo button
  */
 static int acer_toggle_turbo(void)
@@ -1779,8 +1832,11 @@ static int acer_toggle_turbo(void)
 }
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Switch series keyboard dock status
  */
 static int acer_kbd_dock_state_to_sw_tablet_mode(u8 kbd_dock_state)
@@ -2078,12 +2134,18 @@ static void acer_wmi_notify(u32 value, void *context)
 		acer_kbd_dock_event(&return_value);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case WMID_GAMING_TURBO_KEY_EVENT:
 		if (return_value.key_num == 0x4)
 			acer_toggle_turbo();
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		pr_warn("Unknown function number - %d - %d\n",
 			return_value.function, return_value.key_num);

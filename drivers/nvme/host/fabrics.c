@@ -720,9 +720,12 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
 				goto out;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			nvmf_host_put(opts->host);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			opts->host = nvmf_host_add(p);
 			kfree(p);
 			if (!opts->host) {

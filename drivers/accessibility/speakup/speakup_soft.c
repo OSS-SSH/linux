@@ -154,6 +154,7 @@ static char *get_initstring(void)
 	char *cp;
 	struct var_t *var;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size_t len;
 	size_t n;
 
@@ -174,19 +175,32 @@ static char *get_initstring(void)
 	}
 	cp = cp + scnprintf(cp, len, "\n");
 =======
+=======
+	size_t len;
+	size_t n;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(buf, 0, sizeof(buf));
 	cp = buf;
+	len = sizeof(buf);
+
 	var = synth_soft.vars;
 	while (var->var_id != MAXVARS) {
 		if (var->var_id != CAPS_START && var->var_id != CAPS_STOP &&
-		    var->var_id != PAUSE && var->var_id != DIRECT)
-			cp = cp + sprintf(cp, var->u.n.synth_fmt,
-					  var->u.n.value);
+		    var->var_id != PAUSE && var->var_id != DIRECT) {
+			n = scnprintf(cp, len, var->u.n.synth_fmt,
+				      var->u.n.value);
+			cp = cp + n;
+			len = len - n;
+		}
 		var++;
 	}
+<<<<<<< HEAD
 	cp = cp + sprintf(cp, "\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cp = cp + scnprintf(cp, len, "\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return buf;
 }
 

@@ -352,6 +352,7 @@ notrack_tg(struct sk_buff *skb, const struct xt_action_param *par)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int notrack_chk(const struct xt_tgchk_param *par)
 {
@@ -364,14 +365,19 @@ static int notrack_chk(const struct xt_tgchk_param *par)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct xt_target notrack_tg_reg __read_mostly = {
 	.name		= "NOTRACK",
 	.revision	= 0,
 	.family		= NFPROTO_UNSPEC,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.checkentry	= notrack_chk,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.target		= notrack_tg,
 	.table		= "raw",
 	.me		= THIS_MODULE,

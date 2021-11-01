@@ -20,20 +20,27 @@
 #include "fid.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void __add_fid(struct dentry *dentry, struct p9_fid *fid)
 {
 	hlist_add_head(&fid->dlist, (struct hlist_head *)&dentry->d_fsdata);
 }
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * v9fs_fid_add - add a fid to a dentry
  * @dentry: dentry that the fid is being added to
  * @fid: fid to add
  *
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -43,6 +50,8 @@ static inline void __add_fid(struct dentry *dentry, struct p9_fid *fid)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void v9fs_fid_add(struct dentry *dentry, struct p9_fid *fid)
 {
 	spin_lock(&dentry->d_lock);
@@ -80,10 +89,14 @@ static struct p9_fid *v9fs_fid_find_inode(struct inode *inode, kuid_t uid)
 /**
  * v9fs_open_fid_add - add an open fid to an inode
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @inode: inode that the fid is being added to
 =======
  * @dentry: inode that the fid is being added to
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @inode: inode that the fid is being added to
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @fid: fid to add
  *
  */

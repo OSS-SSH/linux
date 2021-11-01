@@ -72,6 +72,7 @@ static int update_classid_sock(const void *v, struct file *file, unsigned n)
 	struct socket *sock = sock_from_file(file);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (sock)
 		sock_cgroup_set_classid(&sock->sk->sk_cgrp_data, ctx->classid);
 =======
@@ -81,6 +82,10 @@ static int update_classid_sock(const void *v, struct file *file, unsigned n)
 		spin_unlock(&cgroup_sk_update_lock);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (sock)
+		sock_cgroup_set_classid(&sock->sk->sk_cgrp_data, ctx->classid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (--ctx->batch == 0) {
 		ctx->batch = UPDATE_CLASSID_BATCH;
 		return n + 1;
@@ -127,10 +132,13 @@ static int write_classid(struct cgroup_subsys_state *css, struct cftype *cft,
 	struct task_struct *p;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	cgroup_sk_alloc_disable();
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cs->classid = (u32)value;
 
 	css_task_iter_start(css, 0, &it);

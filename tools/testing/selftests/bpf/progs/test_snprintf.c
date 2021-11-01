@@ -60,6 +60,7 @@ int handler(const void *ctx)
 	addr_ret = BPF_SNPRINTF(addr_out, sizeof(addr_out), "%pK %px %p",
 				0, 0xFFFF00000ADD4E55, 0xFFFF00000ADD4E55);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Strings and single-byte character embedding */
 	str_ret  = BPF_SNPRINTF(str_out, sizeof(str_out), "%s % 9c %+2c %-3c %04c %0c %+05s",
 				str1, 'a', 'b', 'c', 'd', 'e', longstr);
@@ -68,6 +69,11 @@ int handler(const void *ctx)
 	str_ret  = BPF_SNPRINTF(str_out, sizeof(str_out), "%s %+05s",
 				str1, longstr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Strings and single-byte character embedding */
+	str_ret  = BPF_SNPRINTF(str_out, sizeof(str_out), "%s % 9c %+2c %-3c %04c %0c %+05s",
+				str1, 'a', 'b', 'c', 'd', 'e', longstr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Overflow */
 	over_ret = BPF_SNPRINTF(over_out, sizeof(over_out), "%%overflow");
 	/* Padding of fixed width numbers */

@@ -199,6 +199,7 @@ static void gsi_irq_type_disable(struct gsi *gsi, enum gsi_irq_type_id type_id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Turn off all GSI interrupts initially; there is no gsi_irq_teardown() */
 static void gsi_irq_setup(struct gsi *gsi)
@@ -272,6 +273,8 @@ static int gsi_ring_setup(struct gsi *gsi)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Event ring commands are performed one at a time.  Their completion
  * is signaled by the event ring control GSI interrupt type, which is
  * only enabled when we issue an event ring command.  Only the event
@@ -924,20 +927,29 @@ static void gsi_channel_program(struct gsi_channel *channel, bool doorbell)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __gsi_channel_start(struct gsi_channel *channel, bool resume)
 =======
 static int __gsi_channel_start(struct gsi_channel *channel, bool start)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __gsi_channel_start(struct gsi_channel *channel, bool resume)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct gsi *gsi = channel->gsi;
 	int ret;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Prior to IPA v4.0 suspend/resume is not implemented by GSI */
 	if (resume && gsi->version < IPA_VERSION_4_0)
 =======
 	if (!start)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Prior to IPA v4.0 suspend/resume is not implemented by GSI */
+	if (resume && gsi->version < IPA_VERSION_4_0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	mutex_lock(&gsi->mutex);
@@ -960,10 +972,14 @@ int gsi_channel_start(struct gsi *gsi, u32 channel_id)
 	gsi_irq_ieob_enable_one(gsi, channel->evt_ring_id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = __gsi_channel_start(channel, false);
 =======
 	ret = __gsi_channel_start(channel, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = __gsi_channel_start(channel, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		gsi_irq_ieob_disable_one(gsi, channel->evt_ring_id);
 		napi_disable(&channel->napi);
@@ -988,10 +1004,14 @@ static int gsi_channel_stop_retry(struct gsi_channel *channel)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __gsi_channel_stop(struct gsi_channel *channel, bool suspend)
 =======
 static int __gsi_channel_stop(struct gsi_channel *channel, bool stop)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __gsi_channel_stop(struct gsi_channel *channel, bool suspend)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct gsi *gsi = channel->gsi;
 	int ret;
@@ -1000,11 +1020,16 @@ static int __gsi_channel_stop(struct gsi_channel *channel, bool stop)
 	gsi_channel_trans_quiesce(channel);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Prior to IPA v4.0 suspend/resume is not implemented by GSI */
 	if (suspend && gsi->version < IPA_VERSION_4_0)
 =======
 	if (!stop)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Prior to IPA v4.0 suspend/resume is not implemented by GSI */
+	if (suspend && gsi->version < IPA_VERSION_4_0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	mutex_lock(&gsi->mutex);
@@ -1023,10 +1048,14 @@ int gsi_channel_stop(struct gsi *gsi, u32 channel_id)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = __gsi_channel_stop(channel, false);
 =======
 	ret = __gsi_channel_stop(channel, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = __gsi_channel_stop(channel, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -1056,21 +1085,30 @@ void gsi_channel_reset(struct gsi *gsi, u32 channel_id, bool doorbell)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Stop a started channel for suspend */
 int gsi_channel_suspend(struct gsi *gsi, u32 channel_id)
 =======
 /* Stop a STARTED channel for suspend (using stop if requested) */
 int gsi_channel_suspend(struct gsi *gsi, u32 channel_id, bool stop)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Stop a started channel for suspend */
+int gsi_channel_suspend(struct gsi *gsi, u32 channel_id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct gsi_channel *channel = &gsi->channel[channel_id];
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = __gsi_channel_stop(channel, true);
 =======
 	ret = __gsi_channel_stop(channel, stop);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = __gsi_channel_stop(channel, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -1080,6 +1118,7 @@ int gsi_channel_suspend(struct gsi *gsi, u32 channel_id, bool stop)
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* Resume a suspended channel (starting if stopped) */
 int gsi_channel_resume(struct gsi *gsi, u32 channel_id)
@@ -1107,6 +1146,26 @@ int gsi_channel_resume(struct gsi *gsi, u32 channel_id, bool start)
 
 	return __gsi_channel_start(channel, start);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Resume a suspended channel (starting if stopped) */
+int gsi_channel_resume(struct gsi *gsi, u32 channel_id)
+{
+	struct gsi_channel *channel = &gsi->channel[channel_id];
+
+	return __gsi_channel_start(channel, true);
+}
+
+/* Prevent all GSI interrupts while suspended */
+void gsi_suspend(struct gsi *gsi)
+{
+	disable_irq(gsi->irq);
+}
+
+/* Allow all GSI interrupts again when resuming */
+void gsi_resume(struct gsi *gsi)
+{
+	enable_irq(gsi->irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1432,6 +1491,7 @@ static irqreturn_t gsi_isr(int irq, void *dev_id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Init function for GSI IRQ lookup; there is no gsi_irq_exit() */
 static int gsi_irq_init(struct gsi *gsi, struct platform_device *pdev)
 {
@@ -1441,12 +1501,18 @@ static int gsi_irq_init(struct gsi *gsi, struct platform_device *pdev)
 	struct device *dev = &pdev->dev;
 	unsigned int irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Init function for GSI IRQ lookup; there is no gsi_irq_exit() */
+static int gsi_irq_init(struct gsi *gsi, struct platform_device *pdev)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	ret = platform_get_irq_byname(pdev, "gsi");
 	if (ret <= 0)
 		return ret ? : -EINVAL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	gsi->irq = ret;
 =======
@@ -1459,10 +1525,14 @@ static int gsi_irq_init(struct gsi *gsi, struct platform_device *pdev)
 	}
 	gsi->irq = irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gsi->irq = ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void gsi_irq_exit(struct gsi *gsi)
@@ -1471,6 +1541,8 @@ static void gsi_irq_exit(struct gsi *gsi)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Return the transaction associated with a transfer completion event */
 static struct gsi_trans *gsi_event_trans(struct gsi_channel *channel,
 					 struct gsi_event *event)
@@ -1949,6 +2021,9 @@ static void gsi_channel_teardown(struct gsi *gsi)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Turn off all GSI interrupts initially */
 static int gsi_irq_setup(struct gsi *gsi)
 {
@@ -2036,8 +2111,11 @@ static int gsi_ring_setup(struct gsi *gsi)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Setup function for GSI.  GSI firmware must be loaded and initialized */
 int gsi_setup(struct gsi *gsi)
 {
@@ -2051,6 +2129,7 @@ int gsi_setup(struct gsi *gsi)
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = gsi_irq_setup(gsi);
 	if (ret)
@@ -2066,10 +2145,20 @@ int gsi_setup(struct gsi *gsi)
 	if (ret)
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = gsi_irq_setup(gsi);
+	if (ret)
+		return ret;
+
+	ret = gsi_ring_setup(gsi);	/* No matching teardown required */
+	if (ret)
+		goto err_irq_teardown;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Initialize the error log */
 	iowrite32(0, gsi->virt + GSI_ERROR_LOG_OFFSET);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = gsi_channel_setup(gsi);
 	if (ret)
@@ -2087,6 +2176,18 @@ err_irq_teardown:
 
 	return gsi_channel_setup(gsi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = gsi_channel_setup(gsi);
+	if (ret)
+		goto err_irq_teardown;
+
+	return 0;
+
+err_irq_teardown:
+	gsi_irq_teardown(gsi);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Inverse of gsi_setup() */
@@ -2094,9 +2195,13 @@ void gsi_teardown(struct gsi *gsi)
 {
 	gsi_channel_teardown(gsi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gsi_irq_teardown(gsi);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gsi_irq_teardown(gsi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Initialize a channel's event ring */
@@ -2154,9 +2259,12 @@ static bool gsi_channel_data_valid(struct gsi *gsi,
 				   const struct ipa_gsi_endpoint_data *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef IPA_VALIDATION
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 channel_id = data->channel_id;
 	struct device *dev = gsi->dev;
 
@@ -2203,9 +2311,12 @@ static bool gsi_channel_data_valid(struct gsi *gsi,
 		return false;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #endif /* IPA_VALIDATION */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return true;
 }
@@ -2402,30 +2513,41 @@ int gsi_init(struct gsi *gsi, struct platform_device *pdev,
 	init_completion(&gsi->completion);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = gsi_irq_init(gsi, pdev);	/* No matching exit required */
 =======
 	ret = gsi_irq_init(gsi, pdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = gsi_irq_init(gsi, pdev);	/* No matching exit required */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto err_iounmap;
 
 	ret = gsi_channel_init(gsi, count, data);
 	if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_iounmap;
 =======
 		goto err_irq_exit;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_iounmap;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_init(&gsi->mutex);
 
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 err_irq_exit:
 	gsi_irq_exit(gsi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_iounmap:
 	iounmap(gsi->virt_raw);
 
@@ -2438,9 +2560,12 @@ void gsi_exit(struct gsi *gsi)
 	mutex_destroy(&gsi->mutex);
 	gsi_channel_exit(gsi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gsi_irq_exit(gsi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iounmap(gsi->virt_raw);
 }
 

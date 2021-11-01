@@ -34,9 +34,13 @@
 #include <linux/mm_types.h>
 #include <linux/pgtable.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/memblock.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/memblock.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/pgalloc.h>
 #include <linux/io.h>
@@ -247,6 +251,9 @@ unsigned long iopa(unsigned long addr)
 __ref pte_t *pte_alloc_one_kernel(struct mm_struct *mm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mem_init_done)
 		return (pte_t *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
 	else
@@ -254,6 +261,7 @@ __ref pte_t *pte_alloc_one_kernel(struct mm_struct *mm)
 					      MEMBLOCK_LOW_LIMIT,
 					      memory_start + kernel_tlb,
 					      NUMA_NO_NODE);
+<<<<<<< HEAD
 =======
 	pte_t *pte;
 	if (mem_init_done) {
@@ -265,6 +273,8 @@ __ref pte_t *pte_alloc_one_kernel(struct mm_struct *mm)
 	}
 	return pte;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void __set_fixmap(enum fixed_addresses idx, phys_addr_t phys, pgprot_t flags)

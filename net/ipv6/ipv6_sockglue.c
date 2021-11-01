@@ -226,10 +226,14 @@ static int ipv6_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 		goto out_free_gsf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ip6_mc_msfilter(sk, gsf, gsf->gf_slist_flex);
 =======
 	ret = ip6_mc_msfilter(sk, gsf, gsf->gf_slist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = ip6_mc_msfilter(sk, gsf, gsf->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_free_gsf:
 	kfree(gsf);
 	return ret;
@@ -239,10 +243,14 @@ static int compat_ipv6_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 		int optlen)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
 =======
 	const int size0 = offsetof(struct compat_group_filter, gf_slist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct compat_group_filter *gf32;
 	void *p;
 	int ret;
@@ -258,10 +266,14 @@ static int compat_ipv6_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gf32 = p + 4; /* we want ->gf_group and ->gf_slist_flex aligned */
 =======
 	gf32 = p + 4; /* we want ->gf_group and ->gf_slist aligned */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gf32 = p + 4; /* we want ->gf_group and ->gf_slist_flex aligned */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = -EFAULT;
 	if (copy_from_sockptr(gf32, optval, optlen))
 		goto out_free_p;
@@ -274,10 +286,14 @@ static int compat_ipv6_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 
 	ret = -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (offsetof(struct compat_group_filter, gf_slist_flex[n]) > optlen)
 =======
 	if (offsetof(struct compat_group_filter, gf_slist[n]) > optlen)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (offsetof(struct compat_group_filter, gf_slist_flex[n]) > optlen)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_free_p;
 
 	ret = ip6_mc_msfilter(sk, &(struct group_filter){
@@ -285,10 +301,14 @@ static int compat_ipv6_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 			.gf_group = gf32->gf_group,
 			.gf_fmode = gf32->gf_fmode,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.gf_numsrc = gf32->gf_numsrc}, gf32->gf_slist_flex);
 =======
 			.gf_numsrc = gf32->gf_numsrc}, gf32->gf_slist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			.gf_numsrc = gf32->gf_numsrc}, gf32->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out_free_p:
 	kfree(p);
@@ -1069,10 +1089,14 @@ static int ipv6_get_msfilter(struct sock *sk, void __user *optval,
 		int __user *optlen, int len)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const int size0 = offsetof(struct group_filter, gf_slist_flex);
 =======
 	const int size0 = offsetof(struct group_filter, gf_slist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int size0 = offsetof(struct group_filter, gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct group_filter __user *p = optval;
 	struct group_filter gsf;
 	int num;
@@ -1087,10 +1111,14 @@ static int ipv6_get_msfilter(struct sock *sk, void __user *optval,
 	num = gsf.gf_numsrc;
 	lock_sock(sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ip6_mc_msfget(sk, &gsf, p->gf_slist_flex);
 =======
 	err = ip6_mc_msfget(sk, &gsf, p->gf_slist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ip6_mc_msfget(sk, &gsf, p->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!err) {
 		if (num > gsf.gf_numsrc)
 			num = gsf.gf_numsrc;
@@ -1106,10 +1134,14 @@ static int compat_ipv6_get_msfilter(struct sock *sk, void __user *optval,
 		int __user *optlen)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
 =======
 	const int size0 = offsetof(struct compat_group_filter, gf_slist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct compat_group_filter __user *p = optval;
 	struct compat_group_filter gf32;
 	struct group_filter gf;
@@ -1133,10 +1165,14 @@ static int compat_ipv6_get_msfilter(struct sock *sk, void __user *optval,
 
 	lock_sock(sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ip6_mc_msfget(sk, &gf, p->gf_slist_flex);
 =======
 	err = ip6_mc_msfget(sk, &gf, p->gf_slist);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ip6_mc_msfget(sk, &gf, p->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	release_sock(sk);
 	if (err)
 		return err;

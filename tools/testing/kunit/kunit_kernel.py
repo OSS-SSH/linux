@@ -7,9 +7,12 @@
 # Author: Brendan Higgins <brendanhiggins@google.com>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 from __future__ import annotations
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 import importlib.util
 import logging
 import subprocess
@@ -17,11 +20,15 @@ import os
 import shutil
 import signal
 <<<<<<< HEAD
+<<<<<<< HEAD
 from typing import Iterator, Optional, Tuple
 =======
 from typing import Iterator
 from typing import Optional
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+from typing import Iterator, Optional, Tuple
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 from contextlib import ExitStack
 
@@ -216,10 +223,14 @@ def get_source_tree_ops(arch: str, cross_compile: Optional[str]) -> LinuxSourceT
 
 def get_source_tree_ops_from_qemu_config(config_path: str,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 cross_compile: Optional[str]) -> Tuple[
 =======
 					 cross_compile: Optional[str]) -> tuple[
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 cross_compile: Optional[str]) -> Tuple[
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							 str, LinuxSourceTreeOperations]:
 	# The module name/path has very little to do with where the actual file
 	# exists (I learned this through experimentation and could not find it

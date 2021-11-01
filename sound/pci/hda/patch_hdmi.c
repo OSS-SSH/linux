@@ -48,12 +48,18 @@ module_param(enable_silent_stream, bool, 0644);
 MODULE_PARM_DESC(enable_silent_stream, "Enable Silent Stream for HDMI devices");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool enable_all_pins;
 module_param(enable_all_pins, bool, 0444);
 MODULE_PARM_DESC(enable_all_pins, "Forcibly enable all pins");
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hdmi_spec_per_cvt {
 	hda_nid_t cvt_nid;
 	int assigned;
@@ -1948,10 +1954,15 @@ static const struct snd_pci_quirk force_connect_list[] = {
 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
+	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 
@@ -1970,11 +1981,17 @@ static int hdmi_parse_codec(struct hda_codec *codec)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (enable_all_pins)
 		spec->force_connect = true;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (enable_all_pins)
+		spec->force_connect = true;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	q = snd_pci_quirk_lookup(codec->bus->pci, force_connect_list);
 
 	if (q && q->value)

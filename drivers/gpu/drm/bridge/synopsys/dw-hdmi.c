@@ -144,9 +144,13 @@ struct dw_hdmi {
 	struct drm_connector connector;
 	struct drm_bridge bridge;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct drm_bridge *next_bridge;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct drm_bridge *next_bridge;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	unsigned int version;
 
@@ -2780,11 +2784,16 @@ static int dw_hdmi_bridge_attach(struct drm_bridge *bridge,
 
 	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return drm_bridge_attach(bridge->encoder, hdmi->next_bridge,
 					 bridge, flags);
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return drm_bridge_attach(bridge->encoder, hdmi->next_bridge,
+					 bridge, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return dw_hdmi_connector_create(hdmi);
 }
@@ -3170,6 +3179,9 @@ static void dw_hdmi_init_hw(struct dw_hdmi *hdmi)
  * Probe/remove API, used from platforms based on the DRM bridge API.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int dw_hdmi_parse_dt(struct dw_hdmi *hdmi)
 {
@@ -3216,8 +3228,11 @@ static int dw_hdmi_parse_dt(struct dw_hdmi *hdmi)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
 			      const struct dw_hdmi_plat_data *plat_data)
 {
@@ -3255,12 +3270,18 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
 	spin_lock_init(&hdmi->audio_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = dw_hdmi_parse_dt(hdmi);
 	if (ret < 0)
 		return ERR_PTR(ret);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ddc_node = of_parse_phandle(np, "ddc-i2c-bus", 0);
 	if (ddc_node) {
 		hdmi->ddc = of_get_i2c_adapter_by_node(ddc_node);
@@ -3540,9 +3561,12 @@ struct dw_hdmi *dw_hdmi_bind(struct platform_device *pdev,
 	if (ret) {
 		dw_hdmi_remove(hdmi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		DRM_ERROR("Failed to initialize bridge with drm\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ERR_PTR(ret);
 	}
 

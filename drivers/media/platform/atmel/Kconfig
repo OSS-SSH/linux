@@ -9,9 +9,13 @@ config VIDEO_ATMEL_ISC
 	select REGMAP_MMIO
 	select V4L2_FWNODE
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select VIDEO_ATMEL_ISC_BASE
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select VIDEO_ATMEL_ISC_BASE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	   This module makes the ATMEL Image Sensor Controller available
 	   as a v4l2 device.
@@ -24,22 +28,32 @@ config VIDEO_ATMEL_XISC
 	select REGMAP_MMIO
 	select V4L2_FWNODE
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select VIDEO_ATMEL_ISC_BASE
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select VIDEO_ATMEL_ISC_BASE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	   This module makes the ATMEL eXtended Image Sensor Controller
 	   available as a v4l2 device.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config VIDEO_ATMEL_ISC_BASE
 	tristate
 	default n
 	help
 	  ATMEL ISC and XISC common code base.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config VIDEO_ATMEL_ISI
 	tristate "ATMEL Image Sensor Interface (ISI) support"
 	depends on VIDEO_V4L2 && OF

@@ -6,9 +6,13 @@
 #include "i915_selftest.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "gt/intel_context.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "gt/intel_context.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "gt/intel_engine_user.h"
 #include "gt/intel_gt.h"
 #include "gt/intel_gpu_commands.h"
@@ -20,6 +24,7 @@
 #include "huge_gem_object.h"
 #include "mock_context.h"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int __igt_client_fill(struct intel_engine_cs *engine)
@@ -135,6 +140,8 @@ static int igt_client_fill(void *arg)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define WIDTH 512
 #define HEIGHT 32
 
@@ -701,9 +708,12 @@ int i915_gem_client_blt_live_selftests(struct drm_i915_private *i915)
 {
 	static const struct i915_subtest tests[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		SUBTEST(igt_client_fill),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		SUBTEST(igt_client_tiled_blits),
 	};
 

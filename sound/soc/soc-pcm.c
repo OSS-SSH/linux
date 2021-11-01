@@ -450,19 +450,26 @@ static void soc_pcm_apply_msb(struct snd_pcm_substream *substream)
 	struct snd_soc_dai *cpu_dai;
 	struct snd_soc_dai *codec_dai;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct snd_soc_pcm_stream *pcm_codec, *pcm_cpu;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int stream = substream->stream;
 	int i;
 	unsigned int bits = 0, cpu_bits = 0;
 
 	for_each_rtd_codec_dais(rtd, i, codec_dai) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct snd_soc_pcm_stream *pcm_codec = snd_soc_dai_get_pcm_stream(codec_dai, stream);
 =======
 		pcm_codec = snd_soc_dai_get_pcm_stream(codec_dai, stream);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_pcm_stream *pcm_codec = snd_soc_dai_get_pcm_stream(codec_dai, stream);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (pcm_codec->sig_bits == 0) {
 			bits = 0;
@@ -473,10 +480,14 @@ static void soc_pcm_apply_msb(struct snd_pcm_substream *substream)
 
 	for_each_rtd_cpu_dais(rtd, i, cpu_dai) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct snd_soc_pcm_stream *pcm_cpu = snd_soc_dai_get_pcm_stream(cpu_dai, stream);
 =======
 		pcm_cpu = snd_soc_dai_get_pcm_stream(cpu_dai, stream);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_pcm_stream *pcm_cpu = snd_soc_dai_get_pcm_stream(cpu_dai, stream);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (pcm_cpu->sig_bits == 0) {
 			cpu_bits = 0;
@@ -646,6 +657,7 @@ static int soc_pcm_components_close(struct snd_pcm_substream *substream,
 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
 	struct snd_soc_component *component;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, ret = 0;
 
 	for_each_rtd_components(rtd, i, component) {
@@ -656,6 +668,12 @@ static int soc_pcm_components_close(struct snd_pcm_substream *substream,
 	for_each_rtd_components(rtd, i, component) {
 		r = snd_soc_component_close(component, substream, rollback);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, ret = 0;
+
+	for_each_rtd_components(rtd, i, component) {
+		int r = snd_soc_component_close(component, substream, rollback);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (r < 0)
 			ret = r; /* use last ret */
 
@@ -1034,9 +1052,13 @@ out:
 static int soc_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = -EINVAL, _ret = 0;
 	int rollback = 0;
 
@@ -1078,10 +1100,14 @@ start_err:
 	case SNDRV_PCM_TRIGGER_SUSPEND:
 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rtd->dai_link->stop_dma_first) {
 			ret = snd_soc_pcm_component_trigger(substream, cmd, rollback);
 			if (ret < 0)
 				break;
+<<<<<<< HEAD
 
 			ret = snd_soc_pcm_dai_trigger(substream, cmd, rollback);
 			if (ret < 0)
@@ -1099,12 +1125,25 @@ start_err:
 		ret = snd_soc_pcm_dai_trigger(substream, cmd, rollback);
 		if (ret < 0)
 			break;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		ret = snd_soc_pcm_component_trigger(substream, cmd, rollback);
-		if (ret < 0)
-			break;
+			ret = snd_soc_pcm_dai_trigger(substream, cmd, rollback);
+			if (ret < 0)
+				break;
+		} else {
+			ret = snd_soc_pcm_dai_trigger(substream, cmd, rollback);
+			if (ret < 0)
+				break;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = snd_soc_pcm_component_trigger(substream, cmd, rollback);
+			if (ret < 0)
+				break;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = snd_soc_link_trigger(substream, cmd, rollback);
 		break;
 	}
@@ -1351,19 +1390,26 @@ static bool dpcm_be_is_active(struct snd_soc_dpcm *dpcm, int stream,
 			      struct snd_soc_dapm_widget_list *list)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct snd_soc_dapm_widget *widget;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct snd_soc_dai *dai;
 	unsigned int i;
 
 	/* is there a valid DAI widget for this BE */
 	for_each_rtd_dais(dpcm->be, i, dai) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct snd_soc_dapm_widget *widget = snd_soc_dai_get_widget(dai, stream);
 =======
 		widget = snd_soc_dai_get_widget(dai, stream);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_dapm_widget *widget = snd_soc_dai_get_widget(dai, stream);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * The BE is pruned only if none of the dai
@@ -1677,9 +1723,12 @@ static void dpcm_runtime_setup_be_chan(struct snd_pcm_substream *substream)
 	for_each_dpcm_be(fe, stream, dpcm) {
 		struct snd_soc_pcm_runtime *be = dpcm->be;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		struct snd_soc_pcm_stream *codec_stream;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct snd_soc_pcm_stream *cpu_stream;
 		struct snd_soc_dai *dai;
 		int i;
@@ -1703,11 +1752,16 @@ static void dpcm_runtime_setup_be_chan(struct snd_pcm_substream *substream)
 		 */
 		if (be->num_codecs == 1) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			struct snd_soc_pcm_stream *codec_stream = snd_soc_dai_get_pcm_stream(
 				asoc_rtd_to_codec(be, 0), stream);
 =======
 			codec_stream = snd_soc_dai_get_pcm_stream(asoc_rtd_to_codec(be, 0), stream);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct snd_soc_pcm_stream *codec_stream = snd_soc_dai_get_pcm_stream(
+				asoc_rtd_to_codec(be, 0), stream);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			soc_pcm_hw_update_chan(hw, codec_stream);
 		}
@@ -2639,12 +2693,16 @@ static int soc_get_playback_capture(struct snd_soc_pcm_runtime *rtd,
 				    int *playback, int *capture)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_soc_dai *cpu_dai;
 =======
 	struct snd_soc_dai *codec_dai;
 	struct snd_soc_dai *cpu_dai;
 	int stream;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct snd_soc_dai *cpu_dai;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	if (rtd->dai_link->dynamic && rtd->num_cpus > 1) {
@@ -2655,10 +2713,15 @@ static int soc_get_playback_capture(struct snd_soc_pcm_runtime *rtd,
 
 	if (rtd->dai_link->dynamic || rtd->dai_link->no_pcm) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int stream;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int stream;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rtd->dai_link->dpcm_playback) {
 			stream = SNDRV_PCM_STREAM_PLAYBACK;
 
@@ -2694,10 +2757,15 @@ static int soc_get_playback_capture(struct snd_soc_pcm_runtime *rtd,
 		}
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct snd_soc_dai *codec_dai;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_dai *codec_dai;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Adapt stream for codec2codec links */
 		int cpu_capture = rtd->dai_link->params ?
 			SNDRV_PCM_STREAM_PLAYBACK : SNDRV_PCM_STREAM_CAPTURE;

@@ -404,10 +404,14 @@ static const struct platform_suspend_ops tegra_suspend_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void tegra_pm_init_suspend(void)
 =======
 void __init tegra_init_suspend(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void tegra_pm_init_suspend(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	enum tegra_suspend_mode mode = tegra_pmc_get_suspend_mode();
 

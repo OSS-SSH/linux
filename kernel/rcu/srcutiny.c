@@ -97,10 +97,14 @@ EXPORT_SYMBOL_GPL(cleanup_srcu_struct);
 void __srcu_read_unlock(struct srcu_struct *ssp, int idx)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int newval = READ_ONCE(ssp->srcu_lock_nesting[idx]) - 1;
 =======
 	int newval = ssp->srcu_lock_nesting[idx] - 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int newval = READ_ONCE(ssp->srcu_lock_nesting[idx]) - 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	WRITE_ONCE(ssp->srcu_lock_nesting[idx], newval);
 	if (!newval && READ_ONCE(ssp->srcu_gp_waiting))

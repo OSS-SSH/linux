@@ -677,6 +677,7 @@ int vsp1_entity_init(struct vsp1_device *vsp1, struct vsp1_entity *entity,
 	 */
 	entity->config = v4l2_subdev_alloc_state(&entity->subdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IS_ERR(entity->config)) {
 		media_entity_cleanup(&entity->subdev.entity);
 		return PTR_ERR(entity->config);
@@ -685,6 +686,11 @@ int vsp1_entity_init(struct vsp1_device *vsp1, struct vsp1_entity *entity,
 		media_entity_cleanup(&entity->subdev.entity);
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(entity->config)) {
+		media_entity_cleanup(&entity->subdev.entity);
+		return PTR_ERR(entity->config);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;

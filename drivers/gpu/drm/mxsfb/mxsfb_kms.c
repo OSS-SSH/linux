@@ -48,6 +48,7 @@ static u32 set_hsync_pulse_width(struct mxsfb_drm_private *mxsfb, u32 val)
  * outputting them on the bus.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void mxsfb_set_formats(struct mxsfb_drm_private *mxsfb,
 			      const u32 bus_format)
 {
@@ -57,16 +58,22 @@ static void mxsfb_set_formats(struct mxsfb_drm_private *mxsfb,
 
 =======
 static void mxsfb_set_formats(struct mxsfb_drm_private *mxsfb)
+=======
+static void mxsfb_set_formats(struct mxsfb_drm_private *mxsfb,
+			      const u32 bus_format)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_device *drm = mxsfb->drm;
 	const u32 format = mxsfb->crtc.primary->state->fb->format->format;
-	u32 bus_format = MEDIA_BUS_FMT_RGB888_1X24;
 	u32 ctrl, ctrl1;
 
+<<<<<<< HEAD
 	if (mxsfb->connector->display_info.num_bus_formats)
 		bus_format = mxsfb->connector->display_info.bus_formats[0];
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DRM_DEV_DEBUG_DRIVER(drm->dev, "Using bus_format: 0x%08X\n",
 			     bus_format);
 
@@ -118,6 +125,9 @@ static void mxsfb_enable_controller(struct mxsfb_drm_private *mxsfb)
 	clk_prepare_enable(mxsfb->clk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Increase number of outstanding requests on all supported IPs */
 	if (mxsfb->devdata->has_ctrl2) {
 		reg = readl(mxsfb->base + LCDC_V4_CTRL2);
@@ -126,8 +136,11 @@ static void mxsfb_enable_controller(struct mxsfb_drm_private *mxsfb)
 		writel(reg, mxsfb->base + LCDC_V4_CTRL2);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If it was disabled, re-enable the mode again */
 	writel(CTRL_DOTCLK_MODE, mxsfb->base + LCDC_CTRL + REG_SET);
 
@@ -137,6 +150,9 @@ static void mxsfb_enable_controller(struct mxsfb_drm_private *mxsfb)
 	writel(reg, mxsfb->base + LCDC_VDCTRL4);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Enable recovery on underflow.
 	 *
@@ -166,8 +182,11 @@ static void mxsfb_enable_controller(struct mxsfb_drm_private *mxsfb)
 	reg |= CTRL1_RECOVER_ON_UNDERFLOW;
 	writel(reg, mxsfb->base + LCDC_CTRL1);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writel(CTRL_RUN, mxsfb->base + LCDC_CTRL + REG_SET);
 }
 
@@ -239,11 +258,16 @@ static dma_addr_t mxsfb_get_fb_paddr(struct drm_plane *plane)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void mxsfb_crtc_mode_set_nofb(struct mxsfb_drm_private *mxsfb,
 				     const u32 bus_format)
 =======
 static void mxsfb_crtc_mode_set_nofb(struct mxsfb_drm_private *mxsfb)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void mxsfb_crtc_mode_set_nofb(struct mxsfb_drm_private *mxsfb,
+				     const u32 bus_format)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_device *drm = mxsfb->crtc.dev;
 	struct drm_display_mode *m = &mxsfb->crtc.state->adjusted_mode;
@@ -265,20 +289,30 @@ static void mxsfb_crtc_mode_set_nofb(struct mxsfb_drm_private *mxsfb)
 	/* Clear the FIFOs */
 	writel(CTRL1_FIFO_CLEAR, mxsfb->base + LCDC_CTRL1 + REG_SET);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	readl(mxsfb->base + LCDC_CTRL1);
 	writel(CTRL1_FIFO_CLEAR, mxsfb->base + LCDC_CTRL1 + REG_CLR);
 	readl(mxsfb->base + LCDC_CTRL1);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	readl(mxsfb->base + LCDC_CTRL1);
+	writel(CTRL1_FIFO_CLEAR, mxsfb->base + LCDC_CTRL1 + REG_CLR);
+	readl(mxsfb->base + LCDC_CTRL1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mxsfb->devdata->has_overlay)
 		writel(0, mxsfb->base + LCDC_AS_CTRL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mxsfb_set_formats(mxsfb, bus_format);
 =======
 	mxsfb_set_formats(mxsfb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mxsfb_set_formats(mxsfb, bus_format);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	clk_set_rate(mxsfb->clk, m->crtc_clock * 1000);
 
@@ -377,12 +411,18 @@ static void mxsfb_crtc_atomic_enable(struct drm_crtc *crtc,
 {
 	struct mxsfb_drm_private *mxsfb = to_mxsfb_drm_private(crtc->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct drm_bridge_state *bridge_state;
 	struct drm_device *drm = mxsfb->drm;
 	u32 bus_format = 0;
 =======
 	struct drm_device *drm = mxsfb->drm;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct drm_bridge_state *bridge_state;
+	struct drm_device *drm = mxsfb->drm;
+	u32 bus_format = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_addr_t paddr;
 
 	pm_runtime_get_sync(drm->dev);
@@ -391,6 +431,9 @@ static void mxsfb_crtc_atomic_enable(struct drm_crtc *crtc,
 	drm_crtc_vblank_on(crtc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If there is a bridge attached to the LCDIF, use its bus format */
 	if (mxsfb->bridge) {
 		bridge_state =
@@ -408,9 +451,12 @@ static void mxsfb_crtc_atomic_enable(struct drm_crtc *crtc,
 		bus_format = MEDIA_BUS_FMT_RGB888_1X24;
 
 	mxsfb_crtc_mode_set_nofb(mxsfb, bus_format);
+<<<<<<< HEAD
 =======
 	mxsfb_crtc_mode_set_nofb(mxsfb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Write cur_buf as well to avoid an initial corrupt frame */
 	paddr = mxsfb_get_fb_paddr(crtc->primary);
@@ -595,18 +641,24 @@ static bool mxsfb_format_mod_supported(struct drm_plane *plane,
 
 static const struct drm_plane_helper_funcs mxsfb_plane_primary_helper_funcs = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.prepare_fb = drm_gem_plane_helper_prepare_fb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.atomic_check = mxsfb_plane_atomic_check,
 	.atomic_update = mxsfb_plane_primary_atomic_update,
 };
 
 static const struct drm_plane_helper_funcs mxsfb_plane_overlay_helper_funcs = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.prepare_fb = drm_gem_plane_helper_prepare_fb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.atomic_check = mxsfb_plane_atomic_check,
 	.atomic_update = mxsfb_plane_overlay_atomic_update,
 };

@@ -205,6 +205,7 @@ static int s5m8767_tm_to_data(struct rtc_time *tm, u8 *data)
 	data[RTC_DATE] = tm->tm_mday;
 	data[RTC_MONTH] = tm->tm_mon + 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data[RTC_YEAR1] = tm->tm_year - 100;
 
 	return 0;
@@ -219,6 +220,11 @@ static int s5m8767_tm_to_data(struct rtc_time *tm, u8 *data)
 		return 0;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	data[RTC_YEAR1] = tm->tm_year - 100;
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -793,6 +799,7 @@ static int s5m_rtc_probe(struct platform_device *pdev)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	info->rtc_dev = devm_rtc_allocate_device(&pdev->dev);
 	if (IS_ERR(info->rtc_dev))
 		return PTR_ERR(info->rtc_dev);
@@ -828,25 +835,42 @@ static int s5m_rtc_probe(struct platform_device *pdev)
 	info->rtc_dev = devm_rtc_device_register(&pdev->dev, "s5m-rtc",
 						 &s5m_rtc_ops, THIS_MODULE);
 
+=======
+	info->rtc_dev = devm_rtc_allocate_device(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(info->rtc_dev))
 		return PTR_ERR(info->rtc_dev);
 
+	info->rtc_dev->ops = &s5m_rtc_ops;
+
+	if (info->device_type == S5M8763X) {
+		info->rtc_dev->range_min = RTC_TIMESTAMP_BEGIN_0000;
+		info->rtc_dev->range_max = RTC_TIMESTAMP_END_9999;
+	} else {
+		info->rtc_dev->range_min = RTC_TIMESTAMP_BEGIN_2000;
+		info->rtc_dev->range_max = RTC_TIMESTAMP_END_2099;
+	}
+
 	if (!info->irq) {
-		dev_info(&pdev->dev, "Alarm IRQ not available\n");
-		return 0;
+		clear_bit(RTC_FEATURE_ALARM, info->rtc_dev->features);
+	} else {
+		ret = devm_request_threaded_irq(&pdev->dev, info->irq, NULL,
+						s5m_rtc_alarm_irq, 0, "rtc-alarm0",
+						info);
+		if (ret < 0) {
+			dev_err(&pdev->dev, "Failed to request alarm IRQ: %d: %d\n",
+				info->irq, ret);
+			return ret;
+		}
+		device_init_wakeup(&pdev->dev, 1);
 	}
 
-	ret = devm_request_threaded_irq(&pdev->dev, info->irq, NULL,
-					s5m_rtc_alarm_irq, 0, "rtc-alarm0",
-					info);
-	if (ret < 0) {
-		dev_err(&pdev->dev, "Failed to request alarm IRQ: %d: %d\n",
-			info->irq, ret);
-		return ret;
-	}
-
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return devm_rtc_register_device(info->rtc_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP

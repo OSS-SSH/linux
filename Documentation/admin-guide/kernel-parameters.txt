@@ -288,6 +288,9 @@
 			to be done where GFP_KERNEL allocations are allowed.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	allow_mismatched_32bit_el0 [ARM64]
 			Allow execve() of 32-bit applications and setting of the
 			PER_LINUX32 personality on systems where only a strict
@@ -299,6 +302,7 @@
 			See Documentation/arm64/asymmetric-32bit.rst for more
 			information.
 
+<<<<<<< HEAD
 	amd_iommu=	[HW,X86-64]
 			Pass parameters to the AMD IOMMU driver in the system.
 			Possible values are:
@@ -312,6 +316,12 @@
 				    flushed before they will be reused, which
 				    is a lot of faster
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	amd_iommu=	[HW,X86-64]
+			Pass parameters to the AMD IOMMU driver in the system.
+			Possible values are:
+			fullflush - Deprecated, equivalent to iommu.strict=1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			off	  - do not initialize any AMD IOMMU found in
 				    the system
 			force_isolation - Force device isolation for all
@@ -399,11 +409,17 @@
 			support
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arm64.nomte	[ARM64] Unconditionally disable Memory Tagging Extension
 			support
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	arm64.nomte	[ARM64] Unconditionally disable Memory Tagging Extension
+			support
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ataflop=	[HW,M68k]
 
 	atarimouse=	[HW,MOUSE] Atari Mouse
@@ -1280,10 +1296,14 @@
 			the real console.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			The xen option can only be used in Xen domains.
 =======
 			The xen output can only be used by Xen PV guests.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			The xen option can only be used in Xen domains.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			The sclp output can only be used on s390.
 
@@ -1776,13 +1796,19 @@
 			true (1).
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	idxd.tc_override= [HW]
 			Format: <bool>
 			Allow override of default traffic class configuration
 			for the device. By default it is set to false (0).
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ieee754=	[MIPS] Select IEEE Std 754 conformance mode
 			Format: { strict | legacy | 2008 | relaxed }
 			Default: strict
@@ -1981,23 +2007,31 @@
 			DMA.
 		strict [Default Off]
 <<<<<<< HEAD
+<<<<<<< HEAD
 			Deprecated, equivalent to iommu.strict=1.
 =======
 			With this option on every unmap_single operation will
 			result in a hardware IOTLB flush operation as opposed
 			to batching them for performance.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			Deprecated, equivalent to iommu.strict=1.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sp_off [Default Off]
 			By default, super page will be supported if Intel IOMMU
 			has the capability. With this option, super page will
 			not be supported.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sm_on
 			Enable the Intel IOMMU scalable mode if the hardware
 			advertises that it has support for the scalable mode
 			translation.
 		sm_off
 			Disallow use of the Intel IOMMU scalable mode.
+<<<<<<< HEAD
 =======
 		sm_on [Default Off]
 			By default, scalable mode will be disabled even if the
@@ -2005,6 +2039,8 @@
 			mode translation. With this option set, scalable mode
 			will be used on hardware which claims to support it.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tboot_noforce [Default Off]
 			Do not force the Intel IOMMU enabled under tboot.
 			By default, tboot will force Intel IOMMU on, which
@@ -2097,6 +2133,7 @@
 			  Will fall back to strict mode if not supported by
 			  the relevant IOMMU driver.
 <<<<<<< HEAD
+<<<<<<< HEAD
 			1 - Strict mode.
 			  DMA unmap operations invalidate IOMMU hardware TLBs
 			  synchronously.
@@ -2112,6 +2149,14 @@
 			mode explicitly specified by either method takes
 			precedence.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			1 - Strict mode.
+			  DMA unmap operations invalidate IOMMU hardware TLBs
+			  synchronously.
+			unset - Use value of CONFIG_IOMMU_DEFAULT_DMA_{LAZY,STRICT}.
+			Note: on x86, strict mode specified via one of the
+			legacy driver-specific options takes precedence.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iommu.passthrough=
 			[ARM64, X86] Configure DMA to bypass the IOMMU by default.
@@ -2480,6 +2525,9 @@
 			Default is 1 (enabled)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l1d_flush=	[X86,INTEL]
 			Control mitigation for L1D based snooping vulnerability.
 
@@ -2497,8 +2545,11 @@
 
 			on         - enable the interface for the mitigation
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l1tf=           [X86] Control mitigation of the L1TF vulnerability on
 			      affected CPUs
 
@@ -4246,6 +4297,9 @@
 			default: disabled
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	printk.console_no_auto_verbose=
 			Disable console loglevel raise on oops, panic
 			or lockdep-detected issues (only if lock debug is on).
@@ -4255,8 +4309,11 @@
 			Format: <bool>
 			default: 0 (auto_verbose is enabled)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	printk.devkmsg={on,off,ratelimit}
 			Control writing to /dev/kmsg.
 			on - unlimited logging to /dev/kmsg from userspace
@@ -4868,10 +4925,14 @@
 	reboot=		[KNL]
 			Format (x86 or x86_64):
 <<<<<<< HEAD
+<<<<<<< HEAD
 				[w[arm] | c[old] | h[ard] | s[oft] | g[pio]] | d[efault] \
 =======
 				[w[arm] | c[old] | h[ard] | s[oft] | g[pio]] \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				[w[arm] | c[old] | h[ard] | s[oft] | g[pio]] | d[efault] \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				[[,]s[mp]#### \
 				[[,]b[ios] | a[cpi] | k[bd] | t[riple] | e[fi] | p[ci]] \
 				[[,]f[orce]
@@ -5040,10 +5101,13 @@
 			See drivers/net/irda/sa1100_ir.c.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	sbni=		[NET] Granch SBNI12 leased line adapter
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sched_verbose	[KNL] Enables verbose scheduler debug messages.
 
 	schedstats=	[KNL,X86] Enable or disable scheduled statistics.

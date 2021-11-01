@@ -21,10 +21,14 @@ struct xbtree_afakeroot;
  */
 #define XFS_ALLOC_BLOCK_LEN(mp) \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	(xfs_has_crc(((mp))) ? \
 =======
 	(xfs_sb_version_hascrc(&((mp)->m_sb)) ? \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	(xfs_has_crc(((mp))) ? \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		XFS_BTREE_SBLOCK_CRC_LEN : XFS_BTREE_SBLOCK_LEN)
 
 /*

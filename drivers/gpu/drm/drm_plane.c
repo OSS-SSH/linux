@@ -39,10 +39,14 @@
  * DOC: overview
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * A plane represents an image source that can be blended with or overlaid on
 =======
  * A plane represents an image source that can be blended with or overlayed on
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * A plane represents an image source that can be blended with or overlaid on
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * top of a CRTC during the scanout process. Planes take their input data from a
  * &drm_framebuffer object. The plane itself specifies the cropping and scaling
  * of that image, and where it is placed on the visible area of a display
@@ -1402,6 +1406,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * DOC: damage tracking
  *
@@ -1506,8 +1513,11 @@ drm_plane_get_damage_clips(const struct drm_plane_state *state)
 }
 EXPORT_SYMBOL(drm_plane_get_damage_clips);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_property *
 drm_create_scaling_filter_prop(struct drm_device *dev,
 			       unsigned int supported_filters)

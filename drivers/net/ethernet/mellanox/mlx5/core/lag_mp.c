@@ -162,10 +162,14 @@ static void mlx5_lag_fib_route_event(struct mlx5_lag *ldev,
 
 		tracker = ldev->tracker;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mlx5_activate_lag(ldev, &tracker, MLX5_LAG_FLAG_MULTIPATH, false);
 =======
 		mlx5_activate_lag(ldev, &tracker, MLX5_LAG_FLAG_MULTIPATH);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mlx5_activate_lag(ldev, &tracker, MLX5_LAG_FLAG_MULTIPATH, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mlx5_lag_set_port_affinity(ldev, MLX5_LAG_NORMAL_AFFINITY);
@@ -307,6 +311,9 @@ static int mlx5_lag_fib_event(struct notifier_block *nb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void mlx5_lag_mp_reset(struct mlx5_lag *ldev)
 {
 	/* Clear mfi, as it might become stale when a route delete event
@@ -315,8 +322,11 @@ void mlx5_lag_mp_reset(struct mlx5_lag *ldev)
 	ldev->lag_mp.mfi = NULL;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mlx5_lag_mp_init(struct mlx5_lag *ldev)
 {
 	struct lag_mp *mp = &ldev->lag_mp;

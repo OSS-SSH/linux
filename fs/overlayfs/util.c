@@ -11,9 +11,13 @@
 #include <linux/xattr.h>
 #include <linux/exportfs.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/fileattr.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/fileattr.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/uuid.h>
 #include <linux/namei.h>
 #include <linux/ratelimit.h>
@@ -590,9 +594,13 @@ bool ovl_check_dir_xattr(struct super_block *sb, struct dentry *dentry,
 #define OVL_XATTR_UPPER_POSTFIX		"upper"
 #define OVL_XATTR_METACOPY_POSTFIX	"metacopy"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define OVL_XATTR_PROTATTR_POSTFIX	"protattr"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define OVL_XATTR_PROTATTR_POSTFIX	"protattr"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define OVL_XATTR_TAB_ENTRY(x) \
 	[x] = { [false] = OVL_XATTR_TRUSTED_PREFIX x ## _POSTFIX, \
@@ -607,6 +615,7 @@ const char *const ovl_xattr_table[][2] = {
 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_UPPER),
 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_METACOPY),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_PROTATTR),
 };
 
@@ -616,14 +625,23 @@ int ovl_check_setxattr(struct ovl_fs *ofs, struct dentry *upperdentry,
 
 int ovl_check_setxattr(struct dentry *dentry, struct dentry *upperdentry,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	OVL_XATTR_TAB_ENTRY(OVL_XATTR_PROTATTR),
+};
+
+int ovl_check_setxattr(struct ovl_fs *ofs, struct dentry *upperdentry,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       enum ovl_xattr ox, const void *value, size_t size,
 		       int xerr)
 {
 	int err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct ovl_fs *ofs = dentry->d_sb->s_fs_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ofs->noxattr)
 		return xerr;
@@ -642,9 +660,13 @@ int ovl_check_setxattr(struct dentry *dentry, struct dentry *upperdentry,
 int ovl_set_impure(struct dentry *dentry, struct dentry *upperdentry)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (ovl_test_flag(OVL_IMPURE, d_inode(dentry)))
@@ -655,11 +677,15 @@ int ovl_set_impure(struct dentry *dentry, struct dentry *upperdentry)
 	 * Upper inodes won't have origin nor redirect xattr anyway.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ovl_check_setxattr(ofs, upperdentry, OVL_XATTR_IMPURE, "y", 1, 0);
 =======
 	err = ovl_check_setxattr(dentry, upperdentry, OVL_XATTR_IMPURE,
 				 "y", 1, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ovl_check_setxattr(ofs, upperdentry, OVL_XATTR_IMPURE, "y", 1, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!err)
 		ovl_set_flag(OVL_IMPURE, d_inode(dentry));
 
@@ -667,6 +693,9 @@ int ovl_set_impure(struct dentry *dentry, struct dentry *upperdentry)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define OVL_PROTATTR_MAX 32 /* Reserved for future flags */
 
@@ -749,8 +778,11 @@ int ovl_set_protattr(struct inode *inode, struct dentry *upper,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * Caller must hold a reference to inode to prevent it from being freed while
  * it is marked inuse.

@@ -304,9 +304,13 @@ struct mhi_controller_config {
  * @sbl_size: SBL image size downloaded through BHIe (optional)
  * @seg_len: BHIe vector size (optional)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @reg_len: Length of the MHI MMIO region (required)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @reg_len: Length of the MHI MMIO region (required)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @fbc_image: Points to firmware image buffer
  * @rddm_image: Points to RAM dump buffer
  * @mhi_chan: Points to the channel configuration table
@@ -361,9 +365,13 @@ struct mhi_controller_config {
  * @wake_set: Device wakeup set flag
  * @irq_flags: irq flags passed to request_irq (optional)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @mru: the default MRU for the MHI device
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mru: the default MRU for the MHI device
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Fields marked as (required) need to be populated by the controller driver
  * before calling mhi_register_controller(). For the fields marked as (optional)
@@ -395,9 +403,13 @@ struct mhi_controller {
 	size_t sbl_size;
 	size_t seg_len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size_t reg_len;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size_t reg_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct image_info *fbc_image;
 	struct image_info *rddm_image;
 	struct mhi_chan *mhi_chan;
@@ -461,9 +473,13 @@ struct mhi_controller {
 	bool wake_set;
 	unsigned long irq_flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 mru;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 mru;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**

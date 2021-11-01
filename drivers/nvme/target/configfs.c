@@ -1029,10 +1029,14 @@ nvmet_subsys_attr_version_store_locked(struct nvmet_subsys *subsys,
 
 	/* passthru subsystems use the underlying controller's version */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (nvmet_is_passthru_subsys(subsys))
 =======
 	if (nvmet_passthru_ctrl(subsys))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (nvmet_is_passthru_subsys(subsys))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	ret = sscanf(page, "%d.%d.%d\n", &major, &minor, &tertiary);
@@ -1072,11 +1076,16 @@ static ssize_t nvmet_subsys_attr_serial_show(struct config_item *item,
 	struct nvmet_subsys *subsys = to_subsys(item);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return snprintf(page, PAGE_SIZE, "%.*s\n",
 			NVMET_SN_MAX_SIZE, subsys->serial);
 =======
 	return snprintf(page, PAGE_SIZE, "%s\n", subsys->serial);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return snprintf(page, PAGE_SIZE, "%.*s\n",
+			NVMET_SN_MAX_SIZE, subsys->serial);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t

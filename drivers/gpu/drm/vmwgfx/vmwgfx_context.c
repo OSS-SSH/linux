@@ -186,10 +186,14 @@ static int vmw_gb_context_init(struct vmw_private *dev_priv,
 
 	res->backup_size = (dx ? sizeof(SVGADXContextMobFormat) :
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 sizeof(SVGAGBContextData));
 =======
 			    SVGA3D_CONTEXT_DATA_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 sizeof(SVGAGBContextData));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = vmw_resource_init(dev_priv, res, true,
 				res_free,
 				dx ? &vmw_dx_context_func :
@@ -264,10 +268,14 @@ static int vmw_context_init(struct vmw_private *dev_priv,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(res->id >= SVGA3D_HB_MAX_CONTEXT_IDS)) {
 =======
 	if (unlikely(res->id >= SVGA3D_MAX_CONTEXT_IDS)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(res->id >= SVGA3D_HB_MAX_CONTEXT_IDS)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DRM_ERROR("Out of hw context ids.\n");
 		vmw_resource_unreference(&res);
 		return -ENOMEM;

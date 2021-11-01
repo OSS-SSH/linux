@@ -74,6 +74,7 @@ xchk_inode_extsize(
 {
 	xfs_failaddr_t		fa;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t		value = be32_to_cpu(dip->di_extsize);
 
 	fa = xfs_inode_validate_extsize(sc->mp, value, mode, flags);
@@ -94,12 +95,31 @@ xchk_inode_extsize(
 	    value % sc->mp->m_sb.sb_rextsize > 0)
 		xchk_ino_set_warning(sc, ino);
 =======
+=======
+	uint32_t		value = be32_to_cpu(dip->di_extsize);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	fa = xfs_inode_validate_extsize(sc->mp, be32_to_cpu(dip->di_extsize),
-			mode, flags);
+	fa = xfs_inode_validate_extsize(sc->mp, value, mode, flags);
 	if (fa)
 		xchk_ino_set_corrupt(sc, ino);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/*
+	 * XFS allows a sysadmin to change the rt extent size when adding a rt
+	 * section to a filesystem after formatting.  If there are any
+	 * directories with extszinherit and rtinherit set, the hint could
+	 * become misaligned with the new rextsize.  The verifier doesn't check
+	 * this, because we allow rtinherit directories even without an rt
+	 * device.  Flag this as an administrative warning since we will clean
+	 * this up eventually.
+	 */
+	if ((flags & XFS_DIFLAG_RTINHERIT) &&
+	    (flags & XFS_DIFLAG_EXTSZINHERIT) &&
+	    value % sc->mp->m_sb.sb_rextsize > 0)
+		xchk_ino_set_warning(sc, ino);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -190,10 +210,14 @@ xchk_inode_flags2(
 	/* reflink flag requires reflink feature */
 	if ((flags2 & XFS_DIFLAG2_REFLINK) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    !xfs_has_reflink(mp))
 =======
 	    !xfs_sb_version_hasreflink(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    !xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto bad;
 
 	/* cowextsize flag is checked w.r.t. mode separately */
@@ -212,11 +236,15 @@ xchk_inode_flags2(
 
 	/* no bigtime iflag without the bigtime feature */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_dinode_has_bigtime(dip) && !xfs_has_bigtime(mp))
 =======
 	if (xfs_dinode_has_bigtime(dip) &&
 	    !xfs_sb_version_hasbigtime(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_dinode_has_bigtime(dip) && !xfs_has_bigtime(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto bad;
 
 	return;
@@ -295,10 +323,14 @@ xchk_dinode(
 
 		if (dip->di_projid_hi != 0 &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    !xfs_has_projid32(mp))
 =======
 		    !xfs_sb_version_hasprojid32bit(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    !xfs_has_projid32(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xchk_ino_set_corrupt(sc, ino);
 		break;
 	default:
@@ -553,6 +585,7 @@ xchk_inode_xref(
 	agbno = XFS_INO_TO_AGBNO(sc->mp, ino);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = xchk_ag_init_existing(sc, agno, &sc->sa);
 	if (!xchk_xref_process_error(sc, agno, agbno, &error))
 		goto out_free;
@@ -561,6 +594,11 @@ xchk_inode_xref(
 	if (!xchk_xref_process_error(sc, agno, agbno, &error))
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = xchk_ag_init_existing(sc, agno, &sc->sa);
+	if (!xchk_xref_process_error(sc, agno, agbno, &error))
+		goto out_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	xchk_xref_is_used_space(sc, agbno, 1);
 	xchk_inode_xref_finobt(sc, ino);
@@ -569,9 +607,13 @@ xchk_inode_xref(
 	xchk_inode_xref_bmap(sc, dip);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_free:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_free:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xchk_ag_free(sc, &sc->sa);
 }
 
@@ -591,10 +633,14 @@ xchk_inode_check_reflink_iflag(
 	int			error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_reflink(mp))
 =======
 	if (!xfs_sb_version_hasreflink(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	error = xfs_reflink_inode_has_shared_extents(sc->tp, sc->ip,

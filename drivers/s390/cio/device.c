@@ -138,10 +138,14 @@ static int ccw_uevent(struct device *dev, struct kobj_uevent_env *env)
 static void io_subchannel_irq(struct subchannel *);
 static int io_subchannel_probe(struct subchannel *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void io_subchannel_remove(struct subchannel *);
 =======
 static int io_subchannel_remove(struct subchannel *);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void io_subchannel_remove(struct subchannel *);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void io_subchannel_shutdown(struct subchannel *);
 static int io_subchannel_sch_event(struct subchannel *, int);
 static int io_subchannel_chp_event(struct subchannel *, struct chp_link *,
@@ -872,6 +876,7 @@ out_err:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void ccw_device_call_sch_unregister(struct ccw_device *cdev)
 {
@@ -887,6 +892,8 @@ static void ccw_device_call_sch_unregister(struct ccw_device *cdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * subchannel recognition done. Called from the state machine.
  */
@@ -1109,10 +1116,14 @@ out_schedule:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void io_subchannel_remove(struct subchannel *sch)
 =======
 static int io_subchannel_remove(struct subchannel *sch)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void io_subchannel_remove(struct subchannel *sch)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct io_subchannel_private *io_priv = to_io_private(sch);
 	struct ccw_device *cdev;
@@ -1132,9 +1143,12 @@ out_free:
 	kfree(io_priv);
 	sysfs_remove_group(&sch->dev.kobj, &io_subchannel_attr_group);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void io_subchannel_verify(struct subchannel *sch)
@@ -1757,10 +1771,14 @@ ccw_device_probe (struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void ccw_device_remove(struct device *dev)
 =======
 static int ccw_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ccw_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ccw_device *cdev = to_ccwdev(dev);
 	struct ccw_driver *cdrv = cdev->drv;
@@ -1795,10 +1813,13 @@ static int ccw_device_remove(struct device *dev)
 	io_subchannel_quiesce(sch);
 	__disable_cmf(cdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void ccw_device_shutdown(struct device *dev)
@@ -1882,16 +1903,22 @@ static void ccw_device_todo(struct work_struct *work)
 		fallthrough;
 	case CDEV_TODO_UNREG:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_lock_irq(sch->lock);
 		sch_set_cdev(sch, NULL);
 		spin_unlock_irq(sch->lock);
 		ccw_device_unregister(cdev);
+<<<<<<< HEAD
 =======
 		if (sch_is_pseudo_sch(sch))
 			ccw_device_unregister(cdev);
 		else
 			ccw_device_call_sch_unregister(cdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		break;

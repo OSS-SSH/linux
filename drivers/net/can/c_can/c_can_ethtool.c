@@ -16,6 +16,7 @@ static void c_can_get_drvinfo(struct net_device *netdev,
 {
 	struct c_can_priv *priv = netdev_priv(netdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	strscpy(info->driver, "c_can", sizeof(info->driver));
 	strscpy(info->bus_info, dev_name(priv->device), sizeof(info->bus_info));
 =======
@@ -24,6 +25,10 @@ static void c_can_get_drvinfo(struct net_device *netdev,
 	strscpy(info->driver, "c_can", sizeof(info->driver));
 	strscpy(info->bus_info, pdev->name, sizeof(info->bus_info));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	strscpy(info->driver, "c_can", sizeof(info->driver));
+	strscpy(info->bus_info, dev_name(priv->device), sizeof(info->bus_info));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void c_can_get_ringparam(struct net_device *netdev,

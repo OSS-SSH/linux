@@ -602,6 +602,7 @@ static int pca9685_pwm_remove(struct i2c_client *client)
 {
 	struct pca9685 *pca = i2c_get_clientdata(client);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	pwmchip_remove(&pca->chip);
 =======
@@ -611,6 +612,10 @@ static int pca9685_pwm_remove(struct i2c_client *client)
 	if (ret)
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	pwmchip_remove(&pca->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!pm_runtime_enabled(&client->dev)) {
 		/* Put chip in sleep state if runtime PM is disabled */

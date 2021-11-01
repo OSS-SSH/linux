@@ -29,11 +29,16 @@
 /* override additional length field */
 #define BLIST_INQUIRY_36	((__force blist_flags_t)(1ULL << 10))
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* ignore MEDIA CHANGE unit attention after resuming from runtime suspend */
 #define BLIST_IGN_MEDIA_CHANGE	((__force blist_flags_t)(1ULL << 11))
 =======
 #define __BLIST_UNUSED_11	((__force blist_flags_t)(1ULL << 11))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* ignore MEDIA CHANGE unit attention after resuming from runtime suspend */
+#define BLIST_IGN_MEDIA_CHANGE	((__force blist_flags_t)(1ULL << 11))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* do not do automatic start on add */
 #define BLIST_NOSTARTONADD	((__force blist_flags_t)(1ULL << 12))
 #define __BLIST_UNUSED_13	((__force blist_flags_t)(1ULL << 13))
@@ -79,11 +84,15 @@
 			       (__force blist_flags_t) \
 			       ((__force __u64)__BLIST_LAST_USED - 1ULL)))
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __BLIST_UNUSED_MASK (__BLIST_UNUSED_13 | \
 =======
 #define __BLIST_UNUSED_MASK (__BLIST_UNUSED_11 | \
 			     __BLIST_UNUSED_13 | \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __BLIST_UNUSED_MASK (__BLIST_UNUSED_13 | \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     __BLIST_UNUSED_14 | \
 			     __BLIST_UNUSED_15 | \
 			     __BLIST_UNUSED_16 | \

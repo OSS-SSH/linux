@@ -17,6 +17,7 @@ source "drivers/net/wireless/intersil/orinoco/Kconfig"
 source "drivers/net/wireless/intersil/p54/Kconfig"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config PRISM54
 	tristate 'Intersil Prism GT/Duette/Indigo PCI/Cardbus (DEPRECATED)'
@@ -39,4 +40,6 @@ config PRISM54
 	  When built as module you get the module prism54
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif # WLAN_VENDOR_INTERSIL

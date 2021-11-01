@@ -301,11 +301,17 @@ static int __sev_platform_shutdown_locked(int *error)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (sev->state == SEV_STATE_UNINIT)
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (sev->state == SEV_STATE_UNINIT)
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = __sev_do_cmd_locked(SEV_CMD_SHUTDOWN, NULL, error);
 	if (ret)
 		return ret;
@@ -1026,6 +1032,9 @@ e_err:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sev_firmware_shutdown(struct sev_device *sev)
 {
 	sev_platform_shutdown(NULL);
@@ -1040,8 +1049,11 @@ static void sev_firmware_shutdown(struct sev_device *sev)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void sev_dev_destroy(struct psp_device *psp)
 {
 	struct sev_device *sev = psp->sev_data;
@@ -1050,10 +1062,15 @@ void sev_dev_destroy(struct psp_device *psp)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sev_firmware_shutdown(sev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sev_firmware_shutdown(sev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sev->misc)
 		kref_put(&misc_dev->refcount, sev_exit);
 
@@ -1085,6 +1102,7 @@ void sev_pci_init(void)
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * If platform is not in UNINIT state then firmware upgrade and/or
@@ -1102,6 +1120,8 @@ void sev_pci_init(void)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sev_version_greater_or_equal(0, 15) &&
 	    sev_update_firmware(sev->dev) == 0)
 		sev_get_api_version();
@@ -1147,6 +1167,7 @@ err:
 void sev_pci_exit(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sev_device *sev = psp_master->sev_data;
 
 	if (!sev)
@@ -1158,14 +1179,20 @@ void sev_pci_exit(void)
 		return;
 
 	sev_platform_shutdown(NULL);
+=======
+	struct sev_device *sev = psp_master->sev_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (sev_es_tmr) {
-		/* The TMR area was encrypted, flush it from the cache */
-		wbinvd_on_all_cpus();
+	if (!sev)
+		return;
 
+<<<<<<< HEAD
 		free_pages((unsigned long)sev_es_tmr,
 			   get_order(SEV_ES_TMR_SIZE));
 		sev_es_tmr = NULL;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sev_firmware_shutdown(sev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

@@ -171,13 +171,19 @@ static const struct iio_info dmard10_info = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dmard10_shutdown_cleanup(void *client)
 {
 	dmard10_shutdown(client);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dmard10_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
@@ -203,9 +209,12 @@ static int dmard10_probe(struct i2c_client *client,
 	data = iio_priv(indio_dev);
 	data->client = client;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	i2c_set_clientdata(client, indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	indio_dev->info = &dmard10_info;
 	indio_dev->name = "dmard10";
@@ -218,10 +227,14 @@ static int dmard10_probe(struct i2c_client *client,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = devm_add_action_or_reset(&client->dev, dmard10_shutdown_cleanup,
 				       client);
 	if (ret)
 		return ret;
+<<<<<<< HEAD
 
 	return devm_iio_device_register(&client->dev, indio_dev);
 =======
@@ -242,6 +255,10 @@ static int dmard10_remove(struct i2c_client *client)
 
 	return dmard10_shutdown(client);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return devm_iio_device_register(&client->dev, indio_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP
@@ -271,9 +288,12 @@ static struct i2c_driver dmard10_driver = {
 	},
 	.probe		= dmard10_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= dmard10_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= dmard10_i2c_id,
 };
 

@@ -38,6 +38,9 @@ Primary Nodes, DRM Master and Authentication
    :internal:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 .. _drm_leasing:
 
@@ -47,8 +50,11 @@ DRM Display Resource Leasing
 .. kernel-doc:: drivers/gpu/drm/drm_lease.c
    :doc: drm leasing
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Open-Source Userspace Requirements
 ==================================
 
@@ -470,6 +476,9 @@ Userspace API Structures
    :doc: overview
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 .. _crtc_index:
 
 CRTC index
@@ -483,8 +492,11 @@ drm_mode_get_plane is an example.
 DRM_IOCTL_MODE_GETRESOURCES populates a structure with an array of CRTC ID's,
 and the CRTC index is its position in this array.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 .. kernel-doc:: include/uapi/drm/drm.h
    :internal:
 

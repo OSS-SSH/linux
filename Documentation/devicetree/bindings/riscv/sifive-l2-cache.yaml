@@ -25,16 +25,22 @@ select:
   properties:
     compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       contains:
         enum:
           - sifive,fu540-c000-ccache
           - sifive,fu740-c000-ccache
+<<<<<<< HEAD
 =======
       items:
         - enum:
             - sifive,fu540-c000-ccache
             - sifive,fu740-c000-ccache
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   required:
     - compatible

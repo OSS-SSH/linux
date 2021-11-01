@@ -244,9 +244,12 @@ struct vfs_ns_cap_data {
 /* Allow setting the domainname */
 /* Allow setting the hostname */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Allow calling bdflush() */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Allow mount() and umount(), setting up new smb connection */
 /* Allow some autofs root ioctls */
 /* Allow nfsservctl */

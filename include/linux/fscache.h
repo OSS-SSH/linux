@@ -124,6 +124,7 @@ struct fscache_netfs {
  */
 struct fscache_cookie {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refcount_t			ref;		/* number of users of this cookie */
 	atomic_t			n_children;	/* number of children of this cookie */
 	atomic_t			n_active;	/* number of active users of netfs ptrs */
@@ -133,6 +134,12 @@ struct fscache_cookie {
 	atomic_t			n_children;	/* number of children of this cookie */
 	atomic_t			n_active;	/* number of active users of netfs ptrs */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	refcount_t			ref;		/* number of users of this cookie */
+	atomic_t			n_children;	/* number of children of this cookie */
+	atomic_t			n_active;	/* number of active users of netfs ptrs */
+	unsigned int			debug_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spinlock_t			lock;
 	spinlock_t			stores_lock;	/* lock on page store tree */
 	struct hlist_head		backing_objects; /* object(s) backing this file/index */
@@ -140,9 +147,13 @@ struct fscache_cookie {
 	struct fscache_cookie		*parent;	/* parent of this entry */
 	struct hlist_bl_node		hash_link;	/* Link in hash table */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct list_head		proc_link;	/* Link in proc list */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct list_head		proc_link;	/* Link in proc list */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void				*netfs_data;	/* back pointer to netfs */
 	struct radix_tree_root		stores;		/* pages to be stored on this cookie */
 #define FSCACHE_COOKIE_PENDING_TAG	0		/* pages tag: pending write to cache */

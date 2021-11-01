@@ -136,10 +136,14 @@ static void * __init pcpu_fc_alloc(unsigned int cpu, size_t size, size_t align)
 static void __init pcpu_fc_free(void *ptr, size_t size)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memblock_free_ptr(ptr, size);
 =======
 	memblock_free(__pa(ptr), size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memblock_free_ptr(ptr, size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __init pcpu_cpu_distance(unsigned int from, unsigned int to)

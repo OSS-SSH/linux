@@ -30,10 +30,14 @@ void delayed_work_timer_fn(struct timer_list *t);
 enum {
 	WORK_STRUCT_PENDING_BIT	= 0,	/* work item is pending execution */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WORK_STRUCT_INACTIVE_BIT= 1,	/* work item is inactive */
 =======
 	WORK_STRUCT_DELAYED_BIT	= 1,	/* work item is delayed */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WORK_STRUCT_INACTIVE_BIT= 1,	/* work item is inactive */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	WORK_STRUCT_PWQ_BIT	= 2,	/* data points to pwq */
 	WORK_STRUCT_LINKED_BIT	= 3,	/* next work is linked to this one */
 #ifdef CONFIG_DEBUG_OBJECTS_WORK
@@ -47,10 +51,14 @@ enum {
 
 	WORK_STRUCT_PENDING	= 1 << WORK_STRUCT_PENDING_BIT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WORK_STRUCT_INACTIVE	= 1 << WORK_STRUCT_INACTIVE_BIT,
 =======
 	WORK_STRUCT_DELAYED	= 1 << WORK_STRUCT_DELAYED_BIT,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WORK_STRUCT_INACTIVE	= 1 << WORK_STRUCT_INACTIVE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	WORK_STRUCT_PWQ		= 1 << WORK_STRUCT_PWQ_BIT,
 	WORK_STRUCT_LINKED	= 1 << WORK_STRUCT_LINKED_BIT,
 #ifdef CONFIG_DEBUG_OBJECTS_WORK
@@ -59,6 +67,7 @@ enum {
 	WORK_STRUCT_STATIC	= 0,
 #endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	WORK_NR_COLORS		= (1 << WORK_STRUCT_COLOR_BITS),
 =======
@@ -69,6 +78,9 @@ enum {
 	WORK_NR_COLORS		= (1 << WORK_STRUCT_COLOR_BITS) - 1,
 	WORK_NO_COLOR		= WORK_NR_COLORS,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WORK_NR_COLORS		= (1 << WORK_STRUCT_COLOR_BITS),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* not bound to any CPU, prefer the local CPU */
 	WORK_CPU_UNBOUND	= NR_CPUS,
@@ -76,10 +88,14 @@ enum {
 	/*
 	 * Reserve 8 bits off of pwq pointer w/ debugobjects turned off.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * This makes pwqs aligned to 256 bytes and allows 16 workqueue
 =======
 	 * This makes pwqs aligned to 256 bytes and allows 15 workqueue
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * This makes pwqs aligned to 256 bytes and allows 16 workqueue
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * flush colors.
 	 */
 	WORK_STRUCT_FLAG_BITS	= WORK_STRUCT_COLOR_SHIFT +
@@ -341,10 +357,14 @@ enum {
 	 * however, for example, a per-cpu work item scheduled from an
 	 * interrupt handler on an idle CPU will force the scheduler to
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * execute the work item on that CPU breaking the idleness, which in
 =======
 	 * excute the work item on that CPU breaking the idleness, which in
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * execute the work item on that CPU breaking the idleness, which in
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * turn may lead to more scheduling choices which are sub-optimal
 	 * in terms of power consumption.
 	 *
@@ -425,6 +445,7 @@ extern struct workqueue_struct *system_freezable_power_efficient_wq;
  * Pointer to the allocated workqueue on success, %NULL on failure.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 __printf(1, 4) struct workqueue_struct *
 alloc_workqueue(const char *fmt, unsigned int flags, int max_active, ...);
 =======
@@ -432,6 +453,10 @@ struct workqueue_struct *alloc_workqueue(const char *fmt,
 					 unsigned int flags,
 					 int max_active, ...);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__printf(1, 4) struct workqueue_struct *
+alloc_workqueue(const char *fmt, unsigned int flags, int max_active, ...);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * alloc_ordered_workqueue - allocate an ordered workqueue

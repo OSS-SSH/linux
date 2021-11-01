@@ -17,9 +17,13 @@
 #include <asm/kvm_page_track.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "mmu.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "mmu.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "mmu_internal.h"
 
 void kvm_page_track_free_memslot(struct kvm_memory_slot *slot)
@@ -168,14 +172,19 @@ void kvm_page_track_cleanup(struct kvm *kvm)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int kvm_page_track_init(struct kvm *kvm)
 =======
 void kvm_page_track_init(struct kvm *kvm)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int kvm_page_track_init(struct kvm *kvm)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct kvm_page_track_notifier_head *head;
 
 	head = &kvm->arch.track_notifier_head;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	INIT_HLIST_HEAD(&head->track_notifier_list);
 	return init_srcu_struct(&head->track_srcu);
@@ -183,6 +192,10 @@ void kvm_page_track_init(struct kvm *kvm)
 	init_srcu_struct(&head->track_srcu);
 	INIT_HLIST_HEAD(&head->track_notifier_list);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_HLIST_HEAD(&head->track_notifier_list);
+	return init_srcu_struct(&head->track_srcu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

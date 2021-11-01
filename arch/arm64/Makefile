@@ -22,16 +22,21 @@ endif
 
 ifeq ($(CONFIG_ARM64_ERRATUM_843419),y)
 <<<<<<< HEAD
+<<<<<<< HEAD
   ifeq ($(CONFIG_ARM64_LD_HAS_FIX_ERRATUM_843419),y)
 =======
   ifneq ($(CONFIG_ARM64_LD_HAS_FIX_ERRATUM_843419),y)
 $(warning ld does not support --fix-cortex-a53-843419; kernel may be susceptible to erratum)
   else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  ifeq ($(CONFIG_ARM64_LD_HAS_FIX_ERRATUM_843419),y)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 LDFLAGS_vmlinux	+= --fix-cortex-a53-843419
   endif
 endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 ifeq ($(CONFIG_ARM64_USE_LSE_ATOMICS), y)
@@ -41,6 +46,8 @@ $(warning LSE atomics not supported by binutils)
 endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 cc_has_k_constraint := $(call try-run,echo				\
 	'int main(void) {						\
 		asm volatile("and w0, w0, %w0" :: "K" (4294967295));	\
@@ -173,15 +180,21 @@ Image.%: Image
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 install: install-image := Image
 zinstall: install-image := Image.gz
 install zinstall:
 	$(CONFIG_SHELL) $(srctree)/$(boot)/install.sh $(KERNELRELEASE) \
 	$(boot)/$(install-image) System.map "$(INSTALL_PATH)"
+<<<<<<< HEAD
 =======
 zinstall install:
 	$(Q)$(MAKE) $(build)=$(boot) $@
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 PHONY += vdso_install
 vdso_install:
@@ -192,6 +205,9 @@ vdso_install:
 archprepare:
 	$(Q)$(MAKE) $(build)=arch/arm64/tools kapi
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ifeq ($(CONFIG_ARM64_ERRATUM_843419),y)
   ifneq ($(CONFIG_ARM64_LD_HAS_FIX_ERRATUM_843419),y)
 	@echo "warning: ld does not support --fix-cortex-a53-843419; kernel may be susceptible to erratum" >&2
@@ -203,17 +219,25 @@ ifeq ($(CONFIG_ARM64_USE_LSE_ATOMICS),y)
   endif
 endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # We use MRPROPER_FILES and CLEAN_FILES now
 archclean:
 	$(Q)$(MAKE) $(clean)=$(boot)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	$(Q)$(MAKE) $(clean)=arch/arm64/kernel/vdso
 	$(Q)$(MAKE) $(clean)=arch/arm64/kernel/vdso32
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	$(Q)$(MAKE) $(clean)=arch/arm64/kernel/vdso
+	$(Q)$(MAKE) $(clean)=arch/arm64/kernel/vdso32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ifeq ($(KBUILD_EXTMOD),)
 # We need to generate vdso-offsets.h before compiling certain files in kernel/.

@@ -23,11 +23,17 @@ properties:
               - ti,ths8134b
           - const: ti,ths8134
 <<<<<<< HEAD
+<<<<<<< HEAD
       - items:
           - const: corpro,gm7123
           - const: adi,adv7123
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      - items:
+          - const: corpro,gm7123
+          - const: adi,adv7123
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - enum:
           - adi,adv7123
           - dumb-vga-dac

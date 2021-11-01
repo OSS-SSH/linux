@@ -1085,11 +1085,17 @@ static int rivafb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
 	
 	NVTRACE_ENTER();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!var->pixclock)
 		return -EINVAL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!var->pixclock)
+		return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (var->bits_per_pixel) {
 	case 1 ... 8:
 		var->red.offset = var->green.offset = var->blue.offset = 0;

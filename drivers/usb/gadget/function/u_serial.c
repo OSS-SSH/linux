@@ -1199,10 +1199,14 @@ void gserial_free_line(unsigned char port_num)
 
 	mutex_lock(&ports[port_num].lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ports[port_num].port) {
 =======
 	if (WARN_ON(!ports[port_num].port)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!ports[port_num].port) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mutex_unlock(&ports[port_num].lock);
 		return;
 	}
@@ -1450,6 +1454,7 @@ EXPORT_SYMBOL_GPL(gserial_resume);
 static int userial_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct tty_driver *driver;
 	unsigned			i;
 	int				status;
@@ -1467,27 +1472,38 @@ static int userial_init(void)
 	driver->subtype = SERIAL_TYPE_NORMAL;
 	driver->init_termios = tty_std_termios;
 =======
+=======
+	struct tty_driver *driver;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned			i;
 	int				status;
 
-	gs_tty_driver = alloc_tty_driver(MAX_U_SERIAL_PORTS);
-	if (!gs_tty_driver)
-		return -ENOMEM;
+	driver = tty_alloc_driver(MAX_U_SERIAL_PORTS, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_DYNAMIC_DEV);
+	if (IS_ERR(driver))
+		return PTR_ERR(driver);
 
-	gs_tty_driver->driver_name = "g_serial";
-	gs_tty_driver->name = "ttyGS";
+	driver->driver_name = "g_serial";
+	driver->name = "ttyGS";
 	/* uses dynamically assigned dev_t values */
 
+<<<<<<< HEAD
 	gs_tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
 	gs_tty_driver->subtype = SERIAL_TYPE_NORMAL;
 	gs_tty_driver->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
 	gs_tty_driver->init_termios = tty_std_termios;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	driver->type = TTY_DRIVER_TYPE_SERIAL;
+	driver->subtype = SERIAL_TYPE_NORMAL;
+	driver->init_termios = tty_std_termios;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* 9600-8-N-1 ... matches defaults expected by "usbser.sys" on
 	 * MS-Windows.  Otherwise, most of these flags shouldn't affect
 	 * anything unless we were to actually hook up to a serial line.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	driver->init_termios.c_cflag =
 			B9600 | CS8 | CREAD | HUPCL | CLOCAL;
@@ -1497,21 +1513,32 @@ static int userial_init(void)
 	tty_set_operations(driver, &gs_tty_ops);
 =======
 	gs_tty_driver->init_termios.c_cflag =
+=======
+	driver->init_termios.c_cflag =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			B9600 | CS8 | CREAD | HUPCL | CLOCAL;
-	gs_tty_driver->init_termios.c_ispeed = 9600;
-	gs_tty_driver->init_termios.c_ospeed = 9600;
+	driver->init_termios.c_ispeed = 9600;
+	driver->init_termios.c_ospeed = 9600;
 
+<<<<<<< HEAD
 	tty_set_operations(gs_tty_driver, &gs_tty_ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_set_operations(driver, &gs_tty_ops);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < MAX_U_SERIAL_PORTS; i++)
 		mutex_init(&ports[i].lock);
 
 	/* export the driver ... */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	status = tty_register_driver(driver);
 =======
 	status = tty_register_driver(gs_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	status = tty_register_driver(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (status) {
 		pr_err("%s: cannot register, err %d\n",
 				__func__, status);
@@ -1519,10 +1546,15 @@ static int userial_init(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gs_tty_driver = driver;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gs_tty_driver = driver;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pr_debug("%s: registered %d ttyGS* device%s\n", __func__,
 			MAX_U_SERIAL_PORTS,
 			(MAX_U_SERIAL_PORTS == 1) ? "" : "s");
@@ -1530,11 +1562,15 @@ static int userial_init(void)
 	return status;
 fail:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(driver);
 =======
 	put_tty_driver(gs_tty_driver);
 	gs_tty_driver = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return status;
 }
 module_init(userial_init);
@@ -1543,10 +1579,14 @@ static void userial_cleanup(void)
 {
 	tty_unregister_driver(gs_tty_driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(gs_tty_driver);
 =======
 	put_tty_driver(gs_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(gs_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gs_tty_driver = NULL;
 }
 module_exit(userial_cleanup);

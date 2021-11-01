@@ -21,10 +21,14 @@ static int s3fwrn5_nci_prop_rsp(struct nci_dev *ndev, struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const struct nci_driver_ops s3fwrn5_nci_prop_ops[4] = {
 =======
 static struct nci_driver_ops s3fwrn5_nci_prop_ops[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const struct nci_driver_ops s3fwrn5_nci_prop_ops[4] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.opcode = nci_opcode_pack(NCI_GID_PROPRIETARY,
 				NCI_PROP_SET_RFREG),
@@ -48,6 +52,7 @@ static struct nci_driver_ops s3fwrn5_nci_prop_ops[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void s3fwrn5_nci_get_prop_ops(struct nci_driver_ops **ops, size_t *n)
 {
@@ -56,6 +61,8 @@ void s3fwrn5_nci_get_prop_ops(struct nci_driver_ops **ops, size_t *n)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define S3FWRN5_RFREG_SECTION_SIZE 252
 
 int s3fwrn5_nci_rf_configure(struct s3fwrn5_info *info, const char *fw_name)

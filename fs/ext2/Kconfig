@@ -2,9 +2,13 @@
 config EXT2_FS
 	tristate "Second extended fs support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select FS_IOMAP
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select FS_IOMAP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Ext2 is a standard Linux file system for hard disks.
 

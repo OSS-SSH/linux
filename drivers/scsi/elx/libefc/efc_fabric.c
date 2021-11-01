@@ -108,9 +108,12 @@ efc_fabric_notify_topology(struct efc_node *node)
 {
 	struct efc_node *tmp_node;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	enum efc_nport_topology topology = node->nport->topology;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long index;
 
 	/*
@@ -122,10 +125,14 @@ efc_fabric_notify_topology(struct efc_node *node)
 			efc_node_post_event(tmp_node,
 					    EFC_EVT_NPORT_TOPOLOGY_NOTIFY,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    &node->nport->topology);
 =======
 					    (void *)topology);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    &node->nport->topology);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }

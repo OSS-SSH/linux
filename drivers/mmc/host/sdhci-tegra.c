@@ -117,10 +117,15 @@
 #define NVQUIRK_HAS_TMCLK				BIT(10)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define NVQUIRK_HAS_ANDROID_GPT_SECTOR			BIT(11)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define NVQUIRK_HAS_ANDROID_GPT_SECTOR			BIT(11)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* SDMMC CQE Base Address for Tegra Host Ver 4.1 and Higher */
 #define SDHCI_TEGRA_CQE_BASE_ADDR			0xF000
 
@@ -1367,9 +1372,13 @@ static const struct sdhci_tegra_soc_data soc_data_tegra20 = {
 	.dma_mask = DMA_BIT_MASK(32),
 	.nvquirks = NVQUIRK_FORCE_SDHCI_SPEC_200 |
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    NVQUIRK_HAS_ANDROID_GPT_SECTOR |
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    NVQUIRK_HAS_ANDROID_GPT_SECTOR |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    NVQUIRK_ENABLE_BLOCK_GAP_DET,
 };
 
@@ -1400,9 +1409,13 @@ static const struct sdhci_tegra_soc_data soc_data_tegra30 = {
 		    NVQUIRK_ENABLE_SDR50 |
 		    NVQUIRK_ENABLE_SDR104 |
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    NVQUIRK_HAS_ANDROID_GPT_SECTOR |
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    NVQUIRK_HAS_ANDROID_GPT_SECTOR |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    NVQUIRK_HAS_PADCALIB,
 };
 
@@ -1436,9 +1449,13 @@ static const struct sdhci_tegra_soc_data soc_data_tegra114 = {
 	.pdata = &sdhci_tegra114_pdata,
 	.dma_mask = DMA_BIT_MASK(32),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.nvquirks = NVQUIRK_HAS_ANDROID_GPT_SECTOR,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.nvquirks = NVQUIRK_HAS_ANDROID_GPT_SECTOR,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct sdhci_pltfm_data sdhci_tegra124_pdata = {
@@ -1456,9 +1473,13 @@ static const struct sdhci_tegra_soc_data soc_data_tegra124 = {
 	.pdata = &sdhci_tegra124_pdata,
 	.dma_mask = DMA_BIT_MASK(34),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.nvquirks = NVQUIRK_HAS_ANDROID_GPT_SECTOR,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.nvquirks = NVQUIRK_HAS_ANDROID_GPT_SECTOR,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct sdhci_ops tegra210_sdhci_ops = {
@@ -1638,11 +1659,17 @@ static int sdhci_tegra_probe(struct platform_device *pdev)
 	tegra_host->soc_data = soc_data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (soc_data->nvquirks & NVQUIRK_HAS_ANDROID_GPT_SECTOR)
 		host->mmc->caps2 |= MMC_CAP2_ALT_GPT_TEGRA;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (soc_data->nvquirks & NVQUIRK_HAS_ANDROID_GPT_SECTOR)
+		host->mmc->caps2 |= MMC_CAP2_ALT_GPT_TEGRA;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (soc_data->nvquirks & NVQUIRK_NEEDS_PAD_CONTROL) {
 		rc = tegra_sdhci_init_pinctrl_info(&pdev->dev, tegra_host);
 		if (rc == 0)

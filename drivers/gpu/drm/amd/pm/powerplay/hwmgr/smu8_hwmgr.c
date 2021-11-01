@@ -1548,11 +1548,16 @@ static int smu8_print_clock_levels(struct pp_hwmgr *hwmgr,
 	struct phm_clock_voltage_dependency_table *sclk_table =
 			hwmgr->dyn_state.vddc_dependency_on_sclk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t i, now;
 	int size = 0;
 =======
 	int i, now, size = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t i, now;
+	int size = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (type) {
 	case PP_SCLK:
@@ -1564,10 +1569,14 @@ static int smu8_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		for (i = 0; i < sclk_table->count; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					i, sclk_table->entries[i].clk / 100,
 					(i == now) ? "*" : "");
 		break;
@@ -1580,10 +1589,14 @@ static int smu8_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		for (i = SMU8_NUM_NBPMEMORYCLOCK; i > 0; i--)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					SMU8_NUM_NBPMEMORYCLOCK-i, data->sys_info.nbp_memory_clock[i-1] / 100,
 					(SMU8_NUM_NBPMEMORYCLOCK-i == now) ? "*" : "");
 		break;

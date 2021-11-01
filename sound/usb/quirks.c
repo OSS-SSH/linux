@@ -76,6 +76,7 @@ static int ignore_interface_quirk(struct snd_usb_audio *chip,
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * Allow alignment on audio sub-slot (channel samples) rather than
@@ -91,6 +92,8 @@ static int create_align_transfer_quirk(struct snd_usb_audio *chip,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int create_any_midi_quirk(struct snd_usb_audio *chip,
 				 struct usb_interface *intf,
 				 struct usb_driver *driver,
@@ -112,11 +115,14 @@ static int create_standard_audio_quirk(struct snd_usb_audio *chip,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (chip->usb_id == USB_ID(0x1686, 0x00dd)) /* Zoom R16/24 */
 		chip->tx_length_quirk = 1;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	alts = &iface->altsetting[0];
 	altsd = get_iface_desc(alts);
 	err = snd_usb_parse_audio_interface(chip, altsd->bInterfaceNumber);
@@ -554,6 +560,7 @@ static int create_standard_mixer_quirk(struct snd_usb_audio *chip,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return snd_usb_create_mixer(chip, quirk->ifnum);
 =======
 	return snd_usb_create_mixer(chip, quirk->ifnum, 0);
@@ -567,6 +574,9 @@ static int setup_disable_autosuspend(struct snd_usb_audio *chip,
 	usb_disable_autosuspend(interface_to_usbdev(iface));
 	return 1;	/* Continue with creating streams and mixer */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return snd_usb_create_mixer(chip, quirk->ifnum);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -606,12 +616,16 @@ int snd_usb_create_quirk(struct snd_usb_audio *chip,
 		[QUIRK_AUDIO_FIXED_ENDPOINT] = create_fixed_stream_quirk,
 		[QUIRK_AUDIO_EDIROL_UAXX] = create_uaxx_quirk,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		[QUIRK_AUDIO_STANDARD_MIXER] = create_standard_mixer_quirk,
 =======
 		[QUIRK_AUDIO_ALIGN_TRANSFER] = create_align_transfer_quirk,
 		[QUIRK_AUDIO_STANDARD_MIXER] = create_standard_mixer_quirk,
 		[QUIRK_SETUP_DISABLE_AUTOSUSPEND] = setup_disable_autosuspend,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		[QUIRK_AUDIO_STANDARD_MIXER] = create_standard_mixer_quirk,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	if (quirk->type < QUIRK_TYPE_COUNT) {
@@ -1533,6 +1547,7 @@ void snd_usb_set_format_quirk(struct snd_usb_substream *subs,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 bool snd_usb_get_sample_rate_quirk(struct snd_usb_audio *chip)
 {
@@ -1584,6 +1599,8 @@ static bool is_itf_usb_dsd_dac(unsigned int id)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int snd_usb_select_mode_quirk(struct snd_usb_audio *chip,
 			      const struct audioformat *fmt)
 {
@@ -1591,10 +1608,14 @@ int snd_usb_select_mode_quirk(struct snd_usb_audio *chip,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (chip->quirk_flags & QUIRK_FLAG_ITF_USB_DSD_DAC) {
 =======
 	if (is_itf_usb_dsd_dac(chip->usb_id)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (chip->quirk_flags & QUIRK_FLAG_ITF_USB_DSD_DAC) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* First switch to alt set 0, otherwise the mode switch cmd
 		 * will not be accepted by the DAC
 		 */
@@ -1658,6 +1679,7 @@ void snd_usb_endpoint_start_quirk(struct snd_usb_endpoint *ep)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void snd_usb_set_interface_quirk(struct snd_usb_audio *chip)
 {
@@ -1676,6 +1698,8 @@ void snd_usb_set_interface_quirk(struct snd_usb_audio *chip)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* quirk applied after snd_usb_ctl_msg(); not applied during boot quirks */
 void snd_usb_ctl_msg_quirk(struct usb_device *dev, unsigned int pipe,
 			   __u8 request, __u8 requesttype, __u16 value,
@@ -1683,6 +1707,7 @@ void snd_usb_ctl_msg_quirk(struct usb_device *dev, unsigned int pipe,
 {
 	struct snd_usb_audio *chip = dev_get_drvdata(&dev->dev);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!chip || (requesttype & USB_TYPE_MASK) != USB_TYPE_CLASS)
 		return;
@@ -1694,49 +1719,16 @@ void snd_usb_ctl_msg_quirk(struct usb_device *dev, unsigned int pipe,
 	else if (chip->quirk_flags & QUIRK_FLAG_CTL_MSG_DELAY_5M)
 =======
 	if (!chip)
+=======
+	if (!chip || (requesttype & USB_TYPE_MASK) != USB_TYPE_CLASS)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
-	/*
-	 * "Playback Design" products need a 20ms delay after each
-	 * class compliant request
-	 */
-	if (USB_ID_VENDOR(chip->usb_id) == 0x23ba &&
-	    (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
-		msleep(20);
 
-	/*
-	 * "TEAC Corp." products need a 20ms delay after each
-	 * class compliant request
-	 */
-	if (USB_ID_VENDOR(chip->usb_id) == 0x0644 &&
-	    (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
+	if (chip->quirk_flags & QUIRK_FLAG_CTL_MSG_DELAY)
 		msleep(20);
-
-	/* ITF-USB DSD based DACs functionality need a delay
-	 * after each class compliant request
-	 */
-	if (is_itf_usb_dsd_dac(chip->usb_id)
-	    && (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
-		msleep(20);
-
-	/*
-	 * Plantronics headsets (C320, C320-M, etc) need a delay to avoid
-	 * random microhpone failures.
-	 */
-	if (USB_ID_VENDOR(chip->usb_id) == 0x047f &&
-	    (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
-		msleep(20);
-
-	/* Zoom R16/24, many Logitech(at least H650e/H570e/BCC950),
-	 * Jabra 550a, Kingston HyperX needs a tiny delay here,
-	 * otherwise requests like get/set frequency return
-	 * as failed despite actually succeeding.
-	 */
-	if ((chip->usb_id == USB_ID(0x1686, 0x00dd) ||
-	     USB_ID_VENDOR(chip->usb_id) == 0x046d  || /* Logitech */
-	     chip->usb_id == USB_ID(0x0b0e, 0x0349) ||
-	     chip->usb_id == USB_ID(0x0951, 0x16ad)) &&
-	    (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
+	else if (chip->quirk_flags & QUIRK_FLAG_CTL_MSG_DELAY_1M)
 		usleep_range(1000, 2000);
+<<<<<<< HEAD
 
 	/*
 	 * Samsung USBC Headset (AKG) need a tiny delay after each
@@ -1745,6 +1737,9 @@ void snd_usb_ctl_msg_quirk(struct usb_device *dev, unsigned int pipe,
 	if (chip->usb_id == USB_ID(0x04e8, 0xa051) &&
 	    (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (chip->quirk_flags & QUIRK_FLAG_CTL_MSG_DELAY_5M)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		usleep_range(5000, 6000);
 }
 
@@ -1832,10 +1827,14 @@ u64 snd_usb_interface_dsd_format_quirks(struct snd_usb_audio *chip,
 
 	/* ITF-USB DSD based DACs */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (chip->quirk_flags & QUIRK_FLAG_ITF_USB_DSD_DAC) {
 =======
 	if (is_itf_usb_dsd_dac(chip->usb_id)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (chip->quirk_flags & QUIRK_FLAG_ITF_USB_DSD_DAC) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iface = usb_ifnum_to_if(chip->dev, fp->iface);
 
 		/* Altsetting 2 support native DSD if the num of altsets is
@@ -1847,6 +1846,7 @@ u64 snd_usb_interface_dsd_format_quirks(struct snd_usb_audio *chip,
 			return SNDRV_PCM_FMTBIT_DSD_U32_BE;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/* Mostly generic method to detect many DSD-capable implementations */
 	if ((chip->quirk_flags & QUIRK_FLAG_DSD_RAW) && fp->dsd_raw)
@@ -1876,6 +1876,11 @@ u64 snd_usb_interface_dsd_format_quirks(struct snd_usb_audio *chip,
 
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Mostly generic method to detect many DSD-capable implementations */
+	if ((chip->quirk_flags & QUIRK_FLAG_DSD_RAW) && fp->dsd_raw)
+		return SNDRV_PCM_FMTBIT_DSD_U32_BE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1943,13 +1948,19 @@ static const struct registration_quirk registration_quirks[] = {
 	REG_QUIRK_ENTRY(0x0951, 0x16ed, 2),	/* Kingston HyperX Cloud Alpha S */
 	REG_QUIRK_ENTRY(0x0951, 0x16ea, 2),	/* Kingston HyperX Cloud Flight S */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	REG_QUIRK_ENTRY(0x0ecb, 0x1f46, 2),	/* JBL Quantum 600 */
 	REG_QUIRK_ENTRY(0x0ecb, 0x1f47, 2),	/* JBL Quantum 800 */
 	REG_QUIRK_ENTRY(0x0ecb, 0x2039, 2),	/* JBL Quantum 400 */
 	REG_QUIRK_ENTRY(0x0ecb, 0x203c, 2),	/* JBL Quantum 600 */
 	REG_QUIRK_ENTRY(0x0ecb, 0x203e, 2),	/* JBL Quantum 800 */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ 0 }					/* terminator */
 };
 
@@ -1966,6 +1977,9 @@ bool snd_usb_registration_quirk(struct snd_usb_audio *chip, int iface)
 	return false;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * driver behavior quirk flags
@@ -2154,5 +2168,8 @@ void snd_usb_init_quirk_flags(struct snd_usb_audio *chip)
 		}
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

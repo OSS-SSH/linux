@@ -2,6 +2,7 @@
 /*
  * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *
  * vineetg: May 2011
@@ -30,12 +31,15 @@
  *
  * Amit Bhor, Sameer Dhavale: Codito Technologies 2004
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #ifndef _ASM_ARC_PGTABLE_H
 #define _ASM_ARC_PGTABLE_H
 
 #include <linux/bits.h>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 #include <asm/pgtable-levels.h>
@@ -226,6 +230,13 @@
 #define	PTRS_PER_PTE	BIT(BITS_FOR_PTE)
 #define	PTRS_PER_PGD	BIT(BITS_FOR_PGD)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#include <asm/pgtable-levels.h>
+#include <asm/pgtable-bits-arcv2.h>
+#include <asm/page.h>
+#include <asm/mmu.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Number of entries a user land program use.
@@ -233,6 +244,7 @@
  */
 #define	USER_PTRS_PER_PGD	(TASK_SIZE / PGDIR_SIZE)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #ifndef __ASSEMBLY__
 
@@ -246,109 +258,15 @@ extern pgd_t swapper_pg_dir[] __aligned(PAGE_SIZE);
  * Bucket load of VM Helpers
  */
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef __ASSEMBLY__
 
-#define pte_ERROR(e) \
-	pr_crit("%s:%d: bad pte %08lx.\n", __FILE__, __LINE__, pte_val(e))
-#define pgd_ERROR(e) \
-	pr_crit("%s:%d: bad pgd %08lx.\n", __FILE__, __LINE__, pgd_val(e))
-
-/* the zero page used for uninitialized and anonymous pages */
 extern char empty_zero_page[PAGE_SIZE];
 #define ZERO_PAGE(vaddr)	(virt_to_page(empty_zero_page))
 
-#define set_pte(pteptr, pteval)	((*(pteptr)) = (pteval))
-#define set_pmd(pmdptr, pmdval)	(*(pmdptr) = pmdval)
-
-/* find the page descriptor of the Page Tbl ref by PMD entry */
-#define pmd_page(pmd)		virt_to_page(pmd_val(pmd) & PAGE_MASK)
-
-/* find the logical addr (phy for ARC) of the Page Tbl ref by PMD entry */
-#define pmd_page_vaddr(pmd)	(pmd_val(pmd) & PAGE_MASK)
-
-/* In a 2 level sys, setup the PGD entry with PTE value */
-static inline void pmd_set(pmd_t *pmdp, pte_t *ptep)
-{
-	pmd_val(*pmdp) = (unsigned long)ptep;
-}
-
-#define pte_none(x)			(!pte_val(x))
-#define pte_present(x)			(pte_val(x) & _PAGE_PRESENT)
-#define pte_clear(mm, addr, ptep)	set_pte_at(mm, addr, ptep, __pte(0))
-
-#define pmd_none(x)			(!pmd_val(x))
-#define	pmd_bad(x)			((pmd_val(x) & ~PAGE_MASK))
-#define pmd_present(x)			(pmd_val(x))
-#define pmd_leaf(x)			(pmd_val(x) & _PAGE_HW_SZ)
-#define pmd_clear(xp)			do { pmd_val(*(xp)) = 0; } while (0)
-
-#define pte_page(pte)		pfn_to_page(pte_pfn(pte))
-#define mk_pte(page, prot)	pfn_pte(page_to_pfn(page), prot)
-#define pfn_pte(pfn, prot)	__pte(__pfn_to_phys(pfn) | pgprot_val(prot))
-
-/* Don't use virt_to_pfn for macros below: could cause truncations for PAE40*/
-#define pte_pfn(pte)		(pte_val(pte) >> PAGE_SHIFT)
-
-/* Zoo of pte_xxx function */
-#define pte_read(pte)		(pte_val(pte) & _PAGE_READ)
-#define pte_write(pte)		(pte_val(pte) & _PAGE_WRITE)
-#define pte_dirty(pte)		(pte_val(pte) & _PAGE_DIRTY)
-#define pte_young(pte)		(pte_val(pte) & _PAGE_ACCESSED)
-#define pte_special(pte)	(pte_val(pte) & _PAGE_SPECIAL)
-
-#define PTE_BIT_FUNC(fn, op) \
-	static inline pte_t pte_##fn(pte_t pte) { pte_val(pte) op; return pte; }
-
-PTE_BIT_FUNC(mknotpresent,	&= ~(_PAGE_PRESENT));
-PTE_BIT_FUNC(wrprotect,	&= ~(_PAGE_WRITE));
-PTE_BIT_FUNC(mkwrite,	|= (_PAGE_WRITE));
-PTE_BIT_FUNC(mkclean,	&= ~(_PAGE_DIRTY));
-PTE_BIT_FUNC(mkdirty,	|= (_PAGE_DIRTY));
-PTE_BIT_FUNC(mkold,	&= ~(_PAGE_ACCESSED));
-PTE_BIT_FUNC(mkyoung,	|= (_PAGE_ACCESSED));
-PTE_BIT_FUNC(exprotect,	&= ~(_PAGE_EXECUTE));
-PTE_BIT_FUNC(mkexec,	|= (_PAGE_EXECUTE));
-PTE_BIT_FUNC(mkspecial,	|= (_PAGE_SPECIAL));
-PTE_BIT_FUNC(mkhuge,	|= (_PAGE_HW_SZ));
-
-static inline pte_t pte_modify(pte_t pte, pgprot_t newprot)
-{
-	return __pte((pte_val(pte) & _PAGE_CHG_MASK) | pgprot_val(newprot));
-}
-
-/* Macro to mark a page protection as uncacheable */
-#define pgprot_noncached(prot)	(__pgprot(pgprot_val(prot) & ~_PAGE_CACHEABLE))
-
-static inline void set_pte_at(struct mm_struct *mm, unsigned long addr,
-			      pte_t *ptep, pte_t pteval)
-{
-	set_pte(ptep, pteval);
-}
-
-/*
- * Macro to quickly access the PGD entry, utlising the fact that some
- * arch may cache the pointer to Page Directory of "current" task
- * in a MMU register
- *
- * Thus task->mm->pgd (3 pointer dereferences, cache misses etc simply
- * becomes read a register
- *
- * ********CAUTION*******:
- * Kernel code might be dealing with some mm_struct of NON "current"
- * Thus use this macro only when you are certain that "current" is current
- * e.g. when dealing with signal frame setup code etc
- */
-#ifdef ARC_USE_SCRATCH_REG
-#define pgd_offset_fast(mm, addr)	\
-({					\
-	pgd_t *pgd_base = (pgd_t *) read_aux_reg(ARC_REG_SCRATCH_DATA0);  \
-	pgd_base + pgd_index(addr);	\
-})
-#else
-#define pgd_offset_fast(mm, addr)	pgd_offset(mm, addr)
-#endif
-
 extern pgd_t swapper_pg_dir[] __aligned(PAGE_SIZE);
+<<<<<<< HEAD
 void update_mmu_cache(struct vm_area_struct *vma, unsigned long address,
 		      pte_t *ptep);
 
@@ -379,6 +297,8 @@ void update_mmu_cache(struct vm_area_struct *vma, unsigned long address,
 #include <asm/hugepage.h>
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* to cope with aliasing VIPT cache */
 #define HAVE_ARCH_UNMAPPED_AREA

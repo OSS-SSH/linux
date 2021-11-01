@@ -83,6 +83,7 @@ struct port_database_24xx {
 	uint8_t node_name[WWN_SIZE];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint8_t reserved_3[2];
 	uint16_t nvme_first_burst_size;
 	uint16_t prli_nvme_svc_param_word_0;	/* Bits 15-0 of word 0 */
@@ -94,6 +95,13 @@ struct port_database_24xx {
 	uint16_t prli_nvme_svc_param_word_3;	/* Bits 15-0 of word 3 */
 	uint16_t nvme_first_burst_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint8_t reserved_3[2];
+	uint16_t nvme_first_burst_size;
+	uint16_t prli_nvme_svc_param_word_0;	/* Bits 15-0 of word 0 */
+	uint16_t prli_nvme_svc_param_word_3;	/* Bits 15-0 of word 3 */
+	uint8_t secure_login;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint8_t reserved_4[14];
 };
 
@@ -498,11 +506,17 @@ struct cmd_type_6 {
 
 	__le16	control_flags;		/* Control flags. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CF_NEW_SA			BIT_12
 #define CF_EN_EDIF			BIT_9
 #define CF_ADDITIONAL_PARAM_BLK		BIT_8
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CF_NEW_SA			BIT_12
+#define CF_EN_EDIF			BIT_9
+#define CF_ADDITIONAL_PARAM_BLK		BIT_8
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CF_DIF_SEG_DESCR_ENABLE		BIT_3
 #define CF_DATA_SEG_DESCR_ENABLE	BIT_2
 #define CF_READ_DATA			BIT_1
@@ -626,9 +640,13 @@ struct sts_entry_24xx {
 		__le16 reserved_1;
 		__le16	nvme_rsp_pyld_len;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__le16 edif_sa_index;	 /* edif sa_index used for initiator read data */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__le16 edif_sa_index;	 /* edif sa_index used for initiator read data */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	__le16	state_flags;		/* State flags. */
@@ -824,9 +842,13 @@ struct els_entry_24xx {
 #define ECF_CLR_PASSTHRU_PEND	BIT_12
 #define ECF_INCL_FRAME_HDR	BIT_11
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ECF_SEC_LOGIN		BIT_3
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ECF_SEC_LOGIN		BIT_3
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	union {
 		struct {
@@ -919,9 +941,13 @@ struct logio_entry_24xx {
 #define LCF_CLASS_2		BIT_8	/* Enable class 2 during PLOGI. */
 #define LCF_FREE_NPORT		BIT_7	/* Release NPORT handle after LOGO. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define LCF_COMMON_FEAT		BIT_7	/* PLOGI - Set Common Features Field */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define LCF_COMMON_FEAT		BIT_7	/* PLOGI - Set Common Features Field */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define LCF_EXPL_LOGO		BIT_6	/* Perform an explicit LOGO. */
 #define LCF_NVME_PRLI		BIT_6   /* Perform NVME FC4 PRLI */
 #define LCF_SKIP_PRLI		BIT_5	/* Skip PRLI after PLOGI. */
@@ -947,10 +973,15 @@ struct logio_entry_24xx {
 
 	__le32	io_parameter[11];	/* General I/O parameters. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define LIO_COMM_FEAT_FCSP	BIT_21
 #define LIO_COMM_FEAT_CIO	BIT_31
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define LIO_COMM_FEAT_FCSP	BIT_21
+#define LIO_COMM_FEAT_CIO	BIT_31
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define LSC_SCODE_NOLINK	0x01
 #define LSC_SCODE_NOIOCB	0x02
 #define LSC_SCODE_NOXCB		0x03

@@ -1,9 +1,12 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *   fs/cifs/cifsglob.h
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (C) International Business Machines  Corp., 2002,2008
  *   Author(s): Steve French (sfrench@us.ibm.com)
@@ -79,11 +82,17 @@
 #define SMB_ECHO_INTERVAL_DEFAULT 60
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* dns resolution interval in seconds */
 #define SMB_DNS_RESOLVE_INTERVAL_DEFAULT 600
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* dns resolution interval in seconds */
+#define SMB_DNS_RESOLVE_INTERVAL_DEFAULT 600
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* maximum number of PDUs in one compound */
 #define MAX_COMPOUND 5
 
@@ -121,10 +130,13 @@ enum statusEnum {
 enum securityEnum {
 	Unspecified = 0,	/* not specified */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	LANMAN,			/* Legacy LANMAN auth */
 	NTLM,			/* Legacy NTLM012 auth with NTLM hash */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NTLMv2,			/* Legacy NTLM auth with NTLMv2 hash */
 	RawNTLMSSP,		/* NTLMSSP without SPNEGO, NTLMv2 hash */
 	Kerberos,		/* Kerberos via SPNEGO */
@@ -644,9 +656,12 @@ struct TCP_Server_Info {
 	unsigned long lstrp; /* when we got last response from this server */
 	struct cifs_secmech secmech; /* crypto sec mech functs, descriptors */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define	CIFS_NEGFLAVOR_LANMAN	0	/* wct == 13, LANMAN */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define	CIFS_NEGFLAVOR_UNENCAP	1	/* wct == 17, but no ext_sec */
 #define	CIFS_NEGFLAVOR_EXTENDED	2	/* wct == 17, ext_sec bit set */
 	char	negflavor;	/* NEGOTIATE response flavor */
@@ -662,9 +677,13 @@ struct TCP_Server_Info {
 	struct smbd_connection *smbd_conn;
 	struct delayed_work	echo; /* echo ping workqueue job */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct delayed_work	resolve; /* dns resolution workqueue job */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct delayed_work	resolve; /* dns resolution workqueue job */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char	*smallbuf;	/* pointer to current "small" buffer */
 	char	*bigbuf;	/* pointer to current "big" buffer */
 	/* Total size of this PDU. Only valid from cifs_demultiplex_thread */
@@ -709,11 +728,17 @@ struct TCP_Server_Info {
 	struct sockaddr_storage swn_dstaddr;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CIFS_DFS_UPCALL
 	bool is_dfs_conn; /* if a dfs connection */
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_CIFS_DFS_UPCALL
+	bool is_dfs_conn; /* if a dfs connection */
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct cifs_credits {
@@ -1422,9 +1447,13 @@ struct cifsInodeInfo {
 #define CIFS_INO_LOCK			  (5) /* lock bit for synchronization */
 #define CIFS_INO_MODIFIED_ATTR            (6) /* Indicate change in mtime/ctime */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CIFS_INO_CLOSE_ON_LOCK            (7) /* Not to defer the close when lock is set */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CIFS_INO_CLOSE_ON_LOCK            (7) /* Not to defer the close when lock is set */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 	spinlock_t writers_lock;
 	unsigned int writers;		/* Number of writers on this inode */
@@ -1634,13 +1663,19 @@ struct dfs_info3_param {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct file_list {
 	struct list_head list;
 	struct cifsFileInfo *cfile;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * common struct for holding inode info when searching for or updating an
  * inode with new info
@@ -1760,6 +1795,7 @@ static inline bool is_retryable_error(int error)
 /* Security Flags: indicate type of session setup needed */
 #define   CIFSSEC_MAY_SIGN	0x00001
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define   CIFSSEC_MAY_NTLMV2	0x00004
 #define   CIFSSEC_MAY_KRB5	0x00008
 =======
@@ -1774,6 +1810,10 @@ static inline bool is_retryable_error(int error)
 #define   CIFSSEC_MAY_PLNTXT    0
 #endif /* weak passwords */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define   CIFSSEC_MAY_NTLMV2	0x00004
+#define   CIFSSEC_MAY_KRB5	0x00008
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define   CIFSSEC_MAY_SEAL	0x00040 /* not supported yet */
 #define   CIFSSEC_MAY_NTLMSSP	0x00080 /* raw ntlmssp with ntlmv2 */
 
@@ -1781,6 +1821,7 @@ static inline bool is_retryable_error(int error)
 /* note that only one of the following can be set so the
 result of setting MUST flags more than once will be to
 require use of the stronger protocol */
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define   CIFSSEC_MUST_NTLMV2	0x04004
 #define   CIFSSEC_MUST_KRB5	0x08008
@@ -1800,19 +1841,27 @@ require use of the stronger protocol */
 #define   CIFSSEC_MUST_LANMAN	0
 #define   CIFSSEC_MUST_PLNTXT	0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define   CIFSSEC_MUST_NTLMV2	0x04004
+#define   CIFSSEC_MUST_KRB5	0x08008
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_CIFS_UPCALL
 #define   CIFSSEC_MASK          0x8F08F /* flags supported if no weak allowed */
 #else
 #define	  CIFSSEC_MASK          0x87087 /* flags supported if no weak allowed */
 #endif /* UPCALL */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #endif /* WEAK_PW_HASH */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define   CIFSSEC_MUST_SEAL	0x40040 /* not supported yet */
 #define   CIFSSEC_MUST_NTLMSSP	0x80080 /* raw ntlmssp with ntlmv2 */
 
 #define   CIFSSEC_DEF (CIFSSEC_MAY_SIGN | CIFSSEC_MAY_NTLMV2 | CIFSSEC_MAY_NTLMSSP)
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define   CIFSSEC_MAX (CIFSSEC_MUST_NTLMV2)
 #define   CIFSSEC_AUTH_MASK (CIFSSEC_MAY_NTLMV2 | CIFSSEC_MAY_KRB5 | CIFSSEC_MAY_NTLMSSP)
@@ -1820,6 +1869,10 @@ require use of the stronger protocol */
 #define   CIFSSEC_MAX (CIFSSEC_MUST_SIGN | CIFSSEC_MUST_NTLMV2)
 #define   CIFSSEC_AUTH_MASK (CIFSSEC_MAY_NTLM | CIFSSEC_MAY_NTLMV2 | CIFSSEC_MAY_LANMAN | CIFSSEC_MAY_PLNTXT | CIFSSEC_MAY_KRB5 | CIFSSEC_MAY_NTLMSSP)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define   CIFSSEC_MAX (CIFSSEC_MUST_NTLMV2)
+#define   CIFSSEC_AUTH_MASK (CIFSSEC_MAY_NTLMV2 | CIFSSEC_MAY_KRB5 | CIFSSEC_MAY_NTLMSSP)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  *****************************************************************
  * All constants go here
@@ -1984,12 +2037,15 @@ static inline char *get_security_type_str(enum securityEnum sectype)
 	case NTLMv2:
 		return "NTLMv2";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case NTLM:
 		return "NTLM";
 	case LANMAN:
 		return "LANMAN";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return "Unknown";
 	}

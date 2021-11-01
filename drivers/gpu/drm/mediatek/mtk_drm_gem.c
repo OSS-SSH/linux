@@ -15,19 +15,28 @@
 #include "mtk_drm_gem.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct drm_gem_object_funcs mtk_drm_gem_object_funcs = {
 	.free = mtk_drm_gem_free_object,
 	.get_sg_table = mtk_gem_prime_get_sg_table,
 	.vmap = mtk_drm_gem_prime_vmap,
 	.vunmap = mtk_drm_gem_prime_vunmap,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.mmap = mtk_drm_gem_object_mmap,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.mmap = mtk_drm_gem_object_mmap,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.vm_ops = &drm_gem_cma_vm_ops,
 };
 
@@ -156,12 +165,16 @@ static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Set vm_pgoff (used as a fake buffer offset by DRM) to 0 and map the
 	 * whole buffer from the start.
 	 */
 	vma->vm_pgoff = 0;
 
 	/*
+<<<<<<< HEAD
 	 * dma_alloc_attrs() allocated a struct page table for mtk_gem, so clear
 	 * VM_PFNMAP flag that was set by drm_gem_mmap_obj()/drm_gem_mmap().
 	 */
@@ -174,6 +187,14 @@ static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj,
 	 */
 	vma->vm_flags &= ~VM_PFNMAP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * dma_alloc_attrs() allocated a struct page table for mtk_gem, so clear
+	 * VM_PFNMAP flag that was set by drm_gem_mmap_obj()/drm_gem_mmap().
+	 */
+	vma->vm_flags |= VM_IO | VM_DONTEXPAND | VM_DONTDUMP;
+	vma->vm_page_prot = pgprot_writecombine(vm_get_page_prot(vma->vm_flags));
+	vma->vm_page_prot = pgprot_decrypted(vma->vm_page_prot);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = dma_mmap_attrs(priv->dma_dev, vma, mtk_gem->cookie,
 			     mtk_gem->dma_addr, obj->size, mtk_gem->dma_attrs);
@@ -183,6 +204,7 @@ static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj,
 	return ret;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 int mtk_drm_gem_mmap_buf(struct drm_gem_object *obj, struct vm_area_struct *vma)
@@ -217,6 +239,8 @@ int mtk_drm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Allocate a sg_table for this GEM object.
  * Note: Both the table's contents, and the sg_table itself must be freed by

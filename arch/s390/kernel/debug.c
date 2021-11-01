@@ -25,9 +25,13 @@
 #include <linux/init.h>
 #include <linux/fs.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/minmax.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/minmax.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/debugfs.h>
 
 #include <asm/debug.h>
@@ -97,10 +101,15 @@ static int debug_hex_ascii_format_fn(debug_info_t *id, struct debug_view *view,
 static int debug_sprintf_format_fn(debug_info_t *id, struct debug_view *view,
 				   char *out_buf, debug_sprintf_entry_t *curr_event);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void debug_areas_swap(debug_info_t *a, debug_info_t *b);
 static void debug_events_append(debug_info_t *dest, debug_info_t *src);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void debug_areas_swap(debug_info_t *a, debug_info_t *b);
+static void debug_events_append(debug_info_t *dest, debug_info_t *src);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* globals */
 
@@ -321,6 +330,7 @@ static debug_info_t *debug_info_create(const char *name, int pages_per_area,
 
 	rc->mode = mode & ~S_IFMT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	/* create root directory */
@@ -341,6 +351,8 @@ static debug_info_t *debug_info_create(const char *name, int pages_per_area,
 	rc->next = NULL;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	refcount_set(&rc->ref_count, 1);
 out:
 	return rc;
@@ -401,6 +413,7 @@ static void debug_info_get(debug_info_t *db_info)
 static void debug_info_put(debug_info_t *db_info)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!db_info)
 		return;
 	if (refcount_dec_and_test(&db_info->ref_count))
@@ -408,26 +421,17 @@ static void debug_info_put(debug_info_t *db_info)
 =======
 	int i;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!db_info)
 		return;
-	if (refcount_dec_and_test(&db_info->ref_count)) {
-		for (i = 0; i < DEBUG_MAX_VIEWS; i++) {
-			if (!db_info->views[i])
-				continue;
-			debugfs_remove(db_info->debugfs_entries[i]);
-		}
-		debugfs_remove(db_info->debugfs_root_entry);
-		if (db_info == debug_area_first)
-			debug_area_first = db_info->next;
-		if (db_info == debug_area_last)
-			debug_area_last = db_info->prev;
-		if (db_info->prev)
-			db_info->prev->next = db_info->next;
-		if (db_info->next)
-			db_info->next->prev = db_info->prev;
+	if (refcount_dec_and_test(&db_info->ref_count))
 		debug_info_free(db_info);
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -652,6 +656,9 @@ static int debug_close(struct inode *inode, struct file *file)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Create debugfs entries and add to internal list. */
 static void _debug_register(debug_info_t *id)
 {
@@ -677,8 +684,11 @@ static void _debug_register(debug_info_t *id)
 	debug_register_view(id, &debug_pages_view);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * debug_register_mode() - creates and initializes debug area.
  *
@@ -709,6 +719,7 @@ debug_info_t *debug_register_mode(const char *name, int pages_per_area,
 		pr_warn("Root becomes the owner of all s390dbf files in sysfs\n");
 	BUG_ON(!initialized);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* create new debug_info */
 	rc = debug_info_create(name, pages_per_area, nr_areas, buf_size, mode);
@@ -721,19 +732,23 @@ debug_info_t *debug_register_mode(const char *name, int pages_per_area,
 	}
 =======
 	mutex_lock(&debug_mutex);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* create new debug_info */
 	rc = debug_info_create(name, pages_per_area, nr_areas, buf_size, mode);
-	if (!rc)
-		goto out;
-	debug_register_view(rc, &debug_level_view);
-	debug_register_view(rc, &debug_flush_view);
-	debug_register_view(rc, &debug_pages_view);
-out:
-	if (!rc)
+	if (rc) {
+		mutex_lock(&debug_mutex);
+		_debug_register(rc);
+		mutex_unlock(&debug_mutex);
+	} else {
 		pr_err("Registering debug feature %s failed\n", name);
+<<<<<<< HEAD
 	mutex_unlock(&debug_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 EXPORT_SYMBOL(debug_register_mode);
@@ -764,6 +779,9 @@ EXPORT_SYMBOL(debug_register);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * debug_register_static() - registers a static debug area
  *
  * @id: Handle for static debug area
@@ -840,8 +858,11 @@ static void _debug_unregister(debug_info_t *id)
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * debug_unregister() - give back debug area.
  *
  * @id:		handle for debug log
@@ -855,6 +876,7 @@ void debug_unregister(debug_info_t *id)
 		return;
 	mutex_lock(&debug_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	_debug_unregister(id);
 	mutex_unlock(&debug_mutex);
 
@@ -863,6 +885,12 @@ void debug_unregister(debug_info_t *id)
 	debug_info_put(id);
 	mutex_unlock(&debug_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	_debug_unregister(id);
+	mutex_unlock(&debug_mutex);
+
+	debug_info_put(id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(debug_unregister);
 
@@ -872,6 +900,7 @@ EXPORT_SYMBOL(debug_unregister);
  */
 static int debug_set_size(debug_info_t *id, int nr_areas, int pages_per_area)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	debug_info_t *new_id;
 	unsigned long flags;
@@ -897,35 +926,36 @@ static int debug_set_size(debug_info_t *id, int nr_areas, int pages_per_area)
 	return 0;
 =======
 	debug_entry_t ***new_areas;
+=======
+	debug_info_t *new_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
-	int rc = 0;
 
 	if (!id || (nr_areas <= 0) || (pages_per_area < 0))
 		return -EINVAL;
-	if (pages_per_area > 0) {
-		new_areas = debug_areas_alloc(pages_per_area, nr_areas);
-		if (!new_areas) {
-			pr_info("Allocating memory for %i pages failed\n",
-				pages_per_area);
-			rc = -ENOMEM;
-			goto out;
-		}
-	} else {
-		new_areas = NULL;
+
+	new_id = debug_info_alloc("", pages_per_area, nr_areas, id->buf_size,
+				  id->level, ALL_AREAS);
+	if (!new_id) {
+		pr_info("Allocating memory for %i pages failed\n",
+			pages_per_area);
+		return -ENOMEM;
 	}
+
 	spin_lock_irqsave(&id->lock, flags);
-	debug_areas_free(id);
-	id->areas = new_areas;
-	id->nr_areas = nr_areas;
-	id->pages_per_area = pages_per_area;
-	id->active_area = 0;
-	memset(id->active_entries, 0, sizeof(int)*id->nr_areas);
-	memset(id->active_pages, 0, sizeof(int)*id->nr_areas);
+	debug_events_append(new_id, id);
+	debug_areas_swap(new_id, id);
+	debug_info_free(new_id);
 	spin_unlock_irqrestore(&id->lock, flags);
 	pr_info("%s: set new size (%i pages)\n", id->name, pages_per_area);
+<<<<<<< HEAD
 out:
 	return rc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -944,6 +974,7 @@ void debug_set_level(debug_info_t *id, int new_level)
 	if (!id)
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (new_level == DEBUG_OFF_LEVEL) {
 =======
@@ -951,10 +982,15 @@ void debug_set_level(debug_info_t *id, int new_level)
 	if (new_level == DEBUG_OFF_LEVEL) {
 		id->level = DEBUG_OFF_LEVEL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (new_level == DEBUG_OFF_LEVEL) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_info("%s: switched off\n", id->name);
 	} else if ((new_level > DEBUG_MAX_LEVEL) || (new_level < 0)) {
 		pr_info("%s: level %i is out of range (%i - %i)\n",
 			id->name, new_level, 0, DEBUG_MAX_LEVEL);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return;
 	}
@@ -966,6 +1002,13 @@ void debug_set_level(debug_info_t *id, int new_level)
 		id->level = new_level;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return;
+	}
+
+	spin_lock_irqsave(&id->lock, flags);
+	id->level = new_level;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&id->lock, flags);
 }
 EXPORT_SYMBOL(debug_set_level);
@@ -1006,6 +1049,9 @@ static inline debug_entry_t *get_active_entry(debug_info_t *id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Swap debug areas of a and b. */
 static void debug_areas_swap(debug_info_t *a, debug_info_t *b)
 {
@@ -1042,8 +1088,11 @@ static void debug_events_append(debug_info_t *dest, debug_info_t *src)
 	} while (from != last);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * debug_finish_entry:
  * - set timestamp, caller address, cpu number etc.
@@ -1335,16 +1384,20 @@ int debug_register_view(debug_info_t *id, struct debug_view *view)
 	}
 	if (i == DEBUG_MAX_VIEWS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		pr_err("Registering view %s/%s would exceed the maximum "
 		       "number of views %i\n", id->name, view->name, i);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc = -1;
 	} else {
 		id->views[i] = view;
 		id->debugfs_entries[i] = pde;
 	}
 	spin_unlock_irqrestore(&id->lock, flags);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (rc) {
 		pr_err("Registering view %s/%s would exceed the maximum "
@@ -1355,6 +1408,13 @@ int debug_register_view(debug_info_t *id, struct debug_view *view)
 	if (rc)
 		debugfs_remove(pde);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rc) {
+		pr_err("Registering view %s/%s would exceed the maximum "
+		       "number of views %i\n", id->name, view->name, i);
+		debugfs_remove(pde);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return rc;
 }

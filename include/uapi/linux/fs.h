@@ -185,9 +185,13 @@ struct fsxattr {
 #define BLKROTATIONAL _IO(0x12,126)
 #define BLKZEROOUT _IO(0x12,127)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define BLKGETDISKSEQ _IOR(0x12,128,__u64)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define BLKGETDISKSEQ _IOR(0x12,128,__u64)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * A jump here: 130-136 are reserved for zoned block devices
  * (see uapi/linux/blkzoned.h)

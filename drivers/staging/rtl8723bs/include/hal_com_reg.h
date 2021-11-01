@@ -663,6 +663,7 @@ Default: 00b.
 #define	RATR_MCS6					0x00040000
 #define	RATR_MCS7					0x00080000
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* MCS 2 Spatial Stream */
 #define	RATR_MCS8					0x00100000
@@ -674,6 +675,8 @@ Default: 00b.
 #define	RATR_MCS14					0x04000000
 #define	RATR_MCS15					0x08000000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* CCK */
 #define RATE_1M					BIT(0)
@@ -699,6 +702,7 @@ Default: 00b.
 #define RATE_MCS6				BIT(18)
 #define RATE_MCS7				BIT(19)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* MCS 2 Spatial Stream */
 #define RATE_MCS8				BIT(20)
@@ -711,6 +715,8 @@ Default: 00b.
 #define RATE_MCS15				BIT(27)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*  ALL CCK Rate */
 #define RATE_BITMAP_ALL			0xFFFFF

@@ -5,9 +5,12 @@
  *
  ******************************************************************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define _HAL_COM_C_
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/kernel.h>
 #include <drv_types.h>
@@ -75,6 +78,7 @@ void dump_chip_info(struct hal_version	ChipVersion)
 				"UNKNOWN_CUT(%d)_", ChipVersion.CUTVersion);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "1T1R_");
 =======
 	if (IS_1T1R(ChipVersion))
@@ -87,6 +91,9 @@ void dump_chip_info(struct hal_version	ChipVersion)
 		cnt += scnprintf(buf + cnt, sizeof(buf) - cnt,
 				"UNKNOWN_RFTYPE(%d)_", ChipVersion.RFType);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "1T1R_");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "RomVer(%d)\n", ChipVersion.ROMVer);
 }
@@ -152,19 +159,27 @@ u8 hal_com_config_channel_plan(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool HAL_IsLegalChannel(struct adapter *adapter, u32 Channel)
 =======
 bool HAL_IsLegalChannel(struct adapter *Adapter, u32 Channel)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool HAL_IsLegalChannel(struct adapter *adapter, u32 Channel)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	bool bLegalChannel = true;
 
 	if ((Channel <= 14) && (Channel >= 1)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (is_supported_24g(adapter->registrypriv.wireless_mode) == false)
 =======
 		if (IsSupported24G(Adapter->registrypriv.wireless_mode) == false)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (is_supported_24g(adapter->registrypriv.wireless_mode) == false)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bLegalChannel = false;
 	} else {
 		bLegalChannel = false;
@@ -238,6 +253,7 @@ u8 MRateToHwRate(u8 rate)
 	case MGN_MCS7:
 		ret = DESC_RATEMCS7;
 		break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	case MGN_MCS8:
@@ -313,6 +329,8 @@ u8 MRateToHwRate(u8 rate)
 		ret = DESC_RATEMCS31;
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -385,6 +403,7 @@ u8 HwRateToMRate(u8 rate)
 	case DESC_RATEMCS7:
 		ret_rate = MGN_MCS7;
 		break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	case DESC_RATEMCS8:
@@ -460,6 +479,8 @@ u8 HwRateToMRate(u8 rate)
 		ret_rate = MGN_MCS31;
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -720,10 +741,14 @@ u8 rtw_get_mgntframe_raid(struct adapter *adapter, unsigned char network_type)
 void rtw_hal_update_sta_rate_mask(struct adapter *padapter, struct sta_info *psta)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 i, limit;
 =======
 	u8 i, rf_type, limit;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 i, limit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 tx_ra_bitmap;
 
 	if (!psta)
@@ -740,6 +765,7 @@ void rtw_hal_update_sta_rate_mask(struct adapter *padapter, struct sta_info *pst
 	/* n mode ra_bitmap */
 	if (psta->htpriv.ht_option) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		limit = 8; /*   1R */
 =======
 		rtw_hal_get_hwreg(padapter, HW_VAR_RF_TYPE, (u8 *)(&rf_type));
@@ -748,6 +774,9 @@ void rtw_hal_update_sta_rate_mask(struct adapter *padapter, struct sta_info *pst
 		else
 			limit = 8; /*   1R */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		limit = 8; /*   1R */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		for (i = 0; i < limit; i++) {
 			if (psta->htpriv.ht_cap.mcs.rx_mask[i/8] & BIT(i%8))
@@ -853,11 +882,14 @@ void GetHwReg(struct adapter *adapter, u8 variable, u8 *val)
 		*((u32 *)val) = odm->SupportAbility;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case HW_VAR_RF_TYPE:
 		*((u8 *)val) = hal_data->rf_type;
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		netdev_dbg(adapter->pnetdev,
 			   FUNC_ADPT_FMT " variable(%d) not defined!\n",
@@ -956,10 +988,14 @@ u8 GetHalDefVar(
 			pmlmepriv = &adapter->mlmepriv;
 			pstapriv = &adapter->stapriv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			psta = rtw_get_stainfo(pstapriv, pmlmepriv->cur_network.network.mac_address);
 =======
 			psta = rtw_get_stainfo(pstapriv, pmlmepriv->cur_network.network.MacAddress);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			psta = rtw_get_stainfo(pstapriv, pmlmepriv->cur_network.network.mac_address);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (psta)
 				*((int *)value) = psta->rssi_stat.UndecoratedSmoothedPWDB;
 		}

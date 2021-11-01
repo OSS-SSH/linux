@@ -546,12 +546,17 @@ __end_interrupts:
 	mfspr	r14,SPRN_DEAR
 	mfspr	r15,SPRN_ESR
 <<<<<<< HEAD
+<<<<<<< HEAD
 	std	r14,_DEAR(r1)
 	std	r15,_ESR(r1)
 =======
 	std	r14,_DAR(r1)
 	std	r15,_DSISR(r1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	std	r14,_DEAR(r1)
+	std	r15,_ESR(r1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ld	r14,PACA_EXGEN+EX_R14(r13)
 	ld	r15,PACA_EXGEN+EX_R15(r13)
 	EXCEPTION_COMMON(0x300)
@@ -564,12 +569,17 @@ __end_interrupts:
 	li	r15,0
 	mr	r14,r10
 <<<<<<< HEAD
+<<<<<<< HEAD
 	std	r14,_DEAR(r1)
 	std	r15,_ESR(r1)
 =======
 	std	r14,_DAR(r1)
 	std	r15,_DSISR(r1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	std	r14,_DEAR(r1)
+	std	r15,_ESR(r1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ld	r14,PACA_EXGEN+EX_R14(r13)
 	ld	r15,PACA_EXGEN+EX_R15(r13)
 	EXCEPTION_COMMON(0x400)
@@ -586,12 +596,17 @@ __end_interrupts:
 	mfspr	r14,SPRN_DEAR
 	mfspr	r15,SPRN_ESR
 <<<<<<< HEAD
+<<<<<<< HEAD
 	std	r14,_DEAR(r1)
 	std	r15,_ESR(r1)
 =======
 	std	r14,_DAR(r1)
 	std	r15,_DSISR(r1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	std	r14,_DEAR(r1)
+	std	r15,_ESR(r1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ld	r14,PACA_EXGEN+EX_R14(r13)
 	ld	r15,PACA_EXGEN+EX_R15(r13)
 	EXCEPTION_COMMON(0x600)
@@ -603,10 +618,14 @@ __end_interrupts:
 				PROLOG_ADDITION_1REG)
 	mfspr	r14,SPRN_ESR
 <<<<<<< HEAD
+<<<<<<< HEAD
 	std	r14,_ESR(r1)
 =======
 	std	r14,_DSISR(r1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	std	r14,_ESR(r1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ld	r14,PACA_EXGEN+EX_R14(r13)
 	EXCEPTION_COMMON(0x700)
 	addi	r3,r1,STACK_FRAME_OVERHEAD
@@ -1077,12 +1096,17 @@ bad_stack_book3e:
 	mfspr	r10,SPRN_DEAR
 	mfspr	r11,SPRN_ESR
 <<<<<<< HEAD
+<<<<<<< HEAD
 	std	r10,_DEAR(r1)
 	std	r11,_ESR(r1)
 =======
 	std	r10,_DAR(r1)
 	std	r11,_DSISR(r1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	std	r10,_DEAR(r1)
+	std	r11,_ESR(r1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	std	r0,GPR0(r1);		/* save r0 in stackframe */	    \
 	std	r2,GPR2(r1);		/* save r2 in stackframe */	    \
 	SAVE_4GPRS(3, r1);		/* save r3 - r6 in stackframe */    \
@@ -1152,10 +1176,14 @@ found_iprot:
  * r4 = SPRN_TLBnCFG
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4			/* Find our address */
 =======
 	bl	invstr				/* Find our address */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4			/* Find our address */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 invstr:	mflr	r6				/* Make it accessible */
 	mfmsr	r7
 	rlwinm	r5,r7,27,31,31			/* extract MSR[IS] */
@@ -1225,10 +1253,14 @@ skpinv:	addi	r6,r6,1				/* Increment */
 	xori	r6,r6,MSR_IS
 	mtspr	SPRN_SRR1,r6
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4	/* Find our address */
 =======
 	bl	1f		/* Find our address */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4	/* Find our address */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r6
 	addi	r6,r6,(2f - 1b)
 	mtspr	SPRN_SRR0,r6
@@ -1289,10 +1321,14 @@ skpinv:	addi	r6,r6,1				/* Increment */
  */
 	/* Now we branch the new virtual address mapped by this entry */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4	/* Find our address */
 =======
 	bl	1f		/* Find our address */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4	/* Find our address */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r6
 	addi	r6,r6,(2f - 1b)
 	tovirt(r6,r6)

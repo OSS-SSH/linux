@@ -55,10 +55,14 @@
 #define MP2975_RAIL2_FUNC	(PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT | \
 				 PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT | \
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 PMBUS_HAVE_POUT | PMBUS_PHASE_VIRTUAL)
 =======
 				 PMBUS_PHASE_VIRTUAL)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 PMBUS_HAVE_POUT | PMBUS_PHASE_VIRTUAL)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct mp2975_data {
 	struct pmbus_driver_info info;

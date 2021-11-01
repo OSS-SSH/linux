@@ -107,12 +107,15 @@ def extract_tap_lines(kernel_output: Iterable[str]) -> LineStream:
 	return LineStream(lines=isolate_kunit_output(kernel_output))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 def raw_output(kernel_output) -> None:
 	for line in kernel_output:
 		print(line.rstrip())
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DIVIDER = '=' * 60
 
 RESET = '\033[0;0m'
@@ -141,10 +144,14 @@ def print_log(log) -> None:
 		print_with_timestamp(m)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 TAP_ENTRIES = re.compile(r'^(TAP|[\s]*ok|[\s]*not ok|[\s]*[0-9]+\.\.[0-9]+|[\s]*# (Subtest:|.*: kunit test case crashed!)).*$')
 =======
 TAP_ENTRIES = re.compile(r'^(TAP|[\s]*ok|[\s]*not ok|[\s]*[0-9]+\.\.[0-9]+|[\s]*#).*$')
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+TAP_ENTRIES = re.compile(r'^(TAP|[\s]*ok|[\s]*not ok|[\s]*[0-9]+\.\.[0-9]+|[\s]*# (Subtest:|.*: kunit test case crashed!)).*$')
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 def consume_non_diagnostic(lines: LineStream) -> None:
 	while lines and not TAP_ENTRIES.match(lines.peek()):
@@ -346,6 +353,7 @@ def parse_test_result(lines: LineStream) -> TestResult:
 	consume_non_diagnostic(lines)
 	if not lines or not parse_tap_header(lines):
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return TestResult(TestStatus.FAILURE_TO_PARSE_TESTS, [], lines)
 	expected_test_suite_num = parse_test_plan(lines)
 	if expected_test_suite_num == 0:
@@ -356,6 +364,13 @@ def parse_test_result(lines: LineStream) -> TestResult:
 	expected_test_suite_num = parse_test_plan(lines)
 	if not expected_test_suite_num:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return TestResult(TestStatus.FAILURE_TO_PARSE_TESTS, [], lines)
+	expected_test_suite_num = parse_test_plan(lines)
+	if expected_test_suite_num == 0:
+		return TestResult(TestStatus.NO_TESTS, [], lines)
+	elif expected_test_suite_num is None:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return TestResult(TestStatus.FAILURE_TO_PARSE_TESTS, [], lines)
 	test_suites = []
 	for i in range(1, expected_test_suite_num + 1):

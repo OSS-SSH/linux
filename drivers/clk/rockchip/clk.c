@@ -23,10 +23,15 @@
 #include <linux/reboot.h>
 #include <linux/rational.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #include "../clk-fractional-divider.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#include "../clk-fractional-divider.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "clk.h"
 
 /*
@@ -184,6 +189,7 @@ static void rockchip_fractional_approximation(struct clk_hw *hw,
 		unsigned long *m, unsigned long *n)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long p_rate, p_parent_rate;
 	struct clk_hw *p_parent;
 =======
@@ -192,6 +198,10 @@ static void rockchip_fractional_approximation(struct clk_hw *hw,
 	struct clk_hw *p_parent;
 	unsigned long scale;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long p_rate, p_parent_rate;
+	struct clk_hw *p_parent;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	p_rate = clk_hw_get_rate(clk_hw_get_parent(hw));
 	if ((rate * 20 > p_rate) && (p_rate % rate != 0)) {
@@ -200,6 +210,7 @@ static void rockchip_fractional_approximation(struct clk_hw *hw,
 		*parent_rate = p_parent_rate;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	clk_fractional_divider_general_approximation(hw, rate, parent_rate, m, n);
 =======
@@ -216,6 +227,9 @@ static void rockchip_fractional_approximation(struct clk_hw *hw,
 			GENMASK(fd->mwidth - 1, 0), GENMASK(fd->nwidth - 1, 0),
 			m, n);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_fractional_divider_general_approximation(hw, rate, parent_rate, m, n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct clk *rockchip_clk_register_frac_branch(

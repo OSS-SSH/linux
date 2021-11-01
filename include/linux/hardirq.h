@@ -117,9 +117,12 @@ extern void rcu_nmi_exit(void);
 		lockdep_off();					\
 		arch_nmi_enter();				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		printk_nmi_enter();				\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		BUG_ON(in_nmi() == NMI_MASK);			\
 		__preempt_count_add(NMI_OFFSET + HARDIRQ_OFFSET);	\
 	} while (0)
@@ -139,9 +142,12 @@ extern void rcu_nmi_exit(void);
 		BUG_ON(!in_nmi());				\
 		__preempt_count_sub(NMI_OFFSET + HARDIRQ_OFFSET);	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		printk_nmi_exit();				\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		arch_nmi_exit();				\
 		lockdep_on();					\
 	} while (0)

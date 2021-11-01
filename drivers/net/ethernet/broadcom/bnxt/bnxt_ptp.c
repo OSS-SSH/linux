@@ -19,6 +19,7 @@
 #include "bnxt_hsi.h"
 #include "bnxt.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "bnxt_hwrm.h"
 #include "bnxt_ptp.h"
 
@@ -28,6 +29,12 @@ int bnxt_ptp_parse(struct sk_buff *skb, u16 *seq_id, u16 *hdr_off)
 
 int bnxt_ptp_parse(struct sk_buff *skb, u16 *seq_id)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "bnxt_hwrm.h"
+#include "bnxt_ptp.h"
+
+int bnxt_ptp_parse(struct sk_buff *skb, u16 *seq_id, u16 *hdr_off)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int ptp_class;
 	struct ptp_header *hdr;
@@ -42,9 +49,13 @@ int bnxt_ptp_parse(struct sk_buff *skb, u16 *seq_id)
 			return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*hdr_off = (u8 *)hdr - skb->data;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*hdr_off = (u8 *)hdr - skb->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*seq_id	 = ntohs(hdr->sequence_id);
 		return 0;
 	default:
@@ -67,6 +78,7 @@ static int bnxt_ptp_settime(struct ptp_clock_info *ptp_info,
 
 /* Caller holds ptp_lock */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int bnxt_refclk_read(struct bnxt *bp, struct ptp_system_timestamp *sts,
 			    u64 *ns)
 {
@@ -82,16 +94,27 @@ static int bnxt_refclk_read(struct bnxt *bp, struct ptp_system_timestamp *sts,
 	return 0;
 =======
 static u64 bnxt_refclk_read(struct bnxt *bp, struct ptp_system_timestamp *sts)
+=======
+static int bnxt_refclk_read(struct bnxt *bp, struct ptp_system_timestamp *sts,
+			    u64 *ns)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
-	u64 ns;
+
+	if (test_bit(BNXT_STATE_IN_FW_RESET, &bp->state))
+		return -EIO;
 
 	ptp_read_system_prets(sts);
-	ns = readl(bp->bar0 + ptp->refclk_mapped_regs[0]);
+	*ns = readl(bp->bar0 + ptp->refclk_mapped_regs[0]);
 	ptp_read_system_postts(sts);
+<<<<<<< HEAD
 	ns |= (u64)readl(bp->bar0 + ptp->refclk_mapped_regs[1]) << 32;
 	return ns;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*ns |= (u64)readl(bp->bar0 + ptp->refclk_mapped_regs[1]) << 32;
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void bnxt_ptp_get_current_time(struct bnxt *bp)
@@ -103,15 +126,20 @@ static void bnxt_ptp_get_current_time(struct bnxt *bp)
 	spin_lock_bh(&ptp->ptp_lock);
 	WRITE_ONCE(ptp->old_time, ptp->current_time);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bnxt_refclk_read(bp, NULL, &ptp->current_time);
 =======
 	ptp->current_time = bnxt_refclk_read(bp, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bnxt_refclk_read(bp, NULL, &ptp->current_time);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_bh(&ptp->ptp_lock);
 }
 
 static int bnxt_hwrm_port_ts_query(struct bnxt *bp, u32 flags, u64 *ts)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_port_ts_query_output *resp;
 	struct hwrm_port_ts_query_input *req;
@@ -138,22 +166,35 @@ static int bnxt_hwrm_port_ts_query(struct bnxt *bp, u32 flags, u64 *ts)
 =======
 	struct hwrm_port_ts_query_output *resp = bp->hwrm_cmd_resp_addr;
 	struct hwrm_port_ts_query_input req = {0};
+=======
+	struct hwrm_port_ts_query_output *resp;
+	struct hwrm_port_ts_query_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rc;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_PORT_TS_QUERY, -1, -1);
-	req.flags = cpu_to_le32(flags);
+	rc = hwrm_req_init(bp, req, HWRM_PORT_TS_QUERY);
+	if (rc)
+		return rc;
+
+	req->flags = cpu_to_le32(flags);
 	if ((flags & PORT_TS_QUERY_REQ_FLAGS_PATH) ==
 	    PORT_TS_QUERY_REQ_FLAGS_PATH_TX) {
-		req.enables = cpu_to_le16(BNXT_PTP_QTS_TX_ENABLES);
-		req.ptp_seq_id = cpu_to_le32(bp->ptp_cfg->tx_seqid);
-		req.ts_req_timeout = cpu_to_le16(BNXT_PTP_QTS_TIMEOUT);
+		req->enables = cpu_to_le16(BNXT_PTP_QTS_TX_ENABLES);
+		req->ptp_seq_id = cpu_to_le32(bp->ptp_cfg->tx_seqid);
+		req->ptp_hdr_offset = cpu_to_le16(bp->ptp_cfg->tx_hdr_off);
+		req->ts_req_timeout = cpu_to_le16(BNXT_PTP_QTS_TIMEOUT);
 	}
-	mutex_lock(&bp->hwrm_cmd_lock);
-	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
+	resp = hwrm_req_hold(bp, req);
+
+	rc = hwrm_req_send(bp, req);
 	if (!rc)
 		*ts = le64_to_cpu(resp->ptp_msg_ts);
+<<<<<<< HEAD
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -164,6 +205,7 @@ static int bnxt_ptp_gettimex(struct ptp_clock_info *ptp_info,
 	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
 						ptp_info);
 	u64 ns, cycles;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int rc;
 
@@ -178,6 +220,16 @@ static int bnxt_ptp_gettimex(struct ptp_clock_info *ptp_info,
 	spin_lock_bh(&ptp->ptp_lock);
 	cycles = bnxt_refclk_read(ptp->bp, sts);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int rc;
+
+	spin_lock_bh(&ptp->ptp_lock);
+	rc = bnxt_refclk_read(ptp->bp, sts, &cycles);
+	if (rc) {
+		spin_unlock_bh(&ptp->ptp_lock);
+		return rc;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ns = timecounter_cyc2time(&ptp->tc, cycles);
 	spin_unlock_bh(&ptp->ptp_lock);
 	*ts = ns_to_timespec64(ns);
@@ -201,6 +253,7 @@ static int bnxt_ptp_adjfreq(struct ptp_clock_info *ptp_info, s32 ppb)
 	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
 						ptp_info);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_port_mac_cfg_input *req;
 	struct bnxt *bp = ptp->bp;
 	int rc;
@@ -222,6 +275,19 @@ static int bnxt_ptp_adjfreq(struct ptp_clock_info *ptp_info, s32 ppb)
 	req.enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_PTP_FREQ_ADJ_PPB);
 	rc = hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_port_mac_cfg_input *req;
+	struct bnxt *bp = ptp->bp;
+	int rc;
+
+	rc = hwrm_req_init(bp, req, HWRM_PORT_MAC_CFG);
+	if (rc)
+		return rc;
+
+	req->ptp_freq_adj_ppb = cpu_to_le32(ppb);
+	req->enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_PTP_FREQ_ADJ_PPB);
+	rc = hwrm_req_send(ptp->bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		netdev_err(ptp->bp->dev,
 			   "ptp adjfreq failed. rc = %d\n", rc);
@@ -229,6 +295,9 @@ static int bnxt_ptp_adjfreq(struct ptp_clock_info *ptp_info, s32 ppb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void bnxt_ptp_pps_event(struct bnxt *bp, u32 data1, u32 data2)
 {
 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
@@ -390,6 +459,7 @@ static int bnxt_ptp_perout_cfg(struct bnxt_ptp_cfg *ptp,
 }
 
 static int bnxt_ptp_enable(struct ptp_clock_info *ptp_info,
+<<<<<<< HEAD
 			   struct ptp_clock_request *rq, int on)
 {
 	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
@@ -445,10 +515,62 @@ static int bnxt_ptp_enable(struct ptp_clock_info *ptp,
 {
 	return -EOPNOTSUPP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   struct ptp_clock_request *rq, int on)
+{
+	struct bnxt_ptp_cfg *ptp = container_of(ptp_info, struct bnxt_ptp_cfg,
+						ptp_info);
+	struct bnxt *bp = ptp->bp;
+	u8 pin_id;
+	int rc;
+
+	switch (rq->type) {
+	case PTP_CLK_REQ_EXTTS:
+		/* Configure an External PPS IN */
+		pin_id = ptp_find_pin(ptp->ptp_clock, PTP_PF_EXTTS,
+				      rq->extts.index);
+		if (!on)
+			break;
+		rc = bnxt_ptp_cfg_pin(bp, pin_id, BNXT_PPS_PIN_PPS_IN);
+		if (rc)
+			return rc;
+		rc = bnxt_ptp_cfg_event(bp, BNXT_PPS_EVENT_EXTERNAL);
+		if (!rc)
+			ptp->pps_info.pins[pin_id].event = BNXT_PPS_EVENT_EXTERNAL;
+		return rc;
+	case PTP_CLK_REQ_PEROUT:
+		/* Configure a Periodic PPS OUT */
+		pin_id = ptp_find_pin(ptp->ptp_clock, PTP_PF_PEROUT,
+				      rq->perout.index);
+		if (!on)
+			break;
+
+		rc = bnxt_ptp_cfg_pin(bp, pin_id, BNXT_PPS_PIN_PPS_OUT);
+		if (!rc)
+			rc = bnxt_ptp_perout_cfg(ptp, rq);
+
+		return rc;
+	case PTP_CLK_REQ_PPS:
+		/* Configure PHC PPS IN */
+		rc = bnxt_ptp_cfg_pin(bp, 0, BNXT_PPS_PIN_PPS_IN);
+		if (rc)
+			return rc;
+		rc = bnxt_ptp_cfg_event(bp, BNXT_PPS_EVENT_INTERNAL);
+		if (!rc)
+			ptp->pps_info.pins[0].event = BNXT_PPS_EVENT_INTERNAL;
+		return rc;
+	default:
+		netdev_err(ptp->bp->dev, "Unrecognized PIN function\n");
+		return -EOPNOTSUPP;
+	}
+
+	return bnxt_ptp_cfg_pin(bp, pin_id, BNXT_PPS_PIN_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int bnxt_hwrm_ptp_cfg(struct bnxt *bp)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
 	struct hwrm_port_mac_cfg_input *req;
@@ -461,11 +583,22 @@ static int bnxt_hwrm_ptp_cfg(struct bnxt *bp)
 
 =======
 	struct hwrm_port_mac_cfg_input req = {0};
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
+	struct hwrm_port_mac_cfg_input *req;
 	u32 flags = 0;
+	int rc;
 
+	rc = hwrm_req_init(bp, req, HWRM_PORT_MAC_CFG);
+	if (rc)
+		return rc;
+
+<<<<<<< HEAD
 	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_PORT_MAC_CFG, -1, -1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ptp->rx_filter)
 		flags |= PORT_MAC_CFG_REQ_FLAGS_PTP_RX_TS_CAPTURE_ENABLE;
 	else
@@ -474,6 +607,7 @@ static int bnxt_hwrm_ptp_cfg(struct bnxt *bp)
 		flags |= PORT_MAC_CFG_REQ_FLAGS_PTP_TX_TS_CAPTURE_ENABLE;
 	else
 		flags |= PORT_MAC_CFG_REQ_FLAGS_PTP_TX_TS_CAPTURE_DISABLE;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	req->flags = cpu_to_le32(flags);
 	req->enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_RX_TS_CAPTURE_PTP_MSG_TYPE);
@@ -487,6 +621,13 @@ static int bnxt_hwrm_ptp_cfg(struct bnxt *bp)
 
 	return hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->flags = cpu_to_le32(flags);
+	req->enables = cpu_to_le32(PORT_MAC_CFG_REQ_ENABLES_RX_TS_CAPTURE_PTP_MSG_TYPE);
+	req->rx_ts_capture_ptp_msg_type = cpu_to_le16(ptp->rxctl);
+
+	return hwrm_req_send(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int bnxt_hwtstamp_set(struct net_device *dev, struct ifreq *ifr)
@@ -624,6 +765,7 @@ static u64 bnxt_cc_read(const struct cyclecounter *cc)
 {
 	struct bnxt_ptp_cfg *ptp = container_of(cc, struct bnxt_ptp_cfg, cc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 ns = 0;
 
 	bnxt_refclk_read(ptp->bp, NULL, &ns);
@@ -632,6 +774,12 @@ static u64 bnxt_cc_read(const struct cyclecounter *cc)
 
 	return bnxt_refclk_read(ptp->bp, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 ns = 0;
+
+	bnxt_refclk_read(ptp->bp, NULL, &ns);
+	return ns;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void bnxt_stamp_tx_skb(struct bnxt *bp, struct sk_buff *skb)
@@ -675,14 +823,20 @@ static long bnxt_ptp_ts_aux_work(struct ptp_clock_info *ptp_info)
 	bnxt_ptp_get_current_time(bp);
 	ptp->next_period = now + HZ;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (time_after_eq(now, ptp->next_overflow_check)) {
 		spin_lock_bh(&ptp->ptp_lock);
 		timecounter_read(&ptp->tc);
 		spin_unlock_bh(&ptp->ptp_lock);
 		ptp->next_overflow_check = now + BNXT_PHC_OVERFLOW_PERIOD;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return HZ;
 }
 
@@ -716,6 +870,7 @@ int bnxt_get_rx_ts_p5(struct bnxt *bp, u64 *ts, u32 pkt_ts)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void bnxt_ptp_start(struct bnxt *bp)
 {
@@ -734,6 +889,8 @@ void bnxt_ptp_start(struct bnxt *bp)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct ptp_clock_info bnxt_ptp_caps = {
 	.owner		= THIS_MODULE,
 	.name		= "bnxt clock",
@@ -752,6 +909,9 @@ static const struct ptp_clock_info bnxt_ptp_caps = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bnxt_ptp_verify(struct ptp_clock_info *ptp_info, unsigned int pin,
 			   enum ptp_pin_function func, unsigned int chan)
 {
@@ -833,8 +993,11 @@ static bool bnxt_pps_config_ok(struct bnxt *bp)
 	return !(bp->fw_cap & BNXT_FW_CAP_PTP_PPS) == !ptp->ptp_info.pin_config;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bnxt_ptp_init(struct bnxt *bp)
 {
 	struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
@@ -848,6 +1011,9 @@ int bnxt_ptp_init(struct bnxt *bp)
 		return rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ptp->ptp_clock && bnxt_pps_config_ok(bp))
 		return 0;
 
@@ -857,8 +1023,11 @@ int bnxt_ptp_init(struct bnxt *bp)
 		kfree(ptp->ptp_info.pin_config);
 		ptp->ptp_info.pin_config = NULL;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_set(&ptp->tx_avail, BNXT_MAX_TX_TS);
 	spin_lock_init(&ptp->ptp_lock);
 
@@ -869,6 +1038,9 @@ int bnxt_ptp_init(struct bnxt *bp)
 	ptp->cc.mult = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ptp->next_overflow_check = jiffies + BNXT_PHC_OVERFLOW_PERIOD;
 	timecounter_init(&ptp->tc, &ptp->cc, ktime_to_ns(ktime_get_real()));
 
@@ -877,11 +1049,14 @@ int bnxt_ptp_init(struct bnxt *bp)
 		if (bnxt_ptp_pps_init(bp))
 			netdev_err(bp->dev, "1pps not initialized, continuing without 1pps support\n");
 	}
+<<<<<<< HEAD
 =======
 	timecounter_init(&ptp->tc, &ptp->cc, ktime_to_ns(ktime_get_real()));
 
 	ptp->ptp_info = bnxt_ptp_caps;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ptp->ptp_clock = ptp_clock_register(&ptp->ptp_info, &bp->pdev->dev);
 	if (IS_ERR(ptp->ptp_clock)) {
 		int err = PTR_ERR(ptp->ptp_clock);
@@ -891,6 +1066,9 @@ int bnxt_ptp_init(struct bnxt *bp)
 		return err;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bp->flags & BNXT_FLAG_CHIP_P5) {
 		spin_lock_bh(&ptp->ptp_lock);
 		bnxt_refclk_read(bp, NULL, &ptp->current_time);
@@ -898,9 +1076,12 @@ int bnxt_ptp_init(struct bnxt *bp)
 		spin_unlock_bh(&ptp->ptp_lock);
 		ptp_schedule_worker(ptp->ptp_clock, 0);
 	}
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -916,11 +1097,17 @@ void bnxt_ptp_clear(struct bnxt *bp)
 
 	ptp->ptp_clock = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(ptp->ptp_info.pin_config);
 	ptp->ptp_info.pin_config = NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfree(ptp->ptp_info.pin_config);
+	ptp->ptp_info.pin_config = NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ptp->tx_skb) {
 		dev_kfree_skb_any(ptp->tx_skb);
 		ptp->tx_skb = NULL;

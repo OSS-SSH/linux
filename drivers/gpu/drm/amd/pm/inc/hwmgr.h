@@ -279,6 +279,7 @@ struct pp_hwmgr_func {
 	void (*set_fan_control_mode)(struct pp_hwmgr *hwmgr, uint32_t mode);
 	uint32_t (*get_fan_control_mode)(struct pp_hwmgr *hwmgr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*set_fan_speed_pwm)(struct pp_hwmgr *hwmgr, uint32_t speed);
 	int (*get_fan_speed_pwm)(struct pp_hwmgr *hwmgr, uint32_t *speed);
 	int (*set_fan_speed_rpm)(struct pp_hwmgr *hwmgr, uint32_t speed);
@@ -287,6 +288,11 @@ struct pp_hwmgr_func {
 	int (*get_fan_speed_percent)(struct pp_hwmgr *hwmgr, uint32_t *speed);
 	int (*set_fan_speed_rpm)(struct pp_hwmgr *hwmgr, uint32_t percent);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*set_fan_speed_pwm)(struct pp_hwmgr *hwmgr, uint32_t speed);
+	int (*get_fan_speed_pwm)(struct pp_hwmgr *hwmgr, uint32_t *speed);
+	int (*set_fan_speed_rpm)(struct pp_hwmgr *hwmgr, uint32_t speed);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*get_fan_speed_rpm)(struct pp_hwmgr *hwmgr, uint32_t *speed);
 	int (*reset_fan_speed_to_default)(struct pp_hwmgr *hwmgr);
 	int (*uninitialize_thermal_controller)(struct pp_hwmgr *hwmgr);

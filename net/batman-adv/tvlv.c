@@ -51,11 +51,17 @@ static void batadv_tvlv_handler_release(struct kref *ref)
 static void batadv_tvlv_handler_put(struct batadv_tvlv_handler *tvlv_handler)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!tvlv_handler)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!tvlv_handler)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&tvlv_handler->refcount, batadv_tvlv_handler_release);
 }
 
@@ -113,11 +119,17 @@ static void batadv_tvlv_container_release(struct kref *ref)
 static void batadv_tvlv_container_put(struct batadv_tvlv_container *tvlv)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!tvlv)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!tvlv)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&tvlv->refcount, batadv_tvlv_container_release);
 }
 
@@ -451,11 +463,15 @@ int batadv_tvlv_containers_process(struct batadv_priv *bat_priv,
 						src, dst, tvlv_value,
 						tvlv_value_cont_len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		batadv_tvlv_handler_put(tvlv_handler);
 =======
 		if (tvlv_handler)
 			batadv_tvlv_handler_put(tvlv_handler);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		batadv_tvlv_handler_put(tvlv_handler);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tvlv_value = (u8 *)tvlv_value + tvlv_value_cont_len;
 		tvlv_value_len -= tvlv_value_cont_len;
 	}

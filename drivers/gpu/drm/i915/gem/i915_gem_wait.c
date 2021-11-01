@@ -105,12 +105,17 @@ static void fence_set_priority(struct dma_fence *fence,
 
 	rcu_read_lock(); /* RCU serialisation for set-wedged protection */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (engine->sched_engine->schedule)
 		engine->sched_engine->schedule(rq, attr);
 =======
 	if (engine->schedule)
 		engine->schedule(rq, attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (engine->sched_engine->schedule)
+		engine->sched_engine->schedule(rq, attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_unlock();
 }
 
@@ -296,6 +301,9 @@ i915_gem_wait_ioctl(struct drm_device *dev, void *data, struct drm_file *file)
 	return ret;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * i915_gem_object_wait_migration - Sync an accelerated migration operation
@@ -315,5 +323,8 @@ int i915_gem_object_wait_migration(struct drm_i915_gem_object *obj,
 	/* NOP for now. */
 	return 0;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

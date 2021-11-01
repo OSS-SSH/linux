@@ -17,6 +17,7 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if __has_attribute(__error__)
 # define __compiletime_error(message) __attribute__((error(message)))
 #endif
@@ -25,6 +26,11 @@
 # define __compiletime_error(message) __attribute__((error(message)))
 #endif /* GCC_VERSION >= 40300 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if __has_attribute(__error__)
+# define __compiletime_error(message) __attribute__((error(message)))
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* &a[0] degrades to a pointer: a different type from an array */
 #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
@@ -45,9 +51,12 @@
 #define __printf(a, b)	__attribute__((format(printf, a, b)))
 #define __scanf(a, b)	__attribute__((format(scanf, a, b)))
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 #if GCC_VERSION >= 50100
 #define COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW 1
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

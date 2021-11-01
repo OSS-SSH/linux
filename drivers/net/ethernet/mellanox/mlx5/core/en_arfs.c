@@ -99,6 +99,7 @@ struct arfs_rule {
 		hlist_for_each_entry_safe(hn, tmp, &hash[j], hlist)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static enum mlx5_traffic_types arfs_get_tt(enum arfs_type type)
 {
 	switch (type) {
@@ -112,17 +113,24 @@ static enum mlx5_traffic_types arfs_get_tt(enum arfs_type type)
 		return MLX5_TT_IPV6_UDP;
 =======
 static enum mlx5e_traffic_types arfs_get_tt(enum arfs_type type)
+=======
+static enum mlx5_traffic_types arfs_get_tt(enum arfs_type type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	switch (type) {
 	case ARFS_IPV4_TCP:
-		return MLX5E_TT_IPV4_TCP;
+		return MLX5_TT_IPV4_TCP;
 	case ARFS_IPV4_UDP:
-		return MLX5E_TT_IPV4_UDP;
+		return MLX5_TT_IPV4_UDP;
 	case ARFS_IPV6_TCP:
-		return MLX5E_TT_IPV6_TCP;
+		return MLX5_TT_IPV6_TCP;
 	case ARFS_IPV6_UDP:
+<<<<<<< HEAD
 		return MLX5E_TT_IPV6_UDP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return MLX5_TT_IPV6_UDP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -EINVAL;
 	}
@@ -135,10 +143,14 @@ static int arfs_disable(struct mlx5e_priv *priv)
 	for (i = 0; i < ARFS_NUM_TYPES; i++) {
 		/* Modify ttc rules destination back to their default */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = mlx5_ttc_fwd_default_dest(priv->fs.ttc, arfs_get_tt(i));
 =======
 		err = mlx5e_ttc_fwd_default_dest(priv, arfs_get_tt(i));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = mlx5_ttc_fwd_default_dest(priv->fs.ttc, arfs_get_tt(i));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			netdev_err(priv->netdev,
 				   "%s: modify ttc[%d] default destination failed, err(%d)\n",
@@ -168,10 +180,14 @@ int mlx5e_arfs_enable(struct mlx5e_priv *priv)
 		dest.ft = priv->fs.arfs->arfs_tables[i].ft.t;
 		/* Modify ttc rules destination to point on the aRFS FTs */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = mlx5_ttc_fwd_dest(priv->fs.ttc, arfs_get_tt(i), &dest);
 =======
 		err = mlx5e_ttc_fwd_dest(priv, arfs_get_tt(i), &dest);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = mlx5_ttc_fwd_dest(priv->fs.ttc, arfs_get_tt(i), &dest);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			netdev_err(priv->netdev,
 				   "%s: modify ttc[%d] dest to arfs, failed err(%d)\n",
@@ -215,6 +231,7 @@ static int arfs_add_default_rule(struct mlx5e_priv *priv,
 {
 	struct arfs_table *arfs_t = &priv->fs.arfs->arfs_tables[type];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mlx5_flow_destination dest = {};
 	MLX5_DECLARE_FLOW_ACT(flow_act);
 	enum mlx5_traffic_types tt;
@@ -224,6 +241,11 @@ static int arfs_add_default_rule(struct mlx5e_priv *priv,
 	MLX5_DECLARE_FLOW_ACT(flow_act);
 	enum mlx5e_traffic_types tt;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mlx5_flow_destination dest = {};
+	MLX5_DECLARE_FLOW_ACT(flow_act);
+	enum mlx5_traffic_types tt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err = 0;
 
 	dest.type = MLX5_FLOW_DESTINATION_TYPE_TIR;
@@ -235,6 +257,7 @@ static int arfs_add_default_rule(struct mlx5e_priv *priv,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* FIXME: Must use mlx5_ttc_get_default_dest(),
 	 * but can't since TTC default is not setup yet !
 	 */
@@ -245,6 +268,12 @@ static int arfs_add_default_rule(struct mlx5e_priv *priv,
 	 */
 	dest.tir_num = tir[tt].tirn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* FIXME: Must use mlx5_ttc_get_default_dest(),
+	 * but can't since TTC default is not setup yet !
+	 */
+	dest.tir_num = mlx5e_rx_res_get_tirn_rss(priv->rx_res, tt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	arfs_t->default_rule = mlx5_add_flow_rules(arfs_t->ft.t, NULL,
 						   &flow_act,
 						   &dest, 1);
@@ -589,10 +618,14 @@ static struct mlx5_flow_handle *arfs_add_rule(struct mlx5e_priv *priv,
 	}
 	dest.type = MLX5_FLOW_DESTINATION_TYPE_TIR;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dest.tir_num = mlx5e_rx_res_get_tirn_direct(priv->rx_res, arfs_rule->rxq);
 =======
 	dest.tir_num = priv->direct_tir[arfs_rule->rxq].tirn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dest.tir_num = mlx5e_rx_res_get_tirn_direct(priv->rx_res, arfs_rule->rxq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rule = mlx5_add_flow_rules(ft, spec, &flow_act, &dest, 1);
 	if (IS_ERR(rule)) {
 		err = PTR_ERR(rule);
@@ -616,10 +649,14 @@ static void arfs_modify_rule_rq(struct mlx5e_priv *priv,
 
 	dst.type = MLX5_FLOW_DESTINATION_TYPE_TIR;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dst.tir_num = mlx5e_rx_res_get_tirn_direct(priv->rx_res, rxq);
 =======
 	dst.tir_num = priv->direct_tir[rxq].tirn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dst.tir_num = mlx5e_rx_res_get_tirn_direct(priv->rx_res, rxq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err =  mlx5_modify_rule_destination(rule, &dst, NULL);
 	if (err)
 		netdev_warn(priv->netdev,

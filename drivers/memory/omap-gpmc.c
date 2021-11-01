@@ -10,9 +10,13 @@
  * Added OMAP4 support - Santosh Shilimkar <santosh.shilimkar@ti.com>
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/cpu_pm.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/cpu_pm.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/irq.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
@@ -237,13 +241,19 @@ struct gpmc_device {
 	struct irq_chip irq_chip;
 	struct gpio_chip gpio_chip;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct notifier_block nb;
 	struct omap3_gpmc_regs context;
 	int nirqs;
 	unsigned int is_suspended:1;
+<<<<<<< HEAD
 =======
 	int nirqs;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct irq_domain *gpmc_irq_domain;
@@ -2396,6 +2406,9 @@ static int gpmc_gpio_init(struct gpmc_device *gpmc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void omap3_gpmc_save_context(struct gpmc_device *gpmc)
 {
 	struct omap3_gpmc_regs *gpmc_context;
@@ -2496,8 +2509,11 @@ static int omap_gpmc_context_notifier(struct notifier_block *nb,
 	return NOTIFY_OK;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int gpmc_probe(struct platform_device *pdev)
 {
 	int rc;
@@ -2587,11 +2603,17 @@ static int gpmc_probe(struct platform_device *pdev)
 	gpmc_probe_dt_children(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gpmc->nb.notifier_call = omap_gpmc_context_notifier;
 	cpu_pm_register_notifier(&gpmc->nb);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gpmc->nb.notifier_call = omap_gpmc_context_notifier;
+	cpu_pm_register_notifier(&gpmc->nb);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 gpio_init_failed:
@@ -2607,9 +2629,13 @@ static int gpmc_remove(struct platform_device *pdev)
 	struct gpmc_device *gpmc = platform_get_drvdata(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpu_pm_unregister_notifier(&gpmc->nb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpu_pm_unregister_notifier(&gpmc->nb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gpmc_free_irq(gpmc);
 	gpmc_mem_exit();
 	pm_runtime_put_sync(&pdev->dev);
@@ -2622,6 +2648,7 @@ static int gpmc_remove(struct platform_device *pdev)
 static int gpmc_suspend(struct device *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct gpmc_device *gpmc = dev_get_drvdata(dev);
 
 	omap3_gpmc_save_context(gpmc);
@@ -2632,11 +2659,20 @@ static int gpmc_suspend(struct device *dev)
 	omap3_gpmc_save_context();
 	pm_runtime_put_sync(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct gpmc_device *gpmc = dev_get_drvdata(dev);
+
+	omap3_gpmc_save_context(gpmc);
+	pm_runtime_put_sync(dev);
+	gpmc->is_suspended = 1;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 static int gpmc_resume(struct device *dev)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct gpmc_device *gpmc = dev_get_drvdata(dev);
 
@@ -2648,6 +2684,14 @@ static int gpmc_resume(struct device *dev)
 	pm_runtime_get_sync(dev);
 	omap3_gpmc_restore_context();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct gpmc_device *gpmc = dev_get_drvdata(dev);
+
+	pm_runtime_get_sync(dev);
+	omap3_gpmc_restore_context(gpmc);
+	gpmc->is_suspended = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 #endif
@@ -2669,6 +2713,7 @@ static __init int gpmc_init(void)
 	return platform_driver_register(&gpmc_driver);
 }
 postcore_initcall(gpmc_init);
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -2743,3 +2788,5 @@ void omap3_gpmc_restore_context(void)
 	}
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

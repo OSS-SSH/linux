@@ -146,10 +146,14 @@ static int ixp4xx_pci_check_master_abort(struct ixp4xx_pci *p)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ixp4xx_pci_read_indirect(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 *data)
 =======
 static int ixp4xx_pci_read(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 *data)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int ixp4xx_pci_read_indirect(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 *data)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	ixp4xx_writel(p, IXP4XX_PCI_NP_AD, addr);
 
@@ -175,10 +179,14 @@ static int ixp4xx_pci_read(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ixp4xx_pci_write_indirect(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 data)
 =======
 static int ixp4xx_pci_write(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 data)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int ixp4xx_pci_write_indirect(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 data)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	ixp4xx_writel(p, IXP4XX_PCI_NP_AD, addr);
 
@@ -317,10 +325,14 @@ static int ixp4xx_pci_read_config(struct pci_bus *bus, unsigned int devfn,
 		where, size, bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn), addr, cmd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ixp4xx_pci_read_indirect(p, addr, cmd, &val);
 =======
 	ret = ixp4xx_pci_read(p, addr, cmd, &val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = ixp4xx_pci_read_indirect(p, addr, cmd, &val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return PCIBIOS_DEVICE_NOT_FOUND;
 
@@ -369,10 +381,14 @@ static int ixp4xx_pci_write_config(struct pci_bus *bus,  unsigned int devfn,
 		value, where, size, bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn), addr, cmd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = ixp4xx_pci_write_indirect(p, addr, cmd, val);
 =======
 	ret = ixp4xx_pci_write(p, addr, cmd, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = ixp4xx_pci_write_indirect(p, addr, cmd, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return PCIBIOS_DEVICE_NOT_FOUND;
 

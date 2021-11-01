@@ -32,6 +32,7 @@
  * - 1.4 - Indicate new SRAM EDC bit in device properties
  * - 1.5 - Add SVM API
 <<<<<<< HEAD
+<<<<<<< HEAD
  * - 1.6 - Query clear flags in SVM get_attr API
  */
 #define KFD_IOCTL_MAJOR_VERSION 1
@@ -41,6 +42,12 @@
 #define KFD_IOCTL_MAJOR_VERSION 1
 #define KFD_IOCTL_MINOR_VERSION 5
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * - 1.6 - Query clear flags in SVM get_attr API
+ */
+#define KFD_IOCTL_MAJOR_VERSION 1
+#define KFD_IOCTL_MINOR_VERSION 6
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct kfd_ioctl_get_version_args {
 	__u32 major_version;	/* from KFD */
@@ -583,6 +590,9 @@ struct kfd_ioctl_svm_attribute {
  * @KFD_IOCTL_SVM_ATTR_PREFETCH_LOC resepctively. For
  * @KFD_IOCTL_SVM_ATTR_SET_FLAGS, flags of all pages will be
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * aggregated by bitwise AND. That means, a flag will be set in the
  * output, if that flag is set for all pages in the range. For
  * @KFD_IOCTL_SVM_ATTR_CLR_FLAGS, flags of all pages will be
@@ -590,11 +600,14 @@ struct kfd_ioctl_svm_attribute {
  * output, if that flag is clear for all pages in the range.
  * The minimum migration granularity throughout the range will be
  * returned for @KFD_IOCTL_SVM_ATTR_GRANULARITY.
+<<<<<<< HEAD
 =======
  * aggregated by bitwise AND. The minimum  migration granularity
  * throughout the range will be returned for
  * @KFD_IOCTL_SVM_ATTR_GRANULARITY.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Querying of accessibility attributes works by initializing the
  * attribute type to @KFD_IOCTL_SVM_ATTR_ACCESS and the value to the
@@ -602,11 +615,14 @@ struct kfd_ioctl_svm_attribute {
  * querying multiple GPUIDs. The ioctl function overwrites the
  * attribute type to indicate the access for the specified GPU.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *
  * @KFD_IOCTL_SVM_ATTR_CLR_FLAGS is invalid for
  * @KFD_IOCTL_SVM_OP_GET_ATTR.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct kfd_ioctl_svm_args {
 	__u64 start_addr;

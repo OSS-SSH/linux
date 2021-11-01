@@ -1212,10 +1212,14 @@ static int tps65910_probe(struct platform_device *pdev)
 		rdev = devm_regulator_register(&pdev->dev, &pmic->desc[i],
 					       &config);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(rdev))
 			return dev_err_probe(tps65910->dev, PTR_ERR(rdev),
 					     "failed to register %s regulator\n",
 					     pdev->name);
+<<<<<<< HEAD
 =======
 		if (IS_ERR(rdev)) {
 			dev_err(tps65910->dev,
@@ -1224,6 +1228,8 @@ static int tps65910_probe(struct platform_device *pdev)
 			return PTR_ERR(rdev);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Save regulator for cleanup */
 		pmic->rdev[i] = rdev;

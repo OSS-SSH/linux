@@ -98,6 +98,7 @@ enum {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* 2007/11/15 MH Define different RF type. */
 enum {
@@ -110,6 +111,8 @@ enum {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u32 rtw_ch2freq(u32 ch);
 
 #endif /* _RTL8711_RF_H_ */

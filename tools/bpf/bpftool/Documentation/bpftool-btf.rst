@@ -13,11 +13,16 @@ SYNOPSIS
 	**bpftool** [*OPTIONS*] **btf** *COMMAND*
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | {**-d** | **--debug** } |
 		{ **-B** | **--base-btf** } }
 =======
 	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | {**-d** | **--debug** } |
+		{ **-B** | **--base-btf** } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*COMMANDS* := { **dump** | **help** }
 
@@ -79,6 +84,9 @@ OPTIONS
 	.. include:: common_options.rst
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	-B, --base-btf *FILE*
 		  Pass a base BTF object. Base BTF objects are typically used
 		  with BTF objects for kernel modules. To avoid duplicating
@@ -93,8 +101,11 @@ OPTIONS
 		  this option is optional. When the main BTF object is passed
 		  through other handles, this option becomes necessary.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXAMPLES
 ========
 **# bpftool btf dump id 1226**
@@ -240,6 +251,9 @@ All the standard ways to specify map or program are supported:
 
 **# bpftool btf dump prog pinned /sys/fs/bpf/prog_name**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 |
 | **# bpftool btf dump file /sys/kernel/btf/i2c_smbus**
@@ -271,5 +285,8 @@ All the standard ways to specify map or program are supported:
   [104859] FUNC 'smbalert_work' type_id=9695 linkage=static
   [104860] FUNC 'smbus_alert' type_id=71367 linkage=static
   [104861] FUNC 'smbus_do_alert' type_id=84827 linkage=static
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

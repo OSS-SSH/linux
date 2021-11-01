@@ -662,10 +662,14 @@ static void aspeed_gpio_irq_handler(struct irq_desc *desc)
 	struct irq_chip *ic = irq_desc_get_chip(desc);
 	struct aspeed_gpio *data = gpiochip_get_data(gc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int i, p, banks;
 =======
 	unsigned int i, p, girq, banks;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i, p, banks;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long reg;
 	struct aspeed_gpio *gpio = gpiochip_get_data(gc);
 
@@ -678,6 +682,7 @@ static void aspeed_gpio_irq_handler(struct irq_desc *desc)
 		reg = ioread32(bank_reg(data, bank, reg_irq_status));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for_each_set_bit(p, &reg, 32)
 			generic_handle_domain_irq(gc->irq.domain, i * 32 + p);
 =======
@@ -687,6 +692,10 @@ static void aspeed_gpio_irq_handler(struct irq_desc *desc)
 		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for_each_set_bit(p, &reg, 32)
+			generic_handle_domain_irq(gc->irq.domain, i * 32 + p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(ic, desc);

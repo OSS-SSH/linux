@@ -26,6 +26,7 @@ ifdef CONFIG_64BIT
 UTS_MACHINE	:= parisc64
 CHECKFLAGS	+= -D__LP64__=1
 <<<<<<< HEAD
+<<<<<<< HEAD
 LD_BFD		:= elf64-hppa-linux
 else # 32-bit
 =======
@@ -34,10 +35,15 @@ LD_BFD		:= elf64-hppa-linux
 else # 32-bit
 CC_ARCHES	= hppa hppa2.0 hppa1.1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+LD_BFD		:= elf64-hppa-linux
+else # 32-bit
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 LD_BFD		:= elf32-hppa-linux
 endif
 
 # select defconfig based on actual architecture
+<<<<<<< HEAD
 <<<<<<< HEAD
 ifeq ($(ARCH),parisc64)
 	KBUILD_DEFCONFIG := generic-64bit_defconfig
@@ -47,10 +53,18 @@ else
 	CC_ARCHES := hppa hppa2.0 hppa1.1
 =======
 ifeq ($(shell uname -m),parisc64)
+=======
+ifeq ($(ARCH),parisc64)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	KBUILD_DEFCONFIG := generic-64bit_defconfig
+	CC_ARCHES := hppa64
 else
 	KBUILD_DEFCONFIG := generic-32bit_defconfig
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	CC_ARCHES := hppa hppa2.0 hppa1.1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif
 
 export LD_BFD
@@ -126,11 +140,14 @@ LIBGCC		:= $(shell $(CC) -print-libgcc-file-name)
 export LIBGCC
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 kernel-y			:= mm/ kernel/ math-emu/
 
 core-y	+= $(addprefix arch/parisc/, $(kernel-y))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 libs-y	+= arch/parisc/lib/ $(LIBGCC)
 
 boot	:= arch/parisc/boot

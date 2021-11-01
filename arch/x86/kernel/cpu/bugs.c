@@ -44,9 +44,13 @@ static void __init mds_print_mitigation(void);
 static void __init taa_select_mitigation(void);
 static void __init srbds_select_mitigation(void);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __init l1d_flush_select_mitigation(void);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __init l1d_flush_select_mitigation(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* The base value of the SPEC_CTRL MSR that always has to be preserved. */
 u64 x86_spec_ctrl_base;
@@ -81,6 +85,9 @@ DEFINE_STATIC_KEY_FALSE(mds_idle_clear);
 EXPORT_SYMBOL_GPL(mds_idle_clear);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Controls whether l1d flush based mitigations are enabled,
  * based on hw features and admin setting via boot parameter
@@ -88,8 +95,11 @@ EXPORT_SYMBOL_GPL(mds_idle_clear);
  */
 DEFINE_STATIC_KEY_FALSE(switch_mm_cond_l1d_flush);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __init check_bugs(void)
 {
 	identify_boot_cpu();
@@ -126,9 +136,13 @@ void __init check_bugs(void)
 	taa_select_mitigation();
 	srbds_select_mitigation();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	l1d_flush_select_mitigation();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	l1d_flush_select_mitigation();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * As MDS and TAA mitigations are inter-related, print MDS
@@ -511,6 +525,9 @@ early_param("srbds", srbds_parse_cmdline);
 
 #undef pr_fmt
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define pr_fmt(fmt)     "L1D Flush : " fmt
 
 enum l1d_flush_mitigations {
@@ -539,8 +556,11 @@ static int __init l1d_flush_parse_cmdline(char *str)
 early_param("l1d_flush", l1d_flush_parse_cmdline);
 
 #undef pr_fmt
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define pr_fmt(fmt)     "Spectre V1 : " fmt
 
 enum spectre_v1_mitigation {
@@ -1265,6 +1285,9 @@ static void task_update_spec_tif(struct task_struct *tsk)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int l1d_flush_prctl_set(struct task_struct *task, unsigned long ctrl)
 {
 
@@ -1283,8 +1306,11 @@ static int l1d_flush_prctl_set(struct task_struct *task, unsigned long ctrl)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ssb_prctl_set(struct task_struct *task, unsigned long ctrl)
 {
 	if (ssb_mode != SPEC_STORE_BYPASS_PRCTL &&
@@ -1395,10 +1421,15 @@ int arch_prctl_spec_ctrl_set(struct task_struct *task, unsigned long which,
 	case PR_SPEC_INDIRECT_BRANCH:
 		return ib_prctl_set(task, ctrl);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PR_SPEC_L1D_FLUSH:
 		return l1d_flush_prctl_set(task, ctrl);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PR_SPEC_L1D_FLUSH:
+		return l1d_flush_prctl_set(task, ctrl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -ENODEV;
 	}
@@ -1416,6 +1447,9 @@ void arch_seccomp_spec_mitigate(struct task_struct *task)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int l1d_flush_prctl_get(struct task_struct *task)
 {
 	if (!static_branch_unlikely(&switch_mm_cond_l1d_flush))
@@ -1427,8 +1461,11 @@ static int l1d_flush_prctl_get(struct task_struct *task)
 		return PR_SPEC_PRCTL | PR_SPEC_DISABLE;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ssb_prctl_get(struct task_struct *task)
 {
 	switch (ssb_mode) {
@@ -1480,10 +1517,15 @@ int arch_prctl_spec_ctrl_get(struct task_struct *task, unsigned long which)
 	case PR_SPEC_INDIRECT_BRANCH:
 		return ib_prctl_get(task);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PR_SPEC_L1D_FLUSH:
 		return l1d_flush_prctl_get(task);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PR_SPEC_L1D_FLUSH:
+		return l1d_flush_prctl_get(task);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -ENODEV;
 	}

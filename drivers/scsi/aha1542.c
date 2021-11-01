@@ -263,18 +263,26 @@ static void aha1542_free_cmd(struct scsi_cmnd *cmd)
 
 	if (cmd->sc_data_direction == DMA_FROM_DEVICE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct request *rq = scsi_cmd_to_rq(cmd);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct request *rq = scsi_cmd_to_rq(cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		void *buf = acmd->data_buffer;
 		struct req_iterator iter;
 		struct bio_vec bv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rq_for_each_segment(bv, rq, iter) {
 =======
 		rq_for_each_segment(bv, cmd->request, iter) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rq_for_each_segment(bv, rq, iter) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			memcpy_to_page(bv.bv_page, bv.bv_offset, buf,
 				       bv.bv_len);
 			buf += bv.bv_len;
@@ -456,18 +464,26 @@ static int aha1542_queuecommand(struct Scsi_Host *sh, struct scsi_cmnd *cmd)
 
 	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct request *rq = scsi_cmd_to_rq(cmd);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct request *rq = scsi_cmd_to_rq(cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		void *buf = acmd->data_buffer;
 		struct req_iterator iter;
 		struct bio_vec bv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rq_for_each_segment(bv, rq, iter) {
 =======
 		rq_for_each_segment(bv, cmd->request, iter) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rq_for_each_segment(bv, rq, iter) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			memcpy_from_page(buf, bv.bv_page, bv.bv_offset,
 					 bv.bv_len);
 			buf += bv.bv_len;

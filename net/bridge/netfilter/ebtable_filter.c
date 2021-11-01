@@ -87,10 +87,14 @@ static const struct nf_hook_ops ebt_ops_filter[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int frame_filter_table_init(struct net *net)
 =======
 static int __net_init frame_filter_net_init(struct net *net)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int frame_filter_table_init(struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return ebt_register_table(net, &frame_filter, ebt_ops_filter);
 }
@@ -107,9 +111,12 @@ static void __net_exit frame_filter_net_exit(struct net *net)
 
 static struct pernet_operations frame_filter_net_ops = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.init = frame_filter_net_init,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.exit = frame_filter_net_exit,
 	.pre_exit = frame_filter_net_pre_exit,
 };
@@ -117,6 +124,9 @@ static struct pernet_operations frame_filter_net_ops = {
 static int __init ebtable_filter_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = ebt_register_template(&frame_filter, frame_filter_table_init);
 
 	if (ret)
@@ -129,18 +139,25 @@ static int __init ebtable_filter_init(void)
 	}
 
 	return 0;
+<<<<<<< HEAD
 =======
 	return register_pernet_subsys(&frame_filter_net_ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __exit ebtable_filter_fini(void)
 {
 	unregister_pernet_subsys(&frame_filter_net_ops);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ebt_unregister_template(&frame_filter);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ebt_unregister_template(&frame_filter);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(ebtable_filter_init);

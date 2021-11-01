@@ -224,6 +224,7 @@ xfs_qm_init_dquot_blk(
 		d->dd_diskdq.d_id = cpu_to_be32(curid);
 		d->dd_diskdq.d_type = type;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (curid > 0 && xfs_has_bigtime(mp))
 			d->dd_diskdq.d_type |= XFS_DQTYPE_BIGTIME;
 		if (xfs_has_crc(mp)) {
@@ -232,6 +233,11 @@ xfs_qm_init_dquot_blk(
 			d->dd_diskdq.d_type |= XFS_DQTYPE_BIGTIME;
 		if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (curid > 0 && xfs_has_bigtime(mp))
+			d->dd_diskdq.d_type |= XFS_DQTYPE_BIGTIME;
+		if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			uuid_copy(&d->dd_uuid, &mp->m_sb.sb_meta_uuid);
 			xfs_update_cksum((char *)d, sizeof(struct xfs_dqblk),
 					 XFS_DQUOT_CRC_OFF);
@@ -533,10 +539,14 @@ xfs_dquot_check_type(
 	 * project dquots.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(dqp->q_mount) ||
 =======
 	if (xfs_sb_version_hascrc(&dqp->q_mount->m_sb) ||
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(dqp->q_mount) ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    dqp_type == XFS_DQTYPE_USER || dqp->q_id != 0)
 		return ddqp_type == dqp_type;
 
@@ -858,11 +868,14 @@ xfs_qm_dqget_checks(
 	xfs_dqtype_t		type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (WARN_ON_ONCE(!XFS_IS_QUOTA_RUNNING(mp)))
 		return -ESRCH;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case XFS_DQTYPE_USER:
 		if (!XFS_IS_UQUOTA_ON(mp))
@@ -1236,10 +1249,14 @@ xfs_qm_dqflush_check(
 	/* bigtime flag should never be set on root dquots */
 	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!xfs_has_bigtime(dqp->q_mount))
 =======
 		if (!xfs_sb_version_hasbigtime(&dqp->q_mount->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!xfs_has_bigtime(dqp->q_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return __this_address;
 		if (dqp->q_id == 0)
 			return __this_address;
@@ -1319,10 +1336,14 @@ xfs_qm_dqflush(
 	 * of a dquot without an up-to-date CRC getting to disk.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dqblk->dd_lsn = cpu_to_be64(dqp->q_logitem.qli_item.li_lsn);
 		xfs_update_cksum((char *)dqblk, sizeof(struct xfs_dqblk),
 				 XFS_DQUOT_CRC_OFF);

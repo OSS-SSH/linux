@@ -390,6 +390,7 @@ static void update_edgeport_E2PROM(struct edgeport_serial *edge_serial)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if 0
 /************************************************************************
@@ -425,6 +426,8 @@ static int get_string_desc(struct usb_device *dev, int Id,
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dump_product_info(struct edgeport_serial *edge_serial,
 			      struct edgeport_product_info *product_info)
 {

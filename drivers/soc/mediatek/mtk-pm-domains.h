@@ -61,10 +61,14 @@
 		BUS_PROT_UPDATE(_mask,				\
 				INFRA_TOPAXI_PROTECTEN,		\
 <<<<<<< HEAD
+<<<<<<< HEAD
 				INFRA_TOPAXI_PROTECTEN,		\
 =======
 				INFRA_TOPAXI_PROTECTEN_CLR,	\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				INFRA_TOPAXI_PROTECTEN,		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				INFRA_TOPAXI_PROTECTSTA1)
 
 struct scpsys_bus_prot_data {

@@ -898,11 +898,17 @@ bool tomoyo_dump_page(struct linux_binprm *bprm, unsigned long pos,
 {
 	struct page *page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_MMU
 	int ret;
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_MMU
+	int ret;
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* dump->data is released by tomoyo_find_next_domain(). */
 	if (!dump->data) {
@@ -915,6 +921,7 @@ bool tomoyo_dump_page(struct linux_binprm *bprm, unsigned long pos,
 	/*
 	 * This is called at execve() time in order to dig around
 	 * in the argv/environment of the new proceess
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * (represented by bprm).
 	 */
@@ -930,6 +937,15 @@ bool tomoyo_dump_page(struct linux_binprm *bprm, unsigned long pos,
 	if (get_user_pages_remote(bprm->mm, pos, 1,
 				FOLL_FORCE, &page, NULL, NULL) <= 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * (represented by bprm).
+	 */
+	mmap_read_lock(bprm->mm);
+	ret = get_user_pages_remote(bprm->mm, pos, 1,
+				    FOLL_FORCE, &page, NULL, NULL);
+	mmap_read_unlock(bprm->mm);
+	if (ret <= 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 #else
 	page = bprm->page[pos / PAGE_SIZE];

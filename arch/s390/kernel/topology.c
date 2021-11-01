@@ -68,10 +68,14 @@ static void cpu_group_map(cpumask_t *dst, struct mask_info *info, unsigned int c
 
 	cpumask_clear(&mask);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
 =======
 	if (!cpu_online(cpu))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	cpumask_set_cpu(cpu, &mask);
 	switch (topology_mode) {
@@ -93,10 +97,14 @@ static void cpu_group_map(cpumask_t *dst, struct mask_info *info, unsigned int c
 		break;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpumask_and(&mask, &mask, &cpu_setup_mask);
 =======
 	cpumask_and(&mask, &mask, cpu_online_mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpumask_and(&mask, &mask, &cpu_setup_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	cpumask_copy(dst, &mask);
 }
@@ -108,15 +116,20 @@ static void cpu_thread_map(cpumask_t *dst, unsigned int cpu)
 
 	cpumask_clear(&mask);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
 =======
 	if (!cpu_online(cpu))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	cpumask_set_cpu(cpu, &mask);
 	if (topology_mode != TOPOLOGY_MODE_HW)
 		goto out;
 	cpu -= cpu % (smp_cpu_mtid + 1);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for (i = 0; i <= smp_cpu_mtid; i++) {
 		if (cpumask_test_cpu(cpu + i, &cpu_setup_mask))
@@ -128,6 +141,12 @@ static void cpu_thread_map(cpumask_t *dst, unsigned int cpu)
 			cpumask_set_cpu(cpu + i, &mask);
 	cpumask_and(&mask, &mask, cpu_online_mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i <= smp_cpu_mtid; i++) {
+		if (cpumask_test_cpu(cpu + i, &cpu_setup_mask))
+			cpumask_set_cpu(cpu + i, &mask);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	cpumask_copy(dst, &mask);
 }
@@ -426,10 +445,14 @@ static ssize_t dispatching_store(struct device *dev,
 		return -EINVAL;
 	rc = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&smp_cpu_state_mutex);
 	if (cpu_management == val)
 		goto out;
@@ -441,10 +464,14 @@ static ssize_t dispatching_store(struct device *dev,
 out:
 	mutex_unlock(&smp_cpu_state_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc ? rc : count;
 }
 static DEVICE_ATTR_RW(dispatching);
@@ -597,9 +624,13 @@ void __init topology_init_early(void)
 	alloc_masks(info, &drawer_info, 3);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpumask_set_cpu(0, &cpu_setup_mask);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpumask_set_cpu(0, &cpu_setup_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__arch_update_cpu_topology();
 	__arch_update_dedicated_flag(NULL);
 }

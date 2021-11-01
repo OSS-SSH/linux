@@ -18,9 +18,13 @@
 #include <string.h>
 #include <limits.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <stdbool.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <stdbool.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <errno.h>
 #include "modpost.h"
 #include "../../include/linux/license.h"
@@ -94,6 +98,9 @@ modpost_log(enum loglevel loglevel, const char *fmt, ...)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool strends(const char *str, const char *postfix)
 {
 	if (strlen(str) < strlen(postfix))
@@ -102,8 +109,11 @@ static inline bool strends(const char *str, const char *postfix)
 	return strcmp(str + strlen(str) - strlen(postfix), postfix) == 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void *do_nofail(void *ptr, const char *expr)
 {
 	if (!ptr)
@@ -947,10 +957,14 @@ static void check_section(const char *modname, struct elf_info *elf,
 #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
 		".fixup", ".entry.text", ".exception.text", ".text.*", \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		".coldtext", ".softirqentry.text"
 =======
 		".coldtext"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		".coldtext", ".softirqentry.text"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define INIT_SECTIONS      ".init.*"
 #define MEM_INIT_SECTIONS  ".meminit.*"
@@ -2080,10 +2094,14 @@ static void read_symbols(const char *modname)
 		version = get_modinfo(&info, "version");
 		if (version || all_versions)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			get_src_version(mod->name, mod->srcversion,
 =======
 			get_src_version(modname, mod->srcversion,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			get_src_version(mod->name, mod->srcversion,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					sizeof(mod->srcversion) - 1);
 	}
 

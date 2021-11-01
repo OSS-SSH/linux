@@ -7,10 +7,13 @@ hardware' information respectively.  The framework is then able to read
 the DT and operate in the usual way.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 For more information about the expected DT format [See: ../opp/opp.txt].
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Frequency Scaling only
 ----------------------
 
@@ -19,10 +22,14 @@ No vendor specific driver required for this.
 Located in CPU's node:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - operating-points		: [See: ../power/opp-v1.yaml]
 =======
 - operating-points		: [See: ../power/opp.txt]
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+- operating-points		: [See: ../power/opp-v1.yaml]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Example [safe]
 --------------
@@ -45,10 +52,14 @@ This requires the ST CPUFreq driver to supply 'process' and 'version' info.
 Located in CPU's node:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - operating-points-v2		: [See ../power/opp-v2.yaml]
 =======
 - operating-points-v2		: [See ../power/opp.txt]
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+- operating-points-v2		: [See ../power/opp-v2.yaml]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Example [unsafe]
 ----------------

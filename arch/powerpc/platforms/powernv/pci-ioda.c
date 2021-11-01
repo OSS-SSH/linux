@@ -21,9 +21,13 @@
 #include <linux/rculist.h>
 #include <linux/sizes.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/sections.h>
 #include <asm/io.h>
@@ -37,6 +41,7 @@
 #include <asm/tce.h>
 #include <asm/xics.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/firmware.h>
 #include <asm/pnv-pci.h>
 #include <asm/mmzone.h>
@@ -47,6 +52,12 @@
 #include <asm/pnv-pci.h>
 #include <asm/mmzone.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/firmware.h>
+#include <asm/pnv-pci.h>
+#include <asm/mmzone.h>
+#include <asm/xive.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <misc/cxl-base.h>
 
@@ -1974,6 +1985,9 @@ void pnv_pci_ioda2_setup_dma_pe(struct pnv_phb *phb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Called from KVM in real mode to EOI passthru interrupts. The ICP
  * EOI is handled directly in KVM in kvmppc_deliver_irq_passthru().
@@ -1984,6 +1998,7 @@ void pnv_pci_ioda2_setup_dma_pe(struct pnv_phb *phb,
  * good enough for OPAL. Use that.
  */
 int64_t pnv_opal_pci_msi_eoi(struct irq_data *d)
+<<<<<<< HEAD
 {
 	struct pci_controller *hose = irq_data_get_irq_chip_data(d->parent_data);
 	struct pnv_phb *phb = hose->private_data;
@@ -1996,18 +2011,27 @@ int64_t pnv_opal_pci_msi_eoi(struct irq_data *d)
  */
 =======
 int64_t pnv_opal_pci_msi_eoi(struct irq_chip *chip, unsigned int hw_irq)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct pnv_phb *phb = container_of(chip, struct pnv_phb,
-					   ioda.irq_chip);
+	struct pci_controller *hose = irq_data_get_irq_chip_data(d->parent_data);
+	struct pnv_phb *phb = hose->private_data;
 
-	return opal_pci_msi_eoi(phb->opal_id, hw_irq);
+	return opal_pci_msi_eoi(phb->opal_id, d->parent_data->hwirq);
 }
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+ * The IRQ data is mapped in the XICS domain, with OPAL HW IRQ numbers
+ */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void pnv_ioda2_msi_eoi(struct irq_data *d)
 {
 	int64_t rc;
 	unsigned int hw_irq = (unsigned int)irqd_to_hwirq(d);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct pci_controller *hose = irq_data_get_irq_chip_data(d);
 	struct pnv_phb *phb = hose->private_data;
@@ -2018,16 +2042,26 @@ static void pnv_ioda2_msi_eoi(struct irq_data *d)
 
 	rc = pnv_opal_pci_msi_eoi(chip, hw_irq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pci_controller *hose = irq_data_get_irq_chip_data(d);
+	struct pnv_phb *phb = hose->private_data;
+
+	rc = opal_pci_msi_eoi(phb->opal_id, hw_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	WARN_ON_ONCE(rc);
 
 	icp_native_eoi(d);
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* P8/CXL only */
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* P8/CXL only */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void pnv_set_msi_irq_chip(struct pnv_phb *phb, unsigned int virq)
 {
 	struct irq_data *idata;
@@ -2050,21 +2084,28 @@ void pnv_set_msi_irq_chip(struct pnv_phb *phb, unsigned int virq)
 	}
 	irq_set_chip(virq, &phb->ioda.irq_chip);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	irq_set_chip_data(virq, phb->hose);
 }
 
 static struct irq_chip pnv_pci_msi_irq_chip;
 
+<<<<<<< HEAD
 =======
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Returns true iff chip is something that we could call
  * pnv_opal_pci_msi_eoi for.
  */
 bool is_pnv_opal_msi(struct irq_chip *chip)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return chip == &pnv_pci_msi_irq_chip;
 }
@@ -2083,19 +2124,27 @@ static int __pnv_pci_ioda_msi_setup(struct pnv_phb *phb, struct pci_dev *dev,
 
 =======
 	return chip->irq_eoi == pnv_ioda2_msi_eoi;
+=======
+	return chip == &pnv_pci_msi_irq_chip;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(is_pnv_opal_msi);
 
-static int pnv_pci_ioda_msi_setup(struct pnv_phb *phb, struct pci_dev *dev,
-				  unsigned int hwirq, unsigned int virq,
-				  unsigned int is_64, struct msi_msg *msg)
+static int __pnv_pci_ioda_msi_setup(struct pnv_phb *phb, struct pci_dev *dev,
+				    unsigned int xive_num,
+				    unsigned int is_64, struct msi_msg *msg)
 {
 	struct pnv_ioda_pe *pe = pnv_ioda_get_pe(dev);
-	unsigned int xive_num = hwirq - phb->msi_base;
 	__be32 data;
 	int rc;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_dbg(&dev->dev, "%s: setup %s-bit MSI for vector #%d\n", __func__,
+		is_64 ? "64" : "32", xive_num);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* No PE assigned ? bail out ... no MSI for you ! */
 	if (pe == NULL)
 		return -ENXIO;
@@ -2144,6 +2193,9 @@ static int pnv_pci_ioda_msi_setup(struct pnv_phb *phb, struct pci_dev *dev,
 	msg->data = be32_to_cpu(data);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2326,6 +2378,7 @@ static int pnv_msi_allocate_domains(struct pci_controller *hose, unsigned int co
 	hose->fwnode = irq_domain_alloc_named_id_fwnode("PNV-MSI", phb->opal_id);
 	if (!hose->fwnode)
 		return -ENOMEM;
+<<<<<<< HEAD
 
 	hose->dev_domain = irq_domain_create_hierarchy(parent, 0, count,
 						       hose->fwnode,
@@ -2355,6 +2408,29 @@ static int pnv_msi_allocate_domains(struct pci_controller *hose, unsigned int co
 		 pci_name(dev), is_64 ? "64" : "32", hwirq, xive_num,
 		 msg->address_hi, msg->address_lo, data, pe->pe_number);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	hose->dev_domain = irq_domain_create_hierarchy(parent, 0, count,
+						       hose->fwnode,
+						       &pnv_irq_domain_ops, hose);
+	if (!hose->dev_domain) {
+		pr_err("PCI: failed to create IRQ domain bridge %pOF (domain %d)\n",
+		       hose->dn, hose->global_number);
+		irq_domain_free_fwnode(hose->fwnode);
+		return -ENOMEM;
+	}
+
+	hose->msi_domain = pci_msi_create_irq_domain(of_node_to_fwnode(hose->dn),
+						     &pnv_msi_domain_info,
+						     hose->dev_domain);
+	if (!hose->msi_domain) {
+		pr_err("PCI: failed to create MSI IRQ domain bridge %pOF (domain %d)\n",
+		       hose->dn, hose->global_number);
+		irq_domain_free_fwnode(hose->fwnode);
+		irq_domain_remove(hose->dev_domain);
+		return -ENOMEM;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -2380,6 +2456,7 @@ static void pnv_pci_init_ioda_msis(struct pnv_phb *phb)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_info("  Allocated bitmap for %d MSIs (base IRQ 0x%x)\n",
 		count, phb->msi_base);
 
@@ -2390,6 +2467,12 @@ static void pnv_pci_init_ioda_msis(struct pnv_phb *phb)
 	pr_info("  Allocated bitmap for %d MSIs (base IRQ 0x%x)\n",
 		count, phb->msi_base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_info("  Allocated bitmap for %d MSIs (base IRQ 0x%x)\n",
+		count, phb->msi_base);
+
+	pnv_msi_allocate_domains(phb->hose, count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void pnv_ioda_setup_pe_res(struct pnv_ioda_pe *pe,
@@ -2544,10 +2627,14 @@ static void pnv_pci_ioda_create_dbgfs(void)
 
 		sprintf(name, "PCI%04x", hose->global_number);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		phb->dbgfs = debugfs_create_dir(name, arch_debugfs_dir);
 =======
 		phb->dbgfs = debugfs_create_dir(name, powerpc_debugfs_root);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		phb->dbgfs = debugfs_create_dir(name, arch_debugfs_dir);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		debugfs_create_file_unsafe("dump_diag_regs", 0200, phb->dbgfs,
 					   phb, &pnv_pci_diag_data_fops);
@@ -2998,10 +3085,13 @@ static const struct pci_controller_ops pnv_pci_ioda_controller_ops = {
 	.dma_bus_setup		= pnv_pci_ioda_dma_bus_setup,
 	.iommu_bypass_supported	= pnv_pci_ioda_iommu_bypass_supported,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.setup_msi_irqs		= pnv_setup_msi_irqs,
 	.teardown_msi_irqs	= pnv_teardown_msi_irqs,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.enable_device_hook	= pnv_pci_enable_device_hook,
 	.release_device		= pnv_pci_release_device,
 	.window_alignment	= pnv_pci_window_alignment,

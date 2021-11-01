@@ -174,6 +174,7 @@ my $mcount_adjust;	# Address adjustment to mcount offset
 my $alignment;		# The .align value to use for $mcount_section
 my $section_type;	# Section header plus possible alignment command
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 my $can_use_local = 0; 	# If we can use local function references
 
@@ -209,6 +210,8 @@ sub check_objcopy
     }
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 if ($arch =~ /(x86(_64)?)|(i386)/) {
     if ($bits == 64) {
@@ -226,10 +229,14 @@ $local_regex = "^[0-9a-fA-F]+\\s+t\\s+(\\S+)";
 $weak_regex = "^[0-9a-fA-F]+\\s+([wW])\\s+(\\S+)";
 $section_regex = "Disassembly of section\\s+(\\S+):";
 <<<<<<< HEAD
+<<<<<<< HEAD
 $function_regex = "^([0-9a-fA-F]+)\\s+<([^^]*?)>:";
 =======
 $function_regex = "^([0-9a-fA-F]+)\\s+<(.*?)>:";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$function_regex = "^([0-9a-fA-F]+)\\s+<([^^]*?)>:";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 $mcount_regex = "^\\s*([0-9a-fA-F]+):.*\\s(mcount|__fentry__)\$";
 $section_type = '@progbits';
 $mcount_adjust = 0;
@@ -442,10 +449,13 @@ my $mcount_s = $dirname . "/.tmp_mc_" . $prefix . ".s";
 my $mcount_o = $dirname . "/.tmp_mc_" . $prefix . ".o";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 check_objcopy();
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #
 # Step 1: find all the local (static functions) and weak symbols.
 #         't' is local, 'w/W' is weak
@@ -484,6 +494,7 @@ sub update_funcs
     # is this function static? If so, note this fact.
     if (defined $locals{$ref_func}) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	# only use locals if objcopy supports globalize-symbols
@@ -491,6 +502,8 @@ sub update_funcs
 	    return;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$convert{$ref_func} = 1;
     }
 

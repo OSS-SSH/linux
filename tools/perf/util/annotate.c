@@ -1834,10 +1834,14 @@ static int symbol__disassemble_bpf(struct symbol *sym,
 out:
 	free(prog_linfo);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btf__free(btf);
 =======
 	free(btf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf__free(btf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fclose(s);
 	bfd_close(bfdf);
 	return ret;
@@ -2197,6 +2201,7 @@ int symbol__annotate(struct map_symbol *ms, struct evsel *evsel,
 
 	args.arch = arch = arch__find(arch_name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (arch == NULL) {
 		pr_err("%s: unsupported arch %s\n", __func__, arch_name);
 		return ENOTSUP;
@@ -2205,6 +2210,12 @@ int symbol__annotate(struct map_symbol *ms, struct evsel *evsel,
 	if (arch == NULL)
 		return ENOTSUP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (arch == NULL) {
+		pr_err("%s: unsupported arch %s\n", __func__, arch_name);
+		return ENOTSUP;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (parch)
 		*parch = arch;
@@ -2799,6 +2810,7 @@ int symbol__tty_annotate2(struct map_symbol *ms, struct evsel *evsel,
 	struct hists *hists = evsel__hists(evsel);
 	char buf[1024];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 
 	err = symbol__annotate2(ms, evsel, opts, NULL);
@@ -2811,10 +2823,23 @@ int symbol__tty_annotate2(struct map_symbol *ms, struct evsel *evsel,
 		return -1;
 	}
 =======
+=======
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (symbol__annotate2(ms, evsel, opts, NULL) < 0)
+	err = symbol__annotate2(ms, evsel, opts, NULL);
+	if (err) {
+		char msg[BUFSIZ];
+
+		dso->annotate_warned = true;
+		symbol__strerror_disassemble(ms, err, msg, sizeof(msg));
+		ui__error("Couldn't annotate %s:\n%s", sym->name, msg);
 		return -1;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (opts->print_lines) {
 		srcline_full_filename = opts->full_path;
@@ -2839,11 +2864,15 @@ int symbol__tty_annotate(struct map_symbol *ms, struct evsel *evsel,
 	struct symbol *sym = ms->sym;
 	struct rb_root source_line = RB_ROOT;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	err = symbol__annotate(ms, evsel, opts, NULL);
 	if (err) {
 		char msg[BUFSIZ];
+<<<<<<< HEAD
 
 		dso->annotate_warned = true;
 		symbol__strerror_disassemble(ms, err, msg, sizeof(msg));
@@ -2851,10 +2880,18 @@ int symbol__tty_annotate(struct map_symbol *ms, struct evsel *evsel,
 		return -1;
 	}
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (symbol__annotate(ms, evsel, opts, NULL) < 0)
+		dso->annotate_warned = true;
+		symbol__strerror_disassemble(ms, err, msg, sizeof(msg));
+		ui__error("Couldn't annotate %s:\n%s", sym->name, msg);
 		return -1;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	symbol__calc_percent(sym, evsel);
 

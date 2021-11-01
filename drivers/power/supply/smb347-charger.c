@@ -19,9 +19,13 @@
 #include <linux/property.h>
 #include <linux/regmap.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/regulator/driver.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/regulator/driver.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <dt-bindings/power/summit,smb347-charger.h>
 
@@ -60,9 +64,13 @@
 #define CFG_PIN_EN_APSD_IRQ			BIT(1)
 #define CFG_PIN_EN_CHARGER_ERROR		BIT(2)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CFG_PIN_EN_CTRL				BIT(4)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CFG_PIN_EN_CTRL				BIT(4)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CFG_THERM				0x07
 #define CFG_THERM_SOFT_HOT_COMPENSATION_MASK	0x03
 #define CFG_THERM_SOFT_HOT_COMPENSATION_SHIFT	0
@@ -71,9 +79,13 @@
 #define CFG_THERM_MONITOR_DISABLED		BIT(4)
 #define CFG_SYSOK				0x08
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CFG_SYSOK_INOK_ACTIVE_HIGH		BIT(0)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CFG_SYSOK_INOK_ACTIVE_HIGH		BIT(0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CFG_SYSOK_SUSPEND_HARD_LIMIT_DISABLED	BIT(2)
 #define CFG_OTHER				0x09
 #define CFG_OTHER_RID_MASK			0xc0
@@ -81,10 +93,15 @@
 #define CFG_OTG					0x0a
 #define CFG_OTG_TEMP_THRESHOLD_MASK		0x30
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CFG_OTG_CURRENT_LIMIT_250mA		BIT(2)
 #define CFG_OTG_CURRENT_LIMIT_750mA		BIT(3)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CFG_OTG_CURRENT_LIMIT_250mA		BIT(2)
+#define CFG_OTG_CURRENT_LIMIT_750mA		BIT(3)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CFG_OTG_TEMP_THRESHOLD_SHIFT		4
 #define CFG_OTG_CC_COMPENSATION_MASK		0xc0
 #define CFG_OTG_CC_COMPENSATION_SHIFT		6
@@ -109,9 +126,13 @@
 #define CMD_A_CHG_ENABLED			BIT(1)
 #define CMD_A_SUSPEND_ENABLED			BIT(2)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CMD_A_OTG_ENABLED			BIT(4)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CMD_A_OTG_ENABLED			BIT(4)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CMD_A_ALLOW_WRITE			BIT(7)
 #define CMD_B					0x31
 #define CMD_C					0x33
@@ -154,6 +175,7 @@
  * @mains: power_supply instance for AC/DC power
  * @usb: power_supply instance for USB power
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @usb_rdev: USB VBUS regulator device
  * @id: SMB charger ID
  * @mains_online: is AC/DC input connected
@@ -161,12 +183,18 @@
  * @irq_unsupported: is interrupt unsupported by SMB hardware
  * @usb_vbus_enabled: is USB VBUS powered by SMB charger
 =======
+=======
+ * @usb_rdev: USB VBUS regulator device
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @id: SMB charger ID
  * @mains_online: is AC/DC input connected
  * @usb_online: is USB input connected
- * @charging_enabled: is charging enabled
  * @irq_unsupported: is interrupt unsupported by SMB hardware
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @usb_vbus_enabled: is USB VBUS powered by SMB charger
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @max_charge_current: maximum current (in uA) the battery can be charged
  * @max_charge_voltage: maximum voltage (in uV) the battery can be charged
  * @pre_charge_current: current (in uA) to use in pre-charging phase
@@ -198,10 +226,15 @@
  * @enable_control: how charging enable/disable is controlled
  *		    (driver/pin controls)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @inok_polarity: polarity of INOK signal which denotes presence of external
  *		   power supply
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @inok_polarity: polarity of INOK signal which denotes presence of external
+ *		   power supply
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @use_main, @use_usb, and @use_usb_otg are means to enable/disable
  * hardware support for these. This is useful when we want to have for
@@ -225,6 +258,7 @@ struct smb347_charger {
 	struct power_supply	*mains;
 	struct power_supply	*usb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct regulator_dev	*usb_rdev;
 	unsigned int		id;
 	bool			mains_online;
@@ -232,12 +266,18 @@ struct smb347_charger {
 	bool			irq_unsupported;
 	bool			usb_vbus_enabled;
 =======
+=======
+	struct regulator_dev	*usb_rdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int		id;
 	bool			mains_online;
 	bool			usb_online;
-	bool			charging_enabled;
 	bool			irq_unsupported;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool			usb_vbus_enabled;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	unsigned int		max_charge_current;
 	unsigned int		max_charge_voltage;
@@ -259,9 +299,13 @@ struct smb347_charger {
 	bool			use_usb_otg;
 	unsigned int		enable_control;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int		inok_polarity;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int		inok_polarity;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum smb_charger_chipid {
@@ -407,15 +451,19 @@ static int smb347_charging_status(struct smb347_charger *smb)
 static int smb347_charging_set(struct smb347_charger *smb, bool enable)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret = 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (smb->enable_control != SMB3XX_CHG_ENABLE_SW) {
 		dev_dbg(smb->dev, "charging enable/disable in SW disabled\n");
 		return 0;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (enable && smb->usb_vbus_enabled) {
 		dev_dbg(smb->dev, "charging not enabled because USB is in host mode\n");
@@ -434,6 +482,15 @@ static int smb347_charging_set(struct smb347_charger *smb, bool enable)
 
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (enable && smb->usb_vbus_enabled) {
+		dev_dbg(smb->dev, "charging not enabled because USB is in host mode\n");
+		return 0;
+	}
+
+	return regmap_update_bits(smb->regmap, CMD_A, CMD_A_CHG_ENABLED,
+				  enable ? CMD_A_CHG_ENABLED : 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int smb347_charging_enable(struct smb347_charger *smb)
@@ -733,6 +790,7 @@ static int smb347_set_temp_limits(struct smb347_charger *smb)
  * Returns %0 on success and negative errno in case of failure.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int smb347_set_writable(struct smb347_charger *smb, bool writable,
 			       bool irq_toggle)
 {
@@ -755,6 +813,24 @@ static int smb347_set_writable(struct smb347_charger *smb, bool writable)
 	return regmap_update_bits(smb->regmap, CMD_A, CMD_A_ALLOW_WRITE,
 				  writable ? CMD_A_ALLOW_WRITE : 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int smb347_set_writable(struct smb347_charger *smb, bool writable,
+			       bool irq_toggle)
+{
+	struct i2c_client *client = to_i2c_client(smb->dev);
+	int ret;
+
+	if (writable && irq_toggle && !smb->irq_unsupported)
+		disable_irq(client->irq);
+
+	ret = regmap_update_bits(smb->regmap, CMD_A, CMD_A_ALLOW_WRITE,
+				 writable ? CMD_A_ALLOW_WRITE : 0);
+
+	if ((!writable || ret) && irq_toggle && !smb->irq_unsupported)
+		enable_irq(client->irq);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int smb347_hw_init(struct smb347_charger *smb)
@@ -763,10 +839,14 @@ static int smb347_hw_init(struct smb347_charger *smb)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = smb347_set_writable(smb, true, false);
 =======
 	ret = smb347_set_writable(smb, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = smb347_set_writable(smb, true, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -809,6 +889,9 @@ static int smb347_hw_init(struct smb347_charger *smb)
 		goto fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Activate pin control, making it writable. */
 	switch (smb->enable_control) {
 	case SMB3XX_CHG_ENABLE_PIN_ACTIVE_LOW:
@@ -818,8 +901,11 @@ static int smb347_hw_init(struct smb347_charger *smb)
 			goto fail;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Make the charging functionality controllable by a write to the
 	 * command register unless pin control is specified in the platform
@@ -855,10 +941,14 @@ static int smb347_hw_init(struct smb347_charger *smb)
 
 fail:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	smb347_set_writable(smb, false, false);
 =======
 	smb347_set_writable(smb, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	smb347_set_writable(smb, false, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -967,10 +1057,14 @@ static int smb347_irq_set(struct smb347_charger *smb, bool enable)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = smb347_set_writable(smb, true, true);
 =======
 	ret = smb347_set_writable(smb, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = smb347_set_writable(smb, true, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -996,10 +1090,14 @@ static int smb347_irq_set(struct smb347_charger *smb, bool enable)
 				 enable ? CFG_PIN_EN_CHARGER_ERROR : 0);
 fail:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	smb347_set_writable(smb, false, true);
 =======
 	smb347_set_writable(smb, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	smb347_set_writable(smb, false, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1028,10 +1126,14 @@ static int smb347_irq_init(struct smb347_charger *smb,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = smb347_set_writable(smb, true, false);
 =======
 	ret = smb347_set_writable(smb, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = smb347_set_writable(smb, true, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -1044,10 +1146,14 @@ static int smb347_irq_init(struct smb347_charger *smb,
 				 CFG_STAT_DISABLED);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	smb347_set_writable(smb, false, false);
 =======
 	smb347_set_writable(smb, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	smb347_set_writable(smb, false, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret < 0) {
 		dev_warn(smb->dev, "failed to initialize IRQ: %d\n", ret);
@@ -1358,6 +1464,9 @@ static void smb347_dt_parse_dev_info(struct smb347_charger *smb)
 	device_property_read_u32(dev, "summit,enable-charge-control",
 				 &smb->enable_control);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Polarity of INOK signal indicating presence of external power
@@ -1365,8 +1474,11 @@ static void smb347_dt_parse_dev_info(struct smb347_charger *smb)
 	 */
 	device_property_read_u32(dev, "summit,inok-polarity",
 				 &smb->inok_polarity);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int smb347_get_battery_info(struct smb347_charger *smb)
@@ -1419,6 +1531,9 @@ static int smb347_get_battery_info(struct smb347_charger *smb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int smb347_usb_vbus_get_current_limit(struct regulator_dev *rdev)
 {
 	struct smb347_charger *smb = rdev_get_drvdata(rdev);
@@ -1573,8 +1688,11 @@ done:
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct regmap_config smb347_regmap = {
 	.reg_bits	= 8,
 	.val_bits	= 8,
@@ -1582,6 +1700,9 @@ static const struct regmap_config smb347_regmap = {
 	.volatile_reg	= smb347_volatile_reg,
 	.readable_reg	= smb347_readable_reg,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.cache_type	= REGCACHE_FLAT,
 	.num_reg_defaults_raw = SMB347_MAX_REGISTER,
 };
@@ -1592,8 +1713,11 @@ static const struct regulator_ops smb347_usb_vbus_regulator_ops = {
 	.disable	= smb347_usb_vbus_regulator_disable,
 	.get_current_limit = smb347_usb_vbus_get_current_limit,
 	.set_current_limit = smb347_usb_vbus_set_current_limit,
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct power_supply_desc smb347_mains_desc = {
@@ -1613,6 +1737,9 @@ static const struct power_supply_desc smb347_usb_desc = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct regulator_desc smb347_usb_vbus_regulator_desc = {
 	.name		= "smb347-usb-vbus",
 	.of_match	= of_match_ptr("usb-vbus"),
@@ -1626,16 +1753,23 @@ static const struct regulator_desc smb347_usb_vbus_regulator_desc = {
 	.n_voltages	= 1,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int smb347_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
 	struct power_supply_config mains_usb_cfg = {};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct regulator_config usb_rdev_cfg = {};
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct regulator_config usb_rdev_cfg = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct device *dev = &client->dev;
 	struct smb347_charger *smb;
 	int ret;
@@ -1684,6 +1818,9 @@ static int smb347_probe(struct i2c_client *client,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_rdev_cfg.dev = dev;
 	usb_rdev_cfg.driver_data = smb;
 	usb_rdev_cfg.regmap = smb->regmap;
@@ -1696,8 +1833,11 @@ static int smb347_probe(struct i2c_client *client,
 		return PTR_ERR(smb->usb_rdev);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1706,22 +1846,32 @@ static int smb347_remove(struct i2c_client *client)
 	struct smb347_charger *smb = i2c_get_clientdata(client);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	smb347_usb_vbus_regulator_disable(smb->usb_rdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	smb347_usb_vbus_regulator_disable(smb->usb_rdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	smb347_irq_disable(smb);
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void smb347_shutdown(struct i2c_client *client)
 {
 	smb347_remove(client);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct i2c_device_id smb347_id[] = {
 	{ "smb345", SMB345 },
 	{ "smb347", SMB347 },
@@ -1746,9 +1896,13 @@ static struct i2c_driver smb347_driver = {
 	.probe = smb347_probe,
 	.remove = smb347_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.shutdown = smb347_shutdown,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown = smb347_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table = smb347_id,
 };
 module_i2c_driver(smb347_driver);

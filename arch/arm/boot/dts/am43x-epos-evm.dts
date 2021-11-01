@@ -583,10 +583,14 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0_pins>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clock-frequency = <100000>;
 =======
 	clock-frequency = <400000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clock-frequency = <100000>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tps65218: tps65218@24 {
 		reg = <0x24>;
@@ -1023,9 +1027,15 @@
 	cpu0-supply = <&dcdc2>;
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 &pruss1_mdio {
 	status = "disabled";
 };
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

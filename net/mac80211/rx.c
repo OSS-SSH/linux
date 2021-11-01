@@ -360,15 +360,21 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 	put_unaligned_le32(it_present_val, it_present);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* This references through an offset into it_optional[] rather
 	 * than via it_present otherwise later uses of pos will cause
 	 * the compiler to think we have walked past the end of the
 	 * struct member.
 	 */
 	pos = (void *)&rthdr->it_optional[it_present - rthdr->it_optional];
+<<<<<<< HEAD
 =======
 	pos = (void *)(it_present + 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* the order of the following fields is important */
 
@@ -382,10 +388,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 							 mpdulen, 0),
 			pos);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_TSFT));
 =======
 		rthdr->it_present |= cpu_to_le32(1 << IEEE80211_RADIOTAP_TSFT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_TSFT));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pos += 8;
 	}
 
@@ -410,10 +420,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 	} else {
 		int shift = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_RATE));
 =======
 		rthdr->it_present |= cpu_to_le32(1 << IEEE80211_RADIOTAP_RATE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_RATE));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (status->bw == RATE_INFO_BW_10)
 			shift = 1;
 		else if (status->bw == RATE_INFO_BW_5)
@@ -451,10 +465,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 		*pos = status->signal;
 		rthdr->it_present |=
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cpu_to_le32(BIT(IEEE80211_RADIOTAP_DBM_ANTSIGNAL));
 =======
 			cpu_to_le32(1 << IEEE80211_RADIOTAP_DBM_ANTSIGNAL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cpu_to_le32(BIT(IEEE80211_RADIOTAP_DBM_ANTSIGNAL));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pos++;
 	}
 
@@ -481,10 +499,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 		unsigned int stbc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_MCS));
 =======
 		rthdr->it_present |= cpu_to_le32(1 << IEEE80211_RADIOTAP_MCS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_MCS));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*pos++ = local->hw.radiotap_mcs_details;
 		*pos = 0;
 		if (status->enc_flags & RX_ENC_FLAG_SHORT_GI)
@@ -509,10 +531,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 			pos++;
 		rthdr->it_present |=
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cpu_to_le32(BIT(IEEE80211_RADIOTAP_AMPDU_STATUS));
 =======
 			cpu_to_le32(1 << IEEE80211_RADIOTAP_AMPDU_STATUS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cpu_to_le32(BIT(IEEE80211_RADIOTAP_AMPDU_STATUS));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		put_unaligned_le32(status->ampdu_reference, pos);
 		pos += 4;
 		if (status->flag & RX_FLAG_AMPDU_LAST_KNOWN)
@@ -540,10 +566,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 		u16 known = local->hw.radiotap_vht_details;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_VHT));
 =======
 		rthdr->it_present |= cpu_to_le32(1 << IEEE80211_RADIOTAP_VHT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_VHT));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		put_unaligned_le16(known, pos);
 		pos += 2;
 		/* flags */
@@ -588,10 +618,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 
 		rthdr->it_present |=
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cpu_to_le32(BIT(IEEE80211_RADIOTAP_TIMESTAMP));
 =======
 			cpu_to_le32(1 << IEEE80211_RADIOTAP_TIMESTAMP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cpu_to_le32(BIT(IEEE80211_RADIOTAP_TIMESTAMP));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* ensure 8 byte alignment */
 		while ((pos - (u8 *)rthdr) & 7)
@@ -680,10 +714,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 		while ((pos - (u8 *)rthdr) & 1)
 			pos++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_HE));
 =======
 		rthdr->it_present |= cpu_to_le32(1 << IEEE80211_RADIOTAP_HE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_HE));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcpy(pos, &he, sizeof(he));
 		pos += sizeof(he);
 	}
@@ -694,10 +732,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 		while ((pos - (u8 *)rthdr) & 1)
 			pos++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_HE_MU));
 =======
 		rthdr->it_present |= cpu_to_le32(1 << IEEE80211_RADIOTAP_HE_MU);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_HE_MU));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcpy(pos, &he_mu, sizeof(he_mu));
 		pos += sizeof(he_mu);
 	}
@@ -705,10 +747,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 	if (status->flag & RX_FLAG_NO_PSDU) {
 		rthdr->it_present |=
 <<<<<<< HEAD
+<<<<<<< HEAD
 			cpu_to_le32(BIT(IEEE80211_RADIOTAP_ZERO_LEN_PSDU));
 =======
 			cpu_to_le32(1 << IEEE80211_RADIOTAP_ZERO_LEN_PSDU);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			cpu_to_le32(BIT(IEEE80211_RADIOTAP_ZERO_LEN_PSDU));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*pos++ = status->zero_length_psdu_type;
 	}
 
@@ -717,10 +763,14 @@ ieee80211_add_rx_radiotap_header(struct ieee80211_local *local,
 		while ((pos - (u8 *)rthdr) & 1)
 			pos++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_LSIG));
 =======
 		rthdr->it_present |= cpu_to_le32(1 << IEEE80211_RADIOTAP_LSIG);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rthdr->it_present |= cpu_to_le32(BIT(IEEE80211_RADIOTAP_LSIG));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcpy(pos, &lsig, sizeof(lsig));
 		pos += sizeof(lsig);
 	}
@@ -784,11 +834,16 @@ ieee80211_make_monitor_skb(struct ieee80211_local *local,
 		 * and FCS from the original.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		skb = skb_copy_expand(*origskb, needed_headroom + NET_SKB_PAD,
 				      0, GFP_ATOMIC);
 =======
 		skb = skb_copy_expand(*origskb, needed_headroom, 0, GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		skb = skb_copy_expand(*origskb, needed_headroom + NET_SKB_PAD,
+				      0, GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!skb)
 			return NULL;
@@ -3265,6 +3320,9 @@ ieee80211_rx_h_mgmt_check(struct ieee80211_rx_data *rx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool
 ieee80211_process_rx_twt_action(struct ieee80211_rx_data *rx)
 {
@@ -3327,8 +3385,11 @@ ieee80211_process_rx_twt_action(struct ieee80211_rx_data *rx)
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ieee80211_rx_result debug_noinline
 ieee80211_rx_h_action(struct ieee80211_rx_data *rx)
 {
@@ -3609,6 +3670,9 @@ ieee80211_rx_h_action(struct ieee80211_rx_data *rx)
 			break;
 		goto queue;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case WLAN_CATEGORY_S1G:
 		switch (mgmt->u.action.u.s1g.action_code) {
 		case WLAN_S1G_TWT_SETUP:
@@ -3620,8 +3684,11 @@ ieee80211_rx_h_action(struct ieee80211_rx_data *rx)
 			break;
 		}
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return RX_CONTINUE;
@@ -4190,11 +4257,16 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
 			return false;
 		if (ether_addr_equal(sdata->vif.addr, hdr->addr2) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    ether_addr_equal(sdata->u.ibss.bssid, hdr->addr2) ||
 		    !is_valid_ether_addr(hdr->addr2))
 =======
 		    ether_addr_equal(sdata->u.ibss.bssid, hdr->addr2))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    ether_addr_equal(sdata->u.ibss.bssid, hdr->addr2) ||
+		    !is_valid_ether_addr(hdr->addr2))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return false;
 		if (ieee80211_is_beacon(hdr->frame_control))
 			return true;

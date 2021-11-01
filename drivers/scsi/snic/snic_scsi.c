@@ -34,10 +34,14 @@
 #include "snic.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define snic_cmd_tag(sc)	(scsi_cmd_to_rq(sc)->tag)
 =======
 #define snic_cmd_tag(sc)	(((struct scsi_cmnd *) sc)->request->tag)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define snic_cmd_tag(sc)	(scsi_cmd_to_rq(sc)->tag)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 const char *snic_state_str[] = {
 	[SNIC_INIT]	= "SNIC_INIT",
@@ -1641,10 +1645,14 @@ snic_abort_cmd(struct scsi_cmnd *sc)
 
 	SNIC_SCSI_DBG(snic->shost, "abt_cmd:sc %p :0x%x :req = %p :tag = %d\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       sc, sc->cmnd[0], scsi_cmd_to_rq(sc), tag);
 =======
 		       sc, sc->cmnd[0], sc->request, tag);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       sc, sc->cmnd[0], scsi_cmd_to_rq(sc), tag);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(snic_get_state(snic) != SNIC_ONLINE)) {
 		SNIC_HOST_ERR(snic->shost,
@@ -2161,10 +2169,14 @@ snic_device_reset(struct scsi_cmnd *sc)
 
 	SNIC_SCSI_DBG(shost, "dev_reset:sc %p :0x%x :req = %p :tag = %d\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      sc, sc->cmnd[0], scsi_cmd_to_rq(sc),
 =======
 		      sc, sc->cmnd[0], sc->request,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      sc, sc->cmnd[0], scsi_cmd_to_rq(sc),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		      snic_cmd_tag(sc));
 	dr_supp = snic_dev_reset_supported(sc->device);
 	if (!dr_supp) {
@@ -2348,10 +2360,14 @@ snic_reset(struct Scsi_Host *shost, struct scsi_cmnd *sc)
 	if (snic_get_state(snic) == SNIC_FWRESET) {
 		spin_unlock_irqrestore(&snic->snic_lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		SNIC_HOST_INFO(shost, "reset:prev reset is in progress\n");
 =======
 		SNIC_HOST_INFO(shost, "reset:prev reset is in progres\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		SNIC_HOST_INFO(shost, "reset:prev reset is in progress\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		msleep(SNIC_HOST_RESET_TIMEOUT);
 		ret = SUCCESS;
@@ -2400,6 +2416,7 @@ snic_host_reset(struct scsi_cmnd *sc)
 	struct Scsi_Host *shost = sc->device->host;
 	u32 start_time  = jiffies;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	SNIC_SCSI_DBG(shost,
@@ -2412,6 +2429,13 @@ snic_host_reset(struct scsi_cmnd *sc)
 		      "host reset:sc %p sc_cmd 0x%x req %p tag %d flags 0x%llx\n",
 		      sc, sc->cmnd[0], sc->request,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	SNIC_SCSI_DBG(shost,
+		      "host reset:sc %p sc_cmd 0x%x req %p tag %d flags 0x%llx\n",
+		      sc, sc->cmnd[0], scsi_cmd_to_rq(sc),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		      snic_cmd_tag(sc), CMD_FLAGS(sc));
 
 	ret = snic_reset(shost, sc);
@@ -2519,10 +2543,14 @@ cleanup:
 		SNIC_HOST_INFO(snic->shost,
 			       "sc_clean: DID_TRANSPORT_DISRUPTED for sc %p, Tag %d flags 0x%llx rqi %p duration %u msecs\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			       sc, scsi_cmd_to_rq(sc)->tag, CMD_FLAGS(sc), rqi,
 =======
 			       sc, sc->request->tag, CMD_FLAGS(sc), rqi,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       sc, scsi_cmd_to_rq(sc)->tag, CMD_FLAGS(sc), rqi,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       jiffies_to_msecs(jiffies - st_time));
 
 		/* Update IO stats */

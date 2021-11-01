@@ -36,9 +36,12 @@ BOOTCFLAGS    := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		 -fno-strict-aliasing -O2 -msoft-float -mno-altivec -mno-vsx \
 		 -pipe -fomit-frame-pointer -fno-builtin -fPIC -nostdinc \
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		 -include $(srctree)/include/linux/compiler_attributes.h \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 $(LINUXINCLUDE)
 
 ifdef CONFIG_PPC64_BOOT_WRAPPER
@@ -74,9 +77,13 @@ BOOTCFLAGS	+= -fno-stack-protector
 endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 BOOTCFLAGS	+= -include $(srctree)/include/linux/compiler_attributes.h
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+BOOTCFLAGS	+= -include $(srctree)/include/linux/compiler_attributes.h
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 BOOTCFLAGS	+= -I$(objtree)/$(obj) -I$(srctree)/$(obj)
 
 DTC_FLAGS	?= -p 1024
@@ -349,9 +356,12 @@ image-$(CONFIG_TQM8548)			+= cuImage.tqm8548
 image-$(CONFIG_TQM8555)			+= cuImage.tqm8555
 image-$(CONFIG_TQM8560)			+= cuImage.tqm8560
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 image-$(CONFIG_SBC8548)			+= cuImage.sbc8548
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 image-$(CONFIG_KSI8560)			+= cuImage.ksi8560
 
 # Board ports in arch/powerpc/platform/86xx/Kconfig
@@ -455,6 +465,7 @@ $(obj)/zImage.initrd:	$(addprefix $(obj)/, $(initrd-y))
 	$(Q)rm -f $@; ln $< $@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Only install the vmlinux
 install: $(CONFIGURE) $(addprefix $(obj)/, $(image-y))
@@ -467,6 +478,8 @@ zInstall: $(CONFIGURE) $(addprefix $(obj)/, $(image-y))
 PHONY += install zInstall
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # anything not in $(targets)
 clean-files += $(image-) $(initrd-) cuImage.* dtbImage.* treeImage.* \
 	zImage zImage.initrd zImage.chrp zImage.coff zImage.holly \

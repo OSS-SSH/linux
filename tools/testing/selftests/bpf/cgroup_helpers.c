@@ -13,18 +13,25 @@
 #include <ftw.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "cgroup_helpers.h"
 
 /*
  * To avoid relying on the system setup, when setup_cgroup_env is called
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * we create a new mount namespace, and cgroup namespace. The cgroupv2
  * root is mounted at CGROUP_MOUNT_PATH. Unfortunately, most people don't
  * have cgroupv2 enabled at this point in time. It's easier to create our
  * own mount namespace and manage it ourselves. We assume /mnt exists.
+<<<<<<< HEAD
  *
  * Related cgroupv1 helpers are named *classid*(), since we only use the
  * net_cls controller for tagging net_cls.classid. We assume the default
@@ -45,25 +52,43 @@
  *
  * Unfortunately, most people don't have cgroupv2 enabled at this point in time.
  * It's easier to create our own mount namespace and manage it ourselves.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * We assume /mnt exists.
+ * Related cgroupv1 helpers are named *classid*(), since we only use the
+ * net_cls controller for tagging net_cls.classid. We assume the default
+ * mount under /sys/fs/cgroup/net_cls, which should be the case for the
+ * vast majority of users.
  */
 
 #define WALK_FD_LIMIT			16
+
 #define CGROUP_MOUNT_PATH		"/mnt"
+#define CGROUP_MOUNT_DFLT		"/sys/fs/cgroup"
+#define NETCLS_MOUNT_PATH		CGROUP_MOUNT_DFLT "/net_cls"
 #define CGROUP_WORK_DIR			"/cgroup-test-work-dir"
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define format_cgroup_path(buf, path) \
 	snprintf(buf, sizeof(buf), "%s%s%s", CGROUP_MOUNT_PATH, \
 		 CGROUP_WORK_DIR, path)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define format_classid_path(buf)				\
 	snprintf(buf, sizeof(buf), "%s%s", NETCLS_MOUNT_PATH,	\
 		 CGROUP_WORK_DIR)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * enable_all_controllers() - Enable all available cgroup v2 controllers
  *
@@ -171,11 +196,15 @@ static int nftwfunc(const char *filename, const struct stat *statptr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int join_cgroup_from_top(const char *cgroup_path)
 =======
 
 static int join_cgroup_from_top(char *cgroup_path)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int join_cgroup_from_top(const char *cgroup_path)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	char cgroup_procs_path[PATH_MAX + 1];
 	pid_t pid = getpid();
@@ -349,6 +378,9 @@ int cgroup_setup_and_join(const char *path) {
 	return cg_fd;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * setup_classid_environment() - Setup the cgroupv1 net_cls environment
@@ -460,5 +492,8 @@ void cleanup_classid_environment(void)
 	join_cgroup_from_top(NETCLS_MOUNT_PATH);
 	nftw(cgroup_workdir, nftwfunc, WALK_FD_LIMIT, FTW_DEPTH | FTW_MOUNT);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

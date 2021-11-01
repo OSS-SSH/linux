@@ -28,6 +28,7 @@ Description:
 				 [obj_user=] [obj_role=] [obj_type=]]
 			option:	[[appraise_type=]] [template=] [permit_directio]
 <<<<<<< HEAD
+<<<<<<< HEAD
 				[appraise_flag=] [appraise_algos=] [keyrings=]
 		  base:
 			func:= [BPRM_CHECK][MMAP_CHECK][CREDS_CHECK][FILE_CHECK][MODULE_CHECK]
@@ -37,12 +38,19 @@ Description:
 				[SETXATTR_CHECK]
 =======
 				[appraise_flag=] [keyrings=]
+=======
+				[appraise_flag=] [appraise_algos=] [keyrings=]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  base:
 			func:= [BPRM_CHECK][MMAP_CHECK][CREDS_CHECK][FILE_CHECK][MODULE_CHECK]
-			        [FIRMWARE_CHECK]
+				[FIRMWARE_CHECK]
 				[KEXEC_KERNEL_CHECK] [KEXEC_INITRAMFS_CHECK]
 				[KEXEC_CMDLINE] [KEY_CHECK] [CRITICAL_DATA]
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				[SETXATTR_CHECK]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mask:= [[^]MAY_READ] [[^]MAY_WRITE] [[^]MAY_APPEND]
 			       [[^]MAY_EXEC]
 			fsmagic:= hex value
@@ -66,12 +74,18 @@ Description:
 			data_label:= a unique string used for grouping and limiting critical data.
 			For example, "selinux" to measure critical data for SELinux.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			appraise_algos:= comma-separated list of hash algorithms
 			For example, "sha256,sha512" to only accept to appraise
 			files where the security.ima xattr was hashed with one
 			of these two algorithms.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		  default policy:
 			# PROC_SUPER_MAGIC
@@ -152,11 +166,17 @@ Description:
 
 			measure func=KEY_CHECK keyrings=.builtin_trusted_keys|.ima
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		Example of the special SETXATTR_CHECK appraise rule, that
 		restricts the hash algorithms allowed when writing to the
 		security.ima xattr of a file:
 
 			appraise func=SETXATTR_CHECK appraise_algos=sha256,sha384,sha512
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

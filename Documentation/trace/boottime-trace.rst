@@ -126,6 +126,9 @@ instance node, but those are also visible from other instances. So please
 take care for event name conflict.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Ftrace Histogram Options
 ------------------------
 
@@ -191,8 +194,11 @@ ftrace.[instance.INSTANCE.]event.GROUP.EVENT.hist.filter = FILTER_EXPR
 Note that this 'hist' option can conflict with the per-event 'actions'
 option if the 'actions' option has a histogram action.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 When to Start
 =============
@@ -228,11 +234,15 @@ below::
         synthetic.initcall_latency {
                 fields = "unsigned long func", "u64 lat"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
                 hist {
                         keys = func.sym, lat
                         values = lat
                         sort = lat
                 }
+<<<<<<< HEAD
         }
         initcall.initcall_start.hist {
                 keys = func
@@ -247,13 +257,26 @@ below::
                 }
 =======
                 actions = "hist:keys=func.sym,lat:vals=lat:sort=lat"
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         }
-        initcall.initcall_start {
-                actions = "hist:keys=func:ts0=common_timestamp.usecs"
+        initcall.initcall_start.hist {
+                keys = func
+                var.ts0 = common_timestamp.usecs
         }
+<<<<<<< HEAD
         initcall.initcall_finish {
                 actions = "hist:keys=func:lat=common_timestamp.usecs-$ts0:onmatch(initcall.initcall_start).initcall_latency(func,$lat)"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        initcall.initcall_finish.hist {
+                keys = func
+                var.lat = common_timestamp.usecs - $ts0
+                onmatch {
+                        event = initcall.initcall_start
+                        trace = initcall_latency, func, $lat
+                }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         }
   }
 

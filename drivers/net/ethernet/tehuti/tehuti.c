@@ -638,11 +638,16 @@ static int bdx_range_check(struct bdx_priv *priv, u32 offset)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int bdx_siocdevprivate(struct net_device *ndev, struct ifreq *ifr,
 			      void __user *udata, int cmd)
 =======
 static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int bdx_siocdevprivate(struct net_device *ndev, struct ifreq *ifr,
+			      void __user *udata, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct bdx_priv *priv = netdev_priv(ndev);
 	u32 data[3];
@@ -653,10 +658,14 @@ static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
 	DBG("jiffies=%ld cmd=%d\n", jiffies, cmd);
 	if (cmd != SIOCDEVPRIVATE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		error = copy_from_user(data, udata, sizeof(data));
 =======
 		error = copy_from_user(data, ifr->ifr_data, sizeof(data));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = copy_from_user(data, udata, sizeof(data));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error) {
 			pr_err("can't copy from user\n");
 			RET(-EFAULT);
@@ -679,10 +688,14 @@ static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
 		DBG("read_reg(0x%x)=0x%x (dec %d)\n", data[1], data[2],
 		    data[2]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		error = copy_to_user(udata, data, sizeof(data));
 =======
 		error = copy_to_user(ifr->ifr_data, data, sizeof(data));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = copy_to_user(udata, data, sizeof(data));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error)
 			RET(-EFAULT);
 		break;
@@ -702,6 +715,7 @@ static int bdx_ioctl_priv(struct net_device *ndev, struct ifreq *ifr, int cmd)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int bdx_ioctl(struct net_device *ndev, struct ifreq *ifr, int cmd)
 {
@@ -713,6 +727,8 @@ static int bdx_ioctl(struct net_device *ndev, struct ifreq *ifr, int cmd)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * __bdx_vlan_rx_vid - private helper for adding/killing VLAN vid
  * @ndev: network device
@@ -1877,10 +1893,14 @@ static const struct net_device_ops bdx_netdev_ops = {
 	.ndo_start_xmit		= bdx_tx_transmit,
 	.ndo_validate_addr	= eth_validate_addr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= bdx_siocdevprivate,
 =======
 	.ndo_do_ioctl		= bdx_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= bdx_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode	= bdx_setmulti,
 	.ndo_change_mtu		= bdx_change_mtu,
 	.ndo_set_mac_address	= bdx_set_mac,
@@ -2180,14 +2200,20 @@ bdx_get_drvinfo(struct net_device *netdev, struct ethtool_drvinfo *drvinfo)
  * @ecoal
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bdx_get_coalesce(struct net_device *netdev,
 			    struct ethtool_coalesce *ecoal,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 bdx_get_coalesce(struct net_device *netdev, struct ethtool_coalesce *ecoal)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 rdintcm;
 	u32 tdintcm;
@@ -2216,14 +2242,20 @@ bdx_get_coalesce(struct net_device *netdev, struct ethtool_coalesce *ecoal)
  * @ecoal
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bdx_set_coalesce(struct net_device *netdev,
 			    struct ethtool_coalesce *ecoal,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int
 bdx_set_coalesce(struct net_device *netdev, struct ethtool_coalesce *ecoal)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 rdintcm;
 	u32 tdintcm;

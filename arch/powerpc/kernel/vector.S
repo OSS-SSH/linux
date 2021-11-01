@@ -66,6 +66,7 @@ _GLOBAL(load_up_altivec)
 	/* enable use of VMX after return */
 #ifdef CONFIG_PPC32
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addi	r5,r2,THREAD
 	oris	r9,r9,MSR_VEC@h
 =======
@@ -73,6 +74,10 @@ _GLOBAL(load_up_altivec)
 	oris	r9,r9,MSR_VEC@h
 	tovirt(r5, r5)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addi	r5,r2,THREAD
+	oris	r9,r9,MSR_VEC@h
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 	ld	r4,PACACURRENT(r13)
 	addi	r5,r4,THREAD		/* Get THREAD */
@@ -87,9 +92,12 @@ _GLOBAL(load_up_altivec)
 	stb	r4,THREAD_LOAD_VEC(r5)
 	addi	r6,r5,THREAD_VRSTATE
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	li	r4,1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	li	r10,VRSTATE_VSCR
 	stw	r4,THREAD_USED_VR(r5)
 	lvx	v0,r10,r6

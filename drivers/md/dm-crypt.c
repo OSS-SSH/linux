@@ -2224,6 +2224,7 @@ static void kcryptd_queue_crypt(struct dm_crypt_io *io)
 	    (bio_data_dir(io->base_bio) == WRITE && test_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags))) {
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * in_hardirq(): Crypto API's skcipher_walk_first() refuses to work in hard IRQ context.
 		 * irqs_disabled(): the kernel may run some IO completion from the idle thread, but
 		 * it is being executed with irqs disabled.
@@ -2236,6 +2237,13 @@ static void kcryptd_queue_crypt(struct dm_crypt_io *io)
 		 */
 		if (in_irq() || irqs_disabled()) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * in_hardirq(): Crypto API's skcipher_walk_first() refuses to work in hard IRQ context.
+		 * irqs_disabled(): the kernel may run some IO completion from the idle thread, but
+		 * it is being executed with irqs disabled.
+		 */
+		if (in_hardirq() || irqs_disabled()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			tasklet_init(&io->tasklet, kcryptd_crypt_tasklet, (unsigned long)&io->work);
 			tasklet_schedule(&io->tasklet);
 			return;
@@ -2670,15 +2678,21 @@ static void *crypt_page_alloc(gfp_t gfp_mask, void *pool_data)
 	struct page *page;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Note, percpu_counter_read_positive() may over (and under) estimate
 	 * the current usage by at most (batch - 1) * num_online_cpus() pages,
 	 * but avoids potential spinlock contention of an exact result.
 	 */
 	if (unlikely(percpu_counter_read_positive(&cc->n_allocated_pages) >= dm_crypt_pages_per_client) &&
+<<<<<<< HEAD
 =======
 	if (unlikely(percpu_counter_compare(&cc->n_allocated_pages, dm_crypt_pages_per_client) >= 0) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    likely(gfp_mask & __GFP_NORETRY))
 		return NULL;
 
@@ -3503,6 +3517,9 @@ static void crypt_status(struct dm_target *ti, status_type_t type,
 				DMEMIT(" iv_large_sectors");
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case STATUSTYPE_IMA:
@@ -3531,9 +3548,12 @@ static void crypt_status(struct dm_target *ti, status_type_t type,
 		DMEMIT(",key_extra_size=%u", cc->key_extra_size);
 		DMEMIT(",key_mac_size=%u", cc->key_mac_size);
 		DMEMIT(";");
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 }

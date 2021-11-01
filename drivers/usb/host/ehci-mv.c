@@ -43,6 +43,7 @@ struct ehci_hcd_mv {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int mv_ehci_enable(struct ehci_hcd_mv *ehci_mv)
 {
 	int retval;
@@ -58,30 +59,43 @@ static int mv_ehci_enable(struct ehci_hcd_mv *ehci_mv)
 	return retval;
 =======
 static void ehci_clock_enable(struct ehci_hcd_mv *ehci_mv)
+=======
+static int mv_ehci_enable(struct ehci_hcd_mv *ehci_mv)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	clk_prepare_enable(ehci_mv->clk);
-}
+	int retval;
 
-static void ehci_clock_disable(struct ehci_hcd_mv *ehci_mv)
-{
-	clk_disable_unprepare(ehci_mv->clk);
-}
+	retval = clk_prepare_enable(ehci_mv->clk);
+	if (retval)
+		return retval;
 
+<<<<<<< HEAD
 static int mv_ehci_enable(struct ehci_hcd_mv *ehci_mv)
 {
 	ehci_clock_enable(ehci_mv);
 	return phy_init(ehci_mv->phy);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	retval = phy_init(ehci_mv->phy);
+	if (retval)
+		clk_disable_unprepare(ehci_mv->clk);
+
+	return retval;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mv_ehci_disable(struct ehci_hcd_mv *ehci_mv)
 {
 	phy_exit(ehci_mv->phy);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clk_disable_unprepare(ehci_mv->clk);
 =======
 	ehci_clock_disable(ehci_mv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_disable_unprepare(ehci_mv->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int mv_ehci_reset(struct usb_hcd *hcd)

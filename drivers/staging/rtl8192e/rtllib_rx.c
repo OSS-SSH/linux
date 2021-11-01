@@ -1557,10 +1557,15 @@ static int rtllib_verify_qos_info(struct rtllib_qos_information_element
 {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info_element->elementID != QOS_ELEMENT_ID)
 		return -1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info_element->elementID != QOS_ELEMENT_ID)
+		return -1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (info_element->qui_subtype != sub_type)
 		return -1;
 	if (memcmp(info_element->qui, qos_oui, QOS_OUI_LEN))
@@ -1575,6 +1580,7 @@ static int rtllib_verify_qos_info(struct rtllib_qos_information_element
 
 
 /* Parse a QoS parameter element */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int rtllib_read_qos_param_element(
 			struct rtllib_qos_parameter_info *element_param,
@@ -1607,54 +1613,42 @@ static int rtllib_read_qos_param_element(struct rtllib_qos_parameter_info
 							*element_param,
 					 struct rtllib_info_element
 							*info_element)
+=======
+static int rtllib_read_qos_param_element(
+			struct rtllib_qos_parameter_info *element_param,
+			struct rtllib_info_element *info_element)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	int ret = 0;
-	u16 size = sizeof(struct rtllib_qos_parameter_info) - 2;
+	size_t size = sizeof(*element_param);
 
-	if ((info_element == NULL) || (element_param == NULL))
+	if (!element_param || !info_element || info_element->len != size - 2)
 		return -1;
 
-	if (info_element->id == QOS_ELEMENT_ID && info_element->len == size) {
-		memcpy(element_param->info_element.qui, info_element->data,
-		       info_element->len);
-		element_param->info_element.elementID = info_element->id;
-		element_param->info_element.length = info_element->len;
-	} else
-		ret = -1;
-	if (ret == 0)
-		ret = rtllib_verify_qos_info(&element_param->info_element,
-						QOS_OUI_PARAM_SUB_TYPE);
-	return ret;
+	memcpy(element_param, info_element, size);
+	return rtllib_verify_qos_info(&element_param->info_element,
+				      QOS_OUI_PARAM_SUB_TYPE);
 }
 
 /* Parse a QoS information element */
-static int rtllib_read_qos_info_element(struct rtllib_qos_information_element
-							*element_info,
-					struct rtllib_info_element
-							*info_element)
+static int rtllib_read_qos_info_element(
+			struct rtllib_qos_information_element *element_info,
+			struct rtllib_info_element *info_element)
 {
-	int ret = 0;
-	u16 size = sizeof(struct rtllib_qos_information_element) - 2;
+	size_t size = sizeof(*element_info);
 
-	if (element_info == NULL)
-		return -1;
-	if (info_element == NULL)
+	if (!element_info || !info_element || info_element->len != size - 2)
 		return -1;
 
-	if ((info_element->id == QOS_ELEMENT_ID) &&
-	    (info_element->len == size)) {
-		memcpy(element_info->qui, info_element->data,
-		       info_element->len);
-		element_info->elementID = info_element->id;
-		element_info->length = info_element->len;
-	} else
-		ret = -1;
-
+<<<<<<< HEAD
 	if (ret == 0)
 		ret = rtllib_verify_qos_info(element_info,
 					     QOS_OUI_INFO_SUB_TYPE);
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memcpy(element_info, info_element, size);
+	return rtllib_verify_qos_info(element_info, QOS_OUI_INFO_SUB_TYPE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 

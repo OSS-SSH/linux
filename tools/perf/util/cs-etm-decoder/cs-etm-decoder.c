@@ -14,10 +14,13 @@
 #include <stdlib.h>
 #include <opencsd/c_api/opencsd_c_api.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <opencsd/etmv4/trc_pkt_types_etmv4.h>
 #include <opencsd/ocsd_if_types.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "cs-etm.h"
 #include "cs-etm-decoder.h"
@@ -39,16 +42,22 @@ struct cs_etm_decoder {
 	void *data;
 	void (*packet_printer)(const char *msg);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool suppress_printing;
 	dcd_tree_handle_t dcd_tree;
 	cs_etm_mem_cb_type mem_access;
 	ocsd_datapath_resp_t prev_return;
 	const char *decoder_name;
+<<<<<<< HEAD
 =======
 	dcd_tree_handle_t dcd_tree;
 	cs_etm_mem_cb_type mem_access;
 	ocsd_datapath_resp_t prev_return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static u32
@@ -86,6 +95,7 @@ int cs_etm_decoder__reset(struct cs_etm_decoder *decoder)
 
 	decoder->prev_return = OCSD_RESP_CONT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	decoder->suppress_printing = true;
 	dp_ret = ocsd_dt_process_data(decoder->dcd_tree, OCSD_OP_RESET,
 				      0, 0, NULL, NULL);
@@ -95,6 +105,12 @@ int cs_etm_decoder__reset(struct cs_etm_decoder *decoder)
 	dp_ret = ocsd_dt_process_data(decoder->dcd_tree, OCSD_OP_RESET,
 				      0, 0, NULL, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	decoder->suppress_printing = true;
+	dp_ret = ocsd_dt_process_data(decoder->dcd_tree, OCSD_OP_RESET,
+				      0, 0, NULL, NULL);
+	decoder->suppress_printing = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (OCSD_DATA_RESP_IS_FATAL(dp_ret))
 		return -1;
 
@@ -143,6 +159,9 @@ static int cs_etm_decoder__gen_etmv3_config(struct cs_etm_trace_params *params,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define TRCIDR1_TRCARCHMIN_SHIFT 4
 #define TRCIDR1_TRCARCHMIN_MASK  GENMASK(7, 4)
 #define TRCIDR1_TRCARCHMIN(x)    (((x) & TRCIDR1_TRCARCHMIN_MASK) >> TRCIDR1_TRCARCHMIN_SHIFT)
@@ -158,8 +177,11 @@ static enum _ocsd_arch_version cs_etm_decoder__get_etmv4_arch_ver(u32 reg_idr1)
 	return TRCIDR1_TRCARCHMIN(reg_idr1) >= 4 ? ARCH_AA64 : ARCH_V8;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void cs_etm_decoder__gen_etmv4_config(struct cs_etm_trace_params *params,
 					     ocsd_etmv4_cfg *config)
 {
@@ -175,6 +197,9 @@ static void cs_etm_decoder__gen_etmv4_config(struct cs_etm_trace_params *params,
 	config->reg_idr12 = 0;
 	config->reg_idr13 = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	config->arch_ver = cs_etm_decoder__get_etmv4_arch_ver(params->etmv4.reg_idr1);
 	config->core_prof = profile_CortexA;
 }
@@ -190,9 +215,12 @@ static void cs_etm_decoder__gen_ete_config(struct cs_etm_trace_params *params,
 	config->reg_idr8 = params->ete.reg_idr8;
 	config->reg_devarch = params->ete.reg_devarch;
 	config->arch_ver = ARCH_AA64;
+<<<<<<< HEAD
 =======
 	config->arch_ver = ARCH_V8;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	config->core_prof = profile_CortexA;
 }
 
@@ -201,14 +229,20 @@ static void cs_etm_decoder__print_str_cb(const void *p_context,
 					 const int str_len)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct cs_etm_decoder *decoder = p_context;
 
 	if (p_context && str_len && !decoder->suppress_printing)
 		decoder->packet_printer(msg);
+<<<<<<< HEAD
 =======
 	if (p_context && str_len)
 		((struct cs_etm_decoder *)p_context)->packet_printer(msg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int
@@ -285,6 +319,7 @@ cs_etm_decoder__init_raw_frame_logging(
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int cs_etm_decoder__create_packet_printer(struct cs_etm_decoder *decoder,
 						 const char *decoder_name,
@@ -336,6 +371,8 @@ cs_etm_decoder__create_etm_packet_printer(struct cs_etm_trace_params *t_params,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ocsd_datapath_resp_t
 cs_etm_decoder__do_soft_timestamp(struct cs_etm_queue *etmq,
 				  struct cs_etm_packet_queue *packet_queue,
@@ -389,15 +426,21 @@ cs_etm_decoder__do_hard_timestamp(struct cs_etm_queue *etmq,
 		 */
 		packet_queue->cs_timestamp = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!cs_etm__etmq_is_timeless(etmq))
 			pr_warning_once("Zero Coresight timestamp found at Idx:%" OCSD_TRC_IDX_STR
 					". Decoding may be improved by prepending 'Z' to your current --itrace arguments.\n",
 					indx);
 
+<<<<<<< HEAD
 =======
 		WARN_ONCE(true, "Zero Coresight timestamp found at Idx:%" OCSD_TRC_IDX_STR
 				". Decoding may be improved with --itrace=Z...\n", indx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (packet_queue->instr_count > elem->timestamp) {
 		/*
 		 * Sanity check that the elem->timestamp - packet_queue->instr_count would not
@@ -698,10 +741,14 @@ static ocsd_datapath_resp_t cs_etm_decoder__gen_trace_elem_printer(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 cs_etm_decoder__create_etm_decoder(struct cs_etm_decoder_params *d_params,
 				   struct cs_etm_trace_params *t_params,
 				   struct cs_etm_decoder *decoder)
+<<<<<<< HEAD
 {
 	ocsd_etmv3_cfg config_etmv3;
 	ocsd_etmv4_cfg trace_config_etmv4;
@@ -710,11 +757,16 @@ cs_etm_decoder__create_etm_decoder(struct cs_etm_decoder_params *d_params,
 static int cs_etm_decoder__create_etm_packet_decoder(
 					struct cs_etm_trace_params *t_params,
 					struct cs_etm_decoder *decoder)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	const char *decoder_name;
 	ocsd_etmv3_cfg config_etmv3;
 	ocsd_etmv4_cfg trace_config_etmv4;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ocsd_ete_cfg trace_config_ete;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *trace_config;
 	u8 csid;
 
@@ -723,16 +775,21 @@ static int cs_etm_decoder__create_etm_packet_decoder(
 	case CS_ETM_PROTO_PTM:
 		cs_etm_decoder__gen_etmv3_config(t_params, &config_etmv3);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		decoder->decoder_name = (t_params->protocol == CS_ETM_PROTO_ETMV3) ?
 =======
 		decoder_name = (t_params->protocol == CS_ETM_PROTO_ETMV3) ?
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		decoder->decoder_name = (t_params->protocol == CS_ETM_PROTO_ETMV3) ?
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							OCSD_BUILTIN_DCD_ETMV3 :
 							OCSD_BUILTIN_DCD_PTM;
 		trace_config = &config_etmv3;
 		break;
 	case CS_ETM_PROTO_ETMV4i:
 		cs_etm_decoder__gen_etmv4_config(t_params, &trace_config_etmv4);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		decoder->decoder_name = OCSD_BUILTIN_DCD_ETMV4I;
 		trace_config = &trace_config_etmv4;
@@ -747,17 +804,31 @@ static int cs_etm_decoder__create_etm_packet_decoder(
 		trace_config = &trace_config_etmv4;
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		decoder->decoder_name = OCSD_BUILTIN_DCD_ETMV4I;
+		trace_config = &trace_config_etmv4;
+		break;
+	case CS_ETM_PROTO_ETE:
+		cs_etm_decoder__gen_ete_config(t_params, &trace_config_ete);
+		decoder->decoder_name = OCSD_BUILTIN_DCD_ETE;
+		trace_config = &trace_config_ete;
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -1;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (d_params->operation == CS_ETM_OPERATION_DECODE) {
 		if (ocsd_dt_create_decoder(decoder->dcd_tree,
 					   decoder->decoder_name,
 					   OCSD_CREATE_FLG_FULL_DECODER,
 					   trace_config, &csid))
 			return -1;
+<<<<<<< HEAD
 
 		if (ocsd_dt_set_gen_elem_outfn(decoder->dcd_tree,
 					       cs_etm_decoder__gen_trace_elem_printer,
@@ -782,15 +853,22 @@ static int cs_etm_decoder__create_etm_packet_decoder(
 				     OCSD_CREATE_FLG_FULL_DECODER,
 				     trace_config, &csid))
 		return -1;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (ocsd_dt_set_gen_elem_outfn(decoder->dcd_tree,
-				       cs_etm_decoder__gen_trace_elem_printer,
-				       decoder))
-		return -1;
+		if (ocsd_dt_set_gen_elem_outfn(decoder->dcd_tree,
+					       cs_etm_decoder__gen_trace_elem_printer,
+					       decoder))
+			return -1;
 
-	return 0;
-}
+		return 0;
+	} else if (d_params->operation == CS_ETM_OPERATION_PRINT) {
+		if (ocsd_dt_create_decoder(decoder->dcd_tree, decoder->decoder_name,
+					   OCSD_CREATE_FLG_PACKET_PROC,
+					   trace_config, &csid))
+			return -1;
 
+<<<<<<< HEAD
 static int
 cs_etm_decoder__create_etm_decoder(struct cs_etm_decoder_params *d_params,
 				   struct cs_etm_trace_params *t_params,
@@ -803,16 +881,27 @@ cs_etm_decoder__create_etm_decoder(struct cs_etm_decoder_params *d_params,
 		return cs_etm_decoder__create_etm_packet_decoder(t_params,
 								 decoder);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ocsd_dt_set_pkt_protocol_printer(decoder->dcd_tree, csid, 0))
+			return -1;
+
+		return 0;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return -1;
 }
 
 struct cs_etm_decoder *
 <<<<<<< HEAD
+<<<<<<< HEAD
 cs_etm_decoder__new(int decoders, struct cs_etm_decoder_params *d_params,
 =======
 cs_etm_decoder__new(int num_cpu, struct cs_etm_decoder_params *d_params,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+cs_etm_decoder__new(int decoders, struct cs_etm_decoder_params *d_params,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    struct cs_etm_trace_params t_params[])
 {
 	struct cs_etm_decoder *decoder;
@@ -858,10 +947,14 @@ cs_etm_decoder__new(int num_cpu, struct cs_etm_decoder_params *d_params,
 	cs_etm_decoder__init_raw_frame_logging(d_params, decoder);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < decoders; i++) {
 =======
 	for (i = 0; i < num_cpu; i++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < decoders; i++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = cs_etm_decoder__create_etm_decoder(d_params,
 							 &t_params[i],
 							 decoder);
@@ -934,10 +1027,16 @@ void cs_etm_decoder__free(struct cs_etm_decoder *decoder)
 	free(decoder);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 const char *cs_etm_decoder__get_name(struct cs_etm_decoder *decoder)
 {
 	return decoder->decoder_name;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

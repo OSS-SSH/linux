@@ -13,15 +13,22 @@
 
 #include "abi/guc_actions_abi.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "abi/guc_actions_slpc_abi.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "abi/guc_actions_slpc_abi.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "abi/guc_errors_abi.h"
 #include "abi/guc_communication_mmio_abi.h"
 #include "abi/guc_communication_ctb_abi.h"
 #include "abi/guc_messages_abi.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Payload length only i.e. don't include G2H header length */
 #define G2H_LEN_DW_SCHED_CONTEXT_MODE_SET	2
 #define G2H_LEN_DW_DEREGISTER_CONTEXT		1
@@ -29,8 +36,11 @@
 #define GUC_CONTEXT_DISABLE		0
 #define GUC_CONTEXT_ENABLE		1
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define GUC_CLIENT_PRIORITY_KMD_HIGH	0
 #define GUC_CLIENT_PRIORITY_HIGH	1
 #define GUC_CLIENT_PRIORITY_KMD_NORMAL	2
@@ -38,12 +48,17 @@
 #define GUC_CLIENT_PRIORITY_NUM		4
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define GUC_MAX_LRC_DESCRIPTORS		65535
 #define	GUC_INVALID_LRC_ID		GUC_MAX_LRC_DESCRIPTORS
 =======
 #define GUC_MAX_STAGE_DESCRIPTORS	1024
 #define	GUC_INVALID_STAGE_ID		GUC_MAX_STAGE_DESCRIPTORS
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define GUC_MAX_LRC_DESCRIPTORS		65535
+#define	GUC_INVALID_LRC_ID		GUC_MAX_LRC_DESCRIPTORS
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define GUC_RENDER_ENGINE		0
 #define GUC_VIDEO_ENGINE		1
@@ -101,6 +116,7 @@
 #define   GUC_LOG_CRASH_SHIFT		4
 #define   GUC_LOG_CRASH_MASK		(0x3 << GUC_LOG_CRASH_SHIFT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define   GUC_LOG_DEBUG_SHIFT		6
 #define   GUC_LOG_DEBUG_MASK	        (0xF << GUC_LOG_DEBUG_SHIFT)
 =======
@@ -109,15 +125,23 @@
 #define   GUC_LOG_ISR_SHIFT		9
 #define   GUC_LOG_ISR_MASK	        (0x7 << GUC_LOG_ISR_SHIFT)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define   GUC_LOG_DEBUG_SHIFT		6
+#define   GUC_LOG_DEBUG_MASK	        (0xF << GUC_LOG_DEBUG_SHIFT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define   GUC_LOG_BUF_ADDR_SHIFT	12
 
 #define GUC_CTL_WA			1
 #define GUC_CTL_FEATURE			2
 #define   GUC_CTL_DISABLE_SCHEDULER	(1 << 14)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define   GUC_CTL_ENABLE_SLPC		BIT(2)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define   GUC_CTL_ENABLE_SLPC		BIT(2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define GUC_CTL_DEBUG			3
 #define   GUC_LOG_VERBOSITY_SHIFT	0
@@ -165,13 +189,19 @@
 	(((guc_id) & GUC_ENGINE_INSTANCE_MASK) >> GUC_ENGINE_INSTANCE_SHIFT)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SLPC_EVENT(id, c) (\
 FIELD_PREP(HOST2GUC_PC_SLPC_REQUEST_MSG_1_EVENT_ID, id) | \
 FIELD_PREP(HOST2GUC_PC_SLPC_REQUEST_MSG_1_EVENT_ARGC, c) \
 )
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline u8 engine_class_to_guc_class(u8 class)
 {
 	BUILD_BUG_ON(GUC_RENDER_CLASS != RENDER_CLASS);
@@ -214,6 +244,7 @@ struct guc_process_desc {
 } __packed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CONTEXT_REGISTRATION_FLAG_KMD	BIT(0)
 
 #define CONTEXT_POLICY_DEFAULT_EXECUTION_QUANTUM_US 1000000
@@ -252,54 +283,34 @@ struct guc_lrc_desc {
 /* engine id and context id is packed into guc_execlist_context.context_id*/
 #define GUC_ELC_CTXID_OFFSET		0
 #define GUC_ELC_ENGINE_OFFSET		29
+=======
+#define CONTEXT_REGISTRATION_FLAG_KMD	BIT(0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-/* The execlist context including software and HW information */
-struct guc_execlist_context {
-	u32 context_desc;
-	u32 context_id;
-	u32 ring_status;
-	u32 ring_lrca;
-	u32 ring_begin;
-	u32 ring_end;
-	u32 ring_next_free_location;
-	u32 ring_current_tail_pointer_value;
-	u8 engine_state_submit_value;
-	u8 engine_state_wait_value;
-	u16 pagefault_count;
-	u16 engine_submit_queue_count;
-} __packed;
+#define CONTEXT_POLICY_DEFAULT_EXECUTION_QUANTUM_US 1000000
+#define CONTEXT_POLICY_DEFAULT_PREEMPTION_TIME_US 500000
+
+/* Preempt to idle on quantum expiry */
+#define CONTEXT_POLICY_FLAG_PREEMPT_TO_IDLE	BIT(0)
 
 /*
- * This structure describes a stage set arranged for a particular communication
- * between uKernel (GuC) and Driver (KMD). Technically, this is known as a
- * "GuC Context descriptor" in the specs, but we use the term "stage descriptor"
- * to avoid confusion with all the other things already named "context" in the
- * driver. A static pool of these descriptors are stored inside a GEM object
- * (stage_desc_pool) which is held for the entire lifetime of our interaction
- * with the GuC, being allocated before the GuC is loaded with its firmware.
+ * GuC Context registration descriptor.
+ * FIXME: This is only required to exist during context registration.
+ * The current 1:1 between guc_lrc_desc and LRCs for the lifetime of the LRC
+ * is not required.
  */
-struct guc_stage_desc {
-	u32 sched_common_area;
-	u32 stage_id;
-	u32 pas_id;
-	u8 engines_used;
-	u64 db_trigger_cpu;
-	u32 db_trigger_uk;
-	u64 db_trigger_phy;
-	u16 db_id;
-
-	struct guc_execlist_context lrc[GUC_MAX_ENGINES_NUM];
-
-	u8 attribute;
-
+struct guc_lrc_desc {
+	u32 hw_context_desc;
+	u32 slpm_perf_mode_hint;	/* SPLC v1 only */
+	u32 slpm_freq_hint;
+	u32 engine_submit_mask;		/* In logical space */
+	u8 engine_class;
+	u8 reserved0[3];
 	u32 priority;
-
-	u32 wq_sampled_tail_offset;
-	u32 wq_total_submit_enqueues;
-
 	u32 process_desc;
 	u32 wq_addr;
 	u32 wq_size;
+<<<<<<< HEAD
 
 	u32 engine_presence;
 
@@ -310,6 +321,17 @@ struct guc_stage_desc {
 
 	u64 desc_private;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 context_flags;		/* CONTEXT_REGISTRATION_* */
+	/* Time for one workload to execute. (in micro seconds) */
+	u32 execution_quantum;
+	/* Time to wait for a preemption request to complete before issuing a
+	 * reset. (in micro seconds).
+	 */
+	u32 preemption_timeout;
+	u32 policy_flags;		/* CONTEXT_POLICY_* */
+	u32 reserved1[19];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 #define GUC_POWER_UNSPECIFIED	0
@@ -320,6 +342,7 @@ struct guc_stage_desc {
 
 /* Scheduling policy settings */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define GLOBAL_POLICY_MAX_NUM_WI 15
 
@@ -334,29 +357,21 @@ struct guc_policies {
 #define POLICY_RESET_ENGINE		(1<<0)
 /* Preempt to idle on quantum expiry */
 #define POLICY_PREEMPT_TO_IDLE		(1<<1)
+=======
+#define GLOBAL_POLICY_MAX_NUM_WI 15
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-#define POLICY_MAX_NUM_WI 15
-#define POLICY_DEFAULT_DPC_PROMOTE_TIME_US 500000
-#define POLICY_DEFAULT_EXECUTION_QUANTUM_US 1000000
-#define POLICY_DEFAULT_PREEMPTION_TIME_US 500000
-#define POLICY_DEFAULT_FAULT_TIME_US 250000
+/* Don't reset an engine upon preemption failure */
+#define GLOBAL_POLICY_DISABLE_ENGINE_RESET				BIT(0)
 
-struct guc_policy {
-	/* Time for one workload to execute. (in micro seconds) */
-	u32 execution_quantum;
-	/* Time to wait for a preemption request to completed before issuing a
-	 * reset. (in micro seconds). */
-	u32 preemption_time;
-	/* How much time to allow to run after the first fault is observed.
-	 * Then preempt afterwards. (in micro seconds) */
-	u32 fault_time;
-	u32 policy_flags;
-	u32 reserved[8];
-} __packed;
+#define GLOBAL_POLICY_DEFAULT_DPC_PROMOTE_TIME_US 500000
 
 struct guc_policies {
+<<<<<<< HEAD
 	struct guc_policy policy[GUC_CLIENT_PRIORITY_NUM][GUC_MAX_ENGINE_CLASSES];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 submission_queue_depth[GUC_MAX_ENGINE_CLASSES];
 	/* In micro seconds. How much time to allow before DPC processing is
 	 * called back via interrupt (to prevent DPC queue drain starving).
@@ -371,9 +386,13 @@ struct guc_policies {
 	u32 max_num_work_items;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 global_flags;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 global_flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 reserved[4];
 } __packed;
 
@@ -400,6 +419,7 @@ struct guc_gt_system_info {
 } __packed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Clients info */
 struct guc_ct_pool_entry {
@@ -418,6 +438,8 @@ struct guc_clients_info {
 } __packed;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* GuC Additional Data Struct */
 struct guc_ads {
 	struct guc_mmio_reg_set reg_state_list[GUC_MAX_ENGINE_CLASSES][GUC_MAX_INSTANCES_PER_CLASS];
@@ -425,10 +447,14 @@ struct guc_ads {
 	u32 scheduler_policies;
 	u32 gt_system_info;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 reserved1;
 =======
 	u32 clients_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 reserved1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 control_data;
 	u32 golden_context_lrca[GUC_MAX_ENGINE_CLASSES];
 	u32 eng_state_size[GUC_MAX_ENGINE_CLASSES];
@@ -440,11 +466,15 @@ struct guc_ads {
 
 enum guc_log_buffer_type {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GUC_DEBUG_LOG_BUFFER,
 =======
 	GUC_ISR_LOG_BUFFER,
 	GUC_DPC_LOG_BUFFER,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GUC_DEBUG_LOG_BUFFER,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GUC_CRASH_DUMP_LOG_BUFFER,
 	GUC_MAX_LOG_BUFFER
 };
@@ -514,6 +544,7 @@ struct guc_shared_ctx_data {
 } __packed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define __INTEL_GUC_MSG_GET(T, m) \
 	(((m) & INTEL_GUC_MSG_ ## T ## _MASK) >> INTEL_GUC_MSG_ ## T ## _SHIFT)
@@ -533,6 +564,8 @@ struct guc_shared_ctx_data {
 	   (INTEL_GUC_RESPONSE_STATUS_SUCCESS << INTEL_GUC_MSG_CODE_SHIFT)))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* This action will be programmed in C1BC - SOFT_SCRATCH_15_REG */
 enum intel_guc_recv_message {
 	INTEL_GUC_RECV_MSG_CRASH_DUMP_POSTED = BIT(1),

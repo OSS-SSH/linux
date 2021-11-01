@@ -1269,11 +1269,15 @@ static void ubd_map_req(struct ubd *dev, struct io_thread_req *io_req,
 			BUG_ON(i >= io_req->desc_cnt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			io_req->io_desc[i].buffer = bvec_virt(&bvec);
 =======
 			io_req->io_desc[i].buffer =
 				page_address(bvec.bv_page) + bvec.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			io_req->io_desc[i].buffer = bvec_virt(&bvec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			io_req->io_desc[i].length = bvec.bv_len;
 			i++;
 		}

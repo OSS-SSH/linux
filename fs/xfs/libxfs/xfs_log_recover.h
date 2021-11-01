@@ -123,10 +123,15 @@ void xlog_buf_readahead(struct xlog *log, xfs_daddr_t blkno, uint len,
 bool xlog_is_buffer_cancelled(struct xlog *log, xfs_daddr_t blkno, uint len);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int xlog_recover_iget(struct xfs_mount *mp, xfs_ino_t ino,
 		struct xfs_inode **ipp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int xlog_recover_iget(struct xfs_mount *mp, xfs_ino_t ino,
+		struct xfs_inode **ipp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void xlog_recover_release_intent(struct xlog *log, unsigned short intent_type,
 		uint64_t intent_id);
 

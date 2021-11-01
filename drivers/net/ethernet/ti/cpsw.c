@@ -432,10 +432,14 @@ static void cpsw_rx_handler(void *token, int len, int status)
 
 	/* mark skb for recycling */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	skb_mark_for_recycle(skb);
 =======
 	skb_mark_for_recycle(skb, page, pool);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	skb_mark_for_recycle(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netif_receive_skb(skb);
 
 	ndev->stats.rx_bytes += len;
@@ -850,10 +854,14 @@ static int cpsw_ndo_open(struct net_device *ndev)
 
 		coal.rx_coalesce_usecs = cpsw->coal_intvl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpsw_set_coalesce(ndev, &coal, NULL, NULL);
 =======
 		cpsw_set_coalesce(ndev, &coal);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpsw_set_coalesce(ndev, &coal, NULL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	cpdma_ctlr_start(cpsw->dma);
@@ -914,10 +922,14 @@ static netdev_tx_t cpsw_ndo_start_xmit(struct sk_buff *skb,
 	int ret, q_idx;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb_put_padto(skb, CPSW_MIN_PACKET_SIZE)) {
 =======
 	if (skb_padto(skb, CPSW_MIN_PACKET_SIZE)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb_put_padto(skb, CPSW_MIN_PACKET_SIZE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpsw_err(priv, tx_err, "packet pad failed\n");
 		ndev->stats.tx_dropped++;
 		return NET_XMIT_DROP;
@@ -1172,10 +1184,14 @@ static const struct net_device_ops cpsw_netdev_ops = {
 	.ndo_start_xmit		= cpsw_ndo_start_xmit,
 	.ndo_set_mac_address	= cpsw_ndo_set_mac_address,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= cpsw_ndo_ioctl,
 =======
 	.ndo_do_ioctl		= cpsw_ndo_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= cpsw_ndo_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_tx_timeout		= cpsw_ndo_tx_timeout,
 	.ndo_set_rx_mode	= cpsw_ndo_set_rx_mode,

@@ -352,11 +352,17 @@ static int qed_fw_assertion(struct qed_hwfn *p_hwfn)
 			  "FW assertion!\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Clear assert indications */
 	qed_wr(p_hwfn, p_hwfn->p_dpc_ptt, MISC_REG_AEU_GENERAL_ATTN_32, 0);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Clear assert indications */
+	qed_wr(p_hwfn, p_hwfn->p_dpc_ptt, MISC_REG_AEU_GENERAL_ATTN_32, 0);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -EINVAL;
 }
 
@@ -471,6 +477,9 @@ static int qed_dorq_attn_int_sts(struct qed_hwfn *p_hwfn)
 	struct qed_ptt *p_ptt = p_hwfn->p_dpc_ptt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int_sts = qed_rd(p_hwfn, p_ptt, DORQ_REG_INT_STS);
 	if (int_sts == 0xdeadbeaf) {
 		DP_NOTICE(p_hwfn->cdev,
@@ -479,17 +488,23 @@ static int qed_dorq_attn_int_sts(struct qed_hwfn *p_hwfn)
 		return 0;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* int_sts may be zero since all PFs were interrupted for doorbell
 	 * overflow but another one already handled it. Can abort here. If
 	 * This PF also requires overflow recovery we will be interrupted again.
 	 * The masked almost full indication may also be set. Ignoring.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int_sts = qed_rd(p_hwfn, p_ptt, DORQ_REG_INT_STS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(int_sts & ~DORQ_REG_INT_STS_DORQ_FIFO_AFULL))
 		return 0;
 
@@ -549,11 +564,17 @@ static int qed_dorq_attn_int_sts(struct qed_hwfn *p_hwfn)
 static int qed_dorq_attn_cb(struct qed_hwfn *p_hwfn)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (p_hwfn->cdev->recov_in_prog)
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (p_hwfn->cdev->recov_in_prog)
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	p_hwfn->db_recovery_info.dorq_attn = true;
 	qed_dorq_attn_overflow(p_hwfn);
 
@@ -970,6 +991,9 @@ qed_int_deassertion_aeu_bit(struct qed_hwfn *p_hwfn,
 		p_bit_name);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Re-enable FW aassertion (Gen 32) interrupts */
 	val = qed_rd(p_hwfn, p_hwfn->p_dpc_ptt,
 		     MISC_REG_AEU_ENABLE4_IGU_OUT_0);
@@ -977,8 +1001,11 @@ qed_int_deassertion_aeu_bit(struct qed_hwfn *p_hwfn,
 	qed_wr(p_hwfn, p_hwfn->p_dpc_ptt,
 	       MISC_REG_AEU_ENABLE4_IGU_OUT_0, val);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return rc;
 }

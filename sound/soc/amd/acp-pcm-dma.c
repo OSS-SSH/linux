@@ -157,10 +157,14 @@ static void config_acp_dma_channel(void __iomem *acp_mmio, u8 ch_num,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Initialize a dma descriptor in SRAM based on descriptor information passed */
 =======
 /* Initialize a dma descriptor in SRAM based on descritor information passed */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Initialize a dma descriptor in SRAM based on descriptor information passed */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void config_dma_descriptor_in_sram(void __iomem *acp_mmio,
 					  u16 descr_idx,
 					  acp_dma_dscr_transfer_t *descr_info)
@@ -293,10 +297,14 @@ static void set_acp_to_i2s_dma_descriptors(void __iomem *acp_mmio, u32 size,
 	}
 	pre_config_reset(acp_mmio, ch);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Configure the DMA channel with the above descriptor */
 =======
 	/* Configure the DMA channel with the above descriptore */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Configure the DMA channel with the above descriptor */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	config_acp_dma_channel(acp_mmio, ch, dma_dscr_idx - 1,
 			       NUM_DSCRS_PER_CHANNEL,
 			       ACP_DMA_PRIORITY_LEVEL_NORMAL);
@@ -331,10 +339,14 @@ static void acp_pte_config(void __iomem *acp_mmio, dma_addr_t addr,
 		acp_reg_write(high, acp_mmio, mmACP_SRBM_Targ_Idx_Data);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Move to next physically contiguous page */
 =======
 		/* Move to next physically contiguos page */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Move to next physically contiguous page */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		addr += PAGE_SIZE;
 	}
 }
@@ -615,6 +627,7 @@ static int acp_init(void __iomem *acp_mmio, u32 asic_type)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* initialize Onion control DAGB register */
 	acp_reg_write(ACP_ONION_CNTL_DEFAULT, acp_mmio,
 		      mmACP_AXI2DAGB_ONION_CNTL);
@@ -627,6 +640,13 @@ static int acp_init(void __iomem *acp_mmio, u32 asic_type)
 
 	/* initiailize Garlic control DAGB registers */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* initialize Onion control DAGB register */
+	acp_reg_write(ACP_ONION_CNTL_DEFAULT, acp_mmio,
+		      mmACP_AXI2DAGB_ONION_CNTL);
+
+	/* initialize Garlic control DAGB registers */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acp_reg_write(ACP_GARLIC_CNTL_DEFAULT, acp_mmio,
 		      mmACP_AXI2DAGB_GARLIC_CNTL);
 
@@ -642,10 +662,14 @@ static int acp_init(void __iomem *acp_mmio, u32 asic_type)
 		      mmACP_DMA_DESC_BASE_ADDR);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Num of descriptors in SRAM 0x4, means 256 descriptors;(64 * 4) */
 =======
 	/* Num of descriptiors in SRAM 0x4, means 256 descriptors;(64 * 4) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Num of descriptors in SRAM 0x4, means 256 descriptors;(64 * 4) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acp_reg_write(0x4, acp_mmio, mmACP_DMA_DESC_MAX_NUM_DSCR);
 	acp_reg_write(ACP_EXTERNAL_INTR_CNTL__DMAIOCMask_MASK,
 		      acp_mmio, mmACP_EXTERNAL_INTR_CNTL);
@@ -994,10 +1018,14 @@ static int acp_dma_hw_params(struct snd_soc_component *component,
 	acp_set_sram_bank_state(rtd->acp_mmio, 0, true);
 	/* Save for runtime private data */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rtd->dma_addr = runtime->dma_addr;
 =======
 	rtd->dma_addr = substream->dma_buffer.addr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rtd->dma_addr = runtime->dma_addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rtd->order = get_order(size);
 
 	/* Fill the page table entries in ACP SRAM */
@@ -1064,6 +1092,7 @@ static snd_pcm_uframes_t acp_dma_pointer(struct snd_soc_component *component,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int acp_dma_mmap(struct snd_soc_component *component,
 			struct snd_pcm_substream *substream,
@@ -1073,6 +1102,8 @@ static int acp_dma_mmap(struct snd_soc_component *component,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int acp_dma_prepare(struct snd_soc_component *component,
 			   struct snd_pcm_substream *substream)
 {
@@ -1237,9 +1268,12 @@ static const struct snd_soc_component_driver acp_asoc_platform = {
 	.trigger	= acp_dma_trigger,
 	.pointer	= acp_dma_pointer,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.mmap		= acp_dma_mmap,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.prepare	= acp_dma_prepare,
 	.pcm_construct	= acp_dma_new,
 };

@@ -38,6 +38,7 @@ enum mchp_tc_count_function {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const enum counter_function mchp_tc_count_functions[] = {
 	[MCHP_TC_FUNCTION_INCREASE] = COUNTER_FUNCTION_INCREASE,
 	[MCHP_TC_FUNCTION_QUADRATURE] = COUNTER_FUNCTION_QUADRATURE_X4,
@@ -46,6 +47,11 @@ static const enum counter_count_function mchp_tc_count_functions[] = {
 	[MCHP_TC_FUNCTION_INCREASE] = COUNTER_COUNT_FUNCTION_INCREASE,
 	[MCHP_TC_FUNCTION_QUADRATURE] = COUNTER_COUNT_FUNCTION_QUADRATURE_X4,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const enum counter_function mchp_tc_count_functions[] = {
+	[MCHP_TC_FUNCTION_INCREASE] = COUNTER_FUNCTION_INCREASE,
+	[MCHP_TC_FUNCTION_QUADRATURE] = COUNTER_FUNCTION_QUADRATURE_X4,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum mchp_tc_synapse_action {
@@ -140,11 +146,17 @@ static int mchp_tc_count_function_set(struct counter_device *counter,
 		cmr |= ATMEL_TC_ETRGEDG_RISING | ATMEL_TC_ABETRG | ATMEL_TC_XC0;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	default:
 		/* should never reach this path */
 		return -EINVAL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	default:
+		/* should never reach this path */
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	regmap_write(priv->regmap, ATMEL_TC_BMR, bmr);
@@ -168,10 +180,14 @@ static int mchp_tc_count_function_set(struct counter_device *counter,
 static int mchp_tc_count_signal_read(struct counter_device *counter,
 				     struct counter_signal *signal,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     enum counter_signal_level *lvl)
 =======
 				     enum counter_signal_value *val)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     enum counter_signal_level *lvl)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mchp_tc_data *const priv = counter->priv;
 	bool sigstatus;
@@ -185,10 +201,14 @@ static int mchp_tc_count_signal_read(struct counter_device *counter,
 		sigstatus = (sr & ATMEL_TC_MTIOA);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*lvl = sigstatus ? COUNTER_SIGNAL_LEVEL_HIGH : COUNTER_SIGNAL_LEVEL_LOW;
 =======
 	*val = sigstatus ? COUNTER_SIGNAL_HIGH : COUNTER_SIGNAL_LOW;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*lvl = sigstatus ? COUNTER_SIGNAL_LEVEL_HIGH : COUNTER_SIGNAL_LEVEL_LOW;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -247,11 +267,17 @@ static int mchp_tc_count_action_set(struct counter_device *counter,
 		edge = ATMEL_TC_ETRGEDG_BOTH;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	default:
 		/* should never reach this path */
 		return -EINVAL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	default:
+		/* should never reach this path */
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return regmap_write_bits(priv->regmap,

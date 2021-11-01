@@ -110,6 +110,7 @@
  * However this should be changed in the next major version bump of dlm.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * Ack handling:
  *
@@ -118,6 +119,8 @@
  * message. Will reduce some traffic but makes the drop detection slower.
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Tail Size checking:
  *
  * There exists a message tail payload in e.g. DLM_MSG however we don't
@@ -173,9 +176,13 @@ struct midcomms_node {
 #define DLM_NODE_FLAG_STOP_TX	2
 #define DLM_NODE_FLAG_STOP_RX	3
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DLM_NODE_ULP_DELIVERED	4
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DLM_NODE_ULP_DELIVERED	4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 	wait_queue_head_t shutdown_wait;
 
@@ -488,6 +495,7 @@ static void dlm_midcomms_receive_buffer(union dlm_packet *p,
 	if (seq == node->seq_next) {
 		node->seq_next++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		switch (p->header.h_cmd) {
 		case DLM_FIN:
@@ -501,6 +509,14 @@ static void dlm_midcomms_receive_buffer(union dlm_packet *p,
 		switch (p->header.h_cmd) {
 		case DLM_FIN:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		switch (p->header.h_cmd) {
+		case DLM_FIN:
+			/* send ack before fin */
+			dlm_send_ack(node->nodeid, node->seq_next);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			spin_lock(&node->state_lock);
 			pr_debug("receive fin msg from node %d with state %s\n",
 				 node->nodeid, dlm_state_str(node->state));
@@ -551,9 +567,13 @@ static void dlm_midcomms_receive_buffer(union dlm_packet *p,
 			WARN_ON(test_bit(DLM_NODE_FLAG_STOP_RX, &node->flags));
 			dlm_receive_buffer(p, node->nodeid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			set_bit(DLM_NODE_ULP_DELIVERED, &node->flags);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			set_bit(DLM_NODE_ULP_DELIVERED, &node->flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 	} else {
@@ -954,6 +974,9 @@ int dlm_process_incoming_buffer(int nodeid, unsigned char *buf, int len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dlm_midcomms_receive_done(int nodeid)
 {
 	struct midcomms_node *node;
@@ -997,8 +1020,11 @@ void dlm_midcomms_receive_done(int nodeid)
 	srcu_read_unlock(&nodes_srcu, idx);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dlm_midcomms_unack_msg_resend(int nodeid)
 {
 	struct midcomms_node *node;

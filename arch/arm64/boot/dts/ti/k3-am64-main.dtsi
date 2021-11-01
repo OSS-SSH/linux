@@ -218,14 +218,20 @@
 			#phy-cells = <1>;
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		epwm_tbclk: clock@4140 {
 			compatible = "ti,am64-epwm-tbclk", "syscon";
 			reg = <0x4130 0x4>;
 			#clock-cells = <1>;
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	main_uart0: serial@2800000 {
@@ -869,6 +875,9 @@
 		max-functions = /bits/ 8 <1>;
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	epwm0: pwm@23000000 {
 		compatible = "ti,am64-epwm", "ti,am3352-ehrpwm";
@@ -977,6 +986,9 @@
 		clocks = <&k3_clks 53 0>;
 		clock-names = "fck";
 	};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

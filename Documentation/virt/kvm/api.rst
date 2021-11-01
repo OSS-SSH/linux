@@ -856,10 +856,14 @@ use PPIs designated for specific cpus.  The irq field is interpreted
 like this::
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   bits:  |  31 ... 28  | 27 ... 24 | 23  ... 16 | 15 ... 0 |
 =======
   bits:  |  31 ... 28  | 27 ... 24 | 23  ... 16 | 15 ... 0 |
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  bits:  |  31 ... 28  | 27 ... 24 | 23  ... 16 | 15 ... 0 |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   field: | vcpu2_index | irq_type  | vcpu_index |  irq_id  |
 
 The irq_type field has the following values:
@@ -2154,6 +2158,7 @@ Errors:
 
   ======   ============================================================
 <<<<<<< HEAD
+<<<<<<< HEAD
   ENOENT   no such register
   EINVAL   invalid register ID, or no such register or used with VMs in
            protected virtualization mode on s390
@@ -2164,6 +2169,12 @@ Errors:
            protected virtualization mode on s390
   EPERM    (arm64) register access not allowed before vcpu finalization
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  ENOENT   no such register
+  EINVAL   invalid register ID, or no such register or used with VMs in
+           protected virtualization mode on s390
+  EPERM    (arm64) register access not allowed before vcpu finalization
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ======   ============================================================
 
 (These error codes are indicative only: do not rely on a specific error
@@ -2602,6 +2613,7 @@ Errors include:
 
   ======== ============================================================
 <<<<<<< HEAD
+<<<<<<< HEAD
   ENOENT   no such register
   EINVAL   invalid register ID, or no such register or used with VMs in
            protected virtualization mode on s390
@@ -2612,6 +2624,12 @@ Errors include:
            protected virtualization mode on s390
   EPERM    (arm64) register access not allowed before vcpu finalization
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  ENOENT   no such register
+  EINVAL   invalid register ID, or no such register or used with VMs in
+           protected virtualization mode on s390
+  EPERM    (arm64) register access not allowed before vcpu finalization
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ======== ============================================================
 
 (These error codes are indicative only: do not rely on a specific error
@@ -3131,6 +3149,7 @@ Errors:
 
   ======     =================================================================
 <<<<<<< HEAD
+<<<<<<< HEAD
   EINVAL     the target is unknown, or the combination of features is invalid.
   ENOENT     a features bit specified is unknown.
   ======     =================================================================
@@ -3147,6 +3166,15 @@ This tells KVM what type of CPU to present to the guest, and what
 optional features it should have.  This will cause a reset of the cpu
 registers to their initial values.  If this is not called, KVM_RUN will
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  EINVAL     the target is unknown, or the combination of features is invalid.
+  ENOENT     a features bit specified is unknown.
+  ======     =================================================================
+
+This tells KVM what type of CPU to present to the guest, and what
+optional features it should have.  This will cause a reset of the cpu
+registers to their initial values.  If this is not called, KVM_RUN will
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 return ENOEXEC for that vcpu.
 
 The initial values are defined as:
@@ -3268,12 +3296,17 @@ Errors:
 
   =====      ==============================================================
 <<<<<<< HEAD
+<<<<<<< HEAD
   E2BIG      the reg index list is too big to fit in the array specified by
              the user (the number required will be written into n).
 =======
   E2BIG      the reg index list is too big to fit in the array specified by
              the user (the number required will be written into n).
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  E2BIG      the reg index list is too big to fit in the array specified by
+             the user (the number required will be written into n).
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   =====      ==============================================================
 
 ::
@@ -3322,10 +3355,14 @@ ARM/arm64 divides the id field into two parts, a device id and an
 address type id specific to the individual device::
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   bits:  | 63        ...       32 | 31    ...    16 | 15    ...    0 |
 =======
   bits:  | 63        ...       32 | 31    ...    16 | 15    ...    0 |
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  bits:  | 63        ...       32 | 31    ...    16 | 15    ...    0 |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   field: |        0x00000000      |     device id   |  addr type id  |
 
 ARM/arm64 currently only require this when using the in-kernel GIC
@@ -3395,9 +3432,13 @@ flags which can include the following:
   - KVM_GUESTDBG_INJECT_BP:     inject BP type exception [x86]
   - KVM_GUESTDBG_EXIT_PENDING:  trigger an immediate guest exit [s390]
 <<<<<<< HEAD
+<<<<<<< HEAD
   - KVM_GUESTDBG_BLOCKIRQ:      avoid injecting interrupts/NMI/SMI [x86]
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  - KVM_GUESTDBG_BLOCKIRQ:      avoid injecting interrupts/NMI/SMI [x86]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 For example KVM_GUESTDBG_USE_SW_BP indicates that software breakpoints
 are enabled in memory so we need to ensure breakpoint exceptions are
@@ -5119,10 +5160,14 @@ then ``length`` is returned.
 
 4.131 KVM_GET_SREGS2
 <<<<<<< HEAD
+<<<<<<< HEAD
 --------------------
 =======
 ------------------
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+--------------------
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 :Capability: KVM_CAP_SREGS2
 :Architectures: x86
@@ -5136,6 +5181,9 @@ This ioctl (when supported) replaces the KVM_GET_SREGS.
 ::
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         struct kvm_sregs2 {
                 /* out (KVM_GET_SREGS2) / in (KVM_SET_SREGS2) */
                 struct kvm_segment cs, ds, es, fs, gs, ss;
@@ -5147,6 +5195,7 @@ This ioctl (when supported) replaces the KVM_GET_SREGS.
                 __u64 flags;
                 __u64 pdptrs[4];
         };
+<<<<<<< HEAD
 =======
 struct kvm_sregs2 {
 	/* out (KVM_GET_SREGS2) / in (KVM_SET_SREGS2) */
@@ -5160,6 +5209,8 @@ struct kvm_sregs2 {
 	__u64 pdptrs[4];
 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 flags values for ``kvm_sregs2``:
 
@@ -5170,10 +5221,14 @@ flags values for ``kvm_sregs2``:
 
 4.132 KVM_SET_SREGS2
 <<<<<<< HEAD
+<<<<<<< HEAD
 --------------------
 =======
 ------------------
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+--------------------
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 :Capability: KVM_CAP_SREGS2
 :Architectures: x86
@@ -5265,9 +5320,13 @@ The descriptors block is only needed to be read once for the lifetime of the
 file descriptor contains a sequence of ``struct kvm_stats_desc``, each followed
 by a string of size ``name_size``.
 <<<<<<< HEAD
+<<<<<<< HEAD
 ::
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+::
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	#define KVM_STATS_TYPE_SHIFT		0
 	#define KVM_STATS_TYPE_MASK		(0xF << KVM_STATS_TYPE_SHIFT)
@@ -5275,11 +5334,17 @@ by a string of size ``name_size``.
 	#define KVM_STATS_TYPE_INSTANT		(0x1 << KVM_STATS_TYPE_SHIFT)
 	#define KVM_STATS_TYPE_PEAK		(0x2 << KVM_STATS_TYPE_SHIFT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define KVM_STATS_TYPE_LINEAR_HIST	(0x3 << KVM_STATS_TYPE_SHIFT)
 	#define KVM_STATS_TYPE_LOG_HIST		(0x4 << KVM_STATS_TYPE_SHIFT)
 	#define KVM_STATS_TYPE_MAX		KVM_STATS_TYPE_LOG_HIST
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define KVM_STATS_TYPE_LINEAR_HIST	(0x3 << KVM_STATS_TYPE_SHIFT)
+	#define KVM_STATS_TYPE_LOG_HIST		(0x4 << KVM_STATS_TYPE_SHIFT)
+	#define KVM_STATS_TYPE_MAX		KVM_STATS_TYPE_LOG_HIST
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	#define KVM_STATS_UNIT_SHIFT		4
 	#define KVM_STATS_UNIT_MASK		(0xF << KVM_STATS_UNIT_SHIFT)
@@ -5288,18 +5353,26 @@ by a string of size ``name_size``.
 	#define KVM_STATS_UNIT_SECONDS		(0x2 << KVM_STATS_UNIT_SHIFT)
 	#define KVM_STATS_UNIT_CYCLES		(0x3 << KVM_STATS_UNIT_SHIFT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define KVM_STATS_UNIT_MAX		KVM_STATS_UNIT_CYCLES
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define KVM_STATS_UNIT_MAX		KVM_STATS_UNIT_CYCLES
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	#define KVM_STATS_BASE_SHIFT		8
 	#define KVM_STATS_BASE_MASK		(0xF << KVM_STATS_BASE_SHIFT)
 	#define KVM_STATS_BASE_POW10		(0x0 << KVM_STATS_BASE_SHIFT)
 	#define KVM_STATS_BASE_POW2		(0x1 << KVM_STATS_BASE_SHIFT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define KVM_STATS_BASE_MAX		KVM_STATS_BASE_POW2
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define KVM_STATS_BASE_MAX		KVM_STATS_BASE_POW2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct kvm_stats_desc {
 		__u32 flags;
@@ -5307,10 +5380,14 @@ by a string of size ``name_size``.
 		__u16 size;
 		__u32 offset;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__u32 bucket_size;
 =======
 		__u32 unused;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__u32 bucket_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		char name[];
 	};
 
@@ -5320,6 +5397,7 @@ The following flags are supported:
 
 Bits 0-3 of ``flags`` encode the type:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   * ``KVM_STATS_TYPE_CUMULATIVE``
     The statistics reports a cumulative count. The value of data can only be increased.
@@ -5327,20 +5405,30 @@ Bits 0-3 of ``flags`` encode the type:
   * ``KVM_STATS_TYPE_CUMULATIVE``
     The statistics data is cumulative. The value of data can only be increased.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+  * ``KVM_STATS_TYPE_CUMULATIVE``
+    The statistics reports a cumulative count. The value of data can only be increased.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     Most of the counters used in KVM are of this type.
     The corresponding ``size`` field for this type is always 1.
     All cumulative statistics data are read/write.
   * ``KVM_STATS_TYPE_INSTANT``
 <<<<<<< HEAD
+<<<<<<< HEAD
     The statistics reports an instantaneous value. Its value can be increased or
 =======
     The statistics data is instantaneous. Its value can be increased or
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    The statistics reports an instantaneous value. Its value can be increased or
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     decreased. This type is usually used as a measurement of some resources,
     like the number of dirty pages, the number of large pages, etc.
     All instant statistics are read only.
     The corresponding ``size`` field for this type is always 1.
   * ``KVM_STATS_TYPE_PEAK``
+<<<<<<< HEAD
 <<<<<<< HEAD
     The statistics data reports a peak value, for example the maximum number
     of items in a hash table bucket, the longest time waited and so on.
@@ -5366,11 +5454,33 @@ Bits 4-7 of ``flags`` encode the unit:
 =======
     The statistics data is peak. The value of data can only be increased, and
     represents a peak value for a measurement, for example the maximum number
+=======
+    The statistics data reports a peak value, for example the maximum number
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     of items in a hash table bucket, the longest time waited and so on.
+    The value of data can only be increased.
     The corresponding ``size`` field for this type is always 1.
+  * ``KVM_STATS_TYPE_LINEAR_HIST``
+    The statistic is reported as a linear histogram. The number of
+    buckets is specified by the ``size`` field. The size of buckets is specified
+    by the ``hist_param`` field. The range of the Nth bucket (1 <= N < ``size``)
+    is [``hist_param``*(N-1), ``hist_param``*N), while the range of the last
+    bucket is [``hist_param``*(``size``-1), +INF). (+INF means positive infinity
+    value.) The bucket value indicates how many samples fell in the bucket's range.
+  * ``KVM_STATS_TYPE_LOG_HIST``
+    The statistic is reported as a logarithmic histogram. The number of
+    buckets is specified by the ``size`` field. The range of the first bucket is
+    [0, 1), while the range of the last bucket is [pow(2, ``size``-2), +INF).
+    Otherwise, The Nth bucket (1 < N < ``size``) covers
+    [pow(2, N-2), pow(2, N-1)). The bucket value indicates how many samples fell
+    in the bucket's range.
 
 Bits 4-7 of ``flags`` encode the unit:
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   * ``KVM_STATS_UNIT_NONE``
     There is no unit for the value of statistics data. This usually means that
     the value is a simple counter of an event.
@@ -5386,9 +5496,13 @@ Bits 4-7 of ``flags`` encode the unit:
 Bits 8-11 of ``flags``, together with ``exponent``, encode the scale of the
 unit:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   * ``KVM_STATS_BASE_POW10``
     The scale is based on power of 10. It is used for measurement of time and
     CPU clock cycles.  For example, an exponent of -9 can be used with
@@ -5406,6 +5520,7 @@ The ``offset`` field is the offset from the start of Data Block to the start of
 the corresponding statistics data.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The ``bucket_size`` field is used as a parameter for histogram statistics data.
 It is only used by linear histogram statistics data, specifying the size of a
 bucket.
@@ -5414,6 +5529,11 @@ The ``unused`` field is reserved for future support for other types of
 statistics data, like log/linear histogram. Its value is always 0 for the types
 defined above.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+The ``bucket_size`` field is used as a parameter for histogram statistics data.
+It is only used by linear histogram statistics data, specifying the size of a
+bucket.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The ``name`` field is the name string of the statistics data. The name string
 starts at the end of ``struct kvm_stats_desc``.  The maximum length including
@@ -7179,10 +7299,14 @@ trap and emulate MSRs that are outside of the scope of KVM as well as
 limit the attack surface on KVM's MSR emulation code.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 8.28 KVM_CAP_ENFORCE_PV_FEATURE_CPUID
 =======
 8.28 KVM_CAP_ENFORCE_PV_CPUID
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+8.28 KVM_CAP_ENFORCE_PV_FEATURE_CPUID
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 -----------------------------
 
 Architectures: x86
@@ -7347,10 +7471,14 @@ available to the guest on migration.
 
 8.33 KVM_CAP_HYPERV_ENFORCE_CPUID
 <<<<<<< HEAD
+<<<<<<< HEAD
 ---------------------------------
 =======
 -----------------------------
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+---------------------------------
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Architectures: x86
 

@@ -14,6 +14,9 @@ struct drm_encoder *msm_dsi_get_encoder(struct msm_dsi *msm_dsi)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi)
 {
 	unsigned long host_flags = msm_dsi_host_get_mode_flags(msm_dsi->host);
@@ -21,8 +24,11 @@ bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi)
 	return !(host_flags & MIPI_DSI_MODE_VIDEO);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dsi_get_phy(struct msm_dsi *msm_dsi)
 {
 	struct platform_device *pdev = msm_dsi->pdev;
@@ -37,6 +43,7 @@ static int dsi_get_phy(struct msm_dsi *msm_dsi)
 
 	phy_pdev = of_find_device_by_node(phy_node);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phy_pdev) {
 		msm_dsi->phy = platform_get_drvdata(phy_pdev);
 		msm_dsi->phy_dev = &phy_pdev->dev;
@@ -45,6 +52,12 @@ static int dsi_get_phy(struct msm_dsi *msm_dsi)
 	if (phy_pdev)
 		msm_dsi->phy = platform_get_drvdata(phy_pdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (phy_pdev) {
+		msm_dsi->phy = platform_get_drvdata(phy_pdev);
+		msm_dsi->phy_dev = &phy_pdev->dev;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	of_node_put(phy_node);
 
@@ -54,10 +67,13 @@ static int dsi_get_phy(struct msm_dsi *msm_dsi)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	msm_dsi->phy_dev = get_device(&phy_pdev->dev);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -229,6 +245,7 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!msm_dsi_manager_validate_current_config(msm_dsi->id)) {
 		ret = -EINVAL;
 		goto fail;
@@ -237,6 +254,12 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
 	if (!msm_dsi_manager_validate_current_config(msm_dsi->id))
 		goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!msm_dsi_manager_validate_current_config(msm_dsi->id)) {
+		ret = -EINVAL;
+		goto fail;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	msm_dsi->encoder = encoder;
 
@@ -272,10 +295,13 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	msm_dsi_manager_setup_encoder(msm_dsi->id);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->bridges[priv->num_bridges++]       = msm_dsi->bridge;
 	priv->connectors[priv->num_connectors++] = msm_dsi->connector;
 

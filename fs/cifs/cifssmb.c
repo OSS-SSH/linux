@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *   fs/cifs/cifssmb.c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (C) International Business Machines  Corp., 2002,2010
  *   Author(s): Steve French (sfrench@us.ibm.com)
@@ -46,12 +49,15 @@ static struct {
 	char *name;
 } protocols[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_CIFS_WEAK_PW_HASH
 	{LANMAN_PROT, "\2LM1.2X002"},
 	{LANMAN2_PROT, "\2LANMAN2.1"},
 #endif /* weak password hashing for legacy clients */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{CIFS_PROT, "\2NT LM 0.12"},
 	{POSIX_PROT, "\2POSIX 2"},
 	{BAD_PROT, "\2"}
@@ -62,12 +68,15 @@ static struct {
 	char *name;
 } protocols[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_CIFS_WEAK_PW_HASH
 	{LANMAN_PROT, "\2LM1.2X002"},
 	{LANMAN2_PROT, "\2LANMAN2.1"},
 #endif /* weak password hashing for legacy clients */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{CIFS_PROT, "\2NT LM 0.12"},
 	{BAD_PROT, "\2"}
 };
@@ -76,6 +85,7 @@ static struct {
 /* define the number of elements in the cifs dialect array */
 #ifdef CONFIG_CIFS_POSIX
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CIFS_NUM_PROT 2
 #else /* not posix */
 #define CIFS_NUM_PROT 1
@@ -83,15 +93,16 @@ static struct {
 #ifdef CONFIG_CIFS_WEAK_PW_HASH
 #define CIFS_NUM_PROT 4
 #else
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CIFS_NUM_PROT 2
-#endif /* CIFS_WEAK_PW_HASH */
 #else /* not posix */
-#ifdef CONFIG_CIFS_WEAK_PW_HASH
-#define CIFS_NUM_PROT 3
-#else
 #define CIFS_NUM_PROT 1
+<<<<<<< HEAD
 #endif /* CONFIG_CIFS_WEAK_PW_HASH */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CIFS_POSIX */
 
 /*
@@ -491,6 +502,7 @@ cifs_enable_signing(struct TCP_Server_Info *server, bool mnt_sign_required)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_CIFS_WEAK_PW_HASH
 static int
@@ -576,6 +588,8 @@ decode_lanman_negprot_rsp(struct TCP_Server_Info *server, NEGOTIATE_RSP *pSMBr)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool
 should_set_ext_sec_flag(enum securityEnum sectype)
 {
@@ -645,15 +659,20 @@ CIFSSMBNegotiate(const unsigned int xid, struct cifs_ses *ses)
 	cifs_dbg(FYI, "Dialect: %d\n", server->dialect);
 	/* Check wct = 1 error case */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((pSMBr->hdr.WordCount <= 13) || (server->dialect == BAD_PROT)) {
 =======
 	if ((pSMBr->hdr.WordCount < 13) || (server->dialect == BAD_PROT)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((pSMBr->hdr.WordCount <= 13) || (server->dialect == BAD_PROT)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* core returns wct = 1, but we do not ask for core - otherwise
 		small wct just comes when dialect index is -1 indicating we
 		could not negotiate a common dialect */
 		rc = -EOPNOTSUPP;
 		goto neg_err_exit;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	} else if (pSMBr->hdr.WordCount == 13) {
@@ -661,6 +680,8 @@ CIFSSMBNegotiate(const unsigned int xid, struct cifs_ses *ses)
 		rc = decode_lanman_negprot_rsp(server, pSMBr);
 		goto signing_check;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (pSMBr->hdr.WordCount != 17) {
 		/* unknown wct */
 		rc = -EOPNOTSUPP;
@@ -703,9 +724,12 @@ CIFSSMBNegotiate(const unsigned int xid, struct cifs_ses *ses)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 signing_check:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rc)
 		rc = cifs_enable_signing(server, ses->sign);
 neg_err_exit:
@@ -902,15 +926,21 @@ PsxDelete:
 	offset = param_offset + params;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Setup pointer to Request Data (inode type).
 	 * Note that SMB offsets are from the beginning of SMB which is 4 bytes
 	 * in, after RFC1001 field
 	 */
 	pRqD = (struct unlink_psx_rq *)((char *)(pSMB) + offset + 4);
+<<<<<<< HEAD
 =======
 	/* Setup pointer to Request Data (inode type) */
 	pRqD = (struct unlink_psx_rq *)(((char *)&pSMB->hdr.Protocol) + offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pRqD->type = cpu_to_le16(type);
 	pSMB->ParameterOffset = cpu_to_le16(param_offset);
 	pSMB->DataOffset = cpu_to_le16(offset);
@@ -1118,11 +1148,16 @@ PsxCreat:
 				InformationLevel) - 4;
 	offset = param_offset + params;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* SMB offsets are from the beginning of SMB which is 4 bytes in, after RFC1001 field */
 	pdata = (OPEN_PSX_REQ *)((char *)(pSMB) + offset + 4);
 =======
 	pdata = (OPEN_PSX_REQ *)(((char *)&pSMB->hdr.Protocol) + offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* SMB offsets are from the beginning of SMB which is 4 bytes in, after RFC1001 field */
+	pdata = (OPEN_PSX_REQ *)((char *)(pSMB) + offset + 4);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pdata->Level = cpu_to_le16(SMB_QUERY_FILE_UNIX_BASIC);
 	pdata->Permissions = cpu_to_le64(mode);
 	pdata->PosixOpenFlags = cpu_to_le32(posix_flags);
@@ -2139,9 +2174,13 @@ cifs_writev_complete(struct work_struct *work)
 			SetPageError(page);
 		end_page_writeback(page);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cifs_readpage_to_fscache(inode, page);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cifs_readpage_to_fscache(inode, page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		put_page(page);
 	}
 	if (wdata->result != -EAGAIN)

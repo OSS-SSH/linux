@@ -37,12 +37,17 @@
 #include <linux/cpu.h>
 #include <linux/pgtable.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 
 =======
 
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/interrupt.h>
 #include <asm/processor.h>
 #include <asm/mmu.h>
@@ -2078,10 +2083,14 @@ DEFINE_DEBUGFS_ATTRIBUTE(fops_hpt_order, hpt_order_get, hpt_order_set, "%llu\n")
 static int __init hash64_debugfs(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	debugfs_create_file("hpt_order", 0600, arch_debugfs_dir, NULL,
 =======
 	debugfs_create_file("hpt_order", 0600, powerpc_debugfs_root, NULL,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	debugfs_create_file("hpt_order", 0600, arch_debugfs_dir, NULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    &fops_hpt_order);
 	return 0;
 }

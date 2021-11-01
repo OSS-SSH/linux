@@ -616,24 +616,33 @@ static inline int dma_resv_test_signaled_single(struct dma_fence *passed_fence)
 bool dma_resv_test_signaled(struct dma_resv *obj, bool test_all)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dma_fence *fence;
 	unsigned int seq;
 =======
 	unsigned int seq, shared_count;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct dma_fence *fence;
+	unsigned int seq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	rcu_read_lock();
 retry:
 	ret = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	shared_count = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	seq = read_seqcount_begin(&obj->seq);
 
 	if (test_all) {
 		struct dma_resv_list *fobj = dma_resv_shared_list(obj);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		unsigned int i, shared_count;
 
@@ -644,11 +653,18 @@ retry:
 
 		if (fobj)
 			shared_count = fobj->shared_count;
+=======
+		unsigned int i, shared_count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+		shared_count = fobj ? fobj->shared_count : 0;
 		for (i = 0; i < shared_count; ++i) {
+<<<<<<< HEAD
 			struct dma_fence *fence;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			fence = rcu_dereference(fobj->shared[i]);
 			ret = dma_resv_test_signaled_single(fence);
 			if (ret < 0)
@@ -656,6 +672,7 @@ retry:
 			else if (!ret)
 				break;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	}
 
@@ -673,21 +690,21 @@ retry:
 
 		if (read_seqcount_retry(&obj->seq, seq))
 			goto retry;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
-	if (!shared_count) {
-		struct dma_fence *fence_excl = dma_resv_excl_fence(obj);
+	fence = dma_resv_excl_fence(obj);
+	if (ret && fence) {
+		ret = dma_resv_test_signaled_single(fence);
+		if (ret < 0)
+			goto retry;
 
-		if (fence_excl) {
-			ret = dma_resv_test_signaled_single(fence_excl);
-			if (ret < 0)
-				goto retry;
-
-			if (read_seqcount_retry(&obj->seq, seq))
-				goto retry;
-		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	if (read_seqcount_retry(&obj->seq, seq))
+		goto retry;
 
 	rcu_read_unlock();
 	return ret;

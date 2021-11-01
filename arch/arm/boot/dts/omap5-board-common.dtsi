@@ -31,6 +31,7 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	vdds_1v8_main: fixedregulator-vdds_1v8_main {
 		compatible = "regulator-fixed";
@@ -41,6 +42,8 @@
 	};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vmmcsd_fixed: fixedregulator-mmcsd {
 		compatible = "regulator-fixed";
 		regulator-name = "vmmcsd_fixed";
@@ -491,9 +494,13 @@
 				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				vdds_1v8_main:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				vdds_1v8_main:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				smps7_reg: smps7 {
 					/* VDDS_1v8_OMAP over VDDS_1v8_MAIN */
 					regulator-name = "smps7";

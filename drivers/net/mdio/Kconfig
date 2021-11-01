@@ -170,6 +170,7 @@ config MDIO_IPQ4019
 	tristate "Qualcomm IPQ4019 MDIO interface support"
 	depends on HAS_IOMEM && OF_MDIO
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on COMMON_CLK
 	help
 	  This driver supports the MDIO interface found in Qualcomm
@@ -179,6 +180,12 @@ config MDIO_IPQ4019
 	  This driver supports the MDIO interface found in Qualcomm
 	  IPQ40xx series Soc-s.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on COMMON_CLK
+	help
+	  This driver supports the MDIO interface found in Qualcomm
+	  IPQ40xx, IPQ60xx, IPQ807x and IPQ50xx series Soc-s.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config MDIO_IPQ8064
 	tristate "Qualcomm IPQ8064 MDIO interface support"

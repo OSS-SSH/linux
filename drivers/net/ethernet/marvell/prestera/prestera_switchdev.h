@@ -9,11 +9,16 @@ void prestera_switchdev_fini(struct prestera_switch *sw);
 
 int prestera_bridge_port_join(struct net_device *br_dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct prestera_port *port,
 			      struct netlink_ext_ack *extack);
 =======
 			      struct prestera_port *port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct prestera_port *port,
+			      struct netlink_ext_ack *extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void prestera_bridge_port_leave(struct net_device *br_dev,
 				struct prestera_port *port);

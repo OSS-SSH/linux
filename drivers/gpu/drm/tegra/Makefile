@@ -4,11 +4,17 @@ ccflags-$(CONFIG_DRM_TEGRA_DEBUG) += -DDEBUG
 tegra-drm-y := \
 	drm.o \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uapi.o \
 	submit.o \
 	firewall.o \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uapi.o \
+	submit.o \
+	firewall.o \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gem.o \
 	fb.o \
 	dp.o \

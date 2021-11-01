@@ -83,6 +83,9 @@ static ssize_t recover_store(struct device *dev, struct device_attribute *attr,
 	if (pci_dev_is_added(pdev)) {
 		pci_stop_and_remove_bus_device(pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (zdev->dma_table) {
 			ret = zpci_dma_exit_device(zdev);
 			if (ret)
@@ -94,23 +97,32 @@ static ssize_t recover_store(struct device *dev, struct device_attribute *attr,
 			if (ret)
 				goto out;
 		}
+<<<<<<< HEAD
 =======
 		ret = zpci_disable_device(zdev);
 		if (ret)
 			goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ret = zpci_enable_device(zdev);
 		if (ret)
 			goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = zpci_dma_init_device(zdev);
 		if (ret) {
 			zpci_disable_device(zdev);
 			goto out;
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pci_rescan_bus(zdev->zbus->bus);
 	}
 out:

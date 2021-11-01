@@ -897,10 +897,14 @@ static inline int of_parse_phandle_with_fixed_args(const struct device_node *np,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int of_count_phandle_with_args(const struct device_node *np,
 =======
 static inline int of_count_phandle_with_args(struct device_node *np,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int of_count_phandle_with_args(const struct device_node *np,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					     const char *list_name,
 					     const char *cells_name)
 {
@@ -951,13 +955,19 @@ static inline int of_machine_is_compatible(const char *compat)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int of_add_property(struct device_node *np, struct property *prop)
 {
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int of_remove_property(struct device_node *np, struct property *prop)
 {
 	return 0;

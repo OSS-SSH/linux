@@ -67,6 +67,7 @@ static int snd_card_cs46xx_probe(struct pci_dev *pci,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
@@ -108,60 +109,52 @@ static int snd_card_cs46xx_probe(struct pci_dev *pci,
 =======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*chip), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
+	chip = card->private_data;
 	err = snd_cs46xx_create(card, pci,
-				external_amp[dev], thinkpad[dev],
-				&chip);
-	if (err < 0) {
-		snd_card_free(card);
+				external_amp[dev], thinkpad[dev]);
+	if (err < 0)
 		return err;
-	}
 	card->private_data = chip;
 	chip->accept_valid = mmap_valid[dev];
 	err = snd_cs46xx_pcm(chip, 0);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 #ifdef CONFIG_SND_CS46XX_NEW_DSP
 	err = snd_cs46xx_pcm_rear(chip, 1);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 	err = snd_cs46xx_pcm_iec958(chip, 2);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 #endif
 	err = snd_cs46xx_mixer(chip, 2);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 #ifdef CONFIG_SND_CS46XX_NEW_DSP
 	if (chip->nr_ac97_codecs ==2) {
 		err = snd_cs46xx_pcm_center_lfe(chip, 3);
-		if (err < 0) {
-			snd_card_free(card);
+		if (err < 0)
 			return err;
-		}
 	}
 #endif
 	err = snd_cs46xx_midi(chip, 0);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 	err = snd_cs46xx_start_dsp(chip);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
+<<<<<<< HEAD
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_cs46xx_gameport(chip);
 
@@ -175,6 +168,7 @@ static int snd_card_cs46xx_probe(struct pci_dev *pci,
 
 	err = snd_card_register(card);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 =======
@@ -183,12 +177,17 @@ static int snd_card_cs46xx_probe(struct pci_dev *pci,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_card_cs46xx_remove(struct pci_dev *pci)
@@ -197,14 +196,19 @@ static void snd_card_cs46xx_remove(struct pci_dev *pci)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct pci_driver cs46xx_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_cs46xx_ids,
 	.probe = snd_card_cs46xx_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_card_cs46xx_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 	.driver = {
 		.pm = &snd_cs46xx_pm,

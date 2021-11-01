@@ -194,14 +194,20 @@ static void otg_start_hnp_polling(struct otg_fsm *fsm)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!fsm->hnp_work_inited) {
 		INIT_DELAYED_WORK(&fsm->hnp_polling_work, otg_hnp_polling_work);
 		fsm->hnp_work_inited = true;
 	}
 
+<<<<<<< HEAD
 =======
 	INIT_DELAYED_WORK(&fsm->hnp_polling_work, otg_hnp_polling_work);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	schedule_delayed_work(&fsm->hnp_polling_work,
 					msecs_to_jiffies(T_HOST_REQ_POLL));
 }

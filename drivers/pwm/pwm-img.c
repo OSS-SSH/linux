@@ -327,6 +327,7 @@ static int img_pwm_remove(struct platform_device *pdev)
 {
 	struct img_pwm_chip *pwm_chip = platform_get_drvdata(pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 	u32 val;
@@ -347,10 +348,14 @@ static int img_pwm_remove(struct platform_device *pdev)
 
 	pm_runtime_put(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_disable(&pdev->dev);
 	if (!pm_runtime_status_suspended(&pdev->dev))
 		img_pwm_runtime_suspend(&pdev->dev);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	pwmchip_remove(&pwm_chip->chip);
 
@@ -358,6 +363,11 @@ static int img_pwm_remove(struct platform_device *pdev)
 =======
 	return pwmchip_remove(&pwm_chip->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pwmchip_remove(&pwm_chip->chip);
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP

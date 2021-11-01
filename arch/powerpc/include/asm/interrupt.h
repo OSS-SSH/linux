@@ -266,6 +266,9 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
 	local_paca->irq_happened |= PACA_IRQ_HARD_DIS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(regs->msr & MSR_EE) || is_implicit_soft_masked(regs)) {
 		/*
 		 * Adjust regs->softe to be soft-masked if it had not been
@@ -274,6 +277,7 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
 		 * masked state. This makes arch_irq_disabled_regs(regs)
 		 * behave as expected.
 		 */
+<<<<<<< HEAD
 		regs->softe = IRQS_ALL_DISABLED;
 	}
 =======
@@ -285,6 +289,10 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
 	if (IS_ENABLED(CONFIG_PPC_IRQ_SOFT_MASK_DEBUG))
 		BUG_ON(!arch_irq_disabled_regs(regs) && !(regs->msr & MSR_EE));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		regs->softe = IRQS_ALL_DISABLED;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Don't do any per-CPU operations until interrupt state is fixed */
 
@@ -539,6 +547,7 @@ static __always_inline long ____##func(struct pt_regs *regs)
 DECLARE_INTERRUPT_HANDLER_NMI(system_reset_exception);
 #ifdef CONFIG_PPC_BOOK3S_64
 <<<<<<< HEAD
+<<<<<<< HEAD
 DECLARE_INTERRUPT_HANDLER_ASYNC(machine_check_exception_async);
 #endif
 DECLARE_INTERRUPT_HANDLER_NMI(machine_check_exception);
@@ -548,6 +557,11 @@ DECLARE_INTERRUPT_HANDLER_ASYNC(machine_check_exception);
 DECLARE_INTERRUPT_HANDLER_NMI(machine_check_exception);
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+DECLARE_INTERRUPT_HANDLER_ASYNC(machine_check_exception_async);
+#endif
+DECLARE_INTERRUPT_HANDLER_NMI(machine_check_exception);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DECLARE_INTERRUPT_HANDLER(SMIException);
 DECLARE_INTERRUPT_HANDLER(handle_hmi_exception);
 DECLARE_INTERRUPT_HANDLER(unknown_exception);
@@ -603,11 +617,17 @@ DECLARE_INTERRUPT_HANDLER_NMI(hmi_exception_realmode);
 DECLARE_INTERRUPT_HANDLER_ASYNC(TAUException);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* irq.c */
 DECLARE_INTERRUPT_HANDLER_ASYNC(do_IRQ);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* irq.c */
+DECLARE_INTERRUPT_HANDLER_ASYNC(do_IRQ);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __noreturn unrecoverable_exception(struct pt_regs *regs);
 
 void replay_system_reset(void);

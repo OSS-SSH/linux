@@ -5,9 +5,13 @@ config QCOM_IPA
 	depends on QCOM_RPROC_COMMON || (QCOM_RPROC_COMMON=n && COMPILE_TEST)
 	select QCOM_MDT_LOADER if ARCH_QCOM
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select QCOM_SCM
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select QCOM_SCM
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select QCOM_QMI_HELPERS
 	help
 	  Choose Y or M here to include support for the Qualcomm

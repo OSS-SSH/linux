@@ -435,6 +435,9 @@
 			#size-cells = <1>;
 			ranges = <0x0 0x54400000 0x80000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pruss1: pruss@0 {
 				compatible = "ti,am4376-pruss1";
@@ -600,8 +603,11 @@
 					firmware-name = "am437x-pru0_1-fw";
 				};
 			};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		target-module@50000000 {

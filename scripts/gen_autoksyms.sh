@@ -27,6 +27,7 @@ if [ -n "$CONFIG_MODVERSIONS" ]; then
 fi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # With CONFIG_LTO_CLANG, LLVM bitcode has not yet been compiled into a binary
 # when the .mod files are generated, which means they don't yet contain
@@ -41,6 +42,8 @@ if [ -n "$CONFIG_LTO_CLANG" ]; then
 fi
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ksym_wl=
 if [ -n "$CONFIG_UNUSED_KSYMS_WHITELIST" ]; then
 	# Use 'eval' to expand the whitelist path and check if it is relative

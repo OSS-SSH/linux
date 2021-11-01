@@ -39,10 +39,14 @@ config USB_HIDDEV
 	  Say Y here if you want to support HID devices (from the USB
 	  specification standpoint) that aren't strictly user interface
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  devices, like monitor controls and Uninterruptible Power Supplies.
 =======
 	  devices, like monitor controls and Uninterruptable Power Supplies.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  devices, like monitor controls and Uninterruptible Power Supplies.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	  This module supports these devices separately using a separate
 	  event interface on /dev/usb/hiddevX (char 180:96 to 180:111).

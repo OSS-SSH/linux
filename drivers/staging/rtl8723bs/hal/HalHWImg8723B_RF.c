@@ -495,6 +495,7 @@ static u8 *Array_MP_8723B_TXPWR_LMT[] = {
 	"ETSI", "20M", "HT", "1T", "14", "63",
 	"MKK", "20M", "HT", "1T", "14", "63",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	"FCC", "20M", "HT", "2T", "01", "30",
 	"ETSI", "20M", "HT", "2T", "01", "32",
@@ -539,6 +540,8 @@ static u8 *Array_MP_8723B_TXPWR_LMT[] = {
 	"ETSI", "20M", "HT", "2T", "14", "63",
 	"MKK", "20M", "HT", "2T", "14", "63",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	"FCC", "40M", "HT", "1T", "01", "63",
 	"ETSI", "40M", "HT", "1T", "01", "63",
 	"MKK", "40M", "HT", "1T", "01", "63",
@@ -580,6 +583,7 @@ static u8 *Array_MP_8723B_TXPWR_LMT[] = {
 	"MKK", "40M", "HT", "1T", "13", "32",
 	"FCC", "40M", "HT", "1T", "14", "63",
 	"ETSI", "40M", "HT", "1T", "14", "63",
+<<<<<<< HEAD
 <<<<<<< HEAD
 	"MKK", "40M", "HT", "1T", "14", "63"
 =======
@@ -627,6 +631,9 @@ static u8 *Array_MP_8723B_TXPWR_LMT[] = {
 	"ETSI", "40M", "HT", "2T", "14", "63",
 	"MKK", "40M", "HT", "2T", "14", "63"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	"MKK", "40M", "HT", "1T", "14", "63"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 void ODM_ReadAndConfig_MP_8723B_TXPWR_LMT(struct dm_odm_t *pDM_Odm)

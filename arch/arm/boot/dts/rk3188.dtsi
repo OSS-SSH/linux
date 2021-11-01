@@ -276,6 +276,7 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pcfg_pull_up: pcfg-pull-up {
 			bias-pull-up;
 		};
@@ -287,15 +288,22 @@
 		pcfg_pull_none: pcfg-pull-none {
 =======
 		pcfg_pull_up: pcfg_pull_up {
+=======
+		pcfg_pull_up: pcfg-pull-up {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bias-pull-up;
 		};
 
-		pcfg_pull_down: pcfg_pull_down {
+		pcfg_pull_down: pcfg-pull-down {
 			bias-pull-down;
 		};
 
+<<<<<<< HEAD
 		pcfg_pull_none: pcfg_pull_none {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pcfg_pull_none: pcfg-pull-none {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bias-disable;
 		};
 
@@ -651,6 +659,7 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 &grf {
 	compatible = "rockchip,rk3188-grf", "syscon", "simple-mfd";
 
@@ -664,6 +673,16 @@
 	compatible = "rockchip,rk3188-grf", "syscon", "simple-mfd";
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+&grf {
+	compatible = "rockchip,rk3188-grf", "syscon", "simple-mfd";
+
+	io_domains: io-domains {
+		compatible = "rockchip,rk3188-io-voltage-domain";
+		status = "disabled";
+	};
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usbphy: usbphy {
 		compatible = "rockchip,rk3188-usb-phy",
 			     "rockchip,rk3288-usb-phy";

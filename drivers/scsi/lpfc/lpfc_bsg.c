@@ -5752,6 +5752,9 @@ job_error:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 lpfc_get_cgnbuf_info(struct bsg_job *job)
 {
@@ -5838,8 +5841,11 @@ job_exit:
 	return rc;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * lpfc_bsg_hst_vendor - process a vendor-specific fc_bsg_job
  * @job: fc_bsg_job to handle
@@ -5903,11 +5909,17 @@ lpfc_bsg_hst_vendor(struct bsg_job *job)
 		rc = lpfc_get_trunk_info(job);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case LPFC_BSG_VENDOR_GET_CGNBUF_INFO:
 		rc = lpfc_get_cgnbuf_info(job);
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case LPFC_BSG_VENDOR_GET_CGNBUF_INFO:
+		rc = lpfc_get_cgnbuf_info(job);
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		rc = -EINVAL;
 		bsg_reply->reply_payload_rcv_len = 0;

@@ -161,12 +161,17 @@
 #define IF_MCONT_TX		(IF_MCONT_TXIE | IF_MCONT_EOB)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Use IF1 in NAPI path and IF2 in TX path */
 #define IF_NAPI			0
 =======
 /* Use IF1 for RX and IF2 for TX */
 #define IF_RX			0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Use IF1 in NAPI path and IF2 in TX path */
+#define IF_NAPI			0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IF_TX			1
 
 /* minimum timeout for checking BUSY status */
@@ -433,6 +438,9 @@ static void c_can_setup_receive_object(struct net_device *dev, int iface,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool c_can_tx_busy(const struct c_can_priv *priv,
 			  const struct c_can_tx_ring *tx_ring)
 {
@@ -456,13 +464,17 @@ static bool c_can_tx_busy(const struct c_can_priv *priv,
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static netdev_tx_t c_can_start_xmit(struct sk_buff *skb,
 				    struct net_device *dev)
 {
 	struct can_frame *frame = (struct can_frame *)skb->data;
 	struct c_can_priv *priv = netdev_priv(dev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct c_can_tx_ring *tx_ring = &priv->tx;
 	u32 idx, obj, cmd = IF_COMM_TX;
@@ -483,19 +495,29 @@ static netdev_tx_t c_can_start_xmit(struct sk_buff *skb,
 
 =======
 	u32 idx, obj;
+=======
+	struct c_can_tx_ring *tx_ring = &priv->tx;
+	u32 idx, obj, cmd = IF_COMM_TX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (can_dropped_invalid_skb(dev, skb))
 		return NETDEV_TX_OK;
-	/* This is not a FIFO. C/D_CAN sends out the buffers
-	 * prioritized. The lowest buffer number wins.
-	 */
-	idx = fls(atomic_read(&priv->tx_active));
-	obj = idx + priv->msg_obj_tx_first;
 
-	/* If this is the last buffer, stop the xmit queue */
-	if (idx == priv->msg_obj_tx_num - 1)
+	if (c_can_tx_busy(priv, tx_ring))
+		return NETDEV_TX_BUSY;
+
+	idx = c_can_get_tx_head(tx_ring);
+	tx_ring->head++;
+	if (c_can_get_tx_free(tx_ring) == 0)
 		netif_stop_queue(dev);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (idx < c_can_get_tx_tail(tx_ring))
+		cmd &= ~IF_COMM_TXRQST; /* Cache the message */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Store the message in the interface so we can call
 	 * can_put_echo_skb(). We must do this before we enable
 	 * transmit as we might race against do_tx().
@@ -503,6 +525,7 @@ static netdev_tx_t c_can_start_xmit(struct sk_buff *skb,
 	c_can_setup_tx_object(dev, IF_TX, frame, idx);
 	priv->dlc[idx] = frame->len;
 	can_put_echo_skb(skb, dev, idx, 0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	obj = idx + priv->msg_obj_tx_first;
 	c_can_object_put(dev, IF_TX, obj, cmd);
@@ -513,6 +536,10 @@ static netdev_tx_t c_can_start_xmit(struct sk_buff *skb,
 	/* Start transmission */
 	c_can_object_put(dev, IF_TX, obj, IF_COMM_TX);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	obj = idx + priv->msg_obj_tx_first;
+	c_can_object_put(dev, IF_TX, obj, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return NETDEV_TX_OK;
 }
@@ -586,6 +613,7 @@ static void c_can_configure_msg_objects(struct net_device *dev)
 	/* first invalidate all message objects */
 	for (i = priv->msg_obj_rx_first; i <= priv->msg_obj_num; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		c_can_inval_msg_object(dev, IF_NAPI, i);
 
 	/* setup receive message objects */
@@ -595,13 +623,20 @@ static void c_can_configure_msg_objects(struct net_device *dev)
 	c_can_setup_receive_object(dev, IF_NAPI, priv->msg_obj_rx_last, 0, 0,
 =======
 		c_can_inval_msg_object(dev, IF_RX, i);
+=======
+		c_can_inval_msg_object(dev, IF_NAPI, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* setup receive message objects */
 	for (i = priv->msg_obj_rx_first; i < priv->msg_obj_rx_last; i++)
-		c_can_setup_receive_object(dev, IF_RX, i, 0, 0, IF_MCONT_RCV);
+		c_can_setup_receive_object(dev, IF_NAPI, i, 0, 0, IF_MCONT_RCV);
 
+<<<<<<< HEAD
 	c_can_setup_receive_object(dev, IF_RX, priv->msg_obj_rx_last, 0, 0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	c_can_setup_receive_object(dev, IF_NAPI, priv->msg_obj_rx_last, 0, 0,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   IF_MCONT_RCV_EOB);
 }
 
@@ -634,9 +669,13 @@ static int c_can_chip_config(struct net_device *dev)
 {
 	struct c_can_priv *priv = netdev_priv(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct c_can_tx_ring *tx_ring = &priv->tx;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct c_can_tx_ring *tx_ring = &priv->tx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	err = c_can_software_reset(dev);
@@ -669,11 +708,16 @@ static int c_can_chip_config(struct net_device *dev)
 
 	/* Clear all internal status */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tx_ring->head = 0;
 	tx_ring->tail = 0;
 =======
 	atomic_set(&priv->tx_active, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tx_ring->head = 0;
+	tx_ring->tail = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->tx_dir = 0;
 
 	/* set bittiming params */
@@ -772,6 +816,7 @@ static void c_can_do_tx(struct net_device *dev)
 {
 	struct c_can_priv *priv = netdev_priv(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct c_can_tx_ring *tx_ring = &priv->tx;
 	struct net_device_stats *stats = &dev->stats;
 	u32 idx, obj, pkts = 0, bytes = 0, pend;
@@ -780,21 +825,31 @@ static void c_can_do_tx(struct net_device *dev)
 	struct net_device_stats *stats = &dev->stats;
 	u32 idx, obj, pkts = 0, bytes = 0, pend, clr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct c_can_tx_ring *tx_ring = &priv->tx;
+	struct net_device_stats *stats = &dev->stats;
+	u32 idx, obj, pkts = 0, bytes = 0, pend;
+	u8 tail;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (priv->msg_obj_tx_last > 32)
 		pend = priv->read_reg32(priv, C_CAN_INTPND3_REG);
 	else
 		pend = priv->read_reg(priv, C_CAN_INTPND2_REG);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	clr = pend;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while ((idx = ffs(pend))) {
 		idx--;
 		pend &= ~BIT(idx);
 		obj = idx + priv->msg_obj_tx_first;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* We use IF_NAPI interface instead of IF_TX because we
 		 * are called from c_can_poll(), which runs inside
@@ -803,16 +858,24 @@ static void c_can_do_tx(struct net_device *dev)
 		c_can_inval_tx_object(dev, IF_NAPI, obj);
 =======
 		/* We use IF_RX interface instead of IF_TX because we
+=======
+		/* We use IF_NAPI interface instead of IF_TX because we
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * are called from c_can_poll(), which runs inside
-		 * NAPI. We are not trasmitting.
+		 * NAPI. We are not transmitting.
 		 */
+<<<<<<< HEAD
 		c_can_inval_tx_object(dev, IF_RX, obj);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		c_can_inval_tx_object(dev, IF_NAPI, obj);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		can_get_echo_skb(dev, idx, NULL);
 		bytes += priv->dlc[idx];
 		pkts++;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!pkts)
 		return;
@@ -843,15 +906,42 @@ static void c_can_do_tx(struct net_device *dev)
 =======
 	/* Clear the bits in the tx_active mask */
 	atomic_sub(clr, &priv->tx_active);
+=======
+	if (!pkts)
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (clr & BIT(priv->msg_obj_tx_num - 1))
-		netif_wake_queue(dev);
+	tx_ring->tail += pkts;
+	if (c_can_get_tx_free(tx_ring)) {
+		/* Make sure that anybody stopping the queue after
+		 * this sees the new tx_ring->tail.
+		 */
+		smp_mb();
+		netif_wake_queue(priv->dev);
+	}
 
+<<<<<<< HEAD
 	if (pkts) {
 		stats->tx_bytes += bytes;
 		stats->tx_packets += pkts;
 		can_led_event(dev, CAN_LED_EVENT_TX);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	stats->tx_bytes += bytes;
+	stats->tx_packets += pkts;
+	can_led_event(dev, CAN_LED_EVENT_TX);
+
+	tail = c_can_get_tx_tail(tx_ring);
+
+	if (tail == 0) {
+		u8 head = c_can_get_tx_head(tx_ring);
+
+		/* Start transmission for all cached messages */
+		for (idx = tail; idx < head; idx++) {
+			obj = idx + priv->msg_obj_tx_first;
+			c_can_object_put(dev, IF_NAPI, obj, IF_COMM_TXRQST);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -889,10 +979,14 @@ static inline void c_can_rx_object_get(struct net_device *dev,
 				       struct c_can_priv *priv, u32 obj)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	c_can_object_get(dev, IF_NAPI, obj, priv->comm_rcv_high);
 =======
 	c_can_object_get(dev, IF_RX, obj, priv->comm_rcv_high);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	c_can_object_get(dev, IF_NAPI, obj, priv->comm_rcv_high);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void c_can_rx_finalize(struct net_device *dev,
@@ -900,10 +994,14 @@ static inline void c_can_rx_finalize(struct net_device *dev,
 {
 	if (priv->type != BOSCH_D_CAN)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		c_can_object_get(dev, IF_NAPI, obj, IF_COMM_CLR_NEWDAT);
 =======
 		c_can_object_get(dev, IF_RX, obj, IF_COMM_CLR_NEWDAT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		c_can_object_get(dev, IF_NAPI, obj, IF_COMM_CLR_NEWDAT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int c_can_read_objects(struct net_device *dev, struct c_can_priv *priv,
@@ -915,6 +1013,7 @@ static int c_can_read_objects(struct net_device *dev, struct c_can_priv *priv,
 		pend &= ~BIT(obj - 1);
 
 		c_can_rx_object_get(dev, priv, obj);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		ctrl = priv->read_reg(priv, C_CAN_IFACE(MSGCTRL_REG, IF_NAPI));
 
@@ -928,6 +1027,14 @@ static int c_can_read_objects(struct net_device *dev, struct c_can_priv *priv,
 		if (ctrl & IF_MCONT_MSGLST) {
 			int n = c_can_handle_lost_msg_obj(dev, IF_RX, obj, ctrl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ctrl = priv->read_reg(priv, C_CAN_IFACE(MSGCTRL_REG, IF_NAPI));
+
+		if (ctrl & IF_MCONT_MSGLST) {
+			int n;
+
+			n = c_can_handle_lost_msg_obj(dev, IF_NAPI, obj, ctrl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			pkts += n;
 			quota -= n;
@@ -943,10 +1050,14 @@ static int c_can_read_objects(struct net_device *dev, struct c_can_priv *priv,
 
 		/* read the data from the message object */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		c_can_read_msg_object(dev, IF_NAPI, ctrl);
 =======
 		c_can_read_msg_object(dev, IF_RX, ctrl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		c_can_read_msg_object(dev, IF_NAPI, ctrl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		c_can_rx_finalize(dev, priv, obj);
 
@@ -1349,12 +1460,18 @@ struct net_device *alloc_c_can_dev(int msg_obj_num)
 		priv->msg_obj_tx_first + priv->msg_obj_tx_num - 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->tx.head = 0;
 	priv->tx.tail = 0;
 	priv->tx.obj_num = msg_obj_tx_num;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netif_napi_add(dev, &priv->napi, c_can_poll, priv->msg_obj_rx_num);
 
 	priv->dev = dev;

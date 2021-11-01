@@ -26,6 +26,7 @@ extern const unsigned long sigreturn_codes[17];
 static unsigned long signal_return_offset;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_CRUNCH
 static int preserve_crunch_context(struct crunch_sigframe __user *frame)
@@ -62,6 +63,8 @@ static int restore_crunch_context(char __user **auxp)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_IWMMXT
 
 static int preserve_iwmmxt_context(struct iwmmxt_sigframe __user *frame)
@@ -209,12 +212,15 @@ static int restore_sigframe(struct pt_regs *regs, struct sigframe __user *sf)
 
 	aux = (char __user *) sf->uc.uc_regspace;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_CRUNCH
 	if (err == 0)
 		err |= restore_crunch_context(&aux);
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_IWMMXT
 	if (err == 0)
 		err |= restore_iwmmxt_context(&aux);
@@ -328,12 +334,15 @@ setup_sigframe(struct sigframe __user *sf, struct pt_regs *regs, sigset_t *set)
 
 	aux = (struct aux_sigframe __user *) sf->uc.uc_regspace;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_CRUNCH
 	if (err == 0)
 		err |= preserve_crunch_context(&aux->crunch);
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_IWMMXT
 	if (err == 0)
 		err |= preserve_iwmmxt_context(&aux->iwmmxt);
@@ -680,9 +689,12 @@ do_work_pending(struct pt_regs *regs, unsigned int thread_flags, int syscall)
 			} else {
 				tracehook_notify_resume(regs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				rseq_handle_notify_resume(NULL, regs);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 		local_irq_disable();
@@ -724,6 +736,7 @@ struct page *get_signal_page(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Defer to generic check */
 asmlinkage void addr_limit_check_failed(void)
@@ -734,6 +747,8 @@ asmlinkage void addr_limit_check_failed(void)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_RSEQ
 asmlinkage void do_rseq_syscall(struct pt_regs *regs)
 {
@@ -741,6 +756,9 @@ asmlinkage void do_rseq_syscall(struct pt_regs *regs)
 }
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Compile-time assertions for siginfo_t offsets. Check NSIG* as well, as
@@ -780,5 +798,8 @@ static_assert(offsetof(siginfo_t, si_fd)	== 0x10);
 static_assert(offsetof(siginfo_t, si_call_addr)	== 0x0c);
 static_assert(offsetof(siginfo_t, si_syscall)	== 0x10);
 static_assert(offsetof(siginfo_t, si_arch)	== 0x14);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

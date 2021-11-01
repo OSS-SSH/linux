@@ -44,10 +44,14 @@ source "fs/zonefs/Kconfig"
 
 config FS_DAX
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool "File system based Direct Access (DAX) support"
 =======
 	bool "Direct Access (DAX) support"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool "File system based Direct Access (DAX) support"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on MMU
 	depends on !(ARM || MIPS || SPARC)
 	select DEV_PAGEMAP_OPS if (ZONE_DEVICE && !FS_DAX_LIMITED)
@@ -58,6 +62,9 @@ config FS_DAX
 	  If the block device supports DAX and the filesystem supports DAX,
 	  then you can avoid using the pagecache to buffer I/Os.  Turning
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  on this option will compile in support for DAX.
 
 	  For a DAX device to support file system access it needs to have
@@ -75,10 +82,13 @@ config FS_DAX
 	  file systems DAX support needs to be manually enabled globally or
 	  per-inode using a mount option as well.  See the file documentation in
 	  Documentation/filesystems/dax.rst for details.
+<<<<<<< HEAD
 =======
 	  on this option will compile in support for DAX; you will need to
 	  mount the filesystem using the -o dax option.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	  If you do not have a block device that is capable of using this,
 	  or if unsure, say N.  Saying Y will increase the size of the kernel
@@ -126,6 +136,7 @@ config FILE_LOCKING
           call. Disabling this option saves about 11k.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config MANDATORY_FILE_LOCKING
 	bool "Enable Mandatory file locking"
@@ -138,6 +149,8 @@ config MANDATORY_FILE_LOCKING
 	  To the best of my knowledge this is dead code that no one cares about.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "fs/crypto/Kconfig"
 
 source "fs/verity/Kconfig"
@@ -174,9 +187,13 @@ source "fs/fat/Kconfig"
 source "fs/exfat/Kconfig"
 source "fs/ntfs/Kconfig"
 <<<<<<< HEAD
+<<<<<<< HEAD
 source "fs/ntfs3/Kconfig"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+source "fs/ntfs3/Kconfig"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 endmenu
 endif # BLOCK
@@ -260,11 +277,15 @@ config ARCH_SUPPORTS_HUGETLBFS
 config HUGETLBFS
 	bool "HugeTLB file system support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on X86 || IA64 || SPARC64 || ARCH_SUPPORTS_HUGETLBFS || BROKEN
 =======
 	depends on X86 || IA64 || SPARC64 || (S390 && 64BIT) || \
 		   ARCH_SUPPORTS_HUGETLBFS || BROKEN
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on X86 || IA64 || SPARC64 || ARCH_SUPPORTS_HUGETLBFS || BROKEN
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  hugetlbfs is a filesystem backing for HugeTLB pages, based on
 	  ramfs. For architectures that support it, say Y here and read
@@ -394,6 +415,7 @@ config NFS_V4_2_SSC_HELPER
 source "net/sunrpc/Kconfig"
 source "fs/ceph/Kconfig"
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 source "fs/cifs/Kconfig"
 source "fs/ksmbd/Kconfig"
@@ -406,6 +428,17 @@ config SMBFS_COMMON
 =======
 source "fs/cifs/Kconfig"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+source "fs/cifs/Kconfig"
+source "fs/ksmbd/Kconfig"
+
+config SMBFS_COMMON
+	tristate
+	default y if CIFS=y
+	default m if CIFS=m
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "fs/coda/Kconfig"
 source "fs/afs/Kconfig"
 source "fs/9p/Kconfig"

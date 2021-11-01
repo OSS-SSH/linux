@@ -183,6 +183,9 @@ rebuild_st:
 		i915_gem_object_do_bit_17_swizzle(obj, st);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * EHL and JSL add the 'Bypass LLC' MOCS entry, which should make it
 	 * possible for userspace to bypass the GTT caching bits set by the
@@ -201,8 +204,11 @@ rebuild_st:
 	if (IS_JSL_EHL(i915) && obj->flags & I915_BO_ALLOC_USER)
 		obj->cache_dirty = true;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__i915_gem_object_set_pages(obj, st, sg_page_sizes);
 
 	return 0;
@@ -324,9 +330,13 @@ void i915_gem_object_put_pages_shmem(struct drm_i915_gem_object *obj, struct sg_
 	struct page *page;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GEM_WARN_ON(IS_DGFX(to_i915(obj->base.dev)));
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_WARN_ON(IS_DGFX(to_i915(obj->base.dev)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__i915_gem_object_release_shmem(obj, pages, true);
 
 	i915_gem_gtt_finish_pages(obj, pages);
@@ -470,10 +480,14 @@ shmem_pread(struct drm_i915_gem_object *obj,
 static void shmem_release(struct drm_i915_gem_object *obj)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (i915_gem_object_has_struct_page(obj))
 =======
 	if (obj->flags & I915_BO_ALLOC_STRUCT_PAGE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (i915_gem_object_has_struct_page(obj))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		i915_gem_object_release_memory_region(obj);
 
 	fput(obj->base.filp);
@@ -519,9 +533,13 @@ static int shmem_object_init(struct intel_memory_region *mem,
 			     struct drm_i915_gem_object *obj,
 			     resource_size_t size,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     resource_size_t page_size,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     resource_size_t page_size,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     unsigned int flags)
 {
 	static struct lock_class_key lock_class;
@@ -547,6 +565,7 @@ static int shmem_object_init(struct intel_memory_region *mem,
 	GEM_BUG_ON(!(mapping_gfp_mask(mapping) & __GFP_RECLAIM));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	i915_gem_object_init(obj, &i915_gem_shmem_ops, &lock_class, 0);
 	obj->mem_flags |= I915_BO_FLAG_STRUCT_PAGE;
 =======
@@ -554,6 +573,10 @@ static int shmem_object_init(struct intel_memory_region *mem,
 			     I915_BO_ALLOC_STRUCT_PAGE);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i915_gem_object_init(obj, &i915_gem_shmem_ops, &lock_class, 0);
+	obj->mem_flags |= I915_BO_FLAG_STRUCT_PAGE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	obj->write_domain = I915_GEM_DOMAIN_CPU;
 	obj->read_domains = I915_GEM_DOMAIN_CPU;
 
@@ -587,10 +610,14 @@ i915_gem_object_create_shmem(struct drm_i915_private *i915,
 {
 	return i915_gem_object_create_region(i915->mm.regions[INTEL_REGION_SMEM],
 <<<<<<< HEAD
+<<<<<<< HEAD
 					     size, 0, 0);
 =======
 					     size, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					     size, 0, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Allocate a new GEM object and fill it with the supplied data */
@@ -604,9 +631,13 @@ i915_gem_object_create_shmem_from_data(struct drm_i915_private *dev_priv,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GEM_WARN_ON(IS_DGFX(dev_priv));
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_WARN_ON(IS_DGFX(dev_priv));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	obj = i915_gem_object_create_shmem(dev_priv, round_up(size, PAGE_SIZE));
 	if (IS_ERR(obj))
 		return obj;

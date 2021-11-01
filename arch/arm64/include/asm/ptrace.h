@@ -321,6 +321,9 @@ static inline unsigned long kernel_stack_pointer(struct pt_regs *regs)
 static inline unsigned long regs_return_value(struct pt_regs *regs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long val = regs->regs[0];
 
 	/*
@@ -332,9 +335,12 @@ static inline unsigned long regs_return_value(struct pt_regs *regs)
 		val = sign_extend64(val, 31);
 
 	return val;
+<<<<<<< HEAD
 =======
 	return regs->regs[0];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)

@@ -36,10 +36,14 @@ static DEFINE_SPINLOCK(pmc_mck0_lock);
 static DEFINE_SPINLOCK(pmc_mckX_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * PLL clocks identifiers
  * @PLL_ID_CPU:		CPU PLL identifier
  * @PLL_ID_SYS:		System PLL identifier
@@ -61,10 +65,14 @@ enum pll_ids {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * PLL type identifiers
  * @PLL_TYPE_FRAC:	fractional PLL identifier
  * @PLL_TYPE_DIV:	divider PLL identifier
@@ -127,10 +135,14 @@ static const struct clk_pll_characteristics pll_characteristics = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * PLL clocks description
  * @n:		clock name
  * @p:		clock parent
@@ -298,10 +310,14 @@ static const struct {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Master clock (MCK[1..4]) description
  * @n:			clock name
  * @ep:			extra parents names array
@@ -354,10 +370,14 @@ static const struct {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * System clock description
  * @n:	clock name
  * @p:	clock parent name
@@ -382,10 +402,14 @@ static const struct {
 static u32 sama7g5_prog_mux_table[] = { 0, 1, 2, 5, 6, 7, 8, 9, 10, };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Peripheral clock description
  * @n:		clock name
  * @p:		clock parent name
@@ -474,10 +498,14 @@ static const struct {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
 =======
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Generic clock description
  * @n:			clock name
  * @pp:			PLL parents

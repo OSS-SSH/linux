@@ -123,12 +123,17 @@ config TIGON3
 	tristate "Broadcom Tigon3 support"
 	depends on PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 	select PHYLIB
 =======
 	select PHYLIB
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+	select PHYLIB
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports Broadcom Tigon3 based gigabit Ethernet cards.
 
@@ -146,10 +151,14 @@ config BNX2X
 	tristate "Broadcom NetXtremeII 10Gb support"
 	depends on PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select FW_LOADER
 	select ZLIB_INFLATE
 	select LIBCRC32C
@@ -216,10 +225,14 @@ config BNXT
 	tristate "Broadcom NetXtreme-C/E support"
 	depends on PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
 =======
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select FW_LOADER
 	select LIBCRC32C
 	select NET_DEVLINK

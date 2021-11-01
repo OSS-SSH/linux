@@ -287,10 +287,15 @@ nfp_net_get_link_ksettings(struct net_device *netdev,
 	/* Init to unknowns */
 	ethtool_link_ksettings_add_link_mode(cmd, supported, FIBRE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ethtool_link_ksettings_add_link_mode(cmd, supported, Pause);
 	ethtool_link_ksettings_add_link_mode(cmd, advertising, Pause);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ethtool_link_ksettings_add_link_mode(cmd, supported, Pause);
+	ethtool_link_ksettings_add_link_mode(cmd, advertising, Pause);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cmd->base.port = PORT_OTHER;
 	cmd->base.speed = SPEED_UNKNOWN;
 	cmd->base.duplex = DUPLEX_UNKNOWN;
@@ -1082,12 +1087,18 @@ static void nfp_net_get_regs(struct net_device *netdev,
 
 static int nfp_net_get_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				struct ethtool_coalesce *ec,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
 =======
 				struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				struct ethtool_coalesce *ec,
+				struct kernel_ethtool_coalesce *kernel_coal,
+				struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nfp_net *nn = netdev_priv(netdev);
 
@@ -1095,11 +1106,17 @@ static int nfp_net_get_coalesce(struct net_device *netdev,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ec->use_adaptive_rx_coalesce = nn->rx_coalesce_adapt_on;
 	ec->use_adaptive_tx_coalesce = nn->tx_coalesce_adapt_on;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ec->use_adaptive_rx_coalesce = nn->rx_coalesce_adapt_on;
+	ec->use_adaptive_tx_coalesce = nn->tx_coalesce_adapt_on;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ec->rx_coalesce_usecs       = nn->rx_coalesce_usecs;
 	ec->rx_max_coalesced_frames = nn->rx_coalesce_max_frames;
 	ec->tx_coalesce_usecs       = nn->tx_coalesce_usecs;
@@ -1343,12 +1360,18 @@ exit_close_nsp:
 
 static int nfp_net_set_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				struct ethtool_coalesce *ec,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
 =======
 				struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				struct ethtool_coalesce *ec,
+				struct kernel_ethtool_coalesce *kernel_coal,
+				struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nfp_net *nn = netdev_priv(netdev);
 	unsigned int factor;
@@ -1383,6 +1406,7 @@ static int nfp_net_set_coalesce(struct net_device *netdev,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (nfp_net_coalesce_para_check(ec->rx_coalesce_usecs * factor,
 					ec->rx_max_coalesced_frames))
 		return -EINVAL;
@@ -1400,16 +1424,24 @@ static int nfp_net_set_coalesce(struct net_device *netdev,
 		return -EINVAL;
 
 	if (ec->tx_coalesce_usecs * factor >= ((1 << 16) - 1))
+=======
+	if (nfp_net_coalesce_para_check(ec->rx_coalesce_usecs * factor,
+					ec->rx_max_coalesced_frames))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
-	if (ec->rx_max_coalesced_frames >= ((1 << 16) - 1))
-		return -EINVAL;
-
-	if (ec->tx_max_coalesced_frames >= ((1 << 16) - 1))
+	if (nfp_net_coalesce_para_check(ec->tx_coalesce_usecs * factor,
+					ec->tx_max_coalesced_frames))
 		return -EINVAL;
 
 	/* configuration is valid */
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nn->rx_coalesce_adapt_on = !!ec->use_adaptive_rx_coalesce;
+	nn->tx_coalesce_adapt_on = !!ec->use_adaptive_tx_coalesce;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nn->rx_coalesce_usecs      = ec->rx_coalesce_usecs;
 	nn->rx_coalesce_max_frames = ec->rx_max_coalesced_frames;
 	nn->tx_coalesce_usecs      = ec->tx_coalesce_usecs;
@@ -1482,11 +1514,16 @@ static int nfp_net_set_channels(struct net_device *netdev,
 static const struct ethtool_ops nfp_net_ethtool_ops = {
 	.supported_coalesce_params = ETHTOOL_COALESCE_USECS |
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     ETHTOOL_COALESCE_MAX_FRAMES |
 				     ETHTOOL_COALESCE_USE_ADAPTIVE,
 =======
 				     ETHTOOL_COALESCE_MAX_FRAMES,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     ETHTOOL_COALESCE_MAX_FRAMES |
+				     ETHTOOL_COALESCE_USE_ADAPTIVE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.get_drvinfo		= nfp_net_get_drvinfo,
 	.get_link		= ethtool_op_get_link,
 	.get_ringparam		= nfp_net_get_ringparam,

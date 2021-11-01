@@ -131,6 +131,7 @@ int auxtrace_mmap__mmap(struct auxtrace_mmap *mm,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if BITS_PER_LONG != 64 && !defined(HAVE_SYNC_COMPARE_AND_SWAP_SUPPORT)
 	pr_err("Cannot use AUX area tracing mmaps\n");
@@ -138,6 +139,8 @@ int auxtrace_mmap__mmap(struct auxtrace_mmap *mm,
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pc->aux_offset = mp->offset;
 	pc->aux_size = mp->len;
 
@@ -1678,6 +1681,9 @@ int perf_event__process_auxtrace_error(struct perf_session *session,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * In the compat mode kernel runs in 64-bit and perf tool runs in 32-bit mode,
  * 32-bit perf tool cannot access 64-bit value atomically, which might lead to
@@ -1754,8 +1760,11 @@ int __weak compat_auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __auxtrace_mmap__read(struct mmap *map,
 				 struct auxtrace_record *itr,
 				 struct perf_tool *tool, process_auxtrace_t fn,
@@ -1767,6 +1776,7 @@ static int __auxtrace_mmap__read(struct mmap *map,
 	size_t size, head_off, old_off, len1, len2, padding;
 	union perf_event ev;
 	void *data1, *data2;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int kernel_is_64_bit = perf_env__kernel_is_64_bit(evsel__env(NULL));
 
@@ -1786,6 +1796,15 @@ static int __auxtrace_mmap__read(struct mmap *map,
 		head = auxtrace_mmap__read_head(mm);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int kernel_is_64_bit = perf_env__kernel_is_64_bit(evsel__env(NULL));
+
+	head = auxtrace_mmap__read_head(mm, kernel_is_64_bit);
+
+	if (snapshot &&
+	    auxtrace_record__find_snapshot(itr, mm->idx, mm, data, &head, &old))
+		return -1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (old == head)
 		return 0;
@@ -1865,6 +1884,7 @@ static int __auxtrace_mmap__read(struct mmap *map,
 
 	if (!snapshot) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int err;
 
 		err = auxtrace_mmap__write_tail(mm, head, kernel_is_64_bit);
@@ -1878,6 +1898,15 @@ static int __auxtrace_mmap__read(struct mmap *map,
 			int err;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int err;
+
+		err = auxtrace_mmap__write_tail(mm, head, kernel_is_64_bit);
+		if (err < 0)
+			return err;
+
+		if (itr->read_finish) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = itr->read_finish(itr, mm->idx);
 			if (err < 0)
 				return err;

@@ -380,6 +380,7 @@ void play_idle_precise(u64 duration_ns, u64 latency_ns)
 
 	it.done = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hrtimer_init_on_stack(&it.timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_HARD);
 	it.timer.function = idle_inject_timer_fn;
 	hrtimer_start(&it.timer, ns_to_ktime(duration_ns),
@@ -390,6 +391,12 @@ void play_idle_precise(u64 duration_ns, u64 latency_ns)
 	hrtimer_start(&it.timer, ns_to_ktime(duration_ns),
 		      HRTIMER_MODE_REL_PINNED);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hrtimer_init_on_stack(&it.timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_HARD);
+	it.timer.function = idle_inject_timer_fn;
+	hrtimer_start(&it.timer, ns_to_ktime(duration_ns),
+		      HRTIMER_MODE_REL_PINNED_HARD);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (!READ_ONCE(it.done))
 		do_idle();

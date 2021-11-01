@@ -137,9 +137,13 @@ static int board_staging_add_dev_domain(struct platform_device *pdev,
 					const char *domain)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct device *dev = &pdev->dev;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct device *dev = &pdev->dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct of_phandle_args pd_args;
 	struct device_node *np;
 
@@ -153,14 +157,20 @@ static int board_staging_add_dev_domain(struct platform_device *pdev,
 	pd_args.args_count = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Initialization similar to device_pm_init_common() */
 	spin_lock_init(&dev->power.lock);
 	dev->power.early_init = true;
 
 	return of_genpd_add_device(&pd_args, dev);
+<<<<<<< HEAD
 =======
 	return of_genpd_add_device(&pd_args, &pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #else
 static inline int board_staging_add_dev_domain(struct platform_device *pdev,

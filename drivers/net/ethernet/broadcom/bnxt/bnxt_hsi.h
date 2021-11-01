@@ -369,9 +369,13 @@ struct cmd_nums {
 	#define HWRM_FUNC_PTP_EXT_CFG                     0x1a0UL
 	#define HWRM_FUNC_PTP_EXT_QCFG                    0x1a1UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define HWRM_FUNC_KEY_CTX_ALLOC                   0x1a2UL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define HWRM_FUNC_KEY_CTX_ALLOC                   0x1a2UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	#define HWRM_SELFTEST_QLIST                       0x200UL
 	#define HWRM_SELFTEST_EXEC                        0x201UL
 	#define HWRM_SELFTEST_IRQ                         0x202UL
@@ -536,12 +540,17 @@ struct hwrm_err_output {
 #define HWRM_VERSION_MINOR 10
 #define HWRM_VERSION_UPDATE 2
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define HWRM_VERSION_RSVD 52
 #define HWRM_VERSION_STR "1.10.2.52"
 =======
 #define HWRM_VERSION_RSVD 47
 #define HWRM_VERSION_STR "1.10.2.47"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HWRM_VERSION_RSVD 52
+#define HWRM_VERSION_STR "1.10.2.52"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* hwrm_ver_get_input (size:192b/24B) */
 struct hwrm_ver_get_input {
@@ -595,9 +604,13 @@ struct hwrm_ver_get_output {
 	#define VER_GET_RESP_DEV_CAPS_CFG_CFA_TFLIB_SUPPORTED                      0x2000UL
 	#define VER_GET_RESP_DEV_CAPS_CFG_CFA_TRUFLOW_SUPPORTED                    0x4000UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define VER_GET_RESP_DEV_CAPS_CFG_SECURE_BOOT_CAPABLE                      0x8000UL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define VER_GET_RESP_DEV_CAPS_CFG_SECURE_BOOT_CAPABLE                      0x8000UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8	roce_fw_maj_8b;
 	u8	roce_fw_min_8b;
 	u8	roce_fw_bld_8b;
@@ -900,11 +913,16 @@ struct hwrm_async_event_cmpl_reset_notify {
 	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_FW_EXCEPTION_NON_FATAL    (0x3UL << 8)
 	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_FAST_RESET                (0x4UL << 8)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_FW_ACTIVATION             (0x5UL << 8)
 	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_LAST                     ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_FW_ACTIVATION
 =======
 	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_LAST                     ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_FAST_RESET
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_FW_ACTIVATION             (0x5UL << 8)
+	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_LAST                     ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_REASON_CODE_FW_ACTIVATION
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_DELAY_IN_100MS_TICKS_MASK           0xffff0000UL
 	#define ASYNC_EVENT_CMPL_RESET_NOTIFY_EVENT_DATA1_DELAY_IN_100MS_TICKS_SFT            16
 };
@@ -1255,6 +1273,9 @@ struct hwrm_async_event_cmpl_error_report_base {
 	__le16	timestamp_hi;
 	__le32	event_data1;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_MASK                   0xffUL
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_SFT                    0
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_RESERVED                 0x0UL
@@ -1263,6 +1284,7 @@ struct hwrm_async_event_cmpl_error_report_base {
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_NVM                      0x3UL
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_DOORBELL_DROP_THRESHOLD  0x4UL
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_LAST                    ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_DOORBELL_DROP_THRESHOLD
+<<<<<<< HEAD
 =======
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_MASK          0xffUL
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_SFT           0
@@ -1272,6 +1294,8 @@ struct hwrm_async_event_cmpl_error_report_base {
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_NVM             0x3UL
 	#define ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_LAST           ASYNC_EVENT_CMPL_ERROR_REPORT_BASE_EVENT_DATA1_ERROR_TYPE_NVM
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* hwrm_async_event_cmpl_error_report_pause_storm (size:128b/16B) */
@@ -1476,10 +1500,15 @@ struct hwrm_func_vf_cfg_input {
 	#define FUNC_VF_CFG_REQ_ENABLES_NUM_STAT_CTXS        0x400UL
 	#define FUNC_VF_CFG_REQ_ENABLES_NUM_HW_RING_GRPS     0x800UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define FUNC_VF_CFG_REQ_ENABLES_NUM_TX_KEY_CTXS      0x1000UL
 	#define FUNC_VF_CFG_REQ_ENABLES_NUM_RX_KEY_CTXS      0x2000UL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define FUNC_VF_CFG_REQ_ENABLES_NUM_TX_KEY_CTXS      0x1000UL
+	#define FUNC_VF_CFG_REQ_ENABLES_NUM_RX_KEY_CTXS      0x2000UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le16	mtu;
 	__le16	guest_vlan;
 	__le16	async_event_cr;
@@ -1504,11 +1533,16 @@ struct hwrm_func_vf_cfg_input {
 	__le16	num_stat_ctxs;
 	__le16	num_hw_ring_grps;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__le16	num_tx_key_ctxs;
 	__le16	num_rx_key_ctxs;
 =======
 	u8	unused_0[4];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le16	num_tx_key_ctxs;
+	__le16	num_rx_key_ctxs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* hwrm_func_vf_cfg_output (size:128b/16B) */
@@ -1533,10 +1567,14 @@ struct hwrm_func_qcaps_input {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* hwrm_func_qcaps_output (size:768b/96B) */
 =======
 /* hwrm_func_qcaps_output (size:704b/88B) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* hwrm_func_qcaps_output (size:768b/96B) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hwrm_func_qcaps_output {
 	__le16	error_code;
 	__le16	req_type;
@@ -1631,11 +1669,16 @@ struct hwrm_func_qcaps_output {
 	#define FUNC_QCAPS_RESP_MPC_CHNLS_CAP_RE_CFA      0x8UL
 	#define FUNC_QCAPS_RESP_MPC_CHNLS_CAP_PRIMATE     0x10UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__le16	max_key_ctxs_alloc;
 	u8	unused_1[7];
 =======
 	u8	unused_1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le16	max_key_ctxs_alloc;
+	u8	unused_1[7];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8	valid;
 };
 
@@ -1651,10 +1694,14 @@ struct hwrm_func_qcfg_input {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* hwrm_func_qcfg_output (size:896b/112B) */
 =======
 /* hwrm_func_qcfg_output (size:832b/104B) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* hwrm_func_qcfg_output (size:896b/112B) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hwrm_func_qcfg_output {
 	__le16	error_code;
 	__le16	req_type;
@@ -1802,6 +1849,7 @@ struct hwrm_func_qcfg_output {
 	#define FUNC_QCFG_RESP_PARTITION_MAX_BW_BW_VALUE_UNIT_LAST         FUNC_QCFG_RESP_PARTITION_MAX_BW_BW_VALUE_UNIT_PERCENT1_100
 	__le16	host_mtu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__le16	alloc_tx_key_ctxs;
 	__le16	alloc_rx_key_ctxs;
 	u8	unused_3[5];
@@ -1816,6 +1864,15 @@ struct hwrm_func_qcfg_output {
 
 /* hwrm_func_cfg_input (size:832b/104B) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le16	alloc_tx_key_ctxs;
+	__le16	alloc_rx_key_ctxs;
+	u8	unused_3[5];
+	u8	valid;
+};
+
+/* hwrm_func_cfg_input (size:896b/112B) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hwrm_func_cfg_input {
 	__le16	req_type;
 	__le16	cmpl_ring;
@@ -1883,10 +1940,15 @@ struct hwrm_func_cfg_input {
 	#define FUNC_CFG_REQ_ENABLES_TPID                     0x10000000UL
 	#define FUNC_CFG_REQ_ENABLES_HOST_MTU                 0x20000000UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define FUNC_CFG_REQ_ENABLES_TX_KEY_CTXS              0x40000000UL
 	#define FUNC_CFG_REQ_ENABLES_RX_KEY_CTXS              0x80000000UL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define FUNC_CFG_REQ_ENABLES_TX_KEY_CTXS              0x40000000UL
+	#define FUNC_CFG_REQ_ENABLES_RX_KEY_CTXS              0x80000000UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le16	admin_mtu;
 	__le16	mru;
 	__le16	num_rsscos_ctxs;
@@ -1997,11 +2059,17 @@ struct hwrm_func_cfg_input {
 	__be16	tpid;
 	__le16	host_mtu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__le16	num_tx_key_ctxs;
 	__le16	num_rx_key_ctxs;
 	u8	unused_0[4];
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le16	num_tx_key_ctxs;
+	__le16	num_rx_key_ctxs;
+	u8	unused_0[4];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* hwrm_func_cfg_output (size:128b/16B) */
@@ -2173,9 +2241,13 @@ struct hwrm_func_drv_rgtr_input {
 	#define FUNC_DRV_RGTR_REQ_FLAGS_FAST_RESET_SUPPORT               0x80UL
 	#define FUNC_DRV_RGTR_REQ_FLAGS_RSS_STRICT_HASH_TYPE_SUPPORT     0x100UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define FUNC_DRV_RGTR_REQ_FLAGS_NPAR_1_2_SUPPORT                 0x200UL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define FUNC_DRV_RGTR_REQ_FLAGS_NPAR_1_2_SUPPORT                 0x200UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le32	enables;
 	#define FUNC_DRV_RGTR_REQ_ENABLES_OS_TYPE             0x1UL
 	#define FUNC_DRV_RGTR_REQ_ENABLES_VER                 0x2UL
@@ -2346,10 +2418,14 @@ struct hwrm_func_resource_qcaps_input {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* hwrm_func_resource_qcaps_output (size:512b/64B) */
 =======
 /* hwrm_func_resource_qcaps_output (size:448b/56B) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* hwrm_func_resource_qcaps_output (size:512b/64B) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hwrm_func_resource_qcaps_output {
 	__le16	error_code;
 	__le16	req_type;
@@ -2382,21 +2458,31 @@ struct hwrm_func_resource_qcaps_output {
 	__le16	flags;
 	#define FUNC_RESOURCE_QCAPS_RESP_FLAGS_MIN_GUARANTEED     0x1UL
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le16	min_tx_key_ctxs;
 	__le16	max_tx_key_ctxs;
 	__le16	min_rx_key_ctxs;
 	__le16	max_rx_key_ctxs;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8	unused_0[5];
 	u8	valid;
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* hwrm_func_vf_resource_cfg_input (size:512b/64B) */
 =======
 /* hwrm_func_vf_resource_cfg_input (size:448b/56B) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* hwrm_func_vf_resource_cfg_input (size:512b/64B) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hwrm_func_vf_resource_cfg_input {
 	__le16	req_type;
 	__le16	cmpl_ring;
@@ -2424,12 +2510,18 @@ struct hwrm_func_vf_resource_cfg_input {
 	__le16	flags;
 	#define FUNC_VF_RESOURCE_CFG_REQ_FLAGS_MIN_GUARANTEED     0x1UL
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le16	min_tx_key_ctxs;
 	__le16	max_tx_key_ctxs;
 	__le16	min_rx_key_ctxs;
 	__le16	max_rx_key_ctxs;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8	unused_0[2];
 };
 
@@ -2448,12 +2540,18 @@ struct hwrm_func_vf_resource_cfg_output {
 	__le16	reserved_stat_ctx;
 	__le16	reserved_hw_ring_grps;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__le16	reserved_tx_key_ctxs;
 	__le16	reserved_rx_key_ctxs;
 	u8	unused_0[3];
 =======
 	u8	unused_0[7];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le16	reserved_tx_key_ctxs;
+	__le16	reserved_rx_key_ctxs;
+	u8	unused_0[3];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8	valid;
 };
 
@@ -4326,10 +4424,14 @@ struct hwrm_port_lpbk_clr_stats_output {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* hwrm_port_ts_query_input (size:320b/40B) */
 =======
 /* hwrm_port_ts_query_input (size:256b/32B) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* hwrm_port_ts_query_input (size:320b/40B) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hwrm_port_ts_query_input {
 	__le16	req_type;
 	__le16	cmpl_ring;
@@ -4348,15 +4450,21 @@ struct hwrm_port_ts_query_input {
 	#define PORT_TS_QUERY_REQ_ENABLES_TS_REQ_TIMEOUT     0x1UL
 	#define PORT_TS_QUERY_REQ_ENABLES_PTP_SEQ_ID         0x2UL
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	#define PORT_TS_QUERY_REQ_ENABLES_PTP_HDR_OFFSET     0x4UL
 	__le16	ts_req_timeout;
 	__le32	ptp_seq_id;
 	__le16	ptp_hdr_offset;
 	u8	unused_1[6];
+<<<<<<< HEAD
 =======
 	__le16	ts_req_timeout;
 	__le32	ptp_seq_id;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* hwrm_port_ts_query_output (size:192b/24B) */
@@ -8290,9 +8398,13 @@ struct hwrm_fw_reset_input {
 	u8	flags;
 	#define FW_RESET_REQ_FLAGS_RESET_GRACEFUL     0x1UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define FW_RESET_REQ_FLAGS_FW_ACTIVATION      0x2UL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define FW_RESET_REQ_FLAGS_FW_ACTIVATION      0x2UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8	unused_0[4];
 };
 
@@ -9074,10 +9186,14 @@ struct hwrm_nvm_get_dir_info_output {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* hwrm_nvm_write_input (size:448b/56B) */
 =======
 /* hwrm_nvm_write_input (size:384b/48B) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* hwrm_nvm_write_input (size:448b/56B) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hwrm_nvm_write_input {
 	__le16	req_type;
 	__le16	cmpl_ring;
@@ -9094,6 +9210,7 @@ struct hwrm_nvm_write_input {
 	__le16	flags;
 	#define NVM_WRITE_REQ_FLAGS_KEEP_ORIG_ACTIVE_IMG     0x1UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#define NVM_WRITE_REQ_FLAGS_BATCH_MODE               0x2UL
 	#define NVM_WRITE_REQ_FLAGS_BATCH_LAST               0x4UL
 	__le32	dir_item_length;
@@ -9102,6 +9219,13 @@ struct hwrm_nvm_write_input {
 =======
 	__le32	dir_item_length;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define NVM_WRITE_REQ_FLAGS_BATCH_MODE               0x2UL
+	#define NVM_WRITE_REQ_FLAGS_BATCH_LAST               0x4UL
+	__le32	dir_item_length;
+	__le32	offset;
+	__le32	len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le32	unused_0;
 };
 

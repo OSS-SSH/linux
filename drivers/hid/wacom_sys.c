@@ -2288,6 +2288,9 @@ static void wacom_set_shared_values(struct wacom_wac *wacom_wac)
 	if (wacom_wac->has_mute_touch_switch) {
 		wacom_wac->shared->has_mute_touch_switch = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Hardware touch switch may be off. Wait until
 		 * we know the switch state to decide is_touch_on.
 		 * Softkey state should be initialized to "on" to
@@ -2295,9 +2298,12 @@ static void wacom_set_shared_values(struct wacom_wac *wacom_wac)
 		 */
 		if (wacom_wac->is_soft_touch_switch)
 			wacom_wac->shared->is_touch_on = true;
+<<<<<<< HEAD
 =======
 		wacom_wac->shared->is_touch_on = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (wacom_wac->shared->has_mute_touch_switch &&
@@ -2802,9 +2808,13 @@ static int wacom_probe(struct hid_device *hdev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wacom_wac->probe_complete = true;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	wacom_wac->probe_complete = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

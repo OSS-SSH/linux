@@ -3,10 +3,14 @@
  *
  * Copyright (c) 2017, 2019 Microsemi Corporation
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright 2020-2021 NXP
 =======
  * Copyright 2020-2021 NXP Semiconductors
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright 2020-2021 NXP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/if_bridge.h>

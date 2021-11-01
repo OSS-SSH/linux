@@ -550,6 +550,7 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
 	spin_lock_irq(&mas->lock);
 	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	/*
@@ -558,6 +559,8 @@ static void setup_fifo_xfer(struct spi_transfer *xfer,
 	 * for the watermark interrupt.
 	 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (m_cmd & SPI_TX_ONLY) {
 		if (geni_spi_handle_tx(mas))
 			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);

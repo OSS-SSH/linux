@@ -75,9 +75,13 @@ config QETH_L2
 	prompt "qeth layer 2 device support"
 	depends on QETH
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on BRIDGE || BRIDGE=n
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on BRIDGE || BRIDGE=n
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Select this option to be able to run qeth devices in layer 2 mode.
 	  To compile as a module, choose M. The module name is qeth_l2.
@@ -93,6 +97,7 @@ config QETH_L3
 	  If unsure, choose Y.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config QETH_OSN
 	def_bool !HAVE_MARCH_Z14_FEATURES
@@ -104,6 +109,8 @@ config QETH_OSN
 	  If unsure, choose N.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config QETH_OSX
 	def_bool !HAVE_MARCH_Z15_FEATURES
 	prompt "qeth OSX device support"

@@ -522,11 +522,15 @@ int dn_dev_set_default(struct net_device *dev, int force)
 	spin_unlock(&dndev_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(old);
 =======
 	if (old)
 		dev_put(old);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(old);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rv;
 }
 
@@ -541,11 +545,15 @@ static void dn_dev_check_default(struct net_device *dev)
 	spin_unlock(&dndev_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(dev);
 =======
 	if (dev)
 		dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

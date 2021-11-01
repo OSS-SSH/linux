@@ -32,9 +32,13 @@
 #include <asm/dma.h>
 #include <linux/aer.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/bitfield.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/bitfield.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "pci.h"
 
 DEFINE_MUTEX(pci_slot_mutex);
@@ -77,13 +81,19 @@ static void pci_dev_d3_sleep(struct pci_dev *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool pci_reset_supported(struct pci_dev *dev)
 {
 	return dev->reset_methods[0] != 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PCI_DOMAINS
 int pci_domains_supported = 1;
 #endif
@@ -219,6 +229,7 @@ EXPORT_SYMBOL_GPL(pci_status_get_and_clear_errors);
 
 #ifdef CONFIG_HAS_IOMEM
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __iomem *__pci_ioremap_resource(struct pci_dev *pdev, int bar,
 					    bool write_combine)
 {
@@ -230,11 +241,20 @@ void __iomem *pci_ioremap_bar(struct pci_dev *pdev, int bar)
 {
 	struct resource *res = &pdev->resource[bar];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __iomem *__pci_ioremap_resource(struct pci_dev *pdev, int bar,
+					    bool write_combine)
+{
+	struct resource *res = &pdev->resource[bar];
+	resource_size_t start = res->start;
+	resource_size_t size = resource_size(res);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Make sure the BAR is actually a memory resource, not an IO resource
 	 */
 	if (res->flags & IORESOURCE_UNSET || !(res->flags & IORESOURCE_MEM)) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		pci_err(pdev, "can't ioremap BAR %d: %pR\n", bar, res);
 		return NULL;
@@ -255,11 +275,27 @@ void __iomem *pci_ioremap_bar(struct pci_dev *pdev, int bar)
 	}
 	return ioremap(res->start, resource_size(res));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pci_err(pdev, "can't ioremap BAR %d: %pR\n", bar, res);
+		return NULL;
+	}
+
+	if (write_combine)
+		return ioremap_wc(start, size);
+
+	return ioremap(start, size);
+}
+
+void __iomem *pci_ioremap_bar(struct pci_dev *pdev, int bar)
+{
+	return __pci_ioremap_resource(pdev, bar, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(pci_ioremap_bar);
 
 void __iomem *pci_ioremap_wc_bar(struct pci_dev *pdev, int bar)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return __pci_ioremap_resource(pdev, bar, true);
 =======
@@ -273,6 +309,9 @@ void __iomem *pci_ioremap_wc_bar(struct pci_dev *pdev, int bar)
 	return ioremap_wc(pci_resource_start(pdev, bar),
 			  pci_resource_len(pdev, bar));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return __pci_ioremap_resource(pdev, bar, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(pci_ioremap_wc_bar);
 #endif
@@ -307,10 +346,14 @@ static int pci_dev_str_match_path(struct pci_dev *dev, const char *path,
 	*endptr = strchrnul(path, ';');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wpath = kmemdup_nul(path, *endptr - path, GFP_ATOMIC);
 =======
 	wpath = kmemdup_nul(path, *endptr - path, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	wpath = kmemdup_nul(path, *endptr - path, GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!wpath)
 		return -ENOMEM;
 
@@ -961,12 +1004,17 @@ static void pci_std_enable_acs(struct pci_dev *dev)
 	ctrl |= (cap & PCI_ACS_UF);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Enable Translation Blocking for external devices and noats */
 	if (pci_ats_disabled() || dev->external_facing || dev->untrusted)
 =======
 	/* Enable Translation Blocking for external devices */
 	if (dev->external_facing || dev->untrusted)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Enable Translation Blocking for external devices and noats */
+	if (pci_ats_disabled() || dev->external_facing || dev->untrusted)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ctrl |= (cap & PCI_ACS_TB);
 
 	pci_write_config_word(dev, pos + PCI_ACS_CTRL, ctrl);
@@ -1957,6 +2005,7 @@ static int pci_enable_device_flags(struct pci_dev *dev, unsigned long flags)
 	 * (e.g. if the device really is in D0 at enable time).
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pci_update_current_state(dev, dev->current_state);
 =======
 	if (dev->pm_cap) {
@@ -1965,6 +2014,9 @@ static int pci_enable_device_flags(struct pci_dev *dev, unsigned long flags)
 		dev->current_state = (pmcsr & PCI_PM_CTRL_STATE_MASK);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pci_update_current_state(dev, dev->current_state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (atomic_inc_return(&dev->enable_cnt) > 1)
 		return 0;		/* already enabled */
@@ -2550,6 +2602,9 @@ static int __pci_enable_wake(struct pci_dev *dev, pci_power_t state, bool enable
 		int error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Enable PME signaling if the device can signal PME from
 		 * D3cold regardless of whether or not it can signal PME from
@@ -2558,9 +2613,12 @@ static int __pci_enable_wake(struct pci_dev *dev, pci_power_t state, bool enable
 		 * the device itself ends up in D3cold as a result of that.
 		 */
 		if (pci_pme_capable(dev, state) || pci_pme_capable(dev, PCI_D3cold))
+<<<<<<< HEAD
 =======
 		if (pci_pme_capable(dev, state))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pci_pme_active(dev, true);
 		else
 			ret = 1;
@@ -2665,17 +2723,26 @@ static pci_power_t pci_target_state(struct pci_dev *dev, bool wakeup)
 		target_state = PCI_D3cold;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (wakeup && dev->pme_support) {
 		pci_power_t state = target_state;
 
 =======
 	if (wakeup) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (wakeup && dev->pme_support) {
+		pci_power_t state = target_state;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Find the deepest state from which the device can generate
 		 * PME#.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		while (state && !(dev->pme_support & (1 << state)))
 			state--;
 
@@ -2683,6 +2750,7 @@ static pci_power_t pci_target_state(struct pci_dev *dev, bool wakeup)
 			return state;
 		else if (dev->pme_support & 1)
 			return PCI_D0;
+<<<<<<< HEAD
 =======
 		if (dev->pme_support) {
 			while (target_state
@@ -2690,6 +2758,8 @@ static pci_power_t pci_target_state(struct pci_dev *dev, bool wakeup)
 				target_state--;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return target_state;
@@ -4704,6 +4774,7 @@ EXPORT_SYMBOL(pci_wait_for_pending_transaction);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * pcie_flr - initiate a PCIe function level reset
  * @dev: device to reset
  *
@@ -4736,6 +4807,13 @@ EXPORT_SYMBOL_GPL(pcie_has_flr);
  * device supports FLR before calling this function, e.g. by using the
  * pcie_has_flr() helper.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * pcie_flr - initiate a PCIe function level reset
+ * @dev: device to reset
+ *
+ * Initiate a function level reset unconditionally on @dev without
+ * checking any flags and DEVCAP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int pcie_flr(struct pci_dev *dev)
 {
@@ -4759,6 +4837,9 @@ int pcie_flr(struct pci_dev *dev)
 EXPORT_SYMBOL_GPL(pcie_flr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * pcie_reset_flr - initiate a PCIe function level reset
  * @dev: device to reset
@@ -4782,9 +4863,12 @@ int pcie_reset_flr(struct pci_dev *dev, bool probe)
 EXPORT_SYMBOL_GPL(pcie_reset_flr);
 
 static int pci_af_flr(struct pci_dev *dev, bool probe)
+<<<<<<< HEAD
 =======
 static int pci_af_flr(struct pci_dev *dev, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int pos;
 	u8 cap;
@@ -4832,10 +4916,14 @@ static int pci_af_flr(struct pci_dev *dev, int probe)
  * pci_pm_reset - Put device into PCI_D3 and back into PCI_D0.
  * @dev: Device to reset.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @probe: if true, return 0 if the device can be reset this way.
 =======
  * @probe: If set, only check if the device can be reset this way.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @probe: if true, return 0 if the device can be reset this way.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * If @dev supports native PCI PM and its PCI_PM_CTRL_NO_SOFT_RESET flag is
  * unset, it will be reinitialized internally when going from PCI_D3hot to
@@ -4848,10 +4936,14 @@ static int pci_af_flr(struct pci_dev *dev, int probe)
  * Moreover, only devices in D0 can be reset by this function.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pci_pm_reset(struct pci_dev *dev, bool probe)
 =======
 static int pci_pm_reset(struct pci_dev *dev, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pci_pm_reset(struct pci_dev *dev, bool probe)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u16 csr;
 
@@ -5112,10 +5204,14 @@ int pci_bridge_secondary_bus_reset(struct pci_dev *dev)
 EXPORT_SYMBOL_GPL(pci_bridge_secondary_bus_reset);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pci_parent_bus_reset(struct pci_dev *dev, bool probe)
 =======
 static int pci_parent_bus_reset(struct pci_dev *dev, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pci_parent_bus_reset(struct pci_dev *dev, bool probe)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pci_dev *pdev;
 
@@ -5134,10 +5230,14 @@ static int pci_parent_bus_reset(struct pci_dev *dev, int probe)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pci_reset_hotplug_slot(struct hotplug_slot *hotplug, bool probe)
 =======
 static int pci_reset_hotplug_slot(struct hotplug_slot *hotplug, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pci_reset_hotplug_slot(struct hotplug_slot *hotplug, bool probe)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int rc = -ENOTTY;
 
@@ -5153,10 +5253,14 @@ static int pci_reset_hotplug_slot(struct hotplug_slot *hotplug, int probe)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pci_dev_reset_slot_function(struct pci_dev *dev, bool probe)
 =======
 static int pci_dev_reset_slot_function(struct pci_dev *dev, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pci_dev_reset_slot_function(struct pci_dev *dev, bool probe)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (dev->multifunction || dev->subordinate || !dev->slot ||
 	    dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET)
@@ -5166,10 +5270,14 @@ static int pci_dev_reset_slot_function(struct pci_dev *dev, int probe)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pci_reset_bus_function(struct pci_dev *dev, bool probe)
 =======
 static int pci_reset_bus_function(struct pci_dev *dev, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pci_reset_bus_function(struct pci_dev *dev, bool probe)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int rc;
 
@@ -5254,6 +5362,9 @@ static void pci_dev_restore(struct pci_dev *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* dev->reset_methods[] is a 0-terminated list of indices into this array */
 static const struct pci_reset_fn_method pci_reset_fn_methods[] = {
 	{ },
@@ -5387,8 +5498,11 @@ const struct attribute_group pci_dev_reset_method_attr_group = {
 	.is_visible = pci_dev_reset_method_attr_is_visible,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * __pci_reset_function_locked - reset a PCI device function while holding
  * the @dev mutex lock.
@@ -5412,14 +5526,19 @@ const struct attribute_group pci_dev_reset_method_attr_group = {
 int __pci_reset_function_locked(struct pci_dev *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, m, rc = -ENOTTY;
 =======
 	int rc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, m, rc = -ENOTTY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	might_sleep();
 
 	/*
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * A reset method returns -ENOTTY if it doesn't support this device and
 	 * we should try the next method.
@@ -5444,19 +5563,27 @@ int __pci_reset_function_locked(struct pci_dev *dev)
 =======
 	 * A reset method returns -ENOTTY if it doesn't support this device
 	 * and we should try the next method.
+=======
+	 * A reset method returns -ENOTTY if it doesn't support this device and
+	 * we should try the next method.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
-	 * If it returns 0 (success), we're finished.  If it returns any
-	 * other error, we're also finished: this indicates that further
-	 * reset mechanisms might be broken on the device.
+	 * If it returns 0 (success), we're finished.  If it returns any other
+	 * error, we're also finished: this indicates that further reset
+	 * mechanisms might be broken on the device.
 	 */
-	rc = pci_dev_specific_reset(dev, 0);
-	if (rc != -ENOTTY)
-		return rc;
-	if (pcie_has_flr(dev)) {
-		rc = pcie_flr(dev);
+	for (i = 0; i < PCI_NUM_RESET_METHODS; i++) {
+		m = dev->reset_methods[i];
+		if (!m)
+			return -ENOTTY;
+
+		rc = pci_reset_fn_methods[m].reset_fn(dev, PCI_RESET_DO_RESET);
+		if (!rc)
+			return 0;
 		if (rc != -ENOTTY)
 			return rc;
 	}
+<<<<<<< HEAD
 	rc = pci_af_flr(dev, 0);
 	if (rc != -ENOTTY)
 		return rc;
@@ -5465,10 +5592,15 @@ int __pci_reset_function_locked(struct pci_dev *dev)
 		return rc;
 	return pci_reset_bus_function(dev, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return -ENOTTY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(__pci_reset_function_locked);
 
 /**
+<<<<<<< HEAD
 <<<<<<< HEAD
  * pci_init_reset_methods - check whether device can be safely reset
  * and store supported reset mechanisms.
@@ -5502,34 +5634,42 @@ void pci_init_reset_methods(struct pci_dev *dev)
 =======
  * pci_probe_reset_function - check whether the device can be safely reset
  * @dev: PCI device to reset
+=======
+ * pci_init_reset_methods - check whether device can be safely reset
+ * and store supported reset mechanisms.
+ * @dev: PCI device to check for reset mechanisms
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Some devices allow an individual function to be reset without affecting
- * other functions in the same device.  The PCI device must be responsive
- * to PCI config space in order to use this function.
+ * other functions in the same device.  The PCI device must be in D0-D3hot
+ * state.
  *
- * Returns 0 if the device function can be reset or negative if the
- * device doesn't support resetting a single function.
+ * Stores reset mechanisms supported by device in reset_methods byte array
+ * which is a member of struct pci_dev.
  */
-int pci_probe_reset_function(struct pci_dev *dev)
+void pci_init_reset_methods(struct pci_dev *dev)
 {
-	int rc;
+	int m, i, rc;
+
+	BUILD_BUG_ON(ARRAY_SIZE(pci_reset_fn_methods) != PCI_NUM_RESET_METHODS);
 
 	might_sleep();
 
-	rc = pci_dev_specific_reset(dev, 1);
-	if (rc != -ENOTTY)
-		return rc;
-	if (pcie_has_flr(dev))
-		return 0;
-	rc = pci_af_flr(dev, 1);
-	if (rc != -ENOTTY)
-		return rc;
-	rc = pci_pm_reset(dev, 1);
-	if (rc != -ENOTTY)
-		return rc;
+	i = 0;
+	for (m = 1; m < PCI_NUM_RESET_METHODS; m++) {
+		rc = pci_reset_fn_methods[m].reset_fn(dev, PCI_RESET_PROBE);
+		if (!rc)
+			dev->reset_methods[i++] = m;
+		else if (rc != -ENOTTY)
+			break;
+	}
 
+<<<<<<< HEAD
 	return pci_reset_bus_function(dev, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev->reset_methods[i] = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -5553,10 +5693,14 @@ int pci_reset_function(struct pci_dev *dev)
 	int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pci_reset_supported(dev))
 =======
 	if (!dev->reset_fn)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!pci_reset_supported(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOTTY;
 
 	pci_dev_lock(dev);
@@ -5593,10 +5737,14 @@ int pci_reset_function_locked(struct pci_dev *dev)
 	int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pci_reset_supported(dev))
 =======
 	if (!dev->reset_fn)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!pci_reset_supported(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOTTY;
 
 	pci_dev_save_and_disable(dev);
@@ -5620,10 +5768,14 @@ int pci_try_reset_function(struct pci_dev *dev)
 	int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!pci_reset_supported(dev))
 =======
 	if (!dev->reset_fn)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!pci_reset_supported(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOTTY;
 
 	if (!pci_dev_trylock(dev))
@@ -5852,10 +6004,14 @@ static void pci_slot_restore_locked(struct pci_slot *slot)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pci_slot_reset(struct pci_slot *slot, bool probe)
 =======
 static int pci_slot_reset(struct pci_slot *slot, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pci_slot_reset(struct pci_slot *slot, bool probe)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int rc;
 
@@ -5884,10 +6040,14 @@ static int pci_slot_reset(struct pci_slot *slot, int probe)
 int pci_probe_reset_slot(struct pci_slot *slot)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return pci_slot_reset(slot, PCI_RESET_PROBE);
 =======
 	return pci_slot_reset(slot, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return pci_slot_reset(slot, PCI_RESET_PROBE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(pci_probe_reset_slot);
 
@@ -5911,10 +6071,14 @@ static int __pci_reset_slot(struct pci_slot *slot)
 	int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = pci_slot_reset(slot, PCI_RESET_PROBE);
 =======
 	rc = pci_slot_reset(slot, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = pci_slot_reset(slot, PCI_RESET_PROBE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		return rc;
 
@@ -5922,10 +6086,14 @@ static int __pci_reset_slot(struct pci_slot *slot)
 		pci_slot_save_and_disable_locked(slot);
 		might_sleep();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rc = pci_reset_hotplug_slot(slot->hotplug, PCI_RESET_DO_RESET);
 =======
 		rc = pci_reset_hotplug_slot(slot->hotplug, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rc = pci_reset_hotplug_slot(slot->hotplug, PCI_RESET_DO_RESET);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pci_slot_restore_locked(slot);
 		pci_slot_unlock(slot);
 	} else
@@ -5935,10 +6103,14 @@ static int __pci_reset_slot(struct pci_slot *slot)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pci_bus_reset(struct pci_bus *bus, bool probe)
 =======
 static int pci_bus_reset(struct pci_bus *bus, int probe)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pci_bus_reset(struct pci_bus *bus, bool probe)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 
@@ -5985,10 +6157,14 @@ int pci_bus_error_reset(struct pci_dev *bridge)
 
 	list_for_each_entry(slot, &bus->slots, list)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (pci_slot_reset(slot, PCI_RESET_DO_RESET))
 =======
 		if (pci_slot_reset(slot, 0))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (pci_slot_reset(slot, PCI_RESET_DO_RESET))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto bus_reset;
 
 	mutex_unlock(&pci_slot_mutex);
@@ -5996,10 +6172,14 @@ int pci_bus_error_reset(struct pci_dev *bridge)
 bus_reset:
 	mutex_unlock(&pci_slot_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return pci_bus_reset(bridge->subordinate, PCI_RESET_DO_RESET);
 =======
 	return pci_bus_reset(bridge->subordinate, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return pci_bus_reset(bridge->subordinate, PCI_RESET_DO_RESET);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -6011,10 +6191,14 @@ bus_reset:
 int pci_probe_reset_bus(struct pci_bus *bus)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return pci_bus_reset(bus, PCI_RESET_PROBE);
 =======
 	return pci_bus_reset(bus, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return pci_bus_reset(bus, PCI_RESET_PROBE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(pci_probe_reset_bus);
 
@@ -6029,10 +6213,14 @@ static int __pci_reset_bus(struct pci_bus *bus)
 	int rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = pci_bus_reset(bus, PCI_RESET_PROBE);
 =======
 	rc = pci_bus_reset(bus, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = pci_bus_reset(bus, PCI_RESET_PROBE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		return rc;
 

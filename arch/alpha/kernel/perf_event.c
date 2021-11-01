@@ -575,10 +575,14 @@ static void alpha_pmu_start(struct perf_event *event, int flags)
  * - currently support EV67 and later CPUs.
  * - actually some later revisions of the EV6 have the same PMC model as the
 <<<<<<< HEAD
+<<<<<<< HEAD
  *     EV67 but we don't do sufficiently deep CPU detection to detect them.
 =======
  *     EV67 but we don't do suffiently deep CPU detection to detect them.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *     EV67 but we don't do sufficiently deep CPU detection to detect them.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *     Bad luck to the very few people who might have one, I guess.
  */
 static int supported_cpu(void)

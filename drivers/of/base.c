@@ -37,9 +37,13 @@ struct device_node *of_root;
 EXPORT_SYMBOL(of_root);
 struct device_node *of_chosen;
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL(of_chosen);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL(of_chosen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct device_node *of_aliases;
 struct device_node *of_stdout;
 static const char *of_stdout_options;
@@ -713,12 +717,16 @@ static struct device_node *__of_get_next_child(const struct device_node *node,
 
 	next = prev ? prev->sibling : node->child;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	of_node_get(next);
 =======
 	for (; next; next = next->sibling)
 		if (of_node_get(next))
 			break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	of_node_get(next);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	of_node_put(prev);
 	return next;
 }
@@ -1830,9 +1838,13 @@ int of_add_property(struct device_node *np, struct property *prop)
 	return rc;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(of_add_property);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(of_add_property);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int __of_remove_property(struct device_node *np, struct property *prop)
 {

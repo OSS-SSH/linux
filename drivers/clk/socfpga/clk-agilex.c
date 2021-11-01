@@ -108,16 +108,22 @@ static const struct clk_parent_data gpio_db_free_mux[] = {
 
 static const struct clk_parent_data psi_ref_free_mux[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .fw_name = "main_pll_c2",
 	  .name = "main_pll_c2", },
 	{ .fw_name = "peri_pll_c2",
 	  .name = "peri_pll_c2", },
+<<<<<<< HEAD
 =======
 	{ .fw_name = "main_pll_c3",
 	  .name = "main_pll_c3", },
 	{ .fw_name = "peri_pll_c3",
 	  .name = "peri_pll_c3", },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .fw_name = "osc1",
 	  .name = "osc1", },
 	{ .fw_name = "cb-intosc-hs-div2-clk",
@@ -173,6 +179,7 @@ static const struct clk_parent_data mpu_mux[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct clk_parent_data s2f_usr0_mux[] = {
 	{ .fw_name = "f2s-free-clk",
@@ -182,6 +189,8 @@ static const struct clk_parent_data s2f_usr0_mux[] = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct clk_parent_data emac_mux[] = {
 	{ .fw_name = "emaca_free_clk",
 	  .name = "emaca_free_clk", },
@@ -206,6 +215,9 @@ static const struct clk_parent_data sdmmc_mux[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct clk_parent_data s2f_user0_mux[] = {
 	{ .fw_name = "s2f_user0_free_clk",
 	  .name = "s2f_user0_free_clk", },
@@ -213,8 +225,11 @@ static const struct clk_parent_data s2f_user0_mux[] = {
 	  .name = "boot_clk", },
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct clk_parent_data s2f_user1_mux[] = {
 	{ .fw_name = "s2f_user1_free_clk",
 	  .name = "s2f_user1_free_clk", },
@@ -294,10 +309,14 @@ static const struct stratix10_perip_cnt_clock agilex_main_perip_cnt_clks[] = {
 	  ARRAY_SIZE(sdmmc_free_mux), 0, 0xE4, 0, 0, 0},
 	{ AGILEX_S2F_USER0_FREE_CLK, "s2f_user0_free_clk", NULL, s2f_usr0_free_mux,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  ARRAY_SIZE(s2f_usr0_free_mux), 0, 0xE8, 0, 0x30, 2},
 =======
 	  ARRAY_SIZE(s2f_usr0_free_mux), 0, 0xE8, 0, 0, 0},
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  ARRAY_SIZE(s2f_usr0_free_mux), 0, 0xE8, 0, 0x30, 2},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ AGILEX_S2F_USER1_FREE_CLK, "s2f_user1_free_clk", NULL, s2f_usr1_free_mux,
 	  ARRAY_SIZE(s2f_usr1_free_mux), 0, 0xEC, 0, 0x88, 5},
 	{ AGILEX_PSI_REF_FREE_CLK, "psi_ref_free_clk", NULL, psi_ref_free_mux,
@@ -330,10 +349,13 @@ static const struct stratix10_gate_clock agilex_gate_clks[] = {
 	{ AGILEX_CS_TIMER_CLK, "cs_timer_clk", NULL, noc_mux, ARRAY_SIZE(noc_mux), 0, 0x24,
 	  5, 0, 0, 0, 0x30, 1, 0},
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	{ AGILEX_S2F_USER0_CLK, "s2f_user0_clk", NULL, s2f_usr0_mux, ARRAY_SIZE(s2f_usr0_mux), 0, 0x24,
 	  6, 0, 0, 0, 0, 0, 0},
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ AGILEX_EMAC0_CLK, "emac0_clk", NULL, emac_mux, ARRAY_SIZE(emac_mux), 0, 0x7C,
 	  0, 0, 0, 0, 0x94, 26, 0},
 	{ AGILEX_EMAC1_CLK, "emac1_clk", NULL, emac_mux, ARRAY_SIZE(emac_mux), 0, 0x7C,
@@ -347,10 +369,15 @@ static const struct stratix10_gate_clock agilex_gate_clks[] = {
 	{ AGILEX_SDMMC_CLK, "sdmmc_clk", NULL, sdmmc_mux, ARRAY_SIZE(sdmmc_mux), 0, 0x7C,
 	  5, 0, 0, 0, 0x88, 4, 4},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ AGILEX_S2F_USER0_CLK, "s2f_user0_clk", NULL, s2f_user0_mux, ARRAY_SIZE(s2f_user0_mux), 0, 0x24,
 	  6, 0, 0, 0, 0x30, 2, 0},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ AGILEX_S2F_USER0_CLK, "s2f_user0_clk", NULL, s2f_user0_mux, ARRAY_SIZE(s2f_user0_mux), 0, 0x24,
+	  6, 0, 0, 0, 0x30, 2, 0},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ AGILEX_S2F_USER1_CLK, "s2f_user1_clk", NULL, s2f_user1_mux, ARRAY_SIZE(s2f_user1_mux), 0, 0x7C,
 	  6, 0, 0, 0, 0x88, 5, 0},
 	{ AGILEX_PSI_REF_CLK, "psi_ref_clk", NULL, psi_mux, ARRAY_SIZE(psi_mux), 0, 0x7C,

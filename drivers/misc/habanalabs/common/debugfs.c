@@ -210,6 +210,7 @@ static int userptr_show(struct seq_file *s, void *data)
 			first = false;
 			seq_puts(s, "\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			seq_puts(s, " pid      user virtual address     size             dma dir\n");
 			seq_puts(s, "----------------------------------------------------------\n");
 		}
@@ -224,6 +225,14 @@ static int userptr_show(struct seq_file *s, void *data)
 			"    0x%-14llx      %-10u    %-30s\n",
 			userptr->addr, userptr->size, dma_dir[userptr->dir]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			seq_puts(s, " pid      user virtual address     size             dma dir\n");
+			seq_puts(s, "----------------------------------------------------------\n");
+		}
+		seq_printf(s, " %-7d  0x%-14llx      %-10llu    %-30s\n",
+				userptr->pid, userptr->addr, userptr->size,
+				dma_dir[userptr->dir]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	spin_unlock(&dev_entry->userptr_spinlock);
@@ -245,10 +254,14 @@ static int vm_show(struct seq_file *s, void *data)
 	struct hl_userptr *userptr;
 	struct hl_vm_phys_pg_pack *phys_pg_pack = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum vm_type *vm_type;
 =======
 	enum vm_type_t *vm_type;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum vm_type *vm_type;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool once = true;
 	u64 j;
 	int i;
@@ -275,10 +288,14 @@ static int vm_show(struct seq_file *s, void *data)
 				userptr = hnode->ptr;
 				seq_printf(s,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					"    0x%-14llx      %-10llu\n",
 =======
 					"    0x%-14llx      %-10u\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					"    0x%-14llx      %-10llu\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					hnode->vaddr, userptr->size);
 			} else {
 				phys_pg_pack = hnode->ptr;
@@ -338,6 +355,9 @@ static int vm_show(struct seq_file *s, void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int userptr_lookup_show(struct seq_file *s, void *data)
 {
 	struct hl_debugfs_entry *entry = s->private;
@@ -409,8 +429,11 @@ static ssize_t userptr_lookup_write(struct file *file, const char __user *buf,
 	return count;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mmu_show(struct seq_file *s, void *data)
 {
 	struct hl_debugfs_entry *entry = s->private;
@@ -441,10 +464,14 @@ static int mmu_show(struct seq_file *s, void *data)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hl_mmu_va_to_pa(ctx, virt_addr, &phys_addr);
 =======
 	phys_addr = hops_info.hop_info[hops_info.used_hops - 1].hop_pte_val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hl_mmu_va_to_pa(ctx, virt_addr, &phys_addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (hops_info.scrambled_vaddr &&
 		(dev_entry->mmu_addr != hops_info.scrambled_vaddr))
@@ -587,17 +614,24 @@ static int device_va_to_pa(struct hl_device *hdev, u64 virt_addr, u32 size,
 	struct hl_ctx *ctx = hdev->compute_ctx;
 	struct hl_vm_hash_node *hnode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 end_address, range_size;
 	struct hl_userptr *userptr;
 	enum vm_type *vm_type;
 	bool valid = false;
 =======
+=======
+	u64 end_address, range_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hl_userptr *userptr;
-	enum vm_type_t *vm_type;
+	enum vm_type *vm_type;
 	bool valid = false;
+<<<<<<< HEAD
 	u64 end_address;
 	u32 range_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, rc = 0;
 
 	if (!ctx) {
@@ -1146,6 +1180,9 @@ static ssize_t hl_security_violations_read(struct file *f, char __user *buf,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t hl_state_dump_read(struct file *f, char __user *buf,
 					size_t count, loff_t *ppos)
 {
@@ -1200,8 +1237,11 @@ static ssize_t hl_state_dump_write(struct file *f, const char __user *buf,
 	return count;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct file_operations hl_data32b_fops = {
 	.owner = THIS_MODULE,
 	.read = hl_data_read32,
@@ -1270,14 +1310,20 @@ static const struct file_operations hl_security_violations_fops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct file_operations hl_state_dump_fops = {
 	.owner = THIS_MODULE,
 	.read = hl_state_dump_read,
 	.write = hl_state_dump_write
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct hl_info_list hl_debugfs_list[] = {
 	{"command_buffers", command_buffers_show, NULL},
 	{"command_submission", command_submission_show, NULL},
@@ -1285,9 +1331,13 @@ static const struct hl_info_list hl_debugfs_list[] = {
 	{"userptr", userptr_show, NULL},
 	{"vm", vm_show, NULL},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{"userptr_lookup", userptr_lookup_show, userptr_lookup_write},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{"userptr_lookup", userptr_lookup_show, userptr_lookup_write},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{"mmu", mmu_show, mmu_asid_va_write},
 	{"engines", engines_show, NULL}
 };
@@ -1345,9 +1395,13 @@ void hl_debugfs_add_device(struct hl_device *hdev)
 	INIT_LIST_HEAD(&dev_entry->ctx_mem_hash_list);
 	mutex_init(&dev_entry->file_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	init_rwsem(&dev_entry->state_dump_sem);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	init_rwsem(&dev_entry->state_dump_sem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&dev_entry->cb_spinlock);
 	spin_lock_init(&dev_entry->cs_spinlock);
 	spin_lock_init(&dev_entry->cs_job_spinlock);
@@ -1460,14 +1514,20 @@ void hl_debugfs_add_device(struct hl_device *hdev)
 				&hdev->skip_reset_on_timeout);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	debugfs_create_file("state_dump",
 				0600,
 				dev_entry->root,
 				dev_entry,
 				&hl_state_dump_fops);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0, entry = dev_entry->entry_arr ; i < count ; i++, entry++) {
 		debugfs_create_file(hl_debugfs_list[i].name,
 					0444,
@@ -1483,9 +1543,13 @@ void hl_debugfs_remove_device(struct hl_device *hdev)
 {
 	struct hl_dbg_device_entry *entry = &hdev->hl_debugfs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	debugfs_remove_recursive(entry->root);
 
@@ -1494,11 +1558,17 @@ void hl_debugfs_remove_device(struct hl_device *hdev)
 	vfree(entry->blob_desc.data);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (i = 0; i < ARRAY_SIZE(entry->state_dump); ++i)
 		vfree(entry->state_dump[i]);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < ARRAY_SIZE(entry->state_dump); ++i)
+		vfree(entry->state_dump[i]);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(entry->entry_arr);
 }
 
@@ -1612,6 +1682,9 @@ void hl_debugfs_remove_ctx_mem_hash(struct hl_device *hdev, struct hl_ctx *ctx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * hl_debugfs_set_state_dump - register state dump making it accessible via
  *                             debugfs
@@ -1634,8 +1707,11 @@ void hl_debugfs_set_state_dump(struct hl_device *hdev, char *data,
 	up_write(&dev_entry->state_dump_sem);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __init hl_debugfs_init(void)
 {
 	hl_debug_root = debugfs_create_dir("habanalabs", NULL);

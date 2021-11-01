@@ -272,6 +272,9 @@ void wb_wakeup_delayed(struct bdi_writeback *wb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void wb_update_bandwidth_workfn(struct work_struct *work)
 {
 	struct bdi_writeback *wb = container_of(to_delayed_work(work),
@@ -280,8 +283,11 @@ static void wb_update_bandwidth_workfn(struct work_struct *work)
 	wb_update_bandwidth(wb);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Initial write bandwidth: 100 MB/s
  */
@@ -305,9 +311,13 @@ static int wb_init(struct bdi_writeback *wb, struct backing_dev_info *bdi,
 	spin_lock_init(&wb->list_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_set(&wb->writeback_inodes, 0);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_set(&wb->writeback_inodes, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wb->bw_time_stamp = jiffies;
 	wb->balanced_dirty_ratelimit = INIT_BW;
 	wb->dirty_ratelimit = INIT_BW;
@@ -318,9 +328,13 @@ static int wb_init(struct bdi_writeback *wb, struct backing_dev_info *bdi,
 	INIT_LIST_HEAD(&wb->work_list);
 	INIT_DELAYED_WORK(&wb->dwork, wb_workfn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_DELAYED_WORK(&wb->bw_dwork, wb_update_bandwidth_workfn);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_DELAYED_WORK(&wb->bw_dwork, wb_update_bandwidth_workfn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wb->dirty_sleep = jiffies;
 
 	err = fprop_local_init_percpu(&wb->completions, gfp);
@@ -370,9 +384,13 @@ static void wb_shutdown(struct bdi_writeback *wb)
 	flush_delayed_work(&wb->dwork);
 	WARN_ON(!list_empty(&wb->work_list));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flush_delayed_work(&wb->bw_dwork);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flush_delayed_work(&wb->bw_dwork);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void wb_exit(struct bdi_writeback *wb)
@@ -422,18 +440,25 @@ static void cgwb_release_workfn(struct work_struct *work)
 
 	fprop_local_destroy_percpu(&wb->memcg_completions);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	percpu_ref_exit(&wb->refcnt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irq(&cgwb_lock);
 	list_del(&wb->offline_node);
 	spin_unlock_irq(&cgwb_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	percpu_ref_exit(&wb->refcnt);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	percpu_ref_exit(&wb->refcnt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wb_exit(wb);
 	WARN_ON_ONCE(!list_empty(&wb->b_attached));
 	kfree_rcu(wb, rcu);
@@ -838,9 +863,13 @@ struct backing_dev_info *bdi_alloc(int node_id)
 	bdi->ra_pages = VM_READAHEAD_PAGES;
 	bdi->io_pages = VM_READAHEAD_PAGES;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	timer_setup(&bdi->laptop_mode_wb_timer, laptop_mode_timer_fn, 0);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	timer_setup(&bdi->laptop_mode_wb_timer, laptop_mode_timer_fn, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return bdi;
 }
 EXPORT_SYMBOL(bdi_alloc);
@@ -963,10 +992,15 @@ static void bdi_remove_from_list(struct backing_dev_info *bdi)
 void bdi_unregister(struct backing_dev_info *bdi)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	del_timer_sync(&bdi->laptop_mode_wb_timer);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	del_timer_sync(&bdi->laptop_mode_wb_timer);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* make sure nobody finds us on the bdi_list anymore */
 	bdi_remove_from_list(bdi);
 	wb_shutdown(&bdi->wb);

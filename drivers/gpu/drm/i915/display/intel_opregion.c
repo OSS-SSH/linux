@@ -1079,11 +1079,17 @@ void intel_opregion_resume(struct drm_i915_private *i915)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Some platforms abuse the _DSM to enable MUX */
 	intel_dsm_get_bios_data_funcs_supported(i915);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Some platforms abuse the _DSM to enable MUX */
+	intel_dsm_get_bios_data_funcs_supported(i915);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_opregion_notify_adapter(i915, PCI_D0);
 }
 

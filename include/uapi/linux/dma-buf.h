@@ -23,6 +23,9 @@
 #include <linux/types.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct dma_buf_sync - Synchronize with CPU access.
  *
@@ -52,6 +55,7 @@
  * explicit synchronization, the client may have to wait on a sync_file or
  * other synchronization primitive outside the scope of the DMA buffer API.
  */
+<<<<<<< HEAD
 struct dma_buf_sync {
 	/**
 	 * @flags: Set of access flags
@@ -77,6 +81,29 @@ struct dma_buf_sync {
 /* begin/end dma-buf functions used for userspace mmap. */
 struct dma_buf_sync {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct dma_buf_sync {
+	/**
+	 * @flags: Set of access flags
+	 *
+	 * DMA_BUF_SYNC_START:
+	 *     Indicates the start of a map access session.
+	 *
+	 * DMA_BUF_SYNC_END:
+	 *     Indicates the end of a map access session.
+	 *
+	 * DMA_BUF_SYNC_READ:
+	 *     Indicates that the mapped DMA buffer will be read by the
+	 *     client via the CPU map.
+	 *
+	 * DMA_BUF_SYNC_WRITE:
+	 *     Indicates that the mapped DMA buffer will be written by the
+	 *     client via the CPU map.
+	 *
+	 * DMA_BUF_SYNC_RW:
+	 *     An alias for DMA_BUF_SYNC_READ | DMA_BUF_SYNC_WRITE.
+	 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u64 flags;
 };
 

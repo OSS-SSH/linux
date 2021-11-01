@@ -59,10 +59,15 @@ static int bond_option_lp_interval_set(struct bonding *bond,
 static int bond_option_pps_set(struct bonding *bond,
 			       const struct bond_opt_value *newval);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int bond_option_lacp_active_set(struct bonding *bond,
 				       const struct bond_opt_value *newval);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int bond_option_lacp_active_set(struct bonding *bond,
+				       const struct bond_opt_value *newval);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bond_option_lacp_rate_set(struct bonding *bond,
 				     const struct bond_opt_value *newval);
 static int bond_option_ad_select_set(struct bonding *bond,
@@ -141,14 +146,20 @@ static const struct bond_opt_value bond_intmax_tbl[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct bond_opt_value bond_lacp_active[] = {
 	{ "off", 0,  0},
 	{ "on",  1,  BOND_VALFLAG_DEFAULT},
 	{ NULL,  -1, 0}
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct bond_opt_value bond_lacp_rate_tbl[] = {
 	{ "slow", AD_LACP_SLOW, 0},
 	{ "fast", AD_LACP_FAST, 0},
@@ -298,6 +309,9 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
 		.set = bond_option_updelay_set
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[BOND_OPT_LACP_ACTIVE] = {
 		.id = BOND_OPT_LACP_ACTIVE,
 		.name = "lacp_active",
@@ -307,8 +321,11 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
 		.values = bond_lacp_active,
 		.set = bond_option_lacp_active_set
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[BOND_OPT_LACP_RATE] = {
 		.id = BOND_OPT_LACP_RATE,
 		.name = "lacp_rate",
@@ -1360,6 +1377,9 @@ static int bond_option_pps_set(struct bonding *bond,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bond_option_lacp_active_set(struct bonding *bond,
 				       const struct bond_opt_value *newval)
 {
@@ -1370,8 +1390,11 @@ static int bond_option_lacp_active_set(struct bonding *bond,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bond_option_lacp_rate_set(struct bonding *bond,
 				     const struct bond_opt_value *newval)
 {

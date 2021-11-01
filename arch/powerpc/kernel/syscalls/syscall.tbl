@@ -177,10 +177,14 @@
 132	common	getpgid				sys_getpgid
 133	common	fchdir				sys_fchdir
 <<<<<<< HEAD
+<<<<<<< HEAD
 134	common	bdflush				sys_ni_syscall
 =======
 134	common	bdflush				sys_bdflush
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+134	common	bdflush				sys_ni_syscall
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 135	common	sysfs				sys_sysfs
 136	32	personality			sys_personality			ppc64_personality
 136	64	personality			ppc64_personality
@@ -335,16 +339,22 @@
 256	spu	sys_debug_setcontext		sys_ni_syscall
 # 257 reserved for vserver
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 258	nospu	migrate_pages			sys_migrate_pages
 259	nospu	mbind				sys_mbind
 260	nospu	get_mempolicy			sys_get_mempolicy
 261	nospu	set_mempolicy			sys_set_mempolicy
+<<<<<<< HEAD
 =======
 258	nospu	migrate_pages			sys_migrate_pages		compat_sys_migrate_pages
 259	nospu	mbind				sys_mbind			compat_sys_mbind
 260	nospu	get_mempolicy			sys_get_mempolicy		compat_sys_get_mempolicy
 261	nospu	set_mempolicy			sys_set_mempolicy		compat_sys_set_mempolicy
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 262	nospu	mq_open				sys_mq_open			compat_sys_mq_open
 263	nospu	mq_unlink			sys_mq_unlink
 264	32	mq_timedsend			sys_mq_timedsend_time32
@@ -393,10 +403,14 @@
 299	common	get_robust_list			sys_get_robust_list		compat_sys_get_robust_list
 300	common	set_robust_list			sys_set_robust_list		compat_sys_set_robust_list
 <<<<<<< HEAD
+<<<<<<< HEAD
 301	common	move_pages			sys_move_pages
 =======
 301	common	move_pages			sys_move_pages			compat_sys_move_pages
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+301	common	move_pages			sys_move_pages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 302	common	getcpu				sys_getcpu
 303	nospu	epoll_pwait			sys_epoll_pwait			compat_sys_epoll_pwait
 304	32	utimensat			sys_utimensat_time32
@@ -542,7 +556,12 @@
 445	common	landlock_add_rule		sys_landlock_add_rule
 446	common	landlock_restrict_self		sys_landlock_restrict_self
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 447 reserved for memfd_secret
 448	common	process_mrelease		sys_process_mrelease
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# 447 reserved for memfd_secret
+448	common	process_mrelease		sys_process_mrelease
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -509,6 +509,7 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
 		return -EAGAIN;
 	num_sge = skb_to_sgvec(skb, msg->sg.data, 0, skb->len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(num_sge < 0))
 		return num_sge;
 =======
@@ -517,6 +518,10 @@ static int sk_psock_skb_ingress_enqueue(struct sk_buff *skb,
 		return num_sge;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(num_sge < 0))
+		return num_sge;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	copied = skb->len;
 	msg->sg.start = 0;
@@ -536,9 +541,13 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb)
 	struct sock *sk = psock->sk;
 	struct sk_msg *msg;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* If we are receiving on the same sock skb->sk is already assigned,
 	 * skip memory accounting and owner transition seeing it already set
@@ -558,13 +567,19 @@ static int sk_psock_skb_ingress(struct sk_psock *psock, struct sk_buff *skb)
 	 */
 	skb_set_owner_r(skb, sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = sk_psock_skb_ingress_enqueue(skb, psock, sk, msg);
 	if (err < 0)
 		kfree(msg);
 	return err;
+<<<<<<< HEAD
 =======
 	return sk_psock_skb_ingress_enqueue(skb, psock, sk, msg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Puts an skb on the ingress queue of the socket already assigned to the
@@ -576,22 +591,32 @@ static int sk_psock_skb_ingress_self(struct sk_psock *psock, struct sk_buff *skb
 	struct sk_msg *msg = kzalloc(sizeof(*msg), __GFP_NOWARN | GFP_ATOMIC);
 	struct sock *sk = psock->sk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(!msg))
 		return -EAGAIN;
 	sk_msg_init(msg);
 	skb_set_owner_r(skb, sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = sk_psock_skb_ingress_enqueue(skb, psock, sk, msg);
 	if (err < 0)
 		kfree(msg);
 	return err;
+<<<<<<< HEAD
 =======
 	return sk_psock_skb_ingress_enqueue(skb, psock, sk, msg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
@@ -606,10 +631,14 @@ static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sk_psock_skb_state(struct sk_psock *psock,
 			       struct sk_psock_work_state *state,
 			       struct sk_buff *skb,
 			       int len, int off)
+<<<<<<< HEAD
 {
 	spin_lock_bh(&psock->ingress_lock);
 	if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED)) {
@@ -626,6 +655,18 @@ static void sock_drop(struct sock *sk, struct sk_buff *skb)
 	sk_drops_add(sk, skb);
 	kfree_skb(skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+{
+	spin_lock_bh(&psock->ingress_lock);
+	if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED)) {
+		state->skb = skb;
+		state->len = len;
+		state->off = off;
+	} else {
+		sock_drop(psock->sk, skb);
+	}
+	spin_unlock_bh(&psock->ingress_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void sk_psock_backlog(struct work_struct *work)
@@ -633,25 +674,35 @@ static void sk_psock_backlog(struct work_struct *work)
 	struct sk_psock *psock = container_of(work, struct sk_psock, work);
 	struct sk_psock_work_state *state = &psock->work_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sk_buff *skb = NULL;
 =======
 	struct sk_buff *skb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct sk_buff *skb = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool ingress;
 	u32 len, off;
 	int ret;
 
 	mutex_lock(&psock->work_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(state->skb)) {
 		spin_lock_bh(&psock->ingress_lock);
 =======
 	if (state->skb) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(state->skb)) {
+		spin_lock_bh(&psock->ingress_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb = state->skb;
 		len = state->len;
 		off = state->off;
 		state->skb = NULL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		spin_unlock_bh(&psock->ingress_lock);
 	}
@@ -661,6 +712,12 @@ static void sk_psock_backlog(struct work_struct *work)
 		goto start;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spin_unlock_bh(&psock->ingress_lock);
+	}
+	if (skb)
+		goto start;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while ((skb = skb_dequeue(&psock->ingress_skb))) {
 		len = skb->len;
@@ -676,6 +733,7 @@ start:
 			if (ret <= 0) {
 				if (ret == -EAGAIN) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 					sk_psock_skb_state(psock, state, skb,
 							   len, off);
 =======
@@ -683,6 +741,10 @@ start:
 					state->len = len;
 					state->off = off;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					sk_psock_skb_state(psock, state, skb,
+							   len, off);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					goto end;
 				}
 				/* Hard errors break pipe and stop xmit. */
@@ -782,13 +844,19 @@ static void __sk_psock_zap_ingress(struct sk_psock *psock)
 		sock_drop(psock->sk, skb);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree_skb(psock->work_state.skb);
 	/* We null the skb here to ensure that calls to sk_psock_backlog
 	 * do not pick up the free'd skb.
 	 */
 	psock->work_state.skb = NULL;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__sk_psock_purge_ingress_msg(psock);
 }
 
@@ -841,10 +909,13 @@ static void sk_psock_destroy(struct work_struct *work)
 void sk_psock_drop(struct sock *sk, struct sk_psock *psock)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	sk_psock_stop(psock, false);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	write_lock_bh(&sk->sk_callback_lock);
 	sk_psock_restore_proto(sk, psock);
 	rcu_assign_sk_user_data(sk, NULL);
@@ -855,10 +926,15 @@ void sk_psock_drop(struct sock *sk, struct sk_psock *psock)
 	write_unlock_bh(&sk->sk_callback_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sk_psock_stop(psock, false);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sk_psock_stop(psock, false);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_RCU_WORK(&psock->rwork, sk_psock_destroy);
 	queue_rcu_work(system_wq, &psock->rwork);
 }

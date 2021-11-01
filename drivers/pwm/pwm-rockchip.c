@@ -385,6 +385,7 @@ static int rockchip_pwm_remove(struct platform_device *pdev)
 	struct rockchip_pwm_chip *pc = platform_get_drvdata(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pwmchip_remove(&pc->chip);
 =======
 	/*
@@ -401,15 +402,22 @@ static int rockchip_pwm_remove(struct platform_device *pdev)
 	if (pwm_is_enabled(pc->chip.pwms))
 		clk_disable(pc->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pwmchip_remove(&pc->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	clk_unprepare(pc->pclk);
 	clk_unprepare(pc->clk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return pwmchip_remove(&pc->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct platform_driver rockchip_pwm_driver = {

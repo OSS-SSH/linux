@@ -8,6 +8,7 @@
 #include <linux/dma-map-ops.h>
 #include <linux/memblock.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/page.h>
 
 =======
@@ -60,6 +61,10 @@ void arch_dma_free(struct device *dev, size_t size, void *vaddr,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/page.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void arch_sync_dma_for_device(phys_addr_t paddr, size_t size,
 		enum dma_data_direction dir)
 {
@@ -83,6 +88,9 @@ void arch_sync_dma_for_device(phys_addr_t paddr, size_t size,
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Our max_low_pfn should have been backed off by 16MB in mm/init.c to create
@@ -94,5 +102,8 @@ static int __init hexagon_dma_init(void)
 					hexagon_coherent_pool_size);
 }
 core_initcall(hexagon_dma_init);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

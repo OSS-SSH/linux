@@ -205,6 +205,7 @@ srmcons_init(void)
 		int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		driver = tty_alloc_driver(MAX_SRM_CONSOLE_DEVICES, 0);
 		if (IS_ERR(driver))
 			return PTR_ERR(driver);
@@ -213,6 +214,11 @@ srmcons_init(void)
 		if (!driver)
 			return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		driver = tty_alloc_driver(MAX_SRM_CONSOLE_DEVICES, 0);
+		if (IS_ERR(driver))
+			return PTR_ERR(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		tty_port_init(&srmcons_singleton.port);
 
@@ -228,10 +234,14 @@ srmcons_init(void)
 		err = tty_register_driver(driver);
 		if (err) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			tty_driver_kref_put(driver);
 =======
 			put_tty_driver(driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tty_driver_kref_put(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			tty_port_destroy(&srmcons_singleton.port);
 			return err;
 		}

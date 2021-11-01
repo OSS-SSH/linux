@@ -2505,6 +2505,7 @@ static int ath6kl_wmi_sync_point(struct wmi *wmi, u8 if_idx)
 
 	for (index = 0; index < num_pri_streams; index++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (WARN_ON(!data_sync_bufs[index].skb)) {
 			ret = -ENOMEM;
 			goto free_data_skb;
@@ -2513,6 +2514,12 @@ static int ath6kl_wmi_sync_point(struct wmi *wmi, u8 if_idx)
 		if (WARN_ON(!data_sync_bufs[index].skb))
 			goto free_data_skb;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (WARN_ON(!data_sync_bufs[index].skb)) {
+			ret = -ENOMEM;
+			goto free_data_skb;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ep_id = ath6kl_ac2_endpoint_id(wmi->parent_dev,
 					       data_sync_bufs[index].

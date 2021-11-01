@@ -18,6 +18,9 @@ MODULE_LICENSE("GPL v2");
 asmlinkage void sm4_ce_do_crypt(const u32 *rk, void *out, const void *in);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int sm4_ce_setkey(struct crypto_tfm *tfm, const u8 *key,
 		       unsigned int key_len)
 {
@@ -26,6 +29,7 @@ static int sm4_ce_setkey(struct crypto_tfm *tfm, const u8 *key,
 	return sm4_expandkey(ctx, key, key_len);
 }
 
+<<<<<<< HEAD
 static void sm4_ce_encrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in)
 {
 	const struct sm4_ctx *ctx = crypto_tfm_ctx(tfm);
@@ -33,13 +37,19 @@ static void sm4_ce_encrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in)
 	if (!crypto_simd_usable()) {
 		sm4_crypt_block(ctx->rkey_enc, out, in);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sm4_ce_encrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in)
 {
-	const struct crypto_sm4_ctx *ctx = crypto_tfm_ctx(tfm);
+	const struct sm4_ctx *ctx = crypto_tfm_ctx(tfm);
 
 	if (!crypto_simd_usable()) {
+<<<<<<< HEAD
 		crypto_sm4_encrypt(tfm, out, in);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sm4_crypt_block(ctx->rkey_enc, out, in);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		kernel_neon_begin();
 		sm4_ce_do_crypt(ctx->rkey_enc, out, in);
@@ -49,6 +59,7 @@ static void sm4_ce_encrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in)
 
 static void sm4_ce_decrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	const struct sm4_ctx *ctx = crypto_tfm_ctx(tfm);
 
@@ -60,6 +71,12 @@ static void sm4_ce_decrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in)
 	if (!crypto_simd_usable()) {
 		crypto_sm4_decrypt(tfm, out, in);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct sm4_ctx *ctx = crypto_tfm_ctx(tfm);
+
+	if (!crypto_simd_usable()) {
+		sm4_crypt_block(ctx->rkey_dec, out, in);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		kernel_neon_begin();
 		sm4_ce_do_crypt(ctx->rkey_dec, out, in);
@@ -74,19 +91,27 @@ static struct crypto_alg sm4_ce_alg = {
 	.cra_flags			= CRYPTO_ALG_TYPE_CIPHER,
 	.cra_blocksize			= SM4_BLOCK_SIZE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.cra_ctxsize			= sizeof(struct sm4_ctx),
 =======
 	.cra_ctxsize			= sizeof(struct crypto_sm4_ctx),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.cra_ctxsize			= sizeof(struct sm4_ctx),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.cra_module			= THIS_MODULE,
 	.cra_u.cipher = {
 		.cia_min_keysize	= SM4_KEY_SIZE,
 		.cia_max_keysize	= SM4_KEY_SIZE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.cia_setkey		= sm4_ce_setkey,
 =======
 		.cia_setkey		= crypto_sm4_set_key,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.cia_setkey		= sm4_ce_setkey,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.cia_encrypt		= sm4_ce_encrypt,
 		.cia_decrypt		= sm4_ce_decrypt
 	}

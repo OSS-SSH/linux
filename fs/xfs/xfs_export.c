@@ -45,9 +45,13 @@ xfs_fs_encode_fh(
 	struct inode	*parent)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_mount	*mp = XFS_M(inode->i_sb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_mount	*mp = XFS_M(inode->i_sb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fid		*fid = (struct fid *)fh;
 	struct xfs_fid64	*fid64 = (struct xfs_fid64 *)fh;
 	int			fileid_type;
@@ -68,11 +72,15 @@ xfs_fs_encode_fh(
 	 * confusing looking conditional below.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_small_inums(mp) || xfs_is_inode32(mp))
 =======
 	if (!(XFS_M(inode->i_sb)->m_flags & XFS_MOUNT_SMALL_INUMS) ||
 	    (XFS_M(inode->i_sb)->m_flags & XFS_MOUNT_32BITINODES))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_small_inums(mp) || xfs_is_inode32(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fileid_type |= XFS_FILEID_TYPE_64FLAG;
 
 	/*

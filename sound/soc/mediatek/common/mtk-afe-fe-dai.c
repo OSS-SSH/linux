@@ -140,10 +140,14 @@ int mtk_afe_fe_hw_params(struct snd_pcm_substream *substream,
 		substream->runtime->dma_bytes);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memset_io((void __force __iomem *)substream->runtime->dma_area, 0,
 =======
 	memset_io(substream->runtime->dma_area, 0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memset_io((void __force __iomem *)substream->runtime->dma_area, 0,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  substream->runtime->dma_bytes);
 
 	/* set addr */
@@ -339,16 +343,22 @@ int mtk_afe_suspend(struct snd_soc_component *component)
 				     sizeof(unsigned int), GFP_KERNEL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (afe->reg_back_up) {
 		for (i = 0; i < afe->reg_back_up_list_num; i++)
 			regmap_read(regmap, afe->reg_back_up_list[i],
 				    &afe->reg_back_up[i]);
 	}
+<<<<<<< HEAD
 =======
 	for (i = 0; i < afe->reg_back_up_list_num; i++)
 		regmap_read(regmap, afe->reg_back_up_list[i],
 			    &afe->reg_back_up[i]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	afe->suspended = true;
 	afe->runtime_suspend(dev);
@@ -369,6 +379,7 @@ int mtk_afe_resume(struct snd_soc_component *component)
 	afe->runtime_resume(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!afe->reg_back_up) {
 		dev_dbg(dev, "%s no reg_backup\n", __func__);
 	} else {
@@ -384,6 +395,15 @@ int mtk_afe_resume(struct snd_soc_component *component)
 		mtk_regmap_write(regmap, afe->reg_back_up_list[i],
 				 afe->reg_back_up[i]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!afe->reg_back_up) {
+		dev_dbg(dev, "%s no reg_backup\n", __func__);
+	} else {
+		for (i = 0; i < afe->reg_back_up_list_num; i++)
+			mtk_regmap_write(regmap, afe->reg_back_up_list[i],
+					 afe->reg_back_up[i]);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	afe->suspended = false;
 	return 0;
@@ -456,11 +476,15 @@ int mtk_memif_set_addr(struct mtk_base_afe *afe, int id,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * set MSB to 33-bit, for memif address
 	 * only for memif base address, if msb_end_reg exists
 	 */
 	if (memif->data->msb_reg)
+<<<<<<< HEAD
 		mtk_regmap_update_bits(afe->regmap, memif->data->msb_reg,
 				       1, msb_at_bit33, memif->data->msb_shift);
 
@@ -477,6 +501,17 @@ int mtk_memif_set_addr(struct mtk_base_afe *afe, int id,
 				       1, msb_at_bit33, memif->data->msb_shift);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mtk_regmap_update_bits(afe->regmap, memif->data->msb_reg,
+				       1, msb_at_bit33, memif->data->msb_shift);
+
+	/* set MSB to 33-bit, for memif end address */
+	if (memif->data->msb_end_reg)
+		mtk_regmap_update_bits(afe->regmap, memif->data->msb_end_reg,
+				       1, msb_at_bit33,
+				       memif->data->msb_end_shift);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 EXPORT_SYMBOL_GPL(mtk_memif_set_addr);
@@ -504,6 +539,9 @@ int mtk_memif_set_channel(struct mtk_base_afe *afe,
 		mono = (channel == 1) ? 1 : 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* for specific configuration of memif mono mode */
 	if (memif->data->int_odd_flag_reg)
 		mtk_regmap_update_bits(afe->regmap,
@@ -511,8 +549,11 @@ int mtk_memif_set_channel(struct mtk_base_afe *afe,
 				       1, mono,
 				       memif->data->int_odd_flag_shift);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return mtk_regmap_update_bits(afe->regmap, memif->data->mono_reg,
 				      1, mono, memif->data->mono_shift);
 }

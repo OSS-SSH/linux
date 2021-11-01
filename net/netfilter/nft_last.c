@@ -24,6 +24,7 @@ static int nft_last_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
 	struct nft_last_priv *priv = nft_expr_priv(expr);
 	u64 last_jiffies;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 last_set = 0;
 	int err;
 
@@ -39,16 +40,32 @@ static int nft_last_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
 
 	if (tb[NFTA_LAST_MSECS]) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 last_set = 0;
+	int err;
+
+	if (tb[NFTA_LAST_SET]) {
+		last_set = ntohl(nla_get_be32(tb[NFTA_LAST_SET]));
+		if (last_set == 1)
+			priv->last_set = 1;
+	}
+
+	if (last_set && tb[NFTA_LAST_MSECS]) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = nf_msecs_to_jiffies64(tb[NFTA_LAST_MSECS], &last_jiffies);
 		if (err < 0)
 			return err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		priv->last_jiffies = jiffies - (unsigned long)last_jiffies;
 =======
 		priv->last_jiffies = jiffies + (unsigned long)last_jiffies;
 		priv->last_set = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		priv->last_jiffies = jiffies - (unsigned long)last_jiffies;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -60,19 +77,26 @@ static void nft_last_eval(const struct nft_expr *expr,
 	struct nft_last_priv *priv = nft_expr_priv(expr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (READ_ONCE(priv->last_jiffies) != jiffies)
 		WRITE_ONCE(priv->last_jiffies, jiffies);
 	if (READ_ONCE(priv->last_set) == 0)
 		WRITE_ONCE(priv->last_set, 1);
+<<<<<<< HEAD
 =======
 	priv->last_jiffies = jiffies;
 	priv->last_set = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int nft_last_dump(struct sk_buff *skb, const struct nft_expr *expr)
 {
 	struct nft_last_priv *priv = nft_expr_priv(expr);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned long last_jiffies = READ_ONCE(priv->last_jiffies);
 	u32 last_set = READ_ONCE(priv->last_set);
@@ -90,18 +114,28 @@ static int nft_last_dump(struct sk_buff *skb, const struct nft_expr *expr)
 
 	if (nla_put_be32(skb, NFTA_LAST_SET, htonl(last_set)) ||
 =======
+=======
+	unsigned long last_jiffies = READ_ONCE(priv->last_jiffies);
+	u32 last_set = READ_ONCE(priv->last_set);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__be64 msecs;
 
-	if (time_before(jiffies, priv->last_jiffies))
-		priv->last_set = 0;
+	if (time_before(jiffies, last_jiffies)) {
+		WRITE_ONCE(priv->last_set, 0);
+		last_set = 0;
+	}
 
-	if (priv->last_set)
-		msecs = nf_jiffies64_to_msecs(jiffies - priv->last_jiffies);
+	if (last_set)
+		msecs = nf_jiffies64_to_msecs(jiffies - last_jiffies);
 	else
 		msecs = 0;
 
+<<<<<<< HEAD
 	if (nla_put_be32(skb, NFTA_LAST_SET, htonl(priv->last_set)) ||
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (nla_put_be32(skb, NFTA_LAST_SET, htonl(last_set)) ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    nla_put_be64(skb, NFTA_LAST_MSECS, msecs, NFTA_LAST_PAD))
 		goto nla_put_failure;
 

@@ -610,10 +610,14 @@ static const struct net_device_ops ltq_eth_netdev_ops = {
 	.ndo_start_xmit = ltq_etop_tx,
 	.ndo_change_mtu = ltq_etop_change_mtu,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl = phy_do_ioctl,
 =======
 	.ndo_do_ioctl = phy_do_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl = phy_do_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address = ltq_etop_set_mac_address,
 	.ndo_validate_addr = eth_validate_addr,
 	.ndo_set_rx_mode = ltq_etop_set_multicast_list,

@@ -469,6 +469,7 @@ static int pca953x_gpio_get_value(struct gpio_chip *gc, unsigned off)
 	ret = regmap_read(chip->regmap, inreg, &reg_val);
 	mutex_unlock(&chip->i2c_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 		return ret;
 =======
@@ -482,6 +483,10 @@ static int pca953x_gpio_get_value(struct gpio_chip *gc, unsigned off)
 		return 0;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return !!(reg_val & bit);
 }
@@ -572,6 +577,7 @@ static int pca953x_gpio_set_pull_up_down(struct pca953x_chip *chip,
 	mutex_lock(&chip->i2c_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Disable pull-up/pull-down */
 	ret = regmap_write_bits(chip->regmap, pull_en_reg, bit, 0);
@@ -579,11 +585,14 @@ static int pca953x_gpio_set_pull_up_down(struct pca953x_chip *chip,
 		goto exit;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Configure pull-up/pull-down */
 	if (config == PIN_CONFIG_BIAS_PULL_UP)
 		ret = regmap_write_bits(chip->regmap, pull_sel_reg, bit, bit);
 	else if (config == PIN_CONFIG_BIAS_PULL_DOWN)
 		ret = regmap_write_bits(chip->regmap, pull_sel_reg, bit, 0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	else
 		ret = 0;
@@ -602,6 +611,18 @@ static int pca953x_gpio_set_pull_up_down(struct pca953x_chip *chip,
 	/* Enable pull-up/pull-down */
 	ret = regmap_write_bits(chip->regmap, pull_en_reg, bit, bit);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else
+		ret = 0;
+	if (ret)
+		goto exit;
+
+	/* Disable/Enable pull-up/pull-down */
+	if (config == PIN_CONFIG_BIAS_DISABLE)
+		ret = regmap_write_bits(chip->regmap, pull_en_reg, bit, 0);
+	else
+		ret = regmap_write_bits(chip->regmap, pull_en_reg, bit, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 exit:
 	mutex_unlock(&chip->i2c_lock);
@@ -616,12 +637,18 @@ static int pca953x_gpio_set_config(struct gpio_chip *gc, unsigned int offset,
 	switch (pinconf_to_config_param(config)) {
 	case PIN_CONFIG_BIAS_PULL_UP:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PIN_CONFIG_BIAS_PULL_PIN_DEFAULT:
 	case PIN_CONFIG_BIAS_PULL_DOWN:
 	case PIN_CONFIG_BIAS_DISABLE:
 =======
 	case PIN_CONFIG_BIAS_PULL_DOWN:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PIN_CONFIG_BIAS_PULL_PIN_DEFAULT:
+	case PIN_CONFIG_BIAS_PULL_DOWN:
+	case PIN_CONFIG_BIAS_DISABLE:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return pca953x_gpio_set_pull_up_down(chip, offset, config);
 	default:
 		return -ENOTSUPP;

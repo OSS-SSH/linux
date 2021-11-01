@@ -279,10 +279,15 @@ static int tcindex_filter_result_init(struct tcindex_filter_result *r,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void tcindex_free_perfect_hash(struct tcindex_data *cp);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void tcindex_free_perfect_hash(struct tcindex_data *cp);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void tcindex_partial_destroy_work(struct work_struct *work)
 {
 	struct tcindex_data *p = container_of(to_rcu_work(work),
@@ -291,11 +296,16 @@ static void tcindex_partial_destroy_work(struct work_struct *work)
 
 	rtnl_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (p->perfect)
 		tcindex_free_perfect_hash(p);
 =======
 	kfree(p->perfect);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (p->perfect)
+		tcindex_free_perfect_hash(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(p);
 	rtnl_unlock();
 }
@@ -338,10 +348,14 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
 		  u32 handle, struct tcindex_data *p,
 		  struct tcindex_filter_result *r, struct nlattr **tb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  struct nlattr *est, u32 flags, struct netlink_ext_ack *extack)
 =======
 		  struct nlattr *est, bool ovr, struct netlink_ext_ack *extack)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		  struct nlattr *est, u32 flags, struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tcindex_filter_result new_filter_result, *old_r = r;
 	struct tcindex_data *cp = NULL, *oldp;
@@ -354,10 +368,14 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
 	if (err < 0)
 		return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = tcf_exts_validate(net, tp, tb, est, &e, flags, extack);
 =======
 	err = tcf_exts_validate(net, tp, tb, est, &e, ovr, true, extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = tcf_exts_validate(net, tp, tb, est, &e, flags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		goto errout;
 
@@ -545,12 +563,17 @@ static int
 tcindex_change(struct net *net, struct sk_buff *in_skb,
 	       struct tcf_proto *tp, unsigned long base, u32 handle,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       struct nlattr **tca, void **arg, u32 flags,
 	       struct netlink_ext_ack *extack)
 =======
 	       struct nlattr **tca, void **arg, bool ovr,
 	       bool rtnl_held, struct netlink_ext_ack *extack)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	       struct nlattr **tca, void **arg, u32 flags,
+	       struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nlattr *opt = tca[TCA_OPTIONS];
 	struct nlattr *tb[TCA_TCINDEX_MAX + 1];
@@ -572,10 +595,14 @@ tcindex_change(struct net *net, struct sk_buff *in_skb,
 
 	return tcindex_set_parms(net, tp, base, handle, p, r, tb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 tca[TCA_RATE], flags, extack);
 =======
 				 tca[TCA_RATE], ovr, extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 tca[TCA_RATE], flags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void tcindex_walk(struct tcf_proto *tp, struct tcf_walker *walker,

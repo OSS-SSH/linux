@@ -219,6 +219,9 @@
  * PCI Control/Status Registers
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define _IXP4XX_PCI_CSR(x) ((volatile u32 *)(IXP4XX_PCI_CFG_BASE_VIRT+(x)))
 
 #define PCI_NP_AD               _IXP4XX_PCI_CSR(PCI_NP_AD_OFFSET)
@@ -243,6 +246,7 @@
 #define PCI_ATPDMA1_AHBADDR     _IXP4XX_PCI_CSR(PCI_ATPDMA1_AHBADDR_OFFSET)
 #define PCI_ATPDMA1_PCIADDR     _IXP4XX_PCI_CSR(PCI_ATPDMA1_PCIADDR_OFFSET)
 #define PCI_ATPDMA1_LENADDR     _IXP4XX_PCI_CSR(PCI_ATPDMA1_LENADDR_OFFSET)
+<<<<<<< HEAD
 =======
 #define IXP4XX_PCI_CSR(x) ((volatile u32 *)(IXP4XX_PCI_CFG_BASE_VIRT+(x)))
 
@@ -269,6 +273,8 @@
 #define PCI_ATPDMA1_PCIADDR     IXP4XX_PCI_CSR(PCI_ATPDMA1_PCIADDR_OFFSET)
 #define PCI_ATPDMA1_LENADDR     IXP4XX_PCI_CSR(PCI_ATPDMA1_LENADDR_OFFSET)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * PCI register values and bit definitions 

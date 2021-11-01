@@ -107,6 +107,7 @@
 				hdcp->buf); \
 } while (0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HDCP_FULL_DDC_TRACE(hdcp) do { \
 	if (is_hdcp1(hdcp)) { \
@@ -181,6 +182,8 @@
 	} \
 } while (0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HDCP_TOP_ADD_DISPLAY_TRACE(hdcp, i) \
 		HDCP_LOG_TOP(hdcp, "[Link %d]\tadd display %d", \
 				hdcp->config.index, i)

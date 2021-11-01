@@ -1791,10 +1791,14 @@ static void multipath_status(struct dm_target *ti, status_type_t type,
 			     unsigned status_flags, char *result, unsigned maxlen)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int sz = 0, pg_counter, pgpath_counter;
 =======
 	int sz = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int sz = 0, pg_counter, pgpath_counter;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 	struct multipath *m = ti->private;
 	struct priority_group *pg;
@@ -1909,6 +1913,9 @@ static void multipath_status(struct dm_target *ti, status_type_t type,
 		}
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	case STATUSTYPE_IMA:
 		sz = 0; /*reset the result pointer*/
@@ -1947,8 +1954,11 @@ static void multipath_status(struct dm_target *ti, status_type_t type,
 		}
 		DMEMIT(";");
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	spin_unlock_irqrestore(&m->lock, flags);

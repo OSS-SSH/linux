@@ -27,11 +27,17 @@ static struct relocs relocs32;
 static struct relocs relocs32neg;
 static struct relocs relocs64;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define FMT PRIu64
 #else
 #define FMT PRIu32
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FMT PRIu64
+#else
+#define FMT PRIu32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 struct section {
@@ -64,6 +70,7 @@ static const char * const sym_regex_kernel[S_NSYMTYPES] = {
 	"^(__init_(begin|end)|"
 	"__x86_cpu_dev_(start|end)|"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"(__parainstructions|__alt_instructions)(_end)?|"
 	"(__iommu_table|__apicdrivers|__smp_locks)(_end)?|"
 	"__(start|end)_pci_.*|"
@@ -78,6 +85,14 @@ static const char * const sym_regex_kernel[S_NSYMTYPES] = {
 	"__(start|stop)___ksymtab(|_gpl)|"
 	"__(start|stop)___kcrctab(|_gpl)|"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	"(__parainstructions|__alt_instructions)(_end)?|"
+	"(__iommu_table|__apicdrivers|__smp_locks)(_end)?|"
+	"__(start|end)_pci_.*|"
+	"__(start|end)_builtin_fw|"
+	"__(start|stop)___ksymtab(_gpl)?|"
+	"__(start|stop)___kcrctab(_gpl)?|"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	"__(start|stop)___param|"
 	"__(start|stop)___modver|"
 	"__(start|stop)___bug_table|"
@@ -405,10 +420,14 @@ static void read_ehdr(FILE *fp)
 
 		if (fseek(fp, ehdr.e_shoff, SEEK_SET) < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			die("Seek to %" FMT " failed: %s\n", ehdr.e_shoff, strerror(errno));
 =======
 			die("Seek to %d failed: %s\n", ehdr.e_shoff, strerror(errno));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			die("Seek to %" FMT " failed: %s\n", ehdr.e_shoff, strerror(errno));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (fread(&shdr, sizeof(shdr), 1, fp) != 1)
 			die("Cannot read initial ELF section header: %s\n", strerror(errno));
@@ -432,6 +451,7 @@ static void read_shdrs(FILE *fp)
 	secs = calloc(shnum, sizeof(struct section));
 	if (!secs) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		die("Unable to allocate %ld section headers\n",
 		    shnum);
 	}
@@ -446,15 +466,27 @@ static void read_shdrs(FILE *fp)
 		die("Seek to %d failed: %s\n",
 			ehdr.e_shoff, strerror(errno));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		die("Unable to allocate %ld section headers\n",
+		    shnum);
+	}
+	if (fseek(fp, ehdr.e_shoff, SEEK_SET) < 0) {
+		die("Seek to %" FMT " failed: %s\n",
+		    ehdr.e_shoff, strerror(errno));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	for (i = 0; i < shnum; i++) {
 		struct section *sec = &secs[i];
 		if (fread(&shdr, sizeof(shdr), 1, fp) != 1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			die("Cannot read ELF section headers %d/%ld: %s\n",
 =======
 			die("Cannot read ELF section headers %d/%d: %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			die("Cannot read ELF section headers %d/%ld: %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    i, shnum, strerror(errno));
 		sec->shdr.sh_name      = elf_word_to_cpu(shdr.sh_name);
 		sec->shdr.sh_type      = elf_word_to_cpu(shdr.sh_type);
@@ -483,6 +515,7 @@ static void read_strtabs(FILE *fp)
 		sec->strtab = malloc(sec->shdr.sh_size);
 		if (!sec->strtab) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			die("malloc of %" FMT " bytes for strtab failed\n",
 			    sec->shdr.sh_size);
 		}
@@ -497,6 +530,14 @@ static void read_strtabs(FILE *fp)
 			die("Seek to %d failed: %s\n",
 				sec->shdr.sh_offset, strerror(errno));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			die("malloc of %" FMT " bytes for strtab failed\n",
+			    sec->shdr.sh_size);
+		}
+		if (fseek(fp, sec->shdr.sh_offset, SEEK_SET) < 0) {
+			die("Seek to %" FMT " failed: %s\n",
+			    sec->shdr.sh_offset, strerror(errno));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		if (fread(sec->strtab, 1, sec->shdr.sh_size, fp)
 		    != sec->shdr.sh_size) {
@@ -517,6 +558,7 @@ static void read_symtabs(FILE *fp)
 		sec->symtab = malloc(sec->shdr.sh_size);
 		if (!sec->symtab) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			die("malloc of %" FMT " bytes for symtab failed\n",
 			    sec->shdr.sh_size);
 		}
@@ -531,6 +573,14 @@ static void read_symtabs(FILE *fp)
 			die("Seek to %d failed: %s\n",
 				sec->shdr.sh_offset, strerror(errno));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			die("malloc of %" FMT " bytes for symtab failed\n",
+			    sec->shdr.sh_size);
+		}
+		if (fseek(fp, sec->shdr.sh_offset, SEEK_SET) < 0) {
+			die("Seek to %" FMT " failed: %s\n",
+			    sec->shdr.sh_offset, strerror(errno));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		if (fread(sec->symtab, 1, sec->shdr.sh_size, fp)
 		    != sec->shdr.sh_size) {
@@ -559,6 +609,7 @@ static void read_relocs(FILE *fp)
 		sec->reltab = malloc(sec->shdr.sh_size);
 		if (!sec->reltab) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			die("malloc of %" FMT " bytes for relocs failed\n",
 			    sec->shdr.sh_size);
 		}
@@ -573,6 +624,14 @@ static void read_relocs(FILE *fp)
 			die("Seek to %d failed: %s\n",
 				sec->shdr.sh_offset, strerror(errno));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			die("malloc of %" FMT " bytes for relocs failed\n",
+			    sec->shdr.sh_size);
+		}
+		if (fseek(fp, sec->shdr.sh_offset, SEEK_SET) < 0) {
+			die("Seek to %" FMT " failed: %s\n",
+			    sec->shdr.sh_offset, strerror(errno));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		if (fread(sec->reltab, 1, sec->shdr.sh_size, fp)
 		    != sec->shdr.sh_size) {

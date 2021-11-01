@@ -48,9 +48,13 @@ static void do_wrmsr(u32 idx, u64 val)
 
 static int nr_gp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int nr_ud;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int nr_ud;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline u64 hypercall(u64 control, vm_vaddr_t input_address,
 			    vm_vaddr_t output_address)
@@ -85,14 +89,20 @@ static void guest_gp_handler(struct ex_regs *regs)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void guest_ud_handler(struct ex_regs *regs)
 {
 	nr_ud++;
 	regs->rip += 3;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct msr_data {
 	uint32_t idx;
 	bool available;
@@ -104,9 +114,13 @@ struct hcall_data {
 	uint64_t control;
 	uint64_t expect;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool ud_expected;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool ud_expected;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void guest_msr(struct msr_data *msr)
@@ -135,15 +149,22 @@ static void guest_hcall(vm_vaddr_t pgs_gpa, struct hcall_data *hcall)
 {
 	int i = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 res, input, output;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 res, input, output;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	wrmsr(HV_X64_MSR_GUEST_OS_ID, LINUX_OS_ID);
 	wrmsr(HV_X64_MSR_HYPERCALL, pgs_gpa);
 
 	while (hcall->control) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nr_ud = 0;
 		if (!(hcall->control & HV_HYPERCALL_FAST_BIT)) {
 			input = pgs_gpa;
@@ -158,10 +179,13 @@ static void guest_hcall(vm_vaddr_t pgs_gpa, struct hcall_data *hcall)
 		else
 			GUEST_ASSERT(res == hcall->expect);
 
+<<<<<<< HEAD
 =======
 		GUEST_ASSERT(hypercall(hcall->control, pgs_gpa,
 				       pgs_gpa + 4096) == hcall->expect);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		GUEST_SYNC(i++);
 	}
 
@@ -591,6 +615,7 @@ static void guest_test_hcalls_access(struct kvm_vm *vm, struct hcall_data *hcall
 			hcall->expect = HV_STATUS_SUCCESS;
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case 17:
 			/* XMM fast hypercall */
 			hcall->control = HVCALL_FLUSH_VIRTUAL_ADDRESS_SPACE | HV_HYPERCALL_FAST_BIT;
@@ -607,6 +632,20 @@ static void guest_test_hcalls_access(struct kvm_vm *vm, struct hcall_data *hcall
 
 		case 17:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case 17:
+			/* XMM fast hypercall */
+			hcall->control = HVCALL_FLUSH_VIRTUAL_ADDRESS_SPACE | HV_HYPERCALL_FAST_BIT;
+			hcall->ud_expected = true;
+			break;
+		case 18:
+			feat.edx |= HV_X64_HYPERCALL_XMM_INPUT_AVAILABLE;
+			hcall->ud_expected = false;
+			hcall->expect = HV_STATUS_SUCCESS;
+			break;
+
+		case 19:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* END */
 			hcall->control = 0;
 			break;
@@ -669,10 +708,14 @@ int main(void)
 	vm_init_descriptor_tables(vm);
 	vcpu_init_descriptor_tables(vm, VCPU_ID);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vm_install_exception_handler(vm, GP_VECTOR, guest_gp_handler);
 =======
 	vm_handle_exception(vm, GP_VECTOR, guest_gp_handler);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vm_install_exception_handler(vm, GP_VECTOR, guest_gp_handler);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_info("Testing access to Hyper-V specific MSRs\n");
 	guest_test_msrs_access(vm, addr_gva2hva(vm, msr_gva),
@@ -683,12 +726,18 @@ int main(void)
 	vm = vm_create_default(VCPU_ID, 0, guest_hcall);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vm_init_descriptor_tables(vm);
 	vcpu_init_descriptor_tables(vm, VCPU_ID);
 	vm_install_exception_handler(vm, UD_VECTOR, guest_ud_handler);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Hypercall input/output */
 	hcall_page = vm_vaddr_alloc_pages(vm, 2);
 	memset(addr_gva2hva(vm, hcall_page), 0x0, 2 * getpagesize());

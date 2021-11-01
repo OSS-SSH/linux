@@ -195,10 +195,14 @@ struct buffer_head *__bread_gfp(struct block_device *,
 				sector_t block, unsigned size, gfp_t gfp);
 void invalidate_bh_lrus(void);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void invalidate_bh_lrus_cpu(void);
 =======
 void invalidate_bh_lrus_cpu(int cpu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void invalidate_bh_lrus_cpu(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool has_bh_in_lru(int cpu, void *dummy);
 struct buffer_head *alloc_buffer_head(gfp_t gfp_flags);
 void free_buffer_head(struct buffer_head * bh);
@@ -413,12 +417,17 @@ static inline void invalidate_inode_buffers(struct inode *inode) {}
 static inline int remove_inode_buffers(struct inode *inode) { return 1; }
 static inline int sync_mapping_buffers(struct address_space *mapping) { return 0; }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void invalidate_bh_lrus_cpu(void) {}
 static inline bool has_bh_in_lru(int cpu, void *dummy) { return false; }
 =======
 static inline void invalidate_bh_lrus_cpu(int cpu) {}
 static inline bool has_bh_in_lru(int cpu, void *dummy) { return 0; }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void invalidate_bh_lrus_cpu(void) {}
+static inline bool has_bh_in_lru(int cpu, void *dummy) { return false; }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define buffer_heads_over_limit 0
 
 #endif /* CONFIG_BLOCK */

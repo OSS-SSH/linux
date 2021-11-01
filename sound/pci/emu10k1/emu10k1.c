@@ -100,6 +100,7 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*emu), &card);
 	if (err < 0)
@@ -112,12 +113,21 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 	if (err < 0)
 		return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*emu), &card);
+	if (err < 0)
+		return err;
+	emu = card->private_data;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (max_buffer_size[dev] < 32)
 		max_buffer_size[dev] = 32;
 	else if (max_buffer_size[dev] > 1024)
 		max_buffer_size[dev] = 1024;
 	err = snd_emu10k1_create(card, pci, extin[dev], extout[dev],
 				 (long)max_buffer_size[dev] * 1024 * 1024,
+<<<<<<< HEAD
 <<<<<<< HEAD
 				 enable_ir[dev], subsystem[dev]);
 	if (err < 0)
@@ -141,31 +151,41 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 =======
 				 enable_ir[dev], subsystem[dev],
 				 &emu);
+=======
+				 enable_ir[dev], subsystem[dev]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
-		goto error;
-	card->private_data = emu;
+		return err;
 	emu->delay_pcm_irq = delay_pcm_irq[dev] & 0x1f;
 	err = snd_emu10k1_pcm(emu, 0);
 	if (err < 0)
-		goto error;
+		return err;
 	err = snd_emu10k1_pcm_mic(emu, 1);
 	if (err < 0)
-		goto error;
+		return err;
 	err = snd_emu10k1_pcm_efx(emu, 2);
 	if (err < 0)
-		goto error;
+		return err;
 	/* This stores the periods table. */
 	if (emu->card_capabilities->ca0151_chip) { /* P16V */	
+<<<<<<< HEAD
 		err = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &pci->dev,
 					  1024, &emu->p16v_buffer);
 		if (err < 0)
 			goto error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		emu->p16v_buffer =
+			snd_devm_alloc_pages(&pci->dev, SNDRV_DMA_TYPE_DEV, 1024);
+		if (!emu->p16v_buffer)
+			return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = snd_emu10k1_mixer(emu, 0, 3);
 	if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 	
 	err = snd_emu10k1_timer(emu, 0);
@@ -181,23 +201,31 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 			return err;
 =======
 		goto error;
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
 	err = snd_emu10k1_timer(emu, 0);
 	if (err < 0)
-		goto error;
+		return err;
 
 	err = snd_emu10k1_pcm_multi(emu, 3);
 	if (err < 0)
-		goto error;
+		return err;
 	if (emu->card_capabilities->ca0151_chip) { /* P16V */
 		err = snd_p16v_pcm(emu, 4);
 		if (err < 0)
+<<<<<<< HEAD
 			goto error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (emu->audigy) {
 		err = snd_emu10k1_audigy_midi(emu);
 		if (err < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 			return err;
 	} else {
@@ -210,15 +238,22 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 		return err;
 =======
 			goto error;
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		err = snd_emu10k1_midi(emu);
 		if (err < 0)
-			goto error;
+			return err;
 	}
 	err = snd_emu10k1_fx8010_new(emu, 0);
 	if (err < 0)
+<<<<<<< HEAD
 		goto error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef ENABLE_SYNTH
 	if (snd_seq_device_new(card, 1, SNDRV_SEQ_DEV_ID_EMU10K1_SYNTH,
 			       sizeof(struct snd_emu10k1_synth_arg), &wave) < 0 ||
@@ -247,10 +282,14 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 	err = snd_card_register(card);
 	if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 =======
 		goto error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (emu->card_capabilities->emu_model)
 		schedule_delayed_work(&emu->emu1010.firmware_work, 0);
@@ -258,6 +297,7 @@ static int snd_card_emu10k1_probe(struct pci_dev *pci,
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -275,6 +315,10 @@ static void snd_card_emu10k1_remove(struct pci_dev *pci)
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 static int snd_emu10k1_suspend(struct device *dev)
 {
@@ -332,9 +376,12 @@ static struct pci_driver emu10k1_driver = {
 	.id_table = snd_emu10k1_ids,
 	.probe = snd_card_emu10k1_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_card_emu10k1_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_EMU10K1_PM_OPS,
 	},

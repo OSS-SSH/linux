@@ -391,6 +391,7 @@ static const struct devlink_ops prestera_dl_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct prestera_switch *prestera_devlink_alloc(struct prestera_device *dev)
 {
 	struct devlink *dl;
@@ -404,6 +405,14 @@ struct prestera_switch *prestera_devlink_alloc(void)
 
 	dl = devlink_alloc(&prestera_dl_ops, sizeof(struct prestera_switch));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct prestera_switch *prestera_devlink_alloc(struct prestera_device *dev)
+{
+	struct devlink *dl;
+
+	dl = devlink_alloc(&prestera_dl_ops, sizeof(struct prestera_switch),
+			   dev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return devlink_priv(dl);
 }
@@ -421,10 +430,14 @@ int prestera_devlink_register(struct prestera_switch *sw)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = devlink_register(dl);
 =======
 	err = devlink_register(dl, sw->dev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = devlink_register(dl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		dev_err(prestera_dev(sw), "devlink_register failed: %d\n", err);
 		return err;
@@ -544,10 +557,15 @@ err_trap_register:
 		devlink_traps_unregister(devlink, &prestera_trap->trap, 1);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	devlink_trap_groups_unregister(devlink, prestera_trap_groups_arr,
 				       groups_count);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devlink_trap_groups_unregister(devlink, prestera_trap_groups_arr,
+				       groups_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_groups_register:
 	kfree(trap_data->trap_items_arr);
 err_trap_items_alloc:

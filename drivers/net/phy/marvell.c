@@ -33,9 +33,13 @@
 #include <linux/bitfield.h>
 #include <linux/of.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/sfp.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/sfp.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/io.h>
 #include <asm/irq.h>
@@ -51,9 +55,13 @@
 #define MII_MARVELL_VCT7_PAGE		0x07
 #define MII_MARVELL_WOL_PAGE		0x11
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MII_MARVELL_MODE_PAGE		0x12
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MII_MARVELL_MODE_PAGE		0x12
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MII_M1011_IEVENT		0x13
 #define MII_M1011_IEVENT_CLEAR		0x0000
@@ -164,9 +172,13 @@
 #define MII_88E1318S_PHY_WOL_CTRL				0x10
 #define MII_88E1318S_PHY_WOL_CTRL_CLEAR_WOL_STATUS		BIT(12)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MII_88E1318S_PHY_WOL_CTRL_LINK_UP_ENABLE		BIT(13)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MII_88E1318S_PHY_WOL_CTRL_LINK_UP_ENABLE		BIT(13)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_88E1318S_PHY_WOL_CTRL_MAGIC_PACKET_MATCH_ENABLE	BIT(14)
 
 #define MII_PHY_LED_CTRL	        16
@@ -189,6 +201,9 @@
 #define MII_88E1510_GEN_CTRL_REG_1		0x14
 #define MII_88E1510_GEN_CTRL_REG_1_MODE_MASK	0x7
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII	0x0	/* RGMII to copper */
 #define MII_88E1510_GEN_CTRL_REG_1_MODE_SGMII	0x1	/* SGMII to copper */
 /* RGMII to 1000BASE-X */
@@ -197,9 +212,12 @@
 #define MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_100FX	0x3
 /* RGMII to SGMII */
 #define MII_88E1510_GEN_CTRL_REG_1_MODE_RGMII_SGMII	0x4
+<<<<<<< HEAD
 =======
 #define MII_88E1510_GEN_CTRL_REG_1_MODE_SGMII	0x1	/* SGMII to copper */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_88E1510_GEN_CTRL_REG_1_RESET	0x8000	/* Soft reset */
 
 #define MII_VCT5_TX_RX_MDI0_COUPLING	0x10
@@ -1770,19 +1788,27 @@ static void m88e1318_get_wol(struct phy_device *phydev,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	wol->supported = WAKE_MAGIC | WAKE_PHY;
 =======
 	wol->supported = WAKE_MAGIC;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	wol->supported = WAKE_MAGIC | WAKE_PHY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wol->wolopts = 0;
 
 	ret = phy_read_paged(phydev, MII_MARVELL_WOL_PAGE,
 			     MII_88E1318S_PHY_WOL_CTRL);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return;
 
 	if (ret & MII_88E1318S_PHY_WOL_CTRL_MAGIC_PACKET_MATCH_ENABLE)
+<<<<<<< HEAD
 		wol->wolopts |= WAKE_MAGIC;
 
 	if (ret & MII_88E1318S_PHY_WOL_CTRL_LINK_UP_ENABLE)
@@ -1791,6 +1817,12 @@ static void m88e1318_get_wol(struct phy_device *phydev,
 	if (ret >= 0 && ret & MII_88E1318S_PHY_WOL_CTRL_MAGIC_PACKET_MATCH_ENABLE)
 		wol->wolopts |= WAKE_MAGIC;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		wol->wolopts |= WAKE_MAGIC;
+
+	if (ret & MII_88E1318S_PHY_WOL_CTRL_LINK_UP_ENABLE)
+		wol->wolopts |= WAKE_PHY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int m88e1318_set_wol(struct phy_device *phydev,
@@ -1803,10 +1835,14 @@ static int m88e1318_set_wol(struct phy_device *phydev,
 		goto error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (wol->wolopts & (WAKE_MAGIC | WAKE_PHY)) {
 =======
 	if (wol->wolopts & WAKE_MAGIC) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (wol->wolopts & (WAKE_MAGIC | WAKE_PHY)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Explicitly switch to page 0x00, just to be sure */
 		err = marvell_write_page(phydev, MII_MARVELL_COPPER_PAGE);
 		if (err < 0)
@@ -1839,12 +1875,18 @@ static int m88e1318_set_wol(struct phy_device *phydev,
 		if (err < 0)
 			goto error;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 
 	if (wol->wolopts & WAKE_MAGIC) {
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+
+	if (wol->wolopts & WAKE_MAGIC) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = marvell_write_page(phydev, MII_MARVELL_WOL_PAGE);
 		if (err < 0)
 			goto error;
@@ -1886,6 +1928,9 @@ static int m88e1318_set_wol(struct phy_device *phydev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (wol->wolopts & WAKE_PHY) {
 		err = marvell_write_page(phydev, MII_MARVELL_WOL_PAGE);
 		if (err < 0)
@@ -1910,8 +1955,11 @@ static int m88e1318_set_wol(struct phy_device *phydev,
 			goto error;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 error:
 	return phy_restore_page(phydev, oldpage, err);
 }
@@ -2777,6 +2825,9 @@ static int marvell_probe(struct phy_device *phydev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int m88e1510_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
 {
 	struct phy_device *phydev = upstream;
@@ -2871,8 +2922,11 @@ static int m88e1510_probe(struct phy_device *phydev)
 	return phy_sfp_probe(phydev, &m88e1510_sfp_ops);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct phy_driver marvell_drivers[] = {
 	{
 		.phy_id = MARVELL_PHY_ID_88E1101,
@@ -3100,10 +3154,14 @@ static struct phy_driver marvell_drivers[] = {
 		.features = PHY_GBIT_FIBRE_FEATURES,
 		.flags = PHY_POLL_CABLE_TEST,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.probe = m88e1510_probe,
 =======
 		.probe = marvell_probe,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.probe = m88e1510_probe,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.config_init = m88e1510_config_init,
 		.config_aneg = m88e1510_config_aneg,
 		.read_status = marvell_read_status,

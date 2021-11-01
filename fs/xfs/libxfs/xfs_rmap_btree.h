@@ -60,7 +60,11 @@ extern int xfs_rmapbt_calc_reserves(struct xfs_mount *mp, struct xfs_trans *tp,
 		struct xfs_perag *pag, xfs_extlen_t *ask, xfs_extlen_t *used);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* __XFS_RMAP_BTREE_H__ */
 =======
 #endif	/* __XFS_RMAP_BTREE_H__ */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* __XFS_RMAP_BTREE_H__ */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -293,10 +293,14 @@ struct ab8500_charger {
 	struct iio_channel *adc_vbus_v;
 	struct iio_channel *adc_usb_charger_c;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ab8500_bm_data *bm;
 =======
 	struct abx500_bm_data *bm;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ab8500_bm_data *bm;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ab8500_charger_event_flags flags;
 	struct ab8500_charger_usb_state usb_state;
 	struct ab8500_charger_max_usb_in_curr max_usb_in_curr;
@@ -3393,10 +3397,14 @@ static struct platform_driver *const ab8500_charger_component_drivers[] = {
 	&ab8500_fg_driver,
 	&ab8500_btemp_driver,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	&ab8500_chargalg_driver,
 =======
 	&abx500_chargalg_driver,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&ab8500_chargalg_driver,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int ab8500_charger_compare_dev(struct device *dev, void *data)

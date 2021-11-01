@@ -23,9 +23,12 @@
 
 #include "uc/intel_guc.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "uc/intel_guc_submission.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define RESET_MAX_RETRIES 3
 
@@ -42,6 +45,7 @@ static void rmw_clear_fw(struct intel_uncore *uncore, i915_reg_t reg, u32 clr)
 	intel_uncore_rmw_fw(uncore, reg, clr, 0);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void skip_context(struct i915_request *rq)
@@ -60,6 +64,8 @@ static void skip_context(struct i915_request *rq)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void client_mark_guilty(struct i915_gem_context *ctx, bool banned)
 {
 	struct drm_i915_file_private *file_priv = ctx->file_priv;
@@ -95,6 +101,7 @@ static bool mark_guilty(struct i915_request *rq)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (intel_context_is_closed(rq->context))
 		return true;
 =======
@@ -103,6 +110,10 @@ static bool mark_guilty(struct i915_request *rq)
 		return true;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (intel_context_is_closed(rq->context))
+		return true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rcu_read_lock();
 	ctx = rcu_dereference(rq->context->gem_context);
@@ -135,6 +146,7 @@ static bool mark_guilty(struct i915_request *rq)
 	if (time_before(jiffies, prev_hang + CONTEXT_FAST_HANG_JIFFIES))
 		banned = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (banned)
 		drm_dbg(&ctx->i915->drm, "context %s: guilty %d, banned\n",
 			ctx->name, atomic_read(&ctx->guilty_count));
@@ -145,6 +157,11 @@ static bool mark_guilty(struct i915_request *rq)
 		intel_context_set_banned(rq->context);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (banned)
+		drm_dbg(&ctx->i915->drm, "context %s: guilty %d, banned\n",
+			ctx->name, atomic_read(&ctx->guilty_count));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	client_mark_guilty(ctx, banned);
 
@@ -167,10 +184,15 @@ static void mark_innocent(struct i915_request *rq)
 void __i915_request_reset(struct i915_request *rq, bool guilty)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool banned = false;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool banned = false;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RQ_TRACE(rq, "guilty? %s\n", yesno(guilty));
 	GEM_BUG_ON(__i915_request_is_complete(rq));
 
@@ -179,22 +201,32 @@ void __i915_request_reset(struct i915_request *rq, bool guilty)
 		i915_request_set_error_once(rq, -EIO);
 		__i915_request_skip(rq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		banned = mark_guilty(rq);
 =======
 		if (mark_guilty(rq))
 			skip_context(rq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		banned = mark_guilty(rq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		i915_request_set_error_once(rq, -EAGAIN);
 		mark_innocent(rq);
 	}
 	rcu_read_unlock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (banned)
 		intel_context_ban(rq->context, rq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (banned)
+		intel_context_ban(rq->context, rq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool i915_in_reset(struct pci_dev *pdev)
@@ -548,10 +580,14 @@ static int gen11_reset_engines(struct intel_gt *gt,
 		[VCS2]  = GEN11_GRDOM_MEDIA3,
 		[VCS3]  = GEN11_GRDOM_MEDIA4,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		[VCS4]  = GEN11_GRDOM_MEDIA5,
 		[VCS5]  = GEN11_GRDOM_MEDIA6,
 		[VCS6]  = GEN11_GRDOM_MEDIA7,
 		[VCS7]  = GEN11_GRDOM_MEDIA8,
+<<<<<<< HEAD
 		[VECS0] = GEN11_GRDOM_VECS,
 		[VECS1] = GEN11_GRDOM_VECS2,
 		[VECS2] = GEN11_GRDOM_VECS3,
@@ -560,6 +596,12 @@ static int gen11_reset_engines(struct intel_gt *gt,
 		[VECS0] = GEN11_GRDOM_VECS,
 		[VECS1] = GEN11_GRDOM_VECS2,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		[VECS0] = GEN11_GRDOM_VECS,
+		[VECS1] = GEN11_GRDOM_VECS2,
+		[VECS2] = GEN11_GRDOM_VECS3,
+		[VECS3] = GEN11_GRDOM_VECS4,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	struct intel_engine_cs *engine;
 	intel_engine_mask_t tmp;
@@ -870,10 +912,15 @@ static int gt_reset(struct intel_gt *gt, intel_engine_mask_t stalled_mask)
 	local_bh_enable();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_uc_reset(&gt->uc, true);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_uc_reset(&gt->uc, true);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_ggtt_restore_fences(gt->ggtt);
 
 	return err;
@@ -899,10 +946,15 @@ static void reset_finish(struct intel_gt *gt, intel_engine_mask_t awake)
 			intel_engine_pm_put(engine);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	intel_uc_reset_finish(&gt->uc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	intel_uc_reset_finish(&gt->uc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void nop_submit_request(struct i915_request *request)
@@ -957,9 +1009,13 @@ static void __intel_gt_set_wedged(struct intel_gt *gt)
 		if (engine->reset.cancel)
 			engine->reset.cancel(engine);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_uc_cancel_requests(&gt->uc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_uc_cancel_requests(&gt->uc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	local_bh_enable();
 
 	reset_finish(gt, awake);
@@ -1249,11 +1305,17 @@ int __intel_engine_reset_bh(struct intel_engine_cs *engine, const char *msg)
 	GEM_BUG_ON(!test_bit(I915_RESET_ENGINE + engine->id, &gt->reset.flags));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (intel_engine_uses_guc(engine))
 		return -ENODEV;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (intel_engine_uses_guc(engine))
+		return -ENODEV;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!intel_engine_pm_get_if_awake(engine))
 		return 0;
 
@@ -1264,6 +1326,7 @@ int __intel_engine_reset_bh(struct intel_engine_cs *engine, const char *msg)
 			   "Resetting %s for %s\n", engine->name, msg);
 	atomic_inc(&engine->i915->gpu_error.reset_engine_count[engine->uabi_class]);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = intel_gt_reset_engine(engine);
 	if (ret) {
@@ -1278,6 +1341,12 @@ int __intel_engine_reset_bh(struct intel_engine_cs *engine, const char *msg)
 		/* If we fail here, we expect to fallback to a global reset */
 		ENGINE_TRACE(engine, "Failed to reset, err: %d\n", ret);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = intel_gt_reset_engine(engine);
+	if (ret) {
+		/* If we fail here, we expect to fallback to a global reset */
+		ENGINE_TRACE(engine, "Failed to reset %s, err: %d\n", engine->name, ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
@@ -1412,11 +1481,16 @@ void intel_gt_handle_error(struct intel_gt *gt,
 	 * single reset fails.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!intel_uc_uses_guc_submission(&gt->uc) &&
 	    intel_has_reset_engine(gt) && !intel_gt_is_wedged(gt)) {
 =======
 	if (intel_has_reset_engine(gt) && !intel_gt_is_wedged(gt)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!intel_uc_uses_guc_submission(&gt->uc) &&
+	    intel_has_reset_engine(gt) && !intel_gt_is_wedged(gt)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		local_bh_disable();
 		for_each_engine_masked(engine, gt, engine_mask, tmp) {
 			BUILD_BUG_ON(I915_RESET_MODESET >= I915_RESET_ENGINE);

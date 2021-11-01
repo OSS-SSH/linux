@@ -616,10 +616,15 @@ void ice_free_vfs(struct ice_pf *pf)
 	unsigned int tmp, i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_bit(ICE_VF_DEINIT_IN_PROGRESS, pf->state);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_bit(ICE_VF_DEINIT_IN_PROGRESS, pf->state);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!pf->vf)
 		return;
 
@@ -686,9 +691,13 @@ void ice_free_vfs(struct ice_pf *pf)
 
 	clear_bit(ICE_VF_DIS, pf->state);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clear_bit(ICE_VF_DEINIT_IN_PROGRESS, pf->state);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clear_bit(ICE_VF_DEINIT_IN_PROGRESS, pf->state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clear_bit(ICE_FLAG_SRIOV_ENA, pf->flags);
 }
 
@@ -4425,12 +4434,18 @@ void ice_vc_process_vf_msg(struct ice_pf *pf, struct ice_rq_event_info *event)
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* if de-init is underway, don't process messages from VF */
 	if (test_bit(ICE_VF_DEINIT_IN_PROGRESS, pf->state))
 		return;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev = ice_pf_to_dev(pf);
 	if (ice_validate_vf_id(pf, vf_id)) {
 		err = -EINVAL;

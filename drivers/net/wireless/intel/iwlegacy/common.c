@@ -2820,6 +2820,7 @@ il_cmd_queue_unmap(struct il_priv *il)
 
 		if (txq->meta[i].flags & CMD_MAPPED) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_single(&il->pci_dev->dev,
 					 dma_unmap_addr(&txq->meta[i], mapping),
 					 dma_unmap_len(&txq->meta[i], len),
@@ -2830,6 +2831,12 @@ il_cmd_queue_unmap(struct il_priv *il)
 					 dma_unmap_len(&txq->meta[i], len),
 					 PCI_DMA_BIDIRECTIONAL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_single(&il->pci_dev->dev,
+					 dma_unmap_addr(&txq->meta[i], mapping),
+					 dma_unmap_len(&txq->meta[i], len),
+					 DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			txq->meta[i].flags = 0;
 		}
 
@@ -2838,6 +2845,7 @@ il_cmd_queue_unmap(struct il_priv *il)
 
 	i = q->n_win;
 	if (txq->meta[i].flags & CMD_MAPPED) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dma_unmap_single(&il->pci_dev->dev,
 				 dma_unmap_addr(&txq->meta[i], mapping),
@@ -2849,6 +2857,12 @@ il_cmd_queue_unmap(struct il_priv *il)
 				 dma_unmap_len(&txq->meta[i], len),
 				 PCI_DMA_BIDIRECTIONAL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(&il->pci_dev->dev,
+				 dma_unmap_addr(&txq->meta[i], mapping),
+				 dma_unmap_len(&txq->meta[i], len),
+				 DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		txq->meta[i].flags = 0;
 	}
 }
@@ -3212,6 +3226,7 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phys_addr = dma_map_single(&il->pci_dev->dev, &out_cmd->hdr, fix_size,
 				   DMA_BIDIRECTIONAL);
 	if (unlikely(dma_mapping_error(&il->pci_dev->dev, phys_addr))) {
@@ -3221,6 +3236,11 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
 			   PCI_DMA_BIDIRECTIONAL);
 	if (unlikely(pci_dma_mapping_error(il->pci_dev, phys_addr))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phys_addr = dma_map_single(&il->pci_dev->dev, &out_cmd->hdr, fix_size,
+				   DMA_BIDIRECTIONAL);
+	if (unlikely(dma_mapping_error(&il->pci_dev->dev, phys_addr))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		idx = -ENOMEM;
 		goto out;
 	}
@@ -3319,12 +3339,17 @@ il_tx_cmd_complete(struct il_priv *il, struct il_rx_buf *rxb)
 	txq->time_stamp = jiffies;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_unmap_single(&il->pci_dev->dev, dma_unmap_addr(meta, mapping),
 			 dma_unmap_len(meta, len), DMA_BIDIRECTIONAL);
 =======
 	pci_unmap_single(il->pci_dev, dma_unmap_addr(meta, mapping),
 			 dma_unmap_len(meta, len), PCI_DMA_BIDIRECTIONAL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(&il->pci_dev->dev, dma_unmap_addr(meta, mapping),
+			 dma_unmap_len(meta, len), DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Input error checking is done when commands are added to queue. */
 	if (meta->flags & CMD_WANT_SKB) {

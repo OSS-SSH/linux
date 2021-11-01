@@ -27,9 +27,13 @@ static u32 ibs_caps;
 
 #include <asm/nmi.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/amd-ibs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/amd-ibs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define IBS_FETCH_CONFIG_MASK	(IBS_FETCH_RAND_EN | IBS_FETCH_MAX_CNT)
 #define IBS_OP_CONFIG_MASK	IBS_OP_MAX_CNT
@@ -95,9 +99,13 @@ struct perf_ibs {
 	int				offset_max;
 	unsigned int			fetch_count_reset_broken : 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int			fetch_ignore_if_zero_rip : 1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int			fetch_ignore_if_zero_rip : 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cpu_perf_ibs __percpu	*pcpu;
 
 	struct attribute		**format_attrs;
@@ -107,6 +115,7 @@ struct perf_ibs {
 	u64				(*get_count)(u64 config);
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 struct perf_ibs_data {
@@ -119,6 +128,8 @@ struct perf_ibs_data {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 perf_event_set_period(struct hw_perf_event *hwc, u64 min, u64 max, u64 *hw_period)
 {
@@ -340,20 +351,30 @@ static int perf_ibs_set_period(struct perf_ibs *perf_ibs,
 static u64 get_ibs_fetch_count(u64 config)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	union ibs_fetch_ctl fetch_ctl = (union ibs_fetch_ctl)config;
 
 	return fetch_ctl.fetch_cnt << 4;
 =======
 	return (config & IBS_FETCH_CNT) >> 12;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	union ibs_fetch_ctl fetch_ctl = (union ibs_fetch_ctl)config;
+
+	return fetch_ctl.fetch_cnt << 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u64 get_ibs_op_count(u64 config)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	union ibs_op_ctl op_ctl = (union ibs_op_ctl)config;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	union ibs_op_ctl op_ctl = (union ibs_op_ctl)config;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 count = 0;
 
 	/*
@@ -361,6 +382,7 @@ static u64 get_ibs_op_count(u64 config)
 	 * and the lower 7 bits of CurCnt are randomized.
 	 * Otherwise CurCnt has the full 27-bit current counter value.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (op_ctl.op_val) {
 		count = op_ctl.opmaxcnt << 4;
@@ -371,11 +393,19 @@ static u64 get_ibs_op_count(u64 config)
 =======
 	if (config & IBS_OP_VAL) {
 		count = (config & IBS_OP_MAX_CNT) << 4;
+=======
+	if (op_ctl.op_val) {
+		count = op_ctl.opmaxcnt << 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ibs_caps & IBS_CAPS_OPCNTEXT)
-			count += config & IBS_OP_MAX_CNT_EXT_MASK;
+			count += op_ctl.opmaxcnt_ext << 20;
 	} else if (ibs_caps & IBS_CAPS_RDWROPCNT) {
+<<<<<<< HEAD
 		count = (config & IBS_OP_CUR_CNT) >> 32;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		count = op_ctl.opcurcnt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return count;
@@ -601,9 +631,13 @@ static struct perf_ibs perf_ibs_op = {
 		.stop		= perf_ibs_stop,
 		.read		= perf_ibs_read,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.capabilities	= PERF_PMU_CAP_NO_EXCLUDE,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.capabilities	= PERF_PMU_CAP_NO_EXCLUDE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	.msr			= MSR_AMD64_IBSOPCTL,
 	.config_mask		= IBS_OP_CONFIG_MASK,
@@ -707,12 +741,18 @@ fail:
 		regs.flags &= ~PERF_EFLAGS_EXACT;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Workaround for erratum #1197 */
 		if (perf_ibs->fetch_ignore_if_zero_rip && !(ibs_data.regs[1]))
 			goto out;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		set_linear_ip(&regs, ibs_data.regs[1]);
 		regs.flags |= PERF_EFLAGS_EXACT;
 	}
@@ -811,11 +851,17 @@ static __init void perf_event_ibs_init(void)
 		perf_ibs_fetch.fetch_count_reset_broken = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (boot_cpu_data.x86 == 0x19 && boot_cpu_data.x86_model < 0x10)
 		perf_ibs_fetch.fetch_ignore_if_zero_rip = 1;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (boot_cpu_data.x86 == 0x19 && boot_cpu_data.x86_model < 0x10)
+		perf_ibs_fetch.fetch_ignore_if_zero_rip = 1;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	perf_ibs_pmu_init(&perf_ibs_fetch, "ibs_fetch");
 
 	if (ibs_caps & IBS_CAPS_OPCNT) {

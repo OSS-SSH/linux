@@ -44,6 +44,7 @@ static int snd_adlib_match(struct device *dev, unsigned int n)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void snd_adlib_free(struct snd_card *card)
 {
@@ -51,6 +52,8 @@ static void snd_adlib_free(struct snd_card *card)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_adlib_probe(struct device *dev, unsigned int n)
 {
 	struct snd_card *card;
@@ -58,15 +61,20 @@ static int snd_adlib_probe(struct device *dev, unsigned int n)
 	int error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
 =======
 	error = snd_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0) {
 		dev_err(dev, "could not create card\n");
 		return error;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	card->private_data = devm_request_region(dev, port[n], 4, CRD_NAME);
 	if (!card->private_data) {
@@ -75,13 +83,18 @@ static int snd_adlib_probe(struct device *dev, unsigned int n)
 	}
 =======
 	card->private_data = request_region(port[n], 4, CRD_NAME);
+=======
+	card->private_data = devm_request_region(dev, port[n], 4, CRD_NAME);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!card->private_data) {
 		dev_err(dev, "could not grab ports\n");
-		error = -EBUSY;
-		goto out;
+		return -EBUSY;
 	}
+<<<<<<< HEAD
 	card->private_free = snd_adlib_free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, DEV_NAME);
 	strcpy(card->shortname, CRD_NAME);
@@ -91,34 +104,47 @@ static int snd_adlib_probe(struct device *dev, unsigned int n)
 	if (error < 0) {
 		dev_err(dev, "could not create OPL\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 =======
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	error = snd_opl3_hwdep_new(opl3, 0, 0, NULL);
 	if (error < 0) {
 		dev_err(dev, "could not create FM\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 =======
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	error = snd_card_register(card);
 	if (error < 0) {
 		dev_err(dev, "could not register card\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 =======
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	dev_set_drvdata(dev, card);
 	return 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -130,15 +156,20 @@ static void snd_adlib_remove(struct device *dev, unsigned int n)
 {
 	snd_card_free(dev_get_drvdata(dev));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct isa_driver snd_adlib_driver = {
 	.match		= snd_adlib_match,
 	.probe		= snd_adlib_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_adlib_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.driver		= {
 		.name	= DEV_NAME

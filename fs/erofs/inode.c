@@ -3,9 +3,13 @@
  * Copyright (C) 2017-2018 HUAWEI, Inc.
  *             https://www.huawei.com/
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2021, Alibaba Cloud
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2021, Alibaba Cloud
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include "xattr.h"
 
@@ -127,6 +131,7 @@ static struct page *erofs_read_inode(struct inode *inode,
 		if (erofs_inode_is_data_compressed(vi->datalayout))
 			nblks = le32_to_cpu(die->i_u.compressed_blocks);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (vi->datalayout == EROFS_INODE_CHUNK_BASED)
 			/* fill chunked inode summary info */
 			vi->chunkformat = le16_to_cpu(die->i_u.c.format);
@@ -136,6 +141,13 @@ static struct page *erofs_read_inode(struct inode *inode,
 
 		kfree(copied);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		else if (vi->datalayout == EROFS_INODE_CHUNK_BASED)
+			/* fill chunked inode summary info */
+			vi->chunkformat = le16_to_cpu(die->i_u.c.format);
+		kfree(copied);
+		copied = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case EROFS_INODE_LAYOUT_COMPACT:
 		vi->inode_isize = sizeof(struct erofs_inode_compact);
@@ -173,10 +185,15 @@ static struct page *erofs_read_inode(struct inode *inode,
 		if (erofs_inode_is_data_compressed(vi->datalayout))
 			nblks = le32_to_cpu(dic->i_u.compressed_blocks);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (vi->datalayout == EROFS_INODE_CHUNK_BASED)
 			vi->chunkformat = le16_to_cpu(dic->i_u.c.format);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		else if (vi->datalayout == EROFS_INODE_CHUNK_BASED)
+			vi->chunkformat = le16_to_cpu(dic->i_u.c.format);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		erofs_err(inode->i_sb,
@@ -187,6 +204,9 @@ static struct page *erofs_read_inode(struct inode *inode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vi->datalayout == EROFS_INODE_CHUNK_BASED) {
 		if (vi->chunkformat & ~EROFS_CHUNK_FORMAT_ALL) {
 			erofs_err(inode->i_sb,
@@ -198,20 +218,29 @@ static struct page *erofs_read_inode(struct inode *inode,
 		vi->chunkbits = LOG_BLOCK_SIZE +
 			(vi->chunkformat & EROFS_CHUNK_FORMAT_BLKBITS_MASK);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	inode->i_mtime.tv_sec = inode->i_ctime.tv_sec;
 	inode->i_atime.tv_sec = inode->i_ctime.tv_sec;
 	inode->i_mtime.tv_nsec = inode->i_ctime.tv_nsec;
 	inode->i_atime.tv_nsec = inode->i_ctime.tv_nsec;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	inode->i_flags &= ~S_DAX;
 	if (test_opt(&sbi->ctx, DAX_ALWAYS) && S_ISREG(inode->i_mode) &&
 	    vi->datalayout == EROFS_INODE_FLAT_PLAIN)
 		inode->i_flags |= S_DAX;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!nblks)
 		/* measure inode.i_blocks as generic filesystems */
 		inode->i_blocks = roundup(inode->i_size, EROFS_BLKSIZ) >> 9;
@@ -286,13 +315,19 @@ static int erofs_fill_inode(struct inode *inode, int isdir)
 	case S_IFREG:
 		inode->i_op = &erofs_generic_iops;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (erofs_inode_is_data_compressed(vi->datalayout))
 			inode->i_fop = &generic_ro_fops;
 		else
 			inode->i_fop = &erofs_file_fops;
+<<<<<<< HEAD
 =======
 		inode->i_fop = &generic_ro_fops;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case S_IFDIR:
 		inode->i_op = &erofs_dir_iops;
@@ -404,9 +439,13 @@ const struct inode_operations erofs_generic_iops = {
 	.listxattr = erofs_listxattr,
 	.get_acl = erofs_get_acl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.fiemap = erofs_fiemap,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.fiemap = erofs_fiemap,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 const struct inode_operations erofs_symlink_iops = {

@@ -439,12 +439,17 @@ static void tdma_reset(struct slgt_info *info);
 static bool tx_load(struct slgt_info *info, const char *buf, unsigned int count);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void get_gtsignals(struct slgt_info *info);
 static void set_gtsignals(struct slgt_info *info);
 =======
 static void get_signals(struct slgt_info *info);
 static void set_signals(struct slgt_info *info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void get_gtsignals(struct slgt_info *info);
+static void set_gtsignals(struct slgt_info *info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void set_rate(struct slgt_info *info, u32 data_rate);
 
 static void bh_transmit(struct slgt_info *info);
@@ -726,10 +731,14 @@ static void set_termios(struct tty_struct *tty, struct ktermios *old_termios)
 		info->signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
 		spin_lock_irqsave(&info->lock,flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		set_gtsignals(info);
 =======
 		set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_unlock_irqrestore(&info->lock,flags);
 	}
 
@@ -740,10 +749,14 @@ static void set_termios(struct tty_struct *tty, struct ktermios *old_termios)
 			info->signals |= SerialSignal_RTS;
 		spin_lock_irqsave(&info->lock,flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 	set_gtsignals(info);
 =======
 	 	set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 	set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_unlock_irqrestore(&info->lock,flags);
 	}
 
@@ -1195,10 +1208,14 @@ static inline void line_info(struct seq_file *m, struct slgt_info *info)
 	/* output current serial signal states */
 	spin_lock_irqsave(&info->lock,flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	get_gtsignals(info);
 =======
 	get_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	get_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&info->lock,flags);
 
 	stat_buf[0] = 0;
@@ -1299,10 +1316,14 @@ static void throttle(struct tty_struct * tty)
 		spin_lock_irqsave(&info->lock,flags);
 		info->signals &= ~SerialSignal_RTS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		set_gtsignals(info);
 =======
 		set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_unlock_irqrestore(&info->lock,flags);
 	}
 }
@@ -1328,10 +1349,14 @@ static void unthrottle(struct tty_struct * tty)
 		spin_lock_irqsave(&info->lock,flags);
 		info->signals |= SerialSignal_RTS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		set_gtsignals(info);
 =======
 		set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_unlock_irqrestore(&info->lock,flags);
 	}
 }
@@ -1503,10 +1528,14 @@ static int hdlcdev_open(struct net_device *dev)
 	/* inform generic HDLC layer of current DCD status */
 	spin_lock_irqsave(&info->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	get_gtsignals(info);
 =======
 	get_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	get_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&info->lock, flags);
 	if (info->signals & SerialSignal_DCD)
 		netif_carrier_on(dev);
@@ -1554,6 +1583,7 @@ static int hdlcdev_close(struct net_device *dev)
  * Return: 0 if success, otherwise error code
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int hdlcdev_ioctl(struct net_device *dev, struct if_settings *ifs)
 {
 	const size_t size = sizeof(sync_serial_settings);
@@ -1566,6 +1596,13 @@ static int hdlcdev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	sync_serial_settings new_line;
 	sync_serial_settings __user *line = ifr->ifr_settings.ifs_ifsu.sync;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int hdlcdev_ioctl(struct net_device *dev, struct if_settings *ifs)
+{
+	const size_t size = sizeof(sync_serial_settings);
+	sync_serial_settings new_line;
+	sync_serial_settings __user *line = ifs->ifs_ifsu.sync;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct slgt_info *info = dev_to_port(dev);
 	unsigned int flags;
 
@@ -1575,6 +1612,7 @@ static int hdlcdev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	if (info->port.count)
 		return -EBUSY;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	memset(&new_line, 0, sizeof(new_line));
 
@@ -1588,15 +1626,23 @@ static int hdlcdev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	if (cmd != SIOCWANDEV)
 		return hdlc_ioctl(dev, ifr, cmd);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memset(&new_line, 0, sizeof(new_line));
 
-	switch(ifr->ifr_settings.type) {
+	switch (ifs->type) {
 	case IF_GET_IFACE: /* return current sync_serial_settings */
 
+<<<<<<< HEAD
 		ifr->ifr_settings.type = IF_IFACE_SYNC_SERIAL;
 		if (ifr->ifr_settings.size < size) {
 			ifr->ifr_settings.size = size; /* data size wanted */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ifs->type = IF_IFACE_SYNC_SERIAL;
+		if (ifs->size < size) {
+			ifs->size = size; /* data size wanted */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOBUFS;
 		}
 
@@ -1664,10 +1710,14 @@ static int hdlcdev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return hdlc_ioctl(dev, ifs);
 =======
 		return hdlc_ioctl(dev, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return hdlc_ioctl(dev, ifs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1741,10 +1791,14 @@ static const struct net_device_ops hdlcdev_ops = {
 	.ndo_stop       = hdlcdev_close,
 	.ndo_start_xmit = hdlc_start_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocwandev = hdlcdev_ioctl,
 =======
 	.ndo_do_ioctl   = hdlcdev_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocwandev = hdlcdev_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout = hdlcdev_tx_timeout,
 };
 
@@ -2289,10 +2343,14 @@ static void isr_txeom(struct slgt_info *info, unsigned short status)
 			info->signals &= ~SerialSignal_RTS;
 			info->drop_rts_on_tx_done = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			set_gtsignals(info);
 =======
 			set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 #if SYNCLINK_GENERIC_HDLC
@@ -2458,10 +2516,14 @@ static void shutdown(struct slgt_info *info)
  	if (!info->port.tty || info->port.tty->termios.c_cflag & HUPCL) {
 		info->signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		set_gtsignals(info);
 =======
 		set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	flush_cond_wait(&info->gpio_wait_q);
@@ -2490,10 +2552,14 @@ static void program_hw(struct slgt_info *info)
 		async_mode(info);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_gtsignals(info);
 =======
 	set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info->dcd_chkcount = 0;
 	info->cts_chkcount = 0;
@@ -2502,10 +2568,14 @@ static void program_hw(struct slgt_info *info)
 
 	slgt_irq_on(info, IRQ_DCD | IRQ_CTS | IRQ_DSR | IRQ_RI);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	get_gtsignals(info);
 =======
 	get_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	get_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (info->netcount ||
 	    (info->port.tty && info->port.tty->termios.c_cflag & CREAD))
@@ -2743,10 +2813,14 @@ static int wait_mgsl_event(struct slgt_info *info, int __user *mask_ptr)
 
 	/* return immediately if state matches requested events */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	get_gtsignals(info);
 =======
 	get_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	get_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	s = info->signals;
 
 	events = mask &
@@ -3165,10 +3239,14 @@ static int tiocmget(struct tty_struct *tty)
 
 	spin_lock_irqsave(&info->lock,flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
  	get_gtsignals(info);
 =======
  	get_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ 	get_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&info->lock,flags);
 
 	result = ((info->signals & SerialSignal_RTS) ? TIOCM_RTS:0) +
@@ -3208,10 +3286,14 @@ static int tiocmset(struct tty_struct *tty,
 
 	spin_lock_irqsave(&info->lock,flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_gtsignals(info);
 =======
 	set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&info->lock,flags);
 	return 0;
 }
@@ -3223,10 +3305,14 @@ static int carrier_raised(struct tty_port *port)
 
 	spin_lock_irqsave(&info->lock,flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	get_gtsignals(info);
 =======
 	get_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	get_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&info->lock,flags);
 	return (info->signals & SerialSignal_DCD) ? 1 : 0;
 }
@@ -3242,10 +3328,14 @@ static void dtr_rts(struct tty_port *port, int on)
 	else
 		info->signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_gtsignals(info);
 =======
 	set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&info->lock,flags);
 }
 
@@ -3743,10 +3833,14 @@ static void slgt_cleanup(void)
 			tty_unregister_device(serial_driver, info->line);
 		tty_unregister_driver(serial_driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tty_driver_kref_put(serial_driver);
 =======
 		put_tty_driver(serial_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(serial_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* reset devices */
@@ -3786,6 +3880,7 @@ static int __init slgt_init(void)
 	printk(KERN_INFO "%s\n", driver_name);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	serial_driver = tty_alloc_driver(MAX_DEVICES, TTY_DRIVER_REAL_RAW |
 			TTY_DRIVER_DYNAMIC_DEV);
 	if (IS_ERR(serial_driver)) {
@@ -3797,6 +3892,13 @@ static int __init slgt_init(void)
 		printk("%s can't allocate tty driver\n", driver_name);
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	serial_driver = tty_alloc_driver(MAX_DEVICES, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_DYNAMIC_DEV);
+	if (IS_ERR(serial_driver)) {
+		printk("%s can't allocate tty driver\n", driver_name);
+		return PTR_ERR(serial_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Initialize the tty_driver structure */
@@ -3813,6 +3915,7 @@ static int __init slgt_init(void)
 	serial_driver->init_termios.c_ispeed = 9600;
 	serial_driver->init_termios.c_ospeed = 9600;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_set_operations(serial_driver, &ops);
 	if ((rc = tty_register_driver(serial_driver)) < 0) {
 		DBGERR(("%s can't register serial driver\n", driver_name));
@@ -3824,6 +3927,12 @@ static int __init slgt_init(void)
 		DBGERR(("%s can't register serial driver\n", driver_name));
 		put_tty_driver(serial_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_set_operations(serial_driver, &ops);
+	if ((rc = tty_register_driver(serial_driver)) < 0) {
+		DBGERR(("%s can't register serial driver\n", driver_name));
+		tty_driver_kref_put(serial_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		serial_driver = NULL;
 		goto error;
 	}
@@ -4063,6 +4172,7 @@ static void tx_start(struct slgt_info *info)
 		if (info->params.mode != MGSL_MODE_ASYNC) {
 			if (info->params.flags & HDLC_FLAG_AUTO_RTS) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				get_gtsignals(info);
 				if (!(info->signals & SerialSignal_RTS)) {
 					info->signals |= SerialSignal_RTS;
@@ -4073,6 +4183,12 @@ static void tx_start(struct slgt_info *info)
 					info->signals |= SerialSignal_RTS;
 					set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				get_gtsignals(info);
+				if (!(info->signals & SerialSignal_RTS)) {
+					info->signals |= SerialSignal_RTS;
+					set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					info->drop_rts_on_tx_done = true;
 				}
 			}
@@ -4127,10 +4243,14 @@ static void reset_port(struct slgt_info *info)
 
 	info->signals &= ~(SerialSignal_RTS | SerialSignal_DTR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_gtsignals(info);
 =======
 	set_signals(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_gtsignals(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	slgt_irq_off(info, IRQ_ALL | IRQ_MASTER);
 }
@@ -4553,10 +4673,14 @@ static void tx_set_idle(struct slgt_info *info)
  * get state of V24 status (input) signals
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void get_gtsignals(struct slgt_info *info)
 =======
 static void get_signals(struct slgt_info *info)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void get_gtsignals(struct slgt_info *info)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned short status = rd_reg16(info, SSR);
 
@@ -4619,10 +4743,14 @@ static void msc_set_vcr(struct slgt_info *info)
  * set state of V24 control (output) signals
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void set_gtsignals(struct slgt_info *info)
 =======
 static void set_signals(struct slgt_info *info)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void set_gtsignals(struct slgt_info *info)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned char val = rd_reg8(info, VCR);
 	if (info->signals & SerialSignal_DTR)

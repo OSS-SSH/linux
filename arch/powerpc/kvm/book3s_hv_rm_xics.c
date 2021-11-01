@@ -707,9 +707,13 @@ static int ics_rm_eoi(struct kvm_vcpu *vcpu, u32 irq)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Handle passthrough interrupts */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Handle passthrough interrupts */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (state->host_irq) {
 		++vcpu->stat.pthru_all;
 		if (state->intr_cpu != -1) {
@@ -764,19 +768,27 @@ int xics_rm_h_eoi(struct kvm_vcpu *vcpu, unsigned long xirr)
 static unsigned long eoi_rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void icp_eoi(struct irq_data *d, u32 hwirq, __be32 xirr, bool *again)
 =======
 static void icp_eoi(struct irq_chip *c, u32 hwirq, __be32 xirr, bool *again)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void icp_eoi(struct irq_data *d, u32 hwirq, __be32 xirr, bool *again)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	void __iomem *xics_phys;
 	int64_t rc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = pnv_opal_pci_msi_eoi(d);
 =======
 	rc = pnv_opal_pci_msi_eoi(c, hwirq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = pnv_opal_pci_msi_eoi(d);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (rc)
 		eoi_rc = rc;
@@ -885,11 +897,15 @@ long kvmppc_deliver_irq_passthru(struct kvm_vcpu *vcpu,
 
 	/* EOI the interrupt */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	icp_eoi(irq_desc_get_irq_data(irq_map->desc), irq_map->r_hwirq, xirr, again);
 =======
 	icp_eoi(irq_desc_get_chip(irq_map->desc), irq_map->r_hwirq, xirr,
 		again);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	icp_eoi(irq_desc_get_irq_data(irq_map->desc), irq_map->r_hwirq, xirr, again);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (check_too_hard(xics, icp) == H_TOO_HARD)
 		return 2;

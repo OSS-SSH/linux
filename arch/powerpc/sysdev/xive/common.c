@@ -22,9 +22,12 @@
 #include <linux/vmalloc.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/prom.h>
 #include <asm/io.h>
 #include <asm/smp.h>
@@ -71,9 +74,13 @@ static struct xive_ipi_desc {
 	unsigned int irq;
 	char name[16];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t started;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_t started;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } *xive_ipis;
 
 /*
@@ -320,6 +327,7 @@ void xmon_xive_get_irq_all(void)
 
 	for_each_irq_desc(i, desc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct irq_data *d = irq_domain_get_irq_data(xive_irq_domain, i);
 
 		if (d)
@@ -331,6 +339,12 @@ void xmon_xive_get_irq_all(void)
 		if (d->domain == xive_irq_domain)
 			xmon_xive_get_irq_config(hwirq, d);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct irq_data *d = irq_domain_get_irq_data(xive_irq_domain, i);
+
+		if (d)
+			xmon_xive_get_irq_config(irqd_to_hwirq(d), d);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -631,6 +645,7 @@ static unsigned int xive_irq_startup(struct irq_data *d)
 		 d->irq, hw_irq, d);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PCI_MSI
 	/*
@@ -643,6 +658,8 @@ static unsigned int xive_irq_startup(struct irq_data *d)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Pick a target */
 	target = xive_pick_irq_target(d, irq_data_get_affinity_mask(d));
 	if (target == XIVE_INVALID_TARGET) {
@@ -731,15 +748,20 @@ static int xive_irq_set_affinity(struct irq_data *d,
 	int rc = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_debug("%s: irq %d/%x\n", __func__, d->irq, hw_irq);
 =======
 	pr_devel("xive_irq_set_affinity: irq %d\n", d->irq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("%s: irq %d/%x\n", __func__, d->irq, hw_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Is this valid ? */
 	if (cpumask_any_and(cpumask, cpu_online_mask) >= nr_cpu_ids)
 		return -EINVAL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/* Don't do anything if the interrupt isn't started */
@@ -747,6 +769,8 @@ static int xive_irq_set_affinity(struct irq_data *d,
 		return IRQ_SET_MASK_OK;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If existing target is already in the new mask, and is
 	 * online then do nothing.
@@ -783,10 +807,14 @@ static int xive_irq_set_affinity(struct irq_data *d,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_debug("  target: 0x%x\n", target);
 =======
 	pr_devel("  target: 0x%x\n", target);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("  target: 0x%x\n", target);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xd->target = target;
 
 	/* Give up previous target */
@@ -989,11 +1017,16 @@ static int xive_get_irqchip_state(struct irq_data *data,
 		 */
 		*state = (pq != XIVE_ESB_INVALID) && !xd->stale_p &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 			(xd->saved_p || (!!(pq & XIVE_ESB_VAL_P) &&
 			 !irqd_irq_disabled(data)));
 =======
 			(xd->saved_p || !!(pq & XIVE_ESB_VAL_P));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			(xd->saved_p || (!!(pq & XIVE_ESB_VAL_P) &&
+			 !irqd_irq_disabled(data)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	default:
 		return -EINVAL;
@@ -1023,10 +1056,15 @@ EXPORT_SYMBOL_GPL(is_xive_irq);
 void xive_cleanup_irq_data(struct xive_irq_data *xd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_debug("%s for HW %x\n", __func__, xd->hw_irq);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("%s for HW %x\n", __func__, xd->hw_irq);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xd->eoi_mmio) {
 		iounmap(xd->eoi_mmio);
 		if (xd->eoi_mmio == xd->trig_mmio)
@@ -1069,10 +1107,14 @@ static int xive_irq_alloc_data(unsigned int virq, irq_hw_number_t hw)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void xive_irq_free_data(unsigned int virq)
 =======
 static void xive_irq_free_data(unsigned int virq)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void xive_irq_free_data(unsigned int virq)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xive_irq_data *xd = irq_get_handler_data(virq);
 
@@ -1083,9 +1125,13 @@ static void xive_irq_free_data(unsigned int virq)
 	kfree(xd);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(xive_irq_free_data);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(xive_irq_free_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_SMP
 
@@ -1167,10 +1213,14 @@ static const struct irq_domain_ops xive_ipi_irq_domain_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init xive_init_ipis(void)
 =======
 static int __init xive_request_ipi(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init xive_init_ipis(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fwnode_handle *fwnode;
 	struct irq_domain *ipi_domain;
@@ -1195,12 +1245,15 @@ static int __init xive_request_ipi(void)
 		struct xive_ipi_alloc_info info = { node };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		/* Skip nodes without CPUs */
 		if (cpumask_empty(cpumask_of_node(node)))
 			continue;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Map one IPI interrupt per node for all cpus of that node.
 		 * Since the HW interrupt number doesn't have any meaning,
@@ -1213,6 +1266,7 @@ static int __init xive_request_ipi(void)
 
 		snprintf(xid->name, sizeof(xid->name), "IPI-%d", node);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 		ret = request_irq(xid->irq, xive_muxed_ipi_action,
@@ -1220,6 +1274,8 @@ static int __init xive_request_ipi(void)
 
 		WARN(ret < 0, "Failed to request IPI %d: %d\n", xid->irq, ret);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return ret;
@@ -1235,6 +1291,9 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xive_request_ipi(unsigned int cpu)
 {
 	struct xive_ipi_desc *xid = &xive_ipis[early_cpu_to_node(cpu)];
@@ -1251,8 +1310,11 @@ static int xive_request_ipi(unsigned int cpu)
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xive_setup_cpu_ipi(unsigned int cpu)
 {
 	unsigned int xive_ipi_irq = xive_ipi_cpu_to_irq(cpu);
@@ -1268,11 +1330,17 @@ static int xive_setup_cpu_ipi(unsigned int cpu)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Register the IPI */
 	xive_request_ipi(cpu);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Register the IPI */
+	xive_request_ipi(cpu);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Grab an IPI from the backend, this will populate xc->hw_ipi */
 	if (xive_ops->get_ipi(cpu, xc))
 		return -EIO;
@@ -1313,10 +1381,15 @@ static void xive_cleanup_cpu_ipi(unsigned int cpu, struct xive_cpu *xc)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* TODO: clear IPI mapping */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* TODO: clear IPI mapping */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Mask the IPI */
 	xive_do_source_set_mask(&xc->ipi_data, true);
 
@@ -1340,10 +1413,14 @@ void __init xive_smp_probe(void)
 
 	/* Register the IPI */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xive_init_ipis();
 =======
 	xive_request_ipi();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xive_init_ipis();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Allocate and setup IPI for the boot CPU */
 	xive_setup_cpu_ipi(smp_processor_id());
@@ -1457,6 +1534,9 @@ static void xive_irq_domain_debug_show(struct seq_file *m, struct irq_domain *d,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef	CONFIG_IRQ_DOMAIN_HIERARCHY
 static int xive_irq_domain_translate(struct irq_domain *d,
 				     struct irq_fwspec *fwspec,
@@ -1522,9 +1602,12 @@ static const struct irq_domain_ops xive_irq_domain_ops = {
 	.free	= xive_irq_domain_free,
 	.translate = xive_irq_domain_translate,
 #endif
+<<<<<<< HEAD
 =======
 static const struct irq_domain_ops xive_irq_domain_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.match = xive_irq_domain_match,
 	.map = xive_irq_domain_map,
 	.unmap = xive_irq_domain_unmap,
@@ -1863,6 +1946,7 @@ static int xive_core_debug_show(struct seq_file *m, void *private)
 
 	for_each_irq_desc(i, desc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct irq_data *d = irq_domain_get_irq_data(xive_irq_domain, i);
 
 		if (d)
@@ -1871,6 +1955,11 @@ static int xive_core_debug_show(struct seq_file *m, void *private)
 
 		if (d->domain == xive_irq_domain)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct irq_data *d = irq_domain_get_irq_data(xive_irq_domain, i);
+
+		if (d)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xive_debug_show_irq(m, d);
 	}
 	return 0;
@@ -1881,10 +1970,14 @@ int xive_core_debug_init(void)
 {
 	if (xive_enabled())
 <<<<<<< HEAD
+<<<<<<< HEAD
 		debugfs_create_file("xive", 0400, arch_debugfs_dir,
 =======
 		debugfs_create_file("xive", 0400, powerpc_debugfs_root,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		debugfs_create_file("xive", 0400, arch_debugfs_dir,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    NULL, &xive_core_debug_fops);
 	return 0;
 }

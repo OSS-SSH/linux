@@ -388,10 +388,14 @@ __add_event(struct list_head *list, int *idx,
 
 	if (config_terms)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		list_splice_init(config_terms, &evsel->config_terms);
 =======
 		list_splice(config_terms, &evsel->config_terms);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		list_splice_init(config_terms, &evsel->config_terms);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (list)
 		list_add_tail(&evsel->core.node, list);
@@ -540,6 +544,7 @@ int parse_events_add_cache(struct list_head *list, int *idx,
 					     &hybrid, parse_state);
 	if (hybrid)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_free_terms;
 
 	ret = add_event(list, idx, &attr, config_name ? : name, &config_terms);
@@ -551,6 +556,14 @@ out_free_terms:
 
 	return add_event(list, idx, &attr, config_name ? : name, &config_terms);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_free_terms;
+
+	ret = add_event(list, idx, &attr, config_name ? : name, &config_terms);
+out_free_terms:
+	free_config_terms(&config_terms);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void tracepoint_error(struct parse_events_error *e, int err,
@@ -1471,6 +1484,7 @@ int parse_events_add_numeric(struct parse_events_state *parse_state,
 					       &config_terms, &hybrid);
 	if (hybrid)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_free_terms;
 
 	ret = add_event(list, &parse_state->idx, &attr,
@@ -1484,6 +1498,15 @@ out_free_terms:
 	return add_event(list, &parse_state->idx, &attr,
 			 get_config_name(head_config), &config_terms);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_free_terms;
+
+	ret = add_event(list, &parse_state->idx, &attr,
+			get_config_name(head_config), &config_terms);
+out_free_terms:
+	free_config_terms(&config_terms);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int parse_events_add_tool(struct parse_events_state *parse_state,
@@ -1632,6 +1655,7 @@ int parse_events_add_pmu(struct parse_events_state *parse_state,
 
 	if (!parse_state->fake_pmu && perf_pmu__config(pmu, &attr, head_config, parse_state->error)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		free_config_terms(&config_terms);
 =======
 		struct evsel_config_term *pos, *tmp;
@@ -1643,6 +1667,9 @@ int parse_events_add_pmu(struct parse_events_state *parse_state,
 			free(pos);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		free_config_terms(&config_terms);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 

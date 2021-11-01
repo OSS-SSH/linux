@@ -360,22 +360,30 @@ static int batadv_netlink_mesh_fill(struct sk_buff *msg,
 		goto nla_put_failure;
 
 <<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-=======
-	if (primary_if)
-		batadv_hardif_put(primary_if);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-
-	genlmsg_end(msg, hdr);
-	return 0;
-
-nla_put_failure:
 <<<<<<< HEAD
 	batadv_hardif_put(primary_if);
 =======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	genlmsg_end(msg, hdr);
+	return 0;
+
+nla_put_failure:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+=======
+	if (primary_if)
+		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	genlmsg_cancel(msg, hdr);
 	return -EMSGSIZE;

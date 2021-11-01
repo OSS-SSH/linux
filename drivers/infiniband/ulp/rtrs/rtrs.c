@@ -183,10 +183,14 @@ int rtrs_iu_post_rdma_write_imm(struct rtrs_con *con, struct rtrs_iu *iu,
 EXPORT_SYMBOL_GPL(rtrs_iu_post_rdma_write_imm);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rtrs_post_rdma_write_imm_empty(struct rtrs_con *con,
 					  struct ib_cqe *cqe,
 					  u32 imm_data,
 					  struct ib_send_wr *head)
+<<<<<<< HEAD
 {
 	struct ib_rdma_wr wr;
 	struct rtrs_sess *sess = con->sess;
@@ -203,13 +207,25 @@ static int rtrs_post_rdma_write_imm_empty(struct rtrs_con *con,
 int rtrs_post_rdma_write_imm_empty(struct rtrs_con *con, struct ib_cqe *cqe,
 				    u32 imm_data, enum ib_send_flags flags,
 				    struct ib_send_wr *head)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ib_rdma_wr wr;
+	struct rtrs_sess *sess = con->sess;
+	enum ib_send_flags sflags;
+
+	atomic_dec_if_positive(&con->sq_wr_avail);
+	sflags = (atomic_inc_return(&con->wr_cnt) % sess->signal_interval) ?
+		0 : IB_SEND_SIGNALED;
 
 	wr = (struct ib_rdma_wr) {
 		.wr.wr_cqe	= cqe,
+<<<<<<< HEAD
 		.wr.send_flags	= flags,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.wr.send_flags	= sflags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.wr.opcode	= IB_WR_RDMA_WRITE_WITH_IMM,
 		.wr.ex.imm_data	= cpu_to_be32(imm_data),
 	};
@@ -217,9 +233,12 @@ int rtrs_post_rdma_write_imm_empty(struct rtrs_con *con, struct ib_cqe *cqe,
 	return rtrs_post_send(con->qp, head, &wr.wr, NULL);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(rtrs_post_rdma_write_imm_empty);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void qp_event_handler(struct ib_event *ev, void *ctx)
 {
@@ -337,6 +356,7 @@ void rtrs_send_hb_ack(struct rtrs_sess *sess)
 	imm = rtrs_to_imm(RTRS_HB_ACK_IMM, 0);
 	err = rtrs_post_rdma_write_imm_empty(usr_con, sess->hb_cqe, imm,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					     NULL);
 	if (err) {
 		rtrs_err(sess, "send HB ACK failed, errno: %d\n", err);
@@ -344,6 +364,11 @@ void rtrs_send_hb_ack(struct rtrs_sess *sess)
 					     0, NULL);
 	if (err) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					     NULL);
+	if (err) {
+		rtrs_err(sess, "send HB ACK failed, errno: %d\n", err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sess->hb_err_handler(usr_con);
 		return;
 	}
@@ -362,9 +387,13 @@ static void hb_work(struct work_struct *work)
 
 	if (sess->hb_missed_cnt > sess->hb_missed_max) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rtrs_err(sess, "HB missed max reached.\n");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rtrs_err(sess, "HB missed max reached.\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sess->hb_err_handler(usr_con);
 		return;
 	}
@@ -379,6 +408,7 @@ static void hb_work(struct work_struct *work)
 	imm = rtrs_to_imm(RTRS_HB_MSG_IMM, 0);
 	err = rtrs_post_rdma_write_imm_empty(usr_con, sess->hb_cqe, imm,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					     NULL);
 	if (err) {
 		rtrs_err(sess, "HB send failed, errno: %d\n", err);
@@ -386,6 +416,11 @@ static void hb_work(struct work_struct *work)
 					     0, NULL);
 	if (err) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					     NULL);
+	if (err) {
+		rtrs_err(sess, "HB send failed, errno: %d\n", err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sess->hb_err_handler(usr_con);
 		return;
 	}

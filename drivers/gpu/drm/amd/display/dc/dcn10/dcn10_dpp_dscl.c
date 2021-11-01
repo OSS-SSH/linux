@@ -218,10 +218,15 @@ static void dpp1_dscl_set_lb(
 	enum lb_memory_config mem_size_config)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t max_partitions = 63; /* Currently hardcoded on all ASICs before DCN 3.2 */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t max_partitions = 63; /* Currently hardcoded on all ASICs before DCN 3.2 */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* LB */
 	if (dpp->base.caps->dscl_data_proc_format == DSCL_DATA_PRCESSING_FIXED_FORMAT) {
 		/* DSCL caps: pixel data processed in fixed format */
@@ -245,6 +250,7 @@ static void dpp1_dscl_set_lb(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dpp->base.caps->max_lb_partitions == 31)
 		max_partitions = 31;
 
@@ -256,6 +262,14 @@ static void dpp1_dscl_set_lb(
 		MEMORY_CONFIG, mem_size_config,
 		LB_MAX_PARTITIONS, 63);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dpp->base.caps->max_lb_partitions == 31)
+		max_partitions = 31;
+
+	REG_SET_2(LB_MEMORY_CTRL, 0,
+		MEMORY_CONFIG, mem_size_config,
+		LB_MAX_PARTITIONS, max_partitions);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const uint16_t *dpp1_dscl_get_filter_coeffs_64p(int taps, struct fixed31_32 ratio)

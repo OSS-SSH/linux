@@ -476,9 +476,13 @@ static int verity_verify_io(struct dm_verity_io *io)
 	unsigned b;
 	struct crypto_wait wait;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct bio *bio = dm_bio_from_per_bio_data(io, v->ti->per_io_data_size);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct bio *bio = dm_bio_from_per_bio_data(io, v->ti->per_io_data_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (b = 0; b < io->n_blocks; b++) {
 		int r;
@@ -534,6 +538,9 @@ static int verity_verify_io(struct dm_verity_io *io)
 					   cur_block, NULL, &start) == 0)
 			continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else {
 			if (bio->bi_status) {
 				/*
@@ -545,11 +552,14 @@ static int verity_verify_io(struct dm_verity_io *io)
 					      cur_block))
 				return -EIO;
 		}
+<<<<<<< HEAD
 =======
 		else if (verity_handle_err(v, DM_VERITY_BLOCK_TYPE_DATA,
 					   cur_block))
 			return -EIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -791,6 +801,9 @@ static void verity_status(struct dm_target *ti, status_type_t type,
 				" %s", v->signature_key_desc);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	case STATUSTYPE_IMA:
 		DMEMIT_TARGET_NAME_VERSION(ti->type);
@@ -834,8 +847,11 @@ static void verity_status(struct dm_target *ti, status_type_t type,
 		}
 		DMEMIT(";");
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

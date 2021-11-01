@@ -47,10 +47,14 @@ static int bttv_sub_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void bttv_sub_remove(struct device *dev)
 =======
 static int bttv_sub_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void bttv_sub_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct bttv_sub_device *sdev = to_bttv_sub_dev(dev);
 	struct bttv_sub_driver *sub = to_bttv_sub_drv(dev->driver);
@@ -58,9 +62,12 @@ static int bttv_sub_remove(struct device *dev)
 	if (sub->remove)
 		sub->remove(sdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct bus_type bttv_sub_bus_type = {

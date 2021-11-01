@@ -2641,6 +2641,7 @@ static int idt_init_pci(struct idt_ntb_dev *ndev)
 
 	/* Initialize the bit mask of PCI/NTB DMA */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
 	if (ret != 0) {
 		ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
@@ -2649,12 +2650,18 @@ static int idt_init_pci(struct idt_ntb_dev *ndev)
 	if (ret != 0) {
 		ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+	if (ret != 0) {
+		ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret != 0) {
 			dev_err(&pdev->dev, "Failed to set DMA bit mask\n");
 			return ret;
 		}
 		dev_warn(&pdev->dev, "Cannot set DMA highmem bit mask\n");
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	ret = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
@@ -2669,6 +2676,8 @@ static int idt_init_pci(struct idt_ntb_dev *ndev)
 			"Cannot set consistent DMA highmem bit mask\n");
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Enable the device advanced error reporting. It's not critical to

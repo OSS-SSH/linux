@@ -349,10 +349,14 @@ static int lola_setup_periods(struct lola *chip, struct lola_pcm *pcm,
 
 	/* program the initial BDL entries */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bdl = (__le32 *)(pcm->bdl->area + LOLA_BDL_ENTRY_SIZE * str->index);
 =======
 	bdl = (__le32 *)(pcm->bdl.area + LOLA_BDL_ENTRY_SIZE * str->index);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bdl = (__le32 *)(pcm->bdl->area + LOLA_BDL_ENTRY_SIZE * str->index);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ofs = 0;
 	str->frags = 0;
 	for (i = 0; i < periods; i++) {
@@ -438,10 +442,14 @@ static int lola_setup_controller(struct lola *chip, struct lola_pcm *pcm,
 
 	/* set up BDL */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bdl = pcm->bdl->addr + LOLA_BDL_ENTRY_SIZE * str->index;
 =======
 	bdl = pcm->bdl.addr + LOLA_BDL_ENTRY_SIZE * str->index;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bdl = pcm->bdl->addr + LOLA_BDL_ENTRY_SIZE * str->index;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lola_dsd_write(chip, str->dsd, BDPL, (u32)bdl);
 	lola_dsd_write(chip, str->dsd, BDPU, upper_32_bits(bdl));
 	/* program the stream LVI (last valid index) of the BDL */
@@ -597,11 +605,15 @@ int lola_create_pcm(struct lola *chip)
 
 	for (i = 0; i < 2; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		chip->pcm[i].bdl =
 			snd_devm_alloc_pages(&chip->pci->dev, SNDRV_DMA_TYPE_DEV,
 					     PAGE_SIZE);
 		if (!chip->pcm[i].bdl)
 			return -ENOMEM;
+<<<<<<< HEAD
 =======
 		err = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV,
 					  &chip->pci->dev,
@@ -609,6 +621,8 @@ int lola_create_pcm(struct lola *chip)
 		if (err < 0)
 			return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = snd_pcm_new(chip->card, "Digigram Lola", 0,
@@ -631,6 +645,7 @@ int lola_create_pcm(struct lola *chip)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void lola_free_pcm(struct lola *chip)
 {
@@ -639,6 +654,8 @@ void lola_free_pcm(struct lola *chip)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  */
 

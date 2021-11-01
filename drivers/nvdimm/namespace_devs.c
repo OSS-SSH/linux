@@ -1236,10 +1236,14 @@ static int namespace_update_uuid(struct nd_region *nd_region,
 				continue;
 			nd_label_gen_id(&label_id, nd_label->uuid,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					nsl_get_flags(ndd, nd_label));
 =======
 					__le32_to_cpu(nd_label->flags));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					nsl_get_flags(ndd, nd_label));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (strcmp(old_label_id.id, label_id.id) == 0)
 				set_bit(ND_LABEL_REAP, &label_ent->flags);
 		}
@@ -1852,6 +1856,7 @@ static bool has_uuid_at_pos(struct nd_region *nd_region, u8 *uuid,
 			struct nd_namespace_label *nd_label = label_ent->label;
 			u16 position, nlabel;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (!nd_label)
 				continue;
@@ -1861,20 +1866,26 @@ static bool has_uuid_at_pos(struct nd_region *nd_region, u8 *uuid,
 			if (!nsl_validate_isetcookie(ndd, nd_label, cookie))
 =======
 			u64 isetcookie;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (!nd_label)
 				continue;
-			isetcookie = __le64_to_cpu(nd_label->isetcookie);
-			position = __le16_to_cpu(nd_label->position);
-			nlabel = __le16_to_cpu(nd_label->nlabel);
+			position = nsl_get_position(ndd, nd_label);
+			nlabel = nsl_get_nlabel(ndd, nd_label);
 
+<<<<<<< HEAD
 			if (isetcookie != cookie)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!nsl_validate_isetcookie(ndd, nd_label, cookie))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				continue;
 
 			if (memcmp(nd_label->uuid, uuid, NSLABEL_UUID_LEN) != 0)
 				continue;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (!nsl_validate_type_guid(ndd, nd_label,
 						    &nd_set->type_guid))
@@ -1889,6 +1900,11 @@ static bool has_uuid_at_pos(struct nd_region *nd_region, u8 *uuid,
 				continue;
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!nsl_validate_type_guid(ndd, nd_label,
+						    &nd_set->type_guid))
+				continue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (found_uuid) {
 				dev_dbg(ndd->dev, "duplicate entry for uuid\n");
@@ -1944,12 +1960,17 @@ static int select_pmem_id(struct nd_region *nd_region, u8 *pmem_id)
 		hw_start = nd_mapping->start;
 		hw_end = hw_start + nd_mapping->size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pmem_start = nsl_get_dpa(ndd, nd_label);
 		pmem_end = pmem_start + nsl_get_rawsize(ndd, nd_label);
 =======
 		pmem_start = __le64_to_cpu(nd_label->dpa);
 		pmem_end = pmem_start + __le64_to_cpu(nd_label->rawsize);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pmem_start = nsl_get_dpa(ndd, nd_label);
+		pmem_end = pmem_start + nsl_get_rawsize(ndd, nd_label);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (pmem_start >= hw_start && pmem_start < hw_end
 				&& pmem_end <= hw_end && pmem_end > hw_start)
 			/* pass */;
@@ -1973,6 +1994,7 @@ static int select_pmem_id(struct nd_region *nd_region, u8 *pmem_id)
  */
 static struct device *create_namespace_pmem(struct nd_region *nd_region,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    struct nd_mapping *nd_mapping,
 					    struct nd_namespace_label *nd_label)
 {
@@ -1984,14 +2006,25 @@ static struct device *create_namespace_pmem(struct nd_region *nd_region,
 		struct nd_namespace_label *nd_label)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    struct nd_mapping *nd_mapping,
+					    struct nd_namespace_label *nd_label)
+{
+	struct nvdimm_drvdata *ndd = to_ndd(nd_mapping);
+	struct nd_namespace_index *nsindex =
+		to_namespace_index(ndd, ndd->ns_current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 cookie = nd_region_interleave_set_cookie(nd_region, nsindex);
 	u64 altcookie = nd_region_interleave_set_altcookie(nd_region);
 	struct nd_label_ent *label_ent;
 	struct nd_namespace_pmem *nspm;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct nd_mapping *nd_mapping;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	resource_size_t size = 0;
 	struct resource *res;
 	struct device *dev;
@@ -2004,6 +2037,7 @@ static struct device *create_namespace_pmem(struct nd_region *nd_region,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!nsl_validate_isetcookie(ndd, nd_label, cookie)) {
 		dev_dbg(&nd_region->dev, "invalid cookie in label: %pUb\n",
 				nd_label->uuid);
@@ -2014,6 +2048,12 @@ static struct device *create_namespace_pmem(struct nd_region *nd_region,
 				nd_label->uuid);
 		if (__le64_to_cpu(nd_label->isetcookie) != altcookie)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!nsl_validate_isetcookie(ndd, nd_label, cookie)) {
+		dev_dbg(&nd_region->dev, "invalid cookie in label: %pUb\n",
+				nd_label->uuid);
+		if (!nsl_validate_isetcookie(ndd, nd_label, altcookie))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return ERR_PTR(-EAGAIN);
 
 		dev_dbg(&nd_region->dev, "valid altcookie in label: %pUb\n",
@@ -2082,6 +2122,7 @@ static struct device *create_namespace_pmem(struct nd_region *nd_region,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ndd = to_ndd(nd_mapping);
 		size += nsl_get_rawsize(ndd, label0);
 		if (nsl_get_position(ndd, label0) != 0)
@@ -2097,12 +2138,18 @@ static struct device *create_namespace_pmem(struct nd_region *nd_region,
 =======
 		size += __le64_to_cpu(label0->rawsize);
 		if (__le16_to_cpu(label0->position) != 0)
+=======
+		ndd = to_ndd(nd_mapping);
+		size += nsl_get_rawsize(ndd, label0);
+		if (nsl_get_position(ndd, label0) != 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		WARN_ON(nspm->alt_name || nspm->uuid);
-		nspm->alt_name = kmemdup((void __force *) label0->name,
-				NSLABEL_NAME_LEN, GFP_KERNEL);
+		nspm->alt_name = kmemdup(nsl_ref_name(ndd, label0),
+					 NSLABEL_NAME_LEN, GFP_KERNEL);
 		nspm->uuid = kmemdup((void __force *) label0->uuid,
 				NSLABEL_UUID_LEN, GFP_KERNEL);
+<<<<<<< HEAD
 		nspm->lbasize = __le64_to_cpu(label0->lbasize);
 		ndd = to_ndd(nd_mapping);
 		if (namespace_label_has(ndd, abstraction_guid))
@@ -2110,6 +2157,11 @@ static struct device *create_namespace_pmem(struct nd_region *nd_region,
 				= to_nvdimm_cclass(&label0->abstraction_guid);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nspm->lbasize = nsl_get_lbasize(ndd, label0);
+		nspm->nsio.common.claim_class =
+			nsl_get_claim_class(ndd, label0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!nspm->alt_name || !nspm->uuid) {
@@ -2297,10 +2349,14 @@ static int add_namespace_resource(struct nd_region *nd_region,
 			res = nsblk_add_resource(nd_region, ndd,
 					to_nd_namespace_blk(devs[i]),
 <<<<<<< HEAD
+<<<<<<< HEAD
 					nsl_get_dpa(ndd, nd_label));
 =======
 					__le64_to_cpu(nd_label->dpa));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					nsl_get_dpa(ndd, nd_label));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!res)
 				return -ENXIO;
 			nd_dbg_dpa(nd_region, ndd, res, "%d assign\n", count);
@@ -2329,10 +2385,14 @@ static struct device *create_namespace_blk(struct nd_region *nd_region,
 	struct resource *res;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!nsl_validate_type_guid(ndd, nd_label, &nd_set->type_guid))
 		return ERR_PTR(-EAGAIN);
 	if (!nsl_validate_blk_isetcookie(ndd, nd_label, nd_set->cookie2))
 		return ERR_PTR(-EAGAIN);
+<<<<<<< HEAD
 =======
 	if (namespace_label_has(ndd, type_guid)) {
 		if (!guid_equal(&nd_set->type_guid, &nd_label->type_guid)) {
@@ -2350,6 +2410,8 @@ static struct device *create_namespace_blk(struct nd_region *nd_region,
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	nsblk = kzalloc(sizeof(*nsblk), GFP_KERNEL);
 	if (!nsblk)
@@ -2358,6 +2420,7 @@ static struct device *create_namespace_blk(struct nd_region *nd_region,
 	dev->type = &namespace_blk_device_type;
 	dev->parent = &nd_region->dev;
 	nsblk->id = -1;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	nsblk->lbasize = nsl_get_lbasize(ndd, nd_label);
 	nsblk->uuid = kmemdup(nd_label->uuid, NSLABEL_UUID_LEN, GFP_KERNEL);
@@ -2374,22 +2437,35 @@ static struct device *create_namespace_blk(struct nd_region *nd_region,
 	if (namespace_label_has(ndd, abstraction_guid))
 		nsblk->common.claim_class
 			= to_nvdimm_cclass(&nd_label->abstraction_guid);
+=======
+	nsblk->lbasize = nsl_get_lbasize(ndd, nd_label);
+	nsblk->uuid = kmemdup(nd_label->uuid, NSLABEL_UUID_LEN, GFP_KERNEL);
+	nsblk->common.claim_class = nsl_get_claim_class(ndd, nd_label);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!nsblk->uuid)
 		goto blk_err;
-	memcpy(name, nd_label->name, NSLABEL_NAME_LEN);
+	nsl_get_name(ndd, nd_label, name);
 	if (name[0]) {
+<<<<<<< HEAD
 		nsblk->alt_name = kmemdup(name, NSLABEL_NAME_LEN,
 				GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nsblk->alt_name = kmemdup(name, NSLABEL_NAME_LEN, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!nsblk->alt_name)
 			goto blk_err;
 	}
 	res = nsblk_add_resource(nd_region, ndd, nsblk,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			nsl_get_dpa(ndd, nd_label));
 =======
 			__le64_to_cpu(nd_label->dpa));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			nsl_get_dpa(ndd, nd_label));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!res)
 		goto blk_err;
 	nd_dbg_dpa(nd_region, ndd, res, "%d: assign\n", count);
@@ -2431,9 +2507,13 @@ static struct device **scan_labels(struct nd_region *nd_region)
 	struct nd_label_ent *label_ent, *e;
 	struct nd_mapping *nd_mapping = &nd_region->mapping[0];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nvdimm_drvdata *ndd = to_ndd(nd_mapping);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct nvdimm_drvdata *ndd = to_ndd(nd_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	resource_size_t map_end = nd_mapping->start + nd_mapping->size - 1;
 
 	/* "safe" because create_namespace_pmem() might list_move() label_ent */
@@ -2445,10 +2525,14 @@ static struct device **scan_labels(struct nd_region *nd_region)
 		if (!nd_label)
 			continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flags = nsl_get_flags(ndd, nd_label);
 =======
 		flags = __le32_to_cpu(nd_label->flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		flags = nsl_get_flags(ndd, nd_label);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (is_nd_blk(&nd_region->dev)
 				== !!(flags & NSLABEL_FLAG_LOCAL))
 			/* pass, region matches label type */;
@@ -2456,6 +2540,7 @@ static struct device **scan_labels(struct nd_region *nd_region)
 			continue;
 
 		/* skip labels that describe extents outside of the region */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (nsl_get_dpa(ndd, nd_label) < nd_mapping->start ||
 		    nsl_get_dpa(ndd, nd_label) > map_end)
@@ -2465,6 +2550,11 @@ static struct device **scan_labels(struct nd_region *nd_region)
 		    __le64_to_cpu(nd_label->dpa) > map_end)
 				continue;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (nsl_get_dpa(ndd, nd_label) < nd_mapping->start ||
+		    nsl_get_dpa(ndd, nd_label) > map_end)
+			continue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		i = add_namespace_resource(nd_region, nd_label, devs, count);
 		if (i < 0)
@@ -2481,6 +2571,7 @@ static struct device **scan_labels(struct nd_region *nd_region)
 		if (is_nd_blk(&nd_region->dev))
 			dev = create_namespace_blk(nd_region, nd_label, count);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else
 			dev = create_namespace_pmem(nd_region, nd_mapping,
 						    nd_label);
@@ -2493,6 +2584,11 @@ static struct device **scan_labels(struct nd_region *nd_region)
 			dev = create_namespace_pmem(nd_region, nsindex, nd_label);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		else
+			dev = create_namespace_pmem(nd_region, nd_mapping,
+						    nd_label);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (IS_ERR(dev)) {
 			switch (PTR_ERR(dev)) {
@@ -2633,10 +2729,14 @@ static void deactivate_labels(void *region)
 static int init_active_labels(struct nd_region *nd_region)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int i, rc = 0;
 =======
 	int i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, rc = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < nd_region->ndr_mappings; i++) {
 		struct nd_mapping *nd_mapping = &nd_region->mapping[i];
@@ -2656,21 +2756,30 @@ static int init_active_labels(struct nd_region *nd_region)
 				/* fail, labels needed to disambiguate dpa */;
 			else
 <<<<<<< HEAD
+<<<<<<< HEAD
 				continue;
 =======
 				return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				continue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			dev_err(&nd_region->dev, "%s: is %s, failing probe\n",
 					dev_name(&nd_mapping->nvdimm->dev),
 					test_bit(NDD_LOCKED, &nvdimm->flags)
 					? "locked" : "disabled");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			rc = -ENXIO;
 			goto out;
 =======
 			return -ENXIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			rc = -ENXIO;
+			goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		nd_mapping->ndd = ndd;
 		atomic_inc(&nvdimm->busy);
@@ -2689,6 +2798,7 @@ static int init_active_labels(struct nd_region *nd_region)
 			label = nd_label_active(ndd, j);
 			if (test_bit(NDD_NOBLK, &nvdimm->flags)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				u32 flags = nsl_get_flags(ndd, label);
 
 				flags &= ~NSLABEL_FLAG_LOCAL;
@@ -2699,6 +2809,12 @@ static int init_active_labels(struct nd_region *nd_region)
 				flags &= ~NSLABEL_FLAG_LOCAL;
 				label->flags = __cpu_to_le32(flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				u32 flags = nsl_get_flags(ndd, label);
+
+				flags &= ~NSLABEL_FLAG_LOCAL;
+				nsl_set_flags(ndd, label, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 			label_ent->label = label;
 
@@ -2712,11 +2828,15 @@ static int init_active_labels(struct nd_region *nd_region)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (i < nd_region->ndr_mappings)
 		rc = -ENOMEM;
 
 out:
 	if (rc) {
+<<<<<<< HEAD
 		deactivate_labels(nd_region);
 		return rc;
 	}
@@ -2725,13 +2845,19 @@ out:
 					nd_region);
 =======
 	if (i < nd_region->ndr_mappings) {
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		deactivate_labels(nd_region);
-		return -ENOMEM;
+		return rc;
 	}
 
 	return devm_add_action_or_reset(&nd_region->dev, deactivate_labels,
+<<<<<<< HEAD
 			nd_region);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					nd_region);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int nd_region_register_namespaces(struct nd_region *nd_region, int *err)

@@ -9,9 +9,13 @@ config PTP_1588_CLOCK
 	tristate "PTP clock support"
 	depends on NET && POSIX_TIMERS
 <<<<<<< HEAD
+<<<<<<< HEAD
 	default ETHERNET
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	default ETHERNET
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select PPS
 	select NET_PTP_CLASSIFY
 	help
@@ -31,6 +35,9 @@ config PTP_1588_CLOCK
 	  will be called ptp.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config PTP_1588_CLOCK_OPTIONAL
 	tristate
 	default y if PTP_1588_CLOCK=n
@@ -43,8 +50,11 @@ config PTP_1588_CLOCK_OPTIONAL
 	  If PTP support is disabled, this dependency will still be
 	  met, and drivers refer to dummy helpers.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config PTP_1588_CLOCK_DTE
 	tristate "Broadcom DTE as PTP clock"
 	depends on PTP_1588_CLOCK
@@ -110,6 +120,7 @@ config PTP_1588_CLOCK_PCH
 	tristate "Intel PCH EG20T as PTP clock"
 	depends on X86_32 || COMPILE_TEST
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on HAS_IOMEM && PCI
 	depends on NET
 	depends on PTP_1588_CLOCK
@@ -117,6 +128,11 @@ config PTP_1588_CLOCK_PCH
 	depends on HAS_IOMEM && NET
 	imply PTP_1588_CLOCK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on HAS_IOMEM && PCI
+	depends on NET
+	depends on PTP_1588_CLOCK
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver adds support for using the PCH EG20T as a PTP
 	  clock. The hardware supports time stamping of PTP packets
@@ -183,14 +199,20 @@ config PTP_1588_CLOCK_OCP
 	depends on PTP_1588_CLOCK
 	depends on HAS_IOMEM && PCI
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on I2C && MTD
 	depends on SERIAL_8250
 	depends on !S390
 	depends on COMMON_CLK
 	select NET_DEVLINK
+<<<<<<< HEAD
 =======
 	default n
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver adds support for an OpenCompute time card.
 

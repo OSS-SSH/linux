@@ -597,6 +597,9 @@ static void collect_all_aliases(struct perf_stat_config *config, struct evsel *c
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool is_uncore(struct evsel *evsel)
 {
 	struct perf_pmu *pmu = evsel__find_pmu(evsel);
@@ -609,8 +612,11 @@ static bool hybrid_uniquify(struct evsel *evsel)
 	return perf_pmu__has_hybrid() && !is_uncore(evsel);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool collect_data(struct perf_stat_config *config, struct evsel *counter,
 			    void (*cb)(struct perf_stat_config *config, struct evsel *counter, void *data,
 				       bool first),
@@ -620,10 +626,14 @@ static bool collect_data(struct perf_stat_config *config, struct evsel *counter,
 		return false;
 	cb(config, counter, data, true);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (config->no_merge || hybrid_uniquify(counter))
 =======
 	if (config->no_merge)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (config->no_merge || hybrid_uniquify(counter))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uniquify_event_name(counter);
 	else if (counter->auto_merge_stats)
 		collect_all_aliases(config, counter, cb, data);

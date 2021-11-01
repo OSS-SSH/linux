@@ -15,9 +15,13 @@
 #include <linux/err.h>
 #include "libbpf_legacy.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "relo_core.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "relo_core.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* make sure libbpf doesn't use kernel-only integer typedefs */
 #pragma GCC poison u8 u16 u32 u64 s8 s16 s32 s64
@@ -200,6 +204,9 @@ void *libbpf_add_mem(void **data, size_t *cap_cnt, size_t elem_sz,
 int libbpf_ensure_mem(void **data, size_t *cap_cnt, size_t elem_sz, size_t need_cnt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool libbpf_is_mem_zeroed(const char *p, ssize_t len)
 {
 	while (len > 0) {
@@ -211,8 +218,11 @@ static inline bool libbpf_is_mem_zeroed(const char *p, ssize_t len)
 	return true;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool libbpf_validate_opts(const char *opts,
 					size_t opts_sz, size_t user_sz,
 					const char *type_name)
@@ -221,6 +231,7 @@ static inline bool libbpf_validate_opts(const char *opts,
 		pr_warn("%s size (%zu) is too small\n", type_name, user_sz);
 		return false;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!libbpf_is_mem_zeroed(opts + opts_sz, (ssize_t)user_sz - opts_sz)) {
 		pr_warn("%s has non-zero extra bytes\n", type_name);
@@ -237,6 +248,11 @@ static inline bool libbpf_validate_opts(const char *opts,
 			}
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!libbpf_is_mem_zeroed(opts + opts_sz, (ssize_t)user_sz - opts_sz)) {
+		pr_warn("%s has non-zero extra bytes\n", type_name);
+		return false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return true;
 }
@@ -257,6 +273,9 @@ static inline bool libbpf_validate_opts(const char *opts,
 	} while (0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define OPTS_ZEROED(opts, last_nonzero_field)				      \
 ({									      \
 	ssize_t __off = offsetofend(typeof(*(opts)), last_nonzero_field);     \
@@ -265,8 +284,11 @@ static inline bool libbpf_validate_opts(const char *opts,
 })
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int parse_cpu_mask_str(const char *s, bool **mask, int *mask_sz);
 int parse_cpu_mask_file(const char *fcpu, bool **mask, int *mask_sz);
 int libbpf__load_raw_btf(const char *raw_types, size_t types_len,
@@ -402,6 +424,7 @@ struct bpf_line_info_min {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* bpf_core_relo_kind encodes which aspect of captured field/type/enum value
  * has to be adjusted by relocations.
@@ -474,6 +497,8 @@ struct bpf_core_relo {
 	enum bpf_core_relo_kind kind;
 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 typedef int (*type_id_visit_fn)(__u32 *type_id, void *ctx);
 typedef int (*str_off_visit_fn)(__u32 *str_off, void *ctx);
@@ -533,6 +558,9 @@ static inline void *libbpf_ptr(void *ret)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool str_is_empty(const char *s)
 {
 	return !s || !s[0];
@@ -543,6 +571,9 @@ static inline bool is_ldimm64_insn(struct bpf_insn *insn)
 	return insn->code == (BPF_LD | BPF_IMM | BPF_DW);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __LIBBPF_LIBBPF_INTERNAL_H */

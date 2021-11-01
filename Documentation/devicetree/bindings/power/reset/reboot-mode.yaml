@@ -37,10 +37,14 @@ patternProperties:
     $ref: /schemas/types.yaml#/definitions/uint32
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 additionalProperties: true
 =======
 additionalProperties: false
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+additionalProperties: true
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 examples:
   - |

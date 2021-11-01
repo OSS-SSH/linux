@@ -144,6 +144,7 @@ do {									\
 	if (_cmpxchg_bugcheck_count-- <= 0) {				\
 		void *ip;						\
 <<<<<<< HEAD
+<<<<<<< HEAD
 		extern int _printk(const char *fmt, ...);		\
 		ip = (void *) ia64_getreg(_IA64_REG_IP);		\
 		_printk("CMPXCHG_BUGCHECK: stuck at %p on word %p\n", ip, (v));\
@@ -152,6 +153,11 @@ do {									\
 		ip = (void *) ia64_getreg(_IA64_REG_IP);		\
 		printk("CMPXCHG_BUGCHECK: stuck at %p on word %p\n", ip, (v));\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		extern int _printk(const char *fmt, ...);		\
+		ip = (void *) ia64_getreg(_IA64_REG_IP);		\
+		_printk("CMPXCHG_BUGCHECK: stuck at %p on word %p\n", ip, (v));\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;							\
 	}								\
 } while (0)

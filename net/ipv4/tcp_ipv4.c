@@ -343,10 +343,14 @@ void tcp_v4_mtu_reduced(struct sock *sk)
 	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE))
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mtu = READ_ONCE(tcp_sk(sk)->mtu_info);
 =======
 	mtu = tcp_sk(sk)->mtu_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mtu = READ_ONCE(tcp_sk(sk)->mtu_info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dst = inet_csk_update_pmtu(sk, mtu);
 	if (!dst)
 		return;
@@ -551,10 +555,14 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
 				goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			WRITE_ONCE(tp->mtu_info, info);
 =======
 			tp->mtu_info = info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			WRITE_ONCE(tp->mtu_info, info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!sock_owned_by_user(sk)) {
 				tcp_v4_mtu_reduced(sk);
 			} else {
@@ -2286,6 +2294,9 @@ EXPORT_SYMBOL(tcp_v4_destroy_sock);
 /* Proc filesystem TCP sock list dumping. */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static unsigned short seq_file_family(const struct seq_file *seq);
 
 static bool seq_sk_match(struct seq_file *seq, const struct sock *sk)
@@ -2299,6 +2310,7 @@ static bool seq_sk_match(struct seq_file *seq, const struct sock *sk)
 
 /* Find a non empty bucket (starting from st->bucket)
  * and return the first sk from it.
+<<<<<<< HEAD
  */
 static void *listening_get_first(struct seq_file *seq)
 {
@@ -2357,48 +2369,70 @@ static void *listening_get_next(struct seq_file *seq, void *cur)
  * Get next listener socket follow cur.  If cur is NULL, get first socket
  * starting from bucket given in st->bucket; when st->bucket is zero the
  * very first socket in the hash table is returned.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ */
+static void *listening_get_first(struct seq_file *seq)
+{
+	struct tcp_iter_state *st = seq->private;
+
+	st->offset = 0;
+	for (; st->bucket <= tcp_hashinfo.lhash2_mask; st->bucket++) {
+		struct inet_listen_hashbucket *ilb2;
+		struct inet_connection_sock *icsk;
+		struct sock *sk;
+
+		ilb2 = &tcp_hashinfo.lhash2[st->bucket];
+		if (hlist_empty(&ilb2->head))
+			continue;
+
+		spin_lock(&ilb2->lock);
+		inet_lhash2_for_each_icsk(icsk, &ilb2->head) {
+			sk = (struct sock *)icsk;
+			if (seq_sk_match(seq, sk))
+				return sk;
+		}
+		spin_unlock(&ilb2->lock);
+	}
+
+	return NULL;
+}
+
+/* Find the next sk of "cur" within the same bucket (i.e. st->bucket).
+ * If "cur" is the last one in the st->bucket,
+ * call listening_get_first() to return the first sk of the next
+ * non empty bucket.
  */
 static void *listening_get_next(struct seq_file *seq, void *cur)
 {
-	struct tcp_seq_afinfo *afinfo;
 	struct tcp_iter_state *st = seq->private;
-	struct net *net = seq_file_net(seq);
-	struct inet_listen_hashbucket *ilb;
-	struct hlist_nulls_node *node;
+	struct inet_listen_hashbucket *ilb2;
+	struct inet_connection_sock *icsk;
 	struct sock *sk = cur;
 
-	if (st->bpf_seq_afinfo)
-		afinfo = st->bpf_seq_afinfo;
-	else
-		afinfo = PDE_DATA(file_inode(seq->file));
-
-	if (!sk) {
-get_head:
-		ilb = &tcp_hashinfo.listening_hash[st->bucket];
-		spin_lock(&ilb->lock);
-		sk = sk_nulls_head(&ilb->nulls_head);
-		st->offset = 0;
-		goto get_sk;
-	}
-	ilb = &tcp_hashinfo.listening_hash[st->bucket];
 	++st->num;
 	++st->offset;
 
-	sk = sk_nulls_next(sk);
-get_sk:
-	sk_nulls_for_each_from(sk, node) {
-		if (!net_eq(sock_net(sk), net))
-			continue;
-		if (afinfo->family == AF_UNSPEC ||
-		    sk->sk_family == afinfo->family)
+	icsk = inet_csk(sk);
+	inet_lhash2_for_each_icsk_continue(icsk) {
+		sk = (struct sock *)icsk;
+		if (seq_sk_match(seq, sk))
 			return sk;
 	}
+<<<<<<< HEAD
 	spin_unlock(&ilb->lock);
 	st->offset = 0;
 	if (++st->bucket < INET_LHTABLE_SIZE)
 		goto get_head;
 	return NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	ilb2 = &tcp_hashinfo.lhash2[st->bucket];
+	spin_unlock(&ilb2->lock);
+	++st->bucket;
+	return listening_get_first(seq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void *listening_get_idx(struct seq_file *seq, loff_t *pos)
@@ -2409,10 +2443,14 @@ static void *listening_get_idx(struct seq_file *seq, loff_t *pos)
 	st->bucket = 0;
 	st->offset = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = listening_get_first(seq);
 =======
 	rc = listening_get_next(seq, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = listening_get_first(seq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (rc && *pos) {
 		rc = listening_get_next(seq, rc);
@@ -2433,6 +2471,7 @@ static inline bool empty_bucket(const struct tcp_iter_state *st)
 static void *established_get_first(struct seq_file *seq)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct tcp_iter_state *st = seq->private;
 =======
 	struct tcp_seq_afinfo *afinfo;
@@ -2445,6 +2484,9 @@ static void *established_get_first(struct seq_file *seq)
 	else
 		afinfo = PDE_DATA(file_inode(seq->file));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct tcp_iter_state *st = seq->private;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	st->offset = 0;
 	for (; st->bucket <= tcp_hashinfo.ehash_mask; ++st->bucket) {
@@ -2458,6 +2500,7 @@ static void *established_get_first(struct seq_file *seq)
 
 		spin_lock_bh(lock);
 		sk_nulls_for_each(sk, node, &tcp_hashinfo.ehash[st->bucket].chain) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (seq_sk_match(seq, sk))
 				return sk;
@@ -2480,10 +2523,20 @@ static void *established_get_first(struct seq_file *seq)
 out:
 	return rc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (seq_sk_match(seq, sk))
+				return sk;
+		}
+		spin_unlock_bh(lock);
+	}
+
+	return NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void *established_get_next(struct seq_file *seq, void *cur)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct sock *sk = cur;
 	struct hlist_nulls_node *node;
@@ -2500,6 +2553,11 @@ static void *established_get_next(struct seq_file *seq, void *cur)
 	else
 		afinfo = PDE_DATA(file_inode(seq->file));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct sock *sk = cur;
+	struct hlist_nulls_node *node;
+	struct tcp_iter_state *st = seq->private;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	++st->num;
 	++st->offset;
@@ -2508,12 +2566,16 @@ static void *established_get_next(struct seq_file *seq, void *cur)
 
 	sk_nulls_for_each_from(sk, node) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (seq_sk_match(seq, sk))
 =======
 		if ((afinfo->family == AF_UNSPEC ||
 		     sk->sk_family == afinfo->family) &&
 		    net_eq(sock_net(sk), net))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (seq_sk_match(seq, sk))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return sk;
 	}
 
@@ -2557,15 +2619,20 @@ static void *tcp_seek_last_pos(struct seq_file *seq)
 {
 	struct tcp_iter_state *st = seq->private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int bucket = st->bucket;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int bucket = st->bucket;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int offset = st->offset;
 	int orig_num = st->num;
 	void *rc = NULL;
 
 	switch (st->state) {
 	case TCP_SEQ_STATE_LISTENING:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (st->bucket > tcp_hashinfo.lhash2_mask)
 			break;
@@ -2579,6 +2646,13 @@ static void *tcp_seek_last_pos(struct seq_file *seq)
 		rc = listening_get_next(seq, NULL);
 		while (offset-- && rc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (st->bucket > tcp_hashinfo.lhash2_mask)
+			break;
+		st->state = TCP_SEQ_STATE_LISTENING;
+		rc = listening_get_first(seq);
+		while (offset-- && rc && bucket == st->bucket)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = listening_get_next(seq, rc);
 		if (rc)
 			break;
@@ -2590,10 +2664,14 @@ static void *tcp_seek_last_pos(struct seq_file *seq)
 			break;
 		rc = established_get_first(seq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		while (offset-- && rc && bucket == st->bucket)
 =======
 		while (offset-- && rc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		while (offset-- && rc && bucket == st->bucket)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = established_get_next(seq, rc);
 	}
 
@@ -2664,10 +2742,14 @@ void tcp_seq_stop(struct seq_file *seq, void *v)
 	case TCP_SEQ_STATE_LISTENING:
 		if (v != SEQ_START_TOKEN)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			spin_unlock(&tcp_hashinfo.lhash2[st->bucket].lock);
 =======
 			spin_unlock(&tcp_hashinfo.listening_hash[st->bucket].lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			spin_unlock(&tcp_hashinfo.lhash2[st->bucket].lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case TCP_SEQ_STATE_ESTABLISHED:
 		if (v)
@@ -2813,6 +2895,9 @@ out:
 
 #ifdef CONFIG_BPF_SYSCALL
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bpf_tcp_iter_state {
 	struct tcp_iter_state state;
 	unsigned int cur_sk;
@@ -2822,8 +2907,11 @@ struct bpf_tcp_iter_state {
 	bool st_bucket_done;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bpf_iter__tcp {
 	__bpf_md_ptr(struct bpf_iter_meta *, meta);
 	__bpf_md_ptr(struct sock_common *, sk_common);
@@ -2843,6 +2931,9 @@ static int tcp_prog_seq_show(struct bpf_prog *prog, struct bpf_iter_meta *meta,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void bpf_iter_tcp_put_batch(struct bpf_tcp_iter_state *iter)
 {
 	while (iter->cur_sk < iter->end_sk)
@@ -3021,13 +3112,17 @@ static void *bpf_iter_tcp_seq_next(struct seq_file *seq, void *v, loff_t *pos)
 	return sk;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
 {
 	struct bpf_iter_meta meta;
 	struct bpf_prog *prog;
 	struct sock *sk = v;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	bool slow;
 	uid_t uid;
@@ -3035,11 +3130,19 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
 =======
 	uid_t uid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool slow;
+	uid_t uid;
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (v == SEQ_START_TOKEN)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sk_fullsock(sk))
 		slow = lock_sock_fast(sk);
 
@@ -3048,8 +3151,11 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
 		goto unlock;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sk->sk_state == TCP_TIME_WAIT) {
 		uid = 0;
 	} else if (sk->sk_state == TCP_NEW_SYN_RECV) {
@@ -3064,6 +3170,9 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
 	meta.seq = seq;
 	prog = bpf_iter_get_info(&meta, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = tcp_prog_seq_show(prog, &meta, v, uid);
 
 unlock:
@@ -3071,17 +3180,24 @@ unlock:
 		unlock_sock_fast(sk, slow);
 	return ret;
 
+<<<<<<< HEAD
 =======
 	return tcp_prog_seq_show(prog, &meta, v, uid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void bpf_iter_tcp_seq_stop(struct seq_file *seq, void *v)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct bpf_tcp_iter_state *iter = seq->private;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct bpf_tcp_iter_state *iter = seq->private;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bpf_iter_meta meta;
 	struct bpf_prog *prog;
 
@@ -3093,17 +3209,24 @@ static void bpf_iter_tcp_seq_stop(struct seq_file *seq, void *v)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (iter->cur_sk < iter->end_sk) {
 		bpf_iter_tcp_put_batch(iter);
 		iter->st_bucket_done = false;
 	}
+<<<<<<< HEAD
 =======
 	tcp_seq_stop(seq, v);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct seq_operations bpf_iter_tcp_seq_ops = {
 	.show		= bpf_iter_tcp_seq_show,
+<<<<<<< HEAD
 <<<<<<< HEAD
 	.start		= bpf_iter_tcp_seq_start,
 	.next		= bpf_iter_tcp_seq_next,
@@ -3131,6 +3254,27 @@ static unsigned short seq_file_family(const struct seq_file *seq)
 };
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.start		= bpf_iter_tcp_seq_start,
+	.next		= bpf_iter_tcp_seq_next,
+	.stop		= bpf_iter_tcp_seq_stop,
+};
+#endif
+static unsigned short seq_file_family(const struct seq_file *seq)
+{
+	const struct tcp_seq_afinfo *afinfo;
+
+#ifdef CONFIG_BPF_SYSCALL
+	/* Iterated from bpf_iter.  Let the bpf prog to filter instead. */
+	if (seq->op == &bpf_iter_tcp_seq_ops)
+		return AF_UNSPEC;
+#endif
+
+	/* Iterated from proc fs */
+	afinfo = PDE_DATA(file_inode(seq->file));
+	return afinfo->family;
+}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct seq_operations tcp4_seq_ops = {
 	.show		= tcp4_seq_show,
@@ -3343,11 +3487,15 @@ static int __net_init tcp_sk_init(struct net *net)
 	net->ipv4.sysctl_tcp_comp_sack_nr = 44;
 	net->ipv4.sysctl_tcp_fastopen = TFO_CLIENT_ENABLE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net->ipv4.sysctl_tcp_fastopen_blackhole_timeout = 0;
 =======
 	spin_lock_init(&net->ipv4.tcp_fastopen_ctx_lock);
 	net->ipv4.sysctl_tcp_fastopen_blackhole_timeout = 60 * 60;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	net->ipv4.sysctl_tcp_fastopen_blackhole_timeout = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_set(&net->ipv4.tfo_active_disable_times, 0);
 
 	/* Reno is always built in */
@@ -3386,6 +3534,7 @@ DEFINE_BPF_ITER_FUNC(tcp, struct bpf_iter_meta *meta,
 		     struct sock_common *sk_common, uid_t uid)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define INIT_BATCH_SZ 16
 
 static int bpf_iter_init_tcp(void *priv_data, struct bpf_iter_aux_info *aux)
@@ -3405,16 +3554,20 @@ static int bpf_iter_init_tcp(void *priv_data, struct bpf_iter_aux_info *aux)
 
 	return 0;
 =======
+=======
+#define INIT_BATCH_SZ 16
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bpf_iter_init_tcp(void *priv_data, struct bpf_iter_aux_info *aux)
 {
-	struct tcp_iter_state *st = priv_data;
-	struct tcp_seq_afinfo *afinfo;
-	int ret;
+	struct bpf_tcp_iter_state *iter = priv_data;
+	int err;
 
-	afinfo = kmalloc(sizeof(*afinfo), GFP_USER | __GFP_NOWARN);
-	if (!afinfo)
-		return -ENOMEM;
+	err = bpf_iter_init_seq_net(priv_data, aux);
+	if (err)
+		return err;
 
+<<<<<<< HEAD
 	afinfo->family = AF_UNSPEC;
 	st->bpf_seq_afinfo = afinfo;
 	ret = bpf_iter_init_seq_net(priv_data, aux);
@@ -3422,10 +3575,20 @@ static int bpf_iter_init_tcp(void *priv_data, struct bpf_iter_aux_info *aux)
 		kfree(afinfo);
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = bpf_iter_tcp_realloc_batch(iter, INIT_BATCH_SZ);
+	if (err) {
+		bpf_iter_fini_seq_net(priv_data);
+		return err;
+	}
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void bpf_iter_fini_tcp(void *priv_data)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct bpf_tcp_iter_state *iter = priv_data;
 
@@ -3433,16 +3596,23 @@ static void bpf_iter_fini_tcp(void *priv_data)
 	kvfree(iter->batch);
 =======
 	struct tcp_iter_state *st = priv_data;
+=======
+	struct bpf_tcp_iter_state *iter = priv_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	kfree(st->bpf_seq_afinfo);
 	bpf_iter_fini_seq_net(priv_data);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kvfree(iter->batch);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct bpf_iter_seq_info tcp_seq_info = {
 	.seq_ops		= &bpf_iter_tcp_seq_ops,
 	.init_seq_private	= bpf_iter_init_tcp,
 	.fini_seq_private	= bpf_iter_fini_tcp,
+<<<<<<< HEAD
 <<<<<<< HEAD
 	.seq_priv_size		= sizeof(struct bpf_tcp_iter_state),
 };
@@ -3466,6 +3636,25 @@ bpf_iter_tcp_get_func_proto(enum bpf_func_id func_id,
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.seq_priv_size		= sizeof(struct bpf_tcp_iter_state),
+};
+
+static const struct bpf_func_proto *
+bpf_iter_tcp_get_func_proto(enum bpf_func_id func_id,
+			    const struct bpf_prog *prog)
+{
+	switch (func_id) {
+	case BPF_FUNC_setsockopt:
+		return &bpf_sk_setsockopt_proto;
+	case BPF_FUNC_getsockopt:
+		return &bpf_sk_getsockopt_proto;
+	default:
+		return NULL;
+	}
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct bpf_iter_reg tcp_reg_info = {
 	.target			= "tcp",
 	.ctx_arg_info_size	= 1,
@@ -3474,9 +3663,13 @@ static struct bpf_iter_reg tcp_reg_info = {
 		  PTR_TO_BTF_ID_OR_NULL },
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.get_func_proto		= bpf_iter_tcp_get_func_proto,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.get_func_proto		= bpf_iter_tcp_get_func_proto,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.seq_info		= &tcp_seq_info,
 };
 

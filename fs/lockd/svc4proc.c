@@ -41,22 +41,32 @@ nlm4svc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
 	/* Obtain file pointer. Not used by FREE_ALL call. */
 	if (filp != NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int mode = lock_to_openmode(&lock->fl);
 
 		error = nlm_lookup_file(rqstp, &file, lock);
 		if (error)
+<<<<<<< HEAD
 =======
 		if ((error = nlm_lookup_file(rqstp, &file, &lock->fh)) != 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto no_locks;
 		*filp = file;
 
 		/* Set up the missing parts of the file_lock structure */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		lock->fl.fl_file  = file->f_file[mode];
 =======
 		lock->fl.fl_file  = file->f_file;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		lock->fl.fl_file  = file->f_file[mode];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lock->fl.fl_pid = current->tgid;
 		lock->fl.fl_lmops = &nlmsvc_lock_operations;
 		nlmsvc_locks_init_private(&lock->fl, host, (pid_t)lock->svid);

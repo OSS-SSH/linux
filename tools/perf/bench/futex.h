@@ -14,6 +14,9 @@
 #include <linux/futex.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bench_futex_parameters {
 	bool silent;
 	bool fshared;
@@ -28,8 +31,11 @@ struct bench_futex_parameters {
 	unsigned int nrequeue;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * futex() - SYS_futex syscall wrapper
  * @uaddr:	address of first futex
@@ -38,10 +44,14 @@ struct bench_futex_parameters {
  * @timeout:	typically an absolute struct timespec (except where noted
  *		otherwise). Overloaded by some ops
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @uaddr2:	address of second futex for some ops
 =======
  * @uaddr2:	address of second futex for some ops\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @uaddr2:	address of second futex for some ops
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @val3:	varies by op
  * @opflags:	flags to be bitwise OR'd with op, such as FUTEX_PRIVATE_FLAG
  *
@@ -99,10 +109,14 @@ futex_unlock_pi(u_int32_t *uaddr, int opflags)
 * futex_cmp_requeue() - requeue tasks from uaddr to uaddr2
 * @nr_wake:        wake up to this many tasks
 <<<<<<< HEAD
+<<<<<<< HEAD
 * @nr_requeue:     requeue up to this many tasks
 =======
 * @nr_requeue:        requeue up to this many tasks
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+* @nr_requeue:     requeue up to this many tasks
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 */
 static inline int
 futex_cmp_requeue(u_int32_t *uaddr, u_int32_t val, u_int32_t *uaddr2, int nr_wake,
@@ -112,6 +126,9 @@ futex_cmp_requeue(u_int32_t *uaddr, u_int32_t val, u_int32_t *uaddr2, int nr_wak
 		 val, opflags);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * futex_wait_requeue_pi() - block on uaddr and prepare to requeue to uaddr2
@@ -146,6 +163,9 @@ futex_cmp_requeue_pi(u_int32_t *uaddr, u_int32_t val, u_int32_t *uaddr2,
 		     val, opflags);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _FUTEX_H */

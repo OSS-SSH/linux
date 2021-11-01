@@ -135,6 +135,7 @@ static inline bool
 svcxdr_encode_owner(struct xdr_stream *xdr, const struct xdr_netobj *obj)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (obj->len > XDR_MAX_NETOBJ)
 		return false;
 	return xdr_stream_encode_opaque(xdr, obj->data, obj->len) > 0;
@@ -152,6 +153,11 @@ svcxdr_encode_owner(struct xdr_stream *xdr, const struct xdr_netobj *obj)
 
 	return true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (obj->len > XDR_MAX_NETOBJ)
+		return false;
+	return xdr_stream_encode_opaque(xdr, obj->data, obj->len) > 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #endif /* _LOCKD_SVCXDR_H_ */

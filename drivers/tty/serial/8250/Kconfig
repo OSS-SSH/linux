@@ -362,6 +362,7 @@ config SERIAL_8250_BCM2835AUX
 
 config SERIAL_8250_FSL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool "Freescale 16550 UART support" if COMPILE_TEST && !(PPC || ARM || ARM64)
 	depends on SERIAL_8250_CONSOLE
 	default PPC || ARM || ARM64
@@ -374,6 +375,15 @@ config SERIAL_8250_FSL
 	depends on SERIAL_8250_CONSOLE
 	default PPC || ARM || ARM64
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool "Freescale 16550 UART support" if COMPILE_TEST && !(PPC || ARM || ARM64)
+	depends on SERIAL_8250_CONSOLE
+	default PPC || ARM || ARM64
+	help
+	  Selecting this option enables a workaround for a break-detection
+	  erratum for Freescale 16550 UARTs in the 8250 driver. It also
+	  enables support for ACPI enumeration.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config SERIAL_8250_DW
 	tristate "Support for Synopsys DesignWare 8250 quirks"
@@ -386,11 +396,16 @@ config SERIAL_8250_DW
 config SERIAL_8250_EM
 	tristate "Support for Emma Mobile integrated serial port"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on SERIAL_8250 && HAVE_CLK
 	depends on ARM || COMPILE_TEST
 =======
 	depends on SERIAL_8250 && ARM && HAVE_CLK
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on SERIAL_8250 && HAVE_CLK
+	depends on ARM || COMPILE_TEST
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Selecting this option will add support for the integrated serial
 	  port hardware found on the Emma Mobile line of processors.
@@ -399,11 +414,16 @@ config SERIAL_8250_EM
 config SERIAL_8250_IOC3
 	tristate "SGI IOC3 8250 UART support"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on SERIAL_8250
 	depends on SGI_MFD_IOC3 || COMPILE_TEST
 =======
 	depends on SGI_MFD_IOC3 && SERIAL_8250
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on SERIAL_8250
+	depends on SGI_MFD_IOC3 || COMPILE_TEST
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select SERIAL_8250_EXTENDED
 	select SERIAL_8250_SHARE_IRQ
 	help
@@ -516,10 +536,14 @@ config SERIAL_8250_PXA
 	tristate "PXA serial port support"
 	depends on SERIAL_8250
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on ARCH_PXA || ARCH_MMP || COMPILE_TEST
 =======
 	depends on ARCH_PXA || ARCH_MMP
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on ARCH_PXA || ARCH_MMP || COMPILE_TEST
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  If you have a machine based on an Intel XScale PXA2xx CPU you can
 	  enable its onboard serial ports by enabling this option. The option is

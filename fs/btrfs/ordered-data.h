@@ -146,11 +146,15 @@ struct btrfs_ordered_extent {
 	 */
 	u64 physical;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct block_device *bdev;
 =======
 	struct gendisk *disk;
 	u8 partno;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct block_device *bdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -183,10 +187,14 @@ void btrfs_mark_ordered_io_finished(struct btrfs_inode *inode,
 bool btrfs_dec_test_ordered_pending(struct btrfs_inode *inode,
 				    struct btrfs_ordered_extent **cached,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    u64 file_offset, u64 io_size);
 =======
 				    u64 file_offset, u64 io_size, int uptodate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    u64 file_offset, u64 io_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int btrfs_add_ordered_extent(struct btrfs_inode *inode, u64 file_offset,
 			     u64 disk_bytenr, u64 num_bytes, u64 disk_num_bytes,
 			     int type);

@@ -99,6 +99,7 @@ static irqreturn_t psc_dma_bcom_irq(int irq, void *_psc_dma_stream)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int psc_dma_hw_free(struct snd_soc_component *component,
 			   struct snd_pcm_substream *substream)
@@ -108,6 +109,8 @@ static int psc_dma_hw_free(struct snd_soc_component *component,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * psc_dma_trigger: start and stop the DMA transfer.
  *
@@ -289,6 +292,7 @@ psc_dma_pointer(struct snd_soc_component *component,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int psc_dma_hw_params(struct snd_soc_component *component,
 			     struct snd_pcm_substream *substream,
@@ -300,6 +304,8 @@ static int psc_dma_hw_params(struct snd_soc_component *component,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int psc_dma_new(struct snd_soc_component *component,
 		       struct snd_soc_pcm_runtime *rtd)
 {
@@ -316,6 +322,7 @@ static int psc_dma_new(struct snd_soc_component *component,
 	if (rc)
 		return rc;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV, card->dev,
 					    size);
@@ -363,6 +370,10 @@ static void psc_dma_free(struct snd_soc_component *component,
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV, card->dev,
+					    size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct snd_soc_component_driver mpc5200_audio_dma_component = {
@@ -370,17 +381,22 @@ static const struct snd_soc_component_driver mpc5200_audio_dma_component = {
 	.open		= psc_dma_open,
 	.close		= psc_dma_close,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.pointer	= psc_dma_pointer,
 	.trigger	= psc_dma_trigger,
 	.pcm_construct	= psc_dma_new,
 =======
 	.hw_free	= psc_dma_hw_free,
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pointer	= psc_dma_pointer,
 	.trigger	= psc_dma_trigger,
-	.hw_params	= psc_dma_hw_params,
 	.pcm_construct	= psc_dma_new,
+<<<<<<< HEAD
 	.pcm_destruct	= psc_dma_free,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int mpc5200_audio_dma_create(struct platform_device *op)

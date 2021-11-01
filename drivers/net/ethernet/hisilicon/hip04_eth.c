@@ -132,10 +132,14 @@
 #define PPE_BUF_SIZE_SHIFT		6
 #define PPE_TX_BUF_HOLD			BIT(31)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SOC_CACHE_LINE_MASK		0x3F
 =======
 #define CACHE_LINE_MASK			0x3F
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SOC_CACHE_LINE_MASK		0x3F
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 #define PPE_CFG_QOS_VMID_GRP_SHIFT	8
 #define PPE_CFG_RX_CTRL_ALIGN_SHIFT	11
@@ -536,12 +540,17 @@ hip04_mac_start_xmit(struct sk_buff *skb, struct net_device *ndev)
 	desc->cfg = (__force u32)cpu_to_be32(TX_CLEAR_WB | TX_FINISH_CACHE_INV
 		| TX_RELEASE_TO_PPE | priv->port << TX_POOL_SHIFT);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	desc->data_offset = (__force u32)cpu_to_be32(phys & SOC_CACHE_LINE_MASK);
 	desc->send_addr =  (__force u32)cpu_to_be32(phys & ~SOC_CACHE_LINE_MASK);
 =======
 	desc->data_offset = (__force u32)cpu_to_be32(phys & CACHE_LINE_MASK);
 	desc->send_addr =  (__force u32)cpu_to_be32(phys & ~CACHE_LINE_MASK);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	desc->data_offset = (__force u32)cpu_to_be32(phys & SOC_CACHE_LINE_MASK);
+	desc->send_addr =  (__force u32)cpu_to_be32(phys & ~SOC_CACHE_LINE_MASK);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 	desc->cfg = (__force u32)cpu_to_be32(TX_CLEAR_WB | TX_FINISH_CACHE_INV);
 	desc->send_addr = (__force u32)cpu_to_be32(phys);
@@ -806,12 +815,18 @@ static void hip04_tx_timeout_task(struct work_struct *work)
 
 static int hip04_get_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct ethtool_coalesce *ec,
 			      struct kernel_ethtool_coalesce *kernel_coal,
 			      struct netlink_ext_ack *extack)
 =======
 			      struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct ethtool_coalesce *ec,
+			      struct kernel_ethtool_coalesce *kernel_coal,
+			      struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hip04_priv *priv = netdev_priv(netdev);
 
@@ -823,12 +838,18 @@ static int hip04_get_coalesce(struct net_device *netdev,
 
 static int hip04_set_coalesce(struct net_device *netdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct ethtool_coalesce *ec,
 			      struct kernel_ethtool_coalesce *kernel_coal,
 			      struct netlink_ext_ack *extack)
 =======
 			      struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct ethtool_coalesce *ec,
+			      struct kernel_ethtool_coalesce *kernel_coal,
+			      struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hip04_priv *priv = netdev_priv(netdev);
 

@@ -446,6 +446,7 @@ extern signed int rtw_set_auth(struct adapter *adapter, struct security_priv *ps
 
 static inline u8 *get_bssid(struct mlme_priv *pmlmepriv)
 <<<<<<< HEAD
+<<<<<<< HEAD
 {	/* if sta_mode:pmlmepriv->cur_network.network.mac_address => bssid */
 	/*  if adhoc_mode:pmlmepriv->cur_network.network.mac_address => ibss mac address */
 	return pmlmepriv->cur_network.network.mac_address;
@@ -454,6 +455,11 @@ static inline u8 *get_bssid(struct mlme_priv *pmlmepriv)
 	/*  if adhoc_mode:pmlmepriv->cur_network.network.MacAddress => ibss mac address */
 	return pmlmepriv->cur_network.network.MacAddress;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+{	/* if sta_mode:pmlmepriv->cur_network.network.mac_address => bssid */
+	/*  if adhoc_mode:pmlmepriv->cur_network.network.mac_address => ibss mac address */
+	return pmlmepriv->cur_network.network.mac_address;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline signed int check_fwstate(struct mlme_priv *pmlmepriv, signed int state)

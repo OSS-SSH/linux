@@ -136,10 +136,14 @@ void cedrus_prepare_format(struct v4l2_pix_format *pix_fmt)
 
 		/* Chroma plane size. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sizeimage += bytesperline * ALIGN(height, 64) / 2;
 =======
 		sizeimage += bytesperline * height / 2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sizeimage += bytesperline * ALIGN(height, 64) / 2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		break;
 
@@ -345,9 +349,13 @@ static int cedrus_s_fmt_vid_out(struct file *file, void *priv,
 	switch (ctx->src_fmt.pixelformat) {
 	case V4L2_PIX_FMT_H264_SLICE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case V4L2_PIX_FMT_HEVC_SLICE:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case V4L2_PIX_FMT_HEVC_SLICE:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vq->subsystem_flags |=
 			VB2_V4L2_FL_SUPPORTS_M2M_HOLD_CAPTURE_BUF;
 		break;

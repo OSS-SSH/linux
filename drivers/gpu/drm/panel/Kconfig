@@ -83,9 +83,13 @@ config DRM_PANEL_SIMPLE
 	depends on PM
 	select VIDEOMODE_HELPERS
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select DRM_DP_AUX_BUS
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select DRM_DP_AUX_BUS
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  DRM panel driver for dumb panels that need at most a regulator and
 	  a GPIO to be powered up. Optionally a backlight can be attached so
@@ -129,6 +133,9 @@ config DRM_PANEL_ILITEK_IL9322
 	  QVGA (320x240) RGB, YUV and ITU-T BT.656 panels.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_ILITEK_ILI9341
 	tristate "Ilitek ILI9341 240x320 QVGA panels"
 	depends on OF && SPI
@@ -141,8 +148,11 @@ config DRM_PANEL_ILITEK_ILI9341
 	  QVGA (240x320) RGB panels. support serial & parallel rgb
 	  interface.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_ILITEK_ILI9881C
 	tristate "Ilitek ILI9881C-based panels"
 	depends on OF
@@ -153,6 +163,9 @@ config DRM_PANEL_ILITEK_ILI9881C
 	  Ilitek ILI9881c controller.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_INNOLUX_EJ030NA
         tristate "Innolux EJ030NA 320x480 LCD panel"
         depends on OF && SPI
@@ -162,8 +175,11 @@ config DRM_PANEL_INNOLUX_EJ030NA
           320x480 3.0" panel as found in the RS97 V2.1, RG300(non-ips)
           and LDK handheld gaming consoles.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_INNOLUX_P079ZCA
 	tristate "Innolux P079ZCA panel"
 	depends on OF
@@ -305,9 +321,13 @@ config DRM_PANEL_OLIMEX_LCD_OLINUXINO
 	depends on I2C
 	depends on BACKLIGHT_CLASS_DEVICE
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select CRC32
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select CRC32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  The panel is used with different sizes LCDs, from 480x272 to
 	  1280x800, and 24 bit per pixel.
@@ -379,6 +399,9 @@ config DRM_PANEL_RONBO_RB070D30
 	  RB070D30 1024x600 DSI panel.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_SAMSUNG_ATNA33XC20
 	tristate "Samsung ATNA33XC20 eDP panel"
 	depends on OF
@@ -400,8 +423,11 @@ config DRM_PANEL_SAMSUNG_DB7430
 	  DB7430 DPI display controller used in such devices as the
 	  LMS397KF04 480x800 DPI panel.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_SAMSUNG_S6D16D0
 	tristate "Samsung S6D16D0 DSI video mode panel"
 	depends on OF
@@ -437,9 +463,13 @@ config DRM_PANEL_SAMSUNG_S6E63M0_SPI
 	depends on DRM_PANEL_SAMSUNG_S6E63M0
 	default DRM_PANEL_SAMSUNG_S6E63M0
 <<<<<<< HEAD
+<<<<<<< HEAD
 	select DRM_MIPI_DBI
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select DRM_MIPI_DBI
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here if you want to be able to access the Samsung
 	  S6E63M0 panel using SPI.
@@ -617,6 +647,9 @@ config DRM_PANEL_VISIONOX_RM69299
 	  RM69299  DSI Video Mode panel.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_WIDECHIPS_WS2401
 	tristate "Widechips WS2401 DPI panel driver"
 	depends on SPI && GPIOLIB
@@ -627,8 +660,11 @@ config DRM_PANEL_WIDECHIPS_WS2401
 	  480x800 display controller used in panels such as Samsung LMS380KF01.
 	  This display is used in the Samsung Galaxy Ace 2 GT-I8160 (Codina).
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_PANEL_XINPENG_XPP055C272
 	tristate "Xinpeng XPP055C272 panel driver"
 	depends on OF

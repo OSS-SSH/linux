@@ -326,20 +326,30 @@ static int dr_handle_pending_wc(struct mlx5dr_domain *dmn,
 	do {
 		ne = dr_poll_cq(send_ring->cq, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (unlikely(ne < 0)) {
 			mlx5_core_warn_once(dmn->mdev, "SMFS QPN 0x%x is disabled/limited",
 					    send_ring->qp->qpn);
 			send_ring->err_state = true;
+<<<<<<< HEAD
 			return ne;
 		} else if (ne == 1) {
 			send_ring->pending_wqe -= send_ring->signal_th;
 		}
 =======
 		if (ne < 0)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return ne;
-		else if (ne == 1)
+		} else if (ne == 1) {
 			send_ring->pending_wqe -= send_ring->signal_th;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while (is_drain && send_ring->pending_wqe);
 
 	return 0;
@@ -373,6 +383,9 @@ static int dr_postsend_icm_data(struct mlx5dr_domain *dmn,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(dmn->mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR ||
 		     send_ring->err_state)) {
 		mlx5_core_dbg_once(dmn->mdev,
@@ -381,8 +394,11 @@ static int dr_postsend_icm_data(struct mlx5dr_domain *dmn,
 		return 0;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock(&send_ring->lock);
 
 	ret = dr_handle_pending_wc(dmn, send_ring);
@@ -643,9 +659,13 @@ static int dr_cmd_modify_qp_rtr2rts(struct mlx5_core_dev *mdev,
 	MLX5_SET(qpc, qpc, retry_count, attr->retry_cnt);
 	MLX5_SET(qpc, qpc, rnr_retry, attr->rnr_retry);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MLX5_SET(qpc, qpc, primary_address_path.ack_timeout, 0x8); /* ~1ms */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MLX5_SET(qpc, qpc, primary_address_path.ack_timeout, 0x8); /* ~1ms */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	MLX5_SET(rtr2rts_qp_in, in, opcode, MLX5_CMD_OP_RTR2RTS_QP);
 	MLX5_SET(rtr2rts_qp_in, in, qpn, dr_qp->qpn);
@@ -776,9 +796,12 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
 	struct mlx5dr_cq *cq;
 	int inlen, err, eqn;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int irqn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *cqc, *in;
 	__be64 *pas;
 	int vector;
@@ -812,10 +835,14 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
 
 	vector = raw_smp_processor_id() % mlx5_comp_vectors_count(mdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = mlx5_vector2eqn(mdev, vector, &eqn);
 =======
 	err = mlx5_vector2eqn(mdev, vector, &eqn, &irqn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = mlx5_vector2eqn(mdev, vector, &eqn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		kvfree(in);
 		goto err_cqwq;
@@ -824,10 +851,14 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
 	cqc = MLX5_ADDR_OF(create_cq_in, in, cq_context);
 	MLX5_SET(cqc, cqc, log_cq_size, ilog2(ncqe));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MLX5_SET(cqc, cqc, c_eqn_or_apu_element, eqn);
 =======
 	MLX5_SET(cqc, cqc, c_eqn, eqn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MLX5_SET(cqc, cqc, c_eqn_or_apu_element, eqn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MLX5_SET(cqc, cqc, uar_page, uar->index);
 	MLX5_SET(cqc, cqc, log_page_size, cq->wq_ctrl.buf.page_shift -
 		 MLX5_ADAPTER_PAGE_SHIFT);
@@ -856,9 +887,12 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
 
 	cq->mcq.vector = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	cq->mcq.irqn = irqn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cq->mcq.uar = uar;
 
 	return cq;

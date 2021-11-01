@@ -1705,10 +1705,14 @@ int btrfs_qgroup_trace_extent_nolock(struct btrfs_fs_info *fs_info,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
 =======
 int btrfs_qgroup_trace_extent_post(struct btrfs_fs_info *fs_info,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct btrfs_qgroup_extent_record *qrecord)
 {
 	struct ulist *old_root;
@@ -1716,6 +1720,9 @@ int btrfs_qgroup_trace_extent_post(struct btrfs_fs_info *fs_info,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We are always called in a context where we are already holding a
 	 * transaction handle. Often we are called when adding a data delayed
@@ -1739,6 +1746,7 @@ int btrfs_qgroup_trace_extent_post(struct btrfs_fs_info *fs_info,
 
 	ret = btrfs_find_all_roots(NULL, trans->fs_info, bytenr, 0, &old_root,
 				   true);
+<<<<<<< HEAD
 	if (ret < 0) {
 		trans->fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
 		btrfs_warn(trans->fs_info,
@@ -1748,6 +1756,11 @@ int btrfs_qgroup_trace_extent_post(struct btrfs_fs_info *fs_info,
 		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
 		btrfs_warn(fs_info,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0) {
+		trans->fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+		btrfs_warn(trans->fs_info,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 "error accounting new delayed refs extent (err code: %d), quota inconsistent",
 			ret);
 		return 0;
@@ -1792,10 +1805,14 @@ int btrfs_qgroup_trace_extent(struct btrfs_trans_handle *trans, u64 bytenr,
 		return 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return btrfs_qgroup_trace_extent_post(trans, record);
 =======
 	return btrfs_qgroup_trace_extent_post(fs_info, record);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return btrfs_qgroup_trace_extent_post(trans, record);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int btrfs_qgroup_trace_leaf_items(struct btrfs_trans_handle *trans,
@@ -2683,10 +2700,14 @@ int btrfs_qgroup_account_extents(struct btrfs_trans_handle *trans)
 			 */
 			ret = btrfs_find_all_roots(trans, fs_info,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
 =======
 				record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret < 0)
 				goto cleanup;
 			if (qgroup_to_skip) {

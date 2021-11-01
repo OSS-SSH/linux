@@ -141,6 +141,7 @@ _LPP_OFFSET	= __LC_LPP
 	jnz	\errlabel
 	TSTMSK	__LC_MCCK_CODE,MCCK_CODE_STG_DEGRAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	jz	.Loklabel\@
 	TSTMSK	__LC_MCCK_CODE,MCCK_CODE_STG_FAIL_ADDR
 	jnz	\errlabel
@@ -151,6 +152,12 @@ _LPP_OFFSET	= __LC_LPP
 	jnz	\errlabel
 oklabel\@:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	jz	.Loklabel\@
+	TSTMSK	__LC_MCCK_CODE,MCCK_CODE_STG_FAIL_ADDR
+	jnz	\errlabel
+.Loklabel\@:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.endm
 
 #if IS_ENABLED(CONFIG_KVM)
@@ -632,6 +639,7 @@ ENTRY(mcck_int_handler)
 ENDPROC(mcck_int_handler)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ENTRY(restart_int_handler)
 	ALTERNATIVE "", ".insn s,0xb2800000,_LPP_OFFSET", 40
 	stg	%r15,__LC_SAVE_AREA_RESTART
@@ -649,6 +657,17 @@ ENTRY(restart_int_handler)
 	ALTERNATIVE "", ".insn s,0xb2800000,_LPP_OFFSET", 40
 	stg	%r15,__LC_SAVE_AREA_RESTART
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ENTRY(restart_int_handler)
+	ALTERNATIVE "", ".insn s,0xb2800000,_LPP_OFFSET", 40
+	stg	%r15,__LC_SAVE_AREA_RESTART
+	TSTMSK	__LC_RESTART_FLAGS,RESTART_FLAG_CTLREGS,4
+	jz	0f
+	la	%r15,4095
+	lctlg	%c0,%c15,__LC_CREGS_SAVE_AREA-4095(%r15)
+0:	larl	%r15,.Lstosm_tmp
+	stosm	0(%r15),0x04			# turn dat on, keep irqs off
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lg	%r15,__LC_RESTART_STACK
 	xc	STACK_FRAME_OVERHEAD(__PT_SIZE,%r15),STACK_FRAME_OVERHEAD(%r15)
 	stmg	%r0,%r14,STACK_FRAME_OVERHEAD+__PT_R0(%r15)
@@ -658,10 +677,14 @@ ENTRY(restart_int_handler)
 	lg	%r1,__LC_RESTART_FN		# load fn, parm & source cpu
 	lg	%r2,__LC_RESTART_DATA
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lgf	%r3,__LC_RESTART_SOURCE
 =======
 	lg	%r3,__LC_RESTART_SOURCE
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lgf	%r3,__LC_RESTART_SOURCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ltgr	%r3,%r3				# test source cpu address
 	jm	1f				# negative -> skip source stop
 0:	sigp	%r4,%r3,SIGP_SENSE		# sigp sense to source cpu

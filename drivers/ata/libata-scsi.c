@@ -632,10 +632,14 @@ static struct ata_queued_cmd *ata_scsi_qc_new(struct ata_device *dev,
 	struct ata_queued_cmd *qc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	qc = ata_qc_new_init(dev, scsi_cmd_to_rq(cmd)->tag);
 =======
 	qc = ata_qc_new_init(dev, cmd->request->tag);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qc = ata_qc_new_init(dev, scsi_cmd_to_rq(cmd)->tag);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (qc) {
 		qc->scsicmd = cmd;
 		qc->scsidone = cmd->scsi_done;
@@ -644,10 +648,14 @@ static struct ata_queued_cmd *ata_scsi_qc_new(struct ata_device *dev,
 		qc->n_elem = scsi_sg_count(cmd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (scsi_cmd_to_rq(cmd)->rq_flags & RQF_QUIET)
 =======
 		if (cmd->request->rq_flags & RQF_QUIET)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (scsi_cmd_to_rq(cmd)->rq_flags & RQF_QUIET)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			qc->flags |= ATA_QCFLAG_QUIET;
 	} else {
 		cmd->result = (DID_OK << 16) | SAM_STAT_TASK_SET_FULL;
@@ -1505,10 +1513,14 @@ nothing_to_do:
 static bool ata_check_nblocks(struct scsi_cmnd *scmd, u32 n_blocks)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(scmd);
 =======
 	struct request *rq = scmd->request;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(scmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 req_blocks;
 
 	if (!blk_rq_is_passthrough(rq))
@@ -1544,10 +1556,14 @@ static unsigned int ata_scsi_rw_xlat(struct ata_queued_cmd *qc)
 	struct scsi_cmnd *scmd = qc->scsicmd;
 	const u8 *cdb = scmd->cmnd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(scmd);
 =======
 	struct request *rq = scmd->request;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(scmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int class = IOPRIO_PRIO_CLASS(req_get_ioprio(rq));
 	unsigned int tf_flags = 0;
 	u64 block;
@@ -1783,6 +1799,7 @@ struct ata_scsi_args {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *	ata_scsi_rbuf_get - Map response buffer.
  *	@cmd: SCSI command containing buffer to be mapped.
@@ -1832,6 +1849,8 @@ static inline void ata_scsi_rbuf_put(struct scsi_cmnd *cmd, bool copy_out,
 
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	ata_scsi_rbuf_fill - wrapper for SCSI command simulators
  *	@args: device IDENTIFY data / SCSI command of interest.
  *	@actor: Callback hook for desired SCSI command simulator
@@ -1850,14 +1869,20 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
 		unsigned int (*actor)(struct ata_scsi_args *args, u8 *rbuf))
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u8 *rbuf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int rc;
 	struct scsi_cmnd *cmd = args->cmd;
 	unsigned long flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
 
 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
@@ -1867,11 +1892,14 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
 				    ata_scsi_rbuf, ATA_SCSI_RBUF_SIZE);
 
 	spin_unlock_irqrestore(&ata_scsi_rbuf_lock, flags);
+<<<<<<< HEAD
 =======
 	rbuf = ata_scsi_rbuf_get(cmd, false, &flags);
 	rc = actor(args, rbuf);
 	ata_scsi_rbuf_put(cmd, rc == 0, &flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (rc == 0)
 		cmd->result = SAM_STAT_GOOD;
@@ -3216,10 +3244,14 @@ static unsigned int ata_scsi_write_same_xlat(struct ata_queued_cmd *qc)
 	 * memory for SG_IO commands.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (unlikely(blk_rq_is_passthrough(scsi_cmd_to_rq(scmd))))
 =======
 	if (unlikely(blk_rq_is_passthrough(scmd->request)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(blk_rq_is_passthrough(scsi_cmd_to_rq(scmd))))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto invalid_opcode;
 
 	if (unlikely(scmd->cmd_len < 16)) {

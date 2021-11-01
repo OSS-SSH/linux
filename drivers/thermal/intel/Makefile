@@ -13,6 +13,10 @@ obj-$(CONFIG_INTEL_PCH_THERMAL)	+= intel_pch_thermal.o
 obj-$(CONFIG_INTEL_TCC_COOLING)	+= intel_tcc_cooling.o
 obj-$(CONFIG_X86_THERMAL_VECTOR) += therm_throt.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_INTEL_MENLOW)	+= intel_menlow.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_INTEL_MENLOW)	+= intel_menlow.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

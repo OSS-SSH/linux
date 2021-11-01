@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
 /*
  * Copyright(c) 2015 - 2019 Intel Corporation.
@@ -49,6 +50,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2015 - 2019 Intel Corporation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/pci.h>
@@ -99,10 +105,14 @@ int hfi1_pcie_init(struct hfi1_devdata *dd)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
 =======
 	ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		/*
 		 * If the 64 bit setup fails, try 32 bit.  Some systems
@@ -110,14 +120,19 @@ int hfi1_pcie_init(struct hfi1_devdata *dd)
 		 * memory installed.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
 =======
 		ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret) {
 			dd_dev_err(dd, "Unable to set DMA mask: %d\n", ret);
 			goto bail;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		ret = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
@@ -128,6 +143,8 @@ int hfi1_pcie_init(struct hfi1_devdata *dd)
 		dd_dev_err(dd, "Unable to set DMA consistent mask: %d\n", ret);
 		goto bail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pci_set_master(pdev);

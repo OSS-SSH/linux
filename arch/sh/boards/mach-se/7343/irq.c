@@ -39,10 +39,14 @@ static void se7343_irq_demux(struct irq_desc *desc)
 
 	for_each_set_bit(bit, &mask, SE7343_FPGA_IRQ_NR)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(se7343_irq_domain, bit);
 =======
 		generic_handle_irq(irq_linear_revmap(se7343_irq_domain, bit));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(se7343_irq_domain, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chip->irq_unmask(data);
 }

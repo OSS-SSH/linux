@@ -106,6 +106,9 @@ enum dsi_lane_swap {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum video_config_bpp {
 	VIDEO_CONFIG_18BPP = 0,
 	VIDEO_CONFIG_24BPP = 1,
@@ -132,8 +135,11 @@ enum cmd_dma_pattern_sel {
 	CMD_DMA_CUSTOM_PATTERN_DMA_FIFO = 3,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DSI_IRQ_CMD_DMA_DONE					0x00000001
 #define DSI_IRQ_MASK_CMD_DMA_DONE				0x00000002
 #define DSI_IRQ_CMD_MDP_DONE					0x00000100
@@ -548,9 +554,13 @@ static inline uint32_t DSI_CLKOUT_TIMING_CTRL_T_CLK_POST(uint32_t val)
 
 #define REG_DSI_LANE_CTRL					0x000000a8
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DSI_LANE_CTRL_HS_REQ_SEL_PHY				0x01000000
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DSI_LANE_CTRL_HS_REQ_SEL_PHY				0x01000000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST			0x10000000
 
 #define REG_DSI_LANE_SWAP_CTRL					0x000000ac
@@ -598,6 +608,9 @@ static inline uint32_t DSI_LANE_SWAP_CTRL_DLN_SWAP_SEL(enum dsi_lane_swap val)
 #define DSI_PHY_RESET_RESET					0x00000001
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define REG_DSI_TEST_PATTERN_GEN_VIDEO_INIT_VAL			0x00000160
 
 #define REG_DSI_TPG_MAIN_CONTROL				0x00000198
@@ -645,8 +658,11 @@ static inline uint32_t DSI_TEST_PATTERN_GEN_CTRL_VIDEO_PATTERN_SEL(enum video_pa
 #define DSI_TPG_MAIN_CONTROL2_CMD_MDP1_CHECKERED_RECTANGLE_PATTERN	0x00010000
 #define DSI_TPG_MAIN_CONTROL2_CMD_MDP2_CHECKERED_RECTANGLE_PATTERN	0x02000000
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define REG_DSI_T_CLK_PRE_EXTEND				0x0000017c
 #define DSI_T_CLK_PRE_EXTEND_INC_BY_2_BYTECLK			0x00000001
 

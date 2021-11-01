@@ -235,6 +235,7 @@ static void s3c2410_demux_eint0_3(struct irq_desc *desc)
 	struct irq_data *data = irq_desc_get_irq_data(desc);
 	struct s3c24xx_eint_data *eint_data = irq_desc_get_handler_data(desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	/* the first 4 eints have a simple 1 to 1 mapping */
@@ -243,14 +244,21 @@ static void s3c2410_demux_eint0_3(struct irq_desc *desc)
 	BUG_ON(ret);
 =======
 	unsigned int virq;
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* the first 4 eints have a simple 1 to 1 mapping */
-	virq = irq_linear_revmap(eint_data->domains[data->hwirq], data->hwirq);
+	ret = generic_handle_domain_irq(eint_data->domains[data->hwirq], data->hwirq);
 	/* Something must be really wrong if an unmapped EINT is unmasked */
+<<<<<<< HEAD
 	BUG_ON(!virq);
 
 	generic_handle_irq(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUG_ON(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Handling of EINTs 0-3 on S3C2412 and S3C2413 */
@@ -300,14 +308,19 @@ static void s3c2412_demux_eint0_3(struct irq_desc *desc)
 	struct irq_data *data = irq_desc_get_irq_data(desc);
 	struct irq_chip *chip = irq_data_get_irq_chip(data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	unsigned int virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_enter(chip, desc);
 
 	/* the first 4 eints have a simple 1 to 1 mapping */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = generic_handle_domain_irq(eint_data->domains[data->hwirq], data->hwirq);
 	/* Something must be really wrong if an unmapped EINT is unmasked */
@@ -319,6 +332,11 @@ static void s3c2412_demux_eint0_3(struct irq_desc *desc)
 
 	generic_handle_irq(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = generic_handle_domain_irq(eint_data->domains[data->hwirq], data->hwirq);
+	/* Something must be really wrong if an unmapped EINT is unmasked */
+	BUG_ON(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_exit(chip, desc);
 }
@@ -384,6 +402,7 @@ static inline void s3c24xx_demux_eint(struct irq_desc *desc,
 
 	while (pend) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned int irq;
 		int ret;
 
@@ -394,15 +413,23 @@ static inline void s3c24xx_demux_eint(struct irq_desc *desc,
 		BUG_ON(ret);
 =======
 		unsigned int virq, irq;
+=======
+		unsigned int irq;
+		int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		irq = __ffs(pend);
 		pend &= ~(1 << irq);
-		virq = irq_linear_revmap(data->domains[irq], irq - offset);
+		ret = generic_handle_domain_irq(data->domains[irq], irq - offset);
 		/* Something is really wrong if an unmapped EINT is unmasked */
+<<<<<<< HEAD
 		BUG_ON(!virq);
 
 		generic_handle_irq(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUG_ON(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(chip, desc);

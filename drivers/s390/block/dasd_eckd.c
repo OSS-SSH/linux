@@ -1005,6 +1005,7 @@ static void dasd_eckd_store_conf_data(struct dasd_device *device,
 				      struct dasd_conf_data *conf_data, int chp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dasd_eckd_private *private = device->private;
 	struct channel_path_desc_fmt0 *chp_desc;
 	struct subchannel_id sch_id;
@@ -1023,16 +1024,30 @@ static void dasd_eckd_store_conf_data(struct dasd_device *device,
 	}
 	ccw_device_get_schid(device->cdev, &sch_id);
 =======
+=======
+	struct dasd_eckd_private *private = device->private;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct channel_path_desc_fmt0 *chp_desc;
 	struct subchannel_id sch_id;
+	void *cdp;
 
-	ccw_device_get_schid(device->cdev, &sch_id);
 	/*
 	 * path handling and read_conf allocate data
 	 * free it before replacing the pointer
+	 * also replace the old private->conf_data pointer
+	 * with the new one if this points to the same data
 	 */
+<<<<<<< HEAD
 	kfree(device->path[chp].conf_data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cdp = device->path[chp].conf_data;
+	if (private->conf_data == cdp) {
+		private->conf_data = (void *)conf_data;
+		dasd_eckd_identify_conf_parts(private);
+	}
+	ccw_device_get_schid(device->cdev, &sch_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	device->path[chp].conf_data = conf_data;
 	device->path[chp].cssid = sch_id.cssid;
 	device->path[chp].ssid = sch_id.ssid;
@@ -1041,9 +1056,13 @@ static void dasd_eckd_store_conf_data(struct dasd_device *device,
 		device->path[chp].chpid = chp_desc->chpid;
 	kfree(chp_desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kfree(cdp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfree(cdp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void dasd_eckd_clear_conf_data(struct dasd_device *device)
@@ -3292,10 +3311,14 @@ static int dasd_eckd_ese_read(struct dasd_ccw_req *cqr, struct irb *irb)
 
 	rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
 =======
 		dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (off = 0; off < bv.bv_len; off += blksize) {
 			if (first_blk + blk_count >= end_blk) {
 				cqr->proc_bytes = blk_count * blksize;
@@ -4028,10 +4051,14 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_cmd_single(
 	}
 	rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
 =======
 		dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dasd_page_cache) {
 			char *copy = kmem_cache_alloc(dasd_page_cache,
 						      GFP_DMA | __GFP_NOWARN);
@@ -4199,10 +4226,14 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_cmd_track(
 	idaw_len = 0;
 	rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
 =======
 		dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		seg_len = bv.bv_len;
 		while (seg_len) {
 			if (new_track) {
@@ -4546,10 +4577,14 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_tpm_track(
 		recid = first_rec;
 		rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dst = bvec_virt(&bv);
 =======
 			dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			seg_len = bv.bv_len;
 			while (seg_len) {
 				if (new_track) {
@@ -4583,10 +4618,14 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_tpm_track(
 	} else {
 		rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dst = bvec_virt(&bv);
 =======
 			dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			last_tidaw = itcw_add_tidaw(itcw, 0x00,
 						    dst, bv.bv_len);
 			if (IS_ERR(last_tidaw)) {
@@ -4823,10 +4862,14 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
 	}
 	rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
 =======
 		dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		seg_len = bv.bv_len;
 		if (cmd == DASD_ECKD_CCW_READ_TRACK)
 			memset(dst, 0, seg_len);
@@ -4888,10 +4931,14 @@ dasd_eckd_free_cp(struct dasd_ccw_req *cqr, struct request *req)
 		ccw++;
 	rq_for_each_segment(bv, req, iter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
 =======
 		dst = page_address(bv.bv_page) + bv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dst = bvec_virt(&bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (off = 0; off < bv.bv_len; off += blksize) {
 			/* Skip locate record. */
 			if (private->uses_cdl && recid <= 2*blk_per_trk)

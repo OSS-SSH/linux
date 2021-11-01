@@ -68,9 +68,13 @@ struct nfs_client_initdata {
 	u32 minorversion;
 	unsigned int nconnect;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int max_connect;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int max_connect;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net *net;
 	const struct rpc_timeout *timeparms;
 	const struct cred *cred;
@@ -126,9 +130,13 @@ struct nfs_fs_context {
 		unsigned short		protocol;
 		unsigned short		nconnect;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned short		max_connect;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned short		max_connect;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unsigned short		export_path_len;
 	} nfs_server;
 

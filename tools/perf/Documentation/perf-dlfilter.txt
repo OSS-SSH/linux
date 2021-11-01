@@ -33,10 +33,14 @@ The API for filtering consists of the following:
 #include <perf/perf_dlfilter.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct perf_dlfilter_fns perf_dlfilter_fns;
 =======
 const struct perf_dlfilter_fns perf_dlfilter_fns;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct perf_dlfilter_fns perf_dlfilter_fns;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int start(void **data, void *ctx);
 int stop(void *data, void *ctx);
@@ -219,10 +223,14 @@ Filter out everything except branches from "foo" to "bar":
 #include <string.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct perf_dlfilter_fns perf_dlfilter_fns;
 =======
 const struct perf_dlfilter_fns perf_dlfilter_fns;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct perf_dlfilter_fns perf_dlfilter_fns;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int filter_event(void *data, const struct perf_dlfilter_sample *sample, void *ctx)
 {
@@ -255,6 +263,9 @@ To use the filter with perf script:
 	perf script --dlfilter dlfilter-example.so
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 NOTES
 -----
 
@@ -263,8 +274,11 @@ it may be necessary to rebuild the .so. Also there may be unexpected results
 if the .so uses different versions of the shared libraries that perf uses.
 Versions can be checked using the ldd command.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 SEE ALSO
 --------
 linkperf:perf-script[1]

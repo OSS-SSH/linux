@@ -164,20 +164,28 @@ static int mall_set_parms(struct net *net, struct tcf_proto *tp,
 			  struct cls_mall_head *head,
 			  unsigned long base, struct nlattr **tb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  struct nlattr *est, u32 flags,
 =======
 			  struct nlattr *est, bool ovr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  struct nlattr *est, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  struct netlink_ext_ack *extack)
 {
 	int err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = tcf_exts_validate(net, tp, tb, est, &head->exts, flags, extack);
 =======
 	err = tcf_exts_validate(net, tp, tb, est, &head->exts, ovr, true,
 				extack);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = tcf_exts_validate(net, tp, tb, est, &head->exts, flags, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -192,20 +200,28 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
 		       struct tcf_proto *tp, unsigned long base,
 		       u32 handle, struct nlattr **tca,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       void **arg, u32 flags,
 =======
 		       void **arg, bool ovr, bool rtnl_held,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       void **arg, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       struct netlink_ext_ack *extack)
 {
 	struct cls_mall_head *head = rtnl_dereference(tp->root);
 	struct nlattr *tb[TCA_MATCHALL_MAX + 1];
 	struct cls_mall_head *new;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 userflags = 0;
 =======
 	u32 flags = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 userflags = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!tca[TCA_OPTIONS])
@@ -221,12 +237,17 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
 
 	if (tb[TCA_MATCHALL_FLAGS]) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		userflags = nla_get_u32(tb[TCA_MATCHALL_FLAGS]);
 		if (!tc_flags_valid(userflags))
 =======
 		flags = nla_get_u32(tb[TCA_MATCHALL_FLAGS]);
 		if (!tc_flags_valid(flags))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		userflags = nla_get_u32(tb[TCA_MATCHALL_FLAGS]);
+		if (!tc_flags_valid(userflags))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 	}
 
@@ -242,10 +263,14 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
 		handle = 1;
 	new->handle = handle;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	new->flags = userflags;
 =======
 	new->flags = flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	new->flags = userflags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	new->pf = alloc_percpu(struct tc_matchall_pcnt);
 	if (!new->pf) {
 		err = -ENOMEM;
@@ -253,10 +278,14 @@ static int mall_change(struct net *net, struct sk_buff *in_skb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = mall_set_parms(net, tp, new, base, tb, tca[TCA_RATE], flags,
 =======
 	err = mall_set_parms(net, tp, new, base, tb, tca[TCA_RATE], ovr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = mall_set_parms(net, tp, new, base, tb, tca[TCA_RATE], flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     extack);
 	if (err)
 		goto err_set_parms;

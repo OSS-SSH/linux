@@ -415,10 +415,14 @@ struct ensoniq {
 
 #ifdef CHIP1370
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_dma_buffer *dma_bug;
 =======
 	struct snd_dma_buffer dma_bug;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct snd_dma_buffer *dma_bug;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifdef SUPPORT_JOYSTICK
@@ -1877,6 +1881,7 @@ static void snd_ensoniq_proc_init(struct ensoniq *ensoniq)
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void snd_ensoniq_free(struct snd_card *card)
 {
 	struct ensoniq *ensoniq = card->private_data;
@@ -1884,11 +1889,19 @@ static void snd_ensoniq_free(struct snd_card *card)
 	snd_ensoniq_free_gameport(ensoniq);
 =======
 static int snd_ensoniq_free(struct ensoniq *ensoniq)
+=======
+static void snd_ensoniq_free(struct snd_card *card)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	struct ensoniq *ensoniq = card->private_data;
+
 	snd_ensoniq_free_gameport(ensoniq);
+<<<<<<< HEAD
 	if (ensoniq->irq < 0)
 		goto __hw_end;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CHIP1370
 	outl(ES_1370_SERR_DISABLE, ES_REG(ensoniq, CONTROL));	/* switch everything off */
 	outl(0, ES_REG(ensoniq, SERIAL));	/* clear serial interface */
@@ -1896,6 +1909,7 @@ static int snd_ensoniq_free(struct ensoniq *ensoniq)
 	outl(0, ES_REG(ensoniq, CONTROL));	/* switch everything off */
 	outl(0, ES_REG(ensoniq, SERIAL));	/* clear serial interface */
 #endif
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	pci_set_power_state(ensoniq->pci, PCI_D3hot);
@@ -1917,6 +1931,8 @@ static int snd_ensoniq_dev_free(struct snd_device *device)
 	struct ensoniq *ensoniq = device->device_data;
 	return snd_ensoniq_free(ensoniq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CHIP1371
@@ -1951,10 +1967,14 @@ static void snd_ensoniq_chip_init(struct ensoniq *ensoniq)
 	outl(ensoniq->sctrl, ES_REG(ensoniq, SERIAL));
 	outl(ES_MEM_PAGEO(ES_PAGE_ADC), ES_REG(ensoniq, MEM_PAGE));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	outl(ensoniq->dma_bug->addr, ES_REG(ensoniq, PHANTOM_FRAME));
 =======
 	outl(ensoniq->dma_bug.addr, ES_REG(ensoniq, PHANTOM_FRAME));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	outl(ensoniq->dma_bug->addr, ES_REG(ensoniq, PHANTOM_FRAME));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	outl(0, ES_REG(ensoniq, PHANTOM_COUNT));
 #else
 	outl(ensoniq->ctrl, ES_REG(ensoniq, CONTROL));
@@ -2052,6 +2072,7 @@ static SIMPLE_DEV_PM_OPS(snd_ensoniq_pm, snd_ensoniq_suspend, snd_ensoniq_resume
 
 static int snd_ensoniq_create(struct snd_card *card,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct pci_dev *pci)
 {
 	struct ensoniq *ensoniq = card->private_data;
@@ -2063,29 +2084,32 @@ static int snd_ensoniq_create(struct snd_card *card,
 =======
 			      struct pci_dev *pci,
 			      struct ensoniq **rensoniq)
+=======
+			      struct pci_dev *pci)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct ensoniq *ensoniq;
+	struct ensoniq *ensoniq = card->private_data;
 	int err;
-	static const struct snd_device_ops ops = {
-		.dev_free =	snd_ensoniq_dev_free,
-	};
 
-	*rensoniq = NULL;
-	err = pci_enable_device(pci);
+	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
+<<<<<<< HEAD
 	ensoniq = kzalloc(sizeof(*ensoniq), GFP_KERNEL);
 	if (ensoniq == NULL) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&ensoniq->reg_lock);
 	mutex_init(&ensoniq->src_mutex);
 	ensoniq->card = card;
 	ensoniq->pci = pci;
 	ensoniq->irq = -1;
 	err = pci_request_regions(pci, "Ensoniq AudioPCI");
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err < 0)
 		return err;
@@ -2097,24 +2121,33 @@ static int snd_ensoniq_create(struct snd_card *card,
 	if (err < 0) {
 		kfree(ensoniq);
 		pci_disable_device(pci);
+=======
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 	ensoniq->port = pci_resource_start(pci, 0);
-	if (request_irq(pci->irq, snd_audiopci_interrupt, IRQF_SHARED,
-			KBUILD_MODNAME, ensoniq)) {
+	if (devm_request_irq(&pci->dev, pci->irq, snd_audiopci_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, ensoniq)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+<<<<<<< HEAD
 		snd_ensoniq_free(ensoniq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	ensoniq->irq = pci->irq;
 	card->sync_irq = ensoniq->irq;
 #ifdef CHIP1370
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ensoniq->dma_bug =
 		snd_devm_alloc_pages(&pci->dev, SNDRV_DMA_TYPE_DEV, 16);
 	if (!ensoniq->dma_bug)
 		return -ENOMEM;
+<<<<<<< HEAD
 =======
 	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &pci->dev,
 				16, &ensoniq->dma_bug) < 0) {
@@ -2123,6 +2156,8 @@ static int snd_ensoniq_create(struct snd_card *card,
 		return -EBUSY;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	pci_set_master(pci);
 	ensoniq->rev = pci->revision;
@@ -2146,23 +2181,24 @@ static int snd_ensoniq_create(struct snd_card *card,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	card->private_free = snd_ensoniq_free;
 	snd_ensoniq_chip_init(ensoniq);
 
 	snd_ensoniq_proc_init(ensoniq);
 =======
+=======
+	card->private_free = snd_ensoniq_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_ensoniq_chip_init(ensoniq);
 
-	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, ensoniq, &ops);
-	if (err < 0) {
-		snd_ensoniq_free(ensoniq);
-		return err;
-	}
-
 	snd_ensoniq_proc_init(ensoniq);
+<<<<<<< HEAD
 
 	*rensoniq = ensoniq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2414,6 +2450,7 @@ static int snd_audiopci_probe(struct pci_dev *pci,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*ensoniq), &card);
 	if (err < 0)
@@ -2446,46 +2483,42 @@ static int snd_audiopci_probe(struct pci_dev *pci,
 =======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*ensoniq), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (err < 0)
+		return err;
+	ensoniq = card->private_data;
+
+	err = snd_ensoniq_create(card, pci);
 	if (err < 0)
 		return err;
 
-	err = snd_ensoniq_create(card, pci, &ensoniq);
-	if (err < 0) {
-		snd_card_free(card);
-		return err;
-	}
-	card->private_data = ensoniq;
-
 #ifdef CHIP1370
 	err = snd_ensoniq_1370_mixer(ensoniq);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 #endif
 #ifdef CHIP1371
 	err = snd_ensoniq_1371_mixer(ensoniq, spdif[dev], lineio[dev]);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 #endif
 	err = snd_ensoniq_pcm(ensoniq, 0);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 	err = snd_ensoniq_pcm2(ensoniq, 1);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 	err = snd_ensoniq_midi(ensoniq, 0);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_ensoniq_create_gameport(ensoniq, dev);
 
@@ -2500,6 +2533,7 @@ static int snd_audiopci_probe(struct pci_dev *pci,
 
 	err = snd_card_register(card);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 =======
@@ -2508,12 +2542,17 @@ static int snd_audiopci_probe(struct pci_dev *pci,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_audiopci_remove(struct pci_dev *pci)
@@ -2522,14 +2561,19 @@ static void snd_audiopci_remove(struct pci_dev *pci)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct pci_driver ens137x_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_audiopci_ids,
 	.probe = snd_audiopci_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_audiopci_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_ENSONIQ_PM_OPS,
 	},

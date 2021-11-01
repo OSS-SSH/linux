@@ -181,13 +181,19 @@ void __init efi_mokvar_table_init(void)
 		return;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (md.type == EFI_BOOT_SERVICES_DATA)
 		efi_mem_reserve(efi.mokvar_table, map_size_needed);
 
+<<<<<<< HEAD
 =======
 	efi_mem_reserve(efi.mokvar_table, map_size_needed);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	efi_mokvar_table_size = map_size_needed;
 }
 

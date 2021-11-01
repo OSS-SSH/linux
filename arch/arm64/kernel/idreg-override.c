@@ -55,9 +55,13 @@ static const struct ftr_set_desc pfr1 __initconst = {
 	.fields		= {
 	        { "bt", ID_AA64PFR1_BT_SHIFT },
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{ "mte", ID_AA64PFR1_MTE_SHIFT},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{ "mte", ID_AA64PFR1_MTE_SHIFT},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{}
 	},
 };
@@ -105,9 +109,13 @@ static const struct {
 	  "id_aa64isar1.gpi=0 id_aa64isar1.gpa=0 "
 	  "id_aa64isar1.api=0 id_aa64isar1.apa=0"	   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ "arm64.nomte",		"id_aa64pfr1.mte=0" },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ "arm64.nomte",		"id_aa64pfr1.mte=0" },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ "nokaslr",			"kaslr.disabled=1" },
 };
 

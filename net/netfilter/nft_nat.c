@@ -202,12 +202,18 @@ static int nft_nat_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
 		break;
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (tb[NFTA_NAT_REG_ADDR_MIN])
 			return -EAFNOSUPPORT;
 		break;
 =======
 		return -EAFNOSUPPORT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (tb[NFTA_NAT_REG_ADDR_MIN])
+			return -EAFNOSUPPORT;
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	priv->family = family;
 

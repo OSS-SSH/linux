@@ -15,9 +15,13 @@
 #include <linux/irqdomain.h>
 #include <linux/kernel.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/mfd/syscon.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/mfd/syscon.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/msi.h>
 #include <linux/module.h>
 #include <linux/of_address.h>
@@ -28,9 +32,13 @@
 #include <linux/platform_device.h>
 #include <linux/pm_runtime.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/regmap.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/regmap.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/reset.h>
 
 #include "../pci.h"
@@ -216,9 +224,13 @@ struct mtk_pcie_port {
  * @dev: pointer to PCIe device
  * @base: IO mapped register base
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @cfg: IO mapped register map for PCIe config
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @cfg: IO mapped register map for PCIe config
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @free_ck: free-run reference clock
  * @mem: non-prefetchable memory resource
  * @ports: pointer to PCIe port information
@@ -228,9 +240,13 @@ struct mtk_pcie {
 	struct device *dev;
 	void __iomem *base;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct regmap *cfg;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct regmap *cfg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct clk *free_ck;
 
 	struct list_head ports;
@@ -619,9 +635,12 @@ static void mtk_pcie_intr_handler(struct irq_desc *desc)
 	struct irq_chip *irqchip = irq_desc_get_chip(desc);
 	unsigned long status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u32 virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 bit = INTX_SHIFT;
 
 	chained_irq_enter(irqchip, desc);
@@ -632,6 +651,7 @@ static void mtk_pcie_intr_handler(struct irq_desc *desc)
 			/* Clear the INTx */
 			writel(1 << bit, port->base + PCIE_INT_STATUS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			generic_handle_domain_irq(port->irq_domain,
 						  bit - INTX_SHIFT);
 =======
@@ -639,6 +659,10 @@ static void mtk_pcie_intr_handler(struct irq_desc *desc)
 						bit - INTX_SHIFT);
 			generic_handle_irq(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(port->irq_domain,
+						  bit - INTX_SHIFT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -648,6 +672,7 @@ static void mtk_pcie_intr_handler(struct irq_desc *desc)
 
 			while ((imsi_status = readl(port->base + PCIE_IMSI_STATUS))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				for_each_set_bit(bit, &imsi_status, MTK_MSI_IRQS_NUM)
 					generic_handle_domain_irq(port->inner_domain, bit);
 =======
@@ -656,6 +681,10 @@ static void mtk_pcie_intr_handler(struct irq_desc *desc)
 					generic_handle_irq(virq);
 				}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				for_each_set_bit(bit, &imsi_status, MTK_MSI_IRQS_NUM)
+					generic_handle_domain_irq(port->inner_domain, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 			/* Clear MSI interrupt status */
 			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
@@ -680,14 +709,20 @@ static int mtk_pcie_setup_irq(struct mtk_pcie_port *port,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (of_find_property(dev->of_node, "interrupt-names", NULL))
 		port->irq = platform_get_irq_byname(pdev, "pcie_irq");
 	else
 		port->irq = platform_get_irq(pdev, port->slot);
 
+<<<<<<< HEAD
 =======
 	port->irq = platform_get_irq(pdev, port->slot);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (port->irq < 0)
 		return port->irq;
 
@@ -720,12 +755,18 @@ static int mtk_pcie_startup_port_v2(struct mtk_pcie_port *port)
 		       PCIE_CSR_ASPM_L1_EN(port->slot);
 		writel(val, pcie->base + PCIE_SYS_CFG_V2);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (pcie->cfg) {
 		val = PCIE_CSR_LTSSM_EN(port->slot) |
 		      PCIE_CSR_ASPM_L1_EN(port->slot);
 		regmap_update_bits(pcie->cfg, PCIE_SYS_CFG_V2, val, val);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Assert all reset signals */
@@ -1030,9 +1071,13 @@ static int mtk_pcie_subsys_powerup(struct mtk_pcie *pcie)
 	struct platform_device *pdev = to_platform_device(dev);
 	struct resource *regs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct device_node *cfg_node;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct device_node *cfg_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	/* get shared registers, which are optional */
@@ -1044,6 +1089,9 @@ static int mtk_pcie_subsys_powerup(struct mtk_pcie *pcie)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cfg_node = of_find_compatible_node(NULL, NULL,
 					   "mediatek,generic-pciecfg");
 	if (cfg_node) {
@@ -1052,8 +1100,11 @@ static int mtk_pcie_subsys_powerup(struct mtk_pcie *pcie)
 			return PTR_ERR(pcie->cfg);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pcie->free_ck = devm_clk_get(dev, "free_ck");
 	if (IS_ERR(pcie->free_ck)) {
 		if (PTR_ERR(pcie->free_ck) == -EPROBE_DEFER)
@@ -1087,6 +1138,9 @@ static int mtk_pcie_setup(struct mtk_pcie *pcie)
 	struct device_node *node = dev->of_node, *child;
 	struct mtk_pcie_port *port, *tmp;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err, slot;
 
 	slot = of_get_pci_domain_nr(dev->of_node);
@@ -1097,6 +1151,7 @@ static int mtk_pcie_setup(struct mtk_pcie *pcie)
 				dev_err(dev, "failed to get devfn: %d\n", err);
 				goto error_put_node;
 			}
+<<<<<<< HEAD
 
 			slot = PCI_SLOT(err);
 
@@ -1110,22 +1165,24 @@ static int mtk_pcie_setup(struct mtk_pcie *pcie)
 			return err;
 =======
 	int err;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	for_each_available_child_of_node(node, child) {
-		int slot;
+			slot = PCI_SLOT(err);
 
-		err = of_pci_get_devfn(child);
-		if (err < 0) {
-			dev_err(dev, "failed to parse devfn: %d\n", err);
-			goto error_put_node;
+			err = mtk_pcie_parse_port(pcie, child, slot);
+			if (err)
+				goto error_put_node;
 		}
-
-		slot = PCI_SLOT(err);
-
-		err = mtk_pcie_parse_port(pcie, child, slot);
+	} else {
+		err = mtk_pcie_parse_port(pcie, node, slot);
 		if (err)
+<<<<<<< HEAD
 			goto error_put_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = mtk_pcie_subsys_powerup(pcie);

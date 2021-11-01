@@ -393,9 +393,13 @@ static struct dentry *ovl_lookup_real_one(struct dentry *connected,
 	take_dentry_name_snapshot(&name, real);
 	this = lookup_one_len(name.name.name, connected, name.name.len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	release_dentry_name_snapshot(&name);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	release_dentry_name_snapshot(&name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = PTR_ERR(this);
 	if (IS_ERR(this)) {
 		goto fail;
@@ -411,9 +415,12 @@ static struct dentry *ovl_lookup_real_one(struct dentry *connected,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	release_dentry_name_snapshot(&name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dput(parent);
 	inode_unlock(dir);
 	return this;

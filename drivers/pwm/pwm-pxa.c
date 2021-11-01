@@ -196,15 +196,20 @@ static int pwm_probe(struct platform_device *pdev)
 		return PTR_ERR(pc->mmio_base);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = devm_pwmchip_add(&pdev->dev, &pc->chip);
 =======
 	ret = pwmchip_add(&pc->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_pwmchip_add(&pdev->dev, &pc->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
 		return ret;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return 0;
 }
@@ -224,6 +229,11 @@ static int pwm_remove(struct platform_device *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct platform_driver pwm_driver = {
 	.driver		= {
 		.name	= "pxa25x-pwm",
@@ -231,9 +241,12 @@ static struct platform_driver pwm_driver = {
 	},
 	.probe		= pwm_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= pwm_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= pwm_id_table,
 };
 

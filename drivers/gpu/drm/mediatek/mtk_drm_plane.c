@@ -111,6 +111,9 @@ static int mtk_plane_atomic_async_check(struct drm_plane *plane,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mtk_plane_update_new_state(struct drm_plane_state *new_state,
 				       struct mtk_plane_state *mtk_plane_state)
 {
@@ -140,8 +143,11 @@ static void mtk_plane_update_new_state(struct drm_plane_state *new_state,
 	mtk_plane_state->pending.rotation = new_state->rotation;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mtk_plane_atomic_async_update(struct drm_plane *plane,
 					  struct drm_atomic_state *state)
 {
@@ -159,6 +165,7 @@ static void mtk_plane_atomic_async_update(struct drm_plane *plane,
 	plane->state->src_w = new_state->src_w;
 	swap(plane->state->fb, new_state->fb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	mtk_plane_update_new_state(new_state, new_plane_state);
 	wmb(); /* Make sure the above parameters are set before update */
@@ -167,6 +174,12 @@ static void mtk_plane_atomic_async_update(struct drm_plane *plane,
 	new_plane_state->pending.async_dirty = true;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	mtk_plane_update_new_state(new_state, new_plane_state);
+	wmb(); /* Make sure the above parameters are set before update */
+	new_plane_state->pending.async_dirty = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mtk_drm_crtc_async_update(new_state->crtc, plane, state);
 }
 
@@ -229,6 +242,7 @@ static void mtk_plane_atomic_update(struct drm_plane *plane,
 									   plane);
 	struct mtk_plane_state *mtk_plane_state = to_mtk_plane_state(new_state);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (!new_state->crtc || WARN_ON(!new_state->fb))
 =======
@@ -241,6 +255,10 @@ static void mtk_plane_atomic_update(struct drm_plane *plane,
 
 	if (!crtc || WARN_ON(!fb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (!new_state->crtc || WARN_ON(!new_state->fb))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (!new_state->visible) {
@@ -248,6 +266,7 @@ static void mtk_plane_atomic_update(struct drm_plane *plane,
 		return;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	mtk_plane_update_new_state(new_state, mtk_plane_state);
 =======
@@ -270,15 +289,21 @@ static void mtk_plane_atomic_update(struct drm_plane *plane,
 	mtk_plane_state->pending.height = drm_rect_height(&new_state->dst);
 	mtk_plane_state->pending.rotation = new_state->rotation;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mtk_plane_update_new_state(new_state, mtk_plane_state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wmb(); /* Make sure the above parameters are set before update */
 	mtk_plane_state->pending.dirty = true;
 }
 
 static const struct drm_plane_helper_funcs mtk_plane_helper_funcs = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.prepare_fb = drm_gem_plane_helper_prepare_fb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.atomic_check = mtk_plane_atomic_check,
 	.atomic_update = mtk_plane_atomic_update,
 	.atomic_disable = mtk_plane_atomic_disable,

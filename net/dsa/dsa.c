@@ -239,10 +239,14 @@ static int dsa_switch_rcv(struct sk_buff *skb, struct net_device *dev,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nskb = cpu_dp->rcv(skb, dev);
 =======
 	nskb = cpu_dp->rcv(skb, dev, pt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nskb = cpu_dp->rcv(skb, dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!nskb) {
 		kfree_skb(skb);
 		return 0;
@@ -350,13 +354,19 @@ bool dsa_schedule_work(struct work_struct *work)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dsa_flush_workqueue(void)
 {
 	flush_workqueue(dsa_owq);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int dsa_devlink_param_get(struct devlink *dl, u32 id,
 			  struct devlink_param_gset_ctx *ctx)
 {

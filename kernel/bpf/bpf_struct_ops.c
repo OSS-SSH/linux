@@ -29,9 +29,13 @@ struct bpf_struct_ops_value {
 struct bpf_struct_ops_map {
 	struct bpf_map map;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rcu_head rcu;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rcu_head rcu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct bpf_struct_ops *st_ops;
 	/* protect map_update */
 	struct mutex lock;
@@ -372,9 +376,13 @@ static int bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
 		struct bpf_prog *prog;
 		u32 moff;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u32 flags;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		u32 flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		moff = btf_member_bit_offset(t, member) / 8;
 		ptype = btf_type_resolve_ptr(btf_vmlinux, member->type, NULL);
@@ -439,6 +447,7 @@ static int bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
 		tprogs[BPF_TRAMP_FENTRY].progs[0] = prog;
 		tprogs[BPF_TRAMP_FENTRY].nr_progs = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flags = st_ops->func_models[i].ret_size > 0 ?
 			BPF_TRAMP_F_RET_FENTRY_RET : 0;
 		err = arch_prepare_bpf_trampoline(NULL, image,
@@ -451,6 +460,14 @@ static int bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
 						  &st_ops->func_models[i], 0,
 						  tprogs, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		flags = st_ops->func_models[i].ret_size > 0 ?
+			BPF_TRAMP_F_RET_FENTRY_RET : 0;
+		err = arch_prepare_bpf_trampoline(NULL, image,
+						  st_map->image + PAGE_SIZE,
+						  &st_ops->func_models[i],
+						  flags, tprogs, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err < 0)
 			goto reset_unlock;
 
@@ -640,6 +657,9 @@ bool bpf_struct_ops_get(const void *kdata)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void bpf_struct_ops_put_rcu(struct rcu_head *head)
 {
 	struct bpf_struct_ops_map *st_map;
@@ -648,8 +668,11 @@ static void bpf_struct_ops_put_rcu(struct rcu_head *head)
 	bpf_map_put(&st_map->map);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void bpf_struct_ops_put(const void *kdata)
 {
 	struct bpf_struct_ops_value *kvalue;
@@ -661,6 +684,9 @@ void bpf_struct_ops_put(const void *kdata)
 		st_map = container_of(kvalue, struct bpf_struct_ops_map,
 				      kvalue);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* The struct_ops's function may switch to another struct_ops.
 		 *
 		 * For example, bpf_tcp_cc_x->init() may switch to
@@ -673,8 +699,11 @@ void bpf_struct_ops_put(const void *kdata)
 		 * Thus, a rcu grace period is needed here.
 		 */
 		call_rcu(&st_map->rcu, bpf_struct_ops_put_rcu);
+<<<<<<< HEAD
 =======
 		bpf_map_put(&st_map->map);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }

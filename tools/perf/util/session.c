@@ -103,6 +103,7 @@ static int perf_session__deliver_event(struct perf_session *session,
 				       u64 file_offset);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int perf_session__open(struct perf_session *session, int repipe_fd)
 {
 	struct perf_data *data = session->data;
@@ -115,6 +116,13 @@ static int perf_session__open(struct perf_session *session)
 
 	if (perf_session__read_header(session) < 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int perf_session__open(struct perf_session *session, int repipe_fd)
+{
+	struct perf_data *data = session->data;
+
+	if (perf_session__read_header(session, repipe_fd) < 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("incompatible file format (rerun with -v to learn more)\n");
 		return -1;
 	}
@@ -194,6 +202,7 @@ static int ordered_events__deliver_event(struct ordered_events *oe,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct perf_session *__perf_session__new(struct perf_data *data,
 					 bool repipe, int repipe_fd,
 					 struct perf_tool *tool)
@@ -201,6 +210,11 @@ struct perf_session *__perf_session__new(struct perf_data *data,
 struct perf_session *perf_session__new(struct perf_data *data,
 				       bool repipe, struct perf_tool *tool)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct perf_session *__perf_session__new(struct perf_data *data,
+					 bool repipe, int repipe_fd,
+					 struct perf_tool *tool)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret = -ENOMEM;
 	struct perf_session *session = zalloc(sizeof(*session));
@@ -225,10 +239,14 @@ struct perf_session *perf_session__new(struct perf_data *data,
 
 		if (perf_data__is_read(data)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = perf_session__open(session, repipe_fd);
 =======
 			ret = perf_session__open(session);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = perf_session__open(session, repipe_fd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret < 0)
 				goto out_delete;
 
@@ -325,9 +343,13 @@ void perf_session__delete(struct perf_session *session)
 		perf_data__close(session->data);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	trace_event__cleanup(&session->tevent);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_event__cleanup(&session->tevent);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free(session);
 }
 
@@ -1562,10 +1584,15 @@ static int machines__deliver_event(struct machines *machines,
 			if (event->aux.flags & PERF_AUX_FLAG_PARTIAL)
 				evlist->stats.total_aux_partial += 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (event->aux.flags & PERF_AUX_FLAG_COLLISION)
 				evlist->stats.total_aux_collision += 1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (event->aux.flags & PERF_AUX_FLAG_COLLISION)
+				evlist->stats.total_aux_collision += 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		return tool->aux(tool, event, sample, machine);
 	case PERF_RECORD_ITRACE_START:
@@ -1922,6 +1949,9 @@ static void perf_session__warn_about_errors(const struct perf_session *session)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (session->tool->aux == perf_event__process_aux &&
 	    stats->total_aux_collision != 0) {
 		ui__warning("AUX data detected collision  %" PRIu64 " times out of %u!\n\n",
@@ -1929,8 +1959,11 @@ static void perf_session__warn_about_errors(const struct perf_session *session)
 			    stats->nr_events[PERF_RECORD_AUX]);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (stats->nr_unknown_events != 0) {
 		ui__warning("Found %u unknown events!\n\n"
 			    "Is this an older tool processing a perf.data "
@@ -2143,10 +2176,14 @@ static int __perf_session__process_decomp_events(struct perf_session *session)
 {
 	s64 skip;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 size;
 =======
 	u64 size, file_pos = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct decomp *decomp = session->decomp_last;
 
 	if (!decomp)
@@ -2163,10 +2200,14 @@ static int __perf_session__process_decomp_events(struct perf_session *session)
 
 		if (size < sizeof(struct perf_event_header) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    (skip = perf_session__process_event(session, event, decomp->file_pos)) < 0) {
 =======
 		    (skip = perf_session__process_event(session, event, file_pos)) < 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    (skip = perf_session__process_event(session, event, decomp->file_pos)) < 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pr_err("%#" PRIx64 " [%#x]: failed to process type: %d\n",
 				decomp->file_pos + decomp->head, event->header.size, event->header.type);
 			return -EINVAL;

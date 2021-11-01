@@ -227,10 +227,14 @@ static void aic_irq_eoi(struct irq_data *d)
 	 * the IRQ, so we just unmask it here if needed.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!irqd_irq_masked(d))
 =======
 	if (!irqd_irq_disabled(d) && !irqd_irq_masked(d))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!irqd_irq_masked(d))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		aic_irq_unmask(d);
 }
 

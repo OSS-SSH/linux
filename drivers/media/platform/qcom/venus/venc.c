@@ -184,10 +184,15 @@ venc_try_fmt_common(struct venus_inst *inst, struct v4l2_format *f)
 			return NULL;
 		fmt = find_format(inst, pixmp->pixelformat, f->type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!fmt)
 			return NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!fmt)
+			return NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pixmp->width = clamp(pixmp->width, frame_width_min(inst),
@@ -553,9 +558,13 @@ static int venc_set_properties(struct venus_inst *inst)
 	struct hfi_enable en;
 	struct hfi_ltr_mode ltr_mode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hfi_intra_refresh intra_refresh = {};
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hfi_intra_refresh intra_refresh = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 ptype, rate_control, bitrate;
 	u32 profile, level;
 	int ret;
@@ -577,9 +586,13 @@ static int venc_set_properties(struct venus_inst *inst)
 		struct hfi_h264_entropy_control entropy;
 		struct hfi_h264_db_control deblock;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct hfi_h264_8x8_transform h264_transform;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct hfi_h264_8x8_transform h264_transform;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ptype = HFI_PROPERTY_PARAM_VENC_H264_VUI_TIMING_INFO;
 		info.enable = 1;
@@ -611,6 +624,9 @@ static int venc_set_properties(struct venus_inst *inst)
 		if (ret)
 			return ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
 		h264_transform.enable_type = 0;
@@ -622,8 +638,11 @@ static int venc_set_properties(struct venus_inst *inst)
 		if (ret)
 			return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
@@ -830,6 +849,9 @@ static int venc_set_properties(struct venus_inst *inst)
 
 		ret = hfi_session_set_property(inst, ptype, &en);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if ((inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
@@ -855,8 +877,11 @@ static int venc_set_properties(struct venus_inst *inst)
 		ptype = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH;
 
 		ret = hfi_session_set_property(inst, ptype, &intra_refresh);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 	}

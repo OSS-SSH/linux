@@ -123,9 +123,13 @@ struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
 	u8 mdsmap_v;
 	u16 mdsmap_ev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 target;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 target;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	m = kzalloc(sizeof(*m), GFP_NOFS);
 	if (!m)
@@ -265,6 +269,9 @@ struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
 			if (!info->export_targets)
 				goto nomem;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			for (j = 0; j < num_export_targets; j++) {
 				target = ceph_decode_32(&pexport_targets);
 				if (target >= m->possible_max_rank) {
@@ -273,11 +280,14 @@ struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
 				}
 				info->export_targets[j] = target;
 			}
+<<<<<<< HEAD
 =======
 			for (j = 0; j < num_export_targets; j++)
 				info->export_targets[j] =
 				       ceph_decode_32(&pexport_targets);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			info->export_targets = NULL;
 		}
@@ -410,16 +420,22 @@ void ceph_mdsmap_destroy(struct ceph_mdsmap *m)
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (m->m_info) {
 		for (i = 0; i < m->possible_max_rank; i++)
 			kfree(m->m_info[i].export_targets);
 		kfree(m->m_info);
 	}
+<<<<<<< HEAD
 =======
 	for (i = 0; i < m->possible_max_rank; i++)
 		kfree(m->m_info[i].export_targets);
 	kfree(m->m_info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(m->m_data_pg_pools);
 	kfree(m);
 }

@@ -79,6 +79,9 @@
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Creative Technology, Ltd Live! Cam Sync HD [VF0770]
  * The device advertises 8 formats, but only a rate of 48kHz is honored by the
  * hardware and 24 bits give chopped audio, so only report the one working
@@ -121,8 +124,11 @@
 },
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * HP Wireless Audio
  * When not ignored, causes instability issues for some users, forcing them to
  * skip the entire module.
@@ -2776,6 +2782,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Lenovo ThinkStation P620 Rear Line-in, Line-out and Microphone */
 {
@@ -2795,6 +2802,8 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 },
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Native Instruments MK2 series */
 {
 	/* Komplete Audio 6 */
@@ -2851,6 +2860,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 },
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * Auvitek au0828 devices with audio interface.
@@ -2900,6 +2910,8 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
 },
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Digidesign Mbox */
 {
 	/* Thanks to Clemens Ladisch <clemens@ladisch.de> */
@@ -3863,10 +3875,14 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
  *
  * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * They also need QUIRK_FLAG_ALIGN_TRANSFER, which makes one wonder if
 =======
  * They also need QUIRK_AUDIO_ALIGN_TRANSFER, which makes one wonder if
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * They also need QUIRK_FLAG_ALIGN_TRANSFER, which makes one wonder if
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * they pretend to be 96kHz mono as a workaround for stereo being broken
  * by that...
  *
@@ -3884,12 +3900,15 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
 			{
 				.ifnum = 2,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				.type = QUIRK_AUDIO_ALIGN_TRANSFER,
 			},
 			{
 				.ifnum = 2,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				.type = QUIRK_AUDIO_STANDARD_MIXER,
 			},
 			{

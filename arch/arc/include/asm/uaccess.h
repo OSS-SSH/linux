@@ -656,6 +656,7 @@ static inline unsigned long __arc_clear_user(void __user *to, unsigned long n)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline long
 __arc_strncpy_from_user(char *dst, const char __user *src, long count)
@@ -721,12 +722,15 @@ static inline long __arc_strnlen_user(const char __user *s, long n)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef CONFIG_CC_OPTIMIZE_FOR_SIZE
 
 #define INLINE_COPY_TO_USER
 #define INLINE_COPY_FROM_USER
 
 #define __clear_user(d, n)		__arc_clear_user(d, n)
+<<<<<<< HEAD
 <<<<<<< HEAD
 #else
 extern unsigned long arc_clear_user_noinline(void __user *to,
@@ -735,18 +739,19 @@ extern unsigned long arc_clear_user_noinline(void __user *to,
 =======
 #define __strncpy_from_user(d, s, n)	__arc_strncpy_from_user(d, s, n)
 #define __strnlen_user(s, n)		__arc_strnlen_user(s, n)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 extern unsigned long arc_clear_user_noinline(void __user *to,
 		unsigned long n);
-extern long arc_strncpy_from_user_noinline (char *dst, const char __user *src,
-		long count);
-extern long arc_strnlen_user_noinline(const char __user *src, long n);
-
 #define __clear_user(d, n)		arc_clear_user_noinline(d, n)
+<<<<<<< HEAD
 #define __strncpy_from_user(d, s, n)	arc_strncpy_from_user_noinline(d, s, n)
 #define __strnlen_user(s, n)		arc_strnlen_user_noinline(s, n)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #include <asm/segment.h>

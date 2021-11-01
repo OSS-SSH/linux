@@ -38,10 +38,14 @@ over a rather long period of time, but improvements are always welcome!
 1.	Does the update code have proper mutual exclusion?
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	RCU does allow *readers* to run (almost) naked, but *writers* must
 =======
 	RCU does allow -readers- to run (almost) naked, but -writers- must
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	RCU does allow *readers* to run (almost) naked, but *writers* must
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	still use some sort of mutual exclusion, such as:
 
 	a.	locking,
@@ -78,10 +82,14 @@ over a rather long period of time, but improvements are always welcome!
 	from under a lock.  Unless, of course, you have arranged some
 	other means of protection, such as a lock or a reference count
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*before* letting them out of the RCU read-side critical section.
 =======
 	-before- letting them out of the RCU read-side critical section.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*before* letting them out of the RCU read-side critical section.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 3.	Does the update code tolerate concurrent accesses?
 
@@ -110,10 +118,14 @@ over a rather long period of time, but improvements are always welcome!
 		pointer updates to properly aligned fields will
 		appear atomic, as will individual atomic primitives.
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Sequences of operations performed under a lock will *not*
 =======
 		Sequences of operations performed under a lock will -not-
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		Sequences of operations performed under a lock will *not*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		appear to be atomic to RCU readers, nor will sequences
 		of multiple atomic primitives.
 
@@ -346,10 +358,14 @@ over a rather long period of time, but improvements are always welcome!
 
 10.	Conversely, if you are in an RCU read-side critical section,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	and you don't hold the appropriate update-side lock, you *must*
 =======
 	and you don't hold the appropriate update-side lock, you -must-
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	and you don't hold the appropriate update-side lock, you *must*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	use the "_rcu()" variants of the list macros.  Failing to do so
 	will break Alpha, cause aggressive compilers to generate bad code,
 	and confuse people trying to read your code.
@@ -376,19 +392,27 @@ over a rather long period of time, but improvements are always welcome!
 	surviving CPU.	(If this was not the case, a self-spawning RCU
 	callback would prevent the victim CPU from ever going offline.)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Furthermore, CPUs designated by rcu_nocbs= might well *always*
 =======
 	Furthermore, CPUs designated by rcu_nocbs= might well -always-
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	Furthermore, CPUs designated by rcu_nocbs= might well *always*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	have their RCU callbacks executed on some other CPUs, in fact,
 	for some  real-time workloads, this is the whole point of using
 	the rcu_nocbs= kernel boot parameter.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 13.	Unlike other forms of RCU, it *is* permissible to block in an
 =======
 13.	Unlike other forms of RCU, it -is- permissible to block in an
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+13.	Unlike other forms of RCU, it *is* permissible to block in an
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SRCU read-side critical section (demarked by srcu_read_lock()
 	and srcu_read_unlock()), hence the "SRCU": "sleepable RCU".
 	Please note that if you don't need to sleep in read-side critical
@@ -436,6 +460,7 @@ over a rather long period of time, but improvements are always welcome!
 	is to wait until all pre-existing readers have finished before
 	carrying out some otherwise-destructive operation.  It is
 <<<<<<< HEAD
+<<<<<<< HEAD
 	therefore critically important to *first* remove any path
 	that readers can follow that could be affected by the
 	destructive operation, and *only then* invoke call_rcu(),
@@ -444,6 +469,11 @@ over a rather long period of time, but improvements are always welcome!
 	that readers can follow that could be affected by the
 	destructive operation, and -only- -then- invoke call_rcu(),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	therefore critically important to *first* remove any path
+	that readers can follow that could be affected by the
+	destructive operation, and *only then* invoke call_rcu(),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	synchronize_rcu(), or friends.
 
 	Because these primitives only wait for pre-existing readers, it
@@ -451,10 +481,14 @@ over a rather long period of time, but improvements are always welcome!
 	readers will execute safely.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 15.	The various RCU read-side primitives do *not* necessarily contain
 =======
 15.	The various RCU read-side primitives do -not- necessarily contain
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+15.	The various RCU read-side primitives do *not* necessarily contain
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memory barriers.  You should therefore plan for the CPU
 	and the compiler to freely reorder code into and out of RCU
 	read-side critical sections.  It is the responsibility of the
@@ -494,12 +528,17 @@ over a rather long period of time, but improvements are always welcome!
 	necessary to wait for all pending callbacks to be invoked after
 	the last invocation and before unloading that module.  Note that
 <<<<<<< HEAD
+<<<<<<< HEAD
 	it is absolutely *not* sufficient to wait for a grace period!
 	The current (say) synchronize_rcu() implementation is *not*
 =======
 	it is absolutely -not- sufficient to wait for a grace period!
 	The current (say) synchronize_rcu() implementation is -not-
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	it is absolutely *not* sufficient to wait for a grace period!
+	The current (say) synchronize_rcu() implementation is *not*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	guaranteed to wait for callbacks registered on other CPUs.
 	Or even on the current CPU if that CPU recently went offline
 	and came back online.
@@ -510,10 +549,14 @@ over a rather long period of time, but improvements are always welcome!
 	-	call_srcu() -> srcu_barrier()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	However, these barrier functions are absolutely *not* guaranteed
 =======
 	However, these barrier functions are absolutely -not- guaranteed
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	However, these barrier functions are absolutely *not* guaranteed
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	to wait for a grace period.  In fact, if there are no call_rcu()
 	callbacks waiting anywhere in the system, rcu_barrier() is within
 	its rights to return immediately.

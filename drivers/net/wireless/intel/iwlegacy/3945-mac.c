@@ -572,6 +572,7 @@ il3945_tx_skb(struct il_priv *il,
 	/* Physical address of this Tx command's header (not MAC header!),
 	 * within command buffer array. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	txcmd_phys = dma_map_single(&il->pci_dev->dev, &out_cmd->hdr, firstlen,
 				    DMA_TO_DEVICE);
 	if (unlikely(dma_mapping_error(&il->pci_dev->dev, txcmd_phys)))
@@ -581,12 +582,18 @@ il3945_tx_skb(struct il_priv *il,
 			   PCI_DMA_TODEVICE);
 	if (unlikely(pci_dma_mapping_error(il->pci_dev, txcmd_phys)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	txcmd_phys = dma_map_single(&il->pci_dev->dev, &out_cmd->hdr, firstlen,
+				    DMA_TO_DEVICE);
+	if (unlikely(dma_mapping_error(&il->pci_dev->dev, txcmd_phys)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto drop_unlock;
 
 	/* Set up TFD's 2nd entry to point directly to remainder of skb,
 	 * if any (802.11 null frames have no payload). */
 	secondlen = skb->len - hdr_len;
 	if (secondlen > 0) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		phys_addr = dma_map_single(&il->pci_dev->dev, skb->data + hdr_len,
 					   secondlen, DMA_TO_DEVICE);
@@ -597,6 +604,11 @@ il3945_tx_skb(struct il_priv *il,
 				   PCI_DMA_TODEVICE);
 		if (unlikely(pci_dma_mapping_error(il->pci_dev, phys_addr)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		phys_addr = dma_map_single(&il->pci_dev->dev, skb->data + hdr_len,
+					   secondlen, DMA_TO_DEVICE);
+		if (unlikely(dma_mapping_error(&il->pci_dev->dev, phys_addr)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto drop_unlock;
 	}
 
@@ -1028,6 +1040,7 @@ il3945_rx_allocate(struct il_priv *il, gfp_t priority)
 		/* Get physical address of RB/SKB */
 		page_dma =
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    dma_map_page(&il->pci_dev->dev, page, 0,
 				 PAGE_SIZE << il->hw_params.rx_page_order,
 				 DMA_FROM_DEVICE);
@@ -1035,11 +1048,18 @@ il3945_rx_allocate(struct il_priv *il, gfp_t priority)
 		if (unlikely(dma_mapping_error(&il->pci_dev->dev, page_dma))) {
 =======
 		    pci_map_page(il->pci_dev, page, 0,
+=======
+		    dma_map_page(&il->pci_dev->dev, page, 0,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 PAGE_SIZE << il->hw_params.rx_page_order,
-				 PCI_DMA_FROMDEVICE);
+				 DMA_FROM_DEVICE);
 
+<<<<<<< HEAD
 		if (unlikely(pci_dma_mapping_error(il->pci_dev, page_dma))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (unlikely(dma_mapping_error(&il->pci_dev->dev, page_dma))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__free_pages(page, il->hw_params.rx_page_order);
 			break;
 		}
@@ -1049,6 +1069,7 @@ il3945_rx_allocate(struct il_priv *il, gfp_t priority)
 		if (list_empty(&rxq->rx_used)) {
 			spin_unlock_irqrestore(&rxq->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_page(&il->pci_dev->dev, page_dma,
 				       PAGE_SIZE << il->hw_params.rx_page_order,
 				       DMA_FROM_DEVICE);
@@ -1057,6 +1078,11 @@ il3945_rx_allocate(struct il_priv *il, gfp_t priority)
 				       PAGE_SIZE << il->hw_params.rx_page_order,
 				       PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_page(&il->pci_dev->dev, page_dma,
+				       PAGE_SIZE << il->hw_params.rx_page_order,
+				       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__free_pages(page, il->hw_params.rx_page_order);
 			return;
 		}
@@ -1089,6 +1115,7 @@ il3945_rx_queue_reset(struct il_priv *il, struct il_rx_queue *rxq)
 		 * to an SKB, so we need to unmap and free potential storage */
 		if (rxq->pool[i].page != NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_page(&il->pci_dev->dev,
 				       rxq->pool[i].page_dma,
 				       PAGE_SIZE << il->hw_params.rx_page_order,
@@ -1098,6 +1125,12 @@ il3945_rx_queue_reset(struct il_priv *il, struct il_rx_queue *rxq)
 				       PAGE_SIZE << il->hw_params.rx_page_order,
 				       PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_page(&il->pci_dev->dev,
+				       rxq->pool[i].page_dma,
+				       PAGE_SIZE << il->hw_params.rx_page_order,
+				       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__il_free_pages(il, rxq->pool[i].page);
 			rxq->pool[i].page = NULL;
 		}
@@ -1145,6 +1178,7 @@ il3945_rx_queue_free(struct il_priv *il, struct il_rx_queue *rxq)
 	for (i = 0; i < RX_QUEUE_SIZE + RX_FREE_BUFFERS; i++) {
 		if (rxq->pool[i].page != NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_page(&il->pci_dev->dev,
 				       rxq->pool[i].page_dma,
 				       PAGE_SIZE << il->hw_params.rx_page_order,
@@ -1154,6 +1188,12 @@ il3945_rx_queue_free(struct il_priv *il, struct il_rx_queue *rxq)
 				       PAGE_SIZE << il->hw_params.rx_page_order,
 				       PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_page(&il->pci_dev->dev,
+				       rxq->pool[i].page_dma,
+				       PAGE_SIZE << il->hw_params.rx_page_order,
+				       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__il_free_pages(il, rxq->pool[i].page);
 			rxq->pool[i].page = NULL;
 		}
@@ -1254,6 +1294,7 @@ il3945_rx_handle(struct il_priv *il)
 		rxq->queue[i] = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_unmap_page(&il->pci_dev->dev, rxb->page_dma,
 			       PAGE_SIZE << il->hw_params.rx_page_order,
 			       DMA_FROM_DEVICE);
@@ -1262,6 +1303,11 @@ il3945_rx_handle(struct il_priv *il)
 			       PAGE_SIZE << il->hw_params.rx_page_order,
 			       PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&il->pci_dev->dev, rxb->page_dma,
+			       PAGE_SIZE << il->hw_params.rx_page_order,
+			       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pkt = rxb_addr(rxb);
 
 		len = le32_to_cpu(pkt->len_n_flags) & IL_RX_FRAME_SIZE_MSK;
@@ -1307,11 +1353,15 @@ il3945_rx_handle(struct il_priv *il)
 		if (rxb->page != NULL) {
 			rxb->page_dma =
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    dma_map_page(&il->pci_dev->dev, rxb->page, 0,
 					 PAGE_SIZE << il->hw_params.rx_page_order,
 					 DMA_FROM_DEVICE);
 			if (unlikely(dma_mapping_error(&il->pci_dev->dev,
 						       rxb->page_dma))) {
+<<<<<<< HEAD
 =======
 			    pci_map_page(il->pci_dev, rxb->page, 0,
 					 PAGE_SIZE << il->hw_params.
@@ -1319,6 +1369,8 @@ il3945_rx_handle(struct il_priv *il)
 			if (unlikely(pci_dma_mapping_error(il->pci_dev,
 							   rxb->page_dma))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				__il_free_pages(il, rxb->page);
 				rxb->page = NULL;
 				list_add_tail(&rxb->list, &rxq->rx_used);
@@ -3671,12 +3723,16 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	pci_set_master(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
 =======
 	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 	if (!err)
 		err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		IL_WARN("No suitable DMA available.\n");
 		goto out_pci_disable_device;

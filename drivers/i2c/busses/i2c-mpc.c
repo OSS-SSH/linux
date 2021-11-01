@@ -636,12 +636,17 @@ static irqreturn_t mpc_i2c_isr(int irq, void *dev_id)
 	status = readb(i2c->base + MPC_I2C_SR);
 	if (status & CSR_MIF) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Wait up to 100us for transfer to properly complete */
 		readb_poll_timeout(i2c->base + MPC_I2C_SR, status, !(status & CSR_MCF), 0, 100);
 =======
 		/* Read again to allow register to stabilise */
 		status = readb(i2c->base + MPC_I2C_SR);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Wait up to 100us for transfer to properly complete */
+		readb_poll_timeout(i2c->base + MPC_I2C_SR, status, !(status & CSR_MCF), 0, 100);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		writeb(0, i2c->base + MPC_I2C_SR);
 		mpc_i2c_do_intr(i2c, status);
 		return IRQ_HANDLED;

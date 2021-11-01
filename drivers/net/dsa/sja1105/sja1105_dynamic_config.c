@@ -305,6 +305,9 @@ sja1105pqrs_common_l2_lookup_cmd_packing(void *buf, struct sja1105_dyn_cmd *cmd,
 	}
 	sja1105_packing(p, &hostcmd, 25, 23, size, op);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -314,8 +317,11 @@ sja1105pqrs_l2_lookup_cmd_packing(void *buf, struct sja1105_dyn_cmd *cmd,
 	int entry_size = SJA1105PQRS_SIZE_L2_LOOKUP_ENTRY;
 
 	sja1105pqrs_common_l2_lookup_cmd_packing(buf, cmd, op, entry_size);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Hack - The hardware takes the 'index' field within
 	 * struct sja1105_l2_lookup_entry as the index on which this command
@@ -325,6 +331,7 @@ sja1105pqrs_l2_lookup_cmd_packing(void *buf, struct sja1105_dyn_cmd *cmd,
 	 * such that our API doesn't need to ask for a full-blown entry
 	 * structure when e.g. a delete is requested.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	sja1105_packing(buf, &cmd->index, 15, 6, entry_size, op);
 =======
@@ -340,12 +347,16 @@ sja1105pqrs_l2_lookup_cmd_packing(void *buf, struct sja1105_dyn_cmd *cmd,
 
 	return sja1105pqrs_common_l2_lookup_cmd_packing(buf, cmd, op, size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sja1105_packing(buf, &cmd->index, 15, 6, entry_size, op);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
 sja1110_l2_lookup_cmd_packing(void *buf, struct sja1105_dyn_cmd *cmd,
 			      enum packing_op op)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int entry_size = SJA1110_SIZE_L2_LOOKUP_ENTRY;
 
@@ -357,6 +368,13 @@ sja1110_l2_lookup_cmd_packing(void *buf, struct sja1105_dyn_cmd *cmd,
 
 	return sja1105pqrs_common_l2_lookup_cmd_packing(buf, cmd, op, size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int entry_size = SJA1110_SIZE_L2_LOOKUP_ENTRY;
+
+	sja1105pqrs_common_l2_lookup_cmd_packing(buf, cmd, op, entry_size);
+
+	sja1105_packing(buf, &cmd->index, 10, 1, entry_size, op);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* The switch is so retarded that it makes our command/entry abstraction
@@ -1379,6 +1397,7 @@ u8 sja1105et_fdb_hash(struct sja1105_private *priv, const u8 *addr, u16 vid)
 	struct sja1105_l2_lookup_params_entry *l2_lookup_params =
 		priv->static_config.tables[BLK_IDX_L2_LOOKUP_PARAMS].entries;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 input, poly_koopman = l2_lookup_params->poly;
 	/* Convert polynomial from Koopman to 'normal' notation */
 	u8 poly = (u8)(1 + (poly_koopman << 1));
@@ -1389,14 +1408,20 @@ u8 sja1105et_fdb_hash(struct sja1105_private *priv, const u8 *addr, u16 vid)
 
 =======
 	u64 poly_koopman = l2_lookup_params->poly;
+=======
+	u64 input, poly_koopman = l2_lookup_params->poly;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Convert polynomial from Koopman to 'normal' notation */
 	u8 poly = (u8)(1 + (poly_koopman << 1));
-	u64 vlanid = l2_lookup_params->shared_learn ? 0 : vid;
-	u64 input = (vlanid << 48) | ether_addr_to_u64(addr);
 	u8 crc = 0; /* seed */
 	int i;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	input = ((u64)vid << 48) | ether_addr_to_u64(addr);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Mask the eight bytes starting from MSB one at a time */
 	for (i = 56; i >= 0; i -= 8) {
 		u8 byte = (input & (0xffull << i)) >> i;

@@ -561,11 +561,17 @@ static int kgd_hqd_destroy(struct kgd_dev *kgd, void *mqd,
 		type = RESET_WAVES;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case KFD_PREEMPT_TYPE_WAVEFRONT_SAVE:
 		type = SAVE_WAVES;
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case KFD_PREEMPT_TYPE_WAVEFRONT_SAVE:
+		type = SAVE_WAVES;
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		type = DRAIN_PIPE;
 		break;
@@ -761,6 +767,9 @@ static void set_vm_context_page_table_base(struct kgd_dev *kgd, uint32_t vmid,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void program_trap_handler_settings(struct kgd_dev *kgd,
 		uint32_t vmid, uint64_t tba_addr, uint64_t tma_addr)
 {
@@ -788,8 +797,11 @@ static void program_trap_handler_settings(struct kgd_dev *kgd,
 	unlock_srbm(kgd);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct kfd2kgd_calls gfx_v10_kfd2kgd = {
 	.program_sh_mem_settings = kgd_program_sh_mem_settings,
 	.set_pasid_vmid_mapping = kgd_set_pasid_vmid_mapping,
@@ -811,7 +823,11 @@ const struct kfd2kgd_calls gfx_v10_kfd2kgd = {
 			get_atc_vmid_pasid_mapping_info,
 	.set_vm_context_page_table_base = set_vm_context_page_table_base,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.program_trap_handler_settings = program_trap_handler_settings,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.program_trap_handler_settings = program_trap_handler_settings,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

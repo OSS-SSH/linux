@@ -12,9 +12,13 @@
 
 #define DEFAULT_TX_QUEUE_LEN	1000
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define STAB_SIZE_LOG_MAX	30
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define STAB_SIZE_LOG_MAX	30
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct qdisc_walker {
 	int	stop;

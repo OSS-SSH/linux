@@ -20,9 +20,13 @@ dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls1046a-rdb.dtb
 dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls1088a-qds.dtb
 dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls1088a-rdb.dtb
 <<<<<<< HEAD
+<<<<<<< HEAD
 dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls1088a-ten64.dtb
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls1088a-ten64.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls2080a-qds.dtb
 dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls2080a-rdb.dtb
 dtb-$(CONFIG_ARCH_LAYERSCAPE) += fsl-ls2080a-simu.dtb
@@ -47,17 +51,25 @@ dtb-$(CONFIG_ARCH_MXC) += imx8mm-venice-gw72xx-0x.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mm-venice-gw73xx-0x.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mm-venice-gw7901.dtb
 <<<<<<< HEAD
+<<<<<<< HEAD
 dtb-$(CONFIG_ARCH_MXC) += imx8mm-venice-gw7902.dtb
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dtb-$(CONFIG_ARCH_MXC) += imx8mm-venice-gw7902.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_MXC) += imx8mn-beacon-kit.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mn-evk.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mn-ddr4-evk.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mn-var-som-symphony.dtb
 <<<<<<< HEAD
+<<<<<<< HEAD
 dtb-$(CONFIG_ARCH_MXC) += imx8mn-venice-gw7902.dtb
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dtb-$(CONFIG_ARCH_MXC) += imx8mn-venice-gw7902.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_MXC) += imx8mp-evk.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mp-phyboard-pollux-rdk.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-evk.dtb
@@ -68,9 +80,13 @@ dtb-$(CONFIG_ARCH_MXC) += imx8mq-librem5-r2.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-librem5-r3.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-librem5-r4.dtb
 <<<<<<< HEAD
+<<<<<<< HEAD
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-mnt-reform2.dtb
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dtb-$(CONFIG_ARCH_MXC) += imx8mq-mnt-reform2.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-nitrogen.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-phanbell.dtb
 dtb-$(CONFIG_ARCH_MXC) += imx8mq-pico-pi.dtb

@@ -19,9 +19,13 @@
 
 #define ADF_VINTSOU_OFFSET	0x204
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ADF_VINTMSK_OFFSET	0x208
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ADF_VINTMSK_OFFSET	0x208
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ADF_VINTSOU_BUN		BIT(0)
 #define ADF_VINTSOU_PF2VF	BIT(1)
 
@@ -33,6 +37,9 @@ struct adf_vf_stop_data {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void adf_enable_pf2vf_interrupts(struct adf_accel_dev *accel_dev)
 {
 	struct adf_accel_pci *pci_info = &accel_dev->accel_pci_dev;
@@ -54,8 +61,11 @@ void adf_disable_pf2vf_interrupts(struct adf_accel_dev *accel_dev)
 }
 EXPORT_SYMBOL_GPL(adf_disable_pf2vf_interrupts);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int adf_enable_msi(struct adf_accel_dev *accel_dev)
 {
 	struct adf_accel_pci *pci_dev_info = &accel_dev->accel_pci_dev;
@@ -189,16 +199,24 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 			&GET_BARS(accel_dev)[hw_data->get_misc_bar_id(hw_data)];
 	void __iomem *pmisc_bar_addr = pmisc->virt_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool handled = false;
 	u32 v_int, v_mask;
 =======
 	u32 v_int;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool handled = false;
+	u32 v_int, v_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Read VF INT source CSR to determine the source of VF interrupt */
 	v_int = ADF_CSR_RD(pmisc_bar_addr, ADF_VINTSOU_OFFSET);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Read VF INT mask CSR to determine which sources are masked */
 	v_mask = ADF_CSR_RD(pmisc_bar_addr, ADF_VINTMSK_OFFSET);
 
@@ -208,8 +226,11 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 	 */
 	v_int &= ~v_mask;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check for PF2VF interrupt */
 	if (v_int & ADF_VINTSOU_PF2VF) {
 		/* Disable PF to VF interrupt */
@@ -218,10 +239,14 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 		/* Schedule tasklet to handle interrupt BH */
 		tasklet_hi_schedule(&accel_dev->vf.pf2vf_bh_tasklet);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		handled = true;
 =======
 		return IRQ_HANDLED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		handled = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Check bundle interrupt */
@@ -234,6 +259,7 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 						    bank->bank_number, 0);
 		tasklet_hi_schedule(&bank->resp_handler);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		handled = true;
 	}
 
@@ -244,6 +270,12 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 
 	return IRQ_NONE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		handled = true;
+	}
+
+	return handled ? IRQ_HANDLED : IRQ_NONE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int adf_request_msi_irq(struct adf_accel_dev *accel_dev)
@@ -342,6 +374,9 @@ err_out:
 EXPORT_SYMBOL_GPL(adf_vf_isr_resource_alloc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * adf_flush_vf_wq() - Flush workqueue for VF
  * @accel_dev:  Pointer to acceleration device.
@@ -366,8 +401,11 @@ EXPORT_SYMBOL_GPL(adf_flush_vf_wq);
  *
  * Return: 0 on success, error code otherwise.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int __init adf_init_vf_wq(void)
 {
 	adf_vf_stop_wq = alloc_workqueue("adf_vf_stop_wq", WQ_MEM_RECLAIM, 0);

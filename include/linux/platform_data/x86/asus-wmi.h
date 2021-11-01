@@ -62,9 +62,13 @@
 
 /* Misc */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ASUS_WMI_DEVID_PANEL_OD		0x00050019
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ASUS_WMI_DEVID_PANEL_OD		0x00050019
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ASUS_WMI_DEVID_CAMERA		0x00060013
 #define ASUS_WMI_DEVID_LID_FLIP		0x00060062
 
@@ -94,14 +98,20 @@
 #define ASUS_WMI_DEVID_KBD_DOCK		0x00120063
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* dgpu on/off */
 #define ASUS_WMI_DEVID_EGPU		0x00090019
 
 /* dgpu on/off */
 #define ASUS_WMI_DEVID_DGPU		0x00090020
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* DSTS masks */
 #define ASUS_WMI_DSTS_STATUS_BIT	0x00000001
 #define ASUS_WMI_DSTS_UNKNOWN_BIT	0x00000002

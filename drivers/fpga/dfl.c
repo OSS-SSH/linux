@@ -285,10 +285,14 @@ static int dfl_bus_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void dfl_bus_remove(struct device *dev)
 =======
 static int dfl_bus_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void dfl_bus_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dfl_driver *ddrv = to_dfl_drv(dev->driver);
 	struct dfl_device *ddev = to_dfl_dev(dev);
@@ -296,10 +300,13 @@ static int dfl_bus_remove(struct device *dev)
 	if (ddrv->remove)
 		ddrv->remove(ddev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dfl_bus_uevent(struct device *dev, struct kobj_uevent_env *env)
@@ -389,9 +396,13 @@ dfl_dev_add(struct dfl_feature_platform_data *pdata,
 	ddev->type = feature_dev_id_type(pdev);
 	ddev->feature_id = feature->id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ddev->revision = feature->revision;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ddev->revision = feature->revision;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ddev->cdev = pdata->dfl_cdev;
 
 	/* add mmio resource */
@@ -729,9 +740,13 @@ struct build_feature_devs_info {
 struct dfl_feature_info {
 	u16 fid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 revision;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 revision;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct resource mmio_res;
 	void __iomem *ioaddr;
 	struct list_head node;
@@ -812,9 +827,13 @@ static int build_info_commit_dev(struct build_feature_devs_info *binfo)
 		feature->dev = fdev;
 		feature->id = finfo->fid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		feature->revision = finfo->revision;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		feature->revision = finfo->revision;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * the FIU header feature has some fundamental functions (sriov
@@ -930,6 +949,7 @@ static void build_info_free(struct build_feature_devs_info *binfo)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline u32 feature_size(u64 value)
 {
 	u32 ofst = FIELD_GET(DFH_NEXT_HDR_OFST, value);
@@ -939,10 +959,16 @@ static inline u32 feature_size(void __iomem *start)
 	u64 v = readq(start + DFH);
 	u32 ofst = FIELD_GET(DFH_NEXT_HDR_OFST, v);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline u32 feature_size(u64 value)
+{
+	u32 ofst = FIELD_GET(DFH_NEXT_HDR_OFST, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* workaround for private features with invalid size, use 4K instead */
 	return ofst ? ofst : 4096;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static u16 feature_id(u64 value)
 {
@@ -955,6 +981,12 @@ static u16 feature_id(void __iomem *start)
 	u16 id = FIELD_GET(DFH_ID, v);
 	u8 type = FIELD_GET(DFH_TYPE, v);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u16 feature_id(u64 value)
+{
+	u16 id = FIELD_GET(DFH_ID, value);
+	u8 type = FIELD_GET(DFH_TYPE, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (type == DFH_TYPE_FIU)
 		return FEATURE_ID_FIU_HEADER;
@@ -1053,6 +1085,7 @@ create_feature_instance(struct build_feature_devs_info *binfo,
 	unsigned int irq_base, nr_irqs;
 	struct dfl_feature_info *finfo;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 revision = 0;
 	int ret;
 	u64 v;
@@ -1066,12 +1099,27 @@ create_feature_instance(struct build_feature_devs_info *binfo,
 		fid = fid ? fid : feature_id(v);
 	}
 =======
+=======
+	u8 revision = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
+	u64 v;
 
+<<<<<<< HEAD
 	/* read feature size and id if inputs are invalid */
 	size = size ? size : feature_size(binfo->ioaddr + ofst);
 	fid = fid ? fid : feature_id(binfo->ioaddr + ofst);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (fid != FEATURE_ID_AFU) {
+		v = readq(binfo->ioaddr + ofst);
+		revision = FIELD_GET(DFH_REVISION, v);
+
+		/* read feature size and id if inputs are invalid */
+		size = size ? size : feature_size(v);
+		fid = fid ? fid : feature_id(v);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (binfo->len - ofst < size)
 		return -EINVAL;
@@ -1086,9 +1134,13 @@ create_feature_instance(struct build_feature_devs_info *binfo,
 
 	finfo->fid = fid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	finfo->revision = revision;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	finfo->revision = revision;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	finfo->mmio_res.start = binfo->start + ofst;
 	finfo->mmio_res.end = finfo->mmio_res.start + size - 1;
 	finfo->mmio_res.flags = IORESOURCE_MEM;
@@ -1218,10 +1270,14 @@ static int parse_feature_private(struct build_feature_devs_info *binfo,
 	if (!is_feature_dev_detected(binfo)) {
 		dev_err(binfo->dev, "the private feature 0x%x does not belong to any AFU.\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			feature_id(readq(binfo->ioaddr + ofst)));
 =======
 			feature_id(binfo->ioaddr + ofst));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			feature_id(readq(binfo->ioaddr + ofst)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 

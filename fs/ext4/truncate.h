@@ -12,14 +12,20 @@
 static inline void ext4_truncate_failed_write(struct inode *inode)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct address_space *mapping = inode->i_mapping;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct address_space *mapping = inode->i_mapping;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We don't need to call ext4_break_layouts() because the blocks we
 	 * are truncating were never visible to userspace.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	filemap_invalidate_lock(mapping);
 	truncate_inode_pages(mapping, inode->i_size);
@@ -31,6 +37,12 @@ static inline void ext4_truncate_failed_write(struct inode *inode)
 	ext4_truncate(inode);
 	up_write(&EXT4_I(inode)->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock(mapping);
+	truncate_inode_pages(mapping, inode->i_size);
+	ext4_truncate(inode);
+	filemap_invalidate_unlock(mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

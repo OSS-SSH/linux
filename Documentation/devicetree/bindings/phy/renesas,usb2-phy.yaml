@@ -31,13 +31,19 @@ properties:
           - const: renesas,rcar-gen3-usb2-phy
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - items:
           - enum:
               - renesas,usb2-phy-r9a07g044 # RZ/G2{L,LC}
           - const: renesas,rzg2l-usb2-phy  # RZ/G2L family
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   reg:
     maxItems: 1
 
@@ -100,6 +106,9 @@ required:
   - '#phy-cells'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 allOf:
   - if:
       properties:
@@ -110,8 +119,11 @@ allOf:
       required:
         - resets
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 additionalProperties: false
 
 examples:

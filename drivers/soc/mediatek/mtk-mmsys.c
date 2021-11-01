@@ -14,9 +14,13 @@
 #include "mt8167-mmsys.h"
 #include "mt8183-mmsys.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "mt8365-mmsys.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "mt8365-mmsys.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct mtk_mmsys_driver_data mt2701_mmsys_driver_data = {
 	.clk_driver = "clk-mt2701-mm",
@@ -57,14 +61,20 @@ static const struct mtk_mmsys_driver_data mt8183_mmsys_driver_data = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct mtk_mmsys_driver_data mt8365_mmsys_driver_data = {
 	.clk_driver = "clk-mt8365-mm",
 	.routes = mt8365_mmsys_routing_table,
 	.num_routes = ARRAY_SIZE(mt8365_mmsys_routing_table),
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mtk_mmsys {
 	void __iomem *regs;
 	const struct mtk_mmsys_driver_data *data;
@@ -82,12 +92,18 @@ void mtk_mmsys_ddp_connect(struct device *dev,
 	for (i = 0; i < mmsys->data->num_routes; i++)
 		if (cur == routes[i].from_comp && next == routes[i].to_comp) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			reg = readl_relaxed(mmsys->regs + routes[i].addr);
 			reg &= ~routes[i].mask;
 			reg |= routes[i].val;
 =======
 			reg = readl_relaxed(mmsys->regs + routes[i].addr) | routes[i].val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			reg = readl_relaxed(mmsys->regs + routes[i].addr);
+			reg &= ~routes[i].mask;
+			reg |= routes[i].val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			writel_relaxed(reg, mmsys->regs + routes[i].addr);
 		}
 }
@@ -105,11 +121,16 @@ void mtk_mmsys_ddp_disconnect(struct device *dev,
 	for (i = 0; i < mmsys->data->num_routes; i++)
 		if (cur == routes[i].from_comp && next == routes[i].to_comp) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			reg = readl_relaxed(mmsys->regs + routes[i].addr);
 			reg &= ~routes[i].mask;
 =======
 			reg = readl_relaxed(mmsys->regs + routes[i].addr) & ~routes[i].val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			reg = readl_relaxed(mmsys->regs + routes[i].addr);
+			reg &= ~routes[i].mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			writel_relaxed(reg, mmsys->regs + routes[i].addr);
 		}
 }
@@ -182,12 +203,18 @@ static const struct of_device_id of_match_mtk_mmsys[] = {
 		.data = &mt8183_mmsys_driver_data,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.compatible = "mediatek,mt8365-mmsys",
 		.data = &mt8365_mmsys_driver_data,
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ }
 };
 

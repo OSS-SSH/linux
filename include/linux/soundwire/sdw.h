@@ -662,10 +662,15 @@ struct sdw_slave_ops {
  * @first_interrupt_done: status flag tracking if the interrupt handling
  * for a Slave happens for the first time after enumeration
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @is_mockup_device: status flag used to squelch errors in the command/control
  * protocol for SoundWire mockup devices
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @is_mockup_device: status flag used to squelch errors in the command/control
+ * protocol for SoundWire mockup devices
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct sdw_slave {
 	struct sdw_slave_id id;
@@ -689,9 +694,13 @@ struct sdw_slave {
 	u32 unattach_request;
 	bool first_interrupt_done;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool is_mockup_device;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool is_mockup_device;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define dev_to_sdw_dev(_dev) container_of(_dev, struct sdw_slave, dev)

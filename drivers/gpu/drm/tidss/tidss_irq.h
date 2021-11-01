@@ -68,6 +68,7 @@ void tidss_irq_enable_vblank(struct drm_crtc *crtc);
 void tidss_irq_disable_vblank(struct drm_crtc *crtc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int tidss_irq_install(struct drm_device *ddev, unsigned int irq);
 void tidss_irq_uninstall(struct drm_device *ddev);
 =======
@@ -76,6 +77,10 @@ int tidss_irq_postinstall(struct drm_device *ddev);
 void tidss_irq_uninstall(struct drm_device *ddev);
 irqreturn_t tidss_irq_handler(int irq, void *arg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int tidss_irq_install(struct drm_device *ddev, unsigned int irq);
+void tidss_irq_uninstall(struct drm_device *ddev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void tidss_irq_resume(struct tidss_device *tidss);
 

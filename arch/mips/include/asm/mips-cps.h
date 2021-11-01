@@ -11,10 +11,13 @@
 #include <linux/types.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/mips-boards/launch.h>
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern unsigned long __cps_access_bad_size(void)
 	__compiletime_error("Bad size for CPS accessor");
 
@@ -171,14 +174,18 @@ static inline uint64_t mips_cps_cluster_config(unsigned int cluster)
 static inline unsigned int mips_cps_numcores(unsigned int cluster)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int ncores;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!mips_cm_present())
 		return 0;
 
 	/* Add one before masking to handle 0xff indicating no cores */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return (mips_cps_cluster_config(cluster) + 1) & CM_GCR_CONFIG_PCORES;
 =======
@@ -201,6 +208,9 @@ static inline unsigned int mips_cps_numcores(unsigned int cluster)
 
 	return ncores;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return (mips_cps_cluster_config(cluster) + 1) & CM_GCR_CONFIG_PCORES;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

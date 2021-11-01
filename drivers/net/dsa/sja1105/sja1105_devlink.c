@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0
 /* Copyright (c) 2018-2019, Vladimir Oltean <olteanv@gmail.com>
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright 2020 NXP
 =======
  * Copyright 2020 NXP Semiconductors
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright 2020 NXP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include "sja1105.h"
 
@@ -120,6 +124,7 @@ static void sja1105_teardown_devlink_regions(struct dsa_switch *ds)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int sja1105_best_effort_vlan_filtering_get(struct sja1105_private *priv,
 						  bool *be_vlan)
@@ -221,6 +226,8 @@ static void sja1105_teardown_devlink_params(struct dsa_switch *ds)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int sja1105_devlink_info_get(struct dsa_switch *ds,
 			     struct devlink_info_req *req,
 			     struct netlink_ext_ack *extack)
@@ -241,6 +248,7 @@ int sja1105_devlink_info_get(struct dsa_switch *ds,
 int sja1105_devlink_setup(struct dsa_switch *ds)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sja1105_setup_devlink_regions(ds);
 =======
 	int rc;
@@ -257,13 +265,19 @@ int sja1105_devlink_setup(struct dsa_switch *ds)
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sja1105_setup_devlink_regions(ds);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void sja1105_devlink_teardown(struct dsa_switch *ds)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	sja1105_teardown_devlink_params(ds);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sja1105_teardown_devlink_regions(ds);
 }

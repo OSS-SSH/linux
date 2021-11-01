@@ -331,6 +331,9 @@ void nested_vmx_free_vcpu(struct kvm_vcpu *vcpu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define EPTP_PA_MASK   GENMASK_ULL(51, 12)
 
 static bool nested_ept_root_matches(hpa_t root_hpa, u64 root_eptp, u64 eptp)
@@ -356,8 +359,11 @@ static void nested_ept_invalidate_addr(struct kvm_vcpu *vcpu, gpa_t eptp,
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nested_ept_inject_page_fault(struct kvm_vcpu *vcpu,
 		struct x86_exception *fault)
 {
@@ -371,6 +377,9 @@ static void nested_ept_inject_page_fault(struct kvm_vcpu *vcpu,
 		vmx->nested.pml_full = false;
 		exit_qualification &= INTR_INFO_UNBLOCK_NMI;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		if (fault->error_code & PFERR_RSVD_MASK)
 			vm_exit_reason = EXIT_REASON_EPT_MISCONFIG;
@@ -387,12 +396,15 @@ static void nested_ept_inject_page_fault(struct kvm_vcpu *vcpu,
 		nested_ept_invalidate_addr(vcpu, vmcs12->ept_pointer,
 					   fault->address);
 	}
+<<<<<<< HEAD
 =======
 	} else if (fault->error_code & PFERR_RSVD_MASK)
 		vm_exit_reason = EXIT_REASON_EPT_MISCONFIG;
 	else
 		vm_exit_reason = EXIT_REASON_EPT_VIOLATION;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	nested_vmx_vmexit(vcpu, vm_exit_reason, 0, exit_qualification);
 	vmcs12->guest_physical_address = fault->address;
@@ -2218,11 +2230,16 @@ static void prepare_vmcs02_early_rare(struct vcpu_vmx *vmx,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct loaded_vmcs *vmcs01,
 				 struct vmcs12 *vmcs12)
 =======
 static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct loaded_vmcs *vmcs01,
+				 struct vmcs12 *vmcs12)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 exec_control;
 	u64 guest_efer = nested_vmx_calc_efer(vmx, vmcs12);
@@ -2234,14 +2251,19 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 	 * PIN CONTROLS
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exec_control = __pin_controls_get(vmcs01);
 =======
 	exec_control = vmx_pin_based_exec_ctrl(vmx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exec_control = __pin_controls_get(vmcs01);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	exec_control |= (vmcs12->pin_based_vm_exec_control &
 			 ~PIN_BASED_VMX_PREEMPTION_TIMER);
 
 	/* Posted interrupts setting is only taken from vmcs12.  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	vmx->nested.pi_pending = false;
 	if (nested_cpu_has_posted_intr(vmcs12))
@@ -2250,22 +2272,32 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 		exec_control &= ~PIN_BASED_POSTED_INTR;
 =======
 	if (nested_cpu_has_posted_intr(vmcs12)) {
+=======
+	vmx->nested.pi_pending = false;
+	if (nested_cpu_has_posted_intr(vmcs12))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vmx->nested.posted_intr_nv = vmcs12->posted_intr_nv;
-		vmx->nested.pi_pending = false;
-	} else {
+	else
 		exec_control &= ~PIN_BASED_POSTED_INTR;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pin_controls_set(vmx, exec_control);
 
 	/*
 	 * EXEC CONTROLS
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exec_control = __exec_controls_get(vmcs01); /* L0's desires */
 =======
 	exec_control = vmx_exec_control(vmx); /* L0's desires */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exec_control = __exec_controls_get(vmcs01); /* L0's desires */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	exec_control &= ~CPU_BASED_INTR_WINDOW_EXITING;
 	exec_control &= ~CPU_BASED_NMI_WINDOW_EXITING;
 	exec_control &= ~CPU_BASED_TPR_SHADOW;
@@ -2303,6 +2335,7 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 	 */
 	if (cpu_has_secondary_exec_ctrls()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		exec_control = __secondary_exec_controls_get(vmcs01);
 
 		/* Take the following fields only from vmcs12 */
@@ -2314,6 +2347,13 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 		/* Take the following fields only from vmcs12 */
 		exec_control &= ~(SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES |
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		exec_control = __secondary_exec_controls_get(vmcs01);
+
+		/* Take the following fields only from vmcs12 */
+		exec_control &= ~(SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES |
+				  SECONDARY_EXEC_VIRTUALIZE_X2APIC_MODE |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  SECONDARY_EXEC_ENABLE_INVPCID |
 				  SECONDARY_EXEC_ENABLE_RDTSCP |
 				  SECONDARY_EXEC_XSAVES |
@@ -2322,12 +2362,18 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 				  SECONDARY_EXEC_APIC_REGISTER_VIRT |
 				  SECONDARY_EXEC_ENABLE_VMFUNC |
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  SECONDARY_EXEC_TSC_SCALING |
 				  SECONDARY_EXEC_DESC);
 
 =======
 				  SECONDARY_EXEC_TSC_SCALING);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  SECONDARY_EXEC_TSC_SCALING |
+				  SECONDARY_EXEC_DESC);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (nested_cpu_has(vmcs12,
 				   CPU_BASED_ACTIVATE_SECONDARY_CONTROLS))
 			exec_control |= vmcs12->secondary_vm_exec_control;
@@ -2368,6 +2414,7 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 	 * we can avoid VMWrites during vmx_set_efer().
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exec_control = __vm_entry_controls_get(vmcs01);
 	exec_control |= vmcs12->vm_entry_controls;
 	exec_control &= ~(VM_ENTRY_IA32E_MODE | VM_ENTRY_LOAD_IA32_EFER);
@@ -2375,6 +2422,11 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 	exec_control = (vmcs12->vm_entry_controls | vmx_vmentry_ctrl()) &
 			~VM_ENTRY_IA32E_MODE & ~VM_ENTRY_LOAD_IA32_EFER;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exec_control = __vm_entry_controls_get(vmcs01);
+	exec_control |= vmcs12->vm_entry_controls;
+	exec_control &= ~(VM_ENTRY_IA32E_MODE | VM_ENTRY_LOAD_IA32_EFER);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cpu_has_load_ia32_efer()) {
 		if (guest_efer & EFER_LMA)
 			exec_control |= VM_ENTRY_IA32E_MODE;
@@ -2391,6 +2443,7 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 	 * bits may be modified by vmx_set_efer() in prepare_vmcs02().
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exec_control = __vm_exit_controls_get(vmcs01);
 	if (cpu_has_load_ia32_efer() && guest_efer != host_efer)
 		exec_control |= VM_EXIT_LOAD_IA32_EFER;
@@ -2401,6 +2454,13 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
 	if (cpu_has_load_ia32_efer() && guest_efer != host_efer)
 		exec_control |= VM_EXIT_LOAD_IA32_EFER;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exec_control = __vm_exit_controls_get(vmcs01);
+	if (cpu_has_load_ia32_efer() && guest_efer != host_efer)
+		exec_control |= VM_EXIT_LOAD_IA32_EFER;
+	else
+		exec_control &= ~VM_EXIT_LOAD_IA32_EFER;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vm_exit_controls_set(vmx, exec_control);
 
 	/*
@@ -2637,17 +2697,25 @@ static int prepare_vmcs02(struct kvm_vcpu *vcpu, struct vmcs12 *vmcs12,
 	 * which means L1 attempted VMEntry to L2 with invalid state.
 	 * Fail the VMEntry.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * However when force loading the guest state (SMM exit or
 	 * loading nested state after migration, it is possible to
 	 * have invalid guest state now, which will be later fixed by
 	 * restoring L2 register state
+<<<<<<< HEAD
 	 */
 	if (CC(from_vmentry && !vmx_guest_state_valid(vcpu))) {
 =======
 	 */
 	if (CC(!vmx_guest_state_valid(vcpu))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 */
+	if (CC(from_vmentry && !vmx_guest_state_valid(vcpu))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*entry_failure_code = ENTRY_FAIL_DEFAULT;
 		return -EINVAL;
 	}
@@ -3454,10 +3522,14 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
 	vmx_switch_vmcs(vcpu, &vmx->nested.vmcs02);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	prepare_vmcs02_early(vmx, &vmx->vmcs01, vmcs12);
 =======
 	prepare_vmcs02_early(vmx, vmcs12);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prepare_vmcs02_early(vmx, &vmx->vmcs01, vmcs12);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (from_vmentry) {
 		if (unlikely(!nested_get_vmcs12_pages(vcpu))) {
@@ -4378,10 +4450,14 @@ static void load_vmcs12_host_state(struct kvm_vcpu *vcpu,
 	else
 		seg.db = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__vmx_set_segment(vcpu, &seg, VCPU_SREG_CS);
 =======
 	vmx_set_segment(vcpu, &seg, VCPU_SREG_CS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__vmx_set_segment(vcpu, &seg, VCPU_SREG_CS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	seg = (struct kvm_segment) {
 		.base = 0,
 		.limit = 0xFFFFFFFF,
@@ -4392,6 +4468,7 @@ static void load_vmcs12_host_state(struct kvm_vcpu *vcpu,
 		.g = 1
 	};
 	seg.selector = vmcs12->host_ds_selector;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	__vmx_set_segment(vcpu, &seg, VCPU_SREG_DS);
 	seg.selector = vmcs12->host_es_selector;
@@ -4406,17 +4483,24 @@ static void load_vmcs12_host_state(struct kvm_vcpu *vcpu,
 	__vmx_set_segment(vcpu, &seg, VCPU_SREG_GS);
 =======
 	vmx_set_segment(vcpu, &seg, VCPU_SREG_DS);
+=======
+	__vmx_set_segment(vcpu, &seg, VCPU_SREG_DS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	seg.selector = vmcs12->host_es_selector;
-	vmx_set_segment(vcpu, &seg, VCPU_SREG_ES);
+	__vmx_set_segment(vcpu, &seg, VCPU_SREG_ES);
 	seg.selector = vmcs12->host_ss_selector;
-	vmx_set_segment(vcpu, &seg, VCPU_SREG_SS);
+	__vmx_set_segment(vcpu, &seg, VCPU_SREG_SS);
 	seg.selector = vmcs12->host_fs_selector;
 	seg.base = vmcs12->host_fs_base;
-	vmx_set_segment(vcpu, &seg, VCPU_SREG_FS);
+	__vmx_set_segment(vcpu, &seg, VCPU_SREG_FS);
 	seg.selector = vmcs12->host_gs_selector;
 	seg.base = vmcs12->host_gs_base;
+<<<<<<< HEAD
 	vmx_set_segment(vcpu, &seg, VCPU_SREG_GS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__vmx_set_segment(vcpu, &seg, VCPU_SREG_GS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	seg = (struct kvm_segment) {
 		.base = vmcs12->host_tr_base,
 		.limit = 0x67,
@@ -4425,18 +4509,25 @@ static void load_vmcs12_host_state(struct kvm_vcpu *vcpu,
 		.present = 1
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__vmx_set_segment(vcpu, &seg, VCPU_SREG_TR);
 
 	memset(&seg, 0, sizeof(seg));
 	seg.unusable = 1;
 	__vmx_set_segment(vcpu, &seg, VCPU_SREG_LDTR);
+<<<<<<< HEAD
 =======
 	vmx_set_segment(vcpu, &seg, VCPU_SREG_TR);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kvm_set_dr(vcpu, 7, 0x400);
 	vmcs_write64(GUEST_IA32_DEBUGCTL, 0);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (nested_vmx_load_msr(vcpu, vmcs12->vm_exit_msr_load_addr,
 				vmcs12->vm_exit_msr_load_count))
@@ -4451,6 +4542,13 @@ static void load_vmcs12_host_state(struct kvm_vcpu *vcpu,
 				vmcs12->vm_exit_msr_load_count))
 		nested_vmx_abort(vcpu, VMX_ABORT_LOAD_HOST_MSR_FAIL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (nested_vmx_load_msr(vcpu, vmcs12->vm_exit_msr_load_addr,
+				vmcs12->vm_exit_msr_load_count))
+		nested_vmx_abort(vcpu, VMX_ABORT_LOAD_HOST_MSR_FAIL);
+
+	to_vmx(vcpu)->emulation_required = vmx_emulation_required(vcpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline u64 nested_vmx_get_vmcs01_guest_efer(struct vcpu_vmx *vmx)
@@ -4527,11 +4625,14 @@ static void nested_vmx_restore_host_state(struct kvm_vcpu *vcpu)
 	kvm_mmu_reset_context(vcpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (cpu_has_vmx_msr_bitmap())
 		vmx_update_msr_bitmap(vcpu);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * This nasty bit of open coding is a compromise between blindly
 	 * loading L1's MSRs using the exit load lists (incorrect emulation
@@ -5006,6 +5107,7 @@ out_vmcs02:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Emulate the VMXON instruction. */
 =======
 /*
@@ -5017,6 +5119,9 @@ out_vmcs02:
  * argument is different from the VMXON pointer (which the spec says they do).
  */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Emulate the VMXON instruction. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int handle_vmon(struct kvm_vcpu *vcpu)
 {
 	int ret;
@@ -5477,6 +5582,7 @@ static int handle_vmptrst(struct kvm_vcpu *vcpu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define EPTP_PA_MASK   GENMASK_ULL(51, 12)
 
@@ -5487,6 +5593,8 @@ static bool nested_ept_root_matches(hpa_t root_hpa, u64 root_eptp, u64 eptp)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Emulate the INVEPT instruction */
 static int handle_invept(struct kvm_vcpu *vcpu)
 {
@@ -5981,11 +6089,16 @@ static bool nested_vmx_l0_wants_exit(struct kvm_vcpu *vcpu,
 			return true;
 		else if (is_page_fault(intr_info))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return vcpu->arch.apf.host_apf_flags ||
 			       vmx_need_pf_intercept(vcpu);
 =======
 			return vcpu->arch.apf.host_apf_flags || !enable_ept;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return vcpu->arch.apf.host_apf_flags ||
+			       vmx_need_pf_intercept(vcpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else if (is_debug(intr_info) &&
 			 vcpu->guest_debug &
 			 (KVM_GUESTDBG_SINGLESTEP | KVM_GUESTDBG_USE_HW_BP))
@@ -6029,14 +6142,20 @@ static bool nested_vmx_l0_wants_exit(struct kvm_vcpu *vcpu,
 		/* VM functions are emulated through L2->L0 vmexits. */
 		return true;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case EXIT_REASON_BUS_LOCK:
 		/*
 		 * At present, bus lock VM exit is never exposed to L1.
 		 * Handle L2's bus locks in L0 directly.
 		 */
 		return true;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}

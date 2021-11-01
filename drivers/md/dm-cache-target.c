@@ -3123,6 +3123,9 @@ static void cache_status(struct dm_target *ti, status_type_t type,
 		if (cache->nr_ctr_args)
 			DMEMIT(" %s", cache->ctr_args[cache->nr_ctr_args - 1]);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case STATUSTYPE_IMA:
@@ -3147,8 +3150,11 @@ static void cache_status(struct dm_target *ti, status_type_t type,
 		DMEMIT(",no_discard_passdown=%c", cache->features.discard_passdown ? 'n' : 'y');
 		DMEMIT(";");
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return;

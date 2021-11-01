@@ -134,6 +134,7 @@ static inline void hisi_dma_update_bit(void __iomem *addr, u32 pos, bool val)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void hisi_dma_free_irq_vectors(void *data)
 {
@@ -141,6 +142,8 @@ static void hisi_dma_free_irq_vectors(void *data)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void hisi_dma_pause_dma(struct hisi_dma_dev *hdma_dev, u32 index,
 			       bool pause)
 {
@@ -548,9 +551,13 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	pci_set_master(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* This will be freed by 'pcim_release()'. See 'pcim_enable_device()' */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* This will be freed by 'pcim_release()'. See 'pcim_enable_device()' */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = pci_alloc_irq_vectors(pdev, HISI_DMA_MSI_NUM, HISI_DMA_MSI_NUM,
 				    PCI_IRQ_MSI);
 	if (ret < 0) {
@@ -559,12 +566,15 @@ static int hisi_dma_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ret = devm_add_action_or_reset(dev, hisi_dma_free_irq_vectors, pdev);
 	if (ret)
 		return ret;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_dev = &hdma_dev->dma_dev;
 	dma_cap_set(DMA_MEMCPY, dma_dev->cap_mask);
 	dma_dev->device_free_chan_resources = hisi_dma_free_chan_resources;

@@ -28,11 +28,17 @@
 #include <linux/slab.h>
 #include <asm/div64.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_X86_64)
 #include <asm/intel-family.h>
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if IS_ENABLED(CONFIG_X86_64)
+#include <asm/intel-family.h>
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/amdgpu_drm.h>
 #include "ppatomctrl.h"
 #include "atombios.h"
@@ -1740,6 +1746,9 @@ static int smu7_disable_dpm_tasks(struct pp_hwmgr *hwmgr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool intel_core_rkl_chk(void)
 {
 #if IS_ENABLED(CONFIG_X86_64)
@@ -1751,8 +1760,11 @@ static bool intel_core_rkl_chk(void)
 #endif
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void smu7_init_dpm_defaults(struct pp_hwmgr *hwmgr)
 {
 	struct smu7_hwmgr *data = (struct smu7_hwmgr *)(hwmgr->backend);
@@ -1779,11 +1791,16 @@ static void smu7_init_dpm_defaults(struct pp_hwmgr *hwmgr)
 	data->mclk_dpm_key_disabled = hwmgr->feature_mask & PP_MCLK_DPM_MASK ? false : true;
 	data->sclk_dpm_key_disabled = hwmgr->feature_mask & PP_SCLK_DPM_MASK ? false : true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data->pcie_dpm_key_disabled =
 		intel_core_rkl_chk() || !(hwmgr->feature_mask & PP_PCIE_DPM_MASK);
 =======
 	data->pcie_dpm_key_disabled = hwmgr->feature_mask & PP_PCIE_DPM_MASK ? false : true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	data->pcie_dpm_key_disabled =
+		intel_core_rkl_chk() || !(hwmgr->feature_mask & PP_PCIE_DPM_MASK);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* need to set voltage control types before EVV patching */
 	data->voltage_control = SMU7_VOLTAGE_CONTROL_NONE;
 	data->vddci_control = SMU7_VOLTAGE_CONTROL_NONE;
@@ -3238,10 +3255,14 @@ static int smu7_force_dpm_level(struct pp_hwmgr *hwmgr,
 	if (!ret) {
 		if (level == AMD_DPM_FORCED_LEVEL_PROFILE_PEAK && hwmgr->dpm_level != AMD_DPM_FORCED_LEVEL_PROFILE_PEAK)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			smu7_fan_ctrl_set_fan_speed_pwm(hwmgr, 255);
 =======
 			smu7_fan_ctrl_set_fan_speed_percent(hwmgr, 100);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			smu7_fan_ctrl_set_fan_speed_pwm(hwmgr, 255);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else if (level != AMD_DPM_FORCED_LEVEL_PROFILE_PEAK && hwmgr->dpm_level == AMD_DPM_FORCED_LEVEL_PROFILE_PEAK)
 			smu7_fan_ctrl_reset_fan_speed_to_default(hwmgr);
 	}
@@ -4926,12 +4947,17 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 	struct phm_odn_clock_levels *odn_sclk_table = &(odn_table->odn_core_clock_dpm_levels);
 	struct phm_odn_clock_levels *odn_mclk_table = &(odn_table->odn_memory_clock_dpm_levels);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int size = 0;
 	uint32_t i, now, clock, pcie_speed;
 =======
 	int i, now, size = 0;
 	uint32_t clock, pcie_speed;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int size = 0;
+	uint32_t i, now, clock, pcie_speed;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (type) {
 	case PP_SCLK:
@@ -4946,10 +4972,14 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		for (i = 0; i < sclk_table->count; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					i, sclk_table->dpm_levels[i].value / 100,
 					(i == now) ? "*" : "");
 		break;
@@ -4965,10 +4995,14 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		for (i = 0; i < mclk_table->count; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
 =======
 			size += sprintf(buf + size, "%d: %uMhz %s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					i, mclk_table->dpm_levels[i].value / 100,
 					(i == now) ? "*" : "");
 		break;
@@ -4983,10 +5017,14 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 
 		for (i = 0; i < pcie_table->count; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %s %s\n", i,
 =======
 			size += sprintf(buf + size, "%d: %s %s\n", i,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %s %s\n", i,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					(pcie_table->dpm_levels[i].value == 0) ? "2.5GT/s, x8" :
 					(pcie_table->dpm_levels[i].value == 1) ? "5.0GT/s, x16" :
 					(pcie_table->dpm_levels[i].value == 2) ? "8.0GT/s, x16" : "",
@@ -4994,6 +5032,7 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 		break;
 	case OD_SCLK:
 		if (hwmgr->od_enabled) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			size = sysfs_emit(buf, "%s:\n", "OD_SCLK");
 			for (i = 0; i < odn_sclk_table->num_of_pl; i++)
@@ -5003,12 +5042,18 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 			for (i = 0; i < odn_sclk_table->num_of_pl; i++)
 				size += sprintf(buf + size, "%d: %10uMHz %10umV\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size = sysfs_emit(buf, "%s:\n", "OD_SCLK");
+			for (i = 0; i < odn_sclk_table->num_of_pl; i++)
+				size += sysfs_emit_at(buf, size, "%d: %10uMHz %10umV\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					i, odn_sclk_table->entries[i].clock/100,
 					odn_sclk_table->entries[i].vddc);
 		}
 		break;
 	case OD_MCLK:
 		if (hwmgr->od_enabled) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			size = sysfs_emit(buf, "%s:\n", "OD_MCLK");
 			for (i = 0; i < odn_mclk_table->num_of_pl; i++)
@@ -5018,12 +5063,18 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 			for (i = 0; i < odn_mclk_table->num_of_pl; i++)
 				size += sprintf(buf + size, "%d: %10uMHz %10umV\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size = sysfs_emit(buf, "%s:\n", "OD_MCLK");
+			for (i = 0; i < odn_mclk_table->num_of_pl; i++)
+				size += sysfs_emit_at(buf, size, "%d: %10uMHz %10umV\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					i, odn_mclk_table->entries[i].clock/100,
 					odn_mclk_table->entries[i].vddc);
 		}
 		break;
 	case OD_RANGE:
 		if (hwmgr->od_enabled) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			size = sysfs_emit(buf, "%s:\n", "OD_RANGE");
 			size += sysfs_emit_at(buf, size, "SCLK: %7uMHz %10uMHz\n",
@@ -5036,13 +5087,21 @@ static int smu7_print_clock_levels(struct pp_hwmgr *hwmgr,
 =======
 			size = sprintf(buf, "%s:\n", "OD_RANGE");
 			size += sprintf(buf + size, "SCLK: %7uMHz %10uMHz\n",
+=======
+			size = sysfs_emit(buf, "%s:\n", "OD_RANGE");
+			size += sysfs_emit_at(buf, size, "SCLK: %7uMHz %10uMHz\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				data->golden_dpm_table.sclk_table.dpm_levels[0].value/100,
 				hwmgr->platform_descriptor.overdriveLimit.engineClock/100);
-			size += sprintf(buf + size, "MCLK: %7uMHz %10uMHz\n",
+			size += sysfs_emit_at(buf, size, "MCLK: %7uMHz %10uMHz\n",
 				data->golden_dpm_table.mclk_table.dpm_levels[0].value/100,
 				hwmgr->platform_descriptor.overdriveLimit.memoryClock/100);
+<<<<<<< HEAD
 			size += sprintf(buf + size, "VDDC: %7umV %11umV\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "VDDC: %7umV %11umV\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				data->odn_dpm_table.min_vddc,
 				data->odn_dpm_table.max_vddc);
 		}
@@ -5058,10 +5117,14 @@ static void smu7_set_fan_control_mode(struct pp_hwmgr *hwmgr, uint32_t mode)
 	switch (mode) {
 	case AMD_FAN_CTRL_NONE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		smu7_fan_ctrl_set_fan_speed_pwm(hwmgr, 255);
 =======
 		smu7_fan_ctrl_set_fan_speed_percent(hwmgr, 100);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		smu7_fan_ctrl_set_fan_speed_pwm(hwmgr, 255);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case AMD_FAN_CTRL_MANUAL:
 		if (phm_cap_enabled(hwmgr->platform_descriptor.platformCaps,
@@ -5577,10 +5640,14 @@ static int smu7_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size += sysfs_emit_at(buf, size, "%s %16s %16s %16s %16s %16s %16s %16s\n",
 =======
 	size += sprintf(buf + size, "%s %16s %16s %16s %16s %16s %16s %16s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size += sysfs_emit_at(buf, size, "%s %16s %16s %16s %16s %16s %16s %16s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			title[0], title[1], title[2], title[3],
 			title[4], title[5], title[6], title[7]);
 
@@ -5589,10 +5656,14 @@ static int smu7_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 	for (i = 0; i < len; i++) {
 		if (i == hwmgr->power_profile_mode) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%3d %14s %s: %8d %16d %16d %16d %16d %16d\n",
 =======
 			size += sprintf(buf + size, "%3d %14s %s: %8d %16d %16d %16d %16d %16d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%3d %14s %s: %8d %16d %16d %16d %16d %16d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			i, profile_name[i], "*",
 			data->current_profile_setting.sclk_up_hyst,
 			data->current_profile_setting.sclk_down_hyst,
@@ -5604,14 +5675,19 @@ static int smu7_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 		}
 		if (smu7_profiling[i].bupdate_sclk)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%3d %16s: %8d %16d %16d ",
 =======
 			size += sprintf(buf + size, "%3d %16s: %8d %16d %16d ",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%3d %16s: %8d %16d %16d ",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			i, profile_name[i], smu7_profiling[i].sclk_up_hyst,
 			smu7_profiling[i].sclk_down_hyst,
 			smu7_profiling[i].sclk_activity);
 		else
+<<<<<<< HEAD
 <<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%3d %16s: %8s %16s %16s ",
 			i, profile_name[i], "-", "-", "-");
@@ -5625,15 +5701,26 @@ static int smu7_get_power_profile_mode(struct pp_hwmgr *hwmgr, char *buf)
 		if (smu7_profiling[i].bupdate_mclk)
 			size += sprintf(buf + size, "%16d %16d %16d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%3d %16s: %8s %16s %16s ",
+			i, profile_name[i], "-", "-", "-");
+
+		if (smu7_profiling[i].bupdate_mclk)
+			size += sysfs_emit_at(buf, size, "%16d %16d %16d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			smu7_profiling[i].mclk_up_hyst,
 			smu7_profiling[i].mclk_down_hyst,
 			smu7_profiling[i].mclk_activity);
 		else
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%16s %16s %16s\n",
 =======
 			size += sprintf(buf + size, "%16s %16s %16s\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%16s %16s %16s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			"-", "-", "-");
 	}
 
@@ -5790,12 +5877,17 @@ static const struct pp_hwmgr_func smu7_hwmgr_funcs = {
 	.stop_thermal_controller = smu7_thermal_stop_thermal_controller,
 	.get_fan_speed_info = smu7_fan_ctrl_get_fan_speed_info,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.get_fan_speed_pwm = smu7_fan_ctrl_get_fan_speed_pwm,
 	.set_fan_speed_pwm = smu7_fan_ctrl_set_fan_speed_pwm,
 =======
 	.get_fan_speed_percent = smu7_fan_ctrl_get_fan_speed_percent,
 	.set_fan_speed_percent = smu7_fan_ctrl_set_fan_speed_percent,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.get_fan_speed_pwm = smu7_fan_ctrl_get_fan_speed_pwm,
+	.set_fan_speed_pwm = smu7_fan_ctrl_set_fan_speed_pwm,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.reset_fan_speed_to_default = smu7_fan_ctrl_reset_fan_speed_to_default,
 	.get_fan_speed_rpm = smu7_fan_ctrl_get_fan_speed_rpm,
 	.set_fan_speed_rpm = smu7_fan_ctrl_set_fan_speed_rpm,

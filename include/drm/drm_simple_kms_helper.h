@@ -117,15 +117,21 @@ struct drm_simple_display_pipe_funcs {
 	 * more details.
 	 *
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * For GEM drivers who neither have a @prepare_fb nor @cleanup_fb hook
 	 * set drm_gem_simple_display_pipe_prepare_fb() is called automatically
 	 * to implement this. Other drivers which need additional plane
 	 * processing can call drm_gem_simple_display_pipe_prepare_fb() from
 	 * their @prepare_fb hook.
+<<<<<<< HEAD
 =======
 	 * Drivers which always have their buffers pinned should use
 	 * drm_gem_simple_display_pipe_prepare_fb() for this hook.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	int (*prepare_fb)(struct drm_simple_display_pipe *pipe,
 			  struct drm_plane_state *plane_state);
@@ -160,6 +166,9 @@ struct drm_simple_display_pipe_funcs {
 
 	/**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @reset_crtc:
 	 *
 	 * Optional, called by &drm_crtc_funcs.reset. Please read the
@@ -187,8 +196,11 @@ struct drm_simple_display_pipe_funcs {
 				   struct drm_crtc_state *crtc_state);
 
 	/**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @reset_plane:
 	 *
 	 * Optional, called by &drm_plane_funcs.reset. Please read the

@@ -232,9 +232,13 @@ found:
 /**
  * mptcp_token_get_sock - retrieve mptcp connection sock using its token
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @net: restrict to this namespace
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @net: restrict to this namespace
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @token: token of the mptcp connection to retrieve
  *
  * This function returns the mptcp connection structure with the given token.
@@ -243,10 +247,14 @@ found:
  * returns NULL if no connection with the given token value exists.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct mptcp_sock *mptcp_token_get_sock(struct net *net, u32 token)
 =======
 struct mptcp_sock *mptcp_token_get_sock(u32 token)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct mptcp_sock *mptcp_token_get_sock(struct net *net, u32 token)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hlist_nulls_node *pos;
 	struct token_bucket *bucket;
@@ -260,6 +268,7 @@ again:
 	sk_nulls_for_each_rcu(sk, pos, &bucket->msk_chain) {
 		msk = mptcp_sk(sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (READ_ONCE(msk->token) != token ||
 		    !net_eq(sock_net(sk), net))
 			continue;
@@ -271,11 +280,22 @@ again:
 		    !net_eq(sock_net(sk), net)) {
 =======
 		if (READ_ONCE(msk->token) != token)
+=======
+		if (READ_ONCE(msk->token) != token ||
+		    !net_eq(sock_net(sk), net))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
+
 		if (!refcount_inc_not_zero(&sk->sk_refcnt))
 			goto not_found;
+<<<<<<< HEAD
 		if (READ_ONCE(msk->token) != token) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		if (READ_ONCE(msk->token) != token ||
+		    !net_eq(sock_net(sk), net)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sock_put(sk);
 			goto again;
 		}

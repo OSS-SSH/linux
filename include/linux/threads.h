@@ -39,10 +39,14 @@
  * on original pid max of 32k for 32 cpus.  Also, increase the
  * minimum settable value for pid_max on the running system based
 <<<<<<< HEAD
+<<<<<<< HEAD
  * on similar defaults.  See kernel/pid.c:pid_idr_init() for details.
 =======
  * on similar defaults.  See kernel/pid.c:pidmap_init() for details.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * on similar defaults.  See kernel/pid.c:pid_idr_init() for details.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #define PIDS_PER_CPU_DEFAULT	1024
 #define PIDS_PER_CPU_MIN	8

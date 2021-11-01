@@ -161,6 +161,7 @@ static int acp_poweron(struct generic_pm_domain *genpd)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int acp_genpd_add_device(struct device *dev, void *data)
 {
 	struct generic_pm_domain *gpd = data;
@@ -185,17 +186,35 @@ static int acp_genpd_remove_device(struct device *dev, void *data)
 	return 0;
 =======
 static struct device *get_mfd_cell_dev(const char *device_name, int r)
+=======
+static int acp_genpd_add_device(struct device *dev, void *data)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	char auto_dev_name[25];
-	struct device *dev;
+	struct generic_pm_domain *gpd = data;
+	int ret;
 
-	snprintf(auto_dev_name, sizeof(auto_dev_name),
-		 "%s.%d.auto", device_name, r);
-	dev = bus_find_device_by_name(&platform_bus_type, NULL, auto_dev_name);
-	dev_info(dev, "device %s added to pm domain\n", auto_dev_name);
+	ret = pm_genpd_add_device(gpd, dev);
+	if (ret)
+		dev_err(dev, "Failed to add dev to genpd %d\n", ret);
 
+<<<<<<< HEAD
 	return dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+}
+
+static int acp_genpd_remove_device(struct device *dev, void *data)
+{
+	int ret;
+
+	ret = pm_genpd_remove_device(dev);
+	if (ret)
+		dev_err(dev, "Failed to remove dev from genpd %d\n", ret);
+
+	/* Continue to remove */
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -206,6 +225,7 @@ static struct device *get_mfd_cell_dev(const char *device_name, int r)
  */
 static int acp_hw_init(void *handle)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int r;
 	uint64_t acp_base;
@@ -218,6 +238,12 @@ static int acp_hw_init(void *handle)
 	u32 count = 0;
 	struct device *dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int r;
+	uint64_t acp_base;
+	u32 val = 0;
+	u32 count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct i2s_platform_data *i2s_pdata = NULL;
 
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
@@ -374,10 +400,14 @@ static int acp_hw_init(void *handle)
 		goto failure;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	r = device_for_each_child(adev->acp.parent, &adev->acp.acp_genpd->gpd,
 				  acp_genpd_add_device);
 	if (r)
 		goto failure;
+<<<<<<< HEAD
 =======
 	for (i = 0; i < ACP_DEVS ; i++) {
 		dev = get_mfd_cell_dev(adev->acp.acp_cell[i].name, i);
@@ -389,6 +419,8 @@ static int acp_hw_init(void *handle)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Assert Soft reset of ACP */
 	val = cgs_read_register(adev->acp.cgs_device, mmACP_SOFT_RESET);
@@ -450,6 +482,7 @@ failure:
 static int acp_hw_fini(void *handle)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 val = 0;
 	u32 count = 0;
 =======
@@ -458,6 +491,10 @@ static int acp_hw_fini(void *handle)
 	u32 count = 0;
 	struct device *dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 val = 0;
+	u32 count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 
 	/* return early if no ACP */
@@ -503,6 +540,7 @@ static int acp_hw_fini(void *handle)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	device_for_each_child(adev->acp.parent, NULL,
 			      acp_genpd_remove_device);
 =======
@@ -514,6 +552,10 @@ static int acp_hw_fini(void *handle)
 			dev_err(dev, "remove dev from genpd failed\n");
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	device_for_each_child(adev->acp.parent, NULL,
+			      acp_genpd_remove_device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mfd_remove_devices(adev->acp.parent);
 	kfree(adev->acp.acp_res);

@@ -56,10 +56,14 @@ int __init parse_efi_signature_list(
 		pr_devel("LIST[%04x] guid=%pUl ls=%x hs=%x ss=%x\n",
 			 offs,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 &list.signature_type, list.signature_list_size,
 =======
 			 list.signature_type.b, list.signature_list_size,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 &list.signature_type, list.signature_list_size,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 list.signature_header_size, list.signature_size);
 
 		lsize = list.signature_list_size;

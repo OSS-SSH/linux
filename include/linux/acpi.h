@@ -250,10 +250,14 @@ void acpi_table_print_madt_entry (struct acpi_subtable_header *madt);
 void acpi_numa_slit_init (struct acpi_table_slit *slit);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(CONFIG_X86) || defined(CONFIG_IA64) || defined(CONFIG_LOONGARCH)
 =======
 #if defined(CONFIG_X86) || defined(CONFIG_IA64)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_X86) || defined(CONFIG_IA64) || defined(CONFIG_LOONGARCH)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void acpi_numa_processor_affinity_init (struct acpi_srat_cpu_affinity *pa);
 #else
 static inline void
@@ -1385,6 +1389,7 @@ static inline int find_acpi_cpu_cache_topology(unsigned int cpu, int level)
 
 #ifdef CONFIG_ACPI
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void acpi_device_notify(struct device *dev);
 extern void acpi_device_notify_remove(struct device *dev);
 #else
@@ -1399,6 +1404,13 @@ acpi_platform_notify(struct device *dev, enum kobject_action action)
 	return 0;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void acpi_device_notify(struct device *dev);
+extern void acpi_device_notify_remove(struct device *dev);
+#else
+static inline void acpi_device_notify(struct device *dev) { }
+static inline void acpi_device_notify_remove(struct device *dev) { }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #endif	/*_LINUX_ACPI_H*/

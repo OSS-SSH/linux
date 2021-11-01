@@ -192,10 +192,14 @@ static u32 drm_max_vblank_count(struct drm_device *dev, unsigned int pipe)
 /*
  * "No hw counter" fallback implementation of .get_vblank_counter() hook,
 <<<<<<< HEAD
+<<<<<<< HEAD
  * if there is no usable hardware frame counter available.
 =======
  * if there is no useable hardware frame counter available.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * if there is no usable hardware frame counter available.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static u32 drm_vblank_no_hw_counter(struct drm_device *dev, unsigned int pipe)
 {
@@ -910,10 +914,14 @@ drm_get_last_vbltimestamp(struct drm_device *dev, unsigned int pipe,
  * provide a barrier: Any writes done before calling
  * drm_crtc_handle_vblank() will be visible to callers of the later
 <<<<<<< HEAD
+<<<<<<< HEAD
  * functions, if the vblank count is the same or a later one.
 =======
  * functions, iff the vblank count is the same or a later one.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * functions, if the vblank count is the same or a later one.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * See also &drm_vblank_crtc.count.
  *
@@ -977,10 +985,14 @@ static u64 drm_vblank_count_and_time(struct drm_device *dev, unsigned int pipe,
  * provide a barrier: Any writes done before calling
  * drm_crtc_handle_vblank() will be visible to callers of the later
 <<<<<<< HEAD
+<<<<<<< HEAD
  * functions, if the vblank count is the same or a later one.
 =======
  * functions, iff the vblank count is the same or a later one.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * functions, if the vblank count is the same or a later one.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * See also &drm_vblank_crtc.count.
  */
@@ -1750,6 +1762,9 @@ static void drm_wait_vblank_reply(struct drm_device *dev, unsigned int pipe,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool drm_wait_vblank_supported(struct drm_device *dev)
 {
 #if IS_ENABLED(CONFIG_DRM_LEGACY)
@@ -1759,8 +1774,11 @@ static bool drm_wait_vblank_supported(struct drm_device *dev)
 	return drm_dev_has_vblank(dev);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int drm_wait_vblank_ioctl(struct drm_device *dev, void *data,
 			  struct drm_file *file_priv)
 {
@@ -1773,10 +1791,14 @@ int drm_wait_vblank_ioctl(struct drm_device *dev, void *data,
 	unsigned int flags, pipe, high_pipe;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!drm_wait_vblank_supported(dev))
 =======
 	if (!dev->irq_enabled)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!drm_wait_vblank_supported(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EOPNOTSUPP;
 
 	if (vblwait->request.type & _DRM_VBLANK_SIGNAL)
@@ -2017,10 +2039,14 @@ EXPORT_SYMBOL(drm_handle_vblank);
  * provide a barrier: Any writes done before calling
  * drm_crtc_handle_vblank() will be visible to callers of the later
 <<<<<<< HEAD
+<<<<<<< HEAD
  * functions, if the vblank count is the same or a later one.
 =======
  * functions, iff the vblank count is the same or a later one.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * functions, if the vblank count is the same or a later one.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * See also &drm_vblank_crtc.count.
  *
@@ -2038,10 +2064,14 @@ EXPORT_SYMBOL(drm_crtc_handle_vblank);
  *
  * \param dev DRM device
 <<<<<<< HEAD
+<<<<<<< HEAD
  * \param data user argument, pointing to a drm_crtc_get_sequence structure.
 =======
  * \param data user arguement, pointing to a drm_crtc_get_sequence structure.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * \param data user argument, pointing to a drm_crtc_get_sequence structure.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * \param file_priv drm file private for the user's open file descriptor
  */
 
@@ -2060,10 +2090,14 @@ int drm_crtc_get_sequence_ioctl(struct drm_device *dev, void *data,
 		return -EOPNOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!drm_dev_has_vblank(dev))
 =======
 	if (!dev->irq_enabled)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!drm_dev_has_vblank(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EOPNOTSUPP;
 
 	crtc = drm_crtc_find(dev, file_priv, get_seq->crtc_id);
@@ -2102,10 +2136,14 @@ int drm_crtc_get_sequence_ioctl(struct drm_device *dev, void *data,
  *
  * \param dev DRM device
 <<<<<<< HEAD
+<<<<<<< HEAD
  * \param data user argument, pointing to a drm_crtc_queue_sequence structure.
 =======
  * \param data user arguement, pointing to a drm_crtc_queue_sequence structure.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * \param data user argument, pointing to a drm_crtc_queue_sequence structure.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * \param file_priv drm file private for the user's open file descriptor
  */
 
@@ -2127,10 +2165,14 @@ int drm_crtc_queue_sequence_ioctl(struct drm_device *dev, void *data,
 		return -EOPNOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!drm_dev_has_vblank(dev))
 =======
 	if (!dev->irq_enabled)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!drm_dev_has_vblank(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EOPNOTSUPP;
 
 	crtc = drm_crtc_find(dev, file_priv, queue_seq->crtc_id);

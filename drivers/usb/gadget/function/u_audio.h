@@ -20,6 +20,9 @@
 #define FBACK_SLOW_MAX	250
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Feature Unit parameters */
 struct uac_fu_params {
 	int id;			/* Feature Unit ID */
@@ -32,26 +35,37 @@ struct uac_fu_params {
 	s16 volume_res;		/* volume resolution in 1/256 dB */
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct uac_params {
 	/* playback */
 	int p_chmask;	/* channel mask */
 	int p_srate;	/* rate in Hz */
 	int p_ssize;	/* sample size */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct uac_fu_params p_fu;	/* Feature Unit parameters */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct uac_fu_params p_fu;	/* Feature Unit parameters */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* capture */
 	int c_chmask;	/* channel mask */
 	int c_srate;	/* rate in Hz */
 	int c_ssize;	/* sample size */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct uac_fu_params c_fu;	/* Feature Unit parameters */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct uac_fu_params c_fu;	/* Feature Unit parameters */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	int req_number; /* number of preallocated requests */
 	int fb_max;	/* upper frequency drift feedback limit per-mil */
@@ -73,11 +87,17 @@ struct g_audio {
 	unsigned int out_ep_maxpsize;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Notify UAC driver about control change */
 	int (*notify)(struct g_audio *g_audio, int unit_id, int cs);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Notify UAC driver about control change */
+	int (*notify)(struct g_audio *g_audio, int unit_id, int cs);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* The ALSA Sound Card it represents on the USB-Client side */
 	struct snd_uac_chip *uac;
 
@@ -124,11 +144,17 @@ int u_audio_start_playback(struct g_audio *g_audio);
 void u_audio_stop_playback(struct g_audio *g_audio);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int u_audio_get_volume(struct g_audio *g_audio, int playback, s16 *val);
 int u_audio_set_volume(struct g_audio *g_audio, int playback, s16 val);
 int u_audio_get_mute(struct g_audio *g_audio, int playback, int *val);
 int u_audio_set_mute(struct g_audio *g_audio, int playback, int val);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __U_AUDIO_H */

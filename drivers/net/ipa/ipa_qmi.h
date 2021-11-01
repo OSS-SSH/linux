@@ -40,6 +40,9 @@ struct ipa_qmi {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ipa_qmi_setup() - Set up for QMI message exchange
  * @ipa:		IPA pointer
@@ -54,6 +57,7 @@ struct ipa_qmi {
  * If the modem crashes (or shuts down) a new handshake begins when the
  * modem's QMI server is started again.
  */
+<<<<<<< HEAD
 int ipa_qmi_setup(struct ipa *ipa);
 
 /**
@@ -63,6 +67,14 @@ int ipa_qmi_setup(struct ipa *ipa);
 =======
 int ipa_qmi_setup(struct ipa *ipa);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int ipa_qmi_setup(struct ipa *ipa);
+
+/**
+ * ipa_qmi_teardown() - Tear down IPA QMI handles
+ * @ipa:		IPA pointer
+ */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ipa_qmi_teardown(struct ipa *ipa);
 
 #endif /* !_IPA_QMI_H_ */

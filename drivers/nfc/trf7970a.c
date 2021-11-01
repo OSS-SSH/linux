@@ -644,10 +644,14 @@ static void trf7970a_send_err_upstream(struct trf7970a *trf, int errno)
 
 static int trf7970a_transmit(struct trf7970a *trf, struct sk_buff *skb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     unsigned int len, const u8 *prefix,
 =======
 			     unsigned int len, u8 *prefix,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     unsigned int len, const u8 *prefix,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     unsigned int prefix_len)
 {
 	struct spi_transfer t[2];
@@ -1392,6 +1396,7 @@ static int trf7970a_is_iso15693_write_or_lock(u8 cmd)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int trf7970a_per_cmd_config(struct trf7970a *trf,
 				   const struct sk_buff *skb)
 {
@@ -1401,6 +1406,12 @@ static int trf7970a_per_cmd_config(struct trf7970a *trf, struct sk_buff *skb)
 {
 	u8 *req = skb->data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int trf7970a_per_cmd_config(struct trf7970a *trf,
+				   const struct sk_buff *skb)
+{
+	const u8 *req = skb->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 special_fcn_reg1, iso_ctrl;
 	int ret;
 
@@ -1803,10 +1814,14 @@ static int trf7970a_tg_listen(struct nfc_digital_dev *ddev, u16 timeout,
 			      nfc_digital_cmd_complete_t cb, void *arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
 =======
 	struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(trf->dev, "Listen - state: %d, timeout: %d ms\n",
 		trf->state, timeout);
@@ -1819,10 +1834,14 @@ static int trf7970a_tg_listen_md(struct nfc_digital_dev *ddev,
 				 void *arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
 =======
 	struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	dev_dbg(trf->dev, "Listen MD - state: %d, timeout: %d ms\n",
@@ -1844,10 +1863,14 @@ static int trf7970a_tg_listen_md(struct nfc_digital_dev *ddev,
 static int trf7970a_tg_get_rf_tech(struct nfc_digital_dev *ddev, u8 *rf_tech)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
 =======
 	struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct trf7970a *trf = nfc_digital_get_drvdata(ddev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(trf->dev, "Get RF Tech - state: %d, rf_tech: %d\n",
 		trf->state, trf->md_rf_tech);
@@ -1885,10 +1908,14 @@ static void trf7970a_abort_cmd(struct nfc_digital_dev *ddev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct nfc_digital_ops trf7970a_nfc_ops = {
 =======
 static struct nfc_digital_ops trf7970a_nfc_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nfc_digital_ops trf7970a_nfc_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.in_configure_hw	= trf7970a_in_configure_hw,
 	.in_send_cmd		= trf7970a_send_cmd,
 	.tg_configure_hw	= trf7970a_tg_configure_hw,
@@ -2002,10 +2029,14 @@ static void trf7970a_shutdown(struct trf7970a *trf)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int trf7970a_get_autosuspend_delay(const struct device_node *np)
 =======
 static int trf7970a_get_autosuspend_delay(struct device_node *np)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int trf7970a_get_autosuspend_delay(const struct device_node *np)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int autosuspend_delay, ret;
 
@@ -2019,10 +2050,14 @@ static int trf7970a_get_autosuspend_delay(struct device_node *np)
 static int trf7970a_probe(struct spi_device *spi)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct device_node *np = spi->dev.of_node;
 =======
 	struct device_node *np = spi->dev.of_node;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct device_node *np = spi->dev.of_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct trf7970a *trf;
 	int uvolts, autosuspend_delay, ret;
 	u32 clk_freq = TRF7970A_13MHZ_CLOCK_FREQUENCY;

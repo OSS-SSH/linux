@@ -207,10 +207,14 @@ static const struct ad_sigma_delta_info ad7793_sigma_delta_info = {
 	.addr_shift = 3,
 	.read_mask = BIT(6),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.irq_flags = IRQF_TRIGGER_FALLING,
 =======
 	.irq_flags = IRQF_TRIGGER_LOW,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.irq_flags = IRQF_TRIGGER_FALLING,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct ad_sd_calib_data ad7793_calib_arr[6] = {

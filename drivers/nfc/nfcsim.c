@@ -193,11 +193,15 @@ static void nfcsim_recv_wq(struct work_struct *work)
 		if (!IS_ERR(skb))
 			dev_kfree_skb(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return;
 =======
 
 		skb = ERR_PTR(-ENODEV);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	dev->cb(dev->nfc_digital_dev, dev->arg, skb);
@@ -245,10 +249,14 @@ static int nfcsim_send(struct nfc_digital_dev *ddev, struct sk_buff *skb,
 static void nfcsim_abort_cmd(struct nfc_digital_dev *ddev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct nfcsim *dev = nfc_digital_get_drvdata(ddev);
 =======
 	struct nfcsim *dev = nfc_digital_get_drvdata(ddev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct nfcsim *dev = nfc_digital_get_drvdata(ddev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	nfcsim_link_recv_cancel(dev->link_in);
 }
@@ -329,10 +337,14 @@ static int nfcsim_tg_listen(struct nfc_digital_dev *ddev, u16 timeout,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct nfc_digital_ops nfcsim_digital_ops = {
 =======
 static struct nfc_digital_ops nfcsim_digital_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nfc_digital_ops nfcsim_digital_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.in_configure_hw = nfcsim_in_configure_hw,
 	.in_send_cmd = nfcsim_in_send_cmd,
 

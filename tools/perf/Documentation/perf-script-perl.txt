@@ -55,10 +55,14 @@ Traces meant to be processed using a script should be recorded with
 the above option: -a to enable system-wide collection.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The format file for the sched_wakeup event defines the following fields
 =======
 The format file for the sched_wakep event defines the following fields
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+The format file for the sched_wakeup event defines the following fields
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 (see /sys/kernel/debug/tracing/events/sched/sched_wakeup/format):
 
 ----

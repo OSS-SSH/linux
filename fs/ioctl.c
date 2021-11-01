@@ -264,6 +264,7 @@ static long ioctl_file_clone_range(struct file *file,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_BLOCK
 
@@ -469,6 +470,8 @@ EXPORT_SYMBOL(generic_block_fiemap);
 #endif  /*  CONFIG_BLOCK  */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * This provides compatibility with legacy XFS pre-allocation ioctls
  * which predate the fallocate syscall.
@@ -821,6 +824,9 @@ static int fileattr_set_prepare(struct inode *inode,
 				FS_XFLAG_PROJINHERIT)
 			return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/*
 		 * Caller is allowed to change the project ID. If it is being
@@ -829,8 +835,11 @@ static int fileattr_set_prepare(struct inode *inode,
 		if (old_ma->fsx_projid != fa->fsx_projid &&
 		    !projid_valid(make_kprojid(&init_user_ns, fa->fsx_projid)))
 			return -EINVAL;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Check extent size hints. */

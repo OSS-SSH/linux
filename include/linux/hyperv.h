@@ -539,6 +539,7 @@ struct vmbus_channel_rescind_offer {
 } __packed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline u32
 hv_ringbuffer_pending_size(const struct hv_ring_buffer_info *rbi)
@@ -547,6 +548,8 @@ hv_ringbuffer_pending_size(const struct hv_ring_buffer_info *rbi)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Request Offer -- no parameters, SynIC message contains the partition ID
  * Set Snoop -- no parameters, SynIC message contains the partition ID
@@ -1096,6 +1099,7 @@ static inline void set_channel_pending_send_size(struct vmbus_channel *c,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline void set_low_latency_mode(struct vmbus_channel *c)
 {
@@ -1108,6 +1112,8 @@ static inline void clear_low_latency_mode(struct vmbus_channel *c)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void vmbus_onmessage(struct vmbus_channel_message_header *hdr);
 
 int vmbus_request_offers(void);

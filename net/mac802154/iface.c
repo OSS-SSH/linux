@@ -618,10 +618,14 @@ ieee802154_if_add(struct ieee802154_local *local, const char *name,
 	struct net_device *ndev = NULL;
 	struct ieee802154_sub_if_data *sdata = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	int ret = -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ASSERT_RTNL();
 

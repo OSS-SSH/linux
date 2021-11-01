@@ -212,10 +212,14 @@ static int ixgbevf_ipsec_parse_proto_keys(struct xfrm_state *xs,
 					  u32 *mykey, u32 *mysalt)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net_device *dev = xs->xso.real_dev;
 =======
 	struct net_device *dev = xs->xso.dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net_device *dev = xs->xso.real_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned char *key_data;
 	char *alg_name = NULL;
 	int key_len;
@@ -265,6 +269,7 @@ static int ixgbevf_ipsec_parse_proto_keys(struct xfrm_state *xs,
 static int ixgbevf_ipsec_add_sa(struct xfrm_state *xs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net_device *dev = xs->xso.real_dev;
 	struct ixgbevf_adapter *adapter;
 	struct ixgbevf_ipsec *ipsec;
@@ -282,6 +287,17 @@ static int ixgbevf_ipsec_add_sa(struct xfrm_state *xs)
 	int ret;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net_device *dev = xs->xso.real_dev;
+	struct ixgbevf_adapter *adapter;
+	struct ixgbevf_ipsec *ipsec;
+	u16 sa_idx;
+	int ret;
+
+	adapter = netdev_priv(dev);
+	ipsec = adapter->ipsec;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xs->id.proto != IPPROTO_ESP && xs->id.proto != IPPROTO_AH) {
 		netdev_err(dev, "Unsupported protocol 0x%04x for IPsec offload\n",
 			   xs->id.proto);
@@ -400,6 +416,7 @@ static int ixgbevf_ipsec_add_sa(struct xfrm_state *xs)
 static void ixgbevf_ipsec_del_sa(struct xfrm_state *xs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net_device *dev = xs->xso.real_dev;
 	struct ixgbevf_adapter *adapter;
 	struct ixgbevf_ipsec *ipsec;
@@ -415,6 +432,16 @@ static void ixgbevf_ipsec_del_sa(struct xfrm_state *xs)
 	u16 sa_idx;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net_device *dev = xs->xso.real_dev;
+	struct ixgbevf_adapter *adapter;
+	struct ixgbevf_ipsec *ipsec;
+	u16 sa_idx;
+
+	adapter = netdev_priv(dev);
+	ipsec = adapter->ipsec;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xs->xso.flags & XFRM_OFFLOAD_INBOUND) {
 		sa_idx = xs->xso.offload_handle - IXGBE_IPSEC_BASE_RX_INDEX;
 

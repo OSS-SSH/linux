@@ -583,11 +583,15 @@ struct net_device *nr_dev_first(void)
 				first = dev;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_hold(first);
 =======
 	if (first)
 		dev_hold(first);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(first);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_unlock();
 
 	return first;

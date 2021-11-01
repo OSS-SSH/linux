@@ -43,13 +43,19 @@ enum snd_oxfw_quirk {
 	// Stanton SCS1.d and SCS1.m support unique transaction.
 	SND_OXFW_QUIRK_SCS_TRANSACTION = 0x08,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	// Apogee Duet FireWire ignores data blocks in packet with NO_INFO for audio data
 	// processing, while output level meter moves. Any value in syt field of packet takes
 	// the device to process audio data even if the value is invalid in a point of
 	// IEC 61883-1/6.
 	SND_OXFW_QUIRK_IGNORE_NO_INFO_PACKET = 0x10,
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* This is an arbitrary number for convinience. */

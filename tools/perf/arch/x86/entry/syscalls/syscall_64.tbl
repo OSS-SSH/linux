@@ -369,10 +369,15 @@
 445	common	landlock_add_rule	sys_landlock_add_rule
 446	common	landlock_restrict_self	sys_landlock_restrict_self
 <<<<<<< HEAD
+<<<<<<< HEAD
 447	common	memfd_secret		sys_memfd_secret
 448	common	process_mrelease	sys_process_mrelease
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+447	common	memfd_secret		sys_memfd_secret
+448	common	process_mrelease	sys_process_mrelease
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #
 # Due to a historical design error, certain syscalls are numbered differently
@@ -402,10 +407,14 @@
 531	x32	get_robust_list		compat_sys_get_robust_list
 532	x32	vmsplice		sys_vmsplice
 <<<<<<< HEAD
+<<<<<<< HEAD
 533	x32	move_pages		sys_move_pages
 =======
 533	x32	move_pages		compat_sys_move_pages
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+533	x32	move_pages		sys_move_pages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 534	x32	preadv			compat_sys_preadv64
 535	x32	pwritev			compat_sys_pwritev64
 536	x32	rt_tgsigqueueinfo	compat_sys_rt_tgsigqueueinfo

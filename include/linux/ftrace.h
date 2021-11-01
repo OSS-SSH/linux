@@ -644,6 +644,9 @@ extern int ftrace_make_nop(struct module *mod,
 			   struct dyn_ftrace *rec, unsigned long addr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ftrace_need_init_nop - return whether nop call sites should be initialized
  *
@@ -660,8 +663,11 @@ extern int ftrace_make_nop(struct module *mod,
 #ifndef ftrace_need_init_nop
 #define ftrace_need_init_nop() (!__is_defined(CC_USING_NOP_MCOUNT))
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * ftrace_init_nop - initialize a nop call site

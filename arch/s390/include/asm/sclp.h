@@ -9,10 +9,13 @@
 
 #include <linux/types.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/chpid.h>
 #include <asm/cpu.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define SCLP_CHP_INFO_MASK_SIZE		32
 #define EARLY_SCCB_SIZE		PAGE_SIZE
@@ -23,12 +26,18 @@
 #define EXT_SCCB_READ_CPU	(3 * PAGE_SIZE)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef __ASSEMBLY__
 #include <asm/chpid.h>
 #include <asm/cpu.h>
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct sclp_chp_info {
 	u8 recognized[SCLP_CHP_INFO_MASK_SIZE];
 	u8 standby[SCLP_CHP_INFO_MASK_SIZE];
@@ -124,11 +133,17 @@ struct zpci_report_error_header {
 } __packed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern char *sclp_early_sccb;
 
 void sclp_early_set_buffer(void *sccb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern char *sclp_early_sccb;
+
+void sclp_early_set_buffer(void *sccb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int sclp_early_read_info(void);
 int sclp_early_read_storage_info(void);
 int sclp_early_get_core_info(struct sclp_core_info *info);
@@ -164,7 +179,11 @@ static inline int sclp_get_core_info(struct sclp_core_info *info, int early)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* __ASSEMBLY__ */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* __ASSEMBLY__ */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _ASM_S390_SCLP_H */

@@ -22,10 +22,14 @@
 #include "srcline.h"
 #include "dlfilter.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../include/perf/perf_dlfilter.h"
 =======
 #include "perf_dlfilter.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "../include/perf/perf_dlfilter.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void al_to_d_al(struct addr_location *al, struct perf_dlfilter_al *d_al)
 {
@@ -535,12 +539,17 @@ int dlfilter__do_filter_event(struct dlfilter *d,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool get_filter_desc(const char *dirname, const char *name, char **desc,
 		     char **long_desc)
 =======
 static bool get_filter_desc(const char *dirname, const char *name,
 			    char **desc, char **long_desc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool get_filter_desc(const char *dirname, const char *name, char **desc,
+		     char **long_desc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	char path[PATH_MAX];
 	void *handle;

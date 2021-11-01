@@ -842,10 +842,14 @@ int sh_pfc_register_pinctrl(struct sh_pfc *pfc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const struct pinmux_bias_reg *
 =======
 static const struct pinmux_bias_reg *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const struct pinmux_bias_reg *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 rcar_pin_to_bias_reg(const struct sh_pfc *pfc, unsigned int pin,
 		     unsigned int *bit)
 {
@@ -903,6 +907,7 @@ void rcar_pinmux_set_bias(struct sh_pfc *pfc, unsigned int pin,
 	if (reg->puen) {
 		enable = sh_pfc_read(pfc, reg->puen) & ~BIT(bit);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (bias != PIN_CONFIG_BIAS_DISABLE) {
 			enable |= BIT(bit);
 
@@ -916,17 +921,24 @@ void rcar_pinmux_set_bias(struct sh_pfc *pfc, unsigned int pin,
 		}
 =======
 		if (bias != PIN_CONFIG_BIAS_DISABLE)
+=======
+		if (bias != PIN_CONFIG_BIAS_DISABLE) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			enable |= BIT(bit);
 
-		if (reg->pud) {
-			updown = sh_pfc_read(pfc, reg->pud) & ~BIT(bit);
-			if (bias == PIN_CONFIG_BIAS_PULL_UP)
-				updown |= BIT(bit);
+			if (reg->pud) {
+				updown = sh_pfc_read(pfc, reg->pud) & ~BIT(bit);
+				if (bias == PIN_CONFIG_BIAS_PULL_UP)
+					updown |= BIT(bit);
 
-			sh_pfc_write(pfc, reg->pud, updown);
+				sh_pfc_write(pfc, reg->pud, updown);
+			}
 		}
+<<<<<<< HEAD
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sh_pfc_write(pfc, reg->puen, enable);
 	} else {
 		enable = sh_pfc_read(pfc, reg->pud) & ~BIT(bit);

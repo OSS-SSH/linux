@@ -1163,6 +1163,7 @@ void qedf_scsi_completion(struct qedf_ctx *qedf, struct fcoe_cqe *cqe,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!scsi_cmd_to_rq(sc_cmd)->q) {
 =======
 	if (!sc_cmd->request) {
@@ -1173,6 +1174,9 @@ void qedf_scsi_completion(struct qedf_ctx *qedf, struct fcoe_cqe *cqe,
 
 	if (!sc_cmd->request->q) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!scsi_cmd_to_rq(sc_cmd)->q) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		QEDF_WARN(&(qedf->dbg_ctx), "request->q is NULL so request "
 		   "is not valid, sc_cmd=%p.\n", sc_cmd);
 		return;

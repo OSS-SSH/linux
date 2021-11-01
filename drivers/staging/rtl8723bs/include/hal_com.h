@@ -46,6 +46,7 @@
 #define DESC_RATEMCS6				0x12
 #define DESC_RATEMCS7				0x13
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define DESC_RATEMCS8				0x14
 #define DESC_RATEMCS9				0x15
@@ -72,6 +73,8 @@
 #define DESC_RATEMCS30				0x2A
 #define DESC_RATEMCS31				0x2B
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HDATA_RATE(rate)\
 (rate == DESC_RATE1M) ? "CCK_1M" : \
@@ -94,6 +97,7 @@
 (rate == DESC_RATEMCS5) ? "MCS5" : \
 (rate == DESC_RATEMCS6) ? "MCS6" : \
 <<<<<<< HEAD
+<<<<<<< HEAD
 (rate == DESC_RATEMCS7) ? "MCS7" : "UNKNOWN"
 =======
 (rate == DESC_RATEMCS7) ? "MCS7" : \
@@ -107,6 +111,9 @@
 (rate == DESC_RATEMCS15) ? "MCS15" : "UNKNOWN"
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+(rate == DESC_RATEMCS7) ? "MCS7" : "UNKNOWN"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum{
 	UP_LINK,

@@ -61,10 +61,15 @@ static int __pci_mmap_fits(struct pci_dev *pdev, int num,
  *
  * Use the bus mapping routines to map a PCI resource into userspace.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Return: %0 on success, negative error code otherwise
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * Return: %0 on success, negative error code otherwise
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int pci_mmap_resource(struct kobject *kobj,
 			     struct bin_attribute *attr,
@@ -112,10 +117,14 @@ static int pci_mmap_resource_dense(struct file *filp, struct kobject *kobj,
 /**
  * pci_remove_resource_files - cleanup resource files
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @pdev: pci_dev to cleanup
 =======
  * @dev: dev to cleanup
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @pdev: pci_dev to cleanup
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * If we created resource files for @dev, remove them from sysfs and
  * free their resources.
@@ -231,6 +240,7 @@ static int pci_create_attr(struct pci_dev *pdev, int num)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * pci_create_resource_files - create resource files in sysfs for @pdev
  * @pdev: pci_dev in question
  *
@@ -243,6 +253,14 @@ static int pci_create_attr(struct pci_dev *pdev, int num)
  *
  * Walk the resources in @dev creating files for each resource available.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * pci_create_resource_files - create resource files in sysfs for @pdev
+ * @pdev: pci_dev in question
+ *
+ * Walk the resources in @dev creating files for each resource available.
+ *
+ * Return: %0 on success, or negative error code
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int pci_create_resource_files(struct pci_dev *pdev)
 {
@@ -315,10 +333,14 @@ int pci_mmap_legacy_page_range(struct pci_bus *bus, struct vm_area_struct *vma,
 /**
  * pci_adjust_legacy_attr - adjustment of legacy file attributes
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @bus: bus to create files under
 =======
  * @b: bus to create files under
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @bus: bus to create files under
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @mmap_type: I/O port or memory
  *
  * Adjust file name and size for sparse mappings.

@@ -141,10 +141,14 @@ hash_net4_uadt(struct ip_set *set, struct nlattr *tb[],
 	struct hash_net4_elem e = { .cidr = HOST_MASK };
 	struct ip_set_ext ext = IP_SET_INIT_UEXT(set);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 ip = 0, ip_to = 0, ipn, n = 0;
 =======
 	u32 ip = 0, ip_to = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 ip = 0, ip_to = 0, ipn, n = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	if (tb[IPSET_ATTR_LINENO])
@@ -193,6 +197,9 @@ hash_net4_uadt(struct ip_set *set, struct nlattr *tb[],
 			return -IPSET_ERR_HASH_RANGE;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ipn = ip;
 	do {
 		ipn = ip_set_range_to_cidr(ipn, ip_to, &e.cidr);
@@ -202,8 +209,11 @@ hash_net4_uadt(struct ip_set *set, struct nlattr *tb[],
 	if (n > IPSET_MAX_RANGE)
 		return -ERANGE;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (retried)
 		ip = ntohl(h->next.ip);
 	do {

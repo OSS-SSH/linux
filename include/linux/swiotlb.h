@@ -3,9 +3,13 @@
 #define __LINUX_SWIOTLB_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/device.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/device.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/dma-direction.h>
 #include <linux/init.h>
 #include <linux/types.h>
@@ -77,11 +81,16 @@ extern enum swiotlb_force swiotlb_force;
  *		API.
  * @nslabs:	The number of IO TLB blocks (in groups of 64) between @start and
 <<<<<<< HEAD
+<<<<<<< HEAD
  *		@end. For default swiotlb, this is command line adjustable via
  *		setup_io_tlb_npages.
 =======
  *		@end. This is command line adjustable via setup_io_tlb_npages.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		@end. For default swiotlb, this is command line adjustable via
+ *		setup_io_tlb_npages.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @used:	The number of used IO TLB block.
  * @list:	The free list describing the number of free entries available
  *		from each index.
@@ -93,10 +102,15 @@ extern enum swiotlb_force swiotlb_force;
  * @debugfs:	The dentry to debugfs.
  * @late_alloc:	%true if allocated using the page allocator
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @force_bounce: %true if swiotlb bouncing is forced
  * @for_alloc:  %true if the pool is used for memory allocation
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @force_bounce: %true if swiotlb bouncing is forced
+ * @for_alloc:  %true if the pool is used for memory allocation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct io_tlb_mem {
 	phys_addr_t start;
@@ -108,14 +122,20 @@ struct io_tlb_mem {
 	struct dentry *debugfs;
 	bool late_alloc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool force_bounce;
 	bool for_alloc;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool force_bounce;
+	bool for_alloc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct io_tlb_slot {
 		phys_addr_t orig_addr;
 		size_t alloc_size;
 		unsigned int list;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	} *slots;
 };
@@ -126,18 +146,28 @@ static inline bool is_swiotlb_buffer(struct device *dev, phys_addr_t paddr)
 	struct io_tlb_mem *mem = dev->dma_io_tlb_mem;
 =======
 	} slots[];
+=======
+	} *slots;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
-extern struct io_tlb_mem *io_tlb_default_mem;
+extern struct io_tlb_mem io_tlb_default_mem;
 
-static inline bool is_swiotlb_buffer(phys_addr_t paddr)
+static inline bool is_swiotlb_buffer(struct device *dev, phys_addr_t paddr)
 {
+<<<<<<< HEAD
 	struct io_tlb_mem *mem = io_tlb_default_mem;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct io_tlb_mem *mem = dev->dma_io_tlb_mem;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return mem && paddr >= mem->start && paddr < mem->end;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool is_swiotlb_force_bounce(struct device *dev)
 {
 	struct io_tlb_mem *mem = dev->dma_io_tlb_mem;
@@ -145,6 +175,7 @@ static inline bool is_swiotlb_force_bounce(struct device *dev)
 	return mem && mem->force_bounce;
 }
 
+<<<<<<< HEAD
 void __init swiotlb_exit(void);
 unsigned int swiotlb_max_segment(void);
 size_t swiotlb_max_mapping_size(struct device *dev);
@@ -158,15 +189,25 @@ static inline bool is_swiotlb_buffer(struct device *dev, phys_addr_t paddr)
 }
 static inline bool is_swiotlb_force_bounce(struct device *dev)
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __init swiotlb_exit(void);
 unsigned int swiotlb_max_segment(void);
 size_t swiotlb_max_mapping_size(struct device *dev);
-bool is_swiotlb_active(void);
+bool is_swiotlb_active(struct device *dev);
 void __init swiotlb_adjust_size(unsigned long size);
 #else
 #define swiotlb_force SWIOTLB_NO_FORCE
+<<<<<<< HEAD
 static inline bool is_swiotlb_buffer(phys_addr_t paddr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline bool is_swiotlb_buffer(struct device *dev, phys_addr_t paddr)
+{
+	return false;
+}
+static inline bool is_swiotlb_force_bounce(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return false;
 }
@@ -183,10 +224,14 @@ static inline size_t swiotlb_max_mapping_size(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool is_swiotlb_active(struct device *dev)
 =======
 static inline bool is_swiotlb_active(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline bool is_swiotlb_active(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return false;
 }
@@ -200,6 +245,9 @@ extern void swiotlb_print_info(void);
 extern void swiotlb_set_max_segment(unsigned int);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DMA_RESTRICTED_POOL
 struct page *swiotlb_alloc(struct device *dev, size_t size);
 bool swiotlb_free(struct device *dev, struct page *page, size_t size);
@@ -224,6 +272,9 @@ static inline bool is_swiotlb_for_alloc(struct device *dev)
 }
 #endif /* CONFIG_DMA_RESTRICTED_POOL */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __LINUX_SWIOTLB_H */

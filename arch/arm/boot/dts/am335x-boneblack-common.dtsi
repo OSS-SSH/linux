@@ -4,11 +4,14 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <dt-bindings/display/tda998x.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &ldo3_reg {
 	regulator-min-microvolt = <1800000>;
 	regulator-max-microvolt = <1800000>;
@@ -28,6 +31,7 @@
 	non-removable;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 &am33xx_pinmux {
@@ -119,10 +123,13 @@
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &rtc {
 	system-power-controller;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 &mcasp0	{
@@ -140,11 +147,14 @@
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 / {
 	memory@80000000 {
 		device_type = "memory";
 		reg = <0x80000000 0x20000000>; /* 512 MB */
 	};
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -178,4 +188,6 @@
 		};
 	};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

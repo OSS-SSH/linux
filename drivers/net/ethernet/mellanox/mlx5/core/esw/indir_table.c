@@ -365,9 +365,13 @@ static int mlx5_create_indir_fwd_group(struct mlx5_eswitch *esw,
 	dest.vport.num = e->vport;
 	dest.vport.vhca_id = MLX5_CAP_GEN(esw->dev, vhca_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dest.vport.flags = MLX5_FLOW_DEST_VPORT_VHCA_ID;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dest.vport.flags = MLX5_FLOW_DEST_VPORT_VHCA_ID;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	e->fwd_rule = mlx5_add_flow_rules(e->ft, spec, &flow_act, &dest, 1);
 	if (IS_ERR(e->fwd_rule)) {
 		mlx5_destroy_flow_group(e->fwd_grp);

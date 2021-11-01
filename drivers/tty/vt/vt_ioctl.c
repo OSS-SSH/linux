@@ -247,10 +247,15 @@ int vt_waitactive(int n)
  * XXX It should at least call into the driver, fbdev's definitely need to
  * restore their engine state. --BenH
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Called with the console lock held.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * Called with the console lock held.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int vt_kdsetmode(struct vc_data *vc, unsigned long mode)
 {
@@ -268,9 +273,12 @@ static int vt_kdsetmode(struct vc_data *vc, unsigned long mode)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* FIXME: this needs the console lock extending */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vc->vc_mode == mode)
 		return 0;
 
@@ -280,17 +288,23 @@ static int vt_kdsetmode(struct vc_data *vc, unsigned long mode)
 
 	/* explicitly blank/unblank the screen if switching modes */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	console_lock();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mode == KD_TEXT)
 		do_unblank_screen(1);
 	else
 		do_blank_screen(1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	console_unlock();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -393,13 +407,19 @@ static int vt_k_ioctl(struct tty_struct *tty, unsigned int cmd,
 			return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		console_lock();
 		ret = vt_kdsetmode(vc, arg);
 		console_unlock();
 		return ret;
+<<<<<<< HEAD
 =======
 		return vt_kdsetmode(vc, arg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	case KDGETMODE:
 		return put_user(vc->vc_mode, (int __user *)arg);

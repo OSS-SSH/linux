@@ -63,9 +63,13 @@
 #include <net/compat.h>
 #include <net/xfrm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <net/ioam6.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <net/ioam6.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/uaccess.h>
 #include <linux/mroute6.h>
@@ -459,10 +463,14 @@ int inet6_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 	 */
 	err = BPF_CGROUP_RUN_PROG_INET_BIND_LOCK(sk, uaddr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						 CGROUP_INET6_BIND, &flags);
 =======
 						 BPF_CGROUP_INET6_BIND, &flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 CGROUP_INET6_BIND, &flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -540,10 +548,14 @@ int inet6_getname(struct socket *sock, struct sockaddr *uaddr,
 			sin->sin6_flowinfo = np->flow_label;
 		BPF_CGROUP_RUN_SA_PROG_LOCK(sk, (struct sockaddr *)sin,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    CGROUP_INET6_GETPEERNAME,
 =======
 					    BPF_CGROUP_INET6_GETPEERNAME,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    CGROUP_INET6_GETPEERNAME,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    NULL);
 	} else {
 		if (ipv6_addr_any(&sk->sk_v6_rcv_saddr))
@@ -553,10 +565,14 @@ int inet6_getname(struct socket *sock, struct sockaddr *uaddr,
 		sin->sin6_port = inet->inet_sport;
 		BPF_CGROUP_RUN_SA_PROG_LOCK(sk, (struct sockaddr *)sin,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					    CGROUP_INET6_GETSOCKNAME,
 =======
 					    BPF_CGROUP_INET6_GETSOCKNAME,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    CGROUP_INET6_GETSOCKNAME,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    NULL);
 	}
 	sin->sin6_scope_id = ipv6_iface_scope_id(&sin->sin6_addr,
@@ -978,11 +994,17 @@ static int __net_init inet6_net_init(struct net *net)
 	atomic_set(&net->ipv6.fib6_sernum, 1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	net->ipv6.sysctl.ioam6_id = IOAM6_DEFAULT_ID;
 	net->ipv6.sysctl.ioam6_id_wide = IOAM6_DEFAULT_ID_WIDE;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	net->ipv6.sysctl.ioam6_id = IOAM6_DEFAULT_ID;
+	net->ipv6.sysctl.ioam6_id_wide = IOAM6_DEFAULT_ID_WIDE;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = ipv6_init_mibs(net);
 	if (err)
 		return err;
@@ -1214,12 +1236,18 @@ static int __init inet6_init(void)
 		goto rpl_fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = ioam6_init();
 	if (err)
 		goto ioam6_fail;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = igmp6_late_init();
 	if (err)
 		goto igmp6_late_err;
@@ -1243,10 +1271,15 @@ sysctl_fail:
 #endif
 igmp6_late_err:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ioam6_exit();
 ioam6_fail:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ioam6_exit();
+ioam6_fail:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rpl_exit();
 rpl_fail:
 	seg6_exit();

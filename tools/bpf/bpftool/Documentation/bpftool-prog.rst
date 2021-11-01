@@ -13,12 +13,18 @@ SYNOPSIS
 	**bpftool** [*OPTIONS*] **prog** *COMMAND*
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } |
 		{ **-f** | **--bpffs** } | { **-m** | **--mapcompat** } | { **-n** | **--nomount** } |
 		{ **-L** | **--use-loader** } }
 =======
 	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-f** | **--bpffs** } }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } |
+		{ **-f** | **--bpffs** } | { **-m** | **--mapcompat** } | { **-n** | **--nomount** } |
+		{ **-L** | **--use-loader** } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*COMMANDS* :=
 	{ **show** | **list** | **dump xlated** | **dump jited** | **pin** | **load**
@@ -55,6 +61,7 @@ PROG COMMANDS
 |	}
 |       *ATTACH_TYPE* := {
 <<<<<<< HEAD
+<<<<<<< HEAD
 |		**msg_verdict** | **skb_verdict** | **stream_verdict** | **stream_parser** | **flow_dissector**
 |	}
 |	*METRICs* := {
@@ -66,6 +73,13 @@ PROG COMMANDS
 |	*METRICs* := {
 |		**cycles** | **instructions** | **l1d_loads** | **llc_misses**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+|		**msg_verdict** | **skb_verdict** | **stream_verdict** | **stream_parser** | **flow_dissector**
+|	}
+|	*METRICs* := {
+|		**cycles** | **instructions** | **l1d_loads** | **llc_misses** |
+|		**itlb_misses** | **dtlb_misses**
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 |	}
 
 
@@ -238,6 +252,9 @@ OPTIONS
 		  (such as tracefs or BPF virtual file system) when necessary.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	-L, --use-loader
 		  Load program as a "loader" program. This is useful to debug
 		  the generation of such programs. When this option is in
@@ -252,8 +269,11 @@ OPTIONS
 		  and loading the programs (see **bpftool prog tracelog** as
 		  a way to dump those messages).
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXAMPLES
 ========
 **# bpftool prog show**
@@ -358,6 +378,9 @@ EXAMPLES
       42518139 instructions    #   1.06 insns per cycle               (83.39%)
            123 llc_misses      #   2.89 LLC misses per million insns  (83.15%)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 |
 | Output below is for the trace logs.
@@ -371,5 +394,8 @@ EXAMPLES
     bpftool-620059  [004] d... 2634685.517912: bpf_trace_printk: map_create sample_map idx 0 type 2 value_size 4 value_btf_id 0 r=6
     bpftool-620059  [004] d... 2634685.517997: bpf_trace_printk: prog_load sample insn_cnt 13 r=7
     bpftool-620059  [004] d... 2634685.517999: bpf_trace_printk: close(5) = 0
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

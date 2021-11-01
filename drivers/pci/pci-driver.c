@@ -137,10 +137,14 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
 {
 	struct pci_dynid *dynid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct pci_device_id *found_id = NULL, *ids;
 =======
 	const struct pci_device_id *found_id = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct pci_device_id *found_id = NULL, *ids;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* When driver_override is set, only bind to the matching driver */
 	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
@@ -156,6 +160,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
 	}
 	spin_unlock(&drv->dynids.lock);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (found_id)
 		return found_id;
@@ -182,13 +187,35 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
 =======
 	if (!found_id)
 		found_id = pci_match_id(drv->id_table, dev);
+=======
+	if (found_id)
+		return found_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	/* driver_override will always match, send a dummy id */
-	if (!found_id && dev->driver_override)
-		found_id = &pci_device_id_any;
+	for (ids = drv->id_table; (found_id = pci_match_id(ids, dev));
+	     ids = found_id + 1) {
+		/*
+		 * The match table is split based on driver_override.
+		 * In case override_only was set, enforce driver_override
+		 * matching.
+		 */
+		if (found_id->override_only) {
+			if (dev->driver_override)
+				return found_id;
+		} else {
+			return found_id;
+		}
+	}
 
+<<<<<<< HEAD
 	return found_id;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* driver_override will always match, send a dummy id */
+	if (dev->driver_override)
+		return &pci_device_id_any;
+	return NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -470,10 +497,14 @@ static int pci_device_probe(struct device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void pci_device_remove(struct device *dev)
 =======
 static int pci_device_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void pci_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pci_dev *pci_dev = to_pci_dev(dev);
 	struct pci_driver *drv = pci_dev->driver;
@@ -510,9 +541,12 @@ static int pci_device_remove(struct device *dev)
 
 	pci_dev_put(pci_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void pci_device_shutdown(struct device *dev)

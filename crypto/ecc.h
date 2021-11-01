@@ -28,9 +28,13 @@
 
 #include <crypto/ecc_curve.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/unaligned.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/unaligned.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* One digit is u64 qword. */
 #define ECC_CURVE_NIST_P192_DIGITS  3
@@ -51,20 +55,28 @@
  * @ndigits:  Number of digits to copy
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void ecc_swap_digits(const void *in, u64 *out, unsigned int ndigits)
 =======
 static inline void ecc_swap_digits(const u64 *in, u64 *out, unsigned int ndigits)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void ecc_swap_digits(const void *in, u64 *out, unsigned int ndigits)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const __be64 *src = (__force __be64 *)in;
 	int i;
 
 	for (i = 0; i < ndigits; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		out[i] = get_unaligned_be64(&src[ndigits - 1 - i]);
 =======
 		out[i] = be64_to_cpu(src[ndigits - 1 - i]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		out[i] = get_unaligned_be64(&src[ndigits - 1 - i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

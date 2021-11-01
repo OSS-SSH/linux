@@ -23,6 +23,7 @@
 #define UAC1_CHANNEL_MASK 0x0FFF
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define USB_OUT_FU_ID	(out_feature_unit_desc->bUnitID)
 #define USB_IN_FU_ID	(in_feature_unit_desc->bUnitID)
 
@@ -36,20 +37,37 @@
 #define EPIN_EN(_opts) ((_opts)->p_chmask != 0)
 #define EPOUT_EN(_opts) ((_opts)->c_chmask != 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define USB_OUT_FU_ID	(out_feature_unit_desc->bUnitID)
+#define USB_IN_FU_ID	(in_feature_unit_desc->bUnitID)
+
+#define EPIN_EN(_opts) ((_opts)->p_chmask != 0)
+#define EPOUT_EN(_opts) ((_opts)->c_chmask != 0)
+#define FUIN_EN(_opts) ((_opts)->p_mute_present \
+			|| (_opts)->p_volume_present)
+#define FUOUT_EN(_opts) ((_opts)->c_mute_present \
+			|| (_opts)->c_volume_present)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct f_uac1 {
 	struct g_audio g_audio;
 	u8 ac_intf, as_in_intf, as_out_intf;
 	u8 ac_alt, as_in_alt, as_out_alt;	/* needed for get_alt() */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct usb_ctrlrequest setup_cr;	/* will be used in data stage */
 
 	/* Interrupt IN endpoint of AC interface */
 	struct usb_ep	*int_ep;
 	atomic_t	int_count;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct f_uac1 *func_to_uac1(struct usb_function *f)
@@ -80,10 +98,14 @@ static struct usb_interface_descriptor ac_interface_desc = {
 	.bLength =		USB_DT_INTERFACE_SIZE,
 	.bDescriptorType =	USB_DT_INTERFACE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* .bNumEndpoints =	DYNAMIC */
 =======
 	.bNumEndpoints =	0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* .bNumEndpoints =	DYNAMIC */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.bInterfaceClass =	USB_CLASS_AUDIO,
 	.bInterfaceSubClass =	USB_SUBCLASS_AUDIOCONTROL,
 };
@@ -132,6 +154,9 @@ static struct uac1_output_terminal_descriptor usb_in_ot_desc = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct uac_feature_unit_descriptor *in_feature_unit_desc;
 static struct uac_feature_unit_descriptor *out_feature_unit_desc;
 
@@ -145,8 +170,11 @@ static struct usb_endpoint_descriptor ac_int_ep_desc = {
 	.bInterval = 4,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* B.4.1  Standard AS Interface Descriptor */
 static struct usb_interface_descriptor as_out_interface_alt_0_desc = {
 	.bLength =		USB_DT_INTERFACE_SIZE,
@@ -274,6 +302,7 @@ static struct usb_descriptor_header *f_audio_desc[] = {
 	(struct usb_descriptor_header *)&usb_out_it_desc,
 	(struct usb_descriptor_header *)&io_out_ot_desc,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	(struct usb_descriptor_header *)&out_feature_unit_desc,
 
 	(struct usb_descriptor_header *)&io_in_it_desc,
@@ -285,6 +314,15 @@ static struct usb_descriptor_header *f_audio_desc[] = {
 	(struct usb_descriptor_header *)&io_in_it_desc,
 	(struct usb_descriptor_header *)&usb_in_ot_desc,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	(struct usb_descriptor_header *)&out_feature_unit_desc,
+
+	(struct usb_descriptor_header *)&io_in_it_desc,
+	(struct usb_descriptor_header *)&usb_in_ot_desc,
+	(struct usb_descriptor_header *)&in_feature_unit_desc,
+
+	(struct usb_descriptor_header *)&ac_int_ep_desc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	(struct usb_descriptor_header *)&as_out_interface_alt_0_desc,
 	(struct usb_descriptor_header *)&as_out_interface_alt_1_desc,
@@ -315,10 +353,15 @@ enum {
 	STR_IO_IN_IT_CH_NAMES,
 	STR_USB_IN_OT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	STR_FU_IN,
 	STR_FU_OUT,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	STR_FU_IN,
+	STR_FU_OUT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	STR_AS_OUT_IF_ALT0,
 	STR_AS_OUT_IF_ALT1,
 	STR_AS_IN_IF_ALT0,
@@ -334,10 +377,15 @@ static struct usb_string strings_uac1[] = {
 	[STR_IO_IN_IT_CH_NAMES].s = "Capture Channels",
 	[STR_USB_IN_OT].s = "Capture Output terminal",
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[STR_FU_IN].s = "Capture Volume",
 	[STR_FU_OUT].s = "Playback Volume",
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[STR_FU_IN].s = "Capture Volume",
+	[STR_FU_OUT].s = "Playback Volume",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[STR_AS_OUT_IF_ALT0].s = "Playback Inactive",
 	[STR_AS_OUT_IF_ALT1].s = "Playback Active",
 	[STR_AS_IN_IF_ALT0].s = "Capture Inactive",
@@ -360,6 +408,9 @@ static struct usb_gadget_strings *uac1_strings[] = {
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void audio_notify_complete(struct usb_ep *_ep, struct usb_request *req)
 {
 	struct g_audio *audio = req->context;
@@ -730,8 +781,11 @@ static int ac_rq_in(struct usb_function *f,
 	return value;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int audio_set_endpoint_req(struct usb_function *f,
 		const struct usb_ctrlrequest *ctrl)
 {
@@ -818,6 +872,9 @@ f_audio_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
 		value = audio_get_endpoint_req(f, ctrl);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
 		if (ctrl->bRequest == UAC_SET_CUR)
 			value = out_rq_cur(f, ctrl);
@@ -825,9 +882,12 @@ f_audio_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
 	case USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
 		value = ac_rq_in(f, ctrl);
 		break;
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		ERROR(cdev, "invalid control req%02x.%02x v%04x i%04x l%d\n",
 			ctrl->bRequestType, ctrl->bRequest,
@@ -856,9 +916,13 @@ static int f_audio_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
 	struct usb_gadget *gadget = cdev->gadget;
 	struct device *dev = &gadget->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct g_audio *audio = func_to_g_audio(f);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct g_audio *audio = func_to_g_audio(f);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct f_uac1 *uac1 = func_to_uac1(f);
 	int ret = 0;
 
@@ -875,6 +939,9 @@ static int f_audio_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
 			return -EINVAL;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* restart interrupt endpoint */
 		if (uac1->int_ep) {
@@ -883,8 +950,11 @@ static int f_audio_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
 			usb_ep_enable(uac1->int_ep);
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 
@@ -941,6 +1011,7 @@ static void f_audio_disable(struct usb_function *f)
 	u_audio_stop_playback(&uac1->g_audio);
 	u_audio_stop_capture(&uac1->g_audio);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (uac1->int_ep)
 		usb_ep_disable(uac1->int_ep);
 }
@@ -969,11 +1040,39 @@ static struct uac_feature_unit_descriptor *build_fu_desc(int chmask)
 
 /* B.3.2  Class-Specific AC Interface Descriptor */
 =======
+=======
+	if (uac1->int_ep)
+		usb_ep_disable(uac1->int_ep);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*-------------------------------------------------------------------------*/
+static struct uac_feature_unit_descriptor *build_fu_desc(int chmask)
+{
+	struct uac_feature_unit_descriptor *fu_desc;
+	int channels = num_channels(chmask);
+	int fu_desc_size = UAC_DT_FEATURE_UNIT_SIZE(channels);
 
+	fu_desc = kzalloc(fu_desc_size, GFP_KERNEL);
+	if (!fu_desc)
+		return NULL;
+
+	fu_desc->bLength = fu_desc_size;
+	fu_desc->bDescriptorType = USB_DT_CS_INTERFACE;
+
+	fu_desc->bDescriptorSubtype = UAC_FEATURE_UNIT;
+	fu_desc->bControlSize  = 2;
+
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* bUnitID, bSourceID and bmaControls will be defined later */
+
+	return fu_desc;
+}
+
+/* B.3.2  Class-Specific AC Interface Descriptor */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct
 uac1_ac_header_descriptor *build_ac_header_desc(struct f_uac1_opts *opts)
 {
@@ -1020,6 +1119,9 @@ static void setup_descriptor(struct f_uac1_opts *opts)
 	if (EPIN_EN(opts))
 		usb_in_ot_desc.bTerminalID = i++;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (FUOUT_EN(opts))
 		out_feature_unit_desc->bUnitID = i++;
 	if (FUIN_EN(opts))
@@ -1037,11 +1139,14 @@ static void setup_descriptor(struct f_uac1_opts *opts)
 	} else {
 		io_out_ot_desc.bSourceID = usb_out_it_desc.bTerminalID;
 	}
+<<<<<<< HEAD
 =======
 
 	usb_in_ot_desc.bSourceID = io_in_it_desc.bTerminalID;
 	io_out_ot_desc.bSourceID = usb_out_it_desc.bTerminalID;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	as_out_header_desc.bTerminalLink = usb_out_it_desc.bTerminalID;
 	as_in_header_desc.bTerminalLink = usb_in_ot_desc.bTerminalID;
@@ -1054,10 +1159,15 @@ static void setup_descriptor(struct f_uac1_opts *opts)
 		len += sizeof(usb_in_ot_desc);
 		len += sizeof(io_in_it_desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (FUIN_EN(opts))
 			len += in_feature_unit_desc->bLength;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (FUIN_EN(opts))
+			len += in_feature_unit_desc->bLength;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ac_header_desc->wTotalLength = cpu_to_le16(len);
 	}
 	if (EPOUT_EN(opts)) {
@@ -1066,10 +1176,15 @@ static void setup_descriptor(struct f_uac1_opts *opts)
 		len += sizeof(usb_out_it_desc);
 		len += sizeof(io_out_ot_desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (FUOUT_EN(opts))
 			len += out_feature_unit_desc->bLength;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (FUOUT_EN(opts))
+			len += out_feature_unit_desc->bLength;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ac_header_desc->wTotalLength = cpu_to_le16(len);
 	}
 
@@ -1081,15 +1196,21 @@ static void setup_descriptor(struct f_uac1_opts *opts)
 		f_audio_desc[i++] = USBDHDR(&usb_out_it_desc);
 		f_audio_desc[i++] = USBDHDR(&io_out_ot_desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (FUOUT_EN(opts))
 			f_audio_desc[i++] = USBDHDR(out_feature_unit_desc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (FUOUT_EN(opts))
+			f_audio_desc[i++] = USBDHDR(out_feature_unit_desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (EPIN_EN(opts)) {
 		f_audio_desc[i++] = USBDHDR(&io_in_it_desc);
 		f_audio_desc[i++] = USBDHDR(&usb_in_ot_desc);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (FUIN_EN(opts))
 			f_audio_desc[i++] = USBDHDR(in_feature_unit_desc);
@@ -1102,6 +1223,15 @@ static void setup_descriptor(struct f_uac1_opts *opts)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (FUIN_EN(opts))
+			f_audio_desc[i++] = USBDHDR(in_feature_unit_desc);
+	}
+
+	if (FUOUT_EN(opts) || FUIN_EN(opts))
+		f_audio_desc[i++] = USBDHDR(&ac_int_ep_desc);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (EPOUT_EN(opts)) {
 		f_audio_desc[i++] = USBDHDR(&as_out_interface_alt_0_desc);
 		f_audio_desc[i++] = USBDHDR(&as_out_interface_alt_1_desc);
@@ -1149,6 +1279,9 @@ static int f_audio_validate_opts(struct g_audio *audio, struct device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (opts->p_volume_max <= opts->p_volume_min) {
 		dev_err(dev, "Error: incorrect playback volume max/min\n");
 		return -EINVAL;
@@ -1171,8 +1304,11 @@ static int f_audio_validate_opts(struct g_audio *audio, struct device *dev)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1207,6 +1343,9 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (FUOUT_EN(audio_opts)) {
 		out_feature_unit_desc = build_fu_desc(audio_opts->c_chmask);
 		if (!out_feature_unit_desc) {
@@ -1222,8 +1361,11 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ac_interface_desc.iInterface = us[STR_AC_IF].id;
 	usb_out_it_desc.iTerminal = us[STR_USB_OUT_IT].id;
 	usb_out_it_desc.iChannelNames = us[STR_USB_OUT_IT_CH_NAMES].id;
@@ -1237,6 +1379,9 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 	as_in_interface_alt_1_desc.iInterface = us[STR_AS_IN_IF_ALT1].id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (FUOUT_EN(audio_opts)) {
 		u8 *i_feature;
 
@@ -1252,8 +1397,11 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		*i_feature = us[STR_FU_IN].id;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Set channel numbers */
 	usb_out_it_desc.bNrChannels = num_channels(audio_opts->c_chmask);
 	usb_out_it_desc.wChannelConfig = cpu_to_le16(audio_opts->c_chmask);
@@ -1267,6 +1415,9 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 	as_in_type_i_desc.bBitResolution = audio_opts->p_ssize * 8;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (FUOUT_EN(audio_opts)) {
 		__le16 *bma = (__le16 *)&out_feature_unit_desc->bmaControls[0];
 		u32 control = 0;
@@ -1288,8 +1439,11 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		*bma = cpu_to_le16(control);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Set sample rates */
 	rate = audio_opts->c_srate;
 	sam_freq = as_out_type_i_desc.tSamFreq[0];
@@ -1302,10 +1456,14 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 	status = usb_interface_id(c, f);
 	if (status < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_free_fu;
 =======
 		goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_free_fu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ac_interface_desc.bInterfaceNumber = status;
 	uac1->ac_intf = status;
 	uac1->ac_alt = 0;
@@ -1316,10 +1474,14 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		status = usb_interface_id(c, f);
 		if (status < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_free_fu;
 =======
 			goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_free_fu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		as_out_interface_alt_0_desc.bInterfaceNumber = status;
 		as_out_interface_alt_1_desc.bInterfaceNumber = status;
 		ac_header_desc->baInterfaceNr[ba_iface_id++] = status;
@@ -1331,10 +1493,14 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		status = usb_interface_id(c, f);
 		if (status < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_free_fu;
 =======
 			goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_free_fu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		as_in_interface_alt_0_desc.bInterfaceNumber = status;
 		as_in_interface_alt_1_desc.bInterfaceNumber = status;
 		ac_header_desc->baInterfaceNr[ba_iface_id++] = status;
@@ -1347,6 +1513,9 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 	status = -ENODEV;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ac_interface_desc.bNumEndpoints = 0;
 
 	/* allocate AC interrupt endpoint */
@@ -1360,17 +1529,24 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		ac_interface_desc.bNumEndpoints = 1;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* allocate instance-specific endpoints */
 	if (EPOUT_EN(audio_opts)) {
 		ep = usb_ep_autoconfig(cdev->gadget, &as_out_ep_desc);
 		if (!ep)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_free_fu;
 =======
 			goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_free_fu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		audio->out_ep = ep;
 		audio->out_ep->desc = &as_out_ep_desc;
 	}
@@ -1379,10 +1555,14 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 		ep = usb_ep_autoconfig(cdev->gadget, &as_in_ep_desc);
 		if (!ep)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_free_fu;
 =======
 			goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_free_fu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		audio->in_ep = ep;
 		audio->in_ep->desc = &as_in_ep_desc;
 	}
@@ -1394,10 +1574,14 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 					NULL);
 	if (status)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_free_fu;
 =======
 		goto fail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_free_fu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	audio->out_ep_maxpsize = le16_to_cpu(as_out_ep_desc.wMaxPacketSize);
 	audio->in_ep_maxpsize = le16_to_cpu(as_in_ep_desc.wMaxPacketSize);
@@ -1405,6 +1589,9 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 	audio->params.c_srate = audio_opts->c_srate;
 	audio->params.c_ssize = audio_opts->c_ssize;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (FUIN_EN(audio_opts)) {
 		audio->params.p_fu.id = USB_IN_FU_ID;
 		audio->params.p_fu.mute_present = audio_opts->p_mute_present;
@@ -1429,12 +1616,15 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 	audio->params.req_number = audio_opts->req_number;
 	if (FUOUT_EN(audio_opts) || FUIN_EN(audio_opts))
 		audio->notify = audio_notify;
+<<<<<<< HEAD
 =======
 	audio->params.p_chmask = audio_opts->p_chmask;
 	audio->params.p_srate = audio_opts->p_srate;
 	audio->params.p_ssize = audio_opts->p_ssize;
 	audio->params.req_number = audio_opts->req_number;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	status = g_audio_setup(audio, "UAC1_PCM", "UAC1_Gadget");
 	if (status)
@@ -1445,13 +1635,19 @@ static int f_audio_bind(struct usb_configuration *c, struct usb_function *f)
 err_card_register:
 	usb_free_all_descriptors(f);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_fu:
 	kfree(out_feature_unit_desc);
 	out_feature_unit_desc = NULL;
 	kfree(in_feature_unit_desc);
 	in_feature_unit_desc = NULL;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fail:
 	kfree(ac_header_desc);
 	ac_header_desc = NULL;
@@ -1478,6 +1674,9 @@ static struct configfs_item_operations f_uac1_item_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define uac1_kstrtou32			kstrtou32
 #define uac1_kstrtos16			kstrtos16
 #define uac1_kstrtobool(s, base, res)	kstrtobool((s), (res))
@@ -1487,9 +1686,12 @@ static const char *s16_fmt = "%hd\n";
 static const char *bool_fmt = "%u\n";
 
 #define UAC1_ATTRIBUTE(type, name)					\
+<<<<<<< HEAD
 =======
 #define UAC1_ATTRIBUTE(name)						\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t f_uac1_opts_##name##_show(				\
 					  struct config_item *item,	\
 					  char *page)			\
@@ -1499,10 +1701,14 @@ static ssize_t f_uac1_opts_##name##_show(				\
 									\
 	mutex_lock(&opts->lock);					\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	result = sprintf(page, type##_fmt, opts->name);			\
 =======
 	result = sprintf(page, "%u\n", opts->name);			\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	result = sprintf(page, type##_fmt, opts->name);			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&opts->lock);					\
 									\
 	return result;							\
@@ -1515,10 +1721,14 @@ static ssize_t f_uac1_opts_##name##_store(				\
 	struct f_uac1_opts *opts = to_f_uac1_opts(item);		\
 	int ret;							\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	type num;							\
 =======
 	u32 num;							\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	type num;							\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 									\
 	mutex_lock(&opts->lock);					\
 	if (opts->refcnt) {						\
@@ -1527,10 +1737,14 @@ static ssize_t f_uac1_opts_##name##_store(				\
 	}								\
 									\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = uac1_kstrto##type(page, 0, &num);				\
 =======
 	ret = kstrtou32(page, 0, &num);					\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = uac1_kstrto##type(page, 0, &num);				\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)							\
 		goto end;						\
 									\
@@ -1545,6 +1759,9 @@ end:									\
 CONFIGFS_ATTR(f_uac1_opts_, name)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 UAC1_ATTRIBUTE(u32, c_chmask);
 UAC1_ATTRIBUTE(u32, c_srate);
 UAC1_ATTRIBUTE(u32, c_ssize);
@@ -1564,6 +1781,7 @@ UAC1_ATTRIBUTE(bool, c_volume_present);
 UAC1_ATTRIBUTE(s16, c_volume_min);
 UAC1_ATTRIBUTE(s16, c_volume_max);
 UAC1_ATTRIBUTE(s16, c_volume_res);
+<<<<<<< HEAD
 =======
 UAC1_ATTRIBUTE(c_chmask);
 UAC1_ATTRIBUTE(c_srate);
@@ -1573,6 +1791,8 @@ UAC1_ATTRIBUTE(p_srate);
 UAC1_ATTRIBUTE(p_ssize);
 UAC1_ATTRIBUTE(req_number);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct configfs_attribute *f_uac1_attrs[] = {
 	&f_uac1_opts_attr_c_chmask,
@@ -1583,6 +1803,9 @@ static struct configfs_attribute *f_uac1_attrs[] = {
 	&f_uac1_opts_attr_p_ssize,
 	&f_uac1_opts_attr_req_number,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	&f_uac1_opts_attr_p_mute_present,
 	&f_uac1_opts_attr_p_volume_present,
@@ -1596,8 +1819,11 @@ static struct configfs_attribute *f_uac1_attrs[] = {
 	&f_uac1_opts_attr_c_volume_max,
 	&f_uac1_opts_attr_c_volume_res,
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NULL,
 };
 
@@ -1636,6 +1862,9 @@ static struct usb_function_instance *f_audio_alloc_inst(void)
 	opts->p_srate = UAC1_DEF_PSRATE;
 	opts->p_ssize = UAC1_DEF_PSSIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	opts->p_mute_present = UAC1_DEF_MUTE_PRESENT;
 	opts->p_volume_present = UAC1_DEF_VOLUME_PRESENT;
@@ -1649,8 +1878,11 @@ static struct usb_function_instance *f_audio_alloc_inst(void)
 	opts->c_volume_max = UAC1_DEF_MAX_DB;
 	opts->c_volume_res = UAC1_DEF_RES_DB;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	opts->req_number = UAC1_DEF_REQ_NUM;
 	return &opts->func_inst;
 }
@@ -1676,13 +1908,19 @@ static void f_audio_unbind(struct usb_configuration *c, struct usb_function *f)
 	usb_free_all_descriptors(f);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(out_feature_unit_desc);
 	out_feature_unit_desc = NULL;
 	kfree(in_feature_unit_desc);
 	in_feature_unit_desc = NULL;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(ac_header_desc);
 	ac_header_desc = NULL;
 

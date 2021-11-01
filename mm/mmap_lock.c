@@ -157,10 +157,14 @@ static inline void put_memcg_path_buf(void)
 	do {                                                                   \
 		const char *memcg_path;                                        \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		local_lock(&memcg_paths.lock);                                 \
 =======
 		preempt_disable();                                             \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		local_lock(&memcg_paths.lock);                                 \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcg_path = get_mm_memcg_path(mm);                            \
 		trace_mmap_lock_##type(mm,                                     \
 				       memcg_path != NULL ? memcg_path : "",   \
@@ -168,10 +172,14 @@ static inline void put_memcg_path_buf(void)
 		if (likely(memcg_path != NULL))                                \
 			put_memcg_path_buf();                                  \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		local_unlock(&memcg_paths.lock);                               \
 =======
 		preempt_enable();                                              \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		local_unlock(&memcg_paths.lock);                               \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while (0)
 
 #else /* !CONFIG_MEMCG */

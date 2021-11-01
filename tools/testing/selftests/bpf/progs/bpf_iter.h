@@ -13,9 +13,13 @@
 #define bpf_iter__udp bpf_iter__udp___not_used
 #define udp6_sock udp6_sock___not_used
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define bpf_iter__unix bpf_iter__unix___not_used
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define bpf_iter__unix bpf_iter__unix___not_used
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define bpf_iter__bpf_map_elem bpf_iter__bpf_map_elem___not_used
 #define bpf_iter__bpf_sk_storage_map bpf_iter__bpf_sk_storage_map___not_used
 #define bpf_iter__sockmap bpf_iter__sockmap___not_used
@@ -37,9 +41,13 @@
 #undef bpf_iter__udp
 #undef udp6_sock
 <<<<<<< HEAD
+<<<<<<< HEAD
 #undef bpf_iter__unix
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#undef bpf_iter__unix
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #undef bpf_iter__bpf_map_elem
 #undef bpf_iter__bpf_sk_storage_map
 #undef bpf_iter__sockmap
@@ -112,14 +120,20 @@ struct udp6_sock {
 } __attribute__((preserve_access_index));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bpf_iter__unix {
 	struct bpf_iter_meta *meta;
 	struct unix_sock *unix_sk;
 	uid_t uid;
 } __attribute__((preserve_access_index));
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bpf_iter__bpf_map_elem {
 	struct bpf_iter_meta *meta;
 	struct bpf_map *map;

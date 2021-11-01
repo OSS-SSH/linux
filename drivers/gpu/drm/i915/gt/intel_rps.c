@@ -38,6 +38,9 @@ static struct intel_uncore *rps_to_uncore(struct intel_rps *rps)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct intel_guc_slpc *rps_to_slpc(struct intel_rps *rps)
 {
 	struct intel_gt *gt = rps_to_gt(rps);
@@ -52,8 +55,11 @@ static bool rps_uses_slpc(struct intel_rps *rps)
 	return intel_uc_uses_guc_slpc(&gt->uc);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u32 rps_pm_sanitize_mask(struct intel_rps *rps, u32 mask)
 {
 	return mask & ~rps->pm_intrmsk_mbz;
@@ -185,10 +191,15 @@ static void rps_enable_interrupts(struct intel_rps *rps)
 	struct intel_gt *gt = rps_to_gt(rps);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GEM_BUG_ON(rps_uses_slpc(rps));
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(rps_uses_slpc(rps));
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GT_TRACE(gt, "interrupts:on rps->pm_events: %x, rps_pm_mask:%x\n",
 		 rps->pm_events, rps_pm_mask(rps, rps->last_freq));
 
@@ -794,10 +805,15 @@ static int gen6_rps_set(struct intel_rps *rps, u8 val)
 	u32 swreq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GEM_BUG_ON(rps_uses_slpc(rps));
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(rps_uses_slpc(rps));
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (GRAPHICS_VER(i915) >= 9)
 		swreq = GEN9_FREQUENCY(val);
 	else if (IS_HASWELL(i915) || IS_BROADWELL(i915))
@@ -889,11 +905,16 @@ void intel_rps_park(struct intel_rps *rps)
 	int adj;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!intel_rps_is_enabled(rps))
 		return;
 =======
 	GEM_BUG_ON(atomic_read(&rps->num_waiters));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!intel_rps_is_enabled(rps))
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!intel_rps_clear_active(rps))
 		return;
@@ -1032,10 +1053,14 @@ static void gen6_rps_init(struct intel_rps *rps)
 	rps->efficient_freq = rps->rp1_freq;
 	if (IS_HASWELL(i915) || IS_BROADWELL(i915) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    IS_GEN9_BC(i915) || GRAPHICS_VER(i915) >= 11) {
 =======
 	    IS_GEN9_BC(i915) || GRAPHICS_VER(i915) >= 10) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    IS_GEN9_BC(i915) || GRAPHICS_VER(i915) >= 11) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u32 ddcc_status = 0;
 
 		if (sandybridge_pcode_read(i915,
@@ -1049,10 +1074,14 @@ static void gen6_rps_init(struct intel_rps *rps)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IS_GEN9_BC(i915) || GRAPHICS_VER(i915) >= 11) {
 =======
 	if (IS_GEN9_BC(i915) || GRAPHICS_VER(i915) >= 10) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_GEN9_BC(i915) || GRAPHICS_VER(i915) >= 11) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Store the frequency values in 16.66 MHZ units, which is
 		 * the natural hardware unit for SKL
 		 */
@@ -1397,11 +1426,17 @@ void intel_rps_enable(struct intel_rps *rps)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rps_uses_slpc(rps))
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rps_uses_slpc(rps))
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_gt_check_clock_frequency(rps_to_gt(rps));
 
 	intel_uncore_forcewake_get(uncore, FORCEWAKE_ALL);
@@ -1876,11 +1911,17 @@ void intel_rps_init(struct intel_rps *rps)
 	struct drm_i915_private *i915 = rps_to_i915(rps);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rps_uses_slpc(rps))
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rps_uses_slpc(rps))
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_CHERRYVIEW(i915))
 		chv_rps_init(rps);
 	else if (IS_VALLEYVIEW(i915))
@@ -1930,22 +1971,34 @@ void intel_rps_init(struct intel_rps *rps)
 	if (GRAPHICS_VER(i915) >= 8 && GRAPHICS_VER(i915) < 11)
 		rps->pm_intrmsk_mbz |= GEN8_PMINTR_DISABLE_REDIRECT_TO_GUC;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* GuC needs ARAT expired interrupt unmasked */
 	if (intel_uc_uses_guc_submission(&rps_to_gt(rps)->uc))
 		rps->pm_intrmsk_mbz |= ARAT_EXPIRED_INTRMSK;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void intel_rps_sanitize(struct intel_rps *rps)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (rps_uses_slpc(rps))
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rps_uses_slpc(rps))
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (GRAPHICS_VER(rps_to_i915(rps)) >= 6)
 		rps_disable_interrupts(rps);
 }
@@ -2002,6 +2055,9 @@ u32 intel_rps_read_actual_frequency(struct intel_rps *rps)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u32 intel_rps_read_punit_req(struct intel_rps *rps)
 {
 	struct intel_uncore *uncore = rps_to_uncore(rps);
@@ -2178,8 +2234,11 @@ int intel_rps_set_min_frequency(struct intel_rps *rps, u32 val)
 		return set_min_freq(rps, val);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* External interface for intel_ips.ko */
 
 static struct drm_i915_private __rcu *ips_mchdev;
@@ -2374,7 +2433,11 @@ EXPORT_SYMBOL_GPL(i915_gpu_turbo_disable);
 #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
 #include "selftest_rps.c"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "selftest_slpc.c"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "selftest_slpc.c"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

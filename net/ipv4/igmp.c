@@ -804,6 +804,7 @@ static void igmp_ifc_timer_expire(struct timer_list *t)
 {
 	struct in_device *in_dev = from_timer(in_dev, t, mr_ifc_timer);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 mr_ifc_count;
 
 	igmpv3_send_cr(in_dev);
@@ -821,6 +822,19 @@ restart:
 	if (in_dev->mr_ifc_count) {
 		in_dev->mr_ifc_count--;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 mr_ifc_count;
+
+	igmpv3_send_cr(in_dev);
+restart:
+	mr_ifc_count = READ_ONCE(in_dev->mr_ifc_count);
+
+	if (mr_ifc_count) {
+		if (cmpxchg(&in_dev->mr_ifc_count,
+			    mr_ifc_count,
+			    mr_ifc_count - 1) != mr_ifc_count)
+			goto restart;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		igmp_ifc_start_timer(in_dev,
 				     unsolicited_report_interval(in_dev));
 	}
@@ -833,10 +847,14 @@ static void igmp_ifc_event(struct in_device *in_dev)
 	if (IGMP_V1_SEEN(in_dev) || IGMP_V2_SEEN(in_dev))
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WRITE_ONCE(in_dev->mr_ifc_count, in_dev->mr_qrv ?: net->ipv4.sysctl_igmp_qrv);
 =======
 	in_dev->mr_ifc_count = in_dev->mr_qrv ?: net->ipv4.sysctl_igmp_qrv;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WRITE_ONCE(in_dev->mr_ifc_count, in_dev->mr_qrv ?: net->ipv4.sysctl_igmp_qrv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	igmp_ifc_start_timer(in_dev, 1);
 }
 
@@ -976,10 +994,14 @@ static bool igmp_heard_query(struct in_device *in_dev, struct sk_buff *skb,
 		}
 		/* cancel the interface change timer */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		WRITE_ONCE(in_dev->mr_ifc_count, 0);
 =======
 		in_dev->mr_ifc_count = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WRITE_ONCE(in_dev->mr_ifc_count, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (del_timer(&in_dev->mr_ifc_timer))
 			__in_dev_put(in_dev);
 		/* clear deleted report items */
@@ -1747,10 +1769,14 @@ void ip_mc_down(struct in_device *in_dev)
 
 #ifdef CONFIG_IP_MULTICAST
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WRITE_ONCE(in_dev->mr_ifc_count, 0);
 =======
 	in_dev->mr_ifc_count = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WRITE_ONCE(in_dev->mr_ifc_count, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (del_timer(&in_dev->mr_ifc_timer))
 		__in_dev_put(in_dev);
 	in_dev->mr_gq_running = 0;
@@ -1968,10 +1994,14 @@ static int ip_mc_del_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
 #ifdef CONFIG_IP_MULTICAST
 		pmc->crcount = in_dev->mr_qrv ?: net->ipv4.sysctl_igmp_qrv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
 =======
 		in_dev->mr_ifc_count = pmc->crcount;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (psf = pmc->sources; psf; psf = psf->sf_next)
 			psf->sf_crcount = 0;
 		igmp_ifc_event(pmc->interface);
@@ -2151,10 +2181,14 @@ static int ip_mc_add_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
 
 		pmc->crcount = in_dev->mr_qrv ?: net->ipv4.sysctl_igmp_qrv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
 =======
 		in_dev->mr_ifc_count = pmc->crcount;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (psf = pmc->sources; psf; psf = psf->sf_next)
 			psf->sf_crcount = 0;
 		igmp_ifc_event(in_dev);
@@ -2268,10 +2302,14 @@ static int ip_mc_leave_src(struct sock *sk, struct ip_mc_socklist *iml,
 	RCU_INIT_POINTER(iml->sflist, NULL);
 	/* decrease mem now to avoid the memleak warning */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_sub(struct_size(psf, sl_addr, psf->sl_max), &sk->sk_omem_alloc);
 =======
 	atomic_sub(IP_SFLSIZE(psf->sl_max), &sk->sk_omem_alloc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_sub(struct_size(psf, sl_addr, psf->sl_max), &sk->sk_omem_alloc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree_rcu(psf, rcu);
 	return err;
 }
@@ -2421,11 +2459,16 @@ int ip_mc_source(int add, int omode, struct sock *sk, struct
 		if (psl)
 			count += psl->sl_max;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr, count),
 				      GFP_KERNEL);
 =======
 		newpsl = sock_kmalloc(sk, IP_SFLSIZE(count), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr, count),
+				      GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!newpsl) {
 			err = -ENOBUFS;
 			goto done;
@@ -2437,11 +2480,16 @@ int ip_mc_source(int add, int omode, struct sock *sk, struct
 				newpsl->sl_addr[i] = psl->sl_addr[i];
 			/* decrease mem now to avoid the memleak warning */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
 				   &sk->sk_omem_alloc);
 =======
 			atomic_sub(IP_SFLSIZE(psl->sl_max), &sk->sk_omem_alloc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
+				   &sk->sk_omem_alloc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			kfree_rcu(psl, rcu);
 		}
 		rcu_assign_pointer(pmc->sflist, newpsl);
@@ -2517,6 +2565,7 @@ int ip_mc_msfilter(struct sock *sk, struct ip_msfilter *msf, int ifindex)
 	}
 	if (msf->imsf_numsrc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr,
 						      msf->imsf_numsrc),
 				      GFP_KERNEL);
@@ -2524,11 +2573,17 @@ int ip_mc_msfilter(struct sock *sk, struct ip_msfilter *msf, int ifindex)
 		newpsl = sock_kmalloc(sk, IP_SFLSIZE(msf->imsf_numsrc),
 							   GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr,
+						      msf->imsf_numsrc),
+				      GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!newpsl) {
 			err = -ENOBUFS;
 			goto done;
 		}
 		newpsl->sl_max = newpsl->sl_count = msf->imsf_numsrc;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		memcpy(newpsl->sl_addr, msf->imsf_slist_flex,
 		       flex_array_size(msf, imsf_slist_flex, msf->imsf_numsrc));
@@ -2546,6 +2601,16 @@ int ip_mc_msfilter(struct sock *sk, struct ip_msfilter *msf, int ifindex)
 		if (err) {
 			sock_kfree_s(sk, newpsl, IP_SFLSIZE(newpsl->sl_max));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memcpy(newpsl->sl_addr, msf->imsf_slist_flex,
+		       flex_array_size(msf, imsf_slist_flex, msf->imsf_numsrc));
+		err = ip_mc_add_src(in_dev, &msf->imsf_multiaddr,
+			msf->imsf_fmode, newpsl->sl_count, newpsl->sl_addr, 0);
+		if (err) {
+			sock_kfree_s(sk, newpsl,
+				     struct_size(newpsl, sl_addr,
+						 newpsl->sl_max));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto done;
 		}
 	} else {
@@ -2559,11 +2624,16 @@ int ip_mc_msfilter(struct sock *sk, struct ip_msfilter *msf, int ifindex)
 			psl->sl_count, psl->sl_addr, 0);
 		/* decrease mem now to avoid the memleak warning */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
 			   &sk->sk_omem_alloc);
 =======
 		atomic_sub(IP_SFLSIZE(psl->sl_max), &sk->sk_omem_alloc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
+			   &sk->sk_omem_alloc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree_rcu(psl, rcu);
 	} else
 		(void) ip_mc_del_src(in_dev, &msf->imsf_multiaddr, pmc->sfmode,
@@ -2622,10 +2692,14 @@ int ip_mc_msfget(struct sock *sk, struct ip_msfilter *msf,
 	}
 	copycount = count < msf->imsf_numsrc ? count : msf->imsf_numsrc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	len = flex_array_size(psl, sl_addr, copycount);
 =======
 	len = copycount * sizeof(psl->sl_addr[0]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	len = flex_array_size(psl, sl_addr, copycount);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	msf->imsf_numsrc = count;
 	if (put_user(IP_MSFILTER_SIZE(copycount), optlen) ||
 	    copy_to_user(optval, msf, IP_MSFILTER_SIZE(0))) {
@@ -2633,10 +2707,14 @@ int ip_mc_msfget(struct sock *sk, struct ip_msfilter *msf,
 	}
 	if (len &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    copy_to_user(&optval->imsf_slist_flex[0], psl->sl_addr, len))
 =======
 	    copy_to_user(&optval->imsf_slist[0], psl->sl_addr, len))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    copy_to_user(&optval->imsf_slist_flex[0], psl->sl_addr, len))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 	return 0;
 done:
@@ -2792,9 +2870,13 @@ int ip_check_mc_rcu(struct in_device *in_dev, __be32 mc_addr, __be32 src_addr, u
 	} else if (im) {
 		if (src_addr) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			spin_lock_bh(&im->lock);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			spin_lock_bh(&im->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			for (psf = im->sources; psf; psf = psf->sf_next) {
 				if (psf->sf_inaddr == src_addr)
 					break;
@@ -2806,9 +2888,13 @@ int ip_check_mc_rcu(struct in_device *in_dev, __be32 mc_addr, __be32 src_addr, u
 			else
 				rv = im->sfcount[MCAST_EXCLUDE] != 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			spin_unlock_bh(&im->lock);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			spin_unlock_bh(&im->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else
 			rv = 1; /* unspecified source; tentatively allow */
 	}

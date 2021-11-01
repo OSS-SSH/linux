@@ -15,10 +15,14 @@
 #include "jfs_acl.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct posix_acl *jfs_get_acl(struct inode *inode, int type, bool rcu)
 =======
 struct posix_acl *jfs_get_acl(struct inode *inode, int type)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *jfs_get_acl(struct inode *inode, int type, bool rcu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct posix_acl *acl;
 	char *ea_name;
@@ -26,11 +30,17 @@ struct posix_acl *jfs_get_acl(struct inode *inode, int type)
 	char *value = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch(type) {
 		case ACL_TYPE_ACCESS:
 			ea_name = XATTR_NAME_POSIX_ACL_ACCESS;

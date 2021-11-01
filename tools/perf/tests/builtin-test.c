@@ -362,12 +362,18 @@ static struct test generic_tests[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.desc = "dlfilter C API",
 		.func = test__dlfilter,
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.func = NULL,
 	},
 };
@@ -602,11 +608,16 @@ static int shell_test__run(struct test *test, int subdir __maybe_unused)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int run_shell_tests(int argc, const char *argv[], int i, int width,
 				struct intlist *skiplist)
 =======
 static int run_shell_tests(int argc, const char *argv[], int i, int width)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int run_shell_tests(int argc, const char *argv[], int i, int width,
+				struct intlist *skiplist)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dirent **entlist;
 	struct dirent *ent;
@@ -641,14 +652,20 @@ static int run_shell_tests(int argc, const char *argv[], int i, int width)
 		st.file = ent->d_name;
 		pr_info("%2d: %-*s:", i, width, test.desc);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (intlist__find(skiplist, i)) {
 			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (user override)\n");
 			continue;
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		test_and_print(&test, false, -1);
 	}
 
@@ -749,10 +766,14 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return run_shell_tests(argc, argv, i, width, skiplist);
 =======
 	return run_shell_tests(argc, argv, i, width);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return run_shell_tests(argc, argv, i, width, skiplist);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int perf_test__list_shell(int argc, const char **argv, int i)

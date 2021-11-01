@@ -3,10 +3,14 @@
 #define __KERNEL_PRINTK__
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/stdarg.h>
 =======
 #include <stdarg.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/stdarg.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/init.h>
 #include <linux/kern_levels.h>
 #include <linux/linkage.h>
@@ -75,6 +79,7 @@ extern int console_printk[];
 #define default_console_loglevel (console_printk[3])
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void console_verbose(void);
 =======
 static inline void console_silent(void)
@@ -88,6 +93,9 @@ static inline void console_verbose(void)
 		console_loglevel = CONSOLE_LOGLEVEL_MOTORMOUTH;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void console_verbose(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* strlen("ratelimit") + 1 */
 #define DEVKMSG_STR_MAX_SIZE 10
@@ -159,6 +167,7 @@ void early_printk(const char *s, ...) { }
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PRINTK_NMI
 extern void printk_nmi_enter(void);
@@ -173,6 +182,8 @@ static inline void printk_nmi_direct_exit(void) { }
 #endif /* PRINTK_NMI */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct dev_printk_info;
 
 #ifdef CONFIG_PRINTK
@@ -186,15 +197,22 @@ int vprintk(const char *fmt, va_list args);
 
 asmlinkage __printf(1, 2) __cold
 <<<<<<< HEAD
+<<<<<<< HEAD
 int _printk(const char *fmt, ...);
 =======
 int printk(const char *fmt, ...);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int _printk(const char *fmt, ...);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Special printk facility for scheduler/timekeeping use only, _DO_NOT_USE_ !
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 __printf(1, 2) __cold int _printk_deferred(const char *fmt, ...);
 
 extern void __printk_safe_enter(void);
@@ -206,9 +224,12 @@ extern void __printk_safe_exit(void);
  */
 #define printk_deferred_enter __printk_safe_enter
 #define printk_deferred_exit __printk_safe_exit
+<<<<<<< HEAD
 =======
 __printf(1, 2) __cold int printk_deferred(const char *fmt, ...);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Please don't use printk_ratelimit(), because it shares ratelimiting state
@@ -239,10 +260,13 @@ void show_regs_print_info(const char *log_lvl);
 extern asmlinkage void dump_stack_lvl(const char *log_lvl) __cold;
 extern asmlinkage void dump_stack(void) __cold;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern void printk_safe_flush(void);
 extern void printk_safe_flush_on_panic(void);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline __printf(1, 0)
 int vprintk(const char *s, va_list args)
@@ -251,14 +275,19 @@ int vprintk(const char *s, va_list args)
 }
 static inline __printf(1, 2) __cold
 <<<<<<< HEAD
+<<<<<<< HEAD
 int _printk(const char *s, ...)
 =======
 int printk(const char *s, ...)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int _printk(const char *s, ...)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return 0;
 }
 static inline __printf(1, 2) __cold
+<<<<<<< HEAD
 <<<<<<< HEAD
 int _printk_deferred(const char *s, ...)
 {
@@ -279,6 +308,21 @@ int printk_deferred(const char *s, ...)
 	return 0;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int _printk_deferred(const char *s, ...)
+{
+	return 0;
+}
+
+static inline void printk_deferred_enter(void)
+{
+}
+
+static inline void printk_deferred_exit(void)
+{
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int printk_ratelimit(void)
 {
 	return 0;
@@ -331,6 +375,7 @@ static inline void dump_stack(void)
 {
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 static inline void printk_safe_flush(void)
@@ -341,6 +386,8 @@ static inline void printk_safe_flush_on_panic(void)
 {
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifdef CONFIG_SMP
@@ -404,6 +451,9 @@ extern int kptr_restrict;
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct module;
 
 #ifdef CONFIG_PRINTK_INDEX
@@ -515,8 +565,11 @@ struct pi_entry {
 #define printk_deferred(fmt, ...)					\
 	printk_index_wrap(_printk_deferred, fmt, ##__VA_ARGS__)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * pr_emerg - Print an emergency-level message
  * @fmt: format string

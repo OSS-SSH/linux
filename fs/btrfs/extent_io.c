@@ -14,9 +14,13 @@
 #include <linux/prefetch.h>
 #include <linux/cleancache.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/fsverity.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/fsverity.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "misc.h"
 #include "extent_io.h"
 #include "extent-io-tree.h"
@@ -177,10 +181,15 @@ int __must_check submit_one_bio(struct bio *bio, int mirror_num,
 	bio->bi_private = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Caller should ensure the bio has at least some range added */
 	ASSERT(bio->bi_iter.bi_size);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Caller should ensure the bio has at least some range added */
+	ASSERT(bio->bi_iter.bi_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (is_data_inode(tree->private_data))
 		ret = btrfs_submit_data_bio(tree->private_data, bio, mirror_num,
 					    bio_flags);
@@ -2255,6 +2264,7 @@ int test_range_bit(struct extent_io_tree *tree, u64 start, u64 end,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * helper function to set a given page up to date if all the
@@ -2269,6 +2279,8 @@ static void check_page_uptodate(struct extent_io_tree *tree, struct page *page)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int free_io_failure(struct extent_io_tree *failure_tree,
 		    struct extent_io_tree *io_tree,
 		    struct io_failure_record *rec)
@@ -2701,6 +2713,9 @@ static void end_page_read(struct page *page, bool uptodate, u64 start, u32 len)
 
 	if (uptodate) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (fsverity_active(page->mapping->host) &&
 		    !PageError(page) &&
 		    !PageUptodate(page) &&
@@ -2710,9 +2725,12 @@ static void end_page_read(struct page *page, bool uptodate, u64 start, u32 len)
 		} else {
 			btrfs_page_set_uptodate(fs_info, page, start, len);
 		}
+<<<<<<< HEAD
 =======
 		btrfs_page_set_uptodate(fs_info, page, start, len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		btrfs_page_clear_uptodate(fs_info, page, start, len);
 		btrfs_page_set_error(fs_info, page, start, len);
@@ -2804,10 +2822,14 @@ void end_extent_writepage(struct page *page, int err, u64 start, u64 end)
 {
 	struct btrfs_inode *inode;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const bool uptodate = (err == 0);
 =======
 	int uptodate = (err == 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const bool uptodate = (err == 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	ASSERT(page && page->mapping);
@@ -2816,6 +2838,9 @@ void end_extent_writepage(struct page *page, int err, u64 start, u64 end)
 
 	if (!uptodate) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		const struct btrfs_fs_info *fs_info = inode->root->fs_info;
 		u32 len;
 
@@ -2824,10 +2849,13 @@ void end_extent_writepage(struct page *page, int err, u64 start, u64 end)
 
 		btrfs_page_clear_uptodate(fs_info, page, start, len);
 		btrfs_page_set_error(fs_info, page, start, len);
+<<<<<<< HEAD
 =======
 		ClearPageUptodate(page);
 		SetPageError(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = err < 0 ? err : -EIO;
 		mapping_set_error(page->mapping, ret);
 	}
@@ -3137,10 +3165,14 @@ readpage_ok:
 		end_page_read(page, uptodate, start, len);
 		endio_readpage_release_extent(&processed, BTRFS_I(inode),
 <<<<<<< HEAD
+<<<<<<< HEAD
 					      start, end, PageUptodate(page));
 =======
 					      start, end, uptodate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      start, end, PageUptodate(page));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	/* Release the last extent */
 	endio_readpage_release_extent(&processed, NULL, 0, 0, false);
@@ -3197,19 +3229,28 @@ struct bio *btrfs_io_bio_alloc(unsigned int nr_iovecs)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct bio *btrfs_bio_clone_partial(struct bio *orig, u64 offset, u64 size)
 =======
 struct bio *btrfs_bio_clone_partial(struct bio *orig, int offset, int size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct bio *btrfs_bio_clone_partial(struct bio *orig, u64 offset, u64 size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct bio *bio;
 	struct btrfs_io_bio *btrfs_bio;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ASSERT(offset <= UINT_MAX && size <= UINT_MAX);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ASSERT(offset <= UINT_MAX && size <= UINT_MAX);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* this will never fail when it's backed by a bioset */
 	bio = bio_clone_fast(orig, GFP_NOFS, &btrfs_bioset);
 	ASSERT(bio);
@@ -3234,6 +3275,7 @@ struct bio *btrfs_bio_clone_partial(struct bio *orig, int offset, int size)
  * @prev_bio_flags:  flags of previous bio to see if we can merge the current one
  * @bio_flags:	flags of the current bio to see if we can merge them
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Attempt to add a page to bio considering stripe alignment etc.
  *
@@ -3252,20 +3294,28 @@ static int btrfs_bio_add_page(struct btrfs_bio_ctrl *bio_ctrl,
 	u32 real_size;
 =======
  * @return:	true if page was added, false otherwise
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Attempt to add a page to bio considering stripe alignment etc.
  *
- * Return true if successfully page added. Otherwise, return false.
+ * Return >= 0 for the number of bytes added to the bio.
+ * Can return 0 if the current bio is already at stripe/zone boundary.
+ * Return <0 for error.
  */
-static bool btrfs_bio_add_page(struct btrfs_bio_ctrl *bio_ctrl,
-			       struct page *page,
-			       u64 disk_bytenr, unsigned int size,
-			       unsigned int pg_offset,
-			       unsigned long bio_flags)
+static int btrfs_bio_add_page(struct btrfs_bio_ctrl *bio_ctrl,
+			      struct page *page,
+			      u64 disk_bytenr, unsigned int size,
+			      unsigned int pg_offset,
+			      unsigned long bio_flags)
 {
 	struct bio *bio = bio_ctrl->bio;
 	u32 bio_size = bio->bi_iter.bi_size;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 real_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const sector_t sector = disk_bytenr >> SECTOR_SHIFT;
 	bool contig;
 	int ret;
@@ -3275,16 +3325,21 @@ static bool btrfs_bio_add_page(struct btrfs_bio_ctrl *bio_ctrl,
 	ASSERT(bio_ctrl->len_to_oe_boundary && bio_ctrl->len_to_stripe_boundary);
 	if (bio_ctrl->bio_flags != bio_flags)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return 0;
 =======
 		return false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (bio_ctrl->bio_flags & EXTENT_BIO_COMPRESSED)
 		contig = bio->bi_iter.bi_sector == sector;
 	else
 		contig = bio_end_sector(bio) == sector;
 	if (!contig)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return 0;
 
@@ -3311,22 +3366,36 @@ static int calc_bio_boundaries(struct btrfs_bio_ctrl *bio_ctrl,
 			       struct btrfs_inode *inode, u64 file_offset)
 =======
 		return false;
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (bio_size + size > bio_ctrl->len_to_oe_boundary ||
-	    bio_size + size > bio_ctrl->len_to_stripe_boundary)
-		return false;
+	real_size = min(bio_ctrl->len_to_oe_boundary,
+			bio_ctrl->len_to_stripe_boundary) - bio_size;
+	real_size = min(real_size, size);
+
+	/*
+	 * If real_size is 0, never call bio_add_*_page(), as even size is 0,
+	 * bio will still execute its endio function on the page!
+	 */
+	if (real_size == 0)
+		return 0;
 
 	if (bio_op(bio) == REQ_OP_ZONE_APPEND)
-		ret = bio_add_zone_append_page(bio, page, size, pg_offset);
+		ret = bio_add_zone_append_page(bio, page, real_size, pg_offset);
 	else
-		ret = bio_add_page(bio, page, size, pg_offset);
+		ret = bio_add_page(bio, page, real_size, pg_offset);
 
-	return ret == size;
+	return ret;
 }
 
 static int calc_bio_boundaries(struct btrfs_bio_ctrl *bio_ctrl,
+<<<<<<< HEAD
 			       struct btrfs_inode *inode)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       struct btrfs_inode *inode, u64 file_offset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
 	struct btrfs_io_geometry geom;
@@ -3368,6 +3437,7 @@ static int calc_bio_boundaries(struct btrfs_bio_ctrl *bio_ctrl,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Ordered extent not yet created, so we're good */
 	ordered = btrfs_lookup_ordered_extent(inode, file_offset);
 =======
@@ -3375,6 +3445,10 @@ static int calc_bio_boundaries(struct btrfs_bio_ctrl *bio_ctrl,
 	/* Ordered extent not yet created, so we're good */
 	ordered = btrfs_lookup_ordered_extent(inode, logical);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Ordered extent not yet created, so we're good */
+	ordered = btrfs_lookup_ordered_extent(inode, file_offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ordered) {
 		bio_ctrl->len_to_oe_boundary = U32_MAX;
 		return 0;
@@ -3387,6 +3461,9 @@ static int calc_bio_boundaries(struct btrfs_bio_ctrl *bio_ctrl,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int alloc_new_bio(struct btrfs_inode *inode,
 			 struct btrfs_bio_ctrl *bio_ctrl,
 			 struct writeback_control *wbc,
@@ -3443,8 +3520,11 @@ error:
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * @opf:	bio REQ_OP_* and REQ_* flags as one value
  * @wbc:	optional writeback control for io accounting
@@ -3471,6 +3551,7 @@ static int submit_extent_page(unsigned int opf,
 {
 	int ret = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct btrfs_inode *inode = BTRFS_I(page->mapping->host);
 	unsigned int cur = pg_offset;
 =======
@@ -3480,12 +3561,19 @@ static int submit_extent_page(unsigned int opf,
 	struct extent_io_tree *tree = &inode->io_tree;
 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct btrfs_inode *inode = BTRFS_I(page->mapping->host);
+	unsigned int cur = pg_offset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ASSERT(bio_ctrl);
 
 	ASSERT(pg_offset < PAGE_SIZE && size <= PAGE_SIZE &&
 	       pg_offset + size <= PAGE_SIZE);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (force_bio_submit && bio_ctrl->bio) {
 		ret = submit_one_bio(bio_ctrl->bio, mirror_num, bio_ctrl->bio_flags);
 		bio_ctrl->bio = NULL;
@@ -3533,6 +3621,7 @@ static int submit_extent_page(unsigned int opf,
 			ASSERT(bio_ctrl->bio->bi_iter.bi_size);
 			ret = submit_one_bio(bio_ctrl->bio, mirror_num,
 					bio_ctrl->bio_flags);
+<<<<<<< HEAD
 			bio_ctrl->bio = NULL;
 			if (ret < 0)
 				return ret;
@@ -3547,15 +3636,15 @@ static int submit_extent_page(unsigned int opf,
 		    !btrfs_bio_add_page(bio_ctrl, page, disk_bytenr, io_size,
 					pg_offset, bio_flags)) {
 			ret = submit_one_bio(bio, mirror_num, bio_ctrl->bio_flags);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bio_ctrl->bio = NULL;
 			if (ret < 0)
 				return ret;
-		} else {
-			if (wbc)
-				wbc_account_cgroup_owner(wbc, page, io_size);
-			return 0;
 		}
+		cur += added;
 	}
+<<<<<<< HEAD
 
 	bio = btrfs_bio_alloc(disk_bytenr);
 	bio_add_page(bio, page, io_size, pg_offset);
@@ -3587,6 +3676,9 @@ static int submit_extent_page(unsigned int opf,
 
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int attach_extent_buffer_page(struct extent_buffer *eb,
@@ -3716,9 +3808,12 @@ int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
 	size_t iosize;
 	size_t blocksize = inode->i_sb->s_blocksize;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long this_bio_flag = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct extent_io_tree *tree = &BTRFS_I(inode)->io_tree;
 
 	ret = set_page_extent_mapped(page);
@@ -3750,9 +3845,13 @@ int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
 	begin_page_read(fs_info, page);
 	while (cur <= end) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned long this_bio_flag = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned long this_bio_flag = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bool force_bio_submit = false;
 		u64 disk_bytenr;
 
@@ -3862,9 +3961,12 @@ int btrfs_do_readpage(struct page *page, struct extent_map **em_cached,
 		if (test_range_bit(tree, cur, cur_end,
 				   EXTENT_UPTODATE, 1, NULL)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			check_page_uptodate(tree, page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			unlock_extent(tree, cur, cur + iosize - 1);
 			end_page_read(page, true, cur, iosize);
 			cur = cur + iosize;
@@ -3960,6 +4062,7 @@ static noinline_for_stack int writepage_delalloc(struct btrfs_inode *inode,
 				delalloc_end, &page_started, nr_written, wbc);
 		if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			btrfs_page_set_error(inode->root->fs_info, page,
 					     page_offset(page), PAGE_SIZE);
 			return ret;
@@ -3973,6 +4076,11 @@ static noinline_for_stack int writepage_delalloc(struct btrfs_inode *inode,
 			 */
 			return ret < 0 ? ret : -EIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			btrfs_page_set_error(inode->root->fs_info, page,
+					     page_offset(page), PAGE_SIZE);
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		/*
 		 * delalloc_end is already one less than the total length, so
@@ -4073,6 +4181,7 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
 {
 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 cur = page_offset(page);
 	u64 end = cur + PAGE_SIZE - 1;
 =======
@@ -4080,6 +4189,10 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
 	u64 end = start + PAGE_SIZE - 1;
 	u64 cur = start;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 cur = page_offset(page);
+	u64 end = cur + PAGE_SIZE - 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 extent_offset;
 	u64 block_start;
 	struct extent_map *em;
@@ -4090,10 +4203,14 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
 	bool compressed;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = btrfs_writepage_cow_fixup(page);
 =======
 	ret = btrfs_writepage_cow_fixup(page, start, end);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = btrfs_writepage_cow_fixup(page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		/* Fixup worker will requeue */
 		redirty_page_for_writepage(wbc, page);
@@ -4118,6 +4235,9 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
 		if (cur >= i_size) {
 			btrfs_writepage_endio_finish_ordered(inode, page, cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							     end, true);
 			/*
 			 * This range is beyond i_size, thus we don't need to
@@ -4128,9 +4248,12 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
 			 * causing writeback without ordered extent.
 			 */
 			btrfs_page_clear_dirty(fs_info, page, cur, end + 1 - cur);
+<<<<<<< HEAD
 =======
 							     end, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 
@@ -4181,11 +4304,16 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
 			else
 				btrfs_writepage_endio_finish_ordered(inode,
 <<<<<<< HEAD
+<<<<<<< HEAD
 						page, cur, cur + iosize - 1, true);
 			btrfs_page_clear_dirty(fs_info, page, cur, iosize);
 =======
 						page, cur, cur + iosize - 1, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						page, cur, cur + iosize - 1, true);
+			btrfs_page_clear_dirty(fs_info, page, cur, iosize);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cur += iosize;
 			continue;
 		}
@@ -4222,14 +4350,20 @@ static noinline_for_stack int __extent_writepage_io(struct btrfs_inode *inode,
 		nr++;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If we finish without problem, we should not only clear page dirty,
 	 * but also empty subpage dirty bits
 	 */
 	if (!ret)
 		btrfs_page_assert_not_dirty(fs_info, page);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*nr_ret = nr;
 	return ret;
 }
@@ -4261,11 +4395,16 @@ static int __extent_writepage(struct page *page, struct writeback_control *wbc,
 	WARN_ON(!PageLocked(page));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btrfs_page_clear_error(btrfs_sb(inode->i_sb), page,
 			       page_offset(page), PAGE_SIZE);
 =======
 	ClearPageError(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btrfs_page_clear_error(btrfs_sb(inode->i_sb), page,
+			       page_offset(page), PAGE_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pg_offset = offset_in_page(i_size);
 	if (page->index > end_index ||
@@ -4307,6 +4446,9 @@ done:
 		end_page_writeback(page);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Here we used to have a check for PageError() and then set @ret and
 	 * call end_extent_writepage().
@@ -4339,6 +4481,7 @@ done:
 	 * capable of that.
 	 */
 	if (PageError(page))
+<<<<<<< HEAD
 		end_extent_writepage(page, ret, start, page_end);
 =======
 	if (PageError(page)) {
@@ -4346,6 +4489,9 @@ done:
 		end_extent_writepage(page, ret, start, page_end);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		end_extent_writepage(page, ret, start, page_end);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unlock_page(page);
 	ASSERT(ret <= 0);
 	return ret;
@@ -5305,10 +5451,14 @@ int extent_write_locked_range(struct inode *inode, u64 start, u64 end,
 		else {
 			btrfs_writepage_endio_finish_ordered(BTRFS_I(inode),
 <<<<<<< HEAD
+<<<<<<< HEAD
 					page, start, start + PAGE_SIZE - 1, true);
 =======
 					page, start, start + PAGE_SIZE - 1, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					page, start, start + PAGE_SIZE - 1, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			unlock_page(page);
 		}
 		put_page(page);

@@ -240,6 +240,7 @@ struct gdma_event {
 struct gdma_queue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct mana_eq {
 	struct gdma_queue *eq;
 =======
@@ -248,6 +249,10 @@ struct mana_eq {
 	struct gdma_queue *eq;
 	struct gdma_comp cqe_poll[CQE_POLLING_BUFFER];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct mana_eq {
+	struct gdma_queue *eq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 typedef void gdma_eq_callback(void *context, struct gdma_queue *q,
@@ -297,6 +302,7 @@ struct gdma_queue {
 
 			u32 log2_throttle_limit;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 			/* NAPI data */
@@ -304,6 +310,8 @@ struct gdma_queue {
 			int work_done;
 			int budget;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} eq;
 
 		struct {
@@ -328,11 +336,14 @@ struct gdma_queue_spec {
 
 			unsigned long log2_throttle_limit;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 			/* Only used by the MANA device. */
 			struct net_device *ndev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} eq;
 
 		struct {
@@ -418,10 +429,14 @@ void mana_gd_destroy_queue(struct gdma_context *gc, struct gdma_queue *queue);
 int mana_gd_poll_cq(struct gdma_queue *cq, struct gdma_comp *comp, int num_cqe);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void mana_gd_ring_cq(struct gdma_queue *cq, u8 arm_bit);
 =======
 void mana_gd_arm_cq(struct gdma_queue *cq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void mana_gd_ring_cq(struct gdma_queue *cq, u8 arm_bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct gdma_wqe {
 	u32 reserved	:24;
@@ -512,6 +527,9 @@ enum {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT BIT(0)
 
 #define GDMA_DRV_CAP_FLAGS1 GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT
@@ -522,8 +540,11 @@ enum {
 
 #define GDMA_DRV_CAP_FLAGS4 0
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct gdma_verify_ver_req {
 	struct gdma_req_hdr hdr;
 
@@ -531,18 +552,24 @@ struct gdma_verify_ver_req {
 	u64 protocol_ver_min;
 	u64 protocol_ver_max;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Gdma Driver Capability Flags */
 	u64 gd_drv_cap_flags1;
 	u64 gd_drv_cap_flags2;
 	u64 gd_drv_cap_flags3;
 	u64 gd_drv_cap_flags4;
+<<<<<<< HEAD
 =======
 	u64 drv_cap_flags1;
 	u64 drv_cap_flags2;
 	u64 drv_cap_flags3;
 	u64 drv_cap_flags4;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Advisory fields */
 	u64 drv_ver;

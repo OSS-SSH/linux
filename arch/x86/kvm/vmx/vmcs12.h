@@ -365,10 +365,13 @@ extern const unsigned short vmcs_field_to_offset_table[];
 extern const unsigned int nr_vmcs12_fields;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define ROL16(val, n) ((u16)(((u16)(val) << (n)) | ((u16)(val) >> (16 - (n)))))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline short vmcs_field_to_offset(unsigned long field)
 {
 	unsigned short offset;
@@ -389,10 +392,13 @@ static inline short vmcs_field_to_offset(unsigned long field)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #undef ROL16
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline u64 vmcs12_read_any(struct vmcs12 *vmcs12, unsigned long field,
 				  u16 offset)
 {

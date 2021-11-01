@@ -48,10 +48,14 @@
 
 		gmac: eth@e0800000 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			compatible = "snps,dwmac-3.40a";
 =======
 			compatible = "st,spear600-gmac";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			compatible = "snps,dwmac-3.40a";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0xe0800000 0x8000>;
 			interrupts = <23 22>;
 			interrupt-names = "macirq", "eth_wake_irq";

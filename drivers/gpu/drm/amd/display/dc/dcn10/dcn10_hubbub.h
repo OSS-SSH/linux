@@ -122,12 +122,18 @@ struct dcn_hubbub_registers {
 	uint32_t DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_MSB;
 	uint32_t DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_LSB;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t DCN_VM_FAULT_ADDR_MSB;
 	uint32_t DCN_VM_FAULT_ADDR_LSB;
 	uint32_t DCN_VM_FAULT_CNTL;
 	uint32_t DCN_VM_FAULT_STATUS;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t DCHUBBUB_ARB_FRAC_URG_BW_NOM_A;
 	uint32_t DCHUBBUB_ARB_FRAC_URG_BW_NOM_B;
 	uint32_t DCHUBBUB_ARB_FRAC_URG_BW_NOM_C;
@@ -241,6 +247,9 @@ struct dcn_hubbub_registers {
 		type DCHUBBUB_ARB_ALLOW_DRAM_CLK_CHANGE_WATERMARK_D;\
 		type DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_MSB;\
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		type DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_LSB;\
 		type DCN_VM_FAULT_ADDR_MSB;\
 		type DCN_VM_FAULT_ADDR_LSB;\
@@ -254,9 +263,12 @@ struct dcn_hubbub_registers {
 		type DCN_VM_ERROR_TABLE_LEVEL;\
 		type DCN_VM_ERROR_PIPE;\
 		type DCN_VM_ERROR_INTERRUPT_STATUS
+<<<<<<< HEAD
 =======
 		type DCN_VM_PROTECTION_FAULT_DEFAULT_ADDR_LSB
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HUBBUB_STUTTER_REG_FIELD_LIST(type) \
 		type DCHUBBUB_ARB_ALLOW_SR_ENTER_WATERMARK_A;\
@@ -327,9 +339,13 @@ struct dcn_hubbub_registers {
 		type COMPBUF_SIZE;\
 		type COMPBUF_SIZE_CURRENT;\
 <<<<<<< HEAD
+<<<<<<< HEAD
 		type CONFIG_ERROR;\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		type CONFIG_ERROR;\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		type COMPBUF_RESERVED_SPACE_64B;\
 		type COMPBUF_RESERVED_SPACE_ZS;\
 		type DCHUBBUB_ARB_ALLOW_SR_ENTER_WATERMARK_Z8_A;\

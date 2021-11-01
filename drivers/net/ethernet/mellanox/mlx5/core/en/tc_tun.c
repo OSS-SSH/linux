@@ -125,13 +125,19 @@ static int mlx5e_route_lookup_ipv4_get(struct mlx5e_priv *priv,
 		return PTR_ERR(rt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rt->rt_type != RTN_UNICAST) {
 		ret = -ENETUNREACH;
 		goto err_rt_release;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mlx5_lag_is_multipath(mdev) && rt->rt_gw_family != AF_INET) {
 		ret = -ENETUNREACH;
 		goto err_rt_release;
@@ -529,10 +535,14 @@ int mlx5e_tc_tun_create_header_ipv6(struct mlx5e_priv *priv,
 	e->route_dev_ifindex = attr.route_dev->ifindex;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* It's important to add the neigh to the hash table before checking
 =======
 	/* It's importent to add the neigh to the hash table before checking
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* It's important to add the neigh to the hash table before checking
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * the neigh validity state. So if we'll get a notification, in case the
 	 * neigh changes it's validity state, we would find the relevant neigh
 	 * in the hash.

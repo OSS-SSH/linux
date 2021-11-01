@@ -4,9 +4,13 @@
  *
  * Copyright (C) 2010 OMICRON electronics GmbH
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright 2021 NXP
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright 2021 NXP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include <linux/capability.h>
 #include <linux/slab.h>
@@ -153,6 +157,9 @@ out:
 static DEVICE_ATTR(pps_enable, 0220, NULL, pps_enable_store);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int unregister_vclock(struct device *dev, void *data)
 {
 	struct ptp_clock *ptp = dev_get_drvdata(dev);
@@ -306,8 +313,11 @@ out:
 }
 static DEVICE_ATTR_RW(max_vclocks);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct attribute *ptp_attrs[] = {
 	&dev_attr_clock_name.attr,
 
@@ -323,10 +333,15 @@ static struct attribute *ptp_attrs[] = {
 	&dev_attr_period.attr,
 	&dev_attr_pps_enable.attr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	&dev_attr_n_vclocks.attr,
 	&dev_attr_max_vclocks.attr,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_n_vclocks.attr,
+	&dev_attr_max_vclocks.attr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NULL
 };
 
@@ -349,12 +364,18 @@ static umode_t ptp_is_attribute_visible(struct kobject *kobj,
 		if (!info->pps)
 			mode = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (attr == &dev_attr_n_vclocks.attr ||
 		   attr == &dev_attr_max_vclocks.attr) {
 		if (ptp->is_virtual_clock)
 			mode = 0;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return mode;

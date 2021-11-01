@@ -61,6 +61,9 @@ EXPORT_SYMBOL(generic_fillattr);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * generic_fill_statx_attr - Fill in the statx attributes from the inode flags
  * @inode:	Inode to use as the source
  * @stat:	Where to fill in the attribute flags
@@ -79,8 +82,11 @@ void generic_fill_statx_attr(struct inode *inode, struct kstat *stat)
 EXPORT_SYMBOL(generic_fill_statx_attr);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * vfs_getattr_nosec - getattr without security checks
  * @path: file to get attributes from
  * @stat: structure to return attributes in

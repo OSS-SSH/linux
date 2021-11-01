@@ -6,9 +6,12 @@
 
 void lmc_proto_attach(lmc_softc_t *sc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int lmc_proto_ioctl(lmc_softc_t *sc, struct ifreq *ifr, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int lmc_proto_open(lmc_softc_t *sc);
 void lmc_proto_close(lmc_softc_t *sc);
 __be16 lmc_proto_type(lmc_softc_t *sc, struct sk_buff *skb);

@@ -240,10 +240,14 @@ static struct extent_node *__attach_extent_node(struct f2fs_sb_info *sbi,
 	struct extent_node *en;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	en = f2fs_kmem_cache_alloc(extent_node_slab, GFP_ATOMIC, false, sbi);
 =======
 	en = kmem_cache_alloc(extent_node_slab, GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	en = f2fs_kmem_cache_alloc(extent_node_slab, GFP_ATOMIC, false, sbi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!en)
 		return NULL;
 
@@ -297,11 +301,16 @@ static struct extent_tree *__grab_extent_tree(struct inode *inode)
 	et = radix_tree_lookup(&sbi->extent_tree_root, ino);
 	if (!et) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		et = f2fs_kmem_cache_alloc(extent_tree_slab,
 					GFP_NOFS, true, NULL);
 =======
 		et = f2fs_kmem_cache_alloc(extent_tree_slab, GFP_NOFS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		et = f2fs_kmem_cache_alloc(extent_tree_slab,
+					GFP_NOFS, true, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		f2fs_radix_tree_insert(&sbi->extent_tree_root, ino, et);
 		memset(et, 0, sizeof(struct extent_tree));
 		et->ino = ino;
@@ -671,6 +680,9 @@ static void f2fs_update_extent_tree_range(struct inode *inode,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_F2FS_FS_COMPRESSION
 void f2fs_update_extent_tree_range_compressed(struct inode *inode,
 				pgoff_t fofs, block_t blkaddr, unsigned int llen,
@@ -712,8 +724,11 @@ unlock_out:
 }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned int f2fs_shrink_extent_tree(struct f2fs_sb_info *sbi, int nr_shrink)
 {
 	struct extent_tree *et, *next;

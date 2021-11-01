@@ -89,6 +89,7 @@ queue_requests_store(struct request_queue *q, const char *page, size_t count)
 static ssize_t queue_ra_show(struct request_queue *q, char *page)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long ra_kb;
 
 	if (!q->disk)
@@ -99,6 +100,13 @@ static ssize_t queue_ra_show(struct request_queue *q, char *page)
 					(PAGE_SHIFT - 10);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long ra_kb;
+
+	if (!q->disk)
+		return -EINVAL;
+	ra_kb = q->disk->bdi->ra_pages << (PAGE_SHIFT - 10);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return queue_var_show(ra_kb, page);
 }
 
@@ -106,6 +114,7 @@ static ssize_t
 queue_ra_store(struct request_queue *q, const char *page, size_t count)
 {
 	unsigned long ra_kb;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ssize_t ret;
 
@@ -117,13 +126,23 @@ queue_ra_store(struct request_queue *q, const char *page, size_t count)
 	q->disk->bdi->ra_pages = ra_kb >> (PAGE_SHIFT - 10);
 =======
 	ssize_t ret = queue_var_store(&ra_kb, page, count);
+=======
+	ssize_t ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	if (!q->disk)
+		return -EINVAL;
+	ret = queue_var_store(&ra_kb, page, count);
 	if (ret < 0)
 		return ret;
+<<<<<<< HEAD
 
 	q->backing_dev_info->ra_pages = ra_kb >> (PAGE_SHIFT - 10);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	q->disk->bdi->ra_pages = ra_kb >> (PAGE_SHIFT - 10);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -271,11 +290,16 @@ queue_max_sectors_store(struct request_queue *q, const char *page, size_t count)
 	spin_lock_irq(&q->queue_lock);
 	q->limits.max_sectors = max_sectors_kb << 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (q->disk)
 		q->disk->bdi->io_pages = max_sectors_kb >> (PAGE_SHIFT - 10);
 =======
 	q->backing_dev_info->io_pages = max_sectors_kb >> (PAGE_SHIFT - 10);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (q->disk)
+		q->disk->bdi->io_pages = max_sectors_kb >> (PAGE_SHIFT - 10);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irq(&q->queue_lock);
 
 	return ret;
@@ -791,6 +815,7 @@ static void blk_exit_queue(struct request_queue *q)
 	 */
 	blkcg_exit_queue(q);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	/*
@@ -800,6 +825,8 @@ static void blk_exit_queue(struct request_queue *q)
 	 */
 	bdi_put(q->backing_dev_info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -887,6 +914,7 @@ int blk_register_queue(struct gendisk *disk)
 	struct request_queue *q = disk->queue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (WARN_ON(!q))
 		return -ENXIO;
@@ -898,6 +926,8 @@ int blk_register_queue(struct gendisk *disk)
 	blk_queue_update_readahead(q);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = blk_trace_init_sysfs(dev);
 	if (ret)
 		return ret;
@@ -972,9 +1002,12 @@ unlock:
 	return ret;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL_GPL(blk_register_queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * blk_unregister_queue - counterpart of blk_register_queue()

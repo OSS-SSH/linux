@@ -44,6 +44,7 @@ config XEN_PV_SMP
 	depends on XEN_PV && SMP
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 config XEN_PV_DOM0
 	def_bool y
 	depends on XEN_PV && XEN_DOM0
@@ -56,6 +57,11 @@ config XEN_DOM0
 	help
 	  Support running as a Xen PV Dom0 guest.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+config XEN_PV_DOM0
+	def_bool y
+	depends on XEN_PV && XEN_DOM0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config XEN_PVHVM
 	def_bool y
@@ -93,6 +99,9 @@ config XEN_PVH
 	help
 	  Support for running as a Xen PVH guest.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config XEN_DOM0
 	bool "Xen Dom0 support"
@@ -102,5 +111,8 @@ config XEN_DOM0
 	select X86_X2APIC if XEN_PVH && X86_64
 	help
 	  Support running as a Xen Dom0 guest.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

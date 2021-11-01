@@ -49,9 +49,13 @@ int bench_synthesize(int argc, const char **argv);
 int bench_kallsyms_parse(int argc, const char **argv);
 int bench_inject_build_id(int argc, const char **argv);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int bench_evlist_open_close(int argc, const char **argv);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int bench_evlist_open_close(int argc, const char **argv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define BENCH_FORMAT_DEFAULT_STR	"default"
 #define BENCH_FORMAT_DEFAULT		0

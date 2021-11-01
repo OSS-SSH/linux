@@ -12,11 +12,16 @@
 
 struct msm_fence_context *
 <<<<<<< HEAD
+<<<<<<< HEAD
 msm_fence_context_alloc(struct drm_device *dev, volatile uint32_t *fenceptr,
 		const char *name)
 =======
 msm_fence_context_alloc(struct drm_device *dev, const char *name)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+msm_fence_context_alloc(struct drm_device *dev, volatile uint32_t *fenceptr,
+		const char *name)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct msm_fence_context *fctx;
 
@@ -28,10 +33,14 @@ msm_fence_context_alloc(struct drm_device *dev, const char *name)
 	strncpy(fctx->name, name, sizeof(fctx->name));
 	fctx->context = dma_fence_context_alloc(1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fctx->fenceptr = fenceptr;
 =======
 	init_waitqueue_head(&fctx->event);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fctx->fenceptr = fenceptr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&fctx->spinlock);
 
 	return fctx;
@@ -45,12 +54,16 @@ void msm_fence_context_free(struct msm_fence_context *fctx)
 static inline bool fence_completed(struct msm_fence_context *fctx, uint32_t fence)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Note: Check completed_fence first, as fenceptr is in a write-combine
 	 * mapping, so it will be more expensive to read.
 	 */
 	return (int32_t)(fctx->completed_fence - fence) >= 0 ||
 		(int32_t)(*fctx->fenceptr - fence) >= 0;
+<<<<<<< HEAD
 =======
 	return (int32_t)(fctx->completed_fence - fence) >= 0;
 }
@@ -93,6 +106,8 @@ int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
 
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* called from workqueue */
@@ -102,10 +117,13 @@ void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
 	fctx->completed_fence = max(fence, fctx->completed_fence);
 	spin_unlock(&fctx->spinlock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	wake_up_all(&fctx->event);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct msm_fence {

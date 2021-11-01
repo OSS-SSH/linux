@@ -7,9 +7,13 @@
 #include <linux/dim.h>
 #include <linux/if_vlan.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <net/page_pool.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <net/page_pool.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "hnae3.h"
 
@@ -206,14 +210,20 @@ enum hns3_nic_state {
 #define HNS3_RING_EN_B				0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HNS3_GL0_CQ_MODE_REG			0x20d00
 #define HNS3_GL1_CQ_MODE_REG			0x20d04
 #define HNS3_GL2_CQ_MODE_REG			0x20d08
 #define HNS3_CQ_MODE_EQE			1U
 #define HNS3_CQ_MODE_CQE			0U
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum hns3_pkt_l2t_type {
 	HNS3_L2_TYPE_UNICAST,
 	HNS3_L2_TYPE_MULTICAST,
@@ -321,9 +331,13 @@ enum hns3_desc_type {
 	DESC_TYPE_BOUNCE_HEAD		= 1 << 4,
 	DESC_TYPE_SGL_SKB		= 1 << 5,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DESC_TYPE_PP_FRAG		= 1 << 6,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DESC_TYPE_PP_FRAG		= 1 << 6,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct hns3_desc_cb {
@@ -358,10 +372,14 @@ enum hns3_pkt_l3type {
 	HNS3_L3_TYPE_BPDU,
 	HNS3_L3_TYPE_MAC_PAUSE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	HNS3_L3_TYPE_PFC_PAUSE, /* 0x9 */
 =======
 	HNS3_L3_TYPE_PFC_PAUSE,/* 0x9*/
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	HNS3_L3_TYPE_PFC_PAUSE, /* 0x9 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* reserved for 0xA~0xB */
 
@@ -406,11 +424,15 @@ enum hns3_pkt_ol4type {
 
 struct hns3_rx_ptype {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 ptype : 8;
 	u32 csum_level : 2;
 	u32 ip_summed : 2;
 	u32 l3_type : 4;
 	u32 valid : 1;
+<<<<<<< HEAD
 =======
 	u32 ptype:8;
 	u32 csum_level:2;
@@ -418,6 +440,8 @@ struct hns3_rx_ptype {
 	u32 l3_type:4;
 	u32 valid:1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct ring_stats {
@@ -481,9 +505,13 @@ struct hns3_enet_ring {
 	int queue_index;
 	struct device *dev; /* will be used for DMA mapping of descriptors */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct page_pool *page_pool;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct page_pool *page_pool;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* statistic */
 	struct ring_stats stats;
@@ -547,6 +575,7 @@ struct hns3_enet_coalesce {
 	u16 int_ql;
 	u16 int_ql_max;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 adapt_enable : 1;
 	u8 ql_enable : 1;
 	u8 unit_1us : 1;
@@ -555,6 +584,11 @@ struct hns3_enet_coalesce {
 	u8 ql_enable:1;
 	u8 unit_1us:1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 adapt_enable : 1;
+	u8 ql_enable : 1;
+	u8 unit_1us : 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum hns3_flow_level_range flow_level;
 };
 
@@ -609,10 +643,15 @@ struct hns3_nic_priv {
 	unsigned long state;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum dim_cq_period_mode tx_cqe_mode;
 	enum dim_cq_period_mode rx_cqe_mode;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum dim_cq_period_mode tx_cqe_mode;
+	enum dim_cq_period_mode rx_cqe_mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hns3_enet_coalesce tx_coal;
 	struct hns3_enet_coalesce rx_coal;
 	u32 tx_copybreak;
@@ -638,13 +677,19 @@ struct hns3_hw_error_info {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hns3_reset_type_map {
 	enum ethtool_reset_flags rst_flags;
 	enum hnae3_reset_type rst_type;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int ring_space(struct hns3_enet_ring *ring)
 {
 	/* This smp_load_acquire() pairs with smp_store_release() in
@@ -755,9 +800,15 @@ void hns3_dbg_unregister_debugfs(void);
 void hns3_shinfo_pack(struct skb_shared_info *shinfo, __u32 *size);
 u16 hns3_get_max_available_channels(struct hnae3_handle *h);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void hns3_cq_period_mode_init(struct hns3_nic_priv *priv,
 			      enum dim_cq_period_mode tx_mode,
 			      enum dim_cq_period_mode rx_mode);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hns3_cq_period_mode_init(struct hns3_nic_priv *priv,
+			      enum dim_cq_period_mode tx_mode,
+			      enum dim_cq_period_mode rx_mode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

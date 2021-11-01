@@ -525,6 +525,9 @@ config HW_RANDOM_XIPHERA
 	  module will be called xiphera-trng.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config HW_RANDOM_ARM_SMCCC_TRNG
 	tristate "Arm SMCCC TRNG firmware interface support"
 	depends on HAVE_ARM_SMCCC_DISCOVERY
@@ -539,8 +542,11 @@ config HW_RANDOM_ARM_SMCCC_TRNG
 	  To compile this driver as a module, choose M here: the
 	  module will be called arm_smccc_trng.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif # HW_RANDOM
 
 config UML_RANDOM

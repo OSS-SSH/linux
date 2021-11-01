@@ -26,10 +26,14 @@ static __always_inline void arch_check_user_regs(struct pt_regs *regs)
 		 */
 		if (boot_cpu_has(X86_FEATURE_SMAP) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    (IS_ENABLED(CONFIG_64BIT) && boot_cpu_has(X86_FEATURE_XENPV)))
 =======
 		    (IS_ENABLED(CONFIG_64_BIT) && boot_cpu_has(X86_FEATURE_XENPV)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    (IS_ENABLED(CONFIG_64BIT) && boot_cpu_has(X86_FEATURE_XENPV)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mask |= X86_EFLAGS_AC;
 
 		WARN_ON_ONCE(flags & mask);

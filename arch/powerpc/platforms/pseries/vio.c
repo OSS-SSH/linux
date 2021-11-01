@@ -561,11 +561,16 @@ static int vio_dma_iommu_map_sg(struct device *dev, struct scatterlist *sglist,
 		alloc_size += roundup(sgl->length, IOMMU_PAGE_SIZE(tbl));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = vio_cmo_alloc(viodev, alloc_size);
 	if (ret)
 =======
 	if (vio_cmo_alloc(viodev, alloc_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = vio_cmo_alloc(viodev, alloc_size);
+	if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_fail;
 	ret = ppc_iommu_map_sg(dev, tbl, sglist, nelems, dma_get_mask(dev),
 			direction, attrs);
@@ -583,10 +588,14 @@ out_deallocate:
 out_fail:
 	atomic_inc(&viodev->cmo.allocs_failed);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ret;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void vio_dma_iommu_unmap_sg(struct device *dev,
@@ -1267,10 +1276,14 @@ static int vio_bus_probe(struct device *dev)
 
 /* convert from struct device to struct vio_dev and pass to driver. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void vio_bus_remove(struct device *dev)
 =======
 static int vio_bus_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void vio_bus_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vio_dev *viodev = to_vio_dev(dev);
 	struct vio_driver *viodrv = to_vio_driver(dev->driver);
@@ -1290,9 +1303,12 @@ static int vio_bus_remove(struct device *dev)
 
 	put_device(devptr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void vio_bus_shutdown(struct device *dev)

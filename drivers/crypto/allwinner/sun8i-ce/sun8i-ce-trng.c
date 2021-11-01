@@ -96,6 +96,7 @@ err_pm:
 		err = max;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 err_dst:
 	kfree_sensitive(d);
 =======
@@ -103,6 +104,10 @@ err_dst:
 err_dst:
 	kfree(d);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_dst:
+	kfree_sensitive(d);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 

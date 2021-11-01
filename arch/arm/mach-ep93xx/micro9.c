@@ -81,9 +81,12 @@ MACHINE_START(MICRO9, "Contec Micro9-High")
 	.init_time	= ep93xx_timer_init,
 	.init_machine	= micro9_init_machine,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.init_late	= ep93xx_init_late,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.restart	= ep93xx_restart,
 MACHINE_END
 #endif
@@ -97,9 +100,12 @@ MACHINE_START(MICRO9M, "Contec Micro9-Mid")
 	.init_time	= ep93xx_timer_init,
 	.init_machine	= micro9_init_machine,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.init_late	= ep93xx_init_late,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.restart	= ep93xx_restart,
 MACHINE_END
 #endif
@@ -113,9 +119,12 @@ MACHINE_START(MICRO9L, "Contec Micro9-Lite")
 	.init_time	= ep93xx_timer_init,
 	.init_machine	= micro9_init_machine,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.init_late	= ep93xx_init_late,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.restart	= ep93xx_restart,
 MACHINE_END
 #endif
@@ -129,9 +138,12 @@ MACHINE_START(MICRO9S, "Contec Micro9-Slim")
 	.init_time	= ep93xx_timer_init,
 	.init_machine	= micro9_init_machine,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.init_late	= ep93xx_init_late,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.restart	= ep93xx_restart,
 MACHINE_END
 #endif

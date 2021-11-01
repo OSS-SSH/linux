@@ -104,9 +104,13 @@ struct mmdc_pmu {
 	struct hlist_node node;
 	struct fsl_mmdc_devtype_data *devtype_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct clk *mmdc_ipg_clk;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct clk *mmdc_ipg_clk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -467,20 +471,30 @@ static int imx_mmdc_remove(struct platform_device *pdev)
 	cpuhp_state_remove_instance_nocalls(cpuhp_mmdc_state, &pmu_mmdc->node);
 	perf_pmu_unregister(&pmu_mmdc->pmu);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iounmap(pmu_mmdc->mmdc_base);
 	clk_disable_unprepare(pmu_mmdc->mmdc_ipg_clk);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iounmap(pmu_mmdc->mmdc_base);
+	clk_disable_unprepare(pmu_mmdc->mmdc_ipg_clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(pmu_mmdc);
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int imx_mmdc_perf_init(struct platform_device *pdev, void __iomem *mmdc_base,
 			      struct clk *mmdc_ipg_clk)
 =======
 static int imx_mmdc_perf_init(struct platform_device *pdev, void __iomem *mmdc_base)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int imx_mmdc_perf_init(struct platform_device *pdev, void __iomem *mmdc_base,
+			      struct clk *mmdc_ipg_clk)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mmdc_pmu *pmu_mmdc;
 	char *name;
@@ -509,9 +523,13 @@ static int imx_mmdc_perf_init(struct platform_device *pdev, void __iomem *mmdc_b
 
 	mmdc_num = mmdc_pmu_init(pmu_mmdc, mmdc_base, &pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pmu_mmdc->mmdc_ipg_clk = mmdc_ipg_clk;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pmu_mmdc->mmdc_ipg_clk = mmdc_ipg_clk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mmdc_num == 0)
 		name = "mmdc";
 	else
@@ -548,10 +566,14 @@ pmu_free:
 #else
 #define imx_mmdc_remove NULL
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define imx_mmdc_perf_init(pdev, mmdc_base, mmdc_ipg_clk) 0
 =======
 #define imx_mmdc_perf_init(pdev, mmdc_base) 0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define imx_mmdc_perf_init(pdev, mmdc_base, mmdc_ipg_clk) 0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static int imx_mmdc_probe(struct platform_device *pdev)
@@ -590,6 +612,9 @@ static int imx_mmdc_probe(struct platform_device *pdev)
 	writel_relaxed(val, reg);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = imx_mmdc_perf_init(pdev, mmdc_base, mmdc_ipg_clk);
 	if (err) {
 		iounmap(mmdc_base);
@@ -597,9 +622,12 @@ static int imx_mmdc_probe(struct platform_device *pdev)
 	}
 
 	return err;
+<<<<<<< HEAD
 =======
 	return imx_mmdc_perf_init(pdev, mmdc_base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int imx_mmdc_get_ddr_type(void)

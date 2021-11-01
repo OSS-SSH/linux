@@ -127,10 +127,15 @@ v3d_reset(struct v3d_dev *v3d)
 	v3d_irq_reset(v3d);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	v3d_perfmon_stop(v3d, v3d->active_perfmon, false);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	v3d_perfmon_stop(v3d, v3d->active_perfmon, false);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	trace_v3d_reset_end(dev);
 }
 
@@ -381,11 +386,17 @@ v3d_job_free(struct kref *ref)
 	pm_runtime_put_autosuspend(job->v3d->drm.dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (job->perfmon)
 		v3d_perfmon_put(job->perfmon);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (job->perfmon)
+		v3d_perfmon_put(job->perfmon);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(job);
 }
 
@@ -551,11 +562,17 @@ v3d_submit_cl_ioctl(struct drm_device *dev, void *data,
 	trace_v3d_submit_cl_ioctl(&v3d->drm, args->rcl_start, args->rcl_end);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (args->pad != 0)
 		return -EINVAL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (args->pad != 0)
+		return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (args->flags != 0 &&
 	    args->flags != DRM_V3D_SUBMIT_CL_FLUSH_CACHE) {
 		DRM_INFO("invalid flags: %d\n", args->flags);
@@ -629,6 +646,9 @@ v3d_submit_cl_ioctl(struct drm_device *dev, void *data,
 		goto fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (args->perfmon_id) {
 		render->base.perfmon = v3d_perfmon_find(v3d_priv,
 							args->perfmon_id);
@@ -643,10 +663,13 @@ v3d_submit_cl_ioctl(struct drm_device *dev, void *data,
 	if (bin) {
 		bin->base.perfmon = render->base.perfmon;
 		v3d_perfmon_get(bin->base.perfmon);
+<<<<<<< HEAD
 =======
 	mutex_lock(&v3d->sched_lock);
 	if (bin) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = v3d_push_job(v3d_priv, &bin->base, V3D_BIN);
 		if (ret)
 			goto fail_unreserve;
@@ -668,10 +691,15 @@ v3d_submit_cl_ioctl(struct drm_device *dev, void *data,
 		if (ret)
 			goto fail_unreserve;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		clean_job->perfmon = render->base.perfmon;
 		v3d_perfmon_get(clean_job->perfmon);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clean_job->perfmon = render->base.perfmon;
+		v3d_perfmon_get(clean_job->perfmon);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = v3d_push_job(v3d_priv, clean_job, V3D_CACHE_CLEAN);
 		if (ret)
 			goto fail_unreserve;
@@ -867,6 +895,9 @@ v3d_submit_csd_ioctl(struct drm_device *dev, void *data,
 		goto fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (args->perfmon_id) {
 		job->base.perfmon = v3d_perfmon_find(v3d_priv,
 						     args->perfmon_id);
@@ -876,8 +907,11 @@ v3d_submit_csd_ioctl(struct drm_device *dev, void *data,
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&v3d->sched_lock);
 	ret = v3d_push_job(v3d_priv, &job->base, V3D_CSD);
 	if (ret)

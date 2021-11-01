@@ -1702,10 +1702,14 @@ struct snd_emu10k1 {
 	struct snd_dma_buffer ptb_pages;	/* page table pages */
 	struct snd_dma_device p16v_dma_dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_dma_buffer *p16v_buffer;
 =======
 	struct snd_dma_buffer p16v_buffer;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct snd_dma_buffer *p16v_buffer;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct snd_util_memhdr *memhdr;		/* page allocation list */
 
@@ -1801,20 +1805,27 @@ int snd_emu10k1_create(struct snd_card *card,
 		       long max_cache_bytes,
 		       int enable_ir,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		       uint subsystem);
 =======
 		       uint subsystem,
 		       struct snd_emu10k1 ** remu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       uint subsystem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int snd_emu10k1_pcm(struct snd_emu10k1 *emu, int device);
 int snd_emu10k1_pcm_mic(struct snd_emu10k1 *emu, int device);
 int snd_emu10k1_pcm_efx(struct snd_emu10k1 *emu, int device);
 int snd_p16v_pcm(struct snd_emu10k1 *emu, int device);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int snd_p16v_free(struct snd_emu10k1 * emu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int snd_p16v_mixer(struct snd_emu10k1 * emu);
 int snd_emu10k1_pcm_multi(struct snd_emu10k1 *emu, int device);
 int snd_emu10k1_fx8010_pcm(struct snd_emu10k1 *emu, int device);

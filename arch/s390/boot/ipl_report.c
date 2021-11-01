@@ -55,6 +55,7 @@ static unsigned long find_bootdata_space(struct ipl_rb_components *comps,
 	 */
 repeat:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size &&
 	    intersects(initrd_data.start, initrd_data.size, safe_addr, size))
 		safe_addr = initrd_data.start + initrd_data.size;
@@ -63,6 +64,11 @@ repeat:
 	    intersects(INITRD_START, INITRD_SIZE, safe_addr, size))
 		safe_addr = INITRD_START + INITRD_SIZE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size &&
+	    intersects(initrd_data.start, initrd_data.size, safe_addr, size))
+		safe_addr = initrd_data.start + initrd_data.size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_rb_entry(comp, comps)
 		if (intersects(safe_addr, size, comp->addr, comp->len)) {
 			safe_addr = comp->addr + comp->len;

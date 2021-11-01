@@ -36,10 +36,14 @@ struct stack_info {
  *
  * @fp:          The fp value in the frame record (or the real fp)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @pc:          The lr value in the frame record (or the real lr)
 =======
  * @pc:          The fp value in the frame record (or the real lr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @pc:          The lr value in the frame record (or the real lr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @stacks_done: Stacks which have been entirely unwound, for which it is no
  *               longer valid to unwind to.

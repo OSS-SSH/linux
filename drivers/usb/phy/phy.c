@@ -87,6 +87,7 @@ static struct usb_phy *__device_to_usb_phy(struct device *dev)
 	list_for_each_entry(usb_phy, &phy_list, head) {
 		if (usb_phy->dev == dev)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return usb_phy;
 	}
 
@@ -97,6 +98,12 @@ static struct usb_phy *__device_to_usb_phy(struct device *dev)
 
 	return usb_phy;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return usb_phy;
+	}
+
+	return NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void usb_phy_set_default_current(struct usb_phy *usb_phy)
@@ -158,6 +165,7 @@ static int usb_phy_uevent(struct device *dev, struct kobj_uevent_env *env)
 	char uchger_state[50] = { 0 };
 	char uchger_type[50] = { 0 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long flags;
 
 	spin_lock_irqsave(&phy_lock, flags);
@@ -167,9 +175,20 @@ static int usb_phy_uevent(struct device *dev, struct kobj_uevent_env *env)
 	if (!usb_phy)
 		return -ENODEV;
 =======
+=======
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	spin_lock_irqsave(&phy_lock, flags);
 	usb_phy = __device_to_usb_phy(dev);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irqrestore(&phy_lock, flags);
+
+	if (!usb_phy)
+		return -ENODEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snprintf(uchger_state, ARRAY_SIZE(uchger_state),
 		 "USB_CHARGER_STATE=%s", usb_chger_state[usb_phy->chg_state]);

@@ -87,14 +87,20 @@ static int __write_console(struct xencons_info *xencons,
 	prod = intf->out_prod;
 	mb();			/* update queue values before going on */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((prod - cons) > sizeof(intf->out)) {
 		pr_err_once("xencons: Illegal ring page indices");
 		return -EINVAL;
 	}
+<<<<<<< HEAD
 =======
 	BUG_ON((prod - cons) > sizeof(intf->out));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while ((sent < len) && ((prod - cons) < sizeof(intf->out)))
 		intf->out[MASK_XENCONS_IDX(prod++, intf->out)] = data[sent++];
@@ -123,13 +129,19 @@ static int domU_write_console(uint32_t vtermno, const char *data, int len)
 	while (len) {
 		int sent = __write_console(cons, data, len);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (sent < 0)
 			return sent;
 
+<<<<<<< HEAD
 =======
 		
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		data += sent;
 		len -= sent;
 
@@ -154,14 +166,20 @@ static int domU_read_console(uint32_t vtermno, char *buf, int len)
 	prod = intf->in_prod;
 	mb();			/* get pointers before reading ring */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((prod - cons) > sizeof(intf->in)) {
 		pr_err_once("xencons: Illegal ring page indices");
 		return -EINVAL;
 	}
+<<<<<<< HEAD
 =======
 	BUG_ON((prod - cons) > sizeof(intf->in));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (cons != prod && recv < len)
 		buf[recv++] = intf->in[MASK_XENCONS_IDX(cons++, intf->in)];
@@ -631,6 +649,7 @@ static int __init xenboot_console_setup(struct console *console, char *string)
 	static struct xencons_info xenboot;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xen_initial_domain() || !xen_pv_domain())
 		return 0;
 =======
@@ -639,6 +658,10 @@ static int __init xenboot_console_setup(struct console *console, char *string)
 	if (!xen_pv_domain())
 		return -ENODEV;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xen_initial_domain() || !xen_pv_domain())
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return xencons_info_pv_init(&xenboot, 0);
 }
@@ -650,16 +673,23 @@ static void xenboot_write_console(struct console *console, const char *string,
 	const char *pos;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dom0_write_console(0, string, len) >= 0)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dom0_write_console(0, string, len) >= 0)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!xen_pv_domain()) {
 		xen_hvm_early_write(0, string, len);
 		return;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (domU_write_console(0, "(early) ", 8) < 0)
 		return;
@@ -671,6 +701,10 @@ static void xenboot_write_console(struct console *console, const char *string,
 
 	domU_write_console(0, "(early) ", 8);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (domU_write_console(0, "(early) ", 8) < 0)
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (off < len && NULL != (pos = strchr(string+off, '\n'))) {
 		linelen = pos-string+off;
 		if (off + linelen > len)

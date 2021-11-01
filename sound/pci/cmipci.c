@@ -2853,22 +2853,32 @@ static int snd_cmipci_create_gameport(struct cmipci *cm, int dev)
 		for (i = 0; ports[i]; i++) {
 			io_port = ports[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 			r = devm_request_region(&cm->pci->dev, io_port, 1,
 						"CMIPCI gameport");
 =======
 			r = request_region(io_port, 1, "CMIPCI gameport");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			r = devm_request_region(&cm->pci->dev, io_port, 1,
+						"CMIPCI gameport");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (r)
 				break;
 		}
 	} else {
 		io_port = joystick_port[dev];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		r = devm_request_region(&cm->pci->dev, io_port, 1,
 					"CMIPCI gameport");
 =======
 		r = request_region(io_port, 1, "CMIPCI gameport");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		r = devm_request_region(&cm->pci->dev, io_port, 1,
+					"CMIPCI gameport");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!r) {
@@ -2880,9 +2890,12 @@ static int snd_cmipci_create_gameport(struct cmipci *cm, int dev)
 	if (!gp) {
 		dev_err(cm->card->dev, "cannot allocate memory for gameport\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		release_and_free_resource(r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 	}
 	gameport_set_name(gp, "C-Media Gameport");
@@ -2890,9 +2903,12 @@ static int snd_cmipci_create_gameport(struct cmipci *cm, int dev)
 	gameport_set_dev_parent(gp, &cm->pci->dev);
 	gp->io = io_port;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gameport_set_port_data(gp, r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_cmipci_set_bit(cm, CM_REG_FUNCTRL1, CM_JYSTK_EN);
 
@@ -2905,18 +2921,24 @@ static void snd_cmipci_free_gameport(struct cmipci *cm)
 {
 	if (cm->gameport) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		struct resource *r = gameport_get_port_data(cm->gameport);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gameport_unregister_port(cm->gameport);
 		cm->gameport = NULL;
 
 		snd_cmipci_clear_bit(cm, CM_REG_FUNCTRL1, CM_JYSTK_EN);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		release_and_free_resource(r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 #else
@@ -2924,6 +2946,7 @@ static inline int snd_cmipci_create_gameport(struct cmipci *cm, int dev) { retur
 static inline void snd_cmipci_free_gameport(struct cmipci *cm) { }
 #endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void snd_cmipci_free(struct snd_card *card)
 {
@@ -2943,23 +2966,25 @@ static void snd_cmipci_free(struct snd_card *card)
 	snd_cmipci_free_gameport(cm);
 =======
 static int snd_cmipci_free(struct cmipci *cm)
+=======
+static void snd_cmipci_free(struct snd_card *card)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	if (cm->irq >= 0) {
-		snd_cmipci_clear_bit(cm, CM_REG_MISC_CTRL, CM_FM_EN);
-		snd_cmipci_clear_bit(cm, CM_REG_LEGACY_CTRL, CM_ENSPDOUT);
-		snd_cmipci_write(cm, CM_REG_INT_HLDCLR, 0);  /* disable ints */
-		snd_cmipci_ch_reset(cm, CM_CH_PLAY);
-		snd_cmipci_ch_reset(cm, CM_CH_CAPT);
-		snd_cmipci_write(cm, CM_REG_FUNCTRL0, 0); /* disable channels */
-		snd_cmipci_write(cm, CM_REG_FUNCTRL1, 0);
+	struct cmipci *cm = card->private_data;
 
-		/* reset mixer */
-		snd_cmipci_mixer_write(cm, 0, 0);
+	snd_cmipci_clear_bit(cm, CM_REG_MISC_CTRL, CM_FM_EN);
+	snd_cmipci_clear_bit(cm, CM_REG_LEGACY_CTRL, CM_ENSPDOUT);
+	snd_cmipci_write(cm, CM_REG_INT_HLDCLR, 0);  /* disable ints */
+	snd_cmipci_ch_reset(cm, CM_CH_PLAY);
+	snd_cmipci_ch_reset(cm, CM_CH_CAPT);
+	snd_cmipci_write(cm, CM_REG_FUNCTRL0, 0); /* disable channels */
+	snd_cmipci_write(cm, CM_REG_FUNCTRL1, 0);
 
-		free_irq(cm->irq, cm);
-	}
+	/* reset mixer */
+	snd_cmipci_mixer_write(cm, 0, 0);
 
 	snd_cmipci_free_gameport(cm);
+<<<<<<< HEAD
 	pci_release_regions(cm->pci);
 	pci_disable_device(cm->pci);
 	kfree(cm);
@@ -2971,6 +2996,8 @@ static int snd_cmipci_dev_free(struct snd_device *device)
 	struct cmipci *cm = device->device_data;
 	return snd_cmipci_free(cm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_cmipci_create_fm(struct cmipci *cm, long fm_port)
@@ -3030,19 +3057,26 @@ static int snd_cmipci_create_fm(struct cmipci *cm, long fm_port)
 
 static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     int dev)
 {
 	struct cmipci *cm = card->private_data;
 	int err;
 =======
 			     int dev, struct cmipci **rcmipci)
+=======
+			     int dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct cmipci *cm;
+	struct cmipci *cm = card->private_data;
 	int err;
+<<<<<<< HEAD
 	static const struct snd_device_ops ops = {
 		.dev_free =	snd_cmipci_dev_free,
 	};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int val;
 	long iomidi = 0;
 	int integrated_midi = 0;
@@ -3053,6 +3087,7 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 		{ },
 	};
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = pcim_enable_device(pci);
 	if (err < 0)
@@ -3072,6 +3107,12 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = pcim_enable_device(pci);
+	if (err < 0)
+		return err;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&cm->reg_lock);
 	mutex_init(&cm->open_mutex);
 	cm->device = pci->device;
@@ -3084,6 +3125,7 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 
 	err = pci_request_regions(pci, card->driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 	cm->iobase = pci_resource_start(pci, 0);
@@ -3095,23 +3137,32 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 	if (err < 0) {
 		kfree(cm);
 		pci_disable_device(pci);
+=======
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 	cm->iobase = pci_resource_start(pci, 0);
 
-	if (request_irq(pci->irq, snd_cmipci_interrupt,
-			IRQF_SHARED, KBUILD_MODNAME, cm)) {
+	if (devm_request_irq(&pci->dev, pci->irq, snd_cmipci_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, cm)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+<<<<<<< HEAD
 		snd_cmipci_free(cm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	cm->irq = pci->irq;
 	card->sync_irq = cm->irq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	card->private_free = snd_cmipci_free;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	card->private_free = snd_cmipci_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_master(cm->pci);
 
@@ -3212,6 +3263,7 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 		card->shortname, modelstr, cm->iobase, cm->irq);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, cm, &ops);
 	if (err < 0) {
@@ -3220,6 +3272,8 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cm->chip_version >= 39) {
 		val = snd_cmipci_read_b(cm, CM_REG_MPU_PCI + 1);
 		if (val != 0x00 && val != 0xff) {
@@ -3313,9 +3367,12 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 		snd_cmipci_clear_bit(cm, CM_REG_FUNCTRL1, CM_JYSTK_EN);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	*rcmipci = cm;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3340,6 +3397,7 @@ static int snd_cmipci_probe(struct pci_dev *pci,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*cm), &card);
 	if (err < 0)
@@ -3351,6 +3409,13 @@ static int snd_cmipci_probe(struct pci_dev *pci,
 	if (err < 0)
 		return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*cm), &card);
+	if (err < 0)
+		return err;
+	cm = card->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
 	switch (pci->device) {
 	case PCI_DEVICE_ID_CMEDIA_CM8738:
@@ -3367,6 +3432,7 @@ static int snd_cmipci_probe(struct pci_dev *pci,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_cmipci_create(card, pci, dev);
 	if (err < 0)
 		return err;
@@ -3376,19 +3442,25 @@ static int snd_cmipci_probe(struct pci_dev *pci,
 		return err;
 =======
 	err = snd_cmipci_create(card, pci, dev, &cm);
+=======
+	err = snd_cmipci_create(card, pci, dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
-		goto free_card;
-
-	card->private_data = cm;
+		return err;
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		goto free_card;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -3406,6 +3478,10 @@ static void snd_cmipci_remove(struct pci_dev *pci)
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 /*
  * power management
@@ -3481,9 +3557,12 @@ static struct pci_driver cmipci_driver = {
 	.id_table = snd_cmipci_ids,
 	.probe = snd_cmipci_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_cmipci_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_CMIPCI_PM_OPS,
 	},

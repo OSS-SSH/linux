@@ -540,9 +540,13 @@ static void svc_xprt_release(struct svc_rqst *rqstp)
 	rqstp->rq_deferred = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pagevec_release(&rqstp->rq_pvec);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pagevec_release(&rqstp->rq_pvec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	svc_free_res_pages(rqstp);
 	rqstp->rq_res.page_len = 0;
 	rqstp->rq_res.page_base = 0;
@@ -667,12 +671,18 @@ static int svc_alloc_arg(struct svc_rqst *rqstp)
 	struct svc_serv *serv = rqstp->rq_server;
 	struct xdr_buf *arg = &rqstp->rq_arg;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long pages, filled, ret;
 
 	pagevec_init(&rqstp->rq_pvec);
 =======
 	unsigned long pages, filled;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long pages, filled, ret;
+
+	pagevec_init(&rqstp->rq_pvec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pages = (serv->sv_max_mesg + 2 * PAGE_SIZE) >> PAGE_SHIFT;
 	if (pages > RPCSVC_MAXPAGES) {
@@ -683,12 +693,16 @@ static int svc_alloc_arg(struct svc_rqst *rqstp)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (filled = 0; filled < pages; filled = ret) {
 		ret = alloc_pages_bulk_array(GFP_KERNEL, pages,
 					     rqstp->rq_pages);
 		if (ret > filled)
 			/* Made progress, don't sleep yet */
 			continue;
+<<<<<<< HEAD
 =======
 	for (;;) {
 		filled = alloc_pages_bulk_array(GFP_KERNEL, pages,
@@ -696,6 +710,8 @@ static int svc_alloc_arg(struct svc_rqst *rqstp)
 		if (filled == pages)
 			break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		set_current_state(TASK_INTERRUPTIBLE);
 		if (signalled() || kthread_should_stop()) {
@@ -855,11 +871,16 @@ static int svc_handle_xprt(struct svc_rqst *rqstp, struct svc_xprt *xprt)
 		rqstp->rq_reserved = serv->sv_max_mesg;
 		atomic_add(rqstp->rq_reserved, &xprt->xpt_reserved);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else
 		svc_xprt_received(xprt);
 =======
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else
+		svc_xprt_received(xprt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	trace_svc_handle_xprt(xprt, len);
 	return len;

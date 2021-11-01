@@ -79,25 +79,37 @@ enum {
 	J1939_NLA_PAD,
 	J1939_NLA_BYTES_ACKED,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	J1939_NLA_TOTAL_SIZE,
 	J1939_NLA_PGN,
 	J1939_NLA_SRC_NAME,
 	J1939_NLA_DEST_NAME,
 	J1939_NLA_SRC_ADDR,
 	J1939_NLA_DEST_ADDR,
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum {
 	J1939_EE_INFO_NONE,
 	J1939_EE_INFO_TX_ABORT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	J1939_EE_INFO_RX_RTS,
 	J1939_EE_INFO_RX_DPO,
 	J1939_EE_INFO_RX_ABORT,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	J1939_EE_INFO_RX_RTS,
+	J1939_EE_INFO_RX_DPO,
+	J1939_EE_INFO_RX_ABORT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct j1939_filter {

@@ -720,6 +720,7 @@ static void hclge_dbg_fill_shaper_content(struct hclge_tm_shaper_para *para,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __hclge_dbg_dump_tm_pg(struct hclge_dev *hdev, char *data_str,
 				  char *buf, int len)
 {
@@ -728,6 +729,11 @@ static int hclge_dbg_dump_tm_pg(struct hclge_dev *hdev, char *buf, int len)
 {
 	char data_str[ARRAY_SIZE(tm_pg_items)][HCLGE_DBG_DATA_STR_LEN];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __hclge_dbg_dump_tm_pg(struct hclge_dev *hdev, char *data_str,
+				  char *buf, int len)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hclge_tm_shaper_para c_shaper_para, p_shaper_para;
 	char *result[ARRAY_SIZE(tm_pg_items)], *sch_mode_str;
 	u8 pg_id, sch_mode, weight, pri_bit_map, i, j;
@@ -736,14 +742,20 @@ static int hclge_dbg_dump_tm_pg(struct hclge_dev *hdev, char *buf, int len)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < ARRAY_SIZE(tm_pg_items); i++) {
 		result[i] = data_str;
 		data_str += HCLGE_DBG_DATA_STR_LEN;
 	}
+<<<<<<< HEAD
 =======
 	for (i = 0; i < ARRAY_SIZE(tm_pg_items); i++)
 		result[i] = &data_str[i][0];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hclge_dbg_fill_content(content, sizeof(content), tm_pg_items,
 			       NULL, ARRAY_SIZE(tm_pg_items));
@@ -795,6 +807,9 @@ static int hclge_dbg_dump_tm_pg(struct hclge_dev *hdev, char *buf, int len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hclge_dbg_dump_tm_pg(struct hclge_dev *hdev, char *buf, int len)
 {
 	char *data_str;
@@ -813,8 +828,11 @@ static int hclge_dbg_dump_tm_pg(struct hclge_dev *hdev, char *buf, int len)
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hclge_dbg_dump_tm_port(struct hclge_dev *hdev,  char *buf, int len)
 {
 	struct hclge_tm_shaper_para shaper_para;
@@ -961,6 +979,9 @@ static int hclge_dbg_dump_tm_nodes(struct hclge_dev *hdev, char *buf, int len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct hclge_dbg_item tm_pri_items[] = {
 	{ "ID", 4 },
 	{ "MODE", 2 },
@@ -981,6 +1002,7 @@ static const struct hclge_dbg_item tm_pri_items[] = {
 	{ "P_RATE(Mbps)", 0 }
 };
 
+<<<<<<< HEAD
 static int hclge_dbg_dump_tm_pri(struct hclge_dev *hdev, char *buf, int len)
 {
 	char data_str[ARRAY_SIZE(tm_pri_items)][HCLGE_DBG_DATA_STR_LEN];
@@ -1000,18 +1022,32 @@ static int hclge_dbg_dump_tm_pri(struct hclge_dev *hdev, char *buf, int len)
 	int ret;
 	u8 i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int hclge_dbg_dump_tm_pri(struct hclge_dev *hdev, char *buf, int len)
+{
+	char data_str[ARRAY_SIZE(tm_pri_items)][HCLGE_DBG_DATA_STR_LEN];
+	struct hclge_tm_shaper_para c_shaper_para, p_shaper_para;
+	char *result[ARRAY_SIZE(tm_pri_items)], *sch_mode_str;
+	char content[HCLGE_DBG_TM_INFO_LEN];
+	u8 pri_num, sch_mode, weight, i, j;
+	int pos, ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = hclge_tm_get_pri_num(hdev, &pri_num);
 	if (ret)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < ARRAY_SIZE(tm_pri_items); i++)
 		result[i] = &data_str[i][0];
 
 	hclge_dbg_fill_content(content, sizeof(content), tm_pri_items,
 			       NULL, ARRAY_SIZE(tm_pri_items));
 	pos = scnprintf(buf, len, "%s", content);
+<<<<<<< HEAD
 =======
 	pos += scnprintf(buf + pos, len - pos,
 			 "ID    MODE  DWRR  C_IR_B  C_IR_U  C_IR_S  C_BS_B  ");
@@ -1020,6 +1056,8 @@ static int hclge_dbg_dump_tm_pri(struct hclge_dev *hdev, char *buf, int len)
 	pos += scnprintf(buf + pos, len - pos,
 			 "P_IR_S  P_BS_B  P_BS_S  P_FLAG  P_RATE(Mbps)\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < pri_num; i++) {
 		ret = hclge_tm_get_pri_sch_mode(hdev, i, &sch_mode);
@@ -1046,6 +1084,9 @@ static int hclge_dbg_dump_tm_pri(struct hclge_dev *hdev, char *buf, int len)
 			       "sp";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		j = 0;
 		sprintf(result[j++], "%04u", i);
 		sprintf(result[j++], "%4s", sch_mode_str);
@@ -1056,6 +1097,7 @@ static int hclge_dbg_dump_tm_pri(struct hclge_dev *hdev, char *buf, int len)
 				       (const char **)result,
 				       ARRAY_SIZE(tm_pri_items));
 		pos += scnprintf(buf + pos, len - pos, "%s", content);
+<<<<<<< HEAD
 =======
 		pos += scnprintf(buf + pos, len - pos,
 				 "%04u  %4s  %3u   %3u     %3u     %3u     ",
@@ -1073,6 +1115,8 @@ static int hclge_dbg_dump_tm_pri(struct hclge_dev *hdev, char *buf, int len)
 		pos += scnprintf(buf + pos, len - pos, "%1u     %6u\n",
 				 p_shaper_para.flag, p_shaper_para.rate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -1798,12 +1842,18 @@ hclge_dbg_get_imp_stats_info(struct hclge_dev *hdev, char *buf, int len)
 
 	bd_num = le32_to_cpu(req->bd_num);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!bd_num) {
 		dev_err(&hdev->pdev->dev, "imp statistics bd number is 0!\n");
 		return -EINVAL;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	desc_src = kcalloc(bd_num, sizeof(struct hclge_desc), GFP_KERNEL);
 	if (!desc_src)

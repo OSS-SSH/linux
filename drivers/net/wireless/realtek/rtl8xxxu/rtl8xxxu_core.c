@@ -1671,10 +1671,14 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
 			priv->rx_paths = 2;
 			priv->tx_paths = 2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			priv->usb_interrupts = 0;
 =======
 			priv->usb_interrupts = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			priv->usb_interrupts = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			priv->rtl_chip = RTL8192C;
 		}
 		priv->has_wifi = 1;
@@ -1685,10 +1689,14 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
 		priv->tx_paths = 1;
 		priv->rtl_chip = RTL8188C;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		priv->usb_interrupts = 0;
 =======
 		priv->usb_interrupts = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		priv->usb_interrupts = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		priv->has_wifi = 1;
 	}
 
@@ -4814,10 +4822,15 @@ rtl8xxxu_fill_txdesc_v1(struct ieee80211_hw *hw, struct ieee80211_hdr *hdr,
 	struct rtl8xxxu_priv *priv = hw->priv;
 	struct device *dev = &priv->udev->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 *qc = ieee80211_get_qos_ctl(hdr);
 	u8 tid = qc[0] & IEEE80211_QOS_CTL_TID_MASK;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 *qc = ieee80211_get_qos_ctl(hdr);
+	u8 tid = qc[0] & IEEE80211_QOS_CTL_TID_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 rate;
 	u16 rate_flags = tx_info->control.rates[0].flags;
 	u16 seq_number;
@@ -4842,10 +4855,14 @@ rtl8xxxu_fill_txdesc_v1(struct ieee80211_hw *hw, struct ieee80211_hdr *hdr,
 	tx_desc->txdw3 = cpu_to_le32((u32)seq_number << TXDESC32_SEQ_SHIFT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ampdu_enable && test_bit(tid, priv->tid_tx_operational))
 =======
 	if (ampdu_enable)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ampdu_enable && test_bit(tid, priv->tid_tx_operational))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tx_desc->txdw1 |= cpu_to_le32(TXDESC32_AGG_ENABLE);
 	else
 		tx_desc->txdw1 |= cpu_to_le32(TXDESC32_AGG_BREAK);
@@ -4894,10 +4911,15 @@ rtl8xxxu_fill_txdesc_v2(struct ieee80211_hw *hw, struct ieee80211_hdr *hdr,
 	struct device *dev = &priv->udev->dev;
 	struct rtl8xxxu_txdesc40 *tx_desc40;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 *qc = ieee80211_get_qos_ctl(hdr);
 	u8 tid = qc[0] & IEEE80211_QOS_CTL_TID_MASK;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 *qc = ieee80211_get_qos_ctl(hdr);
+	u8 tid = qc[0] & IEEE80211_QOS_CTL_TID_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 rate;
 	u16 rate_flags = tx_info->control.rates[0].flags;
 	u16 seq_number;
@@ -4925,10 +4947,14 @@ rtl8xxxu_fill_txdesc_v2(struct ieee80211_hw *hw, struct ieee80211_hdr *hdr,
 	tx_desc40->txdw9 = cpu_to_le32((u32)seq_number << TXDESC40_SEQ_SHIFT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ampdu_enable && test_bit(tid, priv->tid_tx_operational))
 =======
 	if (ampdu_enable)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ampdu_enable && test_bit(tid, priv->tid_tx_operational))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tx_desc40->txdw2 |= cpu_to_le32(TXDESC40_AGG_ENABLE);
 	else
 		tx_desc40->txdw2 |= cpu_to_le32(TXDESC40_AGG_BREAK);
@@ -5042,10 +5068,15 @@ static void rtl8xxxu_tx(struct ieee80211_hw *hw,
 		if (sta->ht_cap.ht_supported) {
 			u32 ampdu, val32;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			u8 *qc = ieee80211_get_qos_ctl(hdr);
 			u8 tid = qc[0] & IEEE80211_QOS_CTL_TID_MASK;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			u8 *qc = ieee80211_get_qos_ctl(hdr);
+			u8 tid = qc[0] & IEEE80211_QOS_CTL_TID_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			ampdu = (u32)sta->ht_cap.ampdu_density;
 			val32 = ampdu << TXDESC_AMPDU_DENSITY_SHIFT;
@@ -5053,13 +5084,19 @@ static void rtl8xxxu_tx(struct ieee80211_hw *hw,
 
 			ampdu_enable = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (!test_bit(tid, priv->tx_aggr_started) &&
 			    !(skb->protocol == cpu_to_be16(ETH_P_PAE)))
 				if (!ieee80211_start_tx_ba_session(sta, tid, 0))
 					set_bit(tid, priv->tx_aggr_started);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -6136,9 +6173,13 @@ rtl8xxxu_ampdu_action(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
 	u8 ampdu_factor, ampdu_density;
 	struct ieee80211_sta *sta = params->sta;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 tid = params->tid;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 tid = params->tid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum ieee80211_ampdu_mlme_action action = params->action;
 
 	switch (action) {
@@ -6151,6 +6192,7 @@ rtl8xxxu_ampdu_action(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
 		dev_dbg(dev,
 			"Changed HT: ampdu_factor %02x, ampdu_density %02x\n",
 			ampdu_factor, ampdu_density);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return IEEE80211_AMPDU_TX_START_IMMEDIATE;
 	case IEEE80211_AMPDU_TX_STOP_CONT:
@@ -6168,17 +6210,26 @@ rtl8xxxu_ampdu_action(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
 		set_bit(tid, priv->tid_tx_operational);
 =======
 		break;
+=======
+		return IEEE80211_AMPDU_TX_START_IMMEDIATE;
+	case IEEE80211_AMPDU_TX_STOP_CONT:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case IEEE80211_AMPDU_TX_STOP_FLUSH:
-		dev_dbg(dev, "%s: IEEE80211_AMPDU_TX_STOP_FLUSH\n", __func__);
-		rtl8xxxu_set_ampdu_factor(priv, 0);
-		rtl8xxxu_set_ampdu_min_space(priv, 0);
-		break;
 	case IEEE80211_AMPDU_TX_STOP_FLUSH_CONT:
-		dev_dbg(dev, "%s: IEEE80211_AMPDU_TX_STOP_FLUSH_CONT\n",
-			 __func__);
+		dev_dbg(dev, "%s: IEEE80211_AMPDU_TX_STOP\n", __func__);
 		rtl8xxxu_set_ampdu_factor(priv, 0);
 		rtl8xxxu_set_ampdu_min_space(priv, 0);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clear_bit(tid, priv->tx_aggr_started);
+		clear_bit(tid, priv->tid_tx_operational);
+		ieee80211_stop_tx_ba_cb_irqsafe(vif, sta->addr, tid);
+		break;
+	case IEEE80211_AMPDU_TX_OPERATIONAL:
+		dev_dbg(dev, "%s: IEEE80211_AMPDU_TX_OPERATIONAL\n", __func__);
+		set_bit(tid, priv->tid_tx_operational);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IEEE80211_AMPDU_RX_START:
 		dev_dbg(dev, "%s: IEEE80211_AMPDU_RX_START\n", __func__);

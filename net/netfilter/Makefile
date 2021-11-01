@@ -213,8 +213,14 @@ obj-$(CONFIG_IP_SET) += ipset/
 # IPVS
 obj-$(CONFIG_IP_VS) += ipvs/
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 # lwtunnel
 obj-$(CONFIG_LWTUNNEL) += nf_hooks_lwtunnel.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+# lwtunnel
+obj-$(CONFIG_LWTUNNEL) += nf_hooks_lwtunnel.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

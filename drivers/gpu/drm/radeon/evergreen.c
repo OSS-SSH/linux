@@ -29,9 +29,13 @@
 #include <drm/drm_vblank.h>
 #include <drm/radeon_drm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <drm/drm_fourcc.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <drm/drm_fourcc.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "atom.h"
 #include "avivod.h"
@@ -1419,6 +1423,7 @@ void evergreen_page_flip(struct radeon_device *rdev, int crtc_id, u64 crtc_base,
 {
 	struct radeon_crtc *radeon_crtc = rdev->mode_info.crtcs[crtc_id];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct drm_framebuffer *fb = radeon_crtc->base.primary->fb;
 
 	/* flip at hsync for async, default is vsync */
@@ -1429,11 +1434,21 @@ void evergreen_page_flip(struct radeon_device *rdev, int crtc_id, u64 crtc_base,
 	       fb->pitches[0] / fb->format->cpp[0]);
 	/* update the scanout addresses */
 =======
+=======
+	struct drm_framebuffer *fb = radeon_crtc->base.primary->fb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	/* update the scanout addresses */
+	/* flip at hsync for async, default is vsync */
 	WREG32(EVERGREEN_GRPH_FLIP_CONTROL + radeon_crtc->crtc_offset,
 	       async ? EVERGREEN_GRPH_SURFACE_UPDATE_H_RETRACE_EN : 0);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* update pitch */
+	WREG32(EVERGREEN_GRPH_PITCH + radeon_crtc->crtc_offset,
+	       fb->pitches[0] / fb->format->cpp[0]);
+	/* update the scanout addresses */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	WREG32(EVERGREEN_GRPH_PRIMARY_SURFACE_ADDRESS_HIGH + radeon_crtc->crtc_offset,
 	       upper_32_bits(crtc_base));
 	WREG32(EVERGREEN_GRPH_PRIMARY_SURFACE_ADDRESS + radeon_crtc->crtc_offset,

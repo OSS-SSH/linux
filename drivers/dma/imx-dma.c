@@ -813,10 +813,15 @@ static struct dma_async_tx_descriptor *imxdma_prep_slave_sg(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	imxdma_config_write(chan, &imxdmac->config, direction);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	imxdma_config_write(chan, &imxdmac->config, direction);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (imxdmac->word_size) {
 	case DMA_SLAVE_BUSWIDTH_4_BYTES:
 		if (sg_dma_len(sgl) & 3 || sgl->dma_address & 3)

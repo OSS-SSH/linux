@@ -107,6 +107,7 @@ static void iic_ioexc_cascade(struct irq_desc *desc)
 		/* handle them */
 		for (cascade = 63; cascade >= 0; cascade--)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (bits & (0x8000000000000000UL >> cascade))
 				generic_handle_domain_irq(iic_host,
 							  base | cascade);
@@ -119,6 +120,11 @@ static void iic_ioexc_cascade(struct irq_desc *desc)
 					generic_handle_irq(cirq);
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (bits & (0x8000000000000000UL >> cascade))
+				generic_handle_domain_irq(iic_host,
+							  base | cascade);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* post-ack level interrupts */
 		ack = bits & ~IIC_ISR_EDGE_MASK;
 		if (ack)

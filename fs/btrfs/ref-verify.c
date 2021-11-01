@@ -265,12 +265,17 @@ static struct block_entry *add_block_entry(struct btrfs_fs_info *fs_info,
 	struct root_entry *re = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	re = kzalloc(sizeof(struct root_entry), GFP_NOFS);
 	be = kzalloc(sizeof(struct block_entry), GFP_NOFS);
 =======
 	re = kzalloc(sizeof(struct root_entry), GFP_KERNEL);
 	be = kzalloc(sizeof(struct block_entry), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	re = kzalloc(sizeof(struct root_entry), GFP_NOFS);
+	be = kzalloc(sizeof(struct block_entry), GFP_NOFS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!be || !re) {
 		kfree(re);
 		kfree(be);
@@ -319,10 +324,14 @@ static int add_tree_block(struct btrfs_fs_info *fs_info, u64 ref_root,
 	struct ref_entry *ref = NULL, *exist;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ref = kmalloc(sizeof(struct ref_entry), GFP_NOFS);
 =======
 	ref = kmalloc(sizeof(struct ref_entry), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ref = kmalloc(sizeof(struct ref_entry), GFP_NOFS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ref)
 		return -ENOMEM;
 
@@ -368,10 +377,14 @@ static int add_shared_data_ref(struct btrfs_fs_info *fs_info,
 	struct ref_entry *ref;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ref = kzalloc(sizeof(struct ref_entry), GFP_NOFS);
 =======
 	ref = kzalloc(sizeof(struct ref_entry), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ref = kzalloc(sizeof(struct ref_entry), GFP_NOFS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ref)
 		return -ENOMEM;
 	be = add_block_entry(fs_info, bytenr, num_bytes, 0);
@@ -407,10 +420,14 @@ static int add_extent_data_ref(struct btrfs_fs_info *fs_info,
 	u32 num_refs = btrfs_extent_data_ref_count(leaf, dref);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ref = kzalloc(sizeof(struct ref_entry), GFP_NOFS);
 =======
 	ref = kzalloc(sizeof(struct ref_entry), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ref = kzalloc(sizeof(struct ref_entry), GFP_NOFS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ref)
 		return -ENOMEM;
 	be = add_block_entry(fs_info, bytenr, num_bytes, ref_root);

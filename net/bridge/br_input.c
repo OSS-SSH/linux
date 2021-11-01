@@ -70,15 +70,21 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
 	enum br_pkt_type pkt_type = BR_PKT_UNICAST;
 	struct net_bridge_fdb_entry *dst = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_bridge_mcast_port *pmctx;
 	struct net_bridge_mdb_entry *mdst;
 	bool local_rcv, mcast_hit = false;
 	struct net_bridge_mcast *brmctx;
 	struct net_bridge_vlan *vlan;
+<<<<<<< HEAD
 =======
 	struct net_bridge_mdb_entry *mdst;
 	bool local_rcv, mcast_hit = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_bridge *br;
 	u16 vid = 0;
 	u8 state;
@@ -86,6 +92,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
 	if (!p || p->state == BR_STATE_DISABLED)
 		goto drop;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	brmctx = &p->br->multicast_ctx;
 	pmctx = &p->multicast_ctx;
@@ -97,6 +104,13 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
 	if (!br_allowed_ingress(p->br, nbp_vlan_group_rcu(p), skb, &vid,
 				&state))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	brmctx = &p->br->multicast_ctx;
+	pmctx = &p->multicast_ctx;
+	state = p->state;
+	if (!br_allowed_ingress(p->br, nbp_vlan_group_rcu(p), skb, &vid,
+				&state, &vlan))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	nbp_switchdev_frame_mark(p, skb);
@@ -115,10 +129,14 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
 		} else {
 			pkt_type = BR_PKT_MULTICAST;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (br_multicast_rcv(&brmctx, &pmctx, vlan, skb, vid))
 =======
 			if (br_multicast_rcv(br, p, skb, vid))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (br_multicast_rcv(&brmctx, &pmctx, vlan, skb, vid))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto drop;
 		}
 	}
@@ -149,6 +167,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
 	switch (pkt_type) {
 	case BR_PKT_MULTICAST:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mdst = br_mdb_get(brmctx, skb, vid);
 		if ((mdst || BR_INPUT_SKB_CB_MROUTERS_ONLY(skb)) &&
 		    br_multicast_querier_exists(brmctx, eth_hdr(skb), mdst)) {
@@ -156,11 +175,18 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
 			    br_multicast_is_router(brmctx, skb)) {
 =======
 		mdst = br_mdb_get(br, skb, vid);
+=======
+		mdst = br_mdb_get(brmctx, skb, vid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if ((mdst || BR_INPUT_SKB_CB_MROUTERS_ONLY(skb)) &&
-		    br_multicast_querier_exists(br, eth_hdr(skb), mdst)) {
+		    br_multicast_querier_exists(brmctx, eth_hdr(skb), mdst)) {
 			if ((mdst && mdst->host_joined) ||
+<<<<<<< HEAD
 			    br_multicast_is_router(br, skb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    br_multicast_is_router(brmctx, skb)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				local_rcv = true;
 				br->dev->stats.multicast++;
 			}
@@ -191,10 +217,14 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
 			br_flood(br, skb, pkt_type, local_rcv, false);
 		else
 <<<<<<< HEAD
+<<<<<<< HEAD
 			br_multicast_flood(mdst, skb, brmctx, local_rcv, false);
 =======
 			br_multicast_flood(mdst, skb, local_rcv, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			br_multicast_flood(mdst, skb, brmctx, local_rcv, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (local_rcv)
@@ -322,6 +352,7 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
 
 	p = br_port_get_rcu(skb->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (p->flags & BR_VLAN_TUNNEL)
 		br_handle_ingress_vlan_tunnel(skb, p, nbp_vlan_group_rcu(p));
 =======
@@ -331,6 +362,10 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
 			goto drop;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (p->flags & BR_VLAN_TUNNEL)
+		br_handle_ingress_vlan_tunnel(skb, p, nbp_vlan_group_rcu(p));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(is_link_local_ether_addr(dest))) {
 		u16 fwd_mask = p->br->group_fwd_mask_required;

@@ -64,10 +64,14 @@ static const struct net_device_ops rr_netdev_ops = {
 	.ndo_open 		= rr_open,
 	.ndo_stop		= rr_close,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= rr_siocdevprivate,
 =======
 	.ndo_do_ioctl		= rr_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= rr_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_start_xmit		= rr_start_xmit,
 	.ndo_set_mac_address	= hippi_mac_addr,
 };
@@ -1573,11 +1577,16 @@ out:
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int rr_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 			     void __user *data, int cmd)
 =======
 static int rr_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int rr_siocdevprivate(struct net_device *dev, struct ifreq *rq,
+			     void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rr_private *rrpriv;
 	unsigned char *image, *oldimage;
@@ -1613,10 +1622,14 @@ static int rr_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 			goto gf_out;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		error = copy_to_user(data, image, EEPROM_BYTES);
 =======
 		error = copy_to_user(rq->ifr_data, image, EEPROM_BYTES);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = copy_to_user(data, image, EEPROM_BYTES);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error)
 			error = -EFAULT;
 	gf_out:
@@ -1629,10 +1642,14 @@ static int rr_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		image = memdup_user(data, EEPROM_BYTES);
 =======
 		image = memdup_user(rq->ifr_data, EEPROM_BYTES);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		image = memdup_user(data, EEPROM_BYTES);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(image))
 			return PTR_ERR(image);
 
@@ -1676,10 +1693,14 @@ static int rr_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 
 	case SIOCRRID:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return put_user(0x52523032, (int __user *)data);
 =======
 		return put_user(0x52523032, (int __user *)rq->ifr_data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return put_user(0x52523032, (int __user *)data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return error;
 	}

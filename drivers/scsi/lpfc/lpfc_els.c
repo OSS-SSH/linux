@@ -57,11 +57,17 @@ static int lpfc_issue_els_fdisc(struct lpfc_vport *vport,
 static int lpfc_issue_fabric_iocb(struct lpfc_hba *phba,
 				  struct lpfc_iocbq *iocb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void lpfc_cmpl_els_edc(struct lpfc_hba *phba,
 			      struct lpfc_iocbq *cmdiocb,
 			      struct lpfc_iocbq *rspiocb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void lpfc_cmpl_els_edc(struct lpfc_hba *phba,
+			      struct lpfc_iocbq *cmdiocb,
+			      struct lpfc_iocbq *rspiocb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void lpfc_cmpl_els_uvem(struct lpfc_hba *, struct lpfc_iocbq *,
 			       struct lpfc_iocbq *);
 
@@ -1671,14 +1677,20 @@ lpfc_plogi_confirm_nport(struct lpfc_hba *phba, uint32_t *prsp,
 		return ndlp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Unregister from backend if not done yet. Could have been skipped
 	 * due to ADISC
 	 */
 	lpfc_nlp_unreg_node(vport, new_ndlp);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (phba->sli_rev == LPFC_SLI_REV4) {
 		active_rrqs_xri_bitmap = mempool_alloc(phba->active_rrq_pool,
 						       GFP_KERNEL);
@@ -2041,12 +2053,16 @@ lpfc_cmpl_els_plogi(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 
 		/* Do not call DSM for lpfc_els_abort'ed ELS cmds */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!lpfc_error_lost_link(irsp))
 =======
 		if (lpfc_error_lost_link(irsp))
 			goto check_plogi;
 		else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!lpfc_error_lost_link(irsp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			lpfc_disc_state_machine(vport, ndlp, cmdiocb,
 						NLP_EVT_CMPL_PLOGI);
 
@@ -2100,9 +2116,12 @@ lpfc_cmpl_els_plogi(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  check_plogi:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (disc && vport->num_disc_nodes) {
 		/* Check to see if there are more PLOGIs to be sent */
 		lpfc_more_plogi(vport);
@@ -2630,6 +2649,9 @@ lpfc_adisc_done(struct lpfc_vport *vport)
 	    !(vport->fc_flag & FC_RSCN_MODE) &&
 	    (phba->sli_rev < LPFC_SLI_REV4)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * If link is down, clear_la and reg_vpi will be done after
@@ -2638,8 +2660,11 @@ lpfc_adisc_done(struct lpfc_vport *vport)
 		if (!lpfc_is_link_up(phba))
 			return;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* The ADISCs are complete.  Doesn't matter if they
 		 * succeeded or failed because the ADISC completion
 		 * routine guarantees to call the state machine and
@@ -2783,6 +2808,7 @@ lpfc_cmpl_els_adisc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 				 ndlp->nlp_DID, irsp->ulpStatus,
 				 irsp->un.ulpWord[4]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		lpfc_disc_state_machine(vport, ndlp, cmdiocb,
 				NLP_EVT_CMPL_ADISC);
@@ -2794,6 +2820,11 @@ lpfc_cmpl_els_adisc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 			lpfc_disc_state_machine(vport, ndlp, cmdiocb,
 						NLP_EVT_CMPL_ADISC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		lpfc_disc_state_machine(vport, ndlp, cmdiocb,
+				NLP_EVT_CMPL_ADISC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* As long as this node is not registered with the SCSI or NVMe
 		 * transport, it is no longer an active node. Otherwise
@@ -2812,9 +2843,12 @@ lpfc_cmpl_els_adisc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 					NLP_EVT_CMPL_ADISC);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  check_adisc:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check to see if there are more ADISCs to be sent */
 	if (disc && vport->num_disc_nodes)
 		lpfc_more_adisc(vport);
@@ -3296,10 +3330,14 @@ lpfc_cmpl_els_disc_cmd(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 		irsp->un.elsreq64.remoteID);
 	/* ELS cmd tag <ulpIoTag> completes */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS | LOG_CGN_MGMT,
 =======
 	lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS | LOG_CGN_MGMT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 "0217 ELS cmd tag x%x completes Data: x%x x%x x%x "
 			 "x%x\n",
 			 irsp->ulpIoTag, irsp->ulpStatus,
@@ -3326,11 +3364,17 @@ lpfc_cmpl_els_disc_cmd(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 				lpfc_issue_els_scr(vport, cmdiocb->retry);
 				break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			case ELS_CMD_EDC:
 				lpfc_issue_els_edc(vport, cmdiocb->retry);
 				break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			case ELS_CMD_EDC:
+				lpfc_issue_els_edc(vport, cmdiocb->retry);
+				break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case ELS_CMD_RDF:
 				cmdiocb->context1 = NULL; /* save ndlp refcnt */
 				lpfc_issue_els_rdf(vport, cmdiocb->retry);
@@ -3341,13 +3385,19 @@ lpfc_cmpl_els_disc_cmd(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 		phba->fc_stat.elsRetryExceeded++;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cmd == ELS_CMD_EDC) {
 		/* must be called before checking uplStatus and returning */
 		lpfc_cmpl_els_edc(phba, cmdiocb, rspiocb);
 		return;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (irsp->ulpStatus) {
 		/* ELS discovery cmd completes with error */
 		lpfc_printf_vlog(vport, KERN_WARNING, LOG_ELS,
@@ -3373,6 +3423,9 @@ lpfc_cmpl_els_disc_cmd(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 		for (i = 0; i < ELS_RDF_REG_TAG_CNT &&
 			    i < be32_to_cpu(prdf->reg_d1.reg_desc.count); i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			lpfc_printf_vlog(vport, KERN_INFO,
 					 LOG_ELS | LOG_CGN_MGMT,
 					 "4677 Fabric RDF Notification Grant "
@@ -3381,6 +3434,7 @@ lpfc_cmpl_els_disc_cmd(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 						prdf->reg_d1.desc_tags[i]),
 					 phba->cgn_reg_signal,
 					 phba->cgn_reg_fpin);
+<<<<<<< HEAD
 =======
 			lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
 				 "4677 Fabric RDF Notification Grant Data: "
@@ -3388,6 +3442,8 @@ lpfc_cmpl_els_disc_cmd(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 				 be32_to_cpu(
 					prdf->reg_d1.desc_tags[i]));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 out:
@@ -3447,9 +3503,13 @@ lpfc_issue_els_scr(struct lpfc_vport *vport, uint8_t retry)
 		rc = lpfc_reg_fab_ctrl_node(vport, ndlp);
 		if (rc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			lpfc_els_free_iocb(phba, elsiocb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			lpfc_els_free_iocb(phba, elsiocb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			lpfc_printf_vlog(vport, KERN_ERR, LOG_NODE,
 					 "0937 %s: Failed to reg fc node, rc %d\n",
 					 __func__, rc);
@@ -3489,9 +3549,12 @@ lpfc_issue_els_scr(struct lpfc_vport *vport, uint8_t retry)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Keep the ndlp just in case RDF is being sent */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3736,6 +3799,7 @@ lpfc_issue_els_rdf(struct lpfc_vport *vport, uint8_t retry)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* RDF ELS is not required on an NPIV VN_Port. */
 	if (vport->port_type == LPFC_NPIV_PORT)
 		return -EACCES;
@@ -3746,12 +3810,18 @@ lpfc_issue_els_rdf(struct lpfc_vport *vport, uint8_t retry)
 		return -EACCES;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* RDF ELS is not required on an NPIV VN_Port. */
+	if (vport->port_type == LPFC_NPIV_PORT)
+		return -EACCES;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	elsiocb = lpfc_prep_els_iocb(vport, 1, cmdsize, retry, ndlp,
 				     ndlp->nlp_DID, ELS_CMD_RDF);
 	if (!elsiocb)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (phba->sli_rev == LPFC_SLI_REV4 &&
@@ -3766,6 +3836,8 @@ lpfc_issue_els_rdf(struct lpfc_vport *vport, uint8_t retry)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Configure the payload for the supported FPIN events. */
 	prdf = (struct lpfc_els_rdf_req *)
 		(((struct lpfc_dmabuf *)elsiocb->context2)->virt);
@@ -3783,10 +3855,14 @@ lpfc_issue_els_rdf(struct lpfc_vport *vport, uint8_t retry)
 	prdf->reg_d1.desc_tags[3] = cpu_to_be32(ELS_DTAG_CONGESTION);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS | LOG_CGN_MGMT,
 			 "6444 Xmit RDF to remote NPORT x%x Reg: %x %x\n",
 			 ndlp->nlp_DID, phba->cgn_reg_signal,
 			 phba->cgn_reg_fpin);
+<<<<<<< HEAD
 
 	phba->cgn_fpin_frequency = LPFC_FPIN_INIT_FREQ;
 =======
@@ -3795,6 +3871,10 @@ lpfc_issue_els_rdf(struct lpfc_vport *vport, uint8_t retry)
 			 ndlp->nlp_DID);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	phba->cgn_fpin_frequency = LPFC_FPIN_INIT_FREQ;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	elsiocb->iocb_cmpl = lpfc_cmpl_els_disc_cmd;
 	elsiocb->context1 = lpfc_nlp_get(ndlp);
 	if (!elsiocb->context1) {
@@ -3836,10 +3916,14 @@ lpfc_els_rcv_rdf(struct lpfc_vport *vport, struct lpfc_iocbq *cmdiocb,
 	/* Send LS_ACC */
 	if (lpfc_els_rsp_acc(vport, ELS_CMD_RDF, cmdiocb, ndlp, NULL)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS | LOG_CGN_MGMT,
 =======
 		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS | LOG_CGN_MGMT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 "1623 Failed to RDF_ACC from x%x for x%x\n",
 				 ndlp->nlp_DID, vport->fc_myDID);
 		return -EIO;
@@ -3848,10 +3932,14 @@ lpfc_els_rcv_rdf(struct lpfc_vport *vport, struct lpfc_iocbq *cmdiocb,
 	/* Issue new RDF for reregistering */
 	if (lpfc_issue_els_rdf(vport, 0)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS | LOG_CGN_MGMT,
 =======
 		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS | LOG_CGN_MGMT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 "2623 Failed to re register RDF for x%x\n",
 				 vport->fc_myDID);
 		return -EIO;
@@ -3862,6 +3950,9 @@ lpfc_els_rcv_rdf(struct lpfc_vport *vport, struct lpfc_iocbq *cmdiocb,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * lpfc_least_capable_settings - helper function for EDC rsp processing
  * @phba: pointer to lpfc hba data structure.
  * @pcgd: pointer to congestion detection descriptor in EDC rsp.
@@ -4304,8 +4395,11 @@ try_rdf:
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * lpfc_cancel_retry_delay_tmo - Cancel the timer with delayed iocb-cmd retry
  * @vport: pointer to a host virtual N_Port data structure.
  * @nlp: pointer to a node-list data structure.
@@ -4928,10 +5022,14 @@ out_retry:
 				lpfc_nlp_set_state(vport, ndlp,
 					NLP_STE_PRLI_ISSUE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			else if (cmd != ELS_CMD_ADISC)
 =======
 			else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			else if (cmd != ELS_CMD_ADISC)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				lpfc_nlp_set_state(vport, ndlp,
 					NLP_STE_NPR_NODE);
 			ndlp->nlp_last_elscmd = cmd;
@@ -5074,10 +5172,14 @@ lpfc_els_free_iocb(struct lpfc_hba *phba, struct lpfc_iocbq *elsiocb)
 	struct lpfc_dmabuf *buf_ptr, *buf_ptr1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* The I/O iocb is complete.  Clear the context1 data. */
 =======
 	/* The I/O job is complete.  Clear the context1 data. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* The I/O iocb is complete.  Clear the context1 data. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	elsiocb->context1 = NULL;
 
 	/* context2  = cmd,  context2->next = rsp, context3 = bpl */
@@ -5170,6 +5272,9 @@ lpfc_cmpl_els_logo_acc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 
 	if (ndlp->nlp_state == NLP_STE_NPR_NODE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* If PLOGI is being retried, PLOGI completion will cleanup the
 		 * node. The NLP_NPR_2B_DISC flag needs to be retained to make
@@ -5179,8 +5284,11 @@ lpfc_cmpl_els_logo_acc(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 		    (ndlp->nlp_last_elscmd == ELS_CMD_PLOGI))
 			goto out;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* NPort Recovery mode or node is just allocated */
 		if (!lpfc_nlp_not_used(ndlp)) {
 			/* A LOGO is completing and the node is in NPR state.
@@ -5728,6 +5836,9 @@ lpfc_els_rsp_reject(struct lpfc_vport *vport, uint32_t rejectError,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  /**
   * lpfc_issue_els_edc_rsp - Exchange Diagnostic Capabilities with the fabric.
   * @vport: pointer to a host virtual N_Port data structure.
@@ -5808,8 +5919,11 @@ lpfc_issue_els_edc_rsp(struct lpfc_vport *vport, struct lpfc_iocbq *cmdiocb,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * lpfc_els_rsp_adisc_acc - Prepare and issue acc response to adisc iocb cmd
  * @vport: pointer to a virtual N_Port data structure.
@@ -6310,6 +6424,9 @@ lpfc_els_disc_adisc(struct lpfc_vport *vport)
 	/* go thru NPR nodes and issue any remaining ELS ADISCs */
 	list_for_each_entry_safe(ndlp, next_ndlp, &vport->fc_nodes, nlp_listp) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (ndlp->nlp_state != NLP_STE_NPR_NODE ||
 		    !(ndlp->nlp_flag & NLP_NPR_ADISC))
@@ -6342,6 +6459,7 @@ lpfc_els_disc_adisc(struct lpfc_vport *vport)
 			vport->fc_flag |= FC_NLP_MORE;
 			spin_unlock_irq(shost->host_lock);
 			break;
+<<<<<<< HEAD
 		}
 
 =======
@@ -6365,6 +6483,10 @@ lpfc_els_disc_adisc(struct lpfc_vport *vport)
 			}
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (sentadisc == 0) {
 		spin_lock_irq(shost->host_lock);
@@ -6777,14 +6899,20 @@ lpfc_rdp_res_speed(struct fc_rdp_port_speed_desc *desc, struct lpfc_hba *phba)
 		rdp_speed = RDP_PS_64GB;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case LPFC_LINK_SPEED_128GHZ:
 		rdp_speed = RDP_PS_128GB;
 		break;
 	case LPFC_LINK_SPEED_256GHZ:
 		rdp_speed = RDP_PS_256GB;
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		rdp_speed = RDP_PS_UNKNOWN;
 		break;
@@ -6793,10 +6921,15 @@ lpfc_rdp_res_speed(struct fc_rdp_port_speed_desc *desc, struct lpfc_hba *phba)
 	desc->info.port_speed.speed = cpu_to_be16(rdp_speed);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (phba->lmt & LMT_256Gb)
 		rdp_cap |= RDP_PS_256GB;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (phba->lmt & LMT_256Gb)
+		rdp_cap |= RDP_PS_256GB;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (phba->lmt & LMT_128Gb)
 		rdp_cap |= RDP_PS_128GB;
 	if (phba->lmt & LMT_64Gb)
@@ -7590,6 +7723,7 @@ lpfc_rscn_recovery_check(struct lpfc_vport *vport)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		/* Check to see if we need to NVME rescan this target
 		 * remoteport.
@@ -7599,6 +7733,8 @@ lpfc_rscn_recovery_check(struct lpfc_vport *vport)
 			lpfc_nvme_rescan_port(vport, ndlp);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lpfc_disc_state_machine(vport, ndlp, NULL,
 					NLP_EVT_DEVICE_RECOVERY);
 		lpfc_cancel_retry_delay_tmo(vport, ndlp);
@@ -8919,6 +9055,9 @@ lpfc_els_rcv_fan(struct lpfc_vport *vport, struct lpfc_iocbq *cmdiocb,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * lpfc_els_rcv_edc - Process an unsolicited EDC iocb
  * @vport: pointer to a host virtual N_Port data structure.
  * @cmdiocb: pointer to lpfc command iocb data structure.
@@ -9038,8 +9177,11 @@ out:
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * lpfc_els_timeout - Handler funciton to the els timer
  * @t: timer context used to obtain the vport.
  *
@@ -9497,6 +9639,7 @@ lpfc_send_els_event(struct lpfc_vport *vport,
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 DECLARE_ENUM2STR_LOOKUP(lpfc_get_fpin_li_event_nm, fc_fpin_li_event_types,
 			FC_FPIN_LI_EVT_TYPES_INIT);
 
@@ -9799,48 +9942,312 @@ lpfc_els_rcv_fpin(struct lpfc_vport *vport, void *p, u32 fpin_length)
 DECLARE_ENUM2STR_LOOKUP(lpfc_get_tlv_dtag_nm, fc_ls_tlv_dtag,
 			FC_LS_TLV_DTAG_INIT);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DECLARE_ENUM2STR_LOOKUP(lpfc_get_fpin_li_event_nm, fc_fpin_li_event_types,
 			FC_FPIN_LI_EVT_TYPES_INIT);
 
+DECLARE_ENUM2STR_LOOKUP(lpfc_get_fpin_deli_event_nm, fc_fpin_deli_event_types,
+			FC_FPIN_DELI_EVT_TYPES_INIT);
+
+DECLARE_ENUM2STR_LOOKUP(lpfc_get_fpin_congn_event_nm, fc_fpin_congn_event_types,
+			FC_FPIN_CONGN_EVT_TYPES_INIT);
+
+DECLARE_ENUM2STR_LOOKUP(lpfc_get_fpin_congn_severity_nm,
+			fc_fpin_congn_severity_types,
+			FC_FPIN_CONGN_SEVERITY_INIT);
+
+
+/**
+ * lpfc_display_fpin_wwpn - Display WWPNs accessible by the attached port
+ * @phba: Pointer to phba object.
+ * @wwnlist: Pointer to list of WWPNs in FPIN payload
+ * @cnt: count of WWPNs in FPIN payload
+ *
+ * This routine is called by LI and PC descriptors.
+ * Limit the number of WWPNs displayed to 6 log messages, 6 per log message
+ */
+static void
+lpfc_display_fpin_wwpn(struct lpfc_hba *phba, __be64 *wwnlist, u32 cnt)
+{
+	char buf[LPFC_FPIN_WWPN_LINE_SZ];
+	__be64 wwn;
+	u64 wwpn;
+	int i, len;
+	int line = 0;
+	int wcnt = 0;
+	bool endit = false;
+
+	len = scnprintf(buf, LPFC_FPIN_WWPN_LINE_SZ, "Accessible WWPNs:");
+	for (i = 0; i < cnt; i++) {
+		/* Are we on the last WWPN */
+		if (i == (cnt - 1))
+			endit = true;
+
+		/* Extract the next WWPN from the payload */
+		wwn = *wwnlist++;
+		wwpn = be64_to_cpu(wwn);
+		len += scnprintf(buf + len, LPFC_FPIN_WWPN_LINE_SZ - len,
+				 " %016llx", wwpn);
+
+		/* Log a message if we are on the last WWPN
+		 * or if we hit the max allowed per message.
+		 */
+		wcnt++;
+		if (wcnt == LPFC_FPIN_WWPN_LINE_CNT || endit) {
+			buf[len] = 0;
+			lpfc_printf_log(phba, KERN_INFO, LOG_ELS,
+					"4686 %s\n", buf);
+
+			/* Check if we reached the last WWPN */
+			if (endit)
+				return;
+
+			/* Limit the number of log message displayed per FPIN */
+			line++;
+			if (line == LPFC_FPIN_WWPN_NUM_LINE) {
+				lpfc_printf_log(phba, KERN_INFO, LOG_ELS,
+						"4687 %d WWPNs Truncated\n",
+						cnt - i - 1);
+				return;
+			}
+
+			/* Start over with next log message */
+			wcnt = 0;
+			len = scnprintf(buf, LPFC_FPIN_WWPN_LINE_SZ,
+					"Additional WWPNs:");
+		}
+	}
+}
+
 /**
  * lpfc_els_rcv_fpin_li - Process an FPIN Link Integrity Event.
- * @vport: Pointer to vport object.
+ * @phba: Pointer to phba object.
  * @tlv:  Pointer to the Link Integrity Notification Descriptor.
  *
- * This function processes a link integrity FPIN event by
- * logging a message
+ * This function processes a Link Integrity FPIN event by logging a message.
  **/
 static void
-lpfc_els_rcv_fpin_li(struct lpfc_vport *vport, struct fc_tlv_desc *tlv)
+lpfc_els_rcv_fpin_li(struct lpfc_hba *phba, struct fc_tlv_desc *tlv)
 {
 	struct fc_fn_li_desc *li = (struct fc_fn_li_desc *)tlv;
 	const char *li_evt_str;
-	u32 li_evt;
+	u32 li_evt, cnt;
 
 	li_evt = be16_to_cpu(li->event_type);
 	li_evt_str = lpfc_get_fpin_li_event_nm(li_evt);
+	cnt = be32_to_cpu(li->pname_count);
 
-	lpfc_printf_vlog(vport, KERN_INFO, LOG_ELS,
-			 "4680 FPIN Link Integrity %s (x%x) "
-			 "Detecting PN x%016llx Attached PN x%016llx "
-			 "Duration %d mSecs Count %d Port Cnt %d\n",
-			 li_evt_str, li_evt,
-			 be64_to_cpu(li->detecting_wwpn),
-			 be64_to_cpu(li->attached_wwpn),
-			 be32_to_cpu(li->event_threshold),
-			 be32_to_cpu(li->event_count),
-			 be32_to_cpu(li->pname_count));
+	lpfc_printf_log(phba, KERN_INFO, LOG_ELS,
+			"4680 FPIN Link Integrity %s (x%x) "
+			"Detecting PN x%016llx Attached PN x%016llx "
+			"Duration %d mSecs Count %d Port Cnt %d\n",
+			li_evt_str, li_evt,
+			be64_to_cpu(li->detecting_wwpn),
+			be64_to_cpu(li->attached_wwpn),
+			be32_to_cpu(li->event_threshold),
+			be32_to_cpu(li->event_count), cnt);
+
+	lpfc_display_fpin_wwpn(phba, (__be64 *)&li->pname_list, cnt);
 }
 
+/**
+ * lpfc_els_rcv_fpin_del - Process an FPIN Delivery Event.
+ * @phba: Pointer to hba object.
+ * @tlv:  Pointer to the Delivery Notification Descriptor TLV
+ *
+ * This function processes a Delivery FPIN event by logging a message.
+ **/
 static void
-lpfc_els_rcv_fpin(struct lpfc_vport *vport, struct fc_els_fpin *fpin,
-		  u32 fpin_length)
+lpfc_els_rcv_fpin_del(struct lpfc_hba *phba, struct fc_tlv_desc *tlv)
 {
-	struct fc_tlv_desc *tlv;
+	struct fc_fn_deli_desc *del = (struct fc_fn_deli_desc *)tlv;
+	const char *del_rsn_str;
+	u32 del_rsn;
+	__be32 *frame;
+
+	del_rsn = be16_to_cpu(del->deli_reason_code);
+	del_rsn_str = lpfc_get_fpin_deli_event_nm(del_rsn);
+
+	/* Skip over desc_tag/desc_len header to payload */
+	frame = (__be32 *)(del + 1);
+
+	lpfc_printf_log(phba, KERN_INFO, LOG_ELS,
+			"4681 FPIN Delivery %s (x%x) "
+			"Detecting PN x%016llx Attached PN x%016llx "
+			"DiscHdr0  x%08x "
+			"DiscHdr1 x%08x DiscHdr2 x%08x DiscHdr3 x%08x "
+			"DiscHdr4 x%08x DiscHdr5 x%08x\n",
+			del_rsn_str, del_rsn,
+			be64_to_cpu(del->detecting_wwpn),
+			be64_to_cpu(del->attached_wwpn),
+			be32_to_cpu(frame[0]),
+			be32_to_cpu(frame[1]),
+			be32_to_cpu(frame[2]),
+			be32_to_cpu(frame[3]),
+			be32_to_cpu(frame[4]),
+			be32_to_cpu(frame[5]));
+}
+
+/**
+ * lpfc_els_rcv_fpin_peer_cgn - Process a FPIN Peer Congestion Event.
+ * @phba: Pointer to hba object.
+ * @tlv:  Pointer to the Peer Congestion Notification Descriptor TLV
+ *
+ * This function processes a Peer Congestion FPIN event by logging a message.
+ **/
+static void
+lpfc_els_rcv_fpin_peer_cgn(struct lpfc_hba *phba, struct fc_tlv_desc *tlv)
+{
+	struct fc_fn_peer_congn_desc *pc = (struct fc_fn_peer_congn_desc *)tlv;
+	const char *pc_evt_str;
+	u32 pc_evt, cnt;
+
+	pc_evt = be16_to_cpu(pc->event_type);
+	pc_evt_str = lpfc_get_fpin_congn_event_nm(pc_evt);
+	cnt = be32_to_cpu(pc->pname_count);
+
+	lpfc_printf_log(phba, KERN_INFO, LOG_CGN_MGMT | LOG_ELS,
+			"4684 FPIN Peer Congestion %s (x%x) "
+			"Duration %d mSecs "
+			"Detecting PN x%016llx Attached PN x%016llx "
+			"Impacted Port Cnt %d\n",
+			pc_evt_str, pc_evt,
+			be32_to_cpu(pc->event_period),
+			be64_to_cpu(pc->detecting_wwpn),
+			be64_to_cpu(pc->attached_wwpn),
+			cnt);
+
+	lpfc_display_fpin_wwpn(phba, (__be64 *)&pc->pname_list, cnt);
+}
+
+/**
+ * lpfc_els_rcv_fpin_cgn - Process an FPIN Congestion notification
+ * @phba: Pointer to hba object.
+ * @tlv:  Pointer to the Congestion Notification Descriptor TLV
+ *
+ * This function processes an FPIN Congestion Notifiction.  The notification
+ * could be an Alarm or Warning.  This routine feeds that data into driver's
+ * running congestion algorithm. It also processes the FPIN by
+ * logging a message. It returns 1 to indicate deliver this message
+ * to the upper layer or 0 to indicate don't deliver it.
+ **/
+static int
+lpfc_els_rcv_fpin_cgn(struct lpfc_hba *phba, struct fc_tlv_desc *tlv)
+{
+	struct lpfc_cgn_info *cp;
+	struct fc_fn_congn_desc *cgn = (struct fc_fn_congn_desc *)tlv;
+	const char *cgn_evt_str;
+	u32 cgn_evt;
+	const char *cgn_sev_str;
+	u32 cgn_sev;
+	uint16_t value;
+	u32 crc;
+	bool nm_log = false;
+	int rc = 1;
+
+	cgn_evt = be16_to_cpu(cgn->event_type);
+	cgn_evt_str = lpfc_get_fpin_congn_event_nm(cgn_evt);
+	cgn_sev = cgn->severity;
+	cgn_sev_str = lpfc_get_fpin_congn_severity_nm(cgn_sev);
+
+	/* The driver only takes action on a Credit Stall or Oversubscription
+	 * event type to engage the IO algorithm.  The driver prints an
+	 * unmaskable message only for Lost Credit and Credit Stall.
+	 * TODO: Still need to have definition of host action on clear,
+	 *       lost credit and device specific event types.
+	 */
+	switch (cgn_evt) {
+	case FPIN_CONGN_LOST_CREDIT:
+		nm_log = true;
+		break;
+	case FPIN_CONGN_CREDIT_STALL:
+		nm_log = true;
+		fallthrough;
+	case FPIN_CONGN_OVERSUBSCRIPTION:
+		if (cgn_evt == FPIN_CONGN_OVERSUBSCRIPTION)
+			nm_log = false;
+		switch (cgn_sev) {
+		case FPIN_CONGN_SEVERITY_ERROR:
+			/* Take action here for an Alarm event */
+			if (phba->cmf_active_mode != LPFC_CFG_OFF) {
+				if (phba->cgn_reg_fpin & LPFC_CGN_FPIN_ALARM) {
+					/* Track of alarm cnt for cgn_info */
+					atomic_inc(&phba->cgn_fabric_alarm_cnt);
+					/* Track of alarm cnt for SYNC_WQE */
+					atomic_inc(&phba->cgn_sync_alarm_cnt);
+				}
+				goto cleanup;
+			}
+			break;
+		case FPIN_CONGN_SEVERITY_WARNING:
+			/* Take action here for a Warning event */
+			if (phba->cmf_active_mode != LPFC_CFG_OFF) {
+				if (phba->cgn_reg_fpin & LPFC_CGN_FPIN_WARN) {
+					/* Track of warning cnt for cgn_info */
+					atomic_inc(&phba->cgn_fabric_warn_cnt);
+					/* Track of warning cnt for SYNC_WQE */
+					atomic_inc(&phba->cgn_sync_warn_cnt);
+				}
+cleanup:
+				/* Save frequency in ms */
+				phba->cgn_fpin_frequency =
+					be32_to_cpu(cgn->event_period);
+				value = phba->cgn_fpin_frequency;
+				if (phba->cgn_i) {
+					cp = (struct lpfc_cgn_info *)
+						phba->cgn_i->virt;
+					if (phba->cgn_reg_fpin &
+						LPFC_CGN_FPIN_ALARM)
+						cp->cgn_alarm_freq =
+							cpu_to_le16(value);
+					if (phba->cgn_reg_fpin &
+						LPFC_CGN_FPIN_WARN)
+						cp->cgn_warn_freq =
+							cpu_to_le16(value);
+					crc = lpfc_cgn_calc_crc32
+						(cp,
+						LPFC_CGN_INFO_SZ,
+						LPFC_CGN_CRC32_SEED);
+					cp->cgn_info_crc = cpu_to_le32(crc);
+				}
+
+				/* Don't deliver to upper layer since
+				 * driver took action on this tlv.
+				 */
+				rc = 0;
+			}
+			break;
+		}
+		break;
+	}
+
+	/* Change the log level to unmaskable for the following event types. */
+	lpfc_printf_log(phba, (nm_log ? KERN_WARNING : KERN_INFO),
+			LOG_CGN_MGMT | LOG_ELS,
+			"4683 FPIN CONGESTION %s type %s (x%x) Event "
+			"Duration %d mSecs\n",
+			cgn_sev_str, cgn_evt_str, cgn_evt,
+			be32_to_cpu(cgn->event_period));
+	return rc;
+}
+
+void
+lpfc_els_rcv_fpin(struct lpfc_vport *vport, void *p, u32 fpin_length)
+{
+	struct lpfc_hba *phba = vport->phba;
+	struct fc_els_fpin *fpin = (struct fc_els_fpin *)p;
+	struct fc_tlv_desc *tlv, *first_tlv, *current_tlv;
 	const char *dtag_nm;
+<<<<<<< HEAD
 	uint32_t desc_cnt = 0, bytes_remain;
 	u32 dtag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int desc_cnt = 0, bytes_remain, cnt;
+	u32 dtag, deliver = 0;
+	int len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* FPINs handled only if we are in the right discovery state */
 	if (vport->port_state < LPFC_DISC_AUTH)
@@ -9851,6 +10258,9 @@ lpfc_els_rcv_fpin(struct lpfc_vport *vport, struct fc_els_fpin *fpin,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Sanity check descriptor length. The desc_len value does not
 	 * include space for the ELS command and the desc_len fields.
 	 */
@@ -9862,6 +10272,7 @@ lpfc_els_rcv_fpin(struct lpfc_vport *vport, struct fc_els_fpin *fpin,
 		return;
 	}
 
+<<<<<<< HEAD
 	tlv = (struct fc_tlv_desc *)&fpin->fpin_desc[0];
 	first_tlv = tlv;
 	bytes_remain = fpin_length - offsetof(struct fc_els_fpin, fpin_desc);
@@ -9938,36 +10349,89 @@ lpfc_els_rcv_fpin(struct lpfc_vport *vport, struct fc_els_fpin *fpin,
 		desc_cnt++;
 	}
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tlv = (struct fc_tlv_desc *)&fpin->fpin_desc[0];
+	first_tlv = tlv;
 	bytes_remain = fpin_length - offsetof(struct fc_els_fpin, fpin_desc);
 	bytes_remain = min_t(u32, bytes_remain, be32_to_cpu(fpin->desc_len));
 
-	/* process each descriptor */
+	/* process each descriptor separately */
 	while (bytes_remain >= FC_TLV_DESC_HDR_SZ &&
 	       bytes_remain >= FC_TLV_DESC_SZ_FROM_LENGTH(tlv)) {
-
 		dtag = be32_to_cpu(tlv->desc_tag);
 		switch (dtag) {
 		case ELS_DTAG_LNK_INTEGRITY:
-			lpfc_els_rcv_fpin_li(vport, tlv);
+			lpfc_els_rcv_fpin_li(phba, tlv);
+			deliver = 1;
+			break;
+		case ELS_DTAG_DELIVERY:
+			lpfc_els_rcv_fpin_del(phba, tlv);
+			deliver = 1;
+			break;
+		case ELS_DTAG_PEER_CONGEST:
+			lpfc_els_rcv_fpin_peer_cgn(phba, tlv);
+			deliver = 1;
+			break;
+		case ELS_DTAG_CONGESTION:
+			deliver = lpfc_els_rcv_fpin_cgn(phba, tlv);
 			break;
 		default:
 			dtag_nm = lpfc_get_tlv_dtag_nm(dtag);
-			lpfc_printf_vlog(vport, KERN_ERR, LOG_TRACE_EVENT,
-					 "4678  skipped FPIN descriptor[%d]: "
-					 "tag x%x (%s)\n",
-					 desc_cnt, dtag, dtag_nm);
-			break;
+			lpfc_printf_log(phba, KERN_WARNING, LOG_CGN_MGMT,
+					"4678 unknown FPIN descriptor[%d]: "
+					"tag x%x (%s)\n",
+					desc_cnt, dtag, dtag_nm);
+
+			/* If descriptor is bad, drop the rest of the data */
+			return;
+		}
+		lpfc_cgn_update_stat(phba, dtag);
+		cnt = be32_to_cpu(tlv->desc_len);
+
+		/* Sanity check descriptor length. The desc_len value does not
+		 * include space for the desc_tag and the desc_len fields.
+		 */
+		len -= (cnt + sizeof(struct fc_tlv_desc));
+		if (len < 0) {
+			dtag_nm = lpfc_get_tlv_dtag_nm(dtag);
+			lpfc_printf_log(phba, KERN_WARNING, LOG_CGN_MGMT,
+					"4672 Bad FPIN descriptor TLV length "
+					"%d: %d %d %s\n",
+					cnt, len, fpin_length, dtag_nm);
+			return;
 		}
 
-		desc_cnt++;
+		current_tlv = tlv;
 		bytes_remain -= FC_TLV_DESC_SZ_FROM_LENGTH(tlv);
 		tlv = fc_tlv_next_desc(tlv);
-	}
 
+<<<<<<< HEAD
 	fc_host_fpin_rcv(lpfc_shost_from_vport(vport), fpin_length,
 			 (char *)fpin);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Format payload such that the FPIN delivered to the
+		 * upper layer is a single descriptor FPIN.
+		 */
+		if (desc_cnt)
+			memcpy(first_tlv, current_tlv,
+			       (cnt + sizeof(struct fc_els_fpin)));
+
+		/* Adjust the length so that it only reflects a
+		 * single descriptor FPIN.
+		 */
+		fpin_length = cnt + sizeof(struct fc_els_fpin);
+		fpin->desc_len = cpu_to_be32(fpin_length);
+		fpin_length += sizeof(struct fc_els_fpin); /* the entire FPIN */
+
+		/* Send every descriptor individually to the upper layer */
+		if (deliver)
+			fc_host_fpin_rcv(lpfc_shost_from_vport(vport),
+					 fpin_length, (char *)fpin);
+		desc_cnt++;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -10167,11 +10631,17 @@ lpfc_els_unsol_buffer(struct lpfc_hba *phba, struct lpfc_sli_ring *pring,
 		}
 		lpfc_disc_state_machine(vport, ndlp, elsiocb, NLP_EVT_RCV_LOGO);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (newnode)
 			lpfc_disc_state_machine(vport, ndlp, NULL,
 					NLP_EVT_DEVICE_RM);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (newnode)
+			lpfc_disc_state_machine(vport, ndlp, NULL,
+					NLP_EVT_DEVICE_RM);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case ELS_CMD_PRLO:
 		lpfc_debugfs_disc_trc(vport, LPFC_DISC_TRC_ELS_UNSOL,
@@ -10362,11 +10832,17 @@ lpfc_els_unsol_buffer(struct lpfc_hba *phba, struct lpfc_sli_ring *pring,
 		/* There are no replies, so no rjt codes */
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case ELS_CMD_EDC:
 		lpfc_els_rcv_edc(vport, elsiocb, ndlp);
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case ELS_CMD_EDC:
+		lpfc_els_rcv_edc(vport, elsiocb, ndlp);
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ELS_CMD_RDF:
 		phba->fc_stat.elsRcvRDF++;
 		/* Accept RDF only from fabric controller */

@@ -225,9 +225,13 @@ static bool dmub_srv_hw_setup(struct dmub_srv *dmub, enum dmub_asic asic)
 		funcs->is_gpint_acked = dmub_dcn31_is_gpint_acked;
 		funcs->get_gpint_response = dmub_dcn31_get_gpint_response;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		funcs->get_gpint_dataout = dmub_dcn31_get_gpint_dataout;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		funcs->get_gpint_dataout = dmub_dcn31_get_gpint_dataout;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		funcs->get_fw_status = dmub_dcn31_get_fw_boot_status;
 		funcs->enable_dmub_boot_options = dmub_dcn31_enable_dmub_boot_options;
 		funcs->skip_dmub_panel_power_sequence = dmub_dcn31_skip_dmub_panel_power_sequence;
@@ -724,6 +728,9 @@ enum dmub_status dmub_srv_get_gpint_response(struct dmub_srv *dmub,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum dmub_status dmub_srv_get_gpint_dataout(struct dmub_srv *dmub,
 					     uint32_t *dataout)
 {
@@ -740,8 +747,11 @@ enum dmub_status dmub_srv_get_gpint_dataout(struct dmub_srv *dmub,
 	return DMUB_STATUS_OK;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum dmub_status dmub_srv_get_fw_boot_status(struct dmub_srv *dmub,
 					     union dmub_fw_boot_status *status)
 {

@@ -708,6 +708,9 @@
 			};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ftm1: pwm@30640000 {
 				compatible = "fsl,vf610-ftm-pwm";
 				reg = <0x30640000 0x10000>;
@@ -736,8 +739,11 @@
 				status = "disabled";
 			};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pwm1: pwm@30660000 {
 				compatible = "fsl,imx7d-pwm", "fsl,imx27-pwm";
 				reg = <0x30660000 0x10000>;

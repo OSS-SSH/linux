@@ -77,6 +77,7 @@ static int add_hw_hybrid(struct parse_events_state *parse_state,
 
 	perf_pmu__for_each_hybrid_pmu(pmu) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		LIST_HEAD(terms);
 
 		if (pmu_cmp(parse_state, pmu))
@@ -88,13 +89,23 @@ static int add_hw_hybrid(struct parse_events_state *parse_state,
 					  &terms, pmu);
 		free_config_terms(&terms);
 =======
+=======
+		LIST_HEAD(terms);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (pmu_cmp(parse_state, pmu))
 			continue;
 
+		copy_config_terms(&terms, config_terms);
 		ret = create_event_hybrid(PERF_TYPE_HARDWARE,
 					  &parse_state->idx, list, attr, name,
+<<<<<<< HEAD
 					  config_terms, pmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  &terms, pmu);
+		free_config_terms(&terms);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 	}
@@ -129,6 +140,7 @@ static int add_raw_hybrid(struct parse_events_state *parse_state,
 
 	perf_pmu__for_each_hybrid_pmu(pmu) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		LIST_HEAD(terms);
 
 		if (pmu_cmp(parse_state, pmu))
@@ -139,12 +151,22 @@ static int add_raw_hybrid(struct parse_events_state *parse_state,
 					      name, &terms, pmu);
 		free_config_terms(&terms);
 =======
+=======
+		LIST_HEAD(terms);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (pmu_cmp(parse_state, pmu))
 			continue;
 
+		copy_config_terms(&terms, config_terms);
 		ret = create_raw_event_hybrid(&parse_state->idx, list, attr,
+<<<<<<< HEAD
 					      name, config_terms, pmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      name, &terms, pmu);
+		free_config_terms(&terms);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 	}
@@ -191,6 +213,7 @@ int parse_events__add_cache_hybrid(struct list_head *list, int *idx,
 	*hybrid = true;
 	perf_pmu__for_each_hybrid_pmu(pmu) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		LIST_HEAD(terms);
 
 		if (pmu_cmp(parse_state, pmu))
@@ -201,12 +224,22 @@ int parse_events__add_cache_hybrid(struct list_head *list, int *idx,
 					  attr, name, &terms, pmu);
 		free_config_terms(&terms);
 =======
+=======
+		LIST_HEAD(terms);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (pmu_cmp(parse_state, pmu))
 			continue;
 
+		copy_config_terms(&terms, config_terms);
 		ret = create_event_hybrid(PERF_TYPE_HW_CACHE, idx, list,
+<<<<<<< HEAD
 					  attr, name, config_terms, pmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  attr, name, &terms, pmu);
+		free_config_terms(&terms);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 	}

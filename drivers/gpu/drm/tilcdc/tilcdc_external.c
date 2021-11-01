@@ -94,6 +94,7 @@ int tilcdc_attach_bridge(struct drm_device *ddev, struct drm_bridge *bridge)
 
 	ret = drm_bridge_attach(priv->external_encoder, bridge, NULL, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret)
 		return ret;
 =======
@@ -102,6 +103,10 @@ int tilcdc_attach_bridge(struct drm_device *ddev, struct drm_bridge *bridge)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tilcdc_crtc_set_panel_info(priv->crtc, &panel_info_default);
 

@@ -2094,10 +2094,14 @@ int rt5640_sel_asrc_clk_src(struct snd_soc_component *component,
 EXPORT_SYMBOL_GPL(rt5640_sel_asrc_clk_src);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void rt5640_enable_micbias1_for_ovcd(struct snd_soc_component *component)
 =======
 static void rt5640_enable_micbias1_for_ovcd(struct snd_soc_component *component)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void rt5640_enable_micbias1_for_ovcd(struct snd_soc_component *component)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
 
@@ -2110,6 +2114,7 @@ static void rt5640_enable_micbias1_for_ovcd(struct snd_soc_component *component)
 	snd_soc_dapm_mutex_unlock(dapm);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(rt5640_enable_micbias1_for_ovcd);
 
 void rt5640_disable_micbias1_for_ovcd(struct snd_soc_component *component)
@@ -2117,6 +2122,11 @@ void rt5640_disable_micbias1_for_ovcd(struct snd_soc_component *component)
 
 static void rt5640_disable_micbias1_for_ovcd(struct snd_soc_component *component)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(rt5640_enable_micbias1_for_ovcd);
+
+void rt5640_disable_micbias1_for_ovcd(struct snd_soc_component *component)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
 
@@ -2128,9 +2138,13 @@ static void rt5640_disable_micbias1_for_ovcd(struct snd_soc_component *component
 	snd_soc_dapm_mutex_unlock(dapm);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(rt5640_disable_micbias1_for_ovcd);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(rt5640_disable_micbias1_for_ovcd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void rt5640_enable_micbias1_ovcd_irq(struct snd_soc_component *component)
 {
@@ -2256,10 +2270,14 @@ static void rt5640_button_press_work(struct work_struct *work)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int rt5640_detect_headset(struct snd_soc_component *component, struct gpio_desc *hp_det_gpio)
 =======
 static int rt5640_detect_headset(struct snd_soc_component *component)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int rt5640_detect_headset(struct snd_soc_component *component, struct gpio_desc *hp_det_gpio)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i, headset_count = 0, headphone_count = 0;
 
@@ -2278,6 +2296,9 @@ static int rt5640_detect_headset(struct snd_soc_component *component)
 
 		/* Check the jack is still connected before checking ovcd */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (hp_det_gpio) {
 			if (gpiod_get_value_cansleep(hp_det_gpio))
 				return 0;
@@ -2285,10 +2306,13 @@ static int rt5640_detect_headset(struct snd_soc_component *component)
 			if (!rt5640_jack_inserted(component))
 				return 0;
 		}
+<<<<<<< HEAD
 =======
 		if (!rt5640_jack_inserted(component))
 			return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (rt5640_micbias1_ovcd(component)) {
 			/*
@@ -2314,9 +2338,13 @@ static int rt5640_detect_headset(struct snd_soc_component *component)
 	return SND_JACK_HEADPHONE;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(rt5640_detect_headset);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(rt5640_detect_headset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void rt5640_jack_work(struct work_struct *work)
 {
@@ -2342,10 +2370,14 @@ static void rt5640_jack_work(struct work_struct *work)
 		WARN_ON(rt5640->ovcd_irq_enabled);
 		rt5640_enable_micbias1_for_ovcd(component);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		status = rt5640_detect_headset(component, NULL);
 =======
 		status = rt5640_detect_headset(component);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		status = rt5640_detect_headset(component, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (status == SND_JACK_HEADSET) {
 			/* Enable ovcd IRQ for button press detect. */
 			rt5640_enable_micbias1_ovcd_irq(component);
@@ -2399,6 +2431,9 @@ static void rt5640_cancel_work(void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void rt5640_set_ovcd_params(struct snd_soc_component *component)
 {
 	struct rt5640_priv *rt5640 = snd_soc_component_get_drvdata(component);
@@ -2447,16 +2482,23 @@ static void rt5640_disable_jack_detect(struct snd_soc_component *component)
 	rt5640->jack = NULL;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void rt5640_enable_jack_detect(struct snd_soc_component *component,
 				      struct snd_soc_jack *jack)
 {
 	struct rt5640_priv *rt5640 = snd_soc_component_get_drvdata(component);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Select JD-source */
 	snd_soc_component_update_bits(component, RT5640_JD_CTRL,
@@ -2476,6 +2518,7 @@ static void rt5640_enable_jack_detect(struct snd_soc_component *component,
 	/* Enabling jd2 in general control 2 */
 	snd_soc_component_write(component, RT5640_DUMMY2, 0x4001);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rt5640_set_ovcd_params(component);
 =======
@@ -2498,6 +2541,9 @@ static void rt5640_enable_jack_detect(struct snd_soc_component *component,
 	snd_soc_component_update_bits(component, RT5640_IRQ_CTRL2,
 		RT5640_MB1_OC_STKY_MASK, RT5640_MB1_OC_STKY_EN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rt5640_set_ovcd_params(component);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * All IRQs get or-ed together, so we need the jack IRQ to report 0
@@ -2519,6 +2565,9 @@ static void rt5640_enable_jack_detect(struct snd_soc_component *component,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = request_irq(rt5640->irq, rt5640_irq,
 			  IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
 			  "rt5640", rt5640);
@@ -2527,6 +2576,7 @@ static void rt5640_enable_jack_detect(struct snd_soc_component *component,
 		rt5640->irq = -ENXIO;
 		/* Undo above settings */
 		rt5640_disable_jack_detect(component);
+<<<<<<< HEAD
 		return;
 	}
 
@@ -2547,19 +2597,18 @@ static void rt5640_disable_jack_detect(struct snd_soc_component *component)
 	 * could be NULL at the time of driver's module unloading.
 	 */
 	if (!rt5640->jack)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
-
-	disable_irq(rt5640->irq);
-	rt5640_cancel_work(rt5640);
-
-	if (rt5640->jack->status & SND_JACK_MICROPHONE) {
-		rt5640_disable_micbias1_ovcd_irq(component);
-		rt5640_disable_micbias1_for_ovcd(component);
-		snd_soc_jack_report(rt5640->jack, 0, SND_JACK_BTN_0);
 	}
 
+<<<<<<< HEAD
 	rt5640->jack = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* sync initial jack state */
+	queue_work(system_long_wq, &rt5640->jack_work);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int rt5640_set_jack(struct snd_soc_component *component,
@@ -2948,6 +2997,7 @@ static int rt5640_i2c_probe(struct i2c_client *i2c,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ret = devm_request_irq(&i2c->dev, rt5640->irq, rt5640_irq,
 			       IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING
@@ -2962,6 +3012,8 @@ static int rt5640_i2c_probe(struct i2c_client *i2c,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return devm_snd_soc_register_component(&i2c->dev,
 				      &soc_component_dev_rt5640,
 				      rt5640_dai, ARRAY_SIZE(rt5640_dai));

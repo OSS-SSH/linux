@@ -100,10 +100,14 @@ static int flow_offload_fill_route(struct flow_offload *flow,
 		break;
 	case NFPROTO_IPV6:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flow_tuple->mtu = ip6_dst_mtu_maybe_forward(dst, true);
 =======
 		flow_tuple->mtu = ip6_dst_mtu_forward(dst);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		flow_tuple->mtu = ip6_dst_mtu_maybe_forward(dst, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 
@@ -185,6 +189,7 @@ static void flow_offload_fixup_tcp(struct ip_ct_tcp *tcp)
 static void flow_offload_fixup_ct_timeout(struct nf_conn *ct)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net *net = nf_ct_net(ct);
 	int l4num = nf_ct_protonum(ct);
 	s32 timeout;
@@ -198,10 +203,16 @@ static void flow_offload_fixup_ct_timeout(struct nf_conn *ct)
 	if (!l4proto)
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net *net = nf_ct_net(ct);
+	int l4num = nf_ct_protonum(ct);
+	s32 timeout;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (l4num == IPPROTO_TCP) {
 		struct nf_tcp_net *tn = nf_tcp_pernet(net);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		timeout = tn->timeouts[TCP_CONNTRACK_ESTABLISHED];
 		timeout -= tn->offload_timeout;
@@ -217,16 +228,31 @@ static void flow_offload_fixup_ct_timeout(struct nf_conn *ct)
 
 		timeout = tn->offload_pickup;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		timeout = tn->timeouts[TCP_CONNTRACK_ESTABLISHED];
+		timeout -= tn->offload_timeout;
+	} else if (l4num == IPPROTO_UDP) {
+		struct nf_udp_net *tn = nf_udp_pernet(net);
+
+		timeout = tn->timeouts[UDP_CT_REPLIED];
+		timeout -= tn->offload_timeout;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		return;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (timeout < 0)
 		timeout = 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (timeout < 0)
+		timeout = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (nf_flow_timeout_delta(ct->timeout) > (__s32)timeout)
 		ct->timeout = nfct_time_stamp + timeout;
 }
@@ -300,13 +326,17 @@ static const struct rhashtable_params nf_flow_offload_rhash_params = {
 unsigned long flow_offload_get_timeout(struct flow_offload *flow)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	const struct nf_conntrack_l4proto *l4proto;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long timeout = NF_FLOW_TIMEOUT;
 	struct net *net = nf_ct_net(flow->ct);
 	int l4num = nf_ct_protonum(flow->ct);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	l4proto = nf_ct_l4proto_find(l4num);
@@ -314,6 +344,8 @@ unsigned long flow_offload_get_timeout(struct flow_offload *flow)
 		return timeout;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (l4num == IPPROTO_TCP) {
 		struct nf_tcp_net *tn = nf_tcp_pernet(net);
 
@@ -364,14 +396,20 @@ void flow_offload_refresh(struct nf_flowtable *flow_table,
 			  struct flow_offload *flow)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 timeout;
 
 	timeout = nf_flowtable_time_stamp + flow_offload_get_timeout(flow);
 	if (READ_ONCE(flow->timeout) != timeout)
 		WRITE_ONCE(flow->timeout, timeout);
+<<<<<<< HEAD
 =======
 	flow->timeout = nf_flowtable_time_stamp + flow_offload_get_timeout(flow);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (likely(!nf_flowtable_hw_offload(flow_table)))
 		return;

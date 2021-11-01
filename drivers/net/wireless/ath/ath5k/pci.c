@@ -192,10 +192,14 @@ ath5k_pci_probe(struct pci_dev *pdev,
 
 	/* XXX 32-bit addressing only */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
 =======
 	ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		dev_err(&pdev->dev, "32-bit DMA not available\n");
 		goto err_dis;

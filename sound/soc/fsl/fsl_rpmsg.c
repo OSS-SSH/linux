@@ -166,6 +166,7 @@ static int fsl_rpmsg_probe(struct platform_device *pdev)
 
 	/* Get the optional clocks */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rpmsg->ipg = devm_clk_get_optional(&pdev->dev, "ipg");
 	if (IS_ERR(rpmsg->ipg))
 		return PTR_ERR(rpmsg->ipg);
@@ -187,25 +188,32 @@ static int fsl_rpmsg_probe(struct platform_device *pdev)
 		return PTR_ERR(rpmsg->pll11k);
 =======
 	rpmsg->ipg = devm_clk_get(&pdev->dev, "ipg");
+=======
+	rpmsg->ipg = devm_clk_get_optional(&pdev->dev, "ipg");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(rpmsg->ipg))
-		rpmsg->ipg = NULL;
+		return PTR_ERR(rpmsg->ipg);
 
-	rpmsg->mclk = devm_clk_get(&pdev->dev, "mclk");
+	rpmsg->mclk = devm_clk_get_optional(&pdev->dev, "mclk");
 	if (IS_ERR(rpmsg->mclk))
-		rpmsg->mclk = NULL;
+		return PTR_ERR(rpmsg->mclk);
 
-	rpmsg->dma = devm_clk_get(&pdev->dev, "dma");
+	rpmsg->dma = devm_clk_get_optional(&pdev->dev, "dma");
 	if (IS_ERR(rpmsg->dma))
-		rpmsg->dma = NULL;
+		return PTR_ERR(rpmsg->dma);
 
-	rpmsg->pll8k = devm_clk_get(&pdev->dev, "pll8k");
+	rpmsg->pll8k = devm_clk_get_optional(&pdev->dev, "pll8k");
 	if (IS_ERR(rpmsg->pll8k))
-		rpmsg->pll8k = NULL;
+		return PTR_ERR(rpmsg->pll8k);
 
-	rpmsg->pll11k = devm_clk_get(&pdev->dev, "pll11k");
+	rpmsg->pll11k = devm_clk_get_optional(&pdev->dev, "pll11k");
 	if (IS_ERR(rpmsg->pll11k))
+<<<<<<< HEAD
 		rpmsg->pll11k = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return PTR_ERR(rpmsg->pll11k);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	platform_set_drvdata(pdev, rpmsg);
 	pm_runtime_enable(&pdev->dev);

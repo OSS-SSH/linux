@@ -30,9 +30,13 @@
 #include <asm/fpsimd.h>
 #include <asm/ptrace.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/syscall.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/syscall.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/signal32.h>
 #include <asm/traps.h>
 #include <asm/vdso.h>
@@ -294,13 +298,19 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
 
 	sve_alloc(current);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!current->thread.sve_state) {
 		clear_thread_flag(TIF_SVE);
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = __copy_from_user(current->thread.sve_state,
 			       (char __user const *)user->sve +
 					SVE_SIG_REGS_OFFSET,
@@ -903,10 +913,14 @@ static void do_signal(struct pt_regs *regs)
 		     (retval == -ERESTARTSYS &&
 		      !(ksig.ka.sa.sa_flags & SA_RESTART)))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			syscall_set_return_value(current, regs, -EINTR, 0);
 =======
 			regs->regs[0] = -EINTR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			syscall_set_return_value(current, regs, -EINTR, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			regs->pc = continue_addr;
 		}
 
@@ -928,6 +942,7 @@ static void do_signal(struct pt_regs *regs)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void do_notify_resume(struct pt_regs *regs, unsigned long thread_flags)
 =======
 static bool cpu_affinity_invalid(struct pt_regs *regs)
@@ -946,6 +961,9 @@ static bool cpu_affinity_invalid(struct pt_regs *regs)
 asmlinkage void do_notify_resume(struct pt_regs *regs,
 				 unsigned long thread_flags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void do_notify_resume(struct pt_regs *regs, unsigned long thread_flags)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	do {
 		if (thread_flags & _TIF_NEED_RESCHED) {
@@ -969,6 +987,7 @@ asmlinkage void do_notify_resume(struct pt_regs *regs,
 				do_signal(regs);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (thread_flags & _TIF_NOTIFY_RESUME)
 				tracehook_notify_resume(regs);
 =======
@@ -990,6 +1009,10 @@ asmlinkage void do_notify_resume(struct pt_regs *regs,
 					force_sig(SIGKILL);
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (thread_flags & _TIF_NOTIFY_RESUME)
+				tracehook_notify_resume(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (thread_flags & _TIF_FOREIGN_FPSTATE)
 				fpsimd_restore_current_state();
@@ -1025,6 +1048,9 @@ void __init minsigstksz_setup(void)
 		16; /* max alignment padding */
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Compile-time assertions for siginfo_t offsets. Check NSIG* as well, as
@@ -1064,5 +1090,8 @@ static_assert(offsetof(siginfo_t, si_fd)	== 0x18);
 static_assert(offsetof(siginfo_t, si_call_addr)	== 0x10);
 static_assert(offsetof(siginfo_t, si_syscall)	== 0x18);
 static_assert(offsetof(siginfo_t, si_arch)	== 0x1c);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

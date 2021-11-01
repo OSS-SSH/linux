@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2012-2014, 2018-2019, 2021 Intel Corporation
 =======
  * Copyright (C) 2012-2014, 2018-2019 Intel Corporation
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2012-2014, 2018-2019, 2021 Intel Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
  * Copyright (C) 2016-2017 Intel Deutschland GmbH
  */
@@ -421,10 +425,14 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
 	struct iwl_host_cmd cmd = {
 		.id = MCC_UPDATE_CMD,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.flags = CMD_WANT_SKB | CMD_SEND_IN_RFKILL,
 =======
 		.flags = CMD_WANT_SKB,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.flags = CMD_WANT_SKB | CMD_SEND_IN_RFKILL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.data = { &mcc_update_cmd },
 	};
 

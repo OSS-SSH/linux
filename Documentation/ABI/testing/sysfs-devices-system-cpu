@@ -495,6 +495,9 @@ Description:	AArch64 CPU registers
 		identifying model and revision of the CPU.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:		/sys/devices/system/cpu/aarch32_el0
 Date:		May 2021
 Contact:	Linux ARM Kernel Mailing list <linux-arm-kernel@lists.infradead.org>
@@ -504,8 +507,11 @@ Description:	Identifies the subset of CPUs in the system that can execute
 		If absent, then all or none of the CPUs can execute AArch32
 		applications and execve() will behave accordingly.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:		/sys/devices/system/cpu/cpu#/cpu_capacity
 Date:		December 2016
 Contact:	Linux kernel mailing list <linux-kernel@vger.kernel.org>
@@ -653,6 +659,9 @@ Description:	SPURR ticks for cpuX when it was idle.
 		This sysfs interface exposes the number of SPURR ticks
 		for cpuX when it was idle.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 What: 		/sys/devices/system/cpu/cpuX/mte_tcf_preferred
 Date:		July 2021
@@ -670,5 +679,8 @@ Description:	Preferred MTE tag checking mode
 		================  ==============================================
 
 		See also: Documentation/arm64/memory-tagging-extension.rst
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

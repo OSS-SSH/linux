@@ -20,9 +20,13 @@ KSTM_MODULE_GLOBALS();
 
 static char pbl_buffer[PAGE_SIZE] __initdata;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static char print_buf[PAGE_SIZE * 2] __initdata;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static char print_buf[PAGE_SIZE * 2] __initdata;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const unsigned long exp1[] __initconst = {
 	BITMAP_FROM_U64(1),
@@ -161,6 +165,9 @@ static bool __init __check_eq_clump8(const char *srcfile, unsigned int line,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool __init
 __check_eq_str(const char *srcfile, unsigned int line,
 		const char *exp_str, const char *str,
@@ -175,8 +182,11 @@ __check_eq_str(const char *srcfile, unsigned int line,
 	return eq;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define __expect_eq(suffix, ...)					\
 	({								\
 		int result = 0;						\
@@ -195,9 +205,13 @@ __check_eq_str(const char *srcfile, unsigned int line,
 #define expect_eq_u32_array(...)	__expect_eq(u32_array, ##__VA_ARGS__)
 #define expect_eq_clump8(...)		__expect_eq(clump8, ##__VA_ARGS__)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define expect_eq_str(...)		__expect_eq(str, ##__VA_ARGS__)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define expect_eq_str(...)		__expect_eq(str, ##__VA_ARGS__)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void __init test_zero_clear(void)
 {
@@ -686,6 +700,9 @@ static void __init test_bitmap_cut(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct test_bitmap_print {
 	const unsigned long *bitmap;
 	unsigned long nbits;
@@ -819,8 +836,11 @@ static void __init test_bitmap_print_buf(void)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __init selftest(void)
 {
 	test_zero_clear();
@@ -834,9 +854,13 @@ static void __init selftest(void)
 	test_for_each_set_clump8();
 	test_bitmap_cut();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	test_bitmap_print_buf();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	test_bitmap_print_buf();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 KSTM_MODULE_LOADERS(test_bitmap);

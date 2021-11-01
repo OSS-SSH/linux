@@ -20,10 +20,14 @@
 
 	clocks {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		xo_board: xo-board {
 =======
 		xo_board: xo_board {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		xo_board: xo-board {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <19200000>;
@@ -31,10 +35,14 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sleep_clk: sleep-clk {
 =======
 		sleep_clk: sleep_clk {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sleep_clk: sleep-clk {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <32764>;
@@ -377,6 +385,7 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memory@80000000 {
 		device_type = "memory";
 		/* We expect the bootloader to fill in the reg */
@@ -387,6 +396,12 @@
 		/* We expect the bootloader to fill in the reg */
 		reg = <0 0 0 0>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memory@80000000 {
+		device_type = "memory";
+		/* We expect the bootloader to fill in the reg */
+		reg = <0x0 0x80000000 0x0 0x0>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	psci {
@@ -914,10 +929,15 @@
 				#sound-dai-cells = <1>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				status = "disabled";
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				status = "disabled";
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ports {
 					#address-cells = <1>;
 					#size-cells = <0>;
@@ -952,10 +972,15 @@
 				clock-names = "iface",
 					      "ref";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 				status = "disabled";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+				status = "disabled";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 
@@ -994,10 +1019,15 @@
 			status = "disabled";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			#cooling-cells = <2>;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			#cooling-cells = <2>;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			gpu_opp_table: opp-table {
 				compatible  ="operating-points-v2";
 
@@ -1113,10 +1143,14 @@
 			camera0_state_on:
 			camera_rear_default: camera-rear-default {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				camera0_mclk: mclk0 {
 =======
 				mclk0 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				camera0_mclk: mclk0 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					pins = "gpio13";
 					function = "cam_mclk";
 					drive-strength = <16>;
@@ -1124,10 +1158,14 @@
 				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				camera0_rst: rst {
 =======
 				rst {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				camera0_rst: rst {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					pins = "gpio25";
 					function = "gpio";
 					drive-strength = <16>;
@@ -1135,10 +1173,14 @@
 				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				camera0_pwdn: pwdn {
 =======
 				pwdn {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				camera0_pwdn: pwdn {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					pins = "gpio26";
 					function = "gpio";
 					drive-strength = <16>;
@@ -1180,10 +1222,14 @@
 			camera2_state_on:
 			camera_front_default: camera-front-default {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				camera2_mclk: mclk2 {
 =======
 				mclk2 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				camera2_mclk: mclk2 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					pins = "gpio15";
 					function = "cam_mclk";
 					drive-strength = <16>;
@@ -1191,10 +1237,14 @@
 				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				camera2_rst: rst {
 =======
 				rst {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				camera2_rst: rst {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					pins = "gpio23";
 					function = "gpio";
 					drive-strength = <16>;
@@ -2617,10 +2667,14 @@
 			status = "disabled";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			usb3_dwc3: dwc3@6a00000 {
 =======
 			usb@6a00000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			usb3_dwc3: dwc3@6a00000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0x06a00000 0xcc00>;
 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
@@ -2928,10 +2982,14 @@
 			status = "disabled";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dwc3@7600000 {
 =======
 			usb@7600000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dwc3@7600000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0x07600000 0xcc00>;
 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
@@ -3264,6 +3322,9 @@
 					temperature = <90000>;
 					hysteresis = <2000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					type = "passive";
 				};
 			};
@@ -3272,9 +3333,12 @@
 				map0 {
 					trip = <&gpu1_alert0>;
 					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+<<<<<<< HEAD
 =======
 					type = "hot";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				};
 			};
 		};
@@ -3290,6 +3354,9 @@
 					temperature = <90000>;
 					hysteresis = <2000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					type = "passive";
 				};
 			};
@@ -3298,9 +3365,12 @@
 				map0 {
 					trip = <&gpu2_alert0>;
 					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+<<<<<<< HEAD
 =======
 					type = "hot";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				};
 			};
 		};

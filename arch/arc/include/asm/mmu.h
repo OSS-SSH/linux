@@ -8,6 +8,7 @@
 
 #ifndef __ASSEMBLY__
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #include <linux/threads.h>	/* NR_CPUS */
 =======
@@ -82,11 +83,16 @@
 
 #ifndef __ASSEMBLY__
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#include <linux/threads.h>	/* NR_CPUS */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 typedef struct {
 	unsigned long asid[NR_CPUS];	/* 8 bit MMU PID + Generation cycle */
 } mm_context_t;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
 
@@ -111,5 +117,10 @@ extern int pae40_exist_but_not_enab(void);
 
 #endif	/* !__ASSEMBLY__ */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+
+#include <asm/mmu-arcv2.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

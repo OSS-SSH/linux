@@ -413,15 +413,20 @@ static void mc_handle_msi(struct irq_desc *desc)
 	unsigned long status;
 	u32 bit;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	u32 virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	status = readl_relaxed(bridge_base_addr + ISTATUS_LOCAL);
 	if (status & PM_MSI_INT_MSI_MASK) {
 		status = readl_relaxed(bridge_base_addr + ISTATUS_MSI);
 		for_each_set_bit(bit, &status, msi->num_vectors) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			ret = generic_handle_domain_irq(msi->dev_domain, bit);
 			if (ret)
@@ -431,6 +436,10 @@ static void mc_handle_msi(struct irq_desc *desc)
 				generic_handle_irq(virq);
 			else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = generic_handle_domain_irq(msi->dev_domain, bit);
+			if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dev_err_ratelimited(dev, "bad MSI IRQ %d\n",
 						    bit);
 		}
@@ -580,16 +589,21 @@ static void mc_handle_intx(struct irq_desc *desc)
 	unsigned long status;
 	u32 bit;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	u32 virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	status = readl_relaxed(bridge_base_addr + ISTATUS_LOCAL);
 	if (status & PM_MSI_INT_INTX_MASK) {
 		status &= PM_MSI_INT_INTX_MASK;
 		status >>= PM_MSI_INT_INTX_SHIFT;
 		for_each_set_bit(bit, &status, PCI_NUM_INTX) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			ret = generic_handle_domain_irq(port->intx_domain, bit);
 			if (ret)
@@ -599,6 +613,10 @@ static void mc_handle_intx(struct irq_desc *desc)
 				generic_handle_irq(virq);
 			else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = generic_handle_domain_irq(port->intx_domain, bit);
+			if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dev_err_ratelimited(dev, "bad INTx IRQ %d\n",
 						    bit);
 		}
@@ -764,10 +782,14 @@ static void mc_handle_event(struct irq_desc *desc)
 
 	for_each_set_bit(bit, &events, NUM_EVENTS)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(port->event_domain, bit);
 =======
 		generic_handle_irq(irq_find_mapping(port->event_domain, bit));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(port->event_domain, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_exit(chip, desc);
 }

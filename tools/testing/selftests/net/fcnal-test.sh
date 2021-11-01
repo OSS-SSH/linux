@@ -38,11 +38,17 @@
 # server / client nomenclature relative to ns-A
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Kselftest framework requirement - SKIP code is 4.
 ksft_skip=4
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# Kselftest framework requirement - SKIP code is 4.
+ksft_skip=4
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 VERBOSE=0
 
 NSA_DEV=eth1
@@ -3886,6 +3892,9 @@ use_case_ping_lla_multi()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # Perform IPv{4,6} SNAT on ns-A, and verify TCP connection is successfully
 # established with ns-B.
 use_case_snat_on_vrf()
@@ -3912,8 +3921,11 @@ use_case_snat_on_vrf()
 	run_cmd ip6tables -t nat -D POSTROUTING -p tcp -m tcp --dport ${port} -j SNAT --to-source ${NSA_LO_IP6} -o ${VRF}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 use_cases()
 {
 	log_section "Use cases"
@@ -3922,10 +3934,15 @@ use_cases()
 	log_subsection "Ping LLA with multiple interfaces"
 	use_case_ping_lla_multi
 <<<<<<< HEAD
+<<<<<<< HEAD
 	log_subsection "SNAT on VRF"
 	use_case_snat_on_vrf
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	log_subsection "SNAT on VRF"
+	use_case_snat_on_vrf
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 ################################################################################
@@ -3987,10 +4004,14 @@ which nettest >/dev/null
 if [ $? -ne 0 ]; then
 	echo "'nettest' command not found; skipping tests"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exit $ksft_skip
 =======
 	exit 0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exit $ksft_skip
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 declare -i nfail=0

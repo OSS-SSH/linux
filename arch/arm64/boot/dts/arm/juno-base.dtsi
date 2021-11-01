@@ -28,10 +28,13 @@
 		interrupts = <GIC_SPI 36 IRQ_TYPE_LEVEL_HIGH>,
 			     <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		interrupt-names = "mhu_lpri_rx",
 				  "mhu_hpri_rx";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		#mbox-cells = <1>;
 		clocks = <&soc_refclk100mhz>;
 		clock-names = "apb_pclk";
@@ -808,6 +811,7 @@
 
 	bus@8000000 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		compatible = "simple-bus";
 		#address-cells = <2>;
@@ -820,6 +824,8 @@
 			 <5 0 0 0x10000000 0x04000000>;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		#interrupt-cells = <1>;
 		interrupt-map-mask = <0 0 15>;
 		interrupt-map = <0 0  0 &gic 0 GIC_SPI  68 IRQ_TYPE_LEVEL_HIGH>,

@@ -164,10 +164,14 @@ static void mmc_mq_recovery_handler(struct work_struct *work)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct scatterlist *mmc_alloc_sg(unsigned short sg_len, gfp_t gfp)
 =======
 static struct scatterlist *mmc_alloc_sg(int sg_len, gfp_t gfp)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct scatterlist *mmc_alloc_sg(unsigned short sg_len, gfp_t gfp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct scatterlist *sg;
 
@@ -198,15 +202,20 @@ static void mmc_queue_setup_discard(struct request_queue *q,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned short mmc_get_max_segments(struct mmc_host *host)
 =======
 static unsigned int mmc_get_max_segments(struct mmc_host *host)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static unsigned short mmc_get_max_segments(struct mmc_host *host)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return host->can_dma_map_merge ? MMC_DMA_MAP_MERGE_SEGMENTS :
 					 host->max_segs;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
 			       unsigned int hctx_idx, unsigned int numa_node)
@@ -226,13 +235,22 @@ static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
  */
 static int __mmc_init_request(struct mmc_queue *mq, struct request *req,
 			      gfp_t gfp)
+=======
+static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
+			       unsigned int hctx_idx, unsigned int numa_node)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mmc_queue_req *mq_rq = req_to_mmc_queue_req(req);
+	struct mmc_queue *mq = set->driver_data;
 	struct mmc_card *card = mq->card;
 	struct mmc_host *host = card->host;
 
+<<<<<<< HEAD
 	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), gfp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!mq_rq->sg)
 		return -ENOMEM;
 
@@ -240,11 +258,16 @@ static int __mmc_init_request(struct mmc_queue *mq, struct request *req,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void mmc_mq_exit_request(struct blk_mq_tag_set *set, struct request *req,
 				unsigned int hctx_idx)
 =======
 static void mmc_exit_request(struct request_queue *q, struct request *req)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void mmc_mq_exit_request(struct blk_mq_tag_set *set, struct request *req,
+				unsigned int hctx_idx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mmc_queue_req *mq_rq = req_to_mmc_queue_req(req);
 
@@ -252,6 +275,7 @@ static void mmc_exit_request(struct request_queue *q, struct request *req)
 	mq_rq->sg = NULL;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
@@ -269,6 +293,8 @@ static void mmc_mq_exit_request(struct blk_mq_tag_set *set, struct request *req,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static blk_status_t mmc_mq_queue_rq(struct blk_mq_hw_ctx *hctx,
 				    const struct blk_mq_queue_data *bd)
 {

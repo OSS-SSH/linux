@@ -13,10 +13,14 @@ struct intel_encoder;
 struct intel_crtc_state;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct hsw_ddi_buf_trans {
 =======
 struct ddi_buf_trans {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct hsw_ddi_buf_trans {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 trans1;	/* balance leg enable, de-emph level */
 	u32 trans2;	/* vref sel, vswing */
 	u8 i_boost;	/* SKL: I_boost; valid: 0x0, 0x1, 0x3, 0x7 */
@@ -30,10 +34,14 @@ struct bxt_ddi_buf_trans {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct icl_ddi_buf_trans {
 =======
 struct cnl_ddi_buf_trans {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct icl_ddi_buf_trans {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 dw2_swing_sel;
 	u8 dw7_n_scalar;
 	u8 dw4_cursor_coeff;
@@ -54,6 +62,9 @@ struct tgl_dkl_phy_ddi_buf_trans {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 union intel_ddi_buf_trans_entry {
 	struct hsw_ddi_buf_trans hsw;
 	struct bxt_ddi_buf_trans bxt;
@@ -69,14 +80,18 @@ struct intel_ddi_buf_trans {
 };
 
 bool is_hobl_buf_trans(const struct intel_ddi_buf_trans *table);
+<<<<<<< HEAD
 =======
 bool is_hobl_buf_trans(const struct cnl_ddi_buf_trans *table);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int intel_ddi_hdmi_num_entries(struct intel_encoder *encoder,
 			       const struct intel_crtc_state *crtc_state,
 			       int *default_entry);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 void intel_ddi_buf_trans_init(struct intel_encoder *encoder);
 =======
@@ -130,5 +145,8 @@ cnl_get_buf_trans(struct intel_encoder *encoder,
 		  const struct intel_crtc_state *crtc_state,
 		  int *n_entries);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void intel_ddi_buf_trans_init(struct intel_encoder *encoder);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

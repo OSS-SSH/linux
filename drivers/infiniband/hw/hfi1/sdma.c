@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
 /*
  * Copyright(c) 2015 - 2018 Intel Corporation.
@@ -49,6 +50,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2015 - 2018 Intel Corporation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/spinlock.h>
@@ -1867,10 +1873,14 @@ retry:
 	/*
 	 * The SDMA idle interrupt is not guaranteed to be ordered with respect
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * to updates to the dma_head location in host memory. The head
 =======
 	 * to updates to the the dma_head location in host memory. The head
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * to updates to the dma_head location in host memory. The head
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * value read might not be fully up to date. If there are pending
 	 * descriptors and the SDMA idle interrupt fired then read from the
 	 * CSR SDMA head instead to get the latest value from the hardware.
@@ -3066,9 +3076,13 @@ static int _extend_sdma_tx_descs(struct hfi1_devdata *dd, struct sdma_txreq *tx)
 {
 	int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sdma_desc *descp;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct sdma_desc *descp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Handle last descriptor */
 	if (unlikely((tx->num_desc == (MAX_DESC - 1)))) {
@@ -3090,6 +3104,7 @@ static int _extend_sdma_tx_descs(struct hfi1_devdata *dd, struct sdma_txreq *tx)
 		goto enomem;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	descp = kmalloc_array(MAX_DESC, sizeof(struct sdma_desc), GFP_ATOMIC);
 	if (!descp)
 		goto enomem;
@@ -3102,6 +3117,12 @@ static int _extend_sdma_tx_descs(struct hfi1_devdata *dd, struct sdma_txreq *tx)
 	if (!tx->descp)
 		goto enomem;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	descp = kmalloc_array(MAX_DESC, sizeof(struct sdma_desc), GFP_ATOMIC);
+	if (!descp)
+		goto enomem;
+	tx->descp = descp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* reserve last descriptor for coalescing */
 	tx->desc_limit = MAX_DESC - 1;

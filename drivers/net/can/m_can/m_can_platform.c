@@ -7,9 +7,13 @@
 
 #include <linux/platform_device.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/phy/phy.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/phy/phy.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "m_can.h"
 
@@ -33,6 +37,7 @@ static u32 iomap_read_reg(struct m_can_classdev *cdev, int reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int iomap_read_fifo(struct m_can_classdev *cdev, int offset, void *val, size_t val_count)
 {
 	struct m_can_plat_priv *priv = cdev_to_priv(cdev);
@@ -47,6 +52,15 @@ static u32 iomap_read_fifo(struct m_can_classdev *cdev, int offset)
 
 	return readl(priv->mram_base + offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int iomap_read_fifo(struct m_can_classdev *cdev, int offset, void *val, size_t val_count)
+{
+	struct m_can_plat_priv *priv = cdev_to_priv(cdev);
+
+	ioread32_rep(priv->mram_base + offset, val, val_count);
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int iomap_write_reg(struct m_can_classdev *cdev, int reg, int val)
@@ -58,6 +72,7 @@ static int iomap_write_reg(struct m_can_classdev *cdev, int reg, int val)
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int iomap_write_fifo(struct m_can_classdev *cdev, int offset,
 			    const void *val, size_t val_count)
@@ -72,6 +87,14 @@ static int iomap_write_fifo(struct m_can_classdev *cdev, int offset, int val)
 
 	writel(val, priv->mram_base + offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int iomap_write_fifo(struct m_can_classdev *cdev, int offset,
+			    const void *val, size_t val_count)
+{
+	struct m_can_plat_priv *priv = cdev_to_priv(cdev);
+
+	iowrite32_rep(priv->base + offset, val, val_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -91,9 +114,13 @@ static int m_can_plat_probe(struct platform_device *pdev)
 	void __iomem *addr;
 	void __iomem *mram_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct phy *transceiver;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct phy *transceiver;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int irq, ret = 0;
 
 	mcan_class = m_can_class_allocate_dev(&pdev->dev,
@@ -108,11 +135,15 @@ static int m_can_plat_probe(struct platform_device *pdev)
 		goto probe_fail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addr = devm_platform_ioremap_resource_byname(pdev, "m_can");
 =======
 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "m_can");
 	addr = devm_ioremap_resource(&pdev->dev, res);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addr = devm_platform_ioremap_resource_byname(pdev, "m_can");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	irq = platform_get_irq_byname(pdev, "int0");
 	if (IS_ERR(addr) || irq < 0) {
 		ret = -EINVAL;
@@ -133,6 +164,9 @@ static int m_can_plat_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	transceiver = devm_phy_optional_get(&pdev->dev, NULL);
 	if (IS_ERR(transceiver)) {
 		ret = PTR_ERR(transceiver);
@@ -143,8 +177,11 @@ static int m_can_plat_probe(struct platform_device *pdev)
 	if (transceiver)
 		mcan_class->can.bitrate_max = transceiver->attrs.max_link_rate;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->base = addr;
 	priv->mram_base = mram_addr;
 
@@ -153,9 +190,13 @@ static int m_can_plat_probe(struct platform_device *pdev)
 	mcan_class->can.clock.freq = clk_get_rate(mcan_class->cclk);
 	mcan_class->dev = &pdev->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mcan_class->transceiver = transceiver;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mcan_class->transceiver = transceiver;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mcan_class->ops = &m_can_plat_ops;
 
@@ -164,12 +205,18 @@ static int m_can_plat_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, mcan_class);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = m_can_init_ram(mcan_class);
 	if (ret)
 		goto probe_fail;
 =======
 	m_can_init_ram(mcan_class);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = m_can_init_ram(mcan_class);
+	if (ret)
+		goto probe_fail;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pm_runtime_enable(mcan_class->dev);
 	ret = m_can_class_register(mcan_class);

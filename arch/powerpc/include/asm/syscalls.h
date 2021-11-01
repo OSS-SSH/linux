@@ -7,9 +7,13 @@
 #include <linux/linkage.h>
 #include <linux/types.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/compat.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/compat.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct rtas_args;
 
@@ -23,6 +27,9 @@ asmlinkage long ppc64_personality(unsigned long personality);
 asmlinkage long sys_rtas(struct rtas_args __user *uargs);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_COMPAT
 unsigned long compat_sys_mmap2(unsigned long addr, size_t len,
 			       unsigned long prot, unsigned long flags,
@@ -52,7 +59,10 @@ long compat_sys_sync_file_range2(int fd, unsigned int flags,
 				 unsigned int nbytes1, unsigned int nbytes2);
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __KERNEL__ */
 #endif /* __ASM_POWERPC_SYSCALLS_H */

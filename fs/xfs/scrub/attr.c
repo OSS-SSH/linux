@@ -26,6 +26,7 @@
  * across a reallocation.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int
 xchk_setup_xattr_buf(
 	struct xfs_scrub	*sc,
@@ -38,6 +39,13 @@ xchk_setup_xattr_buf(
 	size_t			value_size,
 	xfs_km_flags_t		flags)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int
+xchk_setup_xattr_buf(
+	struct xfs_scrub	*sc,
+	size_t			value_size,
+	gfp_t			flags)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	size_t			sz;
 	struct xchk_xattr_buf	*ab = sc->buf;
@@ -66,10 +74,14 @@ xchk_setup_xattr_buf(
 	 * All users must be careful never to read uninitialized contents.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ab = kvmalloc(sizeof(*ab) + sz, flags);
 =======
 	ab = kmem_alloc_large(sizeof(*ab) + sz, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ab = kvmalloc(sizeof(*ab) + sz, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ab)
 		return -ENOMEM;
 
@@ -92,10 +104,14 @@ xchk_setup_xattr(
 	 */
 	if (sc->flags & XCHK_TRY_HARDER) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		error = xchk_setup_xattr_buf(sc, XATTR_SIZE_MAX, GFP_KERNEL);
 =======
 		error = xchk_setup_xattr_buf(sc, XATTR_SIZE_MAX, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = xchk_setup_xattr_buf(sc, XATTR_SIZE_MAX, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error)
 			return error;
 	}
@@ -155,11 +171,16 @@ xchk_xattr_listent(
 	 * the error message back to the main scrub function.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = xchk_setup_xattr_buf(sx->sc, valuelen,
 			GFP_KERNEL | __GFP_RETRY_MAYFAIL);
 =======
 	error = xchk_setup_xattr_buf(sx->sc, valuelen, KM_MAYFAIL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = xchk_setup_xattr_buf(sx->sc, valuelen,
+			GFP_KERNEL | __GFP_RETRY_MAYFAIL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error == -ENOMEM)
 		error = -EDEADLOCK;
 	if (error) {
@@ -345,11 +366,16 @@ xchk_xattr_block(
 
 	/* Allocate memory for block usage checking. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = xchk_setup_xattr_buf(ds->sc, 0,
 			GFP_KERNEL | __GFP_RETRY_MAYFAIL);
 =======
 	error = xchk_setup_xattr_buf(ds->sc, 0, KM_MAYFAIL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = xchk_setup_xattr_buf(ds->sc, 0,
+			GFP_KERNEL | __GFP_RETRY_MAYFAIL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error == -ENOMEM)
 		return -EDEADLOCK;
 	if (error)
@@ -361,10 +387,14 @@ xchk_xattr_block(
 
 	/* Check all the padding. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(ds->sc->mp)) {
 =======
 	if (xfs_sb_version_hascrc(&ds->sc->mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(ds->sc->mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct xfs_attr3_leafblock	*leaf = bp->b_addr;
 
 		if (leaf->hdr.pad1 != 0 || leaf->hdr.pad2 != 0 ||

@@ -758,6 +758,7 @@ void __ui_browser__line_arrow(struct ui_browser *browser, unsigned int column,
 
 void ui_browser__mark_fused(struct ui_browser *browser, unsigned int column,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    unsigned int row, int diff, bool arrow_down)
 {
 	int end_row;
@@ -765,23 +766,34 @@ void ui_browser__mark_fused(struct ui_browser *browser, unsigned int column,
 	if (diff <= 0)
 =======
 			    unsigned int row, bool arrow_down)
+=======
+			    unsigned int row, int diff, bool arrow_down)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	unsigned int end_row;
+	int end_row;
 
+<<<<<<< HEAD
 	if (row >= browser->top_idx)
 		end_row = row - browser->top_idx;
 	else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (diff <= 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	SLsmg_set_char_set(1);
 
 	if (arrow_down) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (row + diff <= browser->top_idx)
 			return;
 
 		end_row = row + diff - browser->top_idx;
+<<<<<<< HEAD
 		ui_browser__gotorc(browser, end_row, column - 1);
 		SLsmg_write_char(SLSMG_LTEE_CHAR);
 
@@ -803,14 +815,32 @@ void ui_browser__mark_fused(struct ui_browser *browser, unsigned int column,
 
 		end_row = row - browser->top_idx;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ui_browser__gotorc(browser, end_row, column - 1);
-		SLsmg_write_char(SLSMG_ULCORN_CHAR);
-		ui_browser__gotorc(browser, end_row, column);
-		SLsmg_draw_hline(2);
-		ui_browser__gotorc(browser, end_row + 1, column - 1);
 		SLsmg_write_char(SLSMG_LTEE_CHAR);
+
+		while (--end_row >= 0 && end_row > (int)(row - browser->top_idx)) {
+			ui_browser__gotorc(browser, end_row, column - 1);
+			SLsmg_draw_vline(1);
+		}
+
+		end_row = (int)(row - browser->top_idx);
+		if (end_row >= 0) {
+			ui_browser__gotorc(browser, end_row, column - 1);
+			SLsmg_write_char(SLSMG_ULCORN_CHAR);
+			ui_browser__gotorc(browser, end_row, column);
+			SLsmg_draw_hline(2);
+		}
 	} else {
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (row < browser->top_idx)
+			return;
+
+		end_row = row - browser->top_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ui_browser__gotorc(browser, end_row, column - 1);
 		SLsmg_write_char(SLSMG_LTEE_CHAR);
 		ui_browser__gotorc(browser, end_row, column);

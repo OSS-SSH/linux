@@ -1260,11 +1260,15 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 	if (irq == NO_IRQ) {
 		dev_err(&ofdev->dev, "no SATA DMA irq\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -ENODEV;
 =======
 		err = -ENODEV;
 		goto error_out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENODEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 #ifdef CONFIG_SATA_DWC_OLD_DMA
@@ -1272,14 +1276,19 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 		err = sata_dwc_dma_init_old(ofdev, hsdev);
 		if (err)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return err;
 =======
 			goto error_out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 #endif
 
 	hsdev->phy = devm_phy_optional_get(hsdev->dev, "sata-phy");
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (IS_ERR(hsdev->phy))
 		return PTR_ERR(hsdev->phy);
@@ -1290,6 +1299,10 @@ static int sata_dwc_probe(struct platform_device *ofdev)
 		goto error_out;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(hsdev->phy))
+		return PTR_ERR(hsdev->phy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = phy_init(hsdev->phy);
 	if (err)

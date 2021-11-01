@@ -280,12 +280,17 @@ static int tifm_ms_issue_cmd(struct tifm_ms *host)
 		if (1 != tifm_map_sg(sock, &host->req->sg, 1,
 				     host->req->data_dir == READ
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     ? DMA_FROM_DEVICE
 				     : DMA_TO_DEVICE)) {
 =======
 				     ? PCI_DMA_FROMDEVICE
 				     : PCI_DMA_TODEVICE)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     ? DMA_FROM_DEVICE
+				     : DMA_TO_DEVICE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			host->req->error = -ENOMEM;
 			return host->req->error;
 		}
@@ -356,12 +361,17 @@ static void tifm_ms_complete_cmd(struct tifm_ms *host)
 		tifm_unmap_sg(sock, &host->req->sg, 1,
 			      host->req->data_dir == READ
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      ? DMA_FROM_DEVICE
 			      : DMA_TO_DEVICE);
 =======
 			      ? PCI_DMA_FROMDEVICE
 			      : PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      ? DMA_FROM_DEVICE
+			      : DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	writel((~TIFM_CTRL_LED) & readl(sock->addr + SOCK_CONTROL),
@@ -618,12 +628,17 @@ static void tifm_ms_remove(struct tifm_dev *sock)
 			tifm_unmap_sg(sock, &host->req->sg, 1,
 				      host->req->data_dir == READ
 <<<<<<< HEAD
+<<<<<<< HEAD
 				      ? DMA_TO_DEVICE
 				      : DMA_FROM_DEVICE);
 =======
 				      ? PCI_DMA_TODEVICE
 				      : PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      ? DMA_TO_DEVICE
+				      : DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		host->req->error = -ETIME;
 
 		do {

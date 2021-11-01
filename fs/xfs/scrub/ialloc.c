@@ -419,10 +419,14 @@ STATIC int
 xchk_iallocbt_rec(
 	struct xchk_btree		*bs,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_rec	*rec)
 =======
 	union xfs_btree_rec		*rec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_rec	*rec)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_mount		*mp = bs->cur->bc_mp;
 	struct xchk_iallocbt		*iabt = bs->private;
@@ -522,10 +526,14 @@ xchk_iallocbt_xref_rmap_btreeblks(
 
 	if (!sc->sa.ino_cur || !sc->sa.rmap_cur ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    (xfs_has_finobt(sc->mp) && !sc->sa.fino_cur) ||
 =======
 	    (xfs_sb_version_hasfinobt(&sc->mp->m_sb) && !sc->sa.fino_cur) ||
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    (xfs_has_finobt(sc->mp) && !sc->sa.fino_cur) ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    xchk_skip_xref(sc->sm))
 		return;
 

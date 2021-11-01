@@ -10,9 +10,13 @@ Required properties:
       "fsl,imx6q-sdma"
       "fsl,imx7d-sdma"
 <<<<<<< HEAD
+<<<<<<< HEAD
       "fsl,imx6ul-sdma"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      "fsl,imx6ul-sdma"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       "fsl,imx8mq-sdma"
       "fsl,imx8mm-sdma"
       "fsl,imx8mn-sdma"

@@ -71,10 +71,14 @@ xfs_dquot_verify(
 
 	if ((ddq->d_type & XFS_DQTYPE_BIGTIME) &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    !xfs_has_bigtime(mp))
 =======
 	    !xfs_sb_version_hasbigtime(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    !xfs_has_bigtime(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return __this_address;
 
 	if ((ddq->d_type & XFS_DQTYPE_BIGTIME) && !ddq->d_id)
@@ -111,10 +115,14 @@ xfs_dqblk_verify(
 	xfs_dqid_t		id)	/* used only during quotacheck */
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp) &&
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !uuid_equal(&dqb->dd_uuid, &mp->m_sb.sb_meta_uuid))
 		return __this_address;
 
@@ -143,10 +151,14 @@ xfs_dqblk_repair(
 	dqb->dd_diskdq.d_id = cpu_to_be32(id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uuid_copy(&dqb->dd_uuid, &mp->m_sb.sb_meta_uuid);
 		xfs_update_cksum((char *)dqb, sizeof(struct xfs_dqblk),
 				 XFS_DQUOT_CRC_OFF);
@@ -164,10 +176,14 @@ xfs_dquot_buf_verify_crc(
 	int			i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 =======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 
 	/*

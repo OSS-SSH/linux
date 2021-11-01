@@ -72,6 +72,7 @@ static int rnbd_clt_parse_map_options(const char *buf, size_t max_path_cnt,
 	int token;
 	int ret = -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int nr_poll_queues = 0;
 	int dest_port = 0;
 	int p_cnt = 0;
@@ -80,6 +81,12 @@ static int rnbd_clt_parse_map_options(const char *buf, size_t max_path_cnt,
 	int i, dest_port, nr_poll_queues;
 	int p_cnt = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int nr_poll_queues = 0;
+	int dest_port = 0;
+	int p_cnt = 0;
+	int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	options = kstrdup(buf, GFP_KERNEL);
 	if (!options)
@@ -235,6 +242,7 @@ static ssize_t state_show(struct kobject *kobj,
 	switch (dev->dev_state) {
 	case DEV_STATE_INIT:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return sysfs_emit(page, "init\n");
 	case DEV_STATE_MAPPED:
 		/* TODO fix cli tool before changing to proper state */
@@ -248,17 +256,24 @@ static ssize_t state_show(struct kobject *kobj,
 		return sysfs_emit(page, "unknown\n");
 =======
 		return snprintf(page, PAGE_SIZE, "init\n");
+=======
+		return sysfs_emit(page, "init\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case DEV_STATE_MAPPED:
 		/* TODO fix cli tool before changing to proper state */
-		return snprintf(page, PAGE_SIZE, "open\n");
+		return sysfs_emit(page, "open\n");
 	case DEV_STATE_MAPPED_DISCONNECTED:
 		/* TODO fix cli tool before changing to proper state */
-		return snprintf(page, PAGE_SIZE, "closed\n");
+		return sysfs_emit(page, "closed\n");
 	case DEV_STATE_UNMAPPED:
-		return snprintf(page, PAGE_SIZE, "unmapped\n");
+		return sysfs_emit(page, "unmapped\n");
 	default:
+<<<<<<< HEAD
 		return snprintf(page, PAGE_SIZE, "unknown\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return sysfs_emit(page, "unknown\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -285,10 +300,14 @@ static ssize_t mapping_path_show(struct kobject *kobj,
 	dev = container_of(kobj, struct rnbd_clt_dev, kobj);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(page, "%s\n", dev->pathname);
 =======
 	return scnprintf(page, PAGE_SIZE, "%s\n", dev->pathname);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(page, "%s\n", dev->pathname);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct kobj_attribute rnbd_clt_mapping_path_attr =
@@ -302,11 +321,15 @@ static ssize_t access_mode_show(struct kobject *kobj,
 	dev = container_of(kobj, struct rnbd_clt_dev, kobj);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(page, "%s\n", rnbd_access_mode_str(dev->access_mode));
 =======
 	return snprintf(page, PAGE_SIZE, "%s\n",
 			rnbd_access_mode_str(dev->access_mode));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(page, "%s\n", rnbd_access_mode_str(dev->access_mode));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct kobj_attribute rnbd_clt_access_mode =
@@ -316,12 +339,17 @@ static ssize_t rnbd_clt_unmap_dev_show(struct kobject *kobj,
 					struct kobj_attribute *attr, char *page)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(page, "Usage: echo <normal|force> > %s\n",
 			  attr->attr.name);
 =======
 	return scnprintf(page, PAGE_SIZE, "Usage: echo <normal|force> > %s\n",
 			 attr->attr.name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(page, "Usage: echo <normal|force> > %s\n",
+			  attr->attr.name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t rnbd_clt_unmap_dev_store(struct kobject *kobj,
@@ -392,6 +420,7 @@ static ssize_t rnbd_clt_resize_dev_show(struct kobject *kobj,
 					 char *page)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(page, "Usage: echo <new size in sectors> > %s\n",
 			  attr->attr.name);
 =======
@@ -399,6 +428,10 @@ static ssize_t rnbd_clt_resize_dev_show(struct kobject *kobj,
 			 "Usage: echo <new size in sectors> > %s\n",
 			 attr->attr.name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(page, "Usage: echo <new size in sectors> > %s\n",
+			  attr->attr.name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t rnbd_clt_resize_dev_store(struct kobject *kobj,
@@ -430,11 +463,15 @@ static ssize_t rnbd_clt_remap_dev_show(struct kobject *kobj,
 					struct kobj_attribute *attr, char *page)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(page, "Usage: echo <1> > %s\n", attr->attr.name);
 =======
 	return scnprintf(page, PAGE_SIZE, "Usage: echo <1> > %s\n",
 			 attr->attr.name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(page, "Usage: echo <1> > %s\n", attr->attr.name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t rnbd_clt_remap_dev_store(struct kobject *kobj,
@@ -480,10 +517,14 @@ static ssize_t session_show(struct kobject *kobj, struct kobj_attribute *attr,
 	dev = container_of(kobj, struct rnbd_clt_dev, kobj);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(page, "%s\n", dev->sess->sessname);
 =======
 	return scnprintf(page, PAGE_SIZE, "%s\n", dev->sess->sessname);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(page, "%s\n", dev->sess->sessname);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct kobj_attribute rnbd_clt_session_attr =
@@ -547,12 +588,17 @@ static ssize_t rnbd_clt_map_device_show(struct kobject *kobj,
 					 char *page)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sysfs_emit(page,
 			  "Usage: echo \"[dest_port=server port number] sessname=<name of the rtrs session> path=<[srcaddr@]dstaddr> [path=<[srcaddr@]dstaddr>] device_path=<full path on remote side> [access_mode=<ro|rw|migration>] [nr_poll_queues=<number of queues>]\" > %s\n\naddr ::= [ ip:<ipv4> | ip:<ipv6> | gid:<gid> ]\n",
 =======
 	return scnprintf(page, PAGE_SIZE,
 			 "Usage: echo \"[dest_port=server port number] sessname=<name of the rtrs session> path=<[srcaddr@]dstaddr> [path=<[srcaddr@]dstaddr>] device_path=<full path on remote side> [access_mode=<ro|rw|migration>] [nr_poll_queues=<number of queues>]\" > %s\n\naddr ::= [ ip:<ipv4> | ip:<ipv6> | gid:<gid> ]\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(page,
+			  "Usage: echo \"[dest_port=server port number] sessname=<name of the rtrs session> path=<[srcaddr@]dstaddr> [path=<[srcaddr@]dstaddr>] device_path=<full path on remote side> [access_mode=<ro|rw|migration>] [nr_poll_queues=<number of queues>]\" > %s\n\naddr ::= [ ip:<ipv4> | ip:<ipv6> | gid:<gid> ]\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 attr->attr.name);
 }
 

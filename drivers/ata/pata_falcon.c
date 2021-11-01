@@ -49,12 +49,17 @@ static unsigned int pata_falcon_data_xfer(struct ata_queued_cmd *qc,
 	bool swap = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dev->class == ATA_DEV_ATA && cmd &&
 	    !blk_rq_is_passthrough(scsi_cmd_to_rq(cmd)))
 =======
 	if (dev->class == ATA_DEV_ATA && cmd && cmd->request &&
 	    !blk_rq_is_passthrough(cmd->request))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dev->class == ATA_DEV_ATA && cmd &&
+	    !blk_rq_is_passthrough(scsi_cmd_to_rq(cmd)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swap = 0;
 
 	/* Transfer multiple of 2 bytes */

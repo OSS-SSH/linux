@@ -13,6 +13,7 @@
 #include "pmbus.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 enum chips { bpa_rs600, bpd_rs600 };
 =======
 #define BPARS600_MFR_VIN_MIN	0xa0
@@ -24,6 +25,9 @@ enum chips { bpa_rs600, bpd_rs600 };
 #define BPARS600_MFR_IOUT_MAX	0xa6
 #define BPARS600_MFR_POUT_MAX	0xa7
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+enum chips { bpa_rs600, bpd_rs600 };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int bpa_rs600_read_byte_data(struct i2c_client *client, int page, int reg)
 {
@@ -77,6 +81,9 @@ static int bpa_rs600_read_vin(struct i2c_client *client)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Firmware V5.70 incorrectly reports 1640W for MFR_PIN_MAX.
  * Deal with this by returning a sensible value.
@@ -97,8 +104,11 @@ static int bpa_rs600_read_pin_max(struct i2c_client *client)
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bpa_rs600_read_word_data(struct i2c_client *client, int page, int phase, int reg)
 {
 	int ret;
@@ -108,6 +118,7 @@ static int bpa_rs600_read_word_data(struct i2c_client *client, int page, int pha
 
 	switch (reg) {
 	case PMBUS_VIN_UV_WARN_LIMIT:
+<<<<<<< HEAD
 <<<<<<< HEAD
 	case PMBUS_VIN_OV_WARN_LIMIT:
 	case PMBUS_VOUT_UV_WARN_LIMIT:
@@ -119,28 +130,21 @@ static int bpa_rs600_read_word_data(struct i2c_client *client, int page, int pha
 =======
 		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_VIN_MIN);
 		break;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case PMBUS_VIN_OV_WARN_LIMIT:
-		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_VIN_MAX);
-		break;
 	case PMBUS_VOUT_UV_WARN_LIMIT:
-		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_VOUT_MIN);
-		break;
 	case PMBUS_VOUT_OV_WARN_LIMIT:
-		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_VOUT_MAX);
-		break;
 	case PMBUS_IIN_OC_WARN_LIMIT:
-		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_IIN_MAX);
-		break;
 	case PMBUS_IOUT_OC_WARN_LIMIT:
-		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_IOUT_MAX);
-		break;
 	case PMBUS_PIN_OP_WARN_LIMIT:
-		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_PIN_MAX);
-		break;
 	case PMBUS_POUT_OP_WARN_LIMIT:
+<<<<<<< HEAD
 		ret = pmbus_read_word_data(client, 0, 0xff, BPARS600_MFR_POUT_MAX);
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case PMBUS_VIN_UV_FAULT_LIMIT:
 	case PMBUS_VIN_OV_FAULT_LIMIT:
 	case PMBUS_VOUT_UV_FAULT_LIMIT:
@@ -152,11 +156,17 @@ static int bpa_rs600_read_word_data(struct i2c_client *client, int page, int pha
 		ret = bpa_rs600_read_vin(client);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PMBUS_MFR_PIN_MAX:
 		ret = bpa_rs600_read_pin_max(client);
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PMBUS_MFR_PIN_MAX:
+		ret = bpa_rs600_read_pin_max(client);
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		if (reg >= PMBUS_VIRT_BASE)
 			ret = -ENXIO;
@@ -190,6 +200,9 @@ static struct pmbus_driver_info bpa_rs600_info = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct i2c_device_id bpa_rs600_id[] = {
 	{ "bpa-rs600", bpa_rs600 },
 	{ "bpd-rs600", bpd_rs600 },
@@ -197,17 +210,24 @@ static const struct i2c_device_id bpa_rs600_id[] = {
 };
 MODULE_DEVICE_TABLE(i2c, bpa_rs600_id);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bpa_rs600_probe(struct i2c_client *client)
 {
 	struct device *dev = &client->dev;
 	u8 buf[I2C_SMBUS_BLOCK_MAX + 1];
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct i2c_device_id *mid;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct i2c_device_id *mid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!i2c_check_functionality(client->adapter,
 				     I2C_FUNC_SMBUS_READ_BYTE_DATA
@@ -222,14 +242,20 @@ static int bpa_rs600_probe(struct i2c_client *client)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (mid = bpa_rs600_id; mid->name[0]; mid++) {
 		if (!strncasecmp(buf, mid->name, strlen(mid->name)))
 			break;
 	}
 	if (!mid->name[0]) {
+<<<<<<< HEAD
 =======
 	if (strncmp(buf, "BPA-RS600", 8)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		buf[ret] = '\0';
 		dev_err(dev, "Unsupported Manufacturer Model '%s'\n", buf);
 		return -ENODEV;
@@ -239,6 +265,7 @@ static int bpa_rs600_probe(struct i2c_client *client)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct i2c_device_id bpa_rs600_id[] = {
 	{ "bpars600", 0 },
@@ -247,6 +274,8 @@ static const struct i2c_device_id bpa_rs600_id[] = {
 MODULE_DEVICE_TABLE(i2c, bpa_rs600_id);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id __maybe_unused bpa_rs600_of_match[] = {
 	{ .compatible = "blutek,bpa-rs600" },
 	{},

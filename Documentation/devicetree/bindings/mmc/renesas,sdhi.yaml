@@ -10,11 +10,14 @@ maintainers:
   - Wolfram Sang <wsa+renesas@sang-engineering.com>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 allOf:
   - $ref: "mmc-controller.yaml"
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 properties:
   compatible:
     oneOf:
@@ -51,6 +54,9 @@ properties:
       - items:
           - enum:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - renesas,sdhi-r8a774a1  # RZ/G2M
               - renesas,sdhi-r8a774b1  # RZ/G2N
               - renesas,sdhi-r8a774c0  # RZ/G2E
@@ -65,6 +71,7 @@ properties:
               - renesas,sdhi-r8a77995  # R-Car D3
               - renesas,sdhi-r8a779a0  # R-Car V3U
               - renesas,sdhi-r9a07g044 # RZ/G2{L,LC}
+<<<<<<< HEAD
 =======
               - renesas,sdhi-r8a774a1 # RZ/G2M
               - renesas,sdhi-r8a774b1 # RZ/G2N
@@ -80,6 +87,8 @@ properties:
               - renesas,sdhi-r8a77995 # R-Car D3
               - renesas,sdhi-r8a779a0 # R-Car V3U
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: renesas,rcar-gen3-sdhi # R-Car Gen3 or RZ/G2
 
   reg:
@@ -89,6 +98,7 @@ properties:
     minItems: 1
     maxItems: 3
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   clocks: true
 
@@ -104,6 +114,11 @@ properties:
       - const: core
       - const: cd
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  clocks: true
+
+  clock-names: true
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   dmas:
     minItems: 4
@@ -130,6 +145,7 @@ properties:
   pinctrl-1:
     maxItems: 1
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   pinctrl-names: true
 
@@ -217,6 +233,84 @@ allOf:
   max-frequency: true
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  pinctrl-names: true
+
+  max-frequency: true
+
+allOf:
+  - $ref: "mmc-controller.yaml"
+
+  - if:
+      properties:
+        compatible:
+          contains:
+            const: renesas,sdhi-r9a07g044
+    then:
+      properties:
+        clocks:
+          items:
+            - description: IMCLK, SDHI channel main clock1.
+            - description: IMCLK2, SDHI channel main clock2. When this clock is
+                           turned off, external SD card detection cannot be
+                           detected.
+            - description: CLK_HS, SDHI channel High speed clock which operates
+                           4 times that of SDHI channel main clock1.
+            - description: ACLK, SDHI channel bus clock.
+        clock-names:
+          items:
+            - const: imclk
+            - const: imclk2
+            - const: clk_hs
+            - const: aclk
+      required:
+        - clock-names
+        - resets
+    else:
+      properties:
+        clocks:
+          minItems: 1
+          maxItems: 2
+        clock-names:
+          minItems: 1
+          items:
+            - const: core
+            - const: cd
+
+  - if:
+      properties:
+        compatible:
+          contains:
+            const: renesas,sdhi-mmc-r8a77470
+    then:
+      properties:
+        pinctrl-names:
+          items:
+            - const: state_uhs
+    else:
+      properties:
+        pinctrl-names:
+          minItems: 1
+          items:
+            - const: default
+            - const: state_uhs
+
+  - if:
+      properties:
+        compatible:
+          contains:
+            enum:
+              - renesas,sdhi-r7s72100
+              - renesas,sdhi-r7s9210
+    then:
+      required:
+        - clock-names
+      description:
+        The internal card detection logic that exists in these controllers is
+        sectioned off to be run by a separate second clock source to allow
+        the main core clock to be turned off to save power.
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 required:
   - compatible
   - reg
@@ -224,6 +318,7 @@ required:
   - clocks
   - power-domains
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 if:
@@ -242,6 +337,8 @@ then:
     the main core clock to be turned off to save power.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unevaluatedProperties: false
 
 examples:

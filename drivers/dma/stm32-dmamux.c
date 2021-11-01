@@ -138,10 +138,14 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
 	/* Set dma request */
 	spin_lock_irqsave(&dmamux->lock, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = pm_runtime_resume_and_get(&pdev->dev);
 =======
 	ret = pm_runtime_get_sync(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = pm_runtime_resume_and_get(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		spin_unlock_irqrestore(&dmamux->lock, flags);
 		goto error;
@@ -341,10 +345,14 @@ static int stm32_dmamux_suspend(struct device *dev)
 	int i, ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = pm_runtime_resume_and_get(dev);
 =======
 	ret = pm_runtime_get_sync(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = pm_runtime_resume_and_get(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -370,10 +378,14 @@ static int stm32_dmamux_resume(struct device *dev)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = pm_runtime_resume_and_get(dev);
 =======
 	ret = pm_runtime_get_sync(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = pm_runtime_resume_and_get(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 

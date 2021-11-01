@@ -10,6 +10,9 @@
 #include <linux/slab.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hl_encaps_handle_do_release(struct kref *ref)
 {
 	struct hl_cs_encaps_sig_handle *handle =
@@ -69,13 +72,17 @@ static void hl_encaps_sig_mgr_fini(struct hl_device *hdev,
 	idr_destroy(&mgr->handles);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void hl_ctx_fini(struct hl_ctx *ctx)
 {
 	struct hl_device *hdev = ctx->hdev;
 	int i;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/* Release all allocated pending cb's, those cb's were never
@@ -84,6 +91,8 @@ static void hl_ctx_fini(struct hl_ctx *ctx)
 	hl_pending_cb_list_flush(ctx);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Release all allocated HW block mapped list entries and destroy
 	 * the mutex.
 	 */
@@ -119,9 +128,13 @@ static void hl_ctx_fini(struct hl_ctx *ctx)
 		hl_vm_ctx_fini(ctx);
 		hl_asid_free(hdev, ctx->asid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hl_encaps_sig_mgr_fini(hdev, &ctx->sig_mgr);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hl_encaps_sig_mgr_fini(hdev, &ctx->sig_mgr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Scrub both SRAM and DRAM */
 		hdev->asic_funcs->scrub_device_mem(hdev, 0, 0);
@@ -200,11 +213,14 @@ void hl_ctx_free(struct hl_device *hdev, struct hl_ctx *ctx)
 	if (kref_put(&ctx->refcount, hl_ctx_do_release) == 1)
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	dev_warn(hdev->dev,
 		"user process released device but its command submissions are still executing\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int hl_ctx_init(struct hl_device *hdev, struct hl_ctx *ctx, bool is_kernel_ctx)
@@ -217,6 +233,7 @@ int hl_ctx_init(struct hl_device *hdev, struct hl_ctx *ctx, bool is_kernel_ctx)
 
 	ctx->cs_sequence = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_init(&ctx->cs_lock);
 	atomic_set(&ctx->thread_ctx_switch_token, 1);
 =======
@@ -226,6 +243,10 @@ int hl_ctx_init(struct hl_device *hdev, struct hl_ctx *ctx, bool is_kernel_ctx)
 	atomic_set(&ctx->thread_ctx_switch_token, 1);
 	atomic_set(&ctx->thread_pending_cb_token, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_init(&ctx->cs_lock);
+	atomic_set(&ctx->thread_ctx_switch_token, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ctx->thread_ctx_switch_wait_token = 0;
 	ctx->cs_pending = kcalloc(hdev->asic_prop.max_pending_cs,
 				sizeof(struct hl_fence *),
@@ -278,10 +299,15 @@ int hl_ctx_init(struct hl_device *hdev, struct hl_ctx *ctx, bool is_kernel_ctx)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hl_encaps_sig_mgr_init(&ctx->sig_mgr);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hl_encaps_sig_mgr_init(&ctx->sig_mgr);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_dbg(hdev->dev, "create user context %d\n", ctx->asid);
 	}
 
@@ -312,6 +338,9 @@ int hl_ctx_put(struct hl_ctx *ctx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * hl_ctx_get_fence_locked - get CS fence under CS lock
  *
@@ -324,13 +353,17 @@ int hl_ctx_put(struct hl_ctx *ctx)
  * NOTE: this function shall be called with cs_lock locked
  */
 static struct hl_fence *hl_ctx_get_fence_locked(struct hl_ctx *ctx, u64 seq)
+<<<<<<< HEAD
 =======
 struct hl_fence *hl_ctx_get_fence(struct hl_ctx *ctx, u64 seq)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct asic_fixed_properties *asic_prop = &ctx->hdev->asic_prop;
 	struct hl_fence *fence;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (seq >= ctx->cs_sequence)
 		return ERR_PTR(-EINVAL);
@@ -355,17 +388,30 @@ struct hl_fence *hl_ctx_get_fence(struct hl_ctx *ctx, u64 seq)
 
 	if (seq >= ctx->cs_sequence) {
 		spin_unlock(&ctx->cs_lock);
+=======
+	if (seq >= ctx->cs_sequence)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ERR_PTR(-EINVAL);
-	}
 
-	if (seq + asic_prop->max_pending_cs < ctx->cs_sequence) {
-		spin_unlock(&ctx->cs_lock);
+	if (seq + asic_prop->max_pending_cs < ctx->cs_sequence)
 		return NULL;
-	}
 
 	fence = ctx->cs_pending[seq & (asic_prop->max_pending_cs - 1)];
 	hl_fence_get(fence);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return fence;
+}
+
+struct hl_fence *hl_ctx_get_fence(struct hl_ctx *ctx, u64 seq)
+{
+	struct hl_fence *fence;
+
+	spin_lock(&ctx->cs_lock);
+
+	fence = hl_ctx_get_fence_locked(ctx, seq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_unlock(&ctx->cs_lock);
 
@@ -374,6 +420,9 @@ struct hl_fence *hl_ctx_get_fence(struct hl_ctx *ctx, u64 seq)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * hl_ctx_get_fences - get multiple CS fences under the same CS lock
  *
  * @ctx: pointer to the context structure.
@@ -414,8 +463,11 @@ int hl_ctx_get_fences(struct hl_ctx *ctx, u64 *seq_arr,
 }
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * hl_ctx_mgr_init - initialize the context manager
  *
  * @mgr: pointer to context manager structure

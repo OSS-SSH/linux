@@ -733,9 +733,13 @@ static int ipvlan_device_event(struct notifier_block *unused,
 
 	switch (event) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case NETDEV_UP:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case NETDEV_UP:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case NETDEV_CHANGE:
 		list_for_each_entry(ipvlan, &port->ipvlans, pnode)
 			netif_stacked_transfer_operstate(ipvlan->phy_dev,

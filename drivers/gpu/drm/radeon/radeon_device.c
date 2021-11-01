@@ -407,10 +407,14 @@ void radeon_doorbell_free(struct radeon_device *rdev, u32 doorbell)
 /*
  * radeon_wb_*()
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Writeback is the method by which the GPU updates special pages
 =======
  * Writeback is the the method by which the the GPU updates special pages
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Writeback is the method by which the GPU updates special pages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * in memory with the status of certain GPU events (fences, ring pointers,
  * etc.).
  */
@@ -790,10 +794,14 @@ int radeon_dummy_page_init(struct radeon_device *rdev)
 		return -ENOMEM;
 	rdev->dummy_page.addr = dma_map_page(&rdev->pdev->dev, rdev->dummy_page.page,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					0, PAGE_SIZE, DMA_BIDIRECTIONAL);
 =======
 					0, PAGE_SIZE, PCI_DMA_BIDIRECTIONAL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					0, PAGE_SIZE, DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dma_mapping_error(&rdev->pdev->dev, rdev->dummy_page.addr)) {
 		dev_err(&rdev->pdev->dev, "Failed to DMA MAP the dummy page\n");
 		__free_page(rdev->dummy_page.page);
@@ -817,12 +825,17 @@ void radeon_dummy_page_fini(struct radeon_device *rdev)
 	if (rdev->dummy_page.page == NULL)
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_unmap_page(&rdev->pdev->dev, rdev->dummy_page.addr, PAGE_SIZE,
 		       DMA_BIDIRECTIONAL);
 =======
 	pci_unmap_page(rdev->pdev, rdev->dummy_page.addr,
 			PAGE_SIZE, PCI_DMA_BIDIRECTIONAL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_page(&rdev->pdev->dev, rdev->dummy_page.addr, PAGE_SIZE,
+		       DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__free_page(rdev->dummy_page.page);
 	rdev->dummy_page.page = NULL;
 }
@@ -1081,15 +1094,20 @@ void radeon_combios_fini(struct radeon_device *rdev)
  * radeon_vga_set_decode - enable/disable vga decode
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @pdev: PCI device
 =======
  * @cookie: radeon_device pointer
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @pdev: PCI device
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @state: enable/disable vga decode
  *
  * Enable/disable vga decode (all asics).
  * Returns VGA resource flags.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static unsigned int radeon_vga_set_decode(struct pci_dev *pdev, bool state)
 {
@@ -1100,6 +1118,12 @@ static unsigned int radeon_vga_set_decode(void *cookie, bool state)
 {
 	struct radeon_device *rdev = cookie;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static unsigned int radeon_vga_set_decode(struct pci_dev *pdev, bool state)
+{
+	struct drm_device *dev = pci_get_drvdata(pdev);
+	struct radeon_device *rdev = dev->dev_private;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	radeon_vga_set_state(rdev, state);
 	if (state)
 		return VGA_RSRC_LEGACY_IO | VGA_RSRC_LEGACY_MEM |
@@ -1459,10 +1483,14 @@ int radeon_device_init(struct radeon_device *rdev,
 	/* this will fail for cards that aren't VGA class devices, just
 	 * ignore it */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vga_client_register(rdev->pdev, radeon_vga_set_decode);
 =======
 	vga_client_register(rdev->pdev, rdev, NULL, radeon_vga_set_decode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vga_client_register(rdev->pdev, radeon_vga_set_decode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (rdev->flags & RADEON_IS_PX)
 		runtime = true;
@@ -1559,10 +1587,14 @@ void radeon_device_fini(struct radeon_device *rdev)
 	if (rdev->flags & RADEON_IS_PX)
 		vga_switcheroo_fini_domain_pm_ops(rdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vga_client_unregister(rdev->pdev);
 =======
 	vga_client_register(rdev->pdev, NULL, NULL, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vga_client_unregister(rdev->pdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rdev->rio_mem)
 		pci_iounmap(rdev->pdev, rdev->rio_mem);
 	rdev->rio_mem = NULL;

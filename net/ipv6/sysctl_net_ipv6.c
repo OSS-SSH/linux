@@ -22,9 +22,13 @@
 #include <net/calipso.h>
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/ioam6.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/ioam6.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int two = 2;
 static int three = 3;
@@ -33,10 +37,15 @@ static int auto_flowlabels_max = IP6_AUTO_FLOW_LABEL_MAX;
 static u32 rt6_multipath_hash_fields_all_mask =
 	FIB_MULTIPATH_HASH_FIELD_ALL_MASK;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 ioam6_id_max = IOAM6_DEFAULT_ID;
 static u64 ioam6_id_wide_max = IOAM6_DEFAULT_ID_WIDE;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u32 ioam6_id_max = IOAM6_DEFAULT_ID;
+static u64 ioam6_id_wide_max = IOAM6_DEFAULT_ID_WIDE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int proc_rt6_multipath_hash_policy(struct ctl_table *table, int write,
 					  void *buffer, size_t *lenp, loff_t *ppos)
@@ -206,6 +215,9 @@ static struct ctl_table ipv6_table_template[] = {
 		.extra2         = &two,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.procname	= "ioam6_id",
 		.data		= &init_net.ipv6.sysctl.ioam6_id,
@@ -222,8 +234,11 @@ static struct ctl_table ipv6_table_template[] = {
 		.proc_handler	= proc_doulongvec_minmax,
 		.extra2		= &ioam6_id_wide_max,
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ }
 };
 

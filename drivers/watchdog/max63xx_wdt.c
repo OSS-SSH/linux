@@ -27,9 +27,13 @@
 #include <linux/io.h>
 #include <linux/slab.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/property.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/property.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define DEFAULT_HEARTBEAT 60
 #define MAX_HEARTBEAT     60
@@ -104,12 +108,17 @@ static const struct max63xx_timeout max6373_table[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct max63xx_timeout *
 max63xx_select_timeout(const struct max63xx_timeout *table, int value)
 =======
 static struct max63xx_timeout *
 max63xx_select_timeout(struct max63xx_timeout *table, int value)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct max63xx_timeout *
+max63xx_select_timeout(const struct max63xx_timeout *table, int value)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	while (table->twd) {
 		if (value <= table->twd) {
@@ -212,10 +221,14 @@ static int max63xx_wdt_probe(struct platform_device *pdev)
 	struct device *dev = &pdev->dev;
 	struct max63xx_wdt *wdt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct max63xx_timeout *table;
 =======
 	struct max63xx_timeout *table;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct max63xx_timeout *table;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	wdt = devm_kzalloc(dev, sizeof(*wdt), GFP_KERNEL);
@@ -223,13 +236,19 @@ static int max63xx_wdt_probe(struct platform_device *pdev)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Attempt to use fwnode first */
 	table = device_get_match_data(dev);
 	if (!table)
 		table = (struct max63xx_timeout *)pdev->id_entry->driver_data;
+<<<<<<< HEAD
 =======
 	table = (struct max63xx_timeout *)pdev->id_entry->driver_data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (heartbeat < 1 || heartbeat > MAX_HEARTBEAT)
 		heartbeat = DEFAULT_HEARTBEAT;
@@ -276,6 +295,9 @@ static const struct platform_device_id max63xx_id_table[] = {
 MODULE_DEVICE_TABLE(platform, max63xx_id_table);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id max63xx_dt_id_table[] = {
 	{ .compatible = "maxim,max6369", .data = max6369_table, },
 	{ .compatible = "maxim,max6370", .data = max6369_table, },
@@ -287,17 +309,24 @@ static const struct of_device_id max63xx_dt_id_table[] = {
 };
 MODULE_DEVICE_TABLE(of, max63xx_dt_id_table);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct platform_driver max63xx_wdt_driver = {
 	.probe		= max63xx_wdt_probe,
 	.id_table	= max63xx_id_table,
 	.driver		= {
 		.name	= "max63xx_wdt",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.of_match_table = max63xx_dt_id_table,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.of_match_table = max63xx_dt_id_table,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 };
 

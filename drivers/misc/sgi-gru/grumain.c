@@ -283,10 +283,14 @@ static void gru_unload_mm_tracker(struct gru_state *gru,
 void gts_drop(struct gru_thread_state *gts)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (gts && refcount_dec_and_test(&gts->ts_refcnt)) {
 =======
 	if (gts && atomic_dec_return(&gts->ts_refcnt) == 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (gts && refcount_dec_and_test(&gts->ts_refcnt)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (gts->ts_gms)
 			gru_drop_mmu_notifier(gts->ts_gms);
 		kfree(gts);
@@ -328,10 +332,14 @@ struct gru_thread_state *gru_alloc_gts(struct vm_area_struct *vma,
 	STAT(gts_alloc);
 	memset(gts, 0, sizeof(struct gru_thread_state)); /* zero out header */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refcount_set(&gts->ts_refcnt, 1);
 =======
 	atomic_set(&gts->ts_refcnt, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	refcount_set(&gts->ts_refcnt, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&gts->ts_ctxlock);
 	gts->ts_cbr_au_count = cbr_au_count;
 	gts->ts_dsr_au_count = dsr_au_count;
@@ -897,10 +905,14 @@ again:
 		gts->ts_blade = gru->gs_blade_id;
 		gts->ts_ctxnum = gru_assign_context_number(gru);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		refcount_inc(&gts->ts_refcnt);
 =======
 		atomic_inc(&gts->ts_refcnt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		refcount_inc(&gts->ts_refcnt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gru->gs_gts[gts->ts_ctxnum] = gts;
 		spin_unlock(&gru->gs_lock);
 

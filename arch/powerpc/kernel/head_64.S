@@ -713,10 +713,15 @@ _GLOBAL(copy_and_flush)
 	blr
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 _ASM_NOKPROBE_SYMBOL(copy_and_flush); /* Called in real mode */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+_ASM_NOKPROBE_SYMBOL(copy_and_flush); /* Called in real mode */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 .align 8
 copy_to_here:
 

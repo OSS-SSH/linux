@@ -577,10 +577,14 @@ retry:
 			/* No one is going to touch shadow bb from now on. */
 			i915_gem_object_flush_map(bb->obj);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			i915_gem_ww_ctx_fini(&ww);
 =======
 			i915_gem_object_unlock(bb->obj);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			i915_gem_ww_ctx_fini(&ww);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 	return 0;
@@ -635,10 +639,14 @@ retry:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	i915_gem_ww_ctx_fini(&ww);
 =======
 	i915_gem_object_unlock(wa_ctx->indirect_ctx.obj);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i915_gem_ww_ctx_fini(&ww);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* FIXME: we are not tracking our pinned VMA leaving it
 	 * up to the core to fix up the stray pin_count upon
@@ -1418,6 +1426,7 @@ int intel_vgpu_setup_submission(struct intel_vgpu *vgpu)
 
 		/* Max ring buffer size */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!intel_uc_wants_guc_submission(&engine->gt->uc))
 			ce->ring_size = SZ_2M;
 =======
@@ -1427,6 +1436,10 @@ int intel_vgpu_setup_submission(struct intel_vgpu *vgpu)
 			ce->ring = __intel_context_ring_size(ring_size);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!intel_uc_wants_guc_submission(&engine->gt->uc))
+			ce->ring_size = SZ_2M;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		s->shadow[i] = ce;
 	}

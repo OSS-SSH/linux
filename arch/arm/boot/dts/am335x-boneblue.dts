@@ -436,6 +436,9 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &gpio0 {
 	gpio-line-names =
 		"UART3_CTS", /* M17 */
@@ -544,6 +547,7 @@
 		"MMC0_CMD"; /* G18 */
 };
 
+<<<<<<< HEAD
 &gpio3 {
 	gpio-line-names =
 		"MMC2_DAT3", /* H16 */
@@ -582,14 +586,54 @@
 =======
 &gpio3 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+&gpio3 {
+	gpio-line-names =
+		"MMC2_DAT3", /* H16 */
+		"GPIO3_1", /* H17 */
+		"GPIO3_2", /* J15 */
+		"MMC2_CMD", /* J16 */
+		"MMC2_DAT0", /* J17 */
+		"I2C0_SDA", /* C17 */
+		"I2C0_SCL", /* C16 */
+		"EMU1", /* C14 */
+		"EMU0", /* B14 */
+		"WL_EN", /* K18 */
+		"WL_BT_OE", /* L18 */
+		"",
+		"",
+		"NC", /* F15 */
+		"SPI1_SCK", /* A13 */
+		"SPI1_MISO", /* B13 */
+		"SPI1_MOSI", /* D12 */
+		"GPIO3_17", /* C12 */
+		"EQEP_0A", /* B12 */
+		"EQEP_0B", /* C13 */
+		"GPIO3_20", /* D13 */
+		"IMU_INT", /* A14 */
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"";
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ls-buf-en-hog {
 		gpio-hog;
 		gpios = <10 GPIO_ACTIVE_HIGH>;
 		output-high;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		line-name = "LS_BUF_EN";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 

@@ -348,10 +348,14 @@ static int meson_sar_adc_read_raw_sample(struct iio_dev *indio_dev,
 	int regval, fifo_chan, fifo_val, count;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!wait_for_completion_timeout(&priv->done,
 =======
 	if(!wait_for_completion_timeout(&priv->done,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!wait_for_completion_timeout(&priv->done,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				msecs_to_jiffies(MESON_SAR_ADC_TIMEOUT)))
 		return -ETIMEDOUT;
 
@@ -502,12 +506,17 @@ static int meson_sar_adc_lock(struct iio_dev *indio_dev)
 		/* prevent BL30 from using the SAR ADC while we are using it */
 		regmap_update_bits(priv->regmap, MESON_SAR_ADC_DELAY,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   MESON_SAR_ADC_DELAY_KERNEL_BUSY,
 				   MESON_SAR_ADC_DELAY_KERNEL_BUSY);
 =======
 				MESON_SAR_ADC_DELAY_KERNEL_BUSY,
 				MESON_SAR_ADC_DELAY_KERNEL_BUSY);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   MESON_SAR_ADC_DELAY_KERNEL_BUSY,
+				   MESON_SAR_ADC_DELAY_KERNEL_BUSY);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * wait until BL30 releases it's lock (so we can use the SAR
@@ -535,10 +544,14 @@ static void meson_sar_adc_unlock(struct iio_dev *indio_dev)
 		/* allow BL30 to use the SAR ADC again */
 		regmap_update_bits(priv->regmap, MESON_SAR_ADC_DELAY,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   MESON_SAR_ADC_DELAY_KERNEL_BUSY, 0);
 =======
 				MESON_SAR_ADC_DELAY_KERNEL_BUSY, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   MESON_SAR_ADC_DELAY_KERNEL_BUSY, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_unlock(&indio_dev->mlock);
 }
@@ -805,10 +818,14 @@ static int meson_sar_adc_init(struct iio_dev *indio_dev)
 	 */
 	regmap_update_bits(priv->regmap, MESON_SAR_ADC_REG0,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   MESON_SAR_ADC_REG0_ADC_TEMP_SEN_SEL, 0);
 =======
 			MESON_SAR_ADC_REG0_ADC_TEMP_SEN_SEL, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   MESON_SAR_ADC_REG0_ADC_TEMP_SEN_SEL, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* disable all channels by default */
 	regmap_write(priv->regmap, MESON_SAR_ADC_CHAN_LIST, 0x0);
@@ -1122,6 +1139,9 @@ static const struct meson_sar_adc_param meson_sar_adc_gxl_param = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct meson_sar_adc_param meson_sar_adc_g12a_param = {
 	.has_bl30_integration = false,
 	.clock_rate = 1200000,
@@ -1130,8 +1150,11 @@ static const struct meson_sar_adc_param meson_sar_adc_g12a_param = {
 	.resolution = 12,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct meson_sar_adc_data meson_sar_adc_meson8_data = {
 	.param = &meson_sar_adc_meson8_param,
 	.name = "meson-meson8-saradc",
@@ -1169,10 +1192,14 @@ static const struct meson_sar_adc_data meson_sar_adc_axg_data = {
 
 static const struct meson_sar_adc_data meson_sar_adc_g12a_data = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.param = &meson_sar_adc_g12a_param,
 =======
 	.param = &meson_sar_adc_gxl_param,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.param = &meson_sar_adc_g12a_param,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.name = "meson-g12a-saradc",
 };
 

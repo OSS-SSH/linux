@@ -282,11 +282,16 @@ struct btrfs_super_block {
 #define BTRFS_FEATURE_COMPAT_RO_SUPP			\
 	(BTRFS_FEATURE_COMPAT_RO_FREE_SPACE_TREE |	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 BTRFS_FEATURE_COMPAT_RO_FREE_SPACE_TREE_VALID | \
 	 BTRFS_FEATURE_COMPAT_RO_VERITY)
 =======
 	 BTRFS_FEATURE_COMPAT_RO_FREE_SPACE_TREE_VALID)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 BTRFS_FEATURE_COMPAT_RO_FREE_SPACE_TREE_VALID | \
+	 BTRFS_FEATURE_COMPAT_RO_VERITY)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define BTRFS_FEATURE_COMPAT_RO_SAFE_SET	0ULL
 #define BTRFS_FEATURE_COMPAT_RO_SAFE_CLEAR	0ULL
@@ -1018,10 +1023,13 @@ struct btrfs_fs_info {
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Max size to emit ZONE_APPEND write command */
 	u64 max_zone_append_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mutex zoned_meta_io_lock;
 	spinlock_t treelog_bg_lock;
 	u64 treelog_bg;
@@ -1493,6 +1501,9 @@ do {                                                                   \
  * Inode flags
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define BTRFS_INODE_NODATASUM		(1U << 0)
 #define BTRFS_INODE_NODATACOW		(1U << 1)
 #define BTRFS_INODE_READONLY		(1U << 2)
@@ -1507,6 +1518,7 @@ do {                                                                   \
 #define BTRFS_INODE_COMPRESS		(1U << 11)
 
 #define BTRFS_INODE_ROOT_ITEM_INIT	(1U << 31)
+<<<<<<< HEAD
 =======
 #define BTRFS_INODE_NODATASUM		(1 << 0)
 #define BTRFS_INODE_NODATACOW		(1 << 1)
@@ -1523,6 +1535,8 @@ do {                                                                   \
 
 #define BTRFS_INODE_ROOT_ITEM_INIT	(1 << 31)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define BTRFS_INODE_FLAG_MASK						\
 	(BTRFS_INODE_NODATASUM |					\
@@ -1540,12 +1554,18 @@ do {                                                                   \
 	 BTRFS_INODE_ROOT_ITEM_INIT)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define BTRFS_INODE_RO_VERITY		(1U << 0)
 
 #define BTRFS_INODE_RO_FLAG_MASK	(BTRFS_INODE_RO_VERITY)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct btrfs_map_token {
 	struct extent_buffer *eb;
 	char *kaddr;
@@ -2814,17 +2834,23 @@ enum btrfs_flush_state {
 	FLUSH_DELALLOC		=	5,
 	FLUSH_DELALLOC_WAIT	=	6,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	FLUSH_DELALLOC_FULL	=	7,
 	ALLOC_CHUNK		=	8,
 	ALLOC_CHUNK_FORCE	=	9,
 	RUN_DELAYED_IPUTS	=	10,
 	COMMIT_TRANS		=	11,
+<<<<<<< HEAD
 =======
 	ALLOC_CHUNK		=	7,
 	ALLOC_CHUNK_FORCE	=	8,
 	RUN_DELAYED_IPUTS	=	9,
 	COMMIT_TRANS		=	10,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int btrfs_subvolume_reserve_metadata(struct btrfs_root *root,
@@ -2942,6 +2968,7 @@ static inline int btrfs_insert_empty_item(struct btrfs_trans_handle *trans,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int btrfs_prev_leaf(struct btrfs_root *root, struct btrfs_path *path);
 int btrfs_next_old_leaf(struct btrfs_root *root, struct btrfs_path *path,
 			u64 time_seq);
@@ -2955,6 +2982,15 @@ int btrfs_prev_leaf(struct btrfs_root *root, struct btrfs_path *path);
 int btrfs_next_old_leaf(struct btrfs_root *root, struct btrfs_path *path,
 			u64 time_seq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int btrfs_prev_leaf(struct btrfs_root *root, struct btrfs_path *path);
+int btrfs_next_old_leaf(struct btrfs_root *root, struct btrfs_path *path,
+			u64 time_seq);
+
+int btrfs_search_backwards(struct btrfs_root *root, struct btrfs_key *key,
+			   struct btrfs_path *path);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int btrfs_next_old_item(struct btrfs_root *root,
 				      struct btrfs_path *p, u64 time_seq)
 {
@@ -2964,6 +3000,9 @@ static inline int btrfs_next_old_item(struct btrfs_root *root,
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Search the tree again to find a leaf with greater keys.
@@ -2976,8 +3015,11 @@ static inline int btrfs_next_leaf(struct btrfs_root *root, struct btrfs_path *pa
 	return btrfs_next_old_leaf(root, path, 0);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int btrfs_next_item(struct btrfs_root *root, struct btrfs_path *p)
 {
 	return btrfs_next_old_item(root, p, 0);
@@ -3077,10 +3119,14 @@ btrfs_lookup_dir_index_item(struct btrfs_trans_handle *trans,
 			    struct btrfs_root *root,
 			    struct btrfs_path *path, u64 dir,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    u64 index, const char *name, int name_len,
 =======
 			    u64 objectid, const char *name, int name_len,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    u64 index, const char *name, int name_len,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    int mod);
 struct btrfs_dir_item *
 btrfs_search_dir_index_item(struct btrfs_root *root,
@@ -3215,11 +3261,16 @@ int btrfs_set_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
 int btrfs_create_subvol_root(struct btrfs_trans_handle *trans,
 			     struct btrfs_root *new_root,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct btrfs_root *parent_root,
 			     struct user_namespace *mnt_userns);
 =======
 			     struct btrfs_root *parent_root);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct btrfs_root *parent_root,
+			     struct user_namespace *mnt_userns);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  void btrfs_set_delalloc_extent(struct inode *inode, struct extent_state *state,
 			       unsigned *bits);
 void btrfs_clear_delalloc_extent(struct inode *inode,
@@ -3269,6 +3320,7 @@ int btrfs_run_delalloc_range(struct btrfs_inode *inode, struct page *locked_page
 		u64 start, u64 end, int *page_started, unsigned long *nr_written,
 		struct writeback_control *wbc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int btrfs_writepage_cow_fixup(struct page *page);
 void btrfs_writepage_endio_finish_ordered(struct btrfs_inode *inode,
 					  struct page *page, u64 start,
@@ -3279,6 +3331,12 @@ void btrfs_writepage_endio_finish_ordered(struct btrfs_inode *inode,
 					  struct page *page, u64 start,
 					  u64 end, int uptodate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int btrfs_writepage_cow_fixup(struct page *page);
+void btrfs_writepage_endio_finish_ordered(struct btrfs_inode *inode,
+					  struct page *page, u64 start,
+					  u64 end, bool uptodate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct dentry_operations btrfs_dentry_operations;
 extern const struct iomap_ops btrfs_dio_iomap_ops;
 extern const struct iomap_dio_ops btrfs_dio_ops;
@@ -3768,10 +3826,14 @@ static inline int __btrfs_fs_compat_ro(struct btrfs_fs_info *fs_info, u64 flag)
 /* acl.c */
 #ifdef CONFIG_BTRFS_FS_POSIX_ACL
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu);
 =======
 struct posix_acl *btrfs_get_acl(struct inode *inode, int type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int btrfs_set_acl(struct user_namespace *mnt_userns, struct inode *inode,
 		  struct posix_acl *acl, int type);
 int btrfs_init_acl(struct btrfs_trans_handle *trans,
@@ -3865,6 +3927,9 @@ static inline int btrfs_defrag_cancelled(struct btrfs_fs_info *fs_info)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* verity.c */
 #ifdef CONFIG_FS_VERITY
 
@@ -3889,8 +3954,11 @@ static inline int btrfs_drop_verity_items(struct btrfs_inode *inode)
 
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Sanity test specific functions */
 #ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
 void btrfs_test_destroy_inode(struct inode *inode);

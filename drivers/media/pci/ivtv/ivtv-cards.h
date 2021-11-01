@@ -79,6 +79,9 @@
 
 /* hardware flags, no gaps allowed */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum ivtv_hw_bits {
 	IVTV_HW_BIT_CX25840,
 	IVTV_HW_BIT_SAA7115,
@@ -126,6 +129,7 @@ enum ivtv_hw_bits {
 #define IVTV_HW_I2C_IR_RX_HAUP_INT	BIT(IVTV_HW_BIT_I2C_IR_RX_HAUP_INT)
 #define IVTV_HW_Z8F0811_IR_HAUP		BIT(IVTV_HW_BIT_Z8F0811_IR_HAUP)
 #define IVTV_HW_I2C_IR_RX_ADAPTEC	BIT(IVTV_HW_BIT_I2C_IR_RX_ADAPTEC)
+<<<<<<< HEAD
 =======
 #define IVTV_HW_CX25840			(1 << 0)
 #define IVTV_HW_SAA7115			(1 << 1)
@@ -149,6 +153,8 @@ enum ivtv_hw_bits {
 #define IVTV_HW_Z8F0811_IR_HAUP		(1 << 19)
 #define IVTV_HW_I2C_IR_RX_ADAPTEC	(1 << 20)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define IVTV_HW_SAA711X   (IVTV_HW_SAA7115 | IVTV_HW_SAA7114)
 

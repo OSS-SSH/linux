@@ -7205,10 +7205,14 @@ static void read_local_oob_ext_data_complete(struct hci_dev *hdev, u8 status,
 		goto done;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (eir_len == 0)
 =======
 	if (status)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (eir_len == 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto send_rsp;
 
 	eir_len = eir_append_data(mgmt_rp->eir, 0, EIR_CLASS_OF_DEV,
@@ -7730,10 +7734,14 @@ static int add_advertising(struct sock *sk, struct hci_dev *hdev,
 	 */
 	if (hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_ADVERTISING,
 =======
 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_ADVERTISING,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_ADVERTISING,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       MGMT_STATUS_NOT_SUPPORTED);
 
 	if (cp->instance < 1 || cp->instance > hdev->le_num_of_adv_sets)

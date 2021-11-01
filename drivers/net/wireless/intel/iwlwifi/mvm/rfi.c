@@ -12,10 +12,14 @@
  * frequency values in the adjusted format.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct iwl_rfi_lut_entry iwl_rfi_table[IWL_RFI_LUT_SIZE] = {
 =======
 const static struct iwl_rfi_lut_entry iwl_rfi_table[IWL_RFI_LUT_SIZE] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct iwl_rfi_lut_entry iwl_rfi_table[IWL_RFI_LUT_SIZE] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* LPDDR4 */
 
 	/* frequency 3733MHz */

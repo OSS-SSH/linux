@@ -351,10 +351,15 @@ static u32 goya_all_events[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static s64 goya_state_dump_specs_props[SP_MAX] = {0};
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static s64 goya_state_dump_specs_props[SP_MAX] = {0};
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int goya_mmu_clear_pgt_range(struct hl_device *hdev);
 static int goya_mmu_set_dram_default_page(struct hl_device *hdev);
 static int goya_mmu_add_mappings_for_device_cpu(struct hl_device *hdev);
@@ -393,9 +398,13 @@ int goya_set_fixed_properties(struct hl_device *hdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	prop->device_dma_offset_for_host_access = HOST_PHYS_BASE;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prop->device_dma_offset_for_host_access = HOST_PHYS_BASE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prop->completion_queues_count = NUMBER_OF_CMPLT_QUEUES;
 
 	prop->dram_base_address = DRAM_PHYS_BASE;
@@ -476,10 +485,15 @@ int goya_set_fixed_properties(struct hl_device *hdev)
 	prop->gic_interrupts_enable = true;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	prop->server_type = HL_SERVER_TYPE_UNKNOWN;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prop->server_type = HL_SERVER_TYPE_UNKNOWN;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -664,10 +678,14 @@ pci_init:
 	if (rc) {
 		if (hdev->reset_on_preboot_fail)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			hdev->asic_funcs->hw_fini(hdev, true, false);
 =======
 			hdev->asic_funcs->hw_fini(hdev, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			hdev->asic_funcs->hw_fini(hdev, true, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto pci_fini;
 	}
 
@@ -675,10 +693,14 @@ pci_init:
 		dev_info(hdev->dev,
 			"H/W state is dirty, must reset before initializing\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hdev->asic_funcs->hw_fini(hdev, true, false);
 =======
 		hdev->asic_funcs->hw_fini(hdev, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hdev->asic_funcs->hw_fini(hdev, true, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!hdev->pldm) {
@@ -978,6 +1000,7 @@ static int goya_sw_init(struct hl_device *hdev)
 	hdev->supports_soft_reset = true;
 	hdev->allow_external_soft_reset = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hdev->supports_wait_for_multi_cs = false;
 
 	hdev->asic_funcs->set_pci_memory_regions(hdev);
@@ -985,6 +1008,11 @@ static int goya_sw_init(struct hl_device *hdev)
 
 	goya_set_pci_memory_regions(hdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hdev->supports_wait_for_multi_cs = false;
+
+	hdev->asic_funcs->set_pci_memory_regions(hdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 
@@ -2403,10 +2431,14 @@ static void goya_disable_timestamp(struct hl_device *hdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void goya_halt_engines(struct hl_device *hdev, bool hard_reset, bool fw_reset)
 =======
 static void goya_halt_engines(struct hl_device *hdev, bool hard_reset)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void goya_halt_engines(struct hl_device *hdev, bool hard_reset, bool fw_reset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 wait_timeout_ms;
 
@@ -2526,9 +2558,13 @@ static void goya_init_firmware_loader(struct hl_device *hdev)
 
 	/* fill common fields */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fw_loader->linux_loaded = false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fw_loader->linux_loaded = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fw_loader->boot_fit_img.image_name = GOYA_BOOT_FIT_FILE;
 	fw_loader->linux_img.image_name = GOYA_LINUX_FW_FILE;
 	fw_loader->cpu_timeout = GOYA_CPU_TIMEOUT_USEC;
@@ -2733,6 +2769,7 @@ disable_queues:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void goya_hw_fini(struct hl_device *hdev, bool hard_reset, bool fw_reset)
 =======
 /*
@@ -2744,6 +2781,9 @@ static void goya_hw_fini(struct hl_device *hdev, bool hard_reset, bool fw_reset)
  */
 static void goya_hw_fini(struct hl_device *hdev, bool hard_reset)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void goya_hw_fini(struct hl_device *hdev, bool hard_reset, bool fw_reset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct goya_device *goya = hdev->asic_specific;
 	u32 reset_timeout_ms, cpu_timeout_ms, status;
@@ -2837,10 +2877,14 @@ int goya_resume(struct hl_device *hdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int goya_mmap(struct hl_device *hdev, struct vm_area_struct *vma,
 =======
 static int goya_cb_mmap(struct hl_device *hdev, struct vm_area_struct *vma,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int goya_mmap(struct hl_device *hdev, struct vm_area_struct *vma,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			void *cpu_addr, dma_addr_t dma_addr, size_t size)
 {
 	int rc;
@@ -4842,14 +4886,20 @@ void goya_handle_eqe(struct hl_device *hdev, struct hl_eq_entry *eq_entry)
 	struct goya_device *goya = hdev->asic_specific;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (event_type >= GOYA_ASYNC_EVENT_ID_SIZE) {
 		dev_err(hdev->dev, "Event type %u exceeds maximum of %u",
 				event_type, GOYA_ASYNC_EVENT_ID_SIZE - 1);
 		return;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	goya->events_stat[event_type]++;
 	goya->events_stat_aggregate[event_type]++;
 
@@ -5529,6 +5579,7 @@ u64 goya_get_device_time(struct hl_device *hdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int goya_collective_wait_init_cs(struct hl_cs *cs)
 {
 	return 0;
@@ -5537,15 +5588,24 @@ static void goya_collective_wait_init_cs(struct hl_cs *cs)
 {
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int goya_collective_wait_init_cs(struct hl_cs *cs)
+{
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int goya_collective_wait_create_jobs(struct hl_device *hdev,
 		struct hl_ctx *ctx, struct hl_cs *cs, u32 wait_queue_id,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u32 collective_engine_id, u32 encaps_signal_offset)
 =======
 		u32 collective_engine_id)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		u32 collective_engine_id, u32 encaps_signal_offset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return -EINVAL;
 }
@@ -5588,6 +5648,9 @@ static int goya_map_pll_idx_to_fw_idx(u32 pll_idx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int goya_gen_sync_to_engine_map(struct hl_device *hdev,
 				struct hl_sync_to_engine_map *map)
 {
@@ -5644,8 +5707,11 @@ static u32 *goya_get_stream_master_qid_arr(void)
 	return NULL;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct hl_asic_funcs goya_funcs = {
 	.early_init = goya_early_init,
 	.early_fini = goya_early_fini,
@@ -5659,10 +5725,14 @@ static const struct hl_asic_funcs goya_funcs = {
 	.suspend = goya_suspend,
 	.resume = goya_resume,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.mmap = goya_mmap,
 =======
 	.cb_mmap = goya_cb_mmap,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.mmap = goya_mmap,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ring_doorbell = goya_ring_doorbell,
 	.pqe_write = goya_pqe_write,
 	.asic_dma_alloc_coherent = goya_dma_alloc_coherent,
@@ -5736,14 +5806,20 @@ static const struct hl_asic_funcs goya_funcs = {
 	.map_pll_idx_to_fw_idx = goya_map_pll_idx_to_fw_idx,
 	.init_firmware_loader = goya_init_firmware_loader,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.init_cpu_scrambler_dram = goya_cpu_init_scrambler_dram,
 	.state_dump_init = goya_state_dump_init,
 	.get_sob_addr = &goya_get_sob_addr,
 	.set_pci_memory_regions = goya_set_pci_memory_regions,
 	.get_stream_master_qid_arr = goya_get_stream_master_qid_arr,
+<<<<<<< HEAD
 =======
 	.init_cpu_scrambler_dram = goya_cpu_init_scrambler_dram
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*

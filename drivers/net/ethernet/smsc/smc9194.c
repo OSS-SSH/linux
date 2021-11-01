@@ -1509,10 +1509,14 @@ MODULE_PARM_DESC(irq, "SMC 99194 IRQ number");
 MODULE_PARM_DESC(ifport, "SMC 99194 interface port (0-default, 1-TP, 2-AUI)");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init smc_init_module(void)
 =======
 int __init init_module(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init smc_init_module(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (io == 0)
 		printk(KERN_WARNING
@@ -1523,6 +1527,7 @@ int __init init_module(void)
 	return PTR_ERR_OR_ZERO(devSMC9194);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 module_init(smc_init_module);
 
 static void __exit smc_cleanup_module(void)
@@ -1530,6 +1535,11 @@ static void __exit smc_cleanup_module(void)
 
 void __exit cleanup_module(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_init(smc_init_module);
+
+static void __exit smc_cleanup_module(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unregister_netdev(devSMC9194);
 	free_irq(devSMC9194->irq, devSMC9194);
@@ -1537,8 +1547,12 @@ void __exit cleanup_module(void)
 	free_netdev(devSMC9194);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 module_exit(smc_cleanup_module);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_exit(smc_cleanup_module);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* MODULE */

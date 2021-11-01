@@ -98,18 +98,26 @@ struct panfrost_device {
 	unsigned long as_in_use_mask;
 	unsigned long as_alloc_mask;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long as_faulty_mask;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long as_faulty_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head as_lru_list;
 
 	struct panfrost_job_slot *js;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct panfrost_job *jobs[NUM_JOB_SLOTS][2];
 =======
 	struct panfrost_job *jobs[NUM_JOB_SLOTS];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct panfrost_job *jobs[NUM_JOB_SLOTS][2];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head scheduled_jobs;
 
 	struct panfrost_perfcnt *perfcnt;
@@ -118,9 +126,13 @@ struct panfrost_device {
 
 	struct {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct workqueue_struct *wq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct workqueue_struct *wq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct work_struct work;
 		atomic_t pending;
 	} reset;
@@ -134,16 +146,22 @@ struct panfrost_device {
 
 struct panfrost_mmu {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct panfrost_device *pfdev;
 	struct kref refcount;
 	struct io_pgtable_cfg pgtbl_cfg;
 	struct io_pgtable_ops *pgtbl_ops;
 	struct drm_mm mm;
 	spinlock_t mm_lock;
+<<<<<<< HEAD
 =======
 	struct io_pgtable_cfg pgtbl_cfg;
 	struct io_pgtable_ops *pgtbl_ops;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int as;
 	atomic_t as_count;
 	struct list_head list;
@@ -155,12 +173,16 @@ struct panfrost_file_priv {
 	struct drm_sched_entity sched_entity[NUM_JOB_SLOTS];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct panfrost_mmu *mmu;
 =======
 	struct panfrost_mmu mmu;
 	struct drm_mm mm;
 	spinlock_t mm_lock;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct panfrost_mmu *mmu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct panfrost_device *to_panfrost_device(struct drm_device *ddev)
@@ -197,6 +219,9 @@ int panfrost_device_resume(struct device *dev);
 int panfrost_device_suspend(struct device *dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum drm_panfrost_exception_type {
 	DRM_PANFROST_EXCEPTION_OK = 0x00,
 	DRM_PANFROST_EXCEPTION_DONE = 0x01,
@@ -283,8 +308,11 @@ panfrost_device_schedule_reset(struct panfrost_device *pfdev)
 	atomic_set(&pfdev->reset.pending, 1);
 	queue_work(pfdev->reset.wq, &pfdev->reset.work);
 }
+<<<<<<< HEAD
 =======
 const char *panfrost_exception_name(struct panfrost_device *pfdev, u32 exception_code);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

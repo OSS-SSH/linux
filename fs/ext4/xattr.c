@@ -792,11 +792,16 @@ static void ext4_xattr_update_super_block(handle_t *handle,
 
 	BUFFER_TRACE(EXT4_SB(sb)->s_sbh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ext4_journal_get_write_access(handle, sb, EXT4_SB(sb)->s_sbh,
 					  EXT4_JTR_NONE) == 0) {
 =======
 	if (ext4_journal_get_write_access(handle, EXT4_SB(sb)->s_sbh) == 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ext4_journal_get_write_access(handle, sb, EXT4_SB(sb)->s_sbh,
+					  EXT4_JTR_NONE) == 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lock_buffer(EXT4_SB(sb)->s_sbh);
 		ext4_set_feature_xattr(sb);
 		ext4_superblock_csum_set(sb);
@@ -1175,11 +1180,16 @@ ext4_xattr_inode_dec_ref_all(handle_t *handle, struct inode *parent,
 		}
 		if (err > 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			err = ext4_journal_get_write_access(handle,
 					parent->i_sb, bh, EXT4_JTR_NONE);
 =======
 			err = ext4_journal_get_write_access(handle, bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			err = ext4_journal_get_write_access(handle,
+					parent->i_sb, bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (err) {
 				ext4_warning_inode(ea_inode,
 						"Re-get write access err=%d",
@@ -1241,11 +1251,16 @@ ext4_xattr_release_block(handle_t *handle, struct inode *inode,
 
 	BUFFER_TRACE(bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = ext4_journal_get_write_access(handle, inode->i_sb, bh,
 					      EXT4_JTR_NONE);
 =======
 	error = ext4_journal_get_write_access(handle, bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = ext4_journal_get_write_access(handle, inode->i_sb, bh,
+					      EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error)
 		goto out;
 
@@ -1387,11 +1402,16 @@ retry:
 			return -EFSCORRUPTED;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = ext4_journal_get_write_access(handle, ea_inode->i_sb, bh,
 						   EXT4_JTR_NONE);
 =======
 		ret = ext4_journal_get_write_access(handle, bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = ext4_journal_get_write_access(handle, ea_inode->i_sb, bh,
+						   EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			goto out;
 
@@ -1876,11 +1896,16 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
 	if (s->base) {
 		BUFFER_TRACE(bs->bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		error = ext4_journal_get_write_access(handle, sb, bs->bh,
 						      EXT4_JTR_NONE);
 =======
 		error = ext4_journal_get_write_access(handle, bs->bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = ext4_journal_get_write_access(handle, sb, bs->bh,
+						      EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error)
 			goto cleanup;
 		lock_buffer(bs->bh);
@@ -2013,6 +2038,7 @@ inserted:
 					goto cleanup;
 				BUFFER_TRACE(new_bh, "get_write_access");
 <<<<<<< HEAD
+<<<<<<< HEAD
 				error = ext4_journal_get_write_access(
 						handle, sb, new_bh,
 						EXT4_JTR_NONE);
@@ -2020,6 +2046,11 @@ inserted:
 				error = ext4_journal_get_write_access(handle,
 								      new_bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				error = ext4_journal_get_write_access(
+						handle, sb, new_bh,
+						EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (error)
 					goto cleanup_dquot;
 				lock_buffer(new_bh);
@@ -2124,11 +2155,16 @@ getblk_failed:
 
 			lock_buffer(new_bh);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			error = ext4_journal_get_create_access(handle, sb,
 							new_bh, EXT4_JTR_NONE);
 =======
 			error = ext4_journal_get_create_access(handle, new_bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			error = ext4_journal_get_create_access(handle, sb,
+							new_bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (error) {
 				unlock_buffer(new_bh);
 				error = -EIO;
@@ -2885,11 +2921,16 @@ int ext4_xattr_delete_inode(handle_t *handle, struct inode *inode,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		error = ext4_journal_get_write_access(handle, inode->i_sb,
 						iloc.bh, EXT4_JTR_NONE);
 =======
 		error = ext4_journal_get_write_access(handle, iloc.bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = ext4_journal_get_write_access(handle, inode->i_sb,
+						iloc.bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error) {
 			EXT4_ERROR_INODE(inode, "write access (error %d)",
 					 error);

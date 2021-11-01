@@ -10,6 +10,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/mod_devicetable.h>
 #include <linux/acpi.h>
 #include <linux/i2c.h>
@@ -21,6 +22,12 @@
 #include <linux/iio/iio.h>
 #include <linux/property.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/mod_devicetable.h>
+#include <linux/acpi.h>
+#include <linux/i2c.h>
+#include <linux/iio/iio.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/iio/common/st_sensors_i2c.h>
 #include "st_accel.h"

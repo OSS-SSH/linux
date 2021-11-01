@@ -469,10 +469,14 @@ struct dlm_opt_header {
 	uint16_t	t_type;
 	uint16_t	t_length;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t	t_pad;
 =======
 	uint32_t	o_pad;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t	t_pad;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* need to be 8 byte aligned */
 	char		t_value[];
 };

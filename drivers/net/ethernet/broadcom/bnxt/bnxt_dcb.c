@@ -19,9 +19,13 @@
 #include "bnxt_hsi.h"
 #include "bnxt.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "bnxt_hwrm.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "bnxt_hwrm.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "bnxt_dcb.h"
 
 #ifdef CONFIG_BNXT_DCB
@@ -43,6 +47,7 @@ static int bnxt_queue_to_tc(struct bnxt *bp, u8 queue_id)
 static int bnxt_hwrm_queue_pri2cos_cfg(struct bnxt *bp, struct ieee_ets *ets)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_queue_pri2cos_cfg_input *req;
 	u8 *pri2cos;
 	int rc, i;
@@ -61,33 +66,48 @@ static int bnxt_hwrm_queue_pri2cos_cfg(struct bnxt *bp, struct ieee_ets *ets)
 		req->enables |= cpu_to_le32(
 =======
 	struct hwrm_queue_pri2cos_cfg_input req = {0};
+=======
+	struct hwrm_queue_pri2cos_cfg_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 *pri2cos;
-	int i;
+	int rc, i;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_QUEUE_PRI2COS_CFG, -1, -1);
-	req.flags = cpu_to_le32(QUEUE_PRI2COS_CFG_REQ_FLAGS_PATH_BIDIR |
-				QUEUE_PRI2COS_CFG_REQ_FLAGS_IVLAN);
+	rc = hwrm_req_init(bp, req, HWRM_QUEUE_PRI2COS_CFG);
+	if (rc)
+		return rc;
 
-	pri2cos = &req.pri0_cos_queue_id;
+	req->flags = cpu_to_le32(QUEUE_PRI2COS_CFG_REQ_FLAGS_PATH_BIDIR |
+				 QUEUE_PRI2COS_CFG_REQ_FLAGS_IVLAN);
+
+	pri2cos = &req->pri0_cos_queue_id;
 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
 		u8 qidx;
 
+<<<<<<< HEAD
 		req.enables |= cpu_to_le32(
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->enables |= cpu_to_le32(
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			QUEUE_PRI2COS_CFG_REQ_ENABLES_PRI0_COS_QUEUE_ID << i);
 
 		qidx = bp->tc_to_qidx[ets->prio_tc[i]];
 		pri2cos[i] = bp->q_info[qidx].queue_id;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return hwrm_req_send(bp, req);
 =======
 	return hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return hwrm_req_send(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int bnxt_hwrm_queue_pri2cos_qcfg(struct bnxt *bp, struct ieee_ets *ets)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_queue_pri2cos_qcfg_output *resp;
 	struct hwrm_queue_pri2cos_qcfg_input *req;
@@ -104,13 +124,25 @@ static int bnxt_hwrm_queue_pri2cos_qcfg(struct bnxt *bp, struct ieee_ets *ets)
 	struct hwrm_queue_pri2cos_qcfg_output *resp = bp->hwrm_cmd_resp_addr;
 	struct hwrm_queue_pri2cos_qcfg_input req = {0};
 	int rc = 0;
+=======
+	struct hwrm_queue_pri2cos_qcfg_output *resp;
+	struct hwrm_queue_pri2cos_qcfg_input *req;
+	int rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_QUEUE_PRI2COS_QCFG, -1, -1);
-	req.flags = cpu_to_le32(QUEUE_PRI2COS_QCFG_REQ_FLAGS_IVLAN);
+	rc = hwrm_req_init(bp, req, HWRM_QUEUE_PRI2COS_QCFG);
+	if (rc)
+		return rc;
 
+<<<<<<< HEAD
 	mutex_lock(&bp->hwrm_cmd_lock);
 	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->flags = cpu_to_le32(QUEUE_PRI2COS_QCFG_REQ_FLAGS_IVLAN);
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rc) {
 		u8 *pri2cos = &resp->pri0_cos_queue_id;
 		int i;
@@ -125,16 +157,21 @@ static int bnxt_hwrm_queue_pri2cos_qcfg(struct bnxt *bp, struct ieee_ets *ets)
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hwrm_req_drop(bp, req);
 =======
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
 static int bnxt_hwrm_queue_cos2bw_cfg(struct bnxt *bp, struct ieee_ets *ets,
 				      u8 max_tc)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_queue_cos2bw_cfg_input *req;
 	struct bnxt_cos2bw_cfg cos2bw;
@@ -151,16 +188,26 @@ static int bnxt_hwrm_queue_cos2bw_cfg(struct bnxt *bp, struct ieee_ets *ets,
 		req->enables |= cpu_to_le32(
 =======
 	struct hwrm_queue_cos2bw_cfg_input req = {0};
+=======
+	struct hwrm_queue_cos2bw_cfg_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bnxt_cos2bw_cfg cos2bw;
 	void *data;
-	int i;
+	int rc, i;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_QUEUE_COS2BW_CFG, -1, -1);
+	rc = hwrm_req_init(bp, req, HWRM_QUEUE_COS2BW_CFG);
+	if (rc)
+		return rc;
+
 	for (i = 0; i < max_tc; i++) {
 		u8 qidx = bp->tc_to_qidx[i];
 
+<<<<<<< HEAD
 		req.enables |= cpu_to_le32(
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->enables |= cpu_to_le32(
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			QUEUE_COS2BW_CFG_REQ_ENABLES_COS_QUEUE_ID0_VALID <<
 			qidx);
 
@@ -182,6 +229,7 @@ static int bnxt_hwrm_queue_cos2bw_cfg(struct bnxt *bp, struct ieee_ets *ets,
 					    BW_VALUE_UNIT_PERCENT1_100);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		data = &req->unused_0 + qidx * (sizeof(cos2bw) - 4);
 		memcpy(data, &cos2bw.queue_id, sizeof(cos2bw) - 4);
 		if (qidx == 0) {
@@ -192,18 +240,26 @@ static int bnxt_hwrm_queue_cos2bw_cfg(struct bnxt *bp, struct ieee_ets *ets,
 	return hwrm_req_send(bp, req);
 =======
 		data = &req.unused_0 + qidx * (sizeof(cos2bw) - 4);
+=======
+		data = &req->unused_0 + qidx * (sizeof(cos2bw) - 4);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcpy(data, &cos2bw.queue_id, sizeof(cos2bw) - 4);
 		if (qidx == 0) {
-			req.queue_id0 = cos2bw.queue_id;
-			req.unused_0 = 0;
+			req->queue_id0 = cos2bw.queue_id;
+			req->unused_0 = 0;
 		}
 	}
+<<<<<<< HEAD
 	return hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return hwrm_req_send(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int bnxt_hwrm_queue_cos2bw_qcfg(struct bnxt *bp, struct ieee_ets *ets)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_queue_cos2bw_qcfg_output *resp;
 	struct hwrm_queue_cos2bw_qcfg_input *req;
@@ -211,10 +267,15 @@ static int bnxt_hwrm_queue_cos2bw_qcfg(struct bnxt *bp, struct ieee_ets *ets)
 	struct hwrm_queue_cos2bw_qcfg_output *resp = bp->hwrm_cmd_resp_addr;
 	struct hwrm_queue_cos2bw_qcfg_input req = {0};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_queue_cos2bw_qcfg_output *resp;
+	struct hwrm_queue_cos2bw_qcfg_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bnxt_cos2bw_cfg cos2bw;
 	void *data;
 	int rc, i;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rc = hwrm_req_init(bp, req, HWRM_QUEUE_COS2BW_QCFG);
 	if (rc)
@@ -226,12 +287,21 @@ static int bnxt_hwrm_queue_cos2bw_qcfg(struct bnxt *bp, struct ieee_ets *ets)
 		hwrm_req_drop(bp, req);
 =======
 	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_QUEUE_COS2BW_QCFG, -1, -1);
+=======
+	rc = hwrm_req_init(bp, req, HWRM_QUEUE_COS2BW_QCFG);
+	if (rc)
+		return rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	mutex_lock(&bp->hwrm_cmd_lock);
-	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send(bp, req);
 	if (rc) {
+<<<<<<< HEAD
 		mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rc;
 	}
 
@@ -256,10 +326,14 @@ static int bnxt_hwrm_queue_cos2bw_qcfg(struct bnxt *bp, struct ieee_ets *ets)
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hwrm_req_drop(bp, req);
 =======
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -322,18 +396,26 @@ static int bnxt_queue_remap(struct bnxt *bp, unsigned int lltc_mask)
 static int bnxt_hwrm_queue_pfc_cfg(struct bnxt *bp, struct ieee_pfc *pfc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_queue_pfcenable_cfg_input *req;
 =======
 	struct hwrm_queue_pfcenable_cfg_input req = {0};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_queue_pfcenable_cfg_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ieee_ets *my_ets = bp->ieee_ets;
 	unsigned int tc_mask = 0, pri_mask = 0;
 	u8 i, pri, lltc_count = 0;
 	bool need_q_remap = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int rc;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!my_ets)
 		return -EINVAL;
@@ -367,21 +449,28 @@ static int bnxt_hwrm_queue_pfc_cfg(struct bnxt *bp, struct ieee_pfc *pfc)
 		bnxt_queue_remap(bp, tc_mask);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = hwrm_req_init(bp, req, HWRM_QUEUE_PFCENABLE_CFG);
 	if (rc)
 		return rc;
 
 	req->flags = cpu_to_le32(pri_mask);
 	return hwrm_req_send(bp, req);
+<<<<<<< HEAD
 =======
 	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_QUEUE_PFCENABLE_CFG, -1, -1);
 	req.flags = cpu_to_le32(pri_mask);
 	return hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int bnxt_hwrm_queue_pfc_qcfg(struct bnxt *bp, struct ieee_pfc *pfc)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_queue_pfcenable_qcfg_output *resp;
 	struct hwrm_queue_pfcenable_qcfg_input *req;
@@ -399,26 +488,40 @@ static int bnxt_hwrm_queue_pfc_qcfg(struct bnxt *bp, struct ieee_pfc *pfc)
 =======
 	struct hwrm_queue_pfcenable_qcfg_output *resp = bp->hwrm_cmd_resp_addr;
 	struct hwrm_queue_pfcenable_qcfg_input req = {0};
+=======
+	struct hwrm_queue_pfcenable_qcfg_output *resp;
+	struct hwrm_queue_pfcenable_qcfg_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 pri_mask;
 	int rc;
 
-	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_QUEUE_PFCENABLE_QCFG, -1, -1);
+	rc = hwrm_req_init(bp, req, HWRM_QUEUE_PFCENABLE_QCFG);
+	if (rc)
+		return rc;
 
-	mutex_lock(&bp->hwrm_cmd_lock);
-	rc = _hwrm_send_message(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send(bp, req);
 	if (rc) {
+<<<<<<< HEAD
 		mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rc;
 	}
 
 	pri_mask = le32_to_cpu(resp->flags);
 	pfc->pfc_en = pri_mask;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hwrm_req_drop(bp, req);
 =======
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -426,12 +529,17 @@ static int bnxt_hwrm_set_dcbx_app(struct bnxt *bp, struct dcb_app *app,
 				  bool add)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_fw_set_structured_data_input *set;
 	struct hwrm_fw_get_structured_data_input *get;
 =======
 	struct hwrm_fw_set_structured_data_input set = {0};
 	struct hwrm_fw_get_structured_data_input get = {0};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_fw_set_structured_data_input *set;
+	struct hwrm_fw_get_structured_data_input *get;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hwrm_struct_data_dcbx_app *fw_app;
 	struct hwrm_struct_hdr *data;
 	dma_addr_t mapping;
@@ -442,6 +550,9 @@ static int bnxt_hwrm_set_dcbx_app(struct bnxt *bp, struct dcb_app *app,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = hwrm_req_init(bp, get, HWRM_FW_GET_STRUCTURED_DATA);
 	if (rc)
 		return rc;
@@ -449,6 +560,7 @@ static int bnxt_hwrm_set_dcbx_app(struct bnxt *bp, struct dcb_app *app,
 	hwrm_req_hold(bp, get);
 	hwrm_req_alloc_flags(bp, get, GFP_KERNEL | __GFP_ZERO);
 
+<<<<<<< HEAD
 	n = IEEE_8021QAZ_MAX_TCS;
 	data_len = sizeof(*data) + sizeof(*fw_app) * n;
 	data = hwrm_req_dma_slice(bp, get, data_len, &mapping);
@@ -463,13 +575,17 @@ static int bnxt_hwrm_set_dcbx_app(struct bnxt *bp, struct dcb_app *app,
 	get->count = 0;
 	rc = hwrm_req_send(bp, get);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	n = IEEE_8021QAZ_MAX_TCS;
 	data_len = sizeof(*data) + sizeof(*fw_app) * n;
-	data = dma_alloc_coherent(&bp->pdev->dev, data_len, &mapping,
-				  GFP_KERNEL);
-	if (!data)
-		return -ENOMEM;
+	data = hwrm_req_dma_slice(bp, get, data_len, &mapping);
+	if (!data) {
+		rc = -ENOMEM;
+		goto set_app_exit;
+	}
 
+<<<<<<< HEAD
 	bnxt_hwrm_cmd_hdr_init(bp, &get, HWRM_FW_GET_STRUCTURED_DATA, -1, -1);
 	get.dest_data_addr = cpu_to_le64(mapping);
 	get.structure_id = cpu_to_le16(STRUCT_HDR_STRUCT_ID_DCBX_APP);
@@ -477,6 +593,13 @@ static int bnxt_hwrm_set_dcbx_app(struct bnxt *bp, struct dcb_app *app,
 	get.count = 0;
 	rc = hwrm_send_message(bp, &get, sizeof(get), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	get->dest_data_addr = cpu_to_le64(mapping);
+	get->structure_id = cpu_to_le16(STRUCT_HDR_STRUCT_ID_DCBX_APP);
+	get->subtype = cpu_to_le16(HWRM_STRUCT_DATA_SUBTYPE_HOST_OPERATIONAL);
+	get->count = 0;
+	rc = hwrm_req_send(bp, get);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		goto set_app_exit;
 
@@ -523,6 +646,9 @@ static int bnxt_hwrm_set_dcbx_app(struct bnxt *bp, struct dcb_app *app,
 	data->subtype = cpu_to_le16(HWRM_STRUCT_DATA_SUBTYPE_HOST_OPERATIONAL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = hwrm_req_init(bp, set, HWRM_FW_SET_STRUCTURED_DATA);
 	if (rc)
 		goto set_app_exit;
@@ -531,6 +657,7 @@ static int bnxt_hwrm_set_dcbx_app(struct bnxt *bp, struct dcb_app *app,
 	set->data_len = cpu_to_le16(sizeof(*data) + sizeof(*fw_app) * n);
 	set->hdr_cnt = 1;
 	rc = hwrm_req_send(bp, set);
+<<<<<<< HEAD
 
 set_app_exit:
 	hwrm_req_drop(bp, get); /* dropping get request and associated slice */
@@ -544,11 +671,17 @@ set_app_exit:
 set_app_exit:
 	dma_free_coherent(&bp->pdev->dev, data_len, data, mapping);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+set_app_exit:
+	hwrm_req_drop(bp, get); /* dropping get request and associated slice */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
 static int bnxt_hwrm_queue_dscp_qcaps(struct bnxt *bp)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct hwrm_queue_dscp_qcaps_output *resp;
 	struct hwrm_queue_dscp_qcaps_input *req;
@@ -556,6 +689,10 @@ static int bnxt_hwrm_queue_dscp_qcaps(struct bnxt *bp)
 	struct hwrm_queue_dscp_qcaps_output *resp = bp->hwrm_cmd_resp_addr;
 	struct hwrm_queue_dscp_qcaps_input req = {0};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_queue_dscp_qcaps_output *resp;
+	struct hwrm_queue_dscp_qcaps_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rc;
 
 	bp->max_dscp_value = 0;
@@ -563,28 +700,38 @@ static int bnxt_hwrm_queue_dscp_qcaps(struct bnxt *bp)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = hwrm_req_init(bp, req, HWRM_QUEUE_DSCP_QCAPS);
 	if (rc)
 		return rc;
 
 	resp = hwrm_req_hold(bp, req);
 	rc = hwrm_req_send_silent(bp, req);
+<<<<<<< HEAD
 =======
 	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_QUEUE_DSCP_QCAPS, -1, -1);
 	mutex_lock(&bp->hwrm_cmd_lock);
 	rc = _hwrm_send_message_silent(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rc) {
 		bp->max_dscp_value = (1 << resp->num_dscp_bits) - 1;
 		if (bp->max_dscp_value < 0x3f)
 			bp->max_dscp_value = 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hwrm_req_drop(bp, req);
 =======
 
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -592,10 +739,14 @@ static int bnxt_hwrm_queue_dscp2pri_cfg(struct bnxt *bp, struct dcb_app *app,
 					bool add)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct hwrm_queue_dscp2pri_cfg_input *req;
 =======
 	struct hwrm_queue_dscp2pri_cfg_input req = {0};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hwrm_queue_dscp2pri_cfg_input *req;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bnxt_dscp2pri_entry *dscp2pri;
 	dma_addr_t mapping;
 	int rc;
@@ -604,6 +755,9 @@ static int bnxt_hwrm_queue_dscp2pri_cfg(struct bnxt *bp, struct dcb_app *app,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = hwrm_req_init(bp, req, HWRM_QUEUE_DSCP2PRI_CFG);
 	if (rc)
 		return rc;
@@ -611,6 +765,7 @@ static int bnxt_hwrm_queue_dscp2pri_cfg(struct bnxt *bp, struct dcb_app *app,
 	dscp2pri = hwrm_req_dma_slice(bp, req, sizeof(*dscp2pri), &mapping);
 	if (!dscp2pri) {
 		hwrm_req_drop(bp, req);
+<<<<<<< HEAD
 		return -ENOMEM;
 	}
 
@@ -620,16 +775,24 @@ static int bnxt_hwrm_queue_dscp2pri_cfg(struct bnxt *bp, struct dcb_app *app,
 	dscp2pri = dma_alloc_coherent(&bp->pdev->dev, sizeof(*dscp2pri),
 				      &mapping, GFP_KERNEL);
 	if (!dscp2pri)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
+	}
 
+<<<<<<< HEAD
 	req.src_data_addr = cpu_to_le64(mapping);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->src_data_addr = cpu_to_le64(mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dscp2pri->dscp = app->protocol;
 	if (add)
 		dscp2pri->mask = 0x3f;
 	else
 		dscp2pri->mask = 0;
 	dscp2pri->pri = app->priority;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	req->entry_cnt = cpu_to_le16(1);
 	rc = hwrm_req_send(bp, req);
@@ -639,6 +802,10 @@ static int bnxt_hwrm_queue_dscp2pri_cfg(struct bnxt *bp, struct dcb_app *app,
 	dma_free_coherent(&bp->pdev->dev, sizeof(*dscp2pri), dscp2pri,
 			  mapping);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->entry_cnt = cpu_to_le16(1);
+	rc = hwrm_req_send(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -646,9 +813,13 @@ static int bnxt_ets_validate(struct bnxt *bp, struct ieee_ets *ets, u8 *tc)
 {
 	int total_ets_bw = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool zero = false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool zero = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 max_tc = 0;
 	int i;
 
@@ -670,14 +841,19 @@ static int bnxt_ets_validate(struct bnxt *bp, struct ieee_ets *ets, u8 *tc)
 		case IEEE_8021QAZ_TSA_ETS:
 			total_ets_bw += ets->tc_tx_bw[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 			zero = zero || !ets->tc_tx_bw[i];
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			zero = zero || !ets->tc_tx_bw[i];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		default:
 			return -ENOTSUPP;
 		}
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (total_ets_bw > 100) {
 		netdev_warn(bp->dev, "rejecting ETS config exceeding available bandwidth\n");
@@ -691,6 +867,16 @@ static int bnxt_ets_validate(struct bnxt *bp, struct ieee_ets *ets, u8 *tc)
 	if (total_ets_bw > 100)
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (total_ets_bw > 100) {
+		netdev_warn(bp->dev, "rejecting ETS config exceeding available bandwidth\n");
+		return -EINVAL;
+	}
+	if (zero && total_ets_bw == 100) {
+		netdev_warn(bp->dev, "rejecting ETS config starving a TC\n");
+		return -EINVAL;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (max_tc >= bp->max_tc)
 		*tc = bp->max_tc;

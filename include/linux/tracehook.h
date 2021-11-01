@@ -198,10 +198,15 @@ static inline void tracehook_notify_resume(struct pt_regs *regs)
 	mem_cgroup_handle_over_high();
 	blkcg_maybe_throttle_current();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	rseq_handle_notify_resume(NULL, regs);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	rseq_handle_notify_resume(NULL, regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

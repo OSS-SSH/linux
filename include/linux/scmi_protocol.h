@@ -102,12 +102,18 @@ struct scmi_clk_proto_ops {
  * @est_power_get: gets the estimated power cost for a given performance domain
  *	at a given frequency
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @fast_switch_possible: indicates if fast DVFS switching is possible or not
  *	for a given device
  * @power_scale_mw_get: indicates if the power values provided are in milliWatts
  *	or in some other (abstract) scale
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct scmi_perf_proto_ops {
 	int (*limits_set)(const struct scmi_protocol_handle *ph, u32 domain,
@@ -161,10 +167,14 @@ struct scmi_power_proto_ops {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct scmi_sensor_reading  - represent a timestamped read
 =======
  * scmi_sensor_reading  - represent a timestamped read
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct scmi_sensor_reading  - represent a timestamped read
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Used by @reading_get_timestamped method.
  *
@@ -179,10 +189,14 @@ struct scmi_sensor_reading {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct scmi_range_attrs  - specifies a sensor or axis values' range
 =======
  * scmi_range_attrs  - specifies a sensor or axis values' range
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct scmi_range_attrs  - specifies a sensor or axis values' range
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @min_range: The minimum value which can be represented by the sensor/axis.
  * @max_range: The maximum value which can be represented by the sensor/axis.
  */
@@ -193,10 +207,14 @@ struct scmi_range_attrs {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct scmi_sensor_axis_info  - describes one sensor axes
 =======
  * scmi_sensor_axis_info  - describes one sensor axes
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct scmi_sensor_axis_info  - describes one sensor axes
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @id: The axes ID.
  * @type: Axes type. Chosen amongst one of @enum scmi_sensor_class.
  * @scale: Power-of-10 multiplier applied to the axis unit.
@@ -225,12 +243,17 @@ struct scmi_sensor_axis_info {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct scmi_sensor_intervals_info  - describes number and type of available
  *	update intervals
 =======
  * scmi_sensor_intervals_info  - describes number and type of available update
  * intervals
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct scmi_sensor_intervals_info  - describes number and type of available
+ *	update intervals
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @segmented: Flag for segmented intervals' representation. When True there
  *	       will be exactly 3 intervals in @desc, with each entry
  *	       representing a member of a segment in this order:

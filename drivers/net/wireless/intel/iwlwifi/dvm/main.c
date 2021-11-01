@@ -2,10 +2,14 @@
 /******************************************************************************
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright(c) 2003 - 2014, 2018 - 2021  Intel Corporation. All rights reserved.
 =======
  * Copyright(c) 2003 - 2014, 2018 - 2020  Intel Corporation. All rights reserved.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright(c) 2003 - 2014, 2018 - 2021  Intel Corporation. All rights reserved.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Copyright(c) 2015 Intel Deutschland GmbH
  *
  * Portions of this file are derived from the ipw3945 project, as well
@@ -1955,10 +1959,14 @@ static void iwlagn_fw_error(struct iwl_priv *priv, bool ondemand)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void iwl_nic_error(struct iwl_op_mode *op_mode, bool sync)
 =======
 static void iwl_nic_error(struct iwl_op_mode *op_mode)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void iwl_nic_error(struct iwl_op_mode *op_mode, bool sync)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct iwl_priv *priv = IWL_OP_MODE_GET_DVM(op_mode);
 

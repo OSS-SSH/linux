@@ -1820,10 +1820,14 @@ again:
 
 				BUG_ON(PageHighMem(biv.bv_page));
 <<<<<<< HEAD
+<<<<<<< HEAD
 				tag = bvec_virt(&biv);
 =======
 				tag = lowmem_page_address(biv.bv_page) + biv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				tag = bvec_virt(&biv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				this_len = min(biv.bv_len, data_to_process);
 				r = dm_integrity_rw_tag(ic, tag, &dio->metadata_block, &dio->metadata_offset,
 							this_len, dio->op == REQ_OP_READ ? TAG_READ : TAG_WRITE);
@@ -2011,10 +2015,14 @@ retry_kmap:
 					char *tag_addr;
 					BUG_ON(PageHighMem(biv.bv_page));
 <<<<<<< HEAD
+<<<<<<< HEAD
 					tag_addr = bvec_virt(&biv);
 =======
 					tag_addr = lowmem_page_address(biv.bv_page) + biv.bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					tag_addr = bvec_virt(&biv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					if (likely(dio->op == REQ_OP_WRITE))
 						memcpy(tag_ptr, tag_addr, tag_now);
 					else
@@ -3315,6 +3323,9 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
 		break;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case STATUSTYPE_IMA:
 		DMEMIT_TARGET_NAME_VERSION(ti->type);
 		DMEMIT(",dev_name=%s,start=%llu,tag_size=%u,mode=%c",
@@ -3339,8 +3350,11 @@ static void dm_integrity_status(struct dm_target *ti, status_type_t type,
 		DMEMIT(",buffer_sectors=%u", 1U << ic->log2_buffer_sectors);
 		DMEMIT(";");
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

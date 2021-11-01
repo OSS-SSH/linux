@@ -22,6 +22,9 @@
 #include "util/synthetic-events.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct btf * __weak btf__load_from_kernel_by_id(__u32 id)
 {
        struct btf *btf;
@@ -33,8 +36,11 @@ struct btf * __weak btf__load_from_kernel_by_id(__u32 id)
        return err ? ERR_PTR(err) : btf;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ptr_to_u64(ptr)    ((__u64)(unsigned long)(ptr))
 
 static int snprintf_hex(char *buf, size_t size, unsigned char *data, size_t len)
@@ -238,6 +244,7 @@ static int perf_event__synthesize_one_bpf_prog(struct perf_session *session,
 			return -1;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		btf = btf__load_from_kernel_by_id(info->btf_id);
 		if (libbpf_get_error(btf)) {
 			pr_debug("%s: failed to get BTF of id %u, aborting\n", __func__, info->btf_id);
@@ -248,6 +255,12 @@ static int perf_event__synthesize_one_bpf_prog(struct perf_session *session,
 			err = -1;
 			btf = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		btf = btf__load_from_kernel_by_id(info->btf_id);
+		if (libbpf_get_error(btf)) {
+			pr_debug("%s: failed to get BTF of id %u, aborting\n", __func__, info->btf_id);
+			err = -1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out;
 		}
 		perf_env__fetch_btf(env, info->btf_id, btf);
@@ -318,10 +331,14 @@ static int perf_event__synthesize_one_bpf_prog(struct perf_session *session,
 out:
 	free(info_linear);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btf__free(btf);
 =======
 	free(btf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf__free(btf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err ? -1 : 0;
 }
 
@@ -504,11 +521,16 @@ static void perf_env__add_bpf_info(struct perf_env *env, u32 id)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btf = btf__load_from_kernel_by_id(btf_id);
 	if (libbpf_get_error(btf)) {
 =======
 	if (btf__get_from_id(btf_id, &btf)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf = btf__load_from_kernel_by_id(btf_id);
+	if (libbpf_get_error(btf)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_debug("%s: failed to get BTF of id %u, aborting\n",
 			 __func__, btf_id);
 		goto out;
@@ -517,10 +539,14 @@ static void perf_env__add_bpf_info(struct perf_env *env, u32 id)
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btf__free(btf);
 =======
 	free(btf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf__free(btf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	close(fd);
 }
 

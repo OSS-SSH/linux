@@ -336,20 +336,29 @@ static int arm_smmu_cmdq_build_cmd(u64 *cmd, struct arm_smmu_cmdq_ent *ent)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct arm_smmu_cmdq *arm_smmu_get_cmdq(struct arm_smmu_device *smmu)
 {
 	return &smmu->cmdq;
 }
 
+<<<<<<< HEAD
 static void arm_smmu_cmdq_build_sync_cmd(u64 *cmd, struct arm_smmu_device *smmu,
 					 struct arm_smmu_queue *q, u32 prod)
 {
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void arm_smmu_cmdq_build_sync_cmd(u64 *cmd, struct arm_smmu_device *smmu,
-					 u32 prod)
+					 struct arm_smmu_queue *q, u32 prod)
 {
+<<<<<<< HEAD
 	struct arm_smmu_queue *q = &smmu->cmdq.q;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct arm_smmu_cmdq_ent ent = {
 		.opcode = CMDQ_OP_CMD_SYNC,
 	};
@@ -367,11 +376,16 @@ static void arm_smmu_cmdq_build_sync_cmd(u64 *cmd, struct arm_smmu_device *smmu,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu,
 				     struct arm_smmu_queue *q)
 =======
 static void arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu,
+				     struct arm_smmu_queue *q)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	static const char * const cerror_str[] = {
 		[CMDQ_ERR_CERROR_NONE_IDX]	= "No error",
@@ -383,9 +397,12 @@ static void arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu)
 	int i;
 	u64 cmd[CMDQ_ENT_DWORDS];
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct arm_smmu_queue *q = &smmu->cmdq.q;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 cons = readl_relaxed(q->cons_reg);
 	u32 idx = FIELD_GET(CMDQ_CONS_ERR, cons);
 	struct arm_smmu_cmdq_ent cmd_sync = {
@@ -399,9 +416,13 @@ static void arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu)
 	case CMDQ_ERR_CERROR_ABT_IDX:
 		dev_err(smmu->dev, "retrying command fetch\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CMDQ_ERR_CERROR_NONE_IDX:
 		return;
 	case CMDQ_ERR_CERROR_ATC_INV_IDX:
@@ -436,13 +457,19 @@ static void arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu)
 {
 	__arm_smmu_cmdq_skip_err(smmu, &smmu->cmdq.q);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Command queue locking.
  * This is a form of bastardised rwlock with the following major changes:
@@ -610,10 +637,14 @@ static int arm_smmu_cmdq_poll_until_not_full(struct arm_smmu_device *smmu,
 	unsigned long flags;
 	struct arm_smmu_queue_poll qp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
 =======
 	struct arm_smmu_cmdq *cmdq = &smmu->cmdq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	/*
@@ -630,10 +661,14 @@ static int arm_smmu_cmdq_poll_until_not_full(struct arm_smmu_device *smmu,
 	queue_poll_init(smmu, &qp);
 	do {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		llq->val = READ_ONCE(cmdq->q.llq.val);
 =======
 		llq->val = READ_ONCE(smmu->cmdq.q.llq.val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		llq->val = READ_ONCE(cmdq->q.llq.val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!queue_full(llq))
 			break;
 
@@ -653,10 +688,14 @@ static int __arm_smmu_cmdq_poll_until_msi(struct arm_smmu_device *smmu,
 	int ret = 0;
 	struct arm_smmu_queue_poll qp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
 =======
 	struct arm_smmu_cmdq *cmdq = &smmu->cmdq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 *cmd = (u32 *)(Q_ENT(&cmdq->q, llq->prod));
 
 	queue_poll_init(smmu, &qp);
@@ -680,19 +719,27 @@ static int __arm_smmu_cmdq_poll_until_consumed(struct arm_smmu_device *smmu,
 {
 	struct arm_smmu_queue_poll qp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
 =======
 	struct arm_smmu_cmdq *cmdq = &smmu->cmdq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 prod = llq->prod;
 	int ret = 0;
 
 	queue_poll_init(smmu, &qp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	llq->val = READ_ONCE(cmdq->q.llq.val);
 =======
 	llq->val = READ_ONCE(smmu->cmdq.q.llq.val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	llq->val = READ_ONCE(cmdq->q.llq.val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	do {
 		if (queue_consumed(llq, prod))
 			break;
@@ -783,6 +830,7 @@ static int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
 	unsigned long flags;
 	bool owner;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
 	struct arm_smmu_ll_queue llq, head;
 	int ret = 0;
@@ -797,6 +845,14 @@ static int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
 	int ret = 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq *cmdq = arm_smmu_get_cmdq(smmu);
+	struct arm_smmu_ll_queue llq, head;
+	int ret = 0;
+
+	llq.max_n_shift = cmdq->q.llq.max_n_shift;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* 1. Allocate some space in the queue */
 	local_irq_save(flags);
 	llq.val = READ_ONCE(cmdq->q.llq.val);
@@ -832,10 +888,14 @@ static int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
 	if (sync) {
 		prod = queue_inc_prod_n(&llq, n);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		arm_smmu_cmdq_build_sync_cmd(cmd_sync, smmu, &cmdq->q, prod);
 =======
 		arm_smmu_cmdq_build_sync_cmd(cmd_sync, smmu, prod);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		arm_smmu_cmdq_build_sync_cmd(cmd_sync, smmu, &cmdq->q, prod);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		queue_write(Q_ENT(&cmdq->q, prod), cmd_sync, CMDQ_ENT_DWORDS);
 
 		/*
@@ -909,6 +969,7 @@ static int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
 				     struct arm_smmu_cmdq_ent *ent,
 				     bool sync)
@@ -916,6 +977,11 @@ static int __arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
 static int arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
 				   struct arm_smmu_cmdq_ent *ent)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
+				     struct arm_smmu_cmdq_ent *ent,
+				     bool sync)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u64 cmd[CMDQ_ENT_DWORDS];
 
@@ -925,6 +991,7 @@ static int arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return arm_smmu_cmdq_issue_cmdlist(smmu, cmd, 1, sync);
 }
@@ -941,12 +1008,26 @@ static int arm_smmu_cmdq_issue_cmd_with_sync(struct arm_smmu_device *smmu,
 	return __arm_smmu_cmdq_issue_cmd(smmu, ent, true);
 =======
 	return arm_smmu_cmdq_issue_cmdlist(smmu, cmd, 1, false);
+=======
+	return arm_smmu_cmdq_issue_cmdlist(smmu, cmd, 1, sync);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
-static int arm_smmu_cmdq_issue_sync(struct arm_smmu_device *smmu)
+static int arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
+				   struct arm_smmu_cmdq_ent *ent)
 {
+<<<<<<< HEAD
 	return arm_smmu_cmdq_issue_cmdlist(smmu, NULL, 0, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return __arm_smmu_cmdq_issue_cmd(smmu, ent, false);
+}
+
+static int arm_smmu_cmdq_issue_cmd_with_sync(struct arm_smmu_device *smmu,
+					     struct arm_smmu_cmdq_ent *ent)
+{
+	return __arm_smmu_cmdq_issue_cmd(smmu, ent, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void arm_smmu_cmdq_batch_add(struct arm_smmu_device *smmu,
@@ -1015,11 +1096,15 @@ void arm_smmu_tlb_inv_asid(struct arm_smmu_device *smmu, u16 asid)
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 =======
 	arm_smmu_cmdq_issue_cmd(smmu, &cmd);
 	arm_smmu_cmdq_issue_sync(smmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void arm_smmu_sync_cd(struct arm_smmu_domain *smmu_domain,
@@ -1029,10 +1114,14 @@ static void arm_smmu_sync_cd(struct arm_smmu_domain *smmu_domain,
 	unsigned long flags;
 	struct arm_smmu_master *master;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq_batch cmds;
 =======
 	struct arm_smmu_cmdq_batch cmds = {};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq_batch cmds;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct arm_smmu_device *smmu = smmu_domain->smmu;
 	struct arm_smmu_cmdq_ent cmd = {
 		.opcode	= CMDQ_OP_CFGI_CD,
@@ -1043,10 +1132,15 @@ static void arm_smmu_sync_cd(struct arm_smmu_domain *smmu_domain,
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cmds.num = 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cmds.num = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
 	list_for_each_entry(master, &smmu_domain->devices, domain_head) {
 		for (i = 0; i < master->num_streams; i++) {
@@ -1310,11 +1404,15 @@ static void arm_smmu_sync_ste_for_sid(struct arm_smmu_device *smmu, u32 sid)
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 =======
 	arm_smmu_cmdq_issue_cmd(smmu, &cmd);
 	arm_smmu_cmdq_issue_sync(smmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
@@ -1850,14 +1948,19 @@ static int arm_smmu_atc_inv_master(struct arm_smmu_master *master)
 	int i;
 	struct arm_smmu_cmdq_ent cmd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq_batch cmds = {};
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq_batch cmds = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	arm_smmu_atc_inv_to_cmd(0, 0, 0, &cmd);
 
 	for (i = 0; i < master->num_streams; i++) {
 		cmd.atc.sid = master->streams[i].id;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		arm_smmu_cmdq_batch_add(master->smmu, &cmds, &cmd);
 	}
@@ -1869,6 +1972,12 @@ static int arm_smmu_atc_inv_master(struct arm_smmu_master *master)
 
 	return arm_smmu_cmdq_issue_sync(master->smmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		arm_smmu_cmdq_batch_add(master->smmu, &cmds, &cmd);
+	}
+
+	return arm_smmu_cmdq_batch_submit(master->smmu, &cmds);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int arm_smmu_atc_inv_domain(struct arm_smmu_domain *smmu_domain, int ssid,
@@ -1879,10 +1988,14 @@ int arm_smmu_atc_inv_domain(struct arm_smmu_domain *smmu_domain, int ssid,
 	struct arm_smmu_cmdq_ent cmd;
 	struct arm_smmu_master *master;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq_batch cmds;
 =======
 	struct arm_smmu_cmdq_batch cmds = {};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq_batch cmds;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_ATS))
 		return 0;
@@ -1907,10 +2020,15 @@ int arm_smmu_atc_inv_domain(struct arm_smmu_domain *smmu_domain, int ssid,
 	arm_smmu_atc_inv_to_cmd(ssid, iova, size, &cmd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cmds.num = 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cmds.num = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
 	list_for_each_entry(master, &smmu_domain->devices, domain_head) {
 		if (!master->ats_enabled)
@@ -1946,11 +2064,15 @@ static void arm_smmu_tlb_inv_context(void *cookie)
 		cmd.opcode	= CMDQ_OP_TLBI_S12_VMALL;
 		cmd.tlbi.vmid	= smmu_domain->s2_cfg.vmid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 =======
 		arm_smmu_cmdq_issue_cmd(smmu, &cmd);
 		arm_smmu_cmdq_issue_sync(smmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	arm_smmu_atc_inv_domain(smmu_domain, 0, 0, 0);
 }
@@ -1964,10 +2086,14 @@ static void __arm_smmu_tlb_inv_range(struct arm_smmu_cmdq_ent *cmd,
 	unsigned long end = iova + size, num_pages = 0, tg = 0;
 	size_t inv_range = granule;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct arm_smmu_cmdq_batch cmds;
 =======
 	struct arm_smmu_cmdq_batch cmds = {};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct arm_smmu_cmdq_batch cmds;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!size)
 		return;
@@ -1986,10 +2112,15 @@ static void __arm_smmu_tlb_inv_range(struct arm_smmu_cmdq_ent *cmd,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cmds.num = 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cmds.num = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (iova < end) {
 		if (smmu->features & ARM_SMMU_FEAT_RANGE_INV) {
 			/*
@@ -2108,9 +2239,13 @@ static struct iommu_domain *arm_smmu_domain_alloc(unsigned type)
 	if (type != IOMMU_DOMAIN_UNMANAGED &&
 	    type != IOMMU_DOMAIN_DMA &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    type != IOMMU_DOMAIN_DMA_FQ &&
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    type != IOMMU_DOMAIN_DMA_FQ &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    type != IOMMU_DOMAIN_IDENTITY)
 		return NULL;
 
@@ -2124,6 +2259,7 @@ static struct iommu_domain *arm_smmu_domain_alloc(unsigned type)
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (type == IOMMU_DOMAIN_DMA &&
 	    iommu_get_dma_cookie(&smmu_domain->domain)) {
@@ -2132,6 +2268,8 @@ static struct iommu_domain *arm_smmu_domain_alloc(unsigned type)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&smmu_domain->init_mutex);
 	INIT_LIST_HEAD(&smmu_domain->devices);
 	spin_lock_init(&smmu_domain->devices_lock);
@@ -2164,9 +2302,12 @@ static void arm_smmu_domain_free(struct iommu_domain *domain)
 	struct arm_smmu_device *smmu = smmu_domain->smmu;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	iommu_put_dma_cookie(domain);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free_io_pgtable_ops(smmu_domain->pgtbl_ops);
 
 	/* Free the CD and ASID, if we allocated them */
@@ -2327,11 +2468,14 @@ static int arm_smmu_domain_finalise(struct iommu_domain *domain,
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iommu_get_dma_strict(domain))
 		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pgtbl_ops = alloc_io_pgtable_ops(fmt, &pgtbl_cfg, smmu_domain);
 	if (!pgtbl_ops)
 		return -ENOMEM;
@@ -2588,6 +2732,7 @@ out_unlock:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int arm_smmu_map_pages(struct iommu_domain *domain, unsigned long iova,
 			      phys_addr_t paddr, size_t pgsize, size_t pgcount,
 			      int prot, gfp_t gfp, size_t *mapped)
@@ -2595,12 +2740,18 @@ static int arm_smmu_map_pages(struct iommu_domain *domain, unsigned long iova,
 static int arm_smmu_map(struct iommu_domain *domain, unsigned long iova,
 			phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int arm_smmu_map_pages(struct iommu_domain *domain, unsigned long iova,
+			      phys_addr_t paddr, size_t pgsize, size_t pgcount,
+			      int prot, gfp_t gfp, size_t *mapped)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct io_pgtable_ops *ops = to_smmu_domain(domain)->pgtbl_ops;
 
 	if (!ops)
 		return -ENODEV;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return ops->map_pages(ops, iova, paddr, pgsize, pgcount, prot, gfp, mapped);
 }
@@ -2615,6 +2766,14 @@ static size_t arm_smmu_unmap_pages(struct iommu_domain *domain, unsigned long io
 static size_t arm_smmu_unmap(struct iommu_domain *domain, unsigned long iova,
 			     size_t size, struct iommu_iotlb_gather *gather)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ops->map_pages(ops, iova, paddr, pgsize, pgcount, prot, gfp, mapped);
+}
+
+static size_t arm_smmu_unmap_pages(struct iommu_domain *domain, unsigned long iova,
+				   size_t pgsize, size_t pgcount,
+				   struct iommu_iotlb_gather *gather)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
 	struct io_pgtable_ops *ops = smmu_domain->pgtbl_ops;
@@ -2623,10 +2782,14 @@ static size_t arm_smmu_unmap(struct iommu_domain *domain, unsigned long iova,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ops->unmap_pages(ops, iova, pgsize, pgcount, gather);
 =======
 	return ops->unmap(ops, iova, size, gather);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ops->unmap_pages(ops, iova, pgsize, pgcount, gather);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void arm_smmu_flush_iotlb_all(struct iommu_domain *domain)
@@ -2656,11 +2819,14 @@ arm_smmu_iova_to_phys(struct iommu_domain *domain, dma_addr_t iova)
 	struct io_pgtable_ops *ops = to_smmu_domain(domain)->pgtbl_ops;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (domain->type == IOMMU_DOMAIN_IDENTITY)
 		return iova;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ops)
 		return 0;
 
@@ -2996,12 +3162,17 @@ static struct iommu_ops arm_smmu_ops = {
 	.domain_free		= arm_smmu_domain_free,
 	.attach_dev		= arm_smmu_attach_dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.map_pages		= arm_smmu_map_pages,
 	.unmap_pages		= arm_smmu_unmap_pages,
 =======
 	.map			= arm_smmu_map,
 	.unmap			= arm_smmu_unmap,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.map_pages		= arm_smmu_map_pages,
+	.unmap_pages		= arm_smmu_unmap_pages,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.flush_iotlb_all	= arm_smmu_flush_iotlb_all,
 	.iotlb_sync		= arm_smmu_iotlb_sync,
 	.iova_to_phys		= arm_smmu_iova_to_phys,
@@ -3514,15 +3685,20 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu, bool bypass)
 	/* Invalidate any cached configuration */
 	cmd.opcode = CMDQ_OP_CFGI_ALL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 =======
 	arm_smmu_cmdq_issue_cmd(smmu, &cmd);
 	arm_smmu_cmdq_issue_sync(smmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Invalidate any stale TLB entries */
 	if (smmu->features & ARM_SMMU_FEAT_HYP) {
 		cmd.opcode = CMDQ_OP_TLBI_EL2_ALL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 	}
@@ -3537,6 +3713,13 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu, bool bypass)
 	arm_smmu_cmdq_issue_cmd(smmu, &cmd);
 	arm_smmu_cmdq_issue_sync(smmu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
+	}
+
+	cmd.opcode = CMDQ_OP_TLBI_NSNH_ALL;
+	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Event queue */
 	writeq_relaxed(smmu->evtq.q.q_base, smmu->base + ARM_SMMU_EVTQ_BASE);

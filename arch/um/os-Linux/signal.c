@@ -68,10 +68,14 @@ int signals_enabled;
 static int signals_blocked;
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define signals_blocked 0
 =======
 #define signals_blocked false
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define signals_blocked 0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 static unsigned int signals_pending;
 static unsigned int signals_active = 0;

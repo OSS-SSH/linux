@@ -12,10 +12,14 @@ config USB_OHCI_BIG_ENDIAN_MMIO
 config USB_OHCI_LITTLE_ENDIAN
 	bool
 <<<<<<< HEAD
+<<<<<<< HEAD
 	default n if PPC_MPC52xx
 =======
 	default n if STB03xxx || PPC_MPC52xx
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	default n if PPC_MPC52xx
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default y
 
 config USB_EHCI_BIG_ENDIAN_MMIO

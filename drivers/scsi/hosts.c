@@ -489,9 +489,13 @@ struct Scsi_Host *scsi_host_alloc(struct scsi_host_template *sht, int privsize)
 			"error handler thread failed to spawn, error = %ld\n",
 			PTR_ERR(shost->ehandler));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		shost->ehandler = NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		shost->ehandler = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto fail;
 	}
 

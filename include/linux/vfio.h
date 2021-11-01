@@ -16,6 +16,9 @@
 #include <uapi/linux/vfio.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * VFIO devices can be placed in a set, this allows all devices to share this
  * structure and the VFIO core will provide a lock that is held around
@@ -28,24 +31,33 @@ struct vfio_device_set {
 	unsigned int device_count;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct vfio_device {
 	struct device *dev;
 	const struct vfio_device_ops *ops;
 	struct vfio_group *group;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct vfio_device_set *dev_set;
 	struct list_head dev_set_list;
 
 	/* Members below here are private, not for driver use */
 	refcount_t refcount;
 	unsigned int open_count;
+<<<<<<< HEAD
 =======
 
 	/* Members below here are private, not for driver use */
 	refcount_t refcount;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct completion comp;
 	struct list_head group_next;
 };
@@ -54,12 +66,17 @@ struct vfio_device {
  * struct vfio_device_ops - VFIO bus driver device callbacks
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @open_device: Called when the first file descriptor is opened for this device
  * @close_device: Opposite of open_device
 =======
  * @open: Called when userspace creates new file descriptor for device
  * @release: Called when userspace releases file descriptor for device
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @open_device: Called when the first file descriptor is opened for this device
+ * @close_device: Opposite of open_device
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @read: Perform read(2) on device file descriptor
  * @write: Perform write(2) on device file descriptor
  * @ioctl: Perform ioctl(2) on device file descriptor, supporting VFIO_DEVICE_*
@@ -73,12 +90,17 @@ struct vfio_device {
 struct vfio_device_ops {
 	char	*name;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int	(*open_device)(struct vfio_device *vdev);
 	void	(*close_device)(struct vfio_device *vdev);
 =======
 	int	(*open)(struct vfio_device *vdev);
 	void	(*release)(struct vfio_device *vdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int	(*open_device)(struct vfio_device *vdev);
+	void	(*close_device)(struct vfio_device *vdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t	(*read)(struct vfio_device *vdev, char __user *buf,
 			size_t count, loff_t *ppos);
 	ssize_t	(*write)(struct vfio_device *vdev, const char __user *buf,
@@ -96,19 +118,28 @@ extern void vfio_iommu_group_put(struct iommu_group *group, struct device *dev);
 void vfio_init_group_dev(struct vfio_device *device, struct device *dev,
 			 const struct vfio_device_ops *ops);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void vfio_uninit_group_dev(struct vfio_device *device);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void vfio_uninit_group_dev(struct vfio_device *device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int vfio_register_group_dev(struct vfio_device *device);
 void vfio_unregister_group_dev(struct vfio_device *device);
 extern struct vfio_device *vfio_device_get_from_dev(struct device *dev);
 extern void vfio_device_put(struct vfio_device *device);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int vfio_assign_device_set(struct vfio_device *device, void *set_id);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int vfio_assign_device_set(struct vfio_device *device, void *set_id);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* events for the backend driver notify callback */
 enum vfio_iommu_notify_type {
 	VFIO_IOMMU_CONTAINER_CLOSE = 0,

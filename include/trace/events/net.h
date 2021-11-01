@@ -137,10 +137,14 @@ DECLARE_EVENT_CLASS(net_dev_template,
 	),
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	TP_printk("dev=%s skbaddr=%px len=%u",
 =======
 	TP_printk("dev=%s skbaddr=%p len=%u",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_printk("dev=%s skbaddr=%px len=%u",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__get_str(name), __entry->skbaddr, __entry->len)
 )
 

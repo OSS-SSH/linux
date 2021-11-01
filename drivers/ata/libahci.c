@@ -126,9 +126,13 @@ struct device_attribute *ahci_sdev_attrs[] = {
 	&dev_attr_sw_activity,
 	&dev_attr_unload_heads,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	&dev_attr_ncq_prio_supported,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_ncq_prio_supported,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	&dev_attr_ncq_prio_enable,
 	NULL
 };

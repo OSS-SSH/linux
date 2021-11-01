@@ -55,10 +55,14 @@ ga100_top_oneinit(struct nvkm_top *top)
 			break;
 		case 2:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			info->runlist = (data & 0x00fffc00);
 =======
 			info->runlist = (data & 0x0000fc00) >> 10;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			info->runlist = (data & 0x00fffc00);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			info->engine  = (data & 0x00000003);
 			break;
 		default:
@@ -90,6 +94,7 @@ ga100_top_oneinit(struct nvkm_top *top)
 
 		nvkm_debug(subdev, "%02x.%d (%8s): addr %06x fault %2d "
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   "runlist %6x engine %2d reset %2d\n", type, inst,
 			   info->type == NVKM_SUBDEV_NR ? "????????" : nvkm_subdev_type[info->type],
 			   info->addr, info->fault, info->runlist < 0 ? 0 : info->runlist,
@@ -99,6 +104,12 @@ ga100_top_oneinit(struct nvkm_top *top)
 			   info->type == NVKM_SUBDEV_NR ? "????????" : nvkm_subdev_type[info->type],
 			   info->addr, info->fault, info->runlist, info->engine, info->reset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   "runlist %6x engine %2d reset %2d\n", type, inst,
+			   info->type == NVKM_SUBDEV_NR ? "????????" : nvkm_subdev_type[info->type],
+			   info->addr, info->fault, info->runlist < 0 ? 0 : info->runlist,
+			   info->engine, info->reset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		info = NULL;
 	}
 

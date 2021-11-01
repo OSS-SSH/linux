@@ -322,9 +322,13 @@ static DEFINE_MUTEX(flow_indr_block_lock);
 static LIST_HEAD(flow_block_indr_list);
 static LIST_HEAD(flow_block_indr_dev_list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static LIST_HEAD(flow_indir_dev_list);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static LIST_HEAD(flow_indir_dev_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct flow_indr_dev {
 	struct list_head		list;
@@ -332,9 +336,12 @@ struct flow_indr_dev {
 	void				*cb_priv;
 	refcount_t			refcnt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct rcu_head			rcu;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct flow_indr_dev *flow_indr_dev_alloc(flow_indr_block_bind_cb_t *cb,
@@ -354,6 +361,9 @@ static struct flow_indr_dev *flow_indr_dev_alloc(flow_indr_block_bind_cb_t *cb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct flow_indir_dev_info {
 	void *data;
 	struct net_device *dev;
@@ -381,8 +391,11 @@ static void existing_qdiscs_register(flow_indr_block_bind_cb_t *cb, void *cb_pri
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int flow_indr_dev_register(flow_indr_block_bind_cb_t *cb, void *cb_priv)
 {
 	struct flow_indr_dev *indr_dev;
@@ -405,9 +418,13 @@ int flow_indr_dev_register(flow_indr_block_bind_cb_t *cb, void *cb_priv)
 
 	list_add(&indr_dev->list, &flow_block_indr_dev_list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	existing_qdiscs_register(cb, cb_priv);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	existing_qdiscs_register(cb, cb_priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&flow_indr_block_lock);
 
 	return 0;
@@ -505,6 +522,9 @@ out:
 EXPORT_SYMBOL(flow_indr_block_cb_alloc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct flow_indir_dev_info *find_indir_dev(void *data)
 {
 	struct flow_indir_dev_info *cur;
@@ -558,9 +578,12 @@ static int indir_dev_remove(void *data)
 }
 
 int flow_indr_dev_setup_offload(struct net_device *dev,	struct Qdisc *sch,
+<<<<<<< HEAD
 =======
 int flow_indr_dev_setup_offload(struct net_device *dev, struct Qdisc *sch,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				enum tc_setup_type type, void *data,
 				struct flow_block_offload *bo,
 				void (*cleanup)(struct flow_block_cb *block_cb))
@@ -569,14 +592,20 @@ int flow_indr_dev_setup_offload(struct net_device *dev, struct Qdisc *sch,
 
 	mutex_lock(&flow_indr_block_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (bo->command == FLOW_BLOCK_BIND)
 		indir_dev_add(data, dev, sch, type, cleanup, bo);
 	else if (bo->command == FLOW_BLOCK_UNBIND)
 		indir_dev_remove(data);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(this, &flow_block_indr_dev_list, list)
 		this->cb(dev, sch, this->cb_priv, type, bo, data, cleanup);
 

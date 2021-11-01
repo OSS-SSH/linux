@@ -169,6 +169,7 @@ static int snd_sbdsp_probe(struct snd_sb * chip)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int snd_sbdsp_free(struct snd_sb *chip)
 {
@@ -196,6 +197,8 @@ static int snd_sbdsp_dev_free(struct snd_device *device)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int snd_sbdsp_create(struct snd_card *card,
 		     unsigned long port,
 		     int irq,
@@ -208,15 +211,19 @@ int snd_sbdsp_create(struct snd_card *card,
 	struct snd_sb *chip;
 	int err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	static const struct snd_device_ops ops = {
 		.dev_free =	snd_sbdsp_dev_free,
 	};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (snd_BUG_ON(!r_chip))
 		return -EINVAL;
 	*r_chip = NULL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	chip = devm_kzalloc(card->dev, sizeof(*chip), GFP_KERNEL);
 	if (!chip)
@@ -224,6 +231,10 @@ int snd_sbdsp_create(struct snd_card *card,
 	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
 	if (chip == NULL)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chip = devm_kzalloc(card->dev, sizeof(*chip), GFP_KERNEL);
+	if (!chip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 	spin_lock_init(&chip->reg_lock);
 	spin_lock_init(&chip->open_lock);
@@ -235,11 +246,15 @@ int snd_sbdsp_create(struct snd_card *card,
 	chip->port = port;
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (devm_request_irq(card->dev, irq, irq_handler,
 			     (hardware == SB_HW_ALS4000 ||
 			      hardware == SB_HW_CS5530) ?
 			     IRQF_SHARED : 0,
 			     "SoundBlaster", (void *) chip)) {
+<<<<<<< HEAD
 		snd_printk(KERN_ERR "sb: can't grab irq %d\n", irq);
 =======
 	if (request_irq(irq, irq_handler,
@@ -250,6 +265,9 @@ int snd_sbdsp_create(struct snd_card *card,
 		snd_printk(KERN_ERR "sb: can't grab irq %d\n", irq);
 		snd_sbdsp_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		snd_printk(KERN_ERR "sb: can't grab irq %d\n", irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->irq = irq;
@@ -258,6 +276,7 @@ int snd_sbdsp_create(struct snd_card *card,
 	if (hardware == SB_HW_ALS4000)
 		goto __skip_allocation;
 	
+<<<<<<< HEAD
 <<<<<<< HEAD
 	chip->res_port = devm_request_region(card->dev, port, 16,
 					     "SoundBlaster");
@@ -269,10 +288,17 @@ int snd_sbdsp_create(struct snd_card *card,
 		snd_printk(KERN_ERR "sb: can't grab port 0x%lx\n", port);
 		snd_sbdsp_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chip->res_port = devm_request_region(card->dev, port, 16,
+					     "SoundBlaster");
+	if (!chip->res_port) {
+		snd_printk(KERN_ERR "sb: can't grab port 0x%lx\n", port);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 
 #ifdef CONFIG_ISA
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (dma8 >= 0 && snd_devm_request_dma(card->dev, dma8,
 					      "SoundBlaster - 8bit")) {
@@ -282,6 +308,11 @@ int snd_sbdsp_create(struct snd_card *card,
 		snd_printk(KERN_ERR "sb: can't grab DMA8 %d\n", dma8);
 		snd_sbdsp_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dma8 >= 0 && snd_devm_request_dma(card->dev, dma8,
+					      "SoundBlaster - 8bit")) {
+		snd_printk(KERN_ERR "sb: can't grab DMA8 %d\n", dma8);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->dma8 = dma8;
@@ -289,6 +320,7 @@ int snd_sbdsp_create(struct snd_card *card,
 		if (hardware != SB_HW_ALS100 && (dma16 < 5 || dma16 > 7)) {
 			/* no duplex */
 			dma16 = -1;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		} else if (snd_devm_request_dma(card->dev, dma16,
 						"SoundBlaster - 16bit")) {
@@ -298,6 +330,11 @@ int snd_sbdsp_create(struct snd_card *card,
 			snd_printk(KERN_ERR "sb: can't grab DMA16 %d\n", dma16);
 			snd_sbdsp_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		} else if (snd_devm_request_dma(card->dev, dma16,
+						"SoundBlaster - 16bit")) {
+			snd_printk(KERN_ERR "sb: can't grab DMA16 %d\n", dma16);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EBUSY;
 		}
 	}
@@ -308,6 +345,7 @@ int snd_sbdsp_create(struct snd_card *card,
 	chip->card = card;
 	chip->hardware = hardware;
 	err = snd_sbdsp_probe(chip);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err < 0)
 		return err;
@@ -322,6 +360,10 @@ int snd_sbdsp_create(struct snd_card *card,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*r_chip = chip;
 	return 0;
 }

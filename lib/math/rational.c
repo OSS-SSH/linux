@@ -14,9 +14,13 @@
 #include <linux/minmax.h>
 #include <linux/limits.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/module.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/module.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * calculate best rational approximation for a given fraction
@@ -111,7 +115,12 @@ void rational_best_approximation(
 
 EXPORT_SYMBOL(rational_best_approximation);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 MODULE_LICENSE("GPL v2");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+MODULE_LICENSE("GPL v2");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

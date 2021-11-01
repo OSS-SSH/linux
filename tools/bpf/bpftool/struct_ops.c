@@ -573,12 +573,17 @@ static int do_help(int argc, char **argv)
 		"       %1$s %2$s help\n"
 		"\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"       STRUCT_OPS_MAP := [ id STRUCT_OPS_MAP_ID | name STRUCT_OPS_MAP_NAME ]\n"
 		"       " HELP_SPEC_OPTIONS " }\n"
 =======
 		"       OPTIONS := { {-j|--json} [{-p|--pretty}] }\n"
 		"       STRUCT_OPS_MAP := [ id STRUCT_OPS_MAP_ID | name STRUCT_OPS_MAP_NAME ]\n"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"       STRUCT_OPS_MAP := [ id STRUCT_OPS_MAP_ID | name STRUCT_OPS_MAP_NAME ]\n"
+		"       " HELP_SPEC_OPTIONS " }\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"",
 		bin_name, argv[-2]);
 

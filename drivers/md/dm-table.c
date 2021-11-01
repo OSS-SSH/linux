@@ -810,6 +810,7 @@ int device_not_dax_capable(struct dm_target *ti, struct dm_dev *dev,
 			sector_t start, sector_t len, void *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int blocksize = *(int *) data;
 
 	return !dax_supported(dev->dax_dev, dev->bdev, blocksize, start, len);
@@ -823,6 +824,11 @@ int device_not_dax_capable(struct dm_target *ti, struct dm_dev *dev,
 
 	return rc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int blocksize = *(int *) data;
+
+	return !dax_supported(dev->dax_dev, dev->bdev, blocksize, start, len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Check devices support synchronous DAX */
@@ -2083,10 +2089,14 @@ int dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
 
 	dm_update_keyslot_manager(q, t);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	disk_update_readahead(t->md->disk);
 =======
 	blk_queue_update_readahead(q);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disk_update_readahead(t->md->disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

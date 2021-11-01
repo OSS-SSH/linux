@@ -67,10 +67,14 @@ extern unsigned int kvm_sve_max_vl;
 int kvm_arm_init_sve(void);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 u32 __attribute_const__ kvm_target_cpu(void);
 =======
 int __attribute_const__ kvm_target_cpu(void);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u32 __attribute_const__ kvm_target_cpu(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int kvm_reset_vcpu(struct kvm_vcpu *vcpu);
 void kvm_arm_vcpu_destroy(struct kvm_vcpu *vcpu);
 
@@ -190,9 +194,12 @@ enum vcpu_sysreg {
 	PMINTENSET_EL1,	/* Interrupt Enable Set Register */
 	PMOVSSET_EL0,	/* Overflow Flag Status Set Register */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	PMSWINC_EL0,	/* Software Increment Register */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	PMUSERENR_EL0,	/* User Enable Register */
 
 	/* Pointer Authentication Registers in a strict increasing order. */
@@ -295,6 +302,7 @@ struct kvm_vcpu_arch {
 	struct kvm_s2_mmu *hw_mmu;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Values of trap registers for the guest. */
 	u64 hcr_el2;
 	u64 mdcr_el2;
@@ -307,6 +315,15 @@ struct kvm_vcpu_arch {
 	u64 hcr_el2;
 	u32 mdcr_el2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Values of trap registers for the guest. */
+	u64 hcr_el2;
+	u64 mdcr_el2;
+	u64 cptr_el2;
+
+	/* Values of trap registers for the host before guest entry. */
+	u64 mdcr_el2_host;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Exception Information */
 	struct kvm_vcpu_fault_info fault;
@@ -594,9 +611,13 @@ struct kvm_vcpu_stat {
 	u64 mmio_exit_user;
 	u64 mmio_exit_kernel;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 signal_exits;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 signal_exits;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 exits;
 };
 
@@ -793,13 +814,19 @@ void kvm_arch_free_vm(struct kvm *kvm);
 int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool kvm_vm_is_protected(struct kvm *kvm)
 {
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature);
 bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
 

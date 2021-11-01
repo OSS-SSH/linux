@@ -389,9 +389,12 @@ static void _kvm_vz_restore_htimer(struct kvm_vcpu *vcpu,
 {
 	u32 start_count, after_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ktime_t freeze_time;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 
 	/*
@@ -400,10 +403,14 @@ static void _kvm_vz_restore_htimer(struct kvm_vcpu *vcpu,
 	 */
 	local_irq_save(flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kvm_mips_freeze_hrtimer(vcpu, &start_count);
 =======
 	freeze_time = kvm_mips_freeze_hrtimer(vcpu, &start_count);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kvm_mips_freeze_hrtimer(vcpu, &start_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	write_c0_gtoffset(start_count - read_c0_count());
 	local_irq_restore(flags);
 

@@ -73,12 +73,16 @@ struct nf_ct_event {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct nf_exp_event {
 	struct nf_conntrack_expect *exp;
 	u32 portid;
 	int report;
 };
 
+<<<<<<< HEAD
 struct nf_ct_event_notifier {
 	int (*ct_event)(unsigned int events, const struct nf_ct_event *item);
 	int (*exp_event)(unsigned int events, const struct nf_exp_event *item);
@@ -88,15 +92,24 @@ void nf_conntrack_register_notifier(struct net *net,
 				   const struct nf_ct_event_notifier *nb);
 void nf_conntrack_unregister_notifier(struct net *net);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct nf_ct_event_notifier {
-	int (*fcn)(unsigned int events, struct nf_ct_event *item);
+	int (*ct_event)(unsigned int events, const struct nf_ct_event *item);
+	int (*exp_event)(unsigned int events, const struct nf_exp_event *item);
 };
 
+<<<<<<< HEAD
 int nf_conntrack_register_notifier(struct net *net,
 				   struct nf_ct_event_notifier *nb);
 void nf_conntrack_unregister_notifier(struct net *net,
 				      struct nf_ct_event_notifier *nb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nf_conntrack_register_notifier(struct net *net,
+				   const struct nf_ct_event_notifier *nb);
+void nf_conntrack_unregister_notifier(struct net *net);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void nf_ct_deliver_cached_events(struct nf_conn *ct);
 int nf_conntrack_eventmask_report(unsigned int eventmask, struct nf_conn *ct,
@@ -169,6 +182,7 @@ nf_conntrack_event(enum ip_conntrack_events event, struct nf_conn *ct)
 
 #ifdef CONFIG_NF_CONNTRACK_EVENTS
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 struct nf_exp_event {
@@ -187,6 +201,8 @@ void nf_ct_expect_unregister_notifier(struct net *net,
 				      struct nf_exp_event_notifier *nb);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void nf_ct_expect_event_report(enum ip_conntrack_expect_events event,
 			       struct nf_conntrack_expect *exp,
 			       u32 portid, int report);

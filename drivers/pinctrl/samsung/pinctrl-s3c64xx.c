@@ -415,10 +415,14 @@ static void s3c64xx_eint_gpio_irq(struct irq_desc *desc)
 		unsigned int group;
 		unsigned int pin;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		int ret;
 =======
 		unsigned int virq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		svc = readl(drvdata->virt_base + SERVICE_REG);
 		group = SVC_GROUP(svc);
@@ -436,14 +440,19 @@ static void s3c64xx_eint_gpio_irq(struct irq_desc *desc)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = generic_handle_domain_irq(data->domains[group], pin);
 =======
 		virq = irq_linear_revmap(data->domains[group], pin);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = generic_handle_domain_irq(data->domains[group], pin);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Something must be really wrong if an unmapped EINT
 		 * was unmasked...
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		BUG_ON(ret);
 =======
@@ -451,6 +460,9 @@ static void s3c64xx_eint_gpio_irq(struct irq_desc *desc)
 
 		generic_handle_irq(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUG_ON(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while (1);
 
 	chained_irq_exit(chip, desc);
@@ -620,6 +632,7 @@ static inline void s3c64xx_irq_demux_eint(struct irq_desc *desc, u32 range)
 
 	while (pend) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned int irq;
 		int ret;
 
@@ -633,10 +646,19 @@ static inline void s3c64xx_irq_demux_eint(struct irq_desc *desc, u32 range)
 		pend &= ~(1 << irq);
 		virq = irq_linear_revmap(data->domains[irq], data->pins[irq]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned int irq;
+		int ret;
+
+		irq = fls(pend) - 1;
+		pend &= ~(1 << irq);
+		ret = generic_handle_domain_irq(data->domains[irq], data->pins[irq]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Something must be really wrong if an unmapped EINT
 		 * was unmasked...
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		BUG_ON(ret);
 =======
@@ -644,6 +666,9 @@ static inline void s3c64xx_irq_demux_eint(struct irq_desc *desc, u32 range)
 
 		generic_handle_irq(virq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUG_ON(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(chip, desc);

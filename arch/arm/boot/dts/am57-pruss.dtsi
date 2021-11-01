@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2020-2021 Texas Instruments Incorporated - https://www.ti.com/
 =======
  * Copyright (C) 2020 Texas Instruments Incorporated - https://www.ti.com/
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2020-2021 Texas Instruments Incorporated - https://www.ti.com/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Common PRUSS data for TI AM57xx platforms
  */
@@ -30,6 +34,9 @@
 		#size-cells = <1>;
 		ranges = <0x00000000 0x4b200000 0x80000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pruss1: pruss@0 {
 			compatible = "ti,am5728-pruss";
@@ -118,8 +125,11 @@
 				reg = <0x32400 0x90>;
 			};
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	pruss2_tm: target-module@4b2a6000 {
@@ -142,6 +152,9 @@
 		#size-cells = <1>;
 		ranges = <0x00000000 0x4b280000 0x80000>;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pruss2: pruss@0 {
 			compatible = "ti,am5728-pruss";
@@ -230,7 +243,10 @@
 				reg = <0x32400 0x90>;
 			};
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };

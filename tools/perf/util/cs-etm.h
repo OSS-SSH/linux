@@ -78,6 +78,9 @@ enum {
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ETE metadata is ETMv4 plus TRCDEVARCH register and doesn't support header V0 since it was
  * added in header V1
  */
@@ -87,8 +90,11 @@ enum {
 };
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ETMv3 exception encoding number:
  * See Embedded Trace Macrocell specification (ARM IHI 0014Q)
  * table 7-12 Encoding of Exception[3:0] for non-ARMv7-M processors.
@@ -200,6 +206,7 @@ struct cs_etm_packet_queue {
 #define __perf_cs_etmv3_magic 0x3030303030303030ULL
 #define __perf_cs_etmv4_magic 0x4040404040404040ULL
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __perf_cs_ete_magic   0x5050505050505050ULL
 #define CS_ETMV3_PRIV_SIZE (CS_ETM_PRIV_MAX * sizeof(u64))
 #define CS_ETMV4_PRIV_SIZE (CS_ETMV4_PRIV_MAX * sizeof(u64))
@@ -208,6 +215,12 @@ struct cs_etm_packet_queue {
 #define CS_ETMV3_PRIV_SIZE (CS_ETM_PRIV_MAX * sizeof(u64))
 #define CS_ETMV4_PRIV_SIZE (CS_ETMV4_PRIV_MAX * sizeof(u64))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __perf_cs_ete_magic   0x5050505050505050ULL
+#define CS_ETMV3_PRIV_SIZE (CS_ETM_PRIV_MAX * sizeof(u64))
+#define CS_ETMV4_PRIV_SIZE (CS_ETMV4_PRIV_MAX * sizeof(u64))
+#define CS_ETE_PRIV_SIZE (CS_ETE_PRIV_MAX * sizeof(u64))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef HAVE_CSTRACE_SUPPORT
 int cs_etm__process_auxtrace_info(union perf_event *event,

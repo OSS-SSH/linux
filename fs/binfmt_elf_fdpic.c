@@ -1042,10 +1042,14 @@ static int elf_fdpic_map_file_by_direct_mmap(struct elf_fdpic_params *params,
 		if (phdr->p_flags & PF_X) prot |= PROT_EXEC;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flags = MAP_PRIVATE;
 =======
 		flags = MAP_PRIVATE | MAP_DENYWRITE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		flags = MAP_PRIVATE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		maddr = 0;
 
 		switch (params->flags & ELF_FDPIC_FLAG_ARRANGEMENT) {

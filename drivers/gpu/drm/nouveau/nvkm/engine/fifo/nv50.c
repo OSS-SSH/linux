@@ -137,9 +137,12 @@ nv50_fifo = {
 	.start = nv04_fifo_start,
 	.chan = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		&nv50_fifo_dma_oclass,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		&nv50_fifo_gpfifo_oclass,
 		NULL
 	},

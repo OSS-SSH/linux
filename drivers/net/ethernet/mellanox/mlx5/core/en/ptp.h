@@ -9,10 +9,15 @@
 #include <linux/ptp_classify.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MLX5E_PTP_CHANNEL_IX 0
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MLX5E_PTP_CHANNEL_IX 0
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlx5e_ptpsq {
 	struct mlx5e_txqsq       txqsq;
 	struct mlx5e_cq          ts_cq;

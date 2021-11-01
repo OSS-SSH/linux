@@ -341,6 +341,9 @@ static inline void perf_read_regs(struct pt_regs *regs)
 	 * pt_regs.
 	 *
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * If regs is a kernel interrupt, always use SIAR. Some PMUs have an
 	 * issue with regs_sipr not being in synch with SIAR in interrupt entry
 	 * and return sequences, which can result in regs_sipr being true for
@@ -348,8 +351,11 @@ static inline void perf_read_regs(struct pt_regs *regs)
 	 * to pile up at mtmsrd MSR[EE] 0->1 or pending irq replay around
 	 * interrupt entry/exit.
 	 *
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * If the PMU has HV/PR flags then check to see if they
 	 * place the exception in userspace. If so, use pt_regs. In
 	 * continuous sampling mode the SIAR and the PMU exception are
@@ -367,10 +373,15 @@ static inline void perf_read_regs(struct pt_regs *regs)
 	else if ((ppmu->flags & PPMU_NO_CONT_SAMPLING))
 		use_siar = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (!user_mode(regs))
 		use_siar = 1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (!user_mode(regs))
+		use_siar = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (!(ppmu->flags & PPMU_NO_SIPR) && regs_sipr(regs))
 		use_siar = 0;
 	else
@@ -2267,6 +2278,7 @@ unsigned long perf_misc_flags(struct pt_regs *regs)
 unsigned long perf_instruction_pointer(struct pt_regs *regs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long siar = mfspr(SPRN_SIAR);
 
 	if (regs_use_siar(regs) && siar_valid(regs) && siar)
@@ -2285,6 +2297,12 @@ unsigned long perf_instruction_pointer(struct pt_regs *regs)
 	else if (use_siar)
 		return 0;		// no valid instruction pointer
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long siar = mfspr(SPRN_SIAR);
+
+	if (regs_use_siar(regs) && siar_valid(regs) && siar)
+		return siar + perf_ip_adjust(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		return regs->nip;
 }

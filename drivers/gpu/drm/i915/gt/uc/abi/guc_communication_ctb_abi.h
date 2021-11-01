@@ -8,6 +8,9 @@
 
 #include <linux/types.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/build_bug.h>
 
 #include "guc_messages_abi.h"
@@ -113,8 +116,11 @@ static_assert(sizeof(struct guc_ct_buffer_desc) == 64);
 
 #define GUC_CTB_HXG_MSG_MIN_LEN		(GUC_CTB_MSG_MIN_LEN + GUC_HXG_MSG_MIN_LEN)
 #define GUC_CTB_HXG_MSG_MAX_LEN		GUC_CTB_MSG_MAX_LEN
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * DOC: CTB based communication
@@ -170,6 +176,7 @@ static_assert(sizeof(struct guc_ct_buffer_desc) == 64);
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * Describes single command transport buffer.
  * Used by both guc-master and clients.
@@ -194,6 +201,8 @@ struct guc_ct_buffer_desc {
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Definition of the command transport message header (DW0)
  *
  * bit[4..0]	message len (in dwords)

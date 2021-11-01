@@ -88,6 +88,7 @@ static u32 sdma_v5_2_get_reg_offset(struct amdgpu_device *adev, u32 instance, u3
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void sdma_v5_2_init_golden_registers(struct amdgpu_device *adev)
 {
@@ -105,6 +106,8 @@ static void sdma_v5_2_init_golden_registers(struct amdgpu_device *adev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int sdma_v5_2_init_inst_ctx(struct amdgpu_sdma_instance *sdma_inst)
 {
 	int err = 0;
@@ -887,14 +890,20 @@ static int sdma_v5_2_start(struct amdgpu_device *adev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* TODO: check whether can submit a doorbell request to raise
 	 * a doorbell fence to exit gfxoff.
 	 */
 	if (adev->in_s0ix)
 		amdgpu_gfx_off_ctrl(adev, false);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sdma_v5_2_soft_reset(adev);
 	/* unhalt the MEs */
 	sdma_v5_2_enable(adev, true);
@@ -904,10 +913,15 @@ static int sdma_v5_2_start(struct amdgpu_device *adev)
 	/* start the gfx rings and rlc compute queues */
 	r = sdma_v5_2_gfx_resume(adev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adev->in_s0ix)
 		amdgpu_gfx_off_ctrl(adev, true);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adev->in_s0ix)
+		amdgpu_gfx_off_ctrl(adev, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r)
 		return r;
 	r = sdma_v5_2_rlc_resume(adev);
@@ -1363,10 +1377,13 @@ static int sdma_v5_2_hw_init(void *handle)
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	sdma_v5_2_init_golden_registers(adev);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	r = sdma_v5_2_start(adev);
 
 	return r;

@@ -75,6 +75,9 @@ static __maybe_unused const struct dw_dma_chip_pdata idma32_chip_pdata = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct dw_dma_platform_data xbar_pdata = {
 	.nr_channels = 8,
 	.chan_allocation_order = CHAN_ALLOCATION_ASCENDING,
@@ -91,6 +94,9 @@ static __maybe_unused const struct dw_dma_chip_pdata xbar_chip_pdata = {
 	.remove = idma32_dma_remove,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _DMA_DW_INTERNAL_H */

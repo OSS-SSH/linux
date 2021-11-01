@@ -5,9 +5,12 @@
  *
  ******************************************************************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define __HAL_BTCOEX_C__
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <hal_data.h>
 #include <rtw_debug.h>
@@ -20,6 +23,7 @@ struct btc_coexist GLBtCoexist;
 static u8 GLBtcWiFiInScanState;
 static u8 GLBtcWiFiInIQKState;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static u8 GLBtcDbgBuf[BT_TMP_BUF_SIZE];
@@ -69,6 +73,8 @@ void DBG_BT_INFO(u8 *dbgmsg)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*  */
 /* 		Debug related function */
 /*  */
@@ -408,10 +414,14 @@ static u8 halbtcoutsrc_Get(void *pBtcContext, u8 getType, void *pOutBuf)
 
 	case BTC_GET_U4_WIFI_BW:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (is_legacy_only(mlmeext->cur_wireless_mode))
 =======
 		if (IsLegacyOnly(mlmeext->cur_wireless_mode))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (is_legacy_only(mlmeext->cur_wireless_mode))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			*pU4Tmp = BTC_WIFI_BW_LEGACY;
 		else if (pHalData->CurrentChannelBW == CHANNEL_WIDTH_20)
 			*pU4Tmp = BTC_WIFI_BW_HT20;
@@ -591,10 +601,14 @@ static u8 halbtcoutsrc_Set(void *pBtcContext, u8 setType, void *pInBuf)
 
 			cur_network = &padapter->mlmeextpriv.mlmext_info.network;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			psta = rtw_get_stainfo(&padapter->stapriv, cur_network->mac_address);
 =======
 			psta = rtw_get_stainfo(&padapter->stapriv, cur_network->MacAddress);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			psta = rtw_get_stainfo(&padapter->stapriv, cur_network->mac_address);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtw_hal_update_ra_mask(psta, 0);
 		}
 		break;
@@ -623,6 +637,7 @@ static u8 halbtcoutsrc_Set(void *pBtcContext, u8 setType, void *pInBuf)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void halbtcoutsrc_DisplayFwPwrModeCmd(struct btc_coexist *pBtCoexist)
 {
@@ -636,6 +651,8 @@ static void halbtcoutsrc_DisplayFwPwrModeCmd(struct btc_coexist *pBtCoexist)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*  */
 /* 		IO related function */
 /*  */
@@ -848,6 +865,7 @@ static void halbtcoutsrc_FillH2cCmd(void *pBtcContext, u8 elementId, u32 cmdLen,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void halbtcoutsrc_DisplayDbgMsg(void *pBtcContext, u8 dispType)
 {
@@ -869,6 +887,8 @@ static void halbtcoutsrc_DisplayDbgMsg(void *pBtcContext, u8 dispType)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*  */
 /* 		Extern functions called by other module */
 /*  */
@@ -929,9 +949,12 @@ void hal_btcoex_Initialize(void *padapter)
 
 	pBtCoexist->fBtcFillH2c = halbtcoutsrc_FillH2cCmd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pBtCoexist->fBtcDispDbgMsg = halbtcoutsrc_DisplayDbgMsg;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pBtCoexist->fBtcGet = halbtcoutsrc_Get;
 	pBtCoexist->fBtcSet = halbtcoutsrc_Set;
@@ -939,10 +962,13 @@ void hal_btcoex_Initialize(void *padapter)
 	pBtCoexist->fBtcSetBtReg = halbtcoutsrc_SetBtReg;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pBtCoexist->cliBuf = &GLBtcDbgBuf[0];
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pBtCoexist->boardInfo.singleAntPath = 0;
 
 	GLBtcWiFiInScanState = false;
@@ -1247,6 +1273,7 @@ void EXhalbtcoutsrc_SetSingleAntPath(u8 singleAntPath)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void EXhalbtcoutsrc_DisplayBtCoexInfo(struct btc_coexist *pBtCoexist)
 {
@@ -1264,6 +1291,8 @@ void EXhalbtcoutsrc_DisplayBtCoexInfo(struct btc_coexist *pBtCoexist)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Description:
  *Run BT-Coexist mechanism or not
@@ -1477,6 +1506,7 @@ void hal_btcoex_RecordPwrMode(struct adapter *padapter, u8 *pCmdBuf, u8 cmdLen)
 	memcpy(GLBtCoexist.pwrModeVal, pCmdBuf, cmdLen);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 void hal_btcoex_DisplayBtCoexInfo(struct adapter *padapter, u8 *pbuf, u32 bufsize)
@@ -1491,3 +1521,5 @@ void hal_btcoex_DisplayBtCoexInfo(struct adapter *padapter, u8 *pbuf, u32 bufsiz
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

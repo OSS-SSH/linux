@@ -216,6 +216,9 @@ There are a few special model option values:
   only the generic parser is used.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 A new style for the model option that was introduced since 5.15 kernel
 is to pass the PCI or codec SSID in the form of ``model=XXXX:YYYY``
 where XXXX and YYYY are the sub-vendor and sub-device IDs in hex
@@ -227,8 +230,11 @@ model=103c:8862 will apply the quirk for HP ProBook 445 G8 (which
 isn't found in the model table as of writing) as long as the device is
 handled equivalently by the same driver.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Speaker and Headphone Output
 ----------------------------

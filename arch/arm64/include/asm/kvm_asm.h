@@ -60,6 +60,7 @@
 #define __KVM_HOST_SMCCC_FUNC___vgic_v3_restore_aprs		14
 #define __KVM_HOST_SMCCC_FUNC___pkvm_init			15
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __KVM_HOST_SMCCC_FUNC___pkvm_host_share_hyp		16
 #define __KVM_HOST_SMCCC_FUNC___pkvm_create_private_mapping	17
 #define __KVM_HOST_SMCCC_FUNC___pkvm_cpu_set_vector		18
@@ -73,6 +74,13 @@
 #define __KVM_HOST_SMCCC_FUNC___pkvm_mark_hyp			20
 #define __KVM_HOST_SMCCC_FUNC___kvm_adjust_pc			21
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __KVM_HOST_SMCCC_FUNC___pkvm_host_share_hyp		16
+#define __KVM_HOST_SMCCC_FUNC___pkvm_create_private_mapping	17
+#define __KVM_HOST_SMCCC_FUNC___pkvm_cpu_set_vector		18
+#define __KVM_HOST_SMCCC_FUNC___pkvm_prot_finalize		19
+#define __KVM_HOST_SMCCC_FUNC___kvm_adjust_pc			20
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef __ASSEMBLY__
 
@@ -219,10 +227,14 @@ extern void __vgic_v3_write_vmcr(u32 vmcr);
 extern void __vgic_v3_init_lrs(void);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern u64 __kvm_get_mdcr_el2(void);
 =======
 extern u32 __kvm_get_mdcr_el2(void);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern u64 __kvm_get_mdcr_el2(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define __KVM_EXTABLE(from, to)						\
 	"	.pushsection	__kvm_ex_table, \"a\"\n"		\

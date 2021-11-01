@@ -13,10 +13,15 @@
 #include "i915_scatterlist.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 I915_SELFTEST_DECLARE(static bool force_different_devices;)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+I915_SELFTEST_DECLARE(static bool force_different_devices;)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct drm_i915_gem_object *dma_buf_to_obj(struct dma_buf *buf)
 {
 	return to_intel_bo(buf->priv);
@@ -31,21 +36,28 @@ static struct sg_table *i915_gem_map_dma_buf(struct dma_buf_attachment *attachme
 	int ret, i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ret = i915_gem_object_pin_pages_unlocked(obj);
 	if (ret)
 		goto err;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Copy sg so that we make an independent mapping */
 	st = kmalloc(sizeof(struct sg_table), GFP_KERNEL);
 	if (st == NULL) {
 		ret = -ENOMEM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err;
 =======
 		goto err_unpin_pages;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = sg_alloc_table(st, obj->mm.pages->nents, GFP_KERNEL);
@@ -71,10 +83,13 @@ err_free_sg:
 err_free:
 	kfree(st);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 err_unpin_pages:
 	i915_gem_object_unpin_pages(obj);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err:
 	return ERR_PTR(ret);
 }
@@ -83,6 +98,7 @@ static void i915_gem_unmap_dma_buf(struct dma_buf_attachment *attachment,
 				   struct sg_table *sg,
 				   enum dma_data_direction dir)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dma_unmap_sgtable(attachment->dev, sg, dir, DMA_ATTR_SKIP_CPU_SYNC);
 	sg_free_table(sg);
@@ -96,6 +112,11 @@ static void i915_gem_unmap_dma_buf(struct dma_buf_attachment *attachment,
 
 	i915_gem_object_unpin_pages(obj);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_sgtable(attachment->dev, sg, dir, DMA_ATTR_SKIP_CPU_SYNC);
+	sg_free_table(sg);
+	kfree(sg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int i915_gem_dmabuf_vmap(struct dma_buf *dma_buf, struct dma_buf_map *map)
@@ -190,6 +211,9 @@ retry:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int i915_gem_dmabuf_attach(struct dma_buf *dmabuf,
 				  struct dma_buf_attachment *attach)
 {
@@ -227,12 +251,18 @@ static void i915_gem_dmabuf_detach(struct dma_buf *dmabuf,
 	i915_gem_object_unpin_pages(obj);
 }
 
+<<<<<<< HEAD
 static const struct dma_buf_ops i915_dmabuf_ops =  {
 	.attach = i915_gem_dmabuf_attach,
 	.detach = i915_gem_dmabuf_detach,
 =======
 static const struct dma_buf_ops i915_dmabuf_ops =  {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct dma_buf_ops i915_dmabuf_ops =  {
+	.attach = i915_gem_dmabuf_attach,
+	.detach = i915_gem_dmabuf_detach,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.map_dma_buf = i915_gem_map_dma_buf,
 	.unmap_dma_buf = i915_gem_unmap_dma_buf,
 	.release = drm_gem_dmabuf_release,
@@ -269,10 +299,15 @@ static int i915_gem_object_get_pages_dmabuf(struct drm_i915_gem_object *obj)
 	unsigned int sg_page_sizes;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	assert_object_held(obj);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	assert_object_held(obj);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pages = dma_buf_map_attachment(obj->base.import_attach,
 				       DMA_BIDIRECTIONAL);
 	if (IS_ERR(pages))
@@ -311,11 +346,16 @@ struct drm_gem_object *i915_gem_prime_import(struct drm_device *dev,
 		obj = dma_buf_to_obj(dma_buf);
 		/* is it from our device? */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (obj->base.dev == dev &&
 		    !I915_SELFTEST_ONLY(force_different_devices)) {
 =======
 		if (obj->base.dev == dev) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (obj->base.dev == dev &&
+		    !I915_SELFTEST_ONLY(force_different_devices)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * Importing dmabuf exported from out own gem increases
 			 * refcount on gem itself instead of f_count of dmabuf.

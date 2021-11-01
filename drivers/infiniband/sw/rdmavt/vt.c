@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
 /*
  * Copyright(c) 2016 - 2018 Intel Corporation.
@@ -49,6 +50,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2016 - 2018 Intel Corporation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/module.h>
@@ -138,6 +144,9 @@ static int rvt_query_device(struct ib_device *ibdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rvt_get_numa_node(struct ib_device *ibdev)
 {
 	struct rvt_dev_info *rdi = ib_to_rvt(ibdev);
@@ -145,8 +154,11 @@ static int rvt_get_numa_node(struct ib_device *ibdev)
 	return rdi->dparms.node;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rvt_modify_device(struct ib_device *device,
 			     int device_modify_mask,
 			     struct ib_device_modify *device_modify)
@@ -397,9 +409,13 @@ static const struct ib_device_ops rvt_dev_ops = {
 	.detach_mcast = rvt_detach_mcast,
 	.get_dma_mr = rvt_get_dma_mr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.get_numa_node = rvt_get_numa_node,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.get_numa_node = rvt_get_numa_node,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.get_port_immutable = rvt_get_port_immutable,
 	.map_mr_sg = rvt_map_mr_sg,
 	.mmap = rvt_mmap,
@@ -427,9 +443,13 @@ static const struct ib_device_ops rvt_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_cq, rvt_cq, ibcq),
 	INIT_RDMA_OBJ_SIZE(ib_pd, rvt_pd, ibpd),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_RDMA_OBJ_SIZE(ib_qp, rvt_qp, ibqp),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_RDMA_OBJ_SIZE(ib_qp, rvt_qp, ibqp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_RDMA_OBJ_SIZE(ib_srq, rvt_srq, ibsrq),
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, rvt_ucontext, ibucontext),
 };

@@ -86,6 +86,7 @@ int dlm_recover_directory(struct dlm_ls *ls)
 			int left;
 			error = dlm_recovery_stopped(ls);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (error) {
 				error = -EINTR;
 				goto out_free;
@@ -94,6 +95,12 @@ int dlm_recover_directory(struct dlm_ls *ls)
 			if (error)
 				goto out_free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (error) {
+				error = -EINTR;
+				goto out_free;
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			error = dlm_rcom_names(ls, memb->nodeid,
 					       last_name, last_len);

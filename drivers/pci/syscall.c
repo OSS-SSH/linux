@@ -20,6 +20,7 @@ SYSCALL_DEFINE5(pciconfig_read, unsigned long, bus, unsigned long, dfn,
 	u16 word;
 	u32 dword;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err, cfg_ret;
 
 	err = -EPERM;
@@ -29,10 +30,19 @@ SYSCALL_DEFINE5(pciconfig_read, unsigned long, bus, unsigned long, dfn,
 =======
 	long err;
 	int cfg_ret;
+=======
+	int err, cfg_ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	err = -EPERM;
+	dev = NULL;
 	if (!capable(CAP_SYS_ADMIN))
+<<<<<<< HEAD
 		return -EPERM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = -ENODEV;
 	dev = pci_get_domain_bus_and_slot(0, bus, dfn);

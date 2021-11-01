@@ -14,9 +14,13 @@
 #include <linux/rtc.h>
 #include <linux/suspend.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/init.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/init.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/mc146818rtc.h>
 
@@ -170,11 +174,17 @@ void generate_pm_trace(const void *tracedata, unsigned int user)
 	unsigned int user_hash_value, file_hash_value;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!x86_platform.legacy.rtc)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!x86_platform.legacy.rtc)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	user_hash_value = user % USERHASH;
 	file_hash_value = hash_string(lineno, file, FILEHASH);
 	set_magic_time(user_hash_value, file_hash_value, dev_hash_value);
@@ -278,11 +288,17 @@ static struct notifier_block pm_trace_nb = {
 static int __init early_resume_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!x86_platform.legacy.rtc)
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!x86_platform.legacy.rtc)
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hash_value_early_read = read_magic_time();
 	register_pm_notifier(&pm_trace_nb);
 	return 0;
@@ -294,11 +310,17 @@ static int __init late_resume_init(void)
 	unsigned int user, file, dev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!x86_platform.legacy.rtc)
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!x86_platform.legacy.rtc)
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	user = val % USERHASH;
 	val = val / USERHASH;
 	file = val % FILEHASH;

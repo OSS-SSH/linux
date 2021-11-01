@@ -8,9 +8,13 @@
 #include <linux/module.h>
 #include <linux/of.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/of_device.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/of_device.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 
 #include "bcm-voter.h"
@@ -62,13 +66,19 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
 			qn->max_peak[i] = max_t(u32, qn->max_peak[i], peak_bw);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (node->init_avg || node->init_peak) {
 			qn->sum_avg[i] = max_t(u64, qn->sum_avg[i], node->init_avg);
 			qn->max_peak[i] = max_t(u64, qn->max_peak[i], node->init_peak);
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	*agg_avg += avg_bw;
@@ -92,9 +102,12 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
 {
 	struct qcom_icc_provider *qp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct qcom_icc_node *qn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct icc_node *node;
 
 	if (!src)
@@ -104,6 +117,7 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
 
 	qp = to_qcom_provider(node->provider);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	qn = node->data;
 
@@ -112,6 +126,8 @@ int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
 	qn->max_peak[QCOM_ICC_BUCKET_AMC] = max_t(u64, qn->max_peak[QCOM_ICC_BUCKET_AMC],
 						  node->peak_bw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	qcom_icc_bcm_voter_commit(qp->voter);
 
@@ -203,6 +219,9 @@ int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev)
 EXPORT_SYMBOL_GPL(qcom_icc_bcm_init);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int qcom_icc_rpmh_probe(struct platform_device *pdev)
 {
 	const struct qcom_icc_desc *desc;
@@ -295,6 +314,9 @@ int qcom_icc_rpmh_remove(struct platform_device *pdev)
 }
 EXPORT_SYMBOL_GPL(qcom_icc_rpmh_remove);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_LICENSE("GPL v2");

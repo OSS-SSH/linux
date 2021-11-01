@@ -129,12 +129,17 @@ static int find_divider(struct uniphier_aio *aio, int pll_id, unsigned int freq)
 {
 	struct uniphier_aio_pll *pll;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const int mul[] = { 1, 1, 1, 2, };
 	static const int div[] = { 2, 3, 1, 3, };
 =======
 	int mul[] = { 1, 1, 1, 2, };
 	int div[] = { 2, 3, 1, 3, };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const int mul[] = { 1, 1, 1, 2, };
+	static const int div[] = { 2, 3, 1, 3, };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	if (!is_valid_pll(aio->chip, pll_id))

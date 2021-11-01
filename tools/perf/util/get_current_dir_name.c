@@ -4,6 +4,7 @@
 #ifndef HAVE_GET_CURRENT_DIR_NAME
 #include "get_current_dir_name.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <limits.h>
 #include <string.h>
 #include <unistd.h>
@@ -11,6 +12,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <limits.h>
+#include <string.h>
+#include <unistd.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Android's 'bionic' library, for one, doesn't have this */
 

@@ -154,6 +154,7 @@ static char *extra_init_args;
 /* Is bootconfig on command line? */
 static bool bootconfig_found;
 <<<<<<< HEAD
+<<<<<<< HEAD
 static size_t initargs_offs;
 #else
 # define bootconfig_found false
@@ -164,6 +165,12 @@ static bool initargs_found;
 # define bootconfig_found false
 # define initargs_found false
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static size_t initargs_offs;
+#else
+# define bootconfig_found false
+# define initargs_offs 0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static char *execute_command;
@@ -390,9 +397,13 @@ static char * __init xbc_make_cmdline(const char *key)
 	if (ret < 0 || ret > len) {
 		pr_err("Failed to print extra kernel cmdline.\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memblock_free_ptr(new_cmdline, len + 1);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memblock_free_ptr(new_cmdline, len + 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 	}
 
@@ -409,14 +420,20 @@ static int __init bootconfig_params(char *param, char *val,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __init warn_bootconfig(char *str)
 {
 	/* The 'bootconfig' has been handled by bootconfig_params(). */
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __init setup_boot_config(void)
 {
 	static char tmp_cmdline[COMMAND_LINE_SIZE] __initdata;
@@ -437,6 +454,7 @@ static void __init setup_boot_config(void)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* parse_args() stops at the next param of '--' and returns an address */
 	if (err)
 		initargs_offs = err - tmp_cmdline;
@@ -445,6 +463,11 @@ static void __init setup_boot_config(void)
 	if (err)
 		initargs_found = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* parse_args() stops at the next param of '--' and returns an address */
+	if (err)
+		initargs_offs = err - tmp_cmdline;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!data) {
 		pr_err("'bootconfig' found on command line, but no bootconfig found\n");
@@ -489,15 +512,21 @@ static void __init setup_boot_config(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __init exit_boot_config(void)
 {
 	xbc_destroy_all();
 }
 
 #else	/* !CONFIG_BOOT_CONFIG */
+<<<<<<< HEAD
 =======
 #else
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void __init setup_boot_config(void)
 {
@@ -511,6 +540,7 @@ static int __init warn_bootconfig(char *str)
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #define exit_boot_config()	do {} while (0)
 
@@ -520,8 +550,14 @@ early_param("bootconfig", warn_bootconfig);
 
 =======
 early_param("bootconfig", warn_bootconfig);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-#endif
+#define exit_boot_config()	do {} while (0)
+
+#endif	/* CONFIG_BOOT_CONFIG */
+
+early_param("bootconfig", warn_bootconfig);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Change NUL term back to "=", to make "param" the whole string. */
@@ -687,6 +723,7 @@ static void __init setup_command_line(char *command_line)
 		 * so that user can check what command line options passed
 		 * to init.
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * The order should always be
 		 * " -- "[bootconfig init-param][cmdline init-param]
 		 */
@@ -703,17 +740,29 @@ static void __init setup_command_line(char *command_line)
 			strcpy(saved_command_line + len, extra_init_args);
 		}
 =======
+=======
+		 * The order should always be
+		 * " -- "[bootconfig init-param][cmdline init-param]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
-		len = strlen(saved_command_line);
-		if (initargs_found) {
-			saved_command_line[len++] = ' ';
+		if (initargs_offs) {
+			len = xlen + initargs_offs;
+			strcpy(saved_command_line + len, extra_init_args);
+			len += ilen - 4;	/* strlen(extra_init_args) */
+			strcpy(saved_command_line + len,
+				boot_command_line + initargs_offs - 1);
 		} else {
+			len = strlen(saved_command_line);
 			strcpy(saved_command_line + len, " -- ");
 			len += 4;
+			strcpy(saved_command_line + len, extra_init_args);
 		}
+<<<<<<< HEAD
 
 		strcpy(saved_command_line + len, extra_init_args);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -836,10 +885,15 @@ void __init __weak poking_init(void) { }
 void __init __weak pgtable_cache_init(void) { }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __init __weak trap_init(void) { }
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void __init __weak trap_init(void) { }
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool initcall_debug;
 core_param(initcall_debug, initcall_debug, bool, 0644);
 
@@ -972,10 +1026,14 @@ static void __init print_unknown_bootoptions(void)
 
 	pr_notice("Unknown command line parameters:%s\n", unknown_options);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memblock_free_ptr(unknown_options, len);
 =======
 	memblock_free(__pa(unknown_options), len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memblock_free_ptr(unknown_options, len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 asmlinkage __visible void __init __no_sanitize_address start_kernel(void)
@@ -1460,9 +1518,12 @@ static void __init do_basic_setup(void)
 	init_irq_proc();
 	do_ctors();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	usermodehelper_enable();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	do_initcalls();
 }
 
@@ -1564,9 +1625,13 @@ static int __ref kernel_init(void *unused)
 	ftrace_free_init_mem();
 	kgdb_free_init_mem();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exit_boot_config();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exit_boot_config();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free_initmem();
 	mark_readonly();
 

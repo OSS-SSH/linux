@@ -19,13 +19,18 @@
 #define __ARCH_WANT_NEW_STAT
 #define __ARCH_WANT_SET_GET_RLIMIT
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* __LP64__ */
 
 #define __ARCH_WANT_SYS_CLONE3
 =======
 #define __ARCH_WANT_SYS_CLONE3
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __LP64__ */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+#define __ARCH_WANT_SYS_CLONE3
 
 #include <asm-generic/unistd.h>
 

@@ -114,10 +114,14 @@ static int acpi_register_gsi_xen_hvm(struct device *dev, u32 gsi,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_XEN_PV_DOM0
 =======
 #ifdef CONFIG_XEN_DOM0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_XEN_PV_DOM0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xen_register_gsi(u32 gsi, int triggering, int polarity)
 {
 	int rc, irq;
@@ -266,10 +270,14 @@ error:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_XEN_PV_DOM0
 =======
 #ifdef CONFIG_XEN_DOM0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_XEN_PV_DOM0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool __read_mostly pci_seg_supported = true;
 
 static int xen_initdom_setup_msi_irqs(struct pci_dev *dev, int nvec, int type)
@@ -384,6 +392,7 @@ static void xen_initdom_restore_msi_irqs(struct pci_dev *dev)
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #else /* CONFIG_XEN_PV_DOM0 */
 #define xen_initdom_setup_msi_irqs	NULL
 #define xen_initdom_restore_msi_irqs	NULL
@@ -394,6 +403,12 @@ static void xen_initdom_restore_msi_irqs(struct pci_dev *dev)
 #define xen_initdom_restore_msi_irqs	NULL
 #endif /* !CONFIG_XEN_DOM0 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#else /* CONFIG_XEN_PV_DOM0 */
+#define xen_initdom_setup_msi_irqs	NULL
+#define xen_initdom_restore_msi_irqs	NULL
+#endif /* !CONFIG_XEN_PV_DOM0 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void xen_teardown_msi_irqs(struct pci_dev *dev)
 {
@@ -571,10 +586,14 @@ int __init pci_xen_hvm_init(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_XEN_PV_DOM0
 =======
 #ifdef CONFIG_XEN_DOM0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_XEN_PV_DOM0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int __init pci_xen_initial_domain(void)
 {
 	int irq;
@@ -603,11 +622,17 @@ int __init pci_xen_initial_domain(void)
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif
 
 #ifdef CONFIG_XEN_DOM0
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+
+#ifdef CONFIG_XEN_DOM0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct xen_device_domain_owner {
 	domid_t domain;
@@ -682,7 +707,11 @@ int xen_unregister_device_domain_owner(struct pci_dev *dev)
 }
 EXPORT_SYMBOL_GPL(xen_unregister_device_domain_owner);
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* CONFIG_XEN_DOM0 */
 =======
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_XEN_DOM0 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -395,6 +395,7 @@ static ssize_t adu_read(struct file *file, __user char *buffer, size_t count,
 			if (dev->read_buffer_length) {
 				/* we secure access to the primary */
 <<<<<<< HEAD
+<<<<<<< HEAD
 				dev_dbg(&dev->udev->dev,
 					"%s : swap, read_buffer_length = %d\n",
 					__func__, dev->read_buffer_length);
@@ -408,6 +409,12 @@ static ssize_t adu_read(struct file *file, __user char *buffer, size_t count,
 				dev->read_buffer_secondary = dev->read_buffer_primary;
 				dev->read_buffer_primary = tmp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dev_dbg(&dev->udev->dev,
+					"%s : swap, read_buffer_length = %d\n",
+					__func__, dev->read_buffer_length);
+				swap(dev->read_buffer_primary, dev->read_buffer_secondary);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dev->secondary_head = 0;
 				dev->secondary_tail = dev->read_buffer_length;
 				dev->read_buffer_length = 0;

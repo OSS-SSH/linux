@@ -8,6 +8,9 @@
 #include "msm_gpu.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static uint num_hw_submissions = 8;
 MODULE_PARM_DESC(num_hw_submissions, "The max # of jobs to write into ringbuffer (default 8)");
 module_param(num_hw_submissions, uint, 0600);
@@ -58,16 +61,23 @@ const struct drm_sched_backend_ops msm_sched_ops = {
 	.free_job = msm_job_free
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 		void *memptrs, uint64_t memptrs_iova)
 {
 	struct msm_ringbuffer *ring;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	long sched_timeout;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	long sched_timeout;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char name[32];
 	int ret;
 
@@ -90,10 +100,14 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 	if (IS_ERR(ring->start)) {
 		ret = PTR_ERR(ring->start);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ring->start = NULL;
 =======
 		ring->start = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ring->start = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto fail;
 	}
 
@@ -107,6 +121,9 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 	ring->memptrs_iova = memptrs_iova;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 /* currently managing hangcheck ourselves: */
 	sched_timeout = MAX_SCHEDULE_TIMEOUT;
 
@@ -117,8 +134,11 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 		goto fail;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&ring->submits);
 	spin_lock_init(&ring->submit_lock);
 	spin_lock_init(&ring->preempt_lock);
@@ -126,10 +146,14 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 	snprintf(name, sizeof(name), "gpu-ring-%d", ring->id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ring->fctx = msm_fence_context_alloc(gpu->dev, &ring->memptrs->fence, name);
 =======
 	ring->fctx = msm_fence_context_alloc(gpu->dev, name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ring->fctx = msm_fence_context_alloc(gpu->dev, &ring->memptrs->fence, name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ring;
 
@@ -144,6 +168,7 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_sched_fini(&ring->sched);
 
 	msm_fence_context_free(ring->fctx);
@@ -154,6 +179,13 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring)
 
 	msm_gem_kernel_put(ring->bo, ring->gpu->aspace, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_sched_fini(&ring->sched);
+
+	msm_fence_context_free(ring->fctx);
+
+	msm_gem_kernel_put(ring->bo, ring->gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(ring);
 }

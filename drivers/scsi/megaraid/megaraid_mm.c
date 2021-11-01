@@ -239,10 +239,14 @@ mraid_mm_get_adapter(mimd_t __user *umimd, int *rval)
 	uint32_t	adapno;
 	int		iterator;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool		is_found;
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool		is_found;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (copy_from_user(&mimd, umimd, sizeof(mimd_t))) {
 		*rval = -EFAULT;
@@ -259,6 +263,7 @@ mraid_mm_get_adapter(mimd_t __user *umimd, int *rval)
 	adapter = NULL;
 	iterator = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	is_found = false;
 
 	list_for_each_entry(adapter, &adapters_list_g, list) {
@@ -270,13 +275,23 @@ mraid_mm_get_adapter(mimd_t __user *umimd, int *rval)
 
 	if (!is_found) {
 =======
+=======
+	is_found = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	list_for_each_entry(adapter, &adapters_list_g, list) {
-		if (iterator++ == adapno) break;
+		if (iterator++ == adapno) {
+			is_found = true;
+			break;
+		}
 	}
 
+<<<<<<< HEAD
 	if (!adapter) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!is_found) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*rval = -ENODEV;
 		return NULL;
 	}
@@ -743,9 +758,13 @@ ioctl_done(uioc_t *kioc)
 	int		iterator;
 	mraid_mmadp_t*	adapter;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool		is_found;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool		is_found;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * When the kioc returns from driver, make sure it still doesn't
@@ -769,26 +788,37 @@ ioctl_done(uioc_t *kioc)
 		adapter		= NULL;
 		adapno		= kioc->adapno;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		is_found	= false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		is_found	= false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		con_log(CL_ANN, ( KERN_WARNING "megaraid cmm: completed "
 					"ioctl that was timedout before\n"));
 
 		list_for_each_entry(adapter, &adapters_list_g, list) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (iterator++ == adapno) {
 				is_found = true;
 				break;
 			}
+<<<<<<< HEAD
 =======
 			if (iterator++ == adapno) break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		kioc->timedout = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (is_found)
 			mraid_mm_dealloc_kioc( adapter, kioc );
@@ -798,6 +828,11 @@ ioctl_done(uioc_t *kioc)
 			mraid_mm_dealloc_kioc( adapter, kioc );
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (is_found)
+			mraid_mm_dealloc_kioc( adapter, kioc );
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	else {
 		wake_up(&wait_q);

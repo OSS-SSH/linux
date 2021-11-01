@@ -606,6 +606,9 @@ static bool hubbub2_program_watermarks(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hubbub2_read_state(struct hubbub *hubbub, struct dcn_hubbub_state *hubbub_state)
 {
 	struct dcn20_hubbub *hubbub1 = TO_DCN20_HUBBUB(hubbub);
@@ -626,8 +629,11 @@ void hubbub2_read_state(struct hubbub *hubbub, struct dcn_hubbub_state *hubbub_s
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct hubbub_funcs hubbub2_funcs = {
 	.update_dchub = hubbub2_update_dchub,
 	.init_dchub_sys_ctx = hubbub2_init_dchub_sys_ctx,
@@ -641,9 +647,13 @@ static const struct hubbub_funcs hubbub2_funcs = {
 	.is_allow_self_refresh_enabled = hubbub1_is_allow_self_refresh_enabled,
 	.allow_self_refresh_control = hubbub1_allow_self_refresh_control,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.hubbub_read_state = hubbub2_read_state,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.hubbub_read_state = hubbub2_read_state,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 void hubbub2_construct(struct dcn20_hubbub *hubbub,

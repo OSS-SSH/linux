@@ -93,33 +93,49 @@ static int pch_pic_set_type(struct irq_data *d, unsigned int type)
 		pch_pic_bitset(priv, PCH_PIC_EDGE, d->hwirq);
 		pch_pic_bitclr(priv, PCH_PIC_POL, d->hwirq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		irq_set_handler_locked(d, handle_edge_irq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		irq_set_handler_locked(d, handle_edge_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IRQ_TYPE_EDGE_FALLING:
 		pch_pic_bitset(priv, PCH_PIC_EDGE, d->hwirq);
 		pch_pic_bitset(priv, PCH_PIC_POL, d->hwirq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		irq_set_handler_locked(d, handle_edge_irq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		irq_set_handler_locked(d, handle_edge_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IRQ_TYPE_LEVEL_HIGH:
 		pch_pic_bitclr(priv, PCH_PIC_EDGE, d->hwirq);
 		pch_pic_bitclr(priv, PCH_PIC_POL, d->hwirq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		irq_set_handler_locked(d, handle_level_irq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		irq_set_handler_locked(d, handle_level_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IRQ_TYPE_LEVEL_LOW:
 		pch_pic_bitclr(priv, PCH_PIC_EDGE, d->hwirq);
 		pch_pic_bitset(priv, PCH_PIC_POL, d->hwirq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		irq_set_handler_locked(d, handle_level_irq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		irq_set_handler_locked(d, handle_level_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		ret = -EINVAL;
@@ -130,6 +146,9 @@ static int pch_pic_set_type(struct irq_data *d, unsigned int type)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void pch_pic_ack_irq(struct irq_data *d)
 {
 	unsigned int reg;
@@ -143,17 +162,24 @@ static void pch_pic_ack_irq(struct irq_data *d)
 	irq_chip_ack_parent(d);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct irq_chip pch_pic_irq_chip = {
 	.name			= "PCH PIC",
 	.irq_mask		= pch_pic_mask_irq,
 	.irq_unmask		= pch_pic_unmask_irq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.irq_ack		= pch_pic_ack_irq,
 =======
 	.irq_ack		= irq_chip_ack_parent,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.irq_ack		= pch_pic_ack_irq,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.irq_set_affinity	= irq_chip_set_affinity_parent,
 	.irq_set_type		= pch_pic_set_type,
 };

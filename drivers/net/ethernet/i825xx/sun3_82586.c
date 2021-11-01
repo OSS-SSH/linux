@@ -30,9 +30,13 @@ static int fifo=0x8;	/* don't change */
 
 #include <linux/kernel.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/module.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/module.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/string.h>
 #include <linux/errno.h>
 #include <linux/ioport.h>
@@ -281,10 +285,14 @@ static void alloc586(struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init sun3_82586_probe(void)
 =======
 struct net_device * __init sun3_82586_probe(int unit)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init sun3_82586_probe(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_device *dev;
 	unsigned long ioaddr;
@@ -300,6 +308,7 @@ struct net_device * __init sun3_82586_probe(int unit)
 
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -ENODEV;
 	}
 
@@ -311,20 +320,28 @@ struct net_device * __init sun3_82586_probe(int unit)
 		return -ENOMEM;
 =======
 		return ERR_PTR(-ENODEV);
+=======
+		return -ENODEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (found)
-		return ERR_PTR(-ENODEV);
+		return -ENODEV;
 
 	ioaddr = (unsigned long)ioremap(IE_OBIO, SUN3_82586_TOTAL_SIZE);
 	if (!ioaddr)
+<<<<<<< HEAD
 		return ERR_PTR(-ENOMEM);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	found = 1;
 
 	dev = alloc_etherdev(sizeof(struct priv));
 	if (!dev)
 		goto out;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (unit >= 0) {
@@ -333,6 +350,8 @@ struct net_device * __init sun3_82586_probe(int unit)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev->irq = IE_IRQ;
 	dev->base_addr = ioaddr;
 	err = sun3_82586_probe1(dev, ioaddr);
@@ -342,10 +361,14 @@ struct net_device * __init sun3_82586_probe(int unit)
 	if (err)
 		goto out2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out2:
 	release_region(ioaddr, SUN3_82586_TOTAL_SIZE);
@@ -354,6 +377,7 @@ out1:
 out:
 	iounmap((void __iomem *)ioaddr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return err;
 }
 module_init(sun3_82586_probe);
@@ -361,6 +385,11 @@ module_init(sun3_82586_probe);
 	return ERR_PTR(err);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return err;
+}
+module_init(sun3_82586_probe);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct net_device_ops sun3_82586_netdev_ops = {
 	.ndo_open		= sun3_82586_open,

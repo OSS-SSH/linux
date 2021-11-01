@@ -110,9 +110,12 @@
 
 #define		rTxAGC_B_Mcs07_Mcs04			0x848
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define		rTxAGC_B_Mcs11_Mcs08			0x84c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define		rFPGA0_XA_LSSIParameter		0x840
 #define		rFPGA0_XB_LSSIParameter		0x844
@@ -127,9 +130,12 @@
 #define		rFPGA0_XB_RFInterfaceOE		0x864
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define		rTxAGC_B_Mcs15_Mcs12			0x868
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define		rTxAGC_B_CCK11_A_CCK2_11		0x86c
 
 #define		rFPGA0_XAB_RFInterfaceSW		0x870	/*  RF Interface Software Control */
@@ -310,10 +316,13 @@
 #define		rTxAGC_A_Mcs03_Mcs00			0xe10
 #define		rTxAGC_A_Mcs07_Mcs04			0xe14
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define		rTxAGC_A_Mcs11_Mcs08			0xe18
 #define		rTxAGC_A_Mcs15_Mcs12			0xe1c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define		rFPGA0_IQK					0xe28
 #define		rTx_IQK_Tone_A				0xe30

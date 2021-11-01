@@ -38,10 +38,14 @@
 #include <linux/regulator/machine.h>
 #include <linux/platform_data/ux500_wdt.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "db8500-prcmu-regs.h"
 =======
 #include "dbx500-prcmu-regs.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "db8500-prcmu-regs.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Index of different voltages to be used when accessing AVSData */
 #define PRCM_AVS_BASE		0x2FC
@@ -1627,6 +1631,7 @@ static long round_clock_rate(u8 clock, unsigned long rate)
 
 static const unsigned long db8500_armss_freqs[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	199680000,
 	399360000,
 	798720000,
@@ -1635,11 +1640,17 @@ static const unsigned long db8500_armss_freqs[] = {
 	400000000,
 	800000000,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	199680000,
+	399360000,
+	798720000,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	998400000
 };
 
 /* The DB8520 has slightly higher ARMSS max frequency */
 static const unsigned long db8520_armss_freqs[] = {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	199680000,
 	399360000,
@@ -1657,6 +1668,14 @@ static const unsigned long db8520_armss_freqs[] = {
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	199680000,
+	399360000,
+	798720000,
+	1152000000
+};
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static long round_armss_rate(unsigned long rate)
 {
 	unsigned long freq = 0;
@@ -2384,10 +2403,14 @@ static bool read_mailbox_0(void)
 		for (n = 0; n < NUM_PRCMU_WAKEUPS; n++) {
 			if (ev & prcmu_irq_bit[n])
 <<<<<<< HEAD
+<<<<<<< HEAD
 				generic_handle_domain_irq(db8500_irq_domain, n);
 =======
 				generic_handle_irq(irq_find_mapping(db8500_irq_domain, n));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				generic_handle_domain_irq(db8500_irq_domain, n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		r = true;
 		break;
@@ -2591,12 +2614,17 @@ static char *fw_project_name(u32 project)
 	case PRCMU_FW_PROJECT_U9500_MBL:
 		return "U9500 MBL";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PRCMU_FW_PROJECT_U8500_SSG1:
 		return "U8500 Samsung 1";
 =======
 	case PRCMU_FW_PROJECT_U8500_MBL:
 		return "U8500 MBL";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PRCMU_FW_PROJECT_U8500_SSG1:
+		return "U8500 Samsung 1";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case PRCMU_FW_PROJECT_U8500_MBL2:
 		return "U8500 MBL2";
 	case PRCMU_FW_PROJECT_U8520:
@@ -2604,10 +2632,15 @@ static char *fw_project_name(u32 project)
 	case PRCMU_FW_PROJECT_U8420:
 		return "U8420";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PRCMU_FW_PROJECT_U8500_SSG2:
 		return "U8500 Samsung 2";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PRCMU_FW_PROJECT_U8500_SSG2:
+		return "U8500 Samsung 2";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case PRCMU_FW_PROJECT_U8420_SYSCLK:
 		return "U8420-sysclk";
 	case PRCMU_FW_PROJECT_U9540:
@@ -2985,9 +3018,13 @@ static const struct mfd_cell common_prcmu_devs[] = {
 		.id = -1,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MFD_CELL_NAME("db8500-cpuidle"),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MFD_CELL_NAME("db8500-cpuidle"),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct mfd_cell db8500_prcmu_devs[] = {
@@ -2995,10 +3032,13 @@ static const struct mfd_cell db8500_prcmu_devs[] = {
 		    &db8500_regulators, sizeof(db8500_regulators), 0,
 		    "stericsson,db8500-prcmu-regulator"),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	MFD_CELL_OF("cpuidle-dbx500",
 		    NULL, NULL, 0, 0, "stericsson,cpuidle-dbx500"),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MFD_CELL_OF("db8500-thermal",
 		    NULL, NULL, 0, 0, "stericsson,db8500-thermal"),
 };

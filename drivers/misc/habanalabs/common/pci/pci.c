@@ -437,10 +437,15 @@ int hl_pci_init(struct hl_device *hdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_set_max_seg_size(&pdev->dev, U32_MAX);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_set_max_seg_size(&pdev->dev, U32_MAX);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 unmap_pci_bars:

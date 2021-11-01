@@ -76,11 +76,17 @@ probe_load(enum bpf_prog_type prog_type, const struct bpf_insn *insns,
 		xattr.expected_attach_type = BPF_CGROUP_INET4_CONNECT;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case BPF_PROG_TYPE_CGROUP_SOCKOPT:
 		xattr.expected_attach_type = BPF_CGROUP_GETSOCKOPT;
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case BPF_PROG_TYPE_CGROUP_SOCKOPT:
+		xattr.expected_attach_type = BPF_CGROUP_GETSOCKOPT;
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case BPF_PROG_TYPE_SK_LOOKUP:
 		xattr.expected_attach_type = BPF_SK_LOOKUP;
 		break;
@@ -111,9 +117,12 @@ probe_load(enum bpf_prog_type prog_type, const struct bpf_insn *insns,
 	case BPF_PROG_TYPE_FLOW_DISSECTOR:
 	case BPF_PROG_TYPE_CGROUP_SYSCTL:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case BPF_PROG_TYPE_CGROUP_SOCKOPT:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case BPF_PROG_TYPE_TRACING:
 	case BPF_PROG_TYPE_STRUCT_OPS:
 	case BPF_PROG_TYPE_EXT:

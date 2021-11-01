@@ -39,10 +39,14 @@
 #define __ARM_NR_COMPAT_END		(__ARM_NR_COMPAT_BASE + 0x800)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __NR_compat_syscalls		449
 =======
 #define __NR_compat_syscalls		447
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __NR_compat_syscalls		449
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #define __ARCH_WANT_SYS_CLONE

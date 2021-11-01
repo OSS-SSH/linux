@@ -41,12 +41,18 @@ EXPORT_SYMBOL(sharpsl_param);
 void sharpsl_save_param(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct sharpsl_param_info *params = param_start(PARAM_BASE);
 
 	memcpy(&sharpsl_param, params, sizeof(*params));
 =======
 	memcpy(&sharpsl_param, param_start(PARAM_BASE), sizeof(struct sharpsl_param_info));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct sharpsl_param_info *params = param_start(PARAM_BASE);
+
+	memcpy(&sharpsl_param, params, sizeof(*params));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (sharpsl_param.comadj_keyword != COMADJ_MAGIC)
 		sharpsl_param.comadj=-1;

@@ -11,12 +11,17 @@
 #define BNXT_PTP_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define BNXT_PTP_GRC_WIN	6
 #define BNXT_PTP_GRC_WIN_BASE	0x6000
 =======
 #define BNXT_PTP_GRC_WIN	5
 #define BNXT_PTP_GRC_WIN_BASE	0x5000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define BNXT_PTP_GRC_WIN	6
+#define BNXT_PTP_GRC_WIN_BASE	0x6000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define BNXT_MAX_PHC_DRIFT	31000000
 #define BNXT_LO_TIMER_MASK	0x0000ffffffffUL
@@ -25,6 +30,9 @@
 #define BNXT_PTP_QTS_TIMEOUT	1000
 #define BNXT_PTP_QTS_TX_ENABLES	(PORT_TS_QUERY_REQ_ENABLES_PTP_SEQ_ID |	\
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 PORT_TS_QUERY_REQ_ENABLES_TS_REQ_TIMEOUT | \
 				 PORT_TS_QUERY_REQ_ENABLES_PTP_HDR_OFFSET)
 
@@ -77,9 +85,12 @@ struct bnxt_pps {
 #define BNXT_MAX_TSIO_PINS	4
 	struct pps_pin pins[BNXT_MAX_TSIO_PINS];
 };
+<<<<<<< HEAD
 =======
 				 PORT_TS_QUERY_REQ_ENABLES_TS_REQ_TIMEOUT)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct bnxt_ptp_cfg {
 	struct ptp_clock_info	ptp_info;
@@ -87,9 +98,13 @@ struct bnxt_ptp_cfg {
 	struct cyclecounter	cc;
 	struct timecounter	tc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct bnxt_pps		pps_info;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct bnxt_pps		pps_info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* serialize timecounter access */
 	spinlock_t		ptp_lock;
 	struct sk_buff		*tx_skb;
@@ -97,15 +112,23 @@ struct bnxt_ptp_cfg {
 	u64			old_time;
 	unsigned long		next_period;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long		next_overflow_check;
 	/* 48-bit PHC overflows in 78 hours.  Check overflow every 19 hours. */
 	#define BNXT_PHC_OVERFLOW_PERIOD	(19 * 3600 * HZ)
 
+<<<<<<< HEAD
 	u16			tx_seqid;
 	u16			tx_hdr_off;
 =======
 	u16			tx_seqid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16			tx_seqid;
+	u16			tx_hdr_off;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bnxt		*bp;
 	atomic_t		tx_avail;
 #define BNXT_MAX_TX_TS	1
@@ -144,20 +167,29 @@ do {						\
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int bnxt_ptp_parse(struct sk_buff *skb, u16 *seq_id, u16 *hdr_off);
 void bnxt_ptp_pps_event(struct bnxt *bp, u32 data1, u32 data2);
 void bnxt_ptp_reapply_pps(struct bnxt *bp);
 =======
 int bnxt_ptp_parse(struct sk_buff *skb, u16 *seq_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int bnxt_ptp_parse(struct sk_buff *skb, u16 *seq_id, u16 *hdr_off);
+void bnxt_ptp_pps_event(struct bnxt *bp, u32 data1, u32 data2);
+void bnxt_ptp_reapply_pps(struct bnxt *bp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bnxt_hwtstamp_set(struct net_device *dev, struct ifreq *ifr);
 int bnxt_hwtstamp_get(struct net_device *dev, struct ifreq *ifr);
 int bnxt_get_tx_ts_p5(struct bnxt *bp, struct sk_buff *skb);
 int bnxt_get_rx_ts_p5(struct bnxt *bp, u64 *ts, u32 pkt_ts);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void bnxt_ptp_start(struct bnxt *bp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bnxt_ptp_init(struct bnxt *bp);
 void bnxt_ptp_clear(struct bnxt *bp);
 #endif

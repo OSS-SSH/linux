@@ -435,10 +435,14 @@ qcaspi_receive(struct qcaspi *qca)
 				qca->rx_skb->protocol = eth_type_trans(
 					qca->rx_skb, qca->rx_skb->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 				skb_checksum_none_assert(qca->rx_skb);
 =======
 				qca->rx_skb->ip_summed = CHECKSUM_UNNECESSARY;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				skb_checksum_none_assert(qca->rx_skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				netif_rx_ni(qca->rx_skb);
 				qca->rx_skb = netdev_alloc_skb_ip_align(net_dev,
 					net_dev->mtu + VLAN_ETH_HLEN);

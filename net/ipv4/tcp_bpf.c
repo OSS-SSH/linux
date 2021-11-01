@@ -504,10 +504,14 @@ static int __init tcp_bpf_v4_build_proto(void)
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 late_initcall(tcp_bpf_v4_build_proto);
 =======
 core_initcall(tcp_bpf_v4_build_proto);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+late_initcall(tcp_bpf_v4_build_proto);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int tcp_bpf_assert_proto_ops(struct proto *ops)
 {

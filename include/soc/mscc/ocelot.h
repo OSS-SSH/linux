@@ -90,6 +90,7 @@
 #define PGID_SRC			80
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define IFH_TAG_TYPE_C			0
 #define IFH_TAG_TYPE_S			1
@@ -101,6 +102,8 @@
 #define IFH_REW_OP_ORIGIN_PTP		0x5
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define OCELOT_NUM_TC			8
 
 #define OCELOT_SPEED_2500		0
@@ -593,11 +596,17 @@ enum ocelot_sb_pool {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define OCELOT_QUIRK_PCS_PERFORMS_RATE_ADAPTATION	BIT(0)
 #define OCELOT_QUIRK_QSGMII_PORTS_MUST_BE_UP		BIT(1)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define OCELOT_QUIRK_PCS_PERFORMS_RATE_ADAPTATION	BIT(0)
+#define OCELOT_QUIRK_QSGMII_PORTS_MUST_BE_UP		BIT(1)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ocelot_port {
 	struct ocelot			*ocelot;
 
@@ -610,6 +619,7 @@ struct ocelot_port {
 	struct ocelot_vlan		native_vlan;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int			ptp_skbs_in_flight;
 	u8				ptp_cmd;
 	struct sk_buff_head		tx_skbs;
@@ -620,6 +630,12 @@ struct ocelot_port {
 	u8				ts_id;
 	spinlock_t			ts_id_lock;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int			ptp_skbs_in_flight;
+	u8				ptp_cmd;
+	struct sk_buff_head		tx_skbs;
+	u8				ts_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	phy_interface_t			phy_mode;
 
@@ -694,11 +710,17 @@ struct ocelot {
 	struct ptp_clock_info		ptp_info;
 	struct hwtstamp_config		hwtstamp_config;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int			ptp_skbs_in_flight;
 	/* Protects the 2-step TX timestamp ID logic */
 	spinlock_t			ts_id_lock;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int			ptp_skbs_in_flight;
+	/* Protects the 2-step TX timestamp ID logic */
+	spinlock_t			ts_id_lock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Protects the PTP interface state */
 	struct mutex			ptp_lock;
 	/* Protects the PTP clock */
@@ -712,6 +734,7 @@ struct ocelot_policer {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct ocelot_skb_cb {
 	struct sk_buff *clone;
@@ -723,6 +746,8 @@ struct ocelot_skb_cb {
 	((struct ocelot_skb_cb *)((skb)->cb))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ocelot_read_ix(ocelot, reg, gi, ri) __ocelot_read_ix(ocelot, reg, reg##_GSZ * (gi) + reg##_RSZ * (ri))
 #define ocelot_read_gix(ocelot, reg, gi) __ocelot_read_ix(ocelot, reg, reg##_GSZ * (gi))
 #define ocelot_read_rix(ocelot, reg, ri) __ocelot_read_ix(ocelot, reg, reg##_RSZ * (ri))
@@ -775,10 +800,13 @@ void __ocelot_target_write_ix(struct ocelot *ocelot, enum ocelot_target target,
 			      u32 val, u32 reg, u32 offset);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if IS_ENABLED(CONFIG_MSCC_OCELOT_SWITCH_LIB)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Packet I/O */
 bool ocelot_can_inject(struct ocelot *ocelot, int grp);
 void ocelot_port_inject_frame(struct ocelot *ocelot, int port, int grp,
@@ -786,6 +814,7 @@ void ocelot_port_inject_frame(struct ocelot *ocelot, int port, int grp,
 int ocelot_xtr_poll_frame(struct ocelot *ocelot, int grp, struct sk_buff **skb);
 void ocelot_drain_cpu_queue(struct ocelot *ocelot, int grp);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 u32 ocelot_ptp_rew_op(struct sk_buff *skb);
@@ -819,6 +848,8 @@ static inline u32 ocelot_ptp_rew_op(struct sk_buff *skb)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Hardware initialization */
 int ocelot_regfields_init(struct ocelot *ocelot,
 			  const struct reg_field *const regfields);
@@ -830,17 +861,21 @@ void ocelot_deinit_port(struct ocelot *ocelot, int port);
 
 /* DSA callbacks */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void ocelot_port_enable(struct ocelot *ocelot, int port,
 			struct phy_device *phy);
 void ocelot_port_disable(struct ocelot *ocelot, int port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ocelot_get_strings(struct ocelot *ocelot, int port, u32 sset, u8 *data);
 void ocelot_get_ethtool_stats(struct ocelot *ocelot, int port, u64 *data);
 int ocelot_get_sset_count(struct ocelot *ocelot, int port, int sset);
 int ocelot_get_ts_info(struct ocelot *ocelot, int port,
 		       struct ethtool_ts_info *info);
 void ocelot_set_ageing_time(struct ocelot *ocelot, unsigned int msecs);
+<<<<<<< HEAD
 <<<<<<< HEAD
 int ocelot_port_vlan_filtering(struct ocelot *ocelot, int port, bool enabled,
 			       struct netlink_ext_ack *extack);
@@ -850,6 +885,10 @@ void ocelot_adjust_link(struct ocelot *ocelot, int port,
 			struct phy_device *phydev);
 int ocelot_port_vlan_filtering(struct ocelot *ocelot, int port, bool enabled);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int ocelot_port_vlan_filtering(struct ocelot *ocelot, int port, bool enabled,
+			       struct netlink_ext_ack *extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ocelot_bridge_stp_state_set(struct ocelot *ocelot, int port, u8 state);
 void ocelot_apply_bridge_fwd_mask(struct ocelot *ocelot);
 int ocelot_port_pre_bridge_flags(struct ocelot *ocelot, int port,
@@ -868,10 +907,14 @@ int ocelot_fdb_del(struct ocelot *ocelot, int port,
 		   const unsigned char *addr, u16 vid);
 int ocelot_vlan_prepare(struct ocelot *ocelot, int port, u16 vid, bool pvid,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			bool untagged, struct netlink_ext_ack *extack);
 =======
 			bool untagged);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			bool untagged, struct netlink_ext_ack *extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ocelot_vlan_add(struct ocelot *ocelot, int port, u16 vid, bool pvid,
 		    bool untagged);
 int ocelot_vlan_del(struct ocelot *ocelot, int port, u16 vid);
@@ -938,6 +981,9 @@ int ocelot_sb_occ_tc_port_bind_get(struct ocelot *ocelot, int port,
 				   u32 *p_cur, u32 *p_max);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ocelot_phylink_mac_link_down(struct ocelot *ocelot, int port,
 				  unsigned int link_an_mode,
 				  phy_interface_t interface,
@@ -950,8 +996,11 @@ void ocelot_phylink_mac_link_up(struct ocelot *ocelot, int port,
 				bool tx_pause, bool rx_pause,
 				unsigned long quirks);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_BRIDGE_MRP)
 int ocelot_mrp_add(struct ocelot *ocelot, int port,
 		   const struct switchdev_obj_mrp *mrp);

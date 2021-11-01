@@ -29,9 +29,13 @@ MODULE_PARM_DESC(base, "ACCES 104-QUAD-8 base addresses");
 /**
  * struct quad8 - device private data structure
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @lock:		lock to prevent clobbering device states during R/W ops
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @lock:		lock to prevent clobbering device states during R/W ops
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @counter:		instance of the counter_device
  * @fck_prescaler:	array of filter clock prescaler configurations
  * @preset:		array of preset values
@@ -102,11 +106,16 @@ struct quad8 {
 
 static int quad8_signal_read(struct counter_device *counter,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct counter_signal *signal,
 			     enum counter_signal_level *level)
 =======
 	struct counter_signal *signal, enum counter_signal_value *val)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct counter_signal *signal,
+			     enum counter_signal_level *level)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct quad8 *const priv = counter->priv;
 	unsigned int state;
@@ -119,10 +128,14 @@ static int quad8_signal_read(struct counter_device *counter,
 		& BIT(signal->id - 16);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	*level = (state) ? COUNTER_SIGNAL_LEVEL_HIGH : COUNTER_SIGNAL_LEVEL_LOW;
 =======
 	*val = (state) ? COUNTER_SIGNAL_HIGH : COUNTER_SIGNAL_LOW;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*level = (state) ? COUNTER_SIGNAL_LEVEL_HIGH : COUNTER_SIGNAL_LEVEL_LOW;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -168,10 +181,14 @@ static int quad8_count_write(struct counter_device *counter,
 	/* Only 24-bit values are supported */
 	if (val > 0xFFFFFF)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -ERANGE;
 =======
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ERANGE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&priv->lock);
 
@@ -211,11 +228,15 @@ enum quad8_count_function {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const enum counter_function quad8_count_functions_list[] = {
 	[QUAD8_COUNT_FUNCTION_PULSE_DIRECTION] = COUNTER_FUNCTION_PULSE_DIRECTION,
 	[QUAD8_COUNT_FUNCTION_QUADRATURE_X1] = COUNTER_FUNCTION_QUADRATURE_X1_A,
 	[QUAD8_COUNT_FUNCTION_QUADRATURE_X2] = COUNTER_FUNCTION_QUADRATURE_X2_A,
 	[QUAD8_COUNT_FUNCTION_QUADRATURE_X4] = COUNTER_FUNCTION_QUADRATURE_X4
+<<<<<<< HEAD
 =======
 static const enum counter_count_function quad8_count_functions_list[] = {
 	[QUAD8_COUNT_FUNCTION_PULSE_DIRECTION] = COUNTER_COUNT_FUNCTION_PULSE_DIRECTION,
@@ -223,6 +244,8 @@ static const enum counter_count_function quad8_count_functions_list[] = {
 	[QUAD8_COUNT_FUNCTION_QUADRATURE_X2] = COUNTER_COUNT_FUNCTION_QUADRATURE_X2_A,
 	[QUAD8_COUNT_FUNCTION_QUADRATURE_X4] = COUNTER_COUNT_FUNCTION_QUADRATURE_X4
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int quad8_function_get(struct counter_device *counter,
@@ -299,12 +322,18 @@ static int quad8_function_set(struct counter_device *counter,
 			mode_cfg |= QUAD8_CMR_QUADRATURE_X4;
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			/* should never reach this path */
 			mutex_unlock(&priv->lock);
 			return -EINVAL;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -382,10 +411,14 @@ static int quad8_action_get(struct counter_device *counter,
 		if (synapse->signal->id == signal_a_id)
 			*action = QUAD8_SYNAPSE_ACTION_RISING_EDGE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return 0;
 =======
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case QUAD8_COUNT_FUNCTION_QUADRATURE_X1:
 		if (synapse->signal->id == signal_a_id) {
 			quad8_direction_get(counter, count, &direction);
@@ -395,6 +428,7 @@ static int quad8_action_get(struct counter_device *counter,
 			else
 				*action = QUAD8_SYNAPSE_ACTION_FALLING_EDGE;
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return 0;
 	case QUAD8_COUNT_FUNCTION_QUADRATURE_X2:
@@ -410,17 +444,26 @@ static int quad8_action_get(struct counter_device *counter,
 	}
 =======
 		break;
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case QUAD8_COUNT_FUNCTION_QUADRATURE_X2:
 		if (synapse->signal->id == signal_a_id)
 			*action = QUAD8_SYNAPSE_ACTION_BOTH_EDGES;
-		break;
+		return 0;
 	case QUAD8_COUNT_FUNCTION_QUADRATURE_X4:
 		*action = QUAD8_SYNAPSE_ACTION_BOTH_EDGES;
-		break;
+		return 0;
+	default:
+		/* should never reach this path */
+		return -EINVAL;
 	}
+<<<<<<< HEAD
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct counter_ops quad8_ops = {
@@ -581,11 +624,17 @@ static int quad8_count_mode_set(struct counter_device *counter,
 		cnt_mode = 3;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	default:
 		/* should never reach this path */
 		return -EINVAL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	default:
+		/* should never reach this path */
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mutex_lock(&priv->lock);
@@ -719,10 +768,14 @@ static ssize_t quad8_count_preset_write(struct counter_device *counter,
 	/* Only 24-bit values are supported */
 	if (preset > 0xFFFFFF)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -ERANGE;
 =======
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ERANGE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&priv->lock);
 
@@ -768,10 +821,14 @@ static ssize_t quad8_count_ceiling_write(struct counter_device *counter,
 	/* Only 24-bit values are supported */
 	if (ceiling > 0xFFFFFF)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -ERANGE;
 =======
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ERANGE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&priv->lock);
 
@@ -781,20 +838,29 @@ static ssize_t quad8_count_ceiling_write(struct counter_device *counter,
 	case 3:
 		quad8_preset_register_set(priv, count->id, ceiling);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mutex_unlock(&priv->lock);
 		return len;
 =======
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mutex_unlock(&priv->lock);
+		return len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mutex_unlock(&priv->lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return -EINVAL;
 =======
 	return len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t quad8_count_preset_enable_read(struct counter_device *counter,

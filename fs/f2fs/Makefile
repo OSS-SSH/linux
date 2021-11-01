@@ -10,6 +10,10 @@ f2fs-$(CONFIG_F2FS_FS_POSIX_ACL) += acl.o
 f2fs-$(CONFIG_FS_VERITY) += verity.o
 f2fs-$(CONFIG_F2FS_FS_COMPRESSION) += compress.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 f2fs-$(CONFIG_F2FS_IOSTAT) += iostat.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+f2fs-$(CONFIG_F2FS_IOSTAT) += iostat.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -299,10 +299,14 @@ static void s3c_irq_demux(struct irq_desc *desc)
 	struct s3c_irq_intc *intc = irq_data->intc;
 	struct s3c_irq_intc *sub_intc = irq_data->sub_intc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int n, offset;
 =======
 	unsigned int n, offset, irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int n, offset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long src, msk;
 
 	/* we're using individual domains for the non-dt case
@@ -323,11 +327,15 @@ static void s3c_irq_demux(struct irq_desc *desc)
 		n = __ffs(src);
 		src &= ~(1 << n);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		generic_handle_domain_irq(sub_intc->domain, offset + n);
 =======
 		irq = irq_find_mapping(sub_intc->domain, offset + n);
 		generic_handle_irq(irq);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(sub_intc->domain, offset + n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(chip, desc);

@@ -209,6 +209,9 @@ config CS5535_CLOCK_EVENT_SRC
 	  generic PIT, and are suitable for use as high-res timers.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config GEHC_ACHC
 	tristate "GEHC ACHC support"
 	depends on SPI && SYSFS
@@ -232,8 +235,11 @@ config HI6421V600_IRQ
 	  This driver provides IRQ handling for Hi6421v600, used on
 	  some Kirin chipsets, like the one at Hikey 970.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config HP_ILO
 	tristate "Channel interface driver for the HP iLO processor"
 	depends on PCI

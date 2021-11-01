@@ -74,12 +74,18 @@ IF_OPER_LOWERLAYERDOWN (3):
 
 IF_OPER_TESTING (4):
 <<<<<<< HEAD
+<<<<<<< HEAD
  Interface is in testing mode, for example executing driver self-tests
  or media (cable) test. It can't be used for normal traffic until tests
  complete.
 =======
  Unused in current kernel.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ Interface is in testing mode, for example executing driver self-tests
+ or media (cable) test. It can't be used for normal traffic until tests
+ complete.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 IF_OPER_DORMANT (5):
  Interface is L1 up, but waiting for an external event, f.e. for a
@@ -118,10 +124,14 @@ it as lower layer.
 Note that for certain kind of soft-devices, which are not managing any
 real hardware, it is possible to set this bit from userspace.  One
 <<<<<<< HEAD
+<<<<<<< HEAD
 should use TLV IFLA_CARRIER to do so.
 =======
 should use TVL IFLA_CARRIER to do so.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+should use TLV IFLA_CARRIER to do so.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 netif_carrier_ok() can be used to query that bit.
 

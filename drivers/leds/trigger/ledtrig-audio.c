@@ -7,6 +7,7 @@
 #include <linux/leds.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../leds.h"
 
 static enum led_brightness audio_state[NUM_AUDIO_LEDS];
@@ -35,11 +36,39 @@ static struct led_trigger ledtrig_audio[NUM_AUDIO_LEDS] = {
 };
 
 =======
+=======
+#include "../leds.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-static struct led_trigger *ledtrig_audio[NUM_AUDIO_LEDS];
 static enum led_brightness audio_state[NUM_AUDIO_LEDS];
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int ledtrig_audio_mute_activate(struct led_classdev *led_cdev)
+{
+	led_set_brightness_nosleep(led_cdev, audio_state[LED_AUDIO_MUTE]);
+	return 0;
+}
+
+static int ledtrig_audio_micmute_activate(struct led_classdev *led_cdev)
+{
+	led_set_brightness_nosleep(led_cdev, audio_state[LED_AUDIO_MICMUTE]);
+	return 0;
+}
+
+static struct led_trigger ledtrig_audio[NUM_AUDIO_LEDS] = {
+	[LED_AUDIO_MUTE] = {
+		.name     = "audio-mute",
+		.activate = ledtrig_audio_mute_activate,
+	},
+	[LED_AUDIO_MICMUTE] = {
+		.name     = "audio-micmute",
+		.activate = ledtrig_audio_micmute_activate,
+	},
+};
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum led_brightness ledtrig_audio_get(enum led_audio type)
 {
 	return audio_state[type];
@@ -50,15 +79,20 @@ void ledtrig_audio_set(enum led_audio type, enum led_brightness state)
 {
 	audio_state[type] = state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	led_trigger_event(&ledtrig_audio[type], state);
 =======
 	led_trigger_event(ledtrig_audio[type], state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	led_trigger_event(&ledtrig_audio[type], state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(ledtrig_audio_set);
 
 static int __init ledtrig_audio_init(void)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	led_trigger_register(&ledtrig_audio[LED_AUDIO_MUTE]);
 	led_trigger_register(&ledtrig_audio[LED_AUDIO_MICMUTE]);
@@ -68,6 +102,10 @@ static int __init ledtrig_audio_init(void)
 	led_trigger_register_simple("audio-micmute",
 				    &ledtrig_audio[LED_AUDIO_MICMUTE]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	led_trigger_register(&ledtrig_audio[LED_AUDIO_MUTE]);
+	led_trigger_register(&ledtrig_audio[LED_AUDIO_MICMUTE]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 module_init(ledtrig_audio_init);
@@ -75,12 +113,17 @@ module_init(ledtrig_audio_init);
 static void __exit ledtrig_audio_exit(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	led_trigger_unregister(&ledtrig_audio[LED_AUDIO_MUTE]);
 	led_trigger_unregister(&ledtrig_audio[LED_AUDIO_MICMUTE]);
 =======
 	led_trigger_unregister_simple(ledtrig_audio[LED_AUDIO_MUTE]);
 	led_trigger_unregister_simple(ledtrig_audio[LED_AUDIO_MICMUTE]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	led_trigger_unregister(&ledtrig_audio[LED_AUDIO_MUTE]);
+	led_trigger_unregister(&ledtrig_audio[LED_AUDIO_MICMUTE]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 module_exit(ledtrig_audio_exit);
 

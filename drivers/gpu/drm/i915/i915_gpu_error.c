@@ -728,6 +728,9 @@ static void err_print_gt(struct drm_i915_error_state_buf *m,
 		int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (i = 0; i < GEN12_SFC_DONE_MAX; i++) {
 			/*
 			 * SFC_DONE resides in the VD forcewake domain, so it
@@ -737,6 +740,7 @@ static void err_print_gt(struct drm_i915_error_state_buf *m,
 			if (!HAS_ENGINE(gt->_gt, _VCS(i * 2)))
 				continue;
 
+<<<<<<< HEAD
 			err_printf(m, "  SFC_DONE[%d]: 0x%08x\n", i,
 				   gt->sfc_done[i]);
 		}
@@ -745,6 +749,11 @@ static void err_print_gt(struct drm_i915_error_state_buf *m,
 			err_printf(m, "  SFC_DONE[%d]: 0x%08x\n", i,
 				   gt->sfc_done[i]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			err_printf(m, "  SFC_DONE[%d]: 0x%08x\n", i,
+				   gt->sfc_done[i]);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err_printf(m, "  GAM_DONE: 0x%08x\n", gt->gam_done);
 	}
@@ -1055,10 +1064,14 @@ i915_vma_coredump_create(const struct intel_gt *gt,
 				break;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (__i915_gem_object_is_lmem(vma->obj)) {
 =======
 	} else if (i915_gem_object_is_lmem(vma->obj)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (__i915_gem_object_is_lmem(vma->obj)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct intel_memory_region *mem = vma->obj->mm.region;
 		dma_addr_t dma;
 
@@ -1449,11 +1462,16 @@ capture_engine(struct intel_engine_cs *engine,
 	struct intel_engine_capture_vma *capture = NULL;
 	struct intel_engine_coredump *ee;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct intel_context *ce;
 	struct i915_request *rq = NULL;
 =======
 	struct i915_request *rq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_context *ce;
+	struct i915_request *rq = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 
 	ee = intel_engine_coredump_alloc(engine, GFP_KERNEL);
@@ -1461,6 +1479,9 @@ capture_engine(struct intel_engine_cs *engine,
 		return NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ce = intel_engine_get_hung_context(engine);
 	if (ce) {
 		intel_engine_clear_hung_context(engine);
@@ -1479,6 +1500,7 @@ capture_engine(struct intel_engine_cs *engine,
 					       flags);
 		}
 	}
+<<<<<<< HEAD
 	if (rq)
 		capture = intel_engine_coredump_add_request(ee, rq,
 							    ATOMIC_MAYFAIL);
@@ -1487,12 +1509,17 @@ no_request_capture:
 =======
 	spin_lock_irqsave(&engine->active.lock, flags);
 	rq = intel_engine_find_active_request(engine);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rq)
 		capture = intel_engine_coredump_add_request(ee, rq,
 							    ATOMIC_MAYFAIL);
-	spin_unlock_irqrestore(&engine->active.lock, flags);
 	if (!capture) {
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+no_request_capture:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(ee);
 		return NULL;
 	}
@@ -1632,6 +1659,9 @@ static void gt_record_regs(struct intel_gt_coredump *gt)
 	if (GRAPHICS_VER(i915) >= 12) {
 		for (i = 0; i < GEN12_SFC_DONE_MAX; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * SFC_DONE resides in the VD forcewake domain, so it
 			 * only exists if the corresponding VCS engine is
@@ -1640,8 +1670,11 @@ static void gt_record_regs(struct intel_gt_coredump *gt)
 			if (!HAS_ENGINE(gt->_gt, _VCS(i * 2)))
 				continue;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			gt->sfc_done[i] =
 				intel_uncore_read(uncore, GEN12_SFC_DONE(i));
 		}

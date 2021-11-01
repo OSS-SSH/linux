@@ -30,9 +30,13 @@
 		default-brightness-level = <8>;
 		enable-gpios = <&gpioi 0 GPIO_ACTIVE_HIGH>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		power-supply = <&reg_panel_bl>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		power-supply = <&reg_panel_bl>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = "okay";
 	};
 
@@ -42,10 +46,14 @@
 
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * The EXTi IRQ line 3 is shared with ethernet,
 =======
 		 * The EXTi IRQ line 3 is shared with touchscreen and ethernet,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * The EXTi IRQ line 3 is shared with ethernet,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * so mark this as polled GPIO key.
 		 */
 		button-0 {
@@ -56,6 +64,9 @@
 
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * The EXTi IRQ line 6 is shared with touchscreen,
 		 * so mark this as polled GPIO key.
 		 */
@@ -66,8 +77,11 @@
 		};
 
 		/*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * The EXTi IRQ line 0 is shared with PMIC,
 		 * so mark this as polled GPIO key.
 		 */
@@ -82,6 +96,7 @@
 		compatible = "gpio-keys";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		button-1 {
 			label = "TA2-GPIO-B";
@@ -91,6 +106,8 @@
 		};
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		button-3 {
 			label = "TA4-GPIO-D";
 			linux,code = <KEY_D>;
@@ -107,9 +124,13 @@
 			gpios = <&gpioc 6 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 <<<<<<< HEAD
+<<<<<<< HEAD
 			status = "disabled";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			status = "disabled";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		led-1 {
@@ -135,9 +156,13 @@
 		compatible = "edt,etm0700g0edh6";
 		backlight = <&display_bl>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		power-supply = <&reg_panel_bl>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		power-supply = <&reg_panel_bl>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		port {
 			lcd_panel_in: endpoint {
@@ -147,6 +172,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reg_panel_bl: regulator-panel-bl {
 		compatible = "regulator-fixed";
 		regulator-name = "panel_backlight";
@@ -162,8 +190,11 @@
 		regulator-max-microvolt = <24000000>;
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sound {
 		compatible = "audio-graph-card";
 		routing =
@@ -219,17 +250,23 @@
 				reg = <0>;
 				remote-endpoint = <&sai2a_endpoint>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				frame-master = <&sgtl5000_tx_endpoint>;
 				bitclock-master = <&sgtl5000_tx_endpoint>;
 =======
 				frame-master;
 				bitclock-master;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				frame-master = <&sgtl5000_tx_endpoint>;
+				bitclock-master = <&sgtl5000_tx_endpoint>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			sgtl5000_rx_endpoint: endpoint@1 {
 				reg = <1>;
 				remote-endpoint = <&sai2b_endpoint>;
+<<<<<<< HEAD
 <<<<<<< HEAD
 				frame-master = <&sgtl5000_rx_endpoint>;
 				bitclock-master = <&sgtl5000_rx_endpoint>;
@@ -237,6 +274,10 @@
 				frame-master;
 				bitclock-master;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				frame-master = <&sgtl5000_rx_endpoint>;
+				bitclock-master = <&sgtl5000_rx_endpoint>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 
@@ -246,12 +287,17 @@
 		compatible = "edt,edt-ft5406";
 		reg = <0x38>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		interrupt-parent = <&gpioc>;
 		interrupts = <6 IRQ_TYPE_EDGE_FALLING>; /* GPIO E */
 =======
 		interrupt-parent = <&gpiog>;
 		interrupts = <2 IRQ_TYPE_EDGE_FALLING>; /* GPIO E */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		interrupt-parent = <&gpioc>;
+		interrupts = <6 IRQ_TYPE_EDGE_FALLING>; /* GPIO E */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 

@@ -52,10 +52,14 @@ int smu7_fan_ctrl_get_fan_speed_info(struct pp_hwmgr *hwmgr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int smu7_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
 =======
 int smu7_fan_ctrl_get_fan_speed_percent(struct pp_hwmgr *hwmgr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int smu7_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint32_t *speed)
 {
 	uint32_t duty100;
@@ -75,6 +79,7 @@ int smu7_fan_ctrl_get_fan_speed_percent(struct pp_hwmgr *hwmgr,
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tmp64 = (uint64_t)duty * 255;
 	do_div(tmp64, duty100);
 	*speed = MIN((uint32_t)tmp64, 255);
@@ -86,6 +91,11 @@ int smu7_fan_ctrl_get_fan_speed_percent(struct pp_hwmgr *hwmgr,
 	if (*speed > 100)
 		*speed = 100;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tmp64 = (uint64_t)duty * 255;
+	do_div(tmp64, duty100);
+	*speed = MIN((uint32_t)tmp64, 255);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -210,6 +220,7 @@ int smu7_fan_ctrl_stop_smc_fan_control(struct pp_hwmgr *hwmgr)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * smu7_fan_ctrl_set_fan_speed_pwm - Set Fan Speed in PWM.
  * @hwmgr: the address of the powerplay hardware manager.
  * @speed: is the pwm value (0 - 255) to be set.
@@ -217,12 +228,18 @@ int smu7_fan_ctrl_stop_smc_fan_control(struct pp_hwmgr *hwmgr)
 int smu7_fan_ctrl_set_fan_speed_pwm(struct pp_hwmgr *hwmgr,
 =======
  * smu7_fan_ctrl_set_fan_speed_percent - Set Fan Speed in percent.
+=======
+ * smu7_fan_ctrl_set_fan_speed_pwm - Set Fan Speed in PWM.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @hwmgr: the address of the powerplay hardware manager.
- * @speed: is the percentage value (0% - 100%) to be set.
- * Exception: Fails is the 100% setting appears to be 0.
+ * @speed: is the pwm value (0 - 255) to be set.
  */
+<<<<<<< HEAD
 int smu7_fan_ctrl_set_fan_speed_percent(struct pp_hwmgr *hwmgr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int smu7_fan_ctrl_set_fan_speed_pwm(struct pp_hwmgr *hwmgr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint32_t speed)
 {
 	uint32_t duty100;
@@ -233,11 +250,15 @@ int smu7_fan_ctrl_set_fan_speed_percent(struct pp_hwmgr *hwmgr,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	speed = MIN(speed, 255);
 =======
 	if (speed > 100)
 		speed = 100;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	speed = MIN(speed, 255);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (PP_CAP(PHM_PlatformCaps_MicrocodeFanControl))
 		smu7_fan_ctrl_stop_smc_fan_control(hwmgr);
@@ -250,10 +271,14 @@ int smu7_fan_ctrl_set_fan_speed_percent(struct pp_hwmgr *hwmgr,
 
 	tmp64 = (uint64_t)speed * duty100;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	do_div(tmp64, 255);
 =======
 	do_div(tmp64, 100);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	do_div(tmp64, 255);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	duty = (uint32_t)tmp64;
 
 	PHM_WRITE_VFPF_INDIRECT_FIELD(hwmgr->device, CGS_IND_REG__SMC,

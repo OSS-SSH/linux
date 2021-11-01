@@ -30,9 +30,13 @@ struct qcom_smd_rpm;
 #define QCOM_SMD_RPM_OCMEM_PWR	0x706d636f
 #define QCOM_SMD_RPM_QPIC_CLK	0x63697071
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define QCOM_SMD_RPM_QUP_CLK	0x707571
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define QCOM_SMD_RPM_QUP_CLK	0x707571
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define QCOM_SMD_RPM_SMPA	0x61706d73
 #define QCOM_SMD_RPM_SMPB	0x62706d73
 #define QCOM_SMD_RPM_SPDM	0x63707362

@@ -30,9 +30,12 @@
 #include <drm/drm_gem_cma_helper.h>
 #include <drm/drm_gem_framebuffer_helper.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <drm/drm_irq.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_modeset_helper.h>
 #include <drm/drm_of.h>
 #include <drm/drm_probe_helper.h>
@@ -42,6 +45,9 @@
 #include "hdlcd_regs.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static irqreturn_t hdlcd_irq(int irq, void *arg)
 {
 	struct drm_device *drm = arg;
@@ -130,8 +136,11 @@ static void hdlcd_irq_uninstall(struct drm_device *drm)
 	free_irq(hdlcd->irq, drm);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hdlcd_load(struct drm_device *drm, unsigned long flags)
 {
 	struct hdlcd_drm_private *hdlcd = drm->dev_private;
@@ -185,15 +194,21 @@ static int hdlcd_load(struct drm_device *drm, unsigned long flags)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = platform_get_irq(pdev, 0);
 	if (ret < 0)
 		goto irq_fail;
 	hdlcd->irq = ret;
 
 	ret = hdlcd_irq_install(drm, hdlcd->irq);
+<<<<<<< HEAD
 =======
 	ret = drm_irq_install(drm, platform_get_irq(pdev, 0));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		DRM_ERROR("failed to install IRQ handler\n");
 		goto irq_fail;
@@ -225,6 +240,7 @@ static void hdlcd_setup_mode_config(struct drm_device *drm)
 	drm->mode_config.funcs = &hdlcd_mode_config_funcs;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static irqreturn_t hdlcd_irq(int irq, void *arg)
@@ -298,6 +314,8 @@ static void hdlcd_irq_uninstall(struct drm_device *drm)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_FS
 static int hdlcd_show_underrun_count(struct seq_file *m, void *arg)
 {
@@ -343,12 +361,15 @@ DEFINE_DRM_GEM_CMA_FOPS(fops);
 static const struct drm_driver hdlcd_driver = {
 	.driver_features = DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.irq_handler = hdlcd_irq,
 	.irq_preinstall = hdlcd_irq_preinstall,
 	.irq_postinstall = hdlcd_irq_postinstall,
 	.irq_uninstall = hdlcd_irq_uninstall,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DRM_GEM_CMA_DRIVER_OPS,
 #ifdef CONFIG_DEBUG_FS
 	.debugfs_init = hdlcd_debugfs_init,
@@ -426,10 +447,14 @@ err_unload:
 	of_node_put(hdlcd->crtc.port);
 	hdlcd->crtc.port = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hdlcd_irq_uninstall(drm);
 =======
 	drm_irq_uninstall(drm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hdlcd_irq_uninstall(drm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	of_reserved_mem_device_release(drm->dev);
 err_free:
 	drm_mode_config_cleanup(drm);
@@ -452,10 +477,14 @@ static void hdlcd_drm_unbind(struct device *dev)
 	pm_runtime_get_sync(dev);
 	drm_atomic_helper_shutdown(drm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hdlcd_irq_uninstall(drm);
 =======
 	drm_irq_uninstall(drm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hdlcd_irq_uninstall(drm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_put(dev);
 	if (pm_runtime_enabled(dev))
 		pm_runtime_disable(dev);

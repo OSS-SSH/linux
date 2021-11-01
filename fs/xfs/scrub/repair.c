@@ -249,15 +249,20 @@ xrep_calc_ag_resblks(
 	 */
 	bnobt_sz = 2 * xfs_allocbt_calc_size(mp, freelen);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_sparseinodes(mp))
 =======
 	if (xfs_sb_version_hassparseinodes(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_sparseinodes(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		inobt_sz = xfs_iallocbt_calc_size(mp, icount /
 				XFS_INODES_PER_HOLEMASK_BIT);
 	else
 		inobt_sz = xfs_iallocbt_calc_size(mp, icount /
 				XFS_INODES_PER_CHUNK);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (xfs_has_finobt(mp))
 		inobt_sz *= 2;
@@ -268,13 +273,20 @@ xrep_calc_ag_resblks(
 	if (xfs_has_rmapbt(mp)) {
 =======
 	if (xfs_sb_version_hasfinobt(&mp->m_sb))
+=======
+	if (xfs_has_finobt(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		inobt_sz *= 2;
-	if (xfs_sb_version_hasreflink(&mp->m_sb))
+	if (xfs_has_reflink(mp))
 		refcbt_sz = xfs_refcountbt_calc_size(mp, usedlen);
 	else
 		refcbt_sz = 0;
+<<<<<<< HEAD
 	if (xfs_sb_version_hasrmapbt(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_rmapbt(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Guess how many blocks we need to rebuild the rmapbt.
 		 * For non-reflink filesystems we can't have more records than
@@ -284,10 +296,14 @@ xrep_calc_ag_resblks(
 		 * what we hope is an generous over-estimation.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_has_reflink(mp))
 =======
 		if (xfs_sb_version_hasreflink(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rmapbt_sz = xfs_rmapbt_calc_size(mp,
 					(unsigned long long)aglen * 2);
 		else
@@ -325,6 +341,7 @@ xrep_alloc_ag_block(
 		xfs_extent_busy_reuse(sc->mp, sc->sa.pag, bno,
 				1, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*fsbno = XFS_AGB_TO_FSB(sc->mp, sc->sa.pag->pag_agno, bno);
 		if (resv == XFS_AG_RESV_RMAPBT)
 			xfs_ag_resv_rmapbt_alloc(sc->mp, sc->sa.pag->pag_agno);
@@ -333,6 +350,11 @@ xrep_alloc_ag_block(
 		if (resv == XFS_AG_RESV_RMAPBT)
 			xfs_ag_resv_rmapbt_alloc(sc->mp, sc->sa.agno);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*fsbno = XFS_AGB_TO_FSB(sc->mp, sc->sa.pag->pag_agno, bno);
+		if (resv == XFS_AG_RESV_RMAPBT)
+			xfs_ag_resv_rmapbt_alloc(sc->mp, sc->sa.pag->pag_agno);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	default:
 		break;
@@ -342,10 +364,14 @@ xrep_alloc_ag_block(
 	args.mp = sc->mp;
 	args.oinfo = *oinfo;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	args.fsbno = XFS_AGB_TO_FSB(args.mp, sc->sa.pag->pag_agno, 0);
 =======
 	args.fsbno = XFS_AGB_TO_FSB(args.mp, sc->sa.agno, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	args.fsbno = XFS_AGB_TO_FSB(args.mp, sc->sa.pag->pag_agno, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	args.minlen = 1;
 	args.maxlen = 1;
 	args.prod = 1;
@@ -381,10 +407,14 @@ xrep_init_btblock(
 			XFS_FSB_TO_AGBNO(mp, fsb), btnum);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ASSERT(XFS_FSB_TO_AGNO(mp, fsb) == sc->sa.pag->pag_agno);
 =======
 	ASSERT(XFS_FSB_TO_AGNO(mp, fsb) == sc->sa.agno);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ASSERT(XFS_FSB_TO_AGNO(mp, fsb) == sc->sa.pag->pag_agno);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = xfs_trans_get_buf(tp, mp->m_ddev_targp,
 			XFS_FSB_TO_DADDR(mp, fsb), XFS_FSB_TO_BB(mp, 1), 0,
 			&bp);
@@ -392,10 +422,14 @@ xrep_init_btblock(
 		return error;
 	xfs_buf_zero(bp, 0, BBTOB(bp->b_length));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xfs_btree_init_block(mp, bp, btnum, 0, 0, sc->sa.pag->pag_agno);
 =======
 	xfs_btree_init_block(mp, bp, btnum, 0, 0, sc->sa.agno);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_btree_init_block(mp, bp, btnum, 0, 0, sc->sa.pag->pag_agno);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_trans_buf_set_type(tp, bp, XFS_BLFT_BTREE_BUF);
 	xfs_trans_log_buf(tp, bp, 0, BBTOB(bp->b_length) - 1);
 	bp->b_ops = ops;
@@ -518,10 +552,14 @@ xrep_fix_freelist(
 	args.mp = sc->mp;
 	args.tp = sc->tp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	args.agno = sc->sa.pag->pag_agno;
 =======
 	args.agno = sc->sa.agno;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	args.agno = sc->sa.pag->pag_agno;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	args.alignment = 1;
 	args.pag = sc->sa.pag;
 
@@ -652,6 +690,7 @@ xrep_reap_extents(
 	int				error = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ASSERT(xfs_has_rmapbt(sc->mp));
 
 	for_each_xbitmap_block(fsbno, bmr, n, bitmap) {
@@ -664,6 +703,13 @@ xrep_reap_extents(
 		ASSERT(sc->ip != NULL ||
 		       XFS_FSB_TO_AGNO(sc->mp, fsbno) == sc->sa.agno);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ASSERT(xfs_has_rmapbt(sc->mp));
+
+	for_each_xbitmap_block(fsbno, bmr, n, bitmap) {
+		ASSERT(sc->ip != NULL ||
+		       XFS_FSB_TO_AGNO(sc->mp, fsbno) == sc->sa.pag->pag_agno);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		trace_xrep_dispose_btree_extent(sc->mp,
 				XFS_FSB_TO_AGNO(sc->mp, fsbno),
 				XFS_FSB_TO_AGBNO(sc->mp, fsbno), 1);
@@ -739,10 +785,14 @@ xrep_findroot_block(
 	int				error = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	daddr = XFS_AGB_TO_DADDR(mp, ri->sc->sa.pag->pag_agno, agbno);
 =======
 	daddr = XFS_AGB_TO_DADDR(mp, ri->sc->sa.agno, agbno);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	daddr = XFS_AGB_TO_DADDR(mp, ri->sc->sa.pag->pag_agno, agbno);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Blocks in the AGFL have stale contents that might just happen to
@@ -872,10 +922,14 @@ xrep_findroot_block(
 		fab->root = NULLAGBLOCK;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	trace_xrep_findroot_block(mp, ri->sc->sa.pag->pag_agno, agbno,
 =======
 	trace_xrep_findroot_block(mp, ri->sc->sa.agno, agbno,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_xrep_findroot_block(mp, ri->sc->sa.pag->pag_agno, agbno,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			be32_to_cpu(btblock->bb_magic), fab->height - 1);
 out:
 	xfs_trans_brelse(ri->sc->tp, bp);
@@ -890,10 +944,14 @@ STATIC int
 xrep_findroot_rmap(
 	struct xfs_btree_cur		*cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct xfs_rmap_irec	*rec,
 =======
 	struct xfs_rmap_irec		*rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct xfs_rmap_irec	*rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void				*priv)
 {
 	struct xrep_findroot		*ri = priv;

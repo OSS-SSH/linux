@@ -89,9 +89,13 @@ static struct bench internals_benchmarks[] = {
 	{ "kallsyms-parse", "Benchmark kallsyms parsing",	bench_kallsyms_parse	},
 	{ "inject-build-id", "Benchmark build-id injection",	bench_inject_build_id	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ "evlist-open-close", "Benchmark evlist open and close",	bench_evlist_open_close	},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ "evlist-open-close", "Benchmark evlist open and close",	bench_evlist_open_close	},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ NULL,		NULL,					NULL			}
 };
 

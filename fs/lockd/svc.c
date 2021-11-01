@@ -585,10 +585,14 @@ static struct ctl_table nlm_sysctls[] = {
 		.maxlen		= sizeof(int),
 		.mode		= 0644,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.proc_handler	= proc_dobool,
 =======
 		.proc_handler	= proc_dointvec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.proc_handler	= proc_dobool,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		.procname	= "nsm_local_state",
@@ -654,9 +658,13 @@ static int lockd_authenticate(struct svc_rqst *rqstp)
 		case RPC_AUTH_NULL:
 		case RPC_AUTH_UNIX:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			rqstp->rq_auth_stat = rpc_auth_ok;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			rqstp->rq_auth_stat = rpc_auth_ok;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (rqstp->rq_proc == 0)
 				return SVC_OK;
 			if (is_callback(rqstp->rq_proc)) {
@@ -668,9 +676,13 @@ static int lockd_authenticate(struct svc_rqst *rqstp)
 			return svc_set_client(rqstp);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rqstp->rq_auth_stat = rpc_autherr_badcred;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rqstp->rq_auth_stat = rpc_autherr_badcred;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return SVC_DENIED;
 }
 

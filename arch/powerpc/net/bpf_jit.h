@@ -25,6 +25,9 @@
 
 /* Long jump; (unconditional 'branch') */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PPC_JMP(dest)							      \
 	do {								      \
 		long offset = (long)(dest) - (ctx->idx * 4);		      \
@@ -35,15 +38,21 @@
 		EMIT(PPC_INST_BRANCH | (offset & 0x03fffffc));		      \
 	} while (0)
 
+<<<<<<< HEAD
 =======
 #define PPC_JMP(dest)		EMIT(PPC_INST_BRANCH |			      \
 				     (((dest) - (ctx->idx * 4)) & 0x03fffffc))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* blr; (unconditional 'branch' with link) to absolute address */
 #define PPC_BL_ABS(dest)	EMIT(PPC_INST_BL |			      \
 				     (((dest) - (unsigned long)(image + ctx->idx)) & 0x03fffffc))
 /* "cond" here covers BO:BI fields. */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PPC_BCC_SHORT(cond, dest)					      \
 	do {								      \
 		long offset = (long)(dest) - (ctx->idx * 4);		      \
@@ -54,12 +63,15 @@
 		EMIT(PPC_INST_BRANCH_COND | (((cond) & 0x3ff) << 16) | (offset & 0xfffc));					\
 	} while (0)
 
+<<<<<<< HEAD
 =======
 #define PPC_BCC_SHORT(cond, dest)	EMIT(PPC_INST_BRANCH_COND |	      \
 					     (((cond) & 0x3ff) << 16) |	      \
 					     (((dest) - (ctx->idx * 4)) &     \
 					      0xfffc))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Sign-extended 32-bit immediate load */
 #define PPC_LI32(d, i)		do {					      \
 		if ((int)(uintptr_t)(i) >= -32768 &&			      \
@@ -105,6 +117,7 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline bool is_nearbranch(int offset)
 {
@@ -112,6 +125,8 @@ static inline bool is_nearbranch(int offset)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The fly in the ointment of code size changing from pass to pass is
  * avoided by padding the short branch case with a NOP.	 If code size differs
@@ -121,10 +136,14 @@ static inline bool is_nearbranch(int offset)
  */
 #define PPC_BCC(cond, dest)	do {					      \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (is_offset_in_cond_branch_range((long)(dest) - (ctx->idx * 4))) {	\
 =======
 		if (is_nearbranch((dest) - (ctx->idx * 4))) {		      \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (is_offset_in_cond_branch_range((long)(dest) - (ctx->idx * 4))) {	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			PPC_BCC_SHORT(cond, dest);			      \
 			EMIT(PPC_RAW_NOP());				      \
 		} else {						      \

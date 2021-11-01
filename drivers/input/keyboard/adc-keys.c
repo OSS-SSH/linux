@@ -194,10 +194,14 @@ MODULE_DEVICE_TABLE(of, adc_keys_of_match);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct platform_driver adc_keys_driver = {
 =======
 static struct platform_driver __refdata adc_keys_driver = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct platform_driver adc_keys_driver = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.name = "adc_keys",
 		.of_match_table = of_match_ptr(adc_keys_of_match),

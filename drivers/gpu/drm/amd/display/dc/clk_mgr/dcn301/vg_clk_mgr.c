@@ -115,10 +115,14 @@ void vg_update_clocks(struct clk_mgr *clk_mgr_base,
 			display_count = vg_get_active_display_cnt_wa(dc, context);
 			/* if we can go lower, go lower */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (display_count == 0 && !IS_DIAG_DC(dc->ctx->dce_environment)) {
 =======
 			if (display_count == 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (display_count == 0 && !IS_DIAG_DC(dc->ctx->dce_environment)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				union display_idle_optimization_u idle_info = { 0 };
 
 				idle_info.idle_info.df_request_disabled = 1;

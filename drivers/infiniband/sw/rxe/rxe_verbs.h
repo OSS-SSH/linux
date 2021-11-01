@@ -211,12 +211,17 @@ struct rxe_resp_info {
 
 struct rxe_qp {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ib_qp		ibqp;
 	struct rxe_pool_entry	pelem;
 =======
 	struct rxe_pool_entry	pelem;
 	struct ib_qp		ibqp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ib_qp		ibqp;
+	struct rxe_pool_entry	pelem;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ib_qp_attr	attr;
 	unsigned int		valid;
 	unsigned int		mtu;

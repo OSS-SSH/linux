@@ -42,6 +42,7 @@ struct mlx5e_ipsec_tx {
 
 /* IPsec RX flow steering */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static enum mlx5_traffic_types fs_esp2tt(enum accel_fs_esp_type i)
 {
 	if (i == ACCEL_FS_ESP4)
@@ -54,6 +55,13 @@ static enum mlx5e_traffic_types fs_esp2tt(enum accel_fs_esp_type i)
 		return MLX5E_TT_IPV4_IPSEC_ESP;
 	return MLX5E_TT_IPV6_IPSEC_ESP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static enum mlx5_traffic_types fs_esp2tt(enum accel_fs_esp_type i)
+{
+	if (i == ACCEL_FS_ESP4)
+		return MLX5_TT_IPV4_IPSEC_ESP;
+	return MLX5_TT_IPV6_IPSEC_ESP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int rx_err_add_rule(struct mlx5e_priv *priv,
@@ -274,11 +282,16 @@ static int rx_create(struct mlx5e_priv *priv, enum accel_fs_esp_type type)
 	fs_prot = &accel_esp->fs_prot[type];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fs_prot->default_dest =
 		mlx5_ttc_get_default_dest(priv->fs.ttc, fs_esp2tt(type));
 =======
 	fs_prot->default_dest = mlx5e_ttc_get_default_dest(priv, fs_esp2tt(type));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fs_prot->default_dest =
+		mlx5_ttc_get_default_dest(priv->fs.ttc, fs_esp2tt(type));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = rx_err_create_ft(priv, fs_prot, &fs_prot->rx_err);
 	if (err)
@@ -315,10 +328,14 @@ static int rx_ft_get(struct mlx5e_priv *priv, enum accel_fs_esp_type type)
 	dest.type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
 	dest.ft = fs_prot->ft;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlx5_ttc_fwd_dest(priv->fs.ttc, fs_esp2tt(type), &dest);
 =======
 	mlx5e_ttc_fwd_dest(priv, fs_esp2tt(type), &dest);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5_ttc_fwd_dest(priv->fs.ttc, fs_esp2tt(type), &dest);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out:
 	mutex_unlock(&fs_prot->prot_mutex);
@@ -338,10 +355,14 @@ static void rx_ft_put(struct mlx5e_priv *priv, enum accel_fs_esp_type type)
 
 	/* disconnect */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlx5_ttc_fwd_default_dest(priv->fs.ttc, fs_esp2tt(type));
 =======
 	mlx5e_ttc_fwd_default_dest(priv, fs_esp2tt(type));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlx5_ttc_fwd_default_dest(priv->fs.ttc, fs_esp2tt(type));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* remove FT */
 	rx_destroy(priv, type);

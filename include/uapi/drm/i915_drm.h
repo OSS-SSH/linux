@@ -573,6 +573,9 @@ typedef struct drm_i915_irq_wait {
 #define   I915_SCHEDULER_CAP_SEMAPHORES	(1ul << 3)
 #define   I915_SCHEDULER_CAP_ENGINE_BUSY_STATS	(1ul << 4)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Indicates the 2k user priority levels are statically mapped into 3 buckets as
  * follows:
@@ -582,8 +585,11 @@ typedef struct drm_i915_irq_wait {
  * 1 to 1k	Highest priority
  */
 #define   I915_SCHEDULER_CAP_STATIC_PRIORITY_MAP	(1ul << 5)
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define I915_PARAM_HUC_STATUS		 42
 
@@ -687,11 +693,17 @@ typedef struct drm_i915_irq_wait {
 #define I915_PARAM_HAS_EXEC_TIMELINE_FENCES 55
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Query if the kernel supports the I915_USERPTR_PROBE flag. */
 #define I915_PARAM_HAS_USERPTR_PROBE 56
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Query if the kernel supports the I915_USERPTR_PROBE flag. */
+#define I915_PARAM_HAS_USERPTR_PROBE 56
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Must be kept compact -- no holes and well documented */
 
 typedef struct drm_i915_getparam {
@@ -868,6 +880,9 @@ struct drm_i915_gem_mmap_gtt {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct drm_i915_gem_mmap_offset - Retrieve an offset so we can mmap this buffer object.
  *
@@ -878,6 +893,7 @@ struct drm_i915_gem_mmap_gtt {
  * `DRM_IOCTL_I915_GEM_MMAP_GTT` is an older supported alias to this struct, but will behave
  * as setting the &extensions to 0, and &flags to `I915_MMAP_OFFSET_GTT`.
  */
+<<<<<<< HEAD
 struct drm_i915_gem_mmap_offset {
 	/** @handle: Handle for the object being mapped. */
 	__u32 handle;
@@ -886,13 +902,20 @@ struct drm_i915_gem_mmap_offset {
 	/**
 	 * @offset: The fake offset to use for subsequent mmap call
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_i915_gem_mmap_offset {
-	/** Handle for the object being mapped. */
+	/** @handle: Handle for the object being mapped. */
 	__u32 handle;
+	/** @pad: Must be zero */
 	__u32 pad;
 	/**
+<<<<<<< HEAD
 	 * Fake offset to use for subsequent mmap call
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * @offset: The fake offset to use for subsequent mmap call
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * This is a fixed-size type for 32/64 compatibility.
 	 */
@@ -900,10 +923,14 @@ struct drm_i915_gem_mmap_offset {
 
 	/**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @flags: Flags for extended behaviour.
 	 *
 	 * It is mandatory that one of the `MMAP_OFFSET` types
 	 * should be included:
+<<<<<<< HEAD
 	 *
 	 * - `I915_MMAP_OFFSET_GTT`: Use mmap with the object bound to GTT. (Write-Combined)
 	 * - `I915_MMAP_OFFSET_WC`: Use Write-Combined caching.
@@ -929,19 +956,37 @@ struct drm_i915_gem_mmap_offset {
 	 * @extensions: Zero-terminated chain of extensions.
 =======
 	 * Flags for extended behaviour.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
-	 * It is mandatory that one of the MMAP_OFFSET types
-	 * (GTT, WC, WB, UC, etc) should be included.
+	 * - `I915_MMAP_OFFSET_GTT`: Use mmap with the object bound to GTT. (Write-Combined)
+	 * - `I915_MMAP_OFFSET_WC`: Use Write-Combined caching.
+	 * - `I915_MMAP_OFFSET_WB`: Use Write-Back caching.
+	 * - `I915_MMAP_OFFSET_FIXED`: Use object placement to determine caching.
+	 *
+	 * On devices with local memory `I915_MMAP_OFFSET_FIXED` is the only valid
+	 * type. On devices without local memory, this caching mode is invalid.
+	 *
+	 * As caching mode when specifying `I915_MMAP_OFFSET_FIXED`, WC or WB will
+	 * be used, depending on the object placement on creation. WB will be used
+	 * when the object can only exist in system memory, WC otherwise.
 	 */
 	__u64 flags;
-#define I915_MMAP_OFFSET_GTT 0
-#define I915_MMAP_OFFSET_WC  1
-#define I915_MMAP_OFFSET_WB  2
-#define I915_MMAP_OFFSET_UC  3
 
+<<<<<<< HEAD
 	/*
 	 * Zero-terminated chain of extensions.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define I915_MMAP_OFFSET_GTT	0
+#define I915_MMAP_OFFSET_WC	1
+#define I915_MMAP_OFFSET_WB	2
+#define I915_MMAP_OFFSET_UC	3
+#define I915_MMAP_OFFSET_FIXED	4
+
+	/**
+	 * @extensions: Zero-terminated chain of extensions.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * No current extensions defined; mbz.
 	 */
@@ -949,6 +994,9 @@ struct drm_i915_gem_mmap_offset {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct drm_i915_gem_set_domain - Adjust the objects write or read domain, in
  * preparation for accessing the pages via some CPU domain.
@@ -987,6 +1035,7 @@ struct drm_i915_gem_mmap_offset {
  * more flexibility on future devices, so making this all explicit as part of a
  * new &drm_i915_gem_create_ext extension is probable.
  */
+<<<<<<< HEAD
 struct drm_i915_gem_set_domain {
 	/** @handle: Handle for the object. */
 	__u32 handle;
@@ -1001,15 +1050,26 @@ struct drm_i915_gem_set_domain {
 	 * read domain, and only that read domain.
 	 */
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_i915_gem_set_domain {
-	/** Handle for the object */
+	/** @handle: Handle for the object. */
 	__u32 handle;
 
-	/** New read domains */
+	/** @read_domains: New read domains. */
 	__u32 read_domains;
 
+<<<<<<< HEAD
 	/** New write domain */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/**
+	 * @write_domain: New write domain.
+	 *
+	 * Note that having something in the write domain implies it's in the
+	 * read domain, and only that read domain.
+	 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32 write_domain;
 };
 
@@ -1471,6 +1531,7 @@ struct drm_i915_gem_busy {
 	 *
 	 * The value of each engine class is the same as specified in the
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * I915_CONTEXT_PARAM_ENGINES context parameter and via perf, i.e.
 	 * I915_ENGINE_CLASS_RENDER, I915_ENGINE_CLASS_COPY, etc.
 	 * Some hardware may have parallel execution engines, e.g. multiple
@@ -1484,6 +1545,13 @@ struct drm_i915_gem_busy {
 	 * mapped to the same class identifier and so are not separately
 	 * reported for busyness.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * I915_CONTEXT_PARAM_ENGINES context parameter and via perf, i.e.
+	 * I915_ENGINE_CLASS_RENDER, I915_ENGINE_CLASS_COPY, etc.
+	 * Some hardware may have parallel execution engines, e.g. multiple
+	 * media engines, which are mapped to the same class identifier and so
+	 * are not separately reported for busyness.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * Caveat emptor:
 	 * Only the boolean result of this query is reliable; that is whether
@@ -1495,6 +1563,9 @@ struct drm_i915_gem_busy {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct drm_i915_gem_caching - Set or get the caching for given object
  * handle.
  *
@@ -1532,6 +1603,7 @@ struct drm_i915_gem_busy {
  * supported on other architectures. So for simplicity we opt for setting
  * everything at creation time, whilst also making it immutable, on discrete
  * platforms.
+<<<<<<< HEAD
  */
 struct drm_i915_gem_caching {
 	/**
@@ -1581,32 +1653,51 @@ struct drm_i915_gem_caching {
  * GPU access is coherent with cpu caches and furthermore the data is cached in
  * last-level caches shared between cpu cores and the gpu GT. Default on
  * machines with HAS_LLC.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
-#define I915_CACHING_CACHED		1
-/**
- * I915_CACHING_DISPLAY
- *
- * Special GPU caching mode which is coherent with the scanout engines.
- * Transparently falls back to I915_CACHING_NONE on platforms where no special
- * cache mode (like write-through or gfdt flushing) is available. The kernel
- * automatically sets this mode when using a buffer as a scanout target.
- * Userspace can manually set this mode to avoid a costly stall and clflush in
- * the hotpath of drawing the first frame.
- */
-#define I915_CACHING_DISPLAY		2
-
 struct drm_i915_gem_caching {
 	/**
-	 * Handle of the buffer to set/get the caching level of. */
+	 * @handle: Handle of the buffer to set/get the caching level.
+	 */
 	__u32 handle;
 
 	/**
-	 * Cacheing level to apply or return value
+	 * @caching: The GTT caching level to apply or possible return value.
 	 *
+	 * The supported @caching values:
+	 *
+<<<<<<< HEAD
 	 * bits0-15 are for generic caching control (i.e. the above defined
 	 * values). bits16-31 are reserved for platform-specific variations
 	 * (e.g. l3$ caching on gen7). */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * I915_CACHING_NONE:
+	 *
+	 * GPU access is not coherent with CPU caches.  Default for machines
+	 * without an LLC. This means manual flushing might be needed, if we
+	 * want GPU access to be coherent.
+	 *
+	 * I915_CACHING_CACHED:
+	 *
+	 * GPU access is coherent with CPU caches and furthermore the data is
+	 * cached in last-level caches shared between CPU cores and the GPU GT.
+	 *
+	 * I915_CACHING_DISPLAY:
+	 *
+	 * Special GPU caching mode which is coherent with the scanout engines.
+	 * Transparently falls back to I915_CACHING_NONE on platforms where no
+	 * special cache mode (like write-through or gfdt flushing) is
+	 * available. The kernel automatically sets this mode when using a
+	 * buffer as a scanout target.  Userspace can manually set this mode to
+	 * avoid a costly stall and clflush in the hotpath of drawing the first
+	 * frame.
+	 */
+#define I915_CACHING_NONE		0
+#define I915_CACHING_CACHED		1
+#define I915_CACHING_DISPLAY		2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32 caching;
 };
 
@@ -1846,12 +1937,18 @@ struct drm_i915_gem_context_param {
 	__u64 param;
 #define I915_CONTEXT_PARAM_BAN_PERIOD	0x1
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* I915_CONTEXT_PARAM_NO_ZEROMAP has been removed.  On the off chance
  * someone somewhere has attempted to use it, never re-use this context
  * param number.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define I915_CONTEXT_PARAM_NO_ZEROMAP	0x2
 #define I915_CONTEXT_PARAM_GTT_SIZE	0x3
 #define I915_CONTEXT_PARAM_NO_ERROR_CAPTURE	0x4
@@ -1937,6 +2034,7 @@ struct drm_i915_gem_context_param {
 #define I915_CONTEXT_PARAM_PERSISTENCE	0xb
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* This API has been removed.  On the off chance someone somewhere has
  * attempted to use it, never re-use this context param number.
 =======
@@ -1959,6 +2057,10 @@ struct drm_i915_gem_context_param {
  * Must be between 4 - 512 KiB, in intervals of page size [4 KiB].
  * Default is 16 KiB.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* This API has been removed.  On the off chance someone somewhere has
+ * attempted to use it, never re-use this context param number.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #define I915_CONTEXT_PARAM_RINGSIZE	0xc
 /* Must be kept compact -- no holes and well documented */
@@ -2026,6 +2128,9 @@ struct drm_i915_gem_context_param_sseu {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * DOC: Virtual Engine uAPI
  *
@@ -2089,8 +2194,11 @@ struct drm_i915_gem_context_param_sseu {
  * 	gem_execbuf(drm_fd, &execbuf);
  */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * i915_context_engines_load_balance:
  *
@@ -2168,6 +2276,9 @@ struct i915_context_engines_bond {
 } __attribute__((packed)) name__
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * DOC: Context Engine Map uAPI
  *
@@ -2223,8 +2334,11 @@ struct i915_context_engines_bond {
  * 	gem_execbuf(drm_fd, &execbuf);
  */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct i915_context_param_engines {
 	__u64 extensions; /* linked chain of extension blocks, 0 terminates */
 #define I915_CONTEXT_ENGINES_EXT_LOAD_BALANCE 0 /* see i915_context_engines_load_balance */
@@ -2243,6 +2357,7 @@ struct drm_i915_gem_context_create_ext_setparam {
 	struct drm_i915_gem_context_param param;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* This API has been removed.  On the off chance someone somewhere has
  * attempted to use it, never re-use this extension number.
@@ -2264,6 +2379,12 @@ struct drm_i915_gem_context_create_ext_clone {
 	__u64 rsvd;
 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* This API has been removed.  On the off chance someone somewhere has
+ * attempted to use it, never re-use this extension number.
+ */
+#define I915_CONTEXT_CREATE_EXT_CLONE 1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct drm_i915_gem_context_destroy {
 	__u32 ctx_id;
@@ -2336,12 +2457,16 @@ struct drm_i915_reset_stats {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct drm_i915_gem_userptr - Create GEM object from user allocated memory.
  *
  * Userptr objects have several restrictions on what ioctls can be used with the
  * object handle.
  */
+<<<<<<< HEAD
 struct drm_i915_gem_userptr {
 	/**
 	 * @user_ptr: The pointer to the allocated memory.
@@ -2400,15 +2525,70 @@ struct drm_i915_gem_userptr {
 	/**
 	 * @handle: Returned handle for the object.
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_i915_gem_userptr {
+	/**
+	 * @user_ptr: The pointer to the allocated memory.
+	 *
+	 * Needs to be aligned to PAGE_SIZE.
+	 */
 	__u64 user_ptr;
+
+	/**
+	 * @user_size:
+	 *
+	 * The size in bytes for the allocated memory. This will also become the
+	 * object size.
+	 *
+	 * Needs to be aligned to PAGE_SIZE, and should be at least PAGE_SIZE,
+	 * or larger.
+	 */
 	__u64 user_size;
+
+	/**
+	 * @flags:
+	 *
+	 * Supported flags:
+	 *
+	 * I915_USERPTR_READ_ONLY:
+	 *
+	 * Mark the object as readonly, this also means GPU access can only be
+	 * readonly. This is only supported on HW which supports readonly access
+	 * through the GTT. If the HW can't support readonly access, an error is
+	 * returned.
+	 *
+	 * I915_USERPTR_PROBE:
+	 *
+	 * Probe the provided @user_ptr range and validate that the @user_ptr is
+	 * indeed pointing to normal memory and that the range is also valid.
+	 * For example if some garbage address is given to the kernel, then this
+	 * should complain.
+	 *
+	 * Returns -EFAULT if the probe failed.
+	 *
+	 * Note that this doesn't populate the backing pages, and also doesn't
+	 * guarantee that the object will remain valid when the object is
+	 * eventually used.
+	 *
+	 * The kernel supports this feature if I915_PARAM_HAS_USERPTR_PROBE
+	 * returns a non-zero value.
+	 *
+	 * I915_USERPTR_UNSYNCHRONIZED:
+	 *
+	 * NOT USED. Setting this flag will result in an error.
+	 */
 	__u32 flags;
 #define I915_USERPTR_READ_ONLY 0x1
+#define I915_USERPTR_PROBE 0x2
 #define I915_USERPTR_UNSYNCHRONIZED 0x80000000
 	/**
+<<<<<<< HEAD
 	 * Returned handle for the object.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * @handle: Returned handle for the object.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * Object handles are nonzero.
 	 */
@@ -2793,6 +2973,9 @@ struct drm_i915_query_topology_info {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * DOC: Engine Discovery uAPI
  *
  * Engine discovery uAPI is a way of enumerating physical engines present in a
@@ -2863,8 +3046,11 @@ struct drm_i915_query_topology_info {
  */
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct drm_i915_engine_info
  *
  * Describes one engine and it's capabilities as known to the driver.

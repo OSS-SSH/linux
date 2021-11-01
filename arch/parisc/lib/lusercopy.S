@@ -29,6 +29,7 @@
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	 * get_sr gets the appropriate space value into
 	 * sr1 for kernel/user space access, depending
@@ -46,6 +47,8 @@
 
 	/*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * unsigned long lclear_user(void *to, unsigned long n)
 	 *
 	 * Returns 0 for success.
@@ -54,6 +57,7 @@
 
 ENTRY_CFI(lclear_user)
 	comib,=,n   0,%r25,$lclu_done
+<<<<<<< HEAD
 <<<<<<< HEAD
 $lclu_loop:
 	addib,<>    -1,%r25,$lclu_loop
@@ -64,6 +68,11 @@ $lclu_loop:
 	addib,<>    -1,%r25,$lclu_loop
 1:      stbs,ma     %r0,1(%sr1,%r26)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$lclu_loop:
+	addib,<>    -1,%r25,$lclu_loop
+1:	stbs,ma     %r0,1(%sr3,%r26)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 $lclu_done:
 	bv          %r0(%r2)
@@ -76,6 +85,7 @@ $lclu_done:
 ENDPROC_CFI(lclear_user)
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/*
@@ -113,6 +123,8 @@ ENDPROC_CFI(lstrnlen_user)
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * unsigned long pa_memcpy(void *dstp, const void *srcp, unsigned long len)
  *

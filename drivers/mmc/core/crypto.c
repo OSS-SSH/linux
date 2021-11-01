@@ -32,6 +32,7 @@ void mmc_crypto_prepare_req(struct mmc_queue_req *mqrq)
 	struct mmc_request *mrq = &mqrq->brq.mrq;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!req->crypt_ctx)
 		return;
 
@@ -53,5 +54,13 @@ void mmc_crypto_prepare_req(struct mmc_queue_req *mqrq)
 
 	mrq->data_unit_num = req->crypt_ctx->bc_dun[0];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!req->crypt_ctx)
+		return;
+
+	mrq->crypto_ctx = req->crypt_ctx;
+	if (req->crypt_keyslot)
+		mrq->crypto_key_slot = blk_ksm_get_slot_idx(req->crypt_keyslot);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(mmc_crypto_prepare_req);

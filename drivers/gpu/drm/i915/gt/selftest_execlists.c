@@ -44,10 +44,14 @@ static int wait_for_submit(struct intel_engine_cs *engine,
 {
 	/* Ignore our own attempts to suppress excess tasklets */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tasklet_hi_schedule(&engine->sched_engine->tasklet);
 =======
 	tasklet_hi_schedule(&engine->execlists.tasklet);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tasklet_hi_schedule(&engine->sched_engine->tasklet);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	timeout += jiffies;
 	do {
@@ -278,10 +282,14 @@ static int live_unlite_restore(struct intel_gt *gt, int prio)
 
 			/* Alternatively preempt the spinner with ce[1] */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			engine->sched_engine->schedule(rq[1], &attr);
 =======
 			engine->schedule(rq[1], &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			engine->sched_engine->schedule(rq[1], &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/* And switch back to ce[0] for good measure */
@@ -562,20 +570,28 @@ static int live_pin_rewind(void *arg)
 static int engine_lock_reset_tasklet(struct intel_engine_cs *engine)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tasklet_disable(&engine->sched_engine->tasklet);
 =======
 	tasklet_disable(&engine->execlists.tasklet);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tasklet_disable(&engine->sched_engine->tasklet);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	local_bh_disable();
 
 	if (test_and_set_bit(I915_RESET_ENGINE + engine->id,
 			     &engine->gt->reset.flags)) {
 		local_bh_enable();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tasklet_enable(&engine->sched_engine->tasklet);
 =======
 		tasklet_enable(&engine->execlists.tasklet);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tasklet_enable(&engine->sched_engine->tasklet);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		intel_gt_set_wedged(engine->gt);
 		return -EBUSY;
@@ -591,10 +607,14 @@ static void engine_unlock_reset_tasklet(struct intel_engine_cs *engine)
 
 	local_bh_enable();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tasklet_enable(&engine->sched_engine->tasklet);
 =======
 	tasklet_enable(&engine->execlists.tasklet);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tasklet_enable(&engine->sched_engine->tasklet);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int live_hold_reset(void *arg)
@@ -649,10 +669,14 @@ static int live_hold_reset(void *arg)
 			goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		engine->sched_engine->tasklet.callback(&engine->sched_engine->tasklet);
 =======
 		engine->execlists.tasklet.callback(&engine->execlists.tasklet);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		engine->sched_engine->tasklet.callback(&engine->sched_engine->tasklet);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		GEM_BUG_ON(execlists_active(&engine->execlists) != rq);
 
 		i915_request_get(rq);
@@ -942,10 +966,14 @@ release_queue(struct intel_engine_cs *engine,
 
 	local_bh_disable();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	engine->sched_engine->schedule(rq, &attr);
 =======
 	engine->schedule(rq, &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	engine->sched_engine->schedule(rq, &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	local_bh_enable(); /* kick tasklet */
 
 	i915_request_put(rq);
@@ -1229,10 +1257,14 @@ static int live_timeslice_rewind(void *arg)
 			/* Wait for the timeslice to kick in */
 			del_timer(&engine->execlists.timer);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			tasklet_hi_schedule(&engine->sched_engine->tasklet);
 =======
 			tasklet_hi_schedule(&engine->execlists.tasklet);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tasklet_hi_schedule(&engine->sched_engine->tasklet);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			intel_engine_flush_submission(engine);
 		}
 		/* -> ELSP[] = { { A:rq1 }, { B:rq1 } } */
@@ -1375,10 +1407,14 @@ static int live_timeslice_queue(void *arg)
 			goto err_heartbeat;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		engine->sched_engine->schedule(rq, &attr);
 =======
 		engine->schedule(rq, &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		engine->sched_engine->schedule(rq, &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = wait_for_submit(engine, rq, HZ / 2);
 		if (err) {
 			pr_err("%s: Timed out trying to submit semaphores\n",
@@ -1576,19 +1612,27 @@ static int live_busywait_preempt(void *arg)
 	 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctx_hi = kernel_context(gt->i915, NULL);
 =======
 	ctx_hi = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx_hi = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ctx_hi)
 		return -ENOMEM;
 	ctx_hi->sched.priority = I915_CONTEXT_MAX_USER_PRIORITY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctx_lo = kernel_context(gt->i915, NULL);
 =======
 	ctx_lo = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx_lo = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ctx_lo)
 		goto err_ctx_hi;
 	ctx_lo->sched.priority = I915_CONTEXT_MIN_USER_PRIORITY;
@@ -1786,19 +1830,27 @@ static int live_preempt(void *arg)
 		goto err_spin_hi;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctx_hi = kernel_context(gt->i915, NULL);
 =======
 	ctx_hi = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx_hi = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ctx_hi)
 		goto err_spin_lo;
 	ctx_hi->sched.priority = I915_CONTEXT_MAX_USER_PRIORITY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctx_lo = kernel_context(gt->i915, NULL);
 =======
 	ctx_lo = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx_lo = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ctx_lo)
 		goto err_ctx_hi;
 	ctx_lo->sched.priority = I915_CONTEXT_MIN_USER_PRIORITY;
@@ -1886,6 +1938,7 @@ static int live_late_preempt(void *arg)
 		goto err_spin_hi;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctx_hi = kernel_context(gt->i915, NULL);
 	if (!ctx_hi)
 		goto err_spin_lo;
@@ -1898,6 +1951,13 @@ static int live_late_preempt(void *arg)
 
 	ctx_lo = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx_hi = kernel_context(gt->i915, NULL);
+	if (!ctx_hi)
+		goto err_spin_lo;
+
+	ctx_lo = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ctx_lo)
 		goto err_ctx_hi;
 
@@ -1945,10 +2005,14 @@ static int live_late_preempt(void *arg)
 
 		attr.priority = I915_PRIORITY_MAX;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		engine->sched_engine->schedule(rq, &attr);
 =======
 		engine->schedule(rq, &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		engine->sched_engine->schedule(rq, &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!igt_wait_for_spinner(&spin_hi, rq)) {
 			pr_err("High priority context failed to preempt the low priority context\n");
@@ -1992,10 +2056,14 @@ struct preempt_client {
 static int preempt_client_init(struct intel_gt *gt, struct preempt_client *c)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	c->ctx = kernel_context(gt->i915, NULL);
 =======
 	c->ctx = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	c->ctx = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!c->ctx)
 		return -ENOMEM;
 
@@ -2566,10 +2634,14 @@ static int live_suppress_self_preempt(void *arg)
 
 			GEM_BUG_ON(i915_request_completed(rq_a));
 <<<<<<< HEAD
+<<<<<<< HEAD
 			engine->sched_engine->schedule(rq_a, &attr);
 =======
 			engine->schedule(rq_a, &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			engine->sched_engine->schedule(rq_a, &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			igt_spinner_end(&a.spin);
 
 			if (!igt_wait_for_spinner(&b.spin, rq_b)) {
@@ -2702,10 +2774,14 @@ static int live_chain_preempt(void *arg)
 			i915_request_get(rq);
 			i915_request_add(rq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			engine->sched_engine->schedule(rq, &attr);
 =======
 			engine->schedule(rq, &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			engine->sched_engine->schedule(rq, &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			igt_spinner_end(&hi.spin);
 			if (i915_request_wait(rq, 0, HZ / 5) < 0) {
@@ -2887,10 +2963,14 @@ static int __live_preempt_ring(struct intel_engine_cs *engine,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tmp->ring_size = ring_sz;
 =======
 		tmp->ring = __intel_context_ring_size(ring_sz);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tmp->ring_size = ring_sz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = intel_context_pin(tmp);
 		if (err) {
@@ -3069,10 +3149,14 @@ static int live_preempt_gang(void *arg)
 
 			/* Submit each spinner at increasing priority */
 <<<<<<< HEAD
+<<<<<<< HEAD
 			engine->sched_engine->schedule(rq, &attr);
 =======
 			engine->schedule(rq, &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			engine->sched_engine->schedule(rq, &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} while (prio <= I915_PRIORITY_MAX &&
 			 !__igt_timeout(end_time, NULL));
 		pr_debug("%s: Preempt chain of %d requests\n",
@@ -3321,10 +3405,14 @@ static int preempt_user(struct intel_engine_cs *engine,
 	i915_request_add(rq);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	engine->sched_engine->schedule(rq, &attr);
 =======
 	engine->schedule(rq, &attr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	engine->sched_engine->schedule(rq, &attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (i915_request_wait(rq, 0, HZ / 2) < 0)
 		err = -ETIME;
@@ -3473,19 +3561,27 @@ static int live_preempt_timeout(void *arg)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctx_hi = kernel_context(gt->i915, NULL);
 =======
 	ctx_hi = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx_hi = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ctx_hi)
 		goto err_spin_lo;
 	ctx_hi->sched.priority = I915_CONTEXT_MAX_USER_PRIORITY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ctx_lo = kernel_context(gt->i915, NULL);
 =======
 	ctx_lo = kernel_context(gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx_lo = kernel_context(gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ctx_lo)
 		goto err_ctx_hi;
 	ctx_lo->sched.priority = I915_CONTEXT_MIN_USER_PRIORITY;
@@ -3658,22 +3754,32 @@ static int smoke_crescendo(struct preempt_smoke *smoke, unsigned int flags)
 {
 	struct task_struct *tsk[I915_NUM_ENGINES] = {};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct preempt_smoke *arg;
 =======
 	struct preempt_smoke arg[I915_NUM_ENGINES];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct preempt_smoke *arg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_engine_cs *engine;
 	enum intel_engine_id id;
 	unsigned long count;
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	arg = kmalloc_array(I915_NUM_ENGINES, sizeof(*arg), GFP_KERNEL);
 	if (!arg)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_engine(engine, smoke->gt, id) {
 		arg[id] = *smoke;
 		arg[id].engine = engine;
@@ -3682,10 +3788,14 @@ static int smoke_crescendo(struct preempt_smoke *smoke, unsigned int flags)
 		arg[id].count = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tsk[id] = kthread_run(smoke_crescendo_thread, arg,
 =======
 		tsk[id] = kthread_run(smoke_crescendo_thread, &arg,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tsk[id] = kthread_run(smoke_crescendo_thread, arg,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      "igt/smoke:%d", id);
 		if (IS_ERR(tsk[id])) {
 			err = PTR_ERR(tsk[id]);
@@ -3715,10 +3825,15 @@ static int smoke_crescendo(struct preempt_smoke *smoke, unsigned int flags)
 	pr_info("Submitted %lu crescendo:%x requests across %d engines and %d contexts\n",
 		count, flags, smoke->gt->info.num_engines, smoke->ncontext);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	kfree(arg);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	kfree(arg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3793,10 +3908,14 @@ static int live_preempt_smoke(void *arg)
 
 	for (n = 0; n < smoke.ncontext; n++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		smoke.contexts[n] = kernel_context(smoke.gt->i915, NULL);
 =======
 		smoke.contexts[n] = kernel_context(smoke.gt->i915);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		smoke.contexts[n] = kernel_context(smoke.gt->i915, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!smoke.contexts[n])
 			goto err_ctx;
 	}
@@ -3848,10 +3967,14 @@ static int nop_virtual_engine(struct intel_gt *gt,
 
 	for (n = 0; n < nctx; n++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ve[n] = intel_engine_create_virtual(siblings, nsibling);
 =======
 		ve[n] = intel_execlists_create_virtual(siblings, nsibling);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ve[n] = intel_engine_create_virtual(siblings, nsibling);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(ve[n])) {
 			err = PTR_ERR(ve[n]);
 			nctx = n;
@@ -4048,10 +4171,14 @@ static int mask_virtual_engine(struct intel_gt *gt,
 	 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ve = intel_engine_create_virtual(siblings, nsibling);
 =======
 	ve = intel_execlists_create_virtual(siblings, nsibling);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ve = intel_engine_create_virtual(siblings, nsibling);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ve)) {
 		err = PTR_ERR(ve);
 		goto out_close;
@@ -4183,10 +4310,14 @@ static int slicein_virtual_engine(struct intel_gt *gt,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ce = intel_engine_create_virtual(siblings, nsibling);
 =======
 	ce = intel_execlists_create_virtual(siblings, nsibling);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ce = intel_engine_create_virtual(siblings, nsibling);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ce)) {
 		err = PTR_ERR(ce);
 		goto out;
@@ -4239,10 +4370,14 @@ static int sliceout_virtual_engine(struct intel_gt *gt,
 	/* XXX We do not handle oversubscription and fairness with normal rq */
 	for (n = 0; n < nsibling; n++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ce = intel_engine_create_virtual(siblings, nsibling);
 =======
 		ce = intel_execlists_create_virtual(siblings, nsibling);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ce = intel_engine_create_virtual(siblings, nsibling);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(ce)) {
 			err = PTR_ERR(ce);
 			goto out;
@@ -4345,10 +4480,14 @@ static int preserved_virtual_engine(struct intel_gt *gt,
 		goto out_scratch;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ve = intel_engine_create_virtual(siblings, nsibling);
 =======
 	ve = intel_execlists_create_virtual(siblings, nsibling);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ve = intel_engine_create_virtual(siblings, nsibling);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ve)) {
 		err = PTR_ERR(ve);
 		goto out_scratch;
@@ -4468,6 +4607,7 @@ static int live_virtual_preserved(void *arg)
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int bond_virtual_engine(struct intel_gt *gt,
@@ -4699,6 +4839,8 @@ static int live_virtual_bond(void *arg)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int reset_virtual_engine(struct intel_gt *gt,
 				struct intel_engine_cs **siblings,
 				unsigned int nsibling)
@@ -4720,10 +4862,14 @@ static int reset_virtual_engine(struct intel_gt *gt,
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ve = intel_engine_create_virtual(siblings, nsibling);
 =======
 	ve = intel_execlists_create_virtual(siblings, nsibling);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ve = intel_engine_create_virtual(siblings, nsibling);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ve)) {
 		err = PTR_ERR(ve);
 		goto out_spin;
@@ -4754,6 +4900,7 @@ static int reset_virtual_engine(struct intel_gt *gt,
 		goto out_heartbeat;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	engine->sched_engine->tasklet.callback(&engine->sched_engine->tasklet);
 	GEM_BUG_ON(execlists_active(&engine->execlists) != rq);
 
@@ -4763,13 +4910,20 @@ static int reset_virtual_engine(struct intel_gt *gt,
 	spin_unlock_irq(&engine->sched_engine->lock);
 =======
 	engine->execlists.tasklet.callback(&engine->execlists.tasklet);
+=======
+	engine->sched_engine->tasklet.callback(&engine->sched_engine->tasklet);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEM_BUG_ON(execlists_active(&engine->execlists) != rq);
 
 	/* Fake a preemption event; failed of course */
-	spin_lock_irq(&engine->active.lock);
+	spin_lock_irq(&engine->sched_engine->lock);
 	__unwind_incomplete_requests(engine);
+<<<<<<< HEAD
 	spin_unlock_irq(&engine->active.lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irq(&engine->sched_engine->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEM_BUG_ON(rq->engine != engine);
 
 	/* Reset the engine while keeping our active request on hold */
@@ -4879,9 +5033,12 @@ int intel_execlists_live_selftests(struct drm_i915_private *i915)
 		SUBTEST(live_virtual_preserved),
 		SUBTEST(live_virtual_slice),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		SUBTEST(live_virtual_bond),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		SUBTEST(live_virtual_reset),
 	};
 

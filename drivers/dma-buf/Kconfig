@@ -43,9 +43,13 @@ config DMABUF_MOVE_NOTIFY
 	bool "Move notify between drivers (EXPERIMENTAL)"
 	default n
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on DMA_SHARED_BUFFER
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on DMA_SHARED_BUFFER
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Don't pin buffers if the dynamic DMA-buf interface is available on
 	  both the exporter as well as the importer. This fixes a security
@@ -57,9 +61,13 @@ config DMABUF_MOVE_NOTIFY
 config DMABUF_DEBUG
 	bool "DMA-BUF debug checks"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	depends on DMA_SHARED_BUFFER
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on DMA_SHARED_BUFFER
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default y if DMA_API_DEBUG
 	help
 	  This option enables additional checks for DMA-BUF importers and
@@ -81,6 +89,9 @@ menuconfig DMABUF_HEAPS
 	  between drivers.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 menuconfig DMABUF_SYSFS_STATS
 	bool "DMA-BUF sysfs statistics"
 	depends on DMA_SHARED_BUFFER
@@ -92,8 +103,11 @@ menuconfig DMABUF_SYSFS_STATS
 	   statistics for the DMA-BUF with the unique inode number
 	   <inode_number>.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "drivers/dma-buf/heaps/Kconfig"
 
 endmenu

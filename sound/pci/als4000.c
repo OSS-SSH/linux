@@ -747,22 +747,32 @@ static int snd_als4000_create_gameport(struct snd_card_als4000 *acard, int dev)
 	if (joystick_port[dev] == 1) { /* auto-detect */
 		for (io_port = 0x200; io_port <= 0x218; io_port += 8) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			r = devm_request_region(&acard->pci->dev, io_port, 8,
 						"ALS4000 gameport");
 =======
 			r = request_region(io_port, 8, "ALS4000 gameport");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			r = devm_request_region(&acard->pci->dev, io_port, 8,
+						"ALS4000 gameport");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (r)
 				break;
 		}
 	} else {
 		io_port = joystick_port[dev];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		r = devm_request_region(&acard->pci->dev, io_port, 8,
 					"ALS4000 gameport");
 =======
 		r = request_region(io_port, 8, "ALS4000 gameport");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		r = devm_request_region(&acard->pci->dev, io_port, 8,
+					"ALS4000 gameport");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!r) {
@@ -774,9 +784,12 @@ static int snd_als4000_create_gameport(struct snd_card_als4000 *acard, int dev)
 	if (!gp) {
 		dev_err(&acard->pci->dev, "cannot allocate memory for gameport\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		release_and_free_resource(r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 	}
 
@@ -785,9 +798,12 @@ static int snd_als4000_create_gameport(struct snd_card_als4000 *acard, int dev)
 	gameport_set_dev_parent(gp, &acard->pci->dev);
 	gp->io = io_port;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gameport_set_port_data(gp, r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Enable legacy joystick port */
 	snd_als4000_set_addr(acard->iobase, 0, 0, 0, 1);
@@ -801,20 +817,26 @@ static void snd_als4000_free_gameport(struct snd_card_als4000 *acard)
 {
 	if (acard->gameport) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		struct resource *r = gameport_get_port_data(acard->gameport);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gameport_unregister_port(acard->gameport);
 		acard->gameport = NULL;
 
 		/* disable joystick */
 		snd_als4000_set_addr(acard->iobase, 0, 0, 0, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 		release_and_free_resource(r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 #else
@@ -831,10 +853,13 @@ static void snd_card_als4000_free( struct snd_card *card )
 	/* free resources */
 	snd_als4000_free_gameport(acard);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pci_release_regions(acard->pci);
 	pci_disable_device(acard->pci);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_card_als4000_probe(struct pci_dev *pci,
@@ -858,10 +883,14 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 
 	/* enable PCI device */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = pcim_enable_device(pci);
 =======
 	err = pci_enable_device(pci);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = pcim_enable_device(pci);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -869,13 +898,17 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 	if (dma_set_mask_and_coherent(&pci->dev, DMA_BIT_MASK(24))) {
 		dev_err(&pci->dev, "architecture does not support 24bit PCI busmaster DMA\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		pci_disable_device(pci);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENXIO;
 	}
 
 	err = pci_request_regions(pci, "ALS4000");
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err < 0)
 		return err;
@@ -885,6 +918,10 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iobase = pci_resource_start(pci, 0);
 
 	pci_read_config_word(pci, PCI_COMMAND, &word);
@@ -892,10 +929,14 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 	pci_set_master(pci);
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*acard) /* private_data: acard */,
 				&card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 =======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
@@ -907,6 +948,9 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	acard = card->private_data;
 	acard->pci = pci;
@@ -927,10 +971,14 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 			       &chip);
 	if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 =======
 		goto out_err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acard->chip = chip;
 
 	chip->pci = pci;
@@ -952,10 +1000,14 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 		dev_err(&pci->dev, "no MPU-401 device at 0x%lx?\n",
 				iobase + ALS4K_IOB_30_MIDI_DATA);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 =======
 		goto out_err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	/* FIXME: ALS4000 has interesting MPU401 configuration features
 	 * at ALS4K_CR1A_MPU401_UART_MODE_CONTROL
@@ -965,6 +1017,7 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 
 	err = snd_als4000_pcm(chip, 0);
 	if (err < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return err;
 
@@ -978,6 +1031,13 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 	if (err < 0)
 		goto out_err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+
+	err = snd_sbmixer_new(chip);
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (snd_opl3_create(card,
 				iobase + ALS4K_IOB_10_ADLIB_ADDR0,
@@ -990,16 +1050,21 @@ static int snd_card_als4000_probe(struct pci_dev *pci,
 		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
 		if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return err;
 =======
 			goto out_err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	snd_als4000_create_gameport(acard, dev);
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return err;
 
@@ -1025,6 +1090,13 @@ static void snd_card_als4000_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+
+	pci_set_drvdata(pci, card);
+	dev++;
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP
@@ -1070,9 +1142,12 @@ static struct pci_driver als4000_driver = {
 	.id_table = snd_als4000_ids,
 	.probe = snd_card_als4000_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_card_als4000_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_ALS4000_PM_OPS,
 	},

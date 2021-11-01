@@ -12,9 +12,13 @@
 	aliases {
 		serial0 = &blsp1_uart2;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		serial1 = &blsp2_uart7;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		serial1 = &blsp2_uart7;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	chosen {
@@ -341,6 +345,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	serial@f995d000 {
 		status = "ok";
 
@@ -362,8 +369,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb@f9a55000 {
 		status = "okay";
 
@@ -409,6 +419,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		blsp2_uart7_pin_a: blsp2-uart7-pin-active {
 			tx {
 				pins = "gpio41";
@@ -443,8 +456,11 @@
 			};
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		i2c8_pins: i2c8 {
 			mux {
 				pins = "gpio47", "gpio48";
@@ -545,6 +561,9 @@
 			};
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		bt_host_wake_pin: bt-host-wake {
 			pins = "gpio95";
@@ -562,8 +581,11 @@
 			drive-strength = <2>;
 			bias-disable;
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	i2c@f9964000 {
@@ -692,6 +714,9 @@
 			};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bt_reg_on_pin: bt-reg-on {
 				pins = "gpio16";
 				function = "normal";
@@ -700,8 +725,11 @@
 				power-source = <PM8941_GPIO_S3>;
 			};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			wlan_sleep_clk_pin: wl-sleep-clk {
 				pins = "gpio17";
 				function = "func2";

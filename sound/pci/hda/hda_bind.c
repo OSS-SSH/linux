@@ -166,6 +166,7 @@ static int hda_codec_driver_remove(struct device *dev)
 static void hda_codec_driver_shutdown(struct device *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_hda_codec_shutdown(dev_to_hda_codec(dev));
 =======
 	struct hda_codec *codec = dev_to_hda_codec(dev);
@@ -176,6 +177,9 @@ static void hda_codec_driver_shutdown(struct device *dev)
 		snd_hda_codec_display_power(codec, false);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snd_hda_codec_shutdown(dev_to_hda_codec(dev));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int __hda_codec_driver_register(struct hda_codec_driver *drv, const char *name,
@@ -309,33 +313,46 @@ int snd_hda_codec_configure(struct hda_codec *codec)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (codec->configured)
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (codec->configured)
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (is_generic_config(codec))
 		codec->probe_id = HDA_CODEC_ID_GENERIC;
 	else
 		codec->probe_id = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!device_is_registered(&codec->core.dev)) {
 		err = snd_hdac_device_register(&codec->core);
 		if (err < 0)
 			return err;
 	}
+<<<<<<< HEAD
 =======
 	err = snd_hdac_device_register(&codec->core);
 	if (err < 0)
 		return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!codec->preset)
 		codec_bind_module(codec);
 	if (!codec->preset) {
 		err = codec_bind_generic(codec);
 		if (err < 0) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			codec_dbg(codec, "Unable to bind the codec\n");
 			return err;
@@ -347,14 +364,22 @@ int snd_hda_codec_configure(struct hda_codec *codec)
 =======
 			codec_err(codec, "Unable to bind the codec\n");
 			goto error;
+=======
+			codec_dbg(codec, "Unable to bind the codec\n");
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
+	codec->configured = 1;
 	return 0;
+<<<<<<< HEAD
 
  error:
 	snd_hdac_device_unregister(&codec->core);
 	return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(snd_hda_codec_configure);

@@ -119,10 +119,14 @@ bool amdgpu_gtt_mgr_has_gart_addr(struct ttm_resource *res)
  * @tbo: TTM BO we need this range for
  * @place: placement flags and restrictions
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @res: the resulting mem object
 =======
  * @mem: the resulting mem object
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @res: the resulting mem object
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Dummy, allocate the node but no space for it yet.
  */
@@ -136,6 +140,7 @@ static int amdgpu_gtt_mgr_new(struct ttm_resource_manager *man,
 	struct amdgpu_gtt_node *node;
 	int r;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!(place->flags & TTM_PL_FLAG_TEMPORARY) &&
 	    atomic64_add_return(num_pages, &mgr->used) >  man->size) {
@@ -152,6 +157,13 @@ static int amdgpu_gtt_mgr_new(struct ttm_resource_manager *man,
 	atomic64_sub(num_pages, &mgr->available);
 	spin_unlock(&mgr->lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(place->flags & TTM_PL_FLAG_TEMPORARY) &&
+	    atomic64_add_return(num_pages, &mgr->used) >  man->size) {
+		atomic64_sub(num_pages, &mgr->used);
+		return -ENOSPC;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	node = kzalloc(struct_size(node, base.mm_nodes, 1), GFP_KERNEL);
 	if (!node) {
@@ -188,11 +200,16 @@ err_free:
 
 err_out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(place->flags & TTM_PL_FLAG_TEMPORARY))
 		atomic64_sub(num_pages, &mgr->used);
 =======
 	atomic64_add(num_pages, &mgr->available);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(place->flags & TTM_PL_FLAG_TEMPORARY))
+		atomic64_sub(num_pages, &mgr->used);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return r;
 }
@@ -202,10 +219,14 @@ err_out:
  *
  * @man: TTM memory type manager
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @res: TTM memory object
 =======
  * @mem: TTM memory object
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @res: TTM memory object
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Free the allocated GTT again.
  */
@@ -220,12 +241,18 @@ static void amdgpu_gtt_mgr_del(struct ttm_resource_manager *man,
 		drm_mm_remove_node(&node->base.mm_nodes[0]);
 	spin_unlock(&mgr->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (!(res->placement & TTM_PL_FLAG_TEMPORARY))
 		atomic64_sub(res->num_pages, &mgr->used);
 =======
 	atomic64_add(res->num_pages, &mgr->available);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (!(res->placement & TTM_PL_FLAG_TEMPORARY))
+		atomic64_sub(res->num_pages, &mgr->used);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(node);
 }
@@ -241,6 +268,7 @@ uint64_t amdgpu_gtt_mgr_usage(struct ttm_resource_manager *man)
 {
 	struct amdgpu_gtt_mgr *mgr = to_gtt_mgr(man);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	return atomic64_read(&mgr->used) * PAGE_SIZE;
 =======
@@ -248,6 +276,10 @@ uint64_t amdgpu_gtt_mgr_usage(struct ttm_resource_manager *man)
 
 	return (result > 0 ? result : 0) * PAGE_SIZE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return atomic64_read(&mgr->used) * PAGE_SIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -298,6 +330,7 @@ static void amdgpu_gtt_mgr_debug(struct ttm_resource_manager *man,
 	spin_unlock(&mgr->lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_printf(printer, "man size:%llu pages,  gtt used:%llu pages\n",
 		   man->size, atomic64_read(&mgr->used));
 =======
@@ -305,6 +338,10 @@ static void amdgpu_gtt_mgr_debug(struct ttm_resource_manager *man,
 		   man->size, (u64)atomic64_read(&mgr->available),
 		   amdgpu_gtt_mgr_usage(man) >> 20);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_printf(printer, "man size:%llu pages,  gtt used:%llu pages\n",
+		   man->size, atomic64_read(&mgr->used));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct ttm_resource_manager_func amdgpu_gtt_mgr_func = {
@@ -337,10 +374,14 @@ int amdgpu_gtt_mgr_init(struct amdgpu_device *adev, uint64_t gtt_size)
 	drm_mm_init(&mgr->mm, start, size);
 	spin_lock_init(&mgr->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic64_set(&mgr->used, 0);
 =======
 	atomic64_set(&mgr->available, gtt_size >> PAGE_SHIFT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic64_set(&mgr->used, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ttm_set_driver_manager(&adev->mman.bdev, TTM_PL_TT, &mgr->manager);
 	ttm_resource_manager_set_used(man, true);

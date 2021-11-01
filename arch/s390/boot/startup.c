@@ -13,6 +13,7 @@
 #include "compressed/decompressor.h"
 #include "boot.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "uv.h"
 
 =======
@@ -20,6 +21,10 @@
 extern char __boot_data_start[], __boot_data_end[];
 extern char __boot_data_preserved_start[], __boot_data_preserved_end[];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "uv.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned long __bootdata_preserved(__kaslr_offset);
 unsigned long __bootdata_preserved(VMALLOC_START);
 unsigned long __bootdata_preserved(VMALLOC_END);
@@ -29,6 +34,7 @@ unsigned long __bootdata_preserved(MODULES_VADDR);
 unsigned long __bootdata_preserved(MODULES_END);
 unsigned long __bootdata(ident_map_size);
 int __bootdata(is_full_image) = 1;
+<<<<<<< HEAD
 <<<<<<< HEAD
 struct initrd_data __bootdata(initrd_data);
 
@@ -75,6 +81,13 @@ struct diag_ops __bootdata_preserved(diag_dma_ops) = {
 static struct diag210 _diag210_tmp_dma __section(".dma.data");
 struct diag210 *__bootdata_preserved(__diag210_tmp_dma) = &_diag210_tmp_dma;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct initrd_data __bootdata(initrd_data);
+
+u64 __bootdata_preserved(stfle_fac_list[16]);
+u64 __bootdata_preserved(alt_stfle_fac_list[16]);
+struct oldmem_data __bootdata_preserved(oldmem_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void error(char *x)
 {
@@ -105,6 +118,7 @@ static void rescue_initrd(unsigned long addr)
 	if (!IS_ENABLED(CONFIG_BLK_DEV_INITRD))
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!initrd_data.start || !initrd_data.size)
 		return;
 	if (addr <= initrd_data.start)
@@ -113,12 +127,20 @@ static void rescue_initrd(unsigned long addr)
 	initrd_data.start = addr;
 =======
 	if (!INITRD_START || !INITRD_SIZE)
+=======
+	if (!initrd_data.start || !initrd_data.size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
-	if (addr <= INITRD_START)
+	if (addr <= initrd_data.start)
 		return;
+<<<<<<< HEAD
 	memmove((void *)addr, (void *)INITRD_START, INITRD_SIZE);
 	INITRD_START = addr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memmove((void *)addr, (void *)initrd_data.start, initrd_data.size);
+	initrd_data.start = addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void copy_bootdata(void)
@@ -192,6 +214,7 @@ static void setup_ident_map_size(unsigned long max_physmem_end)
 
 #ifdef CONFIG_CRASH_DUMP
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (oldmem_data.start) {
 		kaslr_enabled = 0;
 		ident_map_size = min(ident_map_size, oldmem_data.size);
@@ -200,6 +223,11 @@ static void setup_ident_map_size(unsigned long max_physmem_end)
 		kaslr_enabled = 0;
 		ident_map_size = min(ident_map_size, OLDMEM_SIZE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (oldmem_data.start) {
+		kaslr_enabled = 0;
+		ident_map_size = min(ident_map_size, oldmem_data.size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (ipl_block_valid && is_ipl_block_dump()) {
 		kaslr_enabled = 0;
 		if (!sclp_early_get_hsa_size(&hsa_size) && hsa_size)
@@ -311,6 +339,9 @@ static void setup_vmalloc_size(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void offset_vmlinux_info(unsigned long offset)
 {
 	vmlinux.default_lma += offset;
@@ -322,8 +353,11 @@ static void offset_vmlinux_info(unsigned long offset)
 	vmlinux.dynsym_start += offset;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void startup_kernel(void)
 {
 	unsigned long random_lma;
@@ -331,13 +365,19 @@ void startup_kernel(void)
 	void *img;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	initrd_data.start = parmarea.initrd_start;
 	initrd_data.size = parmarea.initrd_size;
 	oldmem_data.start = parmarea.oldmem_base;
 	oldmem_data.size = parmarea.oldmem_size;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	setup_lpp();
 	store_ipl_parmblock();
 	safe_addr = mem_safe_offset();
@@ -348,22 +388,30 @@ void startup_kernel(void)
 	setup_boot_command_line();
 	parse_boot_command_line();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sanitize_prot_virt_host();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sanitize_prot_virt_host();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	setup_ident_map_size(detect_memory());
 	setup_vmalloc_size();
 	setup_kernel_memory_layout();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	random_lma = __kaslr_offset = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ENABLED(CONFIG_RANDOMIZE_BASE) && kaslr_enabled) {
 		random_lma = get_random_base(safe_addr);
 		if (random_lma) {
 			__kaslr_offset = random_lma - vmlinux.default_lma;
 			img = (void *)vmlinux.default_lma;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			offset_vmlinux_info(__kaslr_offset);
 =======
@@ -375,6 +423,9 @@ void startup_kernel(void)
 			vmlinux.rela_dyn_end += __kaslr_offset;
 			vmlinux.dynsym_start += __kaslr_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			offset_vmlinux_info(__kaslr_offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

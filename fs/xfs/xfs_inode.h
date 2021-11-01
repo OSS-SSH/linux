@@ -41,12 +41,17 @@ typedef struct xfs_inode {
 	struct xfs_inode_log_item *i_itemp;	/* logging information */
 	mrlock_t		i_lock;		/* inode lock */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t		i_pincount;	/* inode pin count */
 	struct llist_node	i_gclist;	/* deferred inactivation list */
 =======
 	mrlock_t		i_mmaplock;	/* inode mmap IO lock */
 	atomic_t		i_pincount;	/* inode pin count */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_t		i_pincount;	/* inode pin count */
+	struct llist_node	i_gclist;	/* deferred inactivation list */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Bitsets of inode metadata that have been checked and/or are sick.
@@ -246,9 +251,13 @@ static inline bool xfs_inode_has_bigtime(struct xfs_inode *ip)
 #define XFS_IPINNED		(1 << __XFS_IPINNED_BIT)
 #define XFS_IEOFBLOCKS		(1 << 9) /* has the preallocblocks tag set */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define XFS_NEED_INACTIVE	(1 << 10) /* see XFS_INACTIVATING below */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define XFS_NEED_INACTIVE	(1 << 10) /* see XFS_INACTIVATING below */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * If this unlinked inode is in the middle of recovery, don't let drop_inode
  * truncate and free the inode.  This can happen if we iget the inode during
@@ -259,6 +268,9 @@ static inline bool xfs_inode_has_bigtime(struct xfs_inode *ip)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * If we need to update on-disk metadata before this IRECLAIMABLE inode can be
  * freed, then NEED_INACTIVE will be set.  Once we start the updates, the
  * INACTIVATING bit will be set to keep iget away from this inode.  After the
@@ -274,8 +286,11 @@ static inline bool xfs_inode_has_bigtime(struct xfs_inode *ip)
 				 XFS_INACTIVATING)
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Per-lifetime flags need to be reset when re-using a reclaimable inode during
  * inode lookup. This prevents unintended behaviour on the new inode from
  * ocurring.
@@ -283,11 +298,16 @@ static inline bool xfs_inode_has_bigtime(struct xfs_inode *ip)
 #define XFS_IRECLAIM_RESET_FLAGS	\
 	(XFS_IRECLAIMABLE | XFS_IRECLAIM | \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 XFS_IDIRTY_RELEASE | XFS_ITRUNCATED | XFS_NEED_INACTIVE | \
 	 XFS_INACTIVATING)
 =======
 	 XFS_IDIRTY_RELEASE | XFS_ITRUNCATED)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 XFS_IDIRTY_RELEASE | XFS_ITRUNCATED | XFS_NEED_INACTIVE | \
+	 XFS_INACTIVATING)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Flags for inode locking.
@@ -415,11 +435,15 @@ enum layout_break_reason {
  */
 #define XFS_INHERIT_GID(pip)	\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	(xfs_has_grpid((pip)->i_mount) || (VFS_I(pip)->i_mode & S_ISGID))
 =======
 	(((pip)->i_mount->m_flags & XFS_MOUNT_GRPID) || \
 	 (VFS_I(pip)->i_mode & S_ISGID))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	(xfs_has_grpid((pip)->i_mount) || (VFS_I(pip)->i_mode & S_ISGID))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int		xfs_release(struct xfs_inode *ip);
 void		xfs_inactive(struct xfs_inode *ip);
@@ -447,10 +471,14 @@ int		xfs_ilock_nowait(xfs_inode_t *, uint);
 void		xfs_iunlock(xfs_inode_t *, uint);
 void		xfs_ilock_demote(xfs_inode_t *, uint);
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool		xfs_isilocked(struct xfs_inode *, uint);
 =======
 int		xfs_isilocked(xfs_inode_t *, uint);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool		xfs_isilocked(struct xfs_inode *, uint);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 uint		xfs_ilock_data_map_shared(struct xfs_inode *);
 uint		xfs_ilock_attr_map_shared(struct xfs_inode *);
 
@@ -534,10 +562,15 @@ extern struct kmem_zone	*xfs_inode_zone;
 #define XFS_DEFAULT_COWEXTSZ_HINT 32
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool xfs_inode_needs_inactive(struct xfs_inode *ip);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool xfs_inode_needs_inactive(struct xfs_inode *ip);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int xfs_iunlink_init(struct xfs_perag *pag);
 void xfs_iunlink_destroy(struct xfs_perag *pag);
 

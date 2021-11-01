@@ -92,10 +92,14 @@ struct zynqmp_disp_format {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * enum zynqmp_disp_layer_id - Layer identifier
 =======
  * enum zynqmp_disp_id - Layer identifier
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * enum zynqmp_disp_layer_id - Layer identifier
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ZYNQMP_DISP_LAYER_VID: Video layer
  * @ZYNQMP_DISP_LAYER_GFX: Graphics layer
  */
@@ -164,6 +168,7 @@ struct zynqmp_disp_layer {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * struct zynqmp_disp_blend - Blender
  * @base: Registers I/O base address
@@ -194,22 +199,30 @@ struct zynqmp_disp_audio {
 
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct zynqmp_disp - Display controller
  * @dev: Device structure
  * @drm: DRM core
  * @dpsub: Display subsystem
  * @crtc: DRM CRTC
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @blend.base: Register I/O base address for the blender
  * @avbuf.base: Register I/O base address for the audio/video buffer manager
  * @audio.base: Registers I/O base address for the audio mixer
  * @audio.clk: Audio clock
  * @audio.clk_from_ps: True of the audio clock comes from PS, false from PL
+<<<<<<< HEAD
 =======
  * @blend: Blender (video rendering pipeline)
  * @avbuf: Audio/video buffer manager
  * @audio: Audio mixer
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @layers: Layers (planes)
  * @event: Pending vblank event request
  * @pclk: Pixel clock
@@ -223,6 +236,9 @@ struct zynqmp_disp {
 	struct drm_crtc crtc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
 		void __iomem *base;
 	} blend;
@@ -234,11 +250,14 @@ struct zynqmp_disp {
 		struct clk *clk;
 		bool clk_from_ps;
 	} audio;
+<<<<<<< HEAD
 =======
 	struct zynqmp_disp_blend blend;
 	struct zynqmp_disp_avbuf avbuf;
 	struct zynqmp_disp_audio audio;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct zynqmp_disp_layer layers[ZYNQMP_DISP_NUM_LAYERS];
 
@@ -453,6 +472,7 @@ static const struct zynqmp_disp_format avbuf_gfx_fmts[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 zynqmp_disp_avbuf_read(struct zynqmp_disp *disp, int reg)
 {
 	return readl(disp->avbuf.base + reg);
@@ -473,19 +493,36 @@ static bool zynqmp_disp_layer_is_video(const struct zynqmp_disp_layer *layer)
 	return layer->id == ZYNQMP_DISP_LAYER_VID;
 =======
 static u32 zynqmp_disp_avbuf_read(struct zynqmp_disp_avbuf *avbuf, int reg)
+=======
+static u32 zynqmp_disp_avbuf_read(struct zynqmp_disp *disp, int reg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	return readl(avbuf->base + reg);
+	return readl(disp->avbuf.base + reg);
 }
 
-static void zynqmp_disp_avbuf_write(struct zynqmp_disp_avbuf *avbuf,
-				    int reg, u32 val)
+static void zynqmp_disp_avbuf_write(struct zynqmp_disp *disp, int reg, u32 val)
 {
+<<<<<<< HEAD
 	writel(val, avbuf->base + reg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	writel(val, disp->avbuf.base + reg);
+}
+
+static bool zynqmp_disp_layer_is_gfx(const struct zynqmp_disp_layer *layer)
+{
+	return layer->id == ZYNQMP_DISP_LAYER_GFX;
+}
+
+static bool zynqmp_disp_layer_is_video(const struct zynqmp_disp_layer *layer)
+{
+	return layer->id == ZYNQMP_DISP_LAYER_VID;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_avbuf_set_format - Set the input format for a layer
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  * @layer: The layer
@@ -493,10 +530,15 @@ static void zynqmp_disp_avbuf_write(struct zynqmp_disp_avbuf *avbuf,
  * @avbuf: Audio/video buffer manager
  * @layer: The layer ID
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+ * @layer: The layer
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @fmt: The format information
  *
  * Set the video buffer manager format for @layer to @fmt.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void zynqmp_disp_avbuf_set_format(struct zynqmp_disp *disp,
 					 struct zynqmp_disp_layer *layer,
@@ -504,11 +546,16 @@ static void zynqmp_disp_avbuf_set_format(struct zynqmp_disp *disp,
 static void zynqmp_disp_avbuf_set_format(struct zynqmp_disp_avbuf *avbuf,
 					 enum zynqmp_disp_layer_id layer,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_avbuf_set_format(struct zynqmp_disp *disp,
+					 struct zynqmp_disp_layer *layer,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 const struct zynqmp_disp_format *fmt)
 {
 	unsigned int i;
 	u32 val;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	val = zynqmp_disp_avbuf_read(disp, ZYNQMP_DISP_AV_BUF_FMT);
 	val &= zynqmp_disp_layer_is_video(layer)
@@ -526,28 +573,40 @@ static void zynqmp_disp_avbuf_set_format(struct zynqmp_disp_avbuf *avbuf,
 =======
 	val = zynqmp_disp_avbuf_read(avbuf, ZYNQMP_DISP_AV_BUF_FMT);
 	val &= layer == ZYNQMP_DISP_LAYER_VID
+=======
+	val = zynqmp_disp_avbuf_read(disp, ZYNQMP_DISP_AV_BUF_FMT);
+	val &= zynqmp_disp_layer_is_video(layer)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    ? ~ZYNQMP_DISP_AV_BUF_FMT_NL_VID_MASK
 	    : ~ZYNQMP_DISP_AV_BUF_FMT_NL_GFX_MASK;
 	val |= fmt->buf_fmt;
-	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_FMT, val);
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_FMT, val);
 
 	for (i = 0; i < ZYNQMP_DISP_AV_BUF_NUM_SF; i++) {
-		unsigned int reg = layer == ZYNQMP_DISP_LAYER_VID
+		unsigned int reg = zynqmp_disp_layer_is_video(layer)
 				 ? ZYNQMP_DISP_AV_BUF_VID_COMP_SF(i)
 				 : ZYNQMP_DISP_AV_BUF_GFX_COMP_SF(i);
 
+<<<<<<< HEAD
 		zynqmp_disp_avbuf_write(avbuf, reg, fmt->sf[i]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_avbuf_write(disp, reg, fmt->sf[i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
 /**
  * zynqmp_disp_avbuf_set_clocks_sources - Set the clocks sources
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @disp: Display controller
 =======
  * @avbuf: Audio/video buffer manager
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @video_from_ps: True if the video clock originates from the PS
  * @audio_from_ps: True if the audio clock originates from the PS
  * @timings_internal: True if video timings are generated internally
@@ -558,10 +617,14 @@ static void zynqmp_disp_avbuf_set_format(struct zynqmp_disp_avbuf *avbuf,
  */
 static void
 <<<<<<< HEAD
+<<<<<<< HEAD
 zynqmp_disp_avbuf_set_clocks_sources(struct zynqmp_disp *disp,
 =======
 zynqmp_disp_avbuf_set_clocks_sources(struct zynqmp_disp_avbuf *avbuf,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+zynqmp_disp_avbuf_set_clocks_sources(struct zynqmp_disp *disp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     bool video_from_ps, bool audio_from_ps,
 				     bool timings_internal)
 {
@@ -575,14 +638,19 @@ zynqmp_disp_avbuf_set_clocks_sources(struct zynqmp_disp_avbuf *avbuf,
 		val |= ZYNQMP_DISP_AV_BUF_CLK_SRC_VID_INTERNAL_TIMING;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CLK_SRC, val);
 =======
 	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_CLK_SRC, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CLK_SRC, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_avbuf_enable_channels - Enable buffer channels
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  *
@@ -596,6 +664,13 @@ static void zynqmp_disp_avbuf_enable_channels(struct zynqmp_disp *disp)
  */
 static void zynqmp_disp_avbuf_enable_channels(struct zynqmp_disp_avbuf *avbuf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+ *
+ * Enable all (video and audio) buffer channels.
+ */
+static void zynqmp_disp_avbuf_enable_channels(struct zynqmp_disp *disp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int i;
 	u32 val;
@@ -606,10 +681,14 @@ static void zynqmp_disp_avbuf_enable_channels(struct zynqmp_disp_avbuf *avbuf)
 
 	for (i = 0; i < ZYNQMP_DISP_AV_BUF_NUM_VID_GFX_BUFFERS; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CHBUF(i),
 =======
 		zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_CHBUF(i),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CHBUF(i),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					val);
 
 	val = ZYNQMP_DISP_AV_BUF_CHBUF_EN |
@@ -618,15 +697,20 @@ static void zynqmp_disp_avbuf_enable_channels(struct zynqmp_disp_avbuf *avbuf)
 
 	for (; i < ZYNQMP_DISP_AV_BUF_NUM_BUFFERS; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CHBUF(i),
 =======
 		zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_CHBUF(i),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CHBUF(i),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					val);
 }
 
 /**
  * zynqmp_disp_avbuf_disable_channels - Disable buffer channels
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  *
@@ -640,20 +724,32 @@ static void zynqmp_disp_avbuf_disable_channels(struct zynqmp_disp *disp)
  */
 static void zynqmp_disp_avbuf_disable_channels(struct zynqmp_disp_avbuf *avbuf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+ *
+ * Disable all (video and audio) buffer channels.
+ */
+static void zynqmp_disp_avbuf_disable_channels(struct zynqmp_disp *disp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int i;
 
 	for (i = 0; i < ZYNQMP_DISP_AV_BUF_NUM_BUFFERS; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CHBUF(i),
 =======
 		zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_CHBUF(i),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_CHBUF(i),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					ZYNQMP_DISP_AV_BUF_CHBUF_FLUSH);
 }
 
 /**
  * zynqmp_disp_avbuf_enable_audio - Enable audio
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  *
@@ -670,23 +766,31 @@ static void zynqmp_disp_avbuf_enable_audio(struct zynqmp_disp *disp)
 	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 =======
  * @avbuf: Audio/video buffer manager
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Enable all audio buffers with a non-live (memory) source.
  */
-static void zynqmp_disp_avbuf_enable_audio(struct zynqmp_disp_avbuf *avbuf)
+static void zynqmp_disp_avbuf_enable_audio(struct zynqmp_disp *disp)
 {
 	u32 val;
 
-	val = zynqmp_disp_avbuf_read(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT);
+	val = zynqmp_disp_avbuf_read(disp, ZYNQMP_DISP_AV_BUF_OUTPUT);
 	val &= ~ZYNQMP_DISP_AV_BUF_OUTPUT_AUD1_MASK;
 	val |= ZYNQMP_DISP_AV_BUF_OUTPUT_AUD1_MEM;
 	val |= ZYNQMP_DISP_AV_BUF_OUTPUT_AUD2_EN;
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_avbuf_disable_audio - Disable audio
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  *
@@ -703,23 +807,31 @@ static void zynqmp_disp_avbuf_disable_audio(struct zynqmp_disp *disp)
 	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 =======
  * @avbuf: Audio/video buffer manager
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Disable all audio buffers.
  */
-static void zynqmp_disp_avbuf_disable_audio(struct zynqmp_disp_avbuf *avbuf)
+static void zynqmp_disp_avbuf_disable_audio(struct zynqmp_disp *disp)
 {
 	u32 val;
 
-	val = zynqmp_disp_avbuf_read(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT);
+	val = zynqmp_disp_avbuf_read(disp, ZYNQMP_DISP_AV_BUF_OUTPUT);
 	val &= ~ZYNQMP_DISP_AV_BUF_OUTPUT_AUD1_MASK;
 	val |= ZYNQMP_DISP_AV_BUF_OUTPUT_AUD1_DISABLE;
 	val &= ~ZYNQMP_DISP_AV_BUF_OUTPUT_AUD2_EN;
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_avbuf_enable_video - Enable a video layer
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  * @layer: The layer
@@ -727,10 +839,15 @@ static void zynqmp_disp_avbuf_disable_audio(struct zynqmp_disp_avbuf *avbuf)
  * @avbuf: Audio/video buffer manager
  * @layer: The layer ID
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+ * @layer: The layer
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @mode: Operating mode of layer
  *
  * Enable the video/graphics buffer for @layer.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void zynqmp_disp_avbuf_enable_video(struct zynqmp_disp *disp,
 					   struct zynqmp_disp_layer *layer,
@@ -738,10 +855,15 @@ static void zynqmp_disp_avbuf_enable_video(struct zynqmp_disp *disp,
 static void zynqmp_disp_avbuf_enable_video(struct zynqmp_disp_avbuf *avbuf,
 					   enum zynqmp_disp_layer_id layer,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_avbuf_enable_video(struct zynqmp_disp *disp,
+					   struct zynqmp_disp_layer *layer,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					   enum zynqmp_disp_layer_mode mode)
 {
 	u32 val;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	val = zynqmp_disp_avbuf_read(disp, ZYNQMP_DISP_AV_BUF_OUTPUT);
 	if (zynqmp_disp_layer_is_video(layer)) {
@@ -749,6 +871,10 @@ static void zynqmp_disp_avbuf_enable_video(struct zynqmp_disp_avbuf *avbuf,
 	val = zynqmp_disp_avbuf_read(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT);
 	if (layer == ZYNQMP_DISP_LAYER_VID) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	val = zynqmp_disp_avbuf_read(disp, ZYNQMP_DISP_AV_BUF_OUTPUT);
+	if (zynqmp_disp_layer_is_video(layer)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val &= ~ZYNQMP_DISP_AV_BUF_OUTPUT_VID1_MASK;
 		if (mode == ZYNQMP_DISP_LAYER_NONLIVE)
 			val |= ZYNQMP_DISP_AV_BUF_OUTPUT_VID1_MEM;
@@ -763,14 +889,19 @@ static void zynqmp_disp_avbuf_enable_video(struct zynqmp_disp_avbuf *avbuf,
 			val |= ZYNQMP_DISP_AV_BUF_OUTPUT_VID2_LIVE;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 =======
 	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_avbuf_disable_video - Disable a video layer
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  * @layer: The layer
@@ -787,17 +918,26 @@ static void zynqmp_disp_avbuf_disable_video(struct zynqmp_disp *disp,
 =======
  * @avbuf: Audio/video buffer manager
  * @layer: The layer ID
+=======
+ * @disp: Display controller
+ * @layer: The layer
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Disable the video/graphics buffer for @layer.
  */
-static void zynqmp_disp_avbuf_disable_video(struct zynqmp_disp_avbuf *avbuf,
-					    enum zynqmp_disp_layer_id layer)
+static void zynqmp_disp_avbuf_disable_video(struct zynqmp_disp *disp,
+					    struct zynqmp_disp_layer *layer)
 {
 	u32 val;
 
+<<<<<<< HEAD
 	val = zynqmp_disp_avbuf_read(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT);
 	if (layer == ZYNQMP_DISP_LAYER_VID) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	val = zynqmp_disp_avbuf_read(disp, ZYNQMP_DISP_AV_BUF_OUTPUT);
+	if (zynqmp_disp_layer_is_video(layer)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val &= ~ZYNQMP_DISP_AV_BUF_OUTPUT_VID1_MASK;
 		val |= ZYNQMP_DISP_AV_BUF_OUTPUT_VID1_NONE;
 	} else {
@@ -805,14 +945,19 @@ static void zynqmp_disp_avbuf_disable_video(struct zynqmp_disp_avbuf *avbuf,
 		val |= ZYNQMP_DISP_AV_BUF_OUTPUT_VID2_DISABLE;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 =======
 	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_OUTPUT, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_avbuf_enable - Enable the video pipe
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  *
@@ -823,17 +968,25 @@ static void zynqmp_disp_avbuf_enable(struct zynqmp_disp *disp)
 	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_SRST_REG, 0);
 =======
  * @avbuf: Audio/video buffer manager
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * De-assert the video pipe reset.
  */
-static void zynqmp_disp_avbuf_enable(struct zynqmp_disp_avbuf *avbuf)
+static void zynqmp_disp_avbuf_enable(struct zynqmp_disp *disp)
 {
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_SRST_REG, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_SRST_REG, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_avbuf_disable - Disable the video pipe
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  *
@@ -844,13 +997,20 @@ static void zynqmp_disp_avbuf_disable(struct zynqmp_disp *disp)
 	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_SRST_REG,
 =======
  * @avbuf: Audio/video buffer manager
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Assert the video pipe reset.
  */
-static void zynqmp_disp_avbuf_disable(struct zynqmp_disp_avbuf *avbuf)
+static void zynqmp_disp_avbuf_disable(struct zynqmp_disp *disp)
 {
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_write(avbuf, ZYNQMP_DISP_AV_BUF_SRST_REG,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_write(disp, ZYNQMP_DISP_AV_BUF_SRST_REG,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ZYNQMP_DISP_AV_BUF_SRST_REG_VID_RST);
 }
 
@@ -858,6 +1018,7 @@ static void zynqmp_disp_avbuf_disable(struct zynqmp_disp_avbuf *avbuf)
  * Blender (Video Pipeline)
  */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void zynqmp_disp_blend_write(struct zynqmp_disp *disp, int reg, u32 val)
 {
@@ -868,6 +1029,11 @@ static void zynqmp_disp_blend_write(struct zynqmp_disp_blend *blend,
 {
 	writel(val, blend->base + reg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_blend_write(struct zynqmp_disp *disp, int reg, u32 val)
+{
+	writel(val, disp->blend.base + reg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -914,19 +1080,27 @@ static const u32 csc_sdtv_to_rgb_offsets[] = {
 /**
  * zynqmp_disp_blend_set_output_format - Set the output format of the blender
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @disp: Display controller
 =======
  * @blend: Blender object
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @format: Output format
  *
  * Set the output format of the blender to @format.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void zynqmp_disp_blend_set_output_format(struct zynqmp_disp *disp,
 =======
 static void zynqmp_disp_blend_set_output_format(struct zynqmp_disp_blend *blend,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_blend_set_output_format(struct zynqmp_disp *disp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						enum zynqmp_dpsub_format format)
 {
 	static const unsigned int blend_output_fmts[] = {
@@ -943,10 +1117,14 @@ static void zynqmp_disp_blend_set_output_format(struct zynqmp_disp_blend *blend,
 	unsigned int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_blend_write(disp, ZYNQMP_DISP_V_BLEND_OUTPUT_VID_FMT, fmt);
 =======
 	zynqmp_disp_blend_write(blend, ZYNQMP_DISP_V_BLEND_OUTPUT_VID_FMT, fmt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_blend_write(disp, ZYNQMP_DISP_V_BLEND_OUTPUT_VID_FMT, fmt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fmt == ZYNQMP_DISP_V_BLEND_OUTPUT_VID_FMT_RGB) {
 		coeffs = csc_identity_matrix;
 		offsets = csc_zero_offsets;
@@ -957,19 +1135,27 @@ static void zynqmp_disp_blend_set_output_format(struct zynqmp_disp_blend *blend,
 
 	for (i = 0; i < ZYNQMP_DISP_V_BLEND_NUM_COEFF; i++)
 <<<<<<< HEAD
-		zynqmp_disp_blend_write(disp,
-=======
-		zynqmp_disp_blend_write(blend,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-					ZYNQMP_DISP_V_BLEND_RGB2YCBCR_COEFF(i),
-					coeffs[i]);
-
-	for (i = 0; i < ZYNQMP_DISP_V_BLEND_NUM_OFFSET; i++)
 <<<<<<< HEAD
 		zynqmp_disp_blend_write(disp,
 =======
 		zynqmp_disp_blend_write(blend,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_blend_write(disp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+					ZYNQMP_DISP_V_BLEND_RGB2YCBCR_COEFF(i),
+					coeffs[i]);
+
+	for (i = 0; i < ZYNQMP_DISP_V_BLEND_NUM_OFFSET; i++)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		zynqmp_disp_blend_write(disp,
+=======
+		zynqmp_disp_blend_write(blend,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_blend_write(disp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					ZYNQMP_DISP_V_BLEND_OUTCSC_OFFSET(i),
 					offsets[i]);
 }
@@ -977,10 +1163,14 @@ static void zynqmp_disp_blend_set_output_format(struct zynqmp_disp_blend *blend,
 /**
  * zynqmp_disp_blend_set_bg_color - Set the background color
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @disp: Display controller
 =======
  * @blend: Blender object
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @rcr: Red/Cr color component
  * @gy: Green/Y color component
  * @bcb: Blue/Cb color component
@@ -989,6 +1179,7 @@ static void zynqmp_disp_blend_set_output_format(struct zynqmp_disp_blend *blend,
  * B or Cr, Y and Cb components respectively depending on the selected output
  * format.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void zynqmp_disp_blend_set_bg_color(struct zynqmp_disp *disp,
 					   u32 rcr, u32 gy, u32 bcb)
@@ -1004,10 +1195,19 @@ static void zynqmp_disp_blend_set_bg_color(struct zynqmp_disp_blend *blend,
 	zynqmp_disp_blend_write(blend, ZYNQMP_DISP_V_BLEND_BG_CLR_1, gy);
 	zynqmp_disp_blend_write(blend, ZYNQMP_DISP_V_BLEND_BG_CLR_2, bcb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_blend_set_bg_color(struct zynqmp_disp *disp,
+					   u32 rcr, u32 gy, u32 bcb)
+{
+	zynqmp_disp_blend_write(disp, ZYNQMP_DISP_V_BLEND_BG_CLR_0, rcr);
+	zynqmp_disp_blend_write(disp, ZYNQMP_DISP_V_BLEND_BG_CLR_1, gy);
+	zynqmp_disp_blend_write(disp, ZYNQMP_DISP_V_BLEND_BG_CLR_2, bcb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_blend_set_global_alpha - Configure global alpha blending
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  * @enable: True to enable global alpha blending
@@ -1019,14 +1219,21 @@ static void zynqmp_disp_blend_set_global_alpha(struct zynqmp_disp *disp,
 	zynqmp_disp_blend_write(disp, ZYNQMP_DISP_V_BLEND_SET_GLOBAL_ALPHA,
 =======
  * @blend: Blender object
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @enable: True to enable global alpha blending
  * @alpha: Global alpha value (ignored if @enabled is false)
  */
-static void zynqmp_disp_blend_set_global_alpha(struct zynqmp_disp_blend *blend,
+static void zynqmp_disp_blend_set_global_alpha(struct zynqmp_disp *disp,
 					       bool enable, u32 alpha)
 {
+<<<<<<< HEAD
 	zynqmp_disp_blend_write(blend, ZYNQMP_DISP_V_BLEND_SET_GLOBAL_ALPHA,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_blend_write(disp, ZYNQMP_DISP_V_BLEND_SET_GLOBAL_ALPHA,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ZYNQMP_DISP_V_BLEND_SET_GLOBAL_ALPHA_VALUE(alpha) |
 				(enable ? ZYNQMP_DISP_V_BLEND_SET_GLOBAL_ALPHA_EN : 0));
 }
@@ -1034,10 +1241,14 @@ static void zynqmp_disp_blend_set_global_alpha(struct zynqmp_disp_blend *blend,
 /**
  * zynqmp_disp_blend_layer_set_csc - Configure colorspace conversion for layer
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @disp: Display controller
 =======
  * @blend: Blender object
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @layer: The layer
  * @coeffs: Colorspace conversion matrix
  * @offsets: Colorspace conversion offsets
@@ -1047,10 +1258,14 @@ static void zynqmp_disp_blend_set_global_alpha(struct zynqmp_disp_blend *blend,
  * handle RGB and YCrCb components permutations.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void zynqmp_disp_blend_layer_set_csc(struct zynqmp_disp *disp,
 =======
 static void zynqmp_disp_blend_layer_set_csc(struct zynqmp_disp_blend *blend,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_blend_layer_set_csc(struct zynqmp_disp *disp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    struct zynqmp_disp_layer *layer,
 					    const u16 *coeffs,
 					    const u32 *offsets)
@@ -1072,15 +1287,20 @@ static void zynqmp_disp_blend_layer_set_csc(struct zynqmp_disp_blend *blend,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (zynqmp_disp_layer_is_video(layer))
 =======
 	if (layer->id == ZYNQMP_DISP_LAYER_VID)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (zynqmp_disp_layer_is_video(layer))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = ZYNQMP_DISP_V_BLEND_IN1CSC_COEFF(0);
 	else
 		reg = ZYNQMP_DISP_V_BLEND_IN2CSC_COEFF(0);
 
 	for (i = 0; i < ZYNQMP_DISP_V_BLEND_NUM_COEFF; i += 3, reg += 12) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		zynqmp_disp_blend_write(disp, reg + 0, coeffs[i + swap[0]]);
 		zynqmp_disp_blend_write(disp, reg + 4, coeffs[i + swap[1]]);
@@ -1096,20 +1316,33 @@ static void zynqmp_disp_blend_layer_set_csc(struct zynqmp_disp_blend *blend,
 
 	if (layer->id == ZYNQMP_DISP_LAYER_VID)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_blend_write(disp, reg + 0, coeffs[i + swap[0]]);
+		zynqmp_disp_blend_write(disp, reg + 4, coeffs[i + swap[1]]);
+		zynqmp_disp_blend_write(disp, reg + 8, coeffs[i + swap[2]]);
+	}
+
+	if (zynqmp_disp_layer_is_video(layer))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = ZYNQMP_DISP_V_BLEND_IN1CSC_OFFSET(0);
 	else
 		reg = ZYNQMP_DISP_V_BLEND_IN2CSC_OFFSET(0);
 
 	for (i = 0; i < ZYNQMP_DISP_V_BLEND_NUM_OFFSET; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		zynqmp_disp_blend_write(disp, reg + i * 4, offsets[i]);
 =======
 		zynqmp_disp_blend_write(blend, reg + i * 4, offsets[i]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		zynqmp_disp_blend_write(disp, reg + i * 4, offsets[i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_blend_layer_enable - Enable a layer
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  * @layer: The layer
@@ -1121,6 +1354,12 @@ static void zynqmp_disp_blend_layer_enable(struct zynqmp_disp *disp,
  */
 static void zynqmp_disp_blend_layer_enable(struct zynqmp_disp_blend *blend,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+ * @layer: The layer
+ */
+static void zynqmp_disp_blend_layer_enable(struct zynqmp_disp *disp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					   struct zynqmp_disp_layer *layer)
 {
 	const u16 *coeffs;
@@ -1133,10 +1372,14 @@ static void zynqmp_disp_blend_layer_enable(struct zynqmp_disp_blend *blend,
 	       ZYNQMP_DISP_V_BLEND_LAYER_CONTROL_EN_US : 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_blend_write(disp,
 =======
 	zynqmp_disp_blend_write(blend,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_blend_write(disp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ZYNQMP_DISP_V_BLEND_LAYER_CONTROL(layer->id),
 				val);
 
@@ -1149,14 +1392,19 @@ static void zynqmp_disp_blend_layer_enable(struct zynqmp_disp_blend *blend,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_blend_layer_set_csc(disp, layer, coeffs, offsets);
 =======
 	zynqmp_disp_blend_layer_set_csc(blend, layer, coeffs, offsets);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_blend_layer_set_csc(disp, layer, coeffs, offsets);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_blend_layer_disable - Disable a layer
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  * @layer: The layer
@@ -1171,17 +1419,24 @@ static void zynqmp_disp_blend_layer_disable(struct zynqmp_disp *disp,
 	zynqmp_disp_blend_layer_set_csc(disp, layer, csc_zero_matrix,
 =======
  * @blend: Blender object
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @layer: The layer
  */
-static void zynqmp_disp_blend_layer_disable(struct zynqmp_disp_blend *blend,
+static void zynqmp_disp_blend_layer_disable(struct zynqmp_disp *disp,
 					    struct zynqmp_disp_layer *layer)
 {
-	zynqmp_disp_blend_write(blend,
+	zynqmp_disp_blend_write(disp,
 				ZYNQMP_DISP_V_BLEND_LAYER_CONTROL(layer->id),
 				0);
 
+<<<<<<< HEAD
 	zynqmp_disp_blend_layer_set_csc(blend, layer, csc_zero_matrix,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_blend_layer_set_csc(disp, layer, csc_zero_matrix,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					csc_zero_offsets);
 }
 
@@ -1189,6 +1444,7 @@ static void zynqmp_disp_blend_layer_disable(struct zynqmp_disp_blend *blend,
  * Audio Mixer
  */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void zynqmp_disp_audio_write(struct zynqmp_disp *disp, int reg, u32 val)
 {
@@ -1199,19 +1455,29 @@ static void zynqmp_disp_audio_write(struct zynqmp_disp_audio *audio,
 {
 	writel(val, audio->base + reg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_audio_write(struct zynqmp_disp *disp, int reg, u32 val)
+{
+	writel(val, disp->audio.base + reg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
  * zynqmp_disp_audio_enable - Enable the audio mixer
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @disp: Display controller
 =======
  * @audio: Audio mixer
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Enable the audio mixer by de-asserting the soft reset. The audio state is set to
  * default values by the reset, set the default mixer volume explicitly.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void zynqmp_disp_audio_enable(struct zynqmp_disp *disp)
 {
@@ -1225,11 +1491,19 @@ static void zynqmp_disp_audio_enable(struct zynqmp_disp_audio *audio)
 	zynqmp_disp_audio_write(audio, ZYNQMP_DISP_AUD_SOFT_RESET, 0);
 	zynqmp_disp_audio_write(audio, ZYNQMP_DISP_AUD_MIXER_VOLUME,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void zynqmp_disp_audio_enable(struct zynqmp_disp *disp)
+{
+	/* Clear the audio soft reset register as it's an non-reset flop. */
+	zynqmp_disp_audio_write(disp, ZYNQMP_DISP_AUD_SOFT_RESET, 0);
+	zynqmp_disp_audio_write(disp, ZYNQMP_DISP_AUD_MIXER_VOLUME,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ZYNQMP_DISP_AUD_MIXER_VOLUME_NO_SCALE);
 }
 
 /**
  * zynqmp_disp_audio_disable - Disable the audio mixer
+<<<<<<< HEAD
 <<<<<<< HEAD
  * @disp: Display controller
  *
@@ -1249,27 +1523,36 @@ static void zynqmp_disp_audio_init(struct zynqmp_disp *disp)
 		disp->audio.clk_from_ps = false;
 =======
  * @audio: Audio mixer
+=======
+ * @disp: Display controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Disable the audio mixer by asserting its soft reset.
  */
-static void zynqmp_disp_audio_disable(struct zynqmp_disp_audio *audio)
+static void zynqmp_disp_audio_disable(struct zynqmp_disp *disp)
 {
-	zynqmp_disp_audio_write(audio, ZYNQMP_DISP_AUD_SOFT_RESET,
+	zynqmp_disp_audio_write(disp, ZYNQMP_DISP_AUD_SOFT_RESET,
 				ZYNQMP_DISP_AUD_SOFT_RESET_AUD_SRST);
 }
 
-static void zynqmp_disp_audio_init(struct device *dev,
-				   struct zynqmp_disp_audio *audio)
+static void zynqmp_disp_audio_init(struct zynqmp_disp *disp)
 {
 	/* Try the live PL audio clock. */
+<<<<<<< HEAD
 	audio->clk = devm_clk_get(dev, "dp_live_audio_aclk");
 	if (!IS_ERR(audio->clk)) {
 		audio->clk_from_ps = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disp->audio.clk = devm_clk_get(disp->dev, "dp_live_audio_aclk");
+	if (!IS_ERR(disp->audio.clk)) {
+		disp->audio.clk_from_ps = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
 	/* If the live PL audio clock is not valid, fall back to PS clock. */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	disp->audio.clk = devm_clk_get(disp->dev, "dp_aud_clk");
 	if (!IS_ERR(disp->audio.clk)) {
@@ -1287,6 +1570,15 @@ static void zynqmp_disp_audio_init(struct device *dev,
 
 	dev_err(dev, "audio disabled due to missing clock\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disp->audio.clk = devm_clk_get(disp->dev, "dp_aud_clk");
+	if (!IS_ERR(disp->audio.clk)) {
+		disp->audio.clk_from_ps = true;
+		return;
+	}
+
+	dev_err(disp->dev, "audio disabled due to missing clock\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* -----------------------------------------------------------------------------
@@ -1383,6 +1675,7 @@ zynqmp_disp_layer_find_format(struct zynqmp_disp_layer *layer,
 static void zynqmp_disp_layer_enable(struct zynqmp_disp_layer *layer)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_enable_video(layer->disp, layer,
 				       ZYNQMP_DISP_LAYER_NONLIVE);
 	zynqmp_disp_blend_layer_enable(layer->disp, layer);
@@ -1391,6 +1684,11 @@ static void zynqmp_disp_layer_enable(struct zynqmp_disp_layer *layer)
 				       ZYNQMP_DISP_LAYER_NONLIVE);
 	zynqmp_disp_blend_layer_enable(&layer->disp->blend, layer);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_enable_video(layer->disp, layer,
+				       ZYNQMP_DISP_LAYER_NONLIVE);
+	zynqmp_disp_blend_layer_enable(layer->disp, layer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	layer->mode = ZYNQMP_DISP_LAYER_NONLIVE;
 }
@@ -1410,12 +1708,17 @@ static void zynqmp_disp_layer_disable(struct zynqmp_disp_layer *layer)
 		dmaengine_terminate_sync(layer->dmas[i].chan);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_disable_video(layer->disp, layer);
 	zynqmp_disp_blend_layer_disable(layer->disp, layer);
 =======
 	zynqmp_disp_avbuf_disable_video(&layer->disp->avbuf, layer->id);
 	zynqmp_disp_blend_layer_disable(&layer->disp->blend, layer);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_disable_video(layer->disp, layer);
+	zynqmp_disp_blend_layer_disable(layer->disp, layer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1436,11 +1739,15 @@ static void zynqmp_disp_layer_set_format(struct zynqmp_disp_layer *layer,
 	layer->drm_fmt = info;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_set_format(layer->disp, layer, layer->disp_fmt);
 =======
 	zynqmp_disp_avbuf_set_format(&layer->disp->avbuf, layer->id,
 				     layer->disp_fmt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_avbuf_set_format(layer->disp, layer, layer->disp_fmt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Set slave_id for each DMA channel to indicate they're part of a
@@ -1548,12 +1855,18 @@ zynqmp_disp_plane_atomic_disable(struct drm_plane *plane,
 
 	zynqmp_disp_layer_disable(layer);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (zynqmp_disp_layer_is_gfx(layer))
 		zynqmp_disp_blend_set_global_alpha(layer->disp, false,
 						   plane->state->alpha >> 8);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -1584,12 +1897,18 @@ zynqmp_disp_plane_atomic_update(struct drm_plane *plane,
 	zynqmp_disp_layer_update(layer, new_state);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (zynqmp_disp_layer_is_gfx(layer))
 		zynqmp_disp_blend_set_global_alpha(layer->disp, true,
 						   plane->state->alpha >> 8);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Enable or re-enable the plane is the format has changed. */
 	if (format_changed)
 		zynqmp_disp_layer_enable(layer);
@@ -1631,12 +1950,17 @@ static int zynqmp_disp_create_planes(struct zynqmp_disp *disp)
 
 		/* Graphics layer is primary, and video layer is overlay. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		type = zynqmp_disp_layer_is_video(layer)
 		     ? DRM_PLANE_TYPE_OVERLAY : DRM_PLANE_TYPE_PRIMARY;
 =======
 		type = i == ZYNQMP_DISP_LAYER_GFX
 		     ? DRM_PLANE_TYPE_PRIMARY : DRM_PLANE_TYPE_OVERLAY;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		type = zynqmp_disp_layer_is_video(layer)
+		     ? DRM_PLANE_TYPE_OVERLAY : DRM_PLANE_TYPE_PRIMARY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = drm_universal_plane_init(disp->drm, &layer->plane, 0,
 					       &zynqmp_disp_plane_funcs,
 					       drm_formats,
@@ -1648,12 +1972,18 @@ static int zynqmp_disp_create_planes(struct zynqmp_disp *disp)
 		drm_plane_helper_add(&layer->plane,
 				     &zynqmp_disp_plane_helper_funcs);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		drm_plane_create_zpos_immutable_property(&layer->plane, i);
 		if (zynqmp_disp_layer_is_gfx(layer))
 			drm_plane_create_alpha_property(&layer->plane);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -1786,6 +2116,7 @@ err:
 static void zynqmp_disp_enable(struct zynqmp_disp *disp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_avbuf_enable(disp);
 	/* Choose clock source based on the DT clock handle. */
 	zynqmp_disp_avbuf_set_clocks_sources(disp, disp->pclk_from_ps,
@@ -1796,14 +2127,21 @@ static void zynqmp_disp_enable(struct zynqmp_disp *disp)
 	zynqmp_disp_audio_enable(disp);
 =======
 	zynqmp_disp_avbuf_enable(&disp->avbuf);
+=======
+	zynqmp_disp_avbuf_enable(disp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Choose clock source based on the DT clock handle. */
-	zynqmp_disp_avbuf_set_clocks_sources(&disp->avbuf, disp->pclk_from_ps,
+	zynqmp_disp_avbuf_set_clocks_sources(disp, disp->pclk_from_ps,
 					     disp->audio.clk_from_ps, true);
-	zynqmp_disp_avbuf_enable_channels(&disp->avbuf);
-	zynqmp_disp_avbuf_enable_audio(&disp->avbuf);
+	zynqmp_disp_avbuf_enable_channels(disp);
+	zynqmp_disp_avbuf_enable_audio(disp);
 
+<<<<<<< HEAD
 	zynqmp_disp_audio_enable(&disp->audio);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_audio_enable(disp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1812,6 +2150,7 @@ static void zynqmp_disp_enable(struct zynqmp_disp *disp)
  */
 static void zynqmp_disp_disable(struct zynqmp_disp *disp)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	zynqmp_disp_audio_disable(disp);
 
@@ -1825,6 +2164,13 @@ static void zynqmp_disp_disable(struct zynqmp_disp *disp)
 	zynqmp_disp_avbuf_disable_channels(&disp->avbuf);
 	zynqmp_disp_avbuf_disable(&disp->avbuf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_audio_disable(disp);
+
+	zynqmp_disp_avbuf_disable_audio(disp);
+	zynqmp_disp_avbuf_disable_channels(disp);
+	zynqmp_disp_avbuf_disable(disp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline struct zynqmp_disp *crtc_to_disp(struct drm_crtc *crtc)
@@ -1870,6 +2216,7 @@ zynqmp_disp_crtc_atomic_enable(struct drm_crtc *crtc,
 	int ret, vrefresh;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_runtime_get_sync(disp->dev);
 
 	zynqmp_disp_crtc_setup_clock(crtc, adjusted_mode);
@@ -1879,6 +2226,12 @@ zynqmp_disp_crtc_atomic_enable(struct drm_crtc *crtc,
 
 	pm_runtime_get_sync(disp->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_get_sync(disp->dev);
+
+	zynqmp_disp_crtc_setup_clock(crtc, adjusted_mode);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = clk_prepare_enable(disp->pclk);
 	if (ret) {
 		dev_err(disp->dev, "failed to enable a pixel clock\n");
@@ -1886,6 +2239,7 @@ zynqmp_disp_crtc_atomic_enable(struct drm_crtc *crtc,
 		return;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	zynqmp_disp_blend_set_output_format(disp, ZYNQMP_DPSUB_FORMAT_RGB);
 	zynqmp_disp_blend_set_bg_color(disp, 0, 0, 0);
@@ -1895,6 +2249,10 @@ zynqmp_disp_crtc_atomic_enable(struct drm_crtc *crtc,
 	zynqmp_disp_blend_set_bg_color(&disp->blend, 0, 0, 0);
 	zynqmp_disp_blend_set_global_alpha(&disp->blend, false, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_blend_set_output_format(disp, ZYNQMP_DPSUB_FORMAT_RGB);
+	zynqmp_disp_blend_set_bg_color(disp, 0, 0, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	zynqmp_disp_enable(disp);
 
@@ -2104,10 +2462,14 @@ int zynqmp_disp_probe(struct zynqmp_dpsub *dpsub, struct drm_device *drm)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zynqmp_disp_audio_init(disp);
 =======
 	zynqmp_disp_audio_init(disp->dev, &disp->audio);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zynqmp_disp_audio_init(disp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = zynqmp_disp_create_layers(disp);
 	if (ret)

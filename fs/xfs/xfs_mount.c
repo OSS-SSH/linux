@@ -63,10 +63,14 @@ xfs_uuid_mount(
 	uuid_copy(&mp->m_super->s_uuid, uuid);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_nouuid(mp))
 =======
 	if (mp->m_flags & XFS_MOUNT_NOUUID)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_nouuid(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	if (uuid_is_null(uuid)) {
@@ -109,10 +113,14 @@ xfs_uuid_unmount(
 	int			i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_nouuid(mp))
 =======
 	if (mp->m_flags & XFS_MOUNT_NOUUID)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_nouuid(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	mutex_lock(&xfs_uuid_table_mutex);
@@ -234,9 +242,13 @@ reread:
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mp->m_features |= xfs_sb_version_to_features(sbp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mp->m_features |= xfs_sb_version_to_features(sbp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_reinit_percpu_counters(mp);
 
 	/* no need to be quiet anymore, so reset the buf ops */
@@ -331,10 +343,14 @@ xfs_validate_new_dalign(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_dalign(mp)) {
 =======
 	if (!xfs_sb_version_hasdalign(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_dalign(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_warn(mp,
 "cannot change alignment: superblock does not support data alignment");
 		return -EINVAL;
@@ -366,11 +382,15 @@ xfs_update_alignment(
 		sbp->sb_width = mp->m_swidth;
 		mp->m_update_sb = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (!xfs_has_noalign(mp) && xfs_has_dalign(mp)) {
 =======
 	} else if ((mp->m_flags & XFS_MOUNT_NOALIGN) != XFS_MOUNT_NOALIGN &&
 		    xfs_sb_version_hasdalign(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else if (!xfs_has_noalign(mp) && xfs_has_dalign(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mp->m_dalign = sbp->sb_unit;
 		mp->m_swidth = sbp->sb_width;
 	}
@@ -386,6 +406,7 @@ xfs_set_low_space_thresholds(
 	struct xfs_mount	*mp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint64_t		dblocks = mp->m_sb.sb_dblocks;
 	uint64_t		rtexts = mp->m_sb.sb_rextents;
 	int			i;
@@ -398,13 +419,24 @@ xfs_set_low_space_thresholds(
 		mp->m_low_rtexts[i] = rtexts * (i + 1);
 =======
 	int i;
+=======
+	uint64_t		dblocks = mp->m_sb.sb_dblocks;
+	uint64_t		rtexts = mp->m_sb.sb_rextents;
+	int			i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	for (i = 0; i < XFS_LOWSP_MAX; i++) {
-		uint64_t space = mp->m_sb.sb_dblocks;
+	do_div(dblocks, 100);
+	do_div(rtexts, 100);
 
+<<<<<<< HEAD
 		do_div(space, 100);
 		mp->m_low_space[i] = space * (i + 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < XFS_LOWSP_MAX; i++) {
+		mp->m_low_space[i] = dblocks * (i + 1);
+		mp->m_low_rtexts[i] = rtexts * (i + 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -519,10 +551,14 @@ xfs_check_summary_counts(
 	 * them from the AGF headers in the next step.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_clean(mp) &&
 =======
 	if (XFS_LAST_UNMOUNT_WAS_CLEAN(mp) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_clean(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    (mp->m_sb.sb_fdblocks > mp->m_sb.sb_dblocks ||
 	     !xfs_verify_icount(mp, mp->m_sb.sb_icount) ||
 	     mp->m_sb.sb_ifree > mp->m_sb.sb_icount))
@@ -540,11 +576,15 @@ xfs_check_summary_counts(
 	 * Otherwise, recalculate the summary counters.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((!xfs_has_lazysbcount(mp) || xfs_is_clean(mp)) &&
 =======
 	if ((!xfs_sb_version_haslazysbcount(&mp->m_sb) ||
 	     XFS_LAST_UNMOUNT_WAS_CLEAN(mp)) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((!xfs_has_lazysbcount(mp) || xfs_is_clean(mp)) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !xfs_fs_has_sickness(mp, XFS_SICK_FS_COUNTERS))
 		return 0;
 
@@ -556,11 +596,16 @@ xfs_check_summary_counts(
  * internal inode structures can be sitting in the CIL and AIL at this point,
  * so we need to unpin them, write them back and/or reclaim them before unmount
 <<<<<<< HEAD
+<<<<<<< HEAD
  * can proceed.  In other words, callers are required to have inactivated all
  * inodes.
 =======
  * can proceed.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * can proceed.  In other words, callers are required to have inactivated all
+ * inodes.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * An inode cluster that has been freed can have its buffer still pinned in
  * memory because the transaction is still sitting in a iclog. The stale inodes
@@ -590,6 +635,7 @@ xfs_unmount_flush_inodes(
 	flush_workqueue(xfs_discard_wq);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_bit(XFS_OPSTATE_UNMOUNTING, &mp->m_opstate);
 
 	xfs_ail_push_all_sync(mp->m_ail);
@@ -599,6 +645,12 @@ xfs_unmount_flush_inodes(
 
 	xfs_ail_push_all_sync(mp->m_ail);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_bit(XFS_OPSTATE_UNMOUNTING, &mp->m_opstate);
+
+	xfs_ail_push_all_sync(mp->m_ail);
+	xfs_inodegc_stop(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cancel_delayed_work_sync(&mp->m_reclaim_work);
 	xfs_reclaim_inodes(mp);
 	xfs_health_unmount(mp);
@@ -661,6 +713,7 @@ xfs_mountfs(
 		sbp->sb_features2 |= sbp->sb_bad_features2;
 		mp->m_update_sb = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 
 =======
@@ -684,14 +737,22 @@ xfs_mountfs(
 			mp->m_update_sb = true;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* always use v2 inodes by default now */
 	if (!(mp->m_sb.sb_versionnum & XFS_SB_VERSION_NLINKBIT)) {
 		mp->m_sb.sb_versionnum |= XFS_SB_VERSION_NLINKBIT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		mp->m_features |= XFS_FEAT_NLINK;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mp->m_features |= XFS_FEAT_NLINK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mp->m_update_sb = true;
 	}
 
@@ -765,10 +826,14 @@ xfs_mountfs(
 	 * but that is checked on sb read verification...
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_sparseinodes(mp) &&
 =======
 	if (xfs_sb_version_hassparseinodes(&mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_sparseinodes(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    mp->m_sb.sb_spino_align !=
 			XFS_B_TO_FSBT(mp, igeo->inode_cluster_size_raw)) {
 		xfs_warn(mp,
@@ -831,12 +896,18 @@ xfs_mountfs(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = xfs_inodegc_register_shrinker(mp);
 	if (error)
 		goto out_fail_wait;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Log's mount-time initialization. The first part of recovery can place
 	 * some items on the AIL, to be handled when recovery is finished or
@@ -848,10 +919,14 @@ xfs_mountfs(
 	if (error) {
 		xfs_warn(mp, "log mount failed");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_inodegc_shrinker;
 =======
 		goto out_fail_wait;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_inodegc_shrinker;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Make sure the summary counts are ok. */
@@ -860,6 +935,9 @@ xfs_mountfs(
 		goto out_log_dealloc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Enable background inode inactivation workers. */
 	xfs_inodegc_start(mp);
 	xfs_blockgc_start(mp);
@@ -877,8 +955,11 @@ xfs_mountfs(
 		mp->m_features |= XFS_FEAT_ATTR2;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Get and sanity-check the root inode.
 	 * Save the pointer to it in the mount structure.
@@ -923,10 +1004,14 @@ xfs_mountfs(
 	 * perform the update e.g. for the root filesystem.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (mp->m_update_sb && !xfs_is_readonly(mp)) {
 =======
 	if (mp->m_update_sb && !(mp->m_flags & XFS_MOUNT_RDONLY)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mp->m_update_sb && !xfs_is_readonly(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xfs_sync_sb(mp, false);
 		if (error) {
 			xfs_warn(mp, "failed to write sb changes");
@@ -938,19 +1023,26 @@ xfs_mountfs(
 	 * Initialise the XFS quota management subsystem for this mount
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (XFS_IS_QUOTA_ON(mp)) {
 =======
 	if (XFS_IS_QUOTA_RUNNING(mp)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (XFS_IS_QUOTA_ON(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xfs_qm_newmount(mp, &quotamount, &quotaflags);
 		if (error)
 			goto out_rtunmount;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		ASSERT(!XFS_IS_QUOTA_ON(mp));
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * If a file system had quotas running earlier, but decided to
 		 * mount without -o uquota/pquota/gquota options, revoke the
@@ -993,6 +1085,7 @@ xfs_mountfs(
 	 * semantically identical operations.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_readonly(mp) && !xfs_has_norecovery(mp))
 		xfs_log_clean(mp);
 =======
@@ -1001,6 +1094,10 @@ xfs_mountfs(
 		xfs_log_clean(mp);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_readonly(mp) && !xfs_has_norecovery(mp))
+		xfs_log_clean(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Complete the quota initialisation, post-log-replay component.
@@ -1024,10 +1121,14 @@ xfs_mountfs(
 	 * we were already there on the last unmount. Warn if this occurs.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_is_readonly(mp)) {
 =======
 	if (!(mp->m_flags & XFS_MOUNT_RDONLY)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_is_readonly(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		resblks = xfs_default_resblks(mp);
 		error = xfs_reserve_blocks(mp, &resblks, NULL);
 		if (error)
@@ -1062,6 +1163,9 @@ xfs_mountfs(
 	/* Clean out dquots that might be in memory after quotacheck. */
 	xfs_qm_unmount(mp);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Inactivate all inodes that might still be in memory after a log
@@ -1071,8 +1175,11 @@ xfs_mountfs(
 	 */
 	xfs_inodegc_flush(mp);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Flush all inode reclamation work and flush the log.
 	 * We have to do this /after/ rtunmount and qm_unmount because those
@@ -1088,10 +1195,15 @@ xfs_mountfs(
  out_log_dealloc:
 	xfs_log_mount_cancel(mp);
 <<<<<<< HEAD
+<<<<<<< HEAD
  out_inodegc_shrinker:
 	unregister_shrinker(&mp->m_inodegc_shrinker);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ out_inodegc_shrinker:
+	unregister_shrinker(&mp->m_inodegc_shrinker);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out_fail_wait:
 	if (mp->m_logdev_targp && mp->m_logdev_targp != mp->m_ddev_targp)
 		xfs_buftarg_drain(mp->m_logdev_targp);
@@ -1126,6 +1238,9 @@ xfs_unmountfs(
 	int			error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Perform all on-disk metadata updates required to inactivate inodes
 	 * that the VFS evicted earlier in the unmount process.  Freeing inodes
@@ -1136,8 +1251,11 @@ xfs_unmountfs(
 	 */
 	xfs_inodegc_flush(mp);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_blockgc_stop(mp);
 	xfs_fs_unreserve_ag_blocks(mp);
 	xfs_qm_unmount_quotas(mp);
@@ -1176,9 +1294,13 @@ xfs_unmountfs(
 	xfs_errortag_clearall(mp);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unregister_shrinker(&mp->m_inodegc_shrinker);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unregister_shrinker(&mp->m_inodegc_shrinker);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_free_perag(mp);
 
 	xfs_errortag_del(mp);
@@ -1201,15 +1323,20 @@ xfs_fs_writable(
 	ASSERT(level > SB_UNFROZEN);
 	if ((mp->m_super->s_writers.frozen >= level) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    xfs_is_shutdown(mp) || xfs_is_readonly(mp))
 =======
 	    XFS_FORCED_SHUTDOWN(mp) || (mp->m_flags & XFS_MOUNT_RDONLY))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    xfs_is_shutdown(mp) || xfs_is_readonly(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	return true;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /*
@@ -1221,6 +1348,8 @@ xfs_fs_writable(
  */
 #define XFS_FDBLOCKS_BATCH	1024
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int
 xfs_mod_fdblocks(
 	struct xfs_mount	*mp,
@@ -1369,10 +1498,14 @@ xfs_force_summary_recalc(
 	struct xfs_mount	*mp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_lazysbcount(mp))
 =======
 	if (!xfs_sb_version_haslazysbcount(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_lazysbcount(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	xfs_fs_mark_sick(mp, XFS_SICK_FS_COUNTERS);
@@ -1380,6 +1513,9 @@ xfs_force_summary_recalc(
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Enable a log incompat feature flag in the primary superblock.  The caller
  * cannot have any other transactions in progress.
  */
@@ -1490,8 +1626,11 @@ xfs_clear_incompat_log_features(
 }
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Update the in-core delayed block counter.
  *
  * We prefer to update the counter without having to take a spinlock for every

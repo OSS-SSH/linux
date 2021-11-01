@@ -78,6 +78,9 @@ properties:
       of 200 ms. However, some solutions might need more than 200 ms.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   refclk-dig:
     type: object
     description: |
@@ -106,8 +109,11 @@ properties:
       - assigned-clocks
       - assigned-clock-parents
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 patternProperties:
   "^pll[0|1]-refclk$":
     type: object
@@ -153,6 +159,7 @@ patternProperties:
       - "#clock-cells"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   "^refclk-dig$":
     type: object
@@ -183,6 +190,8 @@ patternProperties:
       - assigned-clock-parents
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   "^serdes@[0-9a-f]+$":
     type: object
     description: |

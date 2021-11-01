@@ -13,9 +13,13 @@
 #include <linux/if_ether.h>
 #include <linux/jhash.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/kref.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/kref.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/netlink.h>
 #include <linux/skbuff.h>
 #include <linux/types.h>
@@ -25,30 +29,42 @@ int batadv_originator_init(struct batadv_priv *bat_priv);
 void batadv_originator_free(struct batadv_priv *bat_priv);
 void batadv_purge_orig_ref(struct batadv_priv *bat_priv);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void batadv_orig_node_release(struct kref *ref);
 =======
 void batadv_orig_node_put(struct batadv_orig_node *orig_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void batadv_orig_node_release(struct kref *ref);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct batadv_orig_node *batadv_orig_node_new(struct batadv_priv *bat_priv,
 					      const u8 *addr);
 struct batadv_hardif_neigh_node *
 batadv_hardif_neigh_get(const struct batadv_hard_iface *hard_iface,
 			const u8 *neigh_addr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void batadv_hardif_neigh_release(struct kref *ref);
 =======
 void
 batadv_hardif_neigh_put(struct batadv_hardif_neigh_node *hardif_neigh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void batadv_hardif_neigh_release(struct kref *ref);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct batadv_neigh_node *
 batadv_neigh_node_get_or_create(struct batadv_orig_node *orig_node,
 				struct batadv_hard_iface *hard_iface,
 				const u8 *neigh_addr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void batadv_neigh_node_release(struct kref *ref);
 =======
 void batadv_neigh_node_put(struct batadv_neigh_node *neigh_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void batadv_neigh_node_release(struct kref *ref);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct batadv_neigh_node *
 batadv_orig_router_get(struct batadv_orig_node *orig_node,
 		       const struct batadv_hard_iface *if_outgoing);
@@ -59,10 +75,14 @@ struct batadv_neigh_ifinfo *
 batadv_neigh_ifinfo_get(struct batadv_neigh_node *neigh,
 			struct batadv_hard_iface *if_outgoing);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void batadv_neigh_ifinfo_release(struct kref *ref);
 =======
 void batadv_neigh_ifinfo_put(struct batadv_neigh_ifinfo *neigh_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void batadv_neigh_ifinfo_release(struct kref *ref);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int batadv_hardif_neigh_dump(struct sk_buff *msg, struct netlink_callback *cb);
 
@@ -73,10 +93,14 @@ struct batadv_orig_ifinfo *
 batadv_orig_ifinfo_new(struct batadv_orig_node *orig_node,
 		       struct batadv_hard_iface *if_outgoing);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void batadv_orig_ifinfo_release(struct kref *ref);
 =======
 void batadv_orig_ifinfo_put(struct batadv_orig_ifinfo *orig_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void batadv_orig_ifinfo_release(struct kref *ref);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int batadv_orig_dump(struct sk_buff *msg, struct netlink_callback *cb);
 struct batadv_orig_node_vlan *
@@ -86,10 +110,14 @@ struct batadv_orig_node_vlan *
 batadv_orig_node_vlan_get(struct batadv_orig_node *orig_node,
 			  unsigned short vid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void batadv_orig_node_vlan_release(struct kref *ref);
 =======
 void batadv_orig_node_vlan_put(struct batadv_orig_node_vlan *orig_vlan);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void batadv_orig_node_vlan_release(struct kref *ref);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * batadv_choose_orig() - Return the index of the orig entry in the hash table
@@ -111,6 +139,9 @@ struct batadv_orig_node *
 batadv_orig_hash_find(struct batadv_priv *bat_priv, const void *data);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * batadv_orig_node_vlan_put() - decrement the refcounter and possibly release
  *  the originator-vlan object
@@ -193,6 +224,9 @@ static inline void batadv_orig_node_put(struct batadv_orig_node *orig_node)
 	kref_put(&orig_node->refcount, batadv_orig_node_release);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _NET_BATMAN_ADV_ORIGINATOR_H_ */

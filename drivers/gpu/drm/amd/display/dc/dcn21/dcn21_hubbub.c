@@ -702,9 +702,13 @@ static const struct hubbub_funcs hubbub21_funcs = {
 	.allow_self_refresh_control = hubbub1_allow_self_refresh_control,
 	.apply_DEDCN21_147_wa = hubbub21_apply_DEDCN21_147_wa,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.hubbub_read_state = hubbub2_read_state,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.hubbub_read_state = hubbub2_read_state,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 void hubbub21_construct(struct dcn20_hubbub *hubbub,

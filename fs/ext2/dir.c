@@ -107,18 +107,25 @@ static int ext2_commit_chunk(struct page *page, loff_t pos, unsigned len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool ext2_check_page(struct page *page, int quiet, char *kaddr)
 =======
 static bool ext2_check_page(struct page *page, int quiet)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static bool ext2_check_page(struct page *page, int quiet, char *kaddr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct inode *dir = page->mapping->host;
 	struct super_block *sb = dir->i_sb;
 	unsigned chunk_size = ext2_chunk_size(dir);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	char *kaddr = page_address(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 max_inumber = le32_to_cpu(EXT2_SB(sb)->s_es->s_inodes_count);
 	unsigned offs, rec_len;
 	unsigned limit = PAGE_SIZE;
@@ -213,11 +220,16 @@ static struct page * ext2_get_page(struct inode *dir, unsigned long n,
 		*page_addr = kmap_local_page(page);
 		if (unlikely(!PageChecked(page))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (PageError(page) || !ext2_check_page(page, quiet,
 								*page_addr))
 =======
 			if (PageError(page) || !ext2_check_page(page, quiet))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (PageError(page) || !ext2_check_page(page, quiet,
+								*page_addr))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto fail;
 		}
 	}
@@ -597,6 +609,7 @@ out_unlock:
  * previous entry. Page is up-to-date.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int ext2_delete_entry (struct ext2_dir_entry_2 *dir, struct page *page,
 			char *kaddr)
 {
@@ -607,6 +620,12 @@ int ext2_delete_entry (struct ext2_dir_entry_2 * dir, struct page * page )
 	struct inode *inode = page->mapping->host;
 	char *kaddr = page_address(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int ext2_delete_entry (struct ext2_dir_entry_2 *dir, struct page *page,
+			char *kaddr)
+{
+	struct inode *inode = page->mapping->host;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned from = ((char*)dir - kaddr) & ~(ext2_chunk_size(inode)-1);
 	unsigned to = ((char *)dir - kaddr) +
 				ext2_rec_len_from_disk(dir->rec_len);
@@ -627,10 +646,14 @@ int ext2_delete_entry (struct ext2_dir_entry_2 * dir, struct page * page )
 	}
 	if (pde)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		from = (char *)pde - kaddr;
 =======
 		from = (char*)pde - (char*)page_address(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		from = (char *)pde - kaddr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pos = page_offset(page) + from;
 	lock_page(page);
 	err = ext2_prepare_chunk(page, pos, to - from);

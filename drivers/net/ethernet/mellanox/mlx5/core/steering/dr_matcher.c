@@ -397,9 +397,13 @@ static int dr_matcher_set_ste_builders(struct mlx5dr_matcher *matcher,
 	struct mlx5dr_ste_ctx *ste_ctx = dmn->ste_ctx;
 	struct mlx5dr_match_param mask = {};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool allow_empty_match = false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool allow_empty_match = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mlx5dr_ste_build *sb;
 	bool inner, rx;
 	int idx = 0;
@@ -407,10 +411,14 @@ static int dr_matcher_set_ste_builders(struct mlx5dr_matcher *matcher,
 
 	sb = nic_matcher->ste_builder_arr[outer_ipv][inner_ipv];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rx = nic_dmn->type == DR_DOMAIN_NIC_TYPE_RX;
 =======
 	rx = nic_dmn->ste_type == MLX5DR_STE_TYPE_RX;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rx = nic_dmn->type == DR_DOMAIN_NIC_TYPE_RX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Create a temporary mask to track and clear used mask fields */
 	if (matcher->match_criteria & DR_MATCHER_CRITERIA_OUTER)
@@ -437,6 +445,9 @@ static int dr_matcher_set_ste_builders(struct mlx5dr_matcher *matcher,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Optimize RX pipe by reducing source port match, since
 	 * the FDB RX part is connected only to the wire.
 	 */
@@ -447,8 +458,11 @@ static int dr_matcher_set_ste_builders(struct mlx5dr_matcher *matcher,
 		allow_empty_match = true;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Outer */
 	if (matcher->match_criteria & (DR_MATCHER_CRITERIA_OUTER |
 				       DR_MATCHER_CRITERIA_MISC |
@@ -641,11 +655,16 @@ static int dr_matcher_set_ste_builders(struct mlx5dr_matcher *matcher,
 
 	/* Empty matcher, takes all */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if ((!idx && allow_empty_match) ||
 	    matcher->match_criteria == DR_MATCHER_CRITERIA_EMPTY)
 =======
 	if (matcher->match_criteria == DR_MATCHER_CRITERIA_EMPTY)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((!idx && allow_empty_match) ||
+	    matcher->match_criteria == DR_MATCHER_CRITERIA_EMPTY)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mlx5dr_ste_build_empty_always_hit(&sb[idx++], rx);
 
 	if (idx == 0) {

@@ -395,10 +395,14 @@ static int atm_tc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
 			fl = rcu_dereference_bh(flow->filter_list);
 			if (fl) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				result = tcf_classify(skb, NULL, fl, &res, true);
 =======
 				result = tcf_classify(skb, fl, &res, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				result = tcf_classify(skb, NULL, fl, &res, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (result < 0)
 					continue;
 				flow = (struct atm_flow_data *)res.class;

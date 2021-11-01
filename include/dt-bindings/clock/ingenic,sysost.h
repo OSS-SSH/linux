@@ -14,6 +14,9 @@
 #define OST_CLK_PERCPU_TIMER3	4
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define OST_CLK_EVENT_TIMER		1
 
 #define OST_CLK_EVENT_TIMER0	0
@@ -33,6 +36,9 @@
 #define OST_CLK_EVENT_TIMER14	14
 #define OST_CLK_EVENT_TIMER15	15
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __DT_BINDINGS_CLOCK_INGENIC_OST_H__ */

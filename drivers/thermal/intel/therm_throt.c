@@ -570,13 +570,19 @@ static void notify_thresholds(__u64 msr_val)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __weak notify_hwp_interrupt(void)
 {
 	wrmsrl_safe(MSR_HWP_STATUS, 0);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Thermal transition interrupt handler */
 void intel_thermal_interrupt(void)
 {
@@ -584,10 +590,14 @@ void intel_thermal_interrupt(void)
 
 	if (static_cpu_has(X86_FEATURE_HWP))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		notify_hwp_interrupt();
 =======
 		wrmsrl_safe(MSR_HWP_STATUS, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		notify_hwp_interrupt();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rdmsrl(MSR_IA32_THERM_STATUS, msr_val);
 

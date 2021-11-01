@@ -28,9 +28,13 @@
 #include "11n.h"
 #include "pcie.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "pcie_quirks.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "pcie_quirks.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define PCIE_VERSION	"1.0"
 #define DRV_NAME        "Marvell mwifiex PCIe"
@@ -415,11 +419,17 @@ static int mwifiex_pcie_probe(struct pci_dev *pdev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* check quirks */
 	mwifiex_initialize_quirks(card);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* check quirks */
+	mwifiex_initialize_quirks(card);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mwifiex_add_card(card, &card->fw_done, &pcie_ops,
 			     MWIFIEX_PCIE, &pdev->dev)) {
 		pr_err("%s failed\n", __func__);
@@ -535,6 +545,9 @@ static void mwifiex_pcie_reset_prepare(struct pci_dev *pdev)
 	clear_bit(MWIFIEX_IFACE_WORK_DEVICE_DUMP, &card->work_flags);
 	clear_bit(MWIFIEX_IFACE_WORK_CARD_RESET, &card->work_flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* On MS Surface gen4+ devices FLR isn't effective to recover from
 	 * hangups, so we power-cycle the card instead.
@@ -542,8 +555,11 @@ static void mwifiex_pcie_reset_prepare(struct pci_dev *pdev)
 	if (card->quirks & QUIRK_FW_RST_D3COLD)
 		mwifiex_pcie_reset_d3cold_quirk(pdev);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mwifiex_dbg(adapter, INFO, "%s, successful\n", __func__);
 
 	card->pci_reset_ongoing = true;

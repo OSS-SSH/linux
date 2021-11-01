@@ -15,9 +15,13 @@
 #include <linux/sched.h>
 #include <linux/uaccess.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <kunit/test-bug.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <kunit/test-bug.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "ubsan.h"
 
@@ -146,10 +150,15 @@ static void ubsan_prologue(struct source_location *loc, const char *reason)
 	pr_err("UBSAN: %s in %s:%d:%d\n", reason, loc->file_name,
 		loc->line & LINE_MASK, loc->column & COLUMN_MASK);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	kunit_fail_current_test("%s in %s", reason, loc->file_name);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	kunit_fail_current_test("%s in %s", reason, loc->file_name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void ubsan_epilogue(void)

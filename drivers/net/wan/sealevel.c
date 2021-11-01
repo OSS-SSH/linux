@@ -125,6 +125,7 @@ static int sealevel_close(struct net_device *d)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int sealevel_ioctl(struct net_device *d, struct ifreq *ifr, int cmd)
 {
@@ -135,6 +136,8 @@ static int sealevel_ioctl(struct net_device *d, struct ifreq *ifr, int cmd)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*	Passed network frames, fire them downwind. */
 
 static netdev_tx_t sealevel_queue_xmit(struct sk_buff *skb,
@@ -156,10 +159,14 @@ static const struct net_device_ops sealevel_ops = {
 	.ndo_stop       = sealevel_close,
 	.ndo_start_xmit = hdlc_start_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocwandev = hdlc_ioctl,
 =======
 	.ndo_do_ioctl   = sealevel_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocwandev = hdlc_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int slvl_setup(struct slvl_device *sv, int iobase, int irq)

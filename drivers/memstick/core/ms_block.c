@@ -1106,10 +1106,14 @@ static u16 msb_get_free_block(struct msb_data *msb, int zone)
 
 	if (pba == msb->block_count || (msb_get_zone_from_pba(pba)) != zone) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_err("BUG: can't get a free block");
 =======
 		pr_err("BUG: cant get a free block");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("BUG: can't get a free block");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		msb->read_only = true;
 		return MS_BLOCK_INVALID;
 	}

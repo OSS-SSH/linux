@@ -132,10 +132,14 @@
 #define FEATURE_GFX_PER_PART_VMIN_BIT   50
 #define FEATURE_SMART_SHIFT_BIT         51
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define FEATURE_APT_BIT                 52
 =======
 #define FEATURE_SPARE_52_BIT            52
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FEATURE_APT_BIT                 52
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define FEATURE_SPARE_53_BIT            53
 #define FEATURE_SPARE_54_BIT            54
 #define FEATURE_SPARE_55_BIT            55
@@ -216,9 +220,13 @@ typedef enum {
 #define THROTTLER_PPM_BIT          18
 #define THROTTLER_APCC_BIT         19
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define THROTTLER_COUNT            20
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define THROTTLER_COUNT            20
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 // FW DState Features Control Bits
 // FW DState Features Control Bits
@@ -1415,6 +1423,9 @@ typedef struct {
 
 typedef struct {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   uint32_t CurrClock[PPCLK_COUNT];
 
   uint16_t AverageGfxclkFrequencyPreDs;
@@ -1476,9 +1487,12 @@ typedef struct {
     SmuMetrics_t SmuMetrics;
     SmuMetrics_V2_t SmuMetrics_V2;
   };
+<<<<<<< HEAD
 =======
   SmuMetrics_t SmuMetrics;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   uint32_t Spare[1];
 
   // Padding - ignore

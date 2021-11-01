@@ -242,6 +242,9 @@ e_err:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sp_pci_shutdown(struct pci_dev *pdev)
 {
 	struct device *dev = &pdev->dev;
@@ -253,8 +256,11 @@ static void sp_pci_shutdown(struct pci_dev *pdev)
 	sp_destroy(sp);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sp_pci_remove(struct pci_dev *pdev)
 {
 	struct device *dev = &pdev->dev;
@@ -366,14 +372,20 @@ static const struct sp_dev_vdata dev_vdata[] = {
 #endif
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{	/* 5 */
 		.bar = 2,
 #ifdef CONFIG_CRYPTO_DEV_SP_PSP
 		.psp_vdata = &pspv2,
 #endif
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 static const struct pci_device_id sp_pci_table[] = {
 	{ PCI_VDEVICE(AMD, 0x1537), (kernel_ulong_t)&dev_vdata[0] },
@@ -383,9 +395,13 @@ static const struct pci_device_id sp_pci_table[] = {
 	{ PCI_VDEVICE(AMD, 0x15DF), (kernel_ulong_t)&dev_vdata[4] },
 	{ PCI_VDEVICE(AMD, 0x1649), (kernel_ulong_t)&dev_vdata[4] },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ PCI_VDEVICE(AMD, 0x14CA), (kernel_ulong_t)&dev_vdata[5] },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ PCI_VDEVICE(AMD, 0x14CA), (kernel_ulong_t)&dev_vdata[5] },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Last entry must be zero */
 	{ 0, }
 };
@@ -399,9 +415,13 @@ static struct pci_driver sp_pci_driver = {
 	.probe = sp_pci_probe,
 	.remove = sp_pci_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.shutdown = sp_pci_shutdown,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown = sp_pci_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver.pm = &sp_pci_pm_ops,
 };
 

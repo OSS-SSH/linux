@@ -1257,9 +1257,12 @@ static int oa_get_render_ctx_id(struct i915_perf_stream *stream)
 	case 8:
 	case 9:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case 10:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (intel_engine_uses_guc(ce->engine)) {
 			/*
 			 * When using GuC, the context descriptor we write in
@@ -1288,6 +1291,9 @@ static int oa_get_render_ctx_id(struct i915_perf_stream *stream)
 
 	case 11:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 12:
 		if (GRAPHICS_VER_FULL(ce->engine->i915) >= IP_VER(12, 50)) {
 			stream->specific_ctx_id_mask =
@@ -1307,6 +1313,7 @@ static int oa_get_render_ctx_id(struct i915_perf_stream *stream)
 			stream->specific_ctx_id =
 				(GEN12_MAX_CONTEXT_HW_ID - 1) << (GEN11_SW_CTX_ID_SHIFT - 32);
 		}
+<<<<<<< HEAD
 		break;
 =======
 	case 12: {
@@ -1321,6 +1328,9 @@ static int oa_get_render_ctx_id(struct i915_perf_stream *stream)
 		break;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	default:
 		MISSING_CASE(GRAPHICS_VER(ce->engine->i915));
@@ -2607,10 +2617,14 @@ static void gen8_disable_metric_set(struct i915_perf_stream *stream)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void gen11_disable_metric_set(struct i915_perf_stream *stream)
 =======
 static void gen10_disable_metric_set(struct i915_perf_stream *stream)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void gen11_disable_metric_set(struct i915_perf_stream *stream)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct intel_uncore *uncore = stream->uncore;
 
@@ -3445,6 +3459,7 @@ i915_perf_open_ioctl_locked(struct i915_perf *perf,
 
 		specific_ctx = i915_gem_context_lookup(file_priv, ctx_handle);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (IS_ERR(specific_ctx)) {
 			DRM_DEBUG("Failed to look up context with ID %u for opening perf stream\n",
 				  ctx_handle);
@@ -3455,6 +3470,12 @@ i915_perf_open_ioctl_locked(struct i915_perf *perf,
 				  ctx_handle);
 			ret = -ENOENT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (IS_ERR(specific_ctx)) {
+			DRM_DEBUG("Failed to look up context with ID %u for opening perf stream\n",
+				  ctx_handle);
+			ret = PTR_ERR(specific_ctx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto err;
 		}
 	}
@@ -3925,10 +3946,14 @@ static bool gen8_is_valid_mux_addr(struct i915_perf *perf, u32 addr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static bool gen11_is_valid_mux_addr(struct i915_perf *perf, u32 addr)
 =======
 static bool gen10_is_valid_mux_addr(struct i915_perf *perf, u32 addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static bool gen11_is_valid_mux_addr(struct i915_perf *perf, u32 addr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return gen8_is_valid_mux_addr(perf, addr) ||
 	       REG_EQUAL(addr, GEN10_NOA_WRITE_HIGH) ||
@@ -4352,9 +4377,12 @@ static void oa_init_supported_formats(struct i915_perf *perf)
 	case INTEL_COFFEELAKE:
 	case INTEL_COMETLAKE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case INTEL_CANNONLAKE:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case INTEL_ICELAKE:
 	case INTEL_ELKHARTLAKE:
 	case INTEL_JASPERLAKE:
@@ -4440,6 +4468,7 @@ void i915_perf_init(struct drm_i915_private *i915)
 				perf->gen8_valid_ctx_bit = BIT(16);
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} else if (GRAPHICS_VER(i915) == 11) {
 			perf->ops.is_valid_b_counter_reg =
 				gen7_is_valid_b_counter_addr;
@@ -4452,12 +4481,20 @@ void i915_perf_init(struct drm_i915_private *i915)
 			perf->ops.is_valid_mux_reg =
 				gen10_is_valid_mux_addr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		} else if (GRAPHICS_VER(i915) == 11) {
+			perf->ops.is_valid_b_counter_reg =
+				gen7_is_valid_b_counter_addr;
+			perf->ops.is_valid_mux_reg =
+				gen11_is_valid_mux_addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			perf->ops.is_valid_flex_reg =
 				gen8_is_valid_flex_addr;
 
 			perf->ops.oa_enable = gen8_oa_enable;
 			perf->ops.oa_disable = gen8_oa_disable;
 			perf->ops.enable_metric_set = gen8_enable_metric_set;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			perf->ops.disable_metric_set = gen11_disable_metric_set;
 			perf->ops.oa_hw_tail_read = gen8_oa_hw_tail_read;
@@ -4477,6 +4514,14 @@ void i915_perf_init(struct drm_i915_private *i915)
 				perf->ctx_flexeu0_offset = 0x78e;
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			perf->ops.disable_metric_set = gen11_disable_metric_set;
+			perf->ops.oa_hw_tail_read = gen8_oa_hw_tail_read;
+
+			perf->ctx_oactxctrl_offset = 0x124;
+			perf->ctx_flexeu0_offset = 0x78e;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			perf->gen8_valid_ctx_bit = BIT(16);
 		} else if (GRAPHICS_VER(i915) == 12) {
 			perf->ops.is_valid_b_counter_reg =
@@ -4545,6 +4590,7 @@ static int destroy_config(int id, void *p, void *data)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int i915_perf_sysctl_register(void)
 {
 	sysctl_header = register_sysctl_table(dev_root);
@@ -4554,6 +4600,12 @@ void i915_perf_sysctl_register(void)
 {
 	sysctl_header = register_sysctl_table(dev_root);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int i915_perf_sysctl_register(void)
+{
+	sysctl_header = register_sysctl_table(dev_root);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void i915_perf_sysctl_unregister(void)

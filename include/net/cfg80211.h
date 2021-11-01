@@ -1254,6 +1254,9 @@ struct cfg80211_csa_settings {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct cfg80211_color_change_settings - color change settings
  *
  * Used for bss color change
@@ -1275,8 +1278,11 @@ struct cfg80211_color_change_settings {
 };
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct iface_combination_params - input parameters for interface combinations
  *
  * Used to pass interface combination parameters
@@ -4020,10 +4026,15 @@ struct mgmt_frame_regs {
  *
  * @set_sar_specs: Update the SAR (TX power) settings.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * @color_change: Initiate a color change.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * @color_change: Initiate a color change.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct cfg80211_ops {
 	int	(*suspend)(struct wiphy *wiphy, struct cfg80211_wowlan *wow);
@@ -4352,11 +4363,17 @@ struct cfg80211_ops {
 	int	(*set_sar_specs)(struct wiphy *wiphy,
 				 struct cfg80211_sar_specs *sar);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int	(*color_change)(struct wiphy *wiphy,
 				struct net_device *dev,
 				struct cfg80211_color_change_settings *params);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int	(*color_change)(struct wiphy *wiphy,
+				struct net_device *dev,
+				struct cfg80211_color_change_settings *params);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -8260,6 +8277,9 @@ void cfg80211_update_owe_info_event(struct net_device *netdev,
 void cfg80211_bss_flush(struct wiphy *wiphy);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * cfg80211_bss_color_notify - notify about bss color event
  * @dev: network device
@@ -8326,6 +8346,9 @@ static inline int cfg80211_color_change_notify(struct net_device *dev)
 					 0, 0);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __NET_CFG80211_H */

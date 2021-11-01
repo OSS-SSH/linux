@@ -780,6 +780,7 @@ extern u16 amd_iommu_last_bdf;
 extern unsigned long *amd_iommu_pd_alloc_bitmap;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * If true, the addresses will be flushed on unmap time, not when
@@ -788,6 +789,8 @@ extern unsigned long *amd_iommu_pd_alloc_bitmap;
 extern bool amd_iommu_unmap_flush;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Smallest max PASID supported by any IOMMU in the system */
 extern u32 amd_iommu_max_pasid;
 

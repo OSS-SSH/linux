@@ -246,10 +246,14 @@ static int dr_domain_caps_init(struct mlx5_core_dev *mdev,
 
 		dmn->info.supp_sw_steering = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dmn->info.rx.type = DR_DOMAIN_NIC_TYPE_RX;
 =======
 		dmn->info.rx.ste_type = MLX5DR_STE_TYPE_RX;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dmn->info.rx.type = DR_DOMAIN_NIC_TYPE_RX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dmn->info.rx.default_icm_addr = dmn->info.caps.nic_rx_drop_address;
 		dmn->info.rx.drop_icm_addr = dmn->info.caps.nic_rx_drop_address;
 		break;
@@ -259,10 +263,14 @@ static int dr_domain_caps_init(struct mlx5_core_dev *mdev,
 
 		dmn->info.supp_sw_steering = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dmn->info.tx.type = DR_DOMAIN_NIC_TYPE_TX;
 =======
 		dmn->info.tx.ste_type = MLX5DR_STE_TYPE_TX;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dmn->info.tx.type = DR_DOMAIN_NIC_TYPE_TX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dmn->info.tx.default_icm_addr = dmn->info.caps.nic_tx_allow_address;
 		dmn->info.tx.drop_icm_addr = dmn->info.caps.nic_tx_drop_address;
 		break;
@@ -274,12 +282,17 @@ static int dr_domain_caps_init(struct mlx5_core_dev *mdev,
 			return -ENOTSUPP;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dmn->info.rx.type = DR_DOMAIN_NIC_TYPE_RX;
 		dmn->info.tx.type = DR_DOMAIN_NIC_TYPE_TX;
 =======
 		dmn->info.rx.ste_type = MLX5DR_STE_TYPE_RX;
 		dmn->info.tx.ste_type = MLX5DR_STE_TYPE_TX;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dmn->info.rx.type = DR_DOMAIN_NIC_TYPE_RX;
+		dmn->info.tx.type = DR_DOMAIN_NIC_TYPE_TX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vport_cap = mlx5dr_get_vport_cap(&dmn->info.caps, 0);
 		if (!vport_cap) {
 			mlx5dr_err(dmn, "Failed to get esw manager vport\n");

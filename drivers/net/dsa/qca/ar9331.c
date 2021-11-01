@@ -102,6 +102,9 @@
 	 AR9331_SW_PORT_STATUS_SPEED_M)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define AR9331_SW_REG_PORT_CTRL(_port)			(0x104 + (_port) * 0x100)
 #define AR9331_SW_PORT_CTRL_HEAD_EN			BIT(11)
 #define AR9331_SW_PORT_CTRL_PORT_STATE			GENMASK(2, 0)
@@ -119,8 +122,11 @@
 #define AR9331_SW_8021Q_MODE_NONE			0
 #define AR9331_SW_PORT_VLAN_PORT_VID_MEMBER		GENMASK(25, 16)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* MIB registers */
 #define AR9331_MIB_COUNTER(x)			(0x20000 + ((x) * 0x100))
 
@@ -392,6 +398,7 @@ static int ar9331_sw_mbus_init(struct ar9331_sw_priv *priv)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ar9331_sw_setup_port(struct dsa_switch *ds, int port)
 {
 	struct ar9331_sw_priv *priv = (struct ar9331_sw_priv *)ds->priv;
@@ -449,8 +456,62 @@ static int ar9331_sw_setup(struct dsa_switch *ds)
 <<<<<<< HEAD
 	int ret, i;
 =======
+=======
+static int ar9331_sw_setup_port(struct dsa_switch *ds, int port)
+{
+	struct ar9331_sw_priv *priv = (struct ar9331_sw_priv *)ds->priv;
+	struct regmap *regmap = priv->regmap;
+	u32 port_mask, port_ctrl, val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	/* Generate default port settings */
+	port_ctrl = FIELD_PREP(AR9331_SW_PORT_CTRL_PORT_STATE,
+			       AR9331_SW_PORT_CTRL_PORT_STATE_FORWARD);
+
+	if (dsa_is_cpu_port(ds, port)) {
+		/* CPU port should be allowed to communicate with all user
+		 * ports.
+		 */
+		port_mask = dsa_user_ports(ds);
+		/* Enable Atheros header on CPU port. This will allow us
+		 * communicate with each port separately
+		 */
+		port_ctrl |= AR9331_SW_PORT_CTRL_HEAD_EN;
+	} else if (dsa_is_user_port(ds, port)) {
+		/* User ports should communicate only with the CPU port.
+		 */
+		port_mask = BIT(dsa_upstream_port(ds, port));
+	} else {
+		/* Other ports do not need to communicate at all */
+		port_mask = 0;
+	}
+
+	val = FIELD_PREP(AR9331_SW_PORT_VLAN_8021Q_MODE,
+			 AR9331_SW_8021Q_MODE_NONE) |
+		FIELD_PREP(AR9331_SW_PORT_VLAN_PORT_VID_MEMBER, port_mask);
+
+	ret = regmap_write(regmap, AR9331_SW_REG_PORT_VLAN(port), val);
+	if (ret)
+		goto error;
+
+	ret = regmap_write(regmap, AR9331_SW_REG_PORT_CTRL(port), port_ctrl);
+	if (ret)
+		goto error;
+
+	return 0;
+error:
+	dev_err(priv->dev, "%s: error: %i\n", __func__, ret);
+
+	return ret;
+}
+
+static int ar9331_sw_setup(struct dsa_switch *ds)
+{
+	struct ar9331_sw_priv *priv = (struct ar9331_sw_priv *)ds->priv;
+	struct regmap *regmap = priv->regmap;
+	int ret, i;
 
 	ret = ar9331_sw_reset(priv);
 	if (ret)
@@ -478,14 +539,20 @@ static int ar9331_sw_setup(struct dsa_switch *ds)
 		goto error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < ds->num_ports; i++) {
 		ret = ar9331_sw_setup_port(ds, i);
 		if (ret)
 			goto error;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ds->configure_vlan_while_not_filtering = false;
 
 	return 0;
@@ -922,6 +989,9 @@ static int ar9331_mdio_write(void *ctx, u32 reg, u32 val)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* In case of this switch we work with 32bit registers on top of 16bit
 	 * bus. Some registers (for example access to forwarding database) have
 	 * trigger bit on the first 16bit half of request, the result and
@@ -931,6 +1001,7 @@ static int ar9331_mdio_write(void *ctx, u32 reg, u32 val)
 	 */
 	ret = __ar9331_mdio_write(sbus, AR9331_SW_MDIO_PHY_MODE_REG, reg + 2,
 				  val >> 16);
+<<<<<<< HEAD
 	if (ret < 0)
 		goto error;
 
@@ -943,14 +1014,24 @@ static int ar9331_mdio_write(void *ctx, u32 reg, u32 val)
 	ret = __ar9331_mdio_write(sbus, AR9331_SW_MDIO_PHY_MODE_REG, reg + 2,
 				  val >> 16);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		goto error;
+
+	ret = __ar9331_mdio_write(sbus, AR9331_SW_MDIO_PHY_MODE_REG, reg, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		goto error;
 
 	return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 error:
 	dev_err_ratelimited(&sbus->dev, "Bus error. Failed to write register.\n");
 	return ret;
@@ -1109,11 +1190,17 @@ static void ar9331_sw_remove(struct mdio_device *mdiodev)
 	unsigned int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!priv)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!priv)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < ARRAY_SIZE(priv->port); i++) {
 		struct ar9331_sw_port *port = &priv->port[i];
 
@@ -1126,6 +1213,9 @@ static void ar9331_sw_remove(struct mdio_device *mdiodev)
 
 	reset_control_assert(priv->sw_reset);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
 }
@@ -1140,8 +1230,11 @@ static void ar9331_sw_shutdown(struct mdio_device *mdiodev)
 	dsa_switch_shutdown(&priv->ds);
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct of_device_id ar9331_sw_of_match[] = {
@@ -1153,9 +1246,13 @@ static struct mdio_driver ar9331_sw_mdio_driver = {
 	.probe = ar9331_sw_probe,
 	.remove = ar9331_sw_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.shutdown = ar9331_sw_shutdown,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown = ar9331_sw_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.mdiodrv.driver = {
 		.name = AR9331_SW_NAME,
 		.of_match_table = ar9331_sw_of_match,

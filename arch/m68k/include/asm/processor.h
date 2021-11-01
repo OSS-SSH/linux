@@ -10,9 +10,12 @@
 
 #include <linux/thread_info.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/segment.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/fpu.h>
 #include <asm/ptrace.h>
 
@@ -79,6 +82,9 @@ static inline void wrusp(unsigned long usp)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Address spaces (or Function Codes in Motorola lingo) */
 #define USER_DATA     1
 #define USER_PROGRAM  2
@@ -105,17 +111,24 @@ static inline void set_fc(unsigned long val)
 }
 #endif /* CONFIG_CPU_HAS_ADDRESS_SPACES */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct thread_struct {
 	unsigned long  ksp;		/* kernel stack pointer */
 	unsigned long  usp;		/* user stack pointer */
 	unsigned short sr;		/* saved status register */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned short fc;		/* saved fc (sfc, dfc) */
 =======
 	unsigned short fs;		/* saved fs (sfc, dfc) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned short fc;		/* saved fc (sfc, dfc) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long  crp[2];		/* cpu root pointer */
 	unsigned long  esp0;		/* points to SR of stack frame */
 	unsigned long  faddr;		/* info about last fault */
@@ -129,10 +142,14 @@ struct thread_struct {
 	.ksp	= sizeof(init_stack) + (unsigned long) init_stack,	\
 	.sr	= PS_S,							\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.fc	= USER_DATA,						\
 =======
 	.fs	= __KERNEL_DS,						\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.fc	= USER_DATA,						\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

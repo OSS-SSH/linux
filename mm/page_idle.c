@@ -208,6 +208,7 @@ static const struct attribute_group page_idle_attr_group = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifndef CONFIG_64BIT
 static bool need_page_idle(void)
@@ -220,6 +221,8 @@ struct page_ext_operations page_idle_ops = {
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __init page_idle_init(void)
 {
 	int err;

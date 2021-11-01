@@ -9,6 +9,7 @@
 #include "br_private.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct static_key_false br_switchdev_tx_fwd_offload;
 
 static bool nbp_switchdev_can_offload_tx_fwd(const struct net_bridge_port *p,
@@ -56,39 +57,62 @@ void nbp_switchdev_frame_mark_tx_fwd_to_hwdom(const struct net_bridge_port *p,
 static int br_switchdev_mark_get(struct net_bridge *br, struct net_device *dev)
 {
 	struct net_bridge_port *p;
+=======
+static struct static_key_false br_switchdev_tx_fwd_offload;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	/* dev is yet to be added to the port list. */
-	list_for_each_entry(p, &br->port_list, list) {
-		if (netdev_port_same_parent_id(dev, p->dev))
-			return p->offload_fwd_mark;
-	}
+static bool nbp_switchdev_can_offload_tx_fwd(const struct net_bridge_port *p,
+					     const struct sk_buff *skb)
+{
+	if (!static_branch_unlikely(&br_switchdev_tx_fwd_offload))
+		return false;
 
-	return ++br->offload_fwd_mark;
+	return (p->flags & BR_TX_FWD_OFFLOAD) &&
+	       (p->hwdom != BR_INPUT_SKB_CB(skb)->src_hwdom);
 }
 
-int nbp_switchdev_mark_set(struct net_bridge_port *p)
+bool br_switchdev_frame_uses_tx_fwd_offload(struct sk_buff *skb)
 {
-	struct netdev_phys_item_id ppid = { };
-	int err;
+	if (!static_branch_unlikely(&br_switchdev_tx_fwd_offload))
+		return false;
 
-	ASSERT_RTNL();
+	return BR_INPUT_SKB_CB(skb)->tx_fwd_offload;
+}
 
-	err = dev_get_port_parent_id(p->dev, &ppid, true);
-	if (err) {
-		if (err == -EOPNOTSUPP)
-			return 0;
-		return err;
-	}
+void br_switchdev_frame_set_offload_fwd_mark(struct sk_buff *skb)
+{
+	skb->offload_fwd_mark = br_switchdev_frame_uses_tx_fwd_offload(skb);
+}
 
-	p->offload_fwd_mark = br_switchdev_mark_get(p->br, p->dev);
+/* Mark the frame for TX forwarding offload if this egress port supports it */
+void nbp_switchdev_frame_mark_tx_fwd_offload(const struct net_bridge_port *p,
+					     struct sk_buff *skb)
+{
+	if (nbp_switchdev_can_offload_tx_fwd(p, skb))
+		BR_INPUT_SKB_CB(skb)->tx_fwd_offload = true;
+}
 
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Lazily adds the hwdom of the egress bridge port to the bit mask of hwdoms
+ * that the skb has been already forwarded to, to avoid further cloning to
+ * other ports in the same hwdom by making nbp_switchdev_allowed_egress()
+ * return false.
+ */
+void nbp_switchdev_frame_mark_tx_fwd_to_hwdom(const struct net_bridge_port *p,
+					      struct sk_buff *skb)
+{
+	if (nbp_switchdev_can_offload_tx_fwd(p, skb))
+		set_bit(p->hwdom, &BR_INPUT_SKB_CB(skb)->fwd_hwdoms);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void nbp_switchdev_frame_mark(const struct net_bridge_port *p,
 			      struct sk_buff *skb)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (p->hwdom)
 		BR_INPUT_SKB_CB(skb)->src_hwdom = p->hwdom;
@@ -96,20 +120,30 @@ void nbp_switchdev_frame_mark(const struct net_bridge_port *p,
 	if (skb->offload_fwd_mark && !WARN_ON_ONCE(!p->offload_fwd_mark))
 		BR_INPUT_SKB_CB(skb)->offload_fwd_mark = p->offload_fwd_mark;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (p->hwdom)
+		BR_INPUT_SKB_CB(skb)->src_hwdom = p->hwdom;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 bool nbp_switchdev_allowed_egress(const struct net_bridge_port *p,
 				  const struct sk_buff *skb)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct br_input_skb_cb *cb = BR_INPUT_SKB_CB(skb);
 
 	return !test_bit(p->hwdom, &cb->fwd_hwdoms) &&
 		(!skb->offload_fwd_mark || cb->src_hwdom != p->hwdom);
+<<<<<<< HEAD
 =======
 	return !skb->offload_fwd_mark ||
 	       BR_INPUT_SKB_CB(skb)->offload_fwd_mark != p->offload_fwd_mark;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Flags that can be offloaded to hardware */
@@ -171,9 +205,12 @@ br_switchdev_fdb_notify(struct net_bridge *br,
 {
 	const struct net_bridge_port *dst = READ_ONCE(fdb->dst);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct net_device *dev = dst ? dst->dev : br->dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct switchdev_notifier_fdb_info info = {
 		.addr = fdb->key.addr.addr,
 		.vid = fdb->key.vlan_id,
@@ -182,9 +219,13 @@ br_switchdev_fdb_notify(struct net_bridge *br,
 		.offloaded = test_bit(BR_FDB_OFFLOADED, &fdb->flags),
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net_device *dev = (!dst || info.is_local) ? br->dev : dst->dev;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net_device *dev = (!dst || info.is_local) ? br->dev : dst->dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (type) {
 	case RTM_DELNEIGH:
@@ -222,6 +263,9 @@ int br_switchdev_port_vlan_del(struct net_device *dev, u16 vid)
 	return switchdev_port_obj_del(dev, &v.obj);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int nbp_switchdev_hwdom_set(struct net_bridge_port *joining)
 {
@@ -401,5 +445,8 @@ void br_switchdev_port_unoffload(struct net_bridge_port *p, const void *ctx,
 
 	nbp_switchdev_del(p);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -112,6 +112,7 @@ struct vc4_hdmi_audio {
 	struct snd_soc_dai_link_component codec;
 	struct snd_soc_dai_link_component platform;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct snd_dmaengine_dai_dma_data dma_data;
 	struct hdmi_audio_infoframe infoframe;
 =======
@@ -121,6 +122,10 @@ struct vc4_hdmi_audio {
 	struct snd_pcm_substream *substream;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct snd_dmaengine_dai_dma_data dma_data;
+	struct hdmi_audio_infoframe infoframe;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool streaming;
 };
 

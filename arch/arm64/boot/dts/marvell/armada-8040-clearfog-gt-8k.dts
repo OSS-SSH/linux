@@ -21,10 +21,14 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memory@0 {
 =======
 	memory@00000000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memory@0 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		device_type = "memory";
 		reg = <0x0 0x0 0x0 0x80000000>;
 	};

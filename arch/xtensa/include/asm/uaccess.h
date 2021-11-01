@@ -291,11 +291,15 @@ clear_user(void __user *addr, unsigned long size)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_ARCH_HAS_STRNCPY_FROM_USER
 =======
 #ifndef CONFIG_GENERIC_STRNCPY_FROM_USER
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_ARCH_HAS_STRNCPY_FROM_USER
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern long __strncpy_user(char *dst, const char __user *src, long count);
 
 static inline long

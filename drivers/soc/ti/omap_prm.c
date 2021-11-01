@@ -826,6 +826,9 @@ static int omap_reset_deassert(struct reset_controller_dev *rcdev,
 	spin_unlock_irqrestore(&reset->lock, flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* wait for the reset bit to clear */
 	ret = readl_relaxed_poll_timeout_atomic(reset->prm->base +
 						reset->prm->data->rstctrl,
@@ -834,6 +837,7 @@ static int omap_reset_deassert(struct reset_controller_dev *rcdev,
 	if (ret)
 		pr_err("%s: timedout waiting for %s:%lu\n", __func__,
 		       reset->prm->data->name, id);
+<<<<<<< HEAD
 
 	/* wait for the status to be set */
 	if (has_rstst) {
@@ -851,24 +855,27 @@ static int omap_reset_deassert(struct reset_controller_dev *rcdev,
 =======
 	if (!has_rstst)
 		goto exit;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* wait for the status to be set */
-	ret = readl_relaxed_poll_timeout_atomic(reset->prm->base +
+	if (has_rstst) {
+		ret = readl_relaxed_poll_timeout_atomic(reset->prm->base +
 						 reset->prm->data->rstst,
 						 v, v & BIT(st_bit), 1,
 						 OMAP_RESET_MAX_WAIT);
-	if (ret)
-		pr_err("%s: timedout waiting for %s:%lu\n", __func__,
-		       reset->prm->data->name, id);
+		if (ret)
+			pr_err("%s: timedout waiting for %s:%lu\n", __func__,
+			       reset->prm->data->name, id);
+	}
 
-exit:
-	if (reset->clkdm) {
-		/* At least dra7 iva needs a delay before clkdm idle */
-		if (has_rstst)
-			udelay(1);
+	if (reset->clkdm)
 		pdata->clkdm_allow_idle(reset->clkdm);
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }

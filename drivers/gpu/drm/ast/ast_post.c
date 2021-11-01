@@ -2029,6 +2029,9 @@ static bool ast_dram_init_2500(struct ast_private *ast)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ast_patch_ahb_2500(struct ast_private *ast)
 {
 	u32	data;
@@ -2063,8 +2066,11 @@ void ast_patch_ahb_2500(struct ast_private *ast)
 	ast_moutdwm(ast, 0x1e6e207c, 0x08000000);	/* clear fast reset */
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ast_post_chip_2500(struct drm_device *dev)
 {
 	struct ast_private *ast = to_ast_private(dev);
@@ -2072,6 +2078,7 @@ void ast_post_chip_2500(struct drm_device *dev)
 	u8 reg;
 
 	reg = ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xd0, 0xff);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if ((reg & AST_VRAM_INIT_STATUS_MASK) == 0) {/* vga only */
 		/* Clear bus lock condition */
@@ -2122,12 +2129,47 @@ void ast_post_chip_2500(struct drm_device *dev)
 		while (ast_read32(ast, 0x10000) != 0x1)
 			;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((reg & AST_VRAM_INIT_STATUS_MASK) == 0) {/* vga only */
+		/* Clear bus lock condition */
+		ast_patch_ahb_2500(ast);
+
+		/* Disable watchdog */
+		ast_moutdwm(ast, 0x1E78502C, 0x00000000);
+		ast_moutdwm(ast, 0x1E78504C, 0x00000000);
+
+		/*
+		 * Reset USB port to patch USB unknown device issue
+		 * SCU90 is Multi-function Pin Control #5
+		 *	[29]:= 1:Enable USB2.0 Host port#1 (that the mutually shared USB2.0 Hub
+		 *				port).
+		 * SCU94 is Multi-function Pin Control #6
+		 *	[14:13]:= 1x:USB2.0 Host2 controller
+		 * SCU70 is Hardware Strap reg
+		 *	[23]:= 1:CLKIN is 25MHz and USBCK1 = 24/48 MHz (determined by
+		 *				[18]: 0(24)/1(48) MHz)
+		 * SCU7C is Write clear reg to SCU70
+		 *	[23]:= write 1 and then SCU70[23] will be clear as 0b.
+		 */
+		ast_moutdwm(ast, 0x1E6E2090, 0x20000000);
+		ast_moutdwm(ast, 0x1E6E2094, 0x00004000);
+		if (ast_mindwm(ast, 0x1E6E2070) & 0x00800000) {
+			ast_moutdwm(ast, 0x1E6E207C, 0x00800000);
+			mdelay(100);
+			ast_moutdwm(ast, 0x1E6E2070, 0x00800000);
+		}
+		/* Modify eSPI reset pin */
+		temp = ast_mindwm(ast, 0x1E6E2070);
+		if (temp & 0x02000000)
+			ast_moutdwm(ast, 0x1E6E207C, 0x00004000);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Slow down CPU/AHB CLK in VGA only mode */
 		temp = ast_read32(ast, 0x12008);
 		temp |= 0x73;
 		ast_write32(ast, 0x12008, temp);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		/* Reset USB port to patch USB unknown device issue */
@@ -2143,6 +2185,8 @@ void ast_post_chip_2500(struct drm_device *dev)
 		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!ast_dram_init_2500(ast))
 			drm_err(dev, "DRAM init failed !\n");
 

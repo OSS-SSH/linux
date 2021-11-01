@@ -20,10 +20,14 @@ enum page_ext_flags {
 	PAGE_EXT_OWNER,
 	PAGE_EXT_OWNER_ALLOCATED,
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if defined(CONFIG_PAGE_IDLE_FLAG) && !defined(CONFIG_64BIT)
 =======
 #if defined(CONFIG_IDLE_PAGE_TRACKING) && !defined(CONFIG_64BIT)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_PAGE_IDLE_FLAG) && !defined(CONFIG_64BIT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	PAGE_EXT_YOUNG,
 	PAGE_EXT_IDLE,
 #endif

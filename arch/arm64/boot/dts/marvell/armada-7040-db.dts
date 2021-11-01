@@ -283,10 +283,14 @@
 	status = "okay";
 	/* Network PHY */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phy-mode = "10gbase-r";
 =======
 	phy-mode = "10gbase-kr";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy-mode = "10gbase-r";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Generic PHY, providing serdes lanes */
 	phys = <&cp0_comphy2 0>;
 

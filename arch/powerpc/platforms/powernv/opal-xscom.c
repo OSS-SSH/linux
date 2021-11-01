@@ -15,17 +15,24 @@
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/machdep.h>
 #include <asm/firmware.h>
 #include <asm/opal.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/prom.h>
 
 static u64 opal_scom_unmangle(u64 addr)
@@ -197,10 +204,14 @@ static int scom_debug_init(void)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	root = debugfs_create_dir("scom", arch_debugfs_dir);
 =======
 	root = debugfs_create_dir("scom", powerpc_debugfs_root);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	root = debugfs_create_dir("scom", arch_debugfs_dir);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!root)
 		return -1;
 

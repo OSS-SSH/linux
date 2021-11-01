@@ -6,10 +6,14 @@
 
 #include <linux/etherdevice.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/vringh.h>
 =======
 #include <linux/if_vlan.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/vringh.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/vdpa.h>
 #include <linux/mlx5/driver.h>
 
@@ -53,6 +57,9 @@ struct mlx5_vdpa_resources {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlx5_control_vq {
 	struct vhost_iotlb *iotlb;
 	/* spinlock to synchronize iommu table */
@@ -73,8 +80,11 @@ struct mlx5_ctrl_wq_ent {
 	struct mlx5_vdpa_dev *mvdev;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlx5_vdpa_dev {
 	struct vdpa_device vdev;
 	struct mlx5_core_dev *mdev;
@@ -84,6 +94,7 @@ struct mlx5_vdpa_dev {
 	u64 actual_features;
 	u8 status;
 	u32 max_vqs;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	u16 max_idx;
 	u32 generation;
@@ -96,6 +107,14 @@ struct mlx5_vdpa_dev {
 
 	struct mlx5_vdpa_mr mr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 max_idx;
+	u32 generation;
+
+	struct mlx5_vdpa_mr mr;
+	struct mlx5_control_vq cvq;
+	struct workqueue_struct *wq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int mlx5_vdpa_alloc_pd(struct mlx5_vdpa_dev *dev, u32 *pdn, u16 uid);
@@ -105,9 +124,13 @@ int mlx5_vdpa_create_tis(struct mlx5_vdpa_dev *mvdev, void *in, u32 *tisn);
 void mlx5_vdpa_destroy_tis(struct mlx5_vdpa_dev *mvdev, u32 tisn);
 int mlx5_vdpa_create_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 *rqtn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int mlx5_vdpa_modify_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 rqtn);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int mlx5_vdpa_modify_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 rqtn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void mlx5_vdpa_destroy_rqt(struct mlx5_vdpa_dev *mvdev, u32 rqtn);
 int mlx5_vdpa_create_tir(struct mlx5_vdpa_dev *mvdev, void *in, u32 *tirn);
 void mlx5_vdpa_destroy_tir(struct mlx5_vdpa_dev *mvdev, u32 tirn);

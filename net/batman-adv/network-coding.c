@@ -218,11 +218,17 @@ static void batadv_nc_node_release(struct kref *ref)
 static void batadv_nc_node_put(struct batadv_nc_node *nc_node)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!nc_node)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!nc_node)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&nc_node->refcount, batadv_nc_node_release);
 }
 
@@ -248,11 +254,17 @@ static void batadv_nc_path_release(struct kref *ref)
 static void batadv_nc_path_put(struct batadv_nc_path *nc_path)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!nc_path)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!nc_path)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&nc_path->refcount, batadv_nc_path_release);
 }
 
@@ -943,6 +955,7 @@ void batadv_nc_update_nc_node(struct batadv_priv *bat_priv,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_nc_node_put(in_nc_node);
 	batadv_nc_node_put(out_nc_node);
 =======
@@ -951,6 +964,10 @@ out:
 	if (out_nc_node)
 		batadv_nc_node_put(out_nc_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_nc_node_put(in_nc_node);
+	batadv_nc_node_put(out_nc_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1227,10 +1244,14 @@ static bool batadv_nc_code_packets(struct batadv_priv *bat_priv,
 	res = true;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	batadv_neigh_node_put(router_neigh);
 	batadv_neigh_node_put(router_coding);
 	batadv_neigh_ifinfo_put(router_neigh_ifinfo);
 	batadv_neigh_ifinfo_put(router_coding_ifinfo);
+<<<<<<< HEAD
 =======
 	if (router_neigh)
 		batadv_neigh_node_put(router_neigh);
@@ -1241,6 +1262,8 @@ out:
 	if (router_coding_ifinfo)
 		batadv_neigh_ifinfo_put(router_coding_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return res;
 }
 

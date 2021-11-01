@@ -173,6 +173,7 @@ static const struct snd_pcm_ops pxa2xx_ac97_pcm_ops = {
 	.close		= pxa2xx_ac97_pcm_close,
 	.hw_params	= pxa2xx_pcm_hw_params,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.prepare	= pxa2xx_ac97_pcm_prepare,
 	.trigger	= pxa2xx_pcm_trigger,
 	.pointer	= pxa2xx_pcm_pointer,
@@ -183,6 +184,11 @@ static const struct snd_pcm_ops pxa2xx_ac97_pcm_ops = {
 	.pointer	= pxa2xx_pcm_pointer,
 	.mmap		= pxa2xx_pcm_mmap,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.prepare	= pxa2xx_ac97_pcm_prepare,
+	.trigger	= pxa2xx_pcm_trigger,
+	.pointer	= pxa2xx_pcm_pointer,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 
@@ -190,24 +196,32 @@ static int pxa2xx_ac97_pcm_new(struct snd_card *card)
 {
 	struct snd_pcm *pcm;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	int stream, ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = snd_pcm_new(card, "PXA2xx-PCM", 0, 1, 1, &pcm);
 	if (ret)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pcm->private_free = pxa2xx_pcm_free_dma_buffers;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = dma_coerce_mask_and_coherent(card->dev, DMA_BIT_MASK(32));
 	if (ret)
 		goto out;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &pxa2xx_ac97_pcm_ops);
 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, &pxa2xx_ac97_pcm_ops);
@@ -223,6 +237,11 @@ static int pxa2xx_ac97_pcm_new(struct snd_card *card)
 	snd_pcm_set_ops(pcm, stream, &pxa2xx_ac97_pcm_ops);
 	ret = pxa2xx_pcm_preallocate_dma_buffer(pcm, stream);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &pxa2xx_ac97_pcm_ops);
+	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, &pxa2xx_ac97_pcm_ops);
+	ret = pxa2xx_pcm_preallocate_dma_buffer(pcm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto out;
 

@@ -595,10 +595,14 @@ void gfs2_log_reserve(struct gfs2_sbd *sdp, struct gfs2_trans *tr,
 	unsigned int blks = tr->tr_reserved;
 	unsigned int revokes = tr->tr_revokes;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int revoke_blks;
 =======
 	unsigned int revoke_blks = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int revoke_blks;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*extra_revokes = 0;
 	if (revokes) {

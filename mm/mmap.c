@@ -149,10 +149,13 @@ static void __remove_shared_vm_struct(struct vm_area_struct *vma,
 		struct file *file, struct address_space *mapping)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (vma->vm_flags & VM_DENYWRITE)
 		allow_write_access(file);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vma->vm_flags & VM_SHARED)
 		mapping_unmap_writable(mapping);
 
@@ -538,9 +541,13 @@ static int find_vma_links(struct mm_struct *mm, unsigned long addr,
 	struct rb_node **__rb_link, *__rb_parent, *rb_prev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mmap_assert_locked(mm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mmap_assert_locked(mm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__rb_link = &mm->mm_rb.rb_node;
 	rb_prev = __rb_parent = NULL;
 
@@ -674,10 +681,13 @@ static void __vma_link_file(struct vm_area_struct *vma)
 		struct address_space *mapping = file->f_mapping;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (vma->vm_flags & VM_DENYWRITE)
 			put_write_access(file_inode(file));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (vma->vm_flags & VM_SHARED)
 			mapping_allow_writable(mapping);
 
@@ -1528,6 +1538,7 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
 				return -EACCES;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			/*
 			 * Make sure there are no mandatory locks on the file.
@@ -1536,6 +1547,8 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
 				return -EAGAIN;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			vm_flags |= VM_SHARED | VM_MAYSHARE;
 			if (!(file->f_mode & FMODE_WRITE))
 				vm_flags &= ~(VM_MAYWRITE | VM_SHARED);
@@ -1644,10 +1657,13 @@ unsigned long ksys_mmap_pgoff(unsigned long addr, unsigned long len,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	flags &= ~MAP_DENYWRITE;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	retval = vm_mmap_pgoff(file, addr, len, prot, flags, pgoff);
 out_fput:
 	if (file)
@@ -1805,6 +1821,7 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
 
 	if (file) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (vm_flags & VM_SHARED) {
 			error = mapping_map_writable(file->f_mapping);
 			if (error)
@@ -1817,18 +1834,23 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
 			if (error)
 				goto free_vma;
 		}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (vm_flags & VM_SHARED) {
 			error = mapping_map_writable(file->f_mapping);
 			if (error)
-				goto allow_write_and_free_vma;
+				goto free_vma;
 		}
 
+<<<<<<< HEAD
 		/* ->mmap() can change vma->vm_file, but must guarantee that
 		 * vma_link() below can deny write-access if VM_DENYWRITE is set
 		 * and map writably if VM_SHARED is set. This usually means the
 		 * new file must not have been exposed to user-space, yet.
 		 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vma->vm_file = get_file(file);
 		error = call_mmap(file, vma);
 		if (error)
@@ -1886,6 +1908,7 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
 	vma_link(mm, vma, prev, rb_link, rb_parent);
 	/* Once vma denies write, undo our temporary denial count */
 <<<<<<< HEAD
+<<<<<<< HEAD
 unmap_writable:
 	if (file && vm_flags & VM_SHARED)
 		mapping_unmap_writable(file->f_mapping);
@@ -1898,6 +1921,11 @@ unmap_writable:
 			allow_write_access(file);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+unmap_writable:
+	if (file && vm_flags & VM_SHARED)
+		mapping_unmap_writable(file->f_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	file = vma->vm_file;
 out:
 	perf_event_mmap(vma);
@@ -1938,11 +1966,14 @@ unmap_and_free_vma:
 	if (vm_flags & VM_SHARED)
 		mapping_unmap_writable(file->f_mapping);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 allow_write_and_free_vma:
 	if (vm_flags & VM_DENYWRITE)
 		allow_write_access(file);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_vma:
 	vm_area_free(vma);
 unacct_error:
@@ -2338,9 +2369,13 @@ struct vm_area_struct *find_vma(struct mm_struct *mm, unsigned long addr)
 	struct vm_area_struct *vma;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mmap_assert_locked(mm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mmap_assert_locked(mm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check the cache first. */
 	vma = vmacache_find(mm, addr);
 	if (likely(vma))
@@ -3031,20 +3066,27 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
 		return -EINTR;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vma = vma_lookup(mm, start);
 =======
 	vma = find_vma(mm, start);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vma = vma_lookup(mm, start);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!vma || !(vma->vm_flags & VM_SHARED))
 		goto out;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (start < vma->vm_start)
 		goto out;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (start + size > vma->vm_end) {
 		struct vm_area_struct *next;
 

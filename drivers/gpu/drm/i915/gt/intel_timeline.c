@@ -128,6 +128,9 @@ static void intel_timeline_fini(struct rcu_head *rcu)
 	i915_vma_put(timeline->hwsp_ggtt);
 	i915_active_fini(&timeline->active);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * A small race exists between intel_gt_retire_requests_timeout and
@@ -137,8 +140,11 @@ static void intel_timeline_fini(struct rcu_head *rcu)
 	 */
 	i915_syncmap_free(&timeline->sync);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(timeline);
 }
 

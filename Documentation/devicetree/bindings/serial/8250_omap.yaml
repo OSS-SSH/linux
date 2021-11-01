@@ -80,9 +80,13 @@ properties:
   clock-frequency: true
   current-speed: true
 <<<<<<< HEAD
+<<<<<<< HEAD
   overrun-throttle-ms: true
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  overrun-throttle-ms: true
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 required:
   - compatible
@@ -95,17 +99,23 @@ if:
   properties:
     compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       contains:
         enum:
           - ti,omap2-uart
           - ti,omap3-uart
           - ti,omap4-uart
+<<<<<<< HEAD
 =======
       oneOf:
         - const: ti,omap2-uart
         - const: ti,omap3-uart
         - const: ti,omap4-uart
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 then:
   properties:

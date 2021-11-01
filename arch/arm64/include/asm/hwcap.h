@@ -19,10 +19,14 @@
 #define COMPAT_HWCAP_JAVA	(1 << 8)
 #define COMPAT_HWCAP_IWMMXT	(1 << 9)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define COMPAT_HWCAP_CRUNCH	(1 << 10) /* Obsolete */
 =======
 #define COMPAT_HWCAP_CRUNCH	(1 << 10)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define COMPAT_HWCAP_CRUNCH	(1 << 10) /* Obsolete */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define COMPAT_HWCAP_THUMBEE	(1 << 11)
 #define COMPAT_HWCAP_NEON	(1 << 12)
 #define COMPAT_HWCAP_VFPv3	(1 << 13)

@@ -70,6 +70,7 @@ early userspace image can be built by an unprivileged user.
 As a technical note, when directories and files are specified, the
 entire CONFIG_INITRAMFS_SOURCE is passed to
 <<<<<<< HEAD
+<<<<<<< HEAD
 usr/gen_initramfs.sh.  This means that CONFIG_INITRAMFS_SOURCE
 can really be interpreted as any legal argument to
 gen_initramfs.sh.  If a directory is specified as an argument then
@@ -78,21 +79,32 @@ usr/gen_init_cpio file directives are output.  If a directory is
 specified as an argument to usr/gen_initramfs.sh then the
 =======
 usr/gen_initramfs_list.sh.  This means that CONFIG_INITRAMFS_SOURCE
+=======
+usr/gen_initramfs.sh.  This means that CONFIG_INITRAMFS_SOURCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 can really be interpreted as any legal argument to
-gen_initramfs_list.sh.  If a directory is specified as an argument then
+gen_initramfs.sh.  If a directory is specified as an argument then
 the contents are scanned, uid/gid translation is performed, and
 usr/gen_init_cpio file directives are output.  If a directory is
+<<<<<<< HEAD
 specified as an argument to usr/gen_initramfs_list.sh then the
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+specified as an argument to usr/gen_initramfs.sh then the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 contents of the file are simply copied to the output.  All of the output
 directives from directory scanning and file contents copying are
 processed by usr/gen_init_cpio.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 See also 'usr/gen_initramfs.sh -h'.
 =======
 See also 'usr/gen_initramfs_list.sh -h'.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+See also 'usr/gen_initramfs.sh -h'.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Where's this all leading?
 =========================

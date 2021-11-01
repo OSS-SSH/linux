@@ -486,19 +486,28 @@ static int ehrpwm_pwm_remove(struct platform_device *pdev)
 	struct ehrpwm_pwm_chip *pc = platform_get_drvdata(pdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pwmchip_remove(&pc->chip);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pwmchip_remove(&pc->chip);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clk_unprepare(pc->tbclk);
 
 	pm_runtime_disable(&pdev->dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return pwmchip_remove(&pc->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP

@@ -1049,6 +1049,7 @@ static SIMPLE_DEV_PM_OPS(snd_via82xx_pm, snd_via82xx_suspend, snd_via82xx_resume
 #endif /* CONFIG_PM_SLEEP */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void snd_via82xx_free(struct snd_card *card)
 {
 	struct via82xx_modem *chip = card->private_data;
@@ -1059,14 +1060,17 @@ static void snd_via82xx_free(struct snd_card *card)
 		snd_via82xx_channel_reset(chip, &chip->devs[i]);
 =======
 static int snd_via82xx_free(struct via82xx_modem *chip)
+=======
+static void snd_via82xx_free(struct snd_card *card)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	struct via82xx_modem *chip = card->private_data;
 	unsigned int i;
 
-	if (chip->irq < 0)
-		goto __end_hw;
 	/* disable interrupts */
 	for (i = 0; i < chip->num_devs; i++)
 		snd_via82xx_channel_reset(chip, &chip->devs[i]);
+<<<<<<< HEAD
 
       __end_hw:
 	if (chip->irq >= 0)
@@ -1082,12 +1086,15 @@ static int snd_via82xx_dev_free(struct snd_device *device)
 	struct via82xx_modem *chip = device->device_data;
 	return snd_via82xx_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_via82xx_create(struct snd_card *card,
 			      struct pci_dev *pci,
 			      int chip_type,
 			      int revision,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			      unsigned int ac97_clock)
 {
@@ -1101,17 +1108,18 @@ static int snd_via82xx_create(struct snd_card *card,
 =======
 			      unsigned int ac97_clock,
 			      struct via82xx_modem **r_via)
+=======
+			      unsigned int ac97_clock)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct via82xx_modem *chip;
+	struct via82xx_modem *chip = card->private_data;
 	int err;
-	static const struct snd_device_ops ops = {
-		.dev_free =	snd_via82xx_dev_free,
-        };
 
-	err = pci_enable_device(pci);
+	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
 	if (!chip) {
 		pci_disable_device(pci);
@@ -1119,12 +1127,15 @@ static int snd_via82xx_create(struct snd_card *card,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&chip->reg_lock);
 	chip->card = card;
 	chip->pci = pci;
 	chip->irq = -1;
 
 	err = pci_request_regions(pci, card->driver);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err < 0)
 		return err;
@@ -1136,26 +1147,36 @@ static int snd_via82xx_create(struct snd_card *card,
 	if (err < 0) {
 		kfree(chip);
 		pci_disable_device(pci);
+=======
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 	chip->port = pci_resource_start(pci, 0);
-	if (request_irq(pci->irq, snd_via82xx_interrupt, IRQF_SHARED,
-			KBUILD_MODNAME, chip)) {
+	if (devm_request_irq(&pci->dev, pci->irq, snd_via82xx_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+<<<<<<< HEAD
 		snd_via82xx_free(chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	card->private_free = snd_via82xx_free;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	card->private_free = snd_via82xx_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ac97_clock >= 8000 && ac97_clock <= 48000)
 		chip->ac97_clock = ac97_clock;
 
 	err = snd_via82xx_chip_init(chip);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err < 0)
 		return err;
@@ -1171,16 +1192,23 @@ static int snd_via82xx_create(struct snd_card *card,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The 8233 ac97 controller does not implement the master bit
 	 * in the pci command register. IMHO this is a violation of the PCI spec.
 	 * We call pci_set_master here because it does not hurt. */
 	pci_set_master(pci);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	*r_via = chip;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1195,6 +1223,7 @@ static int snd_via82xx_probe(struct pci_dev *pci,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index, id, THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
@@ -1205,6 +1234,13 @@ static int snd_via82xx_probe(struct pci_dev *pci,
 	if (err < 0)
 		return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(&pci->dev, index, id, THIS_MODULE,
+				sizeof(*chip), &card);
+	if (err < 0)
+		return err;
+	chip = card->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	card_type = pci_id->driver_data;
 	switch (card_type) {
@@ -1214,6 +1250,7 @@ static int snd_via82xx_probe(struct pci_dev *pci,
 		break;
 	default:
 		dev_err(card->dev, "invalid card type %d\n", card_type);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return -EINVAL;
 	}
@@ -1232,21 +1269,27 @@ static int snd_via82xx_probe(struct pci_dev *pci,
 =======
 		err = -EINVAL;
 		goto __error;
+=======
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 		
 	err = snd_via82xx_create(card, pci, chip_type, pci->revision,
-				 ac97_clock, &chip);
+				 ac97_clock);
 	if (err < 0)
-		goto __error;
-	card->private_data = chip;
+		return err;
 	err = snd_via82xx_mixer_new(chip);
 	if (err < 0)
-		goto __error;
+		return err;
 
 	err = snd_via686_pcm_new(chip);
 	if (err < 0)
+<<<<<<< HEAD
 		goto __error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* disable interrupts */
 	for (i = 0; i < chip->num_devs; i++)
@@ -1259,6 +1302,7 @@ static int snd_via82xx_probe(struct pci_dev *pci,
 
 	err = snd_card_register(card);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 	pci_set_drvdata(pci, card);
@@ -1266,10 +1310,13 @@ static int snd_via82xx_probe(struct pci_dev *pci,
 =======
 	if (err < 0) {
 		snd_card_free(card);
+=======
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 	pci_set_drvdata(pci, card);
 	return 0;
+<<<<<<< HEAD
 
  __error:
 	snd_card_free(card);
@@ -1280,6 +1327,8 @@ static void snd_via82xx_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct pci_driver via82xx_modem_driver = {
@@ -1287,9 +1336,12 @@ static struct pci_driver via82xx_modem_driver = {
 	.id_table = snd_via82xx_modem_ids,
 	.probe = snd_via82xx_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_via82xx_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_VIA82XX_PM_OPS,
 	},

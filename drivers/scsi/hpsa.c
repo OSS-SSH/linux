@@ -5687,10 +5687,14 @@ static int hpsa_scsi_queue_command(struct Scsi_Host *sh, struct scsi_cmnd *cmd)
 	h = sdev_to_hba(cmd->device);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUG_ON(scsi_cmd_to_rq(cmd)->tag < 0);
 =======
 	BUG_ON(cmd->request->tag < 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUG_ON(scsi_cmd_to_rq(cmd)->tag < 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev = cmd->device->hostdata;
 	if (!dev) {
@@ -5734,10 +5738,14 @@ static int hpsa_scsi_queue_command(struct Scsi_Host *sh, struct scsi_cmnd *cmd)
 	 */
 	if (likely(cmd->retries == 0 &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 			!blk_rq_is_passthrough(scsi_cmd_to_rq(cmd)) &&
 =======
 			!blk_rq_is_passthrough(cmd->request) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			!blk_rq_is_passthrough(scsi_cmd_to_rq(cmd)) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			h->acciopath_status)) {
 		/* Submit with the retry_pending flag unset. */
 		rc = hpsa_ioaccel_submit(h, c, cmd, false);
@@ -5903,10 +5911,14 @@ static int hpsa_scsi_add_host(struct ctlr_info *h)
 static int hpsa_get_cmd_index(struct scsi_cmnd *scmd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int idx = scsi_cmd_to_rq(scmd)->tag;
 =======
 	int idx = scmd->request->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int idx = scsi_cmd_to_rq(scmd)->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (idx < 0)
 		return idx;

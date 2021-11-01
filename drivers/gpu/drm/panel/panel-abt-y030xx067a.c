@@ -147,12 +147,17 @@ static const struct reg_sequence y030xx067a_init_sequence[] = {
 	{ 0x0a, REG0A_SUB_BRIGHT_B(0x20) },
 	{ 0x0b, REG0B_HD_FREERUN | REG0B_VD_FREERUN },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ 0x0c, REG0C_CONTRAST_R(0x00) },
 	{ 0x0d, REG0D_CONTRAST_G(0x00) },
 =======
 	{ 0x0c, REG0C_CONTRAST_R(0x10) },
 	{ 0x0d, REG0D_CONTRAST_G(0x10) },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ 0x0c, REG0C_CONTRAST_R(0x00) },
+	{ 0x0d, REG0D_CONTRAST_G(0x00) },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ 0x0e, REG0E_CONTRAST_B(0x10) },
 	{ 0x0f, 0 },
 	{ 0x10, REG10_BRIGHT(0x7f) },

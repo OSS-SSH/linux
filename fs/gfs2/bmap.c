@@ -1003,10 +1003,14 @@ static void gfs2_write_unlock(struct inode *inode)
 
 static int gfs2_iomap_page_prepare(struct inode *inode, loff_t pos,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   unsigned len)
 =======
 				   unsigned len, struct iomap *iomap)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   unsigned len)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int blockmask = i_blocksize(inode) - 1;
 	struct gfs2_sbd *sdp = GFS2_SB(inode);
@@ -1018,11 +1022,15 @@ static int gfs2_iomap_page_prepare(struct inode *inode, loff_t pos,
 
 static void gfs2_iomap_page_done(struct inode *inode, loff_t pos,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 unsigned copied, struct page *page)
 =======
 				 unsigned copied, struct page *page,
 				 struct iomap *iomap)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 unsigned copied, struct page *page)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct gfs2_trans *tr = current->journal_info;
 	struct gfs2_inode *ip = GFS2_I(inode);

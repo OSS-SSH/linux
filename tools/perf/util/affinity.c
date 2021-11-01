@@ -26,6 +26,7 @@ int affinity__setup(struct affinity *a)
 	int cpu_set_size = get_cpu_set_size();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	a->orig_cpus = bitmap_zalloc(cpu_set_size * 8);
 	if (!a->orig_cpus)
 		return -1;
@@ -38,6 +39,13 @@ int affinity__setup(struct affinity *a)
 	sched_getaffinity(0, cpu_set_size, (cpu_set_t *)a->orig_cpus);
 	a->sched_cpus = bitmap_alloc(cpu_set_size * 8);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	a->orig_cpus = bitmap_zalloc(cpu_set_size * 8);
+	if (!a->orig_cpus)
+		return -1;
+	sched_getaffinity(0, cpu_set_size, (cpu_set_t *)a->orig_cpus);
+	a->sched_cpus = bitmap_zalloc(cpu_set_size * 8);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!a->sched_cpus) {
 		zfree(&a->orig_cpus);
 		return -1;

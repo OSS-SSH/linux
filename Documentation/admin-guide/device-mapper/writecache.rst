@@ -79,6 +79,9 @@ Status:
 3. the number of free blocks
 4. the number of blocks under writeback
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 5. the number of read requests
 6. the number of read requests that hit the cache
 7. the number of write requests
@@ -89,6 +92,7 @@ Status:
 12. the number of write requests that are blocked on the freelist
 13. the number of flush requests
 14. the number of discard requests
+<<<<<<< HEAD
 
 Messages:
 	flush
@@ -97,14 +101,20 @@ Messages:
 	flush_on_suspend
 		Flush the cache device on next suspend. Use this message
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Messages:
 	flush
-		flush the cache device. The message returns successfully
+		Flush the cache device. The message returns successfully
 		if the cache device was flushed without an error
 	flush_on_suspend
+<<<<<<< HEAD
 		flush the cache device on next suspend. Use this message
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		Flush the cache device on next suspend. Use this message
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		when you are going to remove the cache device. The proper
 		sequence for removing the cache device is:
 
@@ -119,7 +129,12 @@ Messages:
 	cleaner
 		See above "cleaner" constructor documentation.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clear_stats
 		Clear the statistics that are reported on the status line
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clear_stats
+		Clear the statistics that are reported on the status line
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

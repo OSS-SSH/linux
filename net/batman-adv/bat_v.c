@@ -107,11 +107,15 @@ static void batadv_v_iface_update_mac(struct batadv_hard_iface *hard_iface)
 	batadv_v_primary_iface_set(hard_iface);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_put(primary_if);
 =======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -371,11 +375,15 @@ batadv_v_orig_dump_entry(struct sk_buff *msg, u32 portid, u32 seq,
 
  out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_neigh_node_put(neigh_node_best);
 =======
 	if (neigh_node_best)
 		batadv_neigh_node_put(neigh_node_best);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_neigh_node_put(neigh_node_best);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*sub_s = 0;
 	return 0;
@@ -577,6 +585,7 @@ static int batadv_v_gw_throughput_get(struct batadv_gw_node *gw_node, u32 *bw)
 	ret = 0;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_neigh_node_put(router);
 	batadv_neigh_ifinfo_put(router_ifinfo);
 =======
@@ -585,6 +594,10 @@ out:
 	if (router_ifinfo)
 		batadv_neigh_ifinfo_put(router_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_neigh_node_put(router);
+	batadv_neigh_ifinfo_put(router_ifinfo);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -613,11 +626,15 @@ batadv_v_gw_get_best_gw_node(struct batadv_priv *bat_priv)
 			goto next;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		batadv_gw_node_put(curr_gw);
 =======
 		if (curr_gw)
 			batadv_gw_node_put(curr_gw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		batadv_gw_node_put(curr_gw);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		curr_gw = gw_node;
 		kref_get(&curr_gw->refcount);
@@ -680,6 +697,7 @@ static bool batadv_v_gw_is_eligible(struct batadv_priv *bat_priv,
 	ret = true;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_gw_node_put(curr_gw);
 	batadv_gw_node_put(orig_gw);
 =======
@@ -688,6 +706,10 @@ out:
 	if (orig_gw)
 		batadv_gw_node_put(orig_gw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_gw_node_put(curr_gw);
+	batadv_gw_node_put(orig_gw);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -787,6 +809,7 @@ static int batadv_v_gw_dump_entry(struct sk_buff *msg, u32 portid,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_gw_node_put(curr_gw);
 	batadv_neigh_ifinfo_put(router_ifinfo);
 	batadv_neigh_node_put(router);
@@ -798,6 +821,11 @@ out:
 	if (router)
 		batadv_neigh_node_put(router);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_gw_node_put(curr_gw);
+	batadv_neigh_ifinfo_put(router_ifinfo);
+	batadv_neigh_node_put(router);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

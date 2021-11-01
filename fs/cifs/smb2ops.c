@@ -558,12 +558,17 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
 	while (bytes_left >= sizeof(*p)) {
 		info->speed = le64_to_cpu(p->LinkSpeed);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		info->rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
 		info->rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE) ? 1 : 0;
 =======
 		info->rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE);
 		info->rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		info->rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
+		info->rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE) ? 1 : 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		cifs_dbg(FYI, "%s: adding iface %zu\n", __func__, *iface_count);
 		cifs_dbg(FYI, "%s: speed %zu bps\n", __func__, info->speed);
@@ -695,6 +700,9 @@ smb2_close_cached_fid(struct kref *ref)
 		SMB2_close(0, cfid->tcon, cfid->fid->persistent_fid,
 			   cfid->fid->volatile_fid);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -708,6 +716,7 @@ smb2_close_cached_fid(struct kref *ref)
 	if (cfid->dentry) {
 		dput(cfid->dentry);
 		cfid->dentry = NULL;
+<<<<<<< HEAD
 =======
 		cfid->is_valid = false;
 		cfid->file_all_info_is_valid = false;
@@ -717,6 +726,8 @@ smb2_close_cached_fid(struct kref *ref)
 			cfid->dentry = NULL;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -2932,10 +2943,15 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
 		spin_lock(&cifs_tcp_ses_lock);
 		tcon->tc_count--;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* tc_count can never go negative */
 		WARN_ON(tcon->tc_count < 0);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* tc_count can never go negative */
+		WARN_ON(tcon->tc_count < 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_unlock(&cifs_tcp_ses_lock);
 	}
 	kfree(utf16_path);
@@ -3615,9 +3631,13 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_lock(inode->i_mapping);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We implement the punch hole through ioctl, so we need remove the page
 	 * caches first, otherwise the data may be inconsistent with the server.
@@ -3636,9 +3656,13 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
 			CIFSMaxBufSize, NULL, NULL);
 	free_xid(xid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_unlock(inode->i_mapping);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_unlock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -3651,9 +3675,13 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
 	struct cifs_io_parms io_parms = {0};
 	int nbytes;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int rc = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int rc = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct kvec iov[2];
 
 	io_parms.netfid = cfile->fid.netfid;
@@ -3661,6 +3689,7 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
 	io_parms.tcon = tcon;
 	io_parms.persistent_fid = cfile->fid.persistent_fid;
 	io_parms.volatile_fid = cfile->fid.volatile_fid;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	while (len) {
@@ -3690,6 +3719,27 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
 	iov[1].iov_len = io_parms.length;
 	return SMB2_write(xid, &io_parms, &nbytes, iov, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	while (len) {
+		io_parms.offset = off;
+		io_parms.length = len;
+		if (io_parms.length > SMB2_MAX_BUFFER_SIZE)
+			io_parms.length = SMB2_MAX_BUFFER_SIZE;
+		/* iov[0] is reserved for smb header */
+		iov[1].iov_base = buf;
+		iov[1].iov_len = io_parms.length;
+		rc = SMB2_write(xid, &io_parms, &nbytes, iov, 1);
+		if (rc)
+			break;
+		if (nbytes > len)
+			return -EINVAL;
+		buf += nbytes;
+		off += nbytes;
+		len -= nbytes;
+	}
+	return rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int smb3_simple_fallocate_range(unsigned int xid,
@@ -3714,6 +3764,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
 	if (rc)
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * It is already all allocated
@@ -3721,6 +3772,8 @@ static int smb3_simple_fallocate_range(unsigned int xid,
 	if (out_data_len == 0)
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	buf = kzalloc(1024 * 1024, GFP_KERNEL);
 	if (buf == NULL) {
@@ -3844,6 +3897,9 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (keep_size == true) {
 		/*
 		 * We can not preallocate pages beyond the end of the file
@@ -3862,8 +3918,11 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((keep_size == true) || (i_size_read(inode) >= off + len)) {
 		/*
 		 * At this point, we are trying to fallocate an internal

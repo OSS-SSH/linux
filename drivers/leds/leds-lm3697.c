@@ -3,6 +3,7 @@
 // Copyright (C) 2018 Texas Instruments Incorporated - https://www.ti.com/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/bits.h>
 #include <linux/gpio/consumer.h>
 #include <linux/i2c.h>
@@ -14,12 +15,22 @@
 #include <linux/types.h>
 
 =======
+=======
+#include <linux/bits.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/gpio/consumer.h>
 #include <linux/i2c.h>
-#include <linux/of.h>
-#include <linux/of_gpio.h>
+#include <linux/mod_devicetable.h>
+#include <linux/module.h>
+#include <linux/property.h>
+#include <linux/regmap.h>
 #include <linux/regulator/consumer.h>
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/types.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/leds-ti-lmu-common.h>
 
 #define LM3697_REV			0x0
@@ -235,9 +246,12 @@ static int lm3697_probe_dt(struct lm3697 *priv)
 		if (ret) {
 			dev_err(dev, "reg property missing\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			fwnode_handle_put(child);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto child_out;
 		}
 
@@ -245,9 +259,12 @@ static int lm3697_probe_dt(struct lm3697 *priv)
 			dev_err(dev, "reg property is invalid\n");
 			ret = -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			fwnode_handle_put(child);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto child_out;
 		}
 
@@ -279,9 +296,12 @@ static int lm3697_probe_dt(struct lm3697 *priv)
 		if (ret) {
 			dev_err(dev, "led-sources property missing\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			fwnode_handle_put(child);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto child_out;
 		}
 
@@ -307,15 +327,19 @@ static int lm3697_probe_dt(struct lm3697 *priv)
 		if (ret) {
 			dev_err(dev, "led register err: %d\n", ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			fwnode_handle_put(child);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto child_out;
 		}
 
 		i++;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return ret;
 
@@ -324,6 +348,12 @@ child_out:
 =======
 child_out:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+
+child_out:
+	fwnode_handle_put(child);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

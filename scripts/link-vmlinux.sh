@@ -150,6 +150,7 @@ objtool_link()
 vmlinux_link()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	local output=${1}
 	local objs
 	local libs
@@ -163,6 +164,14 @@ vmlinux_link()
 	local strip_debug
 	local map_option
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	local output=${1}
+	local objs
+	local libs
+	local ld
+	local ldflags
+	local ldlibs
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info LD ${output}
 
@@ -170,6 +179,9 @@ vmlinux_link()
 	shift
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if [ -n "${CONFIG_LTO_CLANG}" ]; then
 		# Use vmlinux.o instead of performing the slow LTO link again.
 		objs=vmlinux.o
@@ -193,6 +205,7 @@ vmlinux_link()
 
 	ldflags="${ldflags} ${wl}--script=${objtree}/${KBUILD_LDS}"
 
+<<<<<<< HEAD
 	# The kallsyms linking does not need debug symbols included.
 	if [ "$output" != "${output#.tmp_vmlinux.kallsyms}" ] ; then
 		ldflags="${ldflags} ${wl}--strip-debug"
@@ -207,15 +220,18 @@ vmlinux_link()
 		${wl}--start-group ${libs} ${wl}--end-group		\
 		$@ ${ldlibs}
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	# The kallsyms linking does not need debug symbols included.
 	if [ "$output" != "${output#.tmp_vmlinux.kallsyms}" ] ; then
-		strip_debug=-Wl,--strip-debug
+		ldflags="${ldflags} ${wl}--strip-debug"
 	fi
 
 	if [ -n "${CONFIG_VMLINUX_MAP}" ]; then
-		map_option="-Map=${output}.map"
+		ldflags="${ldflags} ${wl}-Map=${output}.map"
 	fi
 
+<<<<<<< HEAD
 	if [ "${SRCARCH}" != "um" ]; then
 		if [ -n "${CONFIG_LTO_CLANG}" ]; then
 			# Use vmlinux.o instead of performing the slow LTO
@@ -258,6 +274,12 @@ vmlinux_link()
 		rm -f linux
 	fi
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	${ld} ${ldflags} -o ${output}					\
+		${wl}--whole-archive ${objs} ${wl}--no-whole-archive	\
+		${wl}--start-group ${libs} ${wl}--end-group		\
+		$@ ${ldlibs}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 # generate .BTF typeinfo from DWARF debuginfo

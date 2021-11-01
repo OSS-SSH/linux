@@ -59,6 +59,7 @@
 
 					/* GPADC channels */
 <<<<<<< HEAD
+<<<<<<< HEAD
 					bat_ctrl: channel@1 {
 						reg = <0x01>;
 					};
@@ -101,46 +102,53 @@
 					usb_id: channel@e {
 =======
 					bat_ctrl: channel@01 {
+=======
+					bat_ctrl: channel@1 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						reg = <0x01>;
 					};
-					btemp_ball: channel@02 {
+					btemp_ball: channel@2 {
 						reg = <0x02>;
 					};
-					main_charger_v: channel@03 {
+					main_charger_v: channel@3 {
 						reg = <0x03>;
 					};
-					acc_detect1: channel@04 {
+					acc_detect1: channel@4 {
 						reg = <0x04>;
 					};
-					acc_detect2: channel@05 {
+					acc_detect2: channel@5 {
 						reg = <0x05>;
 					};
-					adc_aux1: channel@06 {
+					adc_aux1: channel@6 {
 						reg = <0x06>;
 					};
-					adc_aux2: channel@07 {
+					adc_aux2: channel@7 {
 						reg = <0x07>;
 					};
-					main_batt_v: channel@08 {
+					main_batt_v: channel@8 {
 						reg = <0x08>;
 					};
-					vbus_v: channel@09 {
+					vbus_v: channel@9 {
 						reg = <0x09>;
 					};
-					main_charger_c: channel@0a {
+					main_charger_c: channel@a {
 						reg = <0x0a>;
 					};
-					usb_charger_c: channel@0b {
+					usb_charger_c: channel@b {
 						reg = <0x0b>;
 					};
-					bk_bat_v: channel@0c {
+					bk_bat_v: channel@c {
 						reg = <0x0c>;
 					};
-					die_temp: channel@0d {
+					die_temp: channel@d {
 						reg = <0x0d>;
 					};
+<<<<<<< HEAD
 					usb_id: channel@0e {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					usb_id: channel@e {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						reg = <0x0e>;
 					};
 					xtal_temp: channel@12 {
@@ -261,10 +269,14 @@
 				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				ab8500_usb: ab8500_usb {
 =======
 				ab8500_usb {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				ab8500_usb: ab8500_usb {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					compatible = "stericsson,ab8500-usb";
 					interrupts = <90 IRQ_TYPE_LEVEL_HIGH>,
 						     <96 IRQ_TYPE_LEVEL_HIGH>,
@@ -286,9 +298,13 @@
 					clocks = <&prcmu_clk PRCMU_SYSCLK>;
 					clock-names = "sysclk";
 <<<<<<< HEAD
+<<<<<<< HEAD
 					#phy-cells = <0>;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					#phy-cells = <0>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				};
 
 				ab8500-ponkey {
@@ -438,12 +454,18 @@
 			};
 		};
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		usb_per5@a03e0000 {
 			phys = <&ab8500_usb>;
 			phy-names = "usb";
 		};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };

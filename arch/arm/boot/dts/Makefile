@@ -75,10 +75,15 @@ dtb-$(CONFIG_SOC_SAM_V7) += \
 	at91-sama5d4ek.dtb \
 	at91-vinco.dtb
 <<<<<<< HEAD
+<<<<<<< HEAD
 dtb-$(CONFIG_SOC_SAMA7G5) += \
 	at91-sama7g5ek.dtb
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dtb-$(CONFIG_SOC_SAMA7G5) += \
+	at91-sama7g5ek.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_AXXIA) += \
 	axm5516-amarillo.dtb
 dtb-$(CONFIG_ARCH_BCM2835) += \
@@ -247,6 +252,7 @@ dtb-$(CONFIG_ARCH_INTEGRATOR) += \
 dtb-$(CONFIG_ARCH_IXP4XX) += \
 	intel-ixp42x-linksys-nslu2.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel-ixp42x-linksys-wrv54g.dtb \
 	intel-ixp42x-freecom-fsg-3.dtb \
 	intel-ixp42x-welltech-epbx100.dtb \
@@ -265,6 +271,22 @@ dtb-$(CONFIG_ARCH_IXP4XX) += \
 	intel-ixp42x-welltech-epbx100.dtb \
 	intel-ixp43x-gateworks-gw2358.dtb
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel-ixp42x-linksys-wrv54g.dtb \
+	intel-ixp42x-freecom-fsg-3.dtb \
+	intel-ixp42x-welltech-epbx100.dtb \
+	intel-ixp42x-ixdp425.dtb \
+	intel-ixp43x-kixrp435.dtb \
+	intel-ixp46x-ixdp465.dtb \
+	intel-ixp42x-adi-coyote.dtb \
+	intel-ixp42x-ixdpg425.dtb \
+	intel-ixp42x-iomega-nas100d.dtb \
+	intel-ixp42x-dlink-dsm-g600.dtb \
+	intel-ixp42x-gateworks-gw2348.dtb \
+	intel-ixp43x-gateworks-gw2358.dtb \
+	intel-ixp42x-netgear-wg302v2.dtb \
+	intel-ixp42x-arcom-vulcan.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_KEYSTONE) += \
 	keystone-k2hk-evm.dtb \
 	keystone-k2l-evm.dtb \
@@ -452,9 +474,13 @@ dtb-$(CONFIG_SOC_IMX6Q) += \
 	imx6dl-cubox-i-som-v15.dtb \
 	imx6dl-dfi-fs700-m60.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	imx6dl-dhcom-picoitx.dtb \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	imx6dl-dhcom-picoitx.dtb \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx6dl-eckelmann-ci4x10.dtb \
 	imx6dl-emcon-avari.dtb \
 	imx6dl-gw51xx.dtb \
@@ -502,11 +528,17 @@ dtb-$(CONFIG_SOC_IMX6Q) += \
 	imx6dl-sabresd.dtb \
 	imx6dl-savageboard.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	imx6dl-skov-revc-lt2.dtb \
 	imx6dl-skov-revc-lt6.dtb \
 	imx6dl-solidsense.dtb \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	imx6dl-skov-revc-lt2.dtb \
+	imx6dl-skov-revc-lt6.dtb \
+	imx6dl-solidsense.dtb \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx6dl-ts4900.dtb \
 	imx6dl-ts7970.dtb \
 	imx6dl-tx6dl-comtft.dtb \
@@ -608,12 +640,18 @@ dtb-$(CONFIG_SOC_IMX6Q) += \
 	imx6q-savageboard.dtb \
 	imx6q-sbc6x.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx6q-skov-revc-lt2.dtb \
 	imx6q-skov-revc-lt6.dtb \
 	imx6q-skov-reve-mi1010ait-1cp1.dtb \
 	imx6q-solidsense.dtb \
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx6q-tbs2910.dtb \
 	imx6q-ts4900.dtb \
 	imx6q-ts7970.dtb \
@@ -647,11 +685,16 @@ dtb-$(CONFIG_SOC_IMX6Q) += \
 	imx6qp-vicutp.dtb \
 	imx6qp-wandboard-revd1.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	imx6qp-zii-rdu2.dtb \
 	imx6s-dhcom-drc02.dtb
 =======
 	imx6qp-zii-rdu2.dtb
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	imx6qp-zii-rdu2.dtb \
+	imx6s-dhcom-drc02.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_SOC_IMX6SL) += \
 	imx6sl-evk.dtb \
 	imx6sl-tolino-shine2hd.dtb \
@@ -888,9 +931,13 @@ dtb-$(CONFIG_SOC_AM33XX) += \
 	am335x-regor-rdk.dtb \
 	am335x-sancloud-bbe.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	am335x-sancloud-bbe-lite.dtb \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	am335x-sancloud-bbe-lite.dtb \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	am335x-shc.dtb \
 	am335x-sbc-t335.dtb \
 	am335x-sl50.dtb \
@@ -982,9 +1029,13 @@ dtb-$(CONFIG_ARCH_QCOM) += \
 	qcom-ipq8064-ap148.dtb \
 	qcom-ipq8064-rb3011.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	qcom-msm8226-samsung-s3ve3g.dtb \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qcom-msm8226-samsung-s3ve3g.dtb \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qcom-msm8660-surf.dtb \
 	qcom-msm8960-cdp.dtb \
 	qcom-msm8974-fairphone-fp2.dtb \
@@ -1129,11 +1180,16 @@ dtb-$(CONFIG_ARCH_STI) += \
 	stih410-b2120.dtb \
 	stih410-b2260.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	stih418-b2199.dtb \
 	stih418-b2264.dtb
 =======
 	stih418-b2199.dtb
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	stih418-b2199.dtb \
+	stih418-b2264.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_STM32) += \
 	stm32f429-disco.dtb \
 	stm32f469-disco.dtb \
@@ -1358,13 +1414,19 @@ dtb-$(CONFIG_ARCH_U8500) += \
 	ste-ux500-samsung-golden.dtb \
 	ste-ux500-samsung-janice.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ste-ux500-samsung-gavini.dtb \
 	ste-ux500-samsung-codina.dtb \
 	ste-ux500-samsung-skomer.dtb \
 	ste-ux500-samsung-kyle.dtb
+<<<<<<< HEAD
 =======
 	ste-ux500-samsung-skomer.dtb
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dtb-$(CONFIG_ARCH_UNIPHIER) += \
 	uniphier-ld4-ref.dtb \
 	uniphier-ld6b-ref.dtb \
@@ -1498,6 +1560,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
 	aspeed-bmc-asrock-e3c246d4i.dtb \
 	aspeed-bmc-bytedance-g220a.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	aspeed-bmc-facebook-cloudripper.dtb \
 	aspeed-bmc-facebook-cmm.dtb \
 	aspeed-bmc-facebook-elbert.dtb \
@@ -1505,6 +1568,12 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
 =======
 	aspeed-bmc-facebook-cmm.dtb \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	aspeed-bmc-facebook-cloudripper.dtb \
+	aspeed-bmc-facebook-cmm.dtb \
+	aspeed-bmc-facebook-elbert.dtb \
+	aspeed-bmc-facebook-fuji.dtb \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	aspeed-bmc-facebook-galaxy100.dtb \
 	aspeed-bmc-facebook-minipack.dtb \
 	aspeed-bmc-facebook-tiogapass.dtb \
@@ -1520,9 +1589,13 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
 	aspeed-bmc-intel-s2600wf.dtb \
 	aspeed-bmc-inspur-fp5280g2.dtb \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	aspeed-bmc-inspur-nf5280m6.dtb \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	aspeed-bmc-inspur-nf5280m6.dtb \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	aspeed-bmc-lenovo-hr630.dtb \
 	aspeed-bmc-lenovo-hr855xg2.dtb \
 	aspeed-bmc-microsoft-olympus.dtb \

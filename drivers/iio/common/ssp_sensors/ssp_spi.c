@@ -138,10 +138,14 @@ static int ssp_print_mcu_debug(char *data_frame, int *data_index,
 		ssp_dbg("[SSP]: MSG From MCU-invalid debug length(%d/%d)\n",
 			length, received_len);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EPROTO;
 =======
 		return length ? length : -EPROTO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EPROTO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ssp_dbg("[SSP]: MSG From MCU - %s\n", &data_frame[*data_index]);
@@ -278,10 +282,15 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 		switch (dataframe[idx++]) {
 		case SSP_MSG2AP_INST_BYPASS_DATA:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (idx >= len)
 				return -EPROTO;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (idx >= len)
+				return -EPROTO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sd = dataframe[idx++];
 			if (sd < 0 || sd >= SSP_SENSOR_MAX) {
 				dev_err(SSP_DEV,
@@ -291,6 +300,7 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 
 			if (indio_devs[sd]) {
 				spd = iio_priv(indio_devs[sd]);
+<<<<<<< HEAD
 <<<<<<< HEAD
 				if (spd->process_data) {
 					if (idx >= len)
@@ -305,6 +315,15 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 							  &dataframe[idx],
 							  data->timestamp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (spd->process_data) {
+					if (idx >= len)
+						return -EPROTO;
+					spd->process_data(indio_devs[sd],
+							  &dataframe[idx],
+							  data->timestamp);
+				}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			} else {
 				dev_err(SSP_DEV, "no client for frame\n");
 			}
@@ -313,10 +332,15 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 			break;
 		case SSP_MSG2AP_INST_DEBUG_DATA:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (idx >= len)
 				return -EPROTO;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (idx >= len)
+				return -EPROTO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sd = ssp_print_mcu_debug(dataframe, &idx, len);
 			if (sd) {
 				dev_err(SSP_DEV,

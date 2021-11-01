@@ -886,6 +886,7 @@ static void bcache_device_free(struct bcache_device *d)
 
 	if (disk) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		bool disk_added = (disk->flags & GENHD_FL_UP) != 0;
 
@@ -893,6 +894,8 @@ static void bcache_device_free(struct bcache_device *d)
 			del_gendisk(disk);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		blk_cleanup_disk(disk);
 		ida_simple_remove(&bcache_device_idx,
 				  first_minor_to_idx(disk->first_minor));
@@ -935,14 +938,19 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
 	d->full_dirty_stripes = kvzalloc(n, GFP_KERNEL);
 	if (!d->full_dirty_stripes)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto out_free_stripe_sectors_dirty;
 =======
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_free_stripe_sectors_dirty;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	idx = ida_simple_get(&bcache_device_idx, 0,
 				BCACHE_DEVICE_IDX_MAX, GFP_KERNEL);
 	if (idx < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out_free_full_dirty_stripes;
 
@@ -955,15 +963,22 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
 		goto out_bioset_exit;
 =======
 		return idx;
+=======
+		goto out_free_full_dirty_stripes;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (bioset_init(&d->bio_split, 4, offsetof(struct bbio, bio),
 			BIOSET_NEED_BVECS|BIOSET_NEED_RESCUER))
-		goto err;
+		goto out_ida_remove;
 
 	d->disk = blk_alloc_disk(NUMA_NO_NODE);
 	if (!d->disk)
+<<<<<<< HEAD
 		goto err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_bioset_exit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	set_capacity(d->disk, sectors);
 	snprintf(d->disk->disk_name, DISK_NAME_LEN, "bcache%i", idx);
@@ -1007,6 +1022,7 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 out_bioset_exit:
 	bioset_exit(&d->bio_split);
 out_ida_remove:
@@ -1019,6 +1035,16 @@ out_free_stripe_sectors_dirty:
 err:
 	ida_simple_remove(&bcache_device_idx, idx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_bioset_exit:
+	bioset_exit(&d->bio_split);
+out_ida_remove:
+	ida_simple_remove(&bcache_device_idx, idx);
+out_free_full_dirty_stripes:
+	kvfree(d->full_dirty_stripes);
+out_free_stripe_sectors_dirty:
+	kvfree(d->stripe_sectors_dirty);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -ENOMEM;
 
 }
@@ -1396,6 +1422,7 @@ static void cached_dev_free(struct closure *cl)
 	mutex_lock(&bch_register_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (atomic_read(&dc->running)) {
 		bd_unlink_disk_holder(dc->bdev, dc->disk.disk);
 		del_gendisk(dc->disk.disk);
@@ -1404,6 +1431,12 @@ static void cached_dev_free(struct closure *cl)
 	if (atomic_read(&dc->running))
 		bd_unlink_disk_holder(dc->bdev, dc->disk.disk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (atomic_read(&dc->running)) {
+		bd_unlink_disk_holder(dc->bdev, dc->disk.disk);
+		del_gendisk(dc->disk.disk);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bcache_device_free(&dc->disk);
 	list_del(&dc->list);
 
@@ -1550,9 +1583,13 @@ static void flash_dev_free(struct closure *cl)
 	atomic_long_sub(bcache_dev_sectors_dirty(d),
 			&d->c->flash_dev_dirty_sectors);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	del_gendisk(d->disk);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	del_gendisk(d->disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bcache_device_free(d);
 	mutex_unlock(&bch_register_lock);
 	kobject_put(&d->kobj);

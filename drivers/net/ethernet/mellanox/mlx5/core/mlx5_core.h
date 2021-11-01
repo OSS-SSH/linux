@@ -169,10 +169,15 @@ void mlx5_lag_remove_netdev(struct mlx5_core_dev *dev, struct net_device *netdev
 void mlx5_lag_add_mdev(struct mlx5_core_dev *dev);
 void mlx5_lag_remove_mdev(struct mlx5_core_dev *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void mlx5_lag_disable_change(struct mlx5_core_dev *dev);
 void mlx5_lag_enable_change(struct mlx5_core_dev *dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void mlx5_lag_disable_change(struct mlx5_core_dev *dev);
+void mlx5_lag_enable_change(struct mlx5_core_dev *dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int mlx5_events_init(struct mlx5_core_dev *dev);
 void mlx5_events_cleanup(struct mlx5_core_dev *dev);
@@ -212,6 +217,9 @@ int mlx5_fw_version_query(struct mlx5_core_dev *dev,
 			  u32 *running_ver, u32 *stored_ver);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_MLX5_CORE_EN
 int mlx5e_init(void);
 void mlx5e_cleanup(void);
@@ -219,10 +227,13 @@ void mlx5e_cleanup(void);
 static inline int mlx5e_init(void){ return 0; }
 static inline void mlx5e_cleanup(void){}
 #endif
+<<<<<<< HEAD
 =======
 int mlx5e_init(void);
 void mlx5e_cleanup(void);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline bool mlx5_sriov_is_enabled(struct mlx5_core_dev *dev)
 {
@@ -286,11 +297,17 @@ static inline u32 mlx5_sriov_get_vf_total_msix(struct pci_dev *pdev)
 	return MLX5_CAP_GEN_MAX(dev, num_total_dynamic_vf_msix);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool mlx5_eth_supported(struct mlx5_core_dev *dev);
 bool mlx5_rdma_supported(struct mlx5_core_dev *dev);
 bool mlx5_vnet_supported(struct mlx5_core_dev *dev);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __MLX5_CORE_H__ */

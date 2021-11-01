@@ -1181,10 +1181,14 @@ static const struct file_operations wakeup_sources_stats_fops = {
 static int __init wakeup_sources_debugfs_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	debugfs_create_file("wakeup_sources", 0444, NULL, NULL,
 =======
 	debugfs_create_file("wakeup_sources", S_IRUGO, NULL, NULL,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	debugfs_create_file("wakeup_sources", 0444, NULL, NULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    &wakeup_sources_stats_fops);
 	return 0;
 }

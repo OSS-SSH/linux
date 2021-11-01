@@ -719,12 +719,17 @@ static int mtty_probe(struct mdev_device *mdev)
 	mdev_state = kzalloc(sizeof(struct mdev_state), GFP_KERNEL);
 	if (mdev_state == NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -ENOMEM;
 		goto err_nr_ports;
 =======
 		atomic_add(nr_ports, &mdev_avail_ports);
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = -ENOMEM;
+		goto err_nr_ports;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	vfio_init_group_dev(&mdev_state->vdev, &mdev->dev, &mtty_dev_ops);
@@ -738,6 +743,7 @@ static int mtty_probe(struct mdev_device *mdev)
 
 	if (mdev_state->vconfig == NULL) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -ENOMEM;
 		goto err_state;
 =======
@@ -745,6 +751,10 @@ static int mtty_probe(struct mdev_device *mdev)
 		atomic_add(nr_ports, &mdev_avail_ports);
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = -ENOMEM;
+		goto err_state;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mutex_init(&mdev_state->ops_lock);
@@ -753,6 +763,7 @@ static int mtty_probe(struct mdev_device *mdev)
 	mtty_create_config_space(mdev_state);
 
 	ret = vfio_register_group_dev(&mdev_state->vdev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret)
 		goto err_vconfig;
@@ -777,6 +788,21 @@ err_nr_ports:
 	dev_set_drvdata(&mdev->dev, mdev_state);
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret)
+		goto err_vconfig;
+	dev_set_drvdata(&mdev->dev, mdev_state);
+	return 0;
+
+err_vconfig:
+	kfree(mdev_state->vconfig);
+err_state:
+	vfio_uninit_group_dev(&mdev_state->vdev);
+	kfree(mdev_state);
+err_nr_ports:
+	atomic_add(nr_ports, &mdev_avail_ports);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mtty_remove(struct mdev_device *mdev)
@@ -788,9 +814,13 @@ static void mtty_remove(struct mdev_device *mdev)
 
 	kfree(mdev_state->vconfig);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vfio_uninit_group_dev(&mdev_state->vdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vfio_uninit_group_dev(&mdev_state->vdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(mdev_state);
 	atomic_add(nr_ports, &mdev_avail_ports);
 }
@@ -1233,6 +1263,7 @@ static long mtty_ioctl(struct vfio_device *vdev, unsigned int cmd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int mtty_open(struct vfio_device *vdev)
 {
@@ -1246,6 +1277,8 @@ static void mtty_close(struct vfio_device *mdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t
 sample_mtty_dev_show(struct device *dev, struct device_attribute *attr,
 		     char *buf)
@@ -1354,10 +1387,13 @@ static struct attribute_group *mdev_type_groups[] = {
 static const struct vfio_device_ops mtty_dev_ops = {
 	.name = "vfio-mtty",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.open = mtty_open,
 	.release = mtty_close,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.read = mtty_read,
 	.write = mtty_write,
 	.ioctl = mtty_ioctl,

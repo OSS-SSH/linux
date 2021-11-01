@@ -175,9 +175,12 @@ void dp_decide_training_settings(
 	struct dc_link *link,
 	const struct dc_link_settings *link_setting,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	const struct dc_link_training_overrides *overrides,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct link_training_settings *lt_settings);
 
 /* Convert PHY repeater count read from DPCD uint8_t. */

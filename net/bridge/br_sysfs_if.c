@@ -245,20 +245,28 @@ BRPORT_ATTR_FLAG(isolated, BR_ISOLATED);
 static ssize_t show_multicast_router(struct net_bridge_port *p, char *buf)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return sprintf(buf, "%d\n", p->multicast_ctx.multicast_router);
 =======
 	return sprintf(buf, "%d\n", p->multicast_router);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sprintf(buf, "%d\n", p->multicast_ctx.multicast_router);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int store_multicast_router(struct net_bridge_port *p,
 				      unsigned long v)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return br_multicast_set_port_router(&p->multicast_ctx, v);
 =======
 	return br_multicast_set_port_router(p, v);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return br_multicast_set_port_router(&p->multicast_ctx, v);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 static BRPORT_ATTR(multicast_router, 0644, show_multicast_router,
 		   store_multicast_router);

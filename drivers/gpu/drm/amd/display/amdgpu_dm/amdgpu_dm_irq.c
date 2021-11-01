@@ -585,10 +585,14 @@ static void amdgpu_dm_irq_schedule_work(struct amdgpu_device *adev,
 
 		/*allocate a new amdgpu_dm_irq_handler_data*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 		handler_data_add = kzalloc(sizeof(*handler_data), GFP_ATOMIC);
 =======
 		handler_data_add = kzalloc(sizeof(*handler_data), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		handler_data_add = kzalloc(sizeof(*handler_data), GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!handler_data_add) {
 			DRM_ERROR("DM_IRQ: failed to allocate irq handler!\n");
 			return;

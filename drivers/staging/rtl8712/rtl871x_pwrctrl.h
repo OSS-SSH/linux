@@ -109,8 +109,12 @@ void r8712_set_ps_mode(struct _adapter *padapter, uint ps_mode,
 			uint smart_ps);
 void r8712_set_rpwm(struct _adapter *padapter, u8 val8);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void r8712_flush_rwctrl_works(struct _adapter *padapter);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void r8712_flush_rwctrl_works(struct _adapter *padapter);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif  /* __RTL871X_PWRCTRL_H_ */

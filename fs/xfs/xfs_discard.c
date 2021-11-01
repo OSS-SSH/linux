@@ -170,10 +170,14 @@ xfs_ioc_trim(
 	 * storage zapping commands.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_norecovery(mp))
 =======
 	if (mp->m_flags & XFS_MOUNT_NORECOVERY)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_norecovery(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EROFS;
 
 	if (copy_from_user(&range, urange, sizeof(range)))

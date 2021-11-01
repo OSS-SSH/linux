@@ -3,9 +3,13 @@
 #define _LINUX_FB_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/refcount.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/refcount.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kgdb.h>
 #include <uapi/linux/fb.h>
 
@@ -440,10 +444,14 @@ struct fb_tile_ops {
 
 struct fb_info {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refcount_t count;
 =======
 	atomic_t count;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	refcount_t count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int node;
 	int flags;
 	/*

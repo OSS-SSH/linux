@@ -326,10 +326,14 @@ int nexthop_mpath_fill_node(struct sk_buff *skb, struct nexthop *nh,
 		int weight = nhg->nh_entries[i].weight;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (fib_add_nexthop(skb, nhc, weight, rt_family, 0) < 0)
 =======
 		if (fib_add_nexthop(skb, nhc, weight, rt_family) < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (fib_add_nexthop(skb, nhc, weight, rt_family, 0) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EMSGSIZE;
 	}
 

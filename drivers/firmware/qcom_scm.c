@@ -72,10 +72,14 @@ static struct qcom_scm_wb_entry qcom_scm_wb[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const char * const qcom_scm_convention_names[] = {
 =======
 static const char *qcom_scm_convention_names[] = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const char * const qcom_scm_convention_names[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[SMC_CONVENTION_UNKNOWN] = "unknown",
 	[SMC_CONVENTION_ARM_32] = "smc arm 32",
 	[SMC_CONVENTION_ARM_64] = "smc arm 64",
@@ -336,10 +340,14 @@ int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!cpus || cpumask_empty(cpus))
 =======
 	if (!cpus || (cpus && cpumask_empty(cpus)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!cpus || cpumask_empty(cpus))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	for_each_cpu(cpu, cpus) {
@@ -1156,6 +1164,9 @@ int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
 EXPORT_SYMBOL(qcom_scm_qsmmu500_wait_safe_toggle);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool qcom_scm_lmh_dcvsh_available(void)
 {
 	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_LMH, QCOM_SCM_LMH_LIMIT_DCVSH);
@@ -1214,8 +1225,11 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
 }
 EXPORT_SYMBOL(qcom_scm_lmh_dcvsh);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
 {
 	struct device_node *tcsr;
@@ -1369,9 +1383,13 @@ static const struct of_device_id qcom_scm_dt_match[] = {
 	{}
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct platform_driver qcom_scm_driver = {
 	.driver = {
@@ -1389,8 +1407,14 @@ static int __init qcom_scm_init(void)
 }
 subsys_initcall(qcom_scm_init);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
 MODULE_LICENSE("GPL v2");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
+MODULE_LICENSE("GPL v2");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

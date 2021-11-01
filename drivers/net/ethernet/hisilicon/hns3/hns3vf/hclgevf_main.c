@@ -9,9 +9,13 @@
 #include "hclge_mbx.h"
 #include "hnae3.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "hclgevf_devlink.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "hclgevf_devlink.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HCLGEVF_NAME	"hclgevf"
 
@@ -44,6 +48,9 @@ static const u8 hclgevf_hash_key[] = {
 MODULE_DEVICE_TABLE(pci, ae_algovf_pci_tbl);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const u32 cmdq_reg_addr_list[] = {HCLGEVF_NIC_CSQ_BASEADDR_L_REG,
 					 HCLGEVF_NIC_CSQ_BASEADDR_H_REG,
 					 HCLGEVF_NIC_CSQ_DEPTH_REG,
@@ -54,6 +61,7 @@ static const u32 cmdq_reg_addr_list[] = {HCLGEVF_NIC_CSQ_BASEADDR_L_REG,
 					 HCLGEVF_NIC_CRQ_DEPTH_REG,
 					 HCLGEVF_NIC_CRQ_TAIL_REG,
 					 HCLGEVF_NIC_CRQ_HEAD_REG,
+<<<<<<< HEAD
 =======
 static const u32 cmdq_reg_addr_list[] = {HCLGEVF_CMDQ_TX_ADDR_L_REG,
 					 HCLGEVF_CMDQ_TX_ADDR_H_REG,
@@ -66,6 +74,8 @@ static const u32 cmdq_reg_addr_list[] = {HCLGEVF_CMDQ_TX_ADDR_L_REG,
 					 HCLGEVF_CMDQ_RX_TAIL_REG,
 					 HCLGEVF_CMDQ_RX_HEAD_REG,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 HCLGEVF_VECTOR0_CMDQ_SRC_REG,
 					 HCLGEVF_VECTOR0_CMDQ_STATE_REG,
 					 HCLGEVF_CMDQ_INTR_EN_REG,
@@ -524,6 +534,7 @@ void hclgevf_update_link_status(struct hclgevf_dev *hdev, int link_state)
 		test_bit(HCLGEVF_STATE_DOWN, &hdev->state) ? 0 : link_state;
 	if (link_state != hdev->hw.mac.link) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		hdev->hw.mac.link = link_state;
 		client->ops->link_status_change(handle, !!link_state);
 		if (rclient && rclient->ops->link_status_change)
@@ -534,6 +545,12 @@ void hclgevf_update_link_status(struct hclgevf_dev *hdev, int link_state)
 			rclient->ops->link_status_change(rhandle, !!link_state);
 		hdev->hw.mac.link = link_state;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hdev->hw.mac.link = link_state;
+		client->ops->link_status_change(handle, !!link_state);
+		if (rclient && rclient->ops->link_status_change)
+			rclient->ops->link_status_change(rhandle, !!link_state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	clear_bit(HCLGEVF_STATE_LINK_UPDATING, &hdev->state);
@@ -563,9 +580,13 @@ static int hclgevf_set_handle_info(struct hclgevf_dev *hdev)
 	nic->numa_node_mask = hdev->numa_node_mask;
 	nic->flags |= HNAE3_SUPPORT_VF;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nic->kinfo.io_base = hdev->hw.io_base;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nic->kinfo.io_base = hdev->hw.io_base;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = hclgevf_knic_setup(hdev);
 	if (ret)
@@ -843,6 +864,9 @@ static int hclgevf_get_rss(struct hnae3_handle *handle, u32 *indir, u8 *key,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hclgevf_parse_rss_hfunc(struct hclgevf_dev *hdev, const u8 hfunc,
 				   u8 *hash_algo)
 {
@@ -861,13 +885,17 @@ static int hclgevf_parse_rss_hfunc(struct hclgevf_dev *hdev, const u8 hfunc,
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hclgevf_set_rss(struct hnae3_handle *handle, const u32 *indir,
 			   const u8 *key, const u8 hfunc)
 {
 	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
 	struct hclgevf_rss_cfg *rss_cfg = &hdev->rss_cfg;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	u8 hash_algo;
 	int ret, i;
@@ -897,36 +925,39 @@ static int hclgevf_set_rss(struct hnae3_handle *handle, const u32 *indir,
 		}
 		rss_cfg->hash_algo = hash_algo;
 =======
+=======
+	u8 hash_algo;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret, i;
 
 	if (hdev->ae_dev->dev_version >= HNAE3_DEVICE_VERSION_V2) {
+		ret = hclgevf_parse_rss_hfunc(hdev, hfunc, &hash_algo);
+		if (ret)
+			return ret;
+
 		/* Set the RSS Hash Key if specififed by the user */
 		if (key) {
-			switch (hfunc) {
-			case ETH_RSS_HASH_TOP:
-				rss_cfg->hash_algo =
-					HCLGEVF_RSS_HASH_ALGO_TOEPLITZ;
-				break;
-			case ETH_RSS_HASH_XOR:
-				rss_cfg->hash_algo =
-					HCLGEVF_RSS_HASH_ALGO_SIMPLE;
-				break;
-			case ETH_RSS_HASH_NO_CHANGE:
-				break;
-			default:
-				return -EINVAL;
-			}
-
-			ret = hclgevf_set_rss_algo_key(hdev, rss_cfg->hash_algo,
-						       key);
-			if (ret)
+			ret = hclgevf_set_rss_algo_key(hdev, hash_algo, key);
+			if (ret) {
+				dev_err(&hdev->pdev->dev,
+					"invalid hfunc type %u\n", hfunc);
 				return ret;
+			}
 
 			/* Update the shadow RSS key with user specified qids */
 			memcpy(rss_cfg->rss_hash_key, key,
 			       HCLGEVF_RSS_KEY_SIZE);
+		} else {
+			ret = hclgevf_set_rss_algo_key(hdev, hash_algo,
+						       rss_cfg->rss_hash_key);
+			if (ret)
+				return ret;
 		}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rss_cfg->hash_algo = hash_algo;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* update the shadow RSS table with user specified qids */
@@ -2041,10 +2072,14 @@ static void hclgevf_dump_rst_info(struct hclgevf_dev *hdev)
 		 hclgevf_read_dev(&hdev->hw, HCLGEVF_VECTOR0_CMDQ_STATE_REG));
 	dev_info(&hdev->pdev->dev, "handshake status: 0x%x\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 hclgevf_read_dev(&hdev->hw, HCLGEVF_NIC_CSQ_DEPTH_REG));
 =======
 		 hclgevf_read_dev(&hdev->hw, HCLGEVF_CMDQ_TX_DEPTH_REG));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 hclgevf_read_dev(&hdev->hw, HCLGEVF_NIC_CSQ_DEPTH_REG));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_info(&hdev->pdev->dev, "function reset status: 0x%x\n",
 		 hclgevf_read_dev(&hdev->hw, HCLGEVF_RST_ING));
 	dev_info(&hdev->pdev->dev, "hdev state: 0x%lx\n", hdev->state);
@@ -2547,10 +2582,15 @@ static irqreturn_t hclgevf_misc_irq_handle(int irq, void *data)
 	hclgevf_enable_vector(&hdev->misc_vector, false);
 	event_cause = hclgevf_check_evt_cause(hdev, &clearval);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (event_cause != HCLGEVF_VECTOR0_EVENT_OTHER)
 		hclgevf_clear_event_cause(hdev, clearval);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (event_cause != HCLGEVF_VECTOR0_EVENT_OTHER)
+		hclgevf_clear_event_cause(hdev, clearval);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (event_cause) {
 	case HCLGEVF_VECTOR0_EVENT_RST:
@@ -2564,6 +2604,7 @@ static irqreturn_t hclgevf_misc_irq_handle(int irq, void *data)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (event_cause != HCLGEVF_VECTOR0_EVENT_OTHER)
 		hclgevf_enable_vector(&hdev->misc_vector, true);
 =======
@@ -2572,6 +2613,10 @@ static irqreturn_t hclgevf_misc_irq_handle(int irq, void *data)
 		hclgevf_enable_vector(&hdev->misc_vector, true);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (event_cause != HCLGEVF_VECTOR0_EVENT_OTHER)
+		hclgevf_enable_vector(&hdev->misc_vector, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return IRQ_HANDLED;
 }
@@ -2581,10 +2626,15 @@ static int hclgevf_configure(struct hclgevf_dev *hdev)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hdev->gro_en = true;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hdev->gro_en = true;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = hclgevf_get_basic_info(hdev);
 	if (ret)
 		return ret;
@@ -2648,10 +2698,14 @@ static int hclgevf_init_roce_base_info(struct hclgevf_dev *hdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int hclgevf_config_gro(struct hclgevf_dev *hdev)
 =======
 static int hclgevf_config_gro(struct hclgevf_dev *hdev, bool en)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int hclgevf_config_gro(struct hclgevf_dev *hdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hclgevf_cfg_gro_status_cmd *req;
 	struct hclgevf_desc desc;
@@ -2665,10 +2719,14 @@ static int hclgevf_config_gro(struct hclgevf_dev *hdev, bool en)
 	req = (struct hclgevf_cfg_gro_status_cmd *)desc.data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	req->gro_en = hdev->gro_en ? 1 : 0;
 =======
 	req->gro_en = en ? 1 : 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->gro_en = hdev->gro_en ? 1 : 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = hclgevf_cmd_send(&hdev->hw, &desc, 1);
 	if (ret)
@@ -2748,6 +2806,9 @@ static int hclgevf_rss_init_hw(struct hclgevf_dev *hdev)
 static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hnae3_handle *nic = &hdev->nic;
 	int ret;
 
@@ -2758,8 +2819,11 @@ static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return hclgevf_set_vlan_filter(&hdev->nic, htons(ETH_P_8021Q), 0,
 				       false);
 }
@@ -3418,10 +3482,14 @@ static int hclgevf_reset_hdev(struct hclgevf_dev *hdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = hclgevf_config_gro(hdev);
 =======
 	ret = hclgevf_config_gro(hdev, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = hclgevf_config_gro(hdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -3451,12 +3519,18 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = hclgevf_devlink_init(hdev);
 	if (ret)
 		goto err_devlink_init;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = hclgevf_cmd_queue_init(hdev);
 	if (ret)
 		goto err_cmd_queue_init;
@@ -3510,10 +3584,14 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
 		goto err_config;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = hclgevf_config_gro(hdev);
 =======
 	ret = hclgevf_config_gro(hdev, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = hclgevf_config_gro(hdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto err_config;
 
@@ -3566,10 +3644,15 @@ err_cmd_init:
 	hclgevf_cmd_uninit(hdev);
 err_cmd_queue_init:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hclgevf_devlink_uninit(hdev);
 err_devlink_init:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hclgevf_devlink_uninit(hdev);
+err_devlink_init:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hclgevf_pci_uninit(hdev);
 	clear_bit(HCLGEVF_STATE_IRQ_INITED, &hdev->state);
 	return ret;
@@ -3592,9 +3675,13 @@ static void hclgevf_uninit_hdev(struct hclgevf_dev *hdev)
 
 	hclgevf_cmd_uninit(hdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hclgevf_devlink_uninit(hdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hclgevf_devlink_uninit(hdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hclgevf_pci_uninit(hdev);
 	hclgevf_uninit_mac_list(hdev);
 }
@@ -3772,6 +3859,7 @@ static int hclgevf_gro_en(struct hnae3_handle *handle, bool enable)
 {
 	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool gro_en_old = hdev->gro_en;
 	int ret;
 
@@ -3785,6 +3873,17 @@ static int hclgevf_gro_en(struct hnae3_handle *handle, bool enable)
 
 	return hclgevf_config_gro(hdev, enable);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool gro_en_old = hdev->gro_en;
+	int ret;
+
+	hdev->gro_en = enable;
+	ret = hclgevf_config_gro(hdev);
+	if (ret)
+		hdev->gro_en = gro_en_old;
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void hclgevf_get_media_type(struct hnae3_handle *handle, u8 *media_type,

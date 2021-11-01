@@ -91,12 +91,16 @@ static int vcn_v3_0_early_init(void *handle)
 
 	if (amdgpu_sriov_vf(adev)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		adev->vcn.num_vcn_inst = VCN_INSTANCES_SIENNA_CICHLID;
 =======
 		for (i = 0; i < VCN_INSTANCES_SIENNA_CICHLID; i++)
 			if (amdgpu_vcn_is_disabled_vcn(adev, VCN_DECODE_RING, i))
 				adev->vcn.num_vcn_inst++;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		adev->vcn.num_vcn_inst = VCN_INSTANCES_SIENNA_CICHLID;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adev->vcn.harvest_config = 0;
 		adev->vcn.num_enc_rings = 1;
 
@@ -158,21 +162,29 @@ static int vcn_v3_0_sw_init(void *handle)
 			ALIGN(le32_to_cpu(hdr->ucode_size_bytes), PAGE_SIZE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (adev->vcn.num_vcn_inst == VCN_INSTANCES_SIENNA_CICHLID) {
 =======
 		if ((adev->vcn.num_vcn_inst == VCN_INSTANCES_SIENNA_CICHLID) ||
 		    (amdgpu_sriov_vf(adev) && adev->asic_type == CHIP_SIENNA_CICHLID)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (adev->vcn.num_vcn_inst == VCN_INSTANCES_SIENNA_CICHLID) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			adev->firmware.ucode[AMDGPU_UCODE_ID_VCN1].ucode_id = AMDGPU_UCODE_ID_VCN1;
 			adev->firmware.ucode[AMDGPU_UCODE_ID_VCN1].fw = adev->vcn.fw;
 			adev->firmware.fw_size +=
 				ALIGN(le32_to_cpu(hdr->ucode_size_bytes), PAGE_SIZE);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_info(adev->dev, "Will use PSP to load VCN firmware\n");
 =======
 		DRM_INFO("PSP loading VCN firmware\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_info(adev->dev, "Will use PSP to load VCN firmware\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	r = amdgpu_vcn_resume(adev);
@@ -341,10 +353,14 @@ static int vcn_v3_0_hw_init(void *handle)
 
 			ring = &adev->vcn.inst[i].ring_dec;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (amdgpu_vcn_is_disabled_vcn(adev, VCN_DECODE_RING, i)) {
 				ring->sched.ready = false;
 				dev_info(adev->dev, "ring %s is disabled by hypervisor\n", ring->name);
 			} else {
+<<<<<<< HEAD
 				ring->wptr = 0;
 				ring->wptr_old = 0;
 				vcn_v3_0_dec_ring_set_wptr(ring);
@@ -370,11 +386,26 @@ static int vcn_v3_0_hw_init(void *handle)
 
 			for (j = 0; j < adev->vcn.num_enc_rings; ++j) {
 				ring = &adev->vcn.inst[i].ring_enc[j];
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ring->wptr = 0;
 				ring->wptr_old = 0;
-				vcn_v3_0_enc_ring_set_wptr(ring);
+				vcn_v3_0_dec_ring_set_wptr(ring);
 				ring->sched.ready = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+			}
+
+			for (j = 0; j < adev->vcn.num_enc_rings; ++j) {
+				ring = &adev->vcn.inst[i].ring_enc[j];
+				if (amdgpu_vcn_is_disabled_vcn(adev, VCN_ENCODE_RING, i)) {
+					ring->sched.ready = false;
+					dev_info(adev->dev, "ring %s is disabled by hypervisor\n", ring->name);
+				} else {
+					ring->wptr = 0;
+					ring->wptr_old = 0;
+					vcn_v3_0_enc_ring_set_wptr(ring);
+					ring->sched.ready = true;
+				}
 			}
 		}
 	} else {

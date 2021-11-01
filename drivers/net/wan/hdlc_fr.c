@@ -147,10 +147,14 @@ struct frad_state {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int fr_ioctl(struct net_device *dev, struct if_settings *ifs);
 =======
 static int fr_ioctl(struct net_device *dev, struct ifreq *ifr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int fr_ioctl(struct net_device *dev, struct if_settings *ifs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline u16 q922_to_dlci(u8 *hdr)
 {
@@ -362,14 +366,19 @@ static int pvc_close(struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int pvc_ioctl(struct net_device *dev, struct if_settings *ifs)
 =======
 static int pvc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pvc_ioctl(struct net_device *dev, struct if_settings *ifs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pvc_device *pvc = dev->ml_priv;
 	fr_proto_pvc_info info;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ifs->type == IF_GET_PROTO) {
 		if (dev->type == ARPHRD_ETHER)
@@ -382,25 +391,36 @@ static int pvc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 			ifs->size = sizeof(info);
 =======
 	if (ifr->ifr_settings.type == IF_GET_PROTO) {
+=======
+	if (ifs->type == IF_GET_PROTO) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dev->type == ARPHRD_ETHER)
-			ifr->ifr_settings.type = IF_PROTO_FR_ETH_PVC;
+			ifs->type = IF_PROTO_FR_ETH_PVC;
 		else
-			ifr->ifr_settings.type = IF_PROTO_FR_PVC;
+			ifs->type = IF_PROTO_FR_PVC;
 
-		if (ifr->ifr_settings.size < sizeof(info)) {
+		if (ifs->size < sizeof(info)) {
 			/* data size wanted */
+<<<<<<< HEAD
 			ifr->ifr_settings.size = sizeof(info);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ifs->size = sizeof(info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOBUFS;
 		}
 
 		info.dlci = pvc->dlci;
 		memcpy(info.master, pvc->frad->name, IFNAMSIZ);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_to_user(ifs->ifs_ifsu.fr_pvc_info,
 =======
 		if (copy_to_user(ifr->ifr_settings.ifs_ifsu.fr_pvc_info,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(ifs->ifs_ifsu.fr_pvc_info,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 &info, sizeof(info)))
 			return -EFAULT;
 		return 0;
@@ -1081,10 +1101,14 @@ static const struct net_device_ops pvc_ops = {
 	.ndo_stop       = pvc_close,
 	.ndo_start_xmit = pvc_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocwandev = pvc_ioctl,
 =======
 	.ndo_do_ioctl   = pvc_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocwandev = pvc_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int fr_add_pvc(struct net_device *frad, unsigned int dlci, int type)
@@ -1208,6 +1232,7 @@ static struct hdlc_proto proto = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int fr_ioctl(struct net_device *dev, struct if_settings *ifs)
 {
 	fr_proto __user *fr_s = ifs->ifs_ifsu.fr;
@@ -1216,12 +1241,18 @@ static int fr_ioctl(struct net_device *dev, struct ifreq *ifr)
 {
 	fr_proto __user *fr_s = ifr->ifr_settings.ifs_ifsu.fr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int fr_ioctl(struct net_device *dev, struct if_settings *ifs)
+{
+	fr_proto __user *fr_s = ifs->ifs_ifsu.fr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const size_t size = sizeof(fr_proto);
 	fr_proto new_settings;
 	hdlc_device *hdlc = dev_to_hdlc(dev);
 	fr_proto_pvc pvc;
 	int result;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	switch (ifs->type) {
 	case IF_GET_PROTO:
@@ -1239,6 +1270,15 @@ static int fr_ioctl(struct net_device *dev, struct ifreq *ifr)
 		if (ifr->ifr_settings.size < size) {
 			ifr->ifr_settings.size = size; /* data size wanted */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switch (ifs->type) {
+	case IF_GET_PROTO:
+		if (dev_to_hdlc(dev)->proto != &proto) /* Different proto */
+			return -EINVAL;
+		ifs->type = IF_PROTO_FR;
+		if (ifs->size < size) {
+			ifs->size = size; /* data size wanted */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOBUFS;
 		}
 		if (copy_to_user(fr_s, &state(hdlc)->settings, size))
@@ -1301,10 +1341,14 @@ static int fr_ioctl(struct net_device *dev, struct ifreq *ifr)
 			return -EPERM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_from_user(&pvc, ifs->ifs_ifsu.fr_pvc,
 =======
 		if (copy_from_user(&pvc, ifr->ifr_settings.ifs_ifsu.fr_pvc,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_from_user(&pvc, ifs->ifs_ifsu.fr_pvc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   sizeof(fr_proto_pvc)))
 			return -EFAULT;
 
@@ -1312,16 +1356,22 @@ static int fr_ioctl(struct net_device *dev, struct ifreq *ifr)
 			return -EINVAL;	/* Only 10 bits, DLCI 0 reserved */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ifs->type == IF_PROTO_FR_ADD_ETH_PVC ||
 		    ifs->type == IF_PROTO_FR_DEL_ETH_PVC)
 =======
 		if (ifr->ifr_settings.type == IF_PROTO_FR_ADD_ETH_PVC ||
 		    ifr->ifr_settings.type == IF_PROTO_FR_DEL_ETH_PVC)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ifs->type == IF_PROTO_FR_ADD_ETH_PVC ||
+		    ifs->type == IF_PROTO_FR_DEL_ETH_PVC)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			result = ARPHRD_ETHER; /* bridged Ethernet device */
 		else
 			result = ARPHRD_DLCI;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (ifs->type == IF_PROTO_FR_ADD_PVC ||
 		    ifs->type == IF_PROTO_FR_ADD_ETH_PVC)
@@ -1329,6 +1379,10 @@ static int fr_ioctl(struct net_device *dev, struct ifreq *ifr)
 		if (ifr->ifr_settings.type == IF_PROTO_FR_ADD_PVC ||
 		    ifr->ifr_settings.type == IF_PROTO_FR_ADD_ETH_PVC)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ifs->type == IF_PROTO_FR_ADD_PVC ||
+		    ifs->type == IF_PROTO_FR_ADD_ETH_PVC)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return fr_add_pvc(dev, pvc.dlci, result);
 		else
 			return fr_del_pvc(hdlc, pvc.dlci, result);
@@ -1338,24 +1392,33 @@ static int fr_ioctl(struct net_device *dev, struct ifreq *ifr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init hdlc_fr_init(void)
 =======
 static int __init mod_init(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init hdlc_fr_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	register_hdlc_protocol(&proto);
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void __exit hdlc_fr_exit(void)
 =======
 static void __exit mod_exit(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit hdlc_fr_exit(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unregister_hdlc_protocol(&proto);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 module_init(hdlc_fr_init);
 module_exit(hdlc_fr_exit);
@@ -1363,6 +1426,10 @@ module_exit(hdlc_fr_exit);
 module_init(mod_init);
 module_exit(mod_exit);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_init(hdlc_fr_init);
+module_exit(hdlc_fr_exit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_AUTHOR("Krzysztof Halasa <khc@pm.waw.pl>");
 MODULE_DESCRIPTION("Frame-Relay protocol support for generic HDLC");

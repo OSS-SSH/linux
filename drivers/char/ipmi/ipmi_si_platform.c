@@ -412,12 +412,18 @@ static int ipmi_probe(struct platform_device *pdev)
 static int ipmi_remove(struct platform_device *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ipmi_si_remove_by_dev(&pdev->dev);
 
 	return 0;
 =======
 	return ipmi_si_remove_by_dev(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ipmi_si_remove_by_dev(&pdev->dev);
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int pdev_match_name(struct device *dev, const void *data)

@@ -43,10 +43,14 @@ int gen8_emit_flush_rcs(struct i915_request *rq, u32 mode)
 
 		/* WaForGAMHang:kbl */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (IS_KBL_GT_STEP(rq->engine->i915, 0, STEP_C0))
 =======
 		if (IS_KBL_GT_STEP(rq->engine->i915, 0, STEP_B0))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (IS_KBL_GT_STEP(rq->engine->i915, 0, STEP_C0))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dc_flush_wa = true;
 	}
 
@@ -213,10 +217,14 @@ int gen12_emit_flush_rcs(struct i915_request *rq, u32 mode)
 		flags |= PIPE_CONTROL_RENDER_TARGET_CACHE_FLUSH;
 		flags |= PIPE_CONTROL_DEPTH_CACHE_FLUSH;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Wa_1409600907:tgl,adl-p */
 =======
 		/* Wa_1409600907:tgl */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Wa_1409600907:tgl,adl-p */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		flags |= PIPE_CONTROL_DEPTH_STALL;
 		flags |= PIPE_CONTROL_DC_FLUSH_ENABLE;
 		flags |= PIPE_CONTROL_FLUSH_ENABLE;
@@ -288,10 +296,14 @@ int gen12_emit_flush_xcs(struct i915_request *rq, u32 mode)
 		aux_inv = rq->engine->mask & ~BIT(BCS0);
 	if (aux_inv)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cmd += 2 * hweight32(aux_inv) + 2;
 =======
 		cmd += 2 * hweight8(aux_inv) + 2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cmd += 2 * hweight32(aux_inv) + 2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cs = intel_ring_begin(rq, cmd);
 	if (IS_ERR(cs))
@@ -326,6 +338,7 @@ int gen12_emit_flush_xcs(struct i915_request *rq, u32 mode)
 		unsigned int tmp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		*cs++ = MI_LOAD_REGISTER_IMM(hweight32(aux_inv));
 		for_each_engine_masked(engine, rq->engine->gt, aux_inv, tmp) {
 =======
@@ -333,6 +346,10 @@ int gen12_emit_flush_xcs(struct i915_request *rq, u32 mode)
 		for_each_engine_masked(engine, rq->engine->gt,
 				       aux_inv, tmp) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*cs++ = MI_LOAD_REGISTER_IMM(hweight32(aux_inv));
+		for_each_engine_masked(engine, rq->engine->gt, aux_inv, tmp) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			*cs++ = i915_mmio_reg_offset(aux_inv_reg(engine));
 			*cs++ = AUX_INV;
 		}
@@ -524,11 +541,16 @@ gen8_emit_fini_breadcrumb_tail(struct i915_request *rq, u32 *cs)
 
 	*cs++ = MI_ARB_ON_OFF | MI_ARB_ENABLE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (intel_engine_has_semaphores(rq->engine) &&
 	    !intel_uc_uses_guc_submission(&rq->engine->gt->uc))
 =======
 	if (intel_engine_has_semaphores(rq->engine))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (intel_engine_has_semaphores(rq->engine) &&
+	    !intel_uc_uses_guc_submission(&rq->engine->gt->uc))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cs = emit_preempt_busywait(rq, cs);
 
 	rq->tail = intel_ring_offset(rq, cs);
@@ -621,11 +643,16 @@ gen12_emit_fini_breadcrumb_tail(struct i915_request *rq, u32 *cs)
 
 	*cs++ = MI_ARB_ON_OFF | MI_ARB_ENABLE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (intel_engine_has_semaphores(rq->engine) &&
 	    !intel_uc_uses_guc_submission(&rq->engine->gt->uc))
 =======
 	if (intel_engine_has_semaphores(rq->engine))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (intel_engine_has_semaphores(rq->engine) &&
+	    !intel_uc_uses_guc_submission(&rq->engine->gt->uc))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cs = gen12_emit_preempt_busywait(rq, cs);
 
 	rq->tail = intel_ring_offset(rq, cs);

@@ -39,6 +39,7 @@ struct public_key_signature {
 	struct asymmetric_key_id *auth_ids[2];
 	u8 *s;			/* Signature */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 *digest;
 	u32 s_size;		/* Number of bytes in signature */
 	u32 digest_size;	/* Number of bytes in digest */
@@ -47,6 +48,11 @@ struct public_key_signature {
 	u8 *digest;
 	u8 digest_size;		/* Number of bytes in digest */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 *digest;
+	u32 s_size;		/* Number of bytes in signature */
+	u32 digest_size;	/* Number of bytes in digest */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char *pkey_algo;
 	const char *hash_algo;
 	const char *encoding;

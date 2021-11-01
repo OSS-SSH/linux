@@ -11,9 +11,13 @@
 #include <linux/io.h>
 #include <linux/slab.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/machdep.h>
 #include <asm/firmware.h>
@@ -21,9 +25,12 @@
 #include <asm/prom.h>
 #include <linux/uaccess.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/isa-bridge.h>
 
 static int opal_lpc_chip_id = -1;
@@ -379,10 +386,14 @@ static int opal_lpc_init_debugfs(void)
 		return -ENODEV;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	root = debugfs_create_dir("lpc", arch_debugfs_dir);
 =======
 	root = debugfs_create_dir("lpc", powerpc_debugfs_root);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	root = debugfs_create_dir("lpc", arch_debugfs_dir);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rc |= opal_lpc_debugfs_create_type(root, "io", OPAL_LPC_IO);
 	rc |= opal_lpc_debugfs_create_type(root, "mem", OPAL_LPC_MEM);

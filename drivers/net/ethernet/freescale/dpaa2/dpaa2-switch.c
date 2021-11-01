@@ -42,16 +42,22 @@ static struct dpaa2_switch_fdb *dpaa2_switch_fdb_get_unused(struct ethsw_core *e
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct dpaa2_switch_filter_block *
 dpaa2_switch_filter_block_get_unused(struct ethsw_core *ethsw)
 =======
 static struct dpaa2_switch_acl_tbl *
 dpaa2_switch_acl_tbl_get_unused(struct ethsw_core *ethsw)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct dpaa2_switch_filter_block *
+dpaa2_switch_filter_block_get_unused(struct ethsw_core *ethsw)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i;
 
 	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!ethsw->filter_blocks[i].in_use)
 			return &ethsw->filter_blocks[i];
@@ -59,6 +65,10 @@ dpaa2_switch_acl_tbl_get_unused(struct ethsw_core *ethsw)
 		if (!ethsw->acls[i].in_use)
 			return &ethsw->acls[i];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!ethsw->filter_blocks[i].in_use)
+			return &ethsw->filter_blocks[i];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NULL;
 }
 
@@ -605,24 +615,34 @@ static int dpaa2_switch_port_change_mtu(struct net_device *netdev, int mtu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dpaa2_switch_port_link_state_update(struct net_device *netdev)
 =======
 static int dpaa2_switch_port_carrier_state_sync(struct net_device *netdev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int dpaa2_switch_port_link_state_update(struct net_device *netdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ethsw_port_priv *port_priv = netdev_priv(netdev);
 	struct dpsw_link_state state;
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* When we manage the MAC/PHY using phylink there is no need
 	 * to manually update the netif_carrier.
 	 */
 	if (dpaa2_switch_port_is_type_phy(port_priv))
 		return 0;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Interrupts are received even though no one issued an 'ifconfig up'
 	 * on the switch interface. Ignore these link state update interrupts
 	 */
@@ -701,6 +721,9 @@ static int dpaa2_switch_port_open(struct net_device *netdev)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dpaa2_switch_port_is_type_phy(port_priv)) {
 		/* Explicitly set carrier off, otherwise
 		 * netif_carrier_ok() will return true and cause 'ip link show'
@@ -709,6 +732,7 @@ static int dpaa2_switch_port_open(struct net_device *netdev)
 		 */
 		netif_carrier_off(netdev);
 	}
+<<<<<<< HEAD
 =======
 	/* Explicitly set carrier off, otherwise
 	 * netif_carrier_ok() will return true and cause 'ip link show'
@@ -717,6 +741,8 @@ static int dpaa2_switch_port_open(struct net_device *netdev)
 	 */
 	netif_carrier_off(netdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = dpsw_if_enable(port_priv->ethsw_data->mc_io, 0,
 			     port_priv->ethsw_data->dpsw_handle,
@@ -726,6 +752,7 @@ static int dpaa2_switch_port_open(struct net_device *netdev)
 		return err;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dpaa2_switch_enable_ctrl_if_napi(ethsw);
 
@@ -742,16 +769,23 @@ static int dpaa2_switch_port_open(struct net_device *netdev)
 		goto err_carrier_sync;
 	}
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dpaa2_switch_enable_ctrl_if_napi(ethsw);
 
-	return 0;
+	if (dpaa2_switch_port_is_type_phy(port_priv))
+		phylink_start(port_priv->mac->phylink);
 
+<<<<<<< HEAD
 err_carrier_sync:
 	dpsw_if_disable(port_priv->ethsw_data->mc_io, 0,
 			port_priv->ethsw_data->dpsw_handle,
 			port_priv->idx);
 	return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dpaa2_switch_port_stop(struct net_device *netdev)
@@ -761,6 +795,9 @@ static int dpaa2_switch_port_stop(struct net_device *netdev)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dpaa2_switch_port_is_type_phy(port_priv)) {
 		phylink_stop(port_priv->mac->phylink);
 	} else {
@@ -768,8 +805,11 @@ static int dpaa2_switch_port_stop(struct net_device *netdev)
 		netif_carrier_off(netdev);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = dpsw_if_disable(port_priv->ethsw_data->mc_io, 0,
 			      port_priv->ethsw_data->dpsw_handle,
 			      port_priv->idx);
@@ -1181,14 +1221,19 @@ err_exit:
 
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 dpaa2_switch_setup_tc_cls_flower(struct dpaa2_switch_filter_block *filter_block,
 =======
 dpaa2_switch_setup_tc_cls_flower(struct dpaa2_switch_acl_tbl *acl_tbl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dpaa2_switch_setup_tc_cls_flower(struct dpaa2_switch_filter_block *filter_block,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 struct flow_cls_offload *f)
 {
 	switch (f->command) {
 	case FLOW_CLS_REPLACE:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return dpaa2_switch_cls_flower_replace(filter_block, f);
 	case FLOW_CLS_DESTROY:
@@ -1198,6 +1243,11 @@ dpaa2_switch_setup_tc_cls_flower(struct dpaa2_switch_acl_tbl *acl_tbl,
 	case FLOW_CLS_DESTROY:
 		return dpaa2_switch_cls_flower_destroy(acl_tbl, f);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return dpaa2_switch_cls_flower_replace(filter_block, f);
+	case FLOW_CLS_DESTROY:
+		return dpaa2_switch_cls_flower_destroy(filter_block, f);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -EOPNOTSUPP;
 	}
@@ -1205,14 +1255,19 @@ dpaa2_switch_setup_tc_cls_flower(struct dpaa2_switch_acl_tbl *acl_tbl,
 
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 dpaa2_switch_setup_tc_cls_matchall(struct dpaa2_switch_filter_block *block,
 =======
 dpaa2_switch_setup_tc_cls_matchall(struct dpaa2_switch_acl_tbl *acl_tbl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dpaa2_switch_setup_tc_cls_matchall(struct dpaa2_switch_filter_block *block,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct tc_cls_matchall_offload *f)
 {
 	switch (f->command) {
 	case TC_CLSMATCHALL_REPLACE:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return dpaa2_switch_cls_matchall_replace(block, f);
 	case TC_CLSMATCHALL_DESTROY:
@@ -1222,6 +1277,11 @@ dpaa2_switch_setup_tc_cls_matchall(struct dpaa2_switch_acl_tbl *acl_tbl,
 	case TC_CLSMATCHALL_DESTROY:
 		return dpaa2_switch_cls_matchall_destroy(acl_tbl, f);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return dpaa2_switch_cls_matchall_replace(block, f);
+	case TC_CLSMATCHALL_DESTROY:
+		return dpaa2_switch_cls_matchall_destroy(block, f);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return -EOPNOTSUPP;
 	}
@@ -1244,6 +1304,7 @@ static int dpaa2_switch_port_setup_tc_block_cb_ig(enum tc_setup_type type,
 static LIST_HEAD(dpaa2_switch_block_cb_list);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int
 dpaa2_switch_port_acl_tbl_bind(struct ethsw_port_priv *port_priv,
 			       struct dpaa2_switch_filter_block *block)
@@ -1251,6 +1312,11 @@ dpaa2_switch_port_acl_tbl_bind(struct ethsw_port_priv *port_priv,
 static int dpaa2_switch_port_acl_tbl_bind(struct ethsw_port_priv *port_priv,
 					  struct dpaa2_switch_acl_tbl *acl_tbl)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int
+dpaa2_switch_port_acl_tbl_bind(struct ethsw_port_priv *port_priv,
+			       struct dpaa2_switch_filter_block *block)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ethsw_core *ethsw = port_priv->ethsw_data;
 	struct net_device *netdev = port_priv->netdev;
@@ -1258,25 +1324,34 @@ static int dpaa2_switch_port_acl_tbl_bind(struct ethsw_port_priv *port_priv,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (port_priv->filter_block)
 =======
 	if (port_priv->acl_tbl)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (port_priv->filter_block)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	acl_if_cfg.if_id[0] = port_priv->idx;
 	acl_if_cfg.num_ifs = 1;
 	err = dpsw_acl_add_if(ethsw->mc_io, 0, ethsw->dpsw_handle,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      block->acl_id, &acl_if_cfg);
 =======
 			      acl_tbl->id, &acl_if_cfg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      block->acl_id, &acl_if_cfg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		netdev_err(netdev, "dpsw_acl_add_if err %d\n", err);
 		return err;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	block->ports |= BIT(port_priv->idx);
 	port_priv->filter_block = block;
@@ -1284,6 +1359,10 @@ static int dpaa2_switch_port_acl_tbl_bind(struct ethsw_port_priv *port_priv,
 	acl_tbl->ports |= BIT(port_priv->idx);
 	port_priv->acl_tbl = acl_tbl;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	block->ports |= BIT(port_priv->idx);
+	port_priv->filter_block = block;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1291,10 +1370,14 @@ static int dpaa2_switch_port_acl_tbl_bind(struct ethsw_port_priv *port_priv,
 static int
 dpaa2_switch_port_acl_tbl_unbind(struct ethsw_port_priv *port_priv,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 struct dpaa2_switch_filter_block *block)
 =======
 				 struct dpaa2_switch_acl_tbl *acl_tbl)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 struct dpaa2_switch_filter_block *block)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ethsw_core *ethsw = port_priv->ethsw_data;
 	struct net_device *netdev = port_priv->netdev;
@@ -1302,25 +1385,34 @@ dpaa2_switch_port_acl_tbl_unbind(struct ethsw_port_priv *port_priv,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (port_priv->filter_block != block)
 =======
 	if (port_priv->acl_tbl != acl_tbl)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (port_priv->filter_block != block)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	acl_if_cfg.if_id[0] = port_priv->idx;
 	acl_if_cfg.num_ifs = 1;
 	err = dpsw_acl_remove_if(ethsw->mc_io, 0, ethsw->dpsw_handle,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 block->acl_id, &acl_if_cfg);
 =======
 				 acl_tbl->id, &acl_if_cfg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 block->acl_id, &acl_if_cfg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		netdev_err(netdev, "dpsw_acl_add_if err %d\n", err);
 		return err;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	block->ports &= ~BIT(port_priv->idx);
 	port_priv->filter_block = NULL;
@@ -1328,10 +1420,15 @@ dpaa2_switch_port_acl_tbl_unbind(struct ethsw_port_priv *port_priv,
 	acl_tbl->ports &= ~BIT(port_priv->idx);
 	port_priv->acl_tbl = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	block->ports &= ~BIT(port_priv->idx);
+	port_priv->filter_block = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 static int dpaa2_switch_port_block_bind(struct ethsw_port_priv *port_priv,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					struct dpaa2_switch_filter_block *block)
 {
@@ -1354,24 +1451,39 @@ static int dpaa2_switch_port_block_bind(struct ethsw_port_priv *port_priv,
 	err = dpaa2_switch_port_acl_tbl_unbind(port_priv, old_block);
 =======
 					struct dpaa2_switch_acl_tbl *acl_tbl)
+=======
+					struct dpaa2_switch_filter_block *block)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct dpaa2_switch_acl_tbl *old_acl_tbl = port_priv->acl_tbl;
+	struct dpaa2_switch_filter_block *old_block = port_priv->filter_block;
 	int err;
+
+	/* Offload all the mirror entries found in the block on this new port
+	 * joining it.
+	 */
+	err = dpaa2_switch_block_offload_mirror(block, port_priv);
+	if (err)
+		return err;
 
 	/* If the port is already bound to this ACL table then do nothing. This
 	 * can happen when this port is the first one to join a tc block
 	 */
-	if (port_priv->acl_tbl == acl_tbl)
+	if (port_priv->filter_block == block)
 		return 0;
 
+<<<<<<< HEAD
 	err = dpaa2_switch_port_acl_tbl_unbind(port_priv, old_acl_tbl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dpaa2_switch_port_acl_tbl_unbind(port_priv, old_block);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
 	/* Mark the previous ACL table as being unused if this was the last
 	 * port that was using it.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (old_block->ports == 0)
 		old_block->in_use = false;
@@ -1413,34 +1525,52 @@ dpaa2_switch_port_block_unbind(struct ethsw_port_priv *port_priv,
 =======
 	if (old_acl_tbl->ports == 0)
 		old_acl_tbl->in_use = false;
+=======
+	if (old_block->ports == 0)
+		old_block->in_use = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	return dpaa2_switch_port_acl_tbl_bind(port_priv, acl_tbl);
+	return dpaa2_switch_port_acl_tbl_bind(port_priv, block);
 }
 
-static int dpaa2_switch_port_block_unbind(struct ethsw_port_priv *port_priv,
-					  struct dpaa2_switch_acl_tbl *acl_tbl)
+static int
+dpaa2_switch_port_block_unbind(struct ethsw_port_priv *port_priv,
+			       struct dpaa2_switch_filter_block *block)
 {
 	struct ethsw_core *ethsw = port_priv->ethsw_data;
-	struct dpaa2_switch_acl_tbl *new_acl_tbl;
+	struct dpaa2_switch_filter_block *new_block;
 	int err;
+
+	/* Unoffload all the mirror entries found in the block from the
+	 * port leaving it.
+	 */
+	err = dpaa2_switch_block_unoffload_mirror(block, port_priv);
+	if (err)
+		return err;
 
 	/* We are the last port that leaves a block (an ACL table).
 	 * We'll continue to use this table.
 	 */
-	if (acl_tbl->ports == BIT(port_priv->idx))
+	if (block->ports == BIT(port_priv->idx))
 		return 0;
 
-	err = dpaa2_switch_port_acl_tbl_unbind(port_priv, acl_tbl);
+	err = dpaa2_switch_port_acl_tbl_unbind(port_priv, block);
 	if (err)
 		return err;
 
-	if (acl_tbl->ports == 0)
-		acl_tbl->in_use = false;
+	if (block->ports == 0)
+		block->in_use = false;
 
+<<<<<<< HEAD
 	new_acl_tbl = dpaa2_switch_acl_tbl_get_unused(ethsw);
 	new_acl_tbl->in_use = true;
 	return dpaa2_switch_port_acl_tbl_bind(port_priv, new_acl_tbl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	new_block = dpaa2_switch_filter_block_get_unused(ethsw);
+	new_block->in_use = true;
+	return dpaa2_switch_port_acl_tbl_bind(port_priv, new_block);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dpaa2_switch_setup_tc_block_bind(struct net_device *netdev,
@@ -1449,10 +1579,14 @@ static int dpaa2_switch_setup_tc_block_bind(struct net_device *netdev,
 	struct ethsw_port_priv *port_priv = netdev_priv(netdev);
 	struct ethsw_core *ethsw = port_priv->ethsw_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dpaa2_switch_filter_block *filter_block;
 =======
 	struct dpaa2_switch_acl_tbl *acl_tbl;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct dpaa2_switch_filter_block *filter_block;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct flow_block_cb *block_cb;
 	bool register_block = false;
 	int err;
@@ -1462,6 +1596,7 @@ static int dpaa2_switch_setup_tc_block_bind(struct net_device *netdev,
 					ethsw);
 
 	if (!block_cb) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* If the filter block is not already known, then this port
 		 * must be the first to join it. In this case, we can just
@@ -1475,17 +1610,27 @@ static int dpaa2_switch_setup_tc_block_bind(struct net_device *netdev,
 		/* If the ACL table is not already known, then this port must
 		 * be the first to join it. In this case, we can just continue
 		 * to use our private table
+=======
+		/* If the filter block is not already known, then this port
+		 * must be the first to join it. In this case, we can just
+		 * continue to use our private table
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
-		acl_tbl = port_priv->acl_tbl;
+		filter_block = port_priv->filter_block;
 
 		block_cb = flow_block_cb_alloc(dpaa2_switch_port_setup_tc_block_cb_ig,
+<<<<<<< HEAD
 					       ethsw, acl_tbl, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					       ethsw, filter_block, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(block_cb))
 			return PTR_ERR(block_cb);
 
 		register_block = true;
 	} else {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		filter_block = flow_block_cb_priv(block_cb);
 	}
@@ -1499,6 +1644,13 @@ static int dpaa2_switch_setup_tc_block_bind(struct net_device *netdev,
 	flow_block_cb_incref(block_cb);
 	err = dpaa2_switch_port_block_bind(port_priv, acl_tbl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		filter_block = flow_block_cb_priv(block_cb);
+	}
+
+	flow_block_cb_incref(block_cb);
+	err = dpaa2_switch_port_block_bind(port_priv, filter_block);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto err_block_bind;
 
@@ -1522,10 +1674,14 @@ static void dpaa2_switch_setup_tc_block_unbind(struct net_device *netdev,
 	struct ethsw_port_priv *port_priv = netdev_priv(netdev);
 	struct ethsw_core *ethsw = port_priv->ethsw_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dpaa2_switch_filter_block *filter_block;
 =======
 	struct dpaa2_switch_acl_tbl *acl_tbl;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct dpaa2_switch_filter_block *filter_block;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct flow_block_cb *block_cb;
 	int err;
 
@@ -1536,12 +1692,17 @@ static void dpaa2_switch_setup_tc_block_unbind(struct net_device *netdev,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filter_block = flow_block_cb_priv(block_cb);
 	err = dpaa2_switch_port_block_unbind(port_priv, filter_block);
 =======
 	acl_tbl = flow_block_cb_priv(block_cb);
 	err = dpaa2_switch_port_block_unbind(port_priv, acl_tbl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filter_block = flow_block_cb_priv(block_cb);
+	err = dpaa2_switch_port_block_unbind(port_priv, filter_block);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!err && !flow_block_cb_decref(block_cb)) {
 		flow_block_cb_remove(block_cb, f);
 		list_del(&block_cb->driver_list);
@@ -1607,6 +1768,7 @@ bool dpaa2_switch_port_dev_check(const struct net_device *netdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int dpaa2_switch_port_connect_mac(struct ethsw_port_priv *port_priv)
 {
 	struct fsl_mc_device *dpsw_port_dev, *dpmac_dev;
@@ -1668,20 +1830,78 @@ static void dpaa2_switch_port_disconnect_mac(struct ethsw_port_priv *port_priv)
 	port_priv->mac = NULL;
 =======
 static void dpaa2_switch_links_state_update(struct ethsw_core *ethsw)
+=======
+static int dpaa2_switch_port_connect_mac(struct ethsw_port_priv *port_priv)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	int i;
+	struct fsl_mc_device *dpsw_port_dev, *dpmac_dev;
+	struct dpaa2_mac *mac;
+	int err;
 
-	for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
-		dpaa2_switch_port_carrier_state_sync(ethsw->ports[i]->netdev);
-		dpaa2_switch_port_set_mac_addr(ethsw->ports[i]);
+	dpsw_port_dev = to_fsl_mc_device(port_priv->netdev->dev.parent);
+	dpmac_dev = fsl_mc_get_endpoint(dpsw_port_dev, port_priv->idx);
+
+	if (PTR_ERR(dpmac_dev) == -EPROBE_DEFER)
+		return PTR_ERR(dpmac_dev);
+
+	if (IS_ERR(dpmac_dev) || dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type)
+		return 0;
+
+	mac = kzalloc(sizeof(*mac), GFP_KERNEL);
+	if (!mac)
+		return -ENOMEM;
+
+	mac->mc_dev = dpmac_dev;
+	mac->mc_io = port_priv->ethsw_data->mc_io;
+	mac->net_dev = port_priv->netdev;
+
+	err = dpaa2_mac_open(mac);
+	if (err)
+		goto err_free_mac;
+	port_priv->mac = mac;
+
+	if (dpaa2_switch_port_is_type_phy(port_priv)) {
+		err = dpaa2_mac_connect(mac);
+		if (err) {
+			netdev_err(port_priv->netdev,
+				   "Error connecting to the MAC endpoint %pe\n",
+				   ERR_PTR(err));
+			goto err_close_mac;
+		}
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+
+err_close_mac:
+	dpaa2_mac_close(mac);
+	port_priv->mac = NULL;
+err_free_mac:
+	kfree(mac);
+	return err;
+}
+
+static void dpaa2_switch_port_disconnect_mac(struct ethsw_port_priv *port_priv)
+{
+	if (dpaa2_switch_port_is_type_phy(port_priv))
+		dpaa2_mac_disconnect(port_priv->mac);
+
+	if (!dpaa2_switch_port_has_mac(port_priv))
+		return;
+
+	dpaa2_mac_close(port_priv->mac);
+	kfree(port_priv->mac);
+	port_priv->mac = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static irqreturn_t dpaa2_switch_irq0_handler_thread(int irq_num, void *arg)
 {
 	struct device *dev = (struct device *)arg;
 	struct ethsw_core *ethsw = dev_get_drvdata(dev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct ethsw_port_priv *port_priv;
 	u32 status = ~0;
@@ -1692,11 +1912,17 @@ static irqreturn_t dpaa2_switch_irq0_handler_thread(int irq_num, void *arg)
 	u32 status = DPSW_IRQ_EVENT_LINK_CHANGED | 0xFFFF0000;
 	int err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ethsw_port_priv *port_priv;
+	u32 status = ~0;
+	int err, if_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = dpsw_get_irq_status(ethsw->mc_io, 0, ethsw->dpsw_handle,
 				  DPSW_IRQ_INDEX_IF, &status);
 	if (err) {
 		dev_err(dev, "Can't get irq status (err %d)\n", err);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out;
 	}
@@ -1730,14 +1956,38 @@ out:
 					    DPSW_IRQ_INDEX_IF, 0xFFFFFFFF);
 		if (err)
 			dev_err(dev, "Can't clear irq status (err %d)\n", err);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
-	if (status & DPSW_IRQ_EVENT_LINK_CHANGED)
-		dpaa2_switch_links_state_update(ethsw);
+	if_id = (status & 0xFFFF0000) >> 16;
+	port_priv = ethsw->ports[if_id];
+
+	if (status & DPSW_IRQ_EVENT_LINK_CHANGED) {
+		dpaa2_switch_port_link_state_update(port_priv->netdev);
+		dpaa2_switch_port_set_mac_addr(port_priv);
+	}
+
+	if (status & DPSW_IRQ_EVENT_ENDPOINT_CHANGED) {
+		rtnl_lock();
+		if (dpaa2_switch_port_has_mac(port_priv))
+			dpaa2_switch_port_disconnect_mac(port_priv);
+		else
+			dpaa2_switch_port_connect_mac(port_priv);
+		rtnl_unlock();
+	}
 
 out:
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dpsw_clear_irq_status(ethsw->mc_io, 0, ethsw->dpsw_handle,
+				    DPSW_IRQ_INDEX_IF, status);
+	if (err)
+		dev_err(dev, "Can't clear irq status (err %d)\n", err);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return IRQ_HANDLED;
 }
 
@@ -2190,6 +2440,7 @@ static int dpaa2_switch_port_attr_set_event(struct net_device *netdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct notifier_block dpaa2_switch_port_switchdev_nb;
 static struct notifier_block dpaa2_switch_port_switchdev_blocking_nb;
 
@@ -2200,6 +2451,14 @@ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
 static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
 					 struct net_device *upper_dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct notifier_block dpaa2_switch_port_switchdev_nb;
+static struct notifier_block dpaa2_switch_port_switchdev_blocking_nb;
+
+static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
+					 struct net_device *upper_dev,
+					 struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ethsw_port_priv *port_priv = netdev_priv(netdev);
 	struct ethsw_core *ethsw = port_priv->ethsw_data;
@@ -2216,12 +2475,17 @@ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
 		other_port_priv = netdev_priv(other_dev);
 		if (other_port_priv->ethsw_data != port_priv->ethsw_data) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			NL_SET_ERR_MSG_MOD(extack,
 					   "Interface from a different DPSW is in the bridge already");
 =======
 			netdev_err(netdev,
 				   "Interface from a different DPSW is in the bridge already!\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			NL_SET_ERR_MSG_MOD(extack,
+					   "Interface from a different DPSW is in the bridge already");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 		}
 	}
@@ -2244,6 +2508,9 @@ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
 		goto err_egress_flood;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = switchdev_bridge_port_offload(netdev, netdev, NULL,
 					    &dpaa2_switch_port_switchdev_nb,
 					    &dpaa2_switch_port_switchdev_blocking_nb,
@@ -2251,6 +2518,7 @@ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
 	if (err)
 		goto err_switchdev_offload;
 
+<<<<<<< HEAD
 	return 0;
 
 err_switchdev_offload:
@@ -2258,6 +2526,11 @@ err_switchdev_offload:
 	return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+
+err_switchdev_offload:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_egress_flood:
 	dpaa2_switch_port_set_fdb(port_priv, NULL);
 	return err;
@@ -2284,6 +2557,9 @@ static int dpaa2_switch_port_restore_rxvlan(struct net_device *vdev, int vid, vo
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dpaa2_switch_port_pre_bridge_leave(struct net_device *netdev)
 {
 	switchdev_bridge_port_unoffload(netdev, NULL,
@@ -2291,8 +2567,11 @@ static void dpaa2_switch_port_pre_bridge_leave(struct net_device *netdev)
 					&dpaa2_switch_port_switchdev_blocking_nb);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dpaa2_switch_port_bridge_leave(struct net_device *netdev)
 {
 	struct ethsw_port_priv *port_priv = netdev_priv(netdev);
@@ -2367,6 +2646,9 @@ static int dpaa2_switch_prevent_bridging_with_8021q_upper(struct net_device *net
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 dpaa2_switch_prechangeupper_sanity_checks(struct net_device *netdev,
 					  struct net_device *upper_dev,
@@ -2389,8 +2671,11 @@ dpaa2_switch_prechangeupper_sanity_checks(struct net_device *netdev,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dpaa2_switch_port_netdevice_event(struct notifier_block *nb,
 					     unsigned long event, void *ptr)
 {
@@ -2412,10 +2697,14 @@ static int dpaa2_switch_port_netdevice_event(struct notifier_block *nb,
 			break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = dpaa2_switch_prechangeupper_sanity_checks(netdev,
 								upper_dev,
 								extack);
 		if (err)
+<<<<<<< HEAD
 			goto out;
 
 		if (!info->linking)
@@ -2424,9 +2713,11 @@ static int dpaa2_switch_port_netdevice_event(struct notifier_block *nb,
 		if (!br_vlan_enabled(upper_dev)) {
 			NL_SET_ERR_MSG_MOD(extack, "Cannot join a VLAN-unaware bridge");
 			err = -EOPNOTSUPP;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out;
-		}
 
+<<<<<<< HEAD
 		err = dpaa2_switch_prevent_bridging_with_8021q_upper(netdev);
 		if (err) {
 			NL_SET_ERR_MSG_MOD(extack,
@@ -2434,6 +2725,10 @@ static int dpaa2_switch_port_netdevice_event(struct notifier_block *nb,
 			goto out;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!info->linking)
+			dpaa2_switch_port_pre_bridge_leave(netdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		break;
 	case NETDEV_CHANGEUPPER:
@@ -2441,12 +2736,18 @@ static int dpaa2_switch_port_netdevice_event(struct notifier_block *nb,
 		if (netif_is_bridge_master(upper_dev)) {
 			if (info->linking)
 <<<<<<< HEAD
+<<<<<<< HEAD
 				err = dpaa2_switch_port_bridge_join(netdev,
 								    upper_dev,
 								    extack);
 =======
 				err = dpaa2_switch_port_bridge_join(netdev, upper_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				err = dpaa2_switch_port_bridge_join(netdev,
+								    upper_dev,
+								    extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			else
 				err = dpaa2_switch_port_bridge_leave(netdev);
 		}
@@ -3150,6 +3451,7 @@ static int dpaa2_switch_ctrl_if_setup(struct ethsw_core *ethsw)
 		return err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = dpaa2_switch_alloc_rings(ethsw);
 	if (err)
 		goto err_free_dpbp;
@@ -3166,41 +3468,59 @@ static int dpaa2_switch_ctrl_if_setup(struct ethsw_core *ethsw)
 	if (err)
 		goto err_free_dpbp;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = dpaa2_switch_alloc_rings(ethsw);
 	if (err)
-		goto err_drain_dpbp;
+		goto err_free_dpbp;
 
 	err = dpaa2_switch_setup_dpio(ethsw);
 	if (err)
 		goto err_destroy_rings;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	err = dpaa2_switch_seed_bp(ethsw);
+	if (err)
+		goto err_deregister_dpio;
 
 	err = dpsw_ctrl_if_enable(ethsw->mc_io, 0, ethsw->dpsw_handle);
 	if (err) {
 		dev_err(ethsw->dev, "dpsw_ctrl_if_enable err %d\n", err);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_drain_dpbp;
 =======
 		goto err_deregister_dpio;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_drain_dpbp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 err_drain_dpbp:
 	dpaa2_switch_drain_bp(ethsw);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_drain_dpbp:
+	dpaa2_switch_drain_bp(ethsw);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_deregister_dpio:
 	dpaa2_switch_free_dpio(ethsw);
 err_destroy_rings:
 	dpaa2_switch_destroy_rings(ethsw);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 err_drain_dpbp:
 	dpaa2_switch_drain_bp(ethsw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_dpbp:
 	dpaa2_switch_free_dpbp(ethsw);
 
@@ -3208,6 +3528,9 @@ err_free_dpbp:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dpaa2_switch_remove_port(struct ethsw_core *ethsw,
 				     u16 port_idx)
 {
@@ -3220,8 +3543,11 @@ static void dpaa2_switch_remove_port(struct ethsw_core *ethsw,
 	ethsw->ports[port_idx] = NULL;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dpaa2_switch_init(struct fsl_mc_device *sw_dev)
 {
 	struct device *dev = &sw_dev->dev;
@@ -3373,10 +3699,14 @@ static int dpaa2_switch_port_trap_mac_addr(struct ethsw_port_priv *port_priv,
 	acl_entry.cfg.result.action = DPSW_ACL_ACTION_REDIRECT_TO_CTRL_IF;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return dpaa2_switch_acl_entry_add(port_priv->filter_block, &acl_entry);
 =======
 	return dpaa2_switch_acl_entry_add(port_priv->acl_tbl, &acl_entry);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return dpaa2_switch_acl_entry_add(port_priv->filter_block, &acl_entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dpaa2_switch_port_init(struct ethsw_port_priv *port_priv, u16 port)
@@ -3390,10 +3720,14 @@ static int dpaa2_switch_port_init(struct ethsw_port_priv *port_priv, u16 port)
 	struct net_device *netdev = port_priv->netdev;
 	struct ethsw_core *ethsw = port_priv->ethsw_data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dpaa2_switch_filter_block *filter_block;
 =======
 	struct dpaa2_switch_acl_tbl *acl_tbl;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct dpaa2_switch_filter_block *filter_block;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dpsw_fdb_cfg fdb_cfg = {0};
 	struct dpsw_if_attr dpsw_if_attr;
 	struct dpaa2_switch_fdb *fdb;
@@ -3449,6 +3783,9 @@ static int dpaa2_switch_port_init(struct ethsw_port_priv *port_priv, u16 port)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	filter_block = dpaa2_switch_filter_block_get_unused(ethsw);
 	filter_block->ethsw = ethsw;
 	filter_block->acl_id = acl_tbl_id;
@@ -3456,6 +3793,7 @@ static int dpaa2_switch_port_init(struct ethsw_port_priv *port_priv, u16 port)
 	filter_block->num_acl_rules = 0;
 	INIT_LIST_HEAD(&filter_block->acl_entries);
 	INIT_LIST_HEAD(&filter_block->mirror_entries);
+<<<<<<< HEAD
 
 	err = dpaa2_switch_port_acl_tbl_bind(port_priv, filter_block);
 =======
@@ -3468,6 +3806,10 @@ static int dpaa2_switch_port_init(struct ethsw_port_priv *port_priv, u16 port)
 
 	err = dpaa2_switch_port_acl_tbl_bind(port_priv, acl_tbl);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	err = dpaa2_switch_port_acl_tbl_bind(port_priv, filter_block);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -3479,6 +3821,9 @@ static int dpaa2_switch_port_init(struct ethsw_port_priv *port_priv, u16 port)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dpaa2_switch_ctrl_if_teardown(struct ethsw_core *ethsw)
 {
 	dpsw_ctrl_if_disable(ethsw->mc_io, 0, ethsw->dpsw_handle);
@@ -3489,26 +3834,36 @@ static void dpaa2_switch_ctrl_if_teardown(struct ethsw_core *ethsw)
 }
 
 static void dpaa2_switch_teardown(struct fsl_mc_device *sw_dev)
+<<<<<<< HEAD
 =======
 static void dpaa2_switch_takedown(struct fsl_mc_device *sw_dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device *dev = &sw_dev->dev;
 	struct ethsw_core *ethsw = dev_get_drvdata(dev);
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dpaa2_switch_ctrl_if_teardown(ethsw);
 
 	destroy_workqueue(ethsw->workqueue);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = dpsw_close(ethsw->mc_io, 0, ethsw->dpsw_handle);
 	if (err)
 		dev_warn(dev, "dpsw_close err %d\n", err);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void dpaa2_switch_ctrl_if_teardown(struct ethsw_core *ethsw)
@@ -3521,6 +3876,8 @@ static void dpaa2_switch_ctrl_if_teardown(struct ethsw_core *ethsw)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
 {
 	struct ethsw_port_priv *port_priv;
@@ -3532,10 +3889,13 @@ static int dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
 	ethsw = dev_get_drvdata(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dpaa2_switch_ctrl_if_teardown(ethsw);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dpaa2_switch_teardown_irqs(sw_dev);
 
 	dpsw_disable(ethsw->mc_io, 0, ethsw->dpsw_handle);
@@ -3543,6 +3903,7 @@ static int dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
 	for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
 		port_priv = ethsw->ports[i];
 		unregister_netdev(port_priv->netdev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		dpaa2_switch_remove_port(ethsw, i);
 	}
@@ -3554,16 +3915,23 @@ static int dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
 	dpaa2_switch_teardown(sw_dev);
 =======
 		free_netdev(port_priv->netdev);
+=======
+		dpaa2_switch_remove_port(ethsw, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	kfree(ethsw->fdbs);
-	kfree(ethsw->acls);
+	kfree(ethsw->filter_blocks);
 	kfree(ethsw->ports);
 
+<<<<<<< HEAD
 	dpaa2_switch_takedown(sw_dev);
 
 	destroy_workqueue(ethsw->workqueue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dpaa2_switch_teardown(sw_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fsl_mc_portal_free(ethsw->mc_io);
 
@@ -3634,12 +4002,18 @@ static int dpaa2_switch_probe_port(struct ethsw_core *ethsw,
 	port_priv->learn_ena = false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = dpaa2_switch_port_connect_mac(port_priv);
 	if (err)
 		goto err_port_probe;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 err_port_probe:
@@ -3684,10 +4058,14 @@ static int dpaa2_switch_probe(struct fsl_mc_device *sw_dev)
 	if (!(ethsw->ports)) {
 		err = -ENOMEM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_teardown;
 =======
 		goto err_takedown;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_teardown;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ethsw->fdbs = kcalloc(ethsw->sw_attr.num_ifs, sizeof(*ethsw->fdbs),
@@ -3698,15 +4076,21 @@ static int dpaa2_switch_probe(struct fsl_mc_device *sw_dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ethsw->filter_blocks = kcalloc(ethsw->sw_attr.num_ifs,
 				       sizeof(*ethsw->filter_blocks),
 				       GFP_KERNEL);
 	if (!ethsw->filter_blocks) {
+<<<<<<< HEAD
 =======
 	ethsw->acls = kcalloc(ethsw->sw_attr.num_ifs, sizeof(*ethsw->acls),
 			      GFP_KERNEL);
 	if (!ethsw->acls) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = -ENOMEM;
 		goto err_free_fdbs;
 	}
@@ -3727,6 +4111,7 @@ static int dpaa2_switch_probe(struct fsl_mc_device *sw_dev)
 			       NAPI_POLL_WEIGHT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	err = dpsw_enable(ethsw->mc_io, 0, ethsw->dpsw_handle);
 	if (err) {
@@ -3735,19 +4120,27 @@ static int dpaa2_switch_probe(struct fsl_mc_device *sw_dev)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Setup IRQs */
 	err = dpaa2_switch_setup_irqs(sw_dev);
 	if (err)
 		goto err_stop;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* By convention, if the mirror port is equal to the number of switch
 	 * interfaces, then mirroring of any kind is disabled.
 	 */
 	ethsw->mirror_port =  ethsw->sw_attr.num_ifs;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Register the netdev only when the entire setup is done and the
 	 * switch port interfaces are ready to receive traffic
 	 */
@@ -3770,17 +4163,23 @@ err_stop:
 err_free_netdev:
 	for (i--; i >= 0; i--)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dpaa2_switch_remove_port(ethsw, i);
 	kfree(ethsw->filter_blocks);
 =======
 		free_netdev(ethsw->ports[i]->netdev);
 	kfree(ethsw->acls);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dpaa2_switch_remove_port(ethsw, i);
+	kfree(ethsw->filter_blocks);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_fdbs:
 	kfree(ethsw->fdbs);
 err_free_ports:
 	kfree(ethsw->ports);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 err_teardown:
 	dpaa2_switch_teardown(sw_dev);
@@ -3788,6 +4187,10 @@ err_teardown:
 err_takedown:
 	dpaa2_switch_takedown(sw_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_teardown:
+	dpaa2_switch_teardown(sw_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 err_free_cmdport:
 	fsl_mc_portal_free(ethsw->mc_io);

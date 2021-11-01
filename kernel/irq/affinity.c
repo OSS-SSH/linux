@@ -356,10 +356,14 @@ static int irq_build_affinity_masks(unsigned int startvec, unsigned int numvecs,
 
 	/* Stabilize the cpumasks */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	build_node_to_cpumask(node_to_cpumask);
 
 	/* Spread on present CPUs starting from affd->pre_vectors */
@@ -389,10 +393,14 @@ static int irq_build_affinity_masks(unsigned int startvec, unsigned int numvecs,
 
  fail_build_affinity:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret >= 0)
 		WARN_ON(nr_present + nr_others < numvecs);
@@ -514,6 +522,7 @@ unsigned int irq_calc_affinity_vectors(unsigned int minvec, unsigned int maxvec,
 		set_vecs = maxvec - resv;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpus_read_lock();
 		set_vecs = cpumask_weight(cpu_possible_mask);
 		cpus_read_unlock();
@@ -522,6 +531,11 @@ unsigned int irq_calc_affinity_vectors(unsigned int minvec, unsigned int maxvec,
 		set_vecs = cpumask_weight(cpu_possible_mask);
 		put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_lock();
+		set_vecs = cpumask_weight(cpu_possible_mask);
+		cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return resv + min(set_vecs, maxvec - resv);

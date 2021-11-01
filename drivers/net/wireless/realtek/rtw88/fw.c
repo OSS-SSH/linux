@@ -820,10 +820,14 @@ static u16 rtw_get_rsvd_page_probe_req_size(struct rtw_dev *rtwdev,
 		if ((!ssid && !rsvd_pkt->ssid) ||
 		    rtw_ssid_equal(rsvd_pkt->ssid, ssid))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			size = rsvd_pkt->probe_req_size;
 =======
 			size = rsvd_pkt->skb->len;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size = rsvd_pkt->probe_req_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return size;
@@ -1052,10 +1056,15 @@ static struct sk_buff *rtw_get_rsvd_page_skb(struct ieee80211_hw *hw,
 		else
 			skb_new = ieee80211_probereq_get(hw, vif->addr, NULL, 0, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (skb_new)
 			rsvd_pkt->probe_req_size = (u16)skb_new->len;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (skb_new)
+			rsvd_pkt->probe_req_size = (u16)skb_new->len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case RSVD_NLO_INFO:
 		skb_new = rtw_nlo_info_get(hw);
@@ -1653,9 +1662,13 @@ static void __rtw_fw_update_pkt(struct rtw_dev *rtwdev, u8 pkt_id, u16 size,
 				u8 location)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rtw_chip_info *chip = rtwdev->chip;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rtw_chip_info *chip = rtwdev->chip;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 h2c_pkt[H2C_PKT_SIZE] = {0};
 	u16 total_size = H2C_PKT_HDR_SIZE + H2C_PKT_UPDATE_PKT_LEN;
 
@@ -1667,9 +1680,13 @@ static void __rtw_fw_update_pkt(struct rtw_dev *rtwdev, u8 pkt_id, u16 size,
 
 	/* include txdesc size */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	size += chip->tx_pkt_desc_sz;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size += chip->tx_pkt_desc_sz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	UPDATE_PKT_SET_SIZE(h2c_pkt, size);
 
 	rtw_fw_send_h2c_packet(rtwdev, h2c_pkt);
@@ -1680,10 +1697,14 @@ void rtw_fw_update_pkt_probe_req(struct rtw_dev *rtwdev,
 {
 	u8 loc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u16 size;
 =======
 	u32 size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	loc = rtw_get_rsvd_page_probe_req_location(rtwdev, ssid);
 	if (!loc) {

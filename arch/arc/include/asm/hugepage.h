@@ -59,6 +59,7 @@ extern void update_mmu_cache_pmd(struct vm_area_struct *vma, unsigned long addr,
 				 pmd_t *pmd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Generic variants assume pgtable_t is struct page *, hence need for these */
 #define __HAVE_ARCH_PGTABLE_DEPOSIT
@@ -69,6 +70,8 @@ extern void pgtable_trans_huge_deposit(struct mm_struct *mm, pmd_t *pmdp,
 extern pgtable_t pgtable_trans_huge_withdraw(struct mm_struct *mm, pmd_t *pmdp);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define __HAVE_ARCH_FLUSH_PMD_TLB_RANGE
 extern void flush_pmd_tlb_range(struct vm_area_struct *vma, unsigned long start,
 				unsigned long end);

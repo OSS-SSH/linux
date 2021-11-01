@@ -41,12 +41,17 @@
 		regulator-settling-time-us = <5000>;
 		gpios = <&expgpio 4 GPIO_ACTIVE_HIGH>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		states = <1800000 0x1>,
 			 <3300000 0x0>;
 =======
 		states = <1800000 0x1
 			  3300000 0x0>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		states = <1800000 0x1>,
+			 <3300000 0x0>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = "okay";
 	};
 
@@ -223,11 +228,16 @@
 
 &pcie0 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pci@0,0 {
 		device_type = "pci";
 =======
 	pci@1,0 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pci@0,0 {
+		device_type = "pci";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		#address-cells = <3>;
 		#size-cells = <2>;
 		ranges;
@@ -235,12 +245,17 @@
 		reg = <0 0 0 0 0>;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		usb@0,0 {
 			reg = <0 0 0 0 0>;
 =======
 		usb@1,0 {
 			reg = <0x10000 0 0 0 0>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		usb@0,0 {
+			reg = <0 0 0 0 0>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			resets = <&reset RASPBERRYPI_FIRMWARE_RESET_ID_USB>;
 		};
 	};

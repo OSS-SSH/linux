@@ -26,11 +26,15 @@ static struct sk_buff *xrs700x_xmit(struct sk_buff *skb, struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct sk_buff *xrs700x_rcv(struct sk_buff *skb, struct net_device *dev)
 =======
 static struct sk_buff *xrs700x_rcv(struct sk_buff *skb, struct net_device *dev,
 				   struct packet_type *pt)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *xrs700x_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int source_port;
 	u8 *trailer;
@@ -51,10 +55,14 @@ static struct sk_buff *xrs700x_rcv(struct sk_buff *skb, struct net_device *dev,
 
 	/* Frame is forwarded by hardware, don't forward in software. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dsa_default_offload_fwd_mark(skb);
 =======
 	skb->offload_fwd_mark = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_default_offload_fwd_mark(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return skb;
 }

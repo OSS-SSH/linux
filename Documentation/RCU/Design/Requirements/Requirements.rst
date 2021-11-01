@@ -363,6 +363,7 @@ do_something_gp() uses rcu_dereference() to fetch from ``gp``:
 
 The rcu_dereference() uses volatile casts and (for DEC Alpha) memory
 <<<<<<< HEAD
+<<<<<<< HEAD
 barriers in the Linux kernel. Should a |high-quality implementation of
 C11 memory_order_consume [PDF]|_
 =======
@@ -370,6 +371,10 @@ barriers in the Linux kernel. Should a `high-quality implementation of
 C11 ``memory_order_consume``
 [PDF] <http://www.rdrop.com/users/paulmck/RCU/consume.2015.07.13a.pdf>`__
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+barriers in the Linux kernel. Should a |high-quality implementation of
+C11 memory_order_consume [PDF]|_
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ever appear, then rcu_dereference() could be implemented as a
 ``memory_order_consume`` load. Regardless of the exact implementation, a
 pointer fetched by rcu_dereference() may not be used outside of the
@@ -380,11 +385,17 @@ mechanism, most commonly locking or `reference
 counting <https://www.kernel.org/doc/Documentation/RCU/rcuref.txt>`__.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .. |high-quality implementation of C11 memory_order_consume [PDF]| replace:: high-quality implementation of C11 ``memory_order_consume`` [PDF]
 .. _high-quality implementation of C11 memory_order_consume [PDF]: http://www.rdrop.com/users/paulmck/RCU/consume.2015.07.13a.pdf
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. |high-quality implementation of C11 memory_order_consume [PDF]| replace:: high-quality implementation of C11 ``memory_order_consume`` [PDF]
+.. _high-quality implementation of C11 memory_order_consume [PDF]: http://www.rdrop.com/users/paulmck/RCU/consume.2015.07.13a.pdf
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 In short, updaters use rcu_assign_pointer() and readers use
 rcu_dereference(), and these two RCU API elements work together to
 ensure that readers have a consistent view of newly added data elements.

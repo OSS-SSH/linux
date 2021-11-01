@@ -70,12 +70,15 @@ int iwpm_register_pid(struct iwpm_dev_data *pm_msg, u8 nl_client)
 	int ret = -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iwpm_valid_client(nl_client)) {
 		err_str = "Invalid port mapper client";
 		goto pid_query_error;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (iwpm_check_registration(nl_client, IWPM_REG_VALID) ||
 			iwpm_user_pid == IWPM_PID_UNAVAILABLE)
 		return 0;
@@ -157,12 +160,15 @@ int iwpm_add_mapping(struct iwpm_sa_data *pm_msg, u8 nl_client)
 	int ret = -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iwpm_valid_client(nl_client)) {
 		err_str = "Invalid port mapper client";
 		goto add_mapping_error;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!iwpm_valid_pid())
 		return 0;
 	if (!iwpm_check_registration(nl_client, IWPM_REG_VALID)) {
@@ -247,12 +253,15 @@ int iwpm_add_and_query_mapping(struct iwpm_sa_data *pm_msg, u8 nl_client)
 	int ret = -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iwpm_valid_client(nl_client)) {
 		err_str = "Invalid port mapper client";
 		goto query_mapping_error;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!iwpm_valid_pid())
 		return 0;
 	if (!iwpm_check_registration(nl_client, IWPM_REG_VALID)) {
@@ -341,12 +350,15 @@ int iwpm_remove_mapping(struct sockaddr_storage *local_addr, u8 nl_client)
 	int ret = -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iwpm_valid_client(nl_client)) {
 		err_str = "Invalid port mapper client";
 		goto remove_mapping_error;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!iwpm_valid_pid())
 		return 0;
 	if (iwpm_check_registration(nl_client, IWPM_REG_UNDEF)) {
@@ -457,11 +469,15 @@ int iwpm_register_pid_cb(struct sk_buff *skb, struct netlink_callback *cb)
 	pr_debug("%s: iWarp Port Mapper (pid = %d) is available!\n",
 			__func__, iwpm_user_pid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iwpm_set_registration(nl_client, IWPM_REG_VALID);
 =======
 	if (iwpm_valid_client(nl_client))
 		iwpm_set_registration(nl_client, IWPM_REG_VALID);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iwpm_set_registration(nl_client, IWPM_REG_VALID);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 register_pid_response_exit:
 	nlmsg_request->request_done = 1;
 	/* always for found nlmsg_request */
@@ -666,6 +682,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 
 	nl_client = RDMA_NL_GET_CLIENT(cb->nlh->nlmsg_type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iwpm_valid_client(nl_client)) {
 		pr_info("%s: Invalid port mapper client = %u\n",
@@ -673,6 +690,8 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_set(&echo_nlmsg_seq, cb->nlh->nlmsg_seq);
 
 	local_sockaddr = (struct sockaddr_storage *)
@@ -756,6 +775,7 @@ int iwpm_mapping_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 	}
 	nl_client = RDMA_NL_GET_CLIENT(cb->nlh->nlmsg_type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iwpm_valid_client(nl_client)) {
 		pr_info("%s: Invalid port mapper client = %u\n",
@@ -763,6 +783,8 @@ int iwpm_mapping_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iwpm_set_registration(nl_client, IWPM_REG_INCOMPL);
 	atomic_set(&echo_nlmsg_seq, cb->nlh->nlmsg_seq);
 	iwpm_user_pid = cb->nlh->nlmsg_pid;
@@ -886,6 +908,7 @@ int iwpm_hello_cb(struct sk_buff *skb, struct netlink_callback *cb)
 	abi_version = nla_get_u16(nltb[IWPM_NLA_HELLO_ABI_VERSION]);
 	nl_client = RDMA_NL_GET_CLIENT(cb->nlh->nlmsg_type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!iwpm_valid_client(nl_client)) {
 		pr_info("%s: Invalid port mapper client = %u\n",
@@ -893,6 +916,8 @@ int iwpm_hello_cb(struct sk_buff *skb, struct netlink_callback *cb)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iwpm_set_registration(nl_client, IWPM_REG_INCOMPL);
 	atomic_set(&echo_nlmsg_seq, cb->nlh->nlmsg_seq);
 	iwpm_ulib_version = min_t(u16, IWPM_UABI_VERSION, abi_version);

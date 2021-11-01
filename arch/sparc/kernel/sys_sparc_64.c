@@ -515,10 +515,14 @@ asmlinkage void sparc_breakpoint(struct pt_regs *regs)
         printk ("TRAP: Entering kernel PC=%lx, nPC=%lx\n", regs->tpc, regs->tnpc);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->tpc);
 =======
 	force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->tpc, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->tpc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef DEBUG_SPARC_BREAKPOINT
 	printk ("TRAP: Returning to space: PC=%lx nPC=%lx\n", regs->tpc, regs->tnpc);
 #endif

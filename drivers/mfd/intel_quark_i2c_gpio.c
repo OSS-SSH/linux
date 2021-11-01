@@ -18,9 +18,12 @@
 #include <linux/dmi.h>
 #include <linux/i2c.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/platform_data/gpio-dwapb.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/property.h>
 
 /* PCI BAR for register base address */
@@ -31,6 +34,7 @@
 #define MFD_ACPI_MATCH_GPIO	0ULL
 #define MFD_ACPI_MATCH_I2C	1ULL
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /* The base GPIO number under GPIOLIB framework */
@@ -43,6 +47,8 @@
 #define INTEL_QUARK_GPIO_NPORTS	1
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define INTEL_QUARK_IORES_MEM	0
 #define INTEL_QUARK_IORES_IRQ	1
 
@@ -118,11 +124,17 @@ static struct resource intel_quark_gpio_res[] = {
 		.flags = IORESOURCE_MEM,
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[INTEL_QUARK_IORES_IRQ] = {
 		.flags = IORESOURCE_IRQ,
 	},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[INTEL_QUARK_IORES_IRQ] = {
+		.flags = IORESOURCE_IRQ,
+	},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct mfd_cell_acpi_match intel_quark_acpi_match_gpio = {
@@ -130,6 +142,9 @@ static struct mfd_cell_acpi_match intel_quark_acpi_match_gpio = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct software_node intel_quark_gpio_controller_node = {
 	.name = "intel-quark-gpio-controller",
 };
@@ -153,8 +168,11 @@ static const struct software_node *intel_quark_gpio_node_group[] = {
 	NULL
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct mfd_cell intel_quark_mfd_cells[] = {
 	[MFD_I2C_BAR] = {
 		.id = MFD_I2C_BAR,
@@ -242,15 +260,20 @@ static int intel_quark_gpio_setup(struct pci_dev *pdev)
 	struct mfd_cell *cell = &intel_quark_mfd_cells[MFD_GPIO_BAR];
 	struct resource *res = intel_quark_gpio_res;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	struct dwapb_platform_data *pdata;
 	struct device *dev = &pdev->dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	res[INTEL_QUARK_IORES_MEM].start = pci_resource_start(pdev, MFD_GPIO_BAR);
 	res[INTEL_QUARK_IORES_MEM].end = pci_resource_end(pdev, MFD_GPIO_BAR);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	res[INTEL_QUARK_IORES_IRQ].start = pci_irq_vector(pdev, 0);
 	res[INTEL_QUARK_IORES_IRQ].end = pci_irq_vector(pdev, 0);
@@ -280,11 +303,20 @@ static int intel_quark_gpio_setup(struct pci_dev *pdev)
 	pdata->properties->gpio_base	= INTEL_QUARK_MFD_GPIO_BASE;
 	pdata->properties->irq[0]	= pci_irq_vector(pdev, 0);
 	pdata->properties->irq_shared	= true;
+=======
+	res[INTEL_QUARK_IORES_IRQ].start = pci_irq_vector(pdev, 0);
+	res[INTEL_QUARK_IORES_IRQ].end = pci_irq_vector(pdev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	cell->platform_data = pdata;
-	cell->pdata_size = sizeof(*pdata);
+	ret = software_node_register_node_group(intel_quark_gpio_node_group);
+	if (ret)
+		return ret;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cell->swnode = &intel_quark_gpio_controller_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -328,6 +360,7 @@ static int intel_quark_mfd_probe(struct pci_dev *pdev,
 			      NULL);
 	if (ret)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_unregister_gpio_node_group;
 
 	return 0;
@@ -340,6 +373,14 @@ err_unregister_gpio_node_group:
 	return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_unregister_gpio_node_group;
+
+	return 0;
+
+err_unregister_gpio_node_group:
+	software_node_unregister_node_group(intel_quark_gpio_node_group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_irq_vectors:
 	pci_free_irq_vectors(pdev);
 err_unregister_i2c_clk:
@@ -351,9 +392,13 @@ static void intel_quark_mfd_remove(struct pci_dev *pdev)
 {
 	mfd_remove_devices(&pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	software_node_unregister_node_group(intel_quark_gpio_node_group);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	software_node_unregister_node_group(intel_quark_gpio_node_group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_free_irq_vectors(pdev);
 	intel_quark_unregister_i2c_clk(&pdev->dev);
 }

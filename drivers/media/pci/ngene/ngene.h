@@ -408,6 +408,9 @@ enum _BUFFER_CONFIGS {
 struct FW_CONFIGURE_FREE_BUFFERS {
 	struct FW_HEADER hdr;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
 		u8   UVI1_BufferLength;
 		u8   UVI2_BufferLength;
@@ -416,6 +419,7 @@ struct FW_CONFIGURE_FREE_BUFFERS {
 		u8   AUD2_BufferLength;
 		u8   TVA_BufferLength;
 	} __packed config;
+<<<<<<< HEAD
 =======
 	u8   UVI1_BufferLength;
 	u8   UVI2_BufferLength;
@@ -424,6 +428,8 @@ struct FW_CONFIGURE_FREE_BUFFERS {
 	u8   AUD2_BufferLength;
 	u8   TVA_BufferLength;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __attribute__ ((__packed__));
 
 struct FW_CONFIGURE_UART {

@@ -364,6 +364,7 @@ void sh_css_unload_firmware(void)
 
 		for (i = 0; i < sh_css_num_binaries; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			kfree(fw_minibuffer[i].name);
 			kvfree(fw_minibuffer[i].buffer);
 =======
@@ -372,6 +373,10 @@ void sh_css_unload_firmware(void)
 			if (fw_minibuffer[i].buffer)
 				kvfree(fw_minibuffer[i].buffer);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			kfree(fw_minibuffer[i].name);
+			kvfree(fw_minibuffer[i].buffer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		kfree(fw_minibuffer);
 		fw_minibuffer = NULL;

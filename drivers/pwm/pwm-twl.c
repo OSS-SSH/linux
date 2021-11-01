@@ -299,9 +299,12 @@ static int twl_pwm_probe(struct platform_device *pdev)
 {
 	struct twl_pwm_chip *twl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	twl = devm_kzalloc(&pdev->dev, sizeof(*twl), GFP_KERNEL);
 	if (!twl)
@@ -317,6 +320,7 @@ static int twl_pwm_probe(struct platform_device *pdev)
 
 	mutex_init(&twl->mutex);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return devm_pwmchip_add(&pdev->dev, &twl->chip);
 =======
@@ -335,6 +339,9 @@ static int twl_pwm_remove(struct platform_device *pdev)
 
 	return pwmchip_remove(&twl->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return devm_pwmchip_add(&pdev->dev, &twl->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_OF
@@ -353,9 +360,12 @@ static struct platform_driver twl_pwm_driver = {
 	},
 	.probe = twl_pwm_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = twl_pwm_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_platform_driver(twl_pwm_driver);
 

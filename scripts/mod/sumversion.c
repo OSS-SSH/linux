@@ -392,6 +392,7 @@ void get_src_version(const char *modname, char sum[], unsigned sumlen)
 	char *fname;
 	char filelist[PATH_MAX + 1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* objects for a module are listed in the first line of *.mod file. */
 	snprintf(filelist, sizeof(filelist), "%s.mod", modname);
@@ -405,6 +406,11 @@ void get_src_version(const char *modname, char sum[], unsigned sumlen)
 	snprintf(filelist, sizeof(filelist), "%.*smod",
 		 (int)strlen(modname) - postfix_len, modname);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* objects for a module are listed in the first line of *.mod file. */
+	snprintf(filelist, sizeof(filelist), "%s.mod", modname);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	buf = read_text_file(filelist);
 

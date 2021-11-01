@@ -407,6 +407,7 @@ static int bcma_hcd_probe(struct bcma_device *core)
 	usb_dev->core = core;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (core->dev.of_node)
 		usb_dev->gpio_desc = devm_gpiod_get(&core->dev, "vcc",
 						    GPIOD_OUT_HIGH);
@@ -418,6 +419,11 @@ static int bcma_hcd_probe(struct bcma_device *core)
 			return PTR_ERR(usb_dev->gpio_desc);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (core->dev.of_node)
+		usb_dev->gpio_desc = devm_gpiod_get(&core->dev, "vcc",
+						    GPIOD_OUT_HIGH);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (core->id.id) {
 	case BCMA_CORE_USB20_HOST:

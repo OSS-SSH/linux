@@ -13,9 +13,13 @@
 #include <linux/of_address.h>
 #include <linux/platform_device.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pm_runtime.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/random.h>
 
 #include <soc/tegra/fuse.h>
@@ -57,6 +61,7 @@ static u32 tegra30_fuse_read(struct tegra_fuse *fuse, unsigned int offset)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = pm_runtime_resume_and_get(fuse->dev);
 	if (err)
 		return 0;
@@ -68,13 +73,20 @@ static u32 tegra30_fuse_read(struct tegra_fuse *fuse, unsigned int offset)
 	err = clk_prepare_enable(fuse->clk);
 	if (err < 0) {
 		dev_err(fuse->dev, "failed to enable FUSE clock: %d\n", err);
+=======
+	err = pm_runtime_resume_and_get(fuse->dev);
+	if (err)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
-	}
 
 	value = readl_relaxed(fuse->base + FUSE_BEGIN + offset);
 
+<<<<<<< HEAD
 	clk_disable_unprepare(fuse->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_put(fuse->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return value;
 }
@@ -128,9 +140,13 @@ const struct tegra_fuse_soc tegra30_fuse_soc = {
 	.info = &tegra30_fuse_info,
 	.soc_attr_group = &tegra_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -147,9 +163,13 @@ const struct tegra_fuse_soc tegra114_fuse_soc = {
 	.info = &tegra114_fuse_info,
 	.soc_attr_group = &tegra_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -232,9 +252,13 @@ const struct tegra_fuse_soc tegra124_fuse_soc = {
 	.num_lookups = ARRAY_SIZE(tegra124_fuse_lookups),
 	.soc_attr_group = &tegra_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = true,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -322,9 +346,13 @@ const struct tegra_fuse_soc tegra210_fuse_soc = {
 	.num_lookups = ARRAY_SIZE(tegra210_fuse_lookups),
 	.soc_attr_group = &tegra_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -356,9 +384,13 @@ const struct tegra_fuse_soc tegra186_fuse_soc = {
 	.num_lookups = ARRAY_SIZE(tegra186_fuse_lookups),
 	.soc_attr_group = &tegra_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -390,9 +422,13 @@ const struct tegra_fuse_soc tegra194_fuse_soc = {
 	.num_lookups = ARRAY_SIZE(tegra194_fuse_lookups),
 	.soc_attr_group = &tegra194_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -424,8 +460,12 @@ const struct tegra_fuse_soc tegra234_fuse_soc = {
 	.num_lookups = ARRAY_SIZE(tegra234_fuse_lookups),
 	.soc_attr_group = &tegra194_soc_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.clk_suspend_on = false,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.clk_suspend_on = false,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif

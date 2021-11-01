@@ -155,6 +155,7 @@ static ssize_t mei_recv_msg(struct mei *me, unsigned char *buffer,
 			ssize_t len, unsigned long timeout)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct timeval tv;
 	fd_set set;
 	ssize_t rc;
@@ -181,15 +182,42 @@ static ssize_t mei_recv_msg(struct mei *me, unsigned char *buffer,
 	}
 
 =======
+=======
+	struct timeval tv;
+	fd_set set;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t rc;
+
+	tv.tv_sec = timeout / 1000;
+	tv.tv_usec = (timeout % 1000) * 1000000;
 
 	mei_msg(me, "call read length = %zd\n", len);
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	FD_ZERO(&set);
+	FD_SET(me->fd, &set);
+	rc = select(me->fd + 1, &set, NULL, NULL, &tv);
+	if (rc > 0 && FD_ISSET(me->fd, &set)) {
+		mei_msg(me, "have reply\n");
+	} else if (rc == 0) {
+		rc = -1;
+		mei_err(me, "read failed on timeout\n");
+		goto out;
+	} else { /* rc < 0 */
+		rc = errno;
+		mei_err(me, "read failed on select with status %zd %s\n",
+			rc, strerror(errno));
+		goto out;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = read(me->fd, buffer, len);
 	if (rc < 0) {
 		mei_err(me, "read failed with status %zd %s\n",
 				rc, strerror(errno));
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out;
 	}
@@ -206,12 +234,24 @@ out:
 		mei_msg(me, "read succeeded with result %zd\n", rc);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out;
+	}
+
+	mei_msg(me, "read succeeded with result %zd\n", rc);
+
+out:
+	if (rc < 0)
+		mei_deinit(me);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
 static ssize_t mei_send_msg(struct mei *me, const unsigned char *buffer,
 			ssize_t len, unsigned long timeout)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ssize_t written;
 	ssize_t rc;
@@ -224,6 +264,10 @@ static ssize_t mei_send_msg(struct mei *me, const unsigned char *buffer,
 	tv.tv_sec = timeout / 1000;
 	tv.tv_usec = (timeout % 1000) * 1000000;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ssize_t written;
+	ssize_t rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mei_msg(me, "call write length = %zd\n", len);
 
@@ -234,6 +278,7 @@ static ssize_t mei_send_msg(struct mei *me, const unsigned char *buffer,
 			written, strerror(errno));
 		goto out;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	mei_msg(me, "write success\n");
 =======
@@ -251,6 +296,9 @@ static ssize_t mei_send_msg(struct mei *me, const unsigned char *buffer,
 		goto out;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mei_msg(me, "write success\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rc = written;
 out:

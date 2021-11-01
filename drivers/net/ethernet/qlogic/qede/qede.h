@@ -31,6 +31,7 @@
 #include <net/tc_act/tc_gact.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define QEDE_MAJOR_VERSION		8
 #define QEDE_MINOR_VERSION		37
@@ -42,6 +43,8 @@
 		__stringify(QEDE_ENGINEERING_VERSION)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DRV_MODULE_SYM		qede
 
 struct qede_stats_common {
@@ -505,9 +508,13 @@ struct qede_fastpath {
 #define QEDE_SP_ARFS_CONFIG             5
 #define QEDE_SP_AER			7
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define QEDE_SP_DISABLE			8
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define QEDE_SP_DISABLE			8
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_RFS_ACCEL
 int qede_rx_flow_steer(struct net_device *dev, const struct sk_buff *skb,
@@ -596,12 +603,18 @@ int qede_add_tc_flower_fltr(struct qede_dev *edev, __be16 proto,
 
 void qede_forced_speed_maps_init(void);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int qede_set_coalesce(struct net_device *dev, struct ethtool_coalesce *coal,
 		      struct kernel_ethtool_coalesce *kernel_coal,
 		      struct netlink_ext_ack *extack);
 =======
 int qede_set_coalesce(struct net_device *dev, struct ethtool_coalesce *coal);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int qede_set_coalesce(struct net_device *dev, struct ethtool_coalesce *coal,
+		      struct kernel_ethtool_coalesce *kernel_coal,
+		      struct netlink_ext_ack *extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int qede_set_per_coalesce(struct net_device *dev, u32 queue,
 			  struct ethtool_coalesce *coal);
 

@@ -453,6 +453,7 @@ static void __init mips_parse_crashkernel(void)
 
 	if (crash_base <= 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		crash_base = memblock_phys_alloc_range(crash_size, CRASH_ALIGN,
 						       CRASH_ALIGN,
 						       CRASH_ADDR_MAX);
@@ -460,6 +461,11 @@ static void __init mips_parse_crashkernel(void)
 		crash_base = memblock_find_in_range(CRASH_ALIGN, CRASH_ADDR_MAX,
 							crash_size, CRASH_ALIGN);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		crash_base = memblock_phys_alloc_range(crash_size, CRASH_ALIGN,
+						       CRASH_ALIGN,
+						       CRASH_ADDR_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!crash_base) {
 			pr_warn("crashkernel reservation failed - No suitable area found.\n");
 			return;
@@ -468,6 +474,7 @@ static void __init mips_parse_crashkernel(void)
 		unsigned long long start;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		start = memblock_phys_alloc_range(crash_size, 1,
 						  crash_base,
 						  crash_base + crash_size);
@@ -475,6 +482,11 @@ static void __init mips_parse_crashkernel(void)
 		start = memblock_find_in_range(crash_base, crash_base + crash_size,
 						crash_size, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		start = memblock_phys_alloc_range(crash_size, 1,
+						  crash_base,
+						  crash_base + crash_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (start != crash_base) {
 			pr_warn("Invalid memory region reserved for crash kernel\n");
 			return;
@@ -669,12 +681,15 @@ static void __init arch_mem_init(char **cmdline_p)
 
 	mips_parse_crashkernel();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_KEXEC
 	if (crashk_res.start != crashk_res.end)
 		memblock_reserve(crashk_res.start, resource_size(&crashk_res));
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	device_tree_init();
 
 	/*

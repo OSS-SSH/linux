@@ -94,6 +94,7 @@ static int dcss_kms_bridge_connector_init(struct dcss_kms_dev *kms)
 	ret = drm_bridge_attach(encoder, bridge, NULL,
 				DRM_BRIDGE_ATTACH_NO_CONNECTOR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 		return ret;
 =======
@@ -103,6 +104,10 @@ static int dcss_kms_bridge_connector_init(struct dcss_kms_dev *kms)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kms->connector = drm_bridge_connector_init(ddev, encoder);
 	if (IS_ERR(kms->connector)) {
@@ -139,10 +144,13 @@ struct dcss_kms_dev *dcss_kms_attach(struct dcss_dev *dcss)
 		goto cleanup_mode_config;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	drm->irq_enabled = true;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = dcss_kms_bridge_connector_init(kms);
 	if (ret)
 		goto cleanup_mode_config;
@@ -187,9 +195,12 @@ void dcss_kms_detach(struct dcss_kms_dev *kms)
 	drm_atomic_helper_shutdown(drm);
 	drm_crtc_vblank_off(&kms->crtc.base);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	drm->irq_enabled = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drm_mode_config_cleanup(drm);
 	dcss_crtc_deinit(&kms->crtc, drm);
 	drm->dev_private = NULL;

@@ -500,12 +500,17 @@ static u16 qedi_calc_mss(u16 pmtu, u8 is_ipv6, u8 tcp_ts_en, u8 vlan_en)
 static int qedi_iscsi_offload_conn(struct qedi_endpoint *qedi_ep)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct qed_iscsi_params_offload *conn_info;
 	struct qedi_ctx *qedi = qedi_ep->qedi;
 =======
 	struct qedi_ctx *qedi = qedi_ep->qedi;
 	struct qed_iscsi_params_offload *conn_info;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct qed_iscsi_params_offload *conn_info;
+	struct qedi_ctx *qedi = qedi_ep->qedi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rval;
 	int i;
 
@@ -583,6 +588,9 @@ static int qedi_iscsi_offload_conn(struct qedi_endpoint *qedi_ep)
 		  conn_info->default_cq, conn_info->mss);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Prepare the doorbell parameters */
 	qedi_ep->db_data.agg_flags = 0;
 	qedi_ep->db_data.params = 0;
@@ -604,6 +612,7 @@ static int qedi_iscsi_offload_conn(struct qedi_endpoint *qedi_ep)
 		return rval;
 	}
 
+<<<<<<< HEAD
 	rval = qedi_ops->offload_conn(qedi->cdev, qedi_ep->handle, conn_info);
 	if (rval) {
 		/* delete doorbell from doorbell recovery mechanism */
@@ -615,11 +624,22 @@ static int qedi_iscsi_offload_conn(struct qedi_endpoint *qedi_ep)
 			 rval, qedi_ep);
 	}
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rval = qedi_ops->offload_conn(qedi->cdev, qedi_ep->handle, conn_info);
-	if (rval)
+	if (rval) {
+		/* delete doorbell from doorbell recovery mechanism */
+		rval = qedi_ops->common->db_recovery_del(qedi->cdev,
+							 qedi_ep->p_doorbell,
+							 &qedi_ep->db_data);
+
 		QEDI_ERR(&qedi->dbg_ctx, "offload_conn returned %d, ep=%p\n",
 			 rval, qedi_ep);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(conn_info);
 	return rval;
@@ -1149,13 +1169,19 @@ static void qedi_ep_disconnect(struct iscsi_endpoint *ep)
 		goto ep_release_conn;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Delete doorbell from doorbell recovery mechanism */
 	ret = qedi_ops->common->db_recovery_del(qedi->cdev,
 					       qedi_ep->p_doorbell,
 					       &qedi_ep->db_data);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = qedi_ops->destroy_conn(qedi->cdev, qedi_ep->handle, abrt_conn);
 	if (ret) {
 		QEDI_WARN(&qedi->dbg_ctx,

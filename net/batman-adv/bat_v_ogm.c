@@ -585,6 +585,7 @@ static void batadv_v_ogm_forward(struct batadv_priv *bat_priv,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_orig_ifinfo_put(orig_ifinfo);
 	batadv_neigh_node_put(router);
 	batadv_neigh_ifinfo_put(neigh_ifinfo);
@@ -596,6 +597,11 @@ out:
 	if (neigh_ifinfo)
 		batadv_neigh_ifinfo_put(neigh_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_ifinfo_put(orig_ifinfo);
+	batadv_neigh_node_put(router);
+	batadv_neigh_ifinfo_put(neigh_ifinfo);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -676,6 +682,7 @@ static int batadv_v_ogm_metric_update(struct batadv_priv *bat_priv,
 		ret = 0;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_orig_ifinfo_put(orig_ifinfo);
 	batadv_neigh_ifinfo_put(neigh_ifinfo);
 =======
@@ -684,6 +691,10 @@ out:
 	if (neigh_ifinfo)
 		batadv_neigh_ifinfo_put(neigh_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_ifinfo_put(orig_ifinfo);
+	batadv_neigh_ifinfo_put(neigh_ifinfo);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -775,11 +786,15 @@ static bool batadv_v_ogm_route_update(struct batadv_priv *bat_priv,
 	batadv_update_route(bat_priv, orig_node, if_outgoing, neigh_node);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	batadv_neigh_node_put(router);
 	batadv_neigh_node_put(orig_neigh_router);
 	batadv_orig_node_put(orig_neigh_node);
 	batadv_neigh_ifinfo_put(router_ifinfo);
 	batadv_neigh_ifinfo_put(neigh_ifinfo);
+<<<<<<< HEAD
 =======
 	if (router)
 		batadv_neigh_node_put(router);
@@ -792,6 +807,8 @@ out:
 	if (neigh_ifinfo)
 		batadv_neigh_ifinfo_put(neigh_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return forward;
 }
@@ -998,6 +1015,7 @@ static void batadv_v_ogm_process(const struct sk_buff *skb, int ogm_offset,
 	rcu_read_unlock();
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_orig_node_put(orig_node);
 	batadv_neigh_node_put(neigh_node);
 	batadv_hardif_neigh_put(hardif_neigh);
@@ -1009,6 +1027,11 @@ out:
 	if (hardif_neigh)
 		batadv_hardif_neigh_put(hardif_neigh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(orig_node);
+	batadv_neigh_node_put(neigh_node);
+	batadv_hardif_neigh_put(hardif_neigh);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

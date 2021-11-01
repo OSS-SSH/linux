@@ -322,10 +322,14 @@ static int igt_atomic_engine_reset(void *arg)
 
 	for_each_engine(engine, gt, id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct tasklet_struct *t = &engine->sched_engine->tasklet;
 =======
 		struct tasklet_struct *t = &engine->execlists.tasklet;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct tasklet_struct *t = &engine->sched_engine->tasklet;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (t->func)
 			tasklet_disable(t);

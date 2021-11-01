@@ -11,7 +11,12 @@ fat-y := cache.o dir.o fatent.o file.o inode.o misc.o nfs.o
 vfat-y := namei_vfat.o
 msdos-y := namei_msdos.o
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 obj-$(CONFIG_FAT_KUNIT_TEST) += fat_test.o
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+obj-$(CONFIG_FAT_KUNIT_TEST) += fat_test.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

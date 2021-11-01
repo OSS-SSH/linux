@@ -233,10 +233,14 @@ struct dfl_feature_irq_ctx {
  * @resource_index: each sub feature has one mmio resource for its registers.
  *		    this index is used to find its mmio resource from the
 <<<<<<< HEAD
+<<<<<<< HEAD
  *		    feature dev (platform device)'s resources.
 =======
  *		    feature dev (platform device)'s reources.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		    feature dev (platform device)'s resources.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ioaddr: mapped mmio resource address.
  * @irq_ctx: interrupt context list.
  * @nr_irqs: number of interrupt contexts.
@@ -248,9 +252,13 @@ struct dfl_feature {
 	struct platform_device *dev;
 	u16 id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 revision;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 revision;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int resource_index;
 	void __iomem *ioaddr;
 	struct dfl_feature_irq_ctx *irq_ctx;

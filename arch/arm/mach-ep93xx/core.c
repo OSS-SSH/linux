@@ -1005,6 +1005,7 @@ void ep93xx_restart(enum reboot_mode mode, const char *cmd)
 		;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 void __init ep93xx_init_late(void)
@@ -1012,3 +1013,5 @@ void __init ep93xx_init_late(void)
 	crunch_init();
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

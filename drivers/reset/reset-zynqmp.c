@@ -54,11 +54,16 @@ static int zynqmp_reset_status(struct reset_controller_dev *rcdev,
 {
 	struct zynqmp_reset_data *priv = to_zynqmp_reset_data(rcdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 	u32 val;
 =======
 	int val, err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+	u32 val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = zynqmp_pm_reset_get_status(priv->data->reset_id + id, &val);
 	if (err)

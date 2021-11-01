@@ -171,14 +171,19 @@ static struct dcp *global_sdcp;
 static int mxs_dcp_start_dma(struct dcp_async_ctx *actx)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int dma_err;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int dma_err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dcp *sdcp = global_sdcp;
 	const int chan = actx->chan;
 	uint32_t stat;
 	unsigned long ret;
 	struct dcp_dma_desc *desc = &sdcp->coh->desc[actx->chan];
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dma_addr_t desc_phys = dma_map_single(sdcp->dev, desc, sizeof(*desc),
 					      DMA_TO_DEVICE);
@@ -193,6 +198,15 @@ static int mxs_dcp_start_dma(struct dcp_async_ctx *actx)
 					      DMA_TO_DEVICE);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_addr_t desc_phys = dma_map_single(sdcp->dev, desc, sizeof(*desc),
+					      DMA_TO_DEVICE);
+
+	dma_err = dma_mapping_error(sdcp->dev, desc_phys);
+	if (dma_err)
+		return dma_err;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reinit_completion(&sdcp->completion[chan]);
 
 	/* Clear status register. */
@@ -231,15 +245,22 @@ static int mxs_dcp_run_aes(struct dcp_async_ctx *actx,
 			   struct skcipher_request *req, int init)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_addr_t key_phys, src_phys, dst_phys;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_addr_t key_phys, src_phys, dst_phys;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dcp *sdcp = global_sdcp;
 	struct dcp_dma_desc *desc = &sdcp->coh->desc[actx->chan];
 	struct dcp_aes_req_ctx *rctx = skcipher_request_ctx(req);
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	key_phys = dma_map_single(sdcp->dev, sdcp->coh->aes_key,
 				  2 * AES_KEYSIZE_128, DMA_TO_DEVICE);
 	ret = dma_mapping_error(sdcp->dev, key_phys);
@@ -257,6 +278,7 @@ static int mxs_dcp_run_aes(struct dcp_async_ctx *actx,
 	ret = dma_mapping_error(sdcp->dev, dst_phys);
 	if (ret)
 		goto err_dst;
+<<<<<<< HEAD
 =======
 	dma_addr_t key_phys = dma_map_single(sdcp->dev, sdcp->coh->aes_key,
 					     2 * AES_KEYSIZE_128,
@@ -266,6 +288,8 @@ static int mxs_dcp_run_aes(struct dcp_async_ctx *actx,
 	dma_addr_t dst_phys = dma_map_single(sdcp->dev, sdcp->coh->aes_out_buf,
 					     DCP_BUF_SZ, DMA_FROM_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (actx->fill % AES_BLOCK_SIZE) {
 		dev_err(sdcp->dev, "Invalid block size!\n");
@@ -304,10 +328,14 @@ static int mxs_dcp_run_aes(struct dcp_async_ctx *actx,
 
 aes_done_run:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_unmap_single(sdcp->dev, dst_phys, DCP_BUF_SZ, DMA_FROM_DEVICE);
 err_dst:
 	dma_unmap_single(sdcp->dev, src_phys, DCP_BUF_SZ, DMA_TO_DEVICE);
 err_src:
+<<<<<<< HEAD
 	dma_unmap_single(sdcp->dev, key_phys, 2 * AES_KEYSIZE_128,
 			 DMA_TO_DEVICE);
 =======
@@ -316,6 +344,10 @@ err_src:
 	dma_unmap_single(sdcp->dev, src_phys, DCP_BUF_SZ, DMA_TO_DEVICE);
 	dma_unmap_single(sdcp->dev, dst_phys, DCP_BUF_SZ, DMA_FROM_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(sdcp->dev, key_phys, 2 * AES_KEYSIZE_128,
+			 DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -331,15 +363,20 @@ static int mxs_dcp_aes_block_crypt(struct crypto_async_request *arq)
 	struct scatterlist *dst = req->dst;
 	struct scatterlist *src = req->src;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int dst_nents = sg_nents(dst);
 =======
 	const int nents = sg_nents(req->src);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int dst_nents = sg_nents(dst);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	const int out_off = DCP_BUF_SZ;
 	uint8_t *in_buf = sdcp->coh->aes_in_buf;
 	uint8_t *out_buf = sdcp->coh->aes_out_buf;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	uint32_t dst_off = 0;
 	uint8_t *src_buf = NULL;
@@ -347,17 +384,25 @@ static int mxs_dcp_aes_block_crypt(struct crypto_async_request *arq)
 	uint8_t *out_tmp, *src_buf, *dst_buf = NULL;
 	uint32_t dst_off = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t dst_off = 0;
+	uint8_t *src_buf = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t last_out_len = 0;
 
 	uint8_t *key = sdcp->coh->aes_key;
 
 	int ret = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int i, len, clen, tlen = 0;
 =======
 	int split = 0;
 	unsigned int i, len, clen, rem = 0, tlen = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i, len, clen, tlen = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int init = 0;
 	bool limit_hit = false;
 
@@ -376,10 +421,14 @@ static int mxs_dcp_aes_block_crypt(struct crypto_async_request *arq)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for_each_sg(req->src, src, sg_nents(src), i) {
 =======
 	for_each_sg(req->src, src, nents, i) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for_each_sg(req->src, src, sg_nents(src), i) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		src_buf = sg_virt(src);
 		len = sg_dma_len(src);
 		tlen += len;
@@ -405,15 +454,20 @@ static int mxs_dcp_aes_block_crypt(struct crypto_async_request *arq)
 			 */
 			if (actx->fill == out_off || sg_is_last(src) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    limit_hit) {
 =======
 				limit_hit) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    limit_hit) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ret = mxs_dcp_run_aes(actx, req, init);
 				if (ret)
 					return ret;
 				init = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 				sg_pcopy_from_buffer(dst, dst_nents, out_buf,
 						     actx->fill, dst_off);
@@ -444,6 +498,13 @@ static int mxs_dcp_aes_block_crypt(struct crypto_async_request *arq)
 					}
 				}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				sg_pcopy_from_buffer(dst, dst_nents, out_buf,
+						     actx->fill, dst_off);
+				dst_off += actx->fill;
+				last_out_len = actx->fill;
+				actx->fill = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		} while (len);
 
@@ -634,12 +695,18 @@ static int mxs_dcp_run_sha(struct ahash_request *req)
 					     DCP_BUF_SZ, DMA_TO_DEVICE);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = dma_mapping_error(sdcp->dev, buf_phys);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Fill in the DMA descriptor. */
 	desc->control0 = MXS_DCP_CONTROL0_DECR_SEMAPHORE |
 		    MXS_DCP_CONTROL0_INTERRUPT |
@@ -673,12 +740,18 @@ static int mxs_dcp_run_sha(struct ahash_request *req)
 		digest_phys = dma_map_single(sdcp->dev, sdcp->coh->sha_out_buf,
 					     DCP_SHA_PAY_SZ, DMA_FROM_DEVICE);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = dma_mapping_error(sdcp->dev, digest_phys);
 		if (ret)
 			goto done_run;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		desc->control0 |= MXS_DCP_CONTROL0_HASH_TERM;
 		desc->payload = digest_phys;
 	}

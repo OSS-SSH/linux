@@ -347,9 +347,13 @@ struct arm_smmu_cfg {
 	enum arm_smmu_cbar_type		cbar;
 	enum arm_smmu_context_fmt	fmt;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool				flush_walk_prefer_tlbiasid;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool				flush_walk_prefer_tlbiasid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #define ARM_SMMU_INVALID_IRPTNDX	0xff
 

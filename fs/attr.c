@@ -250,6 +250,9 @@ void setattr_copy(struct user_namespace *mnt_userns, struct inode *inode,
 EXPORT_SYMBOL(setattr_copy);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int may_setattr(struct user_namespace *mnt_userns, struct inode *inode,
 		unsigned int ia_valid)
 {
@@ -278,8 +281,11 @@ int may_setattr(struct user_namespace *mnt_userns, struct inode *inode,
 }
 EXPORT_SYMBOL(may_setattr);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * notify_change - modify attributes of a filesytem object
  * @mnt_userns:	user namespace of the mount the inode was found from
@@ -322,6 +328,7 @@ int notify_change(struct user_namespace *mnt_userns, struct dentry *dentry,
 	WARN_ON_ONCE(!inode_is_locked(inode));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = may_setattr(mnt_userns, inode, ia_valid);
 	if (error)
 		return error;
@@ -346,6 +353,11 @@ int notify_change(struct user_namespace *mnt_userns, struct dentry *dentry,
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = may_setattr(mnt_userns, inode, ia_valid);
+	if (error)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((ia_valid & ATTR_MODE)) {
 		umode_t amode = attr->ia_mode;

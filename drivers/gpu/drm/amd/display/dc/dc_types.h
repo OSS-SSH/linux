@@ -76,6 +76,7 @@ enum dce_environment {
 	(IS_FPGA_MAXIMUS_DC(dce_environment) || (dce_environment == DCE_ENV_DIAG))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct hw_asic_id {
 	uint32_t chip_id;
@@ -90,6 +91,8 @@ struct hw_asic_id {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct dc_perf_trace {
 	unsigned long read_count;
 	unsigned long write_count;
@@ -97,6 +100,7 @@ struct dc_perf_trace {
 	unsigned long last_entry_write;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define DC_MAX_EDID_BUFFER_SIZE 2048
 =======
@@ -131,6 +135,9 @@ struct dc_context {
 
 #define DC_MAX_EDID_BUFFER_SIZE 1280
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DC_MAX_EDID_BUFFER_SIZE 2048
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DC_EDID_BLOCK_SIZE 128
 #define MAX_SURFACE_NUM 4
 #define NUM_PIXEL_FORMATS 10
@@ -844,6 +851,9 @@ struct dc_clock_config {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hw_asic_id {
 	uint32_t chip_id;
 	uint32_t chip_family;
@@ -884,8 +894,11 @@ struct dc_context {
 
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* DSC DPCD capabilities */
 union dsc_slice_caps1 {
 	struct {

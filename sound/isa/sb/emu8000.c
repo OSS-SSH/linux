@@ -1049,6 +1049,7 @@ __error:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 /*
@@ -1072,6 +1073,8 @@ static int snd_emu8000_dev_free(struct snd_device *device)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * initialize and register emu8000 synth device.
  */
@@ -1083,11 +1086,14 @@ snd_emu8000_new(struct snd_card *card, int index, long port, int seq_ports,
 	struct snd_emu8000 *hw;
 	int err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	static const struct snd_device_ops ops = {
 		.dev_free = snd_emu8000_dev_free,
 	};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (awe_ret)
 		*awe_ret = NULL;
@@ -1096,10 +1102,14 @@ snd_emu8000_new(struct snd_card *card, int index, long port, int seq_ports,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hw = devm_kzalloc(card->dev, sizeof(*hw), GFP_KERNEL);
 =======
 	hw = kzalloc(sizeof(*hw), GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hw = devm_kzalloc(card->dev, sizeof(*hw), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (hw == NULL)
 		return -ENOMEM;
 	spin_lock_init(&hw->reg_lock);
@@ -1107,6 +1117,7 @@ snd_emu8000_new(struct snd_card *card, int index, long port, int seq_ports,
 	hw->port1 = port;
 	hw->port2 = port + 0x400;
 	hw->port3 = port + 0x800;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!devm_request_region(card->dev, hw->port1, 4, "Emu8000-1") ||
 	    !devm_request_region(card->dev, hw->port2, 4, "Emu8000-2") ||
@@ -1120,6 +1131,12 @@ snd_emu8000_new(struct snd_card *card, int index, long port, int seq_ports,
 		snd_printk(KERN_ERR "sbawe: can't grab ports 0x%lx, 0x%lx, 0x%lx\n", hw->port1, hw->port2, hw->port3);
 		snd_emu8000_free(hw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!devm_request_region(card->dev, hw->port1, 4, "Emu8000-1") ||
+	    !devm_request_region(card->dev, hw->port2, 4, "Emu8000-2") ||
+	    !devm_request_region(card->dev, hw->port3, 4, "Emu8000-3")) {
+		snd_printk(KERN_ERR "sbawe: can't grab ports 0x%lx, 0x%lx, 0x%lx\n", hw->port1, hw->port2, hw->port3);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	hw->mem_size = 0;
@@ -1133,6 +1150,7 @@ snd_emu8000_new(struct snd_card *card, int index, long port, int seq_ports,
 	hw->fm_reverb_depth = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (snd_emu8000_detect(hw) < 0)
 		return -ENODEV;
 
@@ -1143,14 +1161,16 @@ snd_emu8000_new(struct snd_card *card, int index, long port, int seq_ports,
 =======
 	if (snd_emu8000_detect(hw) < 0) {
 		snd_emu8000_free(hw);
+=======
+	if (snd_emu8000_detect(hw) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
-	}
 
 	snd_emu8000_init_hw(hw);
 	err = snd_emu8000_create_mixer(card, hw);
-	if (err < 0) {
-		snd_emu8000_free(hw);
+	if (err < 0)
 		return err;
+<<<<<<< HEAD
 	}
 	
 	err = snd_device_new(card, SNDRV_DEV_CODEC, hw, &ops);
@@ -1159,6 +1179,8 @@ snd_emu8000_new(struct snd_card *card, int index, long port, int seq_ports,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_SND_SEQUENCER)
 	if (snd_seq_device_new(card, index, SNDRV_SEQ_DEV_ID_EMU8000,
 			       sizeof(struct snd_emu8000*), &awe) >= 0) {

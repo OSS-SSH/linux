@@ -21,6 +21,7 @@ struct vboxsf_handle {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct vboxsf_handle *vboxsf_create_sf_handle(struct inode *inode,
 					      u64 handle, u32 access_flags)
 {
@@ -56,15 +57,43 @@ static int vboxsf_file_open(struct inode *inode, struct file *file)
 	struct vboxsf_inode *sf_i = VBOXSF_I(inode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct shfl_createparms params = {};
+=======
+struct vboxsf_handle *vboxsf_create_sf_handle(struct inode *inode,
+					      u64 handle, u32 access_flags)
+{
+	struct vboxsf_inode *sf_i = VBOXSF_I(inode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct vboxsf_handle *sf_handle;
-	u32 access_flags = 0;
-	int err;
 
 <<<<<<< HEAD
 =======
 	sf_handle = kmalloc(sizeof(*sf_handle), GFP_KERNEL);
 	if (!sf_handle)
-		return -ENOMEM;
+		return ERR_PTR(-ENOMEM);
+
+	/* the host may have given us different attr then requested */
+	sf_i->force_restat = 1;
+
+	/* init our handle struct and add it to the inode's handles list */
+	sf_handle->handle = handle;
+	sf_handle->root = VBOXSF_SBI(inode->i_sb)->root;
+	sf_handle->access_flags = access_flags;
+	kref_init(&sf_handle->refcount);
+
+	mutex_lock(&sf_i->handle_list_mutex);
+	list_add(&sf_handle->head, &sf_i->handle_list);
+	mutex_unlock(&sf_i->handle_list_mutex);
+
+	return sf_handle;
+}
+
+static int vboxsf_file_open(struct inode *inode, struct file *file)
+{
+	struct vboxsf_sbi *sbi = VBOXSF_SBI(inode->i_sb);
+	struct shfl_createparms params = {};
+	struct vboxsf_handle *sf_handle;
+	u32 access_flags = 0;
+	int err;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
@@ -119,6 +148,7 @@ static int vboxsf_file_open(struct inode *inode, struct file *file)
 	if (err == 0 && params.handle == SHFL_HANDLE_NIL)
 		err = (params.result == SHFL_FILE_EXISTS) ? -EEXIST : -ENOENT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err)
 		return err;
 
@@ -131,21 +161,16 @@ static int vboxsf_file_open(struct inode *inode, struct file *file)
 =======
 	if (err) {
 		kfree(sf_handle);
+=======
+	if (err)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
+
+	sf_handle = vboxsf_create_sf_handle(inode, params.handle, access_flags);
+	if (IS_ERR(sf_handle)) {
+		vboxsf_close(sbi->root, params.handle);
+		return PTR_ERR(sf_handle);
 	}
-
-	/* the host may have given us different attr then requested */
-	sf_i->force_restat = 1;
-
-	/* init our handle struct and add it to the inode's handles list */
-	sf_handle->handle = params.handle;
-	sf_handle->root = VBOXSF_SBI(inode->i_sb)->root;
-	sf_handle->access_flags = access_flags;
-	kref_init(&sf_handle->refcount);
-
-	mutex_lock(&sf_i->handle_list_mutex);
-	list_add(&sf_handle->head, &sf_i->handle_list);
-	mutex_unlock(&sf_i->handle_list_mutex);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	file->private_data = sf_handle;
@@ -162,6 +187,7 @@ static void vboxsf_handle_release(struct kref *refcount)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void vboxsf_release_sf_handle(struct inode *inode, struct vboxsf_handle *sf_handle)
 {
 	struct vboxsf_inode *sf_i = VBOXSF_I(inode);
@@ -177,17 +203,32 @@ static int vboxsf_file_release(struct inode *inode, struct file *file)
 {
 =======
 static int vboxsf_file_release(struct inode *inode, struct file *file)
+=======
+void vboxsf_release_sf_handle(struct inode *inode, struct vboxsf_handle *sf_handle)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vboxsf_inode *sf_i = VBOXSF_I(inode);
-	struct vboxsf_handle *sf_handle = file->private_data;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_lock(&sf_i->handle_list_mutex);
+	list_del(&sf_handle->head);
+	mutex_unlock(&sf_i->handle_list_mutex);
+
+	kref_put(&sf_handle->refcount, vboxsf_handle_release);
+}
+
+static int vboxsf_file_release(struct inode *inode, struct file *file)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * When a file is closed on our (the guest) side, we want any subsequent
 	 * accesses done on the host side to see all changes done from our side.
 	 */
 	filemap_write_and_wait(inode->i_mapping);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	vboxsf_release_sf_handle(inode, file->private_data);
 =======
@@ -197,6 +238,9 @@ static int vboxsf_file_release(struct inode *inode, struct file *file)
 
 	kref_put(&sf_handle->refcount, vboxsf_handle_release);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vboxsf_release_sf_handle(inode, file->private_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

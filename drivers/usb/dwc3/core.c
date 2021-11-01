@@ -265,6 +265,7 @@ static int dwc3_core_soft_reset(struct dwc3 *dwc)
 	u32		reg;
 	int		retries = 1000;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int		ret;
 
@@ -280,6 +281,8 @@ static int dwc3_core_soft_reset(struct dwc3 *dwc)
 		return ret;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * We're resetting only the device side because, if we're in host mode,
@@ -314,11 +317,14 @@ static int dwc3_core_soft_reset(struct dwc3 *dwc)
 	} while (--retries);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	phy_exit(dwc->usb3_generic_phy);
 	phy_exit(dwc->usb2_generic_phy);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -ETIMEDOUT;
 
 done:
@@ -989,6 +995,9 @@ static int dwc3_core_init(struct dwc3 *dwc)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_phy_init(dwc->usb2_phy);
 	usb_phy_init(dwc->usb3_phy);
 	ret = phy_init(dwc->usb2_generic_phy);
@@ -1001,6 +1010,7 @@ static int dwc3_core_init(struct dwc3 *dwc)
 		goto err0a;
 	}
 
+<<<<<<< HEAD
 	ret = dwc3_core_soft_reset(dwc);
 	if (ret)
 		goto err1;
@@ -1009,6 +1019,11 @@ static int dwc3_core_init(struct dwc3 *dwc)
 	if (ret)
 		goto err0a;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dwc3_core_soft_reset(dwc);
+	if (ret)
+		goto err1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD &&
 	    !DWC3_VER_IS_WITHIN(DWC3, ANY, 194A)) {
@@ -1075,6 +1090,9 @@ static int dwc3_core_init(struct dwc3 *dwc)
 			reg |= DWC3_GUCTL1_DEV_L1_EXIT_BY_HW;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Decouple USB 2.0 L1 & L2 events which will allow for
 		 * gadget driver to only receive U3/L2 suspend & wakeup
@@ -1084,8 +1102,11 @@ static int dwc3_core_init(struct dwc3 *dwc)
 		if (!DWC3_VER_IS_PRIOR(DWC3, 300A))
 			reg |= DWC3_GUCTL1_DEV_DECOUPLE_L1L2_EVT;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dwc->dis_tx_ipgap_linecheck_quirk)
 			reg |= DWC3_GUCTL1_TX_IPGAP_LINECHECK_DIS;
 
@@ -1304,9 +1325,13 @@ static void dwc3_get_properties(struct dwc3 *dwc)
 	u8			tx_thr_num_pkt_prd;
 	u8			tx_max_burst_prd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8			tx_fifo_resize_max_num;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8			tx_fifo_resize_max_num;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char		*usb_psy_name;
 	int			ret;
 
@@ -1323,6 +1348,9 @@ static void dwc3_get_properties(struct dwc3 *dwc)
 	hird_threshold = 12;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * default to a TXFIFO size large enough to fit 6 max packets.  This
 	 * allows for systems with larger bus latencies to have some headroom
@@ -1330,8 +1358,11 @@ static void dwc3_get_properties(struct dwc3 *dwc)
 	 */
 	tx_fifo_resize_max_num = 6;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dwc->maximum_speed = usb_get_maximum_speed(dev);
 	dwc->max_ssp_rate = usb_get_maximum_ssp_rate(dev);
 	dwc->dr_mode = usb_get_dr_mode(dev);
@@ -1376,13 +1407,19 @@ static void dwc3_get_properties(struct dwc3 *dwc)
 	device_property_read_u8(dev, "snps,tx-max-burst-prd",
 				&tx_max_burst_prd);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dwc->do_fifo_resize = device_property_read_bool(dev,
 							"tx-fifo-resize");
 	if (dwc->do_fifo_resize)
 		device_property_read_u8(dev, "tx-fifo-max-num",
 					&tx_fifo_resize_max_num);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dwc->disable_scramble_quirk = device_property_read_bool(dev,
 				"snps,disable_scramble_quirk");
@@ -1449,10 +1486,15 @@ static void dwc3_get_properties(struct dwc3 *dwc)
 
 	dwc->imod_interval = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	dwc->tx_fifo_resize_max_num = tx_fifo_resize_max_num;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	dwc->tx_fifo_resize_max_num = tx_fifo_resize_max_num;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* check whether the core supports IMOD */

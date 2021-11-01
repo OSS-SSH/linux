@@ -14,13 +14,18 @@
 
 #include "i915_active_types.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "i915_sw_fence.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "i915_sw_fence.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "i915_utils.h"
 #include "intel_engine_types.h"
 #include "intel_sseu.h"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #include "uc/intel_guc_fwif.h"
 
@@ -29,6 +34,11 @@
 #define CONTEXT_REDZONE POISON_INUSE
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "uc/intel_guc_fwif.h"
+
+#define CONTEXT_REDZONE POISON_INUSE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DECLARE_EWMA(runtime, 3, 8);
 
 struct i915_gem_context;
@@ -46,16 +56,24 @@ struct intel_context_ops {
 	int (*alloc)(struct intel_context *ce);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void (*ban)(struct intel_context *ce, struct i915_request *rq);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void (*ban)(struct intel_context *ce, struct i915_request *rq);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*pre_pin)(struct intel_context *ce, struct i915_gem_ww_ctx *ww, void **vaddr);
 	int (*pin)(struct intel_context *ce, void *vaddr);
 	void (*unpin)(struct intel_context *ce);
 	void (*post_unpin)(struct intel_context *ce);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*cancel_request)(struct intel_context *ce,
 			       struct i915_request *rq);
 
@@ -72,6 +90,7 @@ struct intel_context_ops {
 						unsigned int count);
 	struct intel_engine_cs *(*get_sibling)(struct intel_engine_cs *engine,
 					       unsigned int sibling);
+<<<<<<< HEAD
 =======
 	void (*enter)(struct intel_context *ce);
 	void (*exit)(struct intel_context *ce);
@@ -79,6 +98,8 @@ struct intel_context_ops {
 	void (*reset)(struct intel_context *ce);
 	void (*destroy)(struct kref *kref);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct intel_context {
@@ -117,9 +138,13 @@ struct intel_context {
 
 	struct i915_vma *state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 ring_size;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 ring_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_ring *ring;
 	struct intel_timeline *timeline;
 
@@ -134,9 +159,13 @@ struct intel_context {
 #define CONTEXT_FORCE_SINGLE_SUBMISSION	7
 #define CONTEXT_NOPREEMPT		8
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CONTEXT_LRCA_DIRTY		9
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CONTEXT_LRCA_DIRTY		9
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct {
 		u64 timeout_us;
@@ -179,6 +208,9 @@ struct intel_context {
 
 	u8 wa_bb_page; /* if set, page num reserved for context workarounds */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct {
 		/** lock: protects everything in guc_state */
@@ -224,8 +256,11 @@ struct intel_context {
 	 */
 	u8 guc_prio;
 	u32 guc_prio_count[GUC_CLIENT_PRIORITY_NUM];
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif /* __INTEL_CONTEXT_TYPES__ */

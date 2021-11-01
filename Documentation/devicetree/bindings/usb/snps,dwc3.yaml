@@ -290,11 +290,15 @@ properties:
 
   tx-fifo-resize:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     description: Determines if the TX fifos can be dynamically resized depending
       on the number of IN endpoints used and if bursting is supported.  This
       may help improve bandwidth on platforms with higher system latencies, as
       increased fifo space allows for the controller to prefetch data into its
       internal memory.
+<<<<<<< HEAD
     type: boolean
 
   tx-fifo-max-num:
@@ -311,6 +315,18 @@ properties:
     type: boolean
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    type: boolean
+
+  tx-fifo-max-num:
+    description: Specifies the max number of packets the txfifo resizing logic
+      can account for when higher endpoint bursting is used. (bMaxBurst > 6) The
+      higher the number, the more fifo space the txfifo resizing logic will
+      allocate for that endpoint.
+    $ref: /schemas/types.yaml#/definitions/uint8
+    minimum: 3
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   snps,incr-burst-type-adjustment:
     description:
       Value for INCR burst type of GSBUSCFG0 register, undefined length INCR

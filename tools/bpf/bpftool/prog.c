@@ -250,6 +250,7 @@ static void show_prog_metadata(int fd, __u32 num_maps)
 	struct btf_var_secinfo *vsi;
 	bool printed_header = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int i, vlen;
 	void *value = NULL;
 	const char *name;
@@ -260,6 +261,12 @@ static void show_prog_metadata(int fd, __u32 num_maps)
 	void *value = NULL;
 	const char *name;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i, vlen;
+	void *value = NULL;
+	const char *name;
+	struct btf *btf;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!num_maps)
@@ -271,12 +278,17 @@ static void show_prog_metadata(int fd, __u32 num_maps)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btf = btf__load_from_kernel_by_id(map_info.btf_id);
 	if (libbpf_get_error(btf))
 =======
 	err = btf__get_from_id(map_info.btf_id, &btf);
 	if (err || !btf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf = btf__load_from_kernel_by_id(map_info.btf_id);
+	if (libbpf_get_error(btf))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_free;
 
 	t_datasec = btf__type_by_id(btf, map_info.btf_value_type_id);
@@ -659,17 +671,23 @@ prog_dump(struct bpf_prog_info *info, enum dump_mode mode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (info->btf_id) {
 		btf = btf__load_from_kernel_by_id(info->btf_id);
 		if (libbpf_get_error(btf)) {
 			p_err("failed to get btf");
 			return -1;
 		}
+<<<<<<< HEAD
 =======
 	if (info->btf_id && btf__get_from_id(info->btf_id, &btf)) {
 		p_err("failed to get btf");
 		return -1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	func_info = u64_to_ptr(info->func_info);
@@ -803,10 +821,15 @@ prog_dump(struct bpf_prog_info *info, enum dump_mode mode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btf__free(btf);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf__free(btf);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2029,12 +2052,17 @@ static char *profile_target_name(int tgt_fd)
 	struct bpf_func_info *func_info;
 	const struct btf_type *t;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct btf *btf = NULL;
 	char *name = NULL;
 =======
 	char *name = NULL;
 	struct btf *btf;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct btf *btf = NULL;
+	char *name = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info_linear = bpf_program__get_prog_info_linear(
 		tgt_fd, 1UL << BPF_PROG_INFO_FUNC_INFO);
@@ -2044,24 +2072,34 @@ static char *profile_target_name(int tgt_fd)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (info_linear->info.btf_id == 0) {
 =======
 	if (info_linear->info.btf_id == 0 ||
 	    btf__get_from_id(info_linear->info.btf_id, &btf)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info_linear->info.btf_id == 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		p_err("prog FD %d doesn't have valid btf", tgt_fd);
 		goto out;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	btf = btf__load_from_kernel_by_id(info_linear->info.btf_id);
 	if (libbpf_get_error(btf)) {
 		p_err("failed to load btf for prog FD %d", tgt_fd);
 		goto out;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	func_info = u64_to_ptr(info_linear->info.func_info);
 	t = btf__type_by_id(btf, func_info[0].type_id);
 	if (!t) {
@@ -2072,9 +2110,13 @@ static char *profile_target_name(int tgt_fd)
 	name = strdup(btf__name_by_offset(btf, t->name_off));
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	btf__free(btf);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf__free(btf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free(info_linear);
 	return name;
 }
@@ -2294,6 +2336,7 @@ static int do_help(int argc, char **argv)
 		"                 cgroup/getsockopt | cgroup/setsockopt | cgroup/sock_release |\n"
 		"                 struct_ops | fentry | fexit | freplace | sk_lookup }\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"       ATTACH_TYPE := { msg_verdict | skb_verdict | stream_verdict |\n"
 		"                        stream_parser | flow_dissector }\n"
 		"       METRIC := { cycles | instructions | l1d_loads | llc_misses | itlb_misses | dtlb_misses }\n"
@@ -2306,6 +2349,14 @@ static int do_help(int argc, char **argv)
 		"       METRIC := { cycles | instructions | l1d_loads | llc_misses | itlb_misses | dtlb_misses }\n"
 		"       " HELP_SPEC_OPTIONS "\n"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"       ATTACH_TYPE := { msg_verdict | skb_verdict | stream_verdict |\n"
+		"                        stream_parser | flow_dissector }\n"
+		"       METRIC := { cycles | instructions | l1d_loads | llc_misses | itlb_misses | dtlb_misses }\n"
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-f|--bpffs} | {-m|--mapcompat} | {-n|--nomount} |\n"
+		"                    {-L|--use-loader} }\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"",
 		bin_name, argv[-2]);
 

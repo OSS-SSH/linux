@@ -405,11 +405,17 @@ static void drm_mode_rmfb_work_fn(struct work_struct *w)
 			list_first_entry(&arg->fbs, typeof(*fb), filp_head);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		drm_dbg_kms(fb->dev,
 			    "Removing [FB:%d] from all active usage due to RMFB ioctl\n",
 			    fb->base.id);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		drm_dbg_kms(fb->dev,
+			    "Removing [FB:%d] from all active usage due to RMFB ioctl\n",
+			    fb->base.id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_del_init(&fb->filp_head);
 		drm_framebuffer_remove(fb);
 	}
@@ -988,12 +994,18 @@ retry:
 			continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_dbg_kms(dev,
 			    "Disabling [PLANE:%d:%s] because [FB:%d] is removed\n",
 			    plane->base.id, plane->name, fb->base.id);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		plane_state = drm_atomic_get_plane_state(state, plane);
 		if (IS_ERR(plane_state)) {
 			ret = PTR_ERR(plane_state);
@@ -1004,13 +1016,19 @@ retry:
 			struct drm_crtc_state *crtc_state;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			drm_dbg_kms(dev,
 				    "Disabling [CRTC:%d:%s] because [FB:%d] is removed\n",
 				    plane_state->crtc->base.id,
 				    plane_state->crtc->name, fb->base.id);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			crtc_state = drm_atomic_get_existing_crtc_state(state, plane_state->crtc);
 
 			ret = drm_atomic_add_affected_connectors(state, plane_state->crtc);
@@ -1074,12 +1092,18 @@ static void legacy_remove_fb(struct drm_framebuffer *fb)
 	drm_for_each_crtc(crtc, dev) {
 		if (crtc->primary->fb == fb) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			drm_dbg_kms(dev,
 				    "Disabling [CRTC:%d:%s] because [FB:%d] is removed\n",
 				    crtc->base.id, crtc->name, fb->base.id);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* should turn off the crtc */
 			if (drm_crtc_force_disable(crtc))
 				DRM_ERROR("failed to reset crtc %p when fb was deleted\n", crtc);
@@ -1088,16 +1112,24 @@ static void legacy_remove_fb(struct drm_framebuffer *fb)
 
 	drm_for_each_plane(plane, dev) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (plane->fb == fb) {
 			drm_dbg_kms(dev,
 				    "Disabling [PLANE:%d:%s] because [FB:%d] is removed\n",
 				    plane->base.id, plane->name, fb->base.id);
+<<<<<<< HEAD
 			drm_plane_force_disable(plane);
 		}
 =======
 		if (plane->fb == fb)
 			drm_plane_force_disable(plane);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			drm_plane_force_disable(plane);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	drm_modeset_unlock_all(dev);
 }
@@ -1128,10 +1160,14 @@ void drm_framebuffer_remove(struct drm_framebuffer *fb)
 	/*
 	 * drm ABI mandates that we remove any deleted framebuffers from active
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * usage. But since most sane clients only remove framebuffers they no
 =======
 	 * useage. But since most sane clients only remove framebuffers they no
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * usage. But since most sane clients only remove framebuffers they no
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * longer need, try to optimize this away.
 	 *
 	 * Since we're holding a reference ourselves, observing a refcount of 1

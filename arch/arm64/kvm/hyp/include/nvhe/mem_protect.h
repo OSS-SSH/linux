@@ -13,6 +13,9 @@
 #include <nvhe/spinlock.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * SW bits 0-1 are reserved to track the memory ownership state of each page:
  *   00: The page is owned exclusively by the page-table owner.
@@ -39,8 +42,11 @@ static inline enum pkvm_page_state pkvm_getstate(enum kvm_pgtable_prot prot)
 	return prot & PKVM_PAGE_STATE_PROT_MASK;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct host_kvm {
 	struct kvm_arch arch;
 	struct kvm_pgtable pgt;
@@ -49,6 +55,7 @@ struct host_kvm {
 };
 extern struct host_kvm host_kvm;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 extern const u8 pkvm_hyp_id;
 
@@ -59,10 +66,20 @@ bool addr_is_memory(phys_addr_t phys);
 int host_stage2_idmap_locked(phys_addr_t addr, u64 size, enum kvm_pgtable_prot prot);
 int host_stage2_set_owner_locked(phys_addr_t addr, u64 size, u8 owner_id);
 =======
-int __pkvm_prot_finalize(void);
-int __pkvm_mark_hyp(phys_addr_t start, phys_addr_t end);
+=======
+extern const u8 pkvm_hyp_id;
 
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int __pkvm_prot_finalize(void);
+int __pkvm_host_share_hyp(u64 pfn);
+
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool addr_is_memory(phys_addr_t phys);
+int host_stage2_idmap_locked(phys_addr_t addr, u64 size, enum kvm_pgtable_prot prot);
+int host_stage2_set_owner_locked(phys_addr_t addr, u64 size, u8 owner_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int kvm_host_prepare_stage2(void *pgt_pool_base);
 void handle_host_mem_abort(struct kvm_cpu_context *host_ctxt);
 
@@ -70,10 +87,14 @@ static __always_inline void __load_host_stage2(void)
 {
 	if (static_branch_likely(&kvm_protected_mode_initialized))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__load_stage2(&host_kvm.arch.mmu, &host_kvm.arch);
 =======
 		__load_stage2(&host_kvm.arch.mmu, host_kvm.arch.vtcr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__load_stage2(&host_kvm.arch.mmu, &host_kvm.arch);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		write_sysreg(0, vttbr_el2);
 }

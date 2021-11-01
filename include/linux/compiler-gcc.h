@@ -44,11 +44,14 @@
 #define __compiletime_object_size(obj) __builtin_object_size(obj, 0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define __compiletime_warning(message) __attribute__((__warning__(message)))
 #define __compiletime_error(message) __attribute__((__error__(message)))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(LATENT_ENTROPY_PLUGIN) && !defined(__CHECKER__)
 #define __latent_entropy __attribute__((latent_entropy))
 #endif
@@ -102,6 +105,7 @@
 #if GCC_VERSION >= 70000
 #define KASAN_ABI_VERSION 5
 <<<<<<< HEAD
+<<<<<<< HEAD
 #else
 #define KASAN_ABI_VERSION 4
 =======
@@ -110,6 +114,10 @@
 #elif GCC_VERSION >= 40902
 #define KASAN_ABI_VERSION 3
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#else
+#define KASAN_ABI_VERSION 4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #if __has_attribute(__no_sanitize_address__)
@@ -137,12 +145,15 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #if GCC_VERSION >= 50100
 #define COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW 1
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Turn individual warnings and errors on and off locally, depending
  * on version.

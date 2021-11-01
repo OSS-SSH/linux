@@ -391,6 +391,7 @@ int pvrdma_query_srq(struct ib_srq *srq, struct ib_srq_attr *srq_attr);
 int pvrdma_destroy_srq(struct ib_srq *srq, struct ib_udata *udata);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int pvrdma_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *init_attr,
 		     struct ib_udata *udata);
 =======
@@ -398,6 +399,10 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 			       struct ib_qp_init_attr *init_attr,
 			       struct ib_udata *udata);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int pvrdma_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *init_attr,
+		     struct ib_udata *udata);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int pvrdma_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
 		     int attr_mask, struct ib_udata *udata);
 int pvrdma_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *qp_attr,

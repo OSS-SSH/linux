@@ -94,11 +94,15 @@ static void unset_migratetype_isolate(struct page *page, unsigned migratetype)
 			buddy = page + (buddy_pfn - pfn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (!is_migrate_isolate_page(buddy)) {
 =======
 			if (pfn_valid_within(buddy_pfn) &&
 			    !is_migrate_isolate_page(buddy)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!is_migrate_isolate_page(buddy)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				__isolate_free_page(page, order);
 				isolated_page = true;
 			}
@@ -255,12 +259,15 @@ __test_page_isolated_in_pageblock(unsigned long pfn, unsigned long end_pfn,
 
 	while (pfn < end_pfn) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (!pfn_valid_within(pfn)) {
 			pfn++;
 			continue;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		page = pfn_to_page(pfn);
 		if (PageBuddy(page))
 			/*
@@ -295,9 +302,13 @@ int test_pages_isolated(unsigned long start_pfn, unsigned long end_pfn,
 	struct page *page;
 	struct zone *zone;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Note: pageblock_nr_pages != MAX_ORDER. Then, chunks of free pages
@@ -311,21 +322,28 @@ int test_pages_isolated(unsigned long start_pfn, unsigned long end_pfn,
 	}
 	page = __first_valid_page(start_pfn, end_pfn - start_pfn);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((pfn < end_pfn) || !page) {
 		ret = -EBUSY;
 		goto out;
 	}
 
+<<<<<<< HEAD
 =======
 	if ((pfn < end_pfn) || !page)
 		return -EBUSY;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check all pages are free or marked as ISOLATED */
 	zone = page_zone(page);
 	spin_lock_irqsave(&zone->lock, flags);
 	pfn = __test_page_isolated_in_pageblock(start_pfn, end_pfn, isol_flags);
 	spin_unlock_irqrestore(&zone->lock, flags);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = pfn < end_pfn ? -EBUSY : 0;
 
@@ -338,4 +356,12 @@ out:
 
 	return pfn < end_pfn ? -EBUSY : 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = pfn < end_pfn ? -EBUSY : 0;
+
+out:
+	trace_test_pages_isolated(start_pfn, end_pfn, pfn);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

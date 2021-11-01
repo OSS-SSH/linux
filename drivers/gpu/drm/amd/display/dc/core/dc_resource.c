@@ -1031,10 +1031,14 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
 	/* Timing borders are part of vactive that we are also supposed to skip in addition
 	 * to any stream dst offset. Since dm logic assumes dst is in addressable
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * space we need to add the left and top borders to dst offsets temporarily.
 =======
 	 * space we need to add the the left and top borders to dst offsets temporarily.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * space we need to add the left and top borders to dst offsets temporarily.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * TODO: fix in DM, stream dst is supposed to be in vactive
 	 */
 	pipe_ctx->stream->dst.x += timing->h_border_left;
@@ -1056,13 +1060,19 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
 	calculate_viewport_size(pipe_ctx);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Stopgap for validation of ODM + MPO on one side of screen case */
 	if (pipe_ctx->plane_res.scl_data.viewport.height < 1 ||
 			pipe_ctx->plane_res.scl_data.viewport.width < 1)
 		return false;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * LB calculations depend on vp size, h/v_active and scaling ratios
 	 * Setting line buffer pixel depth to 24bpp yields banding
@@ -1075,10 +1085,14 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
 	 * did not show such problems, so this seems to be the exception.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (plane_state->ctx->dce_version > DCE_VERSION_11_0)
 =======
 	if (plane_state->ctx->dce_version != DCE_VERSION_11_0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (plane_state->ctx->dce_version > DCE_VERSION_11_0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pipe_ctx->plane_res.scl_data.lb_params.depth = LB_PIXEL_DEPTH_36BPP;
 	else
 		pipe_ctx->plane_res.scl_data.lb_params.depth = LB_PIXEL_DEPTH_30BPP;

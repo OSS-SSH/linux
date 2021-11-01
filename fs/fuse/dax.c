@@ -445,12 +445,16 @@ static int fuse_setup_new_dax_mapping(struct inode *inode, loff_t pos,
 	 * Can't do inline reclaim in fault path. We call
 	 * dax_layout_busy_page() before we free a range. And
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * fuse_wait_dax_page() drops mapping->invalidate_lock and requires it.
 	 * In fault path we enter with mapping->invalidate_lock held and can't
 	 * drop it. Also in fault path we hold mapping->invalidate_lock shared
 	 * and not exclusive, so that creates further issues with
 	 * fuse_wait_dax_page().  Hence return -EAGAIN and fuse_dax_fault()
 	 * will wait for a memory range to become free and retry.
+<<<<<<< HEAD
 =======
 	 * fuse_wait_dax_page() drops fi->i_mmap_sem lock and requires it.
 	 * In fault path we enter with fi->i_mmap_sem held and can't drop
@@ -459,6 +463,8 @@ static int fuse_setup_new_dax_mapping(struct inode *inode, loff_t pos,
 	 * Hence return -EAGAIN and fuse_dax_fault() will wait for a memory
 	 * range to become free and retry.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	if (flags & IOMAP_FAULT) {
 		alloc_dmap = alloc_dax_mapping(fcd);
@@ -523,10 +529,14 @@ static int fuse_upgrade_dax_mapping(struct inode *inode, loff_t pos,
 	node = interval_tree_iter_first(&fi->dax->tree, idx, idx);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* We are holding either inode lock or invalidate_lock, and that should
 =======
 	/* We are holding either inode lock or i_mmap_sem, and that should
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* We are holding either inode lock or invalidate_lock, and that should
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * ensure that dmap can't be truncated. We are holding a reference
 	 * on dmap and that should make sure it can't be reclaimed. So dmap
 	 * should still be there in tree despite the fact we dropped and
@@ -674,6 +684,7 @@ static const struct iomap_ops fuse_iomap_ops = {
 static void fuse_wait_dax_page(struct inode *inode)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_unlock(inode->i_mapping);
 	schedule();
 	filemap_invalidate_lock(inode->i_mapping);
@@ -684,12 +695,19 @@ static void fuse_wait_dax_page(struct inode *inode)
 	struct fuse_inode *fi = get_fuse_inode(inode);
 
 	up_write(&fi->i_mmap_sem);
+=======
+	filemap_invalidate_unlock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	schedule();
-	down_write(&fi->i_mmap_sem);
+	filemap_invalidate_lock(inode->i_mapping);
 }
 
+<<<<<<< HEAD
 /* Should be called with fi->i_mmap_sem lock held exclusively */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Should be called with mapping->invalidate_lock held exclusively */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __fuse_dax_break_layouts(struct inode *inode, bool *retry,
 				    loff_t start, loff_t end)
 {
@@ -836,29 +854,41 @@ retry:
 	 * to populate page cache or access memory we are trying to free.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_lock_shared(inode->i_mapping);
 =======
 	down_read(&get_fuse_inode(inode)->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock_shared(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = dax_iomap_fault(vmf, pe_size, &pfn, &error, &fuse_iomap_ops);
 	if ((ret & VM_FAULT_ERROR) && error == -EAGAIN) {
 		error = 0;
 		retry = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		filemap_invalidate_unlock_shared(inode->i_mapping);
 =======
 		up_read(&get_fuse_inode(inode)->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		filemap_invalidate_unlock_shared(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto retry;
 	}
 
 	if (ret & VM_FAULT_NEEDDSYNC)
 		ret = dax_finish_sync_fault(vmf, pe_size, pfn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_unlock_shared(inode->i_mapping);
 =======
 	up_read(&get_fuse_inode(inode)->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_unlock_shared(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (write)
 		sb_end_pagefault(sb);
@@ -995,10 +1025,14 @@ inode_inline_reclaim_one_dmap(struct fuse_conn_dax *fcd, struct inode *inode,
 	struct interval_tree_node *node;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_lock(inode->i_mapping);
 =======
 	down_write(&fi->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Lookup a dmap and corresponding file offset to reclaim. */
 	down_read(&fi->dax->sem);
@@ -1060,10 +1094,14 @@ out_write_dmap_sem:
 	up_write(&fi->dax->sem);
 out_mmap_sem:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_unlock(inode->i_mapping);
 =======
 	up_write(&fi->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_unlock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dmap;
 }
 
@@ -1093,16 +1131,22 @@ alloc_dax_mapping_reclaim(struct fuse_conn_dax *fcd, struct inode *inode)
 		 * Try again. We want to give up inline reclaim only
 		 * if there is no range assigned to this node. Otherwise
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * if a deadlock is possible if we sleep with
 		 * mapping->invalidate_lock held and worker to free memory
 		 * can't make progress due to unavailability of
 		 * mapping->invalidate_lock.  So sleep only if fi->dax->nr=0
+<<<<<<< HEAD
 =======
 		 * if a deadlock is possible if we sleep with fi->i_mmap_sem
 		 * held and worker to free memory can't make progress due
 		 * to unavailability of fi->i_mmap_sem lock. So sleep
 		 * only if fi->dax->nr=0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
 		if (retry)
 			continue;
@@ -1111,12 +1155,17 @@ alloc_dax_mapping_reclaim(struct fuse_conn_dax *fcd, struct inode *inode)
 		 * We are not holding fi->dax->sem. So it is possible
 		 * that range gets added now. But as we are not holding
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * mapping->invalidate_lock, worker should still be able to
 		 * free up a range and wake us up.
 =======
 		 * fi->i_mmap_sem, worker should still be able to free up
 		 * a range and wake us up.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * mapping->invalidate_lock, worker should still be able to
+		 * free up a range and wake us up.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
 		if (!fi->dax->nr && !(fcd->nr_free_ranges > 0)) {
 			if (wait_event_killable_exclusive(fcd->range_waitq,
@@ -1163,10 +1212,14 @@ static int lookup_and_reclaim_dmap_locked(struct fuse_conn_dax *fcd,
  * Free a range of memory.
  * Locking:
 <<<<<<< HEAD
+<<<<<<< HEAD
  * 1. Take mapping->invalidate_lock to block dax faults.
 =======
  * 1. Take fi->i_mmap_sem to block dax faults.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * 1. Take mapping->invalidate_lock to block dax faults.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * 2. Take fi->dax->sem to protect interval tree and also to make sure
  *    read/write can not reuse a dmap which we might be freeing.
  */
@@ -1181,10 +1234,14 @@ static int lookup_and_reclaim_dmap(struct fuse_conn_dax *fcd,
 	loff_t dmap_end = (dmap_start + FUSE_DAX_SZ) - 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_lock(inode->i_mapping);
 =======
 	down_write(&fi->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = fuse_dax_break_layouts(inode, dmap_start, dmap_end);
 	if (ret) {
 		pr_debug("virtio_fs: fuse_dax_break_layouts() failed. err=%d\n",
@@ -1197,10 +1254,14 @@ static int lookup_and_reclaim_dmap(struct fuse_conn_dax *fcd,
 	up_write(&fi->dax->sem);
 out_mmap_sem:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	filemap_invalidate_unlock(inode->i_mapping);
 =======
 	up_write(&fi->i_mmap_sem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_unlock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1302,10 +1363,13 @@ static int fuse_dax_mem_range_init(struct fuse_conn_dax *fcd)
 {
 	long nr_pages, nr_ranges;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	void *kaddr;
 	pfn_t pfn;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fuse_dax_mapping *range;
 	int ret, id;
 	size_t dax_size = -1;
@@ -1318,12 +1382,17 @@ static int fuse_dax_mem_range_init(struct fuse_conn_dax *fcd)
 
 	id = dax_read_lock();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nr_pages = dax_direct_access(fcd->dev, 0, PHYS_PFN(dax_size), NULL,
 				     NULL);
 =======
 	nr_pages = dax_direct_access(fcd->dev, 0, PHYS_PFN(dax_size), &kaddr,
 				     &pfn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nr_pages = dax_direct_access(fcd->dev, 0, PHYS_PFN(dax_size), NULL,
+				     NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dax_read_unlock(id);
 	if (nr_pages < 0) {
 		pr_debug("dax_direct_access() returned %ld\n", nr_pages);

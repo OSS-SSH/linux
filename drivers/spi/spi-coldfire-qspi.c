@@ -445,10 +445,14 @@ static int mcfqspi_remove(struct platform_device *pdev)
 
 	mcfqspi_cs_teardown(mcfqspi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	clk_disable_unprepare(mcfqspi->clk);
 =======
 	clk_disable(mcfqspi->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_disable_unprepare(mcfqspi->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

@@ -21,6 +21,9 @@
 #include <linux/debug_locks.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 # define __DEP_MAP_MUTEX_INITIALIZER(lockname)			\
 		, .dep_map = {					\
@@ -32,10 +35,13 @@
 #endif
 
 #ifndef CONFIG_PREEMPT_RT
+<<<<<<< HEAD
 =======
 struct ww_class;
 struct ww_acquire_ctx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Simple, straightforward mutexes with strict semantics:
@@ -68,10 +74,14 @@ struct ww_acquire_ctx;
 struct mutex {
 	atomic_long_t		owner;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	raw_spinlock_t		wait_lock;
 =======
 	spinlock_t		wait_lock;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	raw_spinlock_t		wait_lock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_MUTEX_SPIN_ON_OWNER
 	struct optimistic_spin_queue osq; /* Spinner MCS lock */
 #endif
@@ -84,6 +94,7 @@ struct mutex {
 #endif
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 struct ww_mutex {
@@ -108,6 +119,8 @@ struct mutex_waiter {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_MUTEXES
 
 #define __DEBUG_MUTEX_INITIALIZER(lockname)				\
@@ -139,6 +152,7 @@ do {									\
 } while (0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __MUTEX_INITIALIZER(lockname) \
 		{ .owner = ATOMIC_LONG_INIT(0) \
 		, .wait_lock = __RAW_SPIN_LOCK_UNLOCKED(lockname.wait_lock) \
@@ -157,6 +171,11 @@ do {									\
 		{ .owner = ATOMIC_LONG_INIT(0) \
 		, .wait_lock = __SPIN_LOCK_UNLOCKED(lockname.wait_lock) \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __MUTEX_INITIALIZER(lockname) \
+		{ .owner = ATOMIC_LONG_INIT(0) \
+		, .wait_lock = __RAW_SPIN_LOCK_UNLOCKED(lockname.wait_lock) \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		, .wait_list = LIST_HEAD_INIT(lockname.wait_list) \
 		__DEBUG_MUTEX_INITIALIZER(lockname) \
 		__DEP_MAP_MUTEX_INITIALIZER(lockname) }
@@ -176,6 +195,9 @@ extern void __mutex_init(struct mutex *lock, const char *name,
 extern bool mutex_is_locked(struct mutex *lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else /* !CONFIG_PREEMPT_RT */
 /*
  * Preempt-RT variant based on rtmutexes.
@@ -220,8 +242,11 @@ do {							\
 } while (0)
 #endif /* CONFIG_PREEMPT_RT */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * See kernel/locking/mutex.c for detailed documentation of these APIs.
  * Also see Documentation/locking/mutex-design.rst.

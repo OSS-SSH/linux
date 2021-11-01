@@ -2415,9 +2415,13 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
 	struct drm_mode_modeinfo __user *mode_ptr;
 	uint32_t __user *encoder_ptr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool is_current_master;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool is_current_master;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!drm_core_check_feature(dev, DRIVER_MODESET))
 		return -EOPNOTSUPP;
@@ -2449,6 +2453,7 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
 	out_resp->connector_type_id = connector->connector_type_id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	is_current_master = drm_is_current_master(file_priv);
 
 	mutex_lock(&dev->mode_config.mutex);
@@ -2459,6 +2464,13 @@ int drm_mode_getconnector(struct drm_device *dev, void *data,
 	if (out_resp->count_modes == 0) {
 		if (drm_is_current_master(file_priv))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	is_current_master = drm_is_current_master(file_priv);
+
+	mutex_lock(&dev->mode_config.mutex);
+	if (out_resp->count_modes == 0) {
+		if (is_current_master)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			connector->funcs->fill_modes(connector,
 						     dev->mode_config.max_width,
 						     dev->mode_config.max_height);

@@ -14,9 +14,12 @@
 #include "i915_drv.h"
 #include "i915_active.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "i915_globals.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Active refs memory management
@@ -26,6 +29,7 @@
  * nodes from a local slab cache to hopefully reduce the fragmentation.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct kmem_cache *slab_cache;
 =======
 static struct i915_global_active {
@@ -33,6 +37,9 @@ static struct i915_global_active {
 	struct kmem_cache *slab_cache;
 } global;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct kmem_cache *slab_cache;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct active_node {
 	struct rb_node node;
@@ -182,10 +189,14 @@ __active_retire(struct i915_active *ref)
 	rbtree_postorder_for_each_entry_safe(it, n, &root, node) {
 		GEM_BUG_ON(i915_active_fence_isset(&it->base));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kmem_cache_free(slab_cache, it);
 =======
 		kmem_cache_free(global.slab_cache, it);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kmem_cache_free(slab_cache, it);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -334,10 +345,14 @@ active_instance(struct i915_active *ref, u64 idx)
 	 *  called, but we cannot call into fs_reclaim() anyway, so use GFP_ATOMIC.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	node = kmem_cache_alloc(slab_cache, GFP_ATOMIC);
 =======
 	node = kmem_cache_alloc(global.slab_cache, GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	node = kmem_cache_alloc(slab_cache, GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!node)
 		goto out;
 
@@ -804,10 +819,14 @@ void i915_active_fini(struct i915_active *ref)
 
 	if (ref->cache)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kmem_cache_free(slab_cache, ref->cache);
 =======
 		kmem_cache_free(global.slab_cache, ref->cache);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kmem_cache_free(slab_cache, ref->cache);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline bool is_idle_barrier(struct active_node *node, u64 idx)
@@ -928,10 +947,14 @@ int i915_active_acquire_preallocate_barrier(struct i915_active *ref,
 		rcu_read_unlock();
 		if (!node) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			node = kmem_cache_alloc(slab_cache, GFP_KERNEL);
 =======
 			node = kmem_cache_alloc(global.slab_cache, GFP_KERNEL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			node = kmem_cache_alloc(slab_cache, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!node)
 				goto unwind;
 
@@ -980,10 +1003,14 @@ unwind:
 		intel_engine_pm_put(barrier_to_engine(node));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kmem_cache_free(slab_cache, node);
 =======
 		kmem_cache_free(global.slab_cache, node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kmem_cache_free(slab_cache, node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return -ENOMEM;
 }
@@ -1204,6 +1231,7 @@ struct i915_active *i915_active_create(void)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void i915_active_module_exit(void)
 {
 	kmem_cache_destroy(slab_cache);
@@ -1217,27 +1245,23 @@ int __init i915_active_module_init(void)
 
 =======
 static void i915_global_active_shrink(void)
+=======
+void i915_active_module_exit(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	kmem_cache_shrink(global.slab_cache);
+	kmem_cache_destroy(slab_cache);
 }
 
-static void i915_global_active_exit(void)
+int __init i915_active_module_init(void)
 {
-	kmem_cache_destroy(global.slab_cache);
-}
-
-static struct i915_global_active global = { {
-	.shrink = i915_global_active_shrink,
-	.exit = i915_global_active_exit,
-} };
-
-int __init i915_global_active_init(void)
-{
-	global.slab_cache = KMEM_CACHE(active_node, SLAB_HWCACHE_ALIGN);
-	if (!global.slab_cache)
+	slab_cache = KMEM_CACHE(active_node, SLAB_HWCACHE_ALIGN);
+	if (!slab_cache)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	i915_global_register(&global.base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }

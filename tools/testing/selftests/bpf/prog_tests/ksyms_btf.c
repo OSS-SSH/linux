@@ -7,9 +7,13 @@
 #include "test_ksyms_btf.skel.h"
 #include "test_ksyms_btf_null_check.skel.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "test_ksyms_weak.skel.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "test_ksyms_weak.skel.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int duration;
 
@@ -86,6 +90,9 @@ static void test_null_check(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void test_weak_syms(void)
 {
 	struct test_ksyms_weak *skel;
@@ -113,8 +120,11 @@ cleanup:
 	test_ksyms_weak__destroy(skel);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void test_ksyms_btf(void)
 {
 	int percpu_datasec;
@@ -140,9 +150,15 @@ void test_ksyms_btf(void)
 	if (test__start_subtest("null_check"))
 		test_null_check();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (test__start_subtest("weak_ksyms"))
 		test_weak_syms();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (test__start_subtest("weak_ksyms"))
+		test_weak_syms();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

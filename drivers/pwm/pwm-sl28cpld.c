@@ -232,12 +232,16 @@ static int sl28cpld_pwm_probe(struct platform_device *pdev)
 	chip->npwm = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = devm_pwmchip_add(&pdev->dev, &priv->pwm_chip);
 =======
 	platform_set_drvdata(pdev, priv);
 
 	ret = pwmchip_add(&priv->pwm_chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_pwmchip_add(&pdev->dev, &priv->pwm_chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		dev_err(&pdev->dev, "failed to add PWM chip (%pe)",
 			ERR_PTR(ret));
@@ -248,6 +252,7 @@ static int sl28cpld_pwm_probe(struct platform_device *pdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int sl28cpld_pwm_remove(struct platform_device *pdev)
 {
@@ -257,6 +262,8 @@ static int sl28cpld_pwm_remove(struct platform_device *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id sl28cpld_pwm_of_match[] = {
 	{ .compatible = "kontron,sl28cpld-pwm" },
 	{}
@@ -266,9 +273,12 @@ MODULE_DEVICE_TABLE(of, sl28cpld_pwm_of_match);
 static struct platform_driver sl28cpld_pwm_driver = {
 	.probe = sl28cpld_pwm_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove	= sl28cpld_pwm_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.name = "sl28cpld-pwm",
 		.of_match_table = sl28cpld_pwm_of_match,

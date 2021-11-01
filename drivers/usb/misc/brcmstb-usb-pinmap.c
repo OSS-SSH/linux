@@ -294,10 +294,15 @@ static int __init brcmstb_usb_pinmap_probe(struct platform_device *pdev)
 		/* Enable interrupt for out pins */
 		irq = platform_get_irq(pdev, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (irq < 0)
 			return irq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (irq < 0)
+			return irq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = devm_request_irq(&pdev->dev, irq,
 				       brcmstb_usb_pinmap_ovr_isr,
 				       IRQF_TRIGGER_RISING,

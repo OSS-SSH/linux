@@ -404,10 +404,14 @@ static int ncsi_rsp_handler_ev(struct ncsi_request *nr)
 	cmd = (struct ncsi_cmd_ev_pkt *)skb_network_header(nr->cmd);
 	ncm->enable = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ncm->data[0] = ntohl((__force __be32)cmd->mode);
 =======
 	ncm->data[0] = ntohl(cmd->mode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ncm->data[0] = ntohl((__force __be32)cmd->mode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -704,6 +708,9 @@ static int ncsi_rsp_handler_oem_bcm(struct ncsi_request *nr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Response handler for Intel command Get Mac Address */
 static int ncsi_rsp_handler_oem_intel_gma(struct ncsi_request *nr)
 {
@@ -752,19 +759,27 @@ static int ncsi_rsp_handler_oem_intel(struct ncsi_request *nr)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct ncsi_rsp_oem_handler {
 	unsigned int	mfr_id;
 	int		(*handler)(struct ncsi_request *nr);
 } ncsi_rsp_oem_handlers[] = {
 	{ NCSI_OEM_MFR_MLX_ID, ncsi_rsp_handler_oem_mlx },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ NCSI_OEM_MFR_BCM_ID, ncsi_rsp_handler_oem_bcm },
 	{ NCSI_OEM_MFR_INTEL_ID, ncsi_rsp_handler_oem_intel }
 =======
 	{ NCSI_OEM_MFR_BCM_ID, ncsi_rsp_handler_oem_bcm }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ NCSI_OEM_MFR_BCM_ID, ncsi_rsp_handler_oem_bcm },
+	{ NCSI_OEM_MFR_INTEL_ID, ncsi_rsp_handler_oem_intel }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* Response handler for OEM command */

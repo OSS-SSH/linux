@@ -25,12 +25,17 @@ static u32 read_reference_ts_freq(struct intel_uncore *uncore)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 gen9_get_crystal_clock_freq(struct intel_uncore *uncore,
 				       u32 rpm_config_reg)
 =======
 static u32 gen10_get_crystal_clock_freq(struct intel_uncore *uncore,
 					u32 rpm_config_reg)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u32 gen9_get_crystal_clock_freq(struct intel_uncore *uncore,
+				       u32 rpm_config_reg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 f19_2_mhz = 19200000;
 	u32 f24_mhz = 24000000;
@@ -134,6 +139,7 @@ static u32 read_clock_frequency(struct intel_uncore *uncore)
 			u32 c0 = intel_uncore_read(uncore, RPM_CONFIG0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (GRAPHICS_VER(uncore->i915) >= 11)
 				freq = gen11_get_crystal_clock_freq(uncore, c0);
 			else
@@ -144,6 +150,12 @@ static u32 read_clock_frequency(struct intel_uncore *uncore)
 			else
 				freq = gen11_get_crystal_clock_freq(uncore, c0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (GRAPHICS_VER(uncore->i915) >= 11)
+				freq = gen11_get_crystal_clock_freq(uncore, c0);
+			else
+				freq = gen9_get_crystal_clock_freq(uncore, c0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/*
 			 * Now figure out how the command stream's timestamp

@@ -743,10 +743,14 @@ static int ft260_is_interface_enabled(struct hid_device *hdev)
 
 	ret = ft260_get_system_config(hdev, &cfg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret < 0)
 =======
 	if (ret)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 
 	ft260_dbg("interface:  0x%02x\n", interface);
@@ -758,6 +762,7 @@ static int ft260_is_interface_enabled(struct hid_device *hdev)
 	switch (cfg.chip_mode) {
 	case FT260_MODE_ALL:
 	case FT260_MODE_BOTH:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (interface == 1)
 			hid_info(hdev, "uart interface is not supported\n");
@@ -771,23 +776,26 @@ static int ft260_is_interface_enabled(struct hid_device *hdev)
 		ret = 1;
 =======
 		if (interface == 1) {
+=======
+		if (interface == 1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			hid_info(hdev, "uart interface is not supported\n");
-			return 0;
-		}
-		ret = 1;
+		else
+			ret = 1;
 		break;
 	case FT260_MODE_UART:
-		if (interface == 0) {
-			hid_info(hdev, "uart is unsupported on interface 0\n");
-			ret = 0;
-		}
+		hid_info(hdev, "uart interface is not supported\n");
 		break;
 	case FT260_MODE_I2C:
+<<<<<<< HEAD
 		if (interface == 1) {
 			hid_info(hdev, "i2c is unsupported on interface 1\n");
 			ret = 0;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 	return ret;
@@ -803,10 +811,14 @@ static int ft260_byte_show(struct hid_device *hdev, int id, u8 *cfg, int len,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return scnprintf(buf, PAGE_SIZE, "%d\n", *field);
 =======
 	return scnprintf(buf, PAGE_SIZE, "%hi\n", *field);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return scnprintf(buf, PAGE_SIZE, "%d\n", *field);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ft260_word_show(struct hid_device *hdev, int id, u8 *cfg, int len,
@@ -819,10 +831,14 @@ static int ft260_word_show(struct hid_device *hdev, int id, u8 *cfg, int len,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return scnprintf(buf, PAGE_SIZE, "%d\n", le16_to_cpu(*field));
 =======
 	return scnprintf(buf, PAGE_SIZE, "%hi\n", le16_to_cpu(*field));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return scnprintf(buf, PAGE_SIZE, "%d\n", le16_to_cpu(*field));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define FT260_ATTR_SHOW(name, reptype, id, type, func)			       \
@@ -1030,6 +1046,7 @@ err_hid_stop:
 static void ft260_remove(struct hid_device *hdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct ft260_device *dev = hid_get_drvdata(hdev);
 
 	if (!dev)
@@ -1040,6 +1057,11 @@ static void ft260_remove(struct hid_device *hdev)
 	ret = ft260_is_interface_enabled(hdev);
 	if (ret <= 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ft260_device *dev = hid_get_drvdata(hdev);
+
+	if (!dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	sysfs_remove_group(&hdev->dev.kobj, &ft260_attr_group);

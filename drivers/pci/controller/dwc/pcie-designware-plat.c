@@ -165,9 +165,12 @@ static int dw_plat_pcie_probe(struct platform_device *pdev)
 		pci->ep.ops = &pcie_ep_ops;
 		return dw_pcie_ep_init(&pci->ep);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		dev_err(dev, "INVALID device type %d\n", dw_plat_pcie->mode);
 	}

@@ -1712,12 +1712,18 @@ enum ieee80211_offload_flags {
  * @offload_flags: 802.3 -> 802.11 enapsulation offload flags, see
  *	&enum ieee80211_offload_flags.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @color_change_active: marks whether a color change is ongoing. Internally it is
  *	write-protected by sdata_lock and local->mtx so holding either is fine
  *	for read access.
  * @color_change_color: the bss color that will be used after the change.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct ieee80211_vif {
 	enum nl80211_iftype type;
@@ -1747,11 +1753,17 @@ struct ieee80211_vif {
 	bool txqs_stopped[IEEE80211_NUM_ACS];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool color_change_active;
 	u8 color_change_color;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool color_change_active;
+	u8 color_change_color;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* must be last */
 	u8 drv_priv[] __aligned(sizeof(void *));
 };
@@ -2825,6 +2837,7 @@ void ieee80211_free_txskb(struct ieee80211_hw *hw, struct sk_buff *skb);
  * when they are able to replace in-use PTK keys according to the following
  * requirements:
 <<<<<<< HEAD
+<<<<<<< HEAD
  * 1) They do not hand over frames decrypted with the old key to mac80211
       once the call to set_key() with command %DISABLE_KEY has been completed,
    2) either drop or continue to use the old key for any outgoing frames queued
@@ -2841,6 +2854,15 @@ void ieee80211_free_txskb(struct ieee80211_hw *hw, struct sk_buff *skb);
    3) never send out a frame queued prior to the set_key() %SET_KEY command
       encrypted with the new key and
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * 1) They do not hand over frames decrypted with the old key to mac80211
+      once the call to set_key() with command %DISABLE_KEY has been completed,
+   2) either drop or continue to use the old key for any outgoing frames queued
+      at the time of the key deletion (including re-transmits),
+   3) never send out a frame queued prior to the set_key() %SET_KEY command
+      encrypted with the new key when also needing
+      @IEEE80211_KEY_FLAG_GENERATE_IV and
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    4) never send out a frame unencrypted when it should be encrypted.
    Mac80211 will not queue any new frames for a deleted key to the driver.
  */
@@ -3943,6 +3965,9 @@ struct ieee80211_prep_tx_info {
  * @sta_set_decap_offload: Called to notify the driver when a station is allowed
  *	to use rx decapsulation offload
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @add_twt_setup: Update hw with TWT agreement parameters received from the peer.
  *	This callback allows the hw to check if requested parameters
  *	are supported and if there is enough room for a new agreement.
@@ -3950,8 +3975,11 @@ struct ieee80211_prep_tx_info {
  *	twt structure.
  * @twt_teardown_request: Update the hw with TWT teardown request received
  *	from the peer.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct ieee80211_ops {
 	void (*tx)(struct ieee80211_hw *hw,
@@ -4276,13 +4304,19 @@ struct ieee80211_ops {
 				      struct ieee80211_vif *vif,
 				      struct ieee80211_sta *sta, bool enabled);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*add_twt_setup)(struct ieee80211_hw *hw,
 			      struct ieee80211_sta *sta,
 			      struct ieee80211_twt_setup *twt);
 	void (*twt_teardown_request)(struct ieee80211_hw *hw,
 				     struct ieee80211_sta *sta, u8 flowid);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -5050,6 +5084,9 @@ bool ieee80211_beacon_cntdwn_is_complete(struct ieee80211_vif *vif);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ieee80211_color_change_finish - notify mac80211 about color change
  * @vif: &struct ieee80211_vif pointer from the add_interface callback.
  *
@@ -5060,8 +5097,11 @@ bool ieee80211_beacon_cntdwn_is_complete(struct ieee80211_vif *vif);
 void ieee80211_color_change_finish(struct ieee80211_vif *vif);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ieee80211_proberesp_get - retrieve a Probe Response template
  * @hw: pointer obtained from ieee80211_alloc_hw().
  * @vif: &struct ieee80211_vif pointer from the add_interface callback.
@@ -6827,6 +6867,9 @@ ieee80211_get_unsol_bcast_probe_resp_tmpl(struct ieee80211_hw *hw,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ieeee80211_obss_color_collision_notify - notify userland about a BSS color
  * collision.
  *
@@ -6839,8 +6882,11 @@ ieeee80211_obss_color_collision_notify(struct ieee80211_vif *vif,
 				       u64 color_bitmap);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ieee80211_is_tx_data - check if frame is a data frame
  *
  * The function is used to check if a frame is a data frame. Frames with

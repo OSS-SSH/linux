@@ -309,6 +309,7 @@ static struct snd_rawmidi *snd_wavefront_new_midi(struct snd_card *card,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void
 snd_wavefront_free(struct snd_card *card)
@@ -323,6 +324,8 @@ snd_wavefront_free(struct snd_card *card)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_wavefront_card_new(struct device *pdev, int dev,
 				  struct snd_card **cardp)
 {
@@ -331,12 +334,17 @@ static int snd_wavefront_card_new(struct device *pdev, int dev,
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_devm_card_new(pdev, index[dev], id[dev], THIS_MODULE,
 				sizeof(snd_wavefront_card_t), &card);
 =======
 	err = snd_card_new(pdev, index[dev], id[dev], THIS_MODULE,
 			   sizeof(snd_wavefront_card_t), &card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(pdev, index[dev], id[dev], THIS_MODULE,
+				sizeof(snd_wavefront_card_t), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -348,9 +356,12 @@ static int snd_wavefront_card_new(struct device *pdev, int dev,
 	spin_lock_init(&acard->wavefront.midi.virtual);
 	acard->wavefront.card = card;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	card->private_free = snd_wavefront_free;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*cardp = card;
 	return 0;
@@ -406,6 +417,7 @@ snd_wavefront_probe (struct snd_card *card, int dev)
 	/* ------- ICS2115 Wavetable synth ------- */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	acard->wavefront.res_base =
 		devm_request_region(card->dev, ics2115_port[dev], 16,
 				    "ICS2115");
@@ -413,11 +425,17 @@ snd_wavefront_probe (struct snd_card *card, int dev)
 	acard->wavefront.res_base = request_region(ics2115_port[dev], 16,
 						   "ICS2115");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	acard->wavefront.res_base =
+		devm_request_region(card->dev, ics2115_port[dev], 16,
+				    "ICS2115");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (acard->wavefront.res_base == NULL) {
 		snd_printk(KERN_ERR "unable to grab ICS2115 i/o region 0x%lx-0x%lx\n",
 			   ics2115_port[dev], ics2115_port[dev] + 16 - 1);
 		return -EBUSY;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (devm_request_irq(card->dev, ics2115_irq[dev],
 			     snd_wavefront_ics2115_interrupt,
@@ -426,6 +444,11 @@ snd_wavefront_probe (struct snd_card *card, int dev)
 	if (request_irq(ics2115_irq[dev], snd_wavefront_ics2115_interrupt,
 			0, "ICS2115", acard)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (devm_request_irq(card->dev, ics2115_irq[dev],
+			     snd_wavefront_ics2115_interrupt,
+			     0, "ICS2115", acard)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		snd_printk(KERN_ERR "unable to use ICS2115 IRQ %d\n", ics2115_irq[dev]);
 		return -EBUSY;
 	}
@@ -580,6 +603,7 @@ static int snd_wavefront_isa_probe(struct device *pdev,
 		return err;
 	err = snd_wavefront_probe(card, dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 =======
@@ -588,11 +612,16 @@ static int snd_wavefront_isa_probe(struct device *pdev,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
 	dev_set_drvdata(pdev, card);
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_wavefront_isa_remove(struct device *devptr,
@@ -602,15 +631,20 @@ static void snd_wavefront_isa_remove(struct device *devptr,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DEV_NAME "wavefront"
 
 static struct isa_driver snd_wavefront_driver = {
 	.match		= snd_wavefront_isa_match,
 	.probe		= snd_wavefront_isa_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_wavefront_isa_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* FIXME: suspend, resume */
 	.driver		= {
 		.name	= DEV_NAME
@@ -641,9 +675,12 @@ static int snd_wavefront_pnp_detect(struct pnp_card_link *pcard,
 		if (cs4232_pcm_port[dev] == SNDRV_AUTO_PORT) {
 			snd_printk (KERN_ERR "isapnp detection failed\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			snd_card_free (card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENODEV;
 		}
 	}
@@ -658,6 +695,7 @@ static int snd_wavefront_pnp_detect(struct pnp_card_link *pcard,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void snd_wavefront_pnp_remove(struct pnp_card_link *pcard)
 {
@@ -666,15 +704,20 @@ static void snd_wavefront_pnp_remove(struct pnp_card_link *pcard)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct pnp_card_driver wavefront_pnpc_driver = {
 	.flags		= PNP_DRIVER_RES_DISABLE,
 	.name		= "wavefront",
 	.id_table	= snd_wavefront_pnpids,
 	.probe		= snd_wavefront_pnp_detect,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_wavefront_pnp_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* FIXME: suspend,resume */
 };
 

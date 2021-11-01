@@ -1774,10 +1774,14 @@ static void mpc_action_side_xid(fsm_instance *fsm, void *arg, int side)
 	CTCM_D3_DUMP((char *)ch->xid_id, 4);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!in_hardirq()) {
 =======
 	if (!in_irq()) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!in_hardirq()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 /* Such conditional locking is a known problem for
 			  * sparse because its static undeterministic.
 			  * Warnings should be ignored here. */

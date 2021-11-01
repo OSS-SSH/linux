@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* SPDX-License-Identifier: MIT */
 /* Copyright (c) 2012-2020 NVIDIA Corporation */
 =======
@@ -24,6 +25,10 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* SPDX-License-Identifier: MIT */
+/* Copyright (c) 2012-2020 NVIDIA Corporation */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef _UAPI_TEGRA_DRM_H_
 #define _UAPI_TEGRA_DRM_H_
@@ -35,10 +40,15 @@ extern "C" {
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Tegra DRM legacy UAPI. Only enabled with STAGING */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Tegra DRM legacy UAPI. Only enabled with STAGING */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DRM_TEGRA_GEM_CREATE_TILED     (1 << 0)
 #define DRM_TEGRA_GEM_CREATE_BOTTOM_UP (1 << 1)
 
@@ -660,12 +670,17 @@ struct drm_tegra_gem_get_flags {
 #define DRM_TEGRA_SYNCPT_INCR		0x03
 #define DRM_TEGRA_SYNCPT_WAIT		0x04
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define DRM_TEGRA_OPEN_CHANNEL	        0x05
 #define DRM_TEGRA_CLOSE_CHANNEL	        0x06
 =======
 #define DRM_TEGRA_OPEN_CHANNEL		0x05
 #define DRM_TEGRA_CLOSE_CHANNEL		0x06
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DRM_TEGRA_OPEN_CHANNEL	        0x05
+#define DRM_TEGRA_CLOSE_CHANNEL	        0x06
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DRM_TEGRA_GET_SYNCPT		0x07
 #define DRM_TEGRA_SUBMIT		0x08
 #define DRM_TEGRA_GET_SYNCPT_BASE	0x09
@@ -690,6 +705,9 @@ struct drm_tegra_gem_get_flags {
 #define DRM_IOCTL_TEGRA_GEM_GET_FLAGS DRM_IOWR(DRM_COMMAND_BASE + DRM_TEGRA_GEM_GET_FLAGS, struct drm_tegra_gem_get_flags)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* New Tegra DRM UAPI */
 
 /*
@@ -1086,8 +1104,11 @@ struct drm_tegra_syncpoint_wait {
 #define DRM_IOCTL_TEGRA_SYNCPOINT_FREE DRM_IOWR(DRM_COMMAND_BASE + 0x21, struct drm_tegra_syncpoint_free)
 #define DRM_IOCTL_TEGRA_SYNCPOINT_WAIT DRM_IOWR(DRM_COMMAND_BASE + 0x22, struct drm_tegra_syncpoint_wait)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(__cplusplus)
 }
 #endif

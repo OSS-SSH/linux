@@ -108,12 +108,17 @@ void hda_dsp_ipc_get_reply(struct snd_sof_dev *sdev)
 		/* reply correct size ? */
 		if (reply.hdr.size != msg->reply_size &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    /* getter payload is never known upfront */
 		    ((reply.hdr.cmd & SOF_GLB_TYPE_MASK) != SOF_IPC_GLB_PROBE)) {
 =======
 			/* getter payload is never known upfront */
 			!(reply.hdr.cmd & SOF_IPC_GLB_PROBE)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    /* getter payload is never known upfront */
+		    ((reply.hdr.cmd & SOF_GLB_TYPE_MASK) != SOF_IPC_GLB_PROBE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_err(sdev->dev, "error: reply expected %zu got %u bytes\n",
 				msg->reply_size, reply.hdr.size);
 			ret = -EINVAL;

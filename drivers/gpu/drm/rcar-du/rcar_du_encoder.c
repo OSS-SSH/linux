@@ -12,9 +12,13 @@
 
 #include <drm/drm_bridge.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <drm/drm_bridge_connector.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <drm/drm_bridge_connector.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_crtc.h>
 #include <drm/drm_managed.h>
 #include <drm/drm_modeset_helper_vtables.h>
@@ -58,12 +62,18 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 {
 	struct rcar_du_encoder *renc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct drm_connector *connector;
 	struct drm_bridge *bridge;
 	int ret;
 =======
 	struct drm_bridge *bridge;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct drm_connector *connector;
+	struct drm_bridge *bridge;
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Locate the DRM bridge from the DT node. For the DPAD outputs, if the
@@ -94,6 +104,7 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Create and initialize the encoder. On Gen3, skip the LVDS1 output if
 	 * the LVDS1 encoder is used as a companion for LVDS0 in dual-link
 	 * mode, or any LVDS output if it isn't connected. The latter may happen
@@ -110,12 +121,28 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 		    !rcar_lvds_is_connected(bridge))
 =======
 	 * Create and initialize the encoder. On Gen3 skip the LVDS1 output if
+=======
+	 * Create and initialize the encoder. On Gen3, skip the LVDS1 output if
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * the LVDS1 encoder is used as a companion for LVDS0 in dual-link
-	 * mode.
+	 * mode, or any LVDS output if it isn't connected. The latter may happen
+	 * on D3 or E3 as the LVDS encoders are needed to provide the pixel
+	 * clock to the DU, even when the LVDS outputs are not used.
 	 */
+<<<<<<< HEAD
 	if (rcdu->info->gen >= 3 && output == RCAR_DU_OUTPUT_LVDS1) {
 		if (rcar_lvds_dual_link(bridge))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rcdu->info->gen >= 3) {
+		if (output == RCAR_DU_OUTPUT_LVDS1 &&
+		    rcar_lvds_dual_link(bridge))
+			return -ENOLINK;
+
+		if ((output == RCAR_DU_OUTPUT_LVDS0 ||
+		     output == RCAR_DU_OUTPUT_LVDS1) &&
+		    !rcar_lvds_is_connected(bridge))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOLINK;
 	}
 
@@ -131,6 +158,9 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 	renc->output = output;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Attach the bridge to the encoder. */
 	ret = drm_bridge_attach(&renc->base, bridge, NULL,
 				DRM_BRIDGE_ATTACH_NO_CONNECTOR);
@@ -149,6 +179,7 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 	}
 
 	return drm_connector_attach_encoder(connector, &renc->base);
+<<<<<<< HEAD
 =======
 	/*
 	 * Attach the bridge to the encoder. The bridge will create the
@@ -156,4 +187,6 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 	 */
 	return drm_bridge_attach(&renc->base, bridge, NULL, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

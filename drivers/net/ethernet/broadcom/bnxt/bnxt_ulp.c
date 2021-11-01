@@ -23,9 +23,13 @@
 #include "bnxt_hsi.h"
 #include "bnxt.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "bnxt_hwrm.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "bnxt_hwrm.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "bnxt_ulp.h"
 
 static int bnxt_register_dev(struct bnxt_en_dev *edev, int ulp_id,
@@ -242,17 +246,24 @@ static int bnxt_send_msg(struct bnxt_en_dev *edev, int ulp_id,
 	struct net_device *dev = edev->net;
 	struct bnxt *bp = netdev_priv(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct output *resp;
 	struct input *req;
 	u32 resp_len;
 =======
 	struct input *req;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct output *resp;
+	struct input *req;
+	u32 resp_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rc;
 
 	if (ulp_id != BNXT_ROCE_ULP && bp->fw_reset_state)
 		return -EBUSY;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	rc = hwrm_req_init(bp, req, 0 /* don't care */);
 	if (rc)
@@ -282,14 +293,32 @@ static int bnxt_send_msg(struct bnxt_en_dev *edev, int ulp_id,
 	if (!rc) {
 		struct output *resp = bp->hwrm_cmd_resp_addr;
 		u32 len = le16_to_cpu(resp->resp_len);
+=======
+	rc = hwrm_req_init(bp, req, 0 /* don't care */);
+	if (rc)
+		return rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		if (fw_msg->resp_max_len < len)
-			len = fw_msg->resp_max_len;
+	rc = hwrm_req_replace(bp, req, fw_msg->msg, fw_msg->msg_len);
+	if (rc)
+		return rc;
 
-		memcpy(fw_msg->resp, resp, len);
+	hwrm_req_timeout(bp, req, fw_msg->timeout);
+	resp = hwrm_req_hold(bp, req);
+	rc = hwrm_req_send(bp, req);
+	resp_len = le16_to_cpu(resp->resp_len);
+	if (resp_len) {
+		if (fw_msg->resp_max_len < resp_len)
+			resp_len = fw_msg->resp_max_len;
+
+		memcpy(fw_msg->resp, resp, resp_len);
 	}
+<<<<<<< HEAD
 	mutex_unlock(&bp->hwrm_cmd_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwrm_req_drop(bp, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -512,12 +541,15 @@ struct bnxt_en_dev *bnxt_ulp_probe(struct net_device *dev)
 			return ERR_PTR(-ENOMEM);
 		edev->en_ops = &bnxt_en_ops_tbl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (bp->flags & BNXT_FLAG_ROCEV1_CAP)
 			edev->flags |= BNXT_EN_FLAG_ROCEV1_CAP;
 		if (bp->flags & BNXT_FLAG_ROCEV2_CAP)
 			edev->flags |= BNXT_EN_FLAG_ROCEV2_CAP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		edev->net = dev;
 		edev->pdev = bp->pdev;
 		edev->l2_db_size = bp->db_size;
@@ -525,13 +557,19 @@ struct bnxt_en_dev *bnxt_ulp_probe(struct net_device *dev)
 		bp->edev = edev;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	edev->flags &= ~BNXT_EN_FLAG_ROCE_CAP;
 	if (bp->flags & BNXT_FLAG_ROCEV1_CAP)
 		edev->flags |= BNXT_EN_FLAG_ROCEV1_CAP;
 	if (bp->flags & BNXT_FLAG_ROCEV2_CAP)
 		edev->flags |= BNXT_EN_FLAG_ROCEV2_CAP;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return bp->edev;
 }
 EXPORT_SYMBOL(bnxt_ulp_probe);

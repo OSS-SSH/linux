@@ -83,6 +83,7 @@ cat << EOF
 #define __IGNORE_stat64
 #define __IGNORE_lstat64
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __IGNORE_fcntl64
 #define __IGNORE_fadvise64_64
 =======
@@ -91,6 +92,10 @@ cat << EOF
 #define __IGNORE_fadvise64_64
 #define __IGNORE_fstatat64
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __IGNORE_fcntl64
+#define __IGNORE_fadvise64_64
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define __IGNORE_fstatfs64
 #define __IGNORE_statfs64
 #define __IGNORE_llseek
@@ -259,12 +264,18 @@ cat << EOF
 #define __IGNORE_putpmsg
 #define __IGNORE_vserver
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* 64-bit ports never needed these, and new 32-bit ports can use statx */
 #define __IGNORE_fstat64
 #define __IGNORE_fstatat64
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EOF
 }
 
@@ -279,7 +290,11 @@ syscall_list() {
 
 (ignore_list && syscall_list $(dirname $0)/../arch/x86/entry/syscalls/syscall_32.tbl) | \
 <<<<<<< HEAD
+<<<<<<< HEAD
 $* -Wno-error -E -x c - > /dev/null
 =======
 $* -E -x c - > /dev/null
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$* -Wno-error -E -x c - > /dev/null
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

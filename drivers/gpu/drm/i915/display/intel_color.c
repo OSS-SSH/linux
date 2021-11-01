@@ -306,20 +306,28 @@ static void ilk_load_csc_matrix(const struct intel_crtc_state *crtc_state)
 	} else if (crtc_state->csc_enable) {
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 		 * On GLK both pipe CSC and degamma LUT are controlled
 =======
 		 * On GLK+ both pipe CSC and degamma LUT are controlled
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * On GLK both pipe CSC and degamma LUT are controlled
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * by csc_enable. Hence for the cases where the degama
 		 * LUT is needed but CSC is not we need to load an
 		 * identity matrix.
 		 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		drm_WARN_ON(&dev_priv->drm, !IS_GEMINILAKE(dev_priv));
 =======
 		drm_WARN_ON(&dev_priv->drm, !IS_CANNONLAKE(dev_priv) &&
 			    !IS_GEMINILAKE(dev_priv));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		drm_WARN_ON(&dev_priv->drm, !IS_GEMINILAKE(dev_priv));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ilk_update_pipe_csc(crtc, ilk_csc_off_zero,
 				    ilk_csc_coeff_identity,

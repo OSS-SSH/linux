@@ -63,16 +63,22 @@ int __init efi_tpm_eventlog_init(void)
 	memblock_reserve(efi.tpm_log, tbl_size);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (efi.tpm_final_log == EFI_INVALID_TABLE_ADDR) {
 		pr_info("TPM Final Events table not present\n");
 		goto out;
 	} else if (log_tbl->version != EFI_TCG2_EVENT_LOG_FORMAT_TCG_2) {
 		pr_warn(FW_BUG "TPM Final Events table invalid\n");
+<<<<<<< HEAD
 =======
 	if (efi.tpm_final_log == EFI_INVALID_TABLE_ADDR ||
 	    log_tbl->version != EFI_TCG2_EVENT_LOG_FORMAT_TCG_2) {
 		pr_warn(FW_BUG "TPM Final Events table missing or invalid\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 

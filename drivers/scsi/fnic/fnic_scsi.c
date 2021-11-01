@@ -108,10 +108,14 @@ static inline spinlock_t *fnic_io_lock_hash(struct fnic *fnic,
 					    struct scsi_cmnd *sc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 hash = scsi_cmd_to_rq(sc)->tag & (FNIC_IO_LOCKS - 1);
 =======
 	u32 hash = sc->request->tag & (FNIC_IO_LOCKS - 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 hash = scsi_cmd_to_rq(sc)->tag & (FNIC_IO_LOCKS - 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return &fnic->io_req_lock[hash];
 }
@@ -395,10 +399,14 @@ static inline int fnic_queue_wq_copy_desc(struct fnic *fnic,
 		exch_flags |= FCPIO_ICMND_SRFLAG_RETRY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fnic_queue_wq_copy_desc_icmnd_16(wq, scsi_cmd_to_rq(sc)->tag,
 =======
 	fnic_queue_wq_copy_desc_icmnd_16(wq, sc->request->tag,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fnic_queue_wq_copy_desc_icmnd_16(wq, scsi_cmd_to_rq(sc)->tag,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 0, exch_flags, io_req->sgl_cnt,
 					 SCSI_SENSE_BUFFERSIZE,
 					 io_req->sgl_list_pa,
@@ -431,9 +439,13 @@ static inline int fnic_queue_wq_copy_desc(struct fnic *fnic,
 static int fnic_queuecommand_lck(struct scsi_cmnd *sc, void (*done)(struct scsi_cmnd *))
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const int tag = scsi_cmd_to_rq(sc)->tag;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int tag = scsi_cmd_to_rq(sc)->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fc_lport *lp = shost_priv(sc->device->host);
 	struct fc_rport *rport;
 	struct fnic_io_req *io_req = NULL;
@@ -524,11 +536,15 @@ static int fnic_queuecommand_lck(struct scsi_cmnd *sc, void (*done)(struct scsi_
 	if (sg_count < 0) {
 		FNIC_TRACE(fnic_queuecommand, sc->device->host->host_no,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  tag, sc, 0, sc->cmnd[0], sg_count, CMD_STATE(sc));
 =======
 			  sc->request->tag, sc, 0, sc->cmnd[0],
 			  sg_count, CMD_STATE(sc));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  tag, sc, 0, sc->cmnd[0], sg_count, CMD_STATE(sc));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mempool_free(io_req, fnic->io_req_pool);
 		goto out;
 	}
@@ -588,10 +604,14 @@ static int fnic_queuecommand_lck(struct scsi_cmnd *sc, void (*done)(struct scsi_
 		 */
 		FNIC_TRACE(fnic_queuecommand, sc->device->host->host_no,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  tag, sc, 0, 0, 0,
 =======
 			  sc->request->tag, sc, 0, 0, 0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  tag, sc, 0, 0, 0,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  (((u64)CMD_FLAGS(sc) << 32) | CMD_STATE(sc)));
 		io_req = (struct fnic_io_req *)CMD_SP(sc);
 		CMD_SP(sc) = NULL;
@@ -624,11 +644,15 @@ out:
 
 	FNIC_TRACE(fnic_queuecommand, sc->device->host->host_no,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  tag, sc, io_req, sg_count, cmd_trace,
 =======
 		  sc->request->tag, sc, io_req,
 		  sg_count, cmd_trace,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		  tag, sc, io_req, sg_count, cmd_trace,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  (((u64)CMD_FLAGS(sc) >> 32) | CMD_STATE(sc)));
 
 	/* if only we issued IO, will we have the io lock */
@@ -1389,9 +1413,13 @@ static bool fnic_cleanup_io_iter(struct scsi_cmnd *sc, void *data,
 				 bool reserved)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const int tag = scsi_cmd_to_rq(sc)->tag;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int tag = scsi_cmd_to_rq(sc)->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fnic *fnic = data;
 	struct fnic_io_req *io_req;
 	unsigned long flags = 0;
@@ -1400,10 +1428,14 @@ static bool fnic_cleanup_io_iter(struct scsi_cmnd *sc, void *data,
 	struct fnic_stats *fnic_stats = &fnic->fnic_stats;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	io_lock = fnic_io_lock_tag(fnic, tag);
 =======
 	io_lock = fnic_io_lock_tag(fnic, sc->request->tag);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	io_lock = fnic_io_lock_tag(fnic, tag);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(io_lock, flags);
 
 	io_req = (struct fnic_io_req *)CMD_SP(sc);
@@ -1446,10 +1478,14 @@ cleanup_scsi_cmd:
 	FNIC_SCSI_DBG(KERN_DEBUG, fnic->lport->host,
 		      "fnic_cleanup_io: tag:0x%x : sc:0x%p duration = %lu DID_TRANSPORT_DISRUPTED\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      tag, sc, jiffies - start_time);
 =======
 		      sc->request->tag, sc, (jiffies - start_time));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      tag, sc, jiffies - start_time);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (atomic64_read(&fnic->io_cmpl_skip))
 		atomic64_dec(&fnic->io_cmpl_skip);
@@ -1462,6 +1498,7 @@ cleanup_scsi_cmd:
 			shost_printk(KERN_ERR, fnic->lport->host,
 				     "Calling done for IO not issued to fw: tag:0x%x sc:0x%p\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     tag, sc);
 
 		FNIC_TRACE(fnic_cleanup_io,
@@ -1472,6 +1509,12 @@ cleanup_scsi_cmd:
 		FNIC_TRACE(fnic_cleanup_io,
 			   sc->device->host->host_no, sc->request->tag, sc,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     tag, sc);
+
+		FNIC_TRACE(fnic_cleanup_io,
+			   sc->device->host->host_no, tag, sc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   jiffies_to_msecs(jiffies - start_time),
 			   0, ((u64)sc->cmnd[0] << 32 |
 			       (u64)sc->cmnd[2] << 24 |
@@ -1610,10 +1653,14 @@ static bool fnic_rport_abort_io_iter(struct scsi_cmnd *sc, void *data,
 	struct fnic_rport_abort_io_iter_data *iter_data = data;
 	struct fnic *fnic = iter_data->fnic;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int abt_tag = scsi_cmd_to_rq(sc)->tag;
 =======
 	int abt_tag = sc->request->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int abt_tag = scsi_cmd_to_rq(sc)->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fnic_io_req *io_req;
 	spinlock_t *io_lock;
 	unsigned long flags;
@@ -1775,9 +1822,13 @@ void fnic_terminate_rport_io(struct fc_rport *rport)
 int fnic_abort_cmd(struct scsi_cmnd *sc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *const rq = scsi_cmd_to_rq(sc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *const rq = scsi_cmd_to_rq(sc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fc_lport *lp;
 	struct fnic *fnic;
 	struct fnic_io_req *io_req = NULL;
@@ -1793,10 +1844,14 @@ int fnic_abort_cmd(struct scsi_cmnd *sc)
 	struct terminate_stats *term_stats;
 	enum fnic_ioreq_state old_ioreq_state;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const int tag = rq->tag;
 =======
 	int tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int tag = rq->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long abt_issued_time;
 	DECLARE_COMPLETION_ONSTACK(tm_done);
 
@@ -1813,9 +1868,12 @@ int fnic_abort_cmd(struct scsi_cmnd *sc)
 
 	rport = starget_to_rport(scsi_target(sc->device));
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	tag = sc->request->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	FNIC_SCSI_DBG(KERN_DEBUG,
 		fnic->lport->host,
 		"Abort Cmd called FCID 0x%x, LUN 0x%llx TAG %x flags %x\n",
@@ -1901,12 +1959,17 @@ int fnic_abort_cmd(struct scsi_cmnd *sc)
 	int_to_scsilun(sc->device->lun, &fc_lun);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (fnic_queue_abort_io_req(fnic, tag, task_req, fc_lun.scsi_lun,
 				    io_req)) {
 =======
 	if (fnic_queue_abort_io_req(fnic, sc->request->tag, task_req,
 				    fc_lun.scsi_lun, io_req)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (fnic_queue_abort_io_req(fnic, tag, task_req, fc_lun.scsi_lun,
+				    io_req)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_lock_irqsave(io_lock, flags);
 		if (CMD_STATE(sc) == FNIC_IOREQ_ABTS_PENDING)
 			CMD_STATE(sc) = old_ioreq_state;
@@ -2007,11 +2070,15 @@ int fnic_abort_cmd(struct scsi_cmnd *sc)
 
 fnic_abort_cmd_end:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	FNIC_TRACE(fnic_abort_cmd, sc->device->host->host_no, tag, sc,
 =======
 	FNIC_TRACE(fnic_abort_cmd, sc->device->host->host_no,
 		  sc->request->tag, sc,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	FNIC_TRACE(fnic_abort_cmd, sc->device->host->host_no, tag, sc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  jiffies_to_msecs(jiffies - start_time),
 		  0, ((u64)sc->cmnd[0] << 32 |
 		  (u64)sc->cmnd[2] << 24 | (u64)sc->cmnd[3] << 16 |
@@ -2062,10 +2129,14 @@ static inline int fnic_queue_dr_io_req(struct fnic *fnic,
 	int_to_scsilun(sc->device->lun, &fc_lun);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fnic_queue_wq_copy_desc_itmf(wq, scsi_cmd_to_rq(sc)->tag | FNIC_TAG_DEV_RST,
 =======
 	fnic_queue_wq_copy_desc_itmf(wq, sc->request->tag | FNIC_TAG_DEV_RST,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fnic_queue_wq_copy_desc_itmf(wq, scsi_cmd_to_rq(sc)->tag | FNIC_TAG_DEV_RST,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     0, FCPIO_ITMF_LUN_RESET, SCSI_NO_TAG,
 				     fc_lun.scsi_lun, io_req->port_id,
 				     fnic->config.ra_tov, fnic->config.ed_tov);
@@ -2097,10 +2168,14 @@ static bool fnic_pending_aborts_iter(struct scsi_cmnd *sc,
 	struct fnic *fnic = iter_data->fnic;
 	struct scsi_device *lun_dev = iter_data->lun_dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int abt_tag = scsi_cmd_to_rq(sc)->tag;
 =======
 	int abt_tag = sc->request->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int abt_tag = scsi_cmd_to_rq(sc)->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fnic_io_req *io_req;
 	spinlock_t *io_lock;
 	unsigned long flags;
@@ -2282,11 +2357,16 @@ static inline int
 fnic_scsi_host_start_tag(struct fnic *fnic, struct scsi_cmnd *sc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(sc);
 	struct request_queue *q = rq->q;
 =======
 	struct request_queue *q = sc->request->q;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(sc);
+	struct request_queue *q = rq->q;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct request *dummy;
 
 	dummy = blk_mq_alloc_request(q, REQ_OP_WRITE, BLK_MQ_REQ_NOWAIT);
@@ -2294,10 +2374,14 @@ fnic_scsi_host_start_tag(struct fnic *fnic, struct scsi_cmnd *sc)
 		return SCSI_NO_TAG;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rq->tag = dummy->tag;
 =======
 	sc->tag = sc->request->tag = dummy->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rq->tag = dummy->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sc->host_scribble = (unsigned char *)dummy;
 
 	return dummy->tag;
@@ -2323,9 +2407,13 @@ fnic_scsi_host_end_tag(struct fnic *fnic, struct scsi_cmnd *sc)
 int fnic_device_reset(struct scsi_cmnd *sc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(sc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(sc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fc_lport *lp;
 	struct fnic *fnic;
 	struct fnic_io_req *io_req = NULL;
@@ -2339,10 +2427,14 @@ int fnic_device_reset(struct scsi_cmnd *sc)
 	struct fnic_stats *fnic_stats;
 	struct reset_stats *reset_stats;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int tag = rq->tag;
 =======
 	int tag = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int tag = rq->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DECLARE_COMPLETION_ONSTACK(tm_done);
 	int tag_gen_flag = 0;   /*to track tags allocated by fnic driver*/
 	bool new_sc = 0;
@@ -2377,9 +2469,12 @@ int fnic_device_reset(struct scsi_cmnd *sc)
 	/* Allocate tag if not present */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	tag = sc->request->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(tag < 0)) {
 		/*
 		 * Really should fix the midlayer to pass in a proper
@@ -2554,11 +2649,15 @@ fnic_device_reset_clean:
 
 fnic_device_reset_end:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	FNIC_TRACE(fnic_device_reset, sc->device->host->host_no, rq->tag, sc,
 =======
 	FNIC_TRACE(fnic_device_reset, sc->device->host->host_no,
 		  sc->request->tag, sc,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	FNIC_TRACE(fnic_device_reset, sc->device->host->host_no, rq->tag, sc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  jiffies_to_msecs(jiffies - start_time),
 		  0, ((u64)sc->cmnd[0] << 32 |
 		  (u64)sc->cmnd[2] << 24 | (u64)sc->cmnd[3] << 16 |

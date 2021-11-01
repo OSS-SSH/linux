@@ -7,10 +7,15 @@
  *
  * based on arch/arm/common/rtctime.c and other bits
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Author: Cassio Neri <cassio.neri@gmail.com> (rtc_time64_to_tm)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * Author: Cassio Neri <cassio.neri@gmail.com> (rtc_time64_to_tm)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/export.h>
@@ -28,10 +33,13 @@ static const unsigned short rtc_ydays[2][13] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define LEAPS_THRU_END_OF(y) ((y) / 4 - (y) / 100 + (y) / 400)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The number of days in the month.
  */
@@ -51,12 +59,16 @@ int rtc_year_days(unsigned int day, unsigned int month, unsigned int year)
 EXPORT_SYMBOL(rtc_year_days);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * rtc_time64_to_tm - converts time64_t to rtc_time.
  *
  * @time:	The number of seconds since 01-01-1970 00:00:00.
  *		(Must be positive.)
  * @tm:		Pointer to the struct rtc_time.
+<<<<<<< HEAD
  */
 void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 {
@@ -72,13 +84,23 @@ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 /*
  * rtc_time64_to_tm - Converts time64_t to rtc_time.
  * Convert seconds since 01-01-1970 00:00:00 to Gregorian date.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 {
-	unsigned int month, year, secs;
+	unsigned int secs;
 	int days;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 u64tmp;
+	u32 u32tmp, udays, century, day_of_century, year_of_century, year,
+		day_of_year, month, day;
+	bool is_Jan_or_Feb, is_leap_year;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* time must be positive */
 	days = div_s64_rem(time, 86400, &secs);
 
@@ -86,6 +108,9 @@ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 	tm->tm_wday = (days + 4) % 7;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * The following algorithm is, basically, Proposition 6.3 of Neri
 	 * and Schneider [1]. In a few words: it works on the computational
@@ -152,6 +177,7 @@ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 	tm->tm_mon	= (int) month;
 	tm->tm_mday	= (int) day;
 	tm->tm_yday	= (int) day_of_year + 1;
+<<<<<<< HEAD
 =======
 	year = 1970 + days / 365;
 	days -= (year - 1970) * 365
@@ -175,6 +201,8 @@ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 	tm->tm_mon = month;
 	tm->tm_mday = days + 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tm->tm_hour = secs / 3600;
 	secs -= tm->tm_hour * 3600;

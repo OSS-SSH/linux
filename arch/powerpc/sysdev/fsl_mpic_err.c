@@ -100,9 +100,12 @@ static irqreturn_t fsl_error_int_handler(int irq, void *data)
 	u32 eisr, eimr;
 	int errint;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int cascade_irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	eisr = mpic_fsl_err_read(mpic->err_regs, MPIC_ERR_INT_EISR);
 	eimr = mpic_fsl_err_read(mpic->err_regs, MPIC_ERR_INT_EIMR);
@@ -111,6 +114,7 @@ static irqreturn_t fsl_error_int_handler(int irq, void *data)
 		return IRQ_NONE;
 
 	while (eisr) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		int ret;
 		errint = __builtin_clz(eisr);
@@ -126,6 +130,13 @@ static irqreturn_t fsl_error_int_handler(int irq, void *data)
 			generic_handle_irq(cascade_irq);
 		} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int ret;
+		errint = __builtin_clz(eisr);
+		ret = generic_handle_domain_irq(mpic->irqhost,
+						mpic->err_int_vecs[errint]);
+		if (WARN_ON(ret)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			eimr |=  1 << (31 - errint);
 			mpic_fsl_err_write(mpic->err_regs, eimr);
 		}

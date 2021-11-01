@@ -1835,6 +1835,9 @@ static void connector_bad_edid(struct drm_connector *connector,
 {
 	int i;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 last_block;
 
 	/*
@@ -1844,6 +1847,7 @@ static void connector_bad_edid(struct drm_connector *connector,
 	 * combined chunk of memory.
 	 */
 	last_block = edid[0x7e];
+<<<<<<< HEAD
 
 	/* Calculate real checksum for the last edid extension block data */
 	if (last_block < num_blocks)
@@ -1856,6 +1860,13 @@ static void connector_bad_edid(struct drm_connector *connector,
 	connector->real_edid_checksum =
 		drm_edid_block_checksum(edid + num_of_ext * EDID_LENGTH);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Calculate real checksum for the last edid extension block data */
+	if (last_block < num_blocks)
+		connector->real_edid_checksum =
+			drm_edid_block_checksum(edid + last_block * EDID_LENGTH);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (connector->bad_edid_counter++ && !drm_debug_enabled(DRM_UT_KMS))
 		return;
@@ -1937,10 +1948,14 @@ EXPORT_SYMBOL(drm_add_override_edid_modes);
  * adapter and use drm_get_edid() instead of abusing this function.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * The EDID may be overridden using debugfs override_edid or firmware EDID
 =======
  * The EDID may be overridden using debugfs override_edid or firmare EDID
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * The EDID may be overridden using debugfs override_edid or firmware EDID
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * (drm_load_edid_firmware() and drm.edid_firmware parameter), in this priority
  * order. Having either of them bypasses actual EDID reads.
  *
@@ -5928,10 +5943,14 @@ drm_hdmi_vendor_infoframe_from_display_mode(struct hdmi_vendor_infoframe *frame,
 	 * know that the sink can handle it. This is based on a
 	 * suggestion in HDMI 2.0 Appendix F. Apparently some sinks
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * have trouble realizing that they should switch from 3D to 2D
 =======
 	 * have trouble realizing that they shuld switch from 3D to 2D
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * have trouble realizing that they should switch from 3D to 2D
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * mode if the source simply stops sending the infoframe when
 	 * it wants to switch from 3D to 2D.
 	 */

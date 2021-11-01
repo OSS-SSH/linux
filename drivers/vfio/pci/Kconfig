@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 <<<<<<< HEAD
+<<<<<<< HEAD
 if PCI && MMU
 config VFIO_PCI_CORE
 	tristate
@@ -30,18 +31,39 @@ config VFIO_PCI
 	tristate "VFIO support for PCI devices"
 	depends on VFIO && PCI && EVENTFD
 	depends on MMU
+=======
+if PCI && MMU
+config VFIO_PCI_CORE
+	tristate
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select VFIO_VIRQFD
 	select IRQ_BYPASS_MANAGER
+
+config VFIO_PCI_MMAP
+	def_bool y if !S390
+
+config VFIO_PCI_INTX
+	def_bool y if !S390
+
+config VFIO_PCI
+	tristate "Generic VFIO support for any PCI device"
+	select VFIO_PCI_CORE
 	help
-	  Support for the PCI VFIO bus driver.  This is required to make
-	  use of PCI drivers using the VFIO framework.
+	  Support for the generic PCI VFIO bus driver which can connect any
+	  PCI device to the VFIO framework.
 
 	  If you don't know what to do here, say N.
 
+if VFIO_PCI
 config VFIO_PCI_VGA
+<<<<<<< HEAD
 	bool "VFIO PCI support for VGA devices"
 	depends on VFIO_PCI && X86 && VGA_ARB
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool "Generic VFIO PCI support for VGA devices"
+	depends on X86 && VGA_ARB
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Support for VGA extension to VFIO PCI.  This exposes an additional
 	  region on VGA devices for accessing legacy VGA addresses used by
@@ -49,6 +71,7 @@ config VFIO_PCI_VGA
 
 	  If you don't know what to do here, say N.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 config VFIO_PCI_IGD
 	bool "Generic VFIO PCI extensions for Intel graphics (GVT-d)"
@@ -66,6 +89,11 @@ config VFIO_PCI_IGD
 	bool "VFIO PCI extensions for Intel graphics (GVT-d)"
 	depends on VFIO_PCI && X86
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+config VFIO_PCI_IGD
+	bool "Generic VFIO PCI extensions for Intel graphics (GVT-d)"
+	depends on X86
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default y
 	help
 	  Support for Intel IGD specific extensions to enable direct
@@ -75,7 +103,12 @@ config VFIO_PCI_IGD
 
 	  To enable Intel IGD assignment through vfio-pci, say Y.
 <<<<<<< HEAD
+<<<<<<< HEAD
 endif
 endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+endif
+endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -31,6 +31,7 @@ ENTRY(__asm_copy_from_user)
 	 */
 	add	t0, a0, a2
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/*
 	 * Use byte copy only if too small.
@@ -43,16 +44,23 @@ ENTRY(__asm_copy_from_user)
 	 * Copy first bytes until dst is aligned to word boundary.
 =======
 	bgtu	a0, t0, 5f
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Use byte copy only if too small.
+	 * SZREG holds 4 for RV32 and 8 for RV64
 	 */
-	li	a3, 8*SZREG /* size must be larger than size in word_copy */
+	li	a3, 9*SZREG /* size must be larger than size in word_copy */
 	bltu	a2, a3, .Lbyte_copy_tail
 
 	/*
+<<<<<<< HEAD
 	 * Copy first bytes until dst is align to word boundary.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * Copy first bytes until dst is aligned to word boundary.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * a0 - start of dst
 	 * t1 - start of aligned dst
 	 */
@@ -60,10 +68,14 @@ ENTRY(__asm_copy_from_user)
 	andi	t1, t1, ~(SZREG-1)
 	/* dst is already aligned, skip */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	beq	a0, t1, .Lskip_align_dst
 =======
 	beq	a0, t1, .Lskip_first_bytes
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	beq	a0, t1, .Lskip_align_dst
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:
 	/* a5 - one byte for copying data */
 	fixup lb      a5, 0(a1), 10f
@@ -73,10 +85,14 @@ ENTRY(__asm_copy_from_user)
 	bltu	a0, t1, 1b	/* t1 - start of aligned dst */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .Lskip_align_dst:
 =======
 .Lskip_first_bytes:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.Lskip_align_dst:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Now dst is aligned.
 	 * Use shift-copy if src is misaligned.
@@ -94,6 +110,7 @@ ENTRY(__asm_copy_from_user)
 	 * a0 - start of aligned dst
 	 * a1 - start of aligned src
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * t0 - end of aligned dst
 	 */
 	addi	t0, t0, -(8*SZREG) /* not to over run */
@@ -103,6 +120,11 @@ ENTRY(__asm_copy_from_user)
 	 */
 	addi	t0, t0, -(8*SZREG-1) /* not to over run */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * t0 - end of aligned dst
+	 */
+	addi	t0, t0, -(8*SZREG) /* not to over run */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 2:
 	fixup REG_L   a4,        0(a1), 10f
 	fixup REG_L   a5,    SZREG(a1), 10f
@@ -125,10 +147,14 @@ ENTRY(__asm_copy_from_user)
 	bltu	a0, t0, 2b
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addi	t0, t0, 8*SZREG /* revert to original value */
 =======
 	addi	t0, t0, 8*SZREG-1 /* revert to original value */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addi	t0, t0, 8*SZREG /* revert to original value */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	j	.Lbyte_copy_tail
 
 .Lshift_copy:
@@ -139,10 +165,14 @@ ENTRY(__asm_copy_from_user)
 	 * we need to use the value fetched from the previous iteration and
 	 * do some shifts.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * This is safe because reading is less than a word size.
 =======
 	 * This is safe because reading less than a word size.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * This is safe because reading is less than a word size.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * a0 - start of aligned dst
 	 * a1 - start of src
@@ -153,10 +183,14 @@ ENTRY(__asm_copy_from_user)
 	/* calculating aligned word boundary for dst */
 	andi	t1, t0, ~(SZREG-1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Converting unaligned src to aligned src */
 =======
 	/* Converting unaligned src to aligned arc */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Converting unaligned src to aligned src */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	andi	a1, a1, ~(SZREG-1)
 
 	/*
@@ -164,6 +198,7 @@ ENTRY(__asm_copy_from_user)
 	 * t3 - prev shift
 	 * t4 - current shift
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	slli	t3, a3, 3 /* converting bytes in a3 to bits */
 	li	a5, SZREG*8
@@ -177,6 +212,13 @@ ENTRY(__asm_copy_from_user)
 
 	/* Load the first word to combine with seceond word */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	slli	t3, a3, 3 /* converting bytes in a3 to bits */
+	li	a5, SZREG*8
+	sub	t4, a5, t3
+
+	/* Load the first word to combine with second word */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fixup REG_L   a5, 0(a1), 10f
 
 3:
@@ -209,10 +251,14 @@ ENTRY(__asm_copy_from_user)
 	 * t0 - end of remaining dst
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bgeu	a0, t0, .Lout_copy_user  /* check if end of copy */
 =======
 	bgeu	a0, t0, 5f
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bgeu	a0, t0, .Lout_copy_user  /* check if end of copy */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 4:
 	fixup lb      a5, 0(a1), 10f
 	addi	a1, a1, 1	/* src */
@@ -221,10 +267,14 @@ ENTRY(__asm_copy_from_user)
 	bltu	a0, t0, 4b	/* t0 - end of dst */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .Lout_copy_user:
 =======
 5:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.Lout_copy_user:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Disable access to user memory */
 	csrc CSR_STATUS, t6
 	li	a0, 0

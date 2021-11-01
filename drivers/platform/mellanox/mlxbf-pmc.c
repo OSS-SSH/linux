@@ -80,11 +80,16 @@
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct mlxbf_pmc_attribute - Structure to hold attribute and block info
  * for each sysfs entry
 =======
  * Structure to hold attribute and block info for each sysfs entry
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct mlxbf_pmc_attribute - Structure to hold attribute and block info
+ * for each sysfs entry
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dev_attr: Device attribute struct
  * @index: index to identify counter number within a block
  * @nr: block number to which the sysfs belongs
@@ -97,10 +102,14 @@ struct mlxbf_pmc_attribute {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct mlxbf_pmc_block_info - Structure to hold info for each HW block
 =======
  * Structure to hold info for each HW block
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct mlxbf_pmc_block_info - Structure to hold info for each HW block
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @mmio_base: The VA at which the PMC block is mapped
  * @blk_size: Size of each mapped region
@@ -112,10 +121,14 @@ struct mlxbf_pmc_attribute {
  * @attr_enable: Attributes for "enable" sysfs files
  * @block_attr: All attributes needed for the block
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @block_attr_grp: Attribute group for the block
 =======
  * @blcok_attr_grp: Attribute group for the block
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @block_attr_grp: Attribute group for the block
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct mlxbf_pmc_block_info {
 	void __iomem *mmio_base;
@@ -132,10 +145,14 @@ struct mlxbf_pmc_block_info {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct mlxbf_pmc_context - Structure to hold PMC context info
 =======
  * Structure to hold PMC context info
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct mlxbf_pmc_context - Structure to hold PMC context info
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @pdev: The kernel structure representing the device
  * @total_blocks: Total number of blocks
@@ -145,10 +162,14 @@ struct mlxbf_pmc_block_info {
  * @block:  Block info
  * @groups:  Attribute groups from each block
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @svc_sreg_support: Whether SMCs are used to access performance registers
 =======
  * @sv_sreg_support: Whether SMCs are used to access performance registers
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @svc_sreg_support: Whether SMCs are used to access performance registers
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @sreg_tbl_perf: Secure register access table number
  * @event_set: Event set to use
  */
@@ -167,10 +188,14 @@ struct mlxbf_pmc_context {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct mlxbf_pmc_events - Structure to hold supported events for each block
 =======
  * Structure to hold supported events for each block
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct mlxbf_pmc_events - Structure to hold supported events for each block
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @evt_num: Event number used to program counters
  * @evt_name: Name of the event
  */

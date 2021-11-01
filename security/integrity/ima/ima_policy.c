@@ -36,9 +36,13 @@
 #define IMA_KEYRINGS	0x0400
 #define IMA_LABEL	0x0800
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IMA_VALIDATE_ALGOS	0x1000
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IMA_VALIDATE_ALGOS	0x1000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define UNKNOWN		0
 #define MEASURE		0x0001	/* same as IMA_MEASURE */
@@ -57,10 +61,15 @@ static int temp_ima_appraise;
 static int build_ima_appraise __ro_after_init;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 atomic_t ima_setxattr_allowed_hash_algorithms;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+atomic_t ima_setxattr_allowed_hash_algorithms;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MAX_LSM_RULES 6
 enum lsm_rule_types { LSM_OBJ_USER, LSM_OBJ_ROLE, LSM_OBJ_TYPE,
 	LSM_SUBJ_USER, LSM_SUBJ_ROLE, LSM_SUBJ_TYPE
@@ -89,9 +98,13 @@ struct ima_rule_entry {
 	bool (*fowner_op)(kuid_t, kuid_t); /* uid_eq(), uid_gt(), uid_lt() */
 	int pcr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int allowed_algos; /* bitfield of allowed hash algorithms */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int allowed_algos; /* bitfield of allowed hash algorithms */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
 		void *rule;	/* LSM file metadata specific */
 		char *args_p;	/* audit value */
@@ -105,6 +118,9 @@ struct ima_rule_entry {
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * sanity check in case the kernels gains more hash algorithms that can
  * fit in an unsigned int
  */
@@ -113,8 +129,11 @@ static_assert(
 	"The bitfield allowed_algos in ima_rule_entry is too small to contain all the supported hash algorithms, consider using a bigger type");
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Without LSM specific knowledge, the default policy can only be
  * written in terms of .action, .func, .mask, .fsmagic, .uid, and .fowner
  */
@@ -671,9 +690,13 @@ static int get_subaction(struct ima_rule_entry *rule, enum ima_hooks func)
  * @template_desc: the template that should be used for this rule
  * @func_data: func specific data, may be NULL
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @allowed_algos: allowlist of hash algorithms for the IMA xattr
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @allowed_algos: allowlist of hash algorithms for the IMA xattr
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Measure decision based on func/mask/fsmagic and LSM(subj/obj/type)
  * conditions.
@@ -687,10 +710,14 @@ int ima_match_policy(struct user_namespace *mnt_userns, struct inode *inode,
 		     int mask, int flags, int *pcr,
 		     struct ima_template_desc **template_desc,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     const char *func_data, unsigned int *allowed_algos)
 =======
 		     const char *func_data)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     const char *func_data, unsigned int *allowed_algos)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ima_rule_entry *entry;
 	int action = 0, actmask = flags | (flags << 1);
@@ -717,6 +744,7 @@ int ima_match_policy(struct user_namespace *mnt_userns, struct inode *inode,
 			if (ima_fail_unverifiable_sigs)
 				action |= IMA_FAIL_UNVERIFIABLE_SIGS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (allowed_algos &&
 			    entry->flags & IMA_VALIDATE_ALGOS)
@@ -725,7 +753,13 @@ int ima_match_policy(struct user_namespace *mnt_userns, struct inode *inode,
 
 =======
 		}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+			if (allowed_algos &&
+			    entry->flags & IMA_VALIDATE_ALGOS)
+				*allowed_algos = entry->allowed_algos;
+		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (entry->action & IMA_DO_MASK)
@@ -748,6 +782,9 @@ int ima_match_policy(struct user_namespace *mnt_userns, struct inode *inode,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ima_update_policy_flags() - Update global IMA variables
  *
@@ -762,6 +799,7 @@ int ima_match_policy(struct user_namespace *mnt_userns, struct inode *inode,
  * a file.
  *
  * Context: called after a policy update and at system initialization.
+<<<<<<< HEAD
  */
 void ima_update_policy_flags(void)
 {
@@ -805,20 +843,50 @@ void ima_update_policy_flags(void)
  * loaded policy.  Based on this flag, the decision to short circuit
  * out of a function or not call the function in the first place
  * can be made earlier.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
-void ima_update_policy_flag(void)
+void ima_update_policy_flags(void)
 {
 	struct ima_rule_entry *entry;
+	int new_policy_flag = 0;
 
+	rcu_read_lock();
 	list_for_each_entry(entry, ima_rules, list) {
+		/*
+		 * SETXATTR_CHECK rules do not implement a full policy check
+		 * because rule checking would probably have an important
+		 * performance impact on setxattr(). As a consequence, only one
+		 * SETXATTR_CHECK can be active at a given time.
+		 * Because we want to preserve that property, we set out to use
+		 * atomic_cmpxchg. Either:
+		 * - the atomic was non-zero: a setxattr hash policy is
+		 *   already enforced, we do nothing
+		 * - the atomic was zero: no setxattr policy was set, enable
+		 *   the setxattr hash policy
+		 */
+		if (entry->func == SETXATTR_CHECK) {
+			atomic_cmpxchg(&ima_setxattr_allowed_hash_algorithms,
+				       0, entry->allowed_algos);
+			/* SETXATTR_CHECK doesn't impact ima_policy_flag */
+			continue;
+		}
+
 		if (entry->action & IMA_DO_MASK)
-			ima_policy_flag |= entry->action;
+			new_policy_flag |= entry->action;
 	}
+	rcu_read_unlock();
 
 	ima_appraise |= (build_ima_appraise | temp_ima_appraise);
 	if (!ima_appraise)
+<<<<<<< HEAD
 		ima_policy_flag &= ~IMA_APPRAISE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		new_policy_flag &= ~IMA_APPRAISE;
+
+	ima_policy_flag = new_policy_flag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ima_appraise_flag(enum ima_hooks func)
@@ -985,12 +1053,18 @@ void __init ima_init_policy(void)
 			  IMA_DEFAULT_POLICY);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_set(&ima_setxattr_allowed_hash_algorithms, 0);
 
 	ima_update_policy_flags();
 =======
 	ima_update_policy_flag();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_set(&ima_setxattr_allowed_hash_algorithms, 0);
+
+	ima_update_policy_flags();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Make sure we have a valid policy, at least containing some rules. */
@@ -1031,10 +1105,14 @@ void ima_update_policy(void)
 		kfree(arch_policy_entry);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ima_update_policy_flags();
 =======
 	ima_update_policy_flag();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ima_update_policy_flags();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Custom IMA policy has been loaded */
 	ima_process_queued_keys();
@@ -1052,10 +1130,14 @@ enum {
 	Opt_uid_gt, Opt_euid_gt, Opt_fowner_gt,
 	Opt_uid_lt, Opt_euid_lt, Opt_fowner_lt,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	Opt_appraise_type, Opt_appraise_flag, Opt_appraise_algos,
 =======
 	Opt_appraise_type, Opt_appraise_flag,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	Opt_appraise_type, Opt_appraise_flag, Opt_appraise_algos,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	Opt_permit_directio, Opt_pcr, Opt_template, Opt_keyrings,
 	Opt_label, Opt_err
 };
@@ -1091,9 +1173,13 @@ static const match_table_t policy_tokens = {
 	{Opt_appraise_type, "appraise_type=%s"},
 	{Opt_appraise_flag, "appraise_flag=%s"},
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{Opt_appraise_algos, "appraise_algos=%s"},
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{Opt_appraise_algos, "appraise_algos=%s"},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{Opt_permit_directio, "permit_directio"},
 	{Opt_pcr, "pcr=%s"},
 	{Opt_template, "template=%s"},
@@ -1195,11 +1281,16 @@ static bool ima_validate_rule(struct ima_rule_entry *entry)
 
 	if (entry->action != APPRAISE &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    entry->flags & (IMA_DIGSIG_REQUIRED | IMA_MODSIG_ALLOWED |
 			    IMA_CHECK_BLACKLIST | IMA_VALIDATE_ALGOS))
 =======
 	    entry->flags & (IMA_DIGSIG_REQUIRED | IMA_MODSIG_ALLOWED | IMA_CHECK_BLACKLIST))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    entry->flags & (IMA_DIGSIG_REQUIRED | IMA_MODSIG_ALLOWED |
+			    IMA_CHECK_BLACKLIST | IMA_VALIDATE_ALGOS))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	/*
@@ -1230,10 +1321,14 @@ static bool ima_validate_rule(struct ima_rule_entry *entry)
 				     IMA_INMASK | IMA_EUID | IMA_PCR |
 				     IMA_FSNAME | IMA_DIGSIG_REQUIRED |
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     IMA_PERMIT_DIRECTIO | IMA_VALIDATE_ALGOS))
 =======
 				     IMA_PERMIT_DIRECTIO))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     IMA_PERMIT_DIRECTIO | IMA_VALIDATE_ALGOS))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return false;
 
 		break;
@@ -1246,10 +1341,14 @@ static bool ima_validate_rule(struct ima_rule_entry *entry)
 				     IMA_FSNAME | IMA_DIGSIG_REQUIRED |
 				     IMA_PERMIT_DIRECTIO | IMA_MODSIG_ALLOWED |
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     IMA_CHECK_BLACKLIST | IMA_VALIDATE_ALGOS))
 =======
 				     IMA_CHECK_BLACKLIST))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     IMA_CHECK_BLACKLIST | IMA_VALIDATE_ALGOS))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return false;
 
 		break;
@@ -1288,6 +1387,9 @@ static bool ima_validate_rule(struct ima_rule_entry *entry)
 
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SETXATTR_CHECK:
 		/* any action other than APPRAISE is unsupported */
 		if (entry->action != APPRAISE)
@@ -1305,8 +1407,11 @@ static bool ima_validate_rule(struct ima_rule_entry *entry)
 			return false;
 
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return false;
 	}
@@ -1320,6 +1425,9 @@ static bool ima_validate_rule(struct ima_rule_entry *entry)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static unsigned int ima_parse_appraise_algos(char *arg)
 {
 	unsigned int res = 0;
@@ -1348,8 +1456,11 @@ static unsigned int ima_parse_appraise_algos(char *arg)
 	return res;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ima_parse_rule(char *rule, struct ima_rule_entry *entry)
 {
 	struct audit_buffer *ab;
@@ -1472,10 +1583,15 @@ static int ima_parse_rule(char *rule, struct ima_rule_entry *entry)
 			else if (strcmp(args[0].from, "CRITICAL_DATA") == 0)
 				entry->func = CRITICAL_DATA;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			else if (strcmp(args[0].from, "SETXATTR_CHECK") == 0)
 				entry->func = SETXATTR_CHECK;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			else if (strcmp(args[0].from, "SETXATTR_CHECK") == 0)
+				entry->func = SETXATTR_CHECK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			else
 				result = -EINVAL;
 			if (!result)
@@ -1691,6 +1807,9 @@ static int ima_parse_rule(char *rule, struct ima_rule_entry *entry)
 				result = -EINVAL;
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case Opt_appraise_algos:
 			ima_log_string(ab, "appraise_algos", args[0].from);
 
@@ -1710,8 +1829,11 @@ static int ima_parse_rule(char *rule, struct ima_rule_entry *entry)
 			entry->flags |= IMA_VALIDATE_ALGOS;
 
 			break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case Opt_permit_directio:
 			entry->flags |= IMA_PERMIT_DIRECTIO;
 			break;
@@ -1905,6 +2027,9 @@ static void ima_show_rule_opt_list(struct seq_file *m,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ima_policy_show_appraise_algos(struct seq_file *m,
 					   unsigned int allowed_hashes)
 {
@@ -1922,8 +2047,11 @@ static void ima_policy_show_appraise_algos(struct seq_file *m,
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ima_policy_show(struct seq_file *m, void *v)
 {
 	struct ima_rule_entry *entry = v;
@@ -2036,14 +2164,20 @@ int ima_policy_show(struct seq_file *m, void *v)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (entry->flags & IMA_VALIDATE_ALGOS) {
 		seq_puts(m, "appraise_algos=");
 		ima_policy_show_appraise_algos(m, entry->allowed_algos);
 		seq_puts(m, " ");
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < MAX_LSM_RULES; i++) {
 		if (entry->lsm[i].rule) {
 			switch (i) {

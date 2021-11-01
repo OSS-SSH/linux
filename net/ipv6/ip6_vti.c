@@ -772,6 +772,7 @@ vti6_parm_to_user(struct ip6_tnl_parm2 *u, const struct __ip6_tnl_parm *p)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * vti6_siocdevprivate - configure vti6 tunnels from userspace
  *   @dev: virtual device associated with tunnel
  *   @ifr: unused
@@ -782,13 +783,21 @@ vti6_parm_to_user(struct ip6_tnl_parm2 *u, const struct __ip6_tnl_parm *p)
  *   vti6_siocdevprivate() is used for managing vti6 tunnels
 =======
  * vti6_ioctl - configure vti6 tunnels from userspace
+=======
+ * vti6_siocdevprivate - configure vti6 tunnels from userspace
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   @dev: virtual device associated with tunnel
- *   @ifr: parameters passed from userspace
+ *   @ifr: unused
+ *   @data: parameters passed from userspace
  *   @cmd: command to be performed
  *
  * Description:
+<<<<<<< HEAD
  *   vti6_ioctl() is used for managing vti6 tunnels
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *   vti6_siocdevprivate() is used for managing vti6 tunnels
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   from userspace.
  *
  *   The possible commands are the following:
@@ -810,10 +819,14 @@ vti6_parm_to_user(struct ip6_tnl_parm2 *u, const struct __ip6_tnl_parm *p)
  **/
 static int
 <<<<<<< HEAD
+<<<<<<< HEAD
 vti6_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
 =======
 vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+vti6_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err = 0;
 	struct ip6_tnl_parm2 p;
@@ -826,10 +839,14 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	case SIOCGETTUNNEL:
 		if (dev == ip6n->fb_tnl_dev) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (copy_from_user(&p, data, sizeof(p))) {
 =======
 			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (copy_from_user(&p, data, sizeof(p))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				err = -EFAULT;
 				break;
 			}
@@ -842,10 +859,14 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 			t = netdev_priv(dev);
 		vti6_parm_to_user(&p, &t->parms);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_to_user(data, &p, sizeof(p)))
 =======
 		if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_to_user(data, &p, sizeof(p)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = -EFAULT;
 		break;
 	case SIOCADDTUNNEL:
@@ -855,10 +876,14 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 			break;
 		err = -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_from_user(&p, data, sizeof(p)))
 =======
 		if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_from_user(&p, data, sizeof(p)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		err = -EINVAL;
 		if (p.proto != IPPROTO_IPV6  && p.proto != 0)
@@ -880,10 +905,14 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 			err = 0;
 			vti6_parm_to_user(&p, &t->parms);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (copy_to_user(data, &p, sizeof(p)))
 =======
 			if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (copy_to_user(data, &p, sizeof(p)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				err = -EFAULT;
 
 		} else
@@ -897,10 +926,14 @@ vti6_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		if (dev == ip6n->fb_tnl_dev) {
 			err = -EFAULT;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (copy_from_user(&p, data, sizeof(p)))
 =======
 			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (copy_from_user(&p, data, sizeof(p)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			err = -ENOENT;
 			vti6_parm_from_user(&p1, &p);
@@ -926,10 +959,14 @@ static const struct net_device_ops vti6_netdev_ops = {
 	.ndo_uninit	= vti6_dev_uninit,
 	.ndo_start_xmit = vti6_tnl_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate = vti6_siocdevprivate,
 =======
 	.ndo_do_ioctl	= vti6_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate = vti6_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_get_stats64 = dev_get_tstats64,
 	.ndo_get_iflink = ip6_tnl_get_iflink,
 };

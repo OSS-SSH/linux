@@ -76,9 +76,13 @@ static int rcar_hdmi_phy_configure(struct dw_hdmi *hdmi, void *data,
 
 static const struct dw_hdmi_plat_data rcar_dw_hdmi_plat_data = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.output_port = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.output_port = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.mode_valid = rcar_hdmi_mode_valid,
 	.configure_phy	= rcar_hdmi_phy_configure,
 };

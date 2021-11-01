@@ -77,11 +77,16 @@ enum intel_display_power_domain {
 	POWER_DOMAIN_PORT_OTHER,
 	POWER_DOMAIN_VGA,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	POWER_DOMAIN_AUDIO_MMIO,
 	POWER_DOMAIN_AUDIO_PLAYBACK,
 =======
 	POWER_DOMAIN_AUDIO,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	POWER_DOMAIN_AUDIO_MMIO,
+	POWER_DOMAIN_AUDIO_PLAYBACK,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	POWER_DOMAIN_AUX_A,
 	POWER_DOMAIN_AUX_B,
 	POWER_DOMAIN_AUX_C,
@@ -148,10 +153,13 @@ enum i915_power_well_id {
 	SKL_DISP_PW_1,
 	SKL_DISP_PW_2,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	CNL_DISP_PW_DDI_F_IO,
 	CNL_DISP_PW_DDI_F_AUX,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ICL_DISP_PW_3,
 	SKL_DISP_DC_OFF,
 	TGL_DISP_PW_TC_COLD_OFF,
@@ -232,14 +240,20 @@ struct i915_power_well_desc {
 			/* Mask of pipes whose IRQ logic is backed by the pw */
 			u8 irq_pipe_mask;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * Instead of waiting for the status bit to ack enables,
 			 * just wait a specific amount of time and then consider
 			 * the well enabled.
 			 */
 			u16 fixed_enable_delay;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* The pw is backing the VGA functionality */
 			bool has_vga:1;
 			bool has_fuses:1;
@@ -404,12 +418,18 @@ intel_display_power_put_all_in_set(struct drm_i915_private *i915,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * FIXME: We should probably switch this to a 0-based scheme to be consistent
  * with how we now name/number DBUF_CTL instances.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum dbuf_slice {
 	DBUF_S1,
 	DBUF_S2,

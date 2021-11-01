@@ -81,6 +81,7 @@ patternProperties:
 
       drive-strength:
 <<<<<<< HEAD
+<<<<<<< HEAD
         enum: [2, 4, 6, 8, 10, 12, 14, 16]
 =======
         description: |
@@ -88,6 +89,9 @@ patternProperties:
           2/4/6/8/10/12/14/16mA in mt8195.
         enum: [0, 1, 2, 3, 4, 5, 6, 7]
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
       bias-pull-down: true
 

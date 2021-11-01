@@ -10,10 +10,15 @@
 #include <linux/clocksource.h>
 #include <linux/ktime.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/delay.h>
 #include <linux/iopoll.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/delay.h>
+#include <linux/iopoll.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define INCVALUE_MASK		0x7fffffff
 #define ISGN			0x80000000
@@ -22,11 +27,17 @@
 #define IGC_PTP_TX_TIMEOUT		(HZ * 15)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IGC_PTM_STAT_SLEEP		2
 #define IGC_PTM_STAT_TIMEOUT		100
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IGC_PTM_STAT_SLEEP		2
+#define IGC_PTM_STAT_TIMEOUT		100
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* SYSTIM read access for I225 */
 void igc_ptp_read(struct igc_adapter *adapter, struct timespec64 *ts)
 {
@@ -764,6 +775,9 @@ int igc_ptp_get_ts_config(struct net_device *netdev, struct ifreq *ifr)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* The two conditions below must be met for cross timestamping via
  * PCIe PTM:
  *
@@ -905,8 +919,11 @@ static int igc_ptp_getcrosststamp(struct ptp_clock_info *ptp,
 					     adapter, &adapter->snapshot, cts);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * igc_ptp_init - Initialize PTP functionality
  * @adapter: Board private structure
@@ -944,13 +961,19 @@ void igc_ptp_init(struct igc_adapter *adapter)
 		adapter->ptp_caps.n_pins = IGC_N_SDP;
 		adapter->ptp_caps.verify = igc_ptp_verify_pin;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!igc_is_crosststamp_supported(adapter))
 			break;
 
 		adapter->ptp_caps.getcrosststamp = igc_ptp_getcrosststamp;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		adapter->ptp_clock = NULL;
@@ -1013,11 +1036,16 @@ void igc_ptp_suspend(struct igc_adapter *adapter)
 	clear_bit_unlock(__IGC_PTP_TX_IN_PROGRESS, &adapter->state);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pci_device_is_present(adapter->pdev))
 		igc_ptp_time_save(adapter);
 =======
 	igc_ptp_time_save(adapter);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (pci_device_is_present(adapter->pdev))
+		igc_ptp_time_save(adapter);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1047,12 +1075,18 @@ void igc_ptp_reset(struct igc_adapter *adapter)
 {
 	struct igc_hw *hw = &adapter->hw;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 cycle_ctrl, ctrl;
 	unsigned long flags;
 	u32 timadj;
 =======
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 cycle_ctrl, ctrl;
+	unsigned long flags;
+	u32 timadj;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* reset the tstamp_config */
 	igc_ptp_set_timestamp_mode(adapter, &adapter->tstamp_config);
@@ -1062,12 +1096,18 @@ void igc_ptp_reset(struct igc_adapter *adapter)
 	switch (adapter->hw.mac.type) {
 	case igc_i225:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		timadj = rd32(IGC_TIMADJ);
 		timadj |= IGC_TIMADJ_ADJUST_METH;
 		wr32(IGC_TIMADJ, timadj);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		wr32(IGC_TSAUXC, 0x0);
 		wr32(IGC_TSSDP, 0x0);
 		wr32(IGC_TSIM,
@@ -1075,6 +1115,9 @@ void igc_ptp_reset(struct igc_adapter *adapter)
 		     (adapter->pps_sys_wrap_on ? IGC_TSICR_SYS_WRAP : 0));
 		wr32(IGC_IMS, IGC_IMS_TS);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!igc_is_crosststamp_supported(adapter))
 			break;
@@ -1097,8 +1140,11 @@ void igc_ptp_reset(struct igc_adapter *adapter)
 		/* Force the first cycle to run. */
 		wr32(IGC_PTM_STAT, IGC_PTM_STAT_VALID);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		/* No work to do. */

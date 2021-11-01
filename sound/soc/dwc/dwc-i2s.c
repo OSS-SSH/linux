@@ -643,10 +643,14 @@ static int dw_i2s_probe(struct platform_device *pdev)
 	dev->dev = &pdev->dev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	irq = platform_get_irq_optional(pdev, 0);
 =======
 	irq = platform_get_irq(pdev, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	irq = platform_get_irq_optional(pdev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (irq >= 0) {
 		ret = devm_request_irq(&pdev->dev, irq, i2s_irq_handler, 0,
 				pdev->name, dev);

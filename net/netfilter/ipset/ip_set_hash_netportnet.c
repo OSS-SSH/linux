@@ -183,11 +183,16 @@ hash_netportnet4_uadt(struct ip_set *set, struct nlattr *tb[],
 	struct ip_set_ext ext = IP_SET_INIT_UEXT(set);
 	u32 ip = 0, ip_to = 0, p = 0, port, port_to;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 ip2_from = 0, ip2_to = 0, ip2, ipn;
 	u64 n = 0, m = 0;
 =======
 	u32 ip2_from = 0, ip2_to = 0, ip2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 ip2_from = 0, ip2_to = 0, ip2, ipn;
+	u64 n = 0, m = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool with_ports = false;
 	int ret;
 
@@ -290,6 +295,9 @@ hash_netportnet4_uadt(struct ip_set *set, struct nlattr *tb[],
 		ip_set_mask_from_to(ip2_from, ip2_to, e.cidr[1]);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ipn = ip;
 	do {
 		ipn = ip_set_range_to_cidr(ipn, ip_to, &e.cidr[0]);
@@ -303,8 +311,11 @@ hash_netportnet4_uadt(struct ip_set *set, struct nlattr *tb[],
 
 	if (n*m*(port_to - port + 1) > IPSET_MAX_RANGE)
 		return -ERANGE;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (retried) {
 		ip = ntohl(h->next.ip[0]);

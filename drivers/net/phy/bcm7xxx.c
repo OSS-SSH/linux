@@ -28,15 +28,21 @@
 #define MII_BCM7XXX_SHD_2_CTRL_STAT	0xf
 #define MII_BCM7XXX_SHD_2_BIAS_TRIM	0x1a
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_BCM7XXX_SHD_3_PCS_CTRL	0x0
 #define MII_BCM7XXX_SHD_3_PCS_STATUS	0x1
 #define MII_BCM7XXX_SHD_3_EEE_CAP	0x2
 #define MII_BCM7XXX_SHD_3_AN_EEE_ADV	0x3
 #define MII_BCM7XXX_SHD_3_EEE_LP	0x4
 #define MII_BCM7XXX_SHD_3_EEE_WK_ERR	0x5
+<<<<<<< HEAD
 =======
 #define MII_BCM7XXX_SHD_3_AN_EEE_ADV	0x3
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_BCM7XXX_SHD_3_PCS_CTRL_2	0x6
 #define  MII_BCM7XXX_PCS_CTRL_2_DEF	0x4400
 #define MII_BCM7XXX_SHD_3_AN_STAT	0xb
@@ -226,6 +232,7 @@ static int bcm7xxx_28nm_resume(struct phy_device *phydev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __phy_set_clr_bits(struct phy_device *dev, int location,
 			      int set_mask, int clr_mask)
 {
@@ -240,6 +247,14 @@ static int phy_set_clr_bits(struct phy_device *dev, int location,
 
 	v = phy_read(dev, location);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __phy_set_clr_bits(struct phy_device *dev, int location,
+			      int set_mask, int clr_mask)
+{
+	int v, ret;
+
+	v = __phy_read(dev, location);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (v < 0)
 		return v;
 
@@ -247,10 +262,14 @@ static int phy_set_clr_bits(struct phy_device *dev, int location,
 	v |= set_mask;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = __phy_write(dev, location, v);
 =======
 	ret = phy_write(dev, location, v);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = __phy_write(dev, location, v);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -258,6 +277,9 @@ static int phy_set_clr_bits(struct phy_device *dev, int location,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int phy_set_clr_bits(struct phy_device *dev, int location,
 			    int set_mask, int clr_mask)
 {
@@ -270,8 +292,11 @@ static int phy_set_clr_bits(struct phy_device *dev, int location,
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bcm7xxx_28nm_ephy_01_afe_config_init(struct phy_device *phydev)
 {
 	int ret;
@@ -436,6 +461,9 @@ static int bcm7xxx_28nm_ephy_config_init(struct phy_device *phydev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_BCM7XXX_REG_INVALID	0xff
 
 static u8 bcm7xxx_28nm_ephy_regnum_to_shd(u16 regnum)
@@ -523,8 +551,11 @@ reset_shadow_mode:
 				  MII_BCM7XXX_SHD_MODE_2);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bcm7xxx_28nm_ephy_resume(struct phy_device *phydev)
 {
 	int ret;
@@ -723,10 +754,15 @@ static void bcm7xxx_28nm_remove(struct phy_device *phydev)
 	.probe		= bcm7xxx_28nm_probe,				\
 	.remove		= bcm7xxx_28nm_remove,				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.read_mmd	= bcm7xxx_28nm_ephy_read_mmd,			\
 	.write_mmd	= bcm7xxx_28nm_ephy_write_mmd,			\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.read_mmd	= bcm7xxx_28nm_ephy_read_mmd,			\
+	.write_mmd	= bcm7xxx_28nm_ephy_write_mmd,			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define BCM7XXX_40NM_EPHY(_oui, _name)					\

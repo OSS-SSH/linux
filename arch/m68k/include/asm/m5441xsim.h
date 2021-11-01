@@ -74,14 +74,20 @@
 
 /* on interrupt controller 1 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MCFINT1_FLEXCAN0_IFL	0
 #define MCFINT1_FLEXCAN0_BOFF	1
 #define MCFINT1_FLEXCAN0_ERR	3
 #define MCFINT1_FLEXCAN1_IFL	4
 #define MCFINT1_FLEXCAN1_BOFF	5
 #define MCFINT1_FLEXCAN1_ERR	7
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MCFINT1_UART4		48
 #define MCFINT1_UART5		49
 #define MCFINT1_UART6		50
@@ -324,6 +330,9 @@
 #define MCFSDHC_CLK		(MCFSDHC_BASE + 0x2c)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Flexcan module
  */
@@ -337,6 +346,9 @@
 #define MCF_IRQ_BOFF1		(MCFINT1_VECBASE + MCFINT1_FLEXCAN1_BOFF)
 #define MCF_IRQ_ERR1		(MCFINT1_VECBASE + MCFINT1_FLEXCAN1_ERR)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* m5441xsim_h */

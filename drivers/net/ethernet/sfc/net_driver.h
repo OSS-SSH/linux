@@ -783,14 +783,20 @@ struct efx_async_filter_insertion {
 #endif /* CONFIG_RFS_ACCEL */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum efx_xdp_tx_queues_mode {
 	EFX_XDP_TX_QUEUES_DEDICATED,	/* one queue per core, locking not needed */
 	EFX_XDP_TX_QUEUES_SHARED,	/* each queue used by more than 1 core */
 	EFX_XDP_TX_QUEUES_BORROWED	/* queues borrowed from net stack */
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct efx_nic - an Efx NIC
  * @name: Device name (net device name or bus id before net device registered)
@@ -830,9 +836,13 @@ enum efx_xdp_tx_queues_mode {
  * @xdp_tx_queue_count: Number of entries in %xdp_tx_queues.
  * @xdp_tx_queues: Array of pointers to tx queues used for XDP transmit.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @xdp_txq_queues_mode: XDP TX queues sharing strategy.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @xdp_txq_queues_mode: XDP TX queues sharing strategy.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @rxq_entries: Size of receive queues requested by user.
  * @txq_entries: Size of transmit queues requested by user.
  * @txq_stop_thresh: TX queue fill level at or above which we stop it.
@@ -993,9 +1003,13 @@ struct efx_nic {
 	unsigned int xdp_tx_queue_count;
 	struct efx_tx_queue **xdp_tx_queues;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum efx_xdp_tx_queues_mode xdp_txq_queues_mode;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum efx_xdp_tx_queues_mode xdp_txq_queues_mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	unsigned rxq_entries;
 	unsigned txq_entries;

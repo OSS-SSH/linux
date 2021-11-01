@@ -10,6 +10,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/mutex.h>
 #include <linux/sysfs.h>
 #include <linux/slab.h>
@@ -18,18 +19,20 @@
 #include <linux/iio/sysfs.h>
 #include <linux/iio/trigger.h>
 =======
+=======
+#include <linux/mutex.h>
+#include <linux/sysfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 #include <linux/acpi.h>
-#include <linux/errno.h>
-#include <linux/types.h>
-#include <linux/interrupt.h>
-#include <linux/i2c.h>
-#include <linux/irq.h>
 #include <linux/iio/iio.h>
 #include <linux/iio/sysfs.h>
 #include <linux/iio/trigger.h>
+<<<<<<< HEAD
 #include <linux/iio/buffer.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/iio/common/st_sensors.h>
 #include "st_accel.h"
@@ -1392,10 +1395,14 @@ int st_accel_common_probe(struct iio_dev *indio_dev)
 						 ST_ACCEL_TRIGGER_OPS);
 		if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return err;
 =======
 			goto st_accel_probe_trigger_error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = iio_device_register(indio_dev);
@@ -1411,10 +1418,13 @@ st_accel_device_register_error:
 	if (adata->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 st_accel_probe_trigger_error:
 	st_accel_deallocate_ring(indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 EXPORT_SYMBOL(st_accel_common_probe);
@@ -1427,10 +1437,13 @@ void st_accel_common_remove(struct iio_dev *indio_dev)
 	if (adata->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	st_accel_deallocate_ring(indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(st_accel_common_remove);
 

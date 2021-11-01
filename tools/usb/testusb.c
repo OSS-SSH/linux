@@ -266,6 +266,7 @@ nomem:
 
 	entry->ifnum = ifnum;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	/* FIXME update USBDEVFS_CONNECTINFO so it tells about high speed etc */
@@ -274,6 +275,8 @@ nomem:
 		speed(entry->speed), entry->name, entry->ifnum);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	entry->next = testdevs;
 	testdevs = entry;
 	return 0;
@@ -303,6 +306,9 @@ static void *handle_testdev (void *arg)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status  =  ioctl(fd, USBDEVFS_GET_SPEED, NULL);
 	if (status < 0)
 		fprintf(stderr, "USBDEVFS_GET_SPEED failed %d\n", status);
@@ -311,8 +317,11 @@ static void *handle_testdev (void *arg)
 	fprintf(stderr, "%s speed\t%s\t%u\n",
 			speed(dev->speed), dev->name, dev->ifnum);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 restart:
 	for (i = 0; i < TEST_CASES; i++) {
 		if (dev->test != -1 && dev->test != i)

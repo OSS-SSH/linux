@@ -693,9 +693,13 @@ int xhci_run(struct usb_hcd *hcd)
 			xhci_free_command(xhci, command);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_bit(HCD_FLAG_DEFER_RH_REGISTER, &hcd->flags);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_bit(HCD_FLAG_DEFER_RH_REGISTER, &hcd->flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
 			"Finished xhci_run for USB2 roothub");
 
@@ -998,11 +1002,16 @@ int xhci_suspend(struct xhci_hcd *xhci, bool do_wakeup)
 
 	/* Don't poll the roothubs on bus suspend. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xhci_dbg(xhci, "%s: stopping usb%d port polling.\n",
 		 __func__, hcd->self.busnum);
 =======
 	xhci_dbg(xhci, "%s: stopping port polling.\n", __func__);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xhci_dbg(xhci, "%s: stopping usb%d port polling.\n",
+		 __func__, hcd->self.busnum);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clear_bit(HCD_FLAG_POLL_RH, &hcd->flags);
 	del_timer_sync(&hcd->rh_timer);
 	clear_bit(HCD_FLAG_POLL_RH, &xhci->shared_hcd->flags);
@@ -1267,11 +1276,16 @@ int xhci_resume(struct xhci_hcd *xhci, bool hibernated)
 
 	/* Re-enable port polling. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xhci_dbg(xhci, "%s: starting usb%d port polling.\n",
 		 __func__, hcd->self.busnum);
 =======
 	xhci_dbg(xhci, "%s: starting port polling.\n", __func__);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xhci_dbg(xhci, "%s: starting usb%d port polling.\n",
+		 __func__, hcd->self.busnum);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	set_bit(HCD_FLAG_POLL_RH, &xhci->shared_hcd->flags);
 	usb_hcd_poll_rh_status(xhci->shared_hcd);
 	set_bit(HCD_FLAG_POLL_RH, &hcd->flags);
@@ -3226,6 +3240,7 @@ static void xhci_endpoint_reset(struct usb_hcd *hcd,
 
 	/* Bail out if toggle is already being cleared by a endpoint reset */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irqsave(&xhci->lock, flags);
 	if (ep->ep_state & EP_HARD_CLEAR_TOGGLE) {
 		ep->ep_state &= ~EP_HARD_CLEAR_TOGGLE;
@@ -3234,11 +3249,19 @@ static void xhci_endpoint_reset(struct usb_hcd *hcd,
 	}
 	spin_unlock_irqrestore(&xhci->lock, flags);
 =======
+=======
+	spin_lock_irqsave(&xhci->lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ep->ep_state & EP_HARD_CLEAR_TOGGLE) {
 		ep->ep_state &= ~EP_HARD_CLEAR_TOGGLE;
+		spin_unlock_irqrestore(&xhci->lock, flags);
 		return;
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irqrestore(&xhci->lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Only interrupt and bulk ep's use data toggle, USB2 spec 5.5.4-> */
 	if (usb_endpoint_xfer_control(&host_ep->desc) ||
 	    usb_endpoint_xfer_isoc(&host_ep->desc))
@@ -3325,6 +3348,7 @@ static void xhci_endpoint_reset(struct usb_hcd *hcd,
 cleanup:
 	xhci_free_command(xhci, stop_cmd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_irqsave(&xhci->lock, flags);
 	if (ep->ep_state & EP_SOFT_CLEAR_TOGGLE)
 		ep->ep_state &= ~EP_SOFT_CLEAR_TOGGLE;
@@ -3333,6 +3357,12 @@ cleanup:
 	if (ep->ep_state & EP_SOFT_CLEAR_TOGGLE)
 		ep->ep_state &= ~EP_SOFT_CLEAR_TOGGLE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_irqsave(&xhci->lock, flags);
+	if (ep->ep_state & EP_SOFT_CLEAR_TOGGLE)
+		ep->ep_state &= ~EP_SOFT_CLEAR_TOGGLE;
+	spin_unlock_irqrestore(&xhci->lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int xhci_check_streams_endpoint(struct xhci_hcd *xhci,
@@ -4737,6 +4767,7 @@ static u16 xhci_calculate_u1_timeout(struct xhci_hcd *xhci,
 	unsigned long long timeout_ns;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Prevent U1 if service interval is shorter than U1 exit latency */
 	if (usb_endpoint_xfer_int(desc) || usb_endpoint_xfer_isoc(desc)) {
 		if (xhci_service_interval_to_ns(desc) <= udev->u1_params.mel) {
@@ -4750,19 +4781,30 @@ static u16 xhci_calculate_u1_timeout(struct xhci_hcd *xhci,
 	if (usb_endpoint_xfer_int(desc) || usb_endpoint_xfer_isoc(desc)) {
 		if (xhci_service_interval_to_ns(desc) <= timeout_ns) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Prevent U1 if service interval is shorter than U1 exit latency */
+	if (usb_endpoint_xfer_int(desc) || usb_endpoint_xfer_isoc(desc)) {
+		if (xhci_service_interval_to_ns(desc) <= udev->u1_params.mel) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_dbg(&udev->dev, "Disable U1, ESIT shorter than exit latency\n");
 			return USB3_LPM_DISABLED;
 		}
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xhci->quirks & XHCI_INTEL_HOST)
 		timeout_ns = xhci_calculate_intel_u1_timeout(udev, desc);
 	else
 		timeout_ns = udev->u1_params.sel;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* The U1 timeout is encoded in 1us intervals.
 	 * Don't return a timeout of zero, because that's USB3_LPM_DISABLED.
 	 */
@@ -4815,6 +4857,7 @@ static u16 xhci_calculate_u2_timeout(struct xhci_hcd *xhci,
 	unsigned long long timeout_ns;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Prevent U2 if service interval is shorter than U2 exit latency */
 	if (usb_endpoint_xfer_int(desc) || usb_endpoint_xfer_isoc(desc)) {
 		if (xhci_service_interval_to_ns(desc) <= udev->u2_params.mel) {
@@ -4828,19 +4871,30 @@ static u16 xhci_calculate_u2_timeout(struct xhci_hcd *xhci,
 	if (usb_endpoint_xfer_int(desc) || usb_endpoint_xfer_isoc(desc)) {
 		if (xhci_service_interval_to_ns(desc) <= timeout_ns) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Prevent U2 if service interval is shorter than U2 exit latency */
+	if (usb_endpoint_xfer_int(desc) || usb_endpoint_xfer_isoc(desc)) {
+		if (xhci_service_interval_to_ns(desc) <= udev->u2_params.mel) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_dbg(&udev->dev, "Disable U2, ESIT shorter than exit latency\n");
 			return USB3_LPM_DISABLED;
 		}
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xhci->quirks & XHCI_INTEL_HOST)
 		timeout_ns = xhci_calculate_intel_u2_timeout(udev, desc);
 	else
 		timeout_ns = udev->u2_params.sel;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* The U2 timeout is encoded in 256us intervals */
 	timeout_ns = DIV_ROUND_UP_ULL(timeout_ns, 256 * 1000);
 	/* If the necessary timeout value is bigger than what we can set in the

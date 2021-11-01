@@ -68,9 +68,13 @@
 #include <linux/sort.h>
 #include <linux/stop_machine.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/sysfs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/sysfs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/types.h>
 #include <linux/minmax.h>
 #include <linux/mm.h>
@@ -86,9 +90,13 @@
 #include <asm/mte.h>
 #include <asm/processor.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/smp.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/smp.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/sysreg.h>
 #include <asm/traps.h>
 #include <asm/virt.h>
@@ -247,12 +255,17 @@ static const struct arm64_ftr_bits ftr_id_aa64pfr0[] = {
 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL3_SHIFT, 4, 0),
 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL2_SHIFT, 4, 0),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL1_SHIFT, 4, ID_AA64PFR0_ELx_64BIT_ONLY),
 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL0_SHIFT, 4, ID_AA64PFR0_ELx_64BIT_ONLY),
 =======
 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL1_SHIFT, 4, ID_AA64PFR0_EL1_64BIT_ONLY),
 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL0_SHIFT, 4, ID_AA64PFR0_EL0_64BIT_ONLY),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL1_SHIFT, 4, ID_AA64PFR0_ELx_64BIT_ONLY),
+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_LOWER_SAFE, ID_AA64PFR0_EL0_SHIFT, 4, ID_AA64PFR0_ELx_64BIT_ONLY),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ARM64_FTR_END,
 };
 
@@ -1334,6 +1347,9 @@ const struct cpumask *system_32bit_el0_cpumask(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __init parse_32bit_el0_param(char *str)
 {
 	allow_mismatched_32bit_el0 = true;
@@ -1359,8 +1375,11 @@ static int __init aarch32_el0_sysfs_init(void)
 }
 device_initcall(aarch32_el0_sysfs_init);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool has_32bit_el0(const struct arm64_cpu_capabilities *entry, int scope)
 {
 	if (!has_cpuid_feature(entry, scope))
@@ -1541,11 +1560,15 @@ static bool unmap_kernel_at_el0(const struct arm64_cpu_capabilities *entry,
 	 * For reasons that aren't entirely clear, enabling KPTI on Cavium
 	 * ThunderX leads to apparent I-cache corruption of kernel text, which
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * ends as well as you might imagine. Don't even try. We cannot rely
 	 * on the cpus_have_*cap() helpers here to detect the CPU erratum
 	 * because cpucap detection order may change. However, since we know
 	 * affected CPUs are always in a homogeneous configuration, it is
 	 * safe to rely on this_cpu_has_cap() here.
+<<<<<<< HEAD
 	 */
 	if (this_cpu_has_cap(ARM64_WORKAROUND_CAVIUM_27456)) {
 =======
@@ -1553,6 +1576,10 @@ static bool unmap_kernel_at_el0(const struct arm64_cpu_capabilities *entry,
 	 */
 	if (cpus_have_const_cap(ARM64_WORKAROUND_CAVIUM_27456)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 */
+	if (this_cpu_has_cap(ARM64_WORKAROUND_CAVIUM_27456)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		str = "ARM64_WORKAROUND_CAVIUM_27456";
 		__kpti_forced = -1;
 	}
@@ -1612,10 +1639,13 @@ kpti_install_ng_mappings(const struct arm64_cpu_capabilities *__unused)
 	if (!cpu)
 		arm64_use_ng_mappings = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #else
 static void
@@ -1788,10 +1818,14 @@ static void cpu_has_fwb(const struct arm64_cpu_capabilities *__unused)
 
 	/* Check that CLIDR_EL1.LOU{U,IS} are both 0 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ON(CLIDR_LOUU(val) || CLIDR_LOUIS(val));
 =======
 	WARN_ON(val & (7 << 27 | 7 << 21));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(CLIDR_LOUU(val) || CLIDR_LOUIS(val));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_ARM64_PAN
@@ -1901,11 +1935,17 @@ static void bti_enable(const struct arm64_cpu_capabilities *__unused)
 static void cpu_enable_mte(struct arm64_cpu_capabilities const *cap)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sysreg_clear_set(sctlr_el1, 0, SCTLR_ELx_ATA | SCTLR_EL1_ATA0);
 	isb();
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sysreg_clear_set(sctlr_el1, 0, SCTLR_ELx_ATA | SCTLR_EL1_ATA0);
+	isb();
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Clear the tags in the zero page. This needs to be done via the
 	 * linear map which has the Tagged attribute.
@@ -2020,10 +2060,14 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
 		.sign = FTR_UNSIGNED,
 		.field_pos = ID_AA64PFR0_EL0_SHIFT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.min_field_value = ID_AA64PFR0_ELx_32BIT_64BIT,
 =======
 		.min_field_value = ID_AA64PFR0_EL0_32BIT_64BIT,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.min_field_value = ID_AA64PFR0_ELx_32BIT_64BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 #ifdef CONFIG_KVM
 	{
@@ -2035,10 +2079,14 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
 		.sign = FTR_UNSIGNED,
 		.field_pos = ID_AA64PFR0_EL1_SHIFT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.min_field_value = ID_AA64PFR0_ELx_32BIT_64BIT,
 =======
 		.min_field_value = ID_AA64PFR0_EL1_32BIT_64BIT,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.min_field_value = ID_AA64PFR0_ELx_32BIT_64BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{
 		.desc = "Protected KVM",
@@ -2973,6 +3021,9 @@ void __init setup_cpu_features(void)
 static int enable_mismatched_32bit_el0(unsigned int cpu)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * The first 32-bit-capable CPU we detected and so can no longer
 	 * be offlined by userspace. -1 indicates we haven't yet onlined
@@ -2980,14 +3031,18 @@ static int enable_mismatched_32bit_el0(unsigned int cpu)
 	 */
 	static int lucky_winner = -1;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cpuinfo_arm64 *info = &per_cpu(cpu_data, cpu);
 	bool cpu_32bit = id_aa64pfr0_32bit_el0(info->reg_id_aa64pfr0);
 
 	if (cpu_32bit) {
 		cpumask_set_cpu(cpu, cpu_32bit_el0_mask);
 		static_branch_enable_cpuslocked(&arm64_mismatched_32bit_el0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	}
 
@@ -3013,6 +3068,27 @@ static int enable_mismatched_32bit_el0(unsigned int cpu)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+
+	if (cpumask_test_cpu(0, cpu_32bit_el0_mask) == cpu_32bit)
+		return 0;
+
+	if (lucky_winner >= 0)
+		return 0;
+
+	/*
+	 * We've detected a mismatch. We need to keep one of our CPUs with
+	 * 32-bit EL0 online so that is_cpu_allowed() doesn't end up rejecting
+	 * every CPU in the system for a 32-bit task.
+	 */
+	lucky_winner = cpu_32bit ? cpu : cpumask_any_and(cpu_32bit_el0_mask,
+							 cpu_active_mask);
+	get_cpu_device(lucky_winner)->offline_disabled = true;
+	setup_elf_hwcaps(compat_elf_hwcaps);
+	pr_info("Asymmetric 32-bit EL0 support detected on CPU %u; CPU hot-unplug disabled on CPU %u\n",
+		cpu, lucky_winner);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

@@ -57,9 +57,13 @@ static void bnxt_qplib_free_stats_ctx(struct pci_dev *pdev,
 				      struct bnxt_qplib_stats *stats);
 static int bnxt_qplib_alloc_stats_ctx(struct pci_dev *pdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				      struct bnxt_qplib_chip_ctx *cctx,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      struct bnxt_qplib_chip_ctx *cctx,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      struct bnxt_qplib_stats *stats);
 
 /* PBL */
@@ -564,10 +568,14 @@ int bnxt_qplib_alloc_ctx(struct bnxt_qplib_res *res,
 stats_alloc:
 	/* Stats */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc = bnxt_qplib_alloc_stats_ctx(res->pdev, res->cctx, &ctx->stats);
 =======
 	rc = bnxt_qplib_alloc_stats_ctx(res->pdev, &ctx->stats);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = bnxt_qplib_alloc_stats_ctx(res->pdev, res->cctx, &ctx->stats);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		goto fail;
 
@@ -898,13 +906,18 @@ static void bnxt_qplib_free_stats_ctx(struct pci_dev *pdev,
 
 static int bnxt_qplib_alloc_stats_ctx(struct pci_dev *pdev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				      struct bnxt_qplib_chip_ctx *cctx,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      struct bnxt_qplib_chip_ctx *cctx,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      struct bnxt_qplib_stats *stats)
 {
 	memset(stats, 0, sizeof(*stats));
 	stats->fw_id = -1;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	stats->size = cctx->hw_stats_size;
 =======
@@ -914,6 +927,9 @@ static int bnxt_qplib_alloc_stats_ctx(struct pci_dev *pdev,
 	 */
 	stats->size = ALIGN(sizeof(struct ctx_hw_stats), 128);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	stats->size = cctx->hw_stats_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	stats->dma = dma_alloc_coherent(&pdev->dev, stats->size,
 					&stats->dma_map, GFP_KERNEL);
 	if (!stats->dma) {

@@ -220,20 +220,28 @@ retry:
 	/* Send a sigbus, regardless of whether we were in kernel
 	   or user mode.  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address);
 =======
 	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!user_mode(regs))
 		goto no_context;
 	return;
 
  do_sigsegv:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	force_sig_fault(SIGSEGV, si_code, (void __user *) address);
 =======
 	force_sig_fault(SIGSEGV, si_code, (void __user *) address, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	force_sig_fault(SIGSEGV, si_code, (void __user *) address);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return;
 
 #ifdef CONFIG_ALPHA_LARGE_VMALLOC

@@ -36,10 +36,14 @@ TRACE_EVENT(erofs_lookup,
 		__field(dev_t,		dev	)
 		__field(erofs_nid_t,	nid	)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__string(name,		dentry->d_name.name	)
 =======
 		__field(const char *,	name	)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__string(name,		dentry->d_name.name	)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__field(unsigned int,	flags	)
 	),
 
@@ -47,20 +51,28 @@ TRACE_EVENT(erofs_lookup,
 		__entry->dev	= dir->i_sb->s_dev;
 		__entry->nid	= EROFS_I(dir)->nid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__assign_str(name, dentry->d_name.name);
 =======
 		__entry->name	= dentry->d_name.name;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__assign_str(name, dentry->d_name.name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__entry->flags	= flags;
 	),
 
 	TP_printk("dev = (%d,%d), pnid = %llu, name:%s, flags:%x",
 		show_dev_nid(__entry),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__get_str(name),
 =======
 		__entry->name,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__get_str(name),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__entry->flags)
 );
 

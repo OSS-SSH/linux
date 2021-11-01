@@ -1337,6 +1337,9 @@ _ieee802_11_parse_elems_crc(const u8 *start, size_t len, bool action,
 			elems->rsnx_len = elen;
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case WLAN_EID_TX_POWER_ENVELOPE:
 			if (elen < 1 ||
 			    elen > sizeof(struct ieee80211_tx_pwr_env))
@@ -1349,8 +1352,11 @@ _ieee802_11_parse_elems_crc(const u8 *start, size_t len, bool action,
 			elems->tx_pwr_env_len[elems->tx_pwr_env_num] = elen;
 			elems->tx_pwr_env_num++;
 			break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case WLAN_EID_EXTENSION:
 			ieee80211_parse_extension_element(calc_crc ?
 								&crc : NULL,

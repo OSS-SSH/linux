@@ -30,10 +30,14 @@
 
 #define CAL_MODULE_NAME			"cal"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CAL_MAX_NUM_CONTEXT		8
 =======
 #define CAL_NUM_CONTEXT			2
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CAL_MAX_NUM_CONTEXT		8
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CAL_NUM_CSI2_PORTS		2
 
 /*
@@ -49,6 +53,9 @@
 
 #define CAL_CAMERARX_PAD_SINK		0
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CAL_CAMERARX_PAD_FIRST_SOURCE	1
 #define CAL_CAMERARX_NUM_SOURCE_PADS	1
 #define CAL_CAMERARX_NUM_PADS		(1 + CAL_CAMERARX_NUM_SOURCE_PADS)
@@ -65,9 +72,12 @@ static inline bool cal_rx_pad_is_source(u32 pad)
 	return pad >= CAL_CAMERARX_PAD_FIRST_SOURCE &&
 	       pad <= CAL_CAMERARX_NUM_SOURCE_PADS;
 }
+<<<<<<< HEAD
 =======
 #define CAL_CAMERARX_PAD_SOURCE		1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct device;
 struct device_node;
@@ -97,9 +107,13 @@ struct cal_format_info {
 	/* Bits per pixel */
 	u8	bpp;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool	meta;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool	meta;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* buffer for one video frame */
@@ -177,15 +191,19 @@ struct cal_camerarx {
 	void __iomem		*base;
 	struct resource		*res;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct device		*dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct regmap_field	*fields[F_MAX_FIELDS];
 
 	struct cal_dev		*cal;
 	unsigned int		instance;
 
 	struct v4l2_fwnode_endpoint	endpoint;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct device_node	*source_ep_node;
 	struct device_node	*source_node;
@@ -215,6 +233,25 @@ struct cal_camerarx {
 	struct v4l2_mbus_framefmt	formats[2];
 	const struct cal_format_info	*fmtinfo;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct device_node	*source_ep_node;
+	struct device_node	*source_node;
+	struct v4l2_subdev	*source;
+	struct media_pipeline	pipe;
+
+	struct v4l2_subdev	subdev;
+	struct media_pad	pads[CAL_CAMERARX_NUM_PADS];
+	struct v4l2_mbus_framefmt	formats[CAL_CAMERARX_NUM_PADS];
+
+	/*
+	 * Lock for camerarx ops. Protects:
+	 * - formats
+	 * - enable_count
+	 */
+	struct mutex		mutex;
+
+	unsigned int		enable_count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct cal_dev {
@@ -235,20 +272,30 @@ struct cal_dev {
 	struct cal_camerarx	*phy[CAL_NUM_CSI2_PORTS];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 num_contexts;
 	struct cal_ctx		*ctx[CAL_MAX_NUM_CONTEXT];
 =======
 	struct cal_ctx		*ctx[CAL_NUM_CONTEXT];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 num_contexts;
+	struct cal_ctx		*ctx[CAL_MAX_NUM_CONTEXT];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct media_device	mdev;
 	struct v4l2_device	v4l2_dev;
 	struct v4l2_async_notifier notifier;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	unsigned long		reserved_pix_proc_mask;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	unsigned long		reserved_pix_proc_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -273,16 +320,23 @@ struct cal_ctx {
 	struct v4l2_format	v_fmt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Current subdev enumerated format (legacy) */
 =======
 	/* Current subdev enumerated format */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Current subdev enumerated format (legacy) */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct cal_format_info	**active_fmt;
 	unsigned int		num_active_fmt;
 
 	unsigned int		sequence;
 	struct vb2_queue	vb_vidq;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8			dma_ctx;
 	u8			cport;
 	u8			csi2_ctx;
@@ -291,10 +345,13 @@ struct cal_ctx {
 	u8			datatype;
 
 	bool			use_pix_proc;
+<<<<<<< HEAD
 =======
 	unsigned int		index;
 	unsigned int		cport;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 extern unsigned int cal_debug;
@@ -313,6 +370,7 @@ extern bool cal_mc_api;
 
 #define ctx_dbg(level, ctx, fmt, arg...)				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cal_dbg(level, (ctx)->cal, "ctx%u: " fmt, (ctx)->dma_ctx, ##arg)
 #define ctx_info(ctx, fmt, arg...)					\
 	cal_info((ctx)->cal, "ctx%u: " fmt, (ctx)->dma_ctx, ##arg)
@@ -320,11 +378,18 @@ extern bool cal_mc_api;
 	cal_err((ctx)->cal, "ctx%u: " fmt, (ctx)->dma_ctx, ##arg)
 =======
 	cal_dbg(level, (ctx)->cal, "ctx%u: " fmt, (ctx)->index, ##arg)
+=======
+	cal_dbg(level, (ctx)->cal, "ctx%u: " fmt, (ctx)->dma_ctx, ##arg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ctx_info(ctx, fmt, arg...)					\
-	cal_info((ctx)->cal, "ctx%u: " fmt, (ctx)->index, ##arg)
+	cal_info((ctx)->cal, "ctx%u: " fmt, (ctx)->dma_ctx, ##arg)
 #define ctx_err(ctx, fmt, arg...)					\
+<<<<<<< HEAD
 	cal_err((ctx)->cal, "ctx%u: " fmt, (ctx)->index, ##arg)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cal_err((ctx)->cal, "ctx%u: " fmt, (ctx)->dma_ctx, ##arg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define phy_dbg(level, phy, fmt, arg...)				\
 	cal_dbg(level, (phy)->cal, "phy%u: " fmt, (phy)->instance, ##arg)
@@ -381,10 +446,15 @@ struct cal_camerarx *cal_camerarx_create(struct cal_dev *cal,
 void cal_camerarx_destroy(struct cal_camerarx *phy);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int cal_ctx_prepare(struct cal_ctx *ctx);
 void cal_ctx_unprepare(struct cal_ctx *ctx);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cal_ctx_prepare(struct cal_ctx *ctx);
+void cal_ctx_unprepare(struct cal_ctx *ctx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void cal_ctx_set_dma_addr(struct cal_ctx *ctx, dma_addr_t addr);
 void cal_ctx_start(struct cal_ctx *ctx);
 void cal_ctx_stop(struct cal_ctx *ctx);

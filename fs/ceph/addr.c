@@ -1282,12 +1282,17 @@ static int ceph_write_end(struct file *file, struct address_space *mapping,
 	     inode, page, (int)pos, (int)copied, (int)len);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!PageUptodate(page)) {
 		/* just return that nothing was copied on a short copy */
 =======
 	/* zero the stale part of the page if we did a short copy */
 	if (!PageUptodate(page)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!PageUptodate(page)) {
+		/* just return that nothing was copied on a short copy */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (copied < len) {
 			copied = 0;
 			goto out;
@@ -1401,16 +1406,22 @@ static vm_fault_t ceph_filemap_fault(struct vm_fault *vmf)
 	} else {
 		struct address_space *mapping = inode->i_mapping;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct page *page;
 
 		filemap_invalidate_lock_shared(mapping);
 		page = find_or_create_page(mapping, 0,
 				mapping_gfp_constraint(mapping, ~__GFP_FS));
+<<<<<<< HEAD
 =======
 		struct page *page = find_or_create_page(mapping, 0,
 						mapping_gfp_constraint(mapping,
 						~__GFP_FS));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!page) {
 			ret = VM_FAULT_OOM;
 			goto out_inline;
@@ -1432,9 +1443,13 @@ static vm_fault_t ceph_filemap_fault(struct vm_fault *vmf)
 		ret = VM_FAULT_MAJOR | VM_FAULT_LOCKED;
 out_inline:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		filemap_invalidate_unlock_shared(mapping);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		filemap_invalidate_unlock_shared(mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dout("filemap_fault %p %llu read inline data ret %x\n",
 		     inode, off, ret);
 	}

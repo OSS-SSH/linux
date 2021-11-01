@@ -5,9 +5,13 @@
 #include <asm/types.h>
 #include <linux/bits.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/typecheck.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/typecheck.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <uapi/linux/kernel.h>
 
@@ -258,6 +262,9 @@ static __always_inline void __assign_bit(long nr, volatile unsigned long *addr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * __ptr_set_bit - Set bit in a pointer's value
  * @nr: the bit to set
@@ -307,8 +314,11 @@ static __always_inline void __assign_bit(long nr, volatile unsigned long *addr,
 		test_bit(nr, (unsigned long *)(addr)); \
 	})
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef __KERNEL__
 
 #ifndef set_mask_bits

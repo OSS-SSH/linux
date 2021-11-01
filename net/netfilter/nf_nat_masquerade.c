@@ -10,6 +10,9 @@
 #include <net/netfilter/nf_nat_masquerade.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct masq_dev_work {
 	struct work_struct work;
 	struct net *net;
@@ -20,6 +23,7 @@ struct masq_dev_work {
 
 #define MAX_MASQ_WORKER_COUNT	16
 
+<<<<<<< HEAD
 static DEFINE_MUTEX(masq_mutex);
 static unsigned int masq_refcnt __read_mostly;
 static atomic_t masq_worker_count __read_mostly;
@@ -27,6 +31,11 @@ static atomic_t masq_worker_count __read_mostly;
 static DEFINE_MUTEX(masq_mutex);
 static unsigned int masq_refcnt __read_mostly;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEFINE_MUTEX(masq_mutex);
+static unsigned int masq_refcnt __read_mostly;
+static atomic_t masq_worker_count __read_mostly;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 unsigned int
 nf_nat_masquerade_ipv4(struct sk_buff *skb, unsigned int hooknum,
@@ -80,6 +89,9 @@ nf_nat_masquerade_ipv4(struct sk_buff *skb, unsigned int hooknum,
 EXPORT_SYMBOL_GPL(nf_nat_masquerade_ipv4);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void iterate_cleanup_work(struct work_struct *work)
 {
 	struct masq_dev_work *w;
@@ -138,6 +150,7 @@ static void nf_nat_masq_schedule(struct net *net, union nf_inet_addr *addr,
 }
 
 static int device_cmp(struct nf_conn *i, void *arg)
+<<<<<<< HEAD
 {
 	const struct nf_conn_nat *nat = nfct_nat(i);
 	const struct masq_dev_work *w = arg;
@@ -147,13 +160,20 @@ static int device_cmp(struct nf_conn *i, void *arg)
 	return nat->masq_index == w->ifindex;
 =======
 static int device_cmp(struct nf_conn *i, void *ifindex)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct nf_conn_nat *nat = nfct_nat(i);
+	const struct masq_dev_work *w = arg;
 
 	if (!nat)
 		return 0;
+<<<<<<< HEAD
 	return nat->masq_index == (int)(long)ifindex;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return nat->masq_index == w->ifindex;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int masq_device_event(struct notifier_block *this,
@@ -170,12 +190,17 @@ static int masq_device_event(struct notifier_block *this,
 		 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		nf_nat_masq_schedule(net, NULL, dev->ifindex,
 				     device_cmp, GFP_KERNEL);
 =======
 		nf_ct_iterate_cleanup_net(net, device_cmp,
 					  (void *)(long)dev->ifindex, 0, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nf_nat_masq_schedule(net, NULL, dev->ifindex,
+				     device_cmp, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return NOTIFY_DONE;
@@ -184,6 +209,7 @@ static int masq_device_event(struct notifier_block *this,
 static int inet_cmp(struct nf_conn *ct, void *ptr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nf_conntrack_tuple *tuple;
 	struct masq_dev_work *w = ptr;
 
@@ -191,19 +217,30 @@ static int inet_cmp(struct nf_conn *ct, void *ptr)
 =======
 	struct in_ifaddr *ifa = (struct in_ifaddr *)ptr;
 	struct net_device *dev = ifa->ifa_dev->dev;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nf_conntrack_tuple *tuple;
+	struct masq_dev_work *w = ptr;
 
+<<<<<<< HEAD
 	if (!device_cmp(ct, (void *)(long)dev->ifindex))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!device_cmp(ct, ptr))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	tuple = &ct->tuplehash[IP_CT_DIR_REPLY].tuple;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return nf_inet_addr_cmp(&w->addr, &tuple->dst.u3);
 =======
 	return ifa->ifa_address == tuple->dst.u3.ip;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return nf_inet_addr_cmp(&w->addr, &tuple->dst.u3);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int masq_inet_event(struct notifier_block *this,
@@ -211,6 +248,9 @@ static int masq_inet_event(struct notifier_block *this,
 			   void *ptr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct in_ifaddr *ifa = ptr;
 	const struct in_device *idev;
 	const struct net_device *dev;
@@ -218,16 +258,20 @@ static int masq_inet_event(struct notifier_block *this,
 
 	if (event != NETDEV_DOWN)
 		return NOTIFY_DONE;
+<<<<<<< HEAD
 =======
 	struct in_device *idev = ((struct in_ifaddr *)ptr)->ifa_dev;
 	struct net *net = dev_net(idev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The masq_dev_notifier will catch the case of the device going
 	 * down.  So if the inetdev is dead and being destroyed we have
 	 * no work to do.  Otherwise this is an individual address removal
 	 * and we have to perform the flush.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	idev = ifa->ifa_dev;
 	if (idev->dead)
@@ -247,6 +291,19 @@ static int masq_inet_event(struct notifier_block *this,
 	if (event == NETDEV_DOWN)
 		nf_ct_iterate_cleanup_net(net, inet_cmp, ptr, 0, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	idev = ifa->ifa_dev;
+	if (idev->dead)
+		return NOTIFY_DONE;
+
+	memset(&addr, 0, sizeof(addr));
+
+	addr.ip = ifa->ifa_address;
+
+	dev = idev->dev;
+	nf_nat_masq_schedule(dev_net(idev->dev), &addr, dev->ifindex,
+			     inet_cmp, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return NOTIFY_DONE;
 }
@@ -261,10 +318,13 @@ static struct notifier_block masq_inet_notifier = {
 
 #if IS_ENABLED(CONFIG_IPV6)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static atomic_t v6_worker_count __read_mostly;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 nat_ipv6_dev_get_saddr(struct net *net, const struct net_device *dev,
 		       const struct in6_addr *daddr, unsigned int srcprefs,
@@ -315,6 +375,7 @@ nf_nat_masquerade_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
 EXPORT_SYMBOL_GPL(nf_nat_masquerade_ipv6);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct masq_dev_work {
 	struct work_struct work;
@@ -351,6 +412,8 @@ static void iterate_cleanup_work(struct work_struct *work)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* atomic notifier; can't call nf_ct_iterate_cleanup_net (it can sleep).
  *
  * Defer it to the system workqueue.
@@ -363,6 +426,7 @@ static int masq_inet6_event(struct notifier_block *this,
 {
 	struct inet6_ifaddr *ifa = ptr;
 	const struct net_device *dev;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	union nf_inet_addr addr;
 
@@ -380,28 +444,20 @@ static int masq_inet6_event(struct notifier_block *this,
 =======
 	struct masq_dev_work *w;
 	struct net *net;
+=======
+	union nf_inet_addr addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (event != NETDEV_DOWN || atomic_read(&v6_worker_count) >= 16)
+	if (event != NETDEV_DOWN)
 		return NOTIFY_DONE;
 
 	dev = ifa->idev->dev;
-	net = maybe_get_net(dev_net(dev));
-	if (!net)
-		return NOTIFY_DONE;
 
-	if (!try_module_get(THIS_MODULE))
-		goto err_module;
+	memset(&addr, 0, sizeof(addr));
 
-	w = kmalloc(sizeof(*w), GFP_ATOMIC);
-	if (w) {
-		atomic_inc(&v6_worker_count);
+	addr.in6 = ifa->addr;
 
-		INIT_WORK(&w->work, iterate_cleanup_work);
-		w->ifindex = dev->ifindex;
-		w->net = net;
-		w->addr = ifa->addr;
-		schedule_work(&w->work);
-
+<<<<<<< HEAD
 		return NOTIFY_DONE;
 	}
 
@@ -409,6 +465,10 @@ static int masq_inet6_event(struct notifier_block *this,
  err_module:
 	put_net(net);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nf_nat_masq_schedule(dev_net(dev), &addr, dev->ifindex, inet_cmp,
+			     GFP_ATOMIC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NOTIFY_DONE;
 }
 

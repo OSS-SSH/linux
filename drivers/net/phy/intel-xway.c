@@ -9,22 +9,34 @@
 #include <linux/phy.h>
 #include <linux/of.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/bitfield.h>
 
 #define XWAY_MDIO_MIICTRL		0x17	/* mii control */
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/bitfield.h>
+
+#define XWAY_MDIO_MIICTRL		0x17	/* mii control */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define XWAY_MDIO_IMASK			0x19	/* interrupt mask */
 #define XWAY_MDIO_ISTAT			0x1A	/* interrupt status */
 #define XWAY_MDIO_LED			0x1B	/* led control */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define XWAY_MDIO_MIICTRL_RXSKEW_MASK	GENMASK(14, 12)
 #define XWAY_MDIO_MIICTRL_TXSKEW_MASK	GENMASK(10, 8)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define XWAY_MDIO_MIICTRL_RXSKEW_MASK	GENMASK(14, 12)
+#define XWAY_MDIO_MIICTRL_TXSKEW_MASK	GENMASK(10, 8)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* bit 15:12 are reserved */
 #define XWAY_MDIO_LED_LED3_EN		BIT(11)	/* Enable the integrated function of LED3 */
 #define XWAY_MDIO_LED_LED2_EN		BIT(10)	/* Enable the integrated function of LED2 */
@@ -170,6 +182,9 @@
 #define PHY_ID_PHY22F_VR9_1_2		0xD565A419
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const int xway_internal_delay[] = {0, 500, 1000, 1500, 2000, 2500,
 					 3000, 3500};
 
@@ -237,8 +252,11 @@ static int xway_gphy_rgmii_init(struct phy_device *phydev)
 			  XWAY_MDIO_MIICTRL_TXSKEW_MASK, val);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xway_gphy_config_init(struct phy_device *phydev)
 {
 	int err;
@@ -287,12 +305,18 @@ static int xway_gphy_config_init(struct phy_device *phydev)
 	phy_write_mmd(phydev, MDIO_MMD_VEND2, XWAY_MMD_LED2L, ledxl);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = xway_gphy_rgmii_init(phydev);
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

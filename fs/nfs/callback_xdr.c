@@ -64,10 +64,14 @@ static __be32 nfs4_callback_null(struct svc_rqst *rqstp)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * svc_process_common() looks for an XDR encoder to know when
  * not to drop a Reply.
  */
+<<<<<<< HEAD
 =======
 static int nfs4_decode_void(struct svc_rqst *rqstp, __be32 *p)
 {
@@ -75,6 +79,8 @@ static int nfs4_decode_void(struct svc_rqst *rqstp, __be32 *p)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int nfs4_encode_void(struct svc_rqst *rqstp, __be32 *p)
 {
 	return xdr_ressize_check(rqstp, p);
@@ -872,6 +878,7 @@ preprocess_nfs4_op(unsigned int op_nr, struct callback_op **op)
 
 static __be32 process_op(int nop, struct svc_rqst *rqstp,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 struct cb_process_state *cps)
 {
 	struct xdr_stream *xdr_out = &rqstp->rq_res_stream;
@@ -881,6 +888,11 @@ static __be32 process_op(int nop, struct svc_rqst *rqstp,
 		struct cb_process_state *cps)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 struct cb_process_state *cps)
+{
+	struct xdr_stream *xdr_out = &rqstp->rq_res_stream;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct callback_op *op = &callback_ops[0];
 	unsigned int op_nr;
 	__be32 status;
@@ -888,10 +900,14 @@ static __be32 process_op(int nop, struct svc_rqst *rqstp,
 	__be32 res;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	status = decode_op_hdr(&rqstp->rq_arg_stream, &op_nr);
 =======
 	status = decode_op_hdr(xdr_in, &op_nr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	status = decode_op_hdr(&rqstp->rq_arg_stream, &op_nr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(status))
 		return status;
 
@@ -922,6 +938,7 @@ static __be32 process_op(int nop, struct svc_rqst *rqstp,
 	maxlen = xdr_out->end - xdr_out->p;
 	if (maxlen > 0 && maxlen < PAGE_SIZE) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		status = op->decode_args(rqstp, &rqstp->rq_arg_stream,
 					 rqstp->rq_argp);
 		if (likely(status == 0))
@@ -932,6 +949,13 @@ static __be32 process_op(int nop, struct svc_rqst *rqstp,
 		if (likely(status == 0))
 			status = op->process_op(argp, resp, cps);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		status = op->decode_args(rqstp, &rqstp->rq_arg_stream,
+					 rqstp->rq_argp);
+		if (likely(status == 0))
+			status = op->process_op(rqstp->rq_argp, rqstp->rq_resp,
+						cps);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else
 		status = htonl(NFS4ERR_RESOURCE);
 
@@ -941,10 +965,14 @@ encode_hdr:
 		return res;
 	if (op->encode_res != NULL && status == 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		status = op->encode_res(rqstp, xdr_out, rqstp->rq_resp);
 =======
 		status = op->encode_res(rqstp, xdr_out, resp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		status = op->encode_res(rqstp, xdr_out, rqstp->rq_resp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return status;
 }
 
@@ -956,16 +984,20 @@ static __be32 nfs4_callback_compound(struct svc_rqst *rqstp)
 	struct cb_compound_hdr_arg hdr_arg = { 0 };
 	struct cb_compound_hdr_res hdr_res = { NULL };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct xdr_stream xdr_in, xdr_out;
 	__be32 *p, status;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cb_process_state cps = {
 		.drc_status = 0,
 		.clp = NULL,
 		.net = SVC_NET(rqstp),
 	};
 	unsigned int nops = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	__be32 status;
 
@@ -980,6 +1012,11 @@ static __be32 nfs4_callback_compound(struct svc_rqst *rqstp)
 
 	status = decode_compound_hdr_arg(&xdr_in, &hdr_arg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__be32 status;
+
+	status = decode_compound_hdr_arg(&rqstp->rq_arg_stream, &hdr_arg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (status == htonl(NFS4ERR_RESOURCE))
 		return rpc_garbage_args;
 
@@ -1000,15 +1037,20 @@ static __be32 nfs4_callback_compound(struct svc_rqst *rqstp)
 	hdr_res.taglen = hdr_arg.taglen;
 	hdr_res.tag = hdr_arg.tag;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (encode_compound_hdr_res(&rqstp->rq_res_stream, &hdr_res) != 0) {
 =======
 	if (encode_compound_hdr_res(&xdr_out, &hdr_res) != 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (encode_compound_hdr_res(&rqstp->rq_res_stream, &hdr_res) != 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (cps.clp)
 			nfs_put_client(cps.clp);
 		return rpc_system_err;
 	}
 	while (status == 0 && nops != hdr_arg.nops) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		status = process_op(nops, rqstp, &cps);
 =======
@@ -1016,6 +1058,9 @@ static __be32 nfs4_callback_compound(struct svc_rqst *rqstp)
 				    rqstp->rq_argp, &xdr_out, rqstp->rq_resp,
 				    &cps);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		status = process_op(nops, rqstp, &cps);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nops++;
 	}
 
@@ -1035,6 +1080,9 @@ static __be32 nfs4_callback_compound(struct svc_rqst *rqstp)
 out_invalidcred:
 	pr_warn_ratelimited("NFS: NFSv4 callback contains invalid cred\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rqstp->rq_auth_stat = rpc_autherr_badcred;
 	return rpc_success;
 }
@@ -1049,9 +1097,12 @@ nfs_callback_dispatch(struct svc_rqst *rqstp, __be32 *statp)
 
 	*statp = procp->pc_func(rqstp);
 	return 1;
+<<<<<<< HEAD
 =======
 	return svc_return_autherr(rqstp, rpc_autherr_badcred);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1121,9 +1172,12 @@ static const struct svc_procedure nfs4_callback_procedures1[] = {
 	[CB_NULL] = {
 		.pc_func = nfs4_callback_null,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		.pc_decode = nfs4_decode_void,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.pc_encode = nfs4_encode_void,
 		.pc_xdrressize = 1,
 		.pc_name = "NULL",
@@ -1146,10 +1200,14 @@ const struct svc_version nfs4_callback_version1 = {
 	.vs_count = nfs4_callback_count1,
 	.vs_xdrsize = NFS4_CALLBACK_XDRSIZE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.vs_dispatch = nfs_callback_dispatch,
 =======
 	.vs_dispatch = NULL,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.vs_dispatch = nfs_callback_dispatch,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.vs_hidden = true,
 	.vs_need_cong_ctrl = true,
 };
@@ -1162,10 +1220,14 @@ const struct svc_version nfs4_callback_version4 = {
 	.vs_count = nfs4_callback_count4,
 	.vs_xdrsize = NFS4_CALLBACK_XDRSIZE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.vs_dispatch = nfs_callback_dispatch,
 =======
 	.vs_dispatch = NULL,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.vs_dispatch = nfs_callback_dispatch,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.vs_hidden = true,
 	.vs_need_cong_ctrl = true,
 };

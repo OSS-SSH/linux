@@ -39,16 +39,20 @@
  */
 enum xfs_icwalk_goal {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Goals that are not related to tags; these must be < 0. */
 	XFS_ICWALK_DQRELE	= -1,
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Goals directly associated with tagged inodes. */
 	XFS_ICWALK_BLOCKGC	= XFS_ICI_BLOCKGC_TAG,
 	XFS_ICWALK_RECLAIM	= XFS_ICI_RECLAIM_TAG,
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 #define XFS_ICWALK_NULL_TAG	(-1U)
@@ -61,6 +65,8 @@ xfs_icwalk_tag(enum xfs_icwalk_goal goal)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int xfs_icwalk(struct xfs_mount *mp,
 		enum xfs_icwalk_goal goal, struct xfs_icwalk *icw);
 static int xfs_icwalk_ag(struct xfs_perag *pag,
@@ -71,11 +77,14 @@ static int xfs_icwalk_ag(struct xfs_perag *pag,
  * coincide with XFS_ICWALK_FLAGS_VALID.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define XFS_ICWALK_FLAG_DROP_UDQUOT	(1U << 31)
 #define XFS_ICWALK_FLAG_DROP_GDQUOT	(1U << 30)
 #define XFS_ICWALK_FLAG_DROP_PDQUOT	(1U << 29)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Stop scanning after icw_scan_limit inodes. */
 #define XFS_ICWALK_FLAG_SCAN_LIMIT	(1U << 28)
@@ -84,6 +93,7 @@ static int xfs_icwalk_ag(struct xfs_perag *pag,
 #define XFS_ICWALK_FLAG_UNION		(1U << 26) /* union filter algorithm */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define XFS_ICWALK_PRIVATE_FLAGS	(XFS_ICWALK_FLAG_SCAN_LIMIT | \
 =======
 #define XFS_ICWALK_PRIVATE_FLAGS	(XFS_ICWALK_FLAG_DROP_UDQUOT | \
@@ -91,6 +101,9 @@ static int xfs_icwalk_ag(struct xfs_perag *pag,
 					 XFS_ICWALK_FLAG_DROP_PDQUOT | \
 					 XFS_ICWALK_FLAG_SCAN_LIMIT | \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define XFS_ICWALK_PRIVATE_FLAGS	(XFS_ICWALK_FLAG_SCAN_LIMIT | \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 XFS_ICWALK_FLAG_RECLAIM_SICK | \
 					 XFS_ICWALK_FLAG_UNION)
 
@@ -116,6 +129,7 @@ xfs_inode_alloc(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* VFS doesn't initialise i_mode or i_state! */
 	VFS_I(ip)->i_mode = 0;
 	VFS_I(ip)->i_state = 0;
@@ -123,6 +137,11 @@ xfs_inode_alloc(
 	/* VFS doesn't initialise i_mode! */
 	VFS_I(ip)->i_mode = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* VFS doesn't initialise i_mode or i_state! */
+	VFS_I(ip)->i_mode = 0;
+	VFS_I(ip)->i_state = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	XFS_STATS_INC(mp, vn_active);
 	ASSERT(atomic_read(&ip->i_pincount) == 0);
@@ -240,11 +259,15 @@ xfs_blockgc_queue(
 	struct xfs_perag	*pag)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_mount	*mp = pag->pag_mount;
 
 	if (!xfs_is_blockgc_enabled(mp))
 		return;
 
+<<<<<<< HEAD
 	rcu_read_lock();
 	if (radix_tree_tagged(&pag->pag_ici_root, XFS_ICI_BLOCKGC_TAG))
 		queue_delayed_work(pag->pag_mount->m_blockgc_wq,
@@ -253,6 +276,11 @@ xfs_blockgc_queue(
 	if (radix_tree_tagged(&pag->pag_ici_root, XFS_ICI_BLOCKGC_TAG))
 		queue_delayed_work(pag->pag_mount->m_gc_workqueue,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rcu_read_lock();
+	if (radix_tree_tagged(&pag->pag_ici_root, XFS_ICI_BLOCKGC_TAG))
+		queue_delayed_work(pag->pag_mount->m_blockgc_wq,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   &pag->pag_blockgc_work,
 				   msecs_to_jiffies(xfs_blockgc_secs * 1000));
 	rcu_read_unlock();
@@ -332,6 +360,7 @@ xfs_perag_clear_inode_tag(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * We set the inode flag atomically with the radix tree tag.
@@ -359,6 +388,8 @@ xfs_inode_mark_reclaimable(
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void
 xfs_inew_wait(
 	struct xfs_inode	*ip)
@@ -518,6 +549,9 @@ xfs_iget_check_free_state(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Make all pending inactivation work start immediately. */
 static void
 xfs_inodegc_queue_all(
@@ -533,8 +567,11 @@ xfs_inodegc_queue_all(
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Check the validity of the inode we just found it the cache
  */
@@ -568,6 +605,9 @@ xfs_iget_cache_hit(
 	 * before continuing.
 	 *
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * If we're racing with the inactivation worker we also want to wait.
 	 * If we're creating a new file, it's possible that the worker
 	 * previously marked the inode as free on disk but hasn't finished
@@ -576,12 +616,16 @@ xfs_iget_cache_hit(
 	 * inodegc workers would result in deadlock.  For a regular iget, the
 	 * worker is running already, so we might as well wait.
 	 *
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * XXX(hch): eventually we should do something equivalent to
 	 *	     wait_on_inode to wait for these flags to be cleared
 	 *	     instead of polling for it.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ip->i_flags & (XFS_INEW | XFS_IRECLAIM | XFS_INACTIVATING))
 		goto out_skip;
@@ -600,6 +644,20 @@ xfs_iget_cache_hit(
 		goto out_skip;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ip->i_flags & (XFS_INEW | XFS_IRECLAIM | XFS_INACTIVATING))
+		goto out_skip;
+
+	if (ip->i_flags & XFS_NEED_INACTIVE) {
+		/* Unlinked inodes cannot be re-grabbed. */
+		if (VFS_I(ip)->i_nlink == 0) {
+			error = -ENOENT;
+			goto out_error;
+		}
+		goto out_inodegc_flush;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Check the inode free state is valid. This also detects lookup
 	 * racing with unlinks.
@@ -648,6 +706,9 @@ out_error:
 	rcu_read_unlock();
 	return error;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out_inodegc_flush:
 	spin_unlock(&ip->i_flags_lock);
@@ -659,8 +720,11 @@ out_inodegc_flush:
 	if (xfs_is_inodegc_enabled(mp))
 		xfs_inodegc_queue_all(mp);
 	return -EAGAIN;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int
@@ -689,10 +753,14 @@ xfs_iget_cache_miss(
 	/*
 	 * For version 5 superblocks, if we are initialising a new inode and we
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * are not utilising the XFS_FEAT_IKEEP inode cluster mode, we can
 =======
 	 * are not utilising the XFS_MOUNT_IKEEP inode cluster mode, we can
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * are not utilising the XFS_FEAT_IKEEP inode cluster mode, we can
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * simply build the new inode core with a random generation number.
 	 *
 	 * For version 4 (and older) superblocks, log recovery is dependent on
@@ -701,12 +769,17 @@ xfs_iget_cache_miss(
 	 * initializing new inodes.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(mp) &&
 	    (flags & XFS_IGET_CREATE) && !xfs_has_ikeep(mp)) {
 =======
 	if (xfs_sb_version_has_v3inode(&mp->m_sb) &&
 	    (flags & XFS_IGET_CREATE) && !(mp->m_flags & XFS_MOUNT_IKEEP)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_v3inodes(mp) &&
+	    (flags & XFS_IGET_CREATE) && !xfs_has_ikeep(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		VFS_I(ip)->i_generation = prandom_u32();
 	} else {
 		struct xfs_buf		*bp;
@@ -918,6 +991,7 @@ xfs_icache_inode_is_allocated(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_XFS_QUOTA
 /* Decide if we want to grab this inode to drop its dquots. */
@@ -1011,6 +1085,8 @@ xfs_dqrele_all_inodes(
 #endif /* CONFIG_XFS_QUOTA */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Grab the inode for reclaim exclusively.
  *
@@ -1080,10 +1156,14 @@ xfs_reclaim_inode(
 		goto out_iunlock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(ip->i_mount)) {
 =======
 	if (XFS_FORCED_SHUTDOWN(ip->i_mount)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(ip->i_mount)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_iunpin_wait(ip);
 		xfs_iflush_abort(ip);
 		goto reclaim;
@@ -1096,9 +1176,13 @@ xfs_reclaim_inode(
 	xfs_iflags_clear(ip, XFS_IFLUSHING);
 reclaim:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	trace_xfs_inode_reclaiming(ip);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_xfs_inode_reclaiming(ip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Because we use RCU freeing we need to ensure the inode always appears
@@ -1164,6 +1248,7 @@ xfs_want_reclaim_sick(
 	struct xfs_mount	*mp)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return xfs_is_unmounting(mp) || xfs_has_norecovery(mp) ||
 	       xfs_is_shutdown(mp);
 =======
@@ -1171,6 +1256,10 @@ xfs_want_reclaim_sick(
 	       (mp->m_flags & XFS_MOUNT_NORECOVERY) ||
 	       XFS_FORCED_SHUTDOWN(mp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return xfs_is_unmounting(mp) || xfs_has_norecovery(mp) ||
+	       xfs_is_shutdown(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void
@@ -1564,16 +1653,24 @@ xfs_blockgc_stop(
 	xfs_agnumber_t		agno;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!xfs_clear_blockgc_enabled(mp))
 		return;
 
 	for_each_perag(mp, agno, pag)
+<<<<<<< HEAD
 		cancel_delayed_work_sync(&pag->pag_blockgc_work);
 	trace_xfs_blockgc_stop(mp, __return_address);
 =======
 	for_each_perag_tag(mp, agno, pag, XFS_ICI_BLOCKGC_TAG)
 		cancel_delayed_work_sync(&pag->pag_blockgc_work);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cancel_delayed_work_sync(&pag->pag_blockgc_work);
+	trace_xfs_blockgc_stop(mp, __return_address);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Enable post-EOF and CoW block auto-reclamation. */
@@ -1585,12 +1682,18 @@ xfs_blockgc_start(
 	xfs_agnumber_t		agno;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xfs_set_blockgc_enabled(mp))
 		return;
 
 	trace_xfs_blockgc_start(mp, __return_address);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_perag_tag(mp, agno, pag, XFS_ICI_BLOCKGC_TAG)
 		xfs_blockgc_queue(pag);
 }
@@ -1598,10 +1701,15 @@ xfs_blockgc_start(
 /* Don't try to run block gc on an inode that's in any of these states. */
 #define XFS_BLOCKGC_NOGRAB_IFLAGS	(XFS_INEW | \
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 XFS_NEED_INACTIVE | \
 					 XFS_INACTIVATING | \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 XFS_NEED_INACTIVE | \
+					 XFS_INACTIVATING | \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 XFS_IRECLAIMABLE | \
 					 XFS_IRECLAIM)
 /*
@@ -1628,10 +1736,14 @@ xfs_blockgc_igrab(
 
 	/* nothing to sync during shutdown */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(ip->i_mount))
 =======
 	if (XFS_FORCED_SHUTDOWN(ip->i_mount))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(ip->i_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	/* If we can't grab the inode, it must on it's way to reclaim. */
@@ -1678,36 +1790,50 @@ xfs_blockgc_worker(
 	int			error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	trace_xfs_blockgc_worker(mp, __return_address);
 
 =======
 	if (!sb_start_write_trylock(mp->m_super))
 		return;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_xfs_blockgc_worker(mp, __return_address);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = xfs_icwalk_ag(pag, XFS_ICWALK_BLOCKGC, NULL);
 	if (error)
 		xfs_info(mp, "AG %u preallocation gc worker failed, err=%d",
 				pag->pag_agno, error);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	sb_end_write(mp->m_super);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_blockgc_queue(pag);
 }
 
 /*
+<<<<<<< HEAD
 <<<<<<< HEAD
  * Try to free space in the filesystem by purging inactive inodes, eofblocks
  * and cowblocks.
 =======
  * Try to free space in the filesystem by purging eofblocks and cowblocks.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Try to free space in the filesystem by purging inactive inodes, eofblocks
+ * and cowblocks.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int
 xfs_blockgc_free_space(
 	struct xfs_mount	*mp,
 	struct xfs_icwalk	*icw)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int			error;
 
@@ -1752,6 +1878,46 @@ xfs_blockgc_flush_all(
 
 	return xfs_icwalk(mp, XFS_ICWALK_BLOCKGC, icw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			error;
+
+	trace_xfs_blockgc_free_space(mp, icw, _RET_IP_);
+
+	error = xfs_icwalk(mp, XFS_ICWALK_BLOCKGC, icw);
+	if (error)
+		return error;
+
+	xfs_inodegc_flush(mp);
+	return 0;
+}
+
+/*
+ * Reclaim all the free space that we can by scheduling the background blockgc
+ * and inodegc workers immediately and waiting for them all to clear.
+ */
+void
+xfs_blockgc_flush_all(
+	struct xfs_mount	*mp)
+{
+	struct xfs_perag	*pag;
+	xfs_agnumber_t		agno;
+
+	trace_xfs_blockgc_flush_all(mp, __return_address);
+
+	/*
+	 * For each blockgc worker, move its queue time up to now.  If it
+	 * wasn't queued, it will not be requeued.  Then flush whatever's
+	 * left.
+	 */
+	for_each_perag_tag(mp, agno, pag, XFS_ICI_BLOCKGC_TAG)
+		mod_delayed_work(pag->pag_mount->m_blockgc_wq,
+				&pag->pag_blockgc_work, 0);
+
+	for_each_perag_tag(mp, agno, pag, XFS_ICI_BLOCKGC_TAG)
+		flush_delayed_work(&pag->pag_blockgc_work);
+
+	xfs_inodegc_flush(mp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1843,10 +2009,13 @@ xfs_icwalk_igrab(
 {
 	switch (goal) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case XFS_ICWALK_DQRELE:
 		return xfs_dqrele_igrab(ip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_ICWALK_BLOCKGC:
 		return xfs_blockgc_igrab(ip);
 	case XFS_ICWALK_RECLAIM:
@@ -1871,11 +2040,14 @@ xfs_icwalk_process_inode(
 
 	switch (goal) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case XFS_ICWALK_DQRELE:
 		xfs_dqrele_inode(ip, icw);
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_ICWALK_BLOCKGC:
 		error = xfs_blockgc_scan_inode(ip, icw);
 		break;
@@ -1914,14 +2086,18 @@ restart:
 	do {
 		struct xfs_inode *batch[XFS_LOOKUP_BATCH];
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		unsigned int	tag = xfs_icwalk_tag(goal);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int		error = 0;
 		int		i;
 
 		rcu_read_lock();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		nr_found = radix_tree_gang_lookup_tag(&pag->pag_ici_root,
 				(void **) batch, first_index,
@@ -1938,6 +2114,11 @@ restart:
 					XFS_LOOKUP_BATCH, tag);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nr_found = radix_tree_gang_lookup_tag(&pag->pag_ici_root,
+				(void **) batch, first_index,
+				XFS_LOOKUP_BATCH, goal);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!nr_found) {
 			done = true;
 			rcu_read_unlock();
@@ -2016,6 +2197,7 @@ restart:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Fetch the next (possibly tagged) per-AG structure. */
 static inline struct xfs_perag *
@@ -2032,6 +2214,8 @@ xfs_icwalk_get_perag(
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Walk all incore inodes to achieve a given goal. */
 static int
 xfs_icwalk(
@@ -2042,6 +2226,7 @@ xfs_icwalk(
 	struct xfs_perag	*pag;
 	int			error = 0;
 	int			last_error = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	xfs_agnumber_t		agno;
 
@@ -2055,22 +2240,31 @@ xfs_icwalk(
 			}
 =======
 	xfs_agnumber_t		agno = 0;
+=======
+	xfs_agnumber_t		agno;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	while ((pag = xfs_icwalk_get_perag(mp, agno, goal))) {
-		agno = pag->pag_agno + 1;
+	for_each_perag_tag(mp, agno, pag, goal) {
 		error = xfs_icwalk_ag(pag, goal, icw);
-		xfs_perag_put(pag);
 		if (error) {
 			last_error = error;
-			if (error == -EFSCORRUPTED)
+			if (error == -EFSCORRUPTED) {
+				xfs_perag_put(pag);
 				break;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 	return last_error;
 	BUILD_BUG_ON(XFS_ICWALK_PRIVATE_FLAGS & XFS_ICWALK_FLAGS_VALID);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef DEBUG
 static void
@@ -2518,5 +2712,8 @@ xfs_inodegc_register_shrinker(
 
 	return register_shrinker(shrink);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

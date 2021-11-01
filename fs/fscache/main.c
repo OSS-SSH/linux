@@ -95,6 +95,9 @@ static struct ctl_table fscache_sysctls_root[] = {
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Mixing scores (in bits) for (7,20):
  * Input delta: 1-bit      2-bit
  * 1 round:     330.3     9201.6
@@ -134,8 +137,11 @@ unsigned int fscache_hash(unsigned int salt, unsigned int *data, unsigned int n)
 }
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * initialise the fs caching module
  */
 static int __init fscache_init(void)

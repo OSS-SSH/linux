@@ -27,12 +27,17 @@
 #define PTRACE_SET_SYSCALL	23
 /* PTRACE_SYSCALL is 24 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PTRACE_GETCRUNCHREGS	25 /* obsolete */
 #define PTRACE_SETCRUNCHREGS	26 /* obsolete */
 =======
 #define PTRACE_GETCRUNCHREGS	25
 #define PTRACE_SETCRUNCHREGS	26
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PTRACE_GETCRUNCHREGS	25 /* obsolete */
+#define PTRACE_SETCRUNCHREGS	26 /* obsolete */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PTRACE_GETVFPREGS	27
 #define PTRACE_SETVFPREGS	28
 #define PTRACE_GETHBPREGS	29

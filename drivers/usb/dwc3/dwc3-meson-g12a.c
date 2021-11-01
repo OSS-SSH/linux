@@ -599,10 +599,15 @@ static int dwc3_meson_g12a_otg_init(struct platform_device *pdev,
 
 		irq = platform_get_irq(pdev, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (irq < 0)
 			return irq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (irq < 0)
+			return irq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
 						dwc3_meson_g12a_irq_thread,
 						IRQF_ONESHOT, pdev->name, priv);

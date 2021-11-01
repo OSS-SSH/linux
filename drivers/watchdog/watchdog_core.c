@@ -35,9 +35,13 @@
 #include <linux/err.h>		/* For IS_ERR macros */
 #include <linux/of.h>		/* For of_get_timeout_sec */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/suspend.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/suspend.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "watchdog_core.h"	/* For watchdog_dev_register/... */
 
@@ -190,6 +194,9 @@ static int watchdog_restart_notifier(struct notifier_block *nb,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int watchdog_pm_notifier(struct notifier_block *nb, unsigned long mode,
 				void *data)
 {
@@ -217,8 +224,11 @@ static int watchdog_pm_notifier(struct notifier_block *nb, unsigned long mode,
 	return NOTIFY_DONE;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * watchdog_set_restart_priority - Change priority of restart handler
  * @wdd: watchdog device
@@ -327,6 +337,9 @@ static int __watchdog_register_device(struct watchdog_device *wdd)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test_bit(WDOG_NO_PING_ON_SUSPEND, &wdd->status)) {
 		wdd->pm_nb.notifier_call = watchdog_pm_notifier;
 
@@ -336,8 +349,11 @@ static int __watchdog_register_device(struct watchdog_device *wdd)
 				wdd->id, ret);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

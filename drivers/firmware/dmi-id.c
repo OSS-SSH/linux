@@ -74,12 +74,18 @@ static void ascii_filter(char *d, const char *s)
 static ssize_t get_modalias(char *buffer, size_t buffer_size)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Note new fields need to be added at the end to keep compatibility
 	 * with udev's hwdb which does matches on "`cat dmi/id/modalias`*".
 	 */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static const struct mafield {
 		const char *prefix;
 		int field;
@@ -93,9 +99,12 @@ static ssize_t get_modalias(char *buffer, size_t buffer_size)
 		{ "pn",  DMI_PRODUCT_NAME },
 		{ "pvr", DMI_PRODUCT_VERSION },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		{ "sku", DMI_PRODUCT_SKU },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ "rvn", DMI_BOARD_VENDOR },
 		{ "rn",  DMI_BOARD_NAME },
 		{ "rvr", DMI_BOARD_VERSION },
@@ -103,9 +112,13 @@ static ssize_t get_modalias(char *buffer, size_t buffer_size)
 		{ "ct",  DMI_CHASSIS_TYPE },
 		{ "cvr", DMI_CHASSIS_VERSION },
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{ "sku", DMI_PRODUCT_SKU },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{ "sku", DMI_PRODUCT_SKU },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ NULL,  DMI_NONE }
 	};
 

@@ -384,6 +384,7 @@ dropped_freed:
 	batadv_inc_counter(bat_priv, BATADV_CNT_TX_DROPPED);
 end:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_orig_node_put(mcast_single_orig);
 	batadv_hardif_put(primary_if);
 =======
@@ -392,6 +393,10 @@ end:
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(mcast_single_orig);
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NETDEV_TX_OK;
 }
 
@@ -507,10 +512,14 @@ out:
  * @ref: kref pointer of the vlan object
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void batadv_softif_vlan_release(struct kref *ref)
 =======
 static void batadv_softif_vlan_release(struct kref *ref)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void batadv_softif_vlan_release(struct kref *ref)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct batadv_softif_vlan *vlan;
 
@@ -524,6 +533,7 @@ static void batadv_softif_vlan_release(struct kref *ref)
 }
 
 /**
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
  * batadv_softif_vlan_put() - decrease the vlan object refcounter and
@@ -540,6 +550,8 @@ void batadv_softif_vlan_put(struct batadv_softif_vlan *vlan)
 
 /**
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * batadv_softif_vlan_get() - get the vlan object for a specific vid
  * @bat_priv: the bat priv with all the soft interface information
  * @vid: the identifier of the vlan object to retrieve
@@ -864,11 +876,15 @@ static int batadv_softif_slave_add(struct net_device *dev,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_put(hard_iface);
 =======
 	if (hard_iface)
 		batadv_hardif_put(hard_iface);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(hard_iface);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -895,11 +911,15 @@ static int batadv_softif_slave_del(struct net_device *dev,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_put(hard_iface);
 =======
 	if (hard_iface)
 		batadv_hardif_put(hard_iface);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(hard_iface);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

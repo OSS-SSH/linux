@@ -35,10 +35,14 @@
 
 #define P9_PORT 564
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MAX_SOCK_BUF (1024*1024)
 =======
 #define MAX_SOCK_BUF (64*1024)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MAX_SOCK_BUF (1024*1024)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MAXPOLLWADDR	2
 
 static struct p9_trans_module p9_tcp_trans;

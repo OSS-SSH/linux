@@ -1,18 +1,25 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RVU Physical Function ethernet driver
  *
  * Copyright (C) 2020 Marvell.
  *
 =======
 /* Marvell OcteonTx2 RVU Physical Function ethernet driver
+=======
+/* Marvell RVU Physical Function ethernet driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2020 Marvell International Ltd.
+ * Copyright (C) 2020 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/module.h>
@@ -1118,13 +1125,19 @@ static int otx2_cgx_config_loopback(struct otx2_nic *pf, bool enable)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (enable && bitmap_weight(&pf->flow_cfg->dmacflt_bmap,
 				    pf->flow_cfg->dmacflt_max_flows))
 		netdev_warn(pf->netdev,
 			    "CGX/RPM internal loopback might not work as DMAC filters are active\n");
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&pf->mbox.lock);
 	if (enable)
 		msg = otx2_mbox_alloc_msg_cgx_intlbk_enable(&pf->mbox);
@@ -1547,6 +1560,7 @@ int otx2_open(struct net_device *netdev)
 		goto err_free_mem;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (test_bit(CN10K_LMTST, &pf->hw.cap_flag)) {
 		/* Reserve LMT lines for NPA AURA batch free */
@@ -1557,6 +1571,8 @@ int otx2_open(struct net_device *netdev)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = otx2_init_hw_resources(pf);
 	if (err)
 		goto err_free_mem;
@@ -1663,12 +1679,18 @@ int otx2_open(struct net_device *netdev)
 	otx2_config_pause_frm(pf);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Install DMAC Filters */
 	if (pf->flags & OTX2_FLAG_DMACFLTR_SUPPORT)
 		otx2_dmacflt_reinstall_flows(pf);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = otx2_rxtx_enable(pf, true);
 	if (err)
 		goto err_tx_stop_queues;
@@ -1679,9 +1701,13 @@ err_tx_stop_queues:
 	netif_tx_stop_all_queues(netdev);
 	netif_carrier_off(netdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pf->flags |= OTX2_FLAG_INTF_DOWN;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pf->flags |= OTX2_FLAG_INTF_DOWN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_cints:
 	otx2_free_cints(pf, qidx);
 	vec = pci_irq_vector(pf->pdev,
@@ -1710,12 +1736,18 @@ int otx2_stop(struct net_device *netdev)
 	int qidx, vec, wrk;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If the DOWN flag is set resources are already freed */
 	if (pf->flags & OTX2_FLAG_INTF_DOWN)
 		return 0;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netif_carrier_off(netdev);
 	netif_tx_stop_all_queues(netdev);
 
@@ -1810,10 +1842,14 @@ static netdev_features_t otx2_fix_features(struct net_device *dev,
 					   netdev_features_t features)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (features & NETIF_F_HW_VLAN_CTAG_RX)
 		features |= NETIF_F_HW_VLAN_STAG_RX;
 	else
 		features &= ~NETIF_F_HW_VLAN_STAG_RX;
+<<<<<<< HEAD
 =======
 	/* check if n-tuple filters are ON */
 	if ((features & NETIF_F_HW_TC) && (dev->features & NETIF_F_NTUPLE)) {
@@ -1827,6 +1863,8 @@ static netdev_features_t otx2_fix_features(struct net_device *dev,
 		features &= ~NETIF_F_HW_TC;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return features;
 }
@@ -1884,9 +1922,13 @@ static int otx2_set_features(struct net_device *netdev,
 	bool ntuple = !!(features & NETIF_F_NTUPLE);
 	struct otx2_nic *pf = netdev_priv(netdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool tc = !!(features & NETIF_F_HW_TC);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool tc = !!(features & NETIF_F_HW_TC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((changed & NETIF_F_LOOPBACK) && netif_running(netdev))
 		return otx2_cgx_config_loopback(pf,
@@ -1900,6 +1942,9 @@ static int otx2_set_features(struct net_device *netdev,
 		otx2_destroy_ntuple_flows(pf);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((changed & NETIF_F_NTUPLE) && ntuple) {
 		if (!pf->flow_cfg->max_flows) {
 			netdev_err(netdev,
@@ -1918,15 +1963,21 @@ static int otx2_set_features(struct net_device *netdev,
 
 	if ((changed & NETIF_F_HW_TC) && !tc &&
 	    pf->flow_cfg && pf->flow_cfg->nr_flows) {
+<<<<<<< HEAD
 =======
 	if ((netdev->features & NETIF_F_HW_TC) > (features & NETIF_F_HW_TC) &&
 	    pf->tc_info.num_entries) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		netdev_err(netdev, "Can't disable TC hardware offload while flows are active\n");
 		return -EBUSY;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((changed & NETIF_F_NTUPLE) && ntuple &&
 	    (netdev->features & NETIF_F_HW_TC) && !(changed & NETIF_F_HW_TC)) {
 		netdev_err(netdev,
@@ -1941,8 +1992,11 @@ static int otx2_set_features(struct net_device *netdev,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2403,10 +2457,14 @@ static const struct net_device_ops otx2_netdev_ops = {
 	.ndo_tx_timeout		= otx2_tx_timeout,
 	.ndo_get_stats64	= otx2_get_stats64,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= otx2_ioctl,
 =======
 	.ndo_do_ioctl		= otx2_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= otx2_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_vf_mac		= otx2_set_vf_mac,
 	.ndo_set_vf_vlan	= otx2_set_vf_vlan,
 	.ndo_get_vf_config	= otx2_get_vf_config,
@@ -2616,10 +2674,14 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		goto err_detach_rsrc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = cn10k_lmtst_init(pf);
 =======
 	err = cn10k_pf_lmtst_init(pf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = cn10k_lmtst_init(pf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto err_detach_rsrc;
 
@@ -2649,10 +2711,13 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	netdev->features |= netdev->hw_features;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	netdev->hw_features |= NETIF_F_LOOPBACK | NETIF_F_RXALL;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = otx2_mcam_flow_init(pf);
 	if (err)
 		goto err_ptp_destroy;
@@ -2677,19 +2742,27 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		netdev->hw_features |= NETIF_F_HW_TC;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	netdev->hw_features |= NETIF_F_LOOPBACK | NETIF_F_RXALL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netdev->hw_features |= NETIF_F_LOOPBACK | NETIF_F_RXALL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netdev->gso_max_segs = OTX2_MAX_GSO_SEGS;
 	netdev->watchdog_timeo = OTX2_TX_TIMEOUT;
 
 	netdev->netdev_ops = &otx2_netdev_ops;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* MTU range: 64 - 9190 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netdev->min_mtu = OTX2_MIN_MTU;
 	netdev->max_mtu = otx2_get_max_mtu(pf);
 
@@ -2710,12 +2783,18 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		goto err_mcam_flow_del;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = otx2_register_dl(pf);
 	if (err)
 		goto err_mcam_flow_del;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Initialize SR-IOV resources */
 	err = otx2_sriov_vfcfg_init(pf);
 	if (err)
@@ -2742,14 +2821,20 @@ err_ptp_destroy:
 	otx2_ptp_destroy(pf);
 err_detach_rsrc:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (pf->hw.lmt_info)
 		free_percpu(pf->hw.lmt_info);
 	if (test_bit(CN10K_LMTST, &pf->hw.cap_flag))
 		qmem_free(pf->dev, pf->dync_lmt);
+<<<<<<< HEAD
 =======
 	if (hw->lmt_base)
 		iounmap(hw->lmt_base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	otx2_detach_resources(&pf->mbox);
 err_disable_mbox_intr:
 	otx2_disable_mbox_intr(pf);
@@ -2881,9 +2966,13 @@ static void otx2_remove(struct pci_dev *pdev)
 	otx2_cgx_config_linkevents(pf, false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	otx2_unregister_dl(pf);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	otx2_unregister_dl(pf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unregister_netdev(netdev);
 	otx2_sriov_disable(pf->pdev);
 	otx2_sriov_vfcfg_cleanup(pf);
@@ -2895,15 +2984,21 @@ static void otx2_remove(struct pci_dev *pdev)
 	otx2_shutdown_tc(pf);
 	otx2_detach_resources(&pf->mbox);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (pf->hw.lmt_info)
 		free_percpu(pf->hw.lmt_info);
 	if (test_bit(CN10K_LMTST, &pf->hw.cap_flag))
 		qmem_free(pf->dev, pf->dync_lmt);
+<<<<<<< HEAD
 =======
 	if (pf->hw.lmt_base)
 		iounmap(pf->hw.lmt_base);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	otx2_disable_mbox_intr(pf);
 	otx2_pfaf_mbox_destroy(pf);
 	pci_free_irq_vectors(pf->pdev);

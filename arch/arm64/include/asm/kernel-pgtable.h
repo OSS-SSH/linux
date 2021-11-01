@@ -66,12 +66,17 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define EARLY_ENTRIES(vstart, vend, shift) \
 	((((vend) - 1) >> (shift)) - ((vstart) >> (shift)) + 1 + EARLY_KASLR)
 =======
 #define EARLY_ENTRIES(vstart, vend, shift) (((vend) >> (shift)) \
 					- ((vstart) >> (shift)) + 1 + EARLY_KASLR)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define EARLY_ENTRIES(vstart, vend, shift) \
+	((((vend) - 1) >> (shift)) - ((vstart) >> (shift)) + 1 + EARLY_KASLR)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define EARLY_PGDS(vstart, vend) (EARLY_ENTRIES(vstart, vend, PGDIR_SHIFT))
 

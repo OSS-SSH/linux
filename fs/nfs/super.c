@@ -481,10 +481,15 @@ static void nfs_show_mount_options(struct seq_file *m, struct nfs_server *nfss,
 		seq_printf(m, ",nconnect=%u", clp->cl_nconnect);
 	if (version == 4) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (clp->cl_max_connect > 1)
 			seq_printf(m, ",max_connect=%u", clp->cl_max_connect);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (clp->cl_max_connect > 1)
+			seq_printf(m, ",max_connect=%u", clp->cl_max_connect);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (nfss->port != NFS_PORT)
 			seq_printf(m, ",port=%u", nfss->port);
 	} else

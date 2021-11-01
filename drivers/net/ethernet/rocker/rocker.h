@@ -120,11 +120,16 @@ struct rocker_world_ops {
 				u16 vid, const unsigned char *addr);
 	int (*port_master_linked)(struct rocker_port *rocker_port,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				  struct net_device *master,
 				  struct netlink_ext_ack *extack);
 =======
 				  struct net_device *master);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  struct net_device *master,
+				  struct netlink_ext_ack *extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*port_master_unlinked)(struct rocker_port *rocker_port,
 				    struct net_device *master);
 	int (*port_neigh_update)(struct rocker_port *rocker_port,

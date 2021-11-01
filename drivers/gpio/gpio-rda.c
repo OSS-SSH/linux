@@ -182,10 +182,14 @@ static void rda_gpio_irq_handler(struct irq_desc *desc)
 	struct rda_gpio *rda_gpio = gpiochip_get_data(chip);
 	unsigned long status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 n;
 =======
 	u32 n, girq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 n;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_enter(ic, desc);
 
@@ -193,6 +197,7 @@ static void rda_gpio_irq_handler(struct irq_desc *desc)
 	/* Only lower 8 bits are capable of generating interrupts */
 	status &= RDA_GPIO_IRQ_MASK;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	for_each_set_bit(n, &status, RDA_GPIO_BANK_NR)
 		generic_handle_domain_irq(chip->irq.domain, n);
@@ -202,6 +207,10 @@ static void rda_gpio_irq_handler(struct irq_desc *desc)
 		generic_handle_irq(girq);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for_each_set_bit(n, &status, RDA_GPIO_BANK_NR)
+		generic_handle_domain_irq(chip->irq.domain, n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_exit(ic, desc);
 }

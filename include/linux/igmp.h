@@ -42,11 +42,14 @@ struct ip_sf_socklist {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define IP_SFLSIZE(count)	(sizeof(struct ip_sf_socklist) + \
 	(count) * sizeof(__be32))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IP_SFBLOCK	10	/* allocate this many at once */
 
 /* ip_mc_socklist is real list now. Speed is not argument;

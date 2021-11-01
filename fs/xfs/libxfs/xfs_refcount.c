@@ -92,10 +92,14 @@ xfs_refcount_lookup_eq(
 void
 xfs_refcount_btrec_to_irec(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_rec	*rec,
 =======
 	union xfs_btree_rec		*rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_rec	*rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_refcount_irec	*irec)
 {
 	irec->rc_startblock = be32_to_cpu(rec->refc.rc_startblock);
@@ -1258,10 +1262,14 @@ xfs_refcount_increase_extent(
 	struct xfs_bmbt_irec		*PREV)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_reflink(tp->t_mountp))
 =======
 	if (!xfs_sb_version_hasreflink(&tp->t_mountp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(tp->t_mountp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	__xfs_refcount_add(tp, XFS_REFCOUNT_INCREASE, PREV->br_startblock,
@@ -1277,10 +1285,14 @@ xfs_refcount_decrease_extent(
 	struct xfs_bmbt_irec		*PREV)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_reflink(tp->t_mountp))
 =======
 	if (!xfs_sb_version_hasreflink(&tp->t_mountp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(tp->t_mountp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	__xfs_refcount_add(tp, XFS_REFCOUNT_DECREASE, PREV->br_startblock,
@@ -1630,10 +1642,14 @@ xfs_refcount_alloc_cow_extent(
 	struct xfs_mount		*mp = tp->t_mountp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_reflink(mp))
 =======
 	if (!xfs_sb_version_hasreflink(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	__xfs_refcount_add(tp, XFS_REFCOUNT_ALLOC_COW, fsb, len);
@@ -1653,10 +1669,14 @@ xfs_refcount_free_cow_extent(
 	struct xfs_mount		*mp = tp->t_mountp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_reflink(mp))
 =======
 	if (!xfs_sb_version_hasreflink(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	/* Remove rmap entry */
@@ -1675,10 +1695,14 @@ STATIC int
 xfs_refcount_recover_extent(
 	struct xfs_btree_cur		*cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_rec	*rec,
 =======
 	union xfs_btree_rec		*rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_rec	*rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void				*priv)
 {
 	struct list_head		*debris = priv;

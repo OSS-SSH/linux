@@ -21,9 +21,13 @@
 #include <linux/slab.h>
 #include <linux/types.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/units.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/units.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/unaligned.h>
 
 #define EBU_CLC			0x000
@@ -107,9 +111,12 @@
 #define MAX_CS	2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define HZ_PER_MHZ	1000000L
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define USEC_PER_SEC	1000000L
 
 struct ebu_nand_cs {
@@ -639,11 +646,15 @@ static int ebu_nand_probe(struct platform_device *pdev)
 
 	ebu_host->dma_tx = dma_request_chan(dev, "tx");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ebu_host->dma_tx)) {
 		ret = dev_err_probe(dev, PTR_ERR(ebu_host->dma_tx),
 				    "failed to request DMA tx chan!.\n");
 		goto err_disable_unprepare_clk;
 	}
+<<<<<<< HEAD
 
 	ebu_host->dma_rx = dma_request_chan(dev, "rx");
 	if (IS_ERR(ebu_host->dma_rx)) {
@@ -663,17 +674,29 @@ static int ebu_nand_probe(struct platform_device *pdev)
 	if (IS_ERR(ebu_host->dma_tx))
 		return dev_err_probe(dev, PTR_ERR(ebu_host->dma_tx),
 				     "failed to request DMA tx chan!.\n");
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ebu_host->dma_rx = dma_request_chan(dev, "rx");
-	if (IS_ERR(ebu_host->dma_rx))
-		return dev_err_probe(dev, PTR_ERR(ebu_host->dma_rx),
-				     "failed to request DMA rx chan!.\n");
+	if (IS_ERR(ebu_host->dma_rx)) {
+		ret = dev_err_probe(dev, PTR_ERR(ebu_host->dma_rx),
+				    "failed to request DMA rx chan!.\n");
+		ebu_host->dma_rx = NULL;
+		goto err_cleanup_dma;
+	}
 
 	resname = devm_kasprintf(dev, GFP_KERNEL, "addr_sel%d", cs);
 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, resname);
+<<<<<<< HEAD
 	if (!res)
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!res) {
+		ret = -EINVAL;
+		goto err_cleanup_dma;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ebu_host->cs[cs].addr_sel = res->start;
 	writel(ebu_host->cs[cs].addr_sel | EBU_ADDR_MASK(5) | EBU_ADDR_SEL_REGEN,
 	       ebu_host->ebu + EBU_ADDR_SEL(cs));
@@ -684,11 +707,16 @@ static int ebu_nand_probe(struct platform_device *pdev)
 	if (!mtd->name) {
 		dev_err(ebu_host->dev, "NAND label property is mandatory\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = -EINVAL;
 		goto err_cleanup_dma;
 =======
 		return -EINVAL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = -EINVAL;
+		goto err_cleanup_dma;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mtd->dev.parent = dev;
@@ -717,9 +745,13 @@ err_clean_nand:
 err_cleanup_dma:
 	ebu_dma_cleanup(ebu_host);
 <<<<<<< HEAD
+<<<<<<< HEAD
 err_disable_unprepare_clk:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_disable_unprepare_clk:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clk_disable_unprepare(ebu_host->clk);
 
 	return ret;

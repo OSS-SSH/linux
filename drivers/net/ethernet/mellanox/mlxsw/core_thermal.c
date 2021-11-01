@@ -25,6 +25,7 @@
 #define MLXSW_THERMAL_TEMP_SCORE_MAX	GENMASK(31, 0)
 #define MLXSW_THERMAL_MAX_STATE	10
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MLXSW_THERMAL_MIN_STATE	2
 #define MLXSW_THERMAL_MAX_DUTY	255
 =======
@@ -39,6 +40,10 @@
 #define MLXSW_THERMAL_SPEED_MAX		(MLXSW_THERMAL_MAX_STATE * 2)
 #define MLXSW_THERMAL_SPEED_MIN_LEVEL	2		/* 20% */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MLXSW_THERMAL_MIN_STATE	2
+#define MLXSW_THERMAL_MAX_DUTY	255
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* External cooling devices, allowed for binding to mlxsw thermal zones. */
 static char * const mlxsw_thermal_external_allowed_cdev[] = {
@@ -652,6 +657,7 @@ static int mlxsw_thermal_set_cur_state(struct thermal_cooling_device *cdev,
 	struct device *dev = thermal->bus_info->dev;
 	char mfsc_pl[MLXSW_REG_MFSC_LEN];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int idx;
 	int err;
 
@@ -660,15 +666,23 @@ static int mlxsw_thermal_set_cur_state(struct thermal_cooling_device *cdev,
 
 =======
 	unsigned long cur_state, i;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int idx;
-	u8 duty;
 	int err;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (state > MLXSW_THERMAL_MAX_STATE)
+		return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	idx = mlxsw_get_cooling_device_idx(thermal, cdev);
 	if (idx < 0)
 		return idx;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/* Verify if this request is for changing allowed fan dynamical
@@ -706,6 +720,8 @@ static int mlxsw_thermal_set_cur_state(struct thermal_cooling_device *cdev,
 		return -EINVAL;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Normalize the state to the valid speed range. */
 	state = thermal->cooling_levels[state];
 	mlxsw_reg_mfsc_pack(mfsc_pl, idx, mlxsw_state_to_duty(state));
@@ -1016,11 +1032,15 @@ int mlxsw_thermal_init(struct mlxsw_core *core,
 	/* Initialize cooling levels per PWM state. */
 	for (i = 0; i < MLXSW_THERMAL_MAX_STATE; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		thermal->cooling_levels[i] = max(MLXSW_THERMAL_MIN_STATE, i);
 =======
 		thermal->cooling_levels[i] = max(MLXSW_THERMAL_SPEED_MIN_LEVEL,
 						 i);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		thermal->cooling_levels[i] = max(MLXSW_THERMAL_MIN_STATE, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	thermal->polling_delay = bus_info->low_frequency ?
 				 MLXSW_THERMAL_SLOW_POLL_INT :

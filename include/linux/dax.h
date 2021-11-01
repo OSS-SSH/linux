@@ -42,9 +42,12 @@ extern struct attribute_group dax_attribute_group;
 
 #if IS_ENABLED(CONFIG_DAX)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct dax_device *dax_get_by_host(const char *host);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct dax_device *alloc_dax(void *private, const char *host,
 		const struct dax_operations *ops, unsigned long flags);
 void put_dax(struct dax_device *dax_dev);
@@ -62,10 +65,13 @@ static inline void set_dax_synchronous(struct dax_device *dax_dev)
 	__set_dax_synchronous(dax_dev);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 bool dax_supported(struct dax_device *dax_dev, struct block_device *bdev,
 		int blocksize, sector_t start, sector_t len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Check if given mapping is supported by the file / underlying device.
  */
@@ -80,12 +86,15 @@ static inline bool daxdev_mapping_supported(struct vm_area_struct *vma,
 }
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline struct dax_device *dax_get_by_host(const char *host)
 {
 	return NULL;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct dax_device *alloc_dax(void *private, const char *host,
 		const struct dax_operations *ops, unsigned long flags)
 {
@@ -116,6 +125,7 @@ static inline void set_dax_synchronous(struct dax_device *dax_dev)
 {
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline bool dax_supported(struct dax_device *dax_dev,
 		struct block_device *bdev, int blocksize, sector_t start,
@@ -124,6 +134,8 @@ static inline bool dax_supported(struct dax_device *dax_dev,
 	return false;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool daxdev_mapping_supported(struct vm_area_struct *vma,
 				struct dax_device *dax_dev)
 {
@@ -134,6 +146,7 @@ static inline bool daxdev_mapping_supported(struct vm_area_struct *vma,
 struct writeback_control;
 int bdev_dax_pgoff(struct block_device *, sector_t, size_t, pgoff_t *pgoff);
 #if IS_ENABLED(CONFIG_FS_DAX)
+<<<<<<< HEAD
 <<<<<<< HEAD
 bool generic_fsdax_supported(struct dax_device *dax_dev,
 		struct block_device *bdev, int blocksize, sector_t start,
@@ -159,6 +172,14 @@ static inline bool generic_fsdax_supported(struct dax_device *dax_dev,
 			sectors);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool generic_fsdax_supported(struct dax_device *dax_dev,
+		struct block_device *bdev, int blocksize, sector_t start,
+		sector_t sectors);
+
+bool dax_supported(struct dax_device *dax_dev, struct block_device *bdev,
+		int blocksize, sector_t start, sector_t len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline void fs_put_dax(struct dax_device *dax_dev)
 {
@@ -175,6 +196,7 @@ dax_entry_t dax_lock_page(struct page *page);
 void dax_unlock_page(struct page *page, dax_entry_t cookie);
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define generic_fsdax_supported		NULL
 
 static inline bool dax_supported(struct dax_device *dax_dev,
@@ -186,11 +208,18 @@ static inline bool bdev_dax_supported(struct block_device *bdev,
 {
 	return false;
 }
+=======
+#define generic_fsdax_supported		NULL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-static inline bool generic_fsdax_supported(struct dax_device *dax_dev,
+static inline bool dax_supported(struct dax_device *dax_dev,
 		struct block_device *bdev, int blocksize, sector_t start,
+<<<<<<< HEAD
 		sector_t sectors)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sector_t len)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return false;
 }

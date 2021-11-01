@@ -26,6 +26,7 @@
 #define SPI_FSI_BASE			0x70000
 #define SPI_FSI_INIT_TIMEOUT_MS		1000
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SPI_FSI_MAX_RX_SIZE		8
 #define SPI_FSI_MAX_TX_SIZE		40
 
@@ -43,6 +44,13 @@
 #define  SPI_FSI_COUNTER_CFG_N2_IMPLICIT BIT_ULL(10)
 #define  SPI_FSI_COUNTER_CFG_N2_RELOAD	 BIT_ULL(11)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SPI_FSI_MAX_RX_SIZE		8
+#define SPI_FSI_MAX_TX_SIZE		40
+
+#define SPI_FSI_ERROR			0x0
+#define SPI_FSI_COUNTER_CFG		0x1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SPI_FSI_CFG1			0x2
 #define SPI_FSI_CLOCK_CFG		0x3
 #define  SPI_FSI_CLOCK_CFG_MM_ENABLE	 BIT_ULL(32)
@@ -85,10 +93,13 @@ struct fsi_spi {
 	struct fsi_device *fsi;	/* FSI2SPI CFAM engine device */
 	u32 base;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	size_t max_xfr_size;
 	bool restricted;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct fsi_spi_sequence {
@@ -253,10 +264,14 @@ static int fsi_spi_reset(struct fsi_spi *ctx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void fsi_spi_sequence_add(struct fsi_spi_sequence *seq, u8 val)
 =======
 static int fsi_spi_sequence_add(struct fsi_spi_sequence *seq, u8 val)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void fsi_spi_sequence_add(struct fsi_spi_sequence *seq, u8 val)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/*
 	 * Add the next byte of instruction to the 8-byte sequence register.
@@ -267,10 +282,13 @@ static int fsi_spi_sequence_add(struct fsi_spi_sequence *seq, u8 val)
 	seq->data |= (u64)val << seq->bit;
 	seq->bit -= 8;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	return ((64 - seq->bit) / 8) - 2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void fsi_spi_sequence_init(struct fsi_spi_sequence *seq)
@@ -279,6 +297,7 @@ static void fsi_spi_sequence_init(struct fsi_spi_sequence *seq)
 	seq->data = 0ULL;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int fsi_spi_sequence_transfer(struct fsi_spi *ctx,
@@ -341,15 +360,20 @@ static int fsi_spi_sequence_transfer(struct fsi_spi *ctx,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int fsi_spi_transfer_data(struct fsi_spi *ctx,
 				 struct spi_transfer *transfer)
 {
 	int rc = 0;
 	u64 status = 0ULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u64 cfg = 0ULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (transfer->tx_buf) {
 		int nb;
@@ -388,6 +412,7 @@ static int fsi_spi_transfer_data(struct fsi_spi *ctx,
 		u8 *rx = transfer->rx_buf;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		rc = fsi_spi_read_reg(ctx, SPI_FSI_COUNTER_CFG, &cfg);
 		if (rc)
@@ -400,6 +425,8 @@ static int fsi_spi_transfer_data(struct fsi_spi *ctx,
 		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		while (transfer->len > recv) {
 			do {
 				rc = fsi_spi_read_reg(ctx, SPI_FSI_STATUS,
@@ -467,12 +494,18 @@ static int fsi_spi_transfer_init(struct fsi_spi *ctx)
 	} while (seq_state && (seq_state != SPI_FSI_STATUS_SEQ_STATE_IDLE));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = fsi_spi_write_reg(ctx, SPI_FSI_COUNTER_CFG, 0ULL);
 	if (rc)
 		return rc;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = fsi_spi_read_reg(ctx, SPI_FSI_CLOCK_CFG, &clock_cfg);
 	if (rc)
 		return rc;
@@ -494,9 +527,13 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
 	int rc;
 	u8 seq_slave = SPI_FSI_SEQUENCE_SEL_SLAVE(mesg->spi->chip_select + 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int len;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct spi_transfer *transfer;
 	struct fsi_spi *ctx = spi_controller_get_devdata(ctlr);
 
@@ -510,11 +547,15 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
 
 		/* Sequencer must do shift out (tx) first. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!transfer->tx_buf || transfer->len > SPI_FSI_MAX_TX_SIZE) {
 =======
 		if (!transfer->tx_buf ||
 		    transfer->len > (ctx->max_xfr_size + 8)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!transfer->tx_buf || transfer->len > SPI_FSI_MAX_TX_SIZE) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = -EINVAL;
 			goto error;
 		}
@@ -529,6 +570,9 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
 		fsi_spi_sequence_add(&seq, seq_slave);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		len = transfer->len;
 		while (len > 8) {
 			fsi_spi_sequence_add(&seq,
@@ -536,11 +580,14 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
 			len -= 8;
 		}
 		fsi_spi_sequence_add(&seq, SPI_FSI_SEQUENCE_SHIFT_OUT(len));
+<<<<<<< HEAD
 =======
 		rc = fsi_spi_sequence_transfer(ctx, &seq, transfer);
 		if (rc)
 			goto error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!list_is_last(&transfer->transfer_list,
 				  &mesg->transfers)) {
@@ -549,12 +596,18 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
 			/* Sequencer can only do shift in (rx) after tx. */
 			if (next->rx_buf) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				u8 shift;
 
 				if (next->len > SPI_FSI_MAX_RX_SIZE) {
 =======
 				if (next->len > ctx->max_xfr_size) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				u8 shift;
+
+				if (next->len > SPI_FSI_MAX_RX_SIZE) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					rc = -EINVAL;
 					goto error;
 				}
@@ -562,6 +615,7 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
 				dev_dbg(ctx->dev, "Sequence rx of %d bytes.\n",
 					next->len);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 				shift = SPI_FSI_SEQUENCE_SHIFT_IN(next->len);
 				fsi_spi_sequence_add(&seq, shift);
@@ -571,6 +625,10 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
 				if (rc)
 					goto error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				shift = SPI_FSI_SEQUENCE_SHIFT_IN(next->len);
+				fsi_spi_sequence_add(&seq, shift);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			} else {
 				next = NULL;
 			}
@@ -605,12 +663,16 @@ error:
 static size_t fsi_spi_max_transfer_size(struct spi_device *spi)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return SPI_FSI_MAX_RX_SIZE;
 =======
 	struct fsi_spi *ctx = spi_controller_get_devdata(spi->controller);
 
 	return ctx->max_xfr_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return SPI_FSI_MAX_RX_SIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int fsi_spi_probe(struct device *dev)
@@ -650,6 +712,7 @@ static int fsi_spi_probe(struct device *dev)
 		ctx->base = base + SPI_FSI_BASE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		if (of_device_is_compatible(np, "ibm,fsi2spi-restricted")) {
 			ctx->restricted = true;
@@ -660,6 +723,8 @@ static int fsi_spi_probe(struct device *dev)
 		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc = devm_spi_register_controller(dev, ctlr);
 		if (rc)
 			spi_controller_put(ctlr);

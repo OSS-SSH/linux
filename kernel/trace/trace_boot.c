@@ -172,6 +172,9 @@ trace_boot_add_synth_event(struct xbc_node *node, const char *event)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_HIST_TRIGGERS
 static int __init __printf(3, 4)
 append_printf(char **bufp, char *end, const char *fmt, ...)
@@ -455,8 +458,11 @@ trace_boot_init_histograms(struct trace_event_file *file,
 }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __init
 trace_boot_init_one_event(struct trace_array *tr, struct xbc_node *gnode,
 			  struct xbc_node *enode)
@@ -492,6 +498,9 @@ trace_boot_init_one_event(struct trace_array *tr, struct xbc_node *gnode,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ENABLED(CONFIG_HIST_TRIGGERS)) {
 		xbc_node_for_each_array_value(enode, "actions", anode, p) {
 			if (strlcpy(buf, p, ARRAY_SIZE(buf)) >= ARRAY_SIZE(buf))
@@ -504,6 +513,7 @@ trace_boot_init_one_event(struct trace_array *tr, struct xbc_node *gnode,
 			trace_boot_init_histograms(file, anode, buf, ARRAY_SIZE(buf));
 	} else if (xbc_node_find_value(enode, "actions", NULL))
 		pr_err("Failed to apply event actions because CONFIG_HIST_TRIGGERS is not set.\n");
+<<<<<<< HEAD
 =======
 	xbc_node_for_each_array_value(enode, "actions", anode, p) {
 		if (strlcpy(buf, p, ARRAY_SIZE(buf)) >= ARRAY_SIZE(buf))
@@ -512,6 +522,8 @@ trace_boot_init_one_event(struct trace_array *tr, struct xbc_node *gnode,
 			pr_err("Failed to apply an action: %s\n", buf);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (xbc_node_find_value(enode, "enable", NULL)) {
 		if (trace_event_enable_disable(file, 1, 0) < 0)
@@ -530,6 +542,7 @@ trace_boot_init_events(struct trace_array *tr, struct xbc_node *node)
 	const char *data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	node = xbc_node_find_subkey(node, "event");
 	if (!node)
 		return;
@@ -542,6 +555,13 @@ trace_boot_init_events(struct trace_array *tr, struct xbc_node *node)
 	/* per-event key starts with "event.GROUP.EVENT" */
 	xbc_node_for_each_child(node, gnode) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	node = xbc_node_find_subkey(node, "event");
+	if (!node)
+		return;
+	/* per-event key starts with "event.GROUP.EVENT" */
+	xbc_node_for_each_subkey(node, gnode) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		data = xbc_node_get_data(gnode);
 		if (!strcmp(data, "enable")) {
 			enable_all = true;
@@ -549,10 +569,14 @@ trace_boot_init_events(struct trace_array *tr, struct xbc_node *node)
 		}
 		enable = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		xbc_node_for_each_subkey(gnode, enode) {
 =======
 		xbc_node_for_each_child(gnode, enode) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		xbc_node_for_each_subkey(gnode, enode) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			data = xbc_node_get_data(enode);
 			if (!strcmp(data, "enable")) {
 				enable = true;
@@ -645,6 +669,7 @@ trace_boot_init_instances(struct xbc_node *node)
 	const char *p;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	node = xbc_node_find_subkey(node, "instance");
 	if (!node)
 		return;
@@ -657,6 +682,13 @@ trace_boot_init_instances(struct xbc_node *node)
 
 	xbc_node_for_each_child(node, inode) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	node = xbc_node_find_subkey(node, "instance");
+	if (!node)
+		return;
+
+	xbc_node_for_each_subkey(node, inode) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		p = xbc_node_get_data(inode);
 		if (!p || *p == '\0')
 			continue;

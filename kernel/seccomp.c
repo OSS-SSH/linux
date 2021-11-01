@@ -603,10 +603,14 @@ static inline void seccomp_sync_threads(unsigned long flags)
 				  caller->seccomp.filter);
 		atomic_set(&thread->seccomp.filter_count,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   atomic_read(&caller->seccomp.filter_count));
 =======
 			   atomic_read(&thread->seccomp.filter_count));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   atomic_read(&caller->seccomp.filter_count));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Don't let an unprivileged task work around
@@ -927,6 +931,7 @@ void get_seccomp_filter(struct task_struct *tsk)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void seccomp_init_siginfo(kernel_siginfo_t *info, int syscall, int reason)
 {
@@ -953,6 +958,8 @@ static void seccomp_send_sigsys(int syscall, int reason)
 	force_sig_info(&info);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif	/* CONFIG_SECCOMP_FILTER */
 
 /* For use with seccomp_actions_logged */
@@ -1226,10 +1233,14 @@ static int __seccomp_filter(int this_syscall, const struct seccomp_data *sd,
 		syscall_rollback(current, current_pt_regs());
 		/* Let the filter pass back 16 bits of data. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		force_sig_seccomp(this_syscall, data, false);
 =======
 		seccomp_send_sigsys(this_syscall, data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		force_sig_seccomp(this_syscall, data, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto skip;
 
 	case SECCOMP_RET_TRACE:
@@ -1300,6 +1311,7 @@ static int __seccomp_filter(int this_syscall, const struct seccomp_data *sd,
 		/* Dump core only if this is the last remaining thread. */
 		if (action != SECCOMP_RET_KILL_THREAD ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    (atomic_read(&current->signal->live) == 1)) {
 			/* Show the original registers in the dump. */
 			syscall_rollback(current, current_pt_regs());
@@ -1313,17 +1325,23 @@ static int __seccomp_filter(int this_syscall, const struct seccomp_data *sd,
 		    get_nr_threads(current) == 1) {
 			kernel_siginfo_t info;
 
+=======
+		    (atomic_read(&current->signal->live) == 1)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* Show the original registers in the dump. */
 			syscall_rollback(current, current_pt_regs());
-			/* Trigger a manual coredump since do_exit skips it. */
-			seccomp_init_siginfo(&info, this_syscall, data);
-			do_coredump(&info);
-		}
-		if (action == SECCOMP_RET_KILL_THREAD)
+			/* Trigger a coredump with SIGSYS */
+			force_sig_seccomp(this_syscall, data, true);
+		} else {
 			do_exit(SIGSYS);
+<<<<<<< HEAD
 		else
 			do_group_exit(SIGSYS);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+		return -1; /* skip the syscall go directly to signal handling */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	unreachable();

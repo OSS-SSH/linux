@@ -1101,6 +1101,9 @@ static int cdns3_ep_run_stream_transfer(struct cdns3_endpoint *priv_ep,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void cdns3_rearm_drdy_if_needed(struct cdns3_endpoint *priv_ep)
 {
 	struct cdns3_device *priv_dev = priv_ep->cdns3_dev;
@@ -1114,8 +1117,11 @@ static void cdns3_rearm_drdy_if_needed(struct cdns3_endpoint *priv_ep)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * cdns3_ep_run_transfer - start transfer on no-default endpoint hardware
  * @priv_ep: endpoint object
@@ -1368,9 +1374,13 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
 		writel(EP_STS_TRBERR | EP_STS_DESCMIS, &priv_dev->regs->ep_sts);
 		writel(EP_CMD_DRDY, &priv_dev->regs->ep_cmd);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cdns3_rearm_drdy_if_needed(priv_ep);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cdns3_rearm_drdy_if_needed(priv_ep);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		trace_cdns3_doorbell_epx(priv_ep->name,
 					 readl(&priv_dev->regs->ep_traddr));
 	}

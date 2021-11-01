@@ -28,9 +28,13 @@ enum mlx5dr_action_reformat_type {
 	DR_ACTION_REFORMAT_TYP_L2_TO_TNL_L3,
 	DR_ACTION_REFORMAT_TYP_INSERT_HDR,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DR_ACTION_REFORMAT_TYP_REMOVE_HDR,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DR_ACTION_REFORMAT_TYP_REMOVE_HDR,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct mlx5dr_match_parameters {
@@ -99,11 +103,16 @@ struct mlx5dr_action *
 mlx5dr_action_create_mult_dest_tbl(struct mlx5dr_domain *dmn,
 				   struct mlx5dr_action_dest *dests,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   u32 num_of_dests,
 				   bool ignore_flow_level);
 =======
 				   u32 num_of_dests);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   u32 num_of_dests,
+				   bool ignore_flow_level);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct mlx5dr_action *mlx5dr_action_create_drop(void);
 

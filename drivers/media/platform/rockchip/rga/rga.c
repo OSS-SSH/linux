@@ -864,19 +864,27 @@ static int rga_probe(struct platform_device *pdev)
 		v4l2_err(&rga->v4l2_dev, "Failed to init mem2mem device\n");
 		ret = PTR_ERR(rga->m2m_dev);
 <<<<<<< HEAD
-		goto rel_vdev;
-=======
-		goto unreg_video_dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-	}
-
-	ret = pm_runtime_resume_and_get(rga->dev);
-	if (ret < 0)
 <<<<<<< HEAD
 		goto rel_vdev;
 =======
 		goto unreg_video_dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto rel_vdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	}
+
+	ret = pm_runtime_resume_and_get(rga->dev);
+	if (ret < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto rel_vdev;
+=======
+		goto unreg_video_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto rel_vdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rga->version.major = (rga_read(rga, RGA_VERSION_INFO) >> 24) & 0xFF;
 	rga->version.minor = (rga_read(rga, RGA_VERSION_INFO) >> 20) & 0x0F;
@@ -891,10 +899,14 @@ static int rga_probe(struct platform_device *pdev)
 					   &rga->cmdbuf_phy, GFP_KERNEL,
 					   DMA_ATTR_WRITE_COMBINE);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rga->cmdbuf_virt) {
 		ret = -ENOMEM;
 		goto rel_vdev;
 	}
+<<<<<<< HEAD
 
 	rga->src_mmu_pages =
 		(unsigned int *)__get_free_pages(GFP_KERNEL | __GFP_ZERO, 3);
@@ -909,12 +921,25 @@ static int rga_probe(struct platform_device *pdev)
 		goto free_src_pages;
 	}
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rga->src_mmu_pages =
 		(unsigned int *)__get_free_pages(GFP_KERNEL | __GFP_ZERO, 3);
+	if (!rga->src_mmu_pages) {
+		ret = -ENOMEM;
+		goto free_dma;
+	}
 	rga->dst_mmu_pages =
 		(unsigned int *)__get_free_pages(GFP_KERNEL | __GFP_ZERO, 3);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rga->dst_mmu_pages) {
+		ret = -ENOMEM;
+		goto free_src_pages;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	def_frame.stride = (def_frame.width * def_frame.fmt->depth) >> 3;
 	def_frame.size = def_frame.stride * def_frame.height;
@@ -923,10 +948,14 @@ static int rga_probe(struct platform_device *pdev)
 	if (ret) {
 		v4l2_err(&rga->v4l2_dev, "Failed to register video device\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto free_dst_pages;
 =======
 		goto rel_vdev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto free_dst_pages;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	v4l2_info(&rga->v4l2_dev, "Registered %s as /dev/%s\n",
@@ -935,6 +964,9 @@ static int rga_probe(struct platform_device *pdev)
 	return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_dst_pages:
 	free_pages((unsigned long)rga->dst_mmu_pages, 3);
 free_src_pages:
@@ -942,6 +974,7 @@ free_src_pages:
 free_dma:
 	dma_free_attrs(rga->dev, RGA_CMDBUF_SIZE, rga->cmdbuf_virt,
 		       rga->cmdbuf_phy, DMA_ATTR_WRITE_COMBINE);
+<<<<<<< HEAD
 rel_vdev:
 	video_device_release(vfd);
 =======
@@ -950,6 +983,10 @@ rel_vdev:
 unreg_video_dev:
 	video_unregister_device(rga->vfd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+rel_vdev:
+	video_device_release(vfd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unreg_v4l2_dev:
 	v4l2_device_unregister(&rga->v4l2_dev);
 err_put_clk:

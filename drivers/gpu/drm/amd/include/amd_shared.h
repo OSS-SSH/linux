@@ -48,9 +48,13 @@ enum amd_apu_flags {
 	AMD_APU_IS_GREEN_SARDINE = 0x00000010UL,
 	AMD_APU_IS_VANGOGH = 0x00000020UL,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	AMD_APU_IS_CYAN_SKILLFISH2 = 0x00000040UL,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	AMD_APU_IS_CYAN_SKILLFISH2 = 0x00000040UL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**

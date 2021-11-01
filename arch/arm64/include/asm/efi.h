@@ -15,9 +15,13 @@
 #ifdef CONFIG_EFI
 extern void efi_init(void);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void efifb_setup_from_dmi(struct screen_info *si, const char *opt);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void efifb_setup_from_dmi(struct screen_info *si, const char *opt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 #define efi_init()
 #endif
@@ -90,12 +94,15 @@ static inline void free_screen_info(struct screen_info *si)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
 {
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define EFI_ALLOC_ALIGN		SZ_64K
 
 /*

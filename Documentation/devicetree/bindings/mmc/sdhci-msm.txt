@@ -20,9 +20,13 @@ Required properties:
 		"qcom,qcs404-sdhci", "qcom,sdhci-msm-v5"
 		"qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"qcom,sdm845-sdhci", "qcom,sdhci-msm-v5"
 		"qcom,sdx55-sdhci", "qcom,sdhci-msm-v5";
 		"qcom,sm8250-sdhci", "qcom,sdhci-msm-v5"

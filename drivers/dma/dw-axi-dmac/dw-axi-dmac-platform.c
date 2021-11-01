@@ -364,10 +364,15 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
 			DWAXIDMAC_TT_FC_MEM_TO_PER_DMAC)
 			<< CH_CFG_H_TT_FC_POS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (chan->chip->apb_regs)
 			reg |= (chan->id << CH_CFG_H_DST_PER_POS);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (chan->chip->apb_regs)
+			reg |= (chan->id << CH_CFG_H_DST_PER_POS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case DMA_DEV_TO_MEM:
 		reg |= (chan->config.device_fc ?
@@ -375,10 +380,15 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
 			DWAXIDMAC_TT_FC_PER_TO_MEM_DMAC)
 			<< CH_CFG_H_TT_FC_POS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (chan->chip->apb_regs)
 			reg |= (chan->id << CH_CFG_H_SRC_PER_POS);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (chan->chip->apb_regs)
+			reg |= (chan->id << CH_CFG_H_SRC_PER_POS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		break;
@@ -481,6 +491,7 @@ static void dma_chan_free_chan_resources(struct dma_chan *dchan)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void dw_axi_dma_set_hw_channel(struct axi_dma_chan *chan, bool set)
 {
 	struct axi_dma_chip *chip = chan->chip;
@@ -491,17 +502,20 @@ static void dw_axi_dma_set_hw_channel(struct axi_dma_chan *chan, bool set)
 =======
 static void dw_axi_dma_set_hw_channel(struct axi_dma_chip *chip,
 				      u32 handshake_num, bool set)
+=======
+static void dw_axi_dma_set_hw_channel(struct axi_dma_chan *chan, bool set)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	unsigned long start = 0;
-	unsigned long reg_value;
-	unsigned long reg_mask;
-	unsigned long reg_set;
-	unsigned long mask;
-	unsigned long val;
+	struct axi_dma_chip *chip = chan->chip;
+	unsigned long reg_value, val;
 
 	if (!chip->apb_regs) {
+<<<<<<< HEAD
 		dev_dbg(chip->dev, "apb_regs not initialized\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_err(chip->dev, "apb_regs not initialized\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
@@ -510,6 +524,7 @@ static void dw_axi_dma_set_hw_channel(struct axi_dma_chip *chip,
 	 * Lock the DMA channel by assign a handshake number to the channel.
 	 * Unlock the DMA channel by assign 0x3F to the channel.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (set)
 		val = chan->hw_handshake_num;
@@ -533,11 +548,16 @@ static void dw_axi_dma_set_hw_channel(struct axi_dma_chip *chip,
 		val = handshake_num;
 	} else {
 		reg_set = handshake_num;
+=======
+	if (set)
+		val = chan->hw_handshake_num;
+	else
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val = UNUSED_CHANNEL;
-	}
 
 	reg_value = lo_hi_readq(chip->apb_regs + DMAC_APB_HW_HS_SEL_0);
 
+<<<<<<< HEAD
 	for_each_set_clump8(start, reg_mask, &reg_value, 64) {
 		if (reg_mask == reg_set) {
 			mask = GENMASK_ULL(start + 7, start);
@@ -549,6 +569,17 @@ static void dw_axi_dma_set_hw_channel(struct axi_dma_chip *chip,
 		}
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Channel is already allocated, set handshake as per channel ID */
+	/* 64 bit write should handle for 8 channels */
+
+	reg_value &= ~(DMA_APB_HS_SEL_MASK <<
+			(chan->id * DMA_APB_HS_SEL_BIT_SIZE));
+	reg_value |= (val << (chan->id * DMA_APB_HS_SEL_BIT_SIZE));
+	lo_hi_writeq(reg_value, chip->apb_regs + DMAC_APB_HW_HS_SEL_0);
+
+	return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -782,10 +813,14 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
 	} while (total_segments);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dw_axi_dma_set_hw_channel(chan, true);
 =======
 	dw_axi_dma_set_hw_channel(chan->chip, chan->hw_handshake_num, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dw_axi_dma_set_hw_channel(chan, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
 
@@ -866,10 +901,14 @@ dw_axi_dma_chan_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
 	} while (num_sgs);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dw_axi_dma_set_hw_channel(chan, true);
 =======
 	dw_axi_dma_set_hw_channel(chan->chip, chan->hw_handshake_num, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dw_axi_dma_set_hw_channel(chan, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return vchan_tx_prep(&chan->vc, &desc->vd, flags);
 
@@ -1146,11 +1185,15 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
 
 	if (chan->direction != DMA_MEM_TO_MEM)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dw_axi_dma_set_hw_channel(chan, false);
 =======
 		dw_axi_dma_set_hw_channel(chan->chip,
 					  chan->hw_handshake_num, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dw_axi_dma_set_hw_channel(chan, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (chan->direction == DMA_MEM_TO_DEV)
 		dw_axi_dma_set_byte_halfword(chan, false);
 
@@ -1348,10 +1391,14 @@ static int parse_device_properties(struct axi_dma_chip *chip)
 
 		chip->dw->hdata->restrict_axi_burst_len = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		chip->dw->hdata->axi_rw_burst_len = tmp;
 =======
 		chip->dw->hdata->axi_rw_burst_len = tmp - 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		chip->dw->hdata->axi_rw_burst_len = tmp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -1421,9 +1468,12 @@ static int dw_probe(struct platform_device *pdev)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&dw->dma.channels);
 	for (i = 0; i < hdata->nr_channels; i++) {
 		struct axi_dma_chan *chan = &dw->chan[i];
@@ -1445,9 +1495,13 @@ static int dw_probe(struct platform_device *pdev)
 	/* DMA capabilities */
 	dw->dma.chancnt = hdata->nr_channels;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dw->dma.max_burst = hdata->axi_rw_burst_len;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dw->dma.max_burst = hdata->axi_rw_burst_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dw->dma.src_addr_widths = AXI_DMA_BUSWIDTHS;
 	dw->dma.dst_addr_widths = AXI_DMA_BUSWIDTHS;
 	dw->dma.directions = BIT(DMA_MEM_TO_MEM);

@@ -30,9 +30,12 @@
 #include <drm/drm_device.h>
 #include <drm/drm_file.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <drm/drm_irq.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/via_drm.h>
 
 #include "via_drv.h"
@@ -90,10 +93,14 @@ int via_final_context(struct drm_device *dev, int context)
 	if (list_is_singular(&dev->ctxlist)) {
 		DRM_DEBUG("Last Context\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		drm_legacy_irq_uninstall(dev);
 =======
 		drm_irq_uninstall(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		drm_legacy_irq_uninstall(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		via_cleanup_futex(dev_priv);
 		via_do_cleanup_map(dev);
 	}

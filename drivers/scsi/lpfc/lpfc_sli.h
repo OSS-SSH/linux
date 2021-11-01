@@ -108,9 +108,13 @@ struct lpfc_iocbq {
 #define LPFC_IO_NVMET		0x800000 /* NVMET command */
 #define LPFC_IO_VMID            0x1000000 /* VMID tagged IO */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define LPFC_IO_CMF		0x4000000 /* CMF command */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define LPFC_IO_CMF		0x4000000 /* CMF command */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	uint32_t drvrTimeout;	/* driver timeout in seconds */
 	struct lpfc_vport *vport;/* virtual port pointer */
@@ -467,7 +471,11 @@ struct lpfc_io_buf {
 	uint64_t ts_data_io;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint64_t rx_cmd_start;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint64_t rx_cmd_start;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

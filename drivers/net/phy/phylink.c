@@ -34,9 +34,13 @@ enum {
 	PHYLINK_DISABLE_STOPPED,
 	PHYLINK_DISABLE_LINK,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	PHYLINK_DISABLE_MAC_WOL,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	PHYLINK_DISABLE_MAC_WOL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -947,6 +951,7 @@ static void phylink_phy_change(struct phy_device *phydev, bool up)
 	phylink_run_resolve(pl);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phylink_dbg(pl, "phy link %s %s/%s/%s/%s\n", up ? "up" : "down",
 		    phy_modes(phydev->interface),
 		    phy_speed_to_str(phydev->speed),
@@ -958,6 +963,13 @@ static void phylink_phy_change(struct phy_device *phydev, bool up)
 		    phy_speed_to_str(phydev->speed),
 		    phy_duplex_to_str(phydev->duplex));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phylink_dbg(pl, "phy link %s %s/%s/%s/%s\n", up ? "up" : "down",
+		    phy_modes(phydev->interface),
+		    phy_speed_to_str(phydev->speed),
+		    phy_duplex_to_str(phydev->duplex),
+		    phylink_pause_to_str(pl->phy_state.pause));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int phylink_bringup_phy(struct phylink *pl, struct phy_device *phy,
@@ -1294,11 +1306,17 @@ EXPORT_SYMBOL_GPL(phylink_start);
  * network device's carrier state should not be changed prior to calling this
  * function.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * This will synchronously bring down the link if the link is not already
  * down (in other words, it will trigger a mac_link_down() method call.)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * This will synchronously bring down the link if the link is not already
+ * down (in other words, it will trigger a mac_link_down() method call.)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void phylink_stop(struct phylink *pl)
 {
@@ -1320,6 +1338,9 @@ EXPORT_SYMBOL_GPL(phylink_stop);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * phylink_suspend() - handle a network device suspend event
  * @pl: a pointer to a &struct phylink returned from phylink_create()
  * @mac_wol: true if the MAC needs to receive packets for Wake-on-Lan
@@ -1398,8 +1419,11 @@ void phylink_resume(struct phylink *pl)
 EXPORT_SYMBOL_GPL(phylink_resume);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * phylink_ethtool_get_wol() - get the wake on lan parameters for the PHY
  * @pl: a pointer to a &struct phylink returned from phylink_create()
  * @wol: a pointer to &struct ethtool_wolinfo to hold the read parameters
@@ -1557,6 +1581,7 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	config = pl->link_config;
 
 	/* Mask out unsupported advertisements */
@@ -1564,15 +1589,20 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 		     pl->supported);
 =======
 	linkmode_copy(support, pl->supported);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	config = pl->link_config;
-	config.an_enabled = kset->base.autoneg == AUTONEG_ENABLE;
 
-	/* Mask out unsupported advertisements, and force the autoneg bit */
+	/* Mask out unsupported advertisements */
 	linkmode_and(config.advertising, kset->link_modes.advertising,
+<<<<<<< HEAD
 		     support);
 	linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, config.advertising,
 			 config.an_enabled);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     pl->supported);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* FIXME: should we reject autoneg if phy/mac does not support it? */
 	switch (kset->base.autoneg) {
@@ -1582,10 +1612,14 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 		 */
 		s = phy_lookup_setting(kset->base.speed, kset->base.duplex,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				       pl->supported, false);
 =======
 				       support, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				       pl->supported, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!s)
 			return -EINVAL;
 
@@ -1627,14 +1661,20 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 	 * fixed-link cases.  All that is left are in-band links.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	config.an_enabled = kset->base.autoneg == AUTONEG_ENABLE;
 	linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, config.advertising,
 			 config.an_enabled);
 
 	/* Validate without changing the current supported mask. */
 	linkmode_copy(support, pl->supported);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (phylink_validate(pl, support, &config))
 		return -EINVAL;
 
@@ -1643,6 +1683,9 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If this link is with an SFP, ensure that changes to advertised modes
 	 * also cause the associated interface to be selected such that the
 	 * link can be configured correctly.
@@ -1669,8 +1712,11 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&pl->state_mutex);
 	pl->link_config.speed = config.speed;
 	pl->link_config.duplex = config.duplex;
@@ -2251,12 +2297,18 @@ static int phylink_sfp_config(struct phylink *pl, u8 mode,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	changed = !linkmode_equal(pl->supported, support) ||
 		  !linkmode_equal(pl->link_config.advertising,
 				  config.advertising);
 =======
 	changed = !linkmode_equal(pl->supported, support);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	changed = !linkmode_equal(pl->supported, support) ||
+		  !linkmode_equal(pl->link_config.advertising,
+				  config.advertising);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (changed) {
 		linkmode_copy(pl->supported, support);
 		linkmode_copy(pl->link_config.advertising, config.advertising);

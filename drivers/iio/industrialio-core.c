@@ -741,11 +741,15 @@ static ssize_t iio_read_channel_label(struct device *dev,
 	struct iio_dev_attr *this_attr = to_iio_dev_attr(attr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (indio_dev->info->read_label)
 		return indio_dev->info->read_label(indio_dev, this_attr->c, buf);
 
 	if (this_attr->c->extend_name)
 		return sprintf(buf, "%s\n", this_attr->c->extend_name);
+<<<<<<< HEAD
 
 	return -EINVAL;
 =======
@@ -754,6 +758,10 @@ static ssize_t iio_read_channel_label(struct device *dev,
 
 	return indio_dev->info->read_label(indio_dev, this_attr->c, buf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t iio_read_channel_info(struct device *dev,
@@ -1194,10 +1202,14 @@ static int iio_device_add_channel_label(struct iio_dev *indio_dev,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!indio_dev->info->read_label && !chan->extend_name)
 =======
 	if (!indio_dev->info->read_label)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!indio_dev->info->read_label && !chan->extend_name)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	ret = __iio_add_chan_devattr("label",
@@ -1873,6 +1885,9 @@ static int iio_check_unique_scan_index(struct iio_dev *indio_dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int iio_check_extended_name(const struct iio_dev *indio_dev)
 {
 	unsigned int i;
@@ -1891,8 +1906,11 @@ static int iio_check_extended_name(const struct iio_dev *indio_dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct iio_buffer_setup_ops noop_ring_setup_ops;
 
 int __iio_device_register(struct iio_dev *indio_dev, struct module *this_mod)
@@ -1918,12 +1936,18 @@ int __iio_device_register(struct iio_dev *indio_dev, struct module *this_mod)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = iio_check_extended_name(indio_dev);
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iio_device_register_debugfs(indio_dev);
 
 	ret = iio_buffers_alloc_sysfs_and_mask(indio_dev);

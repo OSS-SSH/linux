@@ -21,9 +21,13 @@ struct f_hid_opts {
 	unsigned char			subclass;
 	unsigned char			protocol;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned char			no_out_endpoint;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned char			no_out_endpoint;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned short			report_length;
 	unsigned short			report_desc_length;
 	unsigned char			*report_desc;

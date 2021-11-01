@@ -369,10 +369,14 @@ int realtek_smi_setup_mdio(struct realtek_smi *smi)
 	smi->ds->slave_mii_bus = smi->slave_mii_bus;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = devm_of_mdiobus_register(smi->dev, smi->slave_mii_bus, mdio_np);
 =======
 	ret = of_mdiobus_register(smi->slave_mii_bus, mdio_np);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_of_mdiobus_register(smi->dev, smi->slave_mii_bus, mdio_np);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		dev_err(smi->dev, "unable to register MDIO bus %s\n",
 			smi->slave_mii_bus->id);
@@ -469,19 +473,26 @@ static int realtek_smi_probe(struct platform_device *pdev)
 static int realtek_smi_remove(struct platform_device *pdev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct realtek_smi *smi = platform_get_drvdata(pdev);
 
 	if (!smi)
 		return 0;
+<<<<<<< HEAD
 =======
 	struct realtek_smi *smi = dev_get_drvdata(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dsa_unregister_switch(smi->ds);
 	if (smi->slave_mii_bus)
 		of_node_put(smi->slave_mii_bus->dev.of_node);
 	gpiod_set_value(smi->reset, 1);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	platform_set_drvdata(pdev, NULL);
 
@@ -505,6 +516,25 @@ static void realtek_smi_shutdown(struct platform_device *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	platform_set_drvdata(pdev, NULL);
+
+	return 0;
+}
+
+static void realtek_smi_shutdown(struct platform_device *pdev)
+{
+	struct realtek_smi *smi = platform_get_drvdata(pdev);
+
+	if (!smi)
+		return;
+
+	dsa_switch_shutdown(smi->ds);
+
+	platform_set_drvdata(pdev, NULL);
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id realtek_smi_of_match[] = {
 	{
 		.compatible = "realtek,rtl8366rb",
@@ -527,9 +557,13 @@ static struct platform_driver realtek_smi_driver = {
 	.probe  = realtek_smi_probe,
 	.remove = realtek_smi_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.shutdown = realtek_smi_shutdown,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown = realtek_smi_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_platform_driver(realtek_smi_driver);
 

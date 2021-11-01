@@ -17,6 +17,7 @@
 #define EXPECTED_PTYPE		4
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int cht_int33fe_i2c_res_filter(struct acpi_resource *ares, void *data)
 {
@@ -46,6 +47,8 @@ static int cht_int33fe_count_i2c_clients(struct device *dev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int cht_int33fe_check_hw_type(struct device *dev)
 {
 	unsigned long long ptyp;
@@ -73,10 +76,14 @@ static int cht_int33fe_check_hw_type(struct device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = i2c_acpi_client_count(ACPI_COMPANION(dev));
 =======
 	ret = cht_int33fe_count_i2c_clients(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = i2c_acpi_client_count(ACPI_COMPANION(dev));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 

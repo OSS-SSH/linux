@@ -1300,10 +1300,14 @@ static void __init print_PIC(void)
 	pr_debug("... PIC  ISR: %04x\n", v);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	v = inb(PIC_ELCR2) << 8 | inb(PIC_ELCR1);
 =======
 	v = inb(0x4d1) << 8 | inb(0x4d0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	v = inb(PIC_ELCR2) << 8 | inb(PIC_ELCR1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pr_debug("... PIC ELCR: %04x\n", v);
 }
 

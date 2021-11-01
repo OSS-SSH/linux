@@ -16,9 +16,13 @@
 #include "debug.h"
 #include "tracepoint.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "xtlv.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "xtlv.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "fwil.h"
 #include "proto.h"
 
@@ -155,11 +159,16 @@ brcmf_fil_cmd_data_get(struct brcmf_if *ifp, u32 cmd, void *data, u32 len)
 	err = brcmf_fil_cmd_data(ifp, cmd, data, len, false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	brcmf_dbg(FIL, "ifidx=%d, cmd=%d, len=%d, err=%d\n", ifp->ifidx, cmd,
 		  len, err);
 =======
 	brcmf_dbg(FIL, "ifidx=%d, cmd=%d, len=%d\n", ifp->ifidx, cmd, len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	brcmf_dbg(FIL, "ifidx=%d, cmd=%d, len=%d, err=%d\n", ifp->ifidx, cmd,
+		  len, err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	brcmf_dbg_hex_dump(BRCMF_FIL_ON(), data,
 			   min_t(uint, len, MAX_HEX_DUMP_LEN), "data\n");
 
@@ -270,11 +279,16 @@ brcmf_fil_iovar_data_get(struct brcmf_if *ifp, char *name, void *data,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	brcmf_dbg(FIL, "ifidx=%d, name=%s, len=%d, err=%d\n", ifp->ifidx, name,
 		  len, err);
 =======
 	brcmf_dbg(FIL, "ifidx=%d, name=%s, len=%d\n", ifp->ifidx, name, len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	brcmf_dbg(FIL, "ifidx=%d, name=%s, len=%d, err=%d\n", ifp->ifidx, name,
+		  len, err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	brcmf_dbg_hex_dump(BRCMF_FIL_ON(), data,
 			   min_t(uint, len, MAX_HEX_DUMP_LEN), "data\n");
 
@@ -398,21 +412,29 @@ brcmf_fil_bsscfg_data_get(struct brcmf_if *ifp, char *name,
 		bphy_err(drvr, "Creating bsscfg failed\n");
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	brcmf_dbg(FIL, "ifidx=%d, bsscfgidx=%d, name=%s, len=%d, err=%d\n",
 		  ifp->ifidx, ifp->bsscfgidx, name, len, err);
 =======
 	brcmf_dbg(FIL, "ifidx=%d, bsscfgidx=%d, name=%s, len=%d\n", ifp->ifidx,
 		  ifp->bsscfgidx, name, len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	brcmf_dbg(FIL, "ifidx=%d, bsscfgidx=%d, name=%s, len=%d, err=%d\n",
+		  ifp->ifidx, ifp->bsscfgidx, name, len, err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	brcmf_dbg_hex_dump(BRCMF_FIL_ON(), data,
 			   min_t(uint, len, MAX_HEX_DUMP_LEN), "data\n");
 
 	mutex_unlock(&drvr->proto_block);
 	return err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 s32
@@ -437,6 +459,9 @@ brcmf_fil_bsscfg_int_get(struct brcmf_if *ifp, char *name, u32 *data)
 	return err;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static u32 brcmf_create_xtlv(char *name, u16 id, char *data, u32 len,
 			     char *buf, u32 buflen)
@@ -551,5 +576,8 @@ s32 brcmf_fil_xtlv_int16_get(struct brcmf_if *ifp, char *name, u16 id, u16 *data
 	return err;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

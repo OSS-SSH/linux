@@ -57,10 +57,14 @@ static int mfd_assert_new(const char *name, loff_t sz, unsigned int flags)
 static int mfd_assert_reopen_fd(int fd_in)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int fd;
 =======
 	int r, fd;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int fd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char path[100];
 
 	sprintf(path, "/proc/self/fd/%d", fd_in);

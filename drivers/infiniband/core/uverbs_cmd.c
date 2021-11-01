@@ -1436,6 +1436,7 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	qp = ib_create_qp_user(device, pd, &attr, &attrs->driver_udata, obj,
 			       KBUILD_MODNAME);
 =======
@@ -1446,10 +1447,15 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
 				   NULL);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qp = ib_create_qp_user(device, pd, &attr, &attrs->driver_udata, obj,
+			       KBUILD_MODNAME);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(qp)) {
 		ret = PTR_ERR(qp);
 		goto err_put;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ib_qp_usecnt_inc(qp);
 =======
@@ -1473,6 +1479,9 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
 		qp->uobject = obj;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ib_qp_usecnt_inc(qp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	obj->uevent.uobject.object = qp;
 	obj->uevent.event_file = READ_ONCE(attrs->ufile->default_async_file);
@@ -1512,11 +1521,14 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
 	return uverbs_response(attrs, &resp, sizeof(resp));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 err_cb:
 	ib_destroy_qp_user(qp, uverbs_get_cleared_udata(attrs));
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_put:
 	if (!IS_ERR(xrcd_uobj))
 		uobj_put_read(xrcd_uobj);

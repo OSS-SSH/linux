@@ -25,12 +25,16 @@
 #define __MMSCH_V1_0_H__
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MMSCH_VERSION	0x1
 =======
 #define MMSCH_VERSION_MAJOR	1
 #define MMSCH_VERSION_MINOR	0
 #define MMSCH_VERSION	(MMSCH_VERSION_MAJOR << 16 | MMSCH_VERSION_MINOR)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MMSCH_VERSION	0x1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum mmsch_v1_0_command_type {
 	MMSCH_COMMAND__DIRECT_REG_WRITE = 0,

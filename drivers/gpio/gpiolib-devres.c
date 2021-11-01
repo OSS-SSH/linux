@@ -146,10 +146,14 @@ EXPORT_SYMBOL_GPL(devm_gpiod_get_index);
  */
 struct gpio_desc *devm_gpiod_get_from_of_node(struct device *dev,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					      const struct device_node *node,
 =======
 					      struct device_node *node,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      const struct device_node *node,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					      const char *propname, int index,
 					      enum gpiod_flags dflags,
 					      const char *label)

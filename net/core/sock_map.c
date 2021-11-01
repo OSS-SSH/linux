@@ -212,10 +212,13 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static bool sock_map_redirect_allowed(const struct sock *sk);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int sock_map_link(struct bpf_map *map, struct sock *sk)
 {
 	struct sk_psock_progs *progs = sock_map_progs(map);
@@ -227,6 +230,7 @@ static int sock_map_link(struct bpf_map *map, struct sock *sk)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Only sockets we can redirect into/from in BPF need to hold
 	 * refs to parser/verdict progs and have their sk_data_ready
@@ -236,6 +240,8 @@ static int sock_map_link(struct bpf_map *map, struct sock *sk)
 		goto no_progs;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	stream_verdict = READ_ONCE(progs->stream_verdict);
 	if (stream_verdict) {
 		stream_verdict = bpf_prog_inc_not_zero(stream_verdict);
@@ -271,9 +277,12 @@ static int sock_map_link(struct bpf_map *map, struct sock *sk)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 no_progs:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	psock = sock_map_psock_get_checked(sk);
 	if (IS_ERR(psock)) {
 		ret = PTR_ERR(psock);
@@ -537,6 +546,7 @@ static bool sk_is_tcp(const struct sock *sk)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static bool sk_is_udp(const struct sock *sk)
 {
@@ -545,6 +555,8 @@ static bool sk_is_udp(const struct sock *sk)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool sock_map_redirect_allowed(const struct sock *sk)
 {
 	if (sk_is_tcp(sk))
@@ -563,6 +575,7 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
 	if (sk_is_tcp(sk))
 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return true;
 =======
 	else if (sk_is_udp(sk))
@@ -570,6 +583,9 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
 
 	return false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int sock_hash_update_common(struct bpf_map *map, void *key,
@@ -1530,9 +1546,13 @@ void sock_map_unhash(struct sock *sk)
 	saved_unhash(sk);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(sock_map_unhash);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(sock_map_unhash);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void sock_map_close(struct sock *sk, long timeout)
 {
@@ -1557,9 +1577,13 @@ void sock_map_close(struct sock *sk, long timeout)
 	saved_close(sk, timeout);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(sock_map_close);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(sock_map_close);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int sock_map_iter_attach_target(struct bpf_prog *prog,
 				       union bpf_iter_link_info *linfo,

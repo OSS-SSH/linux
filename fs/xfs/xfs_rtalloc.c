@@ -924,6 +924,7 @@ xfs_growfs_rt(
 
 	sbp = &mp->m_sb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
@@ -962,14 +963,47 @@ xfs_growfs_rt(
 	/*
 	 * Initial error checking.
 	 */
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
-	if (mp->m_rtdev_targp == NULL || mp->m_rbmip == NULL ||
-	    (nrblocks = in->newblocks) <= sbp->sb_rblocks ||
-	    (sbp->sb_rblocks && (in->extsize != sbp->sb_rextsize)))
+
+	/* Needs to have been mounted with an rt device. */
+	if (!XFS_IS_REALTIME_MOUNT(mp))
 		return -EINVAL;
+	/*
+	 * Mount should fail if the rt bitmap/summary files don't load, but
+	 * we'll check anyway.
+	 */
+	if (!mp->m_rbmip || !mp->m_rsumip)
+		return -EINVAL;
+
+	/* Shrink not supported. */
+	if (in->newblocks <= sbp->sb_rblocks)
+		return -EINVAL;
+<<<<<<< HEAD
 	if ((error = xfs_sb_validate_fsb_count(sbp, nrblocks)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Can only change rt extent size when adding rt volume. */
+	if (sbp->sb_rblocks > 0 && in->extsize != sbp->sb_rextsize)
+		return -EINVAL;
+
+	/* Range check the extent size. */
+	if (XFS_FSB_TO_B(mp, in->extsize) > XFS_MAX_RTEXTSIZE ||
+	    XFS_FSB_TO_B(mp, in->extsize) < XFS_MIN_RTEXTSIZE)
+		return -EINVAL;
+
+	/* Unsupported realtime features. */
+	if (xfs_has_rmapbt(mp) || xfs_has_reflink(mp))
+		return -EOPNOTSUPP;
+
+	nrblocks = in->newblocks;
+	error = xfs_sb_validate_fsb_count(sbp, nrblocks);
+	if (error)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
 	/*
 	 * Read in the last block of the device, make sure it exists.
@@ -1034,11 +1068,16 @@ xfs_growfs_rt(
 	     bmbno < nrbmblocks;
 	     bmbno++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct xfs_trans	*tp;
 		xfs_rfsblock_t		nrblocks_step;
 =======
 		xfs_trans_t	*tp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct xfs_trans	*tp;
+		xfs_rfsblock_t		nrblocks_step;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		*nmp = *mp;
 		nsbp = &nmp->m_sb;
@@ -1047,6 +1086,7 @@ xfs_growfs_rt(
 		 */
 		nsbp->sb_rextsize = in->extsize;
 		nsbp->sb_rbmblocks = bmbno + 1;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		nrblocks_step = (bmbno + 1) * NBBY * nsbp->sb_blocksize *
 				nsbp->sb_rextsize;
@@ -1057,6 +1097,11 @@ xfs_growfs_rt(
 				  nsbp->sb_rbmblocks * NBBY *
 				  nsbp->sb_blocksize * nsbp->sb_rextsize);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nrblocks_step = (bmbno + 1) * NBBY * nsbp->sb_blocksize *
+				nsbp->sb_rextsize;
+		nsbp->sb_rblocks = min(nrblocks, nrblocks_step);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nsbp->sb_rextents = nsbp->sb_rblocks;
 		do_div(nsbp->sb_rextents, nsbp->sb_rextsize);
 		ASSERT(nsbp->sb_rextents != 0);
@@ -1155,11 +1200,17 @@ error_cancel:
 		if (error)
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		/* Ensure the mount RT feature flag is now set. */
 		mp->m_features |= XFS_FEAT_REALTIME;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		/* Ensure the mount RT feature flag is now set. */
+		mp->m_features |= XFS_FEAT_REALTIME;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (error)
 		goto out_free;

@@ -70,10 +70,14 @@ enum max17042_register {
 	MAX17042_MiscCFG	= 0x2B,
 	MAX17042_TGAIN		= 0x2C,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MAX17042_TOFF		= 0x2D,
 =======
 	MAx17042_TOFF		= 0x2D,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MAX17042_TOFF		= 0x2D,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MAX17042_CGAIN		= 0x2E,
 	MAX17042_COFF		= 0x2F,
 
@@ -115,6 +119,7 @@ enum max17042_register {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Registers specific to max17055 only */
 enum max17055_register {
 	MAX17055_QRes		= 0x0C,
@@ -124,14 +129,21 @@ enum max17055_register {
 	MAX17055_USER_MEM	= 0x40,
 	MAX17055_RGAIN		= 0x43,
 =======
+=======
+/* Registers specific to max17055 only */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum max17055_register {
 	MAX17055_QRes		= 0x0C,
+	MAX17055_RCell		= 0x14,
 	MAX17055_TTF		= 0x20,
-	MAX17055_V_empty	= 0x3A,
-	MAX17055_TIMER		= 0x3E,
+	MAX17055_DieTemp	= 0x34,
 	MAX17055_USER_MEM	= 0x40,
+<<<<<<< HEAD
 	MAX17055_RGAIN		= 0x42,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MAX17055_RGAIN		= 0x43,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	MAX17055_ConvgCfg	= 0x49,
 	MAX17055_VFRemCap	= 0x4A,
@@ -171,10 +183,14 @@ enum max17055_register {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Registers specific to max17047/50/55 */
 =======
 /* Registers specific to max17047/50 */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Registers specific to max17047/50/55 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum max17047_register {
 	MAX17047_QRTbl00	= 0x12,
 	MAX17047_FullSOCThr	= 0x13,
@@ -182,9 +198,13 @@ enum max17047_register {
 	MAX17047_QRTbl20	= 0x32,
 	MAX17047_V_empty	= 0x3A,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MAX17047_TIMER		= 0x3E,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MAX17047_TIMER		= 0x3E,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MAX17047_QRTbl30	= 0x42,
 };
 

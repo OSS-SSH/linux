@@ -52,6 +52,7 @@
 #define RK3399_PMUGRF_VSEL_SUPPLY_NUM	9
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define RK3568_PMU_GRF_IO_VSEL0		(0x0140)
 #define RK3568_PMU_GRF_IO_VSEL1		(0x0144)
 #define RK3568_PMU_GRF_IO_VSEL2		(0x0148)
@@ -60,12 +61,13 @@ struct rockchip_iodomain;
 
 =======
 struct rockchip_iodomain;
+=======
+#define RK3568_PMU_GRF_IO_VSEL0		(0x0140)
+#define RK3568_PMU_GRF_IO_VSEL1		(0x0144)
+#define RK3568_PMU_GRF_IO_VSEL2		(0x0148)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-struct rockchip_iodomain_soc_data {
-	int grf_offset;
-	const char *supply_names[MAX_SUPPLIES];
-	void (*init)(struct rockchip_iodomain *iod);
-};
+struct rockchip_iodomain;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct rockchip_iodomain_supply {
@@ -76,6 +78,9 @@ struct rockchip_iodomain_supply {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct rockchip_iodomain_soc_data {
 	int grf_offset;
 	const char *supply_names[MAX_SUPPLIES];
@@ -83,14 +88,20 @@ struct rockchip_iodomain_soc_data {
 	int (*write)(struct rockchip_iodomain_supply *supply, int uV);
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct rockchip_iodomain {
 	struct device *dev;
 	struct regmap *grf;
 	const struct rockchip_iodomain_soc_data *soc_data;
 	struct rockchip_iodomain_supply supplies[MAX_SUPPLIES];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*write)(struct rockchip_iodomain_supply *supply, int uV);
 };
 
@@ -135,10 +146,13 @@ static int rk3568_iodomain_write(struct rockchip_iodomain_supply *supply, int uV
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rockchip_iodomain_write(struct rockchip_iodomain_supply *supply,
 				   int uV)
 {
@@ -203,10 +217,14 @@ static int rockchip_iodomain_notify(struct notifier_block *nb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = supply->iod->write(supply, uV);
 =======
 	ret = rockchip_iodomain_write(supply, uV);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = supply->iod->write(supply, uV);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret && event == REGULATOR_EVENT_PRE_VOLTAGE_CHANGE)
 		return NOTIFY_BAD;
 
@@ -469,6 +487,9 @@ static const struct rockchip_iodomain_soc_data soc_data_rk3399_pmu = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct rockchip_iodomain_soc_data soc_data_rk3568_pmu = {
 	.grf_offset = 0x140,
 	.supply_names = {
@@ -485,8 +506,11 @@ static const struct rockchip_iodomain_soc_data soc_data_rk3568_pmu = {
 	.write = rk3568_iodomain_write,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct rockchip_iodomain_soc_data soc_data_rv1108 = {
 	.grf_offset = 0x404,
 	.supply_names = {
@@ -560,12 +584,18 @@ static const struct of_device_id rockchip_iodomain_match[] = {
 	},
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.compatible = "rockchip,rk3568-pmu-io-voltage-domain",
 		.data = &soc_data_rk3568_pmu
 	},
 	{
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.compatible = "rockchip,rv1108-io-voltage-domain",
 		.data = &soc_data_rv1108
 	},
@@ -599,13 +629,19 @@ static int rockchip_iodomain_probe(struct platform_device *pdev)
 	iod->soc_data = match->data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (iod->soc_data->write)
 		iod->write = iod->soc_data->write;
 	else
 		iod->write = rockchip_iodomain_write;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	parent = pdev->dev.parent;
 	if (parent && parent->of_node) {
 		iod->grf = syscon_node_to_regmap(parent->of_node);
@@ -667,10 +703,14 @@ static int rockchip_iodomain_probe(struct platform_device *pdev)
 		supply->nb.notifier_call = rockchip_iodomain_notify;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = iod->write(supply, uV);
 =======
 		ret = rockchip_iodomain_write(supply, uV);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = iod->write(supply, uV);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret) {
 			supply->reg = NULL;
 			goto unreg_notify;

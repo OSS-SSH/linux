@@ -205,6 +205,7 @@ static void ath79_gpio_irq_handler(struct irq_desc *desc)
 	raw_spin_unlock_irqrestore(&ctrl->lock, flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for_each_set_bit(irq, &pending, gc->ngpio)
 		generic_handle_domain_irq(gc->irq.domain, irq);
 =======
@@ -214,6 +215,10 @@ static void ath79_gpio_irq_handler(struct irq_desc *desc)
 				irq_linear_revmap(gc->irq.domain, irq));
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for_each_set_bit(irq, &pending, gc->ngpio)
+		generic_handle_domain_irq(gc->irq.domain, irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_exit(irqchip, desc);
 }

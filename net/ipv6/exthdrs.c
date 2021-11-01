@@ -50,6 +50,7 @@
 #endif
 #include <net/rpl.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/ioam6.h>
 #include <net/ioam6.h>
 #include <net/dst_metadata.h>
@@ -74,6 +75,14 @@ struct tlvtype_proc {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/ioam6.h>
+#include <net/ioam6.h>
+#include <net/dst_metadata.h>
+
+#include <linux/uaccess.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*********************
   Generic functions
  *********************/
@@ -119,6 +128,9 @@ drop:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool ipv6_hop_ra(struct sk_buff *skb, int optoff);
 static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff);
 static bool ipv6_hop_jumbo(struct sk_buff *skb, int optoff);
@@ -127,6 +139,7 @@ static bool ipv6_hop_calipso(struct sk_buff *skb, int optoff);
 static bool ipv6_dest_hao(struct sk_buff *skb, int optoff);
 #endif
 
+<<<<<<< HEAD
 /* Parse tlv encoded option header (hop-by-hop or destination) */
 
 static bool ip6_parse_tlv(bool hopbyhop,
@@ -135,6 +148,11 @@ static bool ip6_parse_tlv(bool hopbyhop,
 
 static bool ip6_parse_tlv(const struct tlvtype_proc *procs,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Parse tlv encoded option header (hop-by-hop or destination) */
+
+static bool ip6_parse_tlv(bool hopbyhop,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  struct sk_buff *skb,
 			  int max_count)
 {
@@ -142,9 +160,12 @@ static bool ip6_parse_tlv(const struct tlvtype_proc *procs,
 	const unsigned char *nh = skb_network_header(skb);
 	int off = skb_network_header_len(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	const struct tlvtype_proc *curr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool disallow_unknowns = false;
 	int tlv_count = 0;
 	int padlen = 0;
@@ -200,6 +221,9 @@ static bool ip6_parse_tlv(const struct tlvtype_proc *procs,
 				goto bad;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (hopbyhop) {
 				switch (nh[off]) {
 				case IPV6_TLV_ROUTERALERT:
@@ -235,6 +259,7 @@ static bool ip6_parse_tlv(const struct tlvtype_proc *procs,
 				default:
 					if (!ip6_tlvopt_unknown(skb, off,
 								disallow_unknowns))
+<<<<<<< HEAD
 =======
 			for (curr = procs; curr->type >= 0; curr++) {
 				if (curr->type == nh[off]) {
@@ -243,10 +268,13 @@ static bool ip6_parse_tlv(const struct tlvtype_proc *procs,
 					   func(). */
 					if (curr->func(skb, off) == false)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						return false;
 					break;
 				}
 			}
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 			if (curr->type < 0 &&
@@ -254,6 +282,8 @@ static bool ip6_parse_tlv(const struct tlvtype_proc *procs,
 				return false;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			padlen = 0;
 		}
 		off += optlen;
@@ -332,6 +362,7 @@ static bool ipv6_dest_hao(struct sk_buff *skb, int optoff)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct tlvtype_proc tlvprocdestopt_lst[] = {
 #if IS_ENABLED(CONFIG_IPV6_MIP6)
@@ -344,6 +375,8 @@ static const struct tlvtype_proc tlvprocdestopt_lst[] = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ipv6_destopt_rcv(struct sk_buff *skb)
 {
 	struct inet6_dev *idev = __in6_dev_get(skb->dev);
@@ -375,11 +408,15 @@ fail_and_free:
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ip6_parse_tlv(false, skb, net->ipv6.sysctl.max_dst_opts_cnt)) {
 =======
 	if (ip6_parse_tlv(tlvprocdestopt_lst, skb,
 			  net->ipv6.sysctl.max_dst_opts_cnt)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ip6_parse_tlv(false, skb, net->ipv6.sysctl.max_dst_opts_cnt)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb->transport_header += extlen;
 		opt = IP6CB(skb);
 #if IS_ENABLED(CONFIG_IPV6_MIP6)
@@ -1003,6 +1040,9 @@ static bool ipv6_hop_ra(struct sk_buff *skb, int optoff)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* IOAM */
 
 static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff)
@@ -1057,8 +1097,11 @@ drop:
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Jumbo payload */
 
 static bool ipv6_hop_jumbo(struct sk_buff *skb, int optoff)
@@ -1126,6 +1169,7 @@ drop:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct tlvtype_proc tlvprochopopt_lst[] = {
 	{
@@ -1144,6 +1188,8 @@ static const struct tlvtype_proc tlvprochopopt_lst[] = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ipv6_parse_hopopts(struct sk_buff *skb)
 {
 	struct inet6_skb_parm *opt = IP6CB(skb);
@@ -1170,11 +1216,15 @@ fail_and_free:
 
 	opt->flags |= IP6SKB_HOPBYHOP;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ip6_parse_tlv(true, skb, net->ipv6.sysctl.max_hbh_opts_cnt)) {
 =======
 	if (ip6_parse_tlv(tlvprochopopt_lst, skb,
 			  net->ipv6.sysctl.max_hbh_opts_cnt)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ip6_parse_tlv(true, skb, net->ipv6.sysctl.max_hbh_opts_cnt)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		skb->transport_header += extlen;
 		opt = IP6CB(skb);
 		opt->nhoff = sizeof(struct ipv6hdr);

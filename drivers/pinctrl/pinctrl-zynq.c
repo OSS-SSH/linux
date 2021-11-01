@@ -1029,9 +1029,13 @@ static int zynq_pinconf_cfg_get(struct pinctrl_dev *pctldev,
 	}
 	case PIN_CONFIG_IOSTANDARD:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case PIN_CONFIG_POWER_SOURCE:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case PIN_CONFIG_POWER_SOURCE:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		arg = zynq_pinconf_iostd_get(reg);
 		break;
 	default:
@@ -1083,9 +1087,13 @@ static int zynq_pinconf_cfg_set(struct pinctrl_dev *pctldev,
 			break;
 		case PIN_CONFIG_IOSTANDARD:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case PIN_CONFIG_POWER_SOURCE:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case PIN_CONFIG_POWER_SOURCE:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (arg <= zynq_iostd_min || arg >= zynq_iostd_max) {
 				dev_warn(pctldev->dev,
 					 "unsupported IO standard '%u'\n",

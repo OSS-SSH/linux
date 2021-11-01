@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <linux/kernel.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/stdarg.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/stdarg.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/string.h>
 #include <linux/ctype.h>
 #include <asm/stacktrace.h>
@@ -13,9 +17,12 @@
 #include <asm/sclp.h>
 #include <asm/uv.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <stdarg.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "boot.h"
 
 const char hex_asc[] = "0123456789abcdef";
@@ -37,9 +44,12 @@ static char *symstart(char *p)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern char _decompressor_syms_start[], _decompressor_syms_end[];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static noinline char *findsym(unsigned long ip, unsigned short *off, unsigned short *len)
 {
 	/* symbol entries are in a form "10000 c4 startup\0" */
@@ -137,12 +147,17 @@ out:
 static noinline void print_stacktrace(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct stack_info boot_stack = { STACK_TYPE_TASK, (unsigned long)_stack_start,
 					 (unsigned long)_stack_end };
 =======
 	struct stack_info boot_stack = { STACK_TYPE_TASK, BOOT_STACK_OFFSET,
 					 BOOT_STACK_OFFSET + BOOT_STACK_SIZE };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct stack_info boot_stack = { STACK_TYPE_TASK, (unsigned long)_stack_start,
+					 (unsigned long)_stack_end };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long sp = S390_lowcore.gpregs_save_area[15];
 	bool first = true;
 

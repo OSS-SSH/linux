@@ -195,10 +195,14 @@ EXPORT_SYMBOL_GPL(adf_enable_aer);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * adf_disable_aer() - Disable Advance Error Reporting for acceleration device
 =======
  * adf_disable_aer() - Enable Advance Error Reporting for acceleration device
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * adf_disable_aer() - Disable Advance Error Reporting for acceleration device
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @accel_dev:  Pointer to acceleration device.
  *
  * Function disables PCI Advance Error Reporting for the

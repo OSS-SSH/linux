@@ -37,10 +37,14 @@ static inline int pcibus_to_node(struct pci_bus *bus)
 				 cpumask_of_node(pcibus_to_node(bus)))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int cpu_relative_distance(__be32 *cpu1_assoc, __be32 *cpu2_assoc);
 =======
 extern int cpu_distance(__be32 *cpu1_assoc, __be32 *cpu2_assoc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cpu_relative_distance(__be32 *cpu1_assoc, __be32 *cpu2_assoc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int __node_distance(int, int);
 #define node_distance(a, b) __node_distance(a, b)
 
@@ -69,14 +73,20 @@ static inline int early_cpu_to_node(int cpu)
 
 int of_drconf_to_nid_single(struct drmem_lmb *lmb);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void update_numa_distance(struct device_node *node);
 
 extern void map_cpu_to_node(int cpu, int node);
 #ifdef CONFIG_HOTPLUG_CPU
 extern void unmap_cpu_from_node(unsigned long cpu);
 #endif /* CONFIG_HOTPLUG_CPU */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else
 
@@ -97,10 +107,14 @@ static inline void sysfs_remove_device_from_node(struct device *dev,
 static inline void update_numa_cpu_lookup_table(unsigned int cpu, int node) {}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int cpu_relative_distance(__be32 *cpu1_assoc, __be32 *cpu2_assoc)
 =======
 static inline int cpu_distance(__be32 *cpu1_assoc, __be32 *cpu2_assoc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int cpu_relative_distance(__be32 *cpu1_assoc, __be32 *cpu2_assoc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return 0;
 }
@@ -111,6 +125,9 @@ static inline int of_drconf_to_nid_single(struct drmem_lmb *lmb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void update_numa_distance(struct device_node *node) {}
 
 #ifdef CONFIG_SMP
@@ -120,8 +137,11 @@ static inline void unmap_cpu_from_node(unsigned long cpu) {}
 #endif /* CONFIG_HOTPLUG_CPU */
 #endif /* CONFIG_SMP */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_NUMA */
 
 #if defined(CONFIG_NUMA) && defined(CONFIG_PPC_SPLPAR)

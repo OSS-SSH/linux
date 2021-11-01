@@ -6,9 +6,13 @@
 #include <linux/blkdev.h>
 #include <linux/sched/signal.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/backing-dev-defs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/backing-dev-defs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "fat.h"
 
 struct fatent_operations {

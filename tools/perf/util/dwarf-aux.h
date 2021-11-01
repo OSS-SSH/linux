@@ -20,10 +20,14 @@ const char *cu_get_comp_dir(Dwarf_Die *cu_die);
 
 /* Get a line number and file name for given address */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int cu_find_lineinfo(Dwarf_Die *cudie, Dwarf_Addr addr,
 =======
 int cu_find_lineinfo(Dwarf_Die *cudie, unsigned long addr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cu_find_lineinfo(Dwarf_Die *cudie, Dwarf_Addr addr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     const char **fname, int *lineno);
 
 /* Walk on functions at given address */

@@ -454,10 +454,14 @@ static int fsl_pwm_probe(struct platform_device *pdev)
 	fpc->chip.npwm = 8;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = devm_pwmchip_add(&pdev->dev, &fpc->chip);
 =======
 	ret = pwmchip_add(&fpc->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_pwmchip_add(&pdev->dev, &fpc->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		dev_err(&pdev->dev, "failed to add PWM chip: %d\n", ret);
 		return ret;
@@ -469,6 +473,7 @@ static int fsl_pwm_probe(struct platform_device *pdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int fsl_pwm_remove(struct platform_device *pdev)
 {
@@ -478,6 +483,8 @@ static int fsl_pwm_remove(struct platform_device *pdev)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 static int fsl_pwm_suspend(struct device *dev)
 {
@@ -560,9 +567,12 @@ static struct platform_driver fsl_pwm_driver = {
 	},
 	.probe = fsl_pwm_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = fsl_pwm_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_platform_driver(fsl_pwm_driver);
 

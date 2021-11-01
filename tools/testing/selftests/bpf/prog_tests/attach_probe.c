@@ -3,6 +3,7 @@
 #include "test_attach_probe.skel.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* this is how USDT semaphore is actually defined, except volatile modifier */
 volatile unsigned short uprobe_ref_ctr __attribute__((unused)) __attribute((section(".probes")));
 
@@ -72,30 +73,48 @@ ssize_t get_base_addr() {
 void test_attach_probe(void)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* this is how USDT semaphore is actually defined, except volatile modifier */
+volatile unsigned short uprobe_ref_ctr __attribute__((unused)) __attribute((section(".probes")));
+
+void test_attach_probe(void)
+{
+	DECLARE_LIBBPF_OPTS(bpf_uprobe_opts, uprobe_opts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int duration = 0;
 	struct bpf_link *kprobe_link, *kretprobe_link;
 	struct bpf_link *uprobe_link, *uretprobe_link;
 	struct test_attach_probe* skel;
 	size_t uprobe_offset;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ssize_t base_addr, ref_ctr_offset;
 =======
 	ssize_t base_addr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ssize_t base_addr, ref_ctr_offset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	base_addr = get_base_addr();
 	if (CHECK(base_addr < 0, "get_base_addr",
 		  "failed to find base addr: %zd", base_addr))
 		return;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uprobe_offset = get_uprobe_offset(&get_base_addr, base_addr);
 
 	ref_ctr_offset = get_rel_offset((uintptr_t)&uprobe_ref_ctr);
 	if (!ASSERT_GE(ref_ctr_offset, 0, "ref_ctr_offset"))
 		return;
+<<<<<<< HEAD
 =======
 	uprobe_offset = get_offset((size_t)&get_base_addr, base_addr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	skel = test_attach_probe__open_and_load();
 	if (CHECK(!skel, "skel_open", "failed to open skeleton\n"))
@@ -118,6 +137,9 @@ void test_attach_probe(void)
 	skel->links.handle_kretprobe = kretprobe_link;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ASSERT_EQ(uprobe_ref_ctr, 0, "uprobe_ref_ctr_before");
 
 	uprobe_opts.retprobe = false;
@@ -127,6 +149,7 @@ void test_attach_probe(void)
 						      "/proc/self/exe",
 						      uprobe_offset,
 						      &uprobe_opts);
+<<<<<<< HEAD
 =======
 	uprobe_link = bpf_program__attach_uprobe(skel->progs.handle_uprobe,
 						 false /* retprobe */,
@@ -134,11 +157,16 @@ void test_attach_probe(void)
 						 "/proc/self/exe",
 						 uprobe_offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ASSERT_OK_PTR(uprobe_link, "attach_uprobe"))
 		goto cleanup;
 	skel->links.handle_uprobe = uprobe_link;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ASSERT_GT(uprobe_ref_ctr, 0, "uprobe_ref_ctr_after");
 
 	/* if uprobe uses ref_ctr, uretprobe has to use ref_ctr as well */
@@ -148,6 +176,7 @@ void test_attach_probe(void)
 							 -1 /* any pid */,
 							 "/proc/self/exe",
 							 uprobe_offset, &uprobe_opts);
+<<<<<<< HEAD
 =======
 	uretprobe_link = bpf_program__attach_uprobe(skel->progs.handle_uretprobe,
 						    true /* retprobe */,
@@ -155,6 +184,8 @@ void test_attach_probe(void)
 						    "/proc/self/exe",
 						    uprobe_offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ASSERT_OK_PTR(uretprobe_link, "attach_uretprobe"))
 		goto cleanup;
 	skel->links.handle_uretprobe = uretprobe_link;
@@ -182,7 +213,11 @@ void test_attach_probe(void)
 cleanup:
 	test_attach_probe__destroy(skel);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ASSERT_EQ(uprobe_ref_ctr, 0, "uprobe_ref_ctr_cleanup");
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ASSERT_EQ(uprobe_ref_ctr, 0, "uprobe_ref_ctr_cleanup");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

@@ -1281,10 +1281,14 @@ static bool srp_terminate_cmd(struct scsi_cmnd *scmnd, void *context_ptr,
 	struct srp_terminate_context *context = context_ptr;
 	struct srp_target_port *target = context->srp_target;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmnd));
 =======
 	u32 tag = blk_mq_unique_tag(scmnd->request);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmnd));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct srp_rdma_ch *ch = &target->ch[blk_mq_unique_tag_to_hwq(tag)];
 	struct srp_request *req = scsi_cmd_priv(scmnd);
 
@@ -2157,9 +2161,13 @@ static void srp_handle_qp_err(struct ib_cq *cq, struct ib_wc *wc,
 static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(scmnd);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(scmnd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct srp_target_port *target = host_to_target(shost);
 	struct srp_rdma_ch *ch;
 	struct srp_request *req = scsi_cmd_priv(scmnd);
@@ -2175,12 +2183,17 @@ static int srp_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *scmnd)
 		goto err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ON_ONCE(rq->tag < 0);
 	tag = blk_mq_unique_tag(rq);
 =======
 	WARN_ON_ONCE(scmnd->request->tag < 0);
 	tag = blk_mq_unique_tag(scmnd->request);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON_ONCE(rq->tag < 0);
+	tag = blk_mq_unique_tag(rq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ch = &target->ch[blk_mq_unique_tag_to_hwq(tag)];
 
 	spin_lock_irqsave(&ch->lock, flags);
@@ -2805,10 +2818,14 @@ static int srp_abort(struct scsi_cmnd *scmnd)
 	if (!req)
 		return SUCCESS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmnd));
 =======
 	tag = blk_mq_unique_tag(scmnd->request);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmnd));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ch_idx = blk_mq_unique_tag_to_hwq(tag);
 	if (WARN_ON_ONCE(ch_idx >= target->ch_count))
 		return SUCCESS;

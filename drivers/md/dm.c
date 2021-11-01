@@ -9,9 +9,13 @@
 #include "dm-rq.h"
 #include "dm-uevent.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "dm-ima.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "dm-ima.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/init.h>
 #include <linux/module.h>
@@ -266,6 +270,7 @@ static int __init dm_init(void)
 {
 	const int count = ARRAY_SIZE(_inits);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int r, i;
 
 #if (IS_ENABLED(CONFIG_IMA) && !IS_ENABLED(CONFIG_IMA_DISABLE_HTABLE))
@@ -274,8 +279,15 @@ static int __init dm_init(void)
 #endif
 =======
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int r, i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+#if (IS_ENABLED(CONFIG_IMA) && !IS_ENABLED(CONFIG_IMA_DISABLE_HTABLE))
+	DMWARN("CONFIG_IMA_DISABLE_HTABLE is disabled."
+	       " Duplicate IMA measurements will not be recorded in the IMA log.");
+#endif
 
 	for (i = 0; i < count; i++) {
 		r = _inits[i]();
@@ -285,11 +297,15 @@ static int __init dm_init(void)
 
 	return 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 bad:
 =======
 
       bad:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bad:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (i--)
 		_exits[i]();
 
@@ -510,6 +526,7 @@ static void start_io_acct(struct dm_io *io)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void end_io_acct(struct mapped_device *md, struct bio *bio,
 			unsigned long start_time, struct dm_stats_aux *stats_aux)
 {
@@ -518,22 +535,32 @@ static void end_io_acct(struct mapped_device *md, struct bio *bio,
 	bio_end_io_acct(bio, start_time);
 =======
 static void end_io_acct(struct dm_io *io)
+=======
+static void end_io_acct(struct mapped_device *md, struct bio *bio,
+			unsigned long start_time, struct dm_stats_aux *stats_aux)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct mapped_device *md = io->md;
-	struct bio *bio = io->orig_bio;
-	unsigned long duration = jiffies - io->start_time;
+	unsigned long duration = jiffies - start_time;
 
+<<<<<<< HEAD
 	bio_end_io_acct(bio, io->start_time);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bio_end_io_acct(bio, start_time);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(dm_stats_used(&md->stats)))
 		dm_stats_account_io(&md->stats, bio_data_dir(bio),
 				    bio->bi_iter.bi_sector, bio_sectors(bio),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    true, duration, stats_aux);
 =======
 				    true, duration, &io->stats_aux);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    true, duration, stats_aux);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* nudge anyone waiting on suspend queue */
 	if (unlikely(wq_has_sleeper(&md->wait)))
@@ -681,10 +708,14 @@ static int open_table_device(struct table_device *td, dev_t dev,
 
 	td->dm_dev.bdev = bdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	td->dm_dev.dax_dev = fs_dax_get_by_bdev(bdev);
 =======
 	td->dm_dev.dax_dev = dax_get_by_host(bdev->bd_disk->disk_name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	td->dm_dev.dax_dev = fs_dax_get_by_bdev(bdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -821,10 +852,15 @@ void dm_io_dec_pending(struct dm_io *io, blk_status_t error)
 	struct bio *bio;
 	struct mapped_device *md = io->md;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long start_time = 0;
 	struct dm_stats_aux stats_aux;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long start_time = 0;
+	struct dm_stats_aux stats_aux;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Push-back supersedes any I/O errors */
 	if (unlikely(error)) {
@@ -857,6 +893,7 @@ void dm_io_dec_pending(struct dm_io *io, blk_status_t error)
 
 		io_error = io->status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		start_time = io->start_time;
 		stats_aux = io->stats_aux;
 		free_io(md, io);
@@ -865,6 +902,12 @@ void dm_io_dec_pending(struct dm_io *io, blk_status_t error)
 		end_io_acct(io);
 		free_io(md, io);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		start_time = io->start_time;
+		stats_aux = io->stats_aux;
+		free_io(md, io);
+		end_io_acct(md, bio, start_time, &stats_aux);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (io_error == BLK_STS_DM_REQUEUE)
 			return;
@@ -1740,10 +1783,14 @@ static void cleanup_mapped_device(struct mapped_device *md)
 		md->disk->private_data = NULL;
 		spin_unlock(&_minor_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dm_get_md_type(md) != DM_TYPE_NONE) {
 			dm_sysfs_exit(md);
 			del_gendisk(md->disk);
 		}
+<<<<<<< HEAD
 		dm_queue_destroy_keyslot_manager(md->queue);
 		blk_cleanup_disk(md->disk);
 	}
@@ -1752,11 +1799,15 @@ static void cleanup_mapped_device(struct mapped_device *md)
 	}
 
 	if (md->queue)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dm_queue_destroy_keyslot_manager(md->queue);
-
-	if (md->disk)
 		blk_cleanup_disk(md->disk);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cleanup_srcu_struct(&md->io_barrier);
 
@@ -1849,9 +1900,12 @@ static struct mapped_device *alloc_dev(int minor)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	add_disk_no_queue_reg(md->disk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	format_dev_t(md->name, MKDEV(_major, minor));
 
 	md->wq = alloc_workqueue("kdmflush", WQ_MEM_RECLAIM, 0);
@@ -2053,15 +2107,19 @@ static struct dm_table *__unbind(struct mapped_device *md)
 int dm_create(int minor, struct mapped_device **result)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int r;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mapped_device *md;
 
 	md = alloc_dev(minor);
 	if (!md)
 		return -ENXIO;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	dm_ima_reset_data(md);
 =======
@@ -2071,6 +2129,9 @@ int dm_create(int minor, struct mapped_device **result)
 		return r;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dm_ima_reset_data(md);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*result = md;
 	return 0;
@@ -2123,6 +2184,7 @@ EXPORT_SYMBOL_GPL(dm_get_queue_limits);
 int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum dm_queue_mode type = dm_table_get_type(t);
 	struct queue_limits limits;
 	int r;
@@ -2131,6 +2193,11 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
 	struct queue_limits limits;
 	enum dm_queue_mode type = dm_get_md_type(md);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum dm_queue_mode type = dm_table_get_type(t);
+	struct queue_limits limits;
+	int r;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (type) {
 	case DM_TYPE_REQUEST_BASED:
@@ -2159,6 +2226,7 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
 		return r;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	add_disk(md->disk);
 
 	r = dm_sysfs_init(md);
@@ -2171,6 +2239,16 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
 	blk_register_queue(md->disk);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	add_disk(md->disk);
+
+	r = dm_sysfs_init(md);
+	if (r) {
+		del_gendisk(md->disk);
+		return r;
+	}
+	md->type = type;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2277,9 +2355,12 @@ static void __dm_destroy(struct mapped_device *md, bool wait)
 		       dm_device_name(md), atomic_read(&md->holders));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	dm_sysfs_exit(md);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dm_table_destroy(__unbind(md));
 	free_dev(md);
 }

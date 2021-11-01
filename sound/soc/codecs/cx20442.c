@@ -207,10 +207,14 @@ static int cx20442_write(struct snd_soc_component *component, unsigned int reg,
 
 /* Modem init: echo off, digital speaker off, quiet off, voice mode */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const char v253_init[] = "ate0m0q0+fclass=8\r";
 =======
 static const char *v253_init = "ate0m0q0+fclass=8\r";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const char v253_init[] = "ate0m0q0+fclass=8\r";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Line discipline .open() */
 static int v253_open(struct tty_struct *tty)
@@ -284,6 +288,7 @@ static void v253_receive(struct tty_struct *tty, const unsigned char *cp,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Line discipline .write_wakeup() */
 static void v253_wakeup(struct tty_struct *tty)
@@ -291,6 +296,8 @@ static void v253_wakeup(struct tty_struct *tty)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct tty_ldisc_ops v253_ops = {
 	.name = "cx20442",
 	.owner = THIS_MODULE,
@@ -299,9 +306,12 @@ struct tty_ldisc_ops v253_ops = {
 	.hangup = v253_hangup,
 	.receive_buf = v253_receive,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.write_wakeup = v253_wakeup,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 EXPORT_SYMBOL_GPL(v253_ops);
 

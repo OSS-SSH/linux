@@ -39,6 +39,7 @@ pgprot_t __init __weak early_memremap_pgprot_adjust(resource_size_t phys_addr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __init early_ioremap_reset(void)
 {
 =======
@@ -50,6 +51,10 @@ void __init early_ioremap_reset(void)
 {
 	early_ioremap_shutdown();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void __init early_ioremap_reset(void)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	after_paging_init = 1;
 }
 

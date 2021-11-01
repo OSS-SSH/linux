@@ -4,9 +4,12 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/dma-buf.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/lz4.h>
 #include <linux/usb.h>
 #include <linux/workqueue.h>
@@ -19,11 +22,16 @@
 #include <drm/drm_fourcc.h>
 #include <drm/drm_framebuffer.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <drm/drm_gem.h>
 #include <drm/drm_gem_framebuffer_helper.h>
 =======
 #include <drm/drm_gem_shmem_helper.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <drm/drm_gem.h>
+#include <drm/drm_gem_framebuffer_helper.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_print.h>
 #include <drm/drm_rect.h>
 #include <drm/drm_simple_kms_helper.h>
@@ -33,6 +41,9 @@
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Some userspace rendering loops runs all displays in the same loop.
  * This means that a fast display will have to wait for a slow one.
  * For this reason gud does flushing asynchronous by default.
@@ -46,8 +57,11 @@ module_param_named(async_flush, gud_async_flush, bool, 0644);
 MODULE_PARM_DESC(async_flush, "Enable asynchronous flushing [default=true]");
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * FIXME: The driver is probably broken on Big Endian machines.
  * See discussion:
  * https://lore.kernel.org/dri-devel/CAKb7UvihLX0hgBOP3VBG7O+atwZcUVCPVuBdfmDMpg0NjXe-cQ@mail.gmail.com/
@@ -164,11 +178,16 @@ static int gud_prep_flush(struct gud_device *gdrm, struct drm_framebuffer *fb,
 	struct dma_buf_attachment *import_attach = fb->obj[0]->import_attach;
 	u8 compression = gdrm->compression;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct dma_buf_map map[DRM_FORMAT_MAX_PLANES];
 	struct dma_buf_map map_data[DRM_FORMAT_MAX_PLANES];
 =======
 	struct dma_buf_map map;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct dma_buf_map map[DRM_FORMAT_MAX_PLANES];
+	struct dma_buf_map map_data[DRM_FORMAT_MAX_PLANES];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *vaddr, *buf;
 	size_t pitch, len;
 	int ret = 0;
@@ -178,6 +197,7 @@ static int gud_prep_flush(struct gud_device *gdrm, struct drm_framebuffer *fb,
 	if (len > gdrm->bulk_len)
 		return -E2BIG;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = drm_gem_fb_vmap(fb, map, map_data);
 	if (ret)
@@ -190,17 +210,26 @@ static int gud_prep_flush(struct gud_device *gdrm, struct drm_framebuffer *fb,
 		goto vunmap;
 =======
 	ret = drm_gem_shmem_vmap(fb->obj[0], &map);
+=======
+	ret = drm_gem_fb_vmap(fb, map, map_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
-	vaddr = map.vaddr + fb->offsets[0];
+	vaddr = map_data[0].vaddr;
 
+<<<<<<< HEAD
 	if (import_attach) {
 		ret = dma_buf_begin_cpu_access(import_attach->dmabuf, DMA_FROM_DEVICE);
 		if (ret)
 			goto vunmap;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
+	if (ret)
+		goto vunmap;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 retry:
 	if (compression)
 		buf = gdrm->compress_buf;
@@ -254,6 +283,7 @@ retry:
 
 end_cpu_access:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
 vunmap:
 	drm_gem_fb_vunmap(fb, map);
@@ -302,6 +332,50 @@ static int gud_usb_bulk(struct gud_device *gdrm, size_t len)
 vunmap:
 	drm_gem_shmem_vunmap(fb->obj[0], &map);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
+vunmap:
+	drm_gem_fb_vunmap(fb, map);
+
+	return ret;
+}
+
+struct gud_usb_bulk_context {
+	struct timer_list timer;
+	struct usb_sg_request sgr;
+};
+
+static void gud_usb_bulk_timeout(struct timer_list *t)
+{
+	struct gud_usb_bulk_context *ctx = from_timer(ctx, t, timer);
+
+	usb_sg_cancel(&ctx->sgr);
+}
+
+static int gud_usb_bulk(struct gud_device *gdrm, size_t len)
+{
+	struct gud_usb_bulk_context ctx;
+	int ret;
+
+	ret = usb_sg_init(&ctx.sgr, gud_to_usb_device(gdrm), gdrm->bulk_pipe, 0,
+			  gdrm->bulk_sgt.sgl, gdrm->bulk_sgt.nents, len, GFP_KERNEL);
+	if (ret)
+		return ret;
+
+	timer_setup_on_stack(&ctx.timer, gud_usb_bulk_timeout, 0);
+	mod_timer(&ctx.timer, jiffies + msecs_to_jiffies(3000));
+
+	usb_sg_wait(&ctx.sgr);
+
+	if (!del_timer_sync(&ctx.timer))
+		ret = -ETIMEDOUT;
+	else if (ctx.sgr.status < 0)
+		ret = ctx.sgr.status;
+	else if (ctx.sgr.bytes != len)
+		ret = -EIO;
+
+	destroy_timer_on_stack(&ctx.timer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -310,15 +384,21 @@ static int gud_flush_rect(struct gud_device *gdrm, struct drm_framebuffer *fb,
 			  const struct drm_format_info *format, struct drm_rect *rect)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct gud_set_buffer_req req;
 	size_t len, trlen;
 	int ret;
 =======
 	struct usb_device *usb = gud_to_usb_device(gdrm);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct gud_set_buffer_req req;
-	int ret, actual_length;
 	size_t len, trlen;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	drm_dbg(&gdrm->drm, "Flushing [FB:%d] " DRM_RECT_FMT "\n", fb->base.id, DRM_RECT_ARG(rect));
 
@@ -348,6 +428,7 @@ static int gud_flush_rect(struct gud_device *gdrm, struct drm_framebuffer *fb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = gud_usb_bulk(gdrm, trlen);
 =======
 	ret = usb_bulk_msg(usb, gdrm->bulk_pipe, gdrm->bulk_buf, trlen,
@@ -355,6 +436,9 @@ static int gud_flush_rect(struct gud_device *gdrm, struct drm_framebuffer *fb,
 	if (!ret && trlen != actual_length)
 		ret = -EIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = gud_usb_bulk(gdrm, trlen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		gdrm->stats_num_errors++;
 
@@ -640,10 +724,15 @@ void gud_pipe_update(struct drm_simple_display_pipe *pipe,
 			drm_rect_init(&damage, 0, 0, fb->width, fb->height);
 		gud_fb_queue_damage(gdrm, fb, &damage);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!gud_async_flush)
 			flush_work(&gdrm->work);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!gud_async_flush)
+			flush_work(&gdrm->work);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!crtc->state->enable)

@@ -16,9 +16,13 @@
 #include <asm/kprobes.h>
 #include <linux/bpf.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/security_features.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/security_features.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "bpf_jit64.h"
 
@@ -40,6 +44,7 @@ static inline bool bpf_has_stack_frame(struct codegen_context *ctx)
  *		[	  ...       	] 		|
  * sp (r1) --->	[    stack pointer	] --------------
 <<<<<<< HEAD
+<<<<<<< HEAD
  *		[   nv gpr save area	] 5*8
  *		[    tail_call_cnt	] 8
  *		[    local_tmp_var	] 16
@@ -48,6 +53,11 @@ static inline bool bpf_has_stack_frame(struct codegen_context *ctx)
  *		[    tail_call_cnt	] 8
  *		[    local_tmp_var	] 8
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		[   nv gpr save area	] 5*8
+ *		[    tail_call_cnt	] 8
+ *		[    local_tmp_var	] 16
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *		[   unused red zone	] 208 bytes protected
  */
 static int bpf_jit_stack_local(struct codegen_context *ctx)
@@ -56,19 +66,27 @@ static int bpf_jit_stack_local(struct codegen_context *ctx)
 		return STACK_FRAME_MIN_SIZE + ctx->stack_size;
 	else
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -(BPF_PPC_STACK_SAVE + 24);
 =======
 		return -(BPF_PPC_STACK_SAVE + 16);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -(BPF_PPC_STACK_SAVE + 24);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int bpf_jit_stack_tailcallcnt(struct codegen_context *ctx)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return bpf_jit_stack_local(ctx) + 16;
 =======
 	return bpf_jit_stack_local(ctx) + 8;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return bpf_jit_stack_local(ctx) + 16;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int bpf_jit_stack_offsetof(struct codegen_context *ctx, int reg)
@@ -225,10 +243,14 @@ void bpf_jit_emit_func_call_rel(u32 *image, struct codegen_context *ctx, u64 fun
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 out)
 =======
 static void bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 out)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 out)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/*
 	 * By now, the eBPF program has already setup parameters in r3, r4 and r5
@@ -290,6 +312,7 @@ static void bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 
 
 	EMIT(PPC_RAW_BCTR());
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* out: */
 	return 0;
@@ -318,18 +341,51 @@ asm (
 );
 
 =======
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* out: */
+	return 0;
 }
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+ * We spill into the redzone always, even if the bpf program has its own stackframe.
+ * Offsets hardcoded based on BPF_PPC_STACK_SAVE -- see bpf_jit_stack_local()
+ */
+void bpf_stf_barrier(void);
+
+asm (
+"		.global bpf_stf_barrier		;"
+"	bpf_stf_barrier:			;"
+"		std	21,-64(1)		;"
+"		std	22,-56(1)		;"
+"		sync				;"
+"		ld	21,-64(1)		;"
+"		ld	22,-56(1)		;"
+"		ori	31,31,0			;"
+"		.rept 14			;"
+"		b	1f			;"
+"	1:					;"
+"		.endr				;"
+"		blr				;"
+);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Assemble the body code between the prologue & epilogue */
 int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *ctx,
 		       u32 *addrs, bool extra_pass)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum stf_barrier_type stf_barrier = stf_barrier_type_get();
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum stf_barrier_type stf_barrier = stf_barrier_type_get();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct bpf_insn *insn = fp->insnsi;
 	int flen = fp->len;
 	int i, ret;
@@ -385,6 +441,7 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 			goto bpf_alu32_trunc;
 		case BPF_ALU | BPF_ADD | BPF_K: /* (u32) dst += (u32) imm */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		case BPF_ALU64 | BPF_ADD | BPF_K: /* dst += imm */
 			if (!imm) {
 				goto bpf_alu32_trunc;
@@ -406,8 +463,21 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 				EMIT(PPC_RAW_SUB(dst_reg, dst_reg, b2p[TMP_REG_1]));
 =======
 		case BPF_ALU | BPF_SUB | BPF_K: /* (u32) dst -= (u32) imm */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case BPF_ALU64 | BPF_ADD | BPF_K: /* dst += imm */
+			if (!imm) {
+				goto bpf_alu32_trunc;
+			} else if (imm >= -32768 && imm < 32768) {
+				EMIT(PPC_RAW_ADDI(dst_reg, dst_reg, IMM_L(imm)));
+			} else {
+				PPC_LI32(b2p[TMP_REG_1], imm);
+				EMIT(PPC_RAW_ADD(dst_reg, dst_reg, b2p[TMP_REG_1]));
+			}
+			goto bpf_alu32_trunc;
+		case BPF_ALU | BPF_SUB | BPF_K: /* (u32) dst -= (u32) imm */
 		case BPF_ALU64 | BPF_SUB | BPF_K: /* dst -= imm */
+<<<<<<< HEAD
 			if (BPF_OP(code) == BPF_SUB)
 				imm = -imm;
 			if (imm) {
@@ -418,6 +488,15 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 					EMIT(PPC_RAW_ADD(dst_reg, dst_reg, b2p[TMP_REG_1]));
 				}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!imm) {
+				goto bpf_alu32_trunc;
+			} else if (imm > -32768 && imm <= 32768) {
+				EMIT(PPC_RAW_ADDI(dst_reg, dst_reg, IMM_L(-imm)));
+			} else {
+				PPC_LI32(b2p[TMP_REG_1], imm);
+				EMIT(PPC_RAW_SUB(dst_reg, dst_reg, b2p[TMP_REG_1]));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 			goto bpf_alu32_trunc;
 		case BPF_ALU | BPF_MUL | BPF_X: /* (u32) dst *= (u32) src */
@@ -468,6 +547,9 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 			if (imm == 0)
 				return -EINVAL;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (imm == 1) {
 				if (BPF_OP(code) == BPF_DIV) {
 					goto bpf_alu32_trunc;
@@ -476,10 +558,13 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, struct codegen_context *
 					break;
 				}
 			}
+<<<<<<< HEAD
 =======
 			else if (imm == 1)
 				goto bpf_alu32_trunc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			PPC_LI32(b2p[TMP_REG_1], imm);
 			switch (BPF_CLASS(code)) {
@@ -718,6 +803,9 @@ emit_clear:
 
 		/*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * BPF_ST NOSPEC (speculation barrier)
 		 */
 		case BPF_ST | BPF_NOSPEC:
@@ -747,8 +835,11 @@ emit_clear:
 			break;
 
 		/*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * BPF_ST(X)
 		 */
 		case BPF_STX | BPF_MEM | BPF_B: /* *(u8 *)(dst + off) = src */
@@ -1109,12 +1200,18 @@ cond_branch:
 		case BPF_JMP | BPF_TAIL_CALL:
 			ctx->seen |= SEEN_TAILCALL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ret = bpf_jit_emit_tail_call(image, ctx, addrs[i + 1]);
 			if (ret < 0)
 				return ret;
 =======
 			bpf_jit_emit_tail_call(image, ctx, addrs[i + 1]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = bpf_jit_emit_tail_call(image, ctx, addrs[i + 1]);
+			if (ret < 0)
+				return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 
 		default:

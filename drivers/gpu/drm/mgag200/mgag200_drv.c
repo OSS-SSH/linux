@@ -263,6 +263,7 @@ static void mgag200_g200se_init_unique_id(struct mga_device *mdev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct mga_device *
 mgag200_device_create(struct pci_dev *pdev, enum mga_type type, unsigned long flags)
 {
@@ -285,17 +286,33 @@ mgag200_device_create(struct pci_dev *pdev, enum mga_type type, unsigned long fl
 		return ERR_PTR(ret);
 =======
 static int mgag200_device_init(struct mga_device *mdev, unsigned long flags)
+=======
+static struct mga_device *
+mgag200_device_create(struct pci_dev *pdev, enum mga_type type, unsigned long flags)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct drm_device *dev = &mdev->base;
+	struct mga_device *mdev;
+	struct drm_device *dev;
 	int ret;
 
-	mdev->flags = mgag200_flags_from_driver_data(flags);
-	mdev->type = mgag200_type_from_driver_data(flags);
+	mdev = devm_drm_dev_alloc(&pdev->dev, &mgag200_driver, struct mga_device, base);
+	if (IS_ERR(mdev))
+		return mdev;
+	dev = &mdev->base;
+
+	pci_set_drvdata(pdev, dev);
+
+	mdev->flags = flags;
+	mdev->type = type;
 
 	ret = mgag200_regs_init(mdev);
 	if (ret)
+<<<<<<< HEAD
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ERR_PTR(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mdev->type == G200_PCI || mdev->type == G200_AGP)
 		mgag200_g200_init_refclk(mdev);
@@ -304,6 +321,7 @@ static int mgag200_device_init(struct mga_device *mdev, unsigned long flags)
 
 	ret = mgag200_mm_init(mdev);
 	if (ret)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return ERR_PTR(ret);
 
@@ -337,6 +355,11 @@ mgag200_device_create(struct pci_dev *pdev, unsigned long flags)
 
 	ret = mgag200_device_init(mdev, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ERR_PTR(ret);
+
+	ret = mgag200_modeset_init(mdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ERR_PTR(ret);
 
@@ -365,6 +388,9 @@ static const struct pci_device_id mgag200_pciidlist[] = {
 MODULE_DEVICE_TABLE(pci, mgag200_pciidlist);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static enum mga_type mgag200_type_from_driver_data(kernel_ulong_t driver_data)
 {
 	return (enum mga_type)(driver_data & MGAG200_TYPE_MASK);
@@ -375,6 +401,7 @@ static unsigned long mgag200_flags_from_driver_data(kernel_ulong_t driver_data)
 	return driver_data & MGAG200_FLAG_MASK;
 }
 
+<<<<<<< HEAD
 static int
 mgag200_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 {
@@ -386,15 +413,27 @@ static int
 mgag200_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int
+mgag200_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+{
+	kernel_ulong_t driver_data = ent->driver_data;
+	enum mga_type type = mgag200_type_from_driver_data(driver_data);
+	unsigned long flags = mgag200_flags_from_driver_data(driver_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mga_device *mdev;
 	struct drm_device *dev;
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &mgag200_driver);
 =======
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "mgag200drmfb");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &mgag200_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -403,19 +442,27 @@ mgag200_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mdev = mgag200_device_create(pdev, type, flags);
 =======
 	mdev = mgag200_device_create(pdev, ent->driver_data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mdev = mgag200_device_create(pdev, type, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(mdev))
 		return PTR_ERR(mdev);
 	dev = &mdev->base;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = drm_dev_register(dev, 0);
 =======
 	ret = drm_dev_register(dev, ent->driver_data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = drm_dev_register(dev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 

@@ -50,10 +50,14 @@ static int __xfrm6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 	struct dst_entry *dst = skb_dst(skb);
 	struct xfrm_state *x = dst->xfrm;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int mtu;
 =======
 	int mtu;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int mtu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool toobig;
 
 #ifdef CONFIG_NETFILTER

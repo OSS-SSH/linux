@@ -79,10 +79,14 @@ struct iwl_cfg;
  *	Must be atomic
  * @nic_error: error notification. Must be atomic and must be called with BH
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	disabled, unless the sync parameter is true.
 =======
  *	disabled.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *	disabled, unless the sync parameter is true.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cmd_queue_full: Called when the command queue gets full. Must be atomic and
  *	called with BH disabled.
  * @nic_config: configure NIC, called before firmware is started.
@@ -107,10 +111,14 @@ struct iwl_op_mode_ops {
 	bool (*hw_rf_kill)(struct iwl_op_mode *op_mode, bool state);
 	void (*free_skb)(struct iwl_op_mode *op_mode, struct sk_buff *skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void (*nic_error)(struct iwl_op_mode *op_mode, bool sync);
 =======
 	void (*nic_error)(struct iwl_op_mode *op_mode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void (*nic_error)(struct iwl_op_mode *op_mode, bool sync);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*cmd_queue_full)(struct iwl_op_mode *op_mode);
 	void (*nic_config)(struct iwl_op_mode *op_mode);
 	void (*wimax_active)(struct iwl_op_mode *op_mode);
@@ -190,6 +198,7 @@ static inline void iwl_op_mode_free_skb(struct iwl_op_mode *op_mode,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void iwl_op_mode_nic_error(struct iwl_op_mode *op_mode, bool sync)
 {
 	op_mode->ops->nic_error(op_mode, sync);
@@ -198,6 +207,11 @@ static inline void iwl_op_mode_nic_error(struct iwl_op_mode *op_mode)
 {
 	op_mode->ops->nic_error(op_mode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void iwl_op_mode_nic_error(struct iwl_op_mode *op_mode, bool sync)
+{
+	op_mode->ops->nic_error(op_mode, sync);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void iwl_op_mode_cmd_queue_full(struct iwl_op_mode *op_mode)

@@ -473,6 +473,9 @@ static void skl_set_base_module_format(struct skl_dev *skl,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void fill_pin_params(struct skl_audio_data_format *pin_fmt,
 			    struct skl_module_fmt *format)
 {
@@ -542,8 +545,11 @@ static void skl_set_base_ext_module_format(struct skl_dev *skl,
 	       mconfig->formats_config[SKL_PARAM_INIT].caps_size);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Copies copier capabilities into copier module and updates copier module
  * config size.
@@ -551,6 +557,7 @@ static void skl_set_base_ext_module_format(struct skl_dev *skl,
 static void skl_copy_copier_caps(struct skl_module_cfg *mconfig,
 				struct skl_cpr_cfg *cpr_mconfig)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (mconfig->formats_config[SKL_PARAM_INIT].caps_size == 0)
 		return;
@@ -563,15 +570,22 @@ static void skl_copy_copier_caps(struct skl_module_cfg *mconfig,
 			(mconfig->formats_config[SKL_PARAM_INIT].caps_size) / 4;
 =======
 	if (mconfig->formats_config.caps_size == 0)
+=======
+	if (mconfig->formats_config[SKL_PARAM_INIT].caps_size == 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	memcpy(cpr_mconfig->gtw_cfg.config_data,
-			mconfig->formats_config.caps,
-			mconfig->formats_config.caps_size);
+			mconfig->formats_config[SKL_PARAM_INIT].caps,
+			mconfig->formats_config[SKL_PARAM_INIT].caps_size);
 
 	cpr_mconfig->gtw_cfg.config_length =
+<<<<<<< HEAD
 			(mconfig->formats_config.caps_size) / 4;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			(mconfig->formats_config[SKL_PARAM_INIT].caps_size) / 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define SKL_NON_GATEWAY_CPR_NODE_ID 0xFFFFFFFF
@@ -823,6 +837,7 @@ static void skl_set_copier_format(struct skl_dev *skl,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * Algo module are DSP pre processing modules. Algo module take base module
  * configuration and params
@@ -847,6 +862,8 @@ static void skl_set_algo_format(struct skl_dev *skl,
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Mic select module allows selecting one or many input channels, thus
  * acting as a demux.
  *
@@ -869,20 +886,29 @@ static u16 skl_get_module_param_size(struct skl_dev *skl,
 			struct skl_module_cfg *mconfig)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct skl_module_res *res;
 	struct skl_module *module = mconfig->module;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct skl_module_res *res;
+	struct skl_module *module = mconfig->module;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 param_size;
 
 	switch (mconfig->m_type) {
 	case SKL_MODULE_TYPE_COPIER:
 		param_size = sizeof(struct skl_cpr_cfg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		param_size += mconfig->formats_config[SKL_PARAM_INIT].caps_size;
 =======
 		param_size += mconfig->formats_config.caps_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		param_size += mconfig->formats_config[SKL_PARAM_INIT].caps_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return param_size;
 
 	case SKL_MODULE_TYPE_SRCINT:
@@ -891,6 +917,7 @@ static u16 skl_get_module_param_size(struct skl_dev *skl,
 	case SKL_MODULE_TYPE_UPDWMIX:
 		return sizeof(struct skl_up_down_mixer_cfg);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	case SKL_MODULE_TYPE_BASE_OUTFMT:
 	case SKL_MODULE_TYPE_MIC_SELECT:
@@ -916,18 +943,30 @@ static u16 skl_get_module_param_size(struct skl_dev *skl,
 		param_size += mconfig->formats_config.caps_size;
 		return param_size;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SKL_MODULE_TYPE_BASE_OUTFMT:
 	case SKL_MODULE_TYPE_MIC_SELECT:
-	case SKL_MODULE_TYPE_KPB:
 		return sizeof(struct skl_base_outfmt_cfg);
 
-	default:
-		/*
-		 * return only base cfg when no specific module type is
-		 * specified
-		 */
+	case SKL_MODULE_TYPE_MIXER:
+	case SKL_MODULE_TYPE_KPB:
 		return sizeof(struct skl_base_cfg);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	case SKL_MODULE_TYPE_ALGO:
+	default:
+		res = &module->resources[mconfig->res_idx];
+
+		param_size = sizeof(struct skl_base_cfg) + sizeof(struct skl_base_cfg_ext);
+		param_size += (res->nr_input_pins + res->nr_output_pins) *
+			      sizeof(struct skl_pin_format);
+		param_size += mconfig->formats_config[SKL_PARAM_INIT].caps_size;
+
+		return param_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -969,6 +1008,7 @@ static int skl_set_module_format(struct skl_dev *skl,
 		break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SKL_MODULE_TYPE_BASE_OUTFMT:
 	case SKL_MODULE_TYPE_MIC_SELECT:
 		skl_set_base_outfmt_format(skl, module_config, *param_data);
@@ -991,17 +1031,29 @@ static int skl_set_module_format(struct skl_dev *skl,
 		skl_set_algo_format(skl, module_config, *param_data);
 		break;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SKL_MODULE_TYPE_BASE_OUTFMT:
 	case SKL_MODULE_TYPE_MIC_SELECT:
-	case SKL_MODULE_TYPE_KPB:
 		skl_set_base_outfmt_format(skl, module_config, *param_data);
 		break;
 
-	default:
+	case SKL_MODULE_TYPE_MIXER:
+	case SKL_MODULE_TYPE_KPB:
 		skl_set_base_module_format(skl, module_config, *param_data);
 		break;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SKL_MODULE_TYPE_ALGO:
+	default:
+		skl_set_base_module_format(skl, module_config, *param_data);
+		skl_set_base_ext_module_format(skl, module_config,
+					       *param_data +
+					       sizeof(struct skl_base_cfg));
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	dev_dbg(skl->dev, "Module type=%d id=%d config size: %d bytes\n",
@@ -1223,6 +1275,7 @@ int skl_unbind_modules(struct skl_dev *skl,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void fill_pin_params(struct skl_audio_data_format *pin_fmt,
 				struct skl_module_fmt *format)
@@ -1238,6 +1291,8 @@ static void fill_pin_params(struct skl_audio_data_format *pin_fmt,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CPR_SINK_FMT_PARAM_ID 2
 
 /*

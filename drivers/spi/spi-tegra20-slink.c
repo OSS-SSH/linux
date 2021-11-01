@@ -205,11 +205,14 @@ struct tegra_slink_data {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int tegra_slink_runtime_suspend(struct device *dev);
 static int tegra_slink_runtime_resume(struct device *dev);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline u32 tegra_slink_readl(struct tegra_slink_data *tspi,
 		unsigned long reg)
 {
@@ -1065,6 +1068,7 @@ static int tegra_slink_probe(struct platform_device *pdev)
 		goto exit_free_master;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ret = clk_prepare(tspi->clk);
 	if (ret < 0) {
@@ -1088,16 +1092,22 @@ static int tegra_slink_probe(struct platform_device *pdev)
 		goto exit_clk_disable;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tspi->rst = devm_reset_control_get_exclusive(&pdev->dev, "spi");
 	if (IS_ERR(tspi->rst)) {
 		dev_err(&pdev->dev, "can not get reset\n");
 		ret = PTR_ERR(tspi->rst);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit_free_master;
 =======
 		goto exit_free_irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto exit_free_master;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	tspi->max_buf_size = SLINK_FIFO_DEPTH << 2;
@@ -1106,10 +1116,14 @@ static int tegra_slink_probe(struct platform_device *pdev)
 	ret = tegra_slink_init_dma_param(tspi, true);
 	if (ret < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto exit_free_master;
 =======
 		goto exit_free_irq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto exit_free_master;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = tegra_slink_init_dma_param(tspi, false);
 	if (ret < 0)
 		goto exit_rx_dma_free;
@@ -1120,6 +1134,7 @@ static int tegra_slink_probe(struct platform_device *pdev)
 	init_completion(&tspi->xfer_completion);
 
 	pm_runtime_enable(&pdev->dev);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = pm_runtime_resume_and_get(&pdev->dev);
 	if (ret) {
@@ -1136,6 +1151,11 @@ static int tegra_slink_probe(struct platform_device *pdev)
 		dev_err(&pdev->dev, "pm runtime get failed, e = %d\n", ret);
 		pm_runtime_put_noidle(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = pm_runtime_resume_and_get(&pdev->dev);
+	if (ret) {
+		dev_err(&pdev->dev, "pm runtime get failed, e = %d\n", ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto exit_pm_disable;
 	}
 
@@ -1144,6 +1164,9 @@ static int tegra_slink_probe(struct platform_device *pdev)
 	reset_control_deassert(tspi->rst);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spi_irq = platform_get_irq(pdev, 0);
 	tspi->irq = spi_irq;
 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
@@ -1155,12 +1178,16 @@ static int tegra_slink_probe(struct platform_device *pdev)
 		goto exit_pm_put;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tspi->def_command_reg  = SLINK_M_S;
 	tspi->def_command2_reg = SLINK_CS_ACTIVE_BETWEEN;
 	tegra_slink_writel(tspi, tspi->def_command_reg, SLINK_COMMAND);
 	tegra_slink_writel(tspi, tspi->def_command2_reg, SLINK_COMMAND2);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	master->dev.of_node = pdev->dev.of_node;
@@ -1186,22 +1213,31 @@ exit_rx_dma_free:
 	tegra_slink_deinit_dma_param(tspi, true);
 =======
 	pm_runtime_put(&pdev->dev);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	master->dev.of_node = pdev->dev.of_node;
-	ret = devm_spi_register_master(&pdev->dev, master);
+	ret = spi_register_master(master);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "can not register to master err %d\n", ret);
-		goto exit_pm_disable;
+		goto exit_free_irq;
 	}
+
+	pm_runtime_put(&pdev->dev);
+
 	return ret;
 
+exit_free_irq:
+	free_irq(spi_irq, tspi);
+exit_pm_put:
+	pm_runtime_put(&pdev->dev);
 exit_pm_disable:
 	pm_runtime_disable(&pdev->dev);
-	if (!pm_runtime_status_suspended(&pdev->dev))
-		tegra_slink_runtime_suspend(&pdev->dev);
+
 	tegra_slink_deinit_dma_param(tspi, false);
 exit_rx_dma_free:
 	tegra_slink_deinit_dma_param(tspi, true);
+<<<<<<< HEAD
 exit_free_irq:
 	free_irq(spi_irq, tspi);
 exit_clk_disable:
@@ -1209,6 +1245,8 @@ exit_clk_disable:
 exit_clk_unprepare:
 	clk_unprepare(tspi->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 exit_free_master:
 	spi_master_put(master);
 	return ret;
@@ -1219,6 +1257,7 @@ static int tegra_slink_remove(struct platform_device *pdev)
 	struct spi_master *master = platform_get_drvdata(pdev);
 	struct tegra_slink_data	*tspi = spi_master_get_devdata(master);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	spi_unregister_master(master);
 
@@ -1231,6 +1270,13 @@ static int tegra_slink_remove(struct platform_device *pdev)
 	clk_disable(tspi->clk);
 	clk_unprepare(tspi->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spi_unregister_master(master);
+
+	free_irq(tspi->irq, tspi);
+
+	pm_runtime_disable(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (tspi->tx_dma_chan)
 		tegra_slink_deinit_dma_param(tspi, false);
@@ -1239,12 +1285,15 @@ static int tegra_slink_remove(struct platform_device *pdev)
 		tegra_slink_deinit_dma_param(tspi, true);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pm_runtime_disable(&pdev->dev);
 	if (!pm_runtime_status_suspended(&pdev->dev))
 		tegra_slink_runtime_suspend(&pdev->dev);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1277,10 +1326,14 @@ static int tegra_slink_resume(struct device *dev)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __maybe_unused tegra_slink_runtime_suspend(struct device *dev)
 =======
 static int tegra_slink_runtime_suspend(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __maybe_unused tegra_slink_runtime_suspend(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct spi_master *master = dev_get_drvdata(dev);
 	struct tegra_slink_data *tspi = spi_master_get_devdata(master);

@@ -187,10 +187,14 @@ static irqreturn_t st_nci_irq_thread_fn(int irq, void *phy_id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct nfc_phy_ops i2c_phy_ops = {
 =======
 static struct nfc_phy_ops i2c_phy_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nfc_phy_ops i2c_phy_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.write = st_nci_i2c_write,
 	.enable = st_nci_i2c_enable,
 	.disable = st_nci_i2c_disable,

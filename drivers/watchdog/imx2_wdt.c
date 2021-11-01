@@ -318,9 +318,13 @@ static int __init imx2_wdt_probe(struct platform_device *pdev)
 	watchdog_set_restart_priority(wdog, 128);
 	watchdog_init_timeout(wdog, timeout, dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	watchdog_stop_ping_on_suspend(wdog);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	watchdog_stop_ping_on_suspend(wdog);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (imx2_wdt_is_running(wdev)) {
 		imx2_wdt_set_timeout(wdog, wdog->timeout);

@@ -35,6 +35,7 @@
 #define UDP_PKT_SIZE (IP_PKT_SIZE - sizeof(struct iphdr))
 #define UDP_PKT_DATA_SIZE (UDP_PKT_SIZE - sizeof(struct udphdr))
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define USLEEP_MAX 10000
 #define SOCK_RECONF_CTR 10
 #define BATCH_SIZE 8
@@ -49,14 +50,19 @@ enum test_mode {
 =======
 #define EOT (-1)
 #define USLEEP_MAX 200000
+=======
+#define USLEEP_MAX 10000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SOCK_RECONF_CTR 10
-#define BATCH_SIZE 64
+#define BATCH_SIZE 8
 #define POLL_TMOUT 1000
-#define DEFAULT_PKT_CNT 10000
+#define DEFAULT_PKT_CNT (4 * 1024)
 #define RX_FULL_RXQSIZE 32
+#define XSK_UMEM__INVALID_FRAME_SIZE (XSK_UMEM__DEFAULT_FRAME_SIZE + 1)
 
 #define print_verbose(x...) do { if (opt_verbose) ksft_print_msg(x); } while (0)
 
+<<<<<<< HEAD
 typedef __u32 u32;
 typedef __u16 u16;
 typedef __u8 u8;
@@ -64,16 +70,23 @@ typedef __u8 u8;
 enum TEST_MODES {
 	TEST_MODE_UNCONFIGURED = -1,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+enum test_mode {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	TEST_MODE_SKB,
 	TEST_MODE_DRV,
 	TEST_MODE_MAX
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 enum test_type {
 =======
 enum TEST_TYPES {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+enum test_type {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	TEST_TYPE_NOPOLL,
 	TEST_TYPE_POLL,
 	TEST_TYPE_TEARDOWN,
@@ -84,10 +97,14 @@ enum TEST_TYPES {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 enum stat_test_type {
 =======
 enum STAT_TEST_TYPES {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+enum stat_test_type {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	STAT_TEST_RX_DROPPED,
 	STAT_TEST_TX_INVALID,
 	STAT_TEST_RX_FULL,
@@ -95,6 +112,7 @@ enum STAT_TEST_TYPES {
 	STAT_TEST_TYPE_MAX
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int configured_mode;
 static bool opt_pkt_dump;
@@ -110,19 +128,26 @@ static u32 xdp_bind_flags = XDP_USE_NEED_WAKEUP | XDP_COPY;
 static int configured_mode = TEST_MODE_UNCONFIGURED;
 static u8 debug_pkt_dump;
 static u32 num_frames;
+=======
+static int configured_mode;
+static bool opt_pkt_dump;
+static u32 num_frames = DEFAULT_PKT_CNT / 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool second_step;
 static int test_type;
 
-static int opt_pkt_count;
-static u8 opt_verbose;
+static bool opt_verbose;
 
 static u32 xdp_flags = XDP_FLAGS_UPDATE_IF_NOEXIST;
 static u32 xdp_bind_flags = XDP_USE_NEED_WAKEUP | XDP_COPY;
+<<<<<<< HEAD
 static u8 pkt_data[XSK_UMEM__DEFAULT_FRAME_SIZE];
 static u32 pkt_counter;
 static long prev_pkt = -1;
 static int sigvar;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int stat_test_type;
 static u32 rxqsize;
 static u32 frame_headroom;
@@ -140,12 +165,15 @@ struct xsk_socket_info {
 	struct xsk_umem_info *umem;
 	struct xsk_socket *xsk;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned long rx_npkts;
 	unsigned long tx_npkts;
 	unsigned long prev_rx_npkts;
 	unsigned long prev_tx_npkts;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 outstanding_tx;
 };
 
@@ -157,6 +185,9 @@ struct flow_vector {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct pkt {
 	u64 addr;
 	u32 len;
@@ -166,10 +197,13 @@ struct pkt {
 struct pkt_stream {
 	u32 nb_pkts;
 	struct pkt *pkts;
+<<<<<<< HEAD
 =======
 struct generic_data {
 	u32 seqnum;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct ifobject {
@@ -182,12 +216,17 @@ struct ifobject {
 	void *(*func_ptr)(void *arg);
 	struct flow_vector fv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct pkt_stream *pkt_stream;
 	int ns_fd;
 =======
 	int ns_fd;
 	int ifdict_index;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pkt_stream *pkt_stream;
+	int ns_fd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 dst_ip;
 	u32 src_ip;
 	u16 src_port;
@@ -205,6 +244,7 @@ pthread_barrier_t barr;
 pthread_t t0, t1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 TAILQ_HEAD(head_s, pkt) head = TAILQ_HEAD_INITIALIZER(head);
 struct head_s *head_p;
@@ -221,4 +261,6 @@ struct pkt_frame {
 struct pkt_frame **pkt_buf;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif				/* XDPXCEIVER_H */

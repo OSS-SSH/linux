@@ -10,6 +10,7 @@ obj-$(CONFIG_FS_IOMAP)		+= iomap.o
 
 iomap-y				+= trace.o \
 <<<<<<< HEAD
+<<<<<<< HEAD
 				   buffered-io.o \
 				   direct-io.o \
 				   fiemap.o \
@@ -20,5 +21,11 @@ iomap-y				+= trace.o \
 				   direct-io.o \
 				   fiemap.o \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   buffered-io.o \
+				   direct-io.o \
+				   fiemap.o \
+				   iter.o \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   seek.o
 iomap-$(CONFIG_SWAP)		+= swapfile.o

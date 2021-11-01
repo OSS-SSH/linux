@@ -6,9 +6,12 @@
 #define __LINUX_BIO_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/highmem.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/mempool.h>
 #include <linux/ioprio.h>
 /* struct bio, bio_vec and BIO_* flags are defined in blk_types.h */
@@ -379,10 +382,14 @@ static inline void bip_set_seed(struct bio_integrity_payload *bip,
 #endif /* CONFIG_BLK_DEV_INTEGRITY */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void bio_trim(struct bio *bio, sector_t offset, sector_t size);
 =======
 extern void bio_trim(struct bio *bio, int offset, int size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void bio_trim(struct bio *bio, sector_t offset, sector_t size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern struct bio *bio_split(struct bio *bio, int sectors,
 			     gfp_t gfp, struct bio_set *bs);
 
@@ -409,9 +416,13 @@ enum {
 	BIOSET_NEED_BVECS = BIT(0),
 	BIOSET_NEED_RESCUER = BIT(1),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BIOSET_PERCPU_CACHE = BIT(2),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BIOSET_PERCPU_CACHE = BIT(2),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 extern int bioset_init(struct bio_set *, unsigned int, unsigned int, int flags);
 extern void bioset_exit(struct bio_set *);
@@ -421,10 +432,15 @@ extern int bioset_init_from_src(struct bio_set *bs, struct bio_set *src);
 struct bio *bio_alloc_bioset(gfp_t gfp, unsigned short nr_iovecs,
 		struct bio_set *bs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct bio *bio_alloc_kiocb(struct kiocb *kiocb, unsigned short nr_vecs,
 		struct bio_set *bs);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct bio *bio_alloc_kiocb(struct kiocb *kiocb, unsigned short nr_vecs,
+		struct bio_set *bs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bio *bio_kmalloc(gfp_t gfp_mask, unsigned short nr_iovecs);
 extern void bio_put(struct bio *);
 
@@ -536,6 +552,7 @@ static inline void bio_clone_blkg_association(struct bio *dst,
 #endif	/* CONFIG_BLK_CGROUP */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_HIGHMEM
 /*
@@ -579,6 +596,8 @@ static inline void bvec_kunmap_irq(char *buffer, unsigned long *flags)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * BIO list management for use by remapping drivers (e.g. DM or MD) and loop.
  *
@@ -719,13 +738,19 @@ struct bio_set {
 	unsigned int front_pad;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * per-cpu bio alloc cache
 	 */
 	struct bio_alloc_cache __percpu *cache;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mempool_t bio_pool;
 	mempool_t bvec_pool;
 #if defined(CONFIG_BLK_DEV_INTEGRITY)
@@ -743,13 +768,19 @@ struct bio_set {
 	struct work_struct	rescue_work;
 	struct workqueue_struct	*rescue_workqueue;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Hot un-plug notifier for the per-cpu cache, if used
 	 */
 	struct hlist_node cpuhp_dead;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline bool bioset_initialized(struct bio_set *bs)

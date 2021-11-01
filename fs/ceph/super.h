@@ -183,6 +183,7 @@ struct ceph_cap {
 struct ceph_cap_flush {
 	u64 tid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int caps;
 	bool wake; /* wake up flush waiters when finish ? */
 	bool is_capsnap; /* true means capsnap */
@@ -190,6 +191,11 @@ struct ceph_cap_flush {
 	int caps; /* 0 means capsnap */
 	bool wake; /* wake up flush waiters when finish ? */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int caps;
+	bool wake; /* wake up flush waiters when finish ? */
+	bool is_capsnap; /* true means capsnap */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head g_list; // global
 	struct list_head i_list; // per inode
 };
@@ -424,9 +430,12 @@ struct ceph_inode_info {
 		struct ceph_snapid_map *i_snapid_map; /* snapid -> dev_t */
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int i_snap_realm_counter; /* snap realm (if caps) */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head i_snap_realm_item;
 	struct list_head i_snap_flush_item;
 	struct timespec64 i_btime;
@@ -938,9 +947,13 @@ extern int ceph_update_snap_trace(struct ceph_mds_client *m,
 				  void *p, void *e, bool deletion,
 				  struct ceph_snap_realm **realm_ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void ceph_change_snap_realm(struct inode *inode, struct ceph_snap_realm *realm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void ceph_change_snap_realm(struct inode *inode, struct ceph_snap_realm *realm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void ceph_handle_snap(struct ceph_mds_client *mdsc,
 			     struct ceph_mds_session *session,
 			     struct ceph_msg *msg);
@@ -1101,10 +1114,14 @@ void ceph_release_acl_sec_ctx(struct ceph_acl_sec_ctx *as_ctx);
 #ifdef CONFIG_CEPH_FS_POSIX_ACL
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct posix_acl *ceph_get_acl(struct inode *, int, bool);
 =======
 struct posix_acl *ceph_get_acl(struct inode *, int);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *ceph_get_acl(struct inode *, int, bool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ceph_set_acl(struct user_namespace *mnt_userns,
 		 struct inode *inode, struct posix_acl *acl, int type);
 int ceph_pre_init_acls(struct inode *dir, umode_t *mode,
@@ -1155,9 +1172,13 @@ extern void ceph_add_cap(struct inode *inode,
 			 struct ceph_cap **new_cap);
 extern void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void __ceph_remove_caps(struct ceph_inode_info *ci);
 extern void ceph_put_cap(struct ceph_mds_client *mdsc,
 			 struct ceph_cap *cap);
@@ -1184,24 +1205,34 @@ extern void ceph_put_cap_refs_no_check_caps(struct ceph_inode_info *ci,
 extern void ceph_put_wrbuffer_cap_refs(struct ceph_inode_info *ci, int nr,
 				       struct ceph_snap_context *snapc);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void __ceph_remove_capsnap(struct inode *inode,
 				  struct ceph_cap_snap *capsnap,
 				  bool *wake_ci, bool *wake_mdsc);
 extern void ceph_remove_capsnap(struct inode *inode,
 				struct ceph_cap_snap *capsnap,
 				bool *wake_ci, bool *wake_mdsc);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void ceph_flush_snaps(struct ceph_inode_info *ci,
 			     struct ceph_mds_session **psession);
 extern bool __ceph_should_report_size(struct ceph_inode_info *ci);
 extern void ceph_check_caps(struct ceph_inode_info *ci, int flags,
 			    struct ceph_mds_session *session);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern unsigned long ceph_check_delayed_caps(struct ceph_mds_client *mdsc);
 =======
 extern void ceph_check_delayed_caps(struct ceph_mds_client *mdsc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern unsigned long ceph_check_delayed_caps(struct ceph_mds_client *mdsc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void ceph_flush_dirty_caps(struct ceph_mds_client *mdsc);
 extern int  ceph_drop_caps_for_unlink(struct inode *inode);
 extern int ceph_encode_inode_release(void **p, struct inode *inode,

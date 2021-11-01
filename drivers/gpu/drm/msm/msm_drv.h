@@ -54,6 +54,7 @@ struct msm_disp_state;
 #define FRAC_16_16(mult, div)    (((mult) << 16) / (div))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct msm_file_private {
 	rwlock_t queuelock;
@@ -64,6 +65,8 @@ struct msm_file_private {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum msm_mdp_plane_property {
 	PLANE_PROP_ZPOS,
 	PLANE_PROP_ALPHA,
@@ -313,9 +316,12 @@ struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object *obj);
 int msm_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map *map);
 void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct dma_buf_map *map);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int msm_gem_prime_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
 		struct dma_buf_attachment *attach, struct sg_table *sg);
 int msm_gem_prime_pin(struct drm_gem_object *obj);
@@ -357,12 +363,18 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
 			 struct drm_encoder *encoder);
 void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi);
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
 bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
 bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
+bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
+bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline void __init msm_dsi_register(void)
 {
@@ -380,6 +392,9 @@ static inline void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct ms
 {
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi)
 {
 	return false;
@@ -392,9 +407,12 @@ static inline bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
 {
 	return false;
 }
+<<<<<<< HEAD
 =======
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifdef CONFIG_DRM_MSM_DP
@@ -504,6 +522,7 @@ u32 msm_readl(const void __iomem *addr);
 void msm_rmw(void __iomem *addr, u32 mask, u32 or);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct msm_gpu_submitqueue;
 int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
@@ -541,6 +560,8 @@ static inline struct msm_file_private *msm_file_private_get(
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
 #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
 
@@ -566,10 +587,14 @@ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
 {
 	ktime_t now = ktime_get();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	s64 remaining_jiffies;
 =======
 	unsigned long remaining_jiffies;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	s64 remaining_jiffies;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ktime_compare(*timeout, now) < 0) {
 		remaining_jiffies = 0;
@@ -579,10 +604,14 @@ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return clamp(remaining_jiffies, 0LL, (s64)INT_MAX);
 =======
 	return remaining_jiffies;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return clamp(remaining_jiffies, 0LL, (s64)INT_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #endif /* __MSM_DRV_H__ */

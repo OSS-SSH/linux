@@ -95,9 +95,13 @@ static struct gpiod_lookup_table gpios_led_table = {
 		GPIO_LOOKUP_IDX(AMD_FCH_GPIO_DRIVER_NAME, APU2_GPIO_LINE_LED3,
 				NULL, 2, GPIO_ACTIVE_LOW),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{} /* Terminating entry */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{} /* Terminating entry */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 };
 
@@ -128,9 +132,13 @@ static struct gpiod_lookup_table gpios_key_table = {
 		GPIO_LOOKUP_IDX(AMD_FCH_GPIO_DRIVER_NAME, APU2_GPIO_LINE_MODESW,
 				NULL, 0, GPIO_ACTIVE_LOW),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{} /* Terminating entry */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{} /* Terminating entry */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 };
 

@@ -4,13 +4,19 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/circ_buf.h>
 #include <linux/ktime.h>
 #include <linux/time64.h>
 #include <linux/timekeeping.h>
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "i915_drv.h"
 #include "intel_guc_ct.h"
 #include "gt/intel_gt.h"
@@ -67,12 +73,16 @@ static inline struct drm_device *ct_to_drm(struct intel_guc_ct *ct)
  *
  * Size of each `CT Buffer`_ must be multiple of 4K.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * We don't expect too many messages in flight at any time, unless we are
  * using the GuC submission. In that case each request requires a minimum
  * 2 dwords which gives us a maximum 256 queue'd requests. Hopefully this
  * enough space to avoid backpressure on the driver. We increase the size
  * of the receive buffer (relative to the send) to ensure a G2H response
  * CTB has a landing spot.
+<<<<<<< HEAD
  */
 #define CTB_DESC_SIZE		ALIGN(sizeof(struct guc_ct_buffer_desc), SZ_2K)
 #define CTB_H2G_BUFFER_SIZE	(SZ_4K)
@@ -85,6 +95,13 @@ static inline struct drm_device *ct_to_drm(struct intel_guc_ct *ct)
 #define CTB_H2G_BUFFER_SIZE	(SZ_4K)
 #define CTB_G2H_BUFFER_SIZE	(SZ_4K)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ */
+#define CTB_DESC_SIZE		ALIGN(sizeof(struct guc_ct_buffer_desc), SZ_2K)
+#define CTB_H2G_BUFFER_SIZE	(SZ_4K)
+#define CTB_G2H_BUFFER_SIZE	(4 * CTB_H2G_BUFFER_SIZE)
+#define G2H_ROOM_BUFFER_SIZE	(CTB_G2H_BUFFER_SIZE / 4)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct ct_request {
 	struct list_head link;
@@ -121,14 +138,19 @@ void intel_guc_ct_init_early(struct intel_guc_ct *ct)
 	INIT_WORK(&ct->requests.worker, ct_incoming_request_worker_func);
 	tasklet_setup(&ct->receive_tasklet, ct_receive_tasklet_func);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	init_waitqueue_head(&ct->wq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	init_waitqueue_head(&ct->wq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline const char *guc_ct_buffer_type_to_str(u32 type)
 {
 	switch (type) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	case GUC_CTB_TYPE_HOST2GUC:
 		return "SEND";
@@ -138,12 +160,18 @@ static inline const char *guc_ct_buffer_type_to_str(u32 type)
 		return "SEND";
 	case INTEL_GUC_CT_BUFFER_TYPE_RECV:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case GUC_CTB_TYPE_HOST2GUC:
+		return "SEND";
+	case GUC_CTB_TYPE_GUC2HOST:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return "RECV";
 	default:
 		return "<invalid>";
 	}
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void guc_ct_buffer_desc_init(struct guc_ct_buffer_desc *desc)
 {
@@ -164,21 +192,34 @@ static void guc_ct_buffer_reset(struct intel_guc_ct_buffer *ctb)
 =======
 static void guc_ct_buffer_desc_init(struct guc_ct_buffer_desc *desc,
 				    u32 cmds_addr, u32 size)
+=======
+static void guc_ct_buffer_desc_init(struct guc_ct_buffer_desc *desc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	memset(desc, 0, sizeof(*desc));
-	desc->addr = cmds_addr;
-	desc->size = size;
-	desc->owner = CTB_OWNER_HOST;
 }
 
-static void guc_ct_buffer_reset(struct intel_guc_ct_buffer *ctb, u32 cmds_addr)
+static void guc_ct_buffer_reset(struct intel_guc_ct_buffer *ctb)
 {
+<<<<<<< HEAD
 	guc_ct_buffer_desc_init(ctb->desc, cmds_addr, ctb->size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 space;
+
+	ctb->broken = false;
+	ctb->tail = 0;
+	ctb->head = 0;
+	space = CIRC_SPACE(ctb->tail, ctb->head, ctb->size) - ctb->resv_space;
+	atomic_set(&ctb->space, space);
+
+	guc_ct_buffer_desc_init(ctb->desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void guc_ct_buffer_init(struct intel_guc_ct_buffer *ctb,
 			       struct guc_ct_buffer_desc *desc,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			       u32 *cmds, u32 size_in_bytes, u32 resv_space)
 {
@@ -225,36 +266,55 @@ static int ct_register_buffer(struct intel_guc_ct *ct, u32 type,
 					    desc_addr, buff_addr, size);
 =======
 			       u32 *cmds, u32 size)
+=======
+			       u32 *cmds, u32 size_in_bytes, u32 resv_space)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	GEM_BUG_ON(size % 4);
+	GEM_BUG_ON(size_in_bytes % 4);
 
 	ctb->desc = desc;
 	ctb->cmds = cmds;
-	ctb->size = size;
+	ctb->size = size_in_bytes / 4;
+	ctb->resv_space = resv_space / 4;
 
-	guc_ct_buffer_reset(ctb, 0);
+	guc_ct_buffer_reset(ctb);
 }
 
-static int guc_action_register_ct_buffer(struct intel_guc *guc,
-					 u32 desc_addr,
-					 u32 type)
+static int guc_action_register_ct_buffer(struct intel_guc *guc, u32 type,
+					 u32 desc_addr, u32 buff_addr, u32 size)
 {
-	u32 action[] = {
-		INTEL_GUC_ACTION_REGISTER_COMMAND_TRANSPORT_BUFFER,
-		desc_addr,
-		sizeof(struct guc_ct_buffer_desc),
-		type
+	u32 request[HOST2GUC_REGISTER_CTB_REQUEST_MSG_LEN] = {
+		FIELD_PREP(GUC_HXG_MSG_0_ORIGIN, GUC_HXG_ORIGIN_HOST) |
+		FIELD_PREP(GUC_HXG_MSG_0_TYPE, GUC_HXG_TYPE_REQUEST) |
+		FIELD_PREP(GUC_HXG_REQUEST_MSG_0_ACTION, GUC_ACTION_HOST2GUC_REGISTER_CTB),
+		FIELD_PREP(HOST2GUC_REGISTER_CTB_REQUEST_MSG_1_SIZE, size / SZ_4K - 1) |
+		FIELD_PREP(HOST2GUC_REGISTER_CTB_REQUEST_MSG_1_TYPE, type),
+		FIELD_PREP(HOST2GUC_REGISTER_CTB_REQUEST_MSG_2_DESC_ADDR, desc_addr),
+		FIELD_PREP(HOST2GUC_REGISTER_CTB_REQUEST_MSG_3_BUFF_ADDR, buff_addr),
 	};
 
-	/* Can't use generic send(), CT registration must go over MMIO */
-	return intel_guc_send_mmio(guc, action, ARRAY_SIZE(action), NULL, 0);
+	GEM_BUG_ON(type != GUC_CTB_TYPE_HOST2GUC && type != GUC_CTB_TYPE_GUC2HOST);
+	GEM_BUG_ON(size % SZ_4K);
+
+	/* CT registration must go over MMIO */
+	return intel_guc_send_mmio(guc, request, ARRAY_SIZE(request), NULL, 0);
 }
 
-static int ct_register_buffer(struct intel_guc_ct *ct, u32 desc_addr, u32 type)
+static int ct_register_buffer(struct intel_guc_ct *ct, u32 type,
+			      u32 desc_addr, u32 buff_addr, u32 size)
 {
-	int err = guc_action_register_ct_buffer(ct_to_guc(ct), desc_addr, type);
+	int err;
 
+	err = i915_inject_probe_error(guc_to_gt(ct_to_guc(ct))->i915, -ENXIO);
+	if (unlikely(err))
+		return err;
+
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = guc_action_register_ct_buffer(ct_to_guc(ct), type,
+					    desc_addr, buff_addr, size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err))
 		CT_ERROR(ct, "Failed to register %s buffer (err=%d)\n",
 			 guc_ct_buffer_type_to_str(type), err);
@@ -264,11 +324,15 @@ static int ct_register_buffer(struct intel_guc_ct *ct, u32 desc_addr, u32 type)
 static int guc_action_deregister_ct_buffer(struct intel_guc *guc, u32 type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 request[HOST2GUC_DEREGISTER_CTB_REQUEST_MSG_LEN] = {
 		FIELD_PREP(GUC_HXG_MSG_0_ORIGIN, GUC_HXG_ORIGIN_HOST) |
 		FIELD_PREP(GUC_HXG_MSG_0_TYPE, GUC_HXG_TYPE_REQUEST) |
 		FIELD_PREP(GUC_HXG_REQUEST_MSG_0_ACTION, GUC_ACTION_HOST2GUC_DEREGISTER_CTB),
 		FIELD_PREP(HOST2GUC_DEREGISTER_CTB_REQUEST_MSG_1_TYPE, type),
+<<<<<<< HEAD
 	};
 
 	GEM_BUG_ON(type != GUC_CTB_TYPE_HOST2GUC && type != GUC_CTB_TYPE_GUC2HOST);
@@ -285,6 +349,14 @@ static int guc_action_deregister_ct_buffer(struct intel_guc *guc, u32 type)
 	/* Can't use generic send(), CT deregistration must go over MMIO */
 	return intel_guc_send_mmio(guc, action, ARRAY_SIZE(action), NULL, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	};
+
+	GEM_BUG_ON(type != GUC_CTB_TYPE_HOST2GUC && type != GUC_CTB_TYPE_GUC2HOST);
+
+	/* CT deregistration must go over MMIO */
+	return intel_guc_send_mmio(guc, request, ARRAY_SIZE(request), NULL, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ct_deregister_buffer(struct intel_guc_ct *ct, u32 type)
@@ -312,20 +384,30 @@ int intel_guc_ct_init(struct intel_guc_ct *ct)
 	u32 blob_size;
 	u32 cmds_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 resv_space;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 resv_space;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *blob;
 	u32 *cmds;
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = i915_inject_probe_error(guc_to_gt(guc)->i915, -ENXIO);
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEM_BUG_ON(ct->vma);
 
 	blob_size = 2 * CTB_DESC_SIZE + CTB_H2G_BUFFER_SIZE + CTB_G2H_BUFFER_SIZE;
@@ -343,10 +425,14 @@ int intel_guc_ct_init(struct intel_guc_ct *ct)
 	cmds = blob + 2 * CTB_DESC_SIZE;
 	cmds_size = CTB_H2G_BUFFER_SIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	resv_space = 0;
 	CT_DEBUG(ct, "%s desc %#tx cmds %#tx size %u/%u\n", "send",
 		 ptrdiff(desc, blob), ptrdiff(cmds, blob), cmds_size,
 		 resv_space);
+<<<<<<< HEAD
 
 	guc_ct_buffer_init(&ct->ctbs.send, desc, cmds, cmds_size, resv_space);
 =======
@@ -355,16 +441,24 @@ int intel_guc_ct_init(struct intel_guc_ct *ct)
 
 	guc_ct_buffer_init(&ct->ctbs.send, desc, cmds, cmds_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	guc_ct_buffer_init(&ct->ctbs.send, desc, cmds, cmds_size, resv_space);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* store pointers to desc and cmds for recv ctb */
 	desc = blob + CTB_DESC_SIZE;
 	cmds = blob + 2 * CTB_DESC_SIZE + CTB_H2G_BUFFER_SIZE;
 	cmds_size = CTB_G2H_BUFFER_SIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	resv_space = G2H_ROOM_BUFFER_SIZE;
 	CT_DEBUG(ct, "%s desc %#tx cmds %#tx size %u/%u\n", "recv",
 		 ptrdiff(desc, blob), ptrdiff(cmds, blob), cmds_size,
 		 resv_space);
+<<<<<<< HEAD
 
 	guc_ct_buffer_init(&ct->ctbs.recv, desc, cmds, cmds_size, resv_space);
 =======
@@ -373,6 +467,10 @@ int intel_guc_ct_init(struct intel_guc_ct *ct)
 
 	guc_ct_buffer_init(&ct->ctbs.recv, desc, cmds, cmds_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	guc_ct_buffer_init(&ct->ctbs.recv, desc, cmds, cmds_size, resv_space);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -402,10 +500,14 @@ int intel_guc_ct_enable(struct intel_guc_ct *ct)
 {
 	struct intel_guc *guc = ct_to_guc(ct);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 base, desc, cmds;
 =======
 	u32 base, cmds;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 base, desc, cmds;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *blob;
 	int err;
 
@@ -422,6 +524,7 @@ int intel_guc_ct_enable(struct intel_guc_ct *ct)
 
 	/* (re)initialize descriptors */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	guc_ct_buffer_reset(&ct->ctbs.send);
 	guc_ct_buffer_reset(&ct->ctbs.recv);
 =======
@@ -431,17 +534,25 @@ int intel_guc_ct_enable(struct intel_guc_ct *ct)
 	cmds = base + ptrdiff(ct->ctbs.recv.cmds, blob);
 	guc_ct_buffer_reset(&ct->ctbs.recv, cmds);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	guc_ct_buffer_reset(&ct->ctbs.send);
+	guc_ct_buffer_reset(&ct->ctbs.recv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Register both CT buffers starting with RECV buffer.
 	 * Descriptors are in first half of the blob.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	desc = base + ptrdiff(ct->ctbs.recv.desc, blob);
 	cmds = base + ptrdiff(ct->ctbs.recv.cmds, blob);
 	err = ct_register_buffer(ct, GUC_CTB_TYPE_GUC2HOST,
 				 desc, cmds, ct->ctbs.recv.size * 4);
 
+<<<<<<< HEAD
 	if (unlikely(err))
 		goto err_out;
 
@@ -459,23 +570,41 @@ int intel_guc_ct_enable(struct intel_guc_ct *ct)
 	err = ct_register_buffer(ct, base + ptrdiff(ct->ctbs.send.desc, blob),
 				 INTEL_GUC_CT_BUFFER_TYPE_SEND);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(err))
+		goto err_out;
+
+	desc = base + ptrdiff(ct->ctbs.send.desc, blob);
+	cmds = base + ptrdiff(ct->ctbs.send.cmds, blob);
+	err = ct_register_buffer(ct, GUC_CTB_TYPE_HOST2GUC,
+				 desc, cmds, ct->ctbs.send.size * 4);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err))
 		goto err_deregister;
 
 	ct->enabled = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ct->stall_time = KTIME_MAX;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ct->stall_time = KTIME_MAX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 
 err_deregister:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ct_deregister_buffer(ct, GUC_CTB_TYPE_GUC2HOST);
 =======
 	ct_deregister_buffer(ct, INTEL_GUC_CT_BUFFER_TYPE_RECV);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ct_deregister_buffer(ct, GUC_CTB_TYPE_GUC2HOST);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_out:
 	CT_PROBE_ERROR(ct, "Failed to enable CTB (%pe)\n", ERR_PTR(err));
 	return err;
@@ -495,12 +624,17 @@ void intel_guc_ct_disable(struct intel_guc_ct *ct)
 
 	if (intel_guc_is_fw_running(guc)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ct_deregister_buffer(ct, GUC_CTB_TYPE_HOST2GUC);
 		ct_deregister_buffer(ct, GUC_CTB_TYPE_GUC2HOST);
 =======
 		ct_deregister_buffer(ct, INTEL_GUC_CT_BUFFER_TYPE_SEND);
 		ct_deregister_buffer(ct, INTEL_GUC_CT_BUFFER_TYPE_RECV);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ct_deregister_buffer(ct, GUC_CTB_TYPE_HOST2GUC);
+		ct_deregister_buffer(ct, GUC_CTB_TYPE_GUC2HOST);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -532,6 +666,7 @@ static void write_barrier(struct intel_guc_ct *ct)
 	}
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int ct_write(struct intel_guc_ct *ct,
 		    const u32 *action,
@@ -604,68 +739,79 @@ static int ct_write(struct intel_guc_ct *ct,
  *                   ^-----------------len-------------------^
  */
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ct_write(struct intel_guc_ct *ct,
 		    const u32 *action,
 		    u32 len /* in dwords */,
-		    u32 fence)
+		    u32 fence, u32 flags)
 {
 	struct intel_guc_ct_buffer *ctb = &ct->ctbs.send;
 	struct guc_ct_buffer_desc *desc = ctb->desc;
-	u32 head = desc->head;
-	u32 tail = desc->tail;
+	u32 tail = ctb->tail;
 	u32 size = ctb->size;
-	u32 used;
 	u32 header;
+	u32 hxg;
+	u32 type;
 	u32 *cmds = ctb->cmds;
 	unsigned int i;
 
-	if (unlikely(desc->is_in_error))
-		return -EPIPE;
-
-	if (unlikely(!IS_ALIGNED(head | tail, 4) ||
-		     (tail | head) >= size))
+	if (unlikely(desc->status))
 		goto corrupted;
 
-	/* later calculations will be done in dwords */
-	head /= 4;
-	tail /= 4;
-	size /= 4;
+	GEM_BUG_ON(tail > size);
+
+#ifdef CONFIG_DRM_I915_DEBUG_GUC
+	if (unlikely(tail != READ_ONCE(desc->tail))) {
+		CT_ERROR(ct, "Tail was modified %u != %u\n",
+			 desc->tail, tail);
+		desc->status |= GUC_CTB_STATUS_MISMATCH;
+		goto corrupted;
+	}
+	if (unlikely(READ_ONCE(desc->head) >= size)) {
+		CT_ERROR(ct, "Invalid head offset %u >= %u)\n",
+			 desc->head, size);
+		desc->status |= GUC_CTB_STATUS_OVERFLOW;
+		goto corrupted;
+	}
+#endif
 
 	/*
-	 * tail == head condition indicates empty. GuC FW does not support
-	 * using up the entire buffer to get tail == head meaning full.
+	 * dw0: CT header (including fence)
+	 * dw1: HXG header (including action code)
+	 * dw2+: action data
 	 */
-	if (tail < head)
-		used = (size - head) + tail;
-	else
-		used = tail - head;
+	header = FIELD_PREP(GUC_CTB_MSG_0_FORMAT, GUC_CTB_FORMAT_HXG) |
+		 FIELD_PREP(GUC_CTB_MSG_0_NUM_DWORDS, len) |
+		 FIELD_PREP(GUC_CTB_MSG_0_FENCE, fence);
 
-	/* make sure there is a space including extra dw for the fence */
-	if (unlikely(used + len + 1 >= size))
-		return -ENOSPC;
-
-	/*
-	 * Write the message. The format is the following:
-	 * DW0: header (including action code)
-	 * DW1: fence
-	 * DW2+: action data
-	 */
-	header = (len << GUC_CT_MSG_LEN_SHIFT) |
-		 GUC_CT_MSG_SEND_STATUS |
-		 (action[0] << GUC_CT_MSG_ACTION_SHIFT);
-
+<<<<<<< HEAD
 	CT_DEBUG(ct, "writing %*ph %*ph %*ph\n",
 		 4, &header, 4, &fence, 4 * (len - 1), &action[1]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	type = (flags & INTEL_GUC_CT_SEND_NB) ? GUC_HXG_TYPE_EVENT :
+		GUC_HXG_TYPE_REQUEST;
+	hxg = FIELD_PREP(GUC_HXG_MSG_0_TYPE, type) |
+		FIELD_PREP(GUC_HXG_EVENT_MSG_0_ACTION |
+			   GUC_HXG_EVENT_MSG_0_DATA0, action[0]);
+
+	CT_DEBUG(ct, "writing (tail %u) %*ph %*ph %*ph\n",
+		 tail, 4, &header, 4, &hxg, 4 * (len - 1), &action[1]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cmds[tail] = header;
 	tail = (tail + 1) % size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cmds[tail] = hxg;
 =======
 	cmds[tail] = fence;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cmds[tail] = hxg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tail = (tail + 1) % size;
 
 	for (i = 1; i < len; i++) {
@@ -681,6 +827,9 @@ static int ct_write(struct intel_guc_ct *ct,
 	write_barrier(ct);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* update local copies */
 	ctb->tail = tail;
 	GEM_BUG_ON(atomic_read(&ctb->space) < len + GUC_CTB_HDR_LEN);
@@ -689,6 +838,7 @@ static int ct_write(struct intel_guc_ct *ct,
 	/* now update descriptor */
 	WRITE_ONCE(desc->tail, tail);
 
+<<<<<<< HEAD
 	return 0;
 
 corrupted:
@@ -705,6 +855,14 @@ corrupted:
 		 desc->addr, desc->head, desc->tail, desc->size);
 	desc->is_in_error = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+
+corrupted:
+	CT_ERROR(ct, "Corrupted descriptor head=%u tail=%u status=%#x\n",
+		 desc->head, desc->tail, desc->status);
+	ctb->broken = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -EPIPE;
 }
 
@@ -714,10 +872,14 @@ corrupted:
  * @status:	placeholder for status
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * For each sent request, GuC shall send back CT response message.
 =======
  * For each sent request, Guc shall send bac CT response message.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * For each sent request, GuC shall send back CT response message.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Our message handler will update status of tracked request once
  * response message with given fence is received. Wait here and
  * check for valid response status value.
@@ -734,6 +896,7 @@ static int wait_for_ct_request_update(struct ct_request *req, u32 *status)
 	 * Fast commands should complete in less than 10us, so sample quickly
 	 * up to that length of time, then switch to a slower sleep-wait loop.
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * No GuC command should ever take longer than 10ms but many GuC
 	 * commands can be inflight at time, so use a 1s timeout on the slower
 	 * sleep-wait loop.
@@ -748,12 +911,25 @@ static int wait_for_ct_request_update(struct ct_request *req, u32 *status)
 		err = wait_for(done, GUC_CTB_RESPONSE_TIMEOUT_LONG_MS);
 =======
 	 * No GuC command should ever take longer than 10ms.
+=======
+	 * No GuC command should ever take longer than 10ms but many GuC
+	 * commands can be inflight at time, so use a 1s timeout on the slower
+	 * sleep-wait loop.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-#define done INTEL_GUC_MSG_IS_RESPONSE(READ_ONCE(req->status))
-	err = wait_for_us(done, 10);
+#define GUC_CTB_RESPONSE_TIMEOUT_SHORT_MS 10
+#define GUC_CTB_RESPONSE_TIMEOUT_LONG_MS 1000
+#define done \
+	(FIELD_GET(GUC_HXG_MSG_0_ORIGIN, READ_ONCE(req->status)) == \
+	 GUC_HXG_ORIGIN_GUC)
+	err = wait_for_us(done, GUC_CTB_RESPONSE_TIMEOUT_SHORT_MS);
 	if (err)
+<<<<<<< HEAD
 		err = wait_for(done, 10);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = wait_for(done, GUC_CTB_RESPONSE_TIMEOUT_LONG_MS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #undef done
 
 	if (unlikely(err))
@@ -764,6 +940,9 @@ static int wait_for_ct_request_update(struct ct_request *req, u32 *status)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define GUC_CTB_TIMEOUT_MS	1500
 static inline bool ct_deadlocked(struct intel_guc_ct *ct)
 {
@@ -889,8 +1068,11 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ct_send(struct intel_guc_ct *ct,
 		   const u32 *action,
 		   u32 len,
@@ -899,14 +1081,20 @@ static int ct_send(struct intel_guc_ct *ct,
 		   u32 *status)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_guc_ct_buffer *ctb = &ct->ctbs.send;
 	struct ct_request request;
 	unsigned long flags;
 	unsigned int sleep_period_ms = 1;
+<<<<<<< HEAD
 =======
 	struct ct_request request;
 	unsigned long flags;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 fence;
 	int err;
 
@@ -915,6 +1103,9 @@ static int ct_send(struct intel_guc_ct *ct,
 	GEM_BUG_ON(len & ~GUC_CT_MSG_LEN_MASK);
 	GEM_BUG_ON(!response_buf && response_buf_size);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	might_sleep();
 
 	/*
@@ -940,12 +1131,17 @@ retry:
 
 		goto retry;
 	}
+<<<<<<< HEAD
 
 	ct->stall_time = KTIME_MAX;
 =======
 
 	spin_lock_irqsave(&ct->ctbs.send.lock, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	ct->stall_time = KTIME_MAX;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fence = ct_get_next_fence(ct);
 	request.fence = fence;
@@ -958,6 +1154,7 @@ retry:
 	spin_unlock(&ct->requests.lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = ct_write(ct, action, len, fence, 0);
 	g2h_reserve_space(ct, GUC_CTB_HXG_MSG_MAX_LEN);
 
@@ -967,6 +1164,12 @@ retry:
 
 	spin_unlock_irqrestore(&ct->ctbs.send.lock, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ct_write(ct, action, len, fence, 0);
+	g2h_reserve_space(ct, GUC_CTB_HXG_MSG_MAX_LEN);
+
+	spin_unlock_irqrestore(&ctb->lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(err))
 		goto unlink;
@@ -974,6 +1177,7 @@ retry:
 	intel_guc_notify(ct_to_guc(ct));
 
 	err = wait_for_ct_request_update(&request, status);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	g2h_release_space(ct, GUC_CTB_HXG_MSG_MAX_LEN);
 	if (unlikely(err))
@@ -986,6 +1190,13 @@ retry:
 
 	if (!INTEL_GUC_MSG_IS_RESPONSE_SUCCESS(*status)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	g2h_release_space(ct, GUC_CTB_HXG_MSG_MAX_LEN);
+	if (unlikely(err))
+		goto unlink;
+
+	if (FIELD_GET(GUC_HXG_MSG_0_TYPE, *status) != GUC_HXG_TYPE_RESPONSE_SUCCESS) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = -EIO;
 		goto unlink;
 	}
@@ -993,10 +1204,14 @@ retry:
 	if (response_buf) {
 		/* There shall be no data in the status */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		WARN_ON(FIELD_GET(GUC_HXG_RESPONSE_MSG_0_DATA0, request.status));
 =======
 		WARN_ON(INTEL_GUC_MSG_TO_DATA(request.status));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WARN_ON(FIELD_GET(GUC_HXG_RESPONSE_MSG_0_DATA0, request.status));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Return actual response len */
 		err = request.response_len;
 	} else {
@@ -1004,10 +1219,14 @@ retry:
 		WARN_ON(request.response_len);
 		/* Return data decoded from the status dword */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = FIELD_GET(GUC_HXG_RESPONSE_MSG_0_DATA0, *status);
 =======
 		err = INTEL_GUC_MSG_TO_DATA(*status);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = FIELD_GET(GUC_HXG_RESPONSE_MSG_0_DATA0, *status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 unlink:
@@ -1023,20 +1242,28 @@ unlink:
  */
 int intel_guc_ct_send(struct intel_guc_ct *ct, const u32 *action, u32 len,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		      u32 *response_buf, u32 response_buf_size, u32 flags)
 =======
 		      u32 *response_buf, u32 response_buf_size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      u32 *response_buf, u32 response_buf_size, u32 flags)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 status = ~0; /* undefined */
 	int ret;
 
 	if (unlikely(!ct->enabled)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct intel_guc *guc = ct_to_guc(ct);
 		struct intel_uc *uc = container_of(guc, struct intel_uc, guc);
 
 		WARN(!uc->reset_in_progress, "Unexpected send: action=%#x\n", *action);
+<<<<<<< HEAD
 		return -ENODEV;
 	}
 
@@ -1052,6 +1279,17 @@ int intel_guc_ct_send(struct intel_guc_ct *ct, const u32 *action, u32 len,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENODEV;
+	}
+
+	if (unlikely(ct->ctbs.send.broken))
+		return -EPIPE;
+
+	if (flags & INTEL_GUC_CT_SEND_NB)
+		return ct_send_nb(ct, action, len, flags);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = ct_send(ct, action, len, response_buf, response_buf_size, &status);
 	if (unlikely(ret < 0)) {
 		CT_ERROR(ct, "Sending action %#x failed (err=%d status=%#X)\n",
@@ -1064,6 +1302,7 @@ int intel_guc_ct_send(struct intel_guc_ct *ct, const u32 *action, u32 len,
 	return ret;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static inline unsigned int ct_header_get_len(u32 header)
@@ -1082,6 +1321,8 @@ static inline bool ct_header_is_response(u32 header)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct ct_incoming_msg *ct_alloc_msg(u32 num_dwords)
 {
 	struct ct_incoming_msg *msg;
@@ -1106,12 +1347,17 @@ static int ct_read(struct intel_guc_ct *ct, struct ct_incoming_msg **msg)
 	struct intel_guc_ct_buffer *ctb = &ct->ctbs.recv;
 	struct guc_ct_buffer_desc *desc = ctb->desc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 head = ctb->head;
 	u32 tail = READ_ONCE(desc->tail);
 =======
 	u32 head = desc->head;
 	u32 tail = desc->tail;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 head = ctb->head;
+	u32 tail = READ_ONCE(desc->tail);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 size = ctb->size;
 	u32 *cmds = ctb->cmds;
 	s32 available;
@@ -1119,6 +1365,7 @@ static int ct_read(struct intel_guc_ct *ct, struct ct_incoming_msg **msg)
 	unsigned int i;
 	u32 header;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (unlikely(ctb->broken))
 		return -EPIPE;
@@ -1144,17 +1391,38 @@ static int ct_read(struct intel_guc_ct *ct, struct ct_incoming_msg **msg)
 	}
 =======
 	if (unlikely(desc->is_in_error))
+=======
+	if (unlikely(ctb->broken))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EPIPE;
 
-	if (unlikely(!IS_ALIGNED(head | tail, 4) ||
-		     (tail | head) >= size))
+	if (unlikely(desc->status))
 		goto corrupted;
 
+<<<<<<< HEAD
 	/* later calculations will be done in dwords */
 	head /= 4;
 	tail /= 4;
 	size /= 4;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(head > size);
+
+#ifdef CONFIG_DRM_I915_DEBUG_GUC
+	if (unlikely(head != READ_ONCE(desc->head))) {
+		CT_ERROR(ct, "Head was modified %u != %u\n",
+			 desc->head, head);
+		desc->status |= GUC_CTB_STATUS_MISMATCH;
+		goto corrupted;
+	}
+#endif
+	if (unlikely(tail >= size)) {
+		CT_ERROR(ct, "Invalid tail offset %u >= %u)\n",
+			 tail, size);
+		desc->status |= GUC_CTB_STATUS_OVERFLOW;
+		goto corrupted;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* tail == head condition indicates empty */
 	available = tail - head;
@@ -1167,10 +1435,14 @@ static int ct_read(struct intel_guc_ct *ct, struct ct_incoming_msg **msg)
 	if (unlikely(available < 0))
 		available += size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	CT_DEBUG(ct, "available %d (%u:%u:%u)\n", available, head, tail, size);
 =======
 	CT_DEBUG(ct, "available %d (%u:%u)\n", available, head, tail);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	CT_DEBUG(ct, "available %d (%u:%u:%u)\n", available, head, tail, size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEM_BUG_ON(available < 0);
 
 	header = cmds[head];
@@ -1178,10 +1450,14 @@ static int ct_read(struct intel_guc_ct *ct, struct ct_incoming_msg **msg)
 
 	/* message len with header */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	len = FIELD_GET(GUC_CTB_MSG_0_NUM_DWORDS, header) + GUC_CTB_MSG_MIN_LEN;
 =======
 	len = ct_header_get_len(header) + 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	len = FIELD_GET(GUC_CTB_MSG_0_NUM_DWORDS, header) + GUC_CTB_MSG_MIN_LEN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(len > (u32)available)) {
 		CT_ERROR(ct, "Incomplete message %*ph %*ph %*ph\n",
 			 4, &header,
@@ -1190,9 +1466,13 @@ static int ct_read(struct intel_guc_ct *ct, struct ct_incoming_msg **msg)
 			 4 * (head + available - 1 > size ?
 			      available - 1 - size + head : 0), &cmds[0]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		desc->status |= GUC_CTB_STATUS_UNDERFLOW;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		desc->status |= GUC_CTB_STATUS_UNDERFLOW;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto corrupted;
 	}
 
@@ -1216,12 +1496,16 @@ static int ct_read(struct intel_guc_ct *ct, struct ct_incoming_msg **msg)
 	CT_DEBUG(ct, "received %*ph\n", 4 * len, (*msg)->msg);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* update local copies */
 	ctb->head = head;
 
 	/* now update descriptor */
 	WRITE_ONCE(desc->head, head);
 
+<<<<<<< HEAD
 	return available - len;
 
 corrupted:
@@ -1240,51 +1524,47 @@ static int ct_handle_response(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 	u32 datalen = len - GUC_HXG_MSG_MIN_LEN;
 =======
 	desc->head = head * 4;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return available - len;
 
 corrupted:
-	CT_ERROR(ct, "Corrupted descriptor addr=%#x head=%u tail=%u size=%u\n",
-		 desc->addr, desc->head, desc->tail, desc->size);
-	desc->is_in_error = 1;
+	CT_ERROR(ct, "Corrupted descriptor head=%u tail=%u status=%#x\n",
+		 desc->head, desc->tail, desc->status);
+	ctb->broken = true;
 	return -EPIPE;
 }
 
-/**
- * DOC: CTB GuC to Host response
- *
- * Format of the CTB GuC to Host response message is as follows::
- *
- *      +------------+---------+---------+---------+---------+---------+
- *      |   msg[0]   |   [1]   |   [2]   |   [3]   |   ...   |  [n-1]  |
- *      +------------+---------+---------+---------+---------+---------+
- *      |   MESSAGE  |       MESSAGE PAYLOAD                           |
- *      +   HEADER   +---------+---------+---------+---------+---------+
- *      |            |    0    |    1    |    2    |   ...   |    n    |
- *      +============+=========+=========+=========+=========+=========+
- *      |  len >= 2  |  FENCE  |  STATUS |   response specific data    |
- *      +------+-----+---------+---------+---------+---------+---------+
- *
- *                   ^-----------------------len-----------------------^
- */
-
 static int ct_handle_response(struct intel_guc_ct *ct, struct ct_incoming_msg *response)
 {
+<<<<<<< HEAD
 	u32 header = response->msg[0];
 	u32 len = ct_header_get_len(header);
 	u32 fence;
 	u32 status;
 	u32 datalen;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 len = FIELD_GET(GUC_CTB_MSG_0_NUM_DWORDS, response->msg[0]);
+	u32 fence = FIELD_GET(GUC_CTB_MSG_0_FENCE, response->msg[0]);
+	const u32 *hxg = &response->msg[GUC_CTB_MSG_MIN_LEN];
+	const u32 *data = &hxg[GUC_HXG_MSG_MIN_LEN];
+	u32 datalen = len - GUC_HXG_MSG_MIN_LEN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ct_request *req;
 	unsigned long flags;
 	bool found = false;
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEM_BUG_ON(len < GUC_HXG_MSG_MIN_LEN);
 	GEM_BUG_ON(FIELD_GET(GUC_HXG_MSG_0_ORIGIN, hxg[0]) != GUC_HXG_ORIGIN_GUC);
 	GEM_BUG_ON(FIELD_GET(GUC_HXG_MSG_0_TYPE, hxg[0]) != GUC_HXG_TYPE_RESPONSE_SUCCESS &&
 		   FIELD_GET(GUC_HXG_MSG_0_TYPE, hxg[0]) != GUC_HXG_TYPE_RESPONSE_FAILURE);
+<<<<<<< HEAD
 
 	CT_DEBUG(ct, "response fence %u status %#x\n", fence, hxg[0]);
 =======
@@ -1308,6 +1588,10 @@ static int ct_handle_response(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 
 	CT_DEBUG(ct, "response fence %u status %#x\n", fence, status);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	CT_DEBUG(ct, "response fence %u status %#x\n", fence, hxg[0]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&ct->requests.lock, flags);
 	list_for_each_entry(req, &ct->requests.pending, link) {
@@ -1323,6 +1607,7 @@ static int ct_handle_response(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 			err = -EMSGSIZE;
 		}
 		if (datalen)
+<<<<<<< HEAD
 <<<<<<< HEAD
 			memcpy(req->response_buf, data, 4 * datalen);
 		req->response_len = datalen;
@@ -1342,18 +1627,28 @@ static int ct_handle_response(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 	spin_unlock_irqrestore(&ct->requests.lock, flags);
 =======
 			memcpy(req->response_buf, response->msg + 3, 4 * datalen);
+=======
+			memcpy(req->response_buf, data, 4 * datalen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		req->response_len = datalen;
-		WRITE_ONCE(req->status, status);
+		WRITE_ONCE(req->status, hxg[0]);
 		found = true;
 		break;
 	}
-	spin_unlock_irqrestore(&ct->requests.lock, flags);
-
 	if (!found) {
 		CT_ERROR(ct, "Unsolicited response (fence %u)\n", fence);
-		return -ENOKEY;
+		CT_ERROR(ct, "Could not find fence=%u, last_fence=%u\n", fence,
+			 ct->requests.last_fence);
+		list_for_each_entry(req, &ct->requests.pending, link)
+			CT_ERROR(ct, "request %u awaits response\n",
+				 req->fence);
+		err = -ENOKEY;
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irqrestore(&ct->requests.lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(err))
 		return err;
@@ -1365,6 +1660,7 @@ static int ct_handle_response(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 static int ct_process_request(struct intel_guc_ct *ct, struct ct_incoming_msg *request)
 {
 	struct intel_guc *guc = ct_to_guc(ct);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	const u32 *hxg;
 	const u32 *payload;
@@ -1378,14 +1674,26 @@ static int ct_process_request(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 	len = hxg_len - GUC_HXG_MSG_MIN_LEN;
 =======
 	u32 header, action, len;
+=======
+	const u32 *hxg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const u32 *payload;
+	u32 hxg_len, action, len;
 	int ret;
 
+<<<<<<< HEAD
 	header = request->msg[0];
 	payload = &request->msg[1];
 	action = ct_header_get_action(header);
 	len = ct_header_get_len(header);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hxg = &request->msg[GUC_CTB_MSG_MIN_LEN];
+	hxg_len = request->size - GUC_CTB_MSG_MIN_LEN;
+	payload = &hxg[GUC_HXG_MSG_MIN_LEN];
+	action = FIELD_GET(GUC_HXG_EVENT_MSG_0_ACTION, hxg[0]);
+	len = hxg_len - GUC_HXG_MSG_MIN_LEN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	CT_DEBUG(ct, "request %x %*ph\n", action, 4 * len, payload);
 
@@ -1394,6 +1702,9 @@ static int ct_process_request(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 		ret = intel_guc_to_host_process_recv_msg(guc, payload, len);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case INTEL_GUC_ACTION_DEREGISTER_CONTEXT_DONE:
 		ret = intel_guc_deregister_done_process_msg(guc, payload,
 							    len);
@@ -1407,8 +1718,11 @@ static int ct_process_request(struct intel_guc_ct *ct, struct ct_incoming_msg *r
 	case INTEL_GUC_ACTION_ENGINE_FAILURE_NOTIFICATION:
 		ret = intel_guc_engine_failure_process_msg(guc, payload, len);
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		ret = -EOPNOTSUPP;
 		break;
@@ -1464,6 +1778,7 @@ static void ct_incoming_request_worker_func(struct work_struct *w)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int ct_handle_event(struct intel_guc_ct *ct, struct ct_incoming_msg *request)
 {
 	const u32 *hxg = &request->msg[GUC_CTB_MSG_MIN_LEN];
@@ -1502,11 +1817,31 @@ static int ct_handle_event(struct intel_guc_ct *ct, struct ct_incoming_msg *requ
  */
 
 static int ct_handle_request(struct intel_guc_ct *ct, struct ct_incoming_msg *request)
+=======
+static int ct_handle_event(struct intel_guc_ct *ct, struct ct_incoming_msg *request)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	const u32 *hxg = &request->msg[GUC_CTB_MSG_MIN_LEN];
+	u32 action = FIELD_GET(GUC_HXG_EVENT_MSG_0_ACTION, hxg[0]);
 	unsigned long flags;
 
+<<<<<<< HEAD
 	GEM_BUG_ON(ct_header_is_response(request->msg[0]));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(FIELD_GET(GUC_HXG_MSG_0_TYPE, hxg[0]) != GUC_HXG_TYPE_EVENT);
+
+	/*
+	 * Adjusting the space must be done in IRQ or deadlock can occur as the
+	 * CTB processing in the below workqueue can send CTBs which creates a
+	 * circular dependency if the space was returned there.
+	 */
+	switch (action) {
+	case INTEL_GUC_ACTION_SCHED_CONTEXT_MODE_DONE:
+	case INTEL_GUC_ACTION_DEREGISTER_CONTEXT_DONE:
+		g2h_release_space(ct, request->size);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&ct->requests.lock, flags);
 	list_add_tail(&request->link, &ct->requests.incoming);
@@ -1516,6 +1851,7 @@ static int ct_handle_request(struct intel_guc_ct *ct, struct ct_incoming_msg *re
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static int ct_handle_hxg(struct intel_guc_ct *ct, struct ct_incoming_msg *msg)
 {
@@ -1566,15 +1902,60 @@ static void ct_handle_msg(struct intel_guc_ct *ct, struct ct_incoming_msg *msg)
 		err = -EOPNOTSUPP;
 =======
 static void ct_handle_msg(struct intel_guc_ct *ct, struct ct_incoming_msg *msg)
+=======
+static int ct_handle_hxg(struct intel_guc_ct *ct, struct ct_incoming_msg *msg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	u32 header = msg->msg[0];
+	u32 origin, type;
+	u32 *hxg;
 	int err;
 
-	if (ct_header_is_response(header))
+	if (unlikely(msg->size < GUC_CTB_HXG_MSG_MIN_LEN))
+		return -EBADMSG;
+
+	hxg = &msg->msg[GUC_CTB_MSG_MIN_LEN];
+
+	origin = FIELD_GET(GUC_HXG_MSG_0_ORIGIN, hxg[0]);
+	if (unlikely(origin != GUC_HXG_ORIGIN_GUC)) {
+		err = -EPROTO;
+		goto failed;
+	}
+
+	type = FIELD_GET(GUC_HXG_MSG_0_TYPE, hxg[0]);
+	switch (type) {
+	case GUC_HXG_TYPE_EVENT:
+		err = ct_handle_event(ct, msg);
+		break;
+	case GUC_HXG_TYPE_RESPONSE_SUCCESS:
+	case GUC_HXG_TYPE_RESPONSE_FAILURE:
 		err = ct_handle_response(ct, msg);
+		break;
+	default:
+		err = -EOPNOTSUPP;
+	}
+
+	if (unlikely(err)) {
+failed:
+		CT_ERROR(ct, "Failed to handle HXG message (%pe) %*ph\n",
+			 ERR_PTR(err), 4 * GUC_HXG_MSG_MIN_LEN, hxg);
+	}
+	return err;
+}
+
+static void ct_handle_msg(struct intel_guc_ct *ct, struct ct_incoming_msg *msg)
+{
+	u32 format = FIELD_GET(GUC_CTB_MSG_0_FORMAT, msg->msg[0]);
+	int err;
+
+	if (format == GUC_CTB_FORMAT_HXG)
+		err = ct_handle_hxg(ct, msg);
 	else
+<<<<<<< HEAD
 		err = ct_handle_request(ct, msg);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(err)) {
 		CT_ERROR(ct, "Failed to process CT message (%pe) %*ph\n",
@@ -1638,6 +2019,9 @@ void intel_guc_ct_event_handler(struct intel_guc_ct *ct)
 	ct_try_receive_message(ct);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void intel_guc_ct_print_info(struct intel_guc_ct *ct,
 			     struct drm_printer *p)
@@ -1660,5 +2044,8 @@ void intel_guc_ct_print_info(struct intel_guc_ct *ct,
 	drm_printf(p, "Tail: %u\n",
 		   ct->ctbs.recv.desc->tail);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

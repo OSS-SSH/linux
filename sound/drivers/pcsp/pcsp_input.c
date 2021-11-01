@@ -79,10 +79,14 @@ int pcspkr_input_init(struct input_dev **rdev, struct device *dev)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct input_dev *input_dev = devm_input_allocate_device(dev);
 =======
 	struct input_dev *input_dev = input_allocate_device();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct input_dev *input_dev = devm_input_allocate_device(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!input_dev)
 		return -ENOMEM;
 
@@ -100,6 +104,7 @@ int pcspkr_input_init(struct input_dev **rdev, struct device *dev)
 
 	err = input_register_device(input_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err)
 		return err;
 =======
@@ -108,10 +113,15 @@ int pcspkr_input_init(struct input_dev **rdev, struct device *dev)
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*rdev = input_dev;
 	return 0;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -123,3 +133,5 @@ int pcspkr_input_remove(struct input_dev *dev)
 	return 0;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

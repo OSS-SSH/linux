@@ -341,11 +341,17 @@ static void acm_process_notification(struct acm *acm, unsigned char *buf)
 		spin_unlock_irqrestore(&acm->read_lock, flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (newctrl & ACM_CTRL_BRK)
 			tty_flip_buffer_push(&acm->port);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (newctrl & ACM_CTRL_BRK)
+			tty_flip_buffer_push(&acm->port);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (difference)
 			wake_up_all(&acm->wioctl);
 
@@ -482,6 +488,9 @@ static int acm_submit_read_urbs(struct acm *acm, gfp_t mem_flags)
 static void acm_process_read_urb(struct acm *acm, struct urb *urb)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 
 	if (!urb->actual_length)
@@ -492,6 +501,7 @@ static void acm_process_read_urb(struct acm *acm, struct urb *urb)
 			urb->actual_length);
 	spin_unlock_irqrestore(&acm->read_lock, flags);
 
+<<<<<<< HEAD
 =======
 	if (!urb->actual_length)
 		return;
@@ -499,6 +509,8 @@ static void acm_process_read_urb(struct acm *acm, struct urb *urb)
 	tty_insert_flip_string(&acm->port, urb->transfer_buffer,
 			urb->actual_length);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tty_flip_buffer_push(&acm->port);
 }
 
@@ -746,11 +758,16 @@ static void acm_port_destruct(struct tty_port *port)
 	struct acm *acm = container_of(port, struct acm, port);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (acm->minor != ACM_MINOR_INVALID)
 		acm_release_minor(acm);
 =======
 	acm_release_minor(acm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (acm->minor != ACM_MINOR_INVALID)
+		acm_release_minor(acm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_put_intf(acm->control);
 	kfree(acm->country_codes);
 	kfree(acm);
@@ -1348,6 +1365,7 @@ made_compressed_probe:
 
 	minor = acm_alloc_minor(acm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (minor < 0) {
 		acm->minor = ACM_MINOR_INVALID;
 		goto err_put_port;
@@ -1356,6 +1374,12 @@ made_compressed_probe:
 	if (minor < 0)
 		goto err_put_port;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (minor < 0) {
+		acm->minor = ACM_MINOR_INVALID;
+		goto err_put_port;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	acm->minor = minor;
 	acm->dev = usb_dev;
@@ -2059,15 +2083,21 @@ static int __init acm_init(void)
 {
 	int retval;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acm_tty_driver = tty_alloc_driver(ACM_TTY_MINORS, TTY_DRIVER_REAL_RAW |
 			TTY_DRIVER_DYNAMIC_DEV);
 	if (IS_ERR(acm_tty_driver))
 		return PTR_ERR(acm_tty_driver);
+<<<<<<< HEAD
 =======
 	acm_tty_driver = alloc_tty_driver(ACM_TTY_MINORS);
 	if (!acm_tty_driver)
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acm_tty_driver->driver_name = "acm",
 	acm_tty_driver->name = "ttyACM",
 	acm_tty_driver->major = ACM_TTY_MAJOR,
@@ -2075,9 +2105,12 @@ static int __init acm_init(void)
 	acm_tty_driver->type = TTY_DRIVER_TYPE_SERIAL,
 	acm_tty_driver->subtype = SERIAL_TYPE_NORMAL,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	acm_tty_driver->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acm_tty_driver->init_termios = tty_std_termios;
 	acm_tty_driver->init_termios.c_cflag = B9600 | CS8 | CREAD |
 								HUPCL | CLOCAL;
@@ -2086,10 +2119,14 @@ static int __init acm_init(void)
 	retval = tty_register_driver(acm_tty_driver);
 	if (retval) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tty_driver_kref_put(acm_tty_driver);
 =======
 		put_tty_driver(acm_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(acm_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return retval;
 	}
 
@@ -2097,10 +2134,14 @@ static int __init acm_init(void)
 	if (retval) {
 		tty_unregister_driver(acm_tty_driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tty_driver_kref_put(acm_tty_driver);
 =======
 		put_tty_driver(acm_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(acm_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return retval;
 	}
 
@@ -2114,10 +2155,14 @@ static void __exit acm_exit(void)
 	usb_deregister(&acm_driver);
 	tty_unregister_driver(acm_tty_driver);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(acm_tty_driver);
 =======
 	put_tty_driver(acm_tty_driver);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(acm_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	idr_destroy(&acm_minors);
 }
 

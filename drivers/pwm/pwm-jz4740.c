@@ -246,6 +246,7 @@ static int jz4740_pwm_probe(struct platform_device *pdev)
 	jz4740->chip.npwm = info->num_pwms;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return devm_pwmchip_add(dev, &jz4740->chip);
 =======
 	platform_set_drvdata(pdev, jz4740);
@@ -259,6 +260,9 @@ static int jz4740_pwm_remove(struct platform_device *pdev)
 
 	return pwmchip_remove(&jz4740->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return devm_pwmchip_add(dev, &jz4740->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct soc_info __maybe_unused jz4740_soc_info = {
@@ -285,9 +289,12 @@ static struct platform_driver jz4740_pwm_driver = {
 	},
 	.probe = jz4740_pwm_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = jz4740_pwm_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_platform_driver(jz4740_pwm_driver);
 

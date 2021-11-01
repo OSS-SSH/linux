@@ -703,10 +703,15 @@ static int ocfs2_local_read_info(struct super_block *sb, int type)
 	oinfo->dqi_type = type;
 	INIT_LIST_HEAD(&oinfo->dqi_chunk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	oinfo->dqi_gqinode = NULL;
 	ocfs2_qinfo_lock_res_init(&oinfo->dqi_gqlock, oinfo);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	oinfo->dqi_gqinode = NULL;
+	ocfs2_qinfo_lock_res_init(&oinfo->dqi_gqlock, oinfo);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	oinfo->dqi_rec = NULL;
 	oinfo->dqi_lqi_bh = NULL;
 	oinfo->dqi_libh = NULL;

@@ -23,6 +23,9 @@ static inline int syscall_get_nr(struct task_struct *task,
 				 struct pt_regs *regs)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ENABLED(CONFIG_AEABI) && !IS_ENABLED(CONFIG_OABI_COMPAT))
 		return task_thread_info(task)->abi_syscall;
 
@@ -38,9 +41,12 @@ static inline bool __in_oabi_syscall(struct task_struct *task)
 static inline bool in_oabi_syscall(void)
 {
 	return __in_oabi_syscall(current);
+<<<<<<< HEAD
 =======
 	return task_thread_info(task)->syscall;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void syscall_rollback(struct task_struct *task,

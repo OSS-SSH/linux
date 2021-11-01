@@ -22,11 +22,16 @@
 	EM( MR_NUMA_MISPLACED,	"numa_misplaced")		\
 	EM( MR_CONTIG_RANGE,	"contig_range")			\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	EM( MR_LONGTERM_PIN,	"longterm_pin")			\
 	EMe(MR_DEMOTION,	"demotion")
 =======
 	EMe(MR_LONGTERM_PIN,	"longterm_pin")
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	EM( MR_LONGTERM_PIN,	"longterm_pin")			\
+	EMe(MR_DEMOTION,	"demotion")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * First define the enums in the above macros to be exported to userspace

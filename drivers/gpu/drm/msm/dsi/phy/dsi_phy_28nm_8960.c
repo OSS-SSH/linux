@@ -429,10 +429,14 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
 
 	snprintf(parent_name, 32, "dsi%dvco_clk", pll_28nm->phy->id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snprintf(clk_name, 32, "dsi%dpllbyte", pll_28nm->phy->id + 1);
 =======
 	snprintf(clk_name, 32, "dsi%dpllbyte", pll_28nm->phy->id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snprintf(clk_name, 32, "dsi%dpllbyte", pll_28nm->phy->id + 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	bytediv_init.name = clk_name;
 	bytediv_init.ops = &clk_bytediv_ops;
@@ -447,10 +451,14 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
 	provided_clocks[DSI_BYTE_PLL_CLK] = &bytediv->hw;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snprintf(clk_name, 32, "dsi%dpll", pll_28nm->phy->id + 1);
 =======
 	snprintf(clk_name, 32, "dsi%dpll", pll_28nm->phy->id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snprintf(clk_name, 32, "dsi%dpll", pll_28nm->phy->id + 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* DIV3 */
 	hw = devm_clk_hw_register_divider(dev, clk_name,
 				parent_name, 0, pll_28nm->phy->pll_base +

@@ -436,10 +436,14 @@ static int mmc_busy_cb(void *cb_data, bool *busy)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (data->busy_cmd != MMC_BUSY_IO && host->ops->card_busy) {
 =======
 	if (host->ops->card_busy) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (data->busy_cmd != MMC_BUSY_IO && host->ops->card_busy) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*busy = host->ops->card_busy(host);
 		return 0;
 	}
@@ -462,9 +466,13 @@ static int mmc_busy_cb(void *cb_data, bool *busy)
 	case MMC_BUSY_HPI:
 	case MMC_BUSY_EXTR_SINGLE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case MMC_BUSY_IO:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MMC_BUSY_IO:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		err = -EINVAL;
@@ -518,9 +526,13 @@ int __mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(__mmc_poll_for_busy);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(__mmc_poll_for_busy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
 		      bool retry_crc_err, enum mmc_busy_cmd busy_cmd)
@@ -534,9 +546,13 @@ int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
 	return __mmc_poll_for_busy(card, timeout_ms, &mmc_busy_cb, &cb_data);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(mmc_poll_for_busy);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(mmc_poll_for_busy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool mmc_prepare_busy_cmd(struct mmc_host *host, struct mmc_command *cmd,
 			  unsigned int timeout_ms)
@@ -973,6 +989,9 @@ void mmc_run_bkops(struct mmc_card *card)
 	err = mmc_switch(card, EXT_CSD_CMD_SET_NORMAL,
 			 EXT_CSD_BKOPS_START, 1, MMC_BKOPS_TIMEOUT_MS);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If the BKOPS timed out, the card is probably still busy in the
 	 * R1_STATE_PRG. Rather than continue to wait, let's try to abort
@@ -982,10 +1001,13 @@ void mmc_run_bkops(struct mmc_card *card)
 		pr_warn("%s: BKOPS aborted\n", mmc_hostname(card->host));
 	else if (err)
 		pr_warn("%s: Error %d running bkops\n",
+<<<<<<< HEAD
 =======
 	if (err)
 		pr_warn("%s: Error %d starting bkops\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mmc_hostname(card->host), err);
 
 	mmc_retune_release(card->host);

@@ -163,10 +163,15 @@
 #define SPI_3WIRE_RX		4
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define STM32_SPI_AUTOSUSPEND_DELAY		1	/* 1 ms */
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define STM32_SPI_AUTOSUSPEND_DELAY		1	/* 1 ms */
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * use PIO for small transfers, avoiding DMA setup/teardown overhead for drivers
  * without fifo buffers.
@@ -574,24 +579,32 @@ static void stm32f4_spi_read_rx(struct stm32_spi *spi)
  * stm32h7_spi_read_rxfifo - Read bytes in Receive Data Register
  * @spi: pointer to the spi controller data structure
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * @flush: boolean indicating that FIFO should be flushed
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Write in rx_buf depends on remaining bytes to avoid to write beyond
  * rx_buf end.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void stm32h7_spi_read_rxfifo(struct stm32_spi *spi)
 =======
 static void stm32h7_spi_read_rxfifo(struct stm32_spi *spi, bool flush)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void stm32h7_spi_read_rxfifo(struct stm32_spi *spi)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 sr = readl_relaxed(spi->base + STM32H7_SPI_SR);
 	u32 rxplvl = FIELD_GET(STM32H7_SPI_SR_RXPLVL, sr);
 
 	while ((spi->rx_len > 0) &&
 	       ((sr & STM32H7_SPI_SR_RXP) ||
+<<<<<<< HEAD
 <<<<<<< HEAD
 		((sr & STM32H7_SPI_SR_EOT) &&
 		 ((sr & STM32H7_SPI_SR_RXWNE) || (rxplvl > 0))))) {
@@ -606,17 +619,30 @@ static void stm32h7_spi_read_rxfifo(struct stm32_spi *spi, bool flush)
 		if ((spi->rx_len >= sizeof(u32)) ||
 		    (flush && (sr & STM32H7_SPI_SR_RXWNE))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		((sr & STM32H7_SPI_SR_EOT) &&
+		 ((sr & STM32H7_SPI_SR_RXWNE) || (rxplvl > 0))))) {
+		u32 offs = spi->cur_xferlen - spi->rx_len;
+
+		if ((spi->rx_len >= sizeof(u32)) ||
+		    (sr & STM32H7_SPI_SR_RXWNE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			u32 *rx_buf32 = (u32 *)(spi->rx_buf + offs);
 
 			*rx_buf32 = readl_relaxed(spi->base + STM32H7_SPI_RXDR);
 			spi->rx_len -= sizeof(u32);
 		} else if ((spi->rx_len >= sizeof(u16)) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   (!(sr & STM32H7_SPI_SR_RXWNE) &&
 			    (rxplvl >= 2 || spi->cur_bpw > 8))) {
 =======
 			   (flush && (rxplvl >= 2 || spi->cur_bpw > 8))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   (!(sr & STM32H7_SPI_SR_RXWNE) &&
+			    (rxplvl >= 2 || spi->cur_bpw > 8))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			u16 *rx_buf16 = (u16 *)(spi->rx_buf + offs);
 
 			*rx_buf16 = readw_relaxed(spi->base + STM32H7_SPI_RXDR);
@@ -633,12 +659,17 @@ static void stm32h7_spi_read_rxfifo(struct stm32_spi *spi, bool flush)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_dbg(spi->dev, "%s: %d bytes left (sr=%08x)\n",
 		__func__, spi->rx_len, sr);
 =======
 	dev_dbg(spi->dev, "%s%s: %d bytes left\n", __func__,
 		flush ? "(flush)" : "", spi->rx_len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_dbg(spi->dev, "%s: %d bytes left (sr=%08x)\n",
+		__func__, spi->rx_len, sr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -706,6 +737,7 @@ static void stm32f4_spi_disable(struct stm32_spi *spi)
  * @spi: pointer to the spi controller data structure
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * RX-Fifo is flushed when SPI controller is disabled.
 =======
  * RX-Fifo is flushed when SPI controller is disabled. To prevent any data
@@ -716,15 +748,22 @@ static void stm32f4_spi_disable(struct stm32_spi *spi)
  * raised. So the subsystem unprepare_message call allows us to properly
  * complete the transfer from an hardware point of view.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * RX-Fifo is flushed when SPI controller is disabled.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void stm32h7_spi_disable(struct stm32_spi *spi)
 {
 	unsigned long flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 cr1;
 =======
 	u32 cr1, sr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 cr1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(spi->dev, "disable controller\n");
 
@@ -737,6 +776,7 @@ static void stm32h7_spi_disable(struct stm32_spi *spi)
 		return;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	/* Wait on EOT or suspend the flow */
@@ -759,6 +799,8 @@ static void stm32h7_spi_disable(struct stm32_spi *spi)
 		stm32h7_spi_read_rxfifo(spi, true);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (spi->cur_usedma && spi->dma_tx)
 		dmaengine_terminate_all(spi->dma_tx);
 	if (spi->cur_usedma && spi->dma_rx)
@@ -927,11 +969,15 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
 
 	mask = ier;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * EOTIE enables irq from EOT, SUSP and TXC events. We need to set
 	 * SUSP to acknowledge it later. TXC is automatically cleared
 	 */
 
+<<<<<<< HEAD
 	mask |= STM32H7_SPI_SR_SUSP;
 	/*
 	 * DXPIE is set in Full-Duplex, one IT will be raised if TXP and RXP
@@ -941,15 +987,21 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
 		mask |= STM32H7_SPI_SR_TXP | STM32H7_SPI_SR_RXP;
 =======
 	/* EOTIE is triggered on EOT, SUSP and TXC events. */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mask |= STM32H7_SPI_SR_SUSP;
 	/*
-	 * When TXTF is set, DXPIE and TXPIE are cleared. So in case of
-	 * Full-Duplex, need to poll RXP event to know if there are remaining
-	 * data, before disabling SPI.
+	 * DXPIE is set in Full-Duplex, one IT will be raised if TXP and RXP
+	 * are set. So in case of Full-Duplex, need to poll TXP and RXP event.
 	 */
+<<<<<<< HEAD
 	if (spi->rx_buf && !spi->cur_usedma)
 		mask |= STM32H7_SPI_SR_RXP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((spi->cur_comm == SPI_FULL_DUPLEX) && !spi->cur_usedma)
+		mask |= STM32H7_SPI_SR_TXP | STM32H7_SPI_SR_RXP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!(sr & mask)) {
 		dev_warn(spi->dev, "spurious IT (sr=0x%08x, ier=0x%08x)\n",
@@ -966,10 +1018,14 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
 			dev_dbg_ratelimited(spi->dev, "Communication suspended\n");
 		if (!spi->cur_usedma && (spi->rx_buf && (spi->rx_len > 0)))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			stm32h7_spi_read_rxfifo(spi);
 =======
 			stm32h7_spi_read_rxfifo(spi, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			stm32h7_spi_read_rxfifo(spi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * If communication is suspended while using DMA, it means
 		 * that something went wrong, so stop the current transfer
@@ -991,14 +1047,20 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
 	if (sr & STM32H7_SPI_SR_EOT) {
 		if (!spi->cur_usedma && (spi->rx_buf && (spi->rx_len > 0)))
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			stm32h7_spi_read_rxfifo(spi);
 		if (!spi->cur_usedma ||
 		    (spi->cur_comm == SPI_SIMPLEX_TX || spi->cur_comm == SPI_3WIRE_TX))
 			end = true;
+<<<<<<< HEAD
 =======
 			stm32h7_spi_read_rxfifo(spi, true);
 		end = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (sr & STM32H7_SPI_SR_TXP)
@@ -1008,10 +1070,14 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
 	if (sr & STM32H7_SPI_SR_RXP)
 		if (!spi->cur_usedma && (spi->rx_buf && (spi->rx_len > 0)))
 <<<<<<< HEAD
+<<<<<<< HEAD
 			stm32h7_spi_read_rxfifo(spi);
 =======
 			stm32h7_spi_read_rxfifo(spi, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			stm32h7_spi_read_rxfifo(spi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	writel_relaxed(sr & mask, spi->base + STM32H7_SPI_IFCR);
 
@@ -1111,23 +1177,32 @@ static void stm32f4_spi_dma_tx_cb(void *data)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
  * stm32_spi_dma_rx_cb - dma callback
 =======
  * stm32f4_spi_dma_rx_cb - dma callback
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * stm32_spi_dma_rx_cb - dma callback
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @data: pointer to the spi controller data structure
  *
  * DMA callback is called when the transfer is complete for DMA RX channel.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void stm32_spi_dma_rx_cb(void *data)
 =======
 static void stm32f4_spi_dma_rx_cb(void *data)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void stm32_spi_dma_rx_cb(void *data)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct stm32_spi *spi = data;
 
 	spi_finalize_current_transfer(spi->master);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	spi->cfg->disable(spi);
 =======
@@ -1158,6 +1233,9 @@ static void stm32h7_spi_dma_cb(void *data)
 
 	/* Now wait for EOT, or SUSP or OVR in case of error */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spi->cfg->disable(spi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1324,6 +1402,9 @@ static void stm32f4_spi_transfer_one_dma_start(struct stm32_spi *spi)
 static void stm32h7_spi_transfer_one_dma_start(struct stm32_spi *spi)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t ier = STM32H7_SPI_IER_OVRIE | STM32H7_SPI_IER_MODFIE;
 
 	/* Enable the interrupts */
@@ -1331,6 +1412,7 @@ static void stm32h7_spi_transfer_one_dma_start(struct stm32_spi *spi)
 		ier |= STM32H7_SPI_IER_EOTIE | STM32H7_SPI_IER_TXTFIE;
 
 	stm32_spi_set_bits(spi, STM32H7_SPI_IER, ier);
+<<<<<<< HEAD
 =======
 	/* Enable the interrupts relative to the end of transfer */
 	stm32_spi_set_bits(spi, STM32H7_SPI_IER, STM32H7_SPI_IER_EOTIE |
@@ -1338,6 +1420,8 @@ static void stm32h7_spi_transfer_one_dma_start(struct stm32_spi *spi)
 						 STM32H7_SPI_IER_OVRIE |
 						 STM32H7_SPI_IER_MODFIE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	stm32_spi_enable(spi);
 
@@ -1737,12 +1821,15 @@ static int stm32_spi_transfer_one(struct spi_master *master,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Don't do anything on 0 bytes transfers */
 	if (transfer->len == 0)
 		return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spi->tx_buf = transfer->tx_buf;
 	spi->rx_buf = transfer->rx_buf;
 	spi->tx_len = spi->tx_buf ? transfer->len : 0;
@@ -1857,10 +1944,14 @@ static const struct stm32_spi_cfg stm32f4_spi_cfg = {
 	.transfer_one_dma_start = stm32f4_spi_transfer_one_dma_start,
 	.dma_tx_cb = stm32f4_spi_dma_tx_cb,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.dma_rx_cb = stm32_spi_dma_rx_cb,
 =======
 	.dma_rx_cb = stm32f4_spi_dma_rx_cb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.dma_rx_cb = stm32_spi_dma_rx_cb,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.transfer_one_irq = stm32f4_spi_transfer_one_irq,
 	.irq_handler_event = stm32f4_spi_irq_event,
 	.irq_handler_thread = stm32f4_spi_irq_thread,
@@ -1881,15 +1972,21 @@ static const struct stm32_spi_cfg stm32h7_spi_cfg = {
 	.set_number_of_data = stm32h7_spi_number_of_data,
 	.transfer_one_dma_start = stm32h7_spi_transfer_one_dma_start,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.dma_rx_cb = stm32_spi_dma_rx_cb,
 	/*
 	 * dma_tx_cb is not necessary since in case of TX, dma is followed by
 	 * SPI access hence handling is performed within the SPI interrupt
 	 */
+<<<<<<< HEAD
 =======
 	.dma_rx_cb = stm32h7_spi_dma_cb,
 	.dma_tx_cb = stm32h7_spi_dma_cb,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.transfer_one_irq = stm32h7_spi_transfer_one_irq,
 	.irq_handler_thread = stm32h7_spi_irq_thread,
 	.baud_rate_div_min = STM32H7_SPI_MBR_DIV_MIN,
@@ -2034,6 +2131,7 @@ static int stm32_spi_probe(struct platform_device *pdev)
 		master->can_dma = stm32_spi_can_dma;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_runtime_set_autosuspend_delay(&pdev->dev,
 					 STM32_SPI_AUTOSUSPEND_DELAY);
 	pm_runtime_use_autosuspend(&pdev->dev);
@@ -2042,6 +2140,13 @@ static int stm32_spi_probe(struct platform_device *pdev)
 =======
 	pm_runtime_set_active(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_set_autosuspend_delay(&pdev->dev,
+					 STM32_SPI_AUTOSUSPEND_DELAY);
+	pm_runtime_use_autosuspend(&pdev->dev);
+	pm_runtime_set_active(&pdev->dev);
+	pm_runtime_get_noresume(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_enable(&pdev->dev);
 
 	ret = spi_register_master(master);
@@ -2052,11 +2157,17 @@ static int stm32_spi_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_runtime_mark_last_busy(&pdev->dev);
 	pm_runtime_put_autosuspend(&pdev->dev);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_mark_last_busy(&pdev->dev);
+	pm_runtime_put_autosuspend(&pdev->dev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_info(&pdev->dev, "driver initialized\n");
 
 	return 0;
@@ -2064,11 +2175,17 @@ static int stm32_spi_probe(struct platform_device *pdev)
 err_pm_disable:
 	pm_runtime_disable(&pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_runtime_put_noidle(&pdev->dev);
 	pm_runtime_set_suspended(&pdev->dev);
 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_put_noidle(&pdev->dev);
+	pm_runtime_set_suspended(&pdev->dev);
+	pm_runtime_dont_use_autosuspend(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_dma_release:
 	if (spi->dma_tx)
 		dma_release_channel(spi->dma_tx);
@@ -2086,6 +2203,7 @@ static int stm32_spi_remove(struct platform_device *pdev)
 	struct stm32_spi *spi = spi_master_get_devdata(master);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_runtime_get_sync(&pdev->dev);
 
 	spi_unregister_master(master);
@@ -2101,6 +2219,18 @@ static int stm32_spi_remove(struct platform_device *pdev)
 	spi->cfg->disable(spi);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_get_sync(&pdev->dev);
+
+	spi_unregister_master(master);
+	spi->cfg->disable(spi);
+
+	pm_runtime_disable(&pdev->dev);
+	pm_runtime_put_noidle(&pdev->dev);
+	pm_runtime_set_suspended(&pdev->dev);
+	pm_runtime_dont_use_autosuspend(&pdev->dev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (master->dma_tx)
 		dma_release_channel(master->dma_tx);
 	if (master->dma_rx)
@@ -2109,9 +2239,12 @@ static int stm32_spi_remove(struct platform_device *pdev)
 	clk_disable_unprepare(spi->clk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pm_runtime_disable(&pdev->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pinctrl_pm_select_sleep_state(&pdev->dev);
 

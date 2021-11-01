@@ -367,14 +367,20 @@ static int tegra_cec_probe(struct platform_device *pdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = clk_prepare_enable(cec->clk);
 	if (ret) {
 		dev_err(&pdev->dev, "Unable to prepare clock for CEC\n");
 		return ret;
 	}
+<<<<<<< HEAD
 =======
 	clk_prepare_enable(cec->clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* set context info. */
 	cec->dev = &pdev->dev;
@@ -455,12 +461,16 @@ static int tegra_cec_resume(struct platform_device *pdev)
 	dev_notice(&pdev->dev, "Resuming\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return clk_prepare_enable(cec->clk);
 =======
 	clk_prepare_enable(cec->clk);
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return clk_prepare_enable(cec->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif
 

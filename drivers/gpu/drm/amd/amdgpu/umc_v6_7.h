@@ -24,11 +24,17 @@
 #define __UMC_V6_7_H__
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "soc15_common.h"
 #include "amdgpu.h"
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "soc15_common.h"
+#include "amdgpu.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* EccErrCnt max value */
 #define UMC_V6_7_CE_CNT_MAX		0xffff
 /* umc ce interrupt threshold */
@@ -39,6 +45,9 @@
 #define UMC_V6_7_INST_DIST	0x40000
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* number of umc channel instance with memory map register access */
 #define UMC_V6_7_UMC_INSTANCE_NUM		4
 /* number of umc instance with memory map register access */
@@ -47,6 +56,7 @@
 #define UMC_V6_7_TOTAL_CHANNEL_NUM	(UMC_V6_7_CHANNEL_INSTANCE_NUM * UMC_V6_7_UMC_INSTANCE_NUM)
 /* UMC regiser per channel offset */
 #define UMC_V6_7_PER_CHANNEL_OFFSET		0x400
+<<<<<<< HEAD
 extern const struct amdgpu_umc_ras_funcs umc_v6_7_ras_funcs;
 extern const uint32_t
 	umc_v6_7_channel_idx_tbl_second[UMC_V6_7_UMC_INSTANCE_NUM][UMC_V6_7_CHANNEL_INSTANCE_NUM];
@@ -55,5 +65,12 @@ extern const uint32_t
 =======
 extern const struct amdgpu_umc_ras_funcs umc_v6_7_ras_funcs;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern const struct amdgpu_umc_ras_funcs umc_v6_7_ras_funcs;
+extern const uint32_t
+	umc_v6_7_channel_idx_tbl_second[UMC_V6_7_UMC_INSTANCE_NUM][UMC_V6_7_CHANNEL_INSTANCE_NUM];
+extern const uint32_t
+	umc_v6_7_channel_idx_tbl_first[UMC_V6_7_UMC_INSTANCE_NUM][UMC_V6_7_CHANNEL_INSTANCE_NUM];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

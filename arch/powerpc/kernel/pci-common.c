@@ -30,9 +30,13 @@
 #include <linux/vgaarb.h>
 #include <linux/numa.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/msi.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/msi.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm/processor.h>
 #include <asm/io.h>
@@ -1065,21 +1069,32 @@ void pcibios_bus_add_device(struct pci_dev *dev)
 int pcibios_add_device(struct pci_dev *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct irq_domain *d;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct irq_domain *d;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PCI_IOV
 	if (ppc_md.pcibios_fixup_sriov)
 		ppc_md.pcibios_fixup_sriov(dev);
 #endif /* CONFIG_PCI_IOV */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	d = dev_get_msi_domain(&dev->bus->dev);
 	if (d)
 		dev_set_msi_domain(&dev->dev, d);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	d = dev_get_msi_domain(&dev->bus->dev);
+	if (d)
+		dev_set_msi_domain(&dev->dev, d);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

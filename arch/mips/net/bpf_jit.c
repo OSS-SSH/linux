@@ -663,13 +663,19 @@ static void build_epilogue(struct jit_ctx *ctx)
 	 func##_positive)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool is_bad_offset(int b_off)
 {
 	return b_off > 0x1ffff || b_off < -0x20000;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int build_body(struct jit_ctx *ctx)
 {
 	const struct bpf_prog *prog = ctx->skf;
@@ -737,13 +743,19 @@ load_common:
 			emit_reg_move(r_ret, r_zero, ctx);
 			/* Return with error */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			b_off = b_imm(prog->len, ctx);
 			if (is_bad_offset(b_off))
 				return -E2BIG;
 			emit_b(b_off, ctx);
+<<<<<<< HEAD
 =======
 			emit_b(b_imm(prog->len, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			emit_nop(ctx);
 			break;
 		case BPF_LD | BPF_W | BPF_IND:
@@ -791,14 +803,20 @@ load_ind:
 			emit_reg_move(MIPS_R_A0, r_skb, ctx); /* delay slot */
 			/* Check the error value */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			b_off = b_imm(prog->len, ctx);
 			if (is_bad_offset(b_off))
 				return -E2BIG;
 			emit_bcond(MIPS_COND_NE, r_ret, 0, b_off, ctx);
+<<<<<<< HEAD
 =======
 			emit_bcond(MIPS_COND_NE, r_ret, 0,
 				   b_imm(prog->len, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			emit_reg_move(r_ret, r_zero, ctx);
 			/* We are good */
 			/* X <- P[1:K] & 0xf */
@@ -878,14 +896,20 @@ load_ind:
 			ctx->flags |= SEEN_X | SEEN_A;
 			/* Check if r_X is zero */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			b_off = b_imm(prog->len, ctx);
 			if (is_bad_offset(b_off))
 				return -E2BIG;
 			emit_bcond(MIPS_COND_EQ, r_X, r_zero, b_off, ctx);
+<<<<<<< HEAD
 =======
 			emit_bcond(MIPS_COND_EQ, r_X, r_zero,
 				   b_imm(prog->len, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			emit_load_imm(r_ret, 0, ctx); /* delay slot */
 			emit_div(r_A, r_X, ctx);
 			break;
@@ -894,14 +918,20 @@ load_ind:
 			ctx->flags |= SEEN_X | SEEN_A;
 			/* Check if r_X is zero */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			b_off = b_imm(prog->len, ctx);
 			if (is_bad_offset(b_off))
 				return -E2BIG;
 			emit_bcond(MIPS_COND_EQ, r_X, r_zero, b_off, ctx);
+<<<<<<< HEAD
 =======
 			emit_bcond(MIPS_COND_EQ, r_X, r_zero,
 				   b_imm(prog->len, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			emit_load_imm(r_ret, 0, ctx); /* delay slot */
 			emit_mod(r_A, r_X, ctx);
 			break;
@@ -963,13 +993,19 @@ load_ind:
 		case BPF_JMP | BPF_JA:
 			/* pc += K */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			b_off = b_imm(i + k + 1, ctx);
 			if (is_bad_offset(b_off))
 				return -E2BIG;
 			emit_b(b_off, ctx);
+<<<<<<< HEAD
 =======
 			emit_b(b_imm(i + k + 1, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			emit_nop(ctx);
 			break;
 		case BPF_JMP | BPF_JEQ | BPF_K:
@@ -1100,23 +1136,33 @@ jmp_cmp:
 		case BPF_RET | BPF_A:
 			ctx->flags |= SEEN_A;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (i != prog->len - 1) {
 =======
 			if (i != prog->len - 1)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (i != prog->len - 1) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				/*
 				 * If this is not the last instruction
 				 * then jump to the epilogue
 				 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				b_off = b_imm(prog->len, ctx);
 				if (is_bad_offset(b_off))
 					return -E2BIG;
 				emit_b(b_off, ctx);
 			}
+<<<<<<< HEAD
 =======
 				emit_b(b_imm(prog->len, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			emit_reg_move(r_ret, r_A, ctx); /* delay slot */
 			break;
 		case BPF_RET | BPF_K:
@@ -1131,13 +1177,19 @@ jmp_cmp:
 				 * then jump to the epilogue
 				 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				b_off = b_imm(prog->len, ctx);
 				if (is_bad_offset(b_off))
 					return -E2BIG;
 				emit_b(b_off, ctx);
+<<<<<<< HEAD
 =======
 				emit_b(b_imm(prog->len, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				emit_nop(ctx);
 			}
 			break;
@@ -1196,14 +1248,20 @@ jmp_cmp:
 			emit_load_ptr(r_s0, r_skb, off, ctx);
 			/* error (0) in the delay slot */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			b_off = b_imm(prog->len, ctx);
 			if (is_bad_offset(b_off))
 				return -E2BIG;
 			emit_bcond(MIPS_COND_EQ, r_s0, r_zero, b_off, ctx);
+<<<<<<< HEAD
 =======
 			emit_bcond(MIPS_COND_EQ, r_s0, r_zero,
 				   b_imm(prog->len, ctx), ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			emit_reg_move(r_ret, r_zero, ctx);
 			if (code == (BPF_ANC | SKF_AD_IFINDEX)) {
 				BUILD_BUG_ON(sizeof_field(struct net_device, ifindex) != 4);
@@ -1314,13 +1372,19 @@ void bpf_jit_compile(struct bpf_prog *fp)
 	/* Generate the actual JIT code */
 	build_prologue(&ctx);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (build_body(&ctx)) {
 		module_memfree(ctx.target);
 		goto out;
 	}
+<<<<<<< HEAD
 =======
 	build_body(&ctx);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	build_epilogue(&ctx);
 
 	/* Update the icache */

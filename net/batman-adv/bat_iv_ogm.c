@@ -520,11 +520,15 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_put(primary_if);
 =======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return res;
 }
 
@@ -862,11 +866,15 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_hardif_put(primary_if);
 =======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void batadv_iv_ogm_schedule(struct batadv_hard_iface *hard_iface)
@@ -1055,10 +1063,14 @@ unlock:
 	rcu_read_unlock();
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	batadv_neigh_node_put(neigh_node);
 	batadv_neigh_node_put(router);
 	batadv_neigh_ifinfo_put(neigh_ifinfo);
 	batadv_neigh_ifinfo_put(router_ifinfo);
+<<<<<<< HEAD
 =======
 	if (neigh_node)
 		batadv_neigh_node_put(neigh_node);
@@ -1069,6 +1081,8 @@ out:
 	if (router_ifinfo)
 		batadv_neigh_ifinfo_put(router_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1210,11 +1224,15 @@ static bool batadv_iv_ogm_calc_tq(struct batadv_orig_node *orig_node,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_neigh_node_put(neigh_node);
 =======
 	if (neigh_node)
 		batadv_neigh_node_put(neigh_node);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_neigh_node_put(neigh_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1516,11 +1534,15 @@ out_neigh:
 		batadv_orig_node_put(orig_neigh_node);
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	batadv_neigh_ifinfo_put(router_ifinfo);
 	batadv_neigh_node_put(router);
 	batadv_neigh_node_put(router_router);
 	batadv_neigh_node_put(orig_neigh_router);
 	batadv_hardif_neigh_put(hardif_neigh);
+<<<<<<< HEAD
 =======
 	if (router_ifinfo)
 		batadv_neigh_ifinfo_put(router_ifinfo);
@@ -1533,6 +1555,8 @@ out:
 	if (hardif_neigh)
 		batadv_hardif_neigh_put(hardif_neigh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	consume_skb(skb_priv);
 }
@@ -1954,11 +1978,15 @@ batadv_iv_ogm_orig_dump_entry(struct sk_buff *msg, u32 portid, u32 seq,
 
  out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_neigh_node_put(neigh_node_best);
 =======
 	if (neigh_node_best)
 		batadv_neigh_node_put(neigh_node_best);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_neigh_node_put(neigh_node_best);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*sub_s = 0;
 	return 0;
@@ -2081,6 +2109,7 @@ static bool batadv_iv_ogm_neigh_diff(struct batadv_neigh_node *neigh1,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_neigh_ifinfo_put(neigh1_ifinfo);
 	batadv_neigh_ifinfo_put(neigh2_ifinfo);
 =======
@@ -2089,6 +2118,10 @@ out:
 	if (neigh2_ifinfo)
 		batadv_neigh_ifinfo_put(neigh2_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_neigh_ifinfo_put(neigh1_ifinfo);
+	batadv_neigh_ifinfo_put(neigh2_ifinfo);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -2336,11 +2369,15 @@ batadv_iv_gw_get_best_gw_node(struct batadv_priv *bat_priv)
 			    (tmp_gw_factor == max_gw_factor &&
 			     tq_avg > max_tq)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				batadv_gw_node_put(curr_gw);
 =======
 				if (curr_gw)
 					batadv_gw_node_put(curr_gw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				batadv_gw_node_put(curr_gw);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				curr_gw = gw_node;
 				kref_get(&curr_gw->refcount);
 			}
@@ -2355,11 +2392,15 @@ batadv_iv_gw_get_best_gw_node(struct batadv_priv *bat_priv)
 			  */
 			if (tq_avg > max_tq) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				batadv_gw_node_put(curr_gw);
 =======
 				if (curr_gw)
 					batadv_gw_node_put(curr_gw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				batadv_gw_node_put(curr_gw);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				curr_gw = gw_node;
 				kref_get(&curr_gw->refcount);
 			}
@@ -2377,11 +2418,15 @@ batadv_iv_gw_get_best_gw_node(struct batadv_priv *bat_priv)
 next:
 		batadv_neigh_node_put(router);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		batadv_neigh_ifinfo_put(router_ifinfo);
 =======
 		if (router_ifinfo)
 			batadv_neigh_ifinfo_put(router_ifinfo);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		batadv_neigh_ifinfo_put(router_ifinfo);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	rcu_read_unlock();
 
@@ -2446,10 +2491,14 @@ static bool batadv_iv_gw_is_eligible(struct batadv_priv *bat_priv,
 	ret = true;
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	batadv_neigh_ifinfo_put(router_gw_ifinfo);
 	batadv_neigh_ifinfo_put(router_orig_ifinfo);
 	batadv_neigh_node_put(router_gw);
 	batadv_neigh_node_put(router_orig);
+<<<<<<< HEAD
 =======
 	if (router_gw_ifinfo)
 		batadv_neigh_ifinfo_put(router_gw_ifinfo);
@@ -2460,6 +2509,8 @@ out:
 	if (router_orig)
 		batadv_neigh_node_put(router_orig);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -2535,6 +2586,7 @@ static int batadv_iv_gw_dump_entry(struct sk_buff *msg, u32 portid,
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	batadv_gw_node_put(curr_gw);
 	batadv_neigh_ifinfo_put(router_ifinfo);
 	batadv_neigh_node_put(router);
@@ -2546,6 +2598,11 @@ out:
 	if (router)
 		batadv_neigh_node_put(router);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_gw_node_put(curr_gw);
+	batadv_neigh_ifinfo_put(router_ifinfo);
+	batadv_neigh_node_put(router);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

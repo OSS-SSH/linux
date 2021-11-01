@@ -99,10 +99,14 @@ static int net_assign_generic(struct net *net, unsigned int id, void *data)
 
 	ng = net_alloc_generic();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ng)
 =======
 	if (ng == NULL)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!ng)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 
 	/*
@@ -153,6 +157,7 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void ops_free(const struct pernet_operations *ops, struct net *net)
 {
@@ -162,6 +167,8 @@ static void ops_free(const struct pernet_operations *ops, struct net *net)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ops_pre_exit_list(const struct pernet_operations *ops,
 			      struct list_head *net_exit_list)
 {
@@ -192,10 +199,14 @@ static void ops_free_list(const struct pernet_operations *ops,
 	if (ops->size && ops->id) {
 		list_for_each_entry(net, net_exit_list, exit_list)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			kfree(net_generic(net, *ops->id));
 =======
 			ops_free(ops, net);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			kfree(net_generic(net, *ops->id));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -445,28 +456,40 @@ out_free:
 static void net_free(struct net *net)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (refcount_dec_and_test(&net->passive)) {
 		kfree(rcu_access_pointer(net->gen));
 		kmem_cache_free(net_cachep, net);
 	}
+<<<<<<< HEAD
 =======
 	kfree(rcu_access_pointer(net->gen));
 	kmem_cache_free(net_cachep, net);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void net_drop_ns(void *p)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net *net = (struct net *)p;
 
 	if (net)
 		net_free(net);
+<<<<<<< HEAD
 =======
 	struct net *ns = p;
 	if (ns && refcount_dec_and_test(&ns->passive))
 		net_free(ns);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct net *copy_net_ns(unsigned long flags,
@@ -505,10 +528,14 @@ put_userns:
 		key_remove_domain(net->key_domain);
 		put_user_ns(user_ns);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		net_free(net);
 =======
 		net_drop_ns(net);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		net_free(net);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dec_ucounts:
 		dec_net_namespaces(ucounts);
 		return ERR_PTR(rv);
@@ -641,10 +668,14 @@ static void cleanup_net(struct work_struct *work)
 		key_remove_domain(net->key_domain);
 		put_user_ns(net->user_ns);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		net_free(net);
 =======
 		net_drop_ns(net);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		net_free(net);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1154,6 +1185,9 @@ static int __init net_ns_init(void)
 pure_initcall(net_ns_init);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void free_exit_list(struct pernet_operations *ops, struct list_head *net_exit_list)
 {
 	ops_pre_exit_list(ops, net_exit_list);
@@ -1162,8 +1196,11 @@ static void free_exit_list(struct pernet_operations *ops, struct list_head *net_
 	ops_free_list(ops, net_exit_list);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_NET_NS
 static int __register_pernet_operations(struct list_head *list,
 					struct pernet_operations *ops)
@@ -1190,6 +1227,7 @@ out_undo:
 	/* If I have an error cleanup all namespaces I initialized */
 	list_del(&ops->list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	free_exit_list(ops, &net_exit_list);
 =======
 	ops_pre_exit_list(ops, &net_exit_list);
@@ -1197,6 +1235,9 @@ out_undo:
 	ops_exit_list(ops, &net_exit_list);
 	ops_free_list(ops, &net_exit_list);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free_exit_list(ops, &net_exit_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return error;
 }
 
@@ -1210,6 +1251,7 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
 	for_each_net(net)
 		list_add_tail(&net->exit_list, &net_exit_list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	free_exit_list(ops, &net_exit_list);
 =======
@@ -1218,6 +1260,10 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
 	ops_exit_list(ops, &net_exit_list);
 	ops_free_list(ops, &net_exit_list);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	free_exit_list(ops, &net_exit_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #else
@@ -1241,6 +1287,7 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
 		LIST_HEAD(net_exit_list);
 		list_add(&init_net.exit_list, &net_exit_list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		free_exit_list(ops, &net_exit_list);
 =======
 		ops_pre_exit_list(ops, &net_exit_list);
@@ -1248,6 +1295,9 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
 		ops_exit_list(ops, &net_exit_list);
 		ops_free_list(ops, &net_exit_list);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		free_exit_list(ops, &net_exit_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

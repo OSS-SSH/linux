@@ -5,9 +5,13 @@
 #include <linux/uidgid.h>
 #include <linux/atomic.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/percpu_counter.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/percpu_counter.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/refcount.h>
 #include <linux/ratelimit.h>
 
@@ -18,10 +22,14 @@ struct user_struct {
 	refcount_t __count;	/* reference count */
 #ifdef CONFIG_EPOLL
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct percpu_counter epoll_watches; /* The number of file descriptors currently watched */
 =======
 	atomic_long_t epoll_watches; /* The number of file descriptors currently watched */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct percpu_counter epoll_watches; /* The number of file descriptors currently watched */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	unsigned long unix_inflight;	/* How many files in flight in unix sockets */
 	atomic_long_t pipe_bufs;  /* how many pages are allocated in pipe buffers */

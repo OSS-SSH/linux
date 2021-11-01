@@ -14,6 +14,7 @@ The following FN keys are ignored by the kernel without this driver:
 
 - FN-F1 (LG control panel)   - Generates F15
 <<<<<<< HEAD
+<<<<<<< HEAD
 - FN-F5 (Touchpad toggle)    - Generates F21
 - FN-F6 (Airplane mode)      - Generates RFKILL
 =======
@@ -22,6 +23,10 @@ The following FN keys are ignored by the kernel without this driver:
 - FN-F8 (Keyboard backlight) - Generates F16.
   This key also changes keyboard backlight mode.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+- FN-F5 (Touchpad toggle)    - Generates F21
+- FN-F6 (Airplane mode)      - Generates RFKILL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - FN-F9 (Reader mode)        - Generates F14
 
 The rest of the FN keys work without a need for a special driver.

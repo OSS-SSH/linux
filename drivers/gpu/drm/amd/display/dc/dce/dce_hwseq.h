@@ -637,9 +637,13 @@ struct dce_hwseq_registers {
 	uint32_t DMU_MEM_PWR_CNTL;
 	uint32_t MMHUBBUB_MEM_PWR_CNTL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t DCHUBBUB_ARB_HOSTVM_CNTL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t DCHUBBUB_ARB_HOSTVM_CNTL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
  /* set field name */
 #define HWS_SF(blk_name, reg_name, field_name, post_fix)\
@@ -1115,11 +1119,16 @@ struct dce_hwseq_registers {
 	type DOMAIN_POWER_GATE;\
 	type DOMAIN_PGFSM_PWR_STATUS;\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	type HPO_HDMISTREAMCLK_G_GATE_DIS;\
 	type DISABLE_HOSTVM_FORCE_ALLOW_PSTATE;
 =======
 	type HPO_HDMISTREAMCLK_G_GATE_DIS;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	type HPO_HDMISTREAMCLK_G_GATE_DIS;\
+	type DISABLE_HOSTVM_FORCE_ALLOW_PSTATE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct dce_hwseq_shift {
 	HWSEQ_REG_FIELD_LIST(uint8_t)

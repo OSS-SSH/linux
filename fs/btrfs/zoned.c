@@ -246,10 +246,14 @@ static int calculate_emulated_zone_size(struct btrfs_fs_info *fs_info)
 
 	if (path->slots[0] >= btrfs_header_nritems(path->nodes[0])) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = btrfs_next_leaf(root, path);
 =======
 		ret = btrfs_next_item(root, path);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = btrfs_next_leaf(root, path);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0)
 			goto out;
 		/* No dev extents at all? Not good */
@@ -301,9 +305,12 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device)
 	struct btrfs_zoned_device_info *zone_info = NULL;
 	struct block_device *bdev = device->bdev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct request_queue *queue = bdev_get_queue(bdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sector_t nr_sectors;
 	sector_t sector = 0;
 	struct blk_zone *zones = NULL;
@@ -356,14 +363,18 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device)
 	nr_sectors = bdev_nr_sectors(bdev);
 	zone_info->zone_size_shift = ilog2(zone_info->zone_size);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	zone_info->max_zone_append_size =
 		(u64)queue_max_zone_append_sectors(queue) << SECTOR_SHIFT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zone_info->nr_zones = nr_sectors >> ilog2(zone_sectors);
 	if (!IS_ALIGNED(nr_sectors, zone_sectors))
 		zone_info->nr_zones++;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (bdev_is_zoned(bdev) && zone_info->max_zone_append_size == 0) {
@@ -374,6 +385,8 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zone_info->seq_zones = bitmap_zalloc(zone_info->nr_zones, GFP_KERNEL);
 	if (!zone_info->seq_zones) {
 		ret = -ENOMEM;
@@ -543,9 +556,12 @@ int btrfs_check_zoned_mode(struct btrfs_fs_info *fs_info)
 	u64 nr_devices = 0;
 	u64 zone_size = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u64 max_zone_append_size = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const bool incompat_zoned = btrfs_fs_incompat(fs_info, ZONED);
 	int ret = 0;
 
@@ -582,6 +598,7 @@ int btrfs_check_zoned_mode(struct btrfs_fs_info *fs_info)
 				goto out;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			if (!max_zone_append_size ||
 			    (zone_info->max_zone_append_size &&
@@ -589,6 +606,8 @@ int btrfs_check_zoned_mode(struct btrfs_fs_info *fs_info)
 				max_zone_append_size =
 					zone_info->max_zone_append_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		nr_devices++;
 	}
@@ -639,9 +658,12 @@ int btrfs_check_zoned_mode(struct btrfs_fs_info *fs_info)
 
 	fs_info->zone_size = zone_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	fs_info->max_zone_append_size = max_zone_append_size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fs_info->fs_devices->chunk_alloc_policy = BTRFS_CHUNK_ALLOC_ZONED;
 
 	/*
@@ -1341,11 +1363,14 @@ bool btrfs_use_zone_append(struct btrfs_inode *inode, u64 start)
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!fs_info->max_zone_append_size)
 		return false;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!is_data_inode(&inode->vfs_inode))
 		return false;
 
@@ -1375,11 +1400,15 @@ void btrfs_record_physical_zoned(struct inode *inode, u64 file_offset,
 
 	ordered->physical = physical;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ordered->bdev = bio->bi_bdev;
 =======
 	ordered->disk = bio->bi_bdev->bd_disk;
 	ordered->partno = bio->bi_bdev->bd_partno;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ordered->bdev = bio->bi_bdev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	btrfs_put_ordered_extent(ordered);
 }
@@ -1392,14 +1421,18 @@ void btrfs_rewrite_logical_zoned(struct btrfs_ordered_extent *ordered)
 	struct extent_map *em;
 	struct btrfs_ordered_sum *sum;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct block_device *bdev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 orig_logical = ordered->disk_bytenr;
 	u64 *logical = NULL;
 	int nr, stripe_len;
 
 	/* Zoned devices should not have partitions. So, we can assume it is 0 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ASSERT(!bdev_is_partition(ordered->bdev));
 	if (WARN_ON(!ordered->bdev))
@@ -1414,6 +1447,13 @@ void btrfs_rewrite_logical_zoned(struct btrfs_ordered_extent *ordered)
 
 	if (WARN_ON(btrfs_rmap_block(fs_info, orig_logical, bdev,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ASSERT(!bdev_is_partition(ordered->bdev));
+	if (WARN_ON(!ordered->bdev))
+		return;
+
+	if (WARN_ON(btrfs_rmap_block(fs_info, orig_logical, ordered->bdev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     ordered->physical, &logical, &nr,
 				     &stripe_len)))
 		goto out;
@@ -1443,9 +1483,12 @@ void btrfs_rewrite_logical_zoned(struct btrfs_ordered_extent *ordered)
 out:
 	kfree(logical);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	bdput(bdev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 bool btrfs_check_meta_write_pointer(struct btrfs_fs_info *fs_info,

@@ -208,10 +208,15 @@ config DRM_I915_LOW_LEVEL_TRACEPOINTS
 	  and also analyze the request dependency resolving timeline.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  Recommended for driver developers only.
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  Recommended for driver developers only.
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  If in doubt, say "N".
 
 config DRM_I915_DEBUG_VBLANK_EVADE
@@ -226,10 +231,15 @@ config DRM_I915_DEBUG_VBLANK_EVADE
 	  the vblank.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  Recommended for driver developers only.
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  Recommended for driver developers only.
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  If in doubt, say "N".
 
 config DRM_I915_DEBUG_RUNTIME_PM
@@ -243,8 +253,13 @@ config DRM_I915_DEBUG_RUNTIME_PM
 	  driver loading, suspend and resume operations.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  Recommended for driver developers only.
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  Recommended for driver developers only.
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  If in doubt, say "N"

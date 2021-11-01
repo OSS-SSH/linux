@@ -23,6 +23,7 @@ struct xfs_rtalloc_rec {
 
 typedef int (*xfs_rtalloc_query_range_fn)(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_trans		*tp,
 	const struct xfs_rtalloc_rec	*rec,
 	void				*priv);
@@ -31,6 +32,11 @@ typedef int (*xfs_rtalloc_query_range_fn)(
 	struct xfs_rtalloc_rec	*rec,
 	void			*priv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_trans		*tp,
+	const struct xfs_rtalloc_rec	*rec,
+	void				*priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_XFS_RT
 /*
@@ -131,6 +137,7 @@ int xfs_rtfree_range(struct xfs_mount *mp, struct xfs_trans *tp,
 		     struct xfs_buf **rbpp, xfs_fsblock_t *rsb);
 int xfs_rtalloc_query_range(struct xfs_trans *tp,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		const struct xfs_rtalloc_rec *low_rec,
 		const struct xfs_rtalloc_rec *high_rec,
 		xfs_rtalloc_query_range_fn fn, void *priv);
@@ -140,6 +147,11 @@ int xfs_rtalloc_query_range(struct xfs_trans *tp,
 			    xfs_rtalloc_query_range_fn fn,
 			    void *priv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		const struct xfs_rtalloc_rec *low_rec,
+		const struct xfs_rtalloc_rec *high_rec,
+		xfs_rtalloc_query_range_fn fn, void *priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int xfs_rtalloc_query_all(struct xfs_trans *tp,
 			  xfs_rtalloc_query_range_fn fn,
 			  void *priv);

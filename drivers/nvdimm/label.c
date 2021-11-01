@@ -347,6 +347,9 @@ static bool preamble_next(struct nvdimm_drvdata *ndd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool nsl_validate_checksum(struct nvdimm_drvdata *ndd,
 				  struct nd_namespace_label *nd_label)
 {
@@ -374,6 +377,7 @@ static void nsl_calculate_checksum(struct nvdimm_drvdata *ndd,
 	nsl_set_checksum(ndd, nd_label, sum);
 }
 
+<<<<<<< HEAD
 static bool slot_valid(struct nvdimm_drvdata *ndd,
 		struct nd_namespace_label *nd_label, u32 slot)
 {
@@ -387,12 +391,17 @@ static bool slot_valid(struct nvdimm_drvdata *ndd,
 		dev_dbg(ndd->dev, "fail checksum. slot: %d\n", slot);
 	return valid;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool slot_valid(struct nvdimm_drvdata *ndd,
 		struct nd_namespace_label *nd_label, u32 slot)
 {
+	bool valid;
+
 	/* check that we are written where we expect to be written */
-	if (slot != __le32_to_cpu(nd_label->slot))
+	if (slot != nsl_get_slot(ndd, nd_label))
 		return false;
+<<<<<<< HEAD
 
 	/* check checksum */
 	if (namespace_label_has(ndd, checksum)) {
@@ -411,6 +420,12 @@ static bool slot_valid(struct nvdimm_drvdata *ndd,
 
 	return true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	valid = nsl_validate_checksum(ndd, nd_label);
+	if (!valid)
+		dev_dbg(ndd->dev, "fail checksum. slot: %d\n", slot);
+	return valid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int nd_label_reserve_dpa(struct nvdimm_drvdata *ndd)
@@ -438,14 +453,19 @@ int nd_label_reserve_dpa(struct nvdimm_drvdata *ndd)
 
 		memcpy(label_uuid, nd_label->uuid, NSLABEL_UUID_LEN);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flags = nsl_get_flags(ndd, nd_label);
 =======
 		flags = __le32_to_cpu(nd_label->flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		flags = nsl_get_flags(ndd, nd_label);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (test_bit(NDD_NOBLK, &nvdimm->flags))
 			flags &= ~NSLABEL_FLAG_LOCAL;
 		nd_label_gen_id(&label_id, label_uuid, flags);
 		res = nvdimm_allocate_dpa(ndd, &label_id,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					  nsl_get_dpa(ndd, nd_label),
 					  nsl_get_rawsize(ndd, nd_label));
@@ -453,6 +473,10 @@ int nd_label_reserve_dpa(struct nvdimm_drvdata *ndd)
 				__le64_to_cpu(nd_label->dpa),
 				__le64_to_cpu(nd_label->rawsize));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  nsl_get_dpa(ndd, nd_label),
+					  nsl_get_rawsize(ndd, nd_label));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nd_dbg_dpa(nd_region, ndd, res, "reserve\n");
 		if (!res)
 			return -EBUSY;
@@ -600,6 +624,7 @@ int nd_label_active_count(struct nvdimm_drvdata *ndd)
 
 		if (!slot_valid(ndd, nd_label, slot)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			u32 label_slot = nsl_get_slot(ndd, nd_label);
 			u64 size = nsl_get_rawsize(ndd, nd_label);
 			u64 dpa = nsl_get_dpa(ndd, nd_label);
@@ -608,6 +633,11 @@ int nd_label_active_count(struct nvdimm_drvdata *ndd)
 			u64 size = __le64_to_cpu(nd_label->rawsize);
 			u64 dpa = __le64_to_cpu(nd_label->dpa);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			u32 label_slot = nsl_get_slot(ndd, nd_label);
+			u64 size = nsl_get_rawsize(ndd, nd_label);
+			u64 dpa = nsl_get_dpa(ndd, nd_label);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			dev_dbg(ndd->dev,
 				"slot%d invalid slot: %d dpa: %llx size: %llx\n",
@@ -766,10 +796,14 @@ static unsigned long nd_label_offset(struct nvdimm_drvdata *ndd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static enum nvdimm_claim_class to_nvdimm_cclass(guid_t *guid)
 =======
 enum nvdimm_claim_class to_nvdimm_cclass(guid_t *guid)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static enum nvdimm_claim_class to_nvdimm_cclass(guid_t *guid)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (guid_equal(guid, &nvdimm_btt_guid))
 		return NVDIMM_CCLASS_BTT;
@@ -818,6 +852,9 @@ static void reap_victim(struct nd_mapping *nd_mapping,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nsl_set_type_guid(struct nvdimm_drvdata *ndd,
 			      struct nd_namespace_label *nd_label, guid_t *guid)
 {
@@ -857,8 +894,11 @@ enum nvdimm_claim_class nsl_get_claim_class(struct nvdimm_drvdata *ndd,
 	return to_nvdimm_cclass(&nd_label->abstraction_guid);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __pmem_label_update(struct nd_region *nd_region,
 		struct nd_mapping *nd_mapping, struct nd_namespace_pmem *nspm,
 		int pos, unsigned long flags)
@@ -901,6 +941,9 @@ static int __pmem_label_update(struct nd_region *nd_region,
 	memset(nd_label, 0, sizeof_namespace_label(ndd));
 	memcpy(nd_label->uuid, nspm->uuid, NSLABEL_UUID_LEN);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nsl_set_name(ndd, nd_label, nspm->alt_name);
 	nsl_set_flags(ndd, nd_label, flags);
 	nsl_set_nlabel(ndd, nd_label, nd_region->ndr_mappings);
@@ -913,6 +956,7 @@ static int __pmem_label_update(struct nd_region *nd_region,
 	nsl_set_type_guid(ndd, nd_label, &nd_set->type_guid);
 	nsl_set_claim_class(ndd, nd_label, ndns->claim_class);
 	nsl_calculate_checksum(ndd, nd_label);
+<<<<<<< HEAD
 =======
 	if (nspm->alt_name)
 		memcpy(nd_label->name, nspm->alt_name, NSLABEL_NAME_LEN);
@@ -938,6 +982,8 @@ static int __pmem_label_update(struct nd_region *nd_region,
 		nd_label->checksum = __cpu_to_le64(sum);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nd_dbg_dpa(nd_region, ndd, res, "\n");
 
 	/* update label */
@@ -998,6 +1044,7 @@ static struct resource *to_resource(struct nvdimm_drvdata *ndd,
 
 	for_each_dpa_resource(ndd, res) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (res->start != nsl_get_dpa(ndd, nd_label))
 			continue;
 		if (resource_size(res) != nsl_get_rawsize(ndd, nd_label))
@@ -1006,6 +1053,11 @@ static struct resource *to_resource(struct nvdimm_drvdata *ndd,
 			continue;
 		if (resource_size(res) != __le64_to_cpu(nd_label->rawsize))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (res->start != nsl_get_dpa(ndd, nd_label))
+			continue;
+		if (resource_size(res) != nsl_get_rawsize(ndd, nd_label))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		return res;
 	}
@@ -1015,6 +1067,9 @@ static struct resource *to_resource(struct nvdimm_drvdata *ndd,
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Use the presence of the type_guid as a flag to determine isetcookie
  * usage and nlabel + position policy for blk-aperture namespaces.
  */
@@ -1068,8 +1123,11 @@ static void nsl_set_blk_position(struct nvdimm_drvdata *ndd,
 }
 
 /*
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * 1/ Account all the labels that can be freed after this update
  * 2/ Allocate and write the label to the staging (next) index
  * 3/ Record the resources in the namespace device
@@ -1198,6 +1256,9 @@ static int __blk_label_update(struct nd_region *nd_region,
 		memset(nd_label, 0, sizeof_namespace_label(ndd));
 		memcpy(nd_label->uuid, nsblk->uuid, NSLABEL_UUID_LEN);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nsl_set_name(ndd, nd_label, nsblk->alt_name);
 		nsl_set_flags(ndd, nd_label, NSLABEL_FLAG_LOCAL);
 
@@ -1213,6 +1274,7 @@ static int __blk_label_update(struct nd_region *nd_region,
 		nsl_set_type_guid(ndd, nd_label, &nd_set->type_guid);
 		nsl_set_claim_class(ndd, nd_label, ndns->claim_class);
 		nsl_calculate_checksum(ndd, nd_label);
+<<<<<<< HEAD
 =======
 		if (nsblk->alt_name)
 			memcpy(nd_label->name, nsblk->alt_name,
@@ -1259,6 +1321,8 @@ static int __blk_label_update(struct nd_region *nd_region,
 			nd_label->checksum = __cpu_to_le64(sum);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* update label */
 		offset = nd_label_offset(ndd, nd_label);

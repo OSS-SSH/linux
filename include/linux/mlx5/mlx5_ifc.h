@@ -866,11 +866,16 @@ struct mlx5_ifc_qos_cap_bits {
 	u8         nic_rate_limit[0x1];
 	u8         packet_pacing_uid[0x1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8         log_esw_max_sched_depth[0x4];
 	u8         reserved_at_10[0x10];
 =======
 	u8         reserved_at_c[0x14];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8         log_esw_max_sched_depth[0x4];
+	u8         reserved_at_10[0x10];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u8         reserved_at_20[0xb];
 	u8         log_max_qos_nic_queue_group[0x5];
@@ -927,11 +932,16 @@ struct mlx5_ifc_per_protocol_networking_offload_caps_bits {
 	u8         enhanced_multi_pkt_send_wqe[0x1];
 	u8         tunnel_lso_const_out_ip_id[0x1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8         tunnel_lro_gre[0x1];
 	u8         tunnel_lro_vxlan[0x1];
 =======
 	u8         reserved_at_1c[0x2];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8         tunnel_lro_gre[0x1];
+	u8         tunnel_lro_vxlan[0x1];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8         tunnel_stateless_gre[0x1];
 	u8         tunnel_stateless_vxlan[0x1];
 
@@ -1662,6 +1672,9 @@ struct mlx5_ifc_cmd_hca_cap_bits {
 	u8         reserved_at_570[0x10];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8	   reserved_at_580[0xb];
 	u8	   log_max_dci_stream_channels[0x5];
 	u8	   reserved_at_590[0x3];
@@ -1669,9 +1682,12 @@ struct mlx5_ifc_cmd_hca_cap_bits {
 	u8	   reserved_at_598[0x8];
 
 	u8         reserved_at_5a0[0x13];
+<<<<<<< HEAD
 =======
 	u8         reserved_at_580[0x33];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8         log_max_dek[0x5];
 	u8         reserved_at_5b8[0x4];
 	u8         mini_cqe_resp_stride_index[0x1];
@@ -3041,6 +3057,7 @@ struct mlx5_ifc_qpc_bits {
 	u8         next_send_psn[0x18];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8         reserved_at_3e0[0x3];
 	u8	   log_num_dci_stream_channels[0x5];
 	u8         cqn_snd[0x18];
@@ -3053,6 +3070,14 @@ struct mlx5_ifc_qpc_bits {
 
 	u8         reserved_at_400[0x8];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8         reserved_at_3e0[0x3];
+	u8	   log_num_dci_stream_channels[0x5];
+	u8         cqn_snd[0x18];
+
+	u8         reserved_at_400[0x3];
+	u8	   log_num_dci_errored_streams[0x5];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8         deth_sqpn[0x18];
 
 	u8         reserved_at_420[0x20];
@@ -3941,10 +3966,14 @@ struct mlx5_ifc_cqc_bits {
 	u8         reserved_at_4[0x2];
 	u8         dbr_umem_valid[0x1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8         apu_cq[0x1];
 =======
 	u8         apu_thread_cq[0x1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8         apu_cq[0x1];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8         cqe_sz[0x3];
 	u8         cc[0x1];
 	u8         reserved_at_c[0x1];
@@ -3971,11 +4000,15 @@ struct mlx5_ifc_cqc_bits {
 	u8         cq_max_count[0x10];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8         c_eqn_or_apu_element[0x20];
 =======
 	u8         reserved_at_a0[0x18];
 	u8         c_eqn[0x8];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8         c_eqn_or_apu_element[0x20];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u8         reserved_at_c0[0x3];
 	u8         log_page_size[0x5];
@@ -9504,6 +9537,7 @@ struct mlx5_ifc_pcmr_reg_bits {
 	u8         local_port[0x8];
 	u8         reserved_at_10[0x10];
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	u8         entropy_force_cap[0x1];
 	u8         entropy_calc_cap[0x1];
@@ -9521,17 +9555,29 @@ struct mlx5_ifc_pcmr_reg_bits {
 	u8         rx_ts_over_crc[0x1];
 	u8         reserved_at_53[0xb];
 =======
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8         entropy_force_cap[0x1];
 	u8         entropy_calc_cap[0x1];
 	u8         entropy_gre_calc_cap[0x1];
-	u8         reserved_at_23[0x1b];
+	u8         reserved_at_23[0xf];
+	u8         rx_ts_over_crc_cap[0x1];
+	u8         reserved_at_33[0xb];
 	u8         fcs_cap[0x1];
 	u8         reserved_at_3f[0x1];
+
 	u8         entropy_force[0x1];
 	u8         entropy_calc[0x1];
 	u8         entropy_gre_calc[0x1];
+<<<<<<< HEAD
 	u8         reserved_at_43[0x1b];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8         reserved_at_43[0xf];
+	u8         rx_ts_over_crc[0x1];
+	u8         reserved_at_53[0xb];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8         fcs_chk[0x1];
 	u8         reserved_at_5f[0x1];
 };

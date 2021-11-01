@@ -1764,11 +1764,16 @@ static int atomisp_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
 		goto register_entities_fail;
 	/* init atomisp wdts */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = init_atomisp_wdts(isp);
 	if (err != 0)
 =======
 	if (init_atomisp_wdts(isp) != 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = init_atomisp_wdts(isp);
+	if (err != 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto wdt_work_queue_fail;
 
 	/* save the iunit context only once after all the values are init'ed. */
@@ -1821,9 +1826,13 @@ request_irq_fail:
 	hmm_pool_unregister(HMM_POOL_TYPE_RESERVED);
 hmm_pool_fail:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pm_runtime_get_noresume(&pdev->dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_get_noresume(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	destroy_workqueue(isp->wdt_work_queue);
 wdt_work_queue_fail:
 	atomisp_acc_cleanup(isp);

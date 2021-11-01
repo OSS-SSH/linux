@@ -40,10 +40,14 @@ prio_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
 	if (TC_H_MAJ(skb->priority) != sch->handle) {
 		fl = rcu_dereference_bh(q->filter_list);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = tcf_classify(skb, NULL, fl, &res, false);
 =======
 		err = tcf_classify(skb, fl, &res, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = tcf_classify(skb, NULL, fl, &res, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_NET_CLS_ACT
 		switch (err) {
 		case TC_ACT_STOLEN:

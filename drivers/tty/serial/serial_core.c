@@ -2315,6 +2315,9 @@ uart_report_port(struct uart_driver *drv, struct uart_port *port)
 	       port->name,
 	       address, port->irq, port->uartclk / 16, uart_type(port));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The magic multiplier feature is a bit obscure, so report it too.  */
 	if (port->flags & UPF_MAGIC_MULTIPLIER)
@@ -2323,8 +2326,11 @@ uart_report_port(struct uart_driver *drv, struct uart_port *port)
 			port->dev ? ": " : "",
 			port->name,
 			port->uartclk / 8, port->uartclk / 4);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -2534,10 +2540,14 @@ int uart_register_driver(struct uart_driver *drv)
 		goto out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	normal = tty_alloc_driver(drv->nr, TTY_DRIVER_REAL_RAW |
 			TTY_DRIVER_DYNAMIC_DEV);
 	if (IS_ERR(normal)) {
 		retval = PTR_ERR(normal);
+<<<<<<< HEAD
 		goto out_kfree;
 	}
 =======
@@ -2545,6 +2555,10 @@ int uart_register_driver(struct uart_driver *drv)
 	if (!normal)
 		goto out_kfree;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_kfree;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	drv->tty_driver = normal;
 
@@ -2558,9 +2572,12 @@ int uart_register_driver(struct uart_driver *drv)
 	normal->init_termios.c_cflag = B9600 | CS8 | CREAD | HUPCL | CLOCAL;
 	normal->init_termios.c_ispeed = normal->init_termios.c_ospeed = 9600;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	normal->flags		= TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	normal->driver_state    = drv;
 	tty_set_operations(normal, &uart_ops);
 
@@ -2582,10 +2599,14 @@ int uart_register_driver(struct uart_driver *drv)
 	for (i = 0; i < drv->nr; i++)
 		tty_port_destroy(&drv->state[i].port);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(normal);
 =======
 	put_tty_driver(normal);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(normal);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_kfree:
 	kfree(drv->state);
 out:
@@ -2608,10 +2629,14 @@ void uart_unregister_driver(struct uart_driver *drv)
 
 	tty_unregister_driver(p);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tty_driver_kref_put(p);
 =======
 	put_tty_driver(p);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < drv->nr; i++)
 		tty_port_destroy(&drv->state[i].port);
 	kfree(drv->state);

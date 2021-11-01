@@ -300,6 +300,9 @@ int hyperv_update_situation(struct hv_device *hdev, u8 active, u32 bpp,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Hyper-V supports a hardware cursor feature. It's not used by Linux VM,
  * but the Hyper-V host still draws a point as an extra mouse pointer,
@@ -349,8 +352,11 @@ int hyperv_hide_hw_ptr(struct hv_device *hdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hyperv_update_dirt(struct hv_device *hdev, struct drm_rect *rect)
 {
 	struct hyperv_drm_device *hv = hv_get_drvdata(hdev);
@@ -445,6 +451,7 @@ static void hyperv_receive_sub(struct hv_device *hdev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (msg->vid_hdr.type == SYNTHVID_FEATURE_CHANGE) {
 		hv->dirt_needed = msg->feature_chg.is_dirt_needed;
 		if (hv->dirt_needed)
@@ -454,6 +461,13 @@ static void hyperv_receive_sub(struct hv_device *hdev)
 	if (msg->vid_hdr.type == SYNTHVID_FEATURE_CHANGE)
 		hv->dirt_needed = msg->feature_chg.is_dirt_needed;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (msg->vid_hdr.type == SYNTHVID_FEATURE_CHANGE) {
+		hv->dirt_needed = msg->feature_chg.is_dirt_needed;
+		if (hv->dirt_needed)
+			hyperv_hide_hw_ptr(hv->hdev);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void hyperv_receive(void *ctx)

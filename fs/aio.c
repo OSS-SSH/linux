@@ -1696,10 +1696,14 @@ static int aio_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
 		iocb->ki_res.res = mangle_poll(mask);
 		req->done = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (iocb->ki_eventfd && eventfd_signal_allowed()) {
 =======
 		if (iocb->ki_eventfd && eventfd_signal_count()) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (iocb->ki_eventfd && eventfd_signal_allowed()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			iocb = NULL;
 			INIT_WORK(&req->work, aio_poll_put_work);
 			schedule_work(&req->work);

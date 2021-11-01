@@ -39,6 +39,7 @@ static struct hns3_dbg_dentry_info hns3_dbg_dentry[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int hns3_dbg_bd_file_init(struct hnae3_handle *handle, u32 cmd);
 static int hns3_dbg_common_file_init(struct hnae3_handle *handle, u32 cmd);
 =======
@@ -46,6 +47,10 @@ static int hns3_dbg_bd_file_init(struct hnae3_handle *handle, unsigned int cmd);
 static int hns3_dbg_common_file_init(struct hnae3_handle *handle,
 				     unsigned int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int hns3_dbg_bd_file_init(struct hnae3_handle *handle, u32 cmd);
+static int hns3_dbg_common_file_init(struct hnae3_handle *handle, u32 cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct hns3_dbg_cmd_info hns3_dbg_cmd[] = {
 	{
@@ -702,10 +707,14 @@ static int hns3_dbg_queue_map(struct hnae3_handle *h, char *buf, int len)
 		sprintf(result[j++], "%u",
 			h->ae_algo->ops->get_global_queue_id(h, i));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		sprintf(result[j++], "%d",
 =======
 		sprintf(result[j++], "%u",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sprintf(result[j++], "%d",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			priv->ring[i].tqp_vector->vector_irq);
 		hns3_dbg_fill_content(content, sizeof(content), queue_map_items,
 				      (const char **)result,
@@ -808,16 +817,22 @@ static const struct hns3_dbg_item tx_bd_info_items[] = {
 	{ "OT_VLAN_TAG", 3 },
 	{ "TV", 2 },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ "OLT_VLAN_LEN", 2 },
 	{ "PAYLEN_OL4CS", 2 },
 	{ "BD_FE_SC_VLD", 2 },
 	{ "MSS_HW_CSUM", 0 },
+<<<<<<< HEAD
 =======
 	{ "OLT_VLAN_LEN", 2},
 	{ "PAYLEN_OL4CS", 2},
 	{ "BD_FE_SC_VLD", 2},
 	{ "MSS_HW_CSUM", 0},
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void hns3_dump_tx_bd_info(struct hns3_nic_priv *priv,
@@ -885,10 +900,14 @@ hns3_dbg_dev_caps(struct hnae3_handle *h, char *buf, int len, int *pos)
 {
 	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const char * const str[] = {"no", "yes"};
 =======
 	static const char * const str[] = {"no", "yes"};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const char * const str[] = {"no", "yes"};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long *caps = ae_dev->caps;
 	u32 i, state;
 
@@ -959,32 +978,45 @@ static int hns3_dbg_dev_info(struct hnae3_handle *h, char *buf, int len)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int hns3_dbg_get_cmd_index(struct hns3_dbg_data *dbg_data, u32 *index)
 =======
 static int hns3_dbg_get_cmd_index(struct hnae3_handle *handle,
 				  const unsigned char *name, u32 *index)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int hns3_dbg_get_cmd_index(struct hns3_dbg_data *dbg_data, u32 *index)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 i;
 
 	for (i = 0; i < ARRAY_SIZE(hns3_dbg_cmd); i++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (hns3_dbg_cmd[i].cmd == dbg_data->cmd) {
 =======
 		if (!strncmp(name, hns3_dbg_cmd[i].name,
 			     strlen(hns3_dbg_cmd[i].name))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (hns3_dbg_cmd[i].cmd == dbg_data->cmd) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			*index = i;
 			return 0;
 		}
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_err(&dbg_data->handle->pdev->dev, "unknown command(%d)\n",
 		dbg_data->cmd);
 =======
 	dev_err(&handle->pdev->dev, "unknown command(%s)\n", name);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_err(&dbg_data->handle->pdev->dev, "unknown command(%d)\n",
+		dbg_data->cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -EINVAL;
 }
 
@@ -1053,11 +1085,15 @@ static ssize_t hns3_dbg_read(struct file *filp, char __user *buffer,
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = hns3_dbg_get_cmd_index(dbg_data, &index);
 =======
 	ret = hns3_dbg_get_cmd_index(handle, filp->f_path.dentry->d_iname,
 				     &index);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = hns3_dbg_get_cmd_index(dbg_data, &index);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -1128,9 +1164,13 @@ static int hns3_dbg_bd_file_init(struct hnae3_handle *handle, u32 cmd)
 
 		data[i].handle = handle;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		data[i].cmd = hns3_dbg_cmd[cmd].cmd;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		data[i].cmd = hns3_dbg_cmd[cmd].cmd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		data[i].qid = i;
 		sprintf(name, "%s%u", hns3_dbg_cmd[cmd].name, i);
 		debugfs_create_file(name, 0400, entry_dir, &data[i],
@@ -1152,9 +1192,13 @@ hns3_dbg_common_file_init(struct hnae3_handle *handle, u32 cmd)
 
 	data->handle = handle;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	data->cmd = hns3_dbg_cmd[cmd].cmd;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	data->cmd = hns3_dbg_cmd[cmd].cmd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	entry_dir = hns3_dbg_dentry[hns3_dbg_cmd[cmd].dentry].dentry;
 	debugfs_create_file(hns3_dbg_cmd[cmd].name, 0400, entry_dir,
 			    data, &hns3_dbg_fops);

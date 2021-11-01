@@ -5,9 +5,13 @@
 #include <linux/dynamic_debug.h>
 #include <linux/etherdevice.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/list.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/list.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "ionic.h"
 #include "ionic_lif.h"
@@ -125,6 +129,7 @@ void ionic_rx_filters_deinit(struct ionic_lif *lif)
 
 int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			 u32 hash, struct ionic_admin_ctx *ctx,
 			 enum ionic_filter_state state)
 {
@@ -138,6 +143,14 @@ int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 	struct ionic_rx_filter_add_cmd *ac;
 	struct ionic_rx_filter *f;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 u32 hash, struct ionic_admin_ctx *ctx,
+			 enum ionic_filter_state state)
+{
+	struct device *dev = lif->ionic->dev;
+	struct ionic_rx_filter_add_cmd *ac;
+	struct ionic_rx_filter *f = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hlist_head *head;
 	unsigned int key;
 
@@ -147,16 +160,22 @@ int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 	case IONIC_RX_FILTER_MATCH_VLAN:
 		key = le16_to_cpu(ac->vlan.vlan);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		f = ionic_rx_filter_by_vlan(lif, le16_to_cpu(ac->vlan.vlan));
 		break;
 	case IONIC_RX_FILTER_MATCH_MAC:
 		key = *(u32 *)ac->mac.addr;
 		f = ionic_rx_filter_by_addr(lif, ac->mac.addr);
+<<<<<<< HEAD
 =======
 		break;
 	case IONIC_RX_FILTER_MATCH_MAC:
 		key = *(u32 *)ac->mac.addr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IONIC_RX_FILTER_MATCH_MAC_VLAN:
 		key = le16_to_cpu(ac->mac_vlan.vlan);
@@ -169,6 +188,9 @@ int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (f) {
 		/* remove from current linking so we can refresh it */
 		hlist_del(&f->by_id);
@@ -178,6 +200,7 @@ int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 		if (!f)
 			return -ENOMEM;
 	}
+<<<<<<< HEAD
 
 	f->flow_id = flow_id;
 	f->filter_id = le32_to_cpu(ctx->comp.rx_filter_add.filter_id);
@@ -190,6 +213,12 @@ int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 	f->flow_id = flow_id;
 	f->filter_id = le32_to_cpu(ctx->comp.rx_filter_add.filter_id);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	f->flow_id = flow_id;
+	f->filter_id = le32_to_cpu(ctx->comp.rx_filter_add.filter_id);
+	f->state = state;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	f->rxq_index = rxq_index;
 	memcpy(&f->cmd, ac, sizeof(f->cmd));
 	netdev_dbg(lif->netdev, "rx_filter add filter_id %d\n", f->filter_id);
@@ -198,10 +227,13 @@ int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 	INIT_HLIST_NODE(&f->by_id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	spin_lock_bh(&lif->rx_filters.lock);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	key = hash_32(key, IONIC_RX_FILTER_HASH_BITS);
 	head = &lif->rx_filters.by_hash[key];
 	hlist_add_head(&f->by_hash, head);
@@ -211,10 +243,13 @@ int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
 	hlist_add_head(&f->by_id, head);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	spin_unlock_bh(&lif->rx_filters.lock);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -275,6 +310,9 @@ struct ionic_rx_filter *ionic_rx_filter_rxsteer(struct ionic_lif *lif)
 	return NULL;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int ionic_lif_list_addr(struct ionic_lif *lif, const u8 *addr, bool mode)
 {
@@ -390,5 +428,8 @@ loop_out:
 		devm_kfree(dev, sync_item);
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

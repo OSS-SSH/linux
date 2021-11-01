@@ -23,10 +23,13 @@
 #include <linux/pps_kernel.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define DRVDESC "parallel port PPS client"
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* module parameters */
 
 #define CLEAR_WAIT_MAX		100
@@ -142,14 +145,20 @@ static void parport_attach(struct parport *port)
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (clear_wait > CLEAR_WAIT_MAX) {
 		pr_err("clear_wait value should be not greater then %d\n",
 		       CLEAR_WAIT_MAX);
 		return;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	device = kzalloc(sizeof(struct pps_client_pp), GFP_KERNEL);
 	if (!device) {
 		pr_err("memory allocation failed, not attaching\n");
@@ -227,6 +236,7 @@ static struct parport_driver pps_parport_driver = {
 	.devmodel = true,
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 module_parport_driver(pps_parport_driver);
 
 MODULE_AUTHOR("Alexander Gordeev <lasaine@lvk.cs.msu.su>");
@@ -267,4 +277,10 @@ module_exit(pps_parport_exit);
 MODULE_AUTHOR("Alexander Gordeev <lasaine@lvk.cs.msu.su>");
 MODULE_DESCRIPTION(DRVDESC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_parport_driver(pps_parport_driver);
+
+MODULE_AUTHOR("Alexander Gordeev <lasaine@lvk.cs.msu.su>");
+MODULE_DESCRIPTION("parallel port PPS client");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_LICENSE("GPL");

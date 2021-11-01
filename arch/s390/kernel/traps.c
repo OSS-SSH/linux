@@ -292,10 +292,14 @@ static void __init test_monitor_call(void)
 void __init trap_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sort_extable(__start_amode31_ex_table, __stop_amode31_ex_table);
 =======
 	sort_extable(__start_dma_ex_table, __stop_dma_ex_table);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sort_extable(__start_amode31_ex_table, __stop_amode31_ex_table);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	local_mcck_enable();
 	test_monitor_call();
 }

@@ -570,9 +570,13 @@ struct irq_chip {
  * IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND:  Invokes __enable_irq()/__disable_irq() for wake irqs
  *                                    in the suspend path if they are in disabled state
 <<<<<<< HEAD
+<<<<<<< HEAD
  * IRQCHIP_AFFINITY_PRE_STARTUP:      Default affinity update before startup
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * IRQCHIP_AFFINITY_PRE_STARTUP:      Default affinity update before startup
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 enum {
 	IRQCHIP_SET_TYPE_MASKED			= (1 <<  0),
@@ -586,9 +590,13 @@ enum {
 	IRQCHIP_SUPPORTS_NMI			= (1 <<  8),
 	IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND	= (1 <<  9),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	IRQCHIP_AFFINITY_PRE_STARTUP		= (1 << 10),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IRQCHIP_AFFINITY_PRE_STARTUP		= (1 << 10),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #include <linux/irqdesc.h>

@@ -34,9 +34,13 @@ enum iwl_device_family {
 	IWL_DEVICE_FAMILY_22000,
 	IWL_DEVICE_FAMILY_AX210,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	IWL_DEVICE_FAMILY_BZ,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IWL_DEVICE_FAMILY_BZ,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -326,10 +330,14 @@ struct iwl_fw_mon_regs {
  *	mode set
  * @nvm_hw_section_num: the ID of the HW NVM section
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @mac_addr_from_csr: read HW address from CSR registers at this offset
 =======
  * @mac_addr_from_csr: read HW address from CSR registers
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mac_addr_from_csr: read HW address from CSR registers at this offset
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @features: hw features, any combination of feature_passlist
  * @pwr_tx_backoffs: translation table between power limits and backoffs
  * @max_tx_agg_size: max TX aggregation size of the ADDBA request/response
@@ -352,10 +360,15 @@ struct iwl_fw_mon_regs {
  * @num_rbds: number of receive buffer descriptors to use
  *	(only used for multi-queue capable devices)
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @mac_addr_csr_base: CSR base register for MAC address access, if not set
  *	assume 0x380
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mac_addr_csr_base: CSR base register for MAC address access, if not set
+ *	assume 0x380
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * We enable the driver to be backward compatible wrt. hardware features.
  * API differences in uCode shouldn't be handled here but through TLVs
@@ -392,10 +405,14 @@ struct iwl_cfg {
 	    host_interrupt_operation_mode:1,
 	    high_temp:1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    mac_addr_from_csr:10,
 =======
 	    mac_addr_from_csr:1,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    mac_addr_from_csr:10,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    lp_xtal_workaround:1,
 	    disable_dummy_notification:1,
 	    apmg_not_supported:1,
@@ -530,9 +547,13 @@ extern const char iwl_ax221_name[];
 extern const char iwl_ax231_name[];
 extern const char iwl_ax411_name[];
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern const char iwl_bz_name[];
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern const char iwl_bz_name[];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_IWLDVM)
 extern const struct iwl_cfg iwl5300_agn_cfg;
 extern const struct iwl_cfg iwl5100_agn_cfg;

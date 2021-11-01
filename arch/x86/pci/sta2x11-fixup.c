@@ -147,11 +147,15 @@ static void sta2x11_map_ep(struct pci_dev *pdev)
 
 	dev->bus_dma_limit = max_amba_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_set_mask_and_coherent(&pdev->dev, max_amba_addr);
 =======
 	pci_set_consistent_dma_mask(pdev, max_amba_addr);
 	pci_set_dma_mask(pdev, max_amba_addr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_set_mask_and_coherent(&pdev->dev, max_amba_addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Configure AHB mapping */
 	pci_write_config_dword(pdev, AHB_PEXLBASE(0), 0);

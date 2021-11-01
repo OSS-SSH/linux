@@ -27,9 +27,13 @@
 #include <linux/pci.h>
 #include <linux/pci_hotplug.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/platform_profile.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/platform_profile.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/power_supply.h>
 #include <linux/hwmon.h>
 #include <linux/hwmon-sysfs.h>
@@ -215,12 +219,16 @@ struct asus_wmi {
 	u8 fan_boost_mode;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool egpu_enable_available; // 0 = enable
 	bool egpu_enable;
 
 	bool dgpu_disable_available;
 	bool dgpu_disable;
 
+<<<<<<< HEAD
 	bool throttle_thermal_policy_available;
 	u8 throttle_thermal_policy_mode;
 
@@ -234,13 +242,24 @@ struct asus_wmi {
 	bool panel_overdrive;
 
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool throttle_thermal_policy_available;
 	u8 throttle_thermal_policy_mode;
+
+	struct platform_profile_handler platform_profile_handler;
+	bool platform_profile_support;
 
 	// The RSOC controls the maximum charging percentage.
 	bool battery_rsoc_available;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool panel_overdrive_available;
+	bool panel_overdrive;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hotplug_slot hotplug_slot;
 	struct mutex hotplug_lock;
 	struct mutex wmi_lock;
@@ -450,6 +469,9 @@ static void lid_flip_tablet_mode_get_state(struct asus_wmi *asus)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* dGPU ********************************************************************/
 static int dgpu_disable_check_present(struct asus_wmi *asus)
 {
@@ -625,8 +647,11 @@ static ssize_t egpu_enable_store(struct device *dev,
 
 static DEVICE_ATTR_RW(egpu_enable);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Battery ********************************************************************/
 
 /* The battery maximum charging percentage */
@@ -1425,6 +1450,9 @@ exit:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Panel Overdrive ************************************************************/
 static int panel_od_check_present(struct asus_wmi *asus)
 {
@@ -1506,8 +1534,11 @@ static ssize_t panel_od_store(struct device *dev,
 
 static DEVICE_ATTR_RW(panel_od);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Quirks *********************************************************************/
 
 static void asus_wmi_set_xusb2pr(struct asus_wmi *asus)
@@ -2126,15 +2157,22 @@ static int throttle_thermal_policy_switch_next(struct asus_wmi *asus)
 {
 	u8 new_mode = asus->throttle_thermal_policy_mode + 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (new_mode > ASUS_THROTTLE_THERMAL_POLICY_SILENT)
 		new_mode = ASUS_THROTTLE_THERMAL_POLICY_DEFAULT;
 
 	asus->throttle_thermal_policy_mode = new_mode;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = throttle_thermal_policy_write(asus);
 	if (err)
 		return err;
@@ -2146,9 +2184,12 @@ static int throttle_thermal_policy_switch_next(struct asus_wmi *asus)
 	platform_profile_notify();
 
 	return 0;
+<<<<<<< HEAD
 =======
 	return throttle_thermal_policy_write(asus);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t throttle_thermal_policy_show(struct device *dev,
@@ -2165,6 +2206,7 @@ static ssize_t throttle_thermal_policy_store(struct device *dev,
 				    const char *buf, size_t count)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct asus_wmi *asus = dev_get_drvdata(dev);
 	u8 new_mode;
 	int result;
@@ -2174,6 +2216,12 @@ static ssize_t throttle_thermal_policy_store(struct device *dev,
 	u8 new_mode;
 	struct asus_wmi *asus = dev_get_drvdata(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct asus_wmi *asus = dev_get_drvdata(dev);
+	u8 new_mode;
+	int result;
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	result = kstrtou8(buf, 10, &new_mode);
 	if (result < 0)
@@ -2184,6 +2232,9 @@ static ssize_t throttle_thermal_policy_store(struct device *dev,
 
 	asus->throttle_thermal_policy_mode = new_mode;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = throttle_thermal_policy_write(asus);
 	if (err)
 		return err;
@@ -2193,9 +2244,12 @@ static ssize_t throttle_thermal_policy_store(struct device *dev,
 	 * that platform_profile and throttle_thermal_policy_mode are in sync.
 	 */
 	platform_profile_notify();
+<<<<<<< HEAD
 =======
 	throttle_thermal_policy_write(asus);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return count;
 }
@@ -2204,6 +2258,9 @@ static ssize_t throttle_thermal_policy_store(struct device *dev,
 static DEVICE_ATTR_RW(throttle_thermal_policy);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Platform profile ***********************************************************/
 static int platform_profile_get(struct platform_profile_handler *pprof,
 				enum platform_profile_option *profile)
@@ -2289,8 +2346,11 @@ static int platform_profile_setup(struct asus_wmi *asus)
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Backlight ******************************************************************/
 
 static int read_backlight_power(struct asus_wmi *asus)
@@ -2741,18 +2801,27 @@ static struct attribute *platform_attributes[] = {
 	&dev_attr_cardr.attr,
 	&dev_attr_touchpad.attr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	&dev_attr_egpu_enable.attr,
 	&dev_attr_dgpu_disable.attr,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_egpu_enable.attr,
+	&dev_attr_dgpu_disable.attr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	&dev_attr_lid_resume.attr,
 	&dev_attr_als_enable.attr,
 	&dev_attr_fan_boost_mode.attr,
 	&dev_attr_throttle_thermal_policy.attr,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	&dev_attr_panel_od.attr,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_panel_od.attr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NULL
 };
 
@@ -2775,21 +2844,32 @@ static umode_t asus_sysfs_is_visible(struct kobject *kobj,
 	else if (attr == &dev_attr_als_enable.attr)
 		devid = ASUS_WMI_DEVID_ALS_ENABLE;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (attr == &dev_attr_egpu_enable.attr)
 		ok = asus->egpu_enable_available;
 	else if (attr == &dev_attr_dgpu_disable.attr)
 		ok = asus->dgpu_disable_available;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (attr == &dev_attr_fan_boost_mode.attr)
 		ok = asus->fan_boost_mode_available;
 	else if (attr == &dev_attr_throttle_thermal_policy.attr)
 		ok = asus->throttle_thermal_policy_available;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	else if (attr == &dev_attr_panel_od.attr)
 		ok = asus->panel_overdrive_available;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (attr == &dev_attr_panel_od.attr)
+		ok = asus->panel_overdrive_available;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (devid != -1)
 		ok = !(asus_wmi_get_devstate_simple(asus, devid) < 0);
@@ -3046,6 +3126,9 @@ static int asus_wmi_add(struct platform_device *pdev)
 		goto fail_platform;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = egpu_enable_check_present(asus);
 	if (err)
 		goto fail_egpu_enable;
@@ -3054,8 +3137,11 @@ static int asus_wmi_add(struct platform_device *pdev)
 	if (err)
 		goto fail_dgpu_disable;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = fan_boost_mode_check_present(asus);
 	if (err)
 		goto fail_fan_boost_mode;
@@ -3067,6 +3153,9 @@ static int asus_wmi_add(struct platform_device *pdev)
 		throttle_thermal_policy_set_default(asus);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = platform_profile_setup(asus);
 	if (err)
 		goto fail_platform_profile_setup;
@@ -3075,8 +3164,11 @@ static int asus_wmi_add(struct platform_device *pdev)
 	if (err)
 		goto fail_panel_od;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = asus_wmi_sysfs_init(asus->platform_device);
 	if (err)
 		goto fail_sysfs;
@@ -3163,6 +3255,9 @@ fail_input:
 fail_sysfs:
 fail_throttle_thermal_policy:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fail_platform_profile_setup:
 	if (asus->platform_profile_support)
 		platform_profile_remove();
@@ -3171,10 +3266,13 @@ fail_egpu_enable:
 fail_dgpu_disable:
 fail_platform:
 fail_panel_od:
+<<<<<<< HEAD
 =======
 fail_fan_boost_mode:
 fail_platform:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(asus);
 	return err;
 }
@@ -3195,11 +3293,17 @@ static int asus_wmi_remove(struct platform_device *device)
 	asus_wmi_battery_exit(asus);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (asus->platform_profile_support)
 		platform_profile_remove();
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (asus->platform_profile_support)
+		platform_profile_remove();
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(asus);
 	return 0;
 }

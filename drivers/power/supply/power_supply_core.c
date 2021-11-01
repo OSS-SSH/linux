@@ -572,9 +572,13 @@ int power_supply_get_battery_info(struct power_supply *psy,
 	const __be32 *list;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	info->technology                     = POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	info->technology                     = POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	info->energy_full_design_uwh         = -EINVAL;
 	info->charge_full_design_uah         = -EINVAL;
 	info->voltage_min_design_uv          = -EINVAL;
@@ -623,6 +627,9 @@ int power_supply_get_battery_info(struct power_supply *psy,
 	 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!of_property_read_string(battery_np, "device-chemistry", &value)) {
 		if (!strcmp("nickel-cadmium", value))
 			info->technology = POWER_SUPPLY_TECHNOLOGY_NiCd;
@@ -641,8 +648,11 @@ int power_supply_get_battery_info(struct power_supply *psy,
 			dev_warn(&psy->dev, "%s unknown battery type\n", value);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	of_property_read_u32(battery_np, "energy-full-design-microwatt-hours",
 			     &info->energy_full_design_uwh);
 	of_property_read_u32(battery_np, "charge-full-design-microamp-hours",

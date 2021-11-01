@@ -156,9 +156,13 @@ int v9fs_show_options(struct seq_file *m, struct dentry *root)
  * v9fs_parse_options - parse mount options into session structure
  * @v9ses: existing v9fs session information
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @opts: The mount option string
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @opts: The mount option string
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Return 0 upon success, -ERRNO upon failure.
  */
@@ -547,6 +551,7 @@ static struct kobject *v9fs_kobj;
 
 #ifdef CONFIG_9P_FSCACHE
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * List caches associated with a session
  */
@@ -558,6 +563,11 @@ static struct kobject *v9fs_kobj;
  */
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+ * List caches associated with a session
+ */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t caches_show(struct kobject *kobj,
 			   struct kobj_attribute *attr,
 			   char *buf)

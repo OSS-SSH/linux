@@ -526,9 +526,13 @@ static struct snd_soc_dai_link cz_dai_7219_98357[] = {
 		.init = cz_da7219_init,
 		.dpcm_playback = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_da7219_play_ops,
 		SND_SOC_DAILINK_REG(designware1, dlgs, platform),
 	},
@@ -539,9 +543,13 @@ static struct snd_soc_dai_link cz_dai_7219_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_capture = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_da7219_cap_ops,
 		SND_SOC_DAILINK_REG(designware2, dlgs, platform),
 	},
@@ -552,9 +560,13 @@ static struct snd_soc_dai_link cz_dai_7219_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_playback = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_max_play_ops,
 		SND_SOC_DAILINK_REG(designware3, mx, platform),
 	},
@@ -566,9 +578,13 @@ static struct snd_soc_dai_link cz_dai_7219_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_capture = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_dmic0_cap_ops,
 		SND_SOC_DAILINK_REG(designware3, adau, platform),
 	},
@@ -580,9 +596,13 @@ static struct snd_soc_dai_link cz_dai_7219_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_capture = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_dmic1_cap_ops,
 		SND_SOC_DAILINK_REG(designware2, adau, platform),
 	},
@@ -597,9 +617,13 @@ static struct snd_soc_dai_link cz_dai_5682_98357[] = {
 		.init = cz_rt5682_init,
 		.dpcm_playback = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_rt5682_play_ops,
 		SND_SOC_DAILINK_REG(designware1, rt5682, platform),
 	},
@@ -610,9 +634,13 @@ static struct snd_soc_dai_link cz_dai_5682_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_capture = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_rt5682_cap_ops,
 		SND_SOC_DAILINK_REG(designware2, rt5682, platform),
 	},
@@ -623,9 +651,13 @@ static struct snd_soc_dai_link cz_dai_5682_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_playback = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_rt5682_max_play_ops,
 		SND_SOC_DAILINK_REG(designware3, mx, platform),
 	},
@@ -637,9 +669,13 @@ static struct snd_soc_dai_link cz_dai_5682_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_capture = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_rt5682_dmic0_cap_ops,
 		SND_SOC_DAILINK_REG(designware3, adau, platform),
 	},
@@ -651,9 +687,13 @@ static struct snd_soc_dai_link cz_dai_5682_98357[] = {
 				| SND_SOC_DAIFMT_CBM_CFM,
 		.dpcm_capture = 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.stop_dma_first = 1,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.stop_dma_first = 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.ops = &cz_rt5682_dmic1_cap_ops,
 		SND_SOC_DAILINK_REG(designware2, adau, platform),
 	},
@@ -787,6 +827,7 @@ static int cz_probe(struct platform_device *pdev)
 	ret = devm_snd_soc_register_card(&pdev->dev, card);
 	if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return dev_err_probe(&pdev->dev, ret,
 				"devm_snd_soc_register_card(%s) failed\n",
 				card->name);
@@ -801,6 +842,11 @@ static int cz_probe(struct platform_device *pdev)
 				card->name, ret);
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return dev_err_probe(&pdev->dev, ret,
+				"devm_snd_soc_register_card(%s) failed\n",
+				card->name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	bt_uart_enable = !device_property_read_bool(&pdev->dev,
 						    "bt-pad-enable");

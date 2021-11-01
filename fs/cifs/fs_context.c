@@ -14,11 +14,17 @@
 #include <linux/security.h>
 #include <net/net_namespace.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CIFS_DFS_UPCALL
 #include "dfs_cache.h"
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_CIFS_DFS_UPCALL
+#include "dfs_cache.h"
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 */
 
 #include <linux/ctype.h>
@@ -61,6 +67,7 @@ static const match_table_t cifs_secflavor_tokens = {
 	{ Opt_sec_ntlmsspi, "ntlmsspi" },
 	{ Opt_sec_ntlmssp, "ntlmssp" },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ Opt_sec_ntlmv2, "nontlm" },
 	{ Opt_sec_ntlmv2, "ntlmv2" },
 	{ Opt_sec_ntlmv2i, "ntlmv2i" },
@@ -72,6 +79,11 @@ static const match_table_t cifs_secflavor_tokens = {
 	{ Opt_sec_ntlmv2i, "ntlmv2i" },
 	{ Opt_sec_lanman, "lanman" },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ Opt_sec_ntlmv2, "nontlm" },
+	{ Opt_sec_ntlmv2, "ntlmv2" },
+	{ Opt_sec_ntlmv2i, "ntlmv2i" },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ Opt_sec_none, "none" },
 
 	{ Opt_sec_err, NULL }
@@ -231,6 +243,7 @@ cifs_parse_security_flavors(struct fs_context *fc, char *value, struct smb3_fs_c
 		ctx->sectype = RawNTLMSSP;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	case Opt_sec_ntlmi:
 		ctx->sign = true;
@@ -239,12 +252,15 @@ cifs_parse_security_flavors(struct fs_context *fc, char *value, struct smb3_fs_c
 		ctx->sectype = NTLM;
 		break;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case Opt_sec_ntlmv2i:
 		ctx->sign = true;
 		fallthrough;
 	case Opt_sec_ntlmv2:
 		ctx->sectype = NTLMv2;
 		break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 #ifdef CONFIG_CIFS_WEAK_PW_HASH
@@ -253,6 +269,8 @@ cifs_parse_security_flavors(struct fs_context *fc, char *value, struct smb3_fs_c
 		break;
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case Opt_sec_none:
 		ctx->nullauth = 1;
 		break;
@@ -798,12 +816,18 @@ static int smb3_reconfigure(struct fs_context *fc)
 	rc = smb3_fs_context_dup(cifs_sb->ctx, ctx);
 	smb3_update_mnt_flags(cifs_sb);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_CIFS_DFS_UPCALL
 	if (!rc)
 		rc = dfs_cache_remount_fs(cifs_sb);
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rc;
 }
@@ -944,6 +968,9 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
 		ctx->cruid_specified = true;
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case Opt_backupuid:
 		uid = make_kuid(current_user_ns(), result.uint_32);
 		if (!uid_valid(uid))
@@ -951,8 +978,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
 		ctx->backupuid = uid;
 		ctx->backupuid_specified = true;
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case Opt_backupgid:
 		gid = make_kgid(current_user_ns(), result.uint_32);
 		if (!gid_valid(gid))
@@ -1288,6 +1318,7 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
 		break;
 	case Opt_unix:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (result.negated) {
 			if (ctx->linux_ext == 1)
 				pr_warn_once("conflicting posix mount options specified\n");
@@ -1301,10 +1332,23 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
 		}
 =======
 		if (result.negated)
+=======
+		if (result.negated) {
+			if (ctx->linux_ext == 1)
+				pr_warn_once("conflicting posix mount options specified\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ctx->linux_ext = 0;
-		else
 			ctx->no_linux_ext = 1;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		} else {
+			if (ctx->no_linux_ext == 1)
+				pr_warn_once("conflicting posix mount options specified\n");
+			ctx->linux_ext = 1;
+			ctx->no_linux_ext = 0;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case Opt_nocase:
 		ctx->nocase = 1;

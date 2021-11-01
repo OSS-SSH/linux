@@ -70,6 +70,7 @@ static int run_smbios_call(struct wmi_device *wdev)
 			dev_dbg(&wdev->dev, "SMBIOS call failed: %llu\n",
 				obj->integer.value);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		kfree(output.pointer);
 		return -EIO;
 	}
@@ -79,6 +80,12 @@ static int run_smbios_call(struct wmi_device *wdev)
 	}
 	memcpy(&priv->buf->std, obj->buffer.pointer, obj->buffer.length);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kfree(output.pointer);
+		return -EIO;
+	}
+	memcpy(input.pointer, obj->buffer.pointer, obj->buffer.length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_dbg(&wdev->dev, "result: [%08x,%08x,%08x,%08x]\n",
 		priv->buf->std.output[0], priv->buf->std.output[1],
 		priv->buf->std.output[2], priv->buf->std.output[3]);

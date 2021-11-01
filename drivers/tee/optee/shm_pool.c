@@ -28,11 +28,15 @@ static int pool_op_alloc(struct tee_shm_pool_mgr *poolm,
 	shm->size = PAGE_SIZE << order;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Shared memory private to the OP-TEE driver doesn't need
 	 * to be registered with OP-TEE.
 	 */
 	if (!(shm->flags & TEE_SHM_PRIV)) {
+<<<<<<< HEAD
 		unsigned int nr_pages = 1 << order, i;
 		struct page **pages;
 
@@ -50,6 +54,16 @@ static int pool_op_alloc(struct tee_shm_pool_mgr *poolm,
 		if (!pages)
 			return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned int nr_pages = 1 << order, i;
+		struct page **pages;
+
+		pages = kcalloc(nr_pages, sizeof(*pages), GFP_KERNEL);
+		if (!pages) {
+			rc = -ENOMEM;
+			goto err;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		for (i = 0; i < nr_pages; i++) {
 			pages[i] = page;
@@ -60,6 +74,7 @@ static int pool_op_alloc(struct tee_shm_pool_mgr *poolm,
 		rc = optee_shm_register(shm->ctx, shm, pages, nr_pages,
 					(unsigned long)shm->kaddr);
 		kfree(pages);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (rc)
 			goto err;
@@ -73,6 +88,16 @@ err:
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (rc)
+			goto err;
+	}
+
+	return 0;
+
+err:
+	__free_pages(page, order);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -80,10 +105,14 @@ static void pool_op_free(struct tee_shm_pool_mgr *poolm,
 			 struct tee_shm *shm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(shm->flags & TEE_SHM_PRIV))
 =======
 	if (shm->flags & TEE_SHM_DMA_BUF)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(shm->flags & TEE_SHM_PRIV))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		optee_shm_unregister(shm->ctx, shm);
 
 	free_pages((unsigned long)shm->kaddr, get_order(shm->size));

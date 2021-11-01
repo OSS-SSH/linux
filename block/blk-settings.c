@@ -9,9 +9,13 @@
 #include <linux/blkdev.h>
 #include <linux/pagemap.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/backing-dev-defs.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/backing-dev-defs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/gcd.h>
 #include <linux/lcm.h>
 #include <linux/jiffies.h>
@@ -145,12 +149,18 @@ void blk_queue_max_hw_sectors(struct request_queue *q, unsigned int max_hw_secto
 	limits->max_sectors = max_sectors;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!q->disk)
 		return;
 	q->disk->bdi->io_pages = max_sectors >> (PAGE_SHIFT - 9);
 =======
 	q->backing_dev_info->io_pages = max_sectors >> (PAGE_SHIFT - 9);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!q->disk)
+		return;
+	q->disk->bdi->io_pages = max_sectors >> (PAGE_SHIFT - 9);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(blk_queue_max_hw_sectors);
 
@@ -391,6 +401,7 @@ void blk_queue_alignment_offset(struct request_queue *q, unsigned int offset)
 EXPORT_SYMBOL(blk_queue_alignment_offset);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void disk_update_readahead(struct gendisk *disk)
 {
 	struct request_queue *q = disk->queue;
@@ -399,10 +410,17 @@ void disk_update_readahead(struct gendisk *disk)
 void blk_queue_update_readahead(struct request_queue *q)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void disk_update_readahead(struct gendisk *disk)
+{
+	struct request_queue *q = disk->queue;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * For read-ahead of large files to be effective, we need to read ahead
 	 * at least twice the optimal I/O size.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	disk->bdi->ra_pages =
 		max(queue_io_opt(q) * 2 / PAGE_SIZE, VM_READAHEAD_PAGES);
@@ -411,12 +429,18 @@ void blk_queue_update_readahead(struct request_queue *q)
 EXPORT_SYMBOL_GPL(disk_update_readahead);
 =======
 	q->backing_dev_info->ra_pages =
+=======
+	disk->bdi->ra_pages =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		max(queue_io_opt(q) * 2 / PAGE_SIZE, VM_READAHEAD_PAGES);
-	q->backing_dev_info->io_pages =
-		queue_max_sectors(q) >> (PAGE_SHIFT - 9);
+	disk->bdi->io_pages = queue_max_sectors(q) >> (PAGE_SHIFT - 9);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(blk_queue_update_readahead);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(disk_update_readahead);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * blk_limits_io_min - set minimum request size for a device
@@ -497,12 +521,18 @@ void blk_queue_io_opt(struct request_queue *q, unsigned int opt)
 {
 	blk_limits_io_opt(&q->limits, opt);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!q->disk)
 		return;
 	q->disk->bdi->ra_pages =
 =======
 	q->backing_dev_info->ra_pages =
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!q->disk)
+		return;
+	q->disk->bdi->ra_pages =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		max(queue_io_opt(q) * 2 / PAGE_SIZE, VM_READAHEAD_PAGES);
 }
 EXPORT_SYMBOL(blk_queue_io_opt);
@@ -693,6 +723,7 @@ void disk_stack_limits(struct gendisk *disk, struct block_device *bdev,
 
 	if (blk_stack_limits(&t->limits, &bdev_get_queue(bdev)->limits,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			get_start_sect(bdev) + (offset >> 9)) < 0)
 		pr_notice("%s: Warning: Device %pg is misaligned\n",
 			disk->disk_name, bdev);
@@ -711,6 +742,13 @@ void disk_stack_limits(struct gendisk *disk, struct block_device *bdev,
 
 	blk_queue_update_readahead(disk->queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			get_start_sect(bdev) + (offset >> 9)) < 0)
+		pr_notice("%s: Warning: Device %pg is misaligned\n",
+			disk->disk_name, bdev);
+
+	disk_update_readahead(disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(disk_stack_limits);
 

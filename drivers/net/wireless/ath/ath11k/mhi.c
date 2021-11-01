@@ -331,9 +331,13 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
 	mhi_ctrl->fw_image = ab_pci->amss_path;
 	mhi_ctrl->regs = ab->mem;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mhi_ctrl->reg_len = ab->mem_len;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mhi_ctrl->reg_len = ab->mem_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = ath11k_mhi_get_msi(ab_pci);
 	if (ret) {

@@ -742,6 +742,7 @@ struct pneigh_entry * pneigh_lookup(struct neigh_table *tbl,
 	memcpy(n->key, pkey, key_len);
 	n->dev = dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_hold(dev);
 
 	if (tbl->pconstructor && tbl->pconstructor(n)) {
@@ -754,6 +755,12 @@ struct pneigh_entry * pneigh_lookup(struct neigh_table *tbl,
 		if (dev)
 			dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(dev);
+
+	if (tbl->pconstructor && tbl->pconstructor(n)) {
+		dev_put(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(n);
 		n = NULL;
 		goto out;
@@ -786,11 +793,15 @@ int pneigh_delete(struct neigh_table *tbl, struct net *net, const void *pkey,
 			if (tbl->pdestructor)
 				tbl->pdestructor(n);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dev_put(n->dev);
 =======
 			if (n->dev)
 				dev_put(n->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_put(n->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			kfree(n);
 			return 0;
 		}
@@ -824,11 +835,15 @@ static int pneigh_ifdown_and_unlock(struct neigh_table *tbl,
 		if (tbl->pdestructor)
 			tbl->pdestructor(n);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_put(n->dev);
 =======
 		if (n->dev)
 			dev_put(n->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_put(n->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(n);
 	}
 	return -ENOENT;
@@ -1678,11 +1693,15 @@ void neigh_parms_release(struct neigh_table *tbl, struct neigh_parms *parms)
 	parms->dead = 1;
 	write_unlock_bh(&tbl->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_put(parms->dev);
 =======
 	if (parms->dev)
 		dev_put(parms->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(parms->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	call_rcu(&parms->rcu_head, neigh_rcu_free_parms);
 }
 EXPORT_SYMBOL(neigh_parms_release);
@@ -2553,6 +2572,9 @@ static bool neigh_master_filtered(struct net_device *dev, int master_idx)
 
 	master = dev ? netdev_master_upper_dev_get(dev) : NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* 0 is already used to denote NDA_MASTER wasn't passed, therefore need another
 	 * invalid value for ifindex to denote "no master".
@@ -2560,8 +2582,11 @@ static bool neigh_master_filtered(struct net_device *dev, int master_idx)
 	if (master_idx == -1)
 		return !!master;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!master || master->ifindex != master_idx)
 		return true;
 
@@ -3345,6 +3370,7 @@ static int neigh_stat_seq_show(struct seq_file *seq, void *v)
 
 	if (v == SEQ_START_TOKEN) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		seq_puts(seq, "entries  allocs   destroys hash_grows lookups  hits     res_failed rcv_probes_mcast rcv_probes_ucast periodic_gc_runs forced_gc_runs unresolved_discards table_fulls\n");
 		return 0;
 	}
@@ -3360,6 +3386,15 @@ static int neigh_stat_seq_show(struct seq_file *seq, void *v)
 	seq_printf(seq, "%08x  %08lx %08lx %08lx  %08lx %08lx  %08lx  "
 			"%08lx %08lx  %08lx %08lx %08lx %08lx\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		seq_puts(seq, "entries  allocs   destroys hash_grows lookups  hits     res_failed rcv_probes_mcast rcv_probes_ucast periodic_gc_runs forced_gc_runs unresolved_discards table_fulls\n");
+		return 0;
+	}
+
+	seq_printf(seq, "%08x %08lx %08lx %08lx   %08lx %08lx %08lx   "
+			"%08lx         %08lx         %08lx         "
+			"%08lx       %08lx            %08lx\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		   atomic_read(&tbl->entries),
 
 		   st->allocs,

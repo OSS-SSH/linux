@@ -18,22 +18,33 @@
  *   DEFINE_STATIC_CALL(name, func);
  *   DEFINE_STATIC_CALL_NULL(name, typename);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   DEFINE_STATIC_CALL_RET0(name, typename);
  *
  *   __static_call_return0;
  *
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   static_call(name)(args...);
  *   static_call_cond(name)(args...);
  *   static_call_update(name, func);
  *   static_call_query(name);
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  *   EXPORT_STATIC_CALL{,_TRAMP}{,_GPL}()
  *
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *   EXPORT_STATIC_CALL{,_TRAMP}{,_GPL}()
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Usage example:
  *
  *   # Start with the following functions (with identical prototypes):
@@ -109,6 +120,9 @@
  *
  *   func = static_call_query(name);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *
  * DEFINE_STATIC_CALL_RET0 / __static_call_return0:
@@ -136,8 +150,11 @@
  *   trampoline with the result that a module can use static_call{,_cond}() but
  *   not static_call_update().
  *
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/types.h>

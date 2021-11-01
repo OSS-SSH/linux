@@ -452,10 +452,15 @@ static inline unsigned int i40e_rx_pg_order(struct i40e_ring *ring)
 bool i40e_alloc_rx_buffers(struct i40e_ring *rxr, u16 cleaned_count);
 netdev_tx_t i40e_lan_xmit_frame(struct sk_buff *skb, struct net_device *netdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 u16 i40e_lan_select_queue(struct net_device *netdev, struct sk_buff *skb,
 			  struct net_device *sb_dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u16 i40e_lan_select_queue(struct net_device *netdev, struct sk_buff *skb,
+			  struct net_device *sb_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void i40e_clean_tx_ring(struct i40e_ring *tx_ring);
 void i40e_clean_rx_ring(struct i40e_ring *rx_ring);
 int i40e_setup_tx_descriptors(struct i40e_ring *tx_ring);

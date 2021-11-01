@@ -37,10 +37,15 @@ fake_map-y				+= fake_mem.o
 fake_map-$(CONFIG_X86)			+= x86_fake_mem.o
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 obj-$(CONFIG_SYSFB)			+= sysfb_efi.o
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_SYSFB)			+= sysfb_efi.o
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 arm-obj-$(CONFIG_EFI)			:= efi-init.o arm-runtime.o
 obj-$(CONFIG_ARM)			+= $(arm-obj-y)
 obj-$(CONFIG_ARM64)			+= $(arm-obj-y)

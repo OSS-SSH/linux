@@ -17,6 +17,10 @@ are configurable at compile, boot or run time.
    special-register-buffer-data-sampling.rst
    core-scheduling.rst
 <<<<<<< HEAD
+<<<<<<< HEAD
    l1d_flush.rst
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+   l1d_flush.rst
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -781,10 +781,14 @@ efct_lio_npiv_make_nport(struct target_fabric_configfs *tf,
 	struct efct_lio_vport *lio_vport;
 	struct efct *efct;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 =======
 	int ret = -1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 p_wwpn, npiv_wwpn, npiv_wwnn;
 	char *p, *pbuf, tmp[128];
 	struct efct_lio_vport_list_t *vport_list;
@@ -885,6 +889,7 @@ efct_lio_npiv_drop_nport(struct se_wwn *wwn)
 	unsigned long flags = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (lio_vport->fc_vport)
 		fc_vport_terminate(lio_vport->fc_vport);
 
@@ -897,6 +902,13 @@ efct_lio_npiv_drop_nport(struct se_wwn *wwn)
 		fc_vport_terminate(lio_vport->fc_vport);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (lio_vport->fc_vport)
+		fc_vport_terminate(lio_vport->fc_vport);
+
+	spin_lock_irqsave(&efct->tgt_efct.efct_lio_lock, flags);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry_safe(vport, next_vport, &efct->tgt_efct.vport_list,
 				 list_entry) {
 		if (vport->lio_vport == lio_vport) {

@@ -254,9 +254,13 @@ static struct osnoise_data {
 static bool osnoise_busy;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_PREEMPT_RT
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_PREEMPT_RT
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Print the osnoise header info.
  */
@@ -266,6 +270,9 @@ static void print_osnoise_headers(struct seq_file *s)
 		seq_puts(s, "# osnoise is tainted!\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	seq_puts(s, "#                                _-------=> irqs-off\n");
 	seq_puts(s, "#                               / _------=> need-resched\n");
 	seq_puts(s, "#                              | / _-----=> need-resched-lazy\n");
@@ -295,8 +302,11 @@ static void print_osnoise_headers(struct seq_file *s)
 	if (osnoise_data.tainted)
 		seq_puts(s, "# osnoise is tainted!\n");
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	seq_puts(s, "#                                _-----=> irqs-off\n");
 	seq_puts(s, "#                               / _----=> need-resched\n");
 	seq_puts(s, "#                              | / _---=> hardirq/softirq\n");
@@ -316,9 +326,13 @@ static void print_osnoise_headers(struct seq_file *s)
 	seq_puts(s, "       |    |            |      |      |      |      |      |\n");
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* CONFIG_PREEMPT_RT */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_PREEMPT_RT */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * osnoise_taint - report an osnoise error.
@@ -364,6 +378,9 @@ static void trace_osnoise_sample(struct osnoise_sample *sample)
  * Print the timerlat header info.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PREEMPT_RT
 static void print_timerlat_headers(struct seq_file *s)
 {
@@ -382,8 +399,11 @@ static void print_timerlat_headers(struct seq_file *s)
 	seq_puts(s, "            |                       |\n");
 }
 #else /* CONFIG_PREEMPT_RT */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void print_timerlat_headers(struct seq_file *s)
 {
 	seq_puts(s, "#                                _-----=> irqs-off\n");
@@ -398,9 +418,13 @@ static void print_timerlat_headers(struct seq_file *s)
 	seq_puts(s, "            |                       |\n");
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif /* CONFIG_PREEMPT_RT */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_PREEMPT_RT */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Record an timerlat_sample into the tracer buffer.
@@ -1091,6 +1115,7 @@ diff_osn_sample_stats(struct osnoise_variables *osn_var, struct osnoise_sample *
  * osnoise_stop_tracing - Stop tracing and the tracer.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static __always_inline void osnoise_stop_tracing(void)
 {
 	struct trace_array *tr = osnoise_trace;
@@ -1103,6 +1128,15 @@ static void osnoise_stop_tracing(void)
 {
 	struct trace_array *tr = osnoise_trace;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static __always_inline void osnoise_stop_tracing(void)
+{
+	struct trace_array *tr = osnoise_trace;
+
+	trace_array_printk_buf(tr->array_buffer.buffer, _THIS_IP_,
+			"stop tracing hit on cpu %d\n", smp_processor_id());
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tracer_tracing_off(tr);
 }
 
@@ -1520,19 +1554,27 @@ static void stop_per_cpu_kthreads(void)
 	int cpu;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for_each_online_cpu(cpu)
 		stop_kthread(cpu);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1578,6 +1620,7 @@ static int start_per_cpu_kthreads(struct trace_array *tr)
 {
 	struct cpumask *current_mask = &save_cpumask;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int retval = 0;
 	int cpu;
 
@@ -1588,6 +1631,12 @@ static int start_per_cpu_kthreads(struct trace_array *tr)
 
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int retval = 0;
+	int cpu;
+
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Run only on CPUs in which trace and osnoise are allowed to run.
 	 */
@@ -1605,6 +1654,7 @@ static int start_per_cpu_kthreads(struct trace_array *tr)
 		if (retval) {
 			stop_per_cpu_kthreads();
 <<<<<<< HEAD
+<<<<<<< HEAD
 			break;
 		}
 	}
@@ -1614,13 +1664,20 @@ static int start_per_cpu_kthreads(struct trace_array *tr)
 	return retval;
 =======
 			return retval;
+=======
+			break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
-	put_online_cpus();
+	cpus_read_unlock();
 
+<<<<<<< HEAD
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return retval;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_HOTPLUG_CPU
@@ -1637,10 +1694,14 @@ static void osnoise_hotplug_workfn(struct work_struct *dummy)
 
 	mutex_lock(&interface_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!cpumask_test_cpu(cpu, &osnoise_cpumask))
 		goto out_unlock;
@@ -1652,10 +1713,14 @@ static void osnoise_hotplug_workfn(struct work_struct *dummy)
 
 out_unlock:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&interface_lock);
 out_unlock_trace:
 	mutex_unlock(&trace_types_lock);
@@ -1798,6 +1863,7 @@ osnoise_cpus_write(struct file *filp, const char __user *ubuf, size_t count,
 	 * osnoise_cpumask is read by CPU hotplug operations.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 
 	cpumask_copy(&osnoise_cpumask, osnoise_cpumask_new);
@@ -1810,6 +1876,13 @@ osnoise_cpus_write(struct file *filp, const char __user *ubuf, size_t count,
 
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+
+	cpumask_copy(&osnoise_cpumask, osnoise_cpumask_new);
+
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&interface_lock);
 
 	if (running)

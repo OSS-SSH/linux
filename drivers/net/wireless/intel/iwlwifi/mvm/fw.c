@@ -744,11 +744,16 @@ int iwl_mvm_sar_select_profile(struct iwl_mvm *mvm, int prof_a, int prof_b)
 	len += sizeof(cmd.common);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = iwl_sar_select_profile(&mvm->fwrt, per_chain,
 				     IWL_NUM_CHAIN_TABLES,
 =======
 	ret = iwl_sar_select_profile(&mvm->fwrt, per_chain, ACPI_SAR_NUM_TABLES,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = iwl_sar_select_profile(&mvm->fwrt, per_chain,
+				     IWL_NUM_CHAIN_TABLES,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     n_subbands, prof_a, prof_b);
 
 	/* return on error or if the profile is disabled (positive number) */
@@ -1063,6 +1068,7 @@ static const struct dmi_system_id dmi_ppag_approved_list[] = {
 static int iwl_mvm_ppag_init(struct iwl_mvm *mvm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* no need to read the table, done in INIT stage */
 =======
 	int ret;
@@ -1076,6 +1082,9 @@ static int iwl_mvm_ppag_init(struct iwl_mvm *mvm)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* no need to read the table, done in INIT stage */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dmi_check_system(dmi_ppag_approved_list)) {
 		IWL_DEBUG_RADIO(mvm,
 				"System vendor '%s' is not in the approved list, disabling PPAG.\n",
@@ -1201,6 +1210,9 @@ static void iwl_mvm_lari_cfg(struct iwl_mvm *mvm)
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm)
 {
@@ -1254,18 +1266,25 @@ void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm)
 		}
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else /* CONFIG_ACPI */
 
 inline int iwl_mvm_sar_select_profile(struct iwl_mvm *mvm,
 				      int prof_a, int prof_b)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 1;
 =======
 	return -ENOENT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 inline int iwl_mvm_get_sar_geo_profile(struct iwl_mvm *mvm)
@@ -1301,12 +1320,18 @@ static u8 iwl_mvm_eval_dsm_rfi(struct iwl_mvm *mvm)
 	return DSM_VALUE_RFI_DISABLE;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm)
 {
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_ACPI */
 
 void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
@@ -1363,6 +1388,7 @@ void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
 static int iwl_mvm_sar_init(struct iwl_mvm *mvm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int ret;
 
@@ -1386,6 +1412,8 @@ static int iwl_mvm_sar_init(struct iwl_mvm *mvm)
 				ret);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return iwl_mvm_sar_select_profile(mvm, 1, 1);
 }
 
@@ -1622,6 +1650,7 @@ int iwl_mvm_up(struct iwl_mvm *mvm)
 
 	ret = iwl_mvm_sar_init(mvm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ret == 0)
 		ret = iwl_mvm_sar_geo_init(mvm);
 	else if (ret < 0)
@@ -1640,6 +1669,11 @@ int iwl_mvm_up(struct iwl_mvm *mvm)
 
 	if (ret < 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret == 0)
+		ret = iwl_mvm_sar_geo_init(mvm);
+	else if (ret < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto error;
 
 	iwl_mvm_tas_init(mvm);

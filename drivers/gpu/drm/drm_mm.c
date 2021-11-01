@@ -701,10 +701,14 @@ EXPORT_SYMBOL(drm_mm_replace_node);
  * drm_mm_scan_init() or drm_mm_scan_init_with_range(). The driver adds
  * objects to the roster, probably by walking an LRU list, but this can be
 <<<<<<< HEAD
+<<<<<<< HEAD
  * freely implemented. Eviction candidates are added using
 =======
  * freely implemented. Eviction candiates are added using
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * freely implemented. Eviction candidates are added using
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_mm_scan_add_block() until a suitable hole is found or there are no
  * further evictable objects. Eviction roster metadata is tracked in &struct
  * drm_mm_scan.

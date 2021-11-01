@@ -277,6 +277,7 @@ static int rt_cpu_seq_show(struct seq_file *seq, void *v)
 
 	if (v == SEQ_START_TOKEN) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		seq_puts(seq, "entries  in_hit   in_slow_tot in_slow_mc in_no_route in_brd   in_martian_dst in_martian_src out_hit  out_slow_tot out_slow_mc gc_total gc_ignored gc_goal_miss gc_dst_overflow in_hlist_search out_hlist_search\n");
 		return 0;
 	}
@@ -292,6 +293,15 @@ static int rt_cpu_seq_show(struct seq_file *seq, void *v)
 	seq_printf(seq,"%08x  %08x %08x %08x %08x %08x %08x %08x "
 		   " %08x %08x %08x %08x %08x %08x %08x %08x %08x \n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		seq_puts(seq, "entries  in_hit   in_slow_tot in_slow_mc in_no_route in_brd   in_martian_dst in_martian_src out_hit  out_slow_tot out_slow_mc gc_total gc_ignored gc_goal_miss gc_dst_overflow in_hlist_search out_hlist_search\n");
+		return 0;
+	}
+
+	seq_printf(seq, "%08x %08x %08x    %08x   %08x    %08x %08x       "
+			"%08x       %08x %08x     %08x    %08x %08x   "
+			"%08x     %08x        %08x        %08x\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		   dst_entries_get_slow(&ipv4_dst_ops),
 		   0, /* st->in_hit */
 		   st->in_slow_tot,
@@ -597,6 +607,7 @@ static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void fnhe_remove_oldest(struct fnhe_hash_bucket *hash)
 {
 	struct fib_nh_exception __rcu **fnhe_p, **oldest_p;
@@ -628,28 +639,44 @@ static u32 fnhe_hashfun(__be32 daddr)
 	return hash_64(hval, FNHE_HASH_SHIFT);
 =======
 static struct fib_nh_exception *fnhe_oldest(struct fnhe_hash_bucket *hash)
+=======
+static void fnhe_remove_oldest(struct fnhe_hash_bucket *hash)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct fib_nh_exception *fnhe, *oldest;
+	struct fib_nh_exception __rcu **fnhe_p, **oldest_p;
+	struct fib_nh_exception *fnhe, *oldest = NULL;
 
-	oldest = rcu_dereference(hash->chain);
-	for (fnhe = rcu_dereference(oldest->fnhe_next); fnhe;
-	     fnhe = rcu_dereference(fnhe->fnhe_next)) {
-		if (time_before(fnhe->fnhe_stamp, oldest->fnhe_stamp))
+	for (fnhe_p = &hash->chain; ; fnhe_p = &fnhe->fnhe_next) {
+		fnhe = rcu_dereference_protected(*fnhe_p,
+						 lockdep_is_held(&fnhe_lock));
+		if (!fnhe)
+			break;
+		if (!oldest ||
+		    time_before(fnhe->fnhe_stamp, oldest->fnhe_stamp)) {
 			oldest = fnhe;
+			oldest_p = fnhe_p;
+		}
 	}
 	fnhe_flush_routes(oldest);
-	return oldest;
+	*oldest_p = oldest->fnhe_next;
+	kfree_rcu(oldest, rcu);
 }
 
-static inline u32 fnhe_hashfun(__be32 daddr)
+static u32 fnhe_hashfun(__be32 daddr)
 {
-	static u32 fnhe_hashrnd __read_mostly;
-	u32 hval;
+	static siphash_key_t fnhe_hash_key __read_mostly;
+	u64 hval;
 
+<<<<<<< HEAD
 	net_get_random_once(&fnhe_hashrnd, sizeof(fnhe_hashrnd));
 	hval = jhash_1word((__force u32)daddr, fnhe_hashrnd);
 	return hash_32(hval, FNHE_HASH_SHIFT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	net_get_random_once(&fnhe_hash_key, sizeof(fnhe_hash_key));
+	hval = siphash_1u32((__force u32)daddr, &fnhe_hash_key);
+	return hash_64(hval, FNHE_HASH_SHIFT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void fill_route_from_fnhe(struct rtable *rt, struct fib_nh_exception *fnhe)
@@ -719,6 +746,9 @@ static void update_or_create_fnhe(struct fib_nh_common *nhc, __be32 daddr,
 			fill_route_from_fnhe(rt, fnhe);
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Randomize max depth to avoid some side channels attacks. */
 		int max_depth = FNHE_RECLAIM_DEPTH +
 				prandom_u32_max(FNHE_RECLAIM_DEPTH);
@@ -726,6 +756,7 @@ static void update_or_create_fnhe(struct fib_nh_common *nhc, __be32 daddr,
 		while (depth > max_depth) {
 			fnhe_remove_oldest(hash);
 			depth--;
+<<<<<<< HEAD
 		}
 
 		fnhe = kzalloc(sizeof(*fnhe), GFP_ATOMIC);
@@ -746,6 +777,16 @@ static void update_or_create_fnhe(struct fib_nh_common *nhc, __be32 daddr,
 			rcu_assign_pointer(hash->chain, fnhe);
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+
+		fnhe = kzalloc(sizeof(*fnhe), GFP_ATOMIC);
+		if (!fnhe)
+			goto out_unlock;
+
+		fnhe->fnhe_next = hash->chain;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fnhe->fnhe_genid = genid;
 		fnhe->fnhe_daddr = daddr;
 		fnhe->fnhe_gw = gw;
@@ -754,10 +795,15 @@ static void update_or_create_fnhe(struct fib_nh_common *nhc, __be32 daddr,
 		fnhe->fnhe_expires = max(1UL, expires);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rcu_assign_pointer(hash->chain, fnhe);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rcu_assign_pointer(hash->chain, fnhe);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Exception created; mark the cached routes for the nexthop
 		 * stale, so anyone caching it rechecks if this exception
 		 * applies to them.
@@ -1365,6 +1411,7 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
 INDIRECT_CALLABLE_SCOPE unsigned int ipv4_mtu(const struct dst_entry *dst)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ip_dst_mtu_maybe_forward(dst, false);
 =======
 	const struct rtable *rt = (const struct rtable *)dst;
@@ -1388,6 +1435,9 @@ out:
 
 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ip_dst_mtu_maybe_forward(dst, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_INDIRECT_CALLABLE(ipv4_mtu);
 
@@ -2901,11 +2951,15 @@ struct dst_entry *ipv4_blackhole_route(struct net *net, struct dst_entry *dst_or
 
 		new->dev = net->loopback_dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_hold(new->dev);
 =======
 		if (new->dev)
 			dev_hold(new->dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_hold(new->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		rt->rt_is_input = ort->rt_is_input;
 		rt->rt_iif = ort->rt_iif;
@@ -3244,10 +3298,14 @@ static struct sk_buff *inet_rtm_getroute_build_skb(__be32 src, __be32 dst,
 		udph->source = sport;
 		udph->dest = dport;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		udph->len = htons(sizeof(struct udphdr));
 =======
 		udph->len = sizeof(struct udphdr);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		udph->len = htons(sizeof(struct udphdr));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		udph->check = 0;
 		break;
 	}

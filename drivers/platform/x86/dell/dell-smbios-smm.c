@@ -25,6 +25,7 @@ static struct platform_device *platform_device;
 static DEFINE_MUTEX(smm_mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct dmi_system_id dell_device_table[] __initconst = {
 	{
@@ -58,6 +59,8 @@ static const struct dmi_system_id dell_device_table[] __initconst = {
 MODULE_DEVICE_TABLE(dmi, dell_device_table);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void parse_da_table(const struct dmi_header *dm)
 {
 	struct calling_interface_structure *table =

@@ -55,6 +55,7 @@ static int acp_probe(struct platform_device *pdev)
 	ret = devm_snd_soc_register_card(&pdev->dev, card);
 	if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return dev_err_probe(&pdev->dev, ret,
 				"snd_soc_register_card(%s) failed\n",
 				card->name);
@@ -64,6 +65,11 @@ static int acp_probe(struct platform_device *pdev)
 			acp_card.name, ret);
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return dev_err_probe(&pdev->dev, ret,
+				"snd_soc_register_card(%s) failed\n",
+				card->name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return 0;
 }

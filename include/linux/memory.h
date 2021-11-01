@@ -24,6 +24,9 @@
 #define MIN_MEMORY_BLOCK_SIZE     (1UL << SECTION_SIZE_BITS)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct memory_group - a logical group of memory blocks
  * @nid: The node id for all memory blocks inside the memory group.
@@ -66,8 +69,11 @@ struct memory_group {
 	};
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct memory_block {
 	unsigned long start_section_nr;
 	unsigned long state;		/* serialized by the dev->lock */
@@ -80,10 +86,15 @@ struct memory_block {
 	 */
 	unsigned long nr_vmemmap_pages;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct memory_group *group;	/* group (if any) for this block */
 	struct list_head group_next;	/* next block inside memory group */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct memory_group *group;	/* group (if any) for this block */
+	struct list_head group_next;	/* next block inside memory group */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int arch_get_memory_phys_device(unsigned long start_pfn);
@@ -137,6 +148,7 @@ extern int register_memory_notifier(struct notifier_block *nb);
 extern void unregister_memory_notifier(struct notifier_block *nb);
 int create_memory_block_devices(unsigned long start, unsigned long size,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				unsigned long vmemmap_pages,
 				struct memory_group *group);
 void remove_memory_block_devices(unsigned long start, unsigned long size);
@@ -150,12 +162,23 @@ extern void memory_dev_init(void);
 extern int memory_notify(unsigned long val, void *v);
 extern struct memory_block *find_memory_block(struct mem_section *);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				unsigned long vmemmap_pages,
+				struct memory_group *group);
+void remove_memory_block_devices(unsigned long start, unsigned long size);
+extern void memory_dev_init(void);
+extern int memory_notify(unsigned long val, void *v);
+extern struct memory_block *find_memory_block(unsigned long section_nr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 typedef int (*walk_memory_blocks_func_t)(struct memory_block *, void *);
 extern int walk_memory_blocks(unsigned long start, unsigned long size,
 			      void *arg, walk_memory_blocks_func_t func);
 extern int for_each_memory_block(void *arg, walk_memory_blocks_func_t func);
 #define CONFIG_MEM_BLOCK_SIZE	(PAGES_PER_SECTION<<PAGE_SHIFT)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int memory_group_register_static(int nid, unsigned long max_pages);
 extern int memory_group_register_dynamic(int nid, unsigned long unit_pages);
@@ -164,8 +187,11 @@ struct memory_group *memory_group_find_by_id(int mgid);
 typedef int (*walk_memory_groups_func_t)(struct memory_group *, void *);
 int walk_dynamic_memory_groups(int nid, walk_memory_groups_func_t func,
 			       struct memory_group *excluded, void *arg);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_MEMORY_HOTPLUG_SPARSE */
 
 #ifdef CONFIG_MEMORY_HOTPLUG

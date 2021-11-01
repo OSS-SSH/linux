@@ -26,10 +26,13 @@
 #include "xhci-dbgcap.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define XHCI_MSG_MAX	500
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DECLARE_EVENT_CLASS(xhci_log_msg,
 	TP_PROTO(struct va_format *vaf),
 	TP_ARGS(vaf),
@@ -126,9 +129,13 @@ DECLARE_EVENT_CLASS(xhci_log_trb,
 		__field(u32, field2)
 		__field(u32, field3)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__dynamic_array(char, str, XHCI_MSG_MAX)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__dynamic_array(char, str, XHCI_MSG_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_fast_assign(
 		__entry->type = ring->type;
@@ -139,10 +146,14 @@ DECLARE_EVENT_CLASS(xhci_log_trb,
 	),
 	TP_printk("%s: %s", xhci_ring_type_string(__entry->type),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  xhci_decode_trb(__get_str(str), XHCI_MSG_MAX, __entry->field0, __entry->field1,
 =======
 			xhci_decode_trb(__entry->field0, __entry->field1,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		  xhci_decode_trb(__get_str(str), XHCI_MSG_MAX, __entry->field0, __entry->field1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					__entry->field2, __entry->field3)
 	)
 );
@@ -335,9 +346,13 @@ DECLARE_EVENT_CLASS(xhci_log_ep_ctx,
 		__field(u64, deq)
 		__field(u32, tx_info)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__dynamic_array(char, str, XHCI_MSG_MAX)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__dynamic_array(char, str, XHCI_MSG_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_fast_assign(
 		__entry->info = le32_to_cpu(ctx->ep_info);
@@ -346,12 +361,17 @@ DECLARE_EVENT_CLASS(xhci_log_ep_ctx,
 		__entry->tx_info = le32_to_cpu(ctx->tx_info);
 	),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	TP_printk("%s", xhci_decode_ep_context(__get_str(str),
 		__entry->info, __entry->info2, __entry->deq, __entry->tx_info)
 =======
 	TP_printk("%s", xhci_decode_ep_context(__entry->info,
 		__entry->info2, __entry->deq, __entry->tx_info)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_printk("%s", xhci_decode_ep_context(__get_str(str),
+		__entry->info, __entry->info2, __entry->deq, __entry->tx_info)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	)
 );
 
@@ -389,9 +409,13 @@ DECLARE_EVENT_CLASS(xhci_log_slot_ctx,
 		__field(u32, tt_info)
 		__field(u32, state)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__dynamic_array(char, str, XHCI_MSG_MAX)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__dynamic_array(char, str, XHCI_MSG_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_fast_assign(
 		__entry->info = le32_to_cpu(ctx->dev_info);
@@ -399,6 +423,7 @@ DECLARE_EVENT_CLASS(xhci_log_slot_ctx,
 		__entry->tt_info = le64_to_cpu(ctx->tt_info);
 		__entry->state = le32_to_cpu(ctx->dev_state);
 	),
+<<<<<<< HEAD
 <<<<<<< HEAD
 	TP_printk("%s", xhci_decode_slot_context(__get_str(str),
 			__entry->info, __entry->info2,
@@ -408,6 +433,11 @@ DECLARE_EVENT_CLASS(xhci_log_slot_ctx,
 			__entry->info2, __entry->tt_info,
 			__entry->state)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_printk("%s", xhci_decode_slot_context(__get_str(str),
+			__entry->info, __entry->info2,
+			__entry->tt_info, __entry->state)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	)
 );
 
@@ -463,19 +493,27 @@ DECLARE_EVENT_CLASS(xhci_log_ctrl_ctx,
 		__field(u32, drop)
 		__field(u32, add)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__dynamic_array(char, str, XHCI_MSG_MAX)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__dynamic_array(char, str, XHCI_MSG_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_fast_assign(
 		__entry->drop = le32_to_cpu(ctrl_ctx->drop_flags);
 		__entry->add = le32_to_cpu(ctrl_ctx->add_flags);
 	),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	TP_printk("%s", xhci_decode_ctrl_ctx(__get_str(str), __entry->drop, __entry->add)
 =======
 	TP_printk("%s", xhci_decode_ctrl_ctx(__entry->drop, __entry->add)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_printk("%s", xhci_decode_ctrl_ctx(__get_str(str), __entry->drop, __entry->add)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	)
 );
 
@@ -562,9 +600,13 @@ DECLARE_EVENT_CLASS(xhci_log_portsc,
 				     __field(u32, portnum)
 				     __field(u32, portsc)
 <<<<<<< HEAD
+<<<<<<< HEAD
 				     __dynamic_array(char, str, XHCI_MSG_MAX)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     __dynamic_array(char, str, XHCI_MSG_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     ),
 		    TP_fast_assign(
 				   __entry->portnum = portnum;
@@ -573,10 +615,14 @@ DECLARE_EVENT_CLASS(xhci_log_portsc,
 		    TP_printk("port-%d: %s",
 			      __entry->portnum,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      xhci_decode_portsc(__get_str(str), __entry->portsc)
 =======
 			      xhci_decode_portsc(__entry->portsc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      xhci_decode_portsc(__get_str(str), __entry->portsc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      )
 );
 
@@ -602,9 +648,13 @@ DECLARE_EVENT_CLASS(xhci_log_doorbell,
 		__field(u32, slot)
 		__field(u32, doorbell)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__dynamic_array(char, str, XHCI_MSG_MAX)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__dynamic_array(char, str, XHCI_MSG_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_fast_assign(
 		__entry->slot = slot;
@@ -612,10 +662,14 @@ DECLARE_EVENT_CLASS(xhci_log_doorbell,
 	),
 	TP_printk("Ring doorbell for %s",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		  xhci_decode_doorbell(__get_str(str), __entry->slot, __entry->doorbell)
 =======
 		xhci_decode_doorbell(__entry->slot, __entry->doorbell)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		  xhci_decode_doorbell(__get_str(str), __entry->slot, __entry->doorbell)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	)
 );
 

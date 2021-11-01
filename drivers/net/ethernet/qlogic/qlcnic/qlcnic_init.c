@@ -95,6 +95,7 @@ void qlcnic_release_rx_buffers(struct qlcnic_adapter *adapter)
 				continue;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_single(&adapter->pdev->dev, rx_buf->dma,
 					 rds_ring->dma_size, DMA_FROM_DEVICE);
 =======
@@ -103,6 +104,10 @@ void qlcnic_release_rx_buffers(struct qlcnic_adapter *adapter)
 					rds_ring->dma_size,
 					PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_single(&adapter->pdev->dev, rx_buf->dma,
+					 rds_ring->dma_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			dev_kfree_skb_any(rx_buf->skb);
 		}
@@ -145,17 +150,23 @@ void qlcnic_release_tx_buffers(struct qlcnic_adapter *adapter,
 		buffrag = cmd_buf->frag_array;
 		if (buffrag->dma) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_single(&adapter->pdev->dev, buffrag->dma,
 					 buffrag->length, DMA_TO_DEVICE);
 =======
 			pci_unmap_single(adapter->pdev, buffrag->dma,
 					 buffrag->length, PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_single(&adapter->pdev->dev, buffrag->dma,
+					 buffrag->length, DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			buffrag->dma = 0ULL;
 		}
 		for (j = 1; j < cmd_buf->frag_count; j++) {
 			buffrag++;
 			if (buffrag->dma) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 				dma_unmap_page(&adapter->pdev->dev,
 					       buffrag->dma, buffrag->length,
@@ -165,6 +176,11 @@ void qlcnic_release_tx_buffers(struct qlcnic_adapter *adapter,
 					       buffrag->length,
 					       PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dma_unmap_page(&adapter->pdev->dev,
+					       buffrag->dma, buffrag->length,
+					       DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				buffrag->dma = 0ULL;
 			}
 		}
@@ -456,9 +472,12 @@ int qlcnic_pinit_from_rom(struct qlcnic_adapter *adapter)
 	msleep(20);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	qlcnic_rom_unlock(adapter);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* big hammer don't reset CAM block on reset */
 	QLCWR32(adapter, QLCNIC_ROMUSB_GLB_SW_RESET, 0xfeffffff);
 

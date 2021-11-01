@@ -63,10 +63,14 @@ static struct snd_soc_jack_gpio hp_jack_gpios[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct snd_soc_ops rx1950_ops = {
 =======
 static struct snd_soc_ops rx1950_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct snd_soc_ops rx1950_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.startup	= rx1950_startup,
 	.hw_params	= rx1950_hw_params,
 };

@@ -45,6 +45,7 @@ static inline void __blk_get_queue(struct request_queue *q)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool is_flush_rq(struct request *req);
 =======
 static inline bool
@@ -53,6 +54,9 @@ is_flush_rq(struct request *req, struct blk_mq_hw_ctx *hctx)
 	return hctx->fq->flush_rq == req;
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool is_flush_rq(struct request *req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct blk_flush_queue *blk_alloc_flush_queue(int node, int cmd_size,
 					      gfp_t flags);
@@ -60,10 +64,15 @@ void blk_free_flush_queue(struct blk_flush_queue *q);
 
 void blk_freeze_queue(struct request_queue *q);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic);
 void blk_queue_start_drain(struct request_queue *q);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic);
+void blk_queue_start_drain(struct request_queue *q);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define BIO_INLINE_VECS 4
 struct bio_vec *bvec_alloc(mempool_t *pool, unsigned short *nr_vecs,
@@ -142,10 +151,14 @@ static inline bool integrity_req_gap_front_merge(struct request *req,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int blk_integrity_add(struct gendisk *disk);
 =======
 void blk_integrity_add(struct gendisk *);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int blk_integrity_add(struct gendisk *disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void blk_integrity_del(struct gendisk *);
 #else /* CONFIG_BLK_DEV_INTEGRITY */
 static inline bool blk_integrity_merge_rq(struct request_queue *rq,
@@ -180,6 +193,7 @@ static inline void bio_integrity_free(struct bio *bio)
 {
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int blk_integrity_add(struct gendisk *disk)
 {
 	return 0;
@@ -187,6 +201,11 @@ static inline int blk_integrity_add(struct gendisk *disk)
 static inline void blk_integrity_add(struct gendisk *disk)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int blk_integrity_add(struct gendisk *disk)
+{
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 static inline void blk_integrity_del(struct gendisk *disk)
 {
@@ -313,18 +332,26 @@ extern int blk_throtl_init(struct request_queue *q);
 extern void blk_throtl_exit(struct request_queue *q);
 extern void blk_throtl_register_queue(struct request_queue *q);
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void blk_throtl_charge_bio_split(struct bio *bio);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void blk_throtl_charge_bio_split(struct bio *bio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool blk_throtl_bio(struct bio *bio);
 #else /* CONFIG_BLK_DEV_THROTTLING */
 static inline int blk_throtl_init(struct request_queue *q) { return 0; }
 static inline void blk_throtl_exit(struct request_queue *q) { }
 static inline void blk_throtl_register_queue(struct request_queue *q) { }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void blk_throtl_charge_bio_split(struct bio *bio) { }
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void blk_throtl_charge_bio_split(struct bio *bio) { }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool blk_throtl_bio(struct bio *bio) { return false; }
 #endif /* CONFIG_BLK_DEV_THROTTLING */
 #ifdef CONFIG_BLK_DEV_THROTTLING_LOW
@@ -372,6 +399,7 @@ static inline void blk_queue_clear_zone_settings(struct request_queue *q) {}
 int blk_alloc_ext_minor(void);
 void blk_free_ext_minor(unsigned int minor);
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define ADDPART_FLAG_NONE	0
 #define ADDPART_FLAG_RAID	1
 #define ADDPART_FLAG_WHOLEDISK	2
@@ -391,6 +419,16 @@ int bdev_del_partition(struct block_device *bdev, int partno);
 int bdev_resize_partition(struct block_device *bdev, int partno,
 		sector_t start, sector_t length);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ADDPART_FLAG_NONE	0
+#define ADDPART_FLAG_RAID	1
+#define ADDPART_FLAG_WHOLEDISK	2
+int bdev_add_partition(struct gendisk *disk, int partno, sector_t start,
+		sector_t length);
+int bdev_del_partition(struct gendisk *disk, int partno);
+int bdev_resize_partition(struct gendisk *disk, int partno, sector_t start,
+		sector_t length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int bio_add_hw_page(struct request_queue *q, struct bio *bio,
 		struct page *page, unsigned int len, unsigned int offset,
@@ -399,10 +437,14 @@ int bio_add_hw_page(struct request_queue *q, struct bio *bio,
 struct request_queue *blk_alloc_queue(int node_id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int disk_alloc_events(struct gendisk *disk);
 =======
 void disk_alloc_events(struct gendisk *disk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int disk_alloc_events(struct gendisk *disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void disk_add_events(struct gendisk *disk);
 void disk_del_events(struct gendisk *disk);
 void disk_release_events(struct gendisk *disk);
@@ -411,6 +453,9 @@ extern struct device_attribute dev_attr_events_async;
 extern struct device_attribute dev_attr_events_poll_msecs;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void bio_clear_hipri(struct bio *bio)
 {
 	/* can't support alloc cache if we turn off polling */
@@ -420,6 +465,9 @@ static inline void bio_clear_hipri(struct bio *bio)
 
 extern const struct address_space_operations def_blk_aops;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* BLK_INTERNAL_H */

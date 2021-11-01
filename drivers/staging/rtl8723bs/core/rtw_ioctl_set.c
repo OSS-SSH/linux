@@ -5,9 +5,12 @@
  *
  ******************************************************************************/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define _RTW_IOCTL_SET_C_
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <drv_types.h>
 #include <rtw_debug.h>
@@ -31,10 +34,14 @@ u8 rtw_validate_ssid(struct ndis_802_11_ssid *ssid)
 	u8 ret = true;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (ssid->ssid_length > 32) {
 =======
 	if (ssid->SsidLength > 32) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ssid->ssid_length > 32) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = false;
 		goto exit;
 	}
@@ -101,6 +108,7 @@ u8 rtw_do_join(struct adapter *padapter)
 				pmlmepriv->fw_state = WIFI_ADHOC_MASTER_STATE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				pibss = padapter->registrypriv.dev_network.mac_address;
 
 				memcpy(&pdev_network->ssid, &pmlmepriv->assoc_ssid, sizeof(struct ndis_802_11_ssid));
@@ -109,6 +117,11 @@ u8 rtw_do_join(struct adapter *padapter)
 
 				memcpy(&pdev_network->Ssid, &pmlmepriv->assoc_ssid, sizeof(struct ndis_802_11_ssid));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				pibss = padapter->registrypriv.dev_network.mac_address;
+
+				memcpy(&pdev_network->ssid, &pmlmepriv->assoc_ssid, sizeof(struct ndis_802_11_ssid));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				rtw_update_registrypriv_dev_network(padapter);
 
@@ -148,6 +161,7 @@ exit:
 	return ret;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 u8 rtw_set_802_11_bssid(struct adapter *padapter, u8 *bssid)
@@ -215,6 +229,8 @@ exit:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u8 rtw_set_802_11_ssid(struct adapter *padapter, struct ndis_802_11_ssid *ssid)
 {
 	u8 status = _SUCCESS;
@@ -224,10 +240,14 @@ u8 rtw_set_802_11_ssid(struct adapter *padapter, struct ndis_802_11_ssid *ssid)
 
 	netdev_dbg(padapter->pnetdev, "set ssid [%s] fw_state = 0x%08x\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		   ssid->ssid, get_fwstate(pmlmepriv));
 =======
 		   ssid->Ssid, get_fwstate(pmlmepriv));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		   ssid->ssid, get_fwstate(pmlmepriv));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (padapter->hw_init_completed == false) {
 		status = _FAIL;
@@ -243,12 +263,17 @@ u8 rtw_set_802_11_ssid(struct adapter *padapter, struct ndis_802_11_ssid *ssid)
 
 	if (check_fwstate(pmlmepriv, _FW_LINKED|WIFI_ADHOC_MASTER_STATE) == true) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((pmlmepriv->assoc_ssid.ssid_length == ssid->ssid_length) &&
 		    (!memcmp(&pmlmepriv->assoc_ssid.ssid, ssid->ssid, ssid->ssid_length))) {
 =======
 		if ((pmlmepriv->assoc_ssid.SsidLength == ssid->SsidLength) &&
 		    (!memcmp(&pmlmepriv->assoc_ssid.Ssid, ssid->Ssid, ssid->SsidLength))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((pmlmepriv->assoc_ssid.ssid_length == ssid->ssid_length) &&
+		    (!memcmp(&pmlmepriv->assoc_ssid.ssid, ssid->ssid, ssid->ssid_length))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if ((check_fwstate(pmlmepriv, WIFI_STATION_STATE) == false)) {
 				if (rtw_is_same_ibss(padapter, pnetwork) == false) {
 					/* if in WIFI_ADHOC_MASTER_STATE | WIFI_ADHOC_STATE, create bss or rejoin again */
@@ -380,10 +405,14 @@ u8 rtw_set_802_11_infrastructure_mode(struct adapter *padapter,
 	struct	mlme_priv *pmlmepriv = &padapter->mlmepriv;
 	struct	wlan_network	*cur_network = &pmlmepriv->cur_network;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum ndis_802_11_network_infrastructure *pold_state = &(cur_network->network.infrastructure_mode);
 =======
 	enum ndis_802_11_network_infrastructure *pold_state = &(cur_network->network.InfrastructureMode);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum ndis_802_11_network_infrastructure *pold_state = &(cur_network->network.infrastructure_mode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (*pold_state != networktype) {
 		if (*pold_state == Ndis802_11APMode) {
@@ -480,6 +509,7 @@ u8 rtw_set_802_11_bssid_list_scan(struct adapter *padapter, struct ndis_802_11_s
 
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (rtw_is_scan_deny(padapter))
 			return _SUCCESS;
 =======
@@ -488,6 +518,10 @@ u8 rtw_set_802_11_bssid_list_scan(struct adapter *padapter, struct ndis_802_11_s
 			return _SUCCESS;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (rtw_is_scan_deny(padapter))
+			return _SUCCESS;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		spin_lock_bh(&pmlmepriv->lock);
 
@@ -529,10 +563,14 @@ u8 rtw_set_802_11_add_wep(struct adapter *padapter, struct ndis_802_11_wep *wep)
 	u8 ret = _SUCCESS;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	keyid = wep->key_index & 0x3fffffff;
 =======
 	keyid = wep->KeyIndex & 0x3fffffff;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	keyid = wep->key_index & 0x3fffffff;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (keyid >= 4) {
 		ret = false;
@@ -540,10 +578,14 @@ u8 rtw_set_802_11_add_wep(struct adapter *padapter, struct ndis_802_11_wep *wep)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (wep->key_length) {
 =======
 	switch (wep->KeyLength) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switch (wep->key_length) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 5:
 		psecuritypriv->dot11PrivacyAlgrthm = _WEP40_;
 		break;
@@ -556,6 +598,7 @@ u8 rtw_set_802_11_add_wep(struct adapter *padapter, struct ndis_802_11_wep *wep)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(&(psecuritypriv->dot11DefKey[keyid].skey[0]), &(wep->key_material), wep->key_length);
 
 	psecuritypriv->dot11DefKeylen[keyid] = wep->key_length;
@@ -564,6 +607,11 @@ u8 rtw_set_802_11_add_wep(struct adapter *padapter, struct ndis_802_11_wep *wep)
 
 	psecuritypriv->dot11DefKeylen[keyid] = wep->KeyLength;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memcpy(&(psecuritypriv->dot11DefKey[keyid].skey[0]), &(wep->key_material), wep->key_length);
+
+	psecuritypriv->dot11DefKeylen[keyid] = wep->key_length;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	psecuritypriv->dot11PrivacyKeyIndex = keyid;
 
@@ -591,9 +639,12 @@ u16 rtw_get_cur_max_rate(struct adapter *adapter)
 	struct sta_info *psta = NULL;
 	u8 short_GI = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u8 rf_type = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if ((check_fwstate(pmlmepriv, _FW_LINKED) != true)
 		&& (check_fwstate(pmlmepriv, WIFI_ADHOC_MASTER_STATE) != true))
@@ -605,6 +656,7 @@ u16 rtw_get_cur_max_rate(struct adapter *adapter)
 
 	short_GI = query_ra_short_GI(psta);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (is_supported_ht(psta->wireless_mode)) {
 		max_rate = rtw_mcs_rate(psta->bw_mode == CHANNEL_WIDTH_40 ? 1 : 0,
@@ -625,6 +677,15 @@ u16 rtw_get_cur_max_rate(struct adapter *adapter)
 		while ((pcur_bss->SupportedRates[i] != 0) && (pcur_bss->SupportedRates[i] != 0xFF)) {
 			rate = pcur_bss->SupportedRates[i]&0x7F;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (is_supported_ht(psta->wireless_mode)) {
+		max_rate = rtw_mcs_rate(psta->bw_mode == CHANNEL_WIDTH_40 ? 1 : 0,
+					short_GI,
+					psta->htpriv.ht_cap.mcs.rx_mask);
+	} else {
+		while ((pcur_bss->supported_rates[i] != 0) && (pcur_bss->supported_rates[i] != 0xFF)) {
+			rate = pcur_bss->supported_rates[i]&0x7F;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (rate > max_rate)
 				max_rate = rate;
 			i++;

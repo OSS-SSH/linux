@@ -57,12 +57,18 @@
 #define GFX10_MEC_HPD_SIZE	2048
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define RLCG_VFGATE_DISABLED	0x4000000
 #define RLCG_WRONG_OPERATION_TYPE	0x2000000
 #define RLCG_NOT_IN_RANGE	0x1000000
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define F32_CE_PROGRAM_RAM_SIZE		65536
 #define RLCG_UCODE_LOADING_START_ADDRESS	0x00002000L
 
@@ -189,11 +195,17 @@
 #define GFX_RLCG_MMHUB_WRITE	(0x2 << 28)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define RLCG_ERROR_REPORT_ENABLED(adev) \
 	(amdgpu_sriov_reg_indirect_mmhub(adev) || amdgpu_sriov_reg_indirect_gc(adev))
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define RLCG_ERROR_REPORT_ENABLED(adev) \
+	(amdgpu_sriov_reg_indirect_mmhub(adev) || amdgpu_sriov_reg_indirect_gc(adev))
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_FIRMWARE("amdgpu/navi10_ce.bin");
 MODULE_FIRMWARE("amdgpu/navi10_pfp.bin");
 MODULE_FIRMWARE("amdgpu/navi10_me.bin");
@@ -263,6 +275,9 @@ MODULE_FIRMWARE("amdgpu/yellow_carp_mec2.bin");
 MODULE_FIRMWARE("amdgpu/yellow_carp_rlc.bin");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_FIRMWARE("amdgpu/cyan_skillfish_ce.bin");
 MODULE_FIRMWARE("amdgpu/cyan_skillfish_pfp.bin");
 MODULE_FIRMWARE("amdgpu/cyan_skillfish_me.bin");
@@ -296,8 +311,11 @@ static const struct soc15_reg_golden golden_settings_gc_10_0[] =
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmGRBM_CAM_DATA, 0xffffffff, 0x2233c241),
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct soc15_reg_golden golden_settings_gc_10_1[] =
 {
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmCB_HW_CONTROL_4, 0xffffffff, 0x00400014),
@@ -1536,9 +1554,13 @@ static u32 gfx_v10_rlcg_rw(struct amdgpu_device *adev, u32 offset, u32 v, uint32
 	uint32_t retries = 50000;
 	u32 ret = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 tmp;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 tmp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	scratch_reg0 = adev->rmmio +
 		       (adev->reg_offset[GC_HWIP][0][mmSCRATCH_REG0_BASE_IDX] + mmSCRATCH_REG0) * 4;
@@ -1573,6 +1595,7 @@ static u32 gfx_v10_rlcg_rw(struct amdgpu_device *adev, u32 offset, u32 v, uint32
 		writel(offset | flag, scratch_reg1);
 		writel(1, spare_int);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		for (i = 0; i < retries; i++) {
 =======
@@ -1580,6 +1603,10 @@ static u32 gfx_v10_rlcg_rw(struct amdgpu_device *adev, u32 offset, u32 v, uint32
 			u32 tmp;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		for (i = 0; i < retries; i++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			tmp = readl(scratch_reg1);
 			if (!(tmp & flag))
 				break;
@@ -1588,6 +1615,9 @@ static u32 gfx_v10_rlcg_rw(struct amdgpu_device *adev, u32 offset, u32 v, uint32
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (i >= retries) {
 			if (RLCG_ERROR_REPORT_ENABLED(adev)) {
 				if (tmp & RLCG_VFGATE_DISABLED)
@@ -1601,10 +1631,13 @@ static u32 gfx_v10_rlcg_rw(struct amdgpu_device *adev, u32 offset, u32 v, uint32
 			} else
 				pr_err("timeout: rlcg program reg:0x%05x failed!\n", offset);
 		}
+<<<<<<< HEAD
 =======
 		if (i >= retries)
 			pr_err("timeout: rlcg program reg:0x%05x failed !\n", offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = readl(scratch_reg0);
@@ -1613,10 +1646,14 @@ static u32 gfx_v10_rlcg_rw(struct amdgpu_device *adev, u32 offset, u32 v, uint32
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void gfx_v10_sriov_wreg(struct amdgpu_device *adev, u32 offset, u32 value, u32 acc_flags, u32 hwip)
 =======
 static void gfx_v10_rlcg_wreg(struct amdgpu_device *adev, u32 offset, u32 value, u32 acc_flags, u32 hwip)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void gfx_v10_sriov_wreg(struct amdgpu_device *adev, u32 offset, u32 value, u32 acc_flags, u32 hwip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 rlcg_flag;
 
@@ -1633,10 +1670,14 @@ static void gfx_v10_rlcg_wreg(struct amdgpu_device *adev, u32 offset, u32 value,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 gfx_v10_sriov_rreg(struct amdgpu_device *adev, u32 offset, u32 acc_flags, u32 hwip)
 =======
 static u32 gfx_v10_rlcg_rreg(struct amdgpu_device *adev, u32 offset, u32 acc_flags, u32 hwip)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u32 gfx_v10_sriov_rreg(struct amdgpu_device *adev, u32 offset, u32 acc_flags, u32 hwip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 rlcg_flag;
 
@@ -3383,9 +3424,13 @@ static const struct soc15_reg_golden golden_settings_gc_10_3[] =
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSQ_PERFCOUNTER8_SELECT, 0xf0f001ff, 0x00000000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSQ_PERFCOUNTER9_SELECT, 0xf0f001ff, 0x00000000),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSX_DEBUG_1, 0x00010000, 0x00010020),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSX_DEBUG_1, 0x00010000, 0x00010020),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmTA_CNTL_AUX, 0xfff7ffff, 0x01030000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmUTCL1_CTRL, 0xffbfffff, 0x00a00000)
 };
@@ -3466,9 +3511,13 @@ static const struct soc15_reg_golden golden_settings_gc_10_3_vangogh[] =
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSPI_CONFIG_CNTL_1_Vangogh, 0xffffffff, 0x00070103),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSQG_CONFIG, 0x000017ff, 0x00001000),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSX_DEBUG_1, 0x00010000, 0x00010020),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSX_DEBUG_1, 0x00010000, 0x00010020),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmTA_CNTL_AUX, 0xfff7ffff, 0x01030000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmUTCL1_CTRL, 0xffffffff, 0x00400000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmVGT_GS_MAX_WAVE_ID, 0x00000fff, 0x000000ff),
@@ -3536,9 +3585,13 @@ static const struct soc15_reg_golden golden_settings_gc_10_3_4[] =
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSQ_PERFCOUNTER8_SELECT, 0xf0f001ff, 0x00000000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSQ_PERFCOUNTER9_SELECT, 0xf0f001ff, 0x00000000),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSX_DEBUG_1, 0x00010000, 0x00010020),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SOC15_REG_GOLDEN_VALUE(GC, 0, mmSX_DEBUG_1, 0x00010000, 0x00010020),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmTA_CNTL_AUX, 0x01030000, 0x01030000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmUTCL1_CTRL, 0x03a00000, 0x00a00000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmLDS_CONFIG,  0x00000020, 0x00000020)
@@ -3580,6 +3633,9 @@ static const struct soc15_reg_golden golden_settings_gc_10_3_5[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct soc15_reg_golden golden_settings_gc_10_0_cyan_skillfish[] = {
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmGRBM_GFX_INDEX, 0xffffffff, 0xe0000000),
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmGE_FAST_CLKS, 0x3fffffff, 0x0000493e),
@@ -3617,8 +3673,11 @@ static const struct soc15_reg_golden golden_settings_gc_10_0_cyan_skillfish[] = 
 	SOC15_REG_GOLDEN_VALUE(GC, 0, mmUTCL1_CTRL, 0x00800000, 0x00800000)
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DEFAULT_SH_MEM_CONFIG \
 	((SH_MEM_ADDRESS_MODE_64 << SH_MEM_CONFIG__ADDRESS_MODE__SHIFT) | \
 	 (SH_MEM_ALIGNMENT_MODE_UNALIGNED << SH_MEM_CONFIG__ALIGNMENT_MODE__SHIFT) | \
@@ -3626,10 +3685,15 @@ static const struct soc15_reg_golden golden_settings_gc_10_0_cyan_skillfish[] = 
 	 (3 << SH_MEM_CONFIG__INITIAL_INST_PREFETCH__SHIFT))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* TODO: pending on golden setting value of gb address config */
 #define CYAN_SKILLFISH_GB_ADDR_CONFIG_GOLDEN 0x00100044
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* TODO: pending on golden setting value of gb address config */
+#define CYAN_SKILLFISH_GB_ADDR_CONFIG_GOLDEN 0x00100044
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void gfx_v10_0_set_ring_funcs(struct amdgpu_device *adev);
 static void gfx_v10_0_set_irq_funcs(struct amdgpu_device *adev);
@@ -3855,6 +3919,9 @@ static void gfx_v10_0_init_golden_registers(struct amdgpu_device *adev)
 						(const u32)ARRAY_SIZE(golden_settings_gc_10_3_5));
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_CYAN_SKILLFISH:
 		soc15_program_register_sequence(adev,
 						golden_settings_gc_10_0,
@@ -3863,8 +3930,11 @@ static void gfx_v10_0_init_golden_registers(struct amdgpu_device *adev)
 						golden_settings_gc_10_0_cyan_skillfish,
 						(const u32)ARRAY_SIZE(golden_settings_gc_10_0_cyan_skillfish));
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -4039,9 +4109,13 @@ static void gfx_v10_0_check_fw_write_wait(struct amdgpu_device *adev)
 	case CHIP_NAVI12:
 	case CHIP_NAVI14:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case CHIP_CYAN_SKILLFISH:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case CHIP_CYAN_SKILLFISH:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if ((adev->gfx.me_fw_version >= 0x00000046) &&
 		    (adev->gfx.me_feature_version >= 27) &&
 		    (adev->gfx.pfp_fw_version >= 0x00000068) &&
@@ -4177,14 +4251,20 @@ static int gfx_v10_0_init_microcode(struct amdgpu_device *adev)
 		chip_name = "yellow_carp";
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_CYAN_SKILLFISH:
 		if (adev->apu_flags & AMD_APU_IS_CYAN_SKILLFISH2)
 			chip_name = "cyan_skillfish2";
 		else
 			chip_name = "cyan_skillfish";
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		BUG();
 	}
@@ -4677,9 +4757,13 @@ static void gfx_v10_0_read_wave_data(struct amdgpu_device *adev, uint32_t simd, 
 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_IB_DBG1);
 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_M0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_MODE);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_MODE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void gfx_v10_0_read_wave_sgprs(struct amdgpu_device *adev, uint32_t simd,
@@ -4769,6 +4853,9 @@ static void gfx_v10_0_gpu_early_init(struct amdgpu_device *adev)
 			1 << REG_GET_FIELD(gb_addr_config, GB_ADDR_CONFIG, NUM_PKRS);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CHIP_CYAN_SKILLFISH:
 		adev->gfx.config.max_hw_contexts = 8;
 		adev->gfx.config.sc_prim_fifo_size_frontend = 0x20;
@@ -4777,8 +4864,11 @@ static void gfx_v10_0_gpu_early_init(struct amdgpu_device *adev)
 		adev->gfx.config.sc_earlyz_tile_fifo_size = 0x4C0;
 		gb_addr_config = CYAN_SKILLFISH_GB_ADDR_CONFIG_GOLDEN;
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		BUG();
 		break;
@@ -4884,9 +4974,13 @@ static int gfx_v10_0_sw_init(void *handle)
 	case CHIP_NAVI14:
 	case CHIP_NAVI12:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case CHIP_CYAN_SKILLFISH:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case CHIP_CYAN_SKILLFISH:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adev->gfx.me.num_me = 1;
 		adev->gfx.me.num_pipe_per_me = 1;
 		adev->gfx.me.num_queue_per_pipe = 1;
@@ -5499,11 +5593,16 @@ static int gfx_v10_0_rlc_resume(struct amdgpu_device *adev)
 	int r;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP &&
 		adev->psp.autoload_supported) {
 =======
 	if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP &&
+		adev->psp.autoload_supported) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		r = gfx_v10_0_wait_for_rlc_autoload_complete(adev);
 		if (r)
@@ -5564,10 +5663,14 @@ static int gfx_v10_0_parse_rlc_toc(struct amdgpu_device *adev)
 	RLC_TABLE_OF_CONTENT *rlc_toc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = amdgpu_bo_create_reserved(adev, adev->psp.toc.size_bytes, PAGE_SIZE,
 =======
 	ret = amdgpu_bo_create_reserved(adev, adev->psp.toc_bin_size, PAGE_SIZE,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = amdgpu_bo_create_reserved(adev, adev->psp.toc.size_bytes, PAGE_SIZE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					AMDGPU_GEM_DOMAIN_GTT,
 					&adev->gfx.rlc.rlc_toc_bo,
 					&adev->gfx.rlc.rlc_toc_gpu_addr,
@@ -5579,10 +5682,14 @@ static int gfx_v10_0_parse_rlc_toc(struct amdgpu_device *adev)
 
 	/* Copy toc from psp sos fw to rlc toc buffer */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(adev->gfx.rlc.rlc_toc_buf, adev->psp.toc.start_addr, adev->psp.toc.size_bytes);
 =======
 	memcpy(adev->gfx.rlc.rlc_toc_buf, adev->psp.toc_start_addr, adev->psp.toc_bin_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memcpy(adev->gfx.rlc.rlc_toc_buf, adev->psp.toc.start_addr, adev->psp.toc.size_bytes);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rlc_toc = (RLC_TABLE_OF_CONTENT *)adev->gfx.rlc.rlc_toc_buf;
 	while (rlc_toc && (rlc_toc->id > FIRMWARE_ID_INVALID) &&
@@ -7801,6 +7908,7 @@ static int gfx_v10_0_soft_reset(void *handle)
 static uint64_t gfx_v10_0_get_gpu_clock_counter(struct amdgpu_device *adev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint64_t clock, clock_lo, clock_hi, hi_check;
 
 =======
@@ -7809,6 +7917,10 @@ static uint64_t gfx_v10_0_get_gpu_clock_counter(struct amdgpu_device *adev)
 	amdgpu_gfx_off_ctrl(adev, false);
 	mutex_lock(&adev->gfx.gpu_clock_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint64_t clock, clock_lo, clock_hi, hi_check;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (adev->asic_type) {
 	case CHIP_VANGOGH:
 	case CHIP_YELLOW_CARP:
@@ -7817,6 +7929,9 @@ static uint64_t gfx_v10_0_get_gpu_clock_counter(struct amdgpu_device *adev)
 		break;
 	default:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		preempt_disable();
 		clock_hi = RREG32_SOC15_NO_KIQ(SMUIO, 0, mmGOLDEN_TSC_COUNT_UPPER);
 		clock_lo = RREG32_SOC15_NO_KIQ(SMUIO, 0, mmGOLDEN_TSC_COUNT_LOWER);
@@ -7830,6 +7945,7 @@ static uint64_t gfx_v10_0_get_gpu_clock_counter(struct amdgpu_device *adev)
 		}
 		preempt_enable();
 		clock = clock_lo | (clock_hi << 32ULL);
+<<<<<<< HEAD
 		break;
 	}
 =======
@@ -7840,6 +7956,10 @@ static uint64_t gfx_v10_0_get_gpu_clock_counter(struct amdgpu_device *adev)
 	mutex_unlock(&adev->gfx.gpu_clock_mutex);
 	amdgpu_gfx_off_ctrl(adev, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return clock;
 }
 
@@ -7881,9 +8001,13 @@ static int gfx_v10_0_early_init(void *handle)
 	case CHIP_NAVI14:
 	case CHIP_NAVI12:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case CHIP_CYAN_SKILLFISH:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case CHIP_CYAN_SKILLFISH:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adev->gfx.num_gfx_rings = GFX10_NUM_GFX_RINGS_NV1X;
 		break;
 	case CHIP_SIENNA_CICHLID:
@@ -8481,12 +8605,17 @@ static const struct amdgpu_rlc_funcs gfx_v10_0_rlc_funcs_sriov = {
 	.start = gfx_v10_0_rlc_start,
 	.update_spm_vmid = gfx_v10_0_update_spm_vmid,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.sriov_wreg = gfx_v10_sriov_wreg,
 	.sriov_rreg = gfx_v10_sriov_rreg,
 =======
 	.rlcg_wreg = gfx_v10_rlcg_wreg,
 	.rlcg_rreg = gfx_v10_rlcg_rreg,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.sriov_wreg = gfx_v10_sriov_wreg,
+	.sriov_rreg = gfx_v10_sriov_rreg,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.is_rlcg_access_range = gfx_v10_0_is_rlcg_access_range,
 };
 
@@ -9650,9 +9779,13 @@ static void gfx_v10_0_set_rlc_funcs(struct amdgpu_device *adev)
 	case CHIP_BEIGE_GOBY:
 	case CHIP_YELLOW_CARP:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case CHIP_CYAN_SKILLFISH:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case CHIP_CYAN_SKILLFISH:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adev->gfx.rlc.funcs = &gfx_v10_0_rlc_funcs;
 		break;
 	case CHIP_NAVI12:

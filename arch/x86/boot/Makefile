@@ -134,10 +134,14 @@ cmd_genimage = $(BASH) $(srctree)/$(src)/genimage.sh $2 $3 $(obj)/bzImage \
 		$(obj)/mtools.conf '$(FDARGS)' $(FDINITRD)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 PHONY += bzdisk fdimage fdimage144 fdimage288 hdimage isoimage
 =======
 PHONY += bzdisk fdimage fdimage144 fdimage288 hdimage isoimage install
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+PHONY += bzdisk fdimage fdimage144 fdimage288 hdimage isoimage
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # This requires write access to /dev/fd0
 # All images require syslinux to be installed; hdimage also requires
@@ -161,6 +165,7 @@ isoimage: $(imgdeps)
 	$(call cmd,genimage,isoimage,$(obj)/image.iso)
 	@$(kecho) 'Kernel: $(obj)/image.iso is ready'
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 install:
@@ -168,3 +173,5 @@ install:
 		$(KERNELRELEASE) $(obj)/bzImage \
 		System.map "$(INSTALL_PATH)"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

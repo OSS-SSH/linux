@@ -84,11 +84,15 @@ static int efa_request_mgmnt_irq(struct efa_dev *dev)
 
 	irq = &dev->admin_irq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = request_irq(irq->irqn, irq->handler, 0, irq->name, irq->data);
 =======
 	err = request_irq(irq->vector, irq->handler, 0, irq->name,
 			  irq->data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = request_irq(irq->irqn, irq->handler, 0, irq->name, irq->data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		dev_err(&dev->pdev->dev, "Failed to request admin irq (%d)\n",
 			err);
@@ -97,12 +101,17 @@ static int efa_request_mgmnt_irq(struct efa_dev *dev)
 
 	dev_dbg(&dev->pdev->dev, "Set affinity hint of mgmnt irq to %*pbl (irq vector: %d)\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		nr_cpumask_bits, &irq->affinity_hint_mask, irq->irqn);
 	irq_set_affinity_hint(irq->irqn, &irq->affinity_hint_mask);
 =======
 		nr_cpumask_bits, &irq->affinity_hint_mask, irq->vector);
 	irq_set_affinity_hint(irq->vector, &irq->affinity_hint_mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nr_cpumask_bits, &irq->affinity_hint_mask, irq->irqn);
+	irq_set_affinity_hint(irq->irqn, &irq->affinity_hint_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -116,6 +125,7 @@ static void efa_setup_mgmnt_irq(struct efa_dev *dev)
 	dev->admin_irq.handler = efa_intr_msix_mgmnt;
 	dev->admin_irq.data = dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev->admin_irq.irqn =
 		pci_irq_vector(dev->pdev, dev->admin_msix_vector_idx);
 	cpu = cpumask_first(cpu_online_mask);
@@ -125,15 +135,22 @@ static void efa_setup_mgmnt_irq(struct efa_dev *dev)
 		 dev->admin_irq.irqn,
 =======
 	dev->admin_irq.vector =
+=======
+	dev->admin_irq.irqn =
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pci_irq_vector(dev->pdev, dev->admin_msix_vector_idx);
 	cpu = cpumask_first(cpu_online_mask);
-	dev->admin_irq.cpu = cpu;
 	cpumask_set_cpu(cpu,
 			&dev->admin_irq.affinity_hint_mask);
+<<<<<<< HEAD
 	dev_info(&dev->pdev->dev, "Setup irq:0x%p vector:%d name:%s\n",
 		 &dev->admin_irq,
 		 dev->admin_irq.vector,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_info(&dev->pdev->dev, "Setup irq:%d name:%s\n",
+		 dev->admin_irq.irqn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 dev->admin_irq.name);
 }
 
@@ -143,12 +160,17 @@ static void efa_free_mgmnt_irq(struct efa_dev *dev)
 
 	irq = &dev->admin_irq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	irq_set_affinity_hint(irq->irqn, NULL);
 	free_irq(irq->irqn, irq->data);
 =======
 	irq_set_affinity_hint(irq->vector, NULL);
 	free_irq(irq->vector, irq->data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	irq_set_affinity_hint(irq->irqn, NULL);
+	free_irq(irq->irqn, irq->data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int efa_set_mgmnt_irq(struct efa_dev *dev)
@@ -296,9 +318,13 @@ static const struct ib_device_ops efa_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_cq, efa_cq, ibcq),
 	INIT_RDMA_OBJ_SIZE(ib_pd, efa_pd, ibpd),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_RDMA_OBJ_SIZE(ib_qp, efa_qp, ibqp),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_RDMA_OBJ_SIZE(ib_qp, efa_qp, ibqp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, efa_ucontext, ibucontext),
 };
 
@@ -386,9 +412,13 @@ static int efa_enable_msix(struct efa_dev *dev)
 
 	if (irq_num != msix_vecs) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		efa_disable_msix(dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		efa_disable_msix(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(&dev->pdev->dev,
 			"Allocated %d MSI-X (out of %d requested)\n",
 			irq_num, msix_vecs);

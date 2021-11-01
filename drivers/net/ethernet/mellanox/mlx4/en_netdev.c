@@ -373,11 +373,17 @@ mlx4_en_filter_rfs(struct net_device *net_dev, const struct sk_buff *skb,
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (skb->encapsulation)
 		return -EPROTONOSUPPORT;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb->encapsulation)
+		return -EPROTONOSUPPORT;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (skb->protocol != htons(ETH_P_IP))
 		return -EPROTONOSUPPORT;
 
@@ -1276,9 +1282,12 @@ static void mlx4_en_do_set_rx_mode(struct work_struct *work)
 		if (!mlx4_en_QUERY_PORT(mdev, priv->port)) {
 			if (priv->port_state.link_state) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				priv->last_link_state = MLX4_DEV_EVENT_PORT_UP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				netif_carrier_on(dev);
 				en_dbg(LINK, priv, "Link Up\n");
 			}
@@ -1567,6 +1576,9 @@ static void mlx4_en_service_task(struct work_struct *work)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mlx4_en_linkstate(struct mlx4_en_priv *priv)
 {
 	struct mlx4_en_port_state *port_state = &priv->port_state;
@@ -1590,13 +1602,17 @@ static void mlx4_en_linkstate(struct mlx4_en_priv *priv)
 }
 
 static void mlx4_en_linkstate_work(struct work_struct *work)
+<<<<<<< HEAD
 =======
 static void mlx4_en_linkstate(struct work_struct *work)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx4_en_priv *priv = container_of(work, struct mlx4_en_priv,
 						 linkstate_task);
 	struct mlx4_en_dev *mdev = priv->mdev;
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	mutex_lock(&mdev->state_lock);
@@ -1618,6 +1634,11 @@ static void mlx4_en_linkstate(struct work_struct *work)
 	}
 	priv->last_link_state = linkstate;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	mutex_lock(&mdev->state_lock);
+	mlx4_en_linkstate(priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&mdev->state_lock);
 }
 
@@ -2121,6 +2142,7 @@ static int mlx4_en_open(struct net_device *dev)
 
 	err = mlx4_en_start_port(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err) {
 		en_err(priv, "Failed starting port:%d\n", priv->port);
 		goto out;
@@ -2131,6 +2153,13 @@ static int mlx4_en_open(struct net_device *dev)
 		en_err(priv, "Failed starting port:%d\n", priv->port);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err) {
+		en_err(priv, "Failed starting port:%d\n", priv->port);
+		goto out;
+	}
+	mlx4_en_linkstate(priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	mutex_unlock(&mdev->state_lock);
 	return err;
@@ -2878,10 +2907,14 @@ static const struct net_device_ops mlx4_netdev_ops = {
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_change_mtu		= mlx4_en_change_mtu,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= mlx4_en_ioctl,
 =======
 	.ndo_do_ioctl		= mlx4_en_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= mlx4_en_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout		= mlx4_en_tx_timeout,
 	.ndo_vlan_rx_add_vid	= mlx4_en_vlan_rx_add_vid,
 	.ndo_vlan_rx_kill_vid	= mlx4_en_vlan_rx_kill_vid,
@@ -3222,10 +3255,14 @@ int mlx4_en_init_netdev(struct mlx4_en_dev *mdev, int port,
 	INIT_WORK(&priv->rx_mode_task, mlx4_en_do_set_rx_mode);
 	INIT_WORK(&priv->restart_task, mlx4_en_restart);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_WORK(&priv->linkstate_task, mlx4_en_linkstate_work);
 =======
 	INIT_WORK(&priv->linkstate_task, mlx4_en_linkstate);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_WORK(&priv->linkstate_task, mlx4_en_linkstate_work);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_DELAYED_WORK(&priv->stats_task, mlx4_en_do_get_stats);
 	INIT_DELAYED_WORK(&priv->service_task, mlx4_en_service_task);
 #ifdef CONFIG_RFS_ACCEL

@@ -266,6 +266,7 @@
 	pinctrl-0 = <&pinctrl_enet>;
 	phy-mode = "rgmii";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phy-handle = <&ethphy>;
 	phy-reset-gpios = <&gpio1 27 GPIO_ACTIVE_LOW>;
 =======
@@ -283,11 +284,18 @@
 	txd2-skew-ps = <0>;
 	txd3-skew-ps = <0>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy-handle = <&ethphy>;
+	phy-reset-gpios = <&gpio1 27 GPIO_ACTIVE_LOW>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	interrupts-extended = <&gpio1 6 IRQ_TYPE_LEVEL_HIGH>,
 			      <&intc 0 119 IRQ_TYPE_LEVEL_HIGH>;
 	fsl,err006687-workaround-present;
 	status = "okay";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mdio {
 		#address-cells = <1>;
@@ -309,8 +317,11 @@
 			txd3-skew-ps = <0>;
 		};
 	};
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &hdmi {

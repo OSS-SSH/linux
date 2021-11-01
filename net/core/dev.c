@@ -132,9 +132,13 @@
 #include <trace/events/net.h>
 #include <trace/events/skb.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <trace/events/qdisc.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <trace/events/qdisc.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/inetdevice.h>
 #include <linux/cpu_rmap.h>
 #include <linux/static_key.h>
@@ -680,6 +684,7 @@ void dev_remove_offload(struct packet_offload *po)
 EXPORT_SYMBOL(dev_remove_offload);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /******************************************************************************
  *
@@ -807,6 +812,8 @@ int __init netdev_boot_setup(char *str)
 __setup("netdev=", netdev_boot_setup);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*******************************************************************************
  *
  *			    Device Interface Subroutines
@@ -963,11 +970,15 @@ struct net_device *dev_get_by_name(struct net *net, const char *name)
 	rcu_read_lock();
 	dev = dev_get_by_name_rcu(net, name);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_hold(dev);
 =======
 	if (dev)
 		dev_hold(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_unlock();
 	return dev;
 }
@@ -1041,11 +1052,15 @@ struct net_device *dev_get_by_index(struct net *net, int ifindex)
 	rcu_read_lock();
 	dev = dev_get_by_index_rcu(net, ifindex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev_hold(dev);
 =======
 	if (dev)
 		dev_hold(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_unlock();
 	return dev;
 }
@@ -3114,6 +3129,9 @@ EXPORT_SYMBOL(netif_set_real_num_rx_queues);
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	netif_set_real_num_queues - set actual number of RX and TX queues used
  *	@dev: Network device
  *	@txq: Actual number of TX queues
@@ -3158,8 +3176,11 @@ undo_rx:
 EXPORT_SYMBOL(netif_set_real_num_queues);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * netif_get_num_default_rss_queues - default number of RSS queues
  *
  * This routine should set an upper limit on the number of RSS queues
@@ -3252,10 +3273,14 @@ EXPORT_SYMBOL(__dev_kfree_skb_irq);
 void __dev_kfree_skb_any(struct sk_buff *skb, enum skb_free_reason reason)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (in_hardirq() || irqs_disabled())
 =======
 	if (in_irq() || irqs_disabled())
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (in_hardirq() || irqs_disabled())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__dev_kfree_skb_irq(skb, reason);
 	else
 		dev_kfree_skb(skb);
@@ -3911,6 +3936,9 @@ static void qdisc_pkt_len_init(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dev_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *q,
 			     struct sk_buff **to_free,
 			     struct netdev_queue *txq)
@@ -3923,8 +3951,11 @@ static int dev_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *q,
 	return rc;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 				 struct net_device *dev,
 				 struct netdev_queue *txq)
@@ -3944,11 +3975,15 @@ static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 			 */
 			if (unlikely(!nolock_qdisc_is_empty(q))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				rc = dev_qdisc_enqueue(skb, q, &to_free, txq);
 =======
 				rc = q->enqueue(skb, q, &to_free) &
 					NET_XMIT_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				rc = dev_qdisc_enqueue(skb, q, &to_free, txq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				__qdisc_run(q);
 				qdisc_run_end(q);
 
@@ -3965,10 +4000,14 @@ static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rc = dev_qdisc_enqueue(skb, q, &to_free, txq);
 =======
 		rc = q->enqueue(skb, q, &to_free) & NET_XMIT_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rc = dev_qdisc_enqueue(skb, q, &to_free, txq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qdisc_run(q);
 
 no_lock_out:
@@ -4013,10 +4052,14 @@ no_lock_out:
 		rc = NET_XMIT_SUCCESS;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		rc = dev_qdisc_enqueue(skb, q, &to_free, txq);
 =======
 		rc = q->enqueue(skb, q, &to_free) & NET_XMIT_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rc = dev_qdisc_enqueue(skb, q, &to_free, txq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (qdisc_run_begin(q)) {
 			if (unlikely(contended)) {
 				spin_unlock(&q->busylock);
@@ -4094,10 +4137,14 @@ sch_handle_egress(struct sk_buff *skb, int *ret, struct net_device *dev)
 	mini_qdisc_bstats_cpu_update(miniq, skb);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
 =======
 	switch (tcf_classify(skb, miniq->filter_list, &cl_res, false)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case TC_ACT_OK:
 	case TC_ACT_RECLASSIFY:
 		skb->tc_index = TC_H_MIN(cl_res.classid);
@@ -4842,6 +4889,7 @@ static struct netdev_rx_queue *netif_get_rxqueue(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 u32 bpf_prog_run_generic_xdp(struct sk_buff *skb, struct xdp_buff *xdp,
 			     struct bpf_prog *xdp_prog)
 {
@@ -4856,10 +4904,18 @@ static u32 netif_receive_generic_xdp(struct sk_buff *skb,
 	struct netdev_rx_queue *rxqueue;
 	u32 metalen, act = XDP_DROP;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u32 bpf_prog_run_generic_xdp(struct sk_buff *skb, struct xdp_buff *xdp,
+			     struct bpf_prog *xdp_prog)
+{
+	void *orig_data, *orig_data_end, *hard_start;
+	struct netdev_rx_queue *rxqueue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool orig_bcast, orig_host;
 	u32 mac_len, frame_sz;
 	__be16 orig_eth_type;
 	struct ethhdr *eth;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	u32 metalen, act;
 	int off;
@@ -4894,6 +4950,11 @@ static u32 netif_receive_generic_xdp(struct sk_buff *skb,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 metalen, act;
+	int off;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* The XDP program wants to see the packet starting at the MAC
 	 * header.
 	 */
@@ -4949,6 +5010,9 @@ static u32 netif_receive_generic_xdp(struct sk_buff *skb,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Redirect/Tx gives L2 packet, code that will reuse skb must __skb_pull
 	 * before calling us again on redirect path. We do not call do_redirect
 	 * as we leave that up to the caller.
@@ -4956,8 +5020,11 @@ static u32 netif_receive_generic_xdp(struct sk_buff *skb,
 	 * Caller is responsible for managing lifetime of skb (i.e. calling
 	 * kfree_skb in response to actions it cannot handle/XDP_DROP).
 	 */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (act) {
 	case XDP_REDIRECT:
 	case XDP_TX:
@@ -4969,6 +5036,9 @@ static u32 netif_receive_generic_xdp(struct sk_buff *skb,
 			skb_metadata_set(skb, metalen);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return act;
@@ -5012,8 +5082,11 @@ static u32 netif_receive_generic_xdp(struct sk_buff *skb,
 	case XDP_TX:
 	case XDP_PASS:
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		bpf_warn_invalid_xdp_action(act);
 		fallthrough;
@@ -5297,11 +5370,15 @@ sch_handle_ingress(struct sk_buff *skb, struct packet_type **pt_prev, int *ret,
 	mini_qdisc_bstats_cpu_update(miniq, skb);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
 =======
 	switch (tcf_classify_ingress(skb, miniq->block, miniq->filter_list,
 				     &cl_res, false)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switch (tcf_classify(skb, miniq->block, miniq->filter_list, &cl_res, false)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case TC_ACT_OK:
 	case TC_ACT_RECLASSIFY:
 		skb->tc_index = TC_H_MIN(cl_res.classid);
@@ -5484,9 +5561,12 @@ another_round:
 			goto out;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		skb_reset_mac_len(skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (eth_type_vlan(skb->protocol)) {
@@ -5813,6 +5893,7 @@ static int generic_xdp_install(struct net_device *dev, struct netdev_bpf *xdp)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (new) {
 		u32 i;
@@ -5834,6 +5915,8 @@ static int generic_xdp_install(struct net_device *dev, struct netdev_bpf *xdp)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (xdp->command) {
 	case XDP_SETUP_PROG:
 		rcu_assign_pointer(dev->xdp_prog, new);
@@ -6042,10 +6125,14 @@ static void flush_all_backlogs(void)
 	ASSERT_RTNL();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_lock();
 =======
 	get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cpumask_clear(&flush_cpus);
 	for_each_online_cpu(cpu) {
@@ -6064,10 +6151,14 @@ static void flush_all_backlogs(void)
 		flush_work(per_cpu_ptr(&flush_works, cpu));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cpus_read_unlock();
 =======
 	put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Pass the currently batched GRO_NORMAL SKBs up to the stack. */
@@ -6185,9 +6276,12 @@ static void gro_list_prepare(const struct list_head *head,
 		if (skb_vlan_tag_present(p))
 			diffs |= skb_vlan_tag_get(p) ^ skb_vlan_tag_get(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		diffs |= skb_metadata_dst_cmp(p, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		diffs |= skb_metadata_differs(p, skb);
 		if (maclen == ETH_HLEN)
 			diffs |= compare_ether_header(skb_mac_header(p),
@@ -6197,6 +6291,9 @@ static void gro_list_prepare(const struct list_head *head,
 				       skb_mac_header(skb),
 				       maclen);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* in most common scenarions 'slow_gro' is 0
 		 * otherwise we are already on some slower paths
@@ -6223,8 +6320,11 @@ static void gro_list_prepare(const struct list_head *head,
 #endif
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		NAPI_GRO_CB(p)->same_flow = !diffs;
 	}
 }
@@ -6439,10 +6539,15 @@ static gro_result_t napi_skb_finish(struct napi_struct *napi,
 		if (NAPI_GRO_CB(skb)->free == NAPI_GRO_FREE_STOLEN_HEAD)
 			napi_skb_free_stolen_head(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		else if (skb->fclone != SKB_FCLONE_UNAVAILABLE)
 			__kfree_skb(skb);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		else if (skb->fclone != SKB_FCLONE_UNAVAILABLE)
+			__kfree_skb(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else
 			__kfree_skb_defer(skb);
 		break;
@@ -6492,15 +6597,21 @@ static void napi_reuse_skb(struct napi_struct *napi, struct sk_buff *skb)
 	skb_shinfo(skb)->gso_type = 0;
 	skb->truesize = SKB_TRUESIZE(skb_end_offset(skb));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(skb->slow_gro)) {
 		skb_orphan(skb);
 		skb_ext_reset(skb);
 		nf_reset_ct(skb);
 		skb->slow_gro = 0;
 	}
+<<<<<<< HEAD
 =======
 	skb_ext_reset(skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	napi->skb = skb;
 }
@@ -7192,6 +7303,9 @@ EXPORT_SYMBOL(napi_disable);
 void napi_enable(struct napi_struct *n)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long val, new;
 
 	do {
@@ -7202,6 +7316,7 @@ void napi_enable(struct napi_struct *n)
 		if (n->dev->threaded && n->thread)
 			new |= NAPIF_STATE_THREADED;
 	} while (cmpxchg(&n->state, val, new) != val);
+<<<<<<< HEAD
 =======
 	BUG_ON(!test_bit(NAPI_STATE_SCHED, &n->state));
 	smp_mb__before_atomic();
@@ -7210,6 +7325,8 @@ void napi_enable(struct napi_struct *n)
 	if (n->dev->threaded && n->thread)
 		set_bit(NAPI_STATE_THREADED, &n->state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(napi_enable);
 
@@ -7814,10 +7931,14 @@ void *netdev_lower_get_next_private_rcu(struct net_device *dev,
 	struct netdev_adjacent *lower;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
 =======
 	WARN_ON_ONCE(!rcu_read_lock_held());
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lower = list_entry_rcu((*iter)->next, struct netdev_adjacent, list);
 
@@ -9583,10 +9704,14 @@ static struct bpf_prog *dev_xdp_prog(struct net_device *dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 u8 dev_xdp_prog_count(struct net_device *dev)
 =======
 static u8 dev_xdp_prog_count(struct net_device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u8 dev_xdp_prog_count(struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u8 count = 0;
 	int i;
@@ -9597,9 +9722,13 @@ static u8 dev_xdp_prog_count(struct net_device *dev)
 	return count;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(dev_xdp_prog_count);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(dev_xdp_prog_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 u32 dev_xdp_prog_id(struct net_device *dev, enum bpf_xdp_mode mode)
 {
@@ -9694,10 +9823,15 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
 	unsigned int num_modes = hweight32(flags & XDP_FLAGS_MODES);
 	struct bpf_prog *cur_prog;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net_device *upper;
 	struct list_head *iter;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net_device *upper;
+	struct list_head *iter;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum bpf_xdp_mode mode;
 	bpf_op_t bpf_op;
 	int err;
@@ -9737,6 +9871,9 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* don't allow if an upper device already has a program */
 	netdev_for_each_upper_dev_rcu(dev, upper, iter) {
 		if (dev_xdp_prog_count(upper) > 0) {
@@ -9745,8 +9882,11 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cur_prog = dev_xdp_prog(dev, mode);
 	/* can't replace attached prog with link */
 	if (link && cur_prog) {
@@ -9957,6 +10097,7 @@ int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
 	int err, fd;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rtnl_lock();
 	dev = dev_get_by_index(net, attr->link_create.target_ifindex);
 	if (!dev) {
@@ -9964,19 +10105,31 @@ int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
 		return -EINVAL;
 	}
 =======
+=======
+	rtnl_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev = dev_get_by_index(net, attr->link_create.target_ifindex);
-	if (!dev)
+	if (!dev) {
+		rtnl_unlock();
 		return -EINVAL;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	link = kzalloc(sizeof(*link), GFP_USER);
 	if (!link) {
 		err = -ENOMEM;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto unlock;
 =======
 		goto out_put_dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto unlock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	bpf_link_init(&link->link, BPF_LINK_TYPE_XDP, &bpf_xdp_link_lops, prog);
@@ -9987,6 +10140,7 @@ int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
 	if (err) {
 		kfree(link);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto unlock;
 	}
 
@@ -9996,14 +10150,23 @@ int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
 
 	rtnl_lock();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto unlock;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = dev_xdp_attach_link(dev, NULL, link);
 	rtnl_unlock();
 
 	if (err) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		link->dev = NULL;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		link->dev = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bpf_link_cleanup(&link_primer);
 		goto out_put_dev;
 	}
@@ -10014,11 +10177,17 @@ int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
 	return fd;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 unlock:
 	rtnl_unlock();
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+unlock:
+	rtnl_unlock();
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_put_dev:
 	dev_put(dev);
 	return err;
@@ -10402,10 +10571,14 @@ static int netif_alloc_rx_queues(struct net_device *dev)
 	BUG_ON(count < 1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rx = kvzalloc(sz, GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
 =======
 	rx = kvzalloc(sz, GFP_KERNEL | __GFP_RETRY_MAYFAIL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rx = kvzalloc(sz, GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rx)
 		return -ENOMEM;
 
@@ -10473,10 +10646,14 @@ static int netif_alloc_netdev_queues(struct net_device *dev)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	tx = kvzalloc(sz, GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
 =======
 	tx = kvzalloc(sz, GFP_KERNEL | __GFP_RETRY_MAYFAIL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tx = kvzalloc(sz, GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!tx)
 		return -ENOMEM;
 
@@ -11117,10 +11294,14 @@ struct net_device *alloc_netdev_mqs(int sizeof_priv, const char *name,
 	alloc_size += NETDEV_ALIGN - 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	p = kvzalloc(alloc_size, GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
 =======
 	p = kvzalloc(alloc_size, GFP_KERNEL | __GFP_RETRY_MAYFAIL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	p = kvzalloc(alloc_size, GFP_KERNEL_ACCOUNT | __GFP_RETRY_MAYFAIL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!p)
 		return NULL;
 

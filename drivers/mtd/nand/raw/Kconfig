@@ -481,6 +481,7 @@ config MTD_NAND_RICOH
 	help
 	  Enable support for Ricoh R5C852 xD card reader
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  You also need to enable either
 	  NAND SSFDC (SmartMedia) read only translation layer' or new
 	  experimental, readwrite
@@ -489,6 +490,11 @@ config MTD_NAND_RICOH
 	  NAND SSFDC (SmartMedia) read only translation layer' or new
 	  expermental, readwrite
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  You also need to enable either
+	  NAND SSFDC (SmartMedia) read only translation layer' or new
+	  experimental, readwrite
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  'SmartMedia/xD new translation layer'
 
 config MTD_NAND_DISKONCHIP

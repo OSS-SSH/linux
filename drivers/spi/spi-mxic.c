@@ -336,14 +336,20 @@ static bool mxic_spi_mem_supports_op(struct spi_mem *mem,
 				     const struct spi_mem_op *op)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool all_false;
 
 	if (op->data.buswidth > 8 || op->addr.buswidth > 8 ||
 	    op->dummy.buswidth > 8 || op->cmd.buswidth > 8)
+<<<<<<< HEAD
 =======
 	if (op->data.buswidth > 4 || op->addr.buswidth > 4 ||
 	    op->dummy.buswidth > 4 || op->cmd.buswidth > 4)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	if (op->data.nbytes && op->dummy.nbytes &&
@@ -354,6 +360,9 @@ static bool mxic_spi_mem_supports_op(struct spi_mem *mem,
 		return false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	all_false = !op->cmd.dtr && !op->addr.dtr && !op->dummy.dtr &&
 		    !op->data.dtr;
 
@@ -361,9 +370,12 @@ static bool mxic_spi_mem_supports_op(struct spi_mem *mem,
 		return spi_mem_default_supports_op(mem, op);
 	else
 		return spi_mem_dtr_supports_op(mem, op);
+<<<<<<< HEAD
 =======
 	return spi_mem_default_supports_op(mem, op);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int mxic_spi_mem_exec_op(struct spi_mem *mem,
@@ -373,16 +385,21 @@ static int mxic_spi_mem_exec_op(struct spi_mem *mem,
 	int nio = 1, i, ret;
 	u32 ss_ctrl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u8 addr[8], cmd[2];
 =======
 	u8 addr[8];
 	u8 opcode = op->cmd.opcode;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 addr[8], cmd[2];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = mxic_spi_set_freq(mxic, mem->spi->max_speed_hz);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (mem->spi->mode & (SPI_TX_OCTAL | SPI_RX_OCTAL))
 		nio = 8;
@@ -390,6 +407,11 @@ static int mxic_spi_mem_exec_op(struct spi_mem *mem,
 =======
 	if (mem->spi->mode & (SPI_TX_QUAD | SPI_RX_QUAD))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mem->spi->mode & (SPI_TX_OCTAL | SPI_RX_OCTAL))
+		nio = 8;
+	else if (mem->spi->mode & (SPI_TX_QUAD | SPI_RX_QUAD))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nio = 4;
 	else if (mem->spi->mode & (SPI_TX_DUAL | SPI_RX_DUAL))
 		nio = 2;
@@ -401,6 +423,7 @@ static int mxic_spi_mem_exec_op(struct spi_mem *mem,
 	       mxic->regs + HC_CFG);
 	writel(HC_EN_BIT, mxic->regs + HC_EN);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ss_ctrl = OP_CMD_BYTES(op->cmd.nbytes) |
 		  OP_CMD_BUSW(fls(op->cmd.buswidth) - 1) |
@@ -417,11 +440,22 @@ static int mxic_spi_mem_exec_op(struct spi_mem *mem,
 		ss_ctrl |= OP_ADDR_BYTES(op->addr.nbytes) |
 			   OP_ADDR_BUSW(fls(op->addr.buswidth) - 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ss_ctrl = OP_CMD_BYTES(op->cmd.nbytes) |
+		  OP_CMD_BUSW(fls(op->cmd.buswidth) - 1) |
+		  (op->cmd.dtr ? OP_CMD_DDR : 0);
+
+	if (op->addr.nbytes)
+		ss_ctrl |= OP_ADDR_BYTES(op->addr.nbytes) |
+			   OP_ADDR_BUSW(fls(op->addr.buswidth) - 1) |
+			   (op->addr.dtr ? OP_ADDR_DDR : 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (op->dummy.nbytes)
 		ss_ctrl |= OP_DUMMY_CYC(op->dummy.nbytes);
 
 	if (op->data.nbytes) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		ss_ctrl |= OP_DATA_BUSW(fls(op->data.buswidth) - 1) |
 			   (op->data.dtr ? OP_DATA_DDR : 0);
@@ -435,6 +469,15 @@ static int mxic_spi_mem_exec_op(struct spi_mem *mem,
 		if (op->data.dir == SPI_MEM_DATA_IN)
 			ss_ctrl |= OP_READ;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ss_ctrl |= OP_DATA_BUSW(fls(op->data.buswidth) - 1) |
+			   (op->data.dtr ? OP_DATA_DDR : 0);
+		if (op->data.dir == SPI_MEM_DATA_IN) {
+			ss_ctrl |= OP_READ;
+			if (op->data.dtr)
+				ss_ctrl |= OP_DQS_EN;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	writel(ss_ctrl, mxic->regs + SS_CTRL(mem->spi->chip_select));
@@ -443,13 +486,19 @@ static int mxic_spi_mem_exec_op(struct spi_mem *mem,
 	       mxic->regs + HC_CFG);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < op->cmd.nbytes; i++)
 		cmd[i] = op->cmd.opcode >> (8 * (op->cmd.nbytes - i - 1));
 
 	ret = mxic_spi_data_xfer(mxic, cmd, NULL, op->cmd.nbytes);
+<<<<<<< HEAD
 =======
 	ret = mxic_spi_data_xfer(mxic, &opcode, NULL, 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto out;
 
@@ -623,11 +672,16 @@ static int mxic_spi_probe(struct platform_device *pdev)
 	master->mode_bits = SPI_CPOL | SPI_CPHA |
 			SPI_RX_DUAL | SPI_TX_DUAL |
 <<<<<<< HEAD
+<<<<<<< HEAD
 			SPI_RX_QUAD | SPI_TX_QUAD |
 			SPI_RX_OCTAL | SPI_TX_OCTAL;
 =======
 			SPI_RX_QUAD | SPI_TX_QUAD;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			SPI_RX_QUAD | SPI_TX_QUAD |
+			SPI_RX_OCTAL | SPI_TX_OCTAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mxic_spi_hw_init(mxic);
 

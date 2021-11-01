@@ -26,10 +26,13 @@ MODULE_DESCRIPTION("iptables security table, for MAC rules");
 				(1 << NF_INET_LOCAL_OUT)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int __net_init iptable_security_table_init(struct net *net);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct xt_table security_table = {
 	.name		= "security",
 	.valid_hooks	= SECURITY_VALID_HOOKS,
@@ -37,9 +40,12 @@ static const struct xt_table security_table = {
 	.af		= NFPROTO_IPV4,
 	.priority	= NF_IP_PRI_SECURITY,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.table_init	= iptable_security_table_init,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static unsigned int
@@ -52,10 +58,14 @@ iptable_security_hook(void *priv, struct sk_buff *skb,
 static struct nf_hook_ops *sectbl_ops __read_mostly;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int iptable_security_table_init(struct net *net)
 =======
 static int __net_init iptable_security_table_init(struct net *net)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int iptable_security_table_init(struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ipt_replace *repl;
 	int ret;
@@ -86,11 +96,15 @@ static struct pernet_operations iptable_security_net_ops = {
 static int __init iptable_security_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = xt_register_template(&security_table,
 				       iptable_security_table_init);
 
 	if (ret < 0)
 		return ret;
+<<<<<<< HEAD
 
 	sectbl_ops = xt_hook_ops_alloc(&security_table, iptable_security_hook);
 	if (IS_ERR(sectbl_ops)) {
@@ -103,18 +117,27 @@ static int __init iptable_security_init(void)
 		xt_unregister_template(&security_table);
 =======
 	int ret;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sectbl_ops = xt_hook_ops_alloc(&security_table, iptable_security_hook);
-	if (IS_ERR(sectbl_ops))
+	if (IS_ERR(sectbl_ops)) {
+		xt_unregister_template(&security_table);
 		return PTR_ERR(sectbl_ops);
+	}
 
 	ret = register_pernet_subsys(&iptable_security_net_ops);
 	if (ret < 0) {
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		xt_unregister_template(&security_table);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(sectbl_ops);
 		return ret;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	ret = iptable_security_table_init(&init_net);
@@ -124,6 +147,8 @@ static int __init iptable_security_init(void)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -132,9 +157,13 @@ static void __exit iptable_security_fini(void)
 	unregister_pernet_subsys(&iptable_security_net_ops);
 	kfree(sectbl_ops);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xt_unregister_template(&security_table);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xt_unregister_template(&security_table);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(iptable_security_init);

@@ -46,6 +46,7 @@ static void blk_mq_hw_sysfs_release(struct kobject *kobj)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 struct blk_mq_ctx_sysfs_entry {
 	struct attribute attr;
@@ -54,12 +55,15 @@ struct blk_mq_ctx_sysfs_entry {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct blk_mq_hw_ctx_sysfs_entry {
 	struct attribute attr;
 	ssize_t (*show)(struct blk_mq_hw_ctx *, char *);
 	ssize_t (*store)(struct blk_mq_hw_ctx *, const char *, size_t);
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static ssize_t blk_mq_sysfs_show(struct kobject *kobj, struct attribute *attr,
@@ -105,6 +109,8 @@ static ssize_t blk_mq_sysfs_store(struct kobject *kobj, struct attribute *attr,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t blk_mq_hw_sysfs_show(struct kobject *kobj,
 				    struct attribute *attr, char *page)
 {
@@ -205,6 +211,7 @@ static struct attribute *default_hw_ctx_attrs[] = {
 ATTRIBUTE_GROUPS(default_hw_ctx);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct sysfs_ops blk_mq_sysfs_ops = {
 	.show	= blk_mq_sysfs_show,
@@ -212,6 +219,8 @@ static const struct sysfs_ops blk_mq_sysfs_ops = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct sysfs_ops blk_mq_hw_sysfs_ops = {
 	.show	= blk_mq_hw_sysfs_show,
 	.store	= blk_mq_hw_sysfs_store,
@@ -219,17 +228,23 @@ static const struct sysfs_ops blk_mq_hw_sysfs_ops = {
 
 static struct kobj_type blk_mq_ktype = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.sysfs_ops	= &blk_mq_sysfs_ops,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.release	= blk_mq_sysfs_release,
 };
 
 static struct kobj_type blk_mq_ctx_ktype = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.sysfs_ops	= &blk_mq_sysfs_ops,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.release	= blk_mq_ctx_sysfs_release,
 };
 

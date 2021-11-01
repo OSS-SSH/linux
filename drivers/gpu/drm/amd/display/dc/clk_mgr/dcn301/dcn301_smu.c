@@ -134,10 +134,14 @@ int dcn301_smu_set_dispclk(struct clk_mgr_internal *clk_mgr, int requested_dispc
 			clk_mgr,
 			VBIOSSMC_MSG_SetDispclkFreq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			khz_to_mhz_ceil(requested_dispclk_khz));
 =======
 			requested_dispclk_khz / 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			khz_to_mhz_ceil(requested_dispclk_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return actual_dispclk_set_mhz * 1000;
 }
@@ -152,10 +156,14 @@ int dcn301_smu_set_dprefclk(struct clk_mgr_internal *clk_mgr)
 			clk_mgr,
 			VBIOSSMC_MSG_SetDprefclkFreq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			khz_to_mhz_ceil(clk_mgr->base.dprefclk_khz));
 =======
 			clk_mgr->base.dprefclk_khz / 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			khz_to_mhz_ceil(clk_mgr->base.dprefclk_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* TODO: add code for programing DP DTO, currently this is down by command table */
 
@@ -172,10 +180,14 @@ int dcn301_smu_set_hard_min_dcfclk(struct clk_mgr_internal *clk_mgr, int request
 			clk_mgr,
 			VBIOSSMC_MSG_SetHardMinDcfclkByFreq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			khz_to_mhz_ceil(requested_dcfclk_khz));
 =======
 			requested_dcfclk_khz / 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			khz_to_mhz_ceil(requested_dcfclk_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return actual_dcfclk_set_mhz * 1000;
 }
@@ -190,10 +202,14 @@ int dcn301_smu_set_min_deep_sleep_dcfclk(struct clk_mgr_internal *clk_mgr, int r
 			clk_mgr,
 			VBIOSSMC_MSG_SetMinDeepSleepDcfclk,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			khz_to_mhz_ceil(requested_min_ds_dcfclk_khz));
 =======
 			requested_min_ds_dcfclk_khz / 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			khz_to_mhz_ceil(requested_min_ds_dcfclk_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return actual_min_ds_dcfclk_mhz * 1000;
 }
@@ -208,10 +224,14 @@ int dcn301_smu_set_dppclk(struct clk_mgr_internal *clk_mgr, int requested_dpp_kh
 			clk_mgr,
 			VBIOSSMC_MSG_SetDppclkFreq,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			khz_to_mhz_ceil(requested_dpp_khz));
 =======
 			requested_dpp_khz / 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			khz_to_mhz_ceil(requested_dpp_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return actual_dppclk_set_mhz * 1000;
 }

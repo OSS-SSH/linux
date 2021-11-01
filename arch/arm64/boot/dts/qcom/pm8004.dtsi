@@ -10,9 +10,12 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		status = "disabled";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	pm8004_lsid5: pmic@5 {
@@ -21,9 +24,12 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		status = "disabled";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pm8004_spmi_regulators: regulators {
 			compatible = "qcom,pm8004-regulators";

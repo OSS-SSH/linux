@@ -48,9 +48,13 @@
 #include <uapi/linux/pkt_cls.h>
 #include <linux/hashtable.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/rbtree.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/rbtree.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct netpoll_info;
 struct device;
@@ -213,9 +217,13 @@ struct sk_buff;
 struct netdev_hw_addr {
 	struct list_head	list;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct rb_node		node;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rb_node		node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned char		addr[MAX_ADDR_LEN];
 	unsigned char		type;
 #define NETDEV_HW_ADDR_T_LAN		1
@@ -233,11 +241,17 @@ struct netdev_hw_addr_list {
 	struct list_head	list;
 	int			count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/* Auxiliary tree for faster lookup on addition and deletion */
 	struct rb_root		tree;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Auxiliary tree for faster lookup on addition and deletion */
+	struct rb_root		tree;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define netdev_hw_addr_list_count(l) ((l)->count)
@@ -310,6 +324,7 @@ enum netdev_state_t {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * This structure holds boot-time configured netdevice settings. They
@@ -324,6 +339,8 @@ struct netdev_boot_setup {
 int __init netdev_boot_setup(char *str);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct gro_list {
 	struct list_head	list;
 	int			count;
@@ -752,9 +769,13 @@ bool rps_may_expire_flow(struct net_device *dev, u16 rxq_index, u32 flow_id,
 /* This structure contains an instance of an RX queue. */
 struct netdev_rx_queue {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xdp_rxq_info		xdp_rxq;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xdp_rxq_info		xdp_rxq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_RPS
 	struct rps_map __rcu		*rps_map;
 	struct rps_dev_flow_table __rcu	*rps_flow_table;
@@ -762,9 +783,12 @@ struct netdev_rx_queue {
 	struct kobject			kobj;
 	struct net_device		*dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct xdp_rxq_info		xdp_rxq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_XDP_SOCKETS
 	struct xsk_buff_pool            *pool;
 #endif
@@ -1111,6 +1135,9 @@ struct netdev_net_notifier {
  *
  * int (*ndo_do_ioctl)(struct net_device *dev, struct ifreq *ifr, int cmd);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	Old-style ioctl entry point. This is used internally by the
  *	appletalk and ieee802154 subsystems but is no longer called by
  *	the device ioctl handler.
@@ -1123,11 +1150,14 @@ struct netdev_net_notifier {
  * * int (*ndo_eth_ioctl)(struct net_device *dev, struct ifreq *ifr, int cmd);
  *	Called for ethernet specific ioctls: SIOCGMIIPHY, SIOCGMIIREG,
  *	SIOCSMIIREG, SIOCSHWTSTAMP and SIOCGHWTSTAMP.
+<<<<<<< HEAD
 =======
  *	Called when a user requests an ioctl which can't be handled by
  *	the generic interface code. If not defined ioctls return
  *	not supported error code.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * int (*ndo_set_config)(struct net_device *dev, struct ifmap *map);
  *	Used to set network devices bus interface parameters. This interface
@@ -1361,11 +1391,17 @@ struct netdev_net_notifier {
  *	Returns negative number, means general error invoking ndo, meaning
  *	no frames were xmit'ed and core-caller will free all frames.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * struct net_device *(*ndo_xdp_get_xmit_slave)(struct net_device *dev,
  *					        struct xdp_buff *xdp);
  *      Get the xmit slave of master device based on the xdp_buff.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct net_device *(*ndo_xdp_get_xmit_slave)(struct net_device *dev,
+ *					        struct xdp_buff *xdp);
+ *      Get the xmit slave of master device based on the xdp_buff.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * int (*ndo_xsk_wakeup)(struct net_device *dev, u32 queue_id, u32 flags);
  *      This function is used to wake up the softirq, ksoftirqd or kthread
  *	responsible for sending and/or receiving packets on a specific
@@ -1407,6 +1443,9 @@ struct net_device_ops {
 	int			(*ndo_do_ioctl)(struct net_device *dev,
 					        struct ifreq *ifr, int cmd);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			(*ndo_eth_ioctl)(struct net_device *dev,
 						 struct ifreq *ifr, int cmd);
 	int			(*ndo_siocbond)(struct net_device *dev,
@@ -1416,8 +1455,11 @@ struct net_device_ops {
 	int			(*ndo_siocdevprivate)(struct net_device *dev,
 						      struct ifreq *ifr,
 						      void __user *data, int cmd);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			(*ndo_set_config)(struct net_device *dev,
 					          struct ifmap *map);
 	int			(*ndo_change_mtu)(struct net_device *dev,
@@ -1597,10 +1639,15 @@ struct net_device_ops {
 						struct xdp_frame **xdp,
 						u32 flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct net_device *	(*ndo_xdp_get_xmit_slave)(struct net_device *dev,
 							  struct xdp_buff *xdp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net_device *	(*ndo_xdp_get_xmit_slave)(struct net_device *dev,
+							  struct xdp_buff *xdp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			(*ndo_xsk_wakeup)(struct net_device *dev,
 						  u32 queue_id, u32 flags);
 	struct devlink_port *	(*ndo_get_devlink_port)(struct net_device *dev);
@@ -1868,9 +1915,13 @@ enum netdev_ml_priv_type {
  *			 device struct
  *	@mpls_ptr:	mpls_dev struct pointer
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	@mctp_ptr:	MCTP specific data
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *	@mctp_ptr:	MCTP specific data
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *	@dev_addr:	Hw address (before bcast,
  *			because most packets are unicast)
@@ -2159,11 +2210,17 @@ struct net_device {
 	struct mpls_dev __rcu	*mpls_ptr;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MCTP)
 	struct mctp_dev __rcu	*mctp_ptr;
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if IS_ENABLED(CONFIG_MCTP)
+	struct mctp_dev __rcu	*mctp_ptr;
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Cache lines mostly used on receive path (including eth_type_trans())
@@ -2990,9 +3047,12 @@ static inline struct net_device *first_net_device_rcu(struct net *net)
 
 int netdev_boot_setup_check(struct net_device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 unsigned long netdev_boot_base(const char *prefix, int unit);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct net_device *dev_getbyhwaddr_rcu(struct net *net, unsigned short type,
 				       const char *hwaddr);
 struct net_device *dev_getfirstbyhwtype(struct net *net, unsigned short type);
@@ -3365,6 +3425,7 @@ static inline bool dev_has_header(const struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 typedef int gifconf_func_t(struct net_device * dev, char __user * bufptr,
 			   int len, int size);
@@ -3375,6 +3436,8 @@ static inline int unregister_gifconf(unsigned int family)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_NET_FLOW_LIMIT
 #define FLOW_LIMIT_HISTORY	(1 << 7)  /* must be ^2 and !overflow buckets */
 struct sd_flow_limit {
@@ -3994,10 +4057,15 @@ static inline int netif_set_real_num_rx_queues(struct net_device *dev,
 }
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 int netif_set_real_num_queues(struct net_device *dev,
 			      unsigned int txq, unsigned int rxq);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int netif_set_real_num_queues(struct net_device *dev,
+			      unsigned int txq, unsigned int rxq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline struct netdev_rx_queue *
 __netif_get_rx_queue(struct net_device *dev, unsigned int rxq)
@@ -4032,10 +4100,14 @@ void __dev_kfree_skb_any(struct sk_buff *skb, enum skb_free_reason reason);
  * It is not allowed to call kfree_skb() or consume_skb() from hardware
  * interrupt context or with hardware interrupts being disabled.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * (in_hardirq() || irqs_disabled())
 =======
  * (in_irq() || irqs_disabled())
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * (in_hardirq() || irqs_disabled())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * We provide four helpers that can be used in following contexts :
  *
@@ -4072,10 +4144,15 @@ static inline void dev_consume_skb_any(struct sk_buff *skb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 u32 bpf_prog_run_generic_xdp(struct sk_buff *skb, struct xdp_buff *xdp,
 			     struct bpf_prog *xdp_prog);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u32 bpf_prog_run_generic_xdp(struct sk_buff *skb, struct xdp_buff *xdp,
+			     struct bpf_prog *xdp_prog);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void generic_xdp_tx(struct sk_buff *skb, struct bpf_prog *xdp_prog);
 int do_xdp_generic(struct bpf_prog *xdp_prog, struct sk_buff *skb);
 int netif_rx(struct sk_buff *skb);
@@ -4105,12 +4182,16 @@ void netdev_rx_handler_unregister(struct net_device *dev);
 
 bool dev_valid_name(const char *name);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool is_socket_ioctl_cmd(unsigned int cmd)
 {
 	return _IOC_TYPE(cmd) == SOCK_IOC_TYPE;
 }
 int get_user_ifreq(struct ifreq *ifr, void __user **ifrdata, void __user *arg);
 int put_user_ifreq(struct ifreq *ifr, void __user *arg);
+<<<<<<< HEAD
 int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr,
 		void __user *data, bool *need_copyout);
 int dev_ifconf(struct net *net, struct ifconf __user *ifc);
@@ -4121,6 +4202,12 @@ int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr,
 int dev_ifconf(struct net *net, struct ifconf *, int);
 int dev_ethtool(struct net *net, struct ifreq *);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int dev_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr,
+		void __user *data, bool *need_copyout);
+int dev_ifconf(struct net *net, struct ifconf __user *ifc);
+int dev_ethtool(struct net *net, struct ifreq *ifr, void __user *userdata);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned int dev_get_flags(const struct net_device *);
 int __dev_change_flags(struct net_device *dev, unsigned int flags,
 		       struct netlink_ext_ack *extack);
@@ -4175,9 +4262,13 @@ int dev_change_xdp_fd(struct net_device *dev, struct netlink_ext_ack *extack,
 		      int fd, int expected_fd, u32 flags);
 int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog);
 <<<<<<< HEAD
+<<<<<<< HEAD
 u8 dev_xdp_prog_count(struct net_device *dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+u8 dev_xdp_prog_count(struct net_device *dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u32 dev_xdp_prog_id(struct net_device *dev, enum bpf_xdp_mode mode);
 
 int __dev_forward_skb(struct net_device *dev, struct sk_buff *skb);
@@ -4246,6 +4337,7 @@ void netdev_run_todo(void);
 static inline void dev_put(struct net_device *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dev) {
 #ifdef CONFIG_PCPU_DEV_REFCNT
 		this_cpu_dec(*dev->pcpu_refcnt);
@@ -4254,12 +4346,19 @@ static inline void dev_put(struct net_device *dev)
 #endif
 	}
 =======
+=======
+	if (dev) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PCPU_DEV_REFCNT
-	this_cpu_dec(*dev->pcpu_refcnt);
+		this_cpu_dec(*dev->pcpu_refcnt);
 #else
-	refcount_dec(&dev->dev_refcnt);
+		refcount_dec(&dev->dev_refcnt);
 #endif
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -4271,6 +4370,7 @@ static inline void dev_put(struct net_device *dev)
 static inline void dev_hold(struct net_device *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (dev) {
 #ifdef CONFIG_PCPU_DEV_REFCNT
 		this_cpu_inc(*dev->pcpu_refcnt);
@@ -4279,12 +4379,19 @@ static inline void dev_hold(struct net_device *dev)
 #endif
 	}
 =======
+=======
+	if (dev) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PCPU_DEV_REFCNT
-	this_cpu_inc(*dev->pcpu_refcnt);
+		this_cpu_inc(*dev->pcpu_refcnt);
 #else
-	refcount_inc(&dev->dev_refcnt);
+		refcount_inc(&dev->dev_refcnt);
 #endif
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Carrier loss detection, dial on demand. The functions netif_carrier_on
@@ -4745,6 +4852,9 @@ void __hw_addr_init(struct netdev_hw_addr_list *list);
 
 /* Functions used for device addresses handling */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void
 __dev_addr_set(struct net_device *dev, const u8 *addr, size_t len)
 {
@@ -4763,8 +4873,11 @@ dev_addr_mod(struct net_device *dev, unsigned int offset,
 	memcpy(&dev->dev_addr[offset], addr, len);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int dev_addr_add(struct net_device *dev, const unsigned char *addr,
 		 unsigned char addr_type);
 int dev_addr_del(struct net_device *dev, const unsigned char *addr,

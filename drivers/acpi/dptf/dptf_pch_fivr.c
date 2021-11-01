@@ -10,6 +10,9 @@
 #include <linux/platform_device.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct pch_fivr_resp {
 	u64 status;
 	u64 result;
@@ -46,8 +49,11 @@ release_buffer:
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Presentation of attributes which are defined for INT1045
  * They are:
@@ -62,6 +68,7 @@ static ssize_t name##_show(struct device *dev,\
 			   char *buf)\
 {\
 	struct acpi_device *acpi_dev = dev_get_drvdata(dev);\
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct pch_fivr_resp fivr_resp;\
 	int status;\
@@ -82,6 +89,16 @@ static ssize_t name##_show(struct device *dev,\
 	else\
 		return -EINVAL;\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pch_fivr_resp fivr_resp;\
+	int status;\
+\
+	status = pch_fivr_read(acpi_dev->handle, #method, &fivr_resp);\
+	if (status)\
+		return status;\
+\
+	return sprintf(buf, "%llu\n", fivr_resp.result);\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define PCH_FIVR_STORE(name, method) \
@@ -106,32 +123,50 @@ static ssize_t name##_store(struct device *dev,\
 PCH_FIVR_SHOW(freq_mhz_low_clock, GFC0)
 PCH_FIVR_SHOW(freq_mhz_high_clock, GFC1)
 <<<<<<< HEAD
+<<<<<<< HEAD
 PCH_FIVR_SHOW(ssc_clock_info, GEMI)
 PCH_FIVR_SHOW(fivr_switching_freq_mhz, GFCS)
 PCH_FIVR_SHOW(fivr_switching_fault_status, GFFS)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+PCH_FIVR_SHOW(ssc_clock_info, GEMI)
+PCH_FIVR_SHOW(fivr_switching_freq_mhz, GFCS)
+PCH_FIVR_SHOW(fivr_switching_fault_status, GFFS)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 PCH_FIVR_STORE(freq_mhz_low_clock, RFC0)
 PCH_FIVR_STORE(freq_mhz_high_clock, RFC1)
 
 static DEVICE_ATTR_RW(freq_mhz_low_clock);
 static DEVICE_ATTR_RW(freq_mhz_high_clock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEVICE_ATTR_RO(ssc_clock_info);
 static DEVICE_ATTR_RO(fivr_switching_freq_mhz);
 static DEVICE_ATTR_RO(fivr_switching_fault_status);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEVICE_ATTR_RO(ssc_clock_info);
+static DEVICE_ATTR_RO(fivr_switching_freq_mhz);
+static DEVICE_ATTR_RO(fivr_switching_fault_status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct attribute *fivr_attrs[] = {
 	&dev_attr_freq_mhz_low_clock.attr,
 	&dev_attr_freq_mhz_high_clock.attr,
+<<<<<<< HEAD
 <<<<<<< HEAD
 	&dev_attr_ssc_clock_info.attr,
 	&dev_attr_fivr_switching_freq_mhz.attr,
 	&dev_attr_fivr_switching_fault_status.attr,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_ssc_clock_info.attr,
+	&dev_attr_fivr_switching_freq_mhz.attr,
+	&dev_attr_fivr_switching_fault_status.attr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NULL
 };
 

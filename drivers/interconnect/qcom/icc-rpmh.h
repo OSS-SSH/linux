@@ -135,9 +135,14 @@ struct icc_node_data *qcom_icc_xlate_extended(struct of_phandle_args *spec, void
 int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev);
 void qcom_icc_pre_aggregate(struct icc_node *node);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int qcom_icc_rpmh_probe(struct platform_device *pdev);
 int qcom_icc_rpmh_remove(struct platform_device *pdev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int qcom_icc_rpmh_probe(struct platform_device *pdev);
+int qcom_icc_rpmh_remove(struct platform_device *pdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

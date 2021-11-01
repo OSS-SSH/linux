@@ -235,10 +235,14 @@ out_free:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void vfio_ccw_sch_remove(struct subchannel *sch)
 =======
 static int vfio_ccw_sch_remove(struct subchannel *sch)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void vfio_ccw_sch_remove(struct subchannel *sch)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vfio_ccw_private *private = dev_get_drvdata(&sch->dev);
 	struct vfio_ccw_crw *crw, *temp;
@@ -262,9 +266,12 @@ static int vfio_ccw_sch_remove(struct subchannel *sch)
 			   sch->schid.cssid, sch->schid.ssid,
 			   sch->schid.sch_no);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void vfio_ccw_sch_shutdown(struct subchannel *sch)

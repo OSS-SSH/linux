@@ -26,6 +26,7 @@
 
 #if defined(CONFIG_IRQ_FORCED_THREADING) && !defined(CONFIG_PREEMPT_RT)
 <<<<<<< HEAD
+<<<<<<< HEAD
 DEFINE_STATIC_KEY_FALSE(force_irqthreads_key);
 
 static int __init setup_forced_irqthreads(char *arg)
@@ -39,6 +40,13 @@ static int __init setup_forced_irqthreads(char *arg)
 {
 	force_irqthreads = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+DEFINE_STATIC_KEY_FALSE(force_irqthreads_key);
+
+static int __init setup_forced_irqthreads(char *arg)
+{
+	static_branch_enable(&force_irqthreads_key);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 early_param("threadirqs", setup_forced_irqthreads);
@@ -1269,12 +1277,17 @@ static int irq_thread(void *data)
 			struct irqaction *action);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (force_irqthreads() && test_bit(IRQTF_FORCED_THREAD,
 					   &action->thread_flags))
 =======
 	if (force_irqthreads && test_bit(IRQTF_FORCED_THREAD,
 					&action->thread_flags))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (force_irqthreads() && test_bit(IRQTF_FORCED_THREAD,
+					   &action->thread_flags))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		handler_fn = irq_forced_thread_fn;
 	else
 		handler_fn = irq_thread_fn;
@@ -1336,10 +1349,14 @@ EXPORT_SYMBOL_GPL(irq_wake_thread);
 static int irq_setup_forced_threading(struct irqaction *new)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!force_irqthreads())
 =======
 	if (!force_irqthreads)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!force_irqthreads())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	if (new->flags & (IRQF_NO_THREAD | IRQF_PERCPU | IRQF_ONESHOT))
 		return 0;
@@ -2090,6 +2107,7 @@ const void *free_nmi(unsigned int irq, void *dev_id)
  *	@irq: Interrupt line to allocate
  *	@handler: Function to be called when the IRQ occurs.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *		  Primary handler for threaded interrupts.
  *		  If handler is NULL and thread_fn != NULL
  *		  the default primary handler is installed.
@@ -2098,6 +2116,11 @@ const void *free_nmi(unsigned int irq, void *dev_id)
  *		  If NULL and thread_fn != NULL the default
  *		  primary handler is installed
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		  Primary handler for threaded interrupts.
+ *		  If handler is NULL and thread_fn != NULL
+ *		  the default primary handler is installed.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	@thread_fn: Function called from the irq handler thread
  *		    If NULL, no irq thread is created
  *	@irqflags: Interrupt type flags
@@ -2132,10 +2155,14 @@ const void *free_nmi(unsigned int irq, void *dev_id)
  *	IRQF_SHARED		Interrupt is shared
  *	IRQF_TRIGGER_*		Specify active edge(s) or level
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	IRQF_ONESHOT		Run thread_fn with interrupt line masked
 =======
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *	IRQF_ONESHOT		Run thread_fn with interrupt line masked
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int request_threaded_irq(unsigned int irq, irq_handler_t handler,
 			 irq_handler_t thread_fn, unsigned long irqflags,

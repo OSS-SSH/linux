@@ -256,10 +256,14 @@ _GLOBAL(scom970_write)
  */
 _GLOBAL(kexec_wait)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bcl	20,31,$+4
 =======
 	bl	1f
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bcl	20,31,$+4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r5
 	addi	r5,r5,kexec_flag-1b
 

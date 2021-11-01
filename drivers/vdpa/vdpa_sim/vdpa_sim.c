@@ -93,10 +93,14 @@ static void vdpasim_vq_reset(struct vdpasim *vdpasim,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void vdpasim_do_reset(struct vdpasim *vdpasim)
 =======
 static void vdpasim_reset(struct vdpasim *vdpasim)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void vdpasim_do_reset(struct vdpasim *vdpasim)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i;
 
@@ -142,11 +146,16 @@ static dma_addr_t vdpasim_map_range(struct vdpasim *vdpasim, phys_addr_t paddr,
 
 	/* We set the limit_pfn to the maximum (ULONG_MAX - 1) */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	iova = alloc_iova(&vdpasim->iova, size >> iova_shift(&vdpasim->iova),
 			  ULONG_MAX - 1, true);
 =======
 	iova = alloc_iova(&vdpasim->iova, size, ULONG_MAX - 1, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iova = alloc_iova(&vdpasim->iova, size >> iova_shift(&vdpasim->iova),
+			  ULONG_MAX - 1, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!iova)
 		return DMA_MAPPING_ERROR;
 
@@ -260,6 +269,7 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr)
 
 	vdpasim = vdpa_alloc_device(struct vdpasim, vdpa, NULL, ops,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				    dev_attr->name, false);
 	if (IS_ERR(vdpasim)) {
 		ret = PTR_ERR(vdpasim);
@@ -270,6 +280,13 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr)
 	if (!vdpasim)
 		goto err_alloc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    dev_attr->name, false);
+	if (IS_ERR(vdpasim)) {
+		ret = PTR_ERR(vdpasim);
+		goto err_alloc;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	vdpasim->dev_attr = *dev_attr;
 	INIT_WORK(&vdpasim->work, dev_attr->work_fn);
@@ -475,6 +492,7 @@ static void vdpasim_set_status(struct vdpa_device *vdpa, u8 status)
 	spin_lock(&vdpasim->lock);
 	vdpasim->status = status;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_unlock(&vdpasim->lock);
 }
 
@@ -497,6 +515,23 @@ static int vdpasim_reset(struct vdpa_device *vdpa)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock(&vdpasim->lock);
+}
+
+static int vdpasim_reset(struct vdpa_device *vdpa)
+{
+	struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
+
+	spin_lock(&vdpasim->lock);
+	vdpasim->status = 0;
+	vdpasim_do_reset(vdpasim);
+	spin_unlock(&vdpasim->lock);
+
+	return 0;
+}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static size_t vdpasim_get_config_size(struct vdpa_device *vdpa)
 {
 	struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
@@ -578,15 +613,20 @@ err:
 
 static int vdpasim_dma_map(struct vdpa_device *vdpa, u64 iova, u64 size,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   u64 pa, u32 perm, void *opaque)
 =======
 			   u64 pa, u32 perm)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   u64 pa, u32 perm, void *opaque)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
 	int ret;
 
 	spin_lock(&vdpasim->iommu_lock);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ret = vhost_iotlb_add_range_ctx(vdpasim->iommu, iova, iova + size - 1,
 					pa, perm, opaque);
@@ -594,6 +634,10 @@ static int vdpasim_dma_map(struct vdpa_device *vdpa, u64 iova, u64 size,
 	ret = vhost_iotlb_add_range(vdpasim->iommu, iova, iova + size - 1, pa,
 				    perm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = vhost_iotlb_add_range_ctx(vdpasim->iommu, iova, iova + size - 1,
+					pa, perm, opaque);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock(&vdpasim->iommu_lock);
 
 	return ret;
@@ -650,9 +694,13 @@ static const struct vdpa_config_ops vdpasim_config_ops = {
 	.get_status             = vdpasim_get_status,
 	.set_status             = vdpasim_set_status,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.reset			= vdpasim_reset,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.reset			= vdpasim_reset,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.get_config_size        = vdpasim_get_config_size,
 	.get_config             = vdpasim_get_config,
 	.set_config             = vdpasim_set_config,
@@ -682,9 +730,13 @@ static const struct vdpa_config_ops vdpasim_batch_config_ops = {
 	.get_status             = vdpasim_get_status,
 	.set_status             = vdpasim_set_status,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.reset			= vdpasim_reset,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.reset			= vdpasim_reset,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.get_config_size        = vdpasim_get_config_size,
 	.get_config             = vdpasim_get_config,
 	.set_config             = vdpasim_set_config,

@@ -8,23 +8,24 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/processor.h>
 #include <linux/delay.h>
 #include <asm/div64.h>
 #include <asm/timex.h>
 =======
 #include <linux/sched.h>
+=======
+#include <linux/processor.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/delay.h>
-#include <linux/timex.h>
-#include <linux/export.h>
-#include <linux/irqflags.h>
-#include <linux/interrupt.h>
-#include <linux/jump_label.h>
-#include <linux/irq.h>
-#include <asm/vtimer.h>
 #include <asm/div64.h>
+<<<<<<< HEAD
 #include <asm/idle.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/timex.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void __delay(unsigned long loops)
 {

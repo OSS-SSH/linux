@@ -2,10 +2,14 @@
  * Linux driver for VMware's vmxnet3 ethernet NIC.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
 =======
  * Copyright (C) 2008-2020, VMware, Inc. All Rights Reserved.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -103,11 +107,17 @@ enum {
 	VMXNET3_CMD_GET_COALESCE,
 	VMXNET3_CMD_GET_RSS_FIELDS,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	VMXNET3_CMD_GET_RESERVED2,
 	VMXNET3_CMD_GET_RESERVED3,
 	VMXNET3_CMD_GET_MAX_QUEUES_CONF,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	VMXNET3_CMD_GET_RESERVED2,
+	VMXNET3_CMD_GET_RESERVED3,
+	VMXNET3_CMD_GET_MAX_QUEUES_CONF,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -352,6 +362,9 @@ struct Vmxnet3_RxCompDescExt {
 
 /* value of RxCompDesc.rssType */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define VMXNET3_RCD_RSS_TYPE_NONE     0
 #define VMXNET3_RCD_RSS_TYPE_IPV4     1
 #define VMXNET3_RCD_RSS_TYPE_TCPIPV4  2
@@ -361,6 +374,7 @@ struct Vmxnet3_RxCompDescExt {
 #define VMXNET3_RCD_RSS_TYPE_UDPIPV6  6
 #define VMXNET3_RCD_RSS_TYPE_ESPIPV4  7
 #define VMXNET3_RCD_RSS_TYPE_ESPIPV6  8
+<<<<<<< HEAD
 =======
 enum {
 	VMXNET3_RCD_RSS_TYPE_NONE     = 0,
@@ -370,6 +384,8 @@ enum {
 	VMXNET3_RCD_RSS_TYPE_TCPIPV6  = 4,
 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 /* a union for accessing all cmd/completion descriptors */
@@ -556,6 +572,9 @@ enum vmxnet3_intr_type {
 #define VMXNET3_MAX_INTRS      25
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Version 6 and later will use below macros */
 #define VMXNET3_EXT_MAX_TX_QUEUES  32
 #define VMXNET3_EXT_MAX_RX_QUEUES  32
@@ -563,8 +582,11 @@ enum vmxnet3_intr_type {
 #define VMXNET3_EXT_MAX_INTRS      65
 #define VMXNET3_FIRST_SET_INTRS    64
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* value of intrCtrl */
 #define VMXNET3_IC_DISABLE_ALL  0x1   /* bit 0 */
 
@@ -580,6 +602,9 @@ struct Vmxnet3_IntrConf {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct Vmxnet3_IntrConfExt {
 	u8              autoMask;
 	u8              numIntrs;      /* # of interrupts */
@@ -593,8 +618,11 @@ struct Vmxnet3_IntrConfExt {
 	u8              reserved2[3];
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* one bit per VLAN ID, the size is in the units of u32	*/
 #define VMXNET3_VFT_SIZE  (4096 / (sizeof(u32) * 8))
 
@@ -768,22 +796,32 @@ struct Vmxnet3_DSDevRead {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct Vmxnet3_DSDevReadExt {
 	/* read-only region for device, read by dev in response to a SET cmd */
 	struct Vmxnet3_IntrConfExt              intrConfExt;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* All structures in DriverShared are padded to multiples of 8 bytes */
 struct Vmxnet3_DriverShared {
 	__le32				magic;
 	/* make devRead start at 64bit boundaries */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__le32                          size; /* size of DriverShared */
 =======
 	__le32				pad;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le32                          size; /* size of DriverShared */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct Vmxnet3_DSDevRead	devRead;
 	__le32				ecr;
 	__le32				reserved;
@@ -795,9 +833,13 @@ struct Vmxnet3_DriverShared {
 						  */
 	} cu;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct Vmxnet3_DSDevReadExt     devReadExt;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct Vmxnet3_DSDevReadExt     devReadExt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 
@@ -829,9 +871,13 @@ struct Vmxnet3_DriverShared {
 
 #define VMXNET3_MAX_MTU     9000
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define VMXNET3_V6_MAX_MTU  9190
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VMXNET3_V6_MAX_MTU  9190
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define VMXNET3_MIN_MTU     60
 
 #define VMXNET3_LINK_UP         (10000 << 16 | 1)    /* 10 Gbps, up */

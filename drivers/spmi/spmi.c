@@ -346,10 +346,14 @@ fail_probe:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void spmi_drv_remove(struct device *dev)
 =======
 static int spmi_drv_remove(struct device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void spmi_drv_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct spmi_driver *sdrv = to_spmi_driver(dev->driver);
 
@@ -361,9 +365,12 @@ static int spmi_drv_remove(struct device *dev)
 	pm_runtime_set_suspended(dev);
 	pm_runtime_put_noidle(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void spmi_drv_shutdown(struct device *dev)

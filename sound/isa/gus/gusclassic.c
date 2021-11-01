@@ -136,10 +136,14 @@ static int snd_gusclassic_probe(struct device *dev, unsigned int n)
 	int error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
 =======
 	error = snd_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE, 0, &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0)
 		return error;
 
@@ -149,6 +153,7 @@ static int snd_gusclassic_probe(struct device *dev, unsigned int n)
 	error = snd_gusclassic_create(card, dev, n, &gus);
 	if (error < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 
 	error = snd_gusclassic_detect(gus);
@@ -161,31 +166,47 @@ static int snd_gusclassic_probe(struct device *dev, unsigned int n)
 	if (error < 0)
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+
+	error = snd_gusclassic_detect(gus);
+	if (error < 0)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	gus->joystick_dac = joystick_dac[n];
 
 	error = snd_gus_initialize(gus);
 	if (error < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 =======
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = -ENODEV;
 	if (gus->max_flag || gus->ess_flag) {
 		dev_err(dev, "GUS Classic or ACE soundcard was "
 			"not detected at 0x%lx\n", gus->gf1.port);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 =======
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	error = snd_gf1_new_mixer(gus);
 	if (error < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return error;
 
 	error = snd_gf1_pcm_new(gus, 0, 0);
@@ -198,15 +219,26 @@ static int snd_gusclassic_probe(struct device *dev, unsigned int n)
 	if (error < 0)
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+
+	error = snd_gf1_pcm_new(gus, 0, 0);
+	if (error < 0)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!gus->ace_flag) {
 		error = snd_gf1_rawmidi_new(gus, 0);
 		if (error < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return error;
 =======
 			goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	sprintf(card->longname + strlen(card->longname),
@@ -219,6 +251,7 @@ static int snd_gusclassic_probe(struct device *dev, unsigned int n)
 
 	error = snd_card_register(card);
 	if (error < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return error;
 
@@ -238,11 +271,18 @@ static void snd_gusclassic_remove(struct device *dev, unsigned int n)
 {
 	snd_card_free(dev_get_drvdata(dev));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return error;
+
+	dev_set_drvdata(dev, card);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct isa_driver snd_gusclassic_driver = {
 	.match		= snd_gusclassic_match,
 	.probe		= snd_gusclassic_probe,
+<<<<<<< HEAD
 <<<<<<< HEAD
 #if 0	/* FIXME */
 	.suspend	= snd_gusclassic_suspend,
@@ -252,6 +292,10 @@ static struct isa_driver snd_gusclassic_driver = {
 	.suspend	= snd_gusclassic_suspend,
 	.remove		= snd_gusclassic_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if 0	/* FIXME */
+	.suspend	= snd_gusclassic_suspend,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	.driver		= {
 		.name	= DEV_NAME

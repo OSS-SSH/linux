@@ -10,9 +10,12 @@
 #include <linux/compiler.h>
 #include <linux/types.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/segment.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/extable.h>
 
 /* We let the MMU do all checking */
@@ -20,12 +23,18 @@ static inline int access_ok(const void __user *addr,
 			    unsigned long size)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * XXX: for !CONFIG_CPU_HAS_ADDRESS_SPACES this really needs to check
 	 * for TASK_SIZE!
 	 */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 1;
 }
 
@@ -46,6 +55,7 @@ static inline int access_ok(const void __user *addr,
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define __put_user_asm(inst, res, x, ptr, bwl, reg, err) \
 asm volatile ("\n"					\
 	"1:	"inst"."#bwl"	%2,%1\n"		\
@@ -57,6 +67,11 @@ extern int __get_user_bad(void);
 asm volatile ("\n"					\
 	"1:	"MOVES"."#bwl"	%2,%1\n"		\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __put_user_asm(inst, res, x, ptr, bwl, reg, err) \
+asm volatile ("\n"					\
+	"1:	"inst"."#bwl"	%2,%1\n"		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	"2:\n"						\
 	"	.section .fixup,\"ax\"\n"		\
 	"	.even\n"				\
@@ -73,6 +88,9 @@ asm volatile ("\n"					\
 	: #reg (x), "i" (err))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define __put_user_asm8(inst, res, x, ptr)			\
 do {								\
 	const void *__pu_ptr = (const void __force *)(ptr);	\
@@ -98,8 +116,11 @@ do {								\
 		: "memory");					\
 } while (0)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * These are the main single-value transfer routines.  They automatically
  * use the right size if we just have the right pointer type.
@@ -112,6 +133,7 @@ do {								\
 	__chk_user_ptr(ptr);						\
 	switch (sizeof (*(ptr))) {					\
 	case 1:								\
+<<<<<<< HEAD
 <<<<<<< HEAD
 		__put_user_asm(MOVES, __pu_err, __pu_val, ptr, b, d, -EFAULT); \
 		break;							\
@@ -128,47 +150,34 @@ do {								\
 		BUILD_BUG();						\
 =======
 		__put_user_asm(__pu_err, __pu_val, ptr, b, d, -EFAULT);	\
+=======
+		__put_user_asm(MOVES, __pu_err, __pu_val, ptr, b, d, -EFAULT); \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;							\
 	case 2:								\
-		__put_user_asm(__pu_err, __pu_val, ptr, w, r, -EFAULT);	\
+		__put_user_asm(MOVES, __pu_err, __pu_val, ptr, w, r, -EFAULT); \
 		break;							\
 	case 4:								\
-		__put_user_asm(__pu_err, __pu_val, ptr, l, r, -EFAULT);	\
+		__put_user_asm(MOVES, __pu_err, __pu_val, ptr, l, r, -EFAULT); \
 		break;							\
 	case 8:								\
- 	    {								\
- 		const void __user *__pu_ptr = (ptr);			\
-		asm volatile ("\n"					\
-			"1:	"MOVES".l	%2,(%1)+\n"		\
-			"2:	"MOVES".l	%R2,(%1)\n"		\
-			"3:\n"						\
-			"	.section .fixup,\"ax\"\n"		\
-			"	.even\n"				\
-			"10:	movel %3,%0\n"				\
-			"	jra 3b\n"				\
-			"	.previous\n"				\
-			"\n"						\
-			"	.section __ex_table,\"a\"\n"		\
-			"	.align 4\n"				\
-			"	.long 1b,10b\n"				\
-			"	.long 2b,10b\n"				\
-			"	.long 3b,10b\n"				\
-			"	.previous"				\
-			: "+d" (__pu_err), "+a" (__pu_ptr)		\
-			: "r" (__pu_val), "i" (-EFAULT)			\
-			: "memory");					\
+		__put_user_asm8(MOVES, __pu_err, __pu_val, ptr);	\
 		break;							\
-	    }								\
 	default:							\
+<<<<<<< HEAD
 		__pu_err = __put_user_bad();				\
 		break;							\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUILD_BUG();						\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}								\
 	__pu_err;							\
 })
 #define put_user(x, ptr)	__put_user(x, ptr)
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define __get_user_asm(inst, res, x, ptr, type, bwl, reg, err) ({	\
 	type __gu_val;							\
@@ -180,6 +189,12 @@ do {								\
 	asm volatile ("\n"						\
 		"1:	"MOVES"."#bwl"	%2,%1\n"			\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __get_user_asm(inst, res, x, ptr, type, bwl, reg, err) ({	\
+	type __gu_val;							\
+	asm volatile ("\n"						\
+		"1:	"inst"."#bwl"	%2,%1\n"			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"2:\n"							\
 		"	.section .fixup,\"ax\"\n"			\
 		"	.even\n"					\
@@ -198,6 +213,9 @@ do {								\
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define __get_user_asm8(inst, res, x, ptr) 				\
 do {									\
 	const void *__gu_ptr = (const void __force *)(ptr);		\
@@ -230,14 +248,18 @@ do {									\
 	(x) = __gu_val.t;						\
 } while (0)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define __get_user(x, ptr)						\
 ({									\
 	int __gu_err = 0;						\
 	__chk_user_ptr(ptr);						\
 	switch (sizeof(*(ptr))) {					\
 	case 1:								\
+<<<<<<< HEAD
 <<<<<<< HEAD
 		__get_user_asm(MOVES, __gu_err, x, ptr, u8, b, d, -EFAULT); \
 		break;							\
@@ -254,47 +276,27 @@ do {									\
 		BUILD_BUG();						\
 =======
 		__get_user_asm(__gu_err, x, ptr, u8, b, d, -EFAULT);	\
+=======
+		__get_user_asm(MOVES, __gu_err, x, ptr, u8, b, d, -EFAULT); \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;							\
 	case 2:								\
-		__get_user_asm(__gu_err, x, ptr, u16, w, r, -EFAULT);	\
+		__get_user_asm(MOVES, __gu_err, x, ptr, u16, w, r, -EFAULT); \
 		break;							\
 	case 4:								\
-		__get_user_asm(__gu_err, x, ptr, u32, l, r, -EFAULT);	\
+		__get_user_asm(MOVES, __gu_err, x, ptr, u32, l, r, -EFAULT); \
 		break;							\
-	case 8: {							\
-		const void __user *__gu_ptr = (ptr);			\
-		union {							\
-			u64 l;						\
-			__typeof__(*(ptr)) t;				\
-		} __gu_val;						\
-		asm volatile ("\n"					\
-			"1:	"MOVES".l	(%2)+,%1\n"		\
-			"2:	"MOVES".l	(%2),%R1\n"		\
-			"3:\n"						\
-			"	.section .fixup,\"ax\"\n"		\
-			"	.even\n"				\
-			"10:	move.l	%3,%0\n"			\
-			"	sub.l	%1,%1\n"			\
-			"	sub.l	%R1,%R1\n"			\
-			"	jra	3b\n"				\
-			"	.previous\n"				\
-			"\n"						\
-			"	.section __ex_table,\"a\"\n"		\
-			"	.align	4\n"				\
-			"	.long	1b,10b\n"			\
-			"	.long	2b,10b\n"			\
-			"	.previous"				\
-			: "+d" (__gu_err), "=&r" (__gu_val.l),		\
-			  "+a" (__gu_ptr)				\
-			: "i" (-EFAULT)					\
-			: "memory");					\
-		(x) = __gu_val.t;					\
+	case 8:								\
+		__get_user_asm8(MOVES, __gu_err, x, ptr);		\
 		break;							\
-	}								\
 	default:							\
+<<<<<<< HEAD
 		__gu_err = __get_user_bad();				\
 		break;							\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		BUILD_BUG();						\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}								\
 	__gu_err;							\
 })
@@ -441,6 +443,7 @@ __constant_copy_to_user(void __user *to, const void *from, unsigned long n)
 	switch (n) {
 	case 1:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__put_user_asm(MOVES, res, *(u8 *)from, (u8 __user *)to,
 				b, d, 1);
 		break;
@@ -453,17 +456,30 @@ __constant_copy_to_user(void __user *to, const void *from, unsigned long n)
 	case 2:
 		__put_user_asm(res, *(u16 *)from, (u16 __user *)to, w, r, 2);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__put_user_asm(MOVES, res, *(u8 *)from, (u8 __user *)to,
+				b, d, 1);
+		break;
+	case 2:
+		__put_user_asm(MOVES, res, *(u16 *)from, (u16 __user *)to,
+				w, r, 2);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case 3:
 		__constant_copy_to_user_asm(res, to, from, tmp, 3, w, b,);
 		break;
 	case 4:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__put_user_asm(MOVES, res, *(u32 *)from, (u32 __user *)to,
 				l, r, 4);
 =======
 		__put_user_asm(res, *(u32 *)from, (u32 __user *)to, l, r, 4);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__put_user_asm(MOVES, res, *(u32 *)from, (u32 __user *)to,
+				l, r, 4);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case 5:
 		__constant_copy_to_user_asm(res, to, from, tmp, 5, l, b,);
@@ -513,6 +529,9 @@ raw_copy_to_user(void __user *to, const void *from, unsigned long n)
 #define INLINE_COPY_TO_USER
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HAVE_GET_KERNEL_NOFAULT
 
 #define __get_kernel_nofault(dst, src, type, err_label)			\
@@ -572,10 +591,13 @@ do {									\
 	if (unlikely(__pk_err))						\
 		goto err_label;						\
 } while (0)
+<<<<<<< HEAD
 =======
 #define user_addr_max() \
 	(uaccess_kernel() ? ~0UL : TASK_SIZE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern long strncpy_from_user(char *dst, const char __user *src, long count);
 extern __must_check long strnlen_user(const char __user *str, long n);

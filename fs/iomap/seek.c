@@ -2,10 +2,14 @@
 /*
  * Copyright (C) 2017 Red Hat, Inc.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (c) 2018-2021 Christoph Hellwig.
 =======
  * Copyright (c) 2018 Christoph Hellwig.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (c) 2018-2021 Christoph Hellwig.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include <linux/module.h>
 #include <linux/compiler.h>
@@ -14,6 +18,7 @@
 #include <linux/pagemap.h>
 #include <linux/pagevec.h>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static loff_t iomap_seek_hole_iter(const struct iomap_iter *iter,
 		loff_t *hole_pos)
@@ -33,19 +38,27 @@ static loff_t iomap_seek_hole_iter(const struct iomap_iter *iter,
 static loff_t
 iomap_seek_hole_actor(struct inode *inode, loff_t start, loff_t length,
 		      void *data, struct iomap *iomap, struct iomap *srcmap)
+=======
+static loff_t iomap_seek_hole_iter(const struct iomap_iter *iter,
+		loff_t *hole_pos)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	loff_t offset = start;
+	loff_t length = iomap_length(iter);
 
-	switch (iomap->type) {
+	switch (iter->iomap.type) {
 	case IOMAP_UNWRITTEN:
-		offset = mapping_seek_hole_data(inode->i_mapping, start,
-				start + length, SEEK_HOLE);
-		if (offset == start + length)
+		*hole_pos = mapping_seek_hole_data(iter->inode->i_mapping,
+				iter->pos, iter->pos + length, SEEK_HOLE);
+		if (*hole_pos == iter->pos + length)
 			return length;
-		fallthrough;
+		return 0;
 	case IOMAP_HOLE:
+<<<<<<< HEAD
 		*(loff_t *)data = offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*hole_pos = iter->pos;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	default:
 		return length;
@@ -53,6 +66,7 @@ iomap_seek_hole_actor(struct inode *inode, loff_t start, loff_t length,
 }
 
 loff_t
+<<<<<<< HEAD
 <<<<<<< HEAD
 iomap_seek_hole(struct inode *inode, loff_t pos, const struct iomap_ops *ops)
 {
@@ -97,54 +111,60 @@ static loff_t iomap_seek_data_iter(const struct iomap_iter *iter,
 		*hole_pos = iter->pos;
 =======
 iomap_seek_hole(struct inode *inode, loff_t offset, const struct iomap_ops *ops)
+=======
+iomap_seek_hole(struct inode *inode, loff_t pos, const struct iomap_ops *ops)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	loff_t size = i_size_read(inode);
-	loff_t length = size - offset;
-	loff_t ret;
+	struct iomap_iter iter = {
+		.inode	= inode,
+		.pos	= pos,
+		.flags	= IOMAP_REPORT,
+	};
+	int ret;
 
 	/* Nothing to be found before or beyond the end of the file. */
-	if (offset < 0 || offset >= size)
+	if (pos < 0 || pos >= size)
 		return -ENXIO;
 
-	while (length > 0) {
-		ret = iomap_apply(inode, offset, length, IOMAP_REPORT, ops,
-				  &offset, iomap_seek_hole_actor);
-		if (ret < 0)
-			return ret;
-		if (ret == 0)
-			break;
-
-		offset += ret;
-		length -= ret;
-	}
-
-	return offset;
+	iter.len = size - pos;
+	while ((ret = iomap_iter(&iter, ops)) > 0)
+		iter.processed = iomap_seek_hole_iter(&iter, &pos);
+	if (ret < 0)
+		return ret;
+	if (iter.len) /* found hole before EOF */
+		return pos;
+	return size;
 }
 EXPORT_SYMBOL_GPL(iomap_seek_hole);
 
-static loff_t
-iomap_seek_data_actor(struct inode *inode, loff_t start, loff_t length,
-		      void *data, struct iomap *iomap, struct iomap *srcmap)
+static loff_t iomap_seek_data_iter(const struct iomap_iter *iter,
+		loff_t *hole_pos)
 {
-	loff_t offset = start;
+	loff_t length = iomap_length(iter);
 
-	switch (iomap->type) {
+	switch (iter->iomap.type) {
 	case IOMAP_HOLE:
 		return length;
 	case IOMAP_UNWRITTEN:
-		offset = mapping_seek_hole_data(inode->i_mapping, start,
-				start + length, SEEK_DATA);
-		if (offset < 0)
+		*hole_pos = mapping_seek_hole_data(iter->inode->i_mapping,
+				iter->pos, iter->pos + length, SEEK_DATA);
+		if (*hole_pos < 0)
 			return length;
-		fallthrough;
+		return 0;
 	default:
+<<<<<<< HEAD
 		*(loff_t *)data = offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*hole_pos = iter->pos;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 }
 
 loff_t
+<<<<<<< HEAD
 <<<<<<< HEAD
 iomap_seek_data(struct inode *inode, loff_t pos, const struct iomap_ops *ops)
 {
@@ -171,15 +191,23 @@ iomap_seek_data(struct inode *inode, loff_t pos, const struct iomap_ops *ops)
 	return -ENXIO;
 =======
 iomap_seek_data(struct inode *inode, loff_t offset, const struct iomap_ops *ops)
+=======
+iomap_seek_data(struct inode *inode, loff_t pos, const struct iomap_ops *ops)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	loff_t size = i_size_read(inode);
-	loff_t length = size - offset;
-	loff_t ret;
+	struct iomap_iter iter = {
+		.inode	= inode,
+		.pos	= pos,
+		.flags	= IOMAP_REPORT,
+	};
+	int ret;
 
 	/* Nothing to be found before or beyond the end of the file. */
-	if (offset < 0 || offset >= size)
+	if (pos < 0 || pos >= size)
 		return -ENXIO;
 
+<<<<<<< HEAD
 	while (length > 0) {
 		ret = iomap_apply(inode, offset, length, IOMAP_REPORT, ops,
 				  &offset, iomap_seek_data_actor);
@@ -196,5 +224,16 @@ iomap_seek_data(struct inode *inode, loff_t offset, const struct iomap_ops *ops)
 		return -ENXIO;
 	return offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iter.len = size - pos;
+	while ((ret = iomap_iter(&iter, ops)) > 0)
+		iter.processed = iomap_seek_data_iter(&iter, &pos);
+	if (ret < 0)
+		return ret;
+	if (iter.len) /* found data before EOF */
+		return pos;
+	/* We've reached the end of the file without finding data */
+	return -ENXIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(iomap_seek_data);

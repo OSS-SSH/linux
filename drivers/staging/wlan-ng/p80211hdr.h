@@ -149,6 +149,9 @@
 /* Generic 802.11 Header types */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct p80211_hdr {
 	__le16	frame_control;
 	u16	duration_id;
@@ -157,6 +160,7 @@ struct p80211_hdr {
 	u8	address3[ETH_ALEN];
 	u16	sequence_control;
 	u8	address4[ETH_ALEN];
+<<<<<<< HEAD
 =======
 struct p80211_hdr_a3 {
 	__le16 fc;
@@ -181,6 +185,8 @@ union p80211_hdr {
 	struct p80211_hdr_a3 a3;
 	struct p80211_hdr_a4 a4;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 /* Frame and header length macros */

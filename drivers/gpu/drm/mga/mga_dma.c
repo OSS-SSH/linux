@@ -950,10 +950,14 @@ static int mga_do_cleanup_dma(struct drm_device *dev, int full_cleanup)
 	 */
 	if (dev->irq_enabled)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		drm_legacy_irq_uninstall(dev);
 =======
 		drm_irq_uninstall(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		drm_legacy_irq_uninstall(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dev->dev_private) {
 		drm_mga_private_t *dev_priv = dev->dev_private;

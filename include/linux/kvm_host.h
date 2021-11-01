@@ -151,9 +151,13 @@ static inline bool is_error_page(struct page *page)
 #define KVM_REQ_UNBLOCK           2
 #define KVM_REQ_UNHALT            3
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define KVM_REQ_VM_BUGGED         (4 | KVM_REQUEST_WAIT | KVM_REQUEST_NO_WAKEUP)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define KVM_REQ_VM_BUGGED         (4 | KVM_REQUEST_WAIT | KVM_REQUEST_NO_WAKEUP)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define KVM_REQUEST_ARCH_BASE     8
 
 #define KVM_ARCH_REQ_FLAGS(nr, flags) ({ \
@@ -163,6 +167,9 @@ static inline bool is_error_page(struct page *page)
 #define KVM_ARCH_REQ(nr)           KVM_ARCH_REQ_FLAGS(nr, 0)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool kvm_make_vcpus_request_mask(struct kvm *kvm, unsigned int req,
 				 struct kvm_vcpu *except,
 				 unsigned long *vcpu_bitmap, cpumask_var_t tmp);
@@ -172,8 +179,11 @@ bool kvm_make_all_cpus_request_except(struct kvm *kvm, unsigned int req,
 bool kvm_make_cpus_request_mask(struct kvm *kvm, unsigned int req,
 				unsigned long *vcpu_bitmap);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define KVM_USERSPACE_IRQ_SOURCE_ID		0
 #define KVM_IRQFD_RESAMPLE_IRQ_SOURCE_ID	1
 
@@ -361,6 +371,9 @@ struct kvm_vcpu {
 	char stats_id[KVM_STATS_NAME_SIZE];
 	struct kvm_dirty_ring dirty_ring;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The index of the most recently used memslot by this vCPU. It's ok
@@ -368,8 +381,11 @@ struct kvm_vcpu {
 	 * it is a valid slot.
 	 */
 	int last_used_slot;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* must be called with irqs disabled */
@@ -539,10 +555,14 @@ struct kvm_memslots {
 	/* The mapping table from slot id to the index in memslots[]. */
 	short id_to_index[KVM_MEM_SLOTS_NUM];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t last_used_slot;
 =======
 	atomic_t lru_slot;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_t last_used_slot;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int used_slots;
 	struct kvm_memory_slot memslots[];
 };
@@ -569,13 +589,19 @@ struct kvm {
 	struct kvm_vcpu *vcpus[KVM_MAX_VCPUS];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Used to wait for completion of MMU notifiers.  */
 	spinlock_t mn_invalidate_lock;
 	unsigned long mn_active_invalidate_count;
 	struct rcuwait mn_memslots_update_rcuwait;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * created_vcpus is protected by kvm->lock, and is incremented
 	 * at the beginning of KVM_CREATE_VCPU.  online_vcpus is only
@@ -625,9 +651,12 @@ struct kvm {
 	unsigned long mmu_notifier_range_end;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	long tlbs_dirty;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head devices;
 	u64 manual_dirty_log_protect;
 	struct dentry *debugfs_dentry;
@@ -638,9 +667,13 @@ struct kvm {
 	unsigned int max_halt_poll_ns;
 	u32 dirty_ring_size;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool vm_bugged;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool vm_bugged;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_HAVE_KVM_PM_NOTIFIER
 	struct notifier_block pm_notifier;
@@ -675,6 +708,9 @@ struct kvm {
 	kvm_err("vcpu%i " fmt, (vcpu)->vcpu_id, ## __VA_ARGS__)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void kvm_vm_bugged(struct kvm *kvm)
 {
 	kvm->vm_bugged = true;
@@ -699,8 +735,11 @@ static inline void kvm_vm_bugged(struct kvm *kvm)
 	unlikely(__ret);					\
 })
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool kvm_dirty_log_manual_protect_and_init_set(struct kvm *kvm)
 {
 	return !!(kvm->manual_dirty_log_protect & KVM_DIRTY_LOG_INITIALLY_SET);
@@ -747,6 +786,7 @@ static inline struct kvm_vcpu *kvm_get_vcpu_by_id(struct kvm *kvm, int id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline int kvm_vcpu_get_idx(struct kvm_vcpu *vcpu)
 {
@@ -754,6 +794,8 @@ static inline int kvm_vcpu_get_idx(struct kvm_vcpu *vcpu)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define kvm_for_each_memslot(memslot, slots)				\
 	for (memslot = &slots->memslots[0];				\
 	     memslot < slots->memslots + slots->used_slots; memslot++)	\
@@ -796,9 +838,13 @@ void kvm_exit(void);
 
 void kvm_get_kvm(struct kvm *kvm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool kvm_get_kvm_safe(struct kvm *kvm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool kvm_get_kvm_safe(struct kvm *kvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void kvm_put_kvm(struct kvm *kvm);
 bool file_is_kvm(struct file *file);
 void kvm_put_kvm_no_destroy(struct kvm *kvm);
@@ -904,9 +950,12 @@ void kvm_release_pfn_dirty(kvm_pfn_t pfn);
 void kvm_set_pfn_dirty(kvm_pfn_t pfn);
 void kvm_set_pfn_accessed(kvm_pfn_t pfn);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void kvm_get_pfn(kvm_pfn_t pfn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void kvm_release_pfn(kvm_pfn_t pfn, bool dirty, struct gfn_to_pfn_cache *cache);
 int kvm_read_guest_page(struct kvm *kvm, gfn_t gfn, void *data, int offset,
@@ -1026,10 +1075,14 @@ void *kvm_mmu_memory_cache_alloc(struct kvm_mmu_memory_cache *mc);
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void kvm_inc_notifier_count(struct kvm *kvm, unsigned long start,
 				   unsigned long end);
 void kvm_dec_notifier_count(struct kvm *kvm, unsigned long start,
 				   unsigned long end);
+<<<<<<< HEAD
 =======
 bool kvm_make_vcpus_request_mask(struct kvm *kvm, unsigned int req,
 				 struct kvm_vcpu *except,
@@ -1040,6 +1093,8 @@ bool kvm_make_all_cpus_request_except(struct kvm *kvm, unsigned int req,
 bool kvm_make_cpus_request_mask(struct kvm *kvm, unsigned int req,
 				unsigned long *vcpu_bitmap);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 long kvm_arch_dev_ioctl(struct file *filp,
 			unsigned int ioctl, unsigned long arg);
@@ -1124,9 +1179,13 @@ bool kvm_arch_dy_has_pending_interrupt(struct kvm_vcpu *vcpu);
 int kvm_arch_post_init_vm(struct kvm *kvm);
 void kvm_arch_pre_destroy_vm(struct kvm *kvm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int kvm_arch_create_vm_debugfs(struct kvm *kvm);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int kvm_arch_create_vm_debugfs(struct kvm *kvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef __KVM_HAVE_ARCH_VM_ALLOC
 /*
@@ -1251,6 +1310,9 @@ bool kvm_arch_irqfd_allowed(struct kvm *kvm, struct kvm_irqfd *args);
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Returns a pointer to the memslot at slot_index if it contains gfn.
  * Otherwise returns NULL.
  */
@@ -1279,16 +1341,20 @@ try_get_memslot(struct kvm_memslots *slots, int slot_index, gfn_t gfn)
 /*
  * Returns a pointer to the memslot that contains gfn and records the index of
  * the slot in index. Otherwise returns NULL.
+<<<<<<< HEAD
 =======
  * search_memslots() and __gfn_to_memslot() are here because they are
  * used in non-modular code in arch/powerpc/kvm/book3s_hv_rm_mmu.c.
  * gfn_to_memslot() itself isn't here as an inline because that would
  * bloat other code too much.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * IMPORTANT: Slots are sorted from highest GFN to lowest GFN!
  */
 static inline struct kvm_memory_slot *
+<<<<<<< HEAD
 <<<<<<< HEAD
 search_memslots(struct kvm_memslots *slots, gfn_t gfn, int *index)
 {
@@ -1297,15 +1363,22 @@ search_memslots(struct kvm_memslots *slots, gfn_t gfn, int *index)
 	struct kvm_memory_slot *slot;
 =======
 search_memslots(struct kvm_memslots *slots, gfn_t gfn)
+=======
+search_memslots(struct kvm_memslots *slots, gfn_t gfn, int *index)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int start = 0, end = slots->used_slots;
-	int slot = atomic_read(&slots->lru_slot);
 	struct kvm_memory_slot *memslots = slots->memslots;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kvm_memory_slot *slot;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(!slots->used_slots))
 		return NULL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	while (start < end) {
 		int slot = start + (end - start) / 2;
@@ -1317,6 +1390,10 @@ search_memslots(struct kvm_memslots *slots, gfn_t gfn)
 	while (start < end) {
 		slot = start + (end - start) / 2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (start < end) {
+		int slot = start + (end - start) / 2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (gfn >= memslots[slot].base_gfn)
 			end = slot;
@@ -1325,27 +1402,37 @@ search_memslots(struct kvm_memslots *slots, gfn_t gfn)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	slot = try_get_memslot(slots, start, gfn);
 	if (slot) {
 		*index = start;
 		return slot;
+<<<<<<< HEAD
 =======
 	if (start < slots->used_slots && gfn >= memslots[start].base_gfn &&
 	    gfn < memslots[start].base_gfn + memslots[start].npages) {
 		atomic_set(&slots->lru_slot, start);
 		return &memslots[start];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return NULL;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * __gfn_to_memslot() and its descendants are here because it is called from
  * non-modular code in arch/powerpc/kvm/book3s_64_vio{,_hv}.c. gfn_to_memslot()
  * itself isn't here as an inline because that would bloat other code too much.
  */
+<<<<<<< HEAD
 static inline struct kvm_memory_slot *
 __gfn_to_memslot(struct kvm_memslots *slots, gfn_t gfn)
 {
@@ -1369,6 +1456,25 @@ __gfn_to_memslot(struct kvm_memslots *slots, gfn_t gfn)
 {
 	return search_memslots(slots, gfn);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline struct kvm_memory_slot *
+__gfn_to_memslot(struct kvm_memslots *slots, gfn_t gfn)
+{
+	struct kvm_memory_slot *slot;
+	int slot_index = atomic_read(&slots->last_used_slot);
+
+	slot = try_get_memslot(slots, slot_index, gfn);
+	if (slot)
+		return slot;
+
+	slot = search_memslots(slots, gfn, &slot_index);
+	if (slot) {
+		atomic_set(&slots->last_used_slot, slot_index);
+		return slot;
+	}
+
+	return NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline unsigned long
@@ -1443,15 +1549,20 @@ struct _kvm_stats_desc {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define STATS_DESC_COMMON(type, unit, base, exp, sz, bsz)		       \
 =======
 #define STATS_DESC_COMMON(type, unit, base, exp)			       \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define STATS_DESC_COMMON(type, unit, base, exp, sz, bsz)		       \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.flags = type | unit | base |					       \
 		 BUILD_BUG_ON_ZERO(type & ~KVM_STATS_TYPE_MASK) |	       \
 		 BUILD_BUG_ON_ZERO(unit & ~KVM_STATS_UNIT_MASK) |	       \
 		 BUILD_BUG_ON_ZERO(base & ~KVM_STATS_BASE_MASK),	       \
 	.exponent = exp,						       \
+<<<<<<< HEAD
 <<<<<<< HEAD
 	.size = sz,							       \
 	.bucket_size = bsz
@@ -1462,16 +1573,25 @@ struct _kvm_stats_desc {
 			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
 =======
 	.size = 1
+=======
+	.size = sz,							       \
+	.bucket_size = bsz
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-#define VM_GENERIC_STATS_DESC(stat, type, unit, base, exp)		       \
+#define VM_GENERIC_STATS_DESC(stat, type, unit, base, exp, sz, bsz)	       \
 	{								       \
 		{							       \
+<<<<<<< HEAD
 			STATS_DESC_COMMON(type, unit, base, exp),	       \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			.offset = offsetof(struct kvm_vm_stat, generic.stat)   \
 		},							       \
 		.name = #stat,						       \
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define VCPU_GENERIC_STATS_DESC(stat, type, unit, base, exp, sz, bsz)	       \
 	{								       \
@@ -1483,10 +1603,17 @@ struct _kvm_stats_desc {
 		{							       \
 			STATS_DESC_COMMON(type, unit, base, exp),	       \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VCPU_GENERIC_STATS_DESC(stat, type, unit, base, exp, sz, bsz)	       \
+	{								       \
+		{							       \
+			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			.offset = offsetof(struct kvm_vcpu_stat, generic.stat) \
 		},							       \
 		.name = #stat,						       \
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define VM_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		       \
 	{								       \
@@ -1498,10 +1625,17 @@ struct _kvm_stats_desc {
 		{							       \
 			STATS_DESC_COMMON(type, unit, base, exp),	       \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VM_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		       \
+	{								       \
+		{							       \
+			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			.offset = offsetof(struct kvm_vm_stat, stat)	       \
 		},							       \
 		.name = #stat,						       \
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define VCPU_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		       \
 	{								       \
@@ -1513,11 +1647,18 @@ struct _kvm_stats_desc {
 		{							       \
 			STATS_DESC_COMMON(type, unit, base, exp),	       \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define VCPU_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		       \
+	{								       \
+		{							       \
+			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			.offset = offsetof(struct kvm_vcpu_stat, stat)	       \
 		},							       \
 		.name = #stat,						       \
 	}
 /* SCOPE: VM, VM_GENERIC, VCPU, VCPU_GENERIC */
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define STATS_DESC(SCOPE, stat, type, unit, base, exp, sz, bsz)		       \
 	SCOPE##_STATS_DESC(stat, type, unit, base, exp, sz, bsz)
@@ -1540,14 +1681,31 @@ struct _kvm_stats_desc {
 =======
 #define STATS_DESC(SCOPE, stat, type, unit, base, exp)			       \
 	SCOPE##_STATS_DESC(stat, type, unit, base, exp)
+=======
+#define STATS_DESC(SCOPE, stat, type, unit, base, exp, sz, bsz)		       \
+	SCOPE##_STATS_DESC(stat, type, unit, base, exp, sz, bsz)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define STATS_DESC_CUMULATIVE(SCOPE, name, unit, base, exponent)	       \
-	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_CUMULATIVE, unit, base, exponent)
+	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_CUMULATIVE,		       \
+		unit, base, exponent, 1, 0)
 #define STATS_DESC_INSTANT(SCOPE, name, unit, base, exponent)		       \
-	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_INSTANT, unit, base, exponent)
+	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_INSTANT,			       \
+		unit, base, exponent, 1, 0)
 #define STATS_DESC_PEAK(SCOPE, name, unit, base, exponent)		       \
+<<<<<<< HEAD
 	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_PEAK, unit, base, exponent)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_PEAK,			       \
+		unit, base, exponent, 1, 0)
+#define STATS_DESC_LINEAR_HIST(SCOPE, name, unit, base, exponent, sz, bsz)     \
+	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_LINEAR_HIST,		       \
+		unit, base, exponent, sz, bsz)
+#define STATS_DESC_LOG_HIST(SCOPE, name, unit, base, exponent, sz)	       \
+	STATS_DESC(SCOPE, name, KVM_STATS_TYPE_LOG_HIST,		       \
+		unit, base, exponent, sz, 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Cumulative counter, read/write */
 #define STATS_DESC_COUNTER(SCOPE, name)					       \
@@ -1567,6 +1725,9 @@ struct _kvm_stats_desc {
 	STATS_DESC_CUMULATIVE(SCOPE, name, KVM_STATS_UNIT_SECONDS,	       \
 		KVM_STATS_BASE_POW10, -9)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Linear histogram for time in nanosecond */
 #define STATS_DESC_LINHIST_TIME_NSEC(SCOPE, name, sz, bsz)		       \
 	STATS_DESC_LINEAR_HIST(SCOPE, name, KVM_STATS_UNIT_SECONDS,	       \
@@ -1575,6 +1736,7 @@ struct _kvm_stats_desc {
 #define STATS_DESC_LOGHIST_TIME_NSEC(SCOPE, name, sz)			       \
 	STATS_DESC_LOG_HIST(SCOPE, name, KVM_STATS_UNIT_SECONDS,	       \
 		KVM_STATS_BASE_POW10, -9, sz)
+<<<<<<< HEAD
 
 #define KVM_GENERIC_VM_STATS()						       \
 	STATS_DESC_COUNTER(VM_GENERIC, remote_tlb_flush),		       \
@@ -1584,6 +1746,12 @@ struct _kvm_stats_desc {
 #define KVM_GENERIC_VM_STATS()						       \
 	STATS_DESC_COUNTER(VM_GENERIC, remote_tlb_flush)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#define KVM_GENERIC_VM_STATS()						       \
+	STATS_DESC_COUNTER(VM_GENERIC, remote_tlb_flush),		       \
+	STATS_DESC_COUNTER(VM_GENERIC, remote_tlb_flush_requests)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define KVM_GENERIC_VCPU_STATS()					       \
 	STATS_DESC_COUNTER(VCPU_GENERIC, halt_successful_poll),		       \
@@ -1592,6 +1760,9 @@ struct _kvm_stats_desc {
 	STATS_DESC_COUNTER(VCPU_GENERIC, halt_wakeup),			       \
 	STATS_DESC_TIME_NSEC(VCPU_GENERIC, halt_poll_success_ns),	       \
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	STATS_DESC_TIME_NSEC(VCPU_GENERIC, halt_poll_fail_ns),		       \
 	STATS_DESC_TIME_NSEC(VCPU_GENERIC, halt_wait_ns),		       \
 	STATS_DESC_LOGHIST_TIME_NSEC(VCPU_GENERIC, halt_poll_success_hist,     \
@@ -1600,6 +1771,7 @@ struct _kvm_stats_desc {
 			HALT_POLL_HIST_COUNT),				       \
 	STATS_DESC_LOGHIST_TIME_NSEC(VCPU_GENERIC, halt_wait_hist,	       \
 			HALT_POLL_HIST_COUNT)
+<<<<<<< HEAD
 
 extern struct dentry *kvm_debugfs_dir;
 
@@ -1608,11 +1780,19 @@ extern struct dentry *kvm_debugfs_dir;
 
 extern struct dentry *kvm_debugfs_dir;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+extern struct dentry *kvm_debugfs_dir;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ssize_t kvm_stats_read(char *id, const struct kvm_stats_header *header,
 		       const struct _kvm_stats_desc *desc,
 		       void *stats, size_t size_stats,
 		       char __user *user_buffer, size_t size, loff_t *offset);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * kvm_stats_linear_hist_update() - Update bucket value for linear histogram
@@ -1654,8 +1834,11 @@ static inline void kvm_stats_log_hist_update(u64 *data, size_t size, u64 value)
 	kvm_stats_log_hist_update(array, ARRAY_SIZE(array), value)
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct kvm_stats_header kvm_vm_stats_header;
 extern const struct _kvm_stats_desc kvm_vm_stats_desc[];
 extern const struct kvm_stats_header kvm_vcpu_stats_header;

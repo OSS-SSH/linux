@@ -1978,6 +1978,9 @@ static int elsp_mmio_write(struct intel_vgpu *vgpu, unsigned int offset,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Due to d3_entered is used to indicate skipping PPGTT invalidation on
 	 * vGPU reset, it's set on D0->D3 on PCI config write, and cleared after
@@ -1993,8 +1996,11 @@ static int elsp_mmio_write(struct intel_vgpu *vgpu, unsigned int offset,
 	if (vgpu->d3_entered)
 		vgpu->d3_entered = false;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	execlist = &vgpu->submission.execlist[engine->id];
 
 	execlist->elsp_dwords.data[3 - execlist->elsp_dwords.index] = data;
@@ -3153,9 +3159,13 @@ static int init_bdw_mmio_info(struct intel_gvt *gvt)
 	MMIO_DFH(_MMIO(0xb10c), D_BDW, F_CMD_ACCESS, NULL, NULL);
 	MMIO_D(_MMIO(0xb110), D_BDW);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MMIO_D(GEN9_SCRATCH_LNCF1, D_BDW_PLUS);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MMIO_D(GEN9_SCRATCH_LNCF1, D_BDW_PLUS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	MMIO_F(_MMIO(0x24d0), 48, F_CMD_ACCESS | F_CMD_WRITE_PATCH, 0, 0,
 		D_BDW_PLUS, NULL, force_nonpriv_write);

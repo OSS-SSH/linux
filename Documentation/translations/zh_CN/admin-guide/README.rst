@@ -224,10 +224,14 @@ Linux内核5.x版本 <http://kernel.org/>
 ---------
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  - 确保您至少有gcc 5.1可用。
 =======
  - 确保您至少有gcc 4.9可用。
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ - 确保您至少有gcc 5.1可用。
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    有关更多信息，请参阅 :ref:`Documentation/process/changes.rst <changes>` 。
 
    请注意，您仍然可以使用此内核运行a.out用户程序。

@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <string.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <stdio.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <fcntl.h>
+<<<<<<< HEAD
 #include <linux/stddef.h>
 #include <linux/perf_event.h>
 #include <linux/zalloc.h>
@@ -15,11 +19,21 @@
 #include <linux/stddef.h>
 #include <linux/perf_event.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/stddef.h>
+#include <linux/perf_event.h>
+#include <linux/zalloc.h>
+#include <api/fs/fs.h>
+#include <errno.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "../../../util/intel-pt.h"
 #include "../../../util/intel-bts.h"
 #include "../../../util/pmu.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "../../../util/fncache.h"
 
 #define TEMPLATE_ALIAS	"%s/bus/event_source/devices/%s/alias"
@@ -32,8 +46,11 @@ struct pmu_alias {
 
 static LIST_HEAD(pmu_alias_name_list);
 static bool cached_list;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct perf_event_attr *perf_pmu__get_default_config(struct perf_pmu *pmu __maybe_unused)
 {
@@ -46,6 +63,9 @@ struct perf_event_attr *perf_pmu__get_default_config(struct perf_pmu *pmu __mayb
 	return NULL;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void pmu_alias__delete(struct pmu_alias *pmu_alias)
 {
@@ -181,5 +201,8 @@ char *pmu_find_alias_name(const char *name)
 
 	return __pmu_find_alias_name(name);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

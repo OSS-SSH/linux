@@ -9,9 +9,12 @@
 #include <asm/kup.h>
 #include <asm/cputime.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/interrupt.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/hw_irq.h>
 #include <asm/interrupt.h>
 #include <asm/kprobes.h>
@@ -23,9 +26,13 @@
 #include <asm/syscall.h>
 #include <asm/time.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/tm.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/tm.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/unistd.h>
 
 #if defined(CONFIG_PPC_ADV_DEBUG_REGS) && defined(CONFIG_PPC32)
@@ -101,11 +108,15 @@ notrace long system_call_exception(long r3, long r4, long r5,
 	user_exit_irqoff();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUG_ON(regs_is_unrecoverable(regs));
 =======
 	if (!IS_ENABLED(CONFIG_BOOKE) && !IS_ENABLED(CONFIG_40x))
 		BUG_ON(!(regs->msr & MSR_RI));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUG_ON(regs_is_unrecoverable(regs));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	BUG_ON(!(regs->msr & MSR_PR));
 	BUG_ON(arch_irq_disabled_regs(regs));
 
@@ -150,6 +161,9 @@ notrace long system_call_exception(long r3, long r4, long r5,
 	irq_soft_mask_regs_set_state(regs, IRQS_ENABLED);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If system call is called with TM active, set _TIF_RESTOREALL to
 	 * prevent RFSCV being used to return to userspace, because POWER9
@@ -192,8 +206,11 @@ notrace long system_call_exception(long r3, long r4, long r5,
 	}
 #endif // CONFIG_PPC_TRANSACTIONAL_MEM
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	local_irq_enable();
 
 	if (unlikely(current_thread_info()->flags & _TIF_SYSCALL_DOTRACE)) {
@@ -520,12 +537,16 @@ notrace unsigned long interrupt_exit_user_prepare(struct pt_regs *regs)
 	unsigned long ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	BUG_ON(regs_is_unrecoverable(regs));
 =======
 	if (!IS_ENABLED(CONFIG_BOOKE) && !IS_ENABLED(CONFIG_40x))
 		BUG_ON(!(regs->msr & MSR_RI));
 	BUG_ON(!(regs->msr & MSR_PR));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUG_ON(regs_is_unrecoverable(regs));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	BUG_ON(arch_irq_disabled_regs(regs));
 	CT_WARN_ON(ct_state() == CONTEXT_USER);
 
@@ -557,6 +578,7 @@ notrace unsigned long interrupt_exit_kernel_prepare(struct pt_regs *regs)
 						_TIF_EMULATE_STACK_STORE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (regs_is_unrecoverable(regs))
 		unrecoverable_exception(regs);
 =======
@@ -565,6 +587,10 @@ notrace unsigned long interrupt_exit_kernel_prepare(struct pt_regs *regs)
 		unrecoverable_exception(regs);
 	BUG_ON(regs->msr & MSR_PR);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (regs_is_unrecoverable(regs))
+		unrecoverable_exception(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * CT_WARN_ON comes here via program_check_exception,
 	 * so avoid recursion.

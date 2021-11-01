@@ -24,12 +24,17 @@ struct memblock_region hyp_memory[HYP_MEMBLOCK_REGIONS];
 unsigned int hyp_memblock_nr;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __pkvm_create_mappings(unsigned long start, unsigned long size,
 				  unsigned long phys, enum kvm_pgtable_prot prot)
 =======
 int __pkvm_create_mappings(unsigned long start, unsigned long size,
 			  unsigned long phys, enum kvm_pgtable_prot prot)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __pkvm_create_mappings(unsigned long start, unsigned long size,
+				  unsigned long phys, enum kvm_pgtable_prot prot)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err;
 
@@ -73,10 +78,14 @@ out:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int pkvm_create_mappings_locked(void *from, void *to, enum kvm_pgtable_prot prot)
 =======
 int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int pkvm_create_mappings_locked(void *from, void *to, enum kvm_pgtable_prot prot)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long start = (unsigned long)from;
 	unsigned long end = (unsigned long)to;
@@ -84,10 +93,15 @@ int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
 	phys_addr_t phys;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	hyp_assert_lock_held(&pkvm_pgd_lock);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hyp_assert_lock_held(&pkvm_pgd_lock);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	start = start & PAGE_MASK;
 	end = PAGE_ALIGN(end);
 
@@ -96,11 +110,16 @@ int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
 
 		phys = hyp_virt_to_phys((void *)virt_addr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = kvm_pgtable_hyp_map(&pkvm_pgtable, virt_addr, PAGE_SIZE,
 					  phys, prot);
 =======
 		err = __pkvm_create_mappings(virt_addr, PAGE_SIZE, phys, prot);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = kvm_pgtable_hyp_map(&pkvm_pgtable, virt_addr, PAGE_SIZE,
+					  phys, prot);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			return err;
 	}
@@ -109,6 +128,9 @@ int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
 {
 	int ret;
@@ -120,8 +142,11 @@ int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hyp_back_vmemmap(phys_addr_t phys, unsigned long size, phys_addr_t back)
 {
 	unsigned long start, end;

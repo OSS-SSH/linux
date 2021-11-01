@@ -907,6 +907,7 @@ asmlinkage void do_notify_resume(struct pt_regs *regs, void *unused,
 		do_signal(regs);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (thread_info_flags & _TIF_NOTIFY_RESUME)
 		tracehook_notify_resume(regs);
 =======
@@ -915,6 +916,10 @@ asmlinkage void do_notify_resume(struct pt_regs *regs, void *unused,
 		rseq_handle_notify_resume(NULL, regs);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (thread_info_flags & _TIF_NOTIFY_RESUME)
+		tracehook_notify_resume(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	user_enter();
 }

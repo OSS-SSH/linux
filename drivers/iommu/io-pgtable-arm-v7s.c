@@ -520,6 +520,7 @@ static int __arm_v7s_map(struct arm_v7s_io_pgtable *data, unsigned long iova,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int arm_v7s_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
 			     phys_addr_t paddr, size_t pgsize, size_t pgcount,
 			     int prot, gfp_t gfp, size_t *mapped)
@@ -533,6 +534,14 @@ static int arm_v7s_map(struct io_pgtable_ops *ops, unsigned long iova,
 	struct arm_v7s_io_pgtable *data = io_pgtable_ops_to_data(ops);
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int arm_v7s_map_pages(struct io_pgtable_ops *ops, unsigned long iova,
+			     phys_addr_t paddr, size_t pgsize, size_t pgcount,
+			     int prot, gfp_t gfp, size_t *mapped)
+{
+	struct arm_v7s_io_pgtable *data = io_pgtable_ops_to_data(ops);
+	int ret = -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (WARN_ON(iova >= (1ULL << data->iop.cfg.ias) ||
 		    paddr >= (1ULL << data->iop.cfg.oas)))
@@ -543,6 +552,9 @@ static int arm_v7s_map(struct io_pgtable_ops *ops, unsigned long iova,
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (pgcount--) {
 		ret = __arm_v7s_map(data, iova, paddr, pgsize, prot, 1, data->pgd,
 				    gfp);
@@ -554,9 +566,12 @@ static int arm_v7s_map(struct io_pgtable_ops *ops, unsigned long iova,
 		if (mapped)
 			*mapped += pgsize;
 	}
+<<<<<<< HEAD
 =======
 	ret = __arm_v7s_map(data, iova, paddr, size, prot, 1, data->pgd, gfp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Synchronise all PTE updates for the new mapping before there's
 	 * a chance for anything to kick off a table walk for the new iova.
@@ -567,14 +582,20 @@ static int arm_v7s_map(struct io_pgtable_ops *ops, unsigned long iova,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int arm_v7s_map(struct io_pgtable_ops *ops, unsigned long iova,
 		       phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
 {
 	return arm_v7s_map_pages(ops, iova, paddr, size, 1, prot, gfp, NULL);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void arm_v7s_free_pgtable(struct io_pgtable *iop)
 {
 	struct arm_v7s_io_pgtable *data = io_pgtable_to_data(iop);
@@ -716,6 +737,7 @@ static size_t __arm_v7s_unmap(struct arm_v7s_io_pgtable *data,
 				ptep = iopte_deref(pte[i], lvl, data);
 				__arm_v7s_free_table(ptep, lvl + 1, data);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			} else if (!iommu_iotlb_gather_queued(gather)) {
 =======
 			} else if (iop->cfg.quirks & IO_PGTABLE_QUIRK_NON_STRICT) {
@@ -727,6 +749,9 @@ static size_t __arm_v7s_unmap(struct arm_v7s_io_pgtable *data,
 				smp_wmb();
 			} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			} else if (!iommu_iotlb_gather_queued(gather)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				io_pgtable_tlb_add_page(iop, gather, iova, blk_size);
 			}
 			iova += blk_size;
@@ -747,6 +772,7 @@ static size_t __arm_v7s_unmap(struct arm_v7s_io_pgtable *data,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static size_t arm_v7s_unmap_pages(struct io_pgtable_ops *ops, unsigned long iova,
 				  size_t pgsize, size_t pgcount,
 				  struct iommu_iotlb_gather *gather)
@@ -759,11 +785,22 @@ static size_t arm_v7s_unmap(struct io_pgtable_ops *ops, unsigned long iova,
 {
 	struct arm_v7s_io_pgtable *data = io_pgtable_ops_to_data(ops);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static size_t arm_v7s_unmap_pages(struct io_pgtable_ops *ops, unsigned long iova,
+				  size_t pgsize, size_t pgcount,
+				  struct iommu_iotlb_gather *gather)
+{
+	struct arm_v7s_io_pgtable *data = io_pgtable_ops_to_data(ops);
+	size_t unmapped = 0, ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (WARN_ON(iova >= (1ULL << data->iop.cfg.ias)))
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (pgcount--) {
 		ret = __arm_v7s_unmap(data, gather, iova, pgsize, 1, data->pgd);
 		if (!ret)
@@ -780,9 +817,12 @@ static size_t arm_v7s_unmap(struct io_pgtable_ops *ops, unsigned long iova,
 			    size_t size, struct iommu_iotlb_gather *gather)
 {
 	return arm_v7s_unmap_pages(ops, iova, size, 1, gather);
+<<<<<<< HEAD
 =======
 	return __arm_v7s_unmap(data, gather, iova, size, 1, data->pgd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static phys_addr_t arm_v7s_iova_to_phys(struct io_pgtable_ops *ops,
@@ -822,11 +862,15 @@ static struct io_pgtable *arm_v7s_alloc_pgtable(struct io_pgtable_cfg *cfg,
 	if (cfg->quirks & ~(IO_PGTABLE_QUIRK_ARM_NS |
 			    IO_PGTABLE_QUIRK_NO_PERMS |
 <<<<<<< HEAD
+<<<<<<< HEAD
 			    IO_PGTABLE_QUIRK_ARM_MTK_EXT))
 =======
 			    IO_PGTABLE_QUIRK_ARM_MTK_EXT |
 			    IO_PGTABLE_QUIRK_NON_STRICT))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    IO_PGTABLE_QUIRK_ARM_MTK_EXT))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 
 	/* If ARM_MTK_4GB is enabled, the NO_PERMS is also expected. */
@@ -849,12 +893,18 @@ static struct io_pgtable *arm_v7s_alloc_pgtable(struct io_pgtable_cfg *cfg,
 	data->iop.ops = (struct io_pgtable_ops) {
 		.map		= arm_v7s_map,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.map_pages	= arm_v7s_map_pages,
 		.unmap		= arm_v7s_unmap,
 		.unmap_pages	= arm_v7s_unmap_pages,
 =======
 		.unmap		= arm_v7s_unmap,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.map_pages	= arm_v7s_map_pages,
+		.unmap		= arm_v7s_unmap,
+		.unmap_pages	= arm_v7s_unmap_pages,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.iova_to_phys	= arm_v7s_iova_to_phys,
 	};
 

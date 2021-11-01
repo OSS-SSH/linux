@@ -11,9 +11,13 @@
 #include <linux/irq.h>
 #include <linux/genalloc.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/irqchip/arm-gic.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/irqchip/arm-gic.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/mfd/syscon.h>
 #include <linux/mfd/syscon/imx6q-iomuxc-gpr.h>
 #include <linux/of.h>
@@ -624,9 +628,13 @@ static void __init imx6_pm_common_init(const struct imx6_pm_socdata
 static void imx6_pm_stby_poweroff(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	gic_cpu_if_down(0);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gic_cpu_if_down(0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx6_set_lpm(STOP_POWER_OFF);
 	imx6q_suspend_finish(0);
 

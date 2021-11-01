@@ -23,6 +23,9 @@ config DRM_VMWGFX_FBCON
 	   userspace driver that supports using the kernel driver.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DRM_VMWGFX_MKSSTATS
 	bool "Enable mksGuestStats instrumentation of vmwgfx by default"
 	depends on DRM_VMWGFX
@@ -31,5 +34,8 @@ config DRM_VMWGFX_MKSSTATS
 	help
 	   Choose this option to instrument the kernel driver for mksGuestStats.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

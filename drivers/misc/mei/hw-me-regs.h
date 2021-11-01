@@ -93,9 +93,13 @@
 
 #define MEI_DEV_ID_ICP_LP     0x34E0  /* Ice Lake Point LP */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MEI_DEV_ID_ICP_N      0x38E0  /* Ice Lake Point N */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MEI_DEV_ID_ICP_N      0x38E0  /* Ice Lake Point N */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MEI_DEV_ID_JSP_N      0x4DE0  /* Jasper Lake Point N */
 

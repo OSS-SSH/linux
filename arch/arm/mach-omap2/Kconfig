@@ -113,9 +113,12 @@ config ARCH_OMAP2PLUS
 	select PM_GENERIC_DOMAINS_OF
 	select RESET_CONTROLLER
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	select SIMPLE_PM_BUS
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select SOC_BUS
 	select TI_SYSC
 	select OMAP_IRQCHIP
@@ -185,6 +188,7 @@ config SOC_TI81XX
 	default y
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 config OMAP_PACKAGE_CBC
        bool
@@ -199,6 +203,8 @@ config OMAP_PACKAGE_CBP
        bool
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 comment "OMAP Legacy Platform Data Board Type"
 	depends on ARCH_OMAP2PLUS
 
@@ -210,6 +216,7 @@ config MACH_OMAP2_TUSB6010
 	depends on ARCH_OMAP2 && SOC_OMAP2420
 	default y if MACH_NOKIA_N8X0
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 config MACH_OMAP3517EVM
@@ -224,6 +231,8 @@ config MACH_OMAP3_PANDORA
 	select OMAP_PACKAGE_CBB
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config MACH_NOKIA_N810
        bool
 

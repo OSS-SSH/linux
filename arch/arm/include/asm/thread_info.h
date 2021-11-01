@@ -32,10 +32,13 @@ struct task_struct;
 #include <asm/types.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 typedef unsigned long mm_segment_t;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct cpu_context_save {
 	__u32	r4;
 	__u32	r5;
@@ -58,9 +61,12 @@ struct thread_info {
 	unsigned long		flags;		/* low level flags */
 	int			preempt_count;	/* 0 => preemptable, <0 => bug */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	mm_segment_t		addr_limit;	/* address limit */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct task_struct	*task;		/* main task structure */
 	__u32			cpu;		/* cpu */
 	__u32			cpu_domain;	/* cpu domain */
@@ -68,6 +74,7 @@ struct thread_info {
 	unsigned long		stack_canary;
 #endif
 	struct cpu_context_save	cpu_context;	/* cpu context */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	__u32			abi_syscall;	/* ABI type and syscall nr */
 	__u8			used_cp[16];	/* thread used copro */
@@ -80,6 +87,11 @@ struct thread_info {
 	struct crunch_state	crunchstate;
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__u32			abi_syscall;	/* ABI type and syscall nr */
+	__u8			used_cp[16];	/* thread used copro */
+	unsigned long		tp_value[2];	/* TLS registers */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union fp_state		fpstate __attribute__((aligned(8)));
 	union vfp_state		vfpstate;
 #ifdef CONFIG_ARM_THUMBEE
@@ -93,9 +105,12 @@ struct thread_info {
 	.flags		= 0,						\
 	.preempt_count	= INIT_PREEMPT_COUNT,				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.addr_limit	= KERNEL_DS,					\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -123,6 +138,7 @@ static inline struct thread_info *current_thread_info(void)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern void crunch_task_disable(struct thread_info *);
 extern void crunch_task_copy(struct thread_info *, void *);
@@ -130,6 +146,8 @@ extern void crunch_task_restore(struct thread_info *, void *);
 extern void crunch_task_release(struct thread_info *);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void iwmmxt_task_disable(struct thread_info *);
 extern void iwmmxt_task_copy(struct thread_info *, void *);
 extern void iwmmxt_task_restore(struct thread_info *, void *);

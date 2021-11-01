@@ -2307,10 +2307,14 @@ EXPORT_SYMBOL_GPL(devm_pinctrl_register_and_init);
 /**
  * devm_pinctrl_unregister() - Resource managed version of pinctrl_unregister().
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @dev: device for which resource was allocated
 =======
  * @dev: device for which which resource was allocated
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @dev: device for which resource was allocated
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @pctldev: the pinctrl device to unregister.
  */
 void devm_pinctrl_unregister(struct device *dev, struct pinctrl_dev *pctldev)

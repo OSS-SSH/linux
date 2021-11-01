@@ -115,10 +115,14 @@ vhost_transport_do_send_pkt(struct vhost_vsock *vsock,
 		size_t iov_len, payload_len;
 		int head;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u32 flags_to_restore = 0;
 =======
 		bool restore_flag = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		u32 flags_to_restore = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		spin_lock_bh(&vsock->send_pkt_list_lock);
 		if (list_empty(&vsock->send_pkt_list)) {
@@ -183,12 +187,16 @@ vhost_transport_do_send_pkt(struct vhost_vsock *vsock,
 			 * created dynamically and are initialized with header
 			 * of current packet(except length). But in case of
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 * SOCK_SEQPACKET, we also must clear message delimeter
 			 * bit (VIRTIO_VSOCK_SEQ_EOM) and MSG_EOR bit
 			 * (VIRTIO_VSOCK_SEQ_EOR) if set. Otherwise,
 			 * there will be sequence of packets with these
 			 * bits set. After initialized header will be copied to
 			 * rx buffer, these required bits will be restored.
+<<<<<<< HEAD
 			 */
 			if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOM) {
 				pkt->hdr.flags &= ~cpu_to_le32(VIRTIO_VSOCK_SEQ_EOM);
@@ -210,6 +218,17 @@ vhost_transport_do_send_pkt(struct vhost_vsock *vsock,
 				pkt->hdr.flags &= ~cpu_to_le32(VIRTIO_VSOCK_SEQ_EOR);
 				restore_flag = true;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 */
+			if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOM) {
+				pkt->hdr.flags &= ~cpu_to_le32(VIRTIO_VSOCK_SEQ_EOM);
+				flags_to_restore |= VIRTIO_VSOCK_SEQ_EOM;
+
+				if (le32_to_cpu(pkt->hdr.flags) & VIRTIO_VSOCK_SEQ_EOR) {
+					pkt->hdr.flags &= ~cpu_to_le32(VIRTIO_VSOCK_SEQ_EOR);
+					flags_to_restore |= VIRTIO_VSOCK_SEQ_EOR;
+				}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 
@@ -247,11 +266,15 @@ vhost_transport_do_send_pkt(struct vhost_vsock *vsock,
 		 */
 		if (pkt->off < pkt->len) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pkt->hdr.flags |= cpu_to_le32(flags_to_restore);
 =======
 			if (restore_flag)
 				pkt->hdr.flags |= cpu_to_le32(VIRTIO_VSOCK_SEQ_EOR);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pkt->hdr.flags |= cpu_to_le32(flags_to_restore);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/* We are queueing the same virtio_vsock_pkt to handle
 			 * the remaining bytes, and we want to deliver it

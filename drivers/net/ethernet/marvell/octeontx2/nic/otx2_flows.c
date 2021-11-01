@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RVU Ethernet driver
  *
  * Copyright (C) 2020 Marvell.
@@ -10,22 +11,35 @@
 #include <linux/sort.h>
 =======
 /* Marvell OcteonTx2 RVU Physical Function ethernet driver
+=======
+/* Marvell RVU Ethernet driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2020 Marvell.
+ *
  */
 
 #include <net/ipv6.h>
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/sort.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "otx2_common.h"
 
 #define OTX2_DEFAULT_ACTION	0x1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int otx2_mcam_entry_init(struct otx2_nic *pfvf);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int otx2_mcam_entry_init(struct otx2_nic *pfvf);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct otx2_flow {
 	struct ethtool_rx_flow_spec flow_spec;
 	struct list_head list;
@@ -35,14 +49,20 @@ struct otx2_flow {
 	u8 rss_ctx_id;
 	int vf;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool dmac_filter;
 };
 
 enum dmac_req {
 	DMAC_ADDR_UPDATE,
 	DMAC_ADDR_DEL
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void otx2_clear_ntuple_flow_info(struct otx2_nic *pfvf, struct otx2_flow_config *flow_cfg)
@@ -50,11 +70,15 @@ static void otx2_clear_ntuple_flow_info(struct otx2_nic *pfvf, struct otx2_flow_
 	devm_kfree(pfvf->dev, flow_cfg->flow_ent);
 	flow_cfg->flow_ent = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flow_cfg->max_flows = 0;
 =======
 	flow_cfg->ntuple_max_flows = 0;
 	flow_cfg->tc_max_flows = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flow_cfg->max_flows = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int otx2_free_ntuple_mcam_entries(struct otx2_nic *pfvf)
@@ -63,6 +87,7 @@ static int otx2_free_ntuple_mcam_entries(struct otx2_nic *pfvf)
 	struct npc_mcam_free_entry_req *req;
 	int ent, err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (!flow_cfg->max_flows)
 		return 0;
@@ -76,6 +101,13 @@ static int otx2_free_ntuple_mcam_entries(struct otx2_nic *pfvf)
 	mutex_lock(&pfvf->mbox.lock);
 	for (ent = 0; ent < flow_cfg->ntuple_max_flows; ent++) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!flow_cfg->max_flows)
+		return 0;
+
+	mutex_lock(&pfvf->mbox.lock);
+	for (ent = 0; ent < flow_cfg->max_flows; ent++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		req = otx2_mbox_alloc_msg_npc_mcam_free_entry(&pfvf->mbox);
 		if (!req)
 			break;
@@ -93,15 +125,21 @@ static int otx2_free_ntuple_mcam_entries(struct otx2_nic *pfvf)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mcam_entry_cmp(const void *a, const void *b)
 {
 	return *(u16 *)a - *(u16 *)b;
 }
 
 int otx2_alloc_mcam_entries(struct otx2_nic *pfvf, u16 count)
+<<<<<<< HEAD
 =======
 static int otx2_alloc_ntuple_mcam_entries(struct otx2_nic *pfvf, u16 count)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct otx2_flow_config *flow_cfg = pfvf->flow_cfg;
 	struct npc_mcam_alloc_entry_req *req;
@@ -117,16 +155,24 @@ static int otx2_alloc_ntuple_mcam_entries(struct otx2_nic *pfvf, u16 count)
 	flow_cfg->flow_ent = devm_kmalloc_array(pfvf->dev, count,
 						sizeof(u16), GFP_KERNEL);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!flow_cfg->flow_ent) {
 		netdev_err(pfvf->netdev,
 			   "%s: Unable to allocate memory for flow entries\n",
 			    __func__);
+<<<<<<< HEAD
 		return -ENOMEM;
 	}
 =======
 	if (!flow_cfg->flow_ent)
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ENOMEM;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&pfvf->mbox.lock);
 
@@ -142,6 +188,9 @@ static int otx2_alloc_ntuple_mcam_entries(struct otx2_nic *pfvf, u16 count)
 		req->count = (count - allocated) > NPC_MAX_NONCONTIG_ENTRIES ?
 				NPC_MAX_NONCONTIG_ENTRIES : count - allocated;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Allocate higher priority entries for PFs, so that VF's entries
 		 * will be on top of PF.
@@ -150,10 +199,13 @@ static int otx2_alloc_ntuple_mcam_entries(struct otx2_nic *pfvf, u16 count)
 			req->priority = NPC_MCAM_HIGHER_PRIO;
 			req->ref_entry = flow_cfg->def_ent[0];
 		}
+<<<<<<< HEAD
 =======
 		req->priority = NPC_MCAM_HIGHER_PRIO;
 		req->ref_entry = flow_cfg->def_ent[0];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Send message to AF */
 		if (otx2_sync_mbox_msg(&pfvf->mbox))
@@ -175,6 +227,9 @@ static int otx2_alloc_ntuple_mcam_entries(struct otx2_nic *pfvf, u16 count)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Multiple MCAM entry alloc requests could result in non-sequential
 	 * MCAM entries in the flow_ent[] array. Sort them in an ascending order,
 	 * otherwise user installed ntuple filter index and MCAM entry index will
@@ -184,6 +239,7 @@ static int otx2_alloc_ntuple_mcam_entries(struct otx2_nic *pfvf, u16 count)
 		sort(&flow_cfg->flow_ent[0], allocated,
 		     sizeof(flow_cfg->flow_ent[0]), mcam_entry_cmp, NULL);
 
+<<<<<<< HEAD
 exit:
 	mutex_unlock(&pfvf->mbox.lock);
 
@@ -204,23 +260,32 @@ EXPORT_SYMBOL(otx2_alloc_mcam_entries);
 
 static int otx2_mcam_entry_init(struct otx2_nic *pfvf)
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 exit:
 	mutex_unlock(&pfvf->mbox.lock);
 
-	flow_cfg->ntuple_offset = 0;
-	flow_cfg->ntuple_max_flows = allocated;
-	flow_cfg->tc_max_flows = allocated;
+	flow_cfg->max_flows = allocated;
+
+	if (allocated) {
+		pfvf->flags |= OTX2_FLAG_MCAM_ENTRIES_ALLOC;
+		pfvf->flags |= OTX2_FLAG_NTUPLE_SUPPORT;
+	}
 
 	if (allocated != count)
 		netdev_info(pfvf->netdev,
-			    "Unable to allocate %d MCAM entries for ntuple, got %d\n",
+			    "Unable to allocate %d MCAM entries, got only %d\n",
 			    count, allocated);
-
 	return allocated;
 }
+EXPORT_SYMBOL(otx2_alloc_mcam_entries);
 
+<<<<<<< HEAD
 int otx2_alloc_mcam_entries(struct otx2_nic *pfvf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int otx2_mcam_entry_init(struct otx2_nic *pfvf)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct otx2_flow_config *flow_cfg = pfvf->flow_cfg;
 	struct npc_mcam_alloc_entry_req *req;
@@ -281,25 +346,35 @@ int otx2_alloc_mcam_entries(struct otx2_nic *pfvf)
 
 	/* Allocate entries for Ntuple filters */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	count = otx2_alloc_mcam_entries(pfvf, OTX2_DEFAULT_FLOWCOUNT);
 =======
 	count = otx2_alloc_ntuple_mcam_entries(pfvf, OTX2_DEFAULT_FLOWCOUNT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	count = otx2_alloc_mcam_entries(pfvf, OTX2_DEFAULT_FLOWCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (count <= 0) {
 		otx2_clear_ntuple_flow_info(pfvf, flow_cfg);
 		return 0;
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pfvf->flags |= OTX2_FLAG_NTUPLE_SUPPORT;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pfvf->flags |= OTX2_FLAG_TC_FLOWER_SUPPORT;
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int otx2vf_mcam_flow_init(struct otx2_nic *pfvf)
 {
 	struct otx2_flow_config *flow_cfg;
@@ -318,8 +393,11 @@ int otx2vf_mcam_flow_init(struct otx2_nic *pfvf)
 }
 EXPORT_SYMBOL(otx2vf_mcam_flow_init);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int otx2_mcam_flow_init(struct otx2_nic *pf)
 {
 	int err;
@@ -332,13 +410,19 @@ int otx2_mcam_flow_init(struct otx2_nic *pf)
 	INIT_LIST_HEAD(&pf->flow_cfg->flow_list);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Allocate bare minimum number of MCAM entries needed for
 	 * unicast and ntuple filters.
 	 */
 	err = otx2_mcam_entry_init(pf);
+<<<<<<< HEAD
 =======
 	err = otx2_alloc_mcam_entries(pf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -352,6 +436,9 @@ int otx2_mcam_flow_init(struct otx2_nic *pf)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	otx2_dmacflt_get_max_cnt(pf);
 
 	/* DMAC filters are not allocated */
@@ -368,8 +455,11 @@ int otx2_mcam_flow_init(struct otx2_nic *pf)
 
 	pf->flags |= OTX2_FLAG_DMACFLTR_SUPPORT;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -378,9 +468,13 @@ void otx2_mcam_flow_del(struct otx2_nic *pf)
 	otx2_destroy_mcam_flows(pf);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPORT_SYMBOL(otx2_mcam_flow_del);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL(otx2_mcam_flow_del);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*  On success adds mcam entry
  *  On failure enable promisous mode
@@ -436,14 +530,20 @@ int otx2_add_macfilter(struct net_device *netdev, const u8 *mac)
 	struct otx2_nic *pf = netdev_priv(netdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bitmap_weight(&pf->flow_cfg->dmacflt_bmap,
 			  pf->flow_cfg->dmacflt_max_flows))
 		netdev_warn(netdev,
 			    "Add %pM to CGX/RPM DMAC filters list as well\n",
 			    mac);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return otx2_do_add_macfilter(pf, mac);
 }
 
@@ -516,6 +616,9 @@ static void otx2_add_flow_to_list(struct otx2_nic *pfvf, struct otx2_flow *flow)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int otx2_get_maxflows(struct otx2_flow_config *flow_cfg)
 {
 	if (!flow_cfg)
@@ -530,18 +633,25 @@ int otx2_get_maxflows(struct otx2_flow_config *flow_cfg)
 }
 EXPORT_SYMBOL(otx2_get_maxflows);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int otx2_get_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc,
 		  u32 location)
 {
 	struct otx2_flow *iter;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (location >= otx2_get_maxflows(pfvf->flow_cfg))
 =======
 	if (location >= pfvf->flow_cfg->ntuple_max_flows)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (location >= otx2_get_maxflows(pfvf->flow_cfg))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	list_for_each_entry(iter, &pfvf->flow_cfg->flow_list, list) {
@@ -564,10 +674,14 @@ int otx2_get_all_flows(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc,
 	int err = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nfc->data = otx2_get_maxflows(pfvf->flow_cfg);
 =======
 	nfc->data = pfvf->flow_cfg->ntuple_max_flows;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nfc->data = otx2_get_maxflows(pfvf->flow_cfg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while ((!err || err == -ENOENT) && idx < rule_cnt) {
 		err = otx2_get_flow(pfvf, nfc, location);
 		if (!err)
@@ -860,10 +974,14 @@ static int otx2_prepare_ipv6_flow(struct ethtool_rx_flow_spec *fsp,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
 =======
 int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      struct npc_install_flow_req *req)
 {
 	struct ethhdr *eth_mask = &fsp->m_u.ether_spec;
@@ -888,10 +1006,14 @@ int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
 			req->features |= BIT_ULL(NPC_DMAC);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (eth_hdr->h_proto) {
 =======
 		if (eth_mask->h_proto) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (eth_hdr->h_proto) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			memcpy(&pkt->etype, &eth_hdr->h_proto,
 			       sizeof(pkt->etype));
 			memcpy(&pmask->etype, &eth_mask->h_proto,
@@ -924,11 +1046,15 @@ int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
 	}
 	if (fsp->flow_type & FLOW_EXT) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u16 vlan_etype;
 
 		if (fsp->m_ext.vlan_etype) {
 			/* Partial masks not supported */
 			if (be16_to_cpu(fsp->m_ext.vlan_etype) != 0xFFFF)
+<<<<<<< HEAD
 				return -EINVAL;
 
 			vlan_etype = be16_to_cpu(fsp->h_ext.vlan_etype);
@@ -954,11 +1080,32 @@ int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
 			return -EINVAL;
 		if (fsp->m_ext.vlan_tci) {
 			if (fsp->m_ext.vlan_tci != cpu_to_be16(VLAN_VID_MASK))
-				return -EINVAL;
-			if (be16_to_cpu(fsp->h_ext.vlan_tci) >= VLAN_N_VID)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return -EINVAL;
 
+			vlan_etype = be16_to_cpu(fsp->h_ext.vlan_etype);
+			/* Only ETH_P_8021Q and ETH_P_802AD types supported */
+			if (vlan_etype != ETH_P_8021Q &&
+			    vlan_etype != ETH_P_8021AD)
+				return -EINVAL;
+
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			memcpy(&pkt->vlan_etype, &fsp->h_ext.vlan_etype,
+			       sizeof(pkt->vlan_etype));
+			memcpy(&pmask->vlan_etype, &fsp->m_ext.vlan_etype,
+			       sizeof(pmask->vlan_etype));
+
+			if (vlan_etype == ETH_P_8021Q)
+				req->features |= BIT_ULL(NPC_VLAN_ETYPE_CTAG);
+			else
+				req->features |= BIT_ULL(NPC_VLAN_ETYPE_STAG);
+		}
+
+		if (fsp->m_ext.vlan_tci) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			memcpy(&pkt->vlan_tci, &fsp->h_ext.vlan_tci,
 			       sizeof(pkt->vlan_tci));
 			memcpy(&pmask->vlan_tci, &fsp->m_ext.vlan_tci,
@@ -986,6 +1133,9 @@ int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int otx2_is_flow_rule_dmacfilter(struct otx2_nic *pfvf,
 					struct ethtool_rx_flow_spec *fsp)
 {
@@ -1012,8 +1162,11 @@ static int otx2_is_flow_rule_dmacfilter(struct otx2_nic *pfvf,
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int otx2_add_flow_msg(struct otx2_nic *pfvf, struct otx2_flow *flow)
 {
 	u64 ring_cookie = flow->flow_spec.ring_cookie;
@@ -1049,9 +1202,13 @@ static int otx2_add_flow_msg(struct otx2_nic *pfvf, struct otx2_flow *flow)
 			req->op = NIX_RX_ACTIONOP_RSS;
 			req->index = flow->rss_ctx_id;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			req->flow_key_alg = pfvf->hw.flowkey_alg_idx;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			req->flow_key_alg = pfvf->hw.flowkey_alg_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			req->op = NIX_RX_ACTIONOP_UCAST;
 			req->index = ethtool_get_flow_spec_ring(ring_cookie);
@@ -1077,6 +1234,9 @@ static int otx2_add_flow_msg(struct otx2_nic *pfvf, struct otx2_flow *flow)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int otx2_add_flow_with_pfmac(struct otx2_nic *pfvf,
 				    struct otx2_flow *flow)
 {
@@ -1108,13 +1268,17 @@ static int otx2_add_flow_with_pfmac(struct otx2_nic *pfvf,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
 {
 	struct otx2_flow_config *flow_cfg = pfvf->flow_cfg;
 	struct ethtool_rx_flow_spec *fsp = &nfc->fs;
 	struct otx2_flow *flow;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct ethhdr *eth_hdr;
 	bool new = false;
@@ -1127,10 +1291,23 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
 		return -EINVAL;
 	}
 =======
+=======
+	struct ethhdr *eth_hdr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool new = false;
+	int err = 0;
 	u32 ring;
+<<<<<<< HEAD
 	int err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (!flow_cfg->max_flows) {
+		netdev_err(pfvf->netdev,
+			   "Ntuple rule count is 0, allocate and retry\n");
+		return -EINVAL;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ring = ethtool_get_flow_spec_ring(fsp->ring_cookie);
 	if (!(pfvf->flags & OTX2_FLAG_NTUPLE_SUPPORT))
@@ -1140,19 +1317,27 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (fsp->location >= otx2_get_maxflows(flow_cfg))
 =======
 	if (fsp->location >= flow_cfg->ntuple_max_flows)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (fsp->location >= otx2_get_maxflows(flow_cfg))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	flow = otx2_find_flow(pfvf, fsp->location);
 	if (!flow) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		flow = kzalloc(sizeof(*flow), GFP_KERNEL);
 =======
 		flow = kzalloc(sizeof(*flow), GFP_ATOMIC);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		flow = kzalloc(sizeof(*flow), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!flow)
 			return -ENOMEM;
 		flow->location = fsp->location;
@@ -1166,6 +1351,9 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
 		flow->rss_ctx_id = nfc->rss_context;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (otx2_is_flow_rule_dmacfilter(pfvf, &flow->flow_spec)) {
 		eth_hdr = &flow->flow_spec.h_u.ether_spec;
 
@@ -1213,6 +1401,7 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
 		}
 	}
 
+<<<<<<< HEAD
 	if (err) {
 		if (err == MBOX_MSG_INVALID)
 			err = -EINVAL;
@@ -1220,6 +1409,11 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
 	err = otx2_add_flow_msg(pfvf, flow);
 	if (err) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err) {
+		if (err == MBOX_MSG_INVALID)
+			err = -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (new)
 			kfree(flow);
 		return err;
@@ -1257,6 +1451,9 @@ static int otx2_remove_flow_msg(struct otx2_nic *pfvf, u16 entry, bool all)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void otx2_update_rem_pfmac(struct otx2_nic *pfvf, int req)
 {
 	struct otx2_flow *iter;
@@ -1287,8 +1484,11 @@ static void otx2_update_rem_pfmac(struct otx2_nic *pfvf, int req)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int otx2_remove_flow(struct otx2_nic *pfvf, u32 location)
 {
 	struct otx2_flow_config *flow_cfg = pfvf->flow_cfg;
@@ -1296,10 +1496,14 @@ int otx2_remove_flow(struct otx2_nic *pfvf, u32 location)
 	int err;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (location >= otx2_get_maxflows(flow_cfg))
 =======
 	if (location >= flow_cfg->ntuple_max_flows)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (location >= otx2_get_maxflows(flow_cfg))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	flow = otx2_find_flow(pfvf, location);
@@ -1307,6 +1511,9 @@ int otx2_remove_flow(struct otx2_nic *pfvf, u32 location)
 		return -ENOENT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flow->dmac_filter) {
 		struct ethhdr *eth_hdr = &flow->flow_spec.h_u.ether_spec;
 
@@ -1328,9 +1535,12 @@ int otx2_remove_flow(struct otx2_nic *pfvf, u32 location)
 		err = otx2_remove_flow_msg(pfvf, flow->entry, false);
 	}
 
+<<<<<<< HEAD
 =======
 	err = otx2_remove_flow_msg(pfvf, flow->entry, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -1368,11 +1578,17 @@ int otx2_destroy_ntuple_flows(struct otx2_nic *pfvf)
 		return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!flow_cfg->max_flows)
 		return 0;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!flow_cfg->max_flows)
+		return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&pfvf->mbox.lock);
 	req = otx2_mbox_alloc_msg_npc_delete_flow(&pfvf->mbox);
 	if (!req) {
@@ -1382,10 +1598,14 @@ int otx2_destroy_ntuple_flows(struct otx2_nic *pfvf)
 
 	req->start = flow_cfg->flow_ent[0];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	req->end   = flow_cfg->flow_ent[flow_cfg->max_flows - 1];
 =======
 	req->end   = flow_cfg->flow_ent[flow_cfg->ntuple_max_flows - 1];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	req->end   = flow_cfg->flow_ent[flow_cfg->max_flows - 1];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = otx2_sync_mbox_msg(&pfvf->mbox);
 	mutex_unlock(&pfvf->mbox.lock);
 
@@ -1538,6 +1758,9 @@ int otx2_enable_rxvlan(struct otx2_nic *pf, bool enable)
 	return rsp_hdr->rc;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void otx2_dmacflt_reinstall_flows(struct otx2_nic *pf)
 {
@@ -1557,5 +1780,8 @@ void otx2_dmacflt_update_pfmac_flow(struct otx2_nic *pfvf)
 {
 	otx2_update_rem_pfmac(pfvf, DMAC_ADDR_UPDATE);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -474,10 +474,14 @@ int ppc_iommu_map_sg(struct device *dev, struct iommu_table *tbl,
 
 	if ((nelems == 0) || !tbl)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EINVAL;
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	outs = s = segstart = &sglist[0];
 	outcount = 1;
@@ -580,9 +584,12 @@ int ppc_iommu_map_sg(struct device *dev, struct iommu_table *tbl,
 	if (outcount < incount) {
 		outs = sg_next(outs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		outs->dma_address = DMA_MAPPING_ERROR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		outs->dma_length = 0;
 	}
 
@@ -601,19 +608,26 @@ int ppc_iommu_map_sg(struct device *dev, struct iommu_table *tbl,
 						 IOMMU_PAGE_SIZE(tbl));
 			__iommu_free(tbl, vaddr, npages);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			s->dma_address = DMA_MAPPING_ERROR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			s->dma_length = 0;
 		}
 		if (s == outs)
 			break;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return -EIO;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -705,6 +719,7 @@ static void iommu_table_reserve_pages(struct iommu_table *tbl,
 		set_bit(0, tbl->it_map);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (res_start < tbl->it_offset)
 		res_start = tbl->it_offset;
 
@@ -741,16 +756,26 @@ static void iommu_table_reserve_pages(struct iommu_table *tbl,
 static void iommu_table_release_pages(struct iommu_table *tbl)
 {
 	int i;
+=======
+	if (res_start < tbl->it_offset)
+		res_start = tbl->it_offset;
 
-	/*
-	 * In case we have reserved the first bit, we should not emit
-	 * the warning below.
-	 */
-	if (tbl->it_offset == 0)
-		clear_bit(0, tbl->it_map);
+	if (res_end > (tbl->it_offset + tbl->it_size))
+		res_end = tbl->it_offset + tbl->it_size;
+
+	/* Check if res_start..res_end is a valid range in the table */
+	if (res_start >= res_end) {
+		tbl->it_reserved_start = tbl->it_offset;
+		tbl->it_reserved_end = tbl->it_offset;
+		return;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	tbl->it_reserved_start = res_start;
+	tbl->it_reserved_end = res_end;
 
 	for (i = tbl->it_reserved_start; i < tbl->it_reserved_end; ++i)
-		clear_bit(i - tbl->it_offset, tbl->it_map);
+		set_bit(i - tbl->it_offset, tbl->it_map);
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
@@ -816,6 +841,9 @@ struct iommu_table *iommu_init_table(struct iommu_table *tbl, int nid,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool iommu_table_in_use(struct iommu_table *tbl)
 {
 	unsigned long start = 0, end;
@@ -832,8 +860,11 @@ bool iommu_table_in_use(struct iommu_table *tbl)
 	return find_next_bit(tbl->it_map, end, start) != end;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void iommu_table_free(struct kref *kref)
 {
 	struct iommu_table *tbl;
@@ -851,6 +882,7 @@ static void iommu_table_free(struct kref *kref)
 	iommu_debugfs_del(tbl);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* verify that table contains no entries */
 	if (iommu_table_in_use(tbl))
 =======
@@ -859,6 +891,10 @@ static void iommu_table_free(struct kref *kref)
 	/* verify that table contains no entries */
 	if (!bitmap_empty(tbl->it_map, tbl->it_size))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* verify that table contains no entries */
+	if (iommu_table_in_use(tbl))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_warn("%s: Unexpected TCEs\n", __func__);
 
 	/* free bitmap */
@@ -1160,6 +1196,7 @@ int iommu_take_ownership(struct iommu_table *tbl)
 		spin_lock_nest_lock(&tbl->pools[i].lock, &tbl->large_pool.lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (iommu_table_in_use(tbl)) {
 		pr_err("iommu_tce: it_map is not empty");
 		ret = -EBUSY;
@@ -1173,6 +1210,11 @@ int iommu_take_ownership(struct iommu_table *tbl)
 		iommu_table_reserve_pages(tbl, tbl->it_reserved_start,
 				tbl->it_reserved_end);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (iommu_table_in_use(tbl)) {
+		pr_err("iommu_tce: it_map is not empty");
+		ret = -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		memset(tbl->it_map, 0xff, sz);
 	}

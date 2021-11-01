@@ -612,10 +612,13 @@ ohci_hcd_at91_drv_suspend(struct device *dev)
 		enable_irq_wake(hcd->irq);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ohci_at91_port_suspend(ohci_at91->sfr_regmap, 1);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = ohci_suspend(hcd, ohci_at91->wakeup);
 	if (ret) {
 		if (ohci_at91->wakeup)
@@ -636,13 +639,19 @@ ohci_hcd_at91_drv_suspend(struct device *dev)
 		(void) ohci_readl (ohci, &ohci->regs->control);
 		msleep(1);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ohci_at91_port_suspend(ohci_at91->sfr_regmap, 1);
 		at91_stop_clock(ohci_at91);
 	} else {
 		ohci_at91_port_suspend(ohci_at91->sfr_regmap, 1);
+<<<<<<< HEAD
 =======
 		at91_stop_clock(ohci_at91);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return ret;
@@ -655,10 +664,15 @@ ohci_hcd_at91_drv_resume(struct device *dev)
 	struct ohci_at91_priv *ohci_at91 = hcd_to_ohci_at91_priv(hcd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ohci_at91_port_suspend(ohci_at91->sfr_regmap, 0);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ohci_at91_port_suspend(ohci_at91->sfr_regmap, 0);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ohci_at91->wakeup)
 		disable_irq_wake(hcd->irq);
 	else
@@ -667,10 +681,13 @@ ohci_hcd_at91_drv_resume(struct device *dev)
 	ohci_resume(hcd, false);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ohci_at91_port_suspend(ohci_at91->sfr_regmap, 0);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

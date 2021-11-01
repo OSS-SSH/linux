@@ -1374,10 +1374,14 @@ static const struct net_device_ops octeon_mgmt_ops = {
 	.ndo_set_rx_mode =		octeon_mgmt_set_rx_filtering,
 	.ndo_set_mac_address =		octeon_mgmt_set_mac_address,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl =			octeon_mgmt_ioctl,
 =======
 	.ndo_do_ioctl =			octeon_mgmt_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl =			octeon_mgmt_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu =		octeon_mgmt_change_mtu,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller =		octeon_mgmt_poll_controller,

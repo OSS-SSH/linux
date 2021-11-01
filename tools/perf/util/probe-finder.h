@@ -47,10 +47,14 @@ int debuginfo__find_trace_events(struct debuginfo *dbg,
 
 /* Find a perf_probe_point from debuginfo */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int debuginfo__find_probe_point(struct debuginfo *dbg, u64 addr,
 =======
 int debuginfo__find_probe_point(struct debuginfo *dbg, unsigned long addr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int debuginfo__find_probe_point(struct debuginfo *dbg, u64 addr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				struct perf_probe_point *ppt);
 
 int debuginfo__get_text_offset(struct debuginfo *dbg, Dwarf_Addr *offs,

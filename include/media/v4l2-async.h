@@ -130,11 +130,15 @@ void v4l2_async_debug_init(struct dentry *debugfs_dir);
  * This function initializes the notifier @asd_list. It must be called
  * before adding a subdevice to a notifier, using one of:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * v4l2_async_notifier_add_fwnode_remote_subdev(),
  * v4l2_async_notifier_add_fwnode_subdev(),
  * v4l2_async_notifier_add_i2c_subdev(),
  * __v4l2_async_notifier_add_subdev() or
  * v4l2_async_notifier_parse_fwnode_endpoints().
+<<<<<<< HEAD
 =======
  * @v4l2_async_notifier_add_fwnode_remote_subdev,
  * @v4l2_async_notifier_add_fwnode_subdev,
@@ -142,6 +146,8 @@ void v4l2_async_debug_init(struct dentry *debugfs_dir);
  * @__v4l2_async_notifier_add_subdev or
  * @v4l2_async_notifier_parse_fwnode_endpoints.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void v4l2_async_notifier_init(struct v4l2_async_notifier *notifier);
 
@@ -154,6 +160,7 @@ void v4l2_async_notifier_init(struct v4l2_async_notifier *notifier);
  *
  * \warning: Drivers should avoid using this function and instead use one of:
 <<<<<<< HEAD
+<<<<<<< HEAD
  * v4l2_async_notifier_add_fwnode_subdev(),
  * v4l2_async_notifier_add_fwnode_remote_subdev() or
  * v4l2_async_notifier_add_i2c_subdev().
@@ -162,6 +169,11 @@ void v4l2_async_notifier_init(struct v4l2_async_notifier *notifier);
  * @v4l2_async_notifier_add_fwnode_remote_subdev or
  * @v4l2_async_notifier_add_i2c_subdev.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * v4l2_async_notifier_add_fwnode_subdev(),
+ * v4l2_async_notifier_add_fwnode_remote_subdev() or
+ * v4l2_async_notifier_add_i2c_subdev().
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Call this function before registering a notifier to link the provided @asd to
  * the notifiers master @asd_list. The @asd must be allocated with k*alloc() as
@@ -215,10 +227,14 @@ __v4l2_async_notifier_add_fwnode_remote_subdev(struct v4l2_async_notifier *notif
  * notifier cleanup time.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This is just like v4l2_async_notifier_add_fwnode_subdev(), but with the
 =======
  * This is just like @v4l2_async_notifier_add_fwnode_subdev, but with the
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This is just like v4l2_async_notifier_add_fwnode_subdev(), but with the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * exception that the fwnode refers to a local endpoint, not the remote one.
  */
 #define v4l2_async_notifier_add_fwnode_remote_subdev(notifier, ep, type) \
@@ -284,11 +300,15 @@ void v4l2_async_notifier_unregister(struct v4l2_async_notifier *notifier);
  * itself. The user is responsible for calling this function to clean up the
  * notifier after calling
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * v4l2_async_notifier_add_fwnode_remote_subdev(),
  * v4l2_async_notifier_add_fwnode_subdev(),
  * v4l2_async_notifier_add_i2c_subdev(),
  * __v4l2_async_notifier_add_subdev() or
  * v4l2_async_notifier_parse_fwnode_endpoints().
+<<<<<<< HEAD
  *
  * There is no harm from calling v4l2_async_notifier_cleanup() in other
 =======
@@ -300,6 +320,10 @@ void v4l2_async_notifier_unregister(struct v4l2_async_notifier *notifier);
  *
  * There is no harm from calling v4l2_async_notifier_cleanup in other
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * There is no harm from calling v4l2_async_notifier_cleanup() in other
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * cases as long as its memory has been zeroed after it has been
  * allocated.
  */

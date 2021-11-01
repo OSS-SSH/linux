@@ -2090,6 +2090,9 @@ static void sdhci_msm_cqe_disable(struct mmc_host *mmc, bool recovery)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *cmd)
 {
 	u32 count, start = 15;
@@ -2107,8 +2110,11 @@ static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *c
 		host->data_timeout = 22LL * NSEC_PER_SEC;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
 	.enable		= sdhci_msm_cqe_enable,
 	.disable	= sdhci_msm_cqe_disable,
@@ -2459,9 +2465,13 @@ static const struct sdhci_ops sdhci_msm_ops = {
 	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
 	.set_power = sdhci_set_power_noreg,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.set_timeout = sdhci_msm_set_timeout,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.set_timeout = sdhci_msm_set_timeout,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct sdhci_pltfm_data sdhci_msm_pdata = {
@@ -2721,11 +2731,17 @@ static int sdhci_msm_probe(struct platform_device *pdev)
 	msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Set the timeout value to max possible */
 	host->max_timeout_count = 0xF;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Set the timeout value to max possible */
+	host->max_timeout_count = 0xF;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_get_noresume(&pdev->dev);
 	pm_runtime_set_active(&pdev->dev);
 	pm_runtime_enable(&pdev->dev);

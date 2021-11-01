@@ -466,16 +466,22 @@ static int digital_in_send_sdd_req(struct nfc_digital_dev *ddev,
 	skb_put_u8(skb, DIGITAL_SDD_REQ_SEL_PAR);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = digital_in_send_cmd(ddev, skb, 30, digital_in_recv_sdd_res,
 				 target);
 	if (rc)
 		kfree_skb(skb);
 
 	return rc;
+<<<<<<< HEAD
 =======
 	return digital_in_send_cmd(ddev, skb, 30, digital_in_recv_sdd_res,
 				   target);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void digital_in_recv_sens_res(struct nfc_digital_dev *ddev, void *arg,

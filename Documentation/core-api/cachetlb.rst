@@ -272,6 +272,9 @@ maps this page at its virtual address.
   ``void flush_dcache_page(struct page *page)``
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         This routines must be called when:
 
 	  a) the kernel did write to a page that is in the page cache page
@@ -281,12 +284,15 @@ maps this page at its virtual address.
 	     that {get,pin}_user_pages{_fast} already call flush_dcache_page
 	     on any page found in the user address space and thus driver
 	     code rarely needs to take this into account.
+<<<<<<< HEAD
 =======
 	Any time the kernel writes to a page cache page, _OR_
 	the kernel is about to read from a page cache page and
 	user space shared/writable mappings of this page potentially
 	exist, this routine is called.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.. note::
 
@@ -297,6 +303,9 @@ maps this page at its virtual address.
 	      this interface at all.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	The phrase "kernel writes to a page cache page" means, specifically,
 	that the kernel executes store instructions that dirty data in that
 	page at the page->virtual mapping of that page.  It is important to
@@ -325,6 +334,7 @@ maps this page at its virtual address.
 	just mark the architecture private page flag bit.  Later, in
 	update_mmu_cache(), a check is made of this flag bit, and if set the
 	flush is done and the flag bit is cleared.
+<<<<<<< HEAD
 =======
 	The phrase "kernel writes to a page cache page" means,
 	specifically, that the kernel executes store instructions
@@ -359,6 +369,8 @@ maps this page at its virtual address.
 	made of this flag bit, and if set the flush is done and the flag
 	bit is cleared.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.. important::
 
@@ -395,6 +407,7 @@ maps this page at its virtual address.
 	the cache of the page at vmaddr.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   ``void flush_kernel_dcache_page(struct page *page)``
 
@@ -410,6 +423,8 @@ maps this page at its virtual address.
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ``void flush_icache_range(unsigned long start, unsigned long end)``
 
   	When the kernel stores into addresses that it will execute

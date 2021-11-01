@@ -38,10 +38,14 @@ static __must_check inline bool may_use_simd(void)
 	return !WARN_ON(!system_capabilities_finalized()) &&
 	       system_supports_fpsimd() &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       !in_hardirq() && !irqs_disabled() && !in_nmi() &&
 =======
 	       !in_irq() && !irqs_disabled() && !in_nmi() &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	       !in_hardirq() && !irqs_disabled() && !in_nmi() &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       !this_cpu_read(fpsimd_context_busy);
 }
 

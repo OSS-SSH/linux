@@ -385,6 +385,9 @@ err_kfree:
 }
 EXPORT_SYMBOL_GPL(fscrypt_get_symlink);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * fscrypt_symlink_getattr() - set the correct st_size for encrypted symlinks
@@ -429,5 +432,8 @@ int fscrypt_symlink_getattr(const struct path *path, struct kstat *stat)
 	return 0;
 }
 EXPORT_SYMBOL_GPL(fscrypt_symlink_getattr);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

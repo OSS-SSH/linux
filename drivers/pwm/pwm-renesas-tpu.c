@@ -426,6 +426,7 @@ static int tpu_remove(struct platform_device *pdev)
 {
 	struct tpu_device *tpu = platform_get_drvdata(pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	pwmchip_remove(&tpu->chip);
 
@@ -434,13 +435,19 @@ static int tpu_remove(struct platform_device *pdev)
 	return 0;
 =======
 	int ret;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	ret = pwmchip_remove(&tpu->chip);
+	pwmchip_remove(&tpu->chip);
 
 	pm_runtime_disable(&pdev->dev);
 
+<<<<<<< HEAD
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_OF

@@ -3158,10 +3158,14 @@ static const struct net_device_ops dpaa_ops = {
 	.ndo_validate_addr = eth_validate_addr,
 	.ndo_set_rx_mode = dpaa_set_rx_mode,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl = dpaa_ioctl,
 =======
 	.ndo_do_ioctl = dpaa_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl = dpaa_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_setup_tc = dpaa_setup_tc,
 	.ndo_change_mtu = dpaa_change_mtu,
 	.ndo_bpf = dpaa_xdp,

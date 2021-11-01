@@ -47,10 +47,14 @@
 		compatible = "regulator-fixed";
 		regulator-name = "usb_otg1_vbus";
 <<<<<<< HEAD
+<<<<<<< HEAD
 		gpio = <&gpio1 10 GPIO_ACTIVE_HIGH>;
 =======
 		gpio = <&gpio1 12 GPIO_ACTIVE_HIGH>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gpio = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		enable-active-high;
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
@@ -161,11 +165,16 @@
 	pinctrl_reg_usb1_en: regusb1grp {
 		fsl,pins = <
 <<<<<<< HEAD
+<<<<<<< HEAD
 			MX8MM_IOMUXC_GPIO1_IO10_GPIO1_IO10	0x41
 			MX8MM_IOMUXC_GPIO1_IO12_GPIO1_IO12	0x141
 =======
 			MX8MM_IOMUXC_GPIO1_IO12_GPIO1_IO12	0x41
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			MX8MM_IOMUXC_GPIO1_IO10_GPIO1_IO10	0x41
+			MX8MM_IOMUXC_GPIO1_IO12_GPIO1_IO12	0x141
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			MX8MM_IOMUXC_GPIO1_IO13_USB1_OTG_OC	0x41
 		>;
 	};

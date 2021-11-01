@@ -31,6 +31,9 @@ struct intel_timeline;
 struct intel_ring;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct i915_gem_engines - A set of engines
  */
@@ -64,6 +67,7 @@ struct i915_gem_engines_iter {
 	unsigned int idx;
 
 	/** @engines: Engine set being iterated */
+<<<<<<< HEAD
 =======
 struct i915_gem_engines {
 	union {
@@ -79,11 +83,16 @@ struct i915_gem_engines {
 struct i915_gem_engines_iter {
 	unsigned int idx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct i915_gem_engines *engines;
 };
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * enum i915_gem_engine_type - Describes the type of an i915_gem_proto_engine
  */
 enum i915_gem_engine_type {
@@ -218,14 +227,18 @@ struct i915_gem_proto_context {
 };
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct i915_gem_context - client state
  *
  * The struct i915_gem_context represents the combined view of the driver and
  * logical hardware state for a particular client.
  */
 struct i915_gem_context {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/** @i915: i915 device backpointer */
 	struct drm_i915_private *i915;
@@ -237,6 +250,12 @@ struct i915_gem_context {
 
 	/** file_priv: owning file descriptor */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/** @i915: i915 device backpointer */
+	struct drm_i915_private *i915;
+
+	/** @file_priv: owning file descriptor */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_i915_file_private *file_priv;
 
 	/**
@@ -262,6 +281,7 @@ struct i915_gem_context {
 	 */
 	struct i915_gem_engines __rcu *engines;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/** @engines_mutex: guards writes to engines */
 	struct mutex engines_mutex;
@@ -284,6 +304,25 @@ struct i915_gem_context {
 
 	struct intel_timeline *timeline;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/** @engines_mutex: guards writes to engines */
+	struct mutex engines_mutex;
+
+	/**
+	 * @syncobj: Shared timeline syncobj
+	 *
+	 * When the SHARED_TIMELINE flag is set on context creation, we
+	 * emulate a single timeline across all engines using this syncobj.
+	 * For every execbuffer2 call, this syncobj is used as both an in-
+	 * and out-fence.  Unlike the real intel_timeline, this doesn't
+	 * provide perfect atomic in-order guarantees if the client races
+	 * with itself by calling execbuffer2 twice concurrently.  However,
+	 * if userspace races with itself, that's not likely to yield well-
+	 * defined results anyway so we choose to not care.
+	 */
+	struct drm_syncobj *syncobj;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/**
 	 * @vm: unique address space (GTT)
@@ -307,10 +346,14 @@ struct i915_gem_context {
 	struct pid *pid;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/** @link: place with &drm_i915_private.context_list */
 =======
 	/** link: place with &drm_i915_private.context_list */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/** @link: place with &drm_i915_private.context_list */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head link;
 
 	/**
@@ -334,9 +377,12 @@ struct i915_gem_context {
 	 */
 	unsigned long user_flags;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define UCONTEXT_NO_ZEROMAP		0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define UCONTEXT_NO_ERROR_CAPTURE	1
 #define UCONTEXT_BANNABLE		2
 #define UCONTEXT_RECOVERABLE		3
@@ -350,6 +396,7 @@ struct i915_gem_context {
 #define CONTEXT_USER_ENGINES		1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/** @mutex: guards everything that isn't engines or handles_vma */
 	struct mutex mutex;
 
@@ -358,12 +405,20 @@ struct i915_gem_context {
 
 	/** @guilty_count: How many times this context has caused a GPU hang. */
 =======
+=======
+	/** @mutex: guards everything that isn't engines or handles_vma */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mutex mutex;
 
+	/** @sched: scheduler parameters */
 	struct i915_sched_attr sched;
 
+<<<<<<< HEAD
 	/** guilty_count: How many times this context has caused a GPU hang. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/** @guilty_count: How many times this context has caused a GPU hang. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_t guilty_count;
 	/**
 	 * @active_count: How many times this context was active during a GPU
@@ -372,18 +427,22 @@ struct i915_gem_context {
 	atomic_t active_count;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct {
 		u64 timeout_us;
 	} watchdog;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/**
 	 * @hang_timestamp: The last time(s) this context caused a GPU hang
 	 */
 	unsigned long hang_timestamp[2];
 #define CONTEXT_FAST_HANG_JIFFIES (120 * HZ) /* 3 hangs within 120s? Banned! */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/** @remap_slice: Bitmask of cache lines that need remapping */
 	u8 remap_slice;
@@ -397,15 +456,27 @@ struct i915_gem_context {
 	/**
 	 * handles_vma: rbtree to look up our context specific obj/vma for
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/** @remap_slice: Bitmask of cache lines that need remapping */
+	u8 remap_slice;
+
+	/**
+	 * @handles_vma: rbtree to look up our context specific obj/vma for
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * the user handle. (user handles are per fd, but the binding is
 	 * per vm, which may be one per context or shared with the global GTT)
 	 */
 	struct radix_tree_root handles_vma;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	/** @lut_mutex: Locks handles_vma */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/** @lut_mutex: Locks handles_vma */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mutex lut_mutex;
 
 	/**
@@ -418,15 +489,24 @@ struct i915_gem_context {
 	char name[TASK_COMM_LEN + 8];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/** @stale: tracks stale engines to be destroyed */
 	struct {
 		/** @lock: guards engines */
 		spinlock_t lock;
 		/** @engines: list of stale engines */
 =======
+=======
+	/** @stale: tracks stale engines to be destroyed */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
+		/** @lock: guards engines */
 		spinlock_t lock;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/** @engines: list of stale engines */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct list_head engines;
 	} stale;
 };

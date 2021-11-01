@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 =======
 // SPDX-License-Identifier: GPL-2.0-only
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Copyright (c) 2011-2014 PLUMgrid, http://plumgrid.com
  * Copyright (c) 2016 Facebook
  */
@@ -211,6 +215,9 @@ void print_bpf_insn(const struct bpf_insn_cbs *cbs,
 		}
 	} else if (class == BPF_ST) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (BPF_MODE(insn->code) == BPF_MEM) {
 			verbose(cbs->private_data, "(%02x) *(%s *)(r%d %+d) = %d\n",
 				insn->code,
@@ -220,19 +227,24 @@ void print_bpf_insn(const struct bpf_insn_cbs *cbs,
 		} else if (BPF_MODE(insn->code) == 0xc0 /* BPF_NOSPEC, no UAPI */) {
 			verbose(cbs->private_data, "(%02x) nospec\n", insn->code);
 		} else {
+<<<<<<< HEAD
 			verbose(cbs->private_data, "BUG_st_%02x\n", insn->code);
 		}
 =======
 		if (BPF_MODE(insn->code) != BPF_MEM) {
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			verbose(cbs->private_data, "BUG_st_%02x\n", insn->code);
-			return;
 		}
+<<<<<<< HEAD
 		verbose(cbs->private_data, "(%02x) *(%s *)(r%d %+d) = %d\n",
 			insn->code,
 			bpf_ldst_string[BPF_SIZE(insn->code) >> 3],
 			insn->dst_reg,
 			insn->off, insn->imm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (class == BPF_LDX) {
 		if (BPF_MODE(insn->code) != BPF_MEM) {
 			verbose(cbs->private_data, "BUG_ldx_%02x\n", insn->code);

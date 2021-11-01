@@ -17,6 +17,9 @@
 #define CDNS_PCIE_EP_IRQ_PCI_ADDR_LEGACY	0x3
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u8 cdns_pcie_get_fn_from_vfn(struct cdns_pcie *pcie, u8 fn, u8 vfn)
 {
 	u32 cap = CDNS_PCIE_EP_FUNC_SRIOV_CAP_OFFSET;
@@ -33,6 +36,7 @@ static u8 cdns_pcie_get_fn_from_vfn(struct cdns_pcie *pcie, u8 fn, u8 vfn)
 }
 
 static int cdns_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
+<<<<<<< HEAD
 				     struct pci_epf_header *hdr)
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
@@ -50,11 +54,27 @@ static int cdns_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
 	}
 =======
 static int cdns_pcie_ep_write_header(struct pci_epc *epc, u8 fn,
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     struct pci_epf_header *hdr)
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
+	u32 cap = CDNS_PCIE_EP_FUNC_SRIOV_CAP_OFFSET;
 	struct cdns_pcie *pcie = &ep->pcie;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 reg;
+
+	if (vfn > 1) {
+		dev_err(&epc->dev, "Only Virtual Function #1 has deviceID\n");
+		return -EINVAL;
+	} else if (vfn == 1) {
+		reg = cap + PCI_SRIOV_VF_DID;
+		cdns_pcie_ep_fn_writew(pcie, fn, reg, hdr->deviceid);
+		return 0;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cdns_pcie_ep_fn_writew(pcie, fn, PCI_DEVICE_ID, hdr->deviceid);
 	cdns_pcie_ep_fn_writeb(pcie, fn, PCI_REVISION_ID, hdr->revid);
@@ -82,10 +102,14 @@ static int cdns_pcie_ep_write_header(struct pci_epc *epc, u8 fn,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_set_bar(struct pci_epc *epc, u8 fn, u8 vfn,
 =======
 static int cdns_pcie_ep_set_bar(struct pci_epc *epc, u8 fn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_set_bar(struct pci_epc *epc, u8 fn, u8 vfn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				struct pci_epf_bar *epf_bar)
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
@@ -131,6 +155,9 @@ static int cdns_pcie_ep_set_bar(struct pci_epc *epc, u8 fn,
 	addr0 = lower_32_bits(bar_phys);
 	addr1 = upper_32_bits(bar_phys);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (vfn == 1)
 		reg = CDNS_PCIE_LM_EP_VFUNC_BAR_CFG(bar, fn);
@@ -148,13 +175,17 @@ static int cdns_pcie_ep_set_bar(struct pci_epc *epc, u8 fn,
 	}
 
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_IB_EP_FUNC_BAR_ADDR0(fn, bar),
 			 addr0);
 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_IB_EP_FUNC_BAR_ADDR1(fn, bar),
 			 addr1);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (vfn > 0)
 		epf = &epf->epf[vfn - 1];
@@ -175,16 +206,24 @@ static int cdns_pcie_ep_set_bar(struct pci_epc *epc, u8 fn,
 	cdns_pcie_writel(pcie, reg, cfg);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (vfn > 0)
+		epf = &epf->epf[vfn - 1];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	epf->epf_bar[bar] = epf_bar;
 
 	return 0;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void cdns_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn, u8 vfn,
 =======
 static void cdns_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void cdns_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn, u8 vfn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct pci_epf_bar *epf_bar)
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
@@ -194,6 +233,9 @@ static void cdns_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn,
 	u32 reg, cfg, b, ctrl;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vfn == 1)
 		reg = CDNS_PCIE_LM_EP_VFUNC_BAR_CFG(bar, fn);
 	else
@@ -207,6 +249,7 @@ static void cdns_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn,
 			 CDNS_PCIE_LM_EP_FUNC_BAR_CFG_BAR_CTRL_MASK(b));
 		cfg |= CDNS_PCIE_LM_EP_FUNC_BAR_CFG_BAR_CTRL(b, ctrl);
 		cdns_pcie_writel(pcie, reg, cfg);
+<<<<<<< HEAD
 	}
 
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
@@ -227,24 +270,27 @@ static int cdns_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, u8 vfn,
 	} else {
 		reg = CDNS_PCIE_LM_EP_FUNC_BAR_CFG1(fn);
 		b = bar - BAR_4;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
-	ctrl = CDNS_PCIE_LM_BAR_CFG_CTRL_DISABLED;
-	cfg = cdns_pcie_readl(pcie, reg);
-	cfg &= ~(CDNS_PCIE_LM_EP_FUNC_BAR_CFG_BAR_APERTURE_MASK(b) |
-		 CDNS_PCIE_LM_EP_FUNC_BAR_CFG_BAR_CTRL_MASK(b));
-	cfg |= CDNS_PCIE_LM_EP_FUNC_BAR_CFG_BAR_CTRL(b, ctrl);
-	cdns_pcie_writel(pcie, reg, cfg);
-
+	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_IB_EP_FUNC_BAR_ADDR0(fn, bar), 0);
 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_IB_EP_FUNC_BAR_ADDR1(fn, bar), 0);
 
+	if (vfn > 0)
+		epf = &epf->epf[vfn - 1];
 	epf->epf_bar[bar] = NULL;
 }
 
+<<<<<<< HEAD
 static int cdns_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, phys_addr_t addr,
 				 u64 pci_addr, size_t size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, u8 vfn,
+				 phys_addr_t addr, u64 pci_addr, size_t size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
 	struct cdns_pcie *pcie = &ep->pcie;
@@ -258,9 +304,13 @@ static int cdns_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, phys_addr_t addr,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cdns_pcie_set_outbound_region(pcie, 0, fn, r, false, addr, pci_addr, size);
 
 	set_bit(r, &ep->ob_region_map);
@@ -270,10 +320,14 @@ static int cdns_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, phys_addr_t addr,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void cdns_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn, u8 vfn,
 =======
 static void cdns_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void cdns_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn, u8 vfn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    phys_addr_t addr)
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
@@ -294,10 +348,14 @@ static void cdns_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 vfn, u8 mmc)
 =======
 static int cdns_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 mmc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 vfn, u8 mmc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
 	struct cdns_pcie *pcie = &ep->pcie;
@@ -305,10 +363,15 @@ static int cdns_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 mmc)
 	u16 flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Set the Multiple Message Capable bitfield into the Message Control
 	 * register.
@@ -323,10 +386,14 @@ static int cdns_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 mmc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_get_msi(struct pci_epc *epc, u8 fn, u8 vfn)
 =======
 static int cdns_pcie_ep_get_msi(struct pci_epc *epc, u8 fn)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_get_msi(struct pci_epc *epc, u8 fn, u8 vfn)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
 	struct cdns_pcie *pcie = &ep->pcie;
@@ -334,10 +401,15 @@ static int cdns_pcie_ep_get_msi(struct pci_epc *epc, u8 fn)
 	u16 flags, mme;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Validate that the MSI feature is actually enabled. */
 	flags = cdns_pcie_ep_fn_readw(pcie, fn, cap + PCI_MSI_FLAGS);
 	if (!(flags & PCI_MSI_FLAGS_ENABLE))
@@ -353,10 +425,14 @@ static int cdns_pcie_ep_get_msi(struct pci_epc *epc, u8 fn)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
 =======
 static int cdns_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
 	struct cdns_pcie *pcie = &ep->pcie;
@@ -364,10 +440,15 @@ static int cdns_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no)
 	u32 val, reg;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	func_no = cdns_pcie_get_fn_from_vfn(pcie, func_no, vfunc_no);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	func_no = cdns_pcie_get_fn_from_vfn(pcie, func_no, vfunc_no);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reg = cap + PCI_MSIX_FLAGS;
 	val = cdns_pcie_ep_fn_readw(pcie, func_no, reg);
 	if (!(val & PCI_MSIX_FLAGS_ENABLE))
@@ -379,6 +460,7 @@ static int cdns_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u8 vfn,
 				 u16 interrupts, enum pci_barno bir,
 				 u32 offset)
@@ -386,6 +468,11 @@ static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u8 vfn,
 static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u16 interrupts,
 				 enum pci_barno bir, u32 offset)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u8 vfn,
+				 u16 interrupts, enum pci_barno bir,
+				 u32 offset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
 	struct cdns_pcie *pcie = &ep->pcie;
@@ -393,10 +480,15 @@ static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u16 interrupts,
 	u32 val, reg;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reg = cap + PCI_MSIX_FLAGS;
 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
 	val &= ~PCI_MSIX_FLAGS_QSIZE;
@@ -417,12 +509,17 @@ static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u16 interrupts,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn, u8 intx,
 				     bool is_asserted)
 =======
 static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn,
 				     u8 intx, bool is_asserted)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn, u8 intx,
+				     bool is_asserted)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cdns_pcie *pcie = &ep->pcie;
 	unsigned long flags;
@@ -465,11 +562,16 @@ static void cdns_pcie_ep_assert_intx(struct cdns_pcie_ep *ep, u8 fn,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_send_legacy_irq(struct cdns_pcie_ep *ep, u8 fn, u8 vfn,
 					u8 intx)
 =======
 static int cdns_pcie_ep_send_legacy_irq(struct cdns_pcie_ep *ep, u8 fn, u8 intx)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_send_legacy_irq(struct cdns_pcie_ep *ep, u8 fn, u8 vfn,
+					u8 intx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u16 cmd;
 
@@ -487,10 +589,14 @@ static int cdns_pcie_ep_send_legacy_irq(struct cdns_pcie_ep *ep, u8 fn, u8 intx)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_send_msi_irq(struct cdns_pcie_ep *ep, u8 fn, u8 vfn,
 =======
 static int cdns_pcie_ep_send_msi_irq(struct cdns_pcie_ep *ep, u8 fn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_send_msi_irq(struct cdns_pcie_ep *ep, u8 fn, u8 vfn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     u8 interrupt_num)
 {
 	struct cdns_pcie *pcie = &ep->pcie;
@@ -500,10 +606,15 @@ static int cdns_pcie_ep_send_msi_irq(struct cdns_pcie_ep *ep, u8 fn,
 	u64 pci_addr, pci_addr_mask = 0xff;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check whether the MSI feature has been enabled by the PCI host. */
 	flags = cdns_pcie_ep_fn_readw(pcie, fn, cap + PCI_MSI_FLAGS);
 	if (!(flags & PCI_MSI_FLAGS_ENABLE))
@@ -544,10 +655,14 @@ static int cdns_pcie_ep_send_msi_irq(struct cdns_pcie_ep *ep, u8 fn,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_map_msi_irq(struct pci_epc *epc, u8 fn, u8 vfn,
 =======
 static int cdns_pcie_ep_map_msi_irq(struct pci_epc *epc, u8 fn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_map_msi_irq(struct pci_epc *epc, u8 fn, u8 vfn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    phys_addr_t addr, u8 interrupt_num,
 				    u32 entry_size, u32 *msi_data,
 				    u32 *msi_addr_offset)
@@ -562,10 +677,15 @@ static int cdns_pcie_ep_map_msi_irq(struct pci_epc *epc, u8 fn,
 	int i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check whether the MSI feature has been enabled by the PCI host. */
 	flags = cdns_pcie_ep_fn_readw(pcie, fn, cap + PCI_MSI_FLAGS);
 	if (!(flags & PCI_MSI_FLAGS_ENABLE))
@@ -590,10 +710,14 @@ static int cdns_pcie_ep_map_msi_irq(struct pci_epc *epc, u8 fn,
 
 	for (i = 0; i < interrupt_num; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = cdns_pcie_ep_map_addr(epc, fn, vfn, addr,
 =======
 		ret = cdns_pcie_ep_map_addr(epc, fn, addr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = cdns_pcie_ep_map_addr(epc, fn, vfn, addr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    pci_addr & ~pci_addr_mask,
 					    entry_size);
 		if (ret)
@@ -608,10 +732,14 @@ static int cdns_pcie_ep_map_msi_irq(struct pci_epc *epc, u8 fn,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_send_msix_irq(struct cdns_pcie_ep *ep, u8 fn, u8 vfn,
 =======
 static int cdns_pcie_ep_send_msix_irq(struct cdns_pcie_ep *ep, u8 fn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_send_msix_irq(struct cdns_pcie_ep *ep, u8 fn, u8 vfn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      u16 interrupt_num)
 {
 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
@@ -625,14 +753,20 @@ static int cdns_pcie_ep_send_msix_irq(struct cdns_pcie_ep *ep, u8 fn,
 	u8 bir;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	epf = &ep->epf[fn];
 	if (vfn > 0)
 		epf = &epf->epf[vfn - 1];
 
 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check whether the MSI-X feature has been enabled by the PCI host. */
 	flags = cdns_pcie_ep_fn_readw(pcie, fn, cap + PCI_MSIX_FLAGS);
 	if (!(flags & PCI_MSIX_FLAGS_ENABLE))
@@ -644,9 +778,12 @@ static int cdns_pcie_ep_send_msix_irq(struct cdns_pcie_ep *ep, u8 fn,
 	tbl_offset &= PCI_MSIX_TABLE_OFFSET;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	epf = &ep->epf[fn];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	msix_tbl = epf->epf_bar[bir]->addr + tbl_offset;
 	msg_addr = msix_tbl[(interrupt_num - 1)].msg_addr;
 	msg_data = msix_tbl[(interrupt_num - 1)].msg_data;
@@ -669,14 +806,19 @@ static int cdns_pcie_ep_send_msix_irq(struct cdns_pcie_ep *ep, u8 fn,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int cdns_pcie_ep_raise_irq(struct pci_epc *epc, u8 fn, u8 vfn,
 =======
 static int cdns_pcie_ep_raise_irq(struct pci_epc *epc, u8 fn,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int cdns_pcie_ep_raise_irq(struct pci_epc *epc, u8 fn, u8 vfn,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  enum pci_epc_irq_type type,
 				  u16 interrupt_num)
 {
 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct cdns_pcie *pcie = &ep->pcie;
 	struct device *dev = pcie->dev;
@@ -695,17 +837,29 @@ static int cdns_pcie_ep_raise_irq(struct pci_epc *epc, u8 fn,
 	case PCI_EPC_IRQ_MSIX:
 		return cdns_pcie_ep_send_msix_irq(ep, fn, vfn, interrupt_num);
 =======
+=======
+	struct cdns_pcie *pcie = &ep->pcie;
+	struct device *dev = pcie->dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (type) {
 	case PCI_EPC_IRQ_LEGACY:
-		return cdns_pcie_ep_send_legacy_irq(ep, fn, 0);
+		if (vfn > 0) {
+			dev_err(dev, "Cannot raise legacy interrupts for VF\n");
+			return -EINVAL;
+		}
+		return cdns_pcie_ep_send_legacy_irq(ep, fn, vfn, 0);
 
 	case PCI_EPC_IRQ_MSI:
-		return cdns_pcie_ep_send_msi_irq(ep, fn, interrupt_num);
+		return cdns_pcie_ep_send_msi_irq(ep, fn, vfn, interrupt_num);
 
 	case PCI_EPC_IRQ_MSIX:
+<<<<<<< HEAD
 		return cdns_pcie_ep_send_msix_irq(ep, fn, interrupt_num);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return cdns_pcie_ep_send_msix_irq(ep, fn, vfn, interrupt_num);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	default:
 		break;
@@ -737,6 +891,9 @@ static int cdns_pcie_ep_start(struct pci_epc *epc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pci_epc_features cdns_pcie_epc_vf_features = {
 	.linkup_notifier = false,
 	.msi_capable = true,
@@ -744,8 +901,11 @@ static const struct pci_epc_features cdns_pcie_epc_vf_features = {
 	.align = 65536,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pci_epc_features cdns_pcie_epc_features = {
 	.linkup_notifier = false,
 	.msi_capable = true,
@@ -754,6 +914,7 @@ static const struct pci_epc_features cdns_pcie_epc_features = {
 };
 
 static const struct pci_epc_features*
+<<<<<<< HEAD
 <<<<<<< HEAD
 cdns_pcie_ep_get_features(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
 {
@@ -766,6 +927,14 @@ cdns_pcie_ep_get_features(struct pci_epc *epc, u8 func_no)
 {
 	return &cdns_pcie_epc_features;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+cdns_pcie_ep_get_features(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+{
+	if (!vfunc_no)
+		return &cdns_pcie_epc_features;
+
+	return &cdns_pcie_epc_vf_features;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct pci_epc_ops cdns_pcie_epc_ops = {
@@ -792,16 +961,22 @@ int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
 	struct device_node *np = dev->of_node;
 	struct cdns_pcie *pcie = &ep->pcie;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cdns_pcie_epf *epf;
 	struct resource *res;
 	struct pci_epc *epc;
 	int ret;
 	int i;
+<<<<<<< HEAD
 =======
 	struct resource *res;
 	struct pci_epc *epc;
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pcie->is_rc = false;
 
@@ -847,6 +1022,9 @@ int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	epc->max_vfs = devm_kcalloc(dev, epc->max_functions,
 				    sizeof(*epc->max_vfs), GFP_KERNEL);
 	if (!epc->max_vfs)
@@ -866,8 +1044,11 @@ int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
 		}
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = pci_epc_mem_init(epc, pcie->mem_res->start,
 			       resource_size(pcie->mem_res), PAGE_SIZE);
 	if (ret < 0) {
@@ -886,12 +1067,18 @@ int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
 	/* Reserve region 0 for IRQs */
 	set_bit(0, &ep->ob_region_map);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ep->quirk_detect_quiet_flag)
 		cdns_pcie_detect_quiet_min_delay_set(&ep->pcie);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&ep->lock);
 
 	return 0;

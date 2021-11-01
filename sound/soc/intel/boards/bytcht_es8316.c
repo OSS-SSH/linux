@@ -38,9 +38,13 @@ struct byt_cht_es8316_private {
 	struct snd_soc_jack jack;
 	struct gpio_desc *speaker_en_gpio;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct device *codec_dev;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct device *codec_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool speaker_en;
 };
 
@@ -466,9 +470,13 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 	struct device *dev = &pdev->dev;
 	struct snd_soc_acpi_mach *mach;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct fwnode_handle *fwnode;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct fwnode_handle *fwnode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char *platform_name;
 	struct acpi_device *adev;
 	struct device *codec_dev;
@@ -500,11 +508,17 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 		put_device(&adev->dev);
 		byt_cht_es8316_dais[dai_index].codecs->name = codec_name;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else {
 		dev_err(&pdev->dev, "Error cannot find '%s' dev\n", mach->id);
 		return -ENXIO;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else {
+		dev_err(&pdev->dev, "Error cannot find '%s' dev\n", mach->id);
+		return -ENXIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* override plaform name, if required */
@@ -550,6 +564,7 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 
 	/* get speaker enable GPIO */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	codec_dev = acpi_get_first_physical_node(adev);
 	if (!codec_dev)
 		return -EPROBE_DEFER;
@@ -559,12 +574,21 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 	if (!codec_dev)
 		return -EPROBE_DEFER;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	codec_dev = acpi_get_first_physical_node(adev);
+	if (!codec_dev)
+		return -EPROBE_DEFER;
+	priv->codec_dev = get_device(codec_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (quirk & BYT_CHT_ES8316_JD_INVERTED)
 		props[cnt++] = PROPERTY_ENTRY_BOOL("everest,jack-detect-inverted");
 
 	if (cnt) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fwnode = fwnode_create_software_node(props, NULL);
 		if (IS_ERR(fwnode)) {
 			put_device(codec_dev);
@@ -575,9 +599,12 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 
 		fwnode_handle_put(fwnode);
 
+<<<<<<< HEAD
 =======
 		ret = device_add_properties(codec_dev, props);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret) {
 			put_device(codec_dev);
 			return ret;
@@ -590,9 +617,12 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 				/* see comment in byt_cht_es8316_resume */
 				GPIOD_OUT_LOW | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	put_device(codec_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (IS_ERR(priv->speaker_en_gpio)) {
 		ret = PTR_ERR(priv->speaker_en_gpio);
@@ -605,10 +635,14 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 			fallthrough;
 		case -EPROBE_DEFER:
 <<<<<<< HEAD
+<<<<<<< HEAD
 			goto err_put_codec;
 =======
 			return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_put_codec;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -647,6 +681,7 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 		gpiod_put(priv->speaker_en_gpio);
 		dev_err(dev, "snd_soc_register_card failed: %d\n", ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		goto err_put_codec;
 	}
 	platform_set_drvdata(pdev, &byt_cht_es8316_card);
@@ -662,6 +697,17 @@ err_put_codec:
 	platform_set_drvdata(pdev, &byt_cht_es8316_card);
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_put_codec;
+	}
+	platform_set_drvdata(pdev, &byt_cht_es8316_card);
+	return 0;
+
+err_put_codec:
+	device_remove_software_node(priv->codec_dev);
+	put_device(priv->codec_dev);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_byt_cht_es8316_mc_remove(struct platform_device *pdev)
@@ -671,10 +717,15 @@ static int snd_byt_cht_es8316_mc_remove(struct platform_device *pdev)
 
 	gpiod_put(priv->speaker_en_gpio);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	device_remove_software_node(priv->codec_dev);
 	put_device(priv->codec_dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	device_remove_software_node(priv->codec_dev);
+	put_device(priv->codec_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

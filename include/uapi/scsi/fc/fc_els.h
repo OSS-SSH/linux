@@ -42,9 +42,13 @@ enum fc_els_cmd {
 	ELS_SRR =	0x14,	/* sequence retransmission request */
 	ELS_FPIN =	0x16,	/* Fabric Performance Impact Notification */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ELS_EDC =	0x17,	/* Exchange Diagnostic Capabilities */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ELS_EDC =	0x17,	/* Exchange Diagnostic Capabilities */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ELS_RDP =	0x18,	/* Read Diagnostic Parameters */
 	ELS_RDF =	0x19,	/* Register Diagnostic Functions */
 	ELS_PRLI =	0x20,	/* process login */
@@ -116,9 +120,13 @@ enum fc_els_cmd {
 	[ELS_SRR] =	"SRR",			\
 	[ELS_FPIN] =	"FPIN",			\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	[ELS_EDC] =	"EDC",			\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[ELS_EDC] =	"EDC",			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[ELS_RDP] =	"RDP",			\
 	[ELS_RDF] =	"RDF",			\
 	[ELS_PRLI] =	"PRLI",			\
@@ -227,12 +235,18 @@ enum fc_ls_tlv_dtag {
 	ELS_DTAG_LS_REQ_INFO =		0x00000001,
 		/* Link Service Request Information Descriptor */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ELS_DTAG_LNK_FAULT_CAP =	0x0001000D,
 		/* Link Fault Capability Descriptor */
 	ELS_DTAG_CG_SIGNAL_CAP =	0x0001000F,
 		/* Congestion Signaling Capability Descriptor */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ELS_DTAG_LNK_INTEGRITY =	0x00020001,
 		/* Link Integrity Notification Descriptor */
 	ELS_DTAG_DELIVERY =		0x00020002,
@@ -252,10 +266,15 @@ enum fc_ls_tlv_dtag {
 #define FC_LS_TLV_DTAG_INIT {					      \
 	{ ELS_DTAG_LS_REQ_INFO,		"Link Service Request Information" }, \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ ELS_DTAG_LNK_FAULT_CAP,	"Link Fault Capability" },	      \
 	{ ELS_DTAG_CG_SIGNAL_CAP,	"Congestion Signaling Capability" },  \
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ ELS_DTAG_LNK_FAULT_CAP,	"Link Fault Capability" },	      \
+	{ ELS_DTAG_CG_SIGNAL_CAP,	"Congestion Signaling Capability" },  \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ ELS_DTAG_LNK_INTEGRITY,	"Link Integrity Notification" },      \
 	{ ELS_DTAG_DELIVERY,		"Delivery Notification Present" },    \
 	{ ELS_DTAG_PEER_CONGEST,	"Peer Congestion Notification" },     \
@@ -1165,6 +1184,9 @@ struct fc_els_rdf_resp {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Diagnostic Capability Descriptors for EDC ELS
  */
@@ -1263,6 +1285,9 @@ struct fc_els_edc_resp {
 };
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _FC_ELS_H_ */

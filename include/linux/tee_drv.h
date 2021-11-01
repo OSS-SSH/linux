@@ -28,9 +28,13 @@
 #define TEE_SHM_POOL		BIT(5)  /* Memory allocated from pool */
 #define TEE_SHM_KERNEL_MAPPED	BIT(6)  /* Memory mapped in kernel space */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define TEE_SHM_PRIV		BIT(7)  /* Memory private to TEE driver */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define TEE_SHM_PRIV		BIT(7)  /* Memory private to TEE driver */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct device;
 struct tee_device;
@@ -337,9 +341,13 @@ void *tee_get_drvdata(struct tee_device *teedev);
  */
 struct tee_shm *tee_shm_alloc(struct tee_context *ctx, size_t size, u32 flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct tee_shm *tee_shm_alloc_kernel_buf(struct tee_context *ctx, size_t size);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct tee_shm *tee_shm_alloc_kernel_buf(struct tee_context *ctx, size_t size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * tee_shm_register() - Register shared memory buffer

@@ -9,6 +9,7 @@ enum {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 enum mlx5dr_ste_entry_type {
 	MLX5DR_STE_TYPE_TX		= 1,
@@ -17,6 +18,8 @@ enum mlx5dr_ste_entry_type {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlx5_ifc_ste_general_bits {
 	u8         entry_type[0x4];
 	u8         reserved_at_4[0x4];

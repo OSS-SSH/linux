@@ -110,6 +110,7 @@ static int exynos_dp_bridge_attach(struct analogix_dp_plat_data *plat_data,
 		ret = drm_bridge_attach(&dp->encoder, dp->ptn_bridge, bridge,
 					0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (ret)
 			return ret;
 =======
@@ -119,6 +120,10 @@ static int exynos_dp_bridge_attach(struct analogix_dp_plat_data *plat_data,
 			return ret;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret)
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;

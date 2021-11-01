@@ -299,9 +299,12 @@ int snd_cs4236_create(struct snd_card *card,
 		snd_printk(KERN_ERR "please, specify control port "
 			   "for CS4236+ chips\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		snd_device_free(card, chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 	ver1 = snd_cs4236_ctrl_in(chip, 1);
@@ -312,9 +315,12 @@ int snd_cs4236_create(struct snd_card *card,
 		snd_printk(KERN_ERR "CS4236+ chip detected, but "
 			   "control port 0x%lx is not valid\n", cport);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		snd_device_free(card, chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 	snd_cs4236_ctrl_out(chip, 0, 0x00);

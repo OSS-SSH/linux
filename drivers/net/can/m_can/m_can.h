@@ -29,9 +29,13 @@
 #include <linux/can/dev.h>
 #include <linux/pinctrl/consumer.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/phy/phy.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/phy/phy.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* m_can lec values */
 enum m_can_lec_type {
@@ -69,6 +73,7 @@ struct m_can_ops {
 	u32 (*read_reg)(struct m_can_classdev *cdev, int reg);
 	int (*write_reg)(struct m_can_classdev *cdev, int reg, int val);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*read_fifo)(struct m_can_classdev *cdev, int addr_offset, void *val, size_t val_count);
 	int (*write_fifo)(struct m_can_classdev *cdev, int addr_offset,
 			  const void *val, size_t val_count);
@@ -77,6 +82,11 @@ struct m_can_ops {
 	int (*write_fifo)(struct m_can_classdev *cdev, int addr_offset,
 			  int val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*read_fifo)(struct m_can_classdev *cdev, int addr_offset, void *val, size_t val_count);
+	int (*write_fifo)(struct m_can_classdev *cdev, int addr_offset,
+			  const void *val, size_t val_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*init)(struct m_can_classdev *cdev);
 };
 
@@ -93,12 +103,16 @@ struct m_can_classdev {
 	struct work_struct tx_work;
 	struct sk_buff *tx_skb;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct phy *transceiver;
 =======
 
 	struct can_bittiming_const *bit_timing;
 	struct can_bittiming_const *data_timing;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct phy *transceiver;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct m_can_ops *ops;
 
@@ -117,10 +131,14 @@ int m_can_class_register(struct m_can_classdev *cdev);
 void m_can_class_unregister(struct m_can_classdev *cdev);
 int m_can_class_get_clocks(struct m_can_classdev *cdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int m_can_init_ram(struct m_can_classdev *priv);
 =======
 void m_can_init_ram(struct m_can_classdev *priv);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int m_can_init_ram(struct m_can_classdev *priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int m_can_class_suspend(struct device *dev);
 int m_can_class_resume(struct device *dev);

@@ -12,11 +12,17 @@
 欢迎任何补丁。
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 有关测试专用工具的简要概述，参见
 Documentation/translations/zh_CN/dev-tools/testing-overview.rst
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+有关测试专用工具的简要概述，参见
+Documentation/translations/zh_CN/dev-tools/testing-overview.rst
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 .. class:: toc-title
 
 	   目录
@@ -25,9 +31,13 @@ Documentation/translations/zh_CN/dev-tools/testing-overview.rst
    :maxdepth: 2
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    testing-overview
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+   testing-overview
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    gcov
    kasan
 
@@ -40,9 +50,13 @@ Todolist:
  - kmemleak
  - kcsan
 <<<<<<< HEAD
+<<<<<<< HEAD
  - kfence
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ - kfence
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  - gdb-kernel-debugging
  - kgdb
  - kselftest

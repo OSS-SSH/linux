@@ -362,11 +362,14 @@ EXPORT_SYMBOL_GPL(hv_stimer_global_cleanup);
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 u64 (*hv_read_reference_counter)(void);
 EXPORT_SYMBOL_GPL(hv_read_reference_counter);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static union {
 	struct ms_hyperv_tsc_page page;
 	u8 reserved[PAGE_SIZE];

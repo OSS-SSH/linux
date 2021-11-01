@@ -1821,6 +1821,9 @@ void LedControl871x(struct _adapter *padapter, enum LED_CTL_MODE LedAction)
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void r8712_flush_led_works(struct _adapter *padapter)
 {
@@ -1829,5 +1832,8 @@ void r8712_flush_led_works(struct _adapter *padapter)
 	flush_work(&pledpriv->SwLed0.BlinkWorkItem);
 	flush_work(&pledpriv->SwLed1.BlinkWorkItem);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

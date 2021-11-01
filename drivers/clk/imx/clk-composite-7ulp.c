@@ -11,9 +11,13 @@
 #include <linux/slab.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../clk-fractional-divider.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "../clk-fractional-divider.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "clk.h"
 
 #define PCG_PCS_SHIFT	24

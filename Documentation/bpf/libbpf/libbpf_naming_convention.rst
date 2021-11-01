@@ -70,10 +70,14 @@ are not reentrant for performance reasons.
 
 ABI
 <<<<<<< HEAD
+<<<<<<< HEAD
 ---
 =======
 ==========
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+---
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 libbpf can be both linked statically or used as DSO. To avoid possible
 conflicts with other libraries an application is linked with, all
@@ -113,10 +117,14 @@ This bump in ABI version is at most once per kernel development cycle.
 For example, if current state of ``libbpf.map`` is:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .. code-block:: none
 =======
 .. code-block:: c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. code-block:: none
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
         LIBBPF_0.0.1 {
         	global:
@@ -130,10 +138,14 @@ For example, if current state of ``libbpf.map`` is:
 ``libbpf.map`` should be changed like this:
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .. code-block:: none
 =======
 .. code-block:: c
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. code-block:: none
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
         LIBBPF_0.0.1 {
         	global:

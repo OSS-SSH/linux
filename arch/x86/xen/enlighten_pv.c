@@ -29,9 +29,12 @@
 #include <linux/page-flags.h>
 #include <linux/highmem.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/console.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/pci.h>
 #include <linux/gfp.h>
 #include <linux/edd.h>
@@ -113,6 +116,7 @@ struct tls_descs {
 static DEFINE_PER_CPU(struct tls_descs, shadow_tls_desc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void __init xen_banner(void)
 {
@@ -127,6 +131,8 @@ static void __init xen_banner(void)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __init xen_pv_init_platform(void)
 {
 	populate_extra_pte(fix_to_virt(FIX_PARAVIRT_BOOTMAP));
@@ -150,6 +156,7 @@ static void __init xen_pv_guest_late_init(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Check if running on Xen version (major, minor) or later */
 bool
@@ -168,6 +175,8 @@ xen_running_on_version_or_later(unsigned int major, unsigned int minor)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static __read_mostly unsigned int cpuid_leaf5_ecx_val;
 static __read_mostly unsigned int cpuid_leaf5_edx_val;
 
@@ -766,12 +775,17 @@ static void xen_write_idt_entry(gate_desc *dt, int entrynum, const gate_desc *g)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static unsigned xen_convert_trap_info(const struct desc_ptr *desc,
 				      struct trap_info *traps, bool full)
 =======
 static void xen_convert_trap_info(const struct desc_ptr *desc,
 				  struct trap_info *traps)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static unsigned xen_convert_trap_info(const struct desc_ptr *desc,
+				      struct trap_info *traps, bool full)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned in, out, count;
 
@@ -781,6 +795,7 @@ static void xen_convert_trap_info(const struct desc_ptr *desc,
 	for (in = out = 0; in < count; in++) {
 		gate_desc *entry = (gate_desc *)(desc->address) + in;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (cvt_gate_to_trap(in, entry, &traps[out]) || full)
 			out++;
@@ -793,6 +808,13 @@ static void xen_convert_trap_info(const struct desc_ptr *desc,
 	}
 	traps[out].address = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (cvt_gate_to_trap(in, entry, &traps[out]) || full)
+			out++;
+	}
+
+	return out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void xen_copy_trap_info(struct trap_info *traps)
@@ -800,10 +822,14 @@ void xen_copy_trap_info(struct trap_info *traps)
 	const struct desc_ptr *desc = this_cpu_ptr(&idt_desc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xen_convert_trap_info(desc, traps, true);
 =======
 	xen_convert_trap_info(desc, traps);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xen_convert_trap_info(desc, traps, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Load a new IDT into Xen.  In principle this can be per-CPU, so we
@@ -814,9 +840,13 @@ static void xen_load_idt(const struct desc_ptr *desc)
 	static DEFINE_SPINLOCK(lock);
 	static struct trap_info traps[257];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned out;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	trace_xen_cpu_load_idt(desc);
 
@@ -825,11 +855,16 @@ static void xen_load_idt(const struct desc_ptr *desc)
 	memcpy(this_cpu_ptr(&idt_desc), desc, sizeof(idt_desc));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	out = xen_convert_trap_info(desc, traps, false);
 	memset(&traps[out], 0, sizeof(traps[0]));
 =======
 	xen_convert_trap_info(desc, traps);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	out = xen_convert_trap_info(desc, traps, false);
+	memset(&traps[out], 0, sizeof(traps[0]));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	xen_mc_flush();
 	if (HYPERVISOR_set_trap_table(traps))
@@ -1251,13 +1286,19 @@ static void __init xen_dom0_set_legacy_features(void)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __init xen_domu_set_legacy_features(void)
 {
 	x86_platform.legacy.rtc = 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* First C function to be called on Xen boot */
 asmlinkage __visible void __init xen_start_kernel(void)
 {
@@ -1346,6 +1387,7 @@ asmlinkage __visible void __init xen_start_kernel(void)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (xen_feature(XENFEAT_mmu_pt_update_preserve_ad)) {
 		pv_ops.mmu.ptep_modify_prot_start =
@@ -1355,6 +1397,8 @@ asmlinkage __visible void __init xen_start_kernel(void)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	machine_ops = xen_machine_ops;
 
 	/*
@@ -1411,6 +1455,7 @@ asmlinkage __visible void __init xen_start_kernel(void)
 
 	if (!xen_initial_domain()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (pci_xen)
 			x86_init.pci.arch_init = pci_xen_init;
 		x86_platform.set_legacy_features =
@@ -1420,6 +1465,12 @@ asmlinkage __visible void __init xen_start_kernel(void)
 		if (pci_xen)
 			x86_init.pci.arch_init = pci_xen_init;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (pci_xen)
+			x86_init.pci.arch_init = pci_xen_init;
+		x86_platform.set_legacy_features =
+				xen_domu_set_legacy_features;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		const struct dom0_vga_console_info *info =
 			(void *)((char *)xen_start_info +
@@ -1461,6 +1512,7 @@ asmlinkage __visible void __init xen_start_kernel(void)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xen_add_preferred_consoles();
 =======
 	if (!boot_params.screen_info.orig_video_isVGA)
@@ -1469,6 +1521,9 @@ asmlinkage __visible void __init xen_start_kernel(void)
 	if (boot_params.screen_info.orig_video_isVGA)
 		add_preferred_console("tty", 0, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xen_add_preferred_consoles();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_PCI
 	/* PCI BIOS service won't work from a PV guest. */

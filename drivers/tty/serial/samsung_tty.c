@@ -66,9 +66,13 @@ struct s3c24xx_uart_info {
 	char			*name;
 	enum s3c24xx_port_type	type;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int		has_usi;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int		has_usi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int		port_type;
 	unsigned int		fifosize;
 	unsigned long		rx_fifomask;
@@ -310,6 +314,7 @@ static void s3c24xx_serial_stop_tx(struct uart_port *port)
 		dmaengine_tx_status(dma->tx_chan, dma->tx_cookie, &state);
 		dmaengine_terminate_all(dma->tx_chan);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_sync_single_for_cpu(dma->tx_chan->device->dev,
 					dma->tx_transfer_addr, dma->tx_size,
 					DMA_TO_DEVICE);
@@ -317,6 +322,11 @@ static void s3c24xx_serial_stop_tx(struct uart_port *port)
 		dma_sync_single_for_cpu(ourport->port.dev,
 			dma->tx_transfer_addr, dma->tx_size, DMA_TO_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_sync_single_for_cpu(dma->tx_chan->device->dev,
+					dma->tx_transfer_addr, dma->tx_size,
+					DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		async_tx_ack(dma->tx_desc);
 		count = dma->tx_bytes_requested - state.residue;
 		xmit->tail = (xmit->tail + count) & (UART_XMIT_SIZE - 1);
@@ -349,6 +359,7 @@ static void s3c24xx_serial_tx_dma_complete(void *args)
 	async_tx_ack(dma->tx_desc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_sync_single_for_cpu(dma->tx_chan->device->dev,
 				dma->tx_transfer_addr, dma->tx_size,
 				DMA_TO_DEVICE);
@@ -356,6 +367,11 @@ static void s3c24xx_serial_tx_dma_complete(void *args)
 	dma_sync_single_for_cpu(ourport->port.dev, dma->tx_transfer_addr,
 				dma->tx_size, DMA_TO_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_cpu(dma->tx_chan->device->dev,
+				dma->tx_transfer_addr, dma->tx_size,
+				DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&port->lock, flags);
 
@@ -460,6 +476,7 @@ static int s3c24xx_serial_start_tx_dma(struct s3c24xx_uart_port *ourport,
 	dma->tx_transfer_addr = dma->tx_addr + xmit->tail;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_sync_single_for_device(dma->tx_chan->device->dev,
 				   dma->tx_transfer_addr, dma->tx_size,
 				   DMA_TO_DEVICE);
@@ -467,6 +484,11 @@ static int s3c24xx_serial_start_tx_dma(struct s3c24xx_uart_port *ourport,
 	dma_sync_single_for_device(ourport->port.dev, dma->tx_transfer_addr,
 				dma->tx_size, DMA_TO_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_device(dma->tx_chan->device->dev,
+				   dma->tx_transfer_addr, dma->tx_size,
+				   DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dma->tx_desc = dmaengine_prep_slave_single(dma->tx_chan,
 				dma->tx_transfer_addr, dma->tx_size,
@@ -538,10 +560,14 @@ static void s3c24xx_uart_copy_rx_to_tty(struct s3c24xx_uart_port *ourport,
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_sync_single_for_cpu(dma->rx_chan->device->dev, dma->rx_addr,
 =======
 	dma_sync_single_for_cpu(ourport->port.dev, dma->rx_addr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_cpu(dma->rx_chan->device->dev, dma->rx_addr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dma->rx_size, DMA_FROM_DEVICE);
 
 	ourport->port.icount.rx += count;
@@ -663,12 +689,17 @@ static void s3c64xx_start_rx_dma(struct s3c24xx_uart_port *ourport)
 	struct s3c24xx_uart_dma *dma = ourport->dma;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_sync_single_for_device(dma->rx_chan->device->dev, dma->rx_addr,
 				   dma->rx_size, DMA_FROM_DEVICE);
 =======
 	dma_sync_single_for_device(ourport->port.dev, dma->rx_addr,
 				dma->rx_size, DMA_FROM_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_device(dma->rx_chan->device->dev, dma->rx_addr,
+				   dma->rx_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dma->rx_desc = dmaengine_prep_slave_single(dma->rx_chan,
 				dma->rx_addr, dma->rx_size, DMA_DEV_TO_MEM,
@@ -1134,6 +1165,7 @@ static int s3c24xx_serial_request_dma(struct s3c24xx_uart_port *p)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma->rx_addr = dma_map_single(dma->rx_chan->device->dev, dma->rx_buf,
 				      dma->rx_size, DMA_FROM_DEVICE);
 	if (dma_mapping_error(dma->rx_chan->device->dev, dma->rx_addr)) {
@@ -1142,6 +1174,11 @@ static int s3c24xx_serial_request_dma(struct s3c24xx_uart_port *p)
 				dma->rx_size, DMA_FROM_DEVICE);
 	if (dma_mapping_error(p->port.dev, dma->rx_addr)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma->rx_addr = dma_map_single(dma->rx_chan->device->dev, dma->rx_buf,
+				      dma->rx_size, DMA_FROM_DEVICE);
+	if (dma_mapping_error(dma->rx_chan->device->dev, dma->rx_addr)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reason = "DMA mapping error for RX buffer";
 		ret = -EIO;
 		goto err_free_rx;
@@ -1149,15 +1186,21 @@ static int s3c24xx_serial_request_dma(struct s3c24xx_uart_port *p)
 
 	/* TX buffer */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma->tx_addr = dma_map_single(dma->tx_chan->device->dev,
 				      p->port.state->xmit.buf, UART_XMIT_SIZE,
 				      DMA_TO_DEVICE);
 	if (dma_mapping_error(dma->tx_chan->device->dev, dma->tx_addr)) {
+<<<<<<< HEAD
 =======
 	dma->tx_addr = dma_map_single(p->port.dev, p->port.state->xmit.buf,
 				UART_XMIT_SIZE, DMA_TO_DEVICE);
 	if (dma_mapping_error(p->port.dev, dma->tx_addr)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reason = "DMA mapping error for TX buffer";
 		ret = -EIO;
 		goto err_unmap_rx;
@@ -1167,12 +1210,17 @@ static int s3c24xx_serial_request_dma(struct s3c24xx_uart_port *p)
 
 err_unmap_rx:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_unmap_single(dma->rx_chan->device->dev, dma->rx_addr,
 			 dma->rx_size, DMA_FROM_DEVICE);
 =======
 	dma_unmap_single(p->port.dev, dma->rx_addr, dma->rx_size,
 			 DMA_FROM_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(dma->rx_chan->device->dev, dma->rx_addr,
+			 dma->rx_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_rx:
 	kfree(dma->rx_buf);
 err_release_tx:
@@ -1192,12 +1240,17 @@ static void s3c24xx_serial_release_dma(struct s3c24xx_uart_port *p)
 	if (dma->rx_chan) {
 		dmaengine_terminate_all(dma->rx_chan);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_unmap_single(dma->rx_chan->device->dev, dma->rx_addr,
 				 dma->rx_size, DMA_FROM_DEVICE);
 =======
 		dma_unmap_single(p->port.dev, dma->rx_addr,
 				dma->rx_size, DMA_FROM_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(dma->rx_chan->device->dev, dma->rx_addr,
+				 dma->rx_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(dma->rx_buf);
 		dma_release_channel(dma->rx_chan);
 		dma->rx_chan = NULL;
@@ -1206,12 +1259,17 @@ static void s3c24xx_serial_release_dma(struct s3c24xx_uart_port *p)
 	if (dma->tx_chan) {
 		dmaengine_terminate_all(dma->tx_chan);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_unmap_single(dma->tx_chan->device->dev, dma->tx_addr,
 				 UART_XMIT_SIZE, DMA_TO_DEVICE);
 =======
 		dma_unmap_single(p->port.dev, dma->tx_addr,
 				UART_XMIT_SIZE, DMA_TO_DEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(dma->tx_chan->device->dev, dma->tx_addr,
+				 UART_XMIT_SIZE, DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dma_release_channel(dma->tx_chan);
 		dma->tx_chan = NULL;
 	}
@@ -1412,6 +1470,9 @@ static int apple_s5l_serial_startup(struct uart_port *port)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void exynos_usi_init(struct uart_port *port)
 {
 	struct s3c24xx_uart_port *ourport = to_ourport(port);
@@ -1434,8 +1495,11 @@ static void exynos_usi_init(struct uart_port *port)
 	wr_regl(port, USI_OPTION, val);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* power power management control */
 
 static void s3c24xx_serial_pm(struct uart_port *port, unsigned int level,
@@ -1464,9 +1528,13 @@ static void s3c24xx_serial_pm(struct uart_port *port, unsigned int level,
 			clk_prepare_enable(ourport->baudclk);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		exynos_usi_init(port);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		exynos_usi_init(port);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		dev_err(port->dev, "s3c24xx_serial: unknown pm %d\n", level);
@@ -2191,10 +2259,15 @@ static int s3c24xx_serial_init_port(struct s3c24xx_uart_port *ourport,
 		pr_warn("uart: failed to enable baudclk\n");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	exynos_usi_init(port);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exynos_usi_init(port);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Keep all interrupts masked and cleared */
 	switch (ourport->info->type) {
 	case TYPE_S3C6400:
@@ -2844,6 +2917,7 @@ static struct s3c24xx_serial_drv_data s5pv210_serial_drv_data = {
 
 #if defined(CONFIG_ARCH_EXYNOS)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define EXYNOS_COMMON_SERIAL_DRV_DATA_USI(_has_usi)		\
 	.info = &(struct s3c24xx_uart_info) {			\
 		.name		= "Samsung Exynos UART",	\
@@ -2855,6 +2929,13 @@ static struct s3c24xx_serial_drv_data s5pv210_serial_drv_data = {
 		.name		= "Samsung Exynos UART",	\
 		.type		= TYPE_S3C6400,			\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define EXYNOS_COMMON_SERIAL_DRV_DATA_USI(_has_usi)		\
+	.info = &(struct s3c24xx_uart_info) {			\
+		.name		= "Samsung Exynos UART",	\
+		.type		= TYPE_S3C6400,			\
+		.has_usi	= _has_usi,			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.port_type	= PORT_S3C6400,			\
 		.has_divslot	= 1,				\
 		.rx_fifomask	= S5PV210_UFSTAT_RXMASK,	\
@@ -2875,11 +2956,17 @@ static struct s3c24xx_serial_drv_data s5pv210_serial_drv_data = {
 	}							\
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define EXYNOS_COMMON_SERIAL_DRV_DATA				\
 	EXYNOS_COMMON_SERIAL_DRV_DATA_USI(0)
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define EXYNOS_COMMON_SERIAL_DRV_DATA				\
+	EXYNOS_COMMON_SERIAL_DRV_DATA_USI(0)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct s3c24xx_serial_drv_data exynos4210_serial_drv_data = {
 	EXYNOS_COMMON_SERIAL_DRV_DATA,
 	.fifosize = { 256, 64, 16, 16 },
@@ -2891,11 +2978,15 @@ static struct s3c24xx_serial_drv_data exynos5433_serial_drv_data = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct s3c24xx_serial_drv_data exynos850_serial_drv_data = {
 	EXYNOS_COMMON_SERIAL_DRV_DATA_USI(1),
 	.fifosize = { 256, 64, 64, 64 },
 };
 
+<<<<<<< HEAD
 #define EXYNOS4210_SERIAL_DRV_DATA ((kernel_ulong_t)&exynos4210_serial_drv_data)
 #define EXYNOS5433_SERIAL_DRV_DATA ((kernel_ulong_t)&exynos5433_serial_drv_data)
 #define EXYNOS850_SERIAL_DRV_DATA ((kernel_ulong_t)&exynos850_serial_drv_data)
@@ -2905,12 +2996,22 @@ static struct s3c24xx_serial_drv_data exynos850_serial_drv_data = {
 #define EXYNOS5433_SERIAL_DRV_DATA ((kernel_ulong_t)NULL)
 #define EXYNOS850_SERIAL_DRV_DATA ((kernel_ulong_t)NULL)
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define EXYNOS4210_SERIAL_DRV_DATA ((kernel_ulong_t)&exynos4210_serial_drv_data)
 #define EXYNOS5433_SERIAL_DRV_DATA ((kernel_ulong_t)&exynos5433_serial_drv_data)
+#define EXYNOS850_SERIAL_DRV_DATA ((kernel_ulong_t)&exynos850_serial_drv_data)
+
 #else
+<<<<<<< HEAD
 #define EXYNOS4210_SERIAL_DRV_DATA (kernel_ulong_t)NULL
 #define EXYNOS5433_SERIAL_DRV_DATA (kernel_ulong_t)NULL
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define EXYNOS4210_SERIAL_DRV_DATA ((kernel_ulong_t)NULL)
+#define EXYNOS5433_SERIAL_DRV_DATA ((kernel_ulong_t)NULL)
+#define EXYNOS850_SERIAL_DRV_DATA ((kernel_ulong_t)NULL)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifdef CONFIG_ARCH_APPLE
@@ -2967,11 +3068,17 @@ static const struct platform_device_id s3c24xx_serial_driver_ids[] = {
 		.name		= "s5l-uart",
 		.driver_data	= S5L_SERIAL_DRV_DATA,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}, {
 		.name		= "exynos850-uart",
 		.driver_data	= EXYNOS850_SERIAL_DRV_DATA,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}, {
+		.name		= "exynos850-uart",
+		.driver_data	= EXYNOS850_SERIAL_DRV_DATA,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{ },
 };
@@ -2996,10 +3103,15 @@ static const struct of_device_id s3c24xx_uart_dt_match[] = {
 	{ .compatible = "apple,s5l-uart",
 		.data = (void *)S5L_SERIAL_DRV_DATA },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ .compatible = "samsung,exynos850-uart",
 		.data = (void *)EXYNOS850_SERIAL_DRV_DATA },
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "samsung,exynos850-uart",
+		.data = (void *)EXYNOS850_SERIAL_DRV_DATA },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{},
 };
 MODULE_DEVICE_TABLE(of, s3c24xx_uart_dt_match);

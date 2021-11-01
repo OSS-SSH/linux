@@ -318,11 +318,17 @@ int kvmhv_vcpu_entry_p9(struct kvm_vcpu *vcpu, u64 time_limit, unsigned long lpc
 	mtspr(SPRN_HDEC, hdec);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
 tm_return_to_guest:
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_PPC_TRANSACTIONAL_MEM
+tm_return_to_guest:
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mtspr(SPRN_DAR, vcpu->arch.shregs.dar);
 	mtspr(SPRN_DSISR, vcpu->arch.shregs.dsisr);
 	mtspr(SPRN_SRR0, vcpu->arch.shregs.srr0);
@@ -422,6 +428,7 @@ tm_return_to_guest:
 		 * transactional mode.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!local_paca->kvm_hstate.fake_suspend &&
 				(vcpu->arch.shregs.msr & MSR_TS_S)) {
 			if (kvmhv_p9_tm_emulation_early(vcpu)) {
@@ -446,6 +453,25 @@ tm_return_to_guest:
 				/* Prevent it being handled again. */
 				trap = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!local_paca->kvm_hstate.fake_suspend &&
+				(vcpu->arch.shregs.msr & MSR_TS_S)) {
+			if (kvmhv_p9_tm_emulation_early(vcpu)) {
+				/*
+				 * Go straight back into the guest with the
+				 * new NIP/MSR as set by TM emulation.
+				 */
+				mtspr(SPRN_HSRR0, vcpu->arch.regs.nip);
+				mtspr(SPRN_HSRR1, vcpu->arch.shregs.msr);
+
+				/*
+				 * tm_return_to_guest re-loads SRR0/1, DAR,
+				 * DSISR after RI is cleared, in case they had
+				 * been clobbered by a MCE.
+				 */
+				__mtmsrd(0, 1); /* clear RI */
+				goto tm_return_to_guest;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 #endif
@@ -526,12 +552,18 @@ tm_return_to_guest:
 	 * switched to host, to avoid the P9_RADIX_PREFETCH_BUG.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ENABLED(CONFIG_PPC_TRANSACTIONAL_MEM) &&
 	    vcpu->arch.shregs.msr & MSR_TS_MASK)
 		msr |= MSR_TS_S;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__mtmsrd(msr, 0);
 
 	end_timing(vcpu);

@@ -20,9 +20,13 @@
 
 #define MII_PHY_LED_CTRL		16
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MII_PHY_LED_POL_CTRL		17
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MII_PHY_LED_POL_CTRL		17
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_88E1318S_PHY_LED_TCR	18
 #define MII_88E1318S_PHY_WOL_CTRL	16
 #define MII_M1011_IEVENT		19
@@ -34,6 +38,9 @@
 #define LEDMASK						GENMASK(11,8)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MII_88E1318S_PHY_LED_POL_LED2		BIT(4)
 
 struct power_off_cfg {
@@ -41,6 +48,7 @@ struct power_off_cfg {
 	void (*phy_set_reg)(bool restart);
 };
 
+<<<<<<< HEAD
 static struct phy_device *phydev;
 static const struct power_off_cfg *cfg;
 
@@ -52,12 +60,22 @@ static void linkstation_mvphy_reg_intn(bool restart)
 	if (restart)
 		data = MII_88E1318S_PHY_LED_TCR_FORCE_INT;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct phy_device *phydev;
+static const struct power_off_cfg *cfg;
 
-static void mvphy_reg_intn(u16 data)
+static void linkstation_mvphy_reg_intn(bool restart)
 {
 	int rc = 0, saved_page;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 data = 0;
+
+	if (restart)
+		data = MII_88E1318S_PHY_LED_TCR_FORCE_INT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	saved_page = phy_select_page(phydev, MII_MARVELL_LED_PAGE);
 	if (saved_page < 0)
@@ -91,6 +109,9 @@ err:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void readynas_mvphy_set_reg(bool restart)
 {
 	int rc = 0, saved_page;
@@ -132,17 +153,24 @@ static const struct power_off_cfg readynas_power_off_cfg = {
 	.phy_set_reg = readynas_mvphy_set_reg,
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int linkstation_reboot_notifier(struct notifier_block *nb,
 				       unsigned long action, void *unused)
 {
 	if (action == SYS_RESTART)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cfg->phy_set_reg(true);
 =======
 		mvphy_reg_intn(MII_88E1318S_PHY_LED_TCR_FORCE_INT);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cfg->phy_set_reg(true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return NOTIFY_DONE;
 }
@@ -155,16 +183,23 @@ static void linkstation_poweroff(void)
 {
 	unregister_reboot_notifier(&linkstation_reboot_nb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cfg->phy_set_reg(false);
 =======
 	mvphy_reg_intn(0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cfg->phy_set_reg(false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kernel_restart("Power off");
 }
 
 static const struct of_device_id ls_poweroff_of_match[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "buffalo,ls421d",
 	  .data = &linkstation_power_off_cfg,
 	},
@@ -174,10 +209,13 @@ static const struct of_device_id ls_poweroff_of_match[] = {
 	{ .compatible = "netgear,readynas-duo-v2",
 	  .data = &readynas_power_off_cfg,
 	},
+<<<<<<< HEAD
 =======
 	{ .compatible = "buffalo,ls421d" },
 	{ .compatible = "buffalo,ls421de" },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ },
 };
 
@@ -186,9 +224,13 @@ static int __init linkstation_poweroff_init(void)
 	struct mii_bus *bus;
 	struct device_node *dn;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct of_device_id *match;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct of_device_id *match;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dn = of_find_matching_node(NULL, ls_poweroff_of_match);
 	if (!dn)
@@ -196,13 +238,19 @@ static int __init linkstation_poweroff_init(void)
 	of_node_put(dn);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	match = of_match_node(ls_poweroff_of_match, dn);
 	cfg = match->data;
 
 	dn = of_find_node_by_name(NULL, cfg->mdio_node_name);
+<<<<<<< HEAD
 =======
 	dn = of_find_node_by_name(NULL, "mdio");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dn)
 		return -ENODEV;
 

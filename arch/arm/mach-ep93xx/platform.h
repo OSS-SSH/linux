@@ -39,6 +39,7 @@ extern void ep93xx_timer_init(void);
 
 void ep93xx_restart(enum reboot_mode, const char *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void ep93xx_init_late(void);
 
@@ -48,5 +49,7 @@ int crunch_init(void);
 static inline int crunch_init(void) { return 0; }
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

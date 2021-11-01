@@ -24,9 +24,12 @@
 
 int hwwep = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int channels = 0x3fff;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static char *ifname = "wlan%d";
 
 
@@ -2561,10 +2564,13 @@ static void _rtl92e_pci_disconnect(struct pci_dev *pdev)
 					pci_resource_len(pdev, 1));
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	} else {
 		priv = rtllib_priv(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pci_disable_device(pdev);
@@ -2649,6 +2655,7 @@ MODULE_FIRMWARE(RTL8192E_DATA_IMG_FW);
 module_param(ifname, charp, 0644);
 module_param(hwwep, int, 0644);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 MODULE_PARM_DESC(ifname, " Net interface name, wlan%d=default");
 MODULE_PARM_DESC(hwwep, " Try to use hardware WEP support(default use hw. set 0 to use software security)");
@@ -2659,3 +2666,8 @@ MODULE_PARM_DESC(ifname, " Net interface name, wlan%d=default");
 MODULE_PARM_DESC(hwwep, " Try to use hardware WEP support(default use hw. set 0 to use software security)");
 MODULE_PARM_DESC(channels, " Channel bitmask for specific locales. NYI");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+MODULE_PARM_DESC(ifname, " Net interface name, wlan%d=default");
+MODULE_PARM_DESC(hwwep, " Try to use hardware WEP support(default use hw. set 0 to use software security)");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

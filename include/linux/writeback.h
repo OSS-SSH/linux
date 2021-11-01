@@ -219,10 +219,14 @@ void wbc_detach_inode(struct writeback_control *wbc);
 void wbc_account_cgroup_owner(struct writeback_control *wbc, struct page *page,
 			      size_t bytes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
 =======
 int cgroup_writeback_by_id(u64 bdi_id, int memcg_id, unsigned long nr_pages,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   enum wb_reason reason, struct wb_completion *done);
 void cgroup_writeback_umount(void);
 bool cleanup_offline_cgwb(struct bdi_writeback *wb);
@@ -341,19 +345,24 @@ static inline void cgroup_writeback_umount(void)
  * mm/page-writeback.c
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 void laptop_io_completion(struct backing_dev_info *info);
 void laptop_sync_completion(void);
 void laptop_mode_timer_fn(struct timer_list *t);
 =======
 #ifdef CONFIG_BLOCK
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void laptop_io_completion(struct backing_dev_info *info);
 void laptop_sync_completion(void);
-void laptop_mode_sync(struct work_struct *work);
 void laptop_mode_timer_fn(struct timer_list *t);
+<<<<<<< HEAD
 #else
 static inline void laptop_sync_completion(void) { }
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool node_dirty_ok(struct pglist_data *pgdat);
 int wb_domain_init(struct wb_domain *dom, gfp_t gfp);
 #ifdef CONFIG_CGROUP_WRITEBACK
@@ -390,10 +399,14 @@ void global_dirty_limits(unsigned long *pbackground, unsigned long *pdirty);
 unsigned long wb_calc_thresh(struct bdi_writeback *wb, unsigned long thresh);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void wb_update_bandwidth(struct bdi_writeback *wb);
 =======
 void wb_update_bandwidth(struct bdi_writeback *wb, unsigned long start_time);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void wb_update_bandwidth(struct bdi_writeback *wb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void balance_dirty_pages_ratelimited(struct address_space *mapping);
 bool wb_over_bg_thresh(struct bdi_writeback *wb);
 

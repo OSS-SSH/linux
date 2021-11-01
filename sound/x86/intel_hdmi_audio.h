@@ -128,9 +128,12 @@ struct snd_intelhad {
 	struct work_struct hdmi_audio_wq;
 	struct mutex mutex; /* for protecting chmap and eld */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	bool need_reset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct snd_jack *jack;
 };
 

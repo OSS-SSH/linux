@@ -270,10 +270,14 @@ target_scsi2_reservation_reserve(struct se_cmd *cmd)
 	if (dev->reservation_holder &&
 	    dev->reservation_holder->se_node_acl != sess->se_node_acl) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_err("SCSI-2 RESERVATION CONFLICT for %s fabric\n",
 =======
 		pr_err("SCSI-2 RESERVATION CONFLIFT for %s fabric\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("SCSI-2 RESERVATION CONFLICT for %s fabric\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			tpg->se_tpg_tfo->fabric_name);
 		pr_err("Original reserver LUN: %llu %s\n",
 			cmd->se_lun->unpacked_lun,

@@ -24,9 +24,13 @@
 #include <linux/device.h>
 #include <linux/spinlock.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/platform_device.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/platform_device.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/irq.h>
 #include <asm/io.h>
 #include <soc/fsl/qe/qe.h>
@@ -58,12 +62,17 @@ struct qe_ic {
 
 	/* VIRQ numbers of QE high/low irqs */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int virq_high;
 	int virq_low;
 =======
 	unsigned int virq_high;
 	unsigned int virq_low;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int virq_high;
+	int virq_low;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -414,6 +423,7 @@ static void qe_ic_cascade_muxed_mpic(struct irq_desc *desc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int qe_ic_init(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
@@ -450,35 +460,39 @@ static int qe_ic_init(struct platform_device *pdev)
 	if (qe_ic->virq_high > 0 && qe_ic->virq_high != qe_ic->virq_low) {
 =======
 static void __init qe_ic_init(struct device_node *node)
+=======
+static int qe_ic_init(struct platform_device *pdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	struct device *dev = &pdev->dev;
 	void (*low_handler)(struct irq_desc *desc);
 	void (*high_handler)(struct irq_desc *desc);
 	struct qe_ic *qe_ic;
-	struct resource res;
-	u32 ret;
+	struct resource *res;
+	struct device_node *node = pdev->dev.of_node;
 
-	ret = of_address_to_resource(node, 0, &res);
-	if (ret)
-		return;
-
-	qe_ic = kzalloc(sizeof(*qe_ic), GFP_KERNEL);
-	if (qe_ic == NULL)
-		return;
-
-	qe_ic->irqhost = irq_domain_add_linear(node, NR_QE_IC_INTS,
-					       &qe_ic_host_ops, qe_ic);
-	if (qe_ic->irqhost == NULL) {
-		kfree(qe_ic);
-		return;
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	if (res == NULL) {
+		dev_err(dev, "no memory resource defined\n");
+		return -ENODEV;
 	}
 
-	qe_ic->regs = ioremap(res.start, resource_size(&res));
+	qe_ic = devm_kzalloc(dev, sizeof(*qe_ic), GFP_KERNEL);
+	if (qe_ic == NULL)
+		return -ENOMEM;
+
+	qe_ic->regs = devm_ioremap(dev, res->start, resource_size(res));
+	if (qe_ic->regs == NULL) {
+		dev_err(dev, "failed to ioremap() registers\n");
+		return -ENODEV;
+	}
 
 	qe_ic->hc_irq = qe_ic_irq_chip;
 
-	qe_ic->virq_high = irq_of_parse_and_map(node, 0);
-	qe_ic->virq_low = irq_of_parse_and_map(node, 1);
+	qe_ic->virq_high = platform_get_irq(pdev, 0);
+	qe_ic->virq_low = platform_get_irq(pdev, 1);
 
+<<<<<<< HEAD
 	if (!qe_ic->virq_low) {
 		printk(KERN_ERR "Failed to map QE_IC low IRQ\n");
 		kfree(qe_ic);
@@ -486,6 +500,12 @@ static void __init qe_ic_init(struct device_node *node)
 	}
 	if (qe_ic->virq_high != qe_ic->virq_low) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (qe_ic->virq_low <= 0)
+		return -ENODEV;
+
+	if (qe_ic->virq_high > 0 && qe_ic->virq_high != qe_ic->virq_low) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		low_handler = qe_ic_cascade_low;
 		high_handler = qe_ic_cascade_high;
 	} else {
@@ -494,6 +514,9 @@ static void __init qe_ic_init(struct device_node *node)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qe_ic->irqhost = irq_domain_add_linear(node, NR_QE_IC_INTS,
 					       &qe_ic_host_ops, qe_ic);
 	if (qe_ic->irqhost == NULL) {
@@ -501,13 +524,17 @@ static void __init qe_ic_init(struct device_node *node)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qe_ic_write(qe_ic->regs, QEIC_CICR, 0);
 
 	irq_set_handler_data(qe_ic->virq_low, qe_ic);
 	irq_set_chained_handler(qe_ic->virq_low, low_handler);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (high_handler) {
 		irq_set_handler_data(qe_ic->virq_high, qe_ic);
@@ -535,15 +562,30 @@ static int __init qe_ic_of_init(void)
 	platform_driver_register(&qe_ic_driver);
 =======
 	if (qe_ic->virq_high && qe_ic->virq_high != qe_ic->virq_low) {
+=======
+	if (high_handler) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		irq_set_handler_data(qe_ic->virq_high, qe_ic);
 		irq_set_chained_handler(qe_ic->virq_high, high_handler);
 	}
+	return 0;
 }
+static const struct of_device_id qe_ic_ids[] = {
+	{ .compatible = "fsl,qe-ic"},
+	{ .type = "qeic"},
+	{},
+};
 
-static int __init qe_ic_of_init(void)
+static struct platform_driver qe_ic_driver =
 {
-	struct device_node *np;
+	.driver	= {
+		.name		= "qe-ic",
+		.of_match_table	= qe_ic_ids,
+	},
+	.probe	= qe_ic_init,
+};
 
+<<<<<<< HEAD
 	np = of_find_compatible_node(NULL, NULL, "fsl,qe-ic");
 	if (!np) {
 		np = of_find_node_by_type(NULL, "qeic");
@@ -553,6 +595,11 @@ static int __init qe_ic_of_init(void)
 	qe_ic_init(np);
 	of_node_put(np);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init qe_ic_of_init(void)
+{
+	platform_driver_register(&qe_ic_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 subsys_initcall(qe_ic_of_init);

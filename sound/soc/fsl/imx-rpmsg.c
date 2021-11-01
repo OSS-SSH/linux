@@ -126,10 +126,14 @@ static int imx_rpmsg_probe(struct platform_device *pdev)
 	ret = devm_snd_soc_register_card(&pdev->dev, &data->card);
 	if (ret) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_err_probe(&pdev->dev, ret, "snd_soc_register_card failed\n");
 =======
 		dev_err(&pdev->dev, "snd_soc_register_card failed (%d)\n", ret);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_err_probe(&pdev->dev, ret, "snd_soc_register_card failed\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto fail;
 	}
 

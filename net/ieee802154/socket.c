@@ -42,11 +42,15 @@ ieee802154_get_dev(struct net *net, const struct ieee802154_addr *addr)
 		rcu_read_lock();
 		dev = dev_getbyhwaddr_rcu(net, ARPHRD_IEEE802154, hwaddr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dev_hold(dev);
 =======
 		if (dev)
 			dev_hold(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_hold(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rcu_read_unlock();
 		break;
 	case IEEE802154_ADDR_SHORT:
@@ -134,10 +138,14 @@ static int ieee802154_dev_ioctl(struct sock *sk, struct ifreq __user *arg,
 	struct net_device *dev;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (get_user_ifreq(&ifr, NULL, arg))
 =======
 	if (copy_from_user(&ifr, arg, sizeof(struct ifreq)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (get_user_ifreq(&ifr, NULL, arg))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
 	ifr.ifr_name[IFNAMSIZ-1] = 0;
@@ -152,10 +160,14 @@ static int ieee802154_dev_ioctl(struct sock *sk, struct ifreq __user *arg,
 		ret = dev->netdev_ops->ndo_do_ioctl(dev, &ifr, cmd);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!ret && put_user_ifreq(&ifr, arg))
 =======
 	if (!ret && copy_to_user(arg, &ifr, sizeof(struct ifreq)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!ret && put_user_ifreq(&ifr, arg))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 	dev_put(dev);
 
@@ -997,13 +1009,19 @@ static const struct proto_ops ieee802154_dgram_ops = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ieee802154_sock_destruct(struct sock *sk)
 {
 	skb_queue_purge(&sk->sk_receive_queue);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Create a socket. Initialise the socket, blank the addresses
  * set the state.
  */
@@ -1045,10 +1063,14 @@ static int ieee802154_create(struct net *net, struct socket *sock,
 
 	sock_init_data(sock, sk);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sk->sk_destruct = ieee802154_sock_destruct;
 =======
 	/* FIXME: sk->sk_destruct */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sk->sk_destruct = ieee802154_sock_destruct;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sk->sk_family = PF_IEEE802154;
 
 	/* Checksums on by default */

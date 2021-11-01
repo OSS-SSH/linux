@@ -55,13 +55,19 @@
 struct adjd_s311_data {
 	struct i2c_client *client;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
 		s16 chans[4];
 		s64 ts __aligned(8);
 	} scan;
+<<<<<<< HEAD
 =======
 	u16 *buffer;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum adjd_s311_channel_idx {
@@ -137,6 +143,7 @@ static irqreturn_t adjd_s311_trigger_handler(int irq, void *p)
 			goto done;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		data->scan.chans[j++] = ret & ADJD_S311_DATA_MASK;
 	}
 
@@ -147,6 +154,12 @@ static irqreturn_t adjd_s311_trigger_handler(int irq, void *p)
 
 	iio_push_to_buffers_with_timestamp(indio_dev, data->buffer, time_ns);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		data->scan.chans[j++] = ret & ADJD_S311_DATA_MASK;
+	}
+
+	iio_push_to_buffers_with_timestamp(indio_dev, &data->scan, time_ns);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 done:
 	iio_trigger_notify_done(indio_dev->trig);
@@ -240,6 +253,7 @@ static int adjd_s311_write_raw(struct iio_dev *indio_dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct iio_info adjd_s311_info = {
 	.read_raw = adjd_s311_read_raw,
 	.write_raw = adjd_s311_write_raw,
@@ -262,6 +276,11 @@ static const struct iio_info adjd_s311_info = {
 	.write_raw = adjd_s311_write_raw,
 	.update_scan_mode = adjd_s311_update_scan_mode,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct iio_info adjd_s311_info = {
+	.read_raw = adjd_s311_read_raw,
+	.write_raw = adjd_s311_write_raw,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int adjd_s311_probe(struct i2c_client *client,
@@ -277,9 +296,12 @@ static int adjd_s311_probe(struct i2c_client *client,
 
 	data = iio_priv(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	i2c_set_clientdata(client, indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data->client = client;
 
 	indio_dev->info = &adjd_s311_info;
@@ -288,6 +310,7 @@ static int adjd_s311_probe(struct i2c_client *client,
 	indio_dev->num_channels = ARRAY_SIZE(adjd_s311_channels);
 	indio_dev->modes = INDIO_DIRECT_MODE;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = devm_iio_triggered_buffer_setup(&client->dev, indio_dev, NULL,
 					      adjd_s311_trigger_handler, NULL);
@@ -325,6 +348,14 @@ static int adjd_s311_remove(struct i2c_client *client)
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = devm_iio_triggered_buffer_setup(&client->dev, indio_dev, NULL,
+					      adjd_s311_trigger_handler, NULL);
+	if (err < 0)
+		return err;
+
+	return devm_iio_device_register(&client->dev, indio_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct i2c_device_id adjd_s311_id[] = {
@@ -339,9 +370,12 @@ static struct i2c_driver adjd_s311_driver = {
 	},
 	.probe		= adjd_s311_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= adjd_s311_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= adjd_s311_id,
 };
 module_i2c_driver(adjd_s311_driver);

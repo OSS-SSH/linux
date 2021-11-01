@@ -1196,6 +1196,7 @@ static const struct intel_cdclk_vals glk_cdclk_table[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static const struct intel_cdclk_vals cnl_cdclk_table[] = {
 	{ .refclk = 19200, .cdclk = 168000, .divider = 4, .ratio = 35 },
@@ -1209,6 +1210,8 @@ static const struct intel_cdclk_vals cnl_cdclk_table[] = {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_cdclk_vals icl_cdclk_table[] = {
 	{ .refclk = 19200, .cdclk = 172800, .divider = 2, .ratio = 18 },
 	{ .refclk = 19200, .cdclk = 192000, .divider = 2, .ratio = 20 },
@@ -1294,6 +1297,9 @@ static const struct intel_cdclk_vals adlp_cdclk_table[] = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_cdclk_vals dg2_cdclk_table[] = {
 	{ .refclk = 38400, .cdclk = 172800, .divider = 2, .ratio =  9 },
 	{ .refclk = 38400, .cdclk = 192000, .divider = 2, .ratio = 10 },
@@ -1304,8 +1310,11 @@ static const struct intel_cdclk_vals dg2_cdclk_table[] = {
 	{}
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bxt_calc_cdclk(struct drm_i915_private *dev_priv, int min_cdclk)
 {
 	const struct intel_cdclk_vals *table = dev_priv->cdclk.table;
@@ -1346,6 +1355,7 @@ static u8 bxt_calc_voltage_level(int cdclk)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static u8 cnl_calc_voltage_level(int cdclk)
 {
@@ -1358,6 +1368,8 @@ static u8 cnl_calc_voltage_level(int cdclk)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u8 icl_calc_voltage_level(int cdclk)
 {
 	if (cdclk > 556800)
@@ -1393,6 +1405,7 @@ static u8 tgl_calc_voltage_level(int cdclk)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static void cnl_readout_refclk(struct drm_i915_private *dev_priv,
 			       struct intel_cdclk_config *cdclk_config)
@@ -1404,6 +1417,8 @@ static void cnl_readout_refclk(struct drm_i915_private *dev_priv,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void icl_readout_refclk(struct drm_i915_private *dev_priv,
 			       struct intel_cdclk_config *cdclk_config)
 {
@@ -1431,6 +1446,7 @@ static void bxt_de_pll_readout(struct drm_i915_private *dev_priv,
 	u32 val, ratio;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (IS_DG2(dev_priv))
 		cdclk_config->ref = 38400;
 	else if (DISPLAY_VER(dev_priv) >= 11)
@@ -1441,6 +1457,12 @@ static void bxt_de_pll_readout(struct drm_i915_private *dev_priv,
 	else if (IS_CANNONLAKE(dev_priv))
 		cnl_readout_refclk(dev_priv, cdclk_config);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_DG2(dev_priv))
+		cdclk_config->ref = 38400;
+	else if (DISPLAY_VER(dev_priv) >= 11)
+		icl_readout_refclk(dev_priv, cdclk_config);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		cdclk_config->ref = 19200;
 
@@ -1457,6 +1479,7 @@ static void bxt_de_pll_readout(struct drm_i915_private *dev_priv,
 
 	/*
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * DISPLAY_VER >= 11 have the ratio directly in the PLL enable register,
 	 * gen9lp had it in a separate PLL control register.
 	 */
@@ -1469,6 +1492,13 @@ static void bxt_de_pll_readout(struct drm_i915_private *dev_priv,
 	if (DISPLAY_VER(dev_priv) >= 11 || IS_CANNONLAKE(dev_priv))
 		ratio = val & CNL_CDCLK_PLL_RATIO_MASK;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * DISPLAY_VER >= 11 have the ratio directly in the PLL enable register,
+	 * gen9lp had it in a separate PLL control register.
+	 */
+	if (DISPLAY_VER(dev_priv) >= 11)
+		ratio = val & ICL_CDCLK_PLL_RATIO_MASK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		ratio = intel_de_read(dev_priv, BXT_DE_PLL_CTL) & BXT_DE_PLL_RATIO_MASK;
 
@@ -1556,10 +1586,14 @@ static void bxt_de_pll_enable(struct drm_i915_private *dev_priv, int vco)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void icl_cdclk_pll_disable(struct drm_i915_private *dev_priv)
 =======
 static void cnl_cdclk_pll_disable(struct drm_i915_private *dev_priv)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void icl_cdclk_pll_disable(struct drm_i915_private *dev_priv)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	intel_de_rmw(dev_priv, BXT_DE_PLL_ENABLE,
 		     BXT_DE_PLL_PLL_ENABLE, 0);
@@ -1572,19 +1606,27 @@ static void cnl_cdclk_pll_disable(struct drm_i915_private *dev_priv)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void icl_cdclk_pll_enable(struct drm_i915_private *dev_priv, int vco)
 =======
 static void cnl_cdclk_pll_enable(struct drm_i915_private *dev_priv, int vco)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void icl_cdclk_pll_enable(struct drm_i915_private *dev_priv, int vco)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ratio = DIV_ROUND_CLOSEST(vco, dev_priv->cdclk.hw.ref);
 	u32 val;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	val = ICL_CDCLK_PLL_RATIO(ratio);
 =======
 	val = CNL_CDCLK_PLL_RATIO(ratio);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	val = ICL_CDCLK_PLL_RATIO(ratio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_de_write(dev_priv, BXT_DE_PLL_ENABLE, val);
 
 	val |= BXT_DE_PLL_PLL_ENABLE;
@@ -1598,6 +1640,7 @@ static void cnl_cdclk_pll_enable(struct drm_i915_private *dev_priv, int vco)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static bool has_cdclk_crawl(struct drm_i915_private *i915)
 {
@@ -1605,6 +1648,8 @@ static bool has_cdclk_crawl(struct drm_i915_private *i915)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void adlp_cdclk_pll_crawl(struct drm_i915_private *dev_priv, int vco)
 {
 	int ratio = DIV_ROUND_CLOSEST(vco, dev_priv->cdclk.hw.ref);
@@ -1612,10 +1657,14 @@ static void adlp_cdclk_pll_crawl(struct drm_i915_private *dev_priv, int vco)
 
 	/* Write PLL ratio without disabling */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	val = ICL_CDCLK_PLL_RATIO(ratio) | BXT_DE_PLL_PLL_ENABLE;
 =======
 	val = CNL_CDCLK_PLL_RATIO(ratio) | BXT_DE_PLL_PLL_ENABLE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	val = ICL_CDCLK_PLL_RATIO(ratio) | BXT_DE_PLL_PLL_ENABLE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_de_write(dev_priv, BXT_DE_PLL_ENABLE, val);
 
 	/* Submit freq change request */
@@ -1685,10 +1734,14 @@ static void bxt_set_cdclk(struct drm_i915_private *dev_priv,
 
 	/* Inform power controller of upcoming frequency change. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (DISPLAY_VER(dev_priv) >= 11)
 =======
 	if (DISPLAY_VER(dev_priv) >= 11 || IS_CANNONLAKE(dev_priv))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (DISPLAY_VER(dev_priv) >= 11)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = skl_pcode_request(dev_priv, SKL_PCODE_CDCLK_CONTROL,
 					SKL_CDCLK_PREPARE_FOR_CHANGE,
 					SKL_CDCLK_READY_FOR_CHANGE,
@@ -1710,6 +1763,7 @@ static void bxt_set_cdclk(struct drm_i915_private *dev_priv,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (HAS_CDCLK_CRAWL(dev_priv) && dev_priv->cdclk.hw.vco > 0 && vco > 0) {
 		if (dev_priv->cdclk.hw.vco != vco)
 			adlp_cdclk_pll_crawl(dev_priv, vco);
@@ -1722,16 +1776,23 @@ static void bxt_set_cdclk(struct drm_i915_private *dev_priv,
 			icl_cdclk_pll_enable(dev_priv, vco);
 =======
 	if (has_cdclk_crawl(dev_priv) && dev_priv->cdclk.hw.vco > 0 && vco > 0) {
+=======
+	if (HAS_CDCLK_CRAWL(dev_priv) && dev_priv->cdclk.hw.vco > 0 && vco > 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dev_priv->cdclk.hw.vco != vco)
 			adlp_cdclk_pll_crawl(dev_priv, vco);
-	} else if (DISPLAY_VER(dev_priv) >= 11 || IS_CANNONLAKE(dev_priv)) {
+	} else if (DISPLAY_VER(dev_priv) >= 11) {
 		if (dev_priv->cdclk.hw.vco != 0 &&
 		    dev_priv->cdclk.hw.vco != vco)
-			cnl_cdclk_pll_disable(dev_priv);
+			icl_cdclk_pll_disable(dev_priv);
 
 		if (dev_priv->cdclk.hw.vco != vco)
+<<<<<<< HEAD
 			cnl_cdclk_pll_enable(dev_priv, vco);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			icl_cdclk_pll_enable(dev_priv, vco);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		if (dev_priv->cdclk.hw.vco != 0 &&
 		    dev_priv->cdclk.hw.vco != vco)
@@ -1758,10 +1819,14 @@ static void bxt_set_cdclk(struct drm_i915_private *dev_priv,
 		intel_wait_for_vblank(dev_priv, pipe);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (DISPLAY_VER(dev_priv) >= 11) {
 =======
 	if (DISPLAY_VER(dev_priv) >= 11 || IS_CANNONLAKE(dev_priv)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (DISPLAY_VER(dev_priv) >= 11) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = sandybridge_pcode_write(dev_priv, SKL_PCODE_CDCLK_CONTROL,
 					      cdclk_config->voltage_level);
 	} else {
@@ -1787,10 +1852,14 @@ static void bxt_set_cdclk(struct drm_i915_private *dev_priv,
 	intel_update_cdclk(dev_priv);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (DISPLAY_VER(dev_priv) >= 11)
 =======
 	if (DISPLAY_VER(dev_priv) >= 11 || IS_CANNONLAKE(dev_priv))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (DISPLAY_VER(dev_priv) >= 11)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Can't read out the voltage level :(
 		 * Let's just assume everything is as expected.
@@ -1939,10 +2008,14 @@ static bool intel_cdclk_can_crawl(struct drm_i915_private *dev_priv,
 	int a_div, b_div;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!HAS_CDCLK_CRAWL(dev_priv))
 =======
 	if (!has_cdclk_crawl(dev_priv))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!HAS_CDCLK_CRAWL(dev_priv))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	/*
@@ -2204,10 +2277,14 @@ int intel_crtc_compute_min_cdclk(const struct intel_crtc_state *crtc_state)
 	    crtc_state->lane_count == 4) {
 		if (DISPLAY_VER(dev_priv) == 10) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			/* Display WA #1145: glk */
 =======
 			/* Display WA #1145: glk,cnl */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			/* Display WA #1145: glk */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			min_cdclk = max(316800, min_cdclk);
 		} else if (DISPLAY_VER(dev_priv) == 9 || IS_BROADWELL(dev_priv)) {
 			/* Display WA #1144: skl,bxt */
@@ -2329,10 +2406,14 @@ static int intel_compute_min_cdclk(struct intel_cdclk_state *cdclk_state)
 /*
  * Account for port clock min voltage level requirements.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This only really does something on DISPLA_VER >= 11 but can be
 =======
  * This only really does something on CNL+ but can be
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This only really does something on DISPLA_VER >= 11 but can be
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * called on earlier platforms as well.
  *
  * Note that this functions assumes that 0 is
@@ -2747,10 +2828,13 @@ void intel_update_max_cdclk(struct drm_i915_private *dev_priv)
 		else
 			dev_priv->max_cdclk_freq = 652800;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	} else if (IS_CANNONLAKE(dev_priv)) {
 		dev_priv->max_cdclk_freq = 528000;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (IS_GEMINILAKE(dev_priv)) {
 		dev_priv->max_cdclk_freq = 316800;
 	} else if (IS_BROXTON(dev_priv)) {
@@ -2975,6 +3059,9 @@ u32 intel_read_rawclk(struct drm_i915_private *dev_priv)
 void intel_init_cdclk_hooks(struct drm_i915_private *dev_priv)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_DG2(dev_priv)) {
 		dev_priv->display.set_cdclk = bxt_set_cdclk;
 		dev_priv->display.bw_calc_min_cdclk = skl_bw_calc_min_cdclk;
@@ -2982,13 +3069,17 @@ void intel_init_cdclk_hooks(struct drm_i915_private *dev_priv)
 		dev_priv->display.calc_voltage_level = tgl_calc_voltage_level;
 		dev_priv->cdclk.table = dg2_cdclk_table;
 	} else if (IS_ALDERLAKE_P(dev_priv)) {
+<<<<<<< HEAD
 =======
 	if (IS_ALDERLAKE_P(dev_priv)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_priv->display.set_cdclk = bxt_set_cdclk;
 		dev_priv->display.bw_calc_min_cdclk = skl_bw_calc_min_cdclk;
 		dev_priv->display.modeset_calc_cdclk = bxt_modeset_calc_cdclk;
 		dev_priv->display.calc_voltage_level = tgl_calc_voltage_level;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		/* Wa_22011320316:adl-p[a0] */
 		if (IS_ADLP_DISPLAY_STEP(dev_priv, STEP_A0, STEP_B0))
@@ -2996,6 +3087,10 @@ void intel_init_cdclk_hooks(struct drm_i915_private *dev_priv)
 		/* Wa_22011320316:adlp[a0] */
 		if (IS_ADLP_DISPLAY_STEP(dev_priv, STEP_A0, STEP_A0))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Wa_22011320316:adl-p[a0] */
+		if (IS_ADLP_DISPLAY_STEP(dev_priv, STEP_A0, STEP_B0))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_priv->cdclk.table = adlp_a_step_cdclk_table;
 		else
 			dev_priv->cdclk.table = adlp_cdclk_table;
@@ -3024,6 +3119,7 @@ void intel_init_cdclk_hooks(struct drm_i915_private *dev_priv)
 		dev_priv->display.calc_voltage_level = icl_calc_voltage_level;
 		dev_priv->cdclk.table = icl_cdclk_table;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	} else if (IS_CANNONLAKE(dev_priv)) {
 		dev_priv->display.bw_calc_min_cdclk = skl_bw_calc_min_cdclk;
@@ -3032,6 +3128,8 @@ void intel_init_cdclk_hooks(struct drm_i915_private *dev_priv)
 		dev_priv->display.calc_voltage_level = cnl_calc_voltage_level;
 		dev_priv->cdclk.table = cnl_cdclk_table;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (IS_GEMINILAKE(dev_priv) || IS_BROXTON(dev_priv)) {
 		dev_priv->display.bw_calc_min_cdclk = skl_bw_calc_min_cdclk;
 		dev_priv->display.set_cdclk = bxt_set_cdclk;

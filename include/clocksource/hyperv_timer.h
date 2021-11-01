@@ -21,10 +21,15 @@
 #define HV_MIN_DELTA_TICKS 1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_HYPERV_TIMER
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_HYPERV_TIMER
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Routines called by the VMbus driver */
 extern int hv_stimer_alloc(bool have_percpu_irqs);
 extern int hv_stimer_cleanup(unsigned int cpu);
@@ -34,10 +39,13 @@ extern void hv_stimer_global_cleanup(void);
 extern void hv_stimer0_isr(void);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_HYPERV_TIMER
 extern u64 (*hv_read_reference_counter)(void);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void hv_init_clocksource(void);
 
 extern struct ms_hyperv_tsc_page *hv_get_tsc_page(void);
@@ -109,6 +117,9 @@ static inline u64 hv_read_tsc_page_tsc(const struct ms_hyperv_tsc_page *tsc_pg,
 	return U64_MAX;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline int hv_stimer_cleanup(unsigned int cpu) { return 0; }
 static inline void hv_stimer_legacy_init(unsigned int cpu, int sint) {}
@@ -116,8 +127,11 @@ static inline void hv_stimer_legacy_cleanup(unsigned int cpu) {}
 static inline void hv_stimer_global_cleanup(void) {}
 static inline void hv_stimer0_isr(void) {}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_HYPERV_TIMER */
 
 #endif

@@ -196,10 +196,15 @@ struct esd_usb2 {
 	u32 version;
 	int rxinitdone;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void *rxbuf[MAX_RX_URBS];
 	dma_addr_t rxbuf_dma[MAX_RX_URBS];
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void *rxbuf[MAX_RX_URBS];
+	dma_addr_t rxbuf_dma[MAX_RX_URBS];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct esd_usb2_net_priv {
@@ -228,12 +233,17 @@ static void esd_usb2_rx_event(struct esd_usb2_net_priv *priv,
 		u8 state = msg->msg.rx.data[0];
 		u8 ecc = msg->msg.rx.data[1];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		u8 rxerr = msg->msg.rx.data[2];
 		u8 txerr = msg->msg.rx.data[3];
 =======
 		u8 txerr = msg->msg.rx.data[2];
 		u8 rxerr = msg->msg.rx.data[3];
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		u8 rxerr = msg->msg.rx.data[2];
+		u8 txerr = msg->msg.rx.data[3];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		skb = alloc_can_err_skb(priv->netdev, &cf);
 		if (skb == NULL) {
@@ -485,10 +495,14 @@ static void esd_usb2_write_bulk_callback(struct urb *urb)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static ssize_t firmware_show(struct device *d,
 =======
 static ssize_t show_firmware(struct device *d,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static ssize_t firmware_show(struct device *d,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     struct device_attribute *attr, char *buf)
 {
 	struct usb_interface *intf = to_usb_interface(d);
@@ -500,6 +514,7 @@ static ssize_t show_firmware(struct device *d,
 		       dev->version & 0xff);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEVICE_ATTR_RO(firmware);
 
 static ssize_t hardware_show(struct device *d,
@@ -508,6 +523,11 @@ static DEVICE_ATTR(firmware, 0444, show_firmware, NULL);
 
 static ssize_t show_hardware(struct device *d,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEVICE_ATTR_RO(firmware);
+
+static ssize_t hardware_show(struct device *d,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     struct device_attribute *attr, char *buf)
 {
 	struct usb_interface *intf = to_usb_interface(d);
@@ -519,6 +539,7 @@ static ssize_t show_hardware(struct device *d,
 		       (dev->version >> 16) & 0xff);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEVICE_ATTR_RO(hardware);
 
 static ssize_t nets_show(struct device *d,
@@ -527,6 +548,11 @@ static DEVICE_ATTR(hardware, 0444, show_hardware, NULL);
 
 static ssize_t show_nets(struct device *d,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEVICE_ATTR_RO(hardware);
+
+static ssize_t nets_show(struct device *d,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 struct device_attribute *attr, char *buf)
 {
 	struct usb_interface *intf = to_usb_interface(d);
@@ -535,10 +561,14 @@ static ssize_t show_nets(struct device *d,
 	return sprintf(buf, "%d", dev->net_count);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEVICE_ATTR_RO(nets);
 =======
 static DEVICE_ATTR(nets, 0444, show_nets, NULL);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEVICE_ATTR_RO(nets);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int esd_usb2_send_msg(struct esd_usb2 *dev, struct esd_usb2_msg *msg)
 {
@@ -576,9 +606,13 @@ static int esd_usb2_setup_rx_urbs(struct esd_usb2 *dev)
 		struct urb *urb = NULL;
 		u8 *buf = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_addr_t buf_dma;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_addr_t buf_dma;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* create a URB, and a buffer for it */
 		urb = usb_alloc_urb(0, GFP_KERNEL);
@@ -589,10 +623,14 @@ static int esd_usb2_setup_rx_urbs(struct esd_usb2 *dev)
 
 		buf = usb_alloc_coherent(dev->udev, RX_BUFFER_SIZE, GFP_KERNEL,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					 &buf_dma);
 =======
 					 &urb->transfer_dma);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 &buf_dma);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!buf) {
 			dev_warn(dev->udev->dev.parent,
 				 "No memory left for USB buffer\n");
@@ -601,10 +639,15 @@ static int esd_usb2_setup_rx_urbs(struct esd_usb2 *dev)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		urb->transfer_dma = buf_dma;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		urb->transfer_dma = buf_dma;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		usb_fill_bulk_urb(urb, dev->udev,
 				  usb_rcvbulkpipe(dev->udev, 1),
 				  buf, RX_BUFFER_SIZE,
@@ -618,16 +661,22 @@ static int esd_usb2_setup_rx_urbs(struct esd_usb2 *dev)
 			usb_free_coherent(dev->udev, RX_BUFFER_SIZE, buf,
 					  urb->transfer_dma);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto freeurb;
 		}
 
 		dev->rxbuf[i] = buf;
 		dev->rxbuf_dma[i] = buf_dma;
 
+<<<<<<< HEAD
 =======
 		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 freeurb:
 		/* Drop reference, USB core will take care of freeing it */
 		usb_free_urb(urb);
@@ -716,13 +765,19 @@ static void unlink_all_urbs(struct esd_usb2 *dev)
 
 	usb_kill_anchored_urbs(&dev->rx_submitted);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < MAX_RX_URBS; ++i)
 		usb_free_coherent(dev->udev, RX_BUFFER_SIZE,
 				  dev->rxbuf[i], dev->rxbuf_dma[i]);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < dev->net_count; i++) {
 		priv = dev->nets[i];
 		if (priv) {

@@ -460,6 +460,7 @@ static int mthca_destroy_srq(struct ib_srq *srq, struct ib_udata *udata)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int mthca_create_qp(struct ib_qp *ibqp,
 			   struct ib_qp_init_attr *init_attr,
 			   struct ib_udata *udata)
@@ -468,10 +469,16 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 				     struct ib_qp_init_attr *init_attr,
 				     struct ib_udata *udata)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int mthca_create_qp(struct ib_qp *ibqp,
+			   struct ib_qp_init_attr *init_attr,
+			   struct ib_udata *udata)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mthca_ucontext *context = rdma_udata_to_drv_context(
 		udata, struct mthca_ucontext, ibucontext);
 	struct mthca_create_qp ucmd;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mthca_qp *qp = to_mqp(ibqp);
 	struct mthca_dev *dev = to_mdev(ibqp->device);
@@ -486,12 +493,21 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 	if (init_attr->create_flags)
 		return ERR_PTR(-EOPNOTSUPP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mthca_qp *qp = to_mqp(ibqp);
+	struct mthca_dev *dev = to_mdev(ibqp->device);
+	int err;
+
+	if (init_attr->create_flags)
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (init_attr->qp_type) {
 	case IB_QPT_RC:
 	case IB_QPT_UC:
 	case IB_QPT_UD:
 	{
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (udata) {
 			if (ib_copy_from_udata(&ucmd, udata, sizeof(ucmd)))
@@ -518,31 +534,34 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 		if (!qp)
 			return ERR_PTR(-ENOMEM);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (udata) {
-			if (ib_copy_from_udata(&ucmd, udata, sizeof ucmd)) {
-				kfree(qp);
-				return ERR_PTR(-EFAULT);
-			}
+			if (ib_copy_from_udata(&ucmd, udata, sizeof(ucmd)))
+				return -EFAULT;
 
-			err = mthca_map_user_db(to_mdev(pd->device), &context->uar,
+			err = mthca_map_user_db(dev, &context->uar,
 						context->db_tab,
-						ucmd.sq_db_index, ucmd.sq_db_page);
-			if (err) {
-				kfree(qp);
-				return ERR_PTR(err);
-			}
+						ucmd.sq_db_index,
+						ucmd.sq_db_page);
+			if (err)
+				return err;
 
-			err = mthca_map_user_db(to_mdev(pd->device), &context->uar,
+			err = mthca_map_user_db(dev, &context->uar,
 						context->db_tab,
-						ucmd.rq_db_index, ucmd.rq_db_page);
+						ucmd.rq_db_index,
+						ucmd.rq_db_page);
 			if (err) {
-				mthca_unmap_user_db(to_mdev(pd->device),
-						    &context->uar,
+				mthca_unmap_user_db(dev, &context->uar,
 						    context->db_tab,
 						    ucmd.sq_db_index);
+<<<<<<< HEAD
 				kfree(qp);
 				return ERR_PTR(err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 
 			qp->mr.ibmr.lkey = ucmd.lkey;
@@ -551,16 +570,21 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = mthca_alloc_qp(dev, to_mpd(ibqp->pd),
 =======
 		err = mthca_alloc_qp(to_mdev(pd->device), to_mpd(pd),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = mthca_alloc_qp(dev, to_mpd(ibqp->pd),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     to_mcq(init_attr->send_cq),
 				     to_mcq(init_attr->recv_cq),
 				     init_attr->qp_type, init_attr->sq_sig_type,
 				     &init_attr->cap, qp, udata);
 
 		if (err && udata) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 			mthca_unmap_user_db(dev, &context->uar, context->db_tab,
 					    ucmd.sq_db_index);
@@ -574,6 +598,11 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 					    &context->uar,
 					    context->db_tab,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			mthca_unmap_user_db(dev, &context->uar, context->db_tab,
+					    ucmd.sq_db_index);
+			mthca_unmap_user_db(dev, &context->uar, context->db_tab,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    ucmd.rq_db_index);
 		}
 
@@ -583,6 +612,7 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 	case IB_QPT_SMI:
 	case IB_QPT_GSI:
 	{
+<<<<<<< HEAD
 <<<<<<< HEAD
 		qp->sqp = kzalloc(sizeof(struct mthca_sqp), GFP_KERNEL);
 		if (!qp->sqp)
@@ -600,40 +630,53 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 		qp = kzalloc(sizeof(*qp), GFP_KERNEL);
 		if (!qp)
 			return ERR_PTR(-ENOMEM);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qp->sqp = kzalloc(sizeof(struct mthca_sqp), GFP_KERNEL);
-		if (!qp->sqp) {
-			kfree(qp);
-			return ERR_PTR(-ENOMEM);
-		}
+		if (!qp->sqp)
+			return -ENOMEM;
 
 		qp->ibqp.qp_num = init_attr->qp_type == IB_QPT_SMI ? 0 : 1;
 
-		err = mthca_alloc_sqp(to_mdev(pd->device), to_mpd(pd),
+		err = mthca_alloc_sqp(dev, to_mpd(ibqp->pd),
 				      to_mcq(init_attr->send_cq),
 				      to_mcq(init_attr->recv_cq),
 				      init_attr->sq_sig_type, &init_attr->cap,
+<<<<<<< HEAD
 				      qp->ibqp.qp_num, init_attr->port_num,
 				      qp, udata);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      qp->ibqp.qp_num, init_attr->port_num, qp,
+				      udata);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 	default:
 		/* Don't support raw QPs */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EOPNOTSUPP;
 =======
 		return ERR_PTR(-EOPNOTSUPP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (err) {
 		kfree(qp->sqp);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return err;
 =======
 		kfree(qp);
 		return ERR_PTR(err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	init_attr->cap.max_send_wr     = qp->sq.max;
@@ -643,10 +686,14 @@ static struct ib_qp *mthca_create_qp(struct ib_pd *pd,
 	init_attr->cap.max_inline_data = qp->max_inline_data;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return &qp->ibqp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int mthca_destroy_qp(struct ib_qp *qp, struct ib_udata *udata)
@@ -670,9 +717,12 @@ static int mthca_destroy_qp(struct ib_qp *qp, struct ib_udata *udata)
 	mthca_free_qp(to_mdev(qp->device), to_mqp(qp));
 	kfree(to_mqp(qp)->sqp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kfree(to_mqp(qp));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1200,9 +1250,13 @@ static const struct ib_device_ops mthca_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_cq, mthca_cq, ibcq),
 	INIT_RDMA_OBJ_SIZE(ib_pd, mthca_pd, ibpd),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_RDMA_OBJ_SIZE(ib_qp, mthca_qp, ibqp),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_RDMA_OBJ_SIZE(ib_qp, mthca_qp, ibqp),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, mthca_ucontext, ibucontext),
 };
 

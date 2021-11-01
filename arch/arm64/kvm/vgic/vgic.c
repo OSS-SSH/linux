@@ -107,9 +107,12 @@ struct vgic_irq *vgic_get_irq(struct kvm *kvm, struct kvm_vcpu *vcpu,
 		return vgic_get_lpi(kvm, intid);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	WARN(1, "Looking up struct vgic_irq for reserved INTID");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NULL;
 }
 
@@ -1026,6 +1029,9 @@ bool kvm_vgic_map_is_active(struct kvm_vcpu *vcpu, unsigned int vintid)
 	return map_is_active;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Level-triggered mapped IRQs are special because we only observe rising
@@ -1064,5 +1070,8 @@ void vgic_irq_handle_resampling(struct vgic_irq *irq,
 			vgic_irq_set_phys_active(irq, false);
 	}
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

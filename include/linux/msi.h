@@ -108,11 +108,16 @@ struct ti_sci_inta_msi_desc {
  * @write_msi_msg_data:	Data parameter for the callback.
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @msi_mask:	[PCI MSI]   MSI cached mask bits
  * @msix_ctrl:	[PCI MSI-X] MSI-X cached per vector control bits
 =======
  * @masked:	[PCI MSI/X] Mask bits
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @msi_mask:	[PCI MSI]   MSI cached mask bits
+ * @msix_ctrl:	[PCI MSI-X] MSI-X cached per vector control bits
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @is_msix:	[PCI MSI/X] True if MSI-X
  * @multiple:	[PCI MSI/X] log2 num of messages allocated
  * @multi_cap:	[PCI MSI/X] log2 num of messages supported
@@ -145,13 +150,19 @@ struct msi_desc {
 		/* PCI MSI/X specific data */
 		struct {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			union {
 				u32 msi_mask;
 				u32 msix_ctrl;
 			};
+<<<<<<< HEAD
 =======
 			u32 masked;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct {
 				u8	is_msix		: 1;
 				u8	multiple	: 3;
@@ -245,6 +256,7 @@ void __pci_read_msi_msg(struct msi_desc *entry, struct msi_msg *msg);
 void __pci_write_msi_msg(struct msi_desc *entry, struct msi_msg *msg);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void pci_msi_mask_irq(struct irq_data *data);
 void pci_msi_unmask_irq(struct irq_data *data);
 
@@ -259,6 +271,15 @@ void pci_msi_mask_irq(struct irq_data *data);
 void pci_msi_unmask_irq(struct irq_data *data);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void pci_msi_mask_irq(struct irq_data *data);
+void pci_msi_unmask_irq(struct irq_data *data);
+
+const struct attribute_group **msi_populate_sysfs(struct device *dev);
+void msi_destroy_sysfs(struct device *dev,
+		       const struct attribute_group **msi_irq_groups);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The arch hooks to setup up msi irqs. Default functions are implemented
  * as weak symbols so that they /can/ be overriden by architecture specific

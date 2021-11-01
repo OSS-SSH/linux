@@ -3394,15 +3394,20 @@ static int ath10k_pci_claim(struct ath10k *ar)
 
 	/* Target expects 32 bit DMA. Enforce it. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
 =======
 	ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		ath10k_err(ar, "failed to set dma mask to 32-bit: %d\n", ret);
 		goto err_region;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	ret = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
@@ -3413,6 +3418,8 @@ static int ath10k_pci_claim(struct ath10k *ar)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_set_master(pdev);
 
 	/* Arrange for access to Target SoC registers. */

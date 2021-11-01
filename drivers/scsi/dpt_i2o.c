@@ -653,10 +653,14 @@ static int adpt_abort(struct scsi_cmnd * cmd)
 	msg[3]= 0;
 	/* Add 1 to avoid firmware treating it as invalid command */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	msg[4] = scsi_cmd_to_rq(cmd)->tag + 1;
 =======
 	msg[4] = cmd->request->tag + 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msg[4] = scsi_cmd_to_rq(cmd)->tag + 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (pHba->host)
 		spin_lock_irq(pHba->host->host_lock);
 	rcode = adpt_i2o_post_wait(pHba, msg, sizeof(msg), FOREVER);
@@ -2241,10 +2245,14 @@ static s32 adpt_scsi_to_i2o(adpt_hba* pHba, struct scsi_cmnd* cmd, struct adpt_d
 	msg[2] = 0;
 	/* Add 1 to avoid firmware treating it as invalid command */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	msg[3] = scsi_cmd_to_rq(cmd)->tag + 1;
 =======
 	msg[3] = cmd->request->tag + 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msg[3] = scsi_cmd_to_rq(cmd)->tag + 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	// Our cards use the transaction context as the tag for queueing
 	// Adaptec/DPT Private stuff 
 	msg[4] = I2O_CMD_SCSI_EXEC|(DPT_ORGANIZATION_ID<<16);

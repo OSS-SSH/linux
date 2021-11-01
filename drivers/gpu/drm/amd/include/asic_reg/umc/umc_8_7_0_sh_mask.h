@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Copyright (C) 2020  Advanced Micro Devices, Inc.
  *
@@ -99,6 +102,7 @@
 #define MCA_UMC_UMC0_MCUMC_ADDRT0__Reserved_MASK                                                              0xC000000000000000L
 
 #endif
+<<<<<<< HEAD
 =======
 #ifndef _umc_8_7_0_SH_MASK_HEADER
 #define _umc_8_7_0_SH_MASK_HEADER
@@ -180,3 +184,5 @@
 
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

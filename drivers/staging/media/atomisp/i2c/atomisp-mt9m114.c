@@ -571,6 +571,7 @@ static int power_down(struct v4l2_subdev *sd)
 static int mt9m114_s_power(struct v4l2_subdev *sd, int power)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (power == 0)
 		return power_down(sd);
 
@@ -580,14 +581,21 @@ static int mt9m114_s_power(struct v4l2_subdev *sd, int power)
 	return mt9m114_init_common(sd);
 =======
 	if (power == 0) {
+=======
+	if (power == 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return power_down(sd);
-	} else {
-		if (power_up(sd))
-			return -EINVAL;
 
+<<<<<<< HEAD
 		return mt9m114_init_common(sd);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (power_up(sd))
+		return -EINVAL;
+
+	return mt9m114_init_common(sd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1556,21 +1564,30 @@ static int mt9m114_detect(struct mt9m114_device *dev, struct i2c_client *client)
 {
 	struct i2c_adapter *adapter = client->adapter;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 model;
 	int ret;
 =======
 	u32 retvalue;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 model;
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!i2c_check_functionality(adapter, I2C_FUNC_I2C)) {
 		dev_err(&client->dev, "%s: i2c error", __func__);
 		return -ENODEV;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = mt9m114_read_reg(client, MISENSOR_16BIT, MT9M114_PID, &model);
 	if (ret)
 		return ret;
 	dev->real_model_id = model;
+<<<<<<< HEAD
 
 	if (model != MT9M114_MOD_ID) {
 =======
@@ -1579,6 +1596,10 @@ static int mt9m114_detect(struct mt9m114_device *dev, struct i2c_client *client)
 
 	if (retvalue != MT9M114_MOD_ID) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (model != MT9M114_MOD_ID) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(&client->dev, "%s: failed: client->addr = %x\n",
 			__func__, client->addr);
 		return -ENODEV;

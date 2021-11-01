@@ -3,12 +3,17 @@ Date:		February 2021
 KernelVersion:	5.11
 Contact:	Divya Bharathi <Divya.Bharathi@Dell.com>,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Prasanth KSR <prasanth.ksr@dell.com>
 		Dell.Client.Kernel@dell.com
 =======
 		Mario Limonciello <mario.limonciello@dell.com>,
 		Prasanth KSR <prasanth.ksr@dell.com>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		Prasanth KSR <prasanth.ksr@dell.com>
+		Dell.Client.Kernel@dell.com
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Description:
 		A sysfs interface for systems management software to enable
 		configuration capability on supported systems.  This directory
@@ -136,12 +141,17 @@ Date:		February 2021
 KernelVersion:	5.11
 Contact:	Divya Bharathi <Divya.Bharathi@Dell.com>,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Prasanth KSR <prasanth.ksr@dell.com>
 		Dell.Client.Kernel@dell.com
 =======
 		Mario Limonciello <mario.limonciello@dell.com>,
 		Prasanth KSR <prasanth.ksr@dell.com>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		Prasanth KSR <prasanth.ksr@dell.com>
+		Dell.Client.Kernel@dell.com
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Description:
 		Devices support various authentication mechanisms which can be exposed
 		as a separate configuration object.
@@ -231,12 +241,17 @@ Date:		February 2021
 KernelVersion:	5.11
 Contact:	Divya Bharathi <Divya.Bharathi@Dell.com>,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Prasanth KSR <prasanth.ksr@dell.com>
 		Dell.Client.Kernel@dell.com
 =======
 		Mario Limonciello <mario.limonciello@dell.com>,
 		Prasanth KSR <prasanth.ksr@dell.com>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		Prasanth KSR <prasanth.ksr@dell.com>
+		Dell.Client.Kernel@dell.com
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Description:
 		A read-only attribute reads 1 if a reboot is necessary to apply
 		pending BIOS attribute changes. Also, an uevent_KOBJ_CHANGE is
@@ -265,12 +280,17 @@ Date:		February 2021
 KernelVersion:	5.11
 Contact:	Divya Bharathi <Divya.Bharathi@Dell.com>,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Prasanth KSR <prasanth.ksr@dell.com>
 		Dell.Client.Kernel@dell.com
 =======
 		Mario Limonciello <mario.limonciello@dell.com>,
 		Prasanth KSR <prasanth.ksr@dell.com>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		Prasanth KSR <prasanth.ksr@dell.com>
+		Dell.Client.Kernel@dell.com
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Description:
 		This attribute can be used to reset the BIOS Configuration.
 		Specifically, it tells which type of reset BIOS configuration is being
@@ -293,6 +313,9 @@ Description:
 		Note that any changes to this attribute requires a reboot
 		for changes to take effect.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 What:		/sys/class/firmware-attributes/*/attributes/debug_cmd
 Date:		July 2021
@@ -304,5 +327,8 @@ Description:
 		use it to enable extra debug attributes or BIOS features for testing purposes.
 
 		Note that any changes to this attribute requires a reboot for changes to take effect.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

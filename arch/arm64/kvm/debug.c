@@ -22,10 +22,14 @@
 				DBG_MDSCR_MDE)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static DEFINE_PER_CPU(u64, mdcr_el2);
 =======
 static DEFINE_PER_CPU(u32, mdcr_el2);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEFINE_PER_CPU(u64, mdcr_el2);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * save/restore_guest_debug_regs

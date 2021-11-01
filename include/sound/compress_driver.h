@@ -166,10 +166,13 @@ struct snd_compr {
 
 /* compress device register APIs */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 int snd_compress_register(struct snd_compr *device);
 int snd_compress_deregister(struct snd_compr *device);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int snd_compress_new(struct snd_card *card, int device,
 			int type, const char *id, struct snd_compr *compr);
 

@@ -85,10 +85,13 @@ static void __init tegra_dt_init(void)
 static void __init tegra_dt_init_late(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	tegra_init_suspend();
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ENABLED(CONFIG_ARCH_TEGRA_2x_SOC) &&
 	    of_machine_is_compatible("compal,paz00"))
 		tegra_paz00_wifikill_init();

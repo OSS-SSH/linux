@@ -469,6 +469,9 @@ bool amdgpu_atomfirmware_dynamic_boot_config_supported(struct amdgpu_device *ade
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * amdgpu_atomfirmware_ras_rom_addr -- Get the RAS EEPROM addr from VBIOS
  * adev: amdgpu_device pointer
@@ -525,8 +528,11 @@ bool amdgpu_atomfirmware_ras_rom_addr(struct amdgpu_device *adev,
 }
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 union smu_info {
 	struct atom_smu_info_v3_1 v31;
 };

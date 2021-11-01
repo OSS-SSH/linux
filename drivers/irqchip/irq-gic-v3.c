@@ -101,6 +101,9 @@ DEFINE_STATIC_KEY_FALSE(gic_nonsecure_priorities);
 EXPORT_SYMBOL(gic_nonsecure_priorities);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * When the Non-secure world has access to group 0 interrupts (as a
  * consequence of SCR_EL3.FIQ == 0), reading the ICC_RPR_EL1 register will
@@ -122,8 +125,11 @@ EXPORT_SYMBOL(gic_nonsecure_priorities);
 		__priority;						\
 	})
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* ppi_nmi_refs[n] == number of cpus having ppi[n + 16] set as NMI */
 static refcount_t *ppi_nmi_refs;
 
@@ -471,6 +477,7 @@ static void gic_irq_set_prio(struct irq_data *d, u8 prio)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static u32 __gic_get_ppi_index(irq_hw_number_t hwirq)
 {
 	switch (__get_intid_range(hwirq)) {
@@ -480,26 +487,39 @@ static u32 __gic_get_ppi_index(irq_hw_number_t hwirq)
 		return hwirq - EPPI_BASE_INTID + 16;
 =======
 static u32 gic_get_ppi_index(struct irq_data *d)
+=======
+static u32 __gic_get_ppi_index(irq_hw_number_t hwirq)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	switch (get_intid_range(d)) {
+	switch (__get_intid_range(hwirq)) {
 	case PPI_RANGE:
-		return d->hwirq - 16;
+		return hwirq - 16;
 	case EPPI_RANGE:
+<<<<<<< HEAD
 		return d->hwirq - EPPI_BASE_INTID + 16;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return hwirq - EPPI_BASE_INTID + 16;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		unreachable();
 	}
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u32 gic_get_ppi_index(struct irq_data *d)
 {
 	return __gic_get_ppi_index(d->hwirq);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int gic_irq_nmi_setup(struct irq_data *d)
 {
 	struct irq_desc *desc = irq_to_desc(d->irq);
@@ -730,10 +750,14 @@ static asmlinkage void __exception_irq_entry gic_handle_irq(struct pt_regs *regs
 
 	if (gic_supports_nmi() &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    unlikely(gic_read_rpr() == GICD_INT_RPR_PRI(GICD_INT_NMI_PRI))) {
 =======
 	    unlikely(gic_read_rpr() == GICD_INT_NMI_PRI)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    unlikely(gic_read_rpr() == GICD_INT_RPR_PRI(GICD_INT_NMI_PRI))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gic_handle_nmi(irqnr, regs);
 		return;
 	}
@@ -1514,6 +1538,9 @@ static void gic_irq_domain_free(struct irq_domain *domain, unsigned int virq,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool fwspec_is_partitioned_ppi(struct irq_fwspec *fwspec,
 				      irq_hw_number_t hwirq)
 {
@@ -1535,18 +1562,27 @@ static bool fwspec_is_partitioned_ppi(struct irq_fwspec *fwspec,
 	return true;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int gic_irq_domain_select(struct irq_domain *d,
 				 struct irq_fwspec *fwspec,
 				 enum irq_domain_bus_token bus_token)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	unsigned int type, ret, ppi_idx;
 	irq_hw_number_t hwirq;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int type, ret, ppi_idx;
+	irq_hw_number_t hwirq;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Not for us */
         if (fwspec->fwnode != d->fwnode)
 		return 0;
@@ -1556,6 +1592,9 @@ static int gic_irq_domain_select(struct irq_domain *d,
 		return 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = gic_irq_domain_translate(d, fwspec, &hwirq, &type);
 	if (WARN_ON_ONCE(ret))
 		return 0;
@@ -1563,12 +1602,16 @@ static int gic_irq_domain_select(struct irq_domain *d,
 	if (!fwspec_is_partitioned_ppi(fwspec, hwirq))
 		return d == gic_data.domain;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If this is a PPI and we have a 4th (non-null) parameter,
 	 * then we need to match the partition domain.
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	ppi_idx = __gic_get_ppi_index(hwirq);
 	return d == partition_get_domain(gic_data.ppi_descs[ppi_idx]);
@@ -1580,6 +1623,10 @@ static int gic_irq_domain_select(struct irq_domain *d,
 
 	return d == gic_data.domain;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ppi_idx = __gic_get_ppi_index(hwirq);
+	return d == partition_get_domain(gic_data.ppi_descs[ppi_idx]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct irq_domain_ops gic_irq_domain_ops = {
@@ -1595,12 +1642,18 @@ static int partition_domain_translate(struct irq_domain *d,
 				      unsigned int *type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned long ppi_intid;
 	struct device_node *np;
 	unsigned int ppi_idx;
 =======
 	struct device_node *np;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long ppi_intid;
+	struct device_node *np;
+	unsigned int ppi_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	if (!gic_data.ppi_descs)
@@ -1611,15 +1664,21 @@ static int partition_domain_translate(struct irq_domain *d,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = gic_irq_domain_translate(d, fwspec, &ppi_intid, type);
 	if (WARN_ON_ONCE(ret))
 		return 0;
 
 	ppi_idx = __gic_get_ppi_index(ppi_intid);
 	ret = partition_translate_id(gic_data.ppi_descs[ppi_idx],
+<<<<<<< HEAD
 =======
 	ret = partition_translate_id(gic_data.ppi_descs[fwspec->param[1]],
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     of_node_to_fwnode(np));
 	if (ret < 0)
 		return ret;

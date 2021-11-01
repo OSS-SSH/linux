@@ -913,10 +913,14 @@ void ata_qc_schedule_eh(struct ata_queued_cmd *qc)
 	 * this function completes.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	blk_abort_request(scsi_cmd_to_rq(qc->scsicmd));
 =======
 	blk_abort_request(qc->scsicmd->request);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	blk_abort_request(scsi_cmd_to_rq(qc->scsicmd));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1898,11 +1902,15 @@ static inline int ata_eh_worth_retry(struct ata_queued_cmd *qc)
 static inline bool ata_eh_quiet(struct ata_queued_cmd *qc)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (qc->scsicmd && scsi_cmd_to_rq(qc->scsicmd)->rq_flags & RQF_QUIET)
 =======
 	if (qc->scsicmd &&
 	    qc->scsicmd->request->rq_flags & RQF_QUIET)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (qc->scsicmd && scsi_cmd_to_rq(qc->scsicmd)->rq_flags & RQF_QUIET)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qc->flags |= ATA_QCFLAG_QUIET;
 	return qc->flags & ATA_QCFLAG_QUIET;
 }

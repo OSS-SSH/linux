@@ -22,6 +22,7 @@
 #include <linux/export.h>
 #include <linux/of.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 
 #include <linux/atomic.h>
@@ -30,6 +31,11 @@
 #include <linux/atomic.h>
 #include <asm/debugfs.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+
+#include <linux/atomic.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/eeh.h>
 #include <asm/eeh_event.h>
 #include <asm/io.h>
@@ -1908,6 +1914,7 @@ static int __init eeh_init_proc(void)
 #ifdef CONFIG_DEBUG_FS
 		debugfs_create_file_unsafe("eeh_enable", 0600,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					   arch_debugfs_dir, NULL,
 					   &eeh_enable_dbgfs_ops);
 		debugfs_create_u32("eeh_max_freezes", 0600,
@@ -1928,24 +1935,31 @@ static int __init eeh_init_proc(void)
 				arch_debugfs_dir, NULL,
 =======
 					   powerpc_debugfs_root, NULL,
+=======
+					   arch_debugfs_dir, NULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					   &eeh_enable_dbgfs_ops);
 		debugfs_create_u32("eeh_max_freezes", 0600,
-				powerpc_debugfs_root, &eeh_max_freezes);
+				arch_debugfs_dir, &eeh_max_freezes);
 		debugfs_create_bool("eeh_disable_recovery", 0600,
-				powerpc_debugfs_root,
+				arch_debugfs_dir,
 				&eeh_debugfs_no_recover);
 		debugfs_create_file_unsafe("eeh_dev_check", 0600,
-				powerpc_debugfs_root, NULL,
+				arch_debugfs_dir, NULL,
 				&eeh_dev_check_fops);
 		debugfs_create_file_unsafe("eeh_dev_break", 0600,
-				powerpc_debugfs_root, NULL,
+				arch_debugfs_dir, NULL,
 				&eeh_dev_break_fops);
 		debugfs_create_file_unsafe("eeh_force_recover", 0600,
-				powerpc_debugfs_root, NULL,
+				arch_debugfs_dir, NULL,
 				&eeh_force_recover_fops);
 		debugfs_create_file_unsafe("eeh_dev_can_recover", 0600,
+<<<<<<< HEAD
 				powerpc_debugfs_root, NULL,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				arch_debugfs_dir, NULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				&eeh_dev_can_recover_fops);
 		eeh_cache_debugfs_init();
 #endif

@@ -48,6 +48,7 @@ static int tcf_bpf_act(struct sk_buff *skb, const struct tc_action *act,
 		__skb_push(skb, skb->mac_len);
 		bpf_compute_data_pointers(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		filter_res = bpf_prog_run(filter, skb);
 		__skb_pull(skb, skb->mac_len);
 	} else {
@@ -60,6 +61,13 @@ static int tcf_bpf_act(struct sk_buff *skb, const struct tc_action *act,
 		bpf_compute_data_pointers(skb);
 		filter_res = BPF_PROG_RUN(filter, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		filter_res = bpf_prog_run(filter, skb);
+		__skb_pull(skb, skb->mac_len);
+	} else {
+		bpf_compute_data_pointers(skb);
+		filter_res = bpf_prog_run(filter, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (skb_sk_is_prefetched(skb) && filter_res != TC_ACT_OK)
 		skb_orphan(skb);
@@ -284,17 +292,24 @@ static void tcf_bpf_prog_fill_cfg(const struct tcf_bpf *prog,
 static int tcf_bpf_init(struct net *net, struct nlattr *nla,
 			struct nlattr *est, struct tc_action **act,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			int replace, int bind, bool rtnl_held,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct tcf_proto *tp, u32 flags,
 			struct netlink_ext_ack *extack)
 {
 	struct tc_action_net *tn = net_generic(net, bpf_net_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool bind = flags & TCA_ACT_FLAGS_BIND;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool bind = flags & TCA_ACT_FLAGS_BIND;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nlattr *tb[TCA_ACT_BPF_MAX + 1];
 	struct tcf_chain *goto_ch = NULL;
 	struct tcf_bpf_cfg cfg, old;
@@ -333,10 +348,14 @@ static int tcf_bpf_init(struct net *net, struct nlattr *nla,
 			return 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
 =======
 		if (!replace) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			tcf_idr_release(*act, bind);
 			return -EEXIST;
 		}

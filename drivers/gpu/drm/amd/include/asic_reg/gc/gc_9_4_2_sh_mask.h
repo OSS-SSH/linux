@@ -2990,6 +2990,9 @@
 #define CP_ME1_PIPE3_INT_STATUS__GENERIC1_INT_STATUS_MASK                                                     0x40000000L
 #define CP_ME1_PIPE3_INT_STATUS__GENERIC0_INT_STATUS_MASK                                                     0x80000000L
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 //CP_ME1_INT_STAT_DEBUG
 #define CP_ME1_INT_STAT_DEBUG__CMP_QUERY_STATUS_INT_ASSERTED__SHIFT                                           0xc
 #define CP_ME1_INT_STAT_DEBUG__DEQUEUE_REQUEST_INT_ASSERTED__SHIFT                                            0xd
@@ -3044,8 +3047,11 @@
 #define CP_ME2_INT_STAT_DEBUG__GENERIC2_INT_ASSERTED_MASK                                                     0x20000000L
 #define CP_ME2_INT_STAT_DEBUG__GENERIC1_INT_ASSERTED_MASK                                                     0x40000000L
 #define CP_ME2_INT_STAT_DEBUG__GENERIC0_INT_ASSERTED_MASK                                                     0x80000000L
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 //CP_ME2_PIPE0_INT_STATUS
 #define CP_ME2_PIPE0_INT_STATUS__CMP_QUERY_STATUS_INT_STATUS__SHIFT                                           0xc
 #define CP_ME2_PIPE0_INT_STATUS__DEQUEUE_REQUEST_INT_STATUS__SHIFT                                            0xd

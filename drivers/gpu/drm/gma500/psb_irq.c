@@ -9,9 +9,13 @@
  **************************************************************************/
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <drm/drm_drv.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <drm/drm_drv.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_vblank.h>
 
 #include "power.h"
@@ -227,10 +231,14 @@ static void psb_sgx_interrupt(struct drm_device *dev, u32 stat_1, u32 stat_2)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static irqreturn_t psb_irq_handler(int irq, void *arg)
 =======
 irqreturn_t psb_irq_handler(int irq, void *arg)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static irqreturn_t psb_irq_handler(int irq, void *arg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_device *dev = arg;
 	struct drm_psb_private *dev_priv = dev->dev_private;
@@ -313,10 +321,14 @@ void psb_irq_preinstall(struct drm_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void psb_irq_postinstall(struct drm_device *dev)
 =======
 int psb_irq_postinstall(struct drm_device *dev)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void psb_irq_postinstall(struct drm_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_psb_private *dev_priv = dev->dev_private;
 	unsigned long irqflags;
@@ -345,6 +357,9 @@ int psb_irq_postinstall(struct drm_device *dev)
 
 	spin_unlock_irqrestore(&dev_priv->irqmask_lock, irqflags);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int psb_irq_install(struct drm_device *dev, unsigned int irq)
@@ -363,8 +378,11 @@ int psb_irq_install(struct drm_device *dev, unsigned int irq)
 
 	psb_irq_postinstall(dev);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -372,9 +390,13 @@ void psb_irq_uninstall(struct drm_device *dev)
 {
 	struct drm_psb_private *dev_priv = dev->dev_private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct pci_dev *pdev = to_pci_dev(dev->dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pci_dev *pdev = to_pci_dev(dev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long irqflags;
 	unsigned int i;
 
@@ -404,10 +426,15 @@ void psb_irq_uninstall(struct drm_device *dev)
 	PSB_WVDC32(PSB_RVDC32(PSB_INT_IDENTITY_R), PSB_INT_IDENTITY_R);
 	spin_unlock_irqrestore(&dev_priv->irqmask_lock, irqflags);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	free_irq(pdev->irq, dev);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	free_irq(pdev->irq, dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

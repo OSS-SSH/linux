@@ -127,10 +127,14 @@ static const struct spinand_info macronix_spinand_table[] = {
 					      &write_cache_variants,
 					      &update_cache_variants),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     SPINAND_HAS_QE_BIT,
 =======
 		     0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     SPINAND_HAS_QE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
 				     mx35lf1ge4ab_ecc_get_status)),
 	SPINAND_INFO("MX35LF4GE4AD",
@@ -141,10 +145,14 @@ static const struct spinand_info macronix_spinand_table[] = {
 					      &write_cache_variants,
 					      &update_cache_variants),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     SPINAND_HAS_QE_BIT,
 =======
 		     0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     SPINAND_HAS_QE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
 				     mx35lf1ge4ab_ecc_get_status)),
 	SPINAND_INFO("MX35LF1G24AD",
@@ -154,6 +162,7 @@ static const struct spinand_info macronix_spinand_table[] = {
 		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
 					      &write_cache_variants,
 					      &update_cache_variants),
+<<<<<<< HEAD
 <<<<<<< HEAD
 		     SPINAND_HAS_QE_BIT,
 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout, NULL)),
@@ -167,15 +176,26 @@ static const struct spinand_info macronix_spinand_table[] = {
 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x24),
 		     NAND_MEMORG(1, 2048, 128, 64, 2048, 40, 1, 1, 1),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     SPINAND_HAS_QE_BIT,
+		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout, NULL)),
+	SPINAND_INFO("MX35LF2G24AD",
+		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x24),
+		     NAND_MEMORG(1, 2048, 128, 64, 2048, 40, 2, 1, 1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     NAND_ECCREQ(8, 512),
 		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
 					      &write_cache_variants,
 					      &update_cache_variants),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     SPINAND_HAS_QE_BIT,
 =======
 		     0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     SPINAND_HAS_QE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout, NULL)),
 	SPINAND_INFO("MX35LF4G24AD",
 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x35),
@@ -185,10 +205,14 @@ static const struct spinand_info macronix_spinand_table[] = {
 					      &write_cache_variants,
 					      &update_cache_variants),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     SPINAND_HAS_QE_BIT,
 =======
 		     0,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     SPINAND_HAS_QE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout, NULL)),
 	SPINAND_INFO("MX31LF1GE4BC",
 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0x1e),
@@ -198,10 +222,14 @@ static const struct spinand_info macronix_spinand_table[] = {
 					      &write_cache_variants,
 					      &update_cache_variants),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     SPINAND_HAS_QE_BIT,
 =======
 		     0 /*SPINAND_HAS_QE_BIT*/,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     SPINAND_HAS_QE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
 				     mx35lf1ge4ab_ecc_get_status)),
 	SPINAND_INFO("MX31UF1GE4BC",
@@ -212,10 +240,14 @@ static const struct spinand_info macronix_spinand_table[] = {
 					      &write_cache_variants,
 					      &update_cache_variants),
 <<<<<<< HEAD
+<<<<<<< HEAD
 		     SPINAND_HAS_QE_BIT,
 =======
 		     0 /*SPINAND_HAS_QE_BIT*/,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     SPINAND_HAS_QE_BIT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     SPINAND_ECCINFO(&mx35lfxge4ab_ooblayout,
 				     mx35lf1ge4ab_ecc_get_status)),
 

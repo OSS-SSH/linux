@@ -309,6 +309,7 @@ intel_dp_mst_atomic_check(struct drm_connector *connector,
 	 */
 	if (new_crtc) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct intel_crtc *crtc = to_intel_crtc(new_crtc);
 		struct intel_crtc_state *crtc_state =
 			intel_atomic_get_new_crtc_state(state, crtc);
@@ -317,6 +318,11 @@ intel_dp_mst_atomic_check(struct drm_connector *connector,
 		struct intel_crtc_state *crtc_state =
 			intel_atomic_get_new_crtc_state(state, intel_crtc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct intel_crtc *crtc = to_intel_crtc(new_crtc);
+		struct intel_crtc_state *crtc_state =
+			intel_atomic_get_new_crtc_state(state, crtc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!crtc_state ||
 		    !drm_atomic_crtc_needs_modeset(&crtc_state->uapi) ||
@@ -355,6 +361,9 @@ static void wait_for_act_sent(struct intel_encoder *encoder,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void intel_mst_pre_disable_dp(struct intel_atomic_state *state,
 				     struct intel_encoder *encoder,
 				     const struct intel_crtc_state *old_crtc_state,
@@ -365,8 +374,11 @@ static void intel_mst_pre_disable_dp(struct intel_atomic_state *state,
 					  old_conn_state);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void intel_mst_disable_dp(struct intel_atomic_state *state,
 				 struct intel_encoder *encoder,
 				 const struct intel_crtc_state *old_crtc_state,
@@ -392,11 +404,14 @@ static void intel_mst_disable_dp(struct intel_atomic_state *state,
 		drm_dbg_kms(&i915->drm, "failed to update payload %d\n", ret);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (old_crtc_state->has_audio)
 		intel_audio_codec_disable(encoder,
 					  old_crtc_state, old_conn_state);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void intel_mst_post_disable_dp(struct intel_atomic_state *state,
@@ -565,10 +580,14 @@ static void intel_mst_enable_dp(struct intel_atomic_state *state,
 	struct intel_dp *intel_dp = &dig_port->dp;
 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum transcoder trans = pipe_config->cpu_transcoder;
 =======
 	u32 val;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum transcoder trans = pipe_config->cpu_transcoder;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	drm_WARN_ON(&dev_priv->drm, pipe_config->has_pch_encoder);
 
@@ -576,6 +595,7 @@ static void intel_mst_enable_dp(struct intel_atomic_state *state,
 
 	intel_ddi_enable_transcoder_func(encoder, pipe_config);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	intel_de_rmw(dev_priv, TRANS_DDI_FUNC_CTL(trans), 0,
 		     TRANS_DDI_DP_VC_PAYLOAD_ALLOC);
@@ -587,6 +607,10 @@ static void intel_mst_enable_dp(struct intel_atomic_state *state,
 		       TRANS_DDI_FUNC_CTL(pipe_config->cpu_transcoder),
 		       val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_de_rmw(dev_priv, TRANS_DDI_FUNC_CTL(trans), 0,
+		     TRANS_DDI_DP_VC_PAYLOAD_ALLOC);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	drm_dbg_kms(&dev_priv->drm, "active links %d\n",
 		    intel_dp->active_mst_links);
@@ -596,12 +620,18 @@ static void intel_mst_enable_dp(struct intel_atomic_state *state,
 	drm_dp_update_payload_part2(&intel_dp->mst_mgr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (DISPLAY_VER(dev_priv) >= 12 && pipe_config->fec_enable)
 		intel_de_rmw(dev_priv, CHICKEN_TRANS(trans), 0,
 			     FECSTALL_DIS_DPTSTREAM_DPTTG);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_enable_pipe(pipe_config);
 
 	intel_crtc_vblank_on(pipe_config);
@@ -874,10 +904,14 @@ static struct drm_connector *intel_dp_add_mst_connector(struct drm_dp_mst_topolo
 	intel_attach_broadcast_rgb_property(connector);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = intel_dp_hdcp_init(dig_port, intel_connector);
 	if (ret)
 		drm_dbg_kms(&dev_priv->drm, "[%s:%d] HDCP MST init failed, skipping.\n",
 			    connector->name, connector->base.id);
+<<<<<<< HEAD
 =======
 	if (DISPLAY_VER(dev_priv) <= 12) {
 		ret = intel_dp_hdcp_init(dig_port, intel_connector);
@@ -887,6 +921,8 @@ static struct drm_connector *intel_dp_add_mst_connector(struct drm_dp_mst_topolo
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Reuse the prop from the SST connector because we're
 	 * not allowed to create new props after device registration.
@@ -952,9 +988,13 @@ intel_dp_create_fake_mst_encoder(struct intel_digital_port *dig_port, enum pipe 
 	intel_encoder->compute_config = intel_dp_mst_compute_config;
 	intel_encoder->compute_config_late = intel_dp_mst_compute_config_late;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_encoder->pre_disable = intel_mst_pre_disable_dp;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_encoder->pre_disable = intel_mst_pre_disable_dp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_encoder->disable = intel_mst_disable_dp;
 	intel_encoder->post_disable = intel_mst_post_disable_dp;
 	intel_encoder->update_pipe = intel_ddi_update_pipe;

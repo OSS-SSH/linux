@@ -268,9 +268,12 @@ static char *cosa_net_setup_rx(struct channel_data *channel, int size);
 static int cosa_net_rx_done(struct channel_data *channel);
 static int cosa_net_tx_done(struct channel_data *channel, int size);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int cosa_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Character device */
 static char *chrdev_setup_rx(struct channel_data *channel, int size);
@@ -419,10 +422,14 @@ static const struct net_device_ops cosa_ops = {
 	.ndo_stop       = cosa_net_close,
 	.ndo_start_xmit = hdlc_start_xmit,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocwandev = hdlc_ioctl,
 =======
 	.ndo_do_ioctl   = cosa_net_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocwandev = hdlc_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout = cosa_net_timeout,
 };
 
@@ -1177,6 +1184,7 @@ static int cosa_ioctl_common(struct cosa_data *cosa,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int cosa_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 {
@@ -1191,6 +1199,8 @@ static int cosa_net_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static long cosa_chardev_ioctl(struct file *file, unsigned int cmd,
 			       unsigned long arg)
 {

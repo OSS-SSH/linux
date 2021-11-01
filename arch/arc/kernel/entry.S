@@ -102,6 +102,7 @@ ENTRY(EV_MachineCheck)
 	mov r1, sp
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	; MC excpetions disable MMU
 	ARC_MMU_REENABLE r3
 =======
@@ -111,6 +112,10 @@ ENTRY(EV_MachineCheck)
 	or	r3, r3, MMU_ENABLE
 	sr	r3, [ARC_REG_PID]
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	; MC excpetions disable MMU
+	ARC_MMU_REENABLE r3
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lsr  	r3, r2, 8
 	bmsk 	r3, r3, 7

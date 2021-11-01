@@ -2112,10 +2112,14 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpus_read_lock();
 =======
 		get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Fire off all the required work handlers
 		 * We can't schedule on offline CPUs, but it's not necessary
@@ -2148,10 +2152,14 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpus_read_unlock();
 =======
 		put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		cpu_buffer = buffer->buffers[cpu_id];
 
@@ -2180,10 +2188,14 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpus_read_lock();
 =======
 		get_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Can't run something on an offline CPU. */
 		if (!cpu_online(cpu_id))
@@ -2196,10 +2208,14 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
 
 		cpu_buffer->nr_pages_to_update = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cpus_read_unlock();
 =======
 		put_online_cpus();
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
  out:
@@ -3897,6 +3913,9 @@ static bool rb_per_cpu_empty(struct ring_buffer_per_cpu *cpu_buffer)
 		return true;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Reader should exhaust content in reader page */
 	if (reader->read != rb_page_commit(reader))
 		return false;
@@ -3921,12 +3940,15 @@ static bool rb_per_cpu_empty(struct ring_buffer_per_cpu *cpu_buffer)
 	 * swap reader page with head page when it is to read data.
 	 */
 	return rb_page_commit(commit) == 0;
+<<<<<<< HEAD
 =======
 	return reader->read == rb_page_commit(reader) &&
 		(commit == reader ||
 		 (commit == head &&
 		  head->read == rb_page_commit(commit)));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

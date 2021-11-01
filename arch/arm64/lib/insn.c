@@ -186,10 +186,14 @@ u64 aarch64_insn_decode_immediate(enum aarch64_insn_imm_type type, u32 insn)
 	default:
 		if (aarch64_get_imm_shift_mask(type, &mask, &shift) < 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pr_err("%s: unknown immediate encoding %d\n", __func__,
 =======
 			pr_err("aarch64_insn_decode_immediate: unknown immediate encoding %d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_err("%s: unknown immediate encoding %d\n", __func__,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       type);
 			return 0;
 		}
@@ -220,10 +224,14 @@ u32 __kprobes aarch64_insn_encode_immediate(enum aarch64_insn_imm_type type,
 	default:
 		if (aarch64_get_imm_shift_mask(type, &mask, &shift) < 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pr_err("%s: unknown immediate encoding %d\n", __func__,
 =======
 			pr_err("aarch64_insn_encode_immediate: unknown immediate encoding %d\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_err("%s: unknown immediate encoding %d\n", __func__,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       type);
 			return AARCH64_BREAK_FAULT;
 		}

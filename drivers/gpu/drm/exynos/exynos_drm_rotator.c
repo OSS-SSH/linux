@@ -279,9 +279,12 @@ static int rotator_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct resource	*regs_res;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rot_context *rot;
 	const struct rot_variant *variant;
 	int irq;
@@ -296,11 +299,15 @@ static int rotator_probe(struct platform_device *pdev)
 	rot->num_formats = variant->num_formats;
 	rot->dev = dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rot->regs = devm_platform_ioremap_resource(pdev, 0);
 =======
 	regs_res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	rot->regs = devm_ioremap_resource(dev, regs_res);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rot->regs = devm_platform_ioremap_resource(pdev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(rot->regs))
 		return PTR_ERR(rot->regs);
 

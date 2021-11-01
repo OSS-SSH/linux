@@ -22,9 +22,13 @@ select:
         enum:
           - snps,dwmac
 <<<<<<< HEAD
+<<<<<<< HEAD
           - snps,dwmac-3.40a
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+          - snps,dwmac-3.40a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - snps,dwmac-3.50a
           - snps,dwmac-3.610
           - snps,dwmac-3.70a
@@ -33,9 +37,13 @@ select:
           - snps,dwmac-4.10a
           - snps,dwmac-4.20a
 <<<<<<< HEAD
+<<<<<<< HEAD
           - snps,dwmac-5.10a
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+          - snps,dwmac-5.10a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - snps,dwxgmac
           - snps,dwxgmac-2.10
 
@@ -84,9 +92,13 @@ properties:
         - rockchip,rv1108-gmac
         - snps,dwmac
 <<<<<<< HEAD
+<<<<<<< HEAD
         - snps,dwmac-3.40a
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        - snps,dwmac-3.40a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         - snps,dwmac-3.50a
         - snps,dwmac-3.610
         - snps,dwmac-3.70a
@@ -95,9 +107,13 @@ properties:
         - snps,dwmac-4.10a
         - snps,dwmac-4.20a
 <<<<<<< HEAD
+<<<<<<< HEAD
         - snps,dwmac-5.10a
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        - snps,dwmac-5.10a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         - snps,dwxgmac
         - snps,dwxgmac-2.10
 
@@ -392,9 +408,13 @@ allOf:
               - snps,dwmac-4.10a
               - snps,dwmac-4.20a
 <<<<<<< HEAD
+<<<<<<< HEAD
               - snps,dwmac-5.10a
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              - snps,dwmac-5.10a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - snps,dwxgmac
               - snps,dwxgmac-2.10
               - st,spear600-gmac

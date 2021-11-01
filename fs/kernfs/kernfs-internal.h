@@ -14,9 +14,13 @@
 #include <linux/fs.h>
 #include <linux/mutex.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/rwsem.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/rwsem.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/xattr.h>
 
 #include <linux/kernfs.h>
@@ -74,10 +78,14 @@ struct kernfs_super_info {
 	const void		*ns;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* anchored at kernfs_root->supers, protected by kernfs_rwsem */
 =======
 	/* anchored at kernfs_root->supers, protected by kernfs_mutex */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* anchored at kernfs_root->supers, protected by kernfs_rwsem */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	node;
 };
 #define kernfs_info(SB) ((struct kernfs_super_info *)(SB->s_fs_info))
@@ -90,6 +98,9 @@ static inline struct kernfs_node *kernfs_dentry_node(struct dentry *dentry)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void kernfs_set_rev(struct kernfs_node *parent,
 				  struct dentry *dentry)
 {
@@ -109,8 +120,11 @@ static inline bool kernfs_dir_changed(struct kernfs_node *parent,
 	return false;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct super_operations kernfs_sops;
 extern struct kmem_cache *kernfs_node_cache, *kernfs_iattrs_cache;
 
@@ -133,10 +147,14 @@ int __kernfs_setattr(struct kernfs_node *kn, const struct iattr *iattr);
  * dir.c
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern struct rw_semaphore kernfs_rwsem;
 =======
 extern struct mutex kernfs_mutex;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern struct rw_semaphore kernfs_rwsem;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct dentry_operations kernfs_dops;
 extern const struct file_operations kernfs_dir_fops;
 extern const struct inode_operations kernfs_dir_iops;

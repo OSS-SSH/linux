@@ -2,9 +2,13 @@
 /aarch64/debug-exceptions
 /aarch64/get-reg-list
 <<<<<<< HEAD
+<<<<<<< HEAD
 /aarch64/psci_cpu_on_test
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/aarch64/psci_cpu_on_test
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /aarch64/vgic_init
 /s390x/memop
 /s390x/resets
@@ -28,9 +32,13 @@
 /x86_64/state_test
 /x86_64/svm_vmcall_test
 <<<<<<< HEAD
+<<<<<<< HEAD
 /x86_64/svm_int_ctl_test
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/x86_64/svm_int_ctl_test
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /x86_64/sync_regs_test
 /x86_64/tsc_msrs_test
 /x86_64/userspace_msr_exit_test
@@ -47,9 +55,13 @@
 /x86_64/xss_msr_test
 /x86_64/vmx_pmu_msrs_test
 <<<<<<< HEAD
+<<<<<<< HEAD
 /access_tracking_perf_test
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/access_tracking_perf_test
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /demand_paging_test
 /dirty_log_test
 /dirty_log_perf_test
@@ -59,9 +71,13 @@
 /memslot_modification_stress_test
 /memslot_perf_test
 <<<<<<< HEAD
+<<<<<<< HEAD
 /rseq_test
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/rseq_test
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /set_memory_region_test
 /steal_time
 /kvm_binary_stats_test

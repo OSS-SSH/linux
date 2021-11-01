@@ -21,10 +21,14 @@ void rtrs_clt_update_wc_stats(struct rtrs_clt_con *con)
 	cpu = raw_smp_processor_id();
 	s = this_cpu_ptr(stats->pcpu_stats);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (con->cpu != cpu) {
 =======
 	if (unlikely(con->cpu != cpu)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (con->cpu != cpu) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		s->cpu_migr.to++;
 
 		/* Careful here, override s pointer */
@@ -185,10 +189,14 @@ void rtrs_clt_update_all_stats(struct rtrs_clt_io_req *req, int dir)
 	len = req->usr_len + req->data_len;
 	rtrs_clt_update_rdma_stats(stats, len, dir);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
 =======
 	if (sess->clt->mp_policy == MP_POLICY_MIN_INFLIGHT)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		atomic_inc(&stats->inflight);
 }
 

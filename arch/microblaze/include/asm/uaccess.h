@@ -36,9 +36,13 @@
 # define get_fs()	(current_thread_info()->addr_limit)
 # define set_fs(val)	(current_thread_info()->addr_limit = (val))
 <<<<<<< HEAD
+<<<<<<< HEAD
 # define user_addr_max() get_fs().seg
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# define user_addr_max() get_fs().seg
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # define uaccess_kernel()	(get_fs().seg == KERNEL_DS.seg)
 
@@ -301,6 +305,7 @@ raw_copy_to_user(void __user *to, const void *from, unsigned long n)
  * Copy a null terminated string from userspace.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 __must_check long strncpy_from_user(char *dst, const char __user *src,
 				    long count);
 =======
@@ -314,12 +319,17 @@ strncpy_from_user(char *dst, const char __user *src, long count)
 	return __strncpy_user(dst, src, count);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__must_check long strncpy_from_user(char *dst, const char __user *src,
+				    long count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Return the size of a string (including the ending 0)
  *
  * Return 0 on exception, a value greater than N if too long
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 __must_check long strnlen_user(const char __user *sstr, long len);
 =======
@@ -332,5 +342,8 @@ static inline long strnlen_user(const char __user *src, long n)
 	return __strnlen_user(src, n);
 }
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__must_check long strnlen_user(const char __user *sstr, long len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _ASM_MICROBLAZE_UACCESS_H */

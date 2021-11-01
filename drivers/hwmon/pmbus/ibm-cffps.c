@@ -51,6 +51,7 @@
 #define CFFPS_MFR_CURRENT_SHARE_WARNING		BIT(7)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define CFFPS_LED_BLINK				(BIT(0) | BIT(6))
 #define CFFPS_LED_ON				(BIT(1) | BIT(6))
 #define CFFPS_LED_OFF				(BIT(2) | BIT(6))
@@ -59,6 +60,11 @@
 #define CFFPS_LED_ON				BIT(1)
 #define CFFPS_LED_OFF				BIT(2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CFFPS_LED_BLINK				(BIT(0) | BIT(6))
+#define CFFPS_LED_ON				(BIT(1) | BIT(6))
+#define CFFPS_LED_OFF				(BIT(2) | BIT(6))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CFFPS_BLINK_RATE_MS			250
 
 enum {
@@ -178,6 +184,9 @@ static ssize_t ibm_cffps_debugfs_read(struct file *file, char __user *buf,
 		break;
 	case CFFPS_DEBUGFS_MAX_POWER_OUT:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (psu->version == cffps1) {
 			rc = i2c_smbus_read_word_swapped(psu->client,
 					CFFPS_MAX_POWER_OUT_CMD);
@@ -186,10 +195,13 @@ static ssize_t ibm_cffps_debugfs_read(struct file *file, char __user *buf,
 					CFFPS_MAX_POWER_OUT_CMD);
 		}
 
+<<<<<<< HEAD
 =======
 		rc = i2c_smbus_read_word_swapped(psu->client,
 						 CFFPS_MAX_POWER_OUT_CMD);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rc < 0)
 			return rc;
 

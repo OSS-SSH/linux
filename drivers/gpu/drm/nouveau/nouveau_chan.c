@@ -87,6 +87,7 @@ nouveau_channel_del(struct nouveau_channel **pchan)
 	if (chan) {
 		struct nouveau_cli *cli = (void *)chan->user.client;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		bool super;
 
@@ -95,6 +96,8 @@ nouveau_channel_del(struct nouveau_channel **pchan)
 			cli->base.super = true;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (chan->fence)
 			nouveau_fence(chan->drm)->context_del(chan);
@@ -115,11 +118,14 @@ nouveau_channel_del(struct nouveau_channel **pchan)
 		nouveau_bo_ref(NULL, &chan->push.buffer);
 		kfree(chan);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 		if (cli)
 			cli->base.super = super;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	*pchan = NULL;
 }
@@ -266,11 +272,16 @@ nouveau_channel_ind(struct nouveau_drm *drm, struct nvif_device *device,
 		    u64 runlist, bool priv, struct nouveau_channel **pchan)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const u16 oclasses[] = { AMPERE_CHANNEL_GPFIFO_B,
 					TURING_CHANNEL_GPFIFO_A,
 =======
 	static const u16 oclasses[] = { TURING_CHANNEL_GPFIFO_A,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const u16 oclasses[] = { AMPERE_CHANNEL_GPFIFO_B,
+					TURING_CHANNEL_GPFIFO_A,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					VOLTA_CHANNEL_GPFIFO_A,
 					PASCAL_CHANNEL_GPFIFO_A,
 					MAXWELL_CHANNEL_GPFIFO_A,
@@ -407,11 +418,16 @@ nouveau_channel_init(struct nouveau_channel *chan, u32 vram, u32 gart)
 	nvif_object_map(&chan->user, NULL, 0);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (chan->user.oclass >= FERMI_CHANNEL_GPFIFO &&
 	    chan->user.oclass < AMPERE_CHANNEL_GPFIFO_B) {
 =======
 	if (chan->user.oclass >= FERMI_CHANNEL_GPFIFO) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (chan->user.oclass >= FERMI_CHANNEL_GPFIFO &&
+	    chan->user.oclass < AMPERE_CHANNEL_GPFIFO_B) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = nvif_notify_ctor(&chan->user, "abi16ChanKilled",
 				       nouveau_channel_killed,
 				       true, NV906F_V0_NTFY_KILLED,
@@ -529,6 +545,7 @@ nouveau_channel_new(struct nouveau_drm *drm, struct nvif_device *device,
 {
 	struct nouveau_cli *cli = (void *)device->object.client;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	/* hack until fencenv50 is fixed, and agp access relaxed */
@@ -541,6 +558,11 @@ nouveau_channel_new(struct nouveau_drm *drm, struct nvif_device *device,
 	cli->base.super = true;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	/* hack until fencenv50 is fixed, and agp access relaxed */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = nouveau_channel_ind(drm, device, arg0, priv, pchan);
 	if (ret) {
 		NV_PRINTK(dbg, cli, "ib channel create, %d\n", ret);
@@ -548,10 +570,14 @@ nouveau_channel_new(struct nouveau_drm *drm, struct nvif_device *device,
 		if (ret) {
 			NV_PRINTK(dbg, cli, "dma channel create, %d\n", ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return ret;
 =======
 			goto done;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -560,10 +586,14 @@ nouveau_channel_new(struct nouveau_drm *drm, struct nvif_device *device,
 		NV_PRINTK(err, cli, "channel failed to initialise, %d\n", ret);
 		nouveau_channel_del(pchan);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto done;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = nouveau_svmm_join((*pchan)->vmm->svmm, (*pchan)->inst);
@@ -571,10 +601,13 @@ nouveau_channel_new(struct nouveau_drm *drm, struct nvif_device *device,
 		nouveau_channel_del(pchan);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 done:
 	cli->base.super = super;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

@@ -1384,9 +1384,13 @@ static void build_r4000_tlb_refill_handler(void)
 	default:
 		if (sizeof(long) == 4) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		fallthrough;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CPU_LOONGSON2EF:
 		/* Loongson2 ebase is different than r4k, we have more space */
 			if ((p - tlb_handler) > 64)
@@ -2174,9 +2178,13 @@ static void build_r4000_tlb_load_handler(void)
 			if (cpu_has_mips_r2_exec_hazard) {
 				uasm_i_ehb(&p);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			fallthrough;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		case CPU_CAVIUM_OCTEON:
 		case CPU_CAVIUM_OCTEON_PLUS:

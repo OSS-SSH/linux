@@ -56,11 +56,16 @@
 
 #define BD718XX_OPS(name, _list_voltage, _map_voltage, _set_voltage_sel, \
 <<<<<<< HEAD
+<<<<<<< HEAD
 		   _get_voltage_sel, _set_voltage_time_sel, _set_ramp_delay, \
 		   _set_uvp, _set_ovp)				\
 =======
 		   _get_voltage_sel, _set_voltage_time_sel, _set_ramp_delay) \
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		   _get_voltage_sel, _set_voltage_time_sel, _set_ramp_delay, \
+		   _set_uvp, _set_ovp)				\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct regulator_ops name = {			\
 	.enable = regulator_enable_regmap,			\
 	.disable = regulator_disable_regmap,			\
@@ -72,10 +77,15 @@ static const struct regulator_ops name = {			\
 	.set_voltage_time_sel = (_set_voltage_time_sel),	\
 	.set_ramp_delay = (_set_ramp_delay),			\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.set_under_voltage_protection = (_set_uvp),		\
 	.set_over_voltage_protection = (_set_ovp),		\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.set_under_voltage_protection = (_set_uvp),		\
+	.set_over_voltage_protection = (_set_ovp),		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };								\
 								\
 static const struct regulator_ops BD718XX_HWOPNAME(name) = {	\
@@ -87,10 +97,15 @@ static const struct regulator_ops BD718XX_HWOPNAME(name) = {	\
 	.set_voltage_time_sel = (_set_voltage_time_sel),	\
 	.set_ramp_delay = (_set_ramp_delay),			\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.set_under_voltage_protection = (_set_uvp),		\
 	.set_over_voltage_protection = (_set_ovp),		\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.set_under_voltage_protection = (_set_uvp),		\
+	.set_over_voltage_protection = (_set_ovp),		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }								\
 
 /*
@@ -170,6 +185,7 @@ static void voltage_change_done(struct regulator_dev *rdev, unsigned int sel,
 		 */
 		msleep(1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		ret = regmap_clear_bits(rdev->regmap, BD718XX_REG_MVRFLTMASK2,
 					 *mask);
@@ -186,6 +202,11 @@ static void voltage_change_done(struct regulator_dev *rdev, unsigned int sel,
 		ret = regmap_update_bits(rdev->regmap, BD718XX_REG_MVRFLTMASK2,
 					 *mask, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		ret = regmap_clear_bits(rdev->regmap, BD718XX_REG_MVRFLTMASK2,
+					 *mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			dev_err(&rdev->dev,
 				"Failed to re-enable voltage monitoring (%d)\n",
@@ -230,6 +251,7 @@ static int voltage_change_prepare(struct regulator_dev *rdev, unsigned int sel,
 		 */
 		if (new > now) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			int tmp;
 			int prot_bit;
 			int ldo_offset = rdev->desc->id - BD718XX_LDO1;
@@ -259,6 +281,29 @@ static int voltage_change_prepare(struct regulator_dev *rdev, unsigned int sel,
 						 BD718XX_REG_MVRFLTMASK2,
 						 *mask, *mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			int tmp;
+			int prot_bit;
+			int ldo_offset = rdev->desc->id - BD718XX_LDO1;
+
+			prot_bit = BD718XX_LDO1_VRMON80 << ldo_offset;
+			ret = regmap_read(rdev->regmap, BD718XX_REG_MVRFLTMASK2,
+					  &tmp);
+			if (ret) {
+				dev_err(&rdev->dev,
+					"Failed to read voltage monitoring state\n");
+				return ret;
+			}
+
+			if (!(tmp & prot_bit)) {
+				/* We disable protection if it was enabled... */
+				ret = regmap_set_bits(rdev->regmap,
+						      BD718XX_REG_MVRFLTMASK2,
+						      prot_bit);
+				/* ...and we also want to re-enable it */
+				*mask = prot_bit;
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret) {
 				dev_err(&rdev->dev,
 					"Failed to stop voltage monitoring\n");
@@ -312,6 +357,7 @@ static int bd71837_set_voltage_sel_pickable_restricted(
 }
 
 /*
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
  * OPS common for BD71847 and BD71850
@@ -408,6 +454,8 @@ BD718XX_OPS(bd718xx_dvs_buck_regulator_ops, regulator_list_voltage_linear_range,
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * BD71837 BUCK1/2/3/4
  * BD71847 BUCK1/2
  * 0.70 to 1.30V (10mV step)
@@ -585,6 +633,9 @@ struct bd718xx_regulator_data {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int bd718x7_xvp_sanity_check(struct regulator_dev *rdev, int lim_uV,
 				    int severity)
 {
@@ -817,8 +868,11 @@ BD718XX_OPS(bd718xx_dvs_buck_regulator_ops, regulator_list_voltage_linear_range,
 
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * There is a HW quirk in BD71837. The shutdown sequence timings for
  * bucks/LDOs which are controlled via register interface are changed.

@@ -11,6 +11,7 @@
 #include <linux/build_bug.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PARMAREA		0x10400
 #define HEAD_END		0x11000
 =======
@@ -20,6 +21,10 @@
 #define EARLY_SCCB_OFFSET	0x11000
 #define HEAD_END		0x12000
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PARMAREA		0x10400
+#define HEAD_END		0x11000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Machine features detected in early.c
@@ -42,9 +47,13 @@
 #define MACHINE_FLAG_GS		BIT(16)
 #define MACHINE_FLAG_SCC	BIT(17)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MACHINE_FLAG_PCI_MIO	BIT(18)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MACHINE_FLAG_PCI_MIO	BIT(18)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define LPP_MAGIC		BIT(31)
 #define LPP_PID_MASK		_AC(0xffffffff, UL)
@@ -54,6 +63,7 @@
 #define STARTUP_NORMAL_OFFSET	0x10000
 #define STARTUP_KDUMP_OFFSET	0x10010
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /* Offsets to parameters in kernel/head.S  */
@@ -67,11 +77,14 @@
 #define COMMAND_LINE_OFFSET	0x10480
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef __ASSEMBLY__
 
 #include <asm/lowcore.h>
 #include <asm/types.h>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 #define IPL_DEVICE	(*(unsigned long *)  (IPL_DEVICE_OFFSET))
@@ -82,6 +95,8 @@
 #define COMMAND_LINE	((char *)	     (COMMAND_LINE_OFFSET))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct parmarea {
 	unsigned long ipl_device;			/* 0x10400 */
 	unsigned long initrd_start;			/* 0x10408 */
@@ -126,9 +141,13 @@ extern unsigned long mio_wb_bit_mask;
 #define MACHINE_HAS_GS		(S390_lowcore.machine_flags & MACHINE_FLAG_GS)
 #define MACHINE_HAS_SCC		(S390_lowcore.machine_flags & MACHINE_FLAG_SCC)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MACHINE_HAS_PCI_MIO	(S390_lowcore.machine_flags & MACHINE_FLAG_PCI_MIO)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MACHINE_HAS_PCI_MIO	(S390_lowcore.machine_flags & MACHINE_FLAG_PCI_MIO)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Console mode. Override with conmode=
@@ -181,6 +200,9 @@ static inline unsigned long kaslr_offset(void)
 extern int is_full_image;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct initrd_data {
 	unsigned long start;
 	unsigned long size;
@@ -193,13 +215,17 @@ struct oldmem_data {
 };
 extern struct oldmem_data oldmem_data;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline u32 gen_lpswe(unsigned long addr)
 {
 	BUILD_BUG_ON(addr > 0xfff);
 	return 0xb2b20000 | addr;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -213,5 +239,7 @@ static inline u32 gen_lpswe(unsigned long addr)
 #define COMMAND_LINE	(COMMAND_LINE_OFFSET)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __ASSEMBLY__ */
 #endif /* _ASM_S390_SETUP_H */

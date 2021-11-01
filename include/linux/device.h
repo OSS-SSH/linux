@@ -408,9 +408,13 @@ struct dev_links_info {
  * @pins:	For device pin management.
  *		See Documentation/driver-api/pin-control.rst for details.
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @msi_lock:	Lock to protect MSI mask cache and mask register
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @msi_lock:	Lock to protect MSI mask cache and mask register
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @msi_list:	Hosts MSI descriptors
  * @msi_domain: The generic MSI domain this device is using.
  * @numa_node:	NUMA node this device is close to.
@@ -428,9 +432,13 @@ struct dev_links_info {
  * @dma_mem:	Internal for coherent mem override.
  * @cma_area:	Contiguous memory area for dma allocations
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @dma_io_tlb_mem: Pointer to the swiotlb pool used.  Not for driver use.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @dma_io_tlb_mem: Pointer to the swiotlb pool used.  Not for driver use.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @archdata:	For arch-specific additions.
  * @of_node:	Associated device tree node.
  * @fwnode:	Associated device node supplied by platform firmware.
@@ -515,9 +523,13 @@ struct device {
 #endif
 #ifdef CONFIG_GENERIC_MSI_IRQ
 <<<<<<< HEAD
+<<<<<<< HEAD
 	raw_spinlock_t		msi_lock;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	raw_spinlock_t		msi_lock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	msi_list;
 #endif
 #ifdef CONFIG_DMA_OPS
@@ -545,11 +557,17 @@ struct device {
 					   allocations */
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_SWIOTLB
 	struct io_tlb_mem *dma_io_tlb_mem;
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_SWIOTLB
+	struct io_tlb_mem *dma_io_tlb_mem;
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* arch specific additions */
 	struct dev_archdata	archdata;
 

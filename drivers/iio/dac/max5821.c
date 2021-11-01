@@ -295,13 +295,19 @@ static const struct iio_info max5821_info = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void max5821_regulator_disable(void *reg)
 {
 	regulator_disable(reg);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int max5821_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
@@ -315,9 +321,12 @@ static int max5821_probe(struct i2c_client *client,
 		return -ENOMEM;
 	data = iio_priv(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	i2c_set_clientdata(client, indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data->client = client;
 	mutex_init(&data->lock);
 
@@ -333,10 +342,14 @@ static int max5821_probe(struct i2c_client *client,
 		dev_err(&client->dev,
 			"Failed to get vref regulator: %d\n", ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto error_free_reg;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = regulator_enable(data->vref_reg);
@@ -344,6 +357,9 @@ static int max5821_probe(struct i2c_client *client,
 		dev_err(&client->dev,
 			"Failed to enable vref regulator: %d\n", ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	}
 
@@ -353,9 +369,12 @@ static int max5821_probe(struct i2c_client *client,
 		dev_err(&client->dev,
 			"Failed to add action to managed regulator: %d\n", ret);
 		return ret;
+<<<<<<< HEAD
 =======
 		goto error_free_reg;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = regulator_get_voltage(data->vref_reg);
@@ -363,10 +382,14 @@ static int max5821_probe(struct i2c_client *client,
 		dev_err(&client->dev,
 			"Failed to get voltage on regulator: %d\n", ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ret;
 =======
 		goto error_disable_reg;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	data->vref_mv = ret / 1000;
@@ -377,6 +400,7 @@ static int max5821_probe(struct i2c_client *client,
 	indio_dev->modes = INDIO_DIRECT_MODE;
 	indio_dev->info = &max5821_info;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return devm_iio_device_register(&client->dev, indio_dev);
 =======
@@ -400,6 +424,9 @@ static int max5821_remove(struct i2c_client *client)
 
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return devm_iio_device_register(&client->dev, indio_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct i2c_device_id max5821_id[] = {
@@ -422,9 +449,12 @@ static struct i2c_driver max5821_driver = {
 	},
 	.probe		= max5821_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= max5821_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= max5821_id,
 };
 module_i2c_driver(max5821_driver);

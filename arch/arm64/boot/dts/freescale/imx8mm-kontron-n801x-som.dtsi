@@ -103,9 +103,13 @@
 				regulator-max-microvolt = <950000>;
 				regulator-boot-on;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				regulator-always-on;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				regulator-always-on;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				regulator-ramp-delay = <3125>;
 				nxp,dvs-run-voltage = <950000>;
 				nxp,dvs-standby-voltage = <850000>;

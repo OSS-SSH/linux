@@ -22,6 +22,7 @@ struct mptcp_pernet {
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int add_addr_timeout;
 	unsigned int stale_loss_cnt;
 	u8 mptcp_enabled;
@@ -29,63 +30,94 @@ struct mptcp_pernet {
 	u8 mptcp_enabled;
 	unsigned int add_addr_timeout;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int add_addr_timeout;
+	unsigned int stale_loss_cnt;
+	u8 mptcp_enabled;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 checksum_enabled;
 	u8 allow_join_initial_addr_port;
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct mptcp_pernet *mptcp_get_pernet(const struct net *net)
 =======
 static struct mptcp_pernet *mptcp_get_pernet(struct net *net)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct mptcp_pernet *mptcp_get_pernet(const struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return net_generic(net, mptcp_pernet_id);
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int mptcp_is_enabled(const struct net *net)
 =======
 int mptcp_is_enabled(struct net *net)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int mptcp_is_enabled(const struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return mptcp_get_pernet(net)->mptcp_enabled;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 unsigned int mptcp_get_add_addr_timeout(const struct net *net)
 =======
 unsigned int mptcp_get_add_addr_timeout(struct net *net)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+unsigned int mptcp_get_add_addr_timeout(const struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return mptcp_get_pernet(net)->add_addr_timeout;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int mptcp_is_checksum_enabled(const struct net *net)
 =======
 int mptcp_is_checksum_enabled(struct net *net)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int mptcp_is_checksum_enabled(const struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return mptcp_get_pernet(net)->checksum_enabled;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int mptcp_allow_join_id0(const struct net *net)
 =======
 int mptcp_allow_join_id0(struct net *net)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int mptcp_allow_join_id0(const struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return mptcp_get_pernet(net)->allow_join_initial_addr_port;
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned int mptcp_stale_loss_cnt(const struct net *net)
 {
 	return mptcp_get_pernet(net)->stale_loss_cnt;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mptcp_pernet_set_defaults(struct mptcp_pernet *pernet)
 {
 	pernet->mptcp_enabled = 1;
@@ -93,9 +125,13 @@ static void mptcp_pernet_set_defaults(struct mptcp_pernet *pernet)
 	pernet->checksum_enabled = 0;
 	pernet->allow_join_initial_addr_port = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pernet->stale_loss_cnt = 4;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pernet->stale_loss_cnt = 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_SYSCTL
@@ -134,14 +170,20 @@ static struct ctl_table mptcp_sysctl_table[] = {
 		.extra2       = SYSCTL_ONE
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.procname = "stale_loss_cnt",
 		.maxlen = sizeof(unsigned int),
 		.mode = 0644,
 		.proc_handler = proc_douintvec_minmax,
 	},
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 
@@ -162,9 +204,13 @@ static int mptcp_pernet_new_table(struct net *net, struct mptcp_pernet *pernet)
 	table[2].data = &pernet->checksum_enabled;
 	table[3].data = &pernet->allow_join_initial_addr_port;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	table[4].data = &pernet->stale_loss_cnt;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	table[4].data = &pernet->stale_loss_cnt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hdr = register_net_sysctl(net, MPTCP_SYSCTL_PATH, table);
 	if (!hdr)

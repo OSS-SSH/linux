@@ -785,6 +785,9 @@ static void hid_ishtp_cl_reset_handler(struct work_struct *work)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void hid_ishtp_cl_resume_handler(struct work_struct *work)
 {
 	struct ishtp_cl_data *client_data = container_of(work, struct ishtp_cl_data, resume_work);
@@ -796,8 +799,11 @@ static void hid_ishtp_cl_resume_handler(struct work_struct *work)
 	}
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ishtp_print_log ishtp_hid_print_trace;
 
 /**
@@ -837,10 +843,15 @@ static int hid_ishtp_cl_probe(struct ishtp_cl_device *cl_device)
 
 	INIT_WORK(&client_data->work, hid_ishtp_cl_reset_handler);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	INIT_WORK(&client_data->resume_work, hid_ishtp_cl_resume_handler);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_WORK(&client_data->resume_work, hid_ishtp_cl_resume_handler);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ishtp_hid_print_trace = ishtp_trace_callback(cl_device);
 
@@ -941,10 +952,14 @@ static int hid_ishtp_cl_resume(struct device *device)
 	hid_ishtp_trace(client_data, "%s hid_ishtp_cl %p\n", __func__,
 			hid_ishtp_cl);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	schedule_work(&client_data->resume_work);
 =======
 	client_data->suspended = false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	schedule_work(&client_data->resume_work);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

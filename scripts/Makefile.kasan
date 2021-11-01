@@ -34,6 +34,7 @@ else
 	 $(call cc-param,asan-globals=1) \
 	 $(call cc-param,asan-instrumentation-with-call-threshold=$(call_threshold)) \
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 $(call cc-param,asan-instrument-allocas=1)
 endif
 
@@ -45,6 +46,13 @@ CFLAGS_KASAN += $(call cc-param,asan-stack=$(stack_enable))
 endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 $(call cc-param,asan-instrument-allocas=1)
+endif
+
+CFLAGS_KASAN += $(call cc-param,asan-stack=$(stack_enable))
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif # CONFIG_KASAN_GENERIC
 
 ifdef CONFIG_KASAN_SW_TAGS

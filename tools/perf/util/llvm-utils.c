@@ -39,10 +39,15 @@ struct llvm_param llvm_param = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void version_notice(void);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void version_notice(void);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int perf_llvm_config(const char *var, const char *value)
 {
 	if (!strstarts(var, "llvm."))
@@ -114,6 +119,9 @@ search_program(const char *def, const char *name,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int search_program_and_warn(const char *def, const char *name,
 				   char *output)
 {
@@ -129,8 +137,11 @@ static int search_program_and_warn(const char *def, const char *name,
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define READ_SIZE	4096
 static int
 read_from_pipe(const char *cmd, void **p_buf, size_t *p_read_sz)
@@ -241,10 +252,14 @@ version_notice(void)
 "     \tOr fetch the latest clang/llvm 3.7 from pre-built llvm packages for\n"
 "     \tdebian/ubuntu:\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 "     \t\thttps://apt.llvm.org/\n\n"
 =======
 "     \t\thttp://llvm.org/apt\n\n"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+"     \t\thttps://apt.llvm.org/\n\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 "     \tIf you are using old version of clang, change 'clang-bpf-cmd-template'\n"
 "     \toption in [llvm] section of ~/.perfconfig to:\n\n"
 "     \t  \"$CLANG_EXEC $CLANG_OPTIONS $KERNEL_INC_OPTIONS $PERF_BPF_INC_OPTIONS \\\n"
@@ -486,22 +501,24 @@ int llvm__compile_bpf(const char *path, void **p_obj_buf,
 		template = CLANG_BPF_CMD_DEFAULT_TEMPLATE;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = search_program_and_warn(llvm_param.clang_path,
 			     "clang", clang_path);
 	if (err)
 		return -ENOENT;
 =======
 	err = search_program(llvm_param.clang_path,
+=======
+	err = search_program_and_warn(llvm_param.clang_path,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     "clang", clang_path);
-	if (err) {
-		pr_err(
-"ERROR:\tunable to find clang.\n"
-"Hint:\tTry to install latest clang/llvm to support BPF. Check your $PATH\n"
-"     \tand 'clang-path' option in [llvm] section of ~/.perfconfig.\n");
-		version_notice();
+	if (err)
 		return -ENOENT;
+<<<<<<< HEAD
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * This is an optional work. Even it fail we can continue our
@@ -530,6 +547,7 @@ int llvm__compile_bpf(const char *path, void **p_obj_buf,
 
 	if (opts) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		err = search_program_and_warn(llvm_param.llc_path, "llc", llc_path);
 		if (err)
 			goto errout;
@@ -543,6 +561,11 @@ int llvm__compile_bpf(const char *path, void **p_obj_buf,
 			goto errout;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = search_program_and_warn(llvm_param.llc_path, "llc", llc_path);
+		if (err)
+			goto errout;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = -ENOMEM;
 		if (asprintf(&pipe_template, "%s -emit-llvm | %s -march=bpf %s -filetype=obj -o -",
@@ -620,8 +643,12 @@ int llvm__search_clang(void)
 	char clang_path[PATH_MAX];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return search_program_and_warn(llvm_param.clang_path, "clang", clang_path);
 =======
 	return search_program(llvm_param.clang_path, "clang", clang_path);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return search_program_and_warn(llvm_param.clang_path, "clang", clang_path);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

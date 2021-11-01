@@ -384,11 +384,16 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
 		gfp_flags |= GFP_HIGHUSER;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	for (order = min_t(unsigned int, MAX_ORDER - 1, __fls(num_pages));
 	     num_pages;
 =======
 	for (order = min(MAX_ORDER - 1UL, __fls(num_pages)); num_pages;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (order = min_t(unsigned int, MAX_ORDER - 1, __fls(num_pages));
+	     num_pages;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	     order = min_t(unsigned int, order, __fls(num_pages))) {
 		bool apply_caching = false;
 		struct ttm_pool_type *pt;

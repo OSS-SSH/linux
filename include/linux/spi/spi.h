@@ -148,14 +148,20 @@ extern int spi_delay_exec(struct spi_delay *_delay, struct spi_transfer *xfer);
  * @word_delay: delay to be inserted between consecutive
  *	words of a transfer
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cs_setup: delay to be introduced by the controller after CS is asserted
  * @cs_hold: delay to be introduced by the controller before CS is deasserted
  * @cs_inactive: delay to be introduced by the controller after CS is
  *	deasserted. If @cs_change_delay is used from @spi_transfer, then the
  *	two delays will be added up.
+<<<<<<< HEAD
 =======
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @statistics: statistics for the spi_device
  *
  * A @spi_device is used to interchange data between an SPI slave
@@ -197,12 +203,18 @@ struct spi_device {
 	struct gpio_desc	*cs_gpiod;	/* chip select gpio desc */
 	struct spi_delay	word_delay; /* inter-word delay */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* CS delays */
 	struct spi_delay	cs_setup;
 	struct spi_delay	cs_hold;
 	struct spi_delay	cs_inactive;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* the statistics */
 	struct spi_statistics	statistics;
@@ -355,9 +367,13 @@ extern struct spi_device *spi_new_ancillary_device(struct spi_device *spi, u8 ch
  * @flags: other constraints relevant to this driver
  * @slave: indicates that this is an SPI slave controller
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @devm_allocated: whether the allocation of this struct is devres-managed
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @devm_allocated: whether the allocation of this struct is devres-managed
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @max_transfer_size: function that returns the max transfer size for
  *	a &spi_device; may be %NULL, so the default %SIZE_MAX will be used.
  * @max_message_size: function that returns the max message size for
@@ -432,6 +448,7 @@ extern struct spi_device *spi_new_ancillary_device(struct spi_device *spi, u8 ch
  * @unprepare_message: undo any work done by prepare_message().
  * @slave_abort: abort the ongoing transfer request on an SPI slave controller
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  * @cs_setup: delay to be introduced by the controller after CS is asserted
  * @cs_hold: delay to be introduced by the controller before CS is deasserted
@@ -439,6 +456,8 @@ extern struct spi_device *spi_new_ancillary_device(struct spi_device *spi, u8 ch
  *	deasserted. If @cs_change_delay is used from @spi_transfer, then the
  *	two delays will be added up.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cs_gpios: LEGACY: array of GPIO descs to use as chip select lines; one per
  *	CS number. Any individual value may be -ENOENT for CS lines that
  *	are not GPIOs (driven by the SPI controller itself). Use the cs_gpiods
@@ -534,10 +553,14 @@ struct spi_controller {
 #define SPI_MASTER_GPIO_SS		BIT(5)	/* GPIO CS must select slave */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* flag indicating if the allocation of this struct is devres-managed */
 =======
 	/* flag indicating this is a non-devres managed controller */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* flag indicating if the allocation of this struct is devres-managed */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool			devm_allocated;
 
 	/* flag indicating this is an SPI slave controller */
@@ -554,11 +577,17 @@ struct spi_controller {
 	struct mutex		io_mutex;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Used to avoid adding the same CS twice */
 	struct mutex		add_lock;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Used to avoid adding the same CS twice */
+	struct mutex		add_lock;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* lock and mutex for SPI bus locking */
 	spinlock_t		bus_lock_spinlock;
 	struct mutex		bus_lock_mutex;
@@ -583,11 +612,15 @@ struct spi_controller {
 	 * spi_setup().
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int (*set_cs_timing)(struct spi_device *spi);
 =======
 	int (*set_cs_timing)(struct spi_device *spi, struct spi_delay *setup,
 			     struct spi_delay *hold, struct spi_delay *inactive);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*set_cs_timing)(struct spi_device *spi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* bidirectional bulk transfers
 	 *
@@ -675,6 +708,7 @@ struct spi_controller {
 	const struct spi_controller_mem_ops *mem_ops;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* CS delays */
 	struct spi_delay	cs_setup;
@@ -682,6 +716,8 @@ struct spi_controller {
 	struct spi_delay	cs_inactive;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* gpio chip select */
 	int			*cs_gpios;
 	struct gpio_desc	**cs_gpiods;

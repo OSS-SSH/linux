@@ -7,9 +7,13 @@
 #define VDSO_HAS_CLOCK_GETRES 1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/syscall.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/syscall.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/timex.h>
 #include <asm/unistd.h>
 #include <linux/compiler.h>
@@ -40,6 +44,7 @@ static __always_inline
 long clock_gettime_fallback(clockid_t clkid, struct __kernel_timespec *ts)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return syscall2(__NR_clock_gettime, (long)clkid, (long)ts);
 =======
 	register unsigned long r1 __asm__("r1") = __NR_clock_gettime;
@@ -49,12 +54,16 @@ long clock_gettime_fallback(clockid_t clkid, struct __kernel_timespec *ts)
 	asm ("svc 0\n" : "+d" (r2) : "d" (r1), "d" (r3) : "cc", "memory");
 	return r2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return syscall2(__NR_clock_gettime, (long)clkid, (long)ts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static __always_inline
 long gettimeofday_fallback(register struct __kernel_old_timeval *tv,
 			   register struct timezone *tz)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return syscall2(__NR_gettimeofday, (long)tv, (long)tz);
 =======
@@ -65,11 +74,15 @@ long gettimeofday_fallback(register struct __kernel_old_timeval *tv,
 	asm ("svc 0\n" : "+d" (r2) : "d" (r1), "d" (r3) : "cc", "memory");
 	return r2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return syscall2(__NR_gettimeofday, (long)tv, (long)tz);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static __always_inline
 long clock_getres_fallback(clockid_t clkid, struct __kernel_timespec *ts)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return syscall2(__NR_clock_getres, (long)clkid, (long)ts);
 =======
@@ -80,6 +93,9 @@ long clock_getres_fallback(clockid_t clkid, struct __kernel_timespec *ts)
 	asm ("svc 0\n" : "+d" (r2) : "d" (r1), "d" (r3) : "cc", "memory");
 	return r2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return syscall2(__NR_clock_getres, (long)clkid, (long)ts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_TIME_NS

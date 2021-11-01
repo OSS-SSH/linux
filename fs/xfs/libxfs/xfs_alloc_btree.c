@@ -32,6 +32,7 @@ xfs_allocbt_dup_cursor(
 STATIC void
 xfs_allocbt_set_root(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*ptr,
 	int				inc)
@@ -40,6 +41,11 @@ xfs_allocbt_set_root(
 	union xfs_btree_ptr	*ptr,
 	int			inc)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_ptr	*ptr,
+	int				inc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_buf		*agbp = cur->bc_ag.agbp;
 	struct xfs_agf		*agf = agbp->b_addr;
@@ -57,16 +63,22 @@ xfs_allocbt_set_root(
 STATIC int
 xfs_allocbt_alloc_block(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*start,
 	union xfs_btree_ptr		*new,
 	int				*stat)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	union xfs_btree_ptr	*start,
 	union xfs_btree_ptr	*new,
 	int			*stat)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int			error;
 	xfs_agblock_t		bno;
@@ -101,10 +113,14 @@ xfs_allocbt_free_block(
 	int			error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bno = xfs_daddr_to_agbno(cur->bc_mp, xfs_buf_daddr(bp));
 =======
 	bno = xfs_daddr_to_agbno(cur->bc_mp, XFS_BUF_ADDR(bp));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bno = xfs_daddr_to_agbno(cur->bc_mp, xfs_buf_daddr(bp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = xfs_alloc_put_freelist(cur->bc_tp, agbp, NULL, bno, 1);
 	if (error)
 		return error;
@@ -121,11 +137,15 @@ xfs_allocbt_free_block(
 STATIC void
 xfs_allocbt_update_lastrec(
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_btree_cur		*cur,
 	const struct xfs_btree_block	*block,
 	const union xfs_btree_rec	*rec,
 	int				ptr,
 	int				reason)
+<<<<<<< HEAD
 =======
 	struct xfs_btree_cur	*cur,
 	struct xfs_btree_block	*block,
@@ -133,6 +153,8 @@ xfs_allocbt_update_lastrec(
 	int			ptr,
 	int			reason)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_agf		*agf = cur->bc_ag.agbp->b_addr;
 	struct xfs_perag	*pag;
@@ -203,12 +225,17 @@ xfs_allocbt_get_maxrecs(
 STATIC void
 xfs_allocbt_init_key_from_rec(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	union xfs_btree_key		*key,
 	const union xfs_btree_rec	*rec)
 =======
 	union xfs_btree_key	*key,
 	union xfs_btree_rec	*rec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	union xfs_btree_key		*key,
+	const union xfs_btree_rec	*rec)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	key->alloc.ar_startblock = rec->alloc.ar_startblock;
 	key->alloc.ar_blockcount = rec->alloc.ar_blockcount;
@@ -216,6 +243,7 @@ xfs_allocbt_init_key_from_rec(
 
 STATIC void
 xfs_bnobt_init_high_key_from_rec(
+<<<<<<< HEAD
 <<<<<<< HEAD
 	union xfs_btree_key		*key,
 	const union xfs_btree_rec	*rec)
@@ -227,6 +255,12 @@ xfs_bnobt_init_high_key_from_rec(
 {
 	__u32			x;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	union xfs_btree_key		*key,
+	const union xfs_btree_rec	*rec)
+{
+	__u32				x;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	x = be32_to_cpu(rec->alloc.ar_startblock);
 	x += be32_to_cpu(rec->alloc.ar_blockcount) - 1;
@@ -237,12 +271,17 @@ xfs_bnobt_init_high_key_from_rec(
 STATIC void
 xfs_cntbt_init_high_key_from_rec(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	union xfs_btree_key		*key,
 	const union xfs_btree_rec	*rec)
 =======
 	union xfs_btree_key	*key,
 	union xfs_btree_rec	*rec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	union xfs_btree_key		*key,
+	const union xfs_btree_rec	*rec)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	key->alloc.ar_blockcount = rec->alloc.ar_blockcount;
 	key->alloc.ar_startblock = 0;
@@ -272,6 +311,7 @@ xfs_allocbt_init_ptr_from_cur(
 STATIC int64_t
 xfs_bnobt_key_diff(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*key)
 {
@@ -284,12 +324,20 @@ xfs_bnobt_key_diff(
 	xfs_alloc_rec_incore_t	*rec = &cur->bc_rec.a;
 	xfs_alloc_key_t		*kp = &key->alloc;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_key	*key)
+{
+	struct xfs_alloc_rec_incore	*rec = &cur->bc_rec.a;
+	const struct xfs_alloc_rec	*kp = &key->alloc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return (int64_t)be32_to_cpu(kp->ar_startblock) - rec->ar_startblock;
 }
 
 STATIC int64_t
 xfs_cntbt_key_diff(
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*key)
@@ -305,6 +353,14 @@ xfs_cntbt_key_diff(
 	xfs_alloc_key_t		*kp = &key->alloc;
 	int64_t			diff;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_key	*key)
+{
+	struct xfs_alloc_rec_incore	*rec = &cur->bc_rec.a;
+	const struct xfs_alloc_rec	*kp = &key->alloc;
+	int64_t				diff;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	diff = (int64_t)be32_to_cpu(kp->ar_blockcount) - rec->ar_blockcount;
 	if (diff)
@@ -316,6 +372,7 @@ xfs_cntbt_key_diff(
 STATIC int64_t
 xfs_bnobt_diff_two_keys(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*k1,
 	const union xfs_btree_key	*k2)
@@ -324,6 +381,11 @@ xfs_bnobt_diff_two_keys(
 	union xfs_btree_key	*k1,
 	union xfs_btree_key	*k2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_key	*k1,
+	const union xfs_btree_key	*k2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return (int64_t)be32_to_cpu(k1->alloc.ar_startblock) -
 			  be32_to_cpu(k2->alloc.ar_startblock);
@@ -331,6 +393,7 @@ xfs_bnobt_diff_two_keys(
 
 STATIC int64_t
 xfs_cntbt_diff_two_keys(
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*k1,
@@ -344,6 +407,13 @@ xfs_cntbt_diff_two_keys(
 {
 	int64_t			diff;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_key	*k1,
+	const union xfs_btree_key	*k2)
+{
+	int64_t				diff;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	diff =  be32_to_cpu(k1->alloc.ar_blockcount) -
 		be32_to_cpu(k2->alloc.ar_blockcount);
@@ -369,10 +439,14 @@ xfs_allocbt_verify(
 		return __this_address;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fa = xfs_btree_sblock_v5hdr_verify(bp);
 		if (fa)
 			return fa;
@@ -454,6 +528,7 @@ const struct xfs_buf_ops xfs_cntbt_buf_ops = {
 STATIC int
 xfs_bnobt_keys_inorder(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*k1,
 	const union xfs_btree_key	*k2)
@@ -462,6 +537,11 @@ xfs_bnobt_keys_inorder(
 	union xfs_btree_key	*k1,
 	union xfs_btree_key	*k2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_key	*k1,
+	const union xfs_btree_key	*k2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return be32_to_cpu(k1->alloc.ar_startblock) <
 	       be32_to_cpu(k2->alloc.ar_startblock);
@@ -469,6 +549,7 @@ xfs_bnobt_keys_inorder(
 
 STATIC int
 xfs_bnobt_recs_inorder(
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_rec	*r1,
@@ -478,6 +559,11 @@ xfs_bnobt_recs_inorder(
 	union xfs_btree_rec	*r1,
 	union xfs_btree_rec	*r2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_rec	*r1,
+	const union xfs_btree_rec	*r2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return be32_to_cpu(r1->alloc.ar_startblock) +
 		be32_to_cpu(r1->alloc.ar_blockcount) <=
@@ -487,6 +573,7 @@ xfs_bnobt_recs_inorder(
 STATIC int
 xfs_cntbt_keys_inorder(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*k1,
 	const union xfs_btree_key	*k2)
@@ -495,6 +582,11 @@ xfs_cntbt_keys_inorder(
 	union xfs_btree_key	*k1,
 	union xfs_btree_key	*k2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_key	*k1,
+	const union xfs_btree_key	*k2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return be32_to_cpu(k1->alloc.ar_blockcount) <
 		be32_to_cpu(k2->alloc.ar_blockcount) ||
@@ -506,6 +598,7 @@ xfs_cntbt_keys_inorder(
 STATIC int
 xfs_cntbt_recs_inorder(
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_rec	*r1,
 	const union xfs_btree_rec	*r2)
@@ -514,6 +607,11 @@ xfs_cntbt_recs_inorder(
 	union xfs_btree_rec	*r1,
 	union xfs_btree_rec	*r2)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_btree_cur		*cur,
+	const union xfs_btree_rec	*r1,
+	const union xfs_btree_rec	*r2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return be32_to_cpu(r1->alloc.ar_blockcount) <
 		be32_to_cpu(r2->alloc.ar_blockcount) ||
@@ -600,10 +698,14 @@ xfs_allocbt_init_common(
 	cur->bc_ag.pag = pag;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp))
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cur->bc_flags |= XFS_BTREE_CRC_BLOCKS;
 
 	return cur;

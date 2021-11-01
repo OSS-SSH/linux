@@ -78,6 +78,7 @@ configurable behaviours:
 
 The user can select the above modes, per thread, using the
 <<<<<<< HEAD
+<<<<<<< HEAD
 ``prctl(PR_SET_TAGGED_ADDR_CTRL, flags, 0, 0, 0)`` system call where ``flags``
 contains any number of the following values in the ``PR_MTE_TCF_MASK``
 bit-field:
@@ -95,13 +96,26 @@ preferred tag checking modes" section below.
 =======
 ``prctl(PR_SET_TAGGED_ADDR_CTRL, flags, 0, 0, 0)`` system call where
 ``flags`` contain one of the following values in the ``PR_MTE_TCF_MASK``
+=======
+``prctl(PR_SET_TAGGED_ADDR_CTRL, flags, 0, 0, 0)`` system call where ``flags``
+contains any number of the following values in the ``PR_MTE_TCF_MASK``
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bit-field:
 
-- ``PR_MTE_TCF_NONE``  - *Ignore* tag check faults
+- ``PR_MTE_TCF_NONE``  - *Ignore* tag check faults
+                         (ignored if combined with other options)
 - ``PR_MTE_TCF_SYNC``  - *Synchronous* tag check fault mode
 - ``PR_MTE_TCF_ASYNC`` - *Asynchronous* tag check fault mode
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+If no modes are specified, tag check faults are ignored. If a single
+mode is specified, the program will run in that mode. If multiple
+modes are specified, the mode is selected as described in the "Per-CPU
+preferred tag checking modes" section below.
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The current tag check fault mode can be read using the
 ``prctl(PR_GET_TAGGED_ADDR_CTRL, 0, 0, 0, 0)`` system call.
 
@@ -138,6 +152,9 @@ interface provides an include mask. An include mask of ``0`` (exclusion
 mask ``0xffff``) results in the CPU always generating tag ``0``.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Per-CPU preferred tag checking mode
 -----------------------------------
 
@@ -164,8 +181,11 @@ tag checking modes, but future kernels may support more modes), that
 mode will be selected. Otherwise, one of the modes in the task's mode
 set will be selected in a currently unspecified manner.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Initial process state
 ---------------------
 
@@ -173,10 +193,14 @@ On ``execve()``, the new process has the following configuration:
 
 - ``PR_TAGGED_ADDR_ENABLE`` set to 0 (disabled)
 <<<<<<< HEAD
+<<<<<<< HEAD
 - No tag checking modes are selected (tag check faults ignored)
 =======
 - Tag checking mode set to ``PR_MTE_TCF_NONE``
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+- No tag checking modes are selected (tag check faults ignored)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - ``PR_MTE_TAG_MASK`` set to 0 (all tags excluded)
 - ``PSTATE.TCO`` set to 0
 - ``PROT_MTE`` not set on any of the initial memory maps
@@ -302,6 +326,7 @@ Example of correct usage
 
             /*
 <<<<<<< HEAD
+<<<<<<< HEAD
              * Enable the tagged address ABI, synchronous or asynchronous MTE
              * tag check faults (based on per-CPU preference) and allow all
              * non-zero tags in the randomly generated set.
@@ -316,6 +341,15 @@ Example of correct usage
             if (prctl(PR_SET_TAGGED_ADDR_CTRL,
                       PR_TAGGED_ADDR_ENABLE | PR_MTE_TCF_SYNC | (0xfffe << PR_MTE_TAG_SHIFT),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+             * Enable the tagged address ABI, synchronous or asynchronous MTE
+             * tag check faults (based on per-CPU preference) and allow all
+             * non-zero tags in the randomly generated set.
+             */
+            if (prctl(PR_SET_TAGGED_ADDR_CTRL,
+                      PR_TAGGED_ADDR_ENABLE | PR_MTE_TCF_SYNC | PR_MTE_TCF_ASYNC |
+                      (0xfffe << PR_MTE_TAG_SHIFT),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
                       0, 0, 0)) {
                     perror("prctl() failed");
                     return EXIT_FAILURE;

@@ -441,6 +441,7 @@ struct auxtrace_cache;
 #ifdef HAVE_AUXTRACE_SUPPORT
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 u64 compat_auxtrace_mmap__read_head(struct auxtrace_mmap *mm);
 int compat_auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail);
 
@@ -471,22 +472,33 @@ static inline u64 auxtrace_mmap__read_snapshot_head(struct auxtrace_mmap *mm)
 	smp_rmb();
 	return head;
 }
+=======
+u64 compat_auxtrace_mmap__read_head(struct auxtrace_mmap *mm);
+int compat_auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-static inline u64 auxtrace_mmap__read_head(struct auxtrace_mmap *mm)
+static inline u64 auxtrace_mmap__read_head(struct auxtrace_mmap *mm,
+					   int kernel_is_64_bit __maybe_unused)
 {
 	struct perf_event_mmap_page *pc = mm->userpg;
-#if BITS_PER_LONG == 64 || !defined(HAVE_SYNC_COMPARE_AND_SWAP_SUPPORT)
-	u64 head = READ_ONCE(pc->aux_head);
-#else
-	u64 head = __sync_val_compare_and_swap(&pc->aux_head, 0, 0);
+	u64 head;
+
+#if BITS_PER_LONG == 32
+	if (kernel_is_64_bit)
+		return compat_auxtrace_mmap__read_head(mm);
 #endif
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	head = READ_ONCE(pc->aux_head);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Ensure all reads are done after we read the head */
 	smp_rmb();
 	return head;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static inline int auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail,
 					    int kernel_is_64_bit __maybe_unused)
@@ -503,14 +515,20 @@ static inline int auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail,
 	return 0;
 =======
 static inline void auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail)
+=======
+static inline int auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail,
+					    int kernel_is_64_bit __maybe_unused)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct perf_event_mmap_page *pc = mm->userpg;
-#if BITS_PER_LONG != 64 && defined(HAVE_SYNC_COMPARE_AND_SWAP_SUPPORT)
-	u64 old_tail;
-#endif
 
+#if BITS_PER_LONG == 32
+	if (kernel_is_64_bit)
+		return compat_auxtrace_mmap__write_tail(mm, tail);
+#endif
 	/* Ensure all reads are done before we write the tail out */
 	smp_mb();
+<<<<<<< HEAD
 #if BITS_PER_LONG == 64 || !defined(HAVE_SYNC_COMPARE_AND_SWAP_SUPPORT)
 	pc->aux_tail = tail;
 #else
@@ -519,6 +537,10 @@ static inline void auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail)
 	} while (!__sync_bool_compare_and_swap(&pc->aux_tail, old_tail, tail));
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WRITE_ONCE(pc->aux_tail, tail);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int auxtrace_mmap__mmap(struct auxtrace_mmap *mm,

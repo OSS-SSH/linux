@@ -64,10 +64,14 @@ xfs_readlink_bmap_ilocked(
 
 		cur_chunk = bp->b_addr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_has_crc(mp)) {
 =======
 		if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!xfs_symlink_hdr_ok(ip->i_ino, offset,
 							byte_cnt, bp)) {
 				error = -EFSCORRUPTED;
@@ -112,10 +116,14 @@ xfs_readlink(
 	ASSERT(ip->i_df.if_format != XFS_DINODE_FMT_LOCAL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	xfs_ilock(ip, XFS_ILOCK_SHARED);
@@ -177,10 +185,14 @@ xfs_symlink(
 	trace_xfs_symlink(dp, link_name);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	/*
@@ -334,6 +346,7 @@ xfs_symlink(
 	 * the user.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp) || xfs_has_dirsync(mp))
 		xfs_trans_set_sync(tp);
 =======
@@ -341,6 +354,10 @@ xfs_symlink(
 		xfs_trans_set_sync(tp);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_wsync(mp) || xfs_has_dirsync(mp))
+		xfs_trans_set_sync(tp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = xfs_trans_commit(tp);
 	if (error)
@@ -463,10 +480,14 @@ xfs_inactive_symlink_rmt(
 	error = xfs_trans_commit(tp);
 	if (error) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ASSERT(xfs_is_shutdown(mp));
 =======
 		ASSERT(XFS_FORCED_SHUTDOWN(mp));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ASSERT(xfs_is_shutdown(mp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto error_unlock;
 	}
 
@@ -500,10 +521,14 @@ xfs_inactive_symlink(
 	trace_xfs_inactive_symlink(ip);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
 =======
 	if (XFS_FORCED_SHUTDOWN(mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	xfs_ilock(ip, XFS_ILOCK_EXCL);

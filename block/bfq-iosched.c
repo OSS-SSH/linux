@@ -2362,11 +2362,17 @@ static int bfq_request_merge(struct request_queue *q, struct request **req,
 	if (__rq && elv_bio_merge_ok(__rq, bio)) {
 		*req = __rq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (blk_discard_mergable(__rq))
 			return ELEVATOR_DISCARD_MERGE;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		if (blk_discard_mergable(__rq))
+			return ELEVATOR_DISCARD_MERGE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ELEVATOR_FRONT_MERGE;
 	}
 
@@ -2512,10 +2518,14 @@ void bfq_end_wr_async_queues(struct bfq_data *bfqd,
 
 	for (i = 0; i < 2; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for (j = 0; j < IOPRIO_NR_LEVELS; j++)
 =======
 		for (j = 0; j < IOPRIO_BE_NR; j++)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for (j = 0; j < IOPRIO_NR_LEVELS; j++)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (bfqg->async_bfqq[i][j])
 				bfq_bfqq_end_wr(bfqg->async_bfqq[i][j]);
 	if (bfqg->async_idle_bfqq)
@@ -5277,12 +5287,17 @@ bfq_set_next_ioprio_data(struct bfq_queue *bfqq, struct bfq_io_cq *bic)
 	default:
 		pr_err("bdi %s: bfq: bad prio class %d\n",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			bdi_dev_name(bfqq->bfqd->queue->disk->bdi),
 			ioprio_class);
 =======
 				bdi_dev_name(bfqq->bfqd->queue->backing_dev_info),
 				ioprio_class);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			bdi_dev_name(bfqq->bfqd->queue->disk->bdi),
+			ioprio_class);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fallthrough;
 	case IOPRIO_CLASS_NONE:
 		/*
@@ -5306,6 +5321,7 @@ bfq_set_next_ioprio_data(struct bfq_queue *bfqq, struct bfq_io_cq *bic)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (bfqq->new_ioprio >= IOPRIO_NR_LEVELS) {
 		pr_crit("bfq_set_next_ioprio_data: new_ioprio %d\n",
 			bfqq->new_ioprio);
@@ -5316,6 +5332,12 @@ bfq_set_next_ioprio_data(struct bfq_queue *bfqq, struct bfq_io_cq *bic)
 			bfqq->new_ioprio);
 		bfqq->new_ioprio = IOPRIO_BE_NR;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (bfqq->new_ioprio >= IOPRIO_NR_LEVELS) {
+		pr_crit("bfq_set_next_ioprio_data: new_ioprio %d\n",
+			bfqq->new_ioprio);
+		bfqq->new_ioprio = IOPRIO_NR_LEVELS - 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	bfqq->entity.new_weight = bfq_ioprio_to_weight(bfqq->new_ioprio);
@@ -5431,10 +5453,14 @@ static struct bfq_queue **bfq_async_queue_prio(struct bfq_data *bfqd,
 		return &bfqg->async_bfqq[0][ioprio];
 	case IOPRIO_CLASS_NONE:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ioprio = IOPRIO_BE_NORM;
 =======
 		ioprio = IOPRIO_NORM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ioprio = IOPRIO_BE_NORM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fallthrough;
 	case IOPRIO_CLASS_BE:
 		return &bfqg->async_bfqq[1][ioprio];
@@ -6849,10 +6875,14 @@ void bfq_put_async_queues(struct bfq_data *bfqd, struct bfq_group *bfqg)
 
 	for (i = 0; i < 2; i++)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		for (j = 0; j < IOPRIO_NR_LEVELS; j++)
 =======
 		for (j = 0; j < IOPRIO_BE_NR; j++)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for (j = 0; j < IOPRIO_NR_LEVELS; j++)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__bfq_put_async_bfqq(bfqd, &bfqg->async_bfqq[i][j]);
 
 	__bfq_put_async_bfqq(bfqd, &bfqg->async_idle_bfqq);

@@ -151,6 +151,9 @@ static inline int nvmem_cell_read_u64(struct device *dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int nvmem_cell_read_variable_le_u32(struct device *dev,
 						 const char *cell_id,
 						 u32 *val)
@@ -165,8 +168,11 @@ static inline int nvmem_cell_read_variable_le_u64(struct device *dev,
 	return -EOPNOTSUPP;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct nvmem_device *nvmem_device_get(struct device *dev,
 						    const char *name)
 {

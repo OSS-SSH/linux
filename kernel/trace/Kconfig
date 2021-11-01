@@ -136,6 +136,7 @@ config TRACING_SUPPORT
 	default y
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 menuconfig FTRACE
 	bool "Tracers"
 	depends on TRACING_SUPPORT
@@ -145,6 +146,11 @@ if TRACING_SUPPORT
 menuconfig FTRACE
 	bool "Tracers"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+menuconfig FTRACE
+	bool "Tracers"
+	depends on TRACING_SUPPORT
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default y if DEBUG_KERNEL
 	help
 	  Enable the kernel tracing infrastructure.
@@ -226,13 +232,19 @@ config DYNAMIC_FTRACE_WITH_DIRECT_CALLS
 	depends on HAVE_DYNAMIC_FTRACE_WITH_DIRECT_CALLS
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DYNAMIC_FTRACE_WITH_ARGS
 	def_bool y
 	depends on DYNAMIC_FTRACE
 	depends on HAVE_DYNAMIC_FTRACE_WITH_ARGS
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config FUNCTION_PROFILER
 	bool "Kernel function profiler"
 	depends on FUNCTION_TRACER
@@ -1047,8 +1059,11 @@ config HIST_TRIGGERS_DEBUG
 
 endif # FTRACE
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 endif # TRACING_SUPPORT
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

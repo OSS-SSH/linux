@@ -2391,6 +2391,9 @@ static void snapshot_status(struct dm_target *ti, status_type_t type,
 		}
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	case STATUSTYPE_IMA:
 		DMEMIT_TARGET_NAME_VERSION(ti->type);
@@ -2401,8 +2404,11 @@ static void snapshot_status(struct dm_target *ti, status_type_t type,
 		DMEMIT(",snapshot_overflowed=%c", snap->snapshot_overflowed ? 'y' : 'n');
 		DMEMIT(";");
 		break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -2748,11 +2754,17 @@ static void origin_status(struct dm_target *ti, status_type_t type,
 		snprintf(result, maxlen, "%s", o->dev->name);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case STATUSTYPE_IMA:
 		result[0] = '\0';
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case STATUSTYPE_IMA:
+		result[0] = '\0';
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

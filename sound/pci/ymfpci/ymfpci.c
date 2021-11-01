@@ -106,11 +106,16 @@ static int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev,
 
 	if (!r) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		r = devm_request_region(&chip->pci->dev, io_port, 1,
 					"YMFPCI gameport");
 =======
 		r = request_region(io_port, 1, "YMFPCI gameport");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		r = devm_request_region(&chip->pci->dev, io_port, 1,
+					"YMFPCI gameport");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!r) {
 			dev_err(chip->card->dev,
 				"joystick port %#x is in use.\n", io_port);
@@ -123,9 +128,12 @@ static int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev,
 		dev_err(chip->card->dev,
 			"cannot allocate memory for gameport\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		release_and_free_resource(r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 	}
 
@@ -135,9 +143,12 @@ static int snd_ymfpci_create_gameport(struct snd_ymfpci *chip, int dev,
 	gameport_set_dev_parent(gp, &chip->pci->dev);
 	gp->io = io_port;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	gameport_set_port_data(gp, r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (chip->pci->device >= 0x0010) /* YMF 744/754 */
 		pci_write_config_word(chip->pci, PCIR_DSXG_JOYBASE, io_port);
@@ -154,6 +165,7 @@ void snd_ymfpci_free_gameport(struct snd_ymfpci *chip)
 {
 	if (chip->gameport) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		gameport_unregister_port(chip->gameport);
 		chip->gameport = NULL;
 =======
@@ -164,6 +176,10 @@ void snd_ymfpci_free_gameport(struct snd_ymfpci *chip)
 
 		release_and_free_resource(r);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gameport_unregister_port(chip->gameport);
+		chip->gameport = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 #else
@@ -193,6 +209,7 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   sizeof(*chip), &card);
 	if (err < 0)
 		return err;
@@ -202,6 +219,12 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 	if (err < 0)
 		return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   sizeof(*chip), &card);
+	if (err < 0)
+		return err;
+	chip = card->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (pci_id->device) {
 	case 0x0004: str = "YMF724";  model = "DS-1"; break;
@@ -223,11 +246,16 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 		}
 		if (fm_port[dev] > 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			fm_res = devm_request_region(&pci->dev, fm_port[dev],
 						     4, "YMFPCI OPL3");
 =======
 			fm_res = request_region(fm_port[dev], 4, "YMFPCI OPL3");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			fm_res = devm_request_region(&pci->dev, fm_port[dev],
+						     4, "YMFPCI OPL3");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (fm_res) {
 			legacy_ctrl |= YMFPCI_LEGACY_FMEN;
 			pci_write_config_word(pci, PCIR_DSXG_FMBASE, fm_port[dev]);
@@ -238,11 +266,16 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 		}
 		if (mpu_port[dev] > 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			mpu_res = devm_request_region(&pci->dev, mpu_port[dev],
 						      2, "YMFPCI MPU401");
 =======
 			mpu_res = request_region(mpu_port[dev], 2, "YMFPCI MPU401");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			mpu_res = devm_request_region(&pci->dev, mpu_port[dev],
+						      2, "YMFPCI MPU401");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mpu_res) {
 			legacy_ctrl |= YMFPCI_LEGACY_MEN;
 			pci_write_config_word(pci, PCIR_DSXG_MPU401BASE, mpu_port[dev]);
@@ -257,11 +290,16 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 		}
 		if (fm_port[dev] > 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			fm_res = devm_request_region(&pci->dev, fm_port[dev],
 						     4, "YMFPCI OPL3");
 =======
 			fm_res = request_region(fm_port[dev], 4, "YMFPCI OPL3");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			fm_res = devm_request_region(&pci->dev, fm_port[dev],
+						     4, "YMFPCI OPL3");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (fm_res) {
 			legacy_ctrl |= YMFPCI_LEGACY_FMEN;
 		} else {
@@ -277,11 +315,16 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 		}
 		if (mpu_port[dev] > 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			mpu_res = devm_request_region(&pci->dev, mpu_port[dev],
 						      2, "YMFPCI MPU401");
 =======
 			mpu_res = request_region(mpu_port[dev], 2, "YMFPCI MPU401");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			mpu_res = devm_request_region(&pci->dev, mpu_port[dev],
+						      2, "YMFPCI MPU401");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mpu_res) {
 			legacy_ctrl |= YMFPCI_LEGACY_MEN;
 		} else {
@@ -297,6 +340,7 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 	pci_write_config_word(pci, PCIR_DSXG_LEGACY, legacy_ctrl);
 	pci_write_config_word(pci, PCIR_DSXG_ELEGACY, legacy_ctrl2);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = snd_ymfpci_create(card, pci, old_legacy_ctrl);
 	if (err  < 0)
 		return err;
@@ -311,6 +355,11 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 	chip->mpu_res = mpu_res;
 	card->private_data = chip;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_ymfpci_create(card, pci, old_legacy_ctrl);
+	if (err  < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, str);
 	sprintf(card->shortname, "Yamaha %s (%s)", model, str);
@@ -320,6 +369,7 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 		chip->irq);
 	err = snd_ymfpci_pcm(chip, 0);
 	if (err < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return err;
 
@@ -332,19 +382,27 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 		return err;
 =======
 		goto free_card;
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = snd_ymfpci_pcm_spdif(chip, 1);
 	if (err < 0)
-		goto free_card;
+		return err;
 
 	err = snd_ymfpci_mixer(chip, rear_switch[dev]);
 	if (err < 0)
+<<<<<<< HEAD
 		goto free_card;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (chip->ac97->ext_id & AC97_EI_SDAC) {
 		err = snd_ymfpci_pcm_4ch(chip, 2);
 		if (err < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 			return err;
 
@@ -359,17 +417,24 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 	if (mpu_res) {
 =======
 			goto free_card;
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = snd_ymfpci_pcm2(chip, 3);
 		if (err < 0)
-			goto free_card;
+			return err;
 	}
 	err = snd_ymfpci_timer(chip, 0);
 	if (err < 0)
-		goto free_card;
+		return err;
 
+<<<<<<< HEAD
 	if (chip->mpu_res) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mpu_res) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = snd_mpu401_uart_new(card, 0, MPU401_HW_YMFPCI,
 					  mpu_port[dev],
 					  MPU401_INFO_INTEGRATED |
@@ -384,10 +449,14 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (fm_res) {
 =======
 	if (chip->fm_res) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (fm_res) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = snd_opl3_create(card,
 				      fm_port[dev],
 				      fm_port[dev] + 2,
@@ -403,10 +472,14 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 			if (err < 0) {
 				dev_err(card->dev, "cannot create opl3 hwdep\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 				return err;
 =======
 				goto free_card;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 	}
@@ -416,14 +489,19 @@ static int snd_card_ymfpci_probe(struct pci_dev *pci,
 	err = snd_card_register(card);
 	if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 =======
 		goto free_card;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -436,6 +514,8 @@ static void snd_card_ymfpci_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct pci_driver ymfpci_driver = {
@@ -443,9 +523,12 @@ static struct pci_driver ymfpci_driver = {
 	.id_table = snd_ymfpci_ids,
 	.probe = snd_card_ymfpci_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_card_ymfpci_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 	.driver = {
 		.pm = &snd_ymfpci_pm,

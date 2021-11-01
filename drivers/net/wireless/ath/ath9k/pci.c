@@ -897,15 +897,20 @@ static int ath_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		return -EIO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
 =======
 	ret =  pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		pr_err("32-bit DMA not available\n");
 		return ret;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	ret = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
@@ -915,6 +920,8 @@ static int ath_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Cache line size is used to size and align various
 	 * structures used to communicate with the hardware.

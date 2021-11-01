@@ -141,6 +141,7 @@ static const struct test_string_2 escape0[] __initconst = {{
 	.in = "\\h\\\"\a\e\\",
 	.s1 = {{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.out = "\\\\h\\\\\\\"\\a\\e\\\\",
 		.flags = ESCAPE_SPECIAL,
 	},{
@@ -150,13 +151,20 @@ static const struct test_string_2 escape0[] __initconst = {{
 		.out = "\\\\\\x68\\\\\\\"\\a\\e\\\\",
 =======
 		.out = "\\\\h\\\\\"\\a\\e\\\\",
+=======
+		.out = "\\\\h\\\\\\\"\\a\\e\\\\",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.flags = ESCAPE_SPECIAL,
 	},{
-		.out = "\\\\\\150\\\\\\042\\a\\e\\\\",
+		.out = "\\\\\\150\\\\\\\"\\a\\e\\\\",
 		.flags = ESCAPE_SPECIAL | ESCAPE_OCTAL,
 	},{
+<<<<<<< HEAD
 		.out = "\\\\\\x68\\\\\\x22\\a\\e\\\\",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.out = "\\\\\\x68\\\\\\\"\\a\\e\\\\",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.flags = ESCAPE_SPECIAL | ESCAPE_HEX,
 	},{
 		/* terminator */
@@ -168,6 +176,7 @@ static const struct test_string_2 escape0[] __initconst = {{
 		.flags = ESCAPE_SPACE,
 	},{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		.out = "\\eb \\\\C\\a\\\"\x90\r]",
 		.flags = ESCAPE_SPECIAL,
 	},{
@@ -178,6 +187,12 @@ static const struct test_string_2 escape0[] __initconst = {{
 	},{
 		.out = "\\eb \\\\C\\a\"\x90\\r]",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.out = "\\eb \\\\C\\a\\\"\x90\r]",
+		.flags = ESCAPE_SPECIAL,
+	},{
+		.out = "\\eb \\\\C\\a\\\"\x90\\r]",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.flags = ESCAPE_SPACE | ESCAPE_SPECIAL,
 	},{
 		.out = "\\033\\142\\040\\134\\103\\007\\042\\220\\015\\135",
@@ -186,6 +201,7 @@ static const struct test_string_2 escape0[] __initconst = {{
 		.out = "\\033\\142\\040\\134\\103\\007\\042\\220\\r\\135",
 		.flags = ESCAPE_SPACE | ESCAPE_OCTAL,
 	},{
+<<<<<<< HEAD
 <<<<<<< HEAD
 		.out = "\\e\\142\\040\\\\\\103\\a\\\"\\220\\015\\135",
 		.flags = ESCAPE_SPECIAL | ESCAPE_OCTAL,
@@ -197,6 +213,12 @@ static const struct test_string_2 escape0[] __initconst = {{
 	},{
 		.out = "\\e\\142\\040\\\\\\103\\a\\042\\220\\r\\135",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.out = "\\e\\142\\040\\\\\\103\\a\\\"\\220\\015\\135",
+		.flags = ESCAPE_SPECIAL | ESCAPE_OCTAL,
+	},{
+		.out = "\\e\\142\\040\\\\\\103\\a\\\"\\220\\r\\135",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.flags = ESCAPE_SPACE | ESCAPE_SPECIAL | ESCAPE_OCTAL,
 	},{
 		.out = "\eb \\C\007\"\x90\r]",

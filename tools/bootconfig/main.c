@@ -112,6 +112,7 @@ static void xbc_show_list(void)
 	struct xbc_node *leaf;
 	const char *val;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	xbc_for_each_key_value(leaf, val) {
@@ -122,6 +123,13 @@ static void xbc_show_list(void)
 	xbc_for_each_key_value(leaf, val) {
 		if (xbc_node_compose_key(leaf, key, XBC_KEYLEN_MAX) < 0) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	xbc_for_each_key_value(leaf, val) {
+		ret = xbc_node_compose_key(leaf, key, XBC_KEYLEN_MAX);
+		if (ret < 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			fprintf(stderr, "Failed to compose key %d\n", ret);
 			break;
 		}

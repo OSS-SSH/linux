@@ -2,9 +2,13 @@
 #include <linux/bpf-cgroup.h>
 #include <linux/bpf.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/bpf_local_storage.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/bpf_local_storage.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/btf.h>
 #include <linux/bug.h>
 #include <linux/filter.h>
@@ -16,11 +20,14 @@
 #ifdef CONFIG_CGROUP_BPF
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 DEFINE_PER_CPU(struct bpf_cgroup_storage_info,
 	       bpf_cgroup_storage_info[BPF_CGROUP_STORAGE_NEST_MAX]);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "../cgroup/cgroup-internal.h"
 
 #define LOCAL_STORAGE_CREATE_FLAG_MASK					\
@@ -181,10 +188,14 @@ static int cgroup_storage_update_elem(struct bpf_map *map, void *key,
 
 	memcpy(&new->data[0], value, map->value_size);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	check_and_init_map_value(map, new->data);
 =======
 	check_and_init_map_lock(map, new->data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	check_and_init_map_value(map, new->data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	new = xchg(&storage->buf, new);
 	kfree_rcu(new, rcu);
@@ -298,6 +309,9 @@ enoent:
 static struct bpf_map *cgroup_storage_map_alloc(union bpf_attr *attr)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32 max_value_size = BPF_LOCAL_STORAGE_MAX_VALUE_SIZE;
 	int numa_node = bpf_map_attr_numa_node(attr);
 	struct bpf_cgroup_storage_map *map;
@@ -309,11 +323,14 @@ static struct bpf_map *cgroup_storage_map_alloc(union bpf_attr *attr)
 		max_value_size = min_t(__u32, max_value_size,
 				       PCPU_MIN_UNIT_SIZE);
 
+<<<<<<< HEAD
 =======
 	int numa_node = bpf_map_attr_numa_node(attr);
 	struct bpf_cgroup_storage_map *map;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (attr->key_size != sizeof(struct bpf_cgroup_storage_key) &&
 	    attr->key_size != sizeof(__u64))
 		return ERR_PTR(-EINVAL);
@@ -322,10 +339,14 @@ static struct bpf_map *cgroup_storage_map_alloc(union bpf_attr *attr)
 		return ERR_PTR(-EINVAL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (attr->value_size > max_value_size)
 =======
 	if (attr->value_size > PAGE_SIZE)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (attr->value_size > max_value_size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ERR_PTR(-E2BIG);
 
 	if (attr->map_flags & ~LOCAL_STORAGE_CREATE_FLAG_MASK ||
@@ -439,10 +460,14 @@ static void cgroup_storage_seq_show_elem(struct bpf_map *map, void *key,
 					 struct seq_file *m)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum bpf_cgroup_storage_type stype;
 =======
 	enum bpf_cgroup_storage_type stype = cgroup_storage_type(map);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum bpf_cgroup_storage_type stype;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bpf_cgroup_storage *storage;
 	int cpu;
 
@@ -543,10 +568,14 @@ struct bpf_cgroup_storage *bpf_cgroup_storage_alloc(struct bpf_prog *prog,
 		if (!storage->buf)
 			goto enomem;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		check_and_init_map_value(map, storage->buf->data);
 =======
 		check_and_init_map_lock(map, storage->buf->data);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		check_and_init_map_value(map, storage->buf->data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		storage->percpu_buf = bpf_map_alloc_percpu(map, size, 8, gfp);
 		if (!storage->percpu_buf)

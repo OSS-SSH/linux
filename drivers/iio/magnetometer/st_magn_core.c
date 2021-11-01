@@ -10,6 +10,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/mutex.h>
 #include <linux/sysfs.h>
 #include <linux/iio/iio.h>
@@ -27,6 +28,13 @@
 #include <linux/iio/sysfs.h>
 #include <linux/iio/buffer.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/mutex.h>
+#include <linux/sysfs.h>
+#include <linux/iio/iio.h>
+#include <linux/iio/sysfs.h>
+#include <linux/iio/trigger.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/iio/common/st_sensors.h>
 #include "st_magn.h"
@@ -661,10 +669,14 @@ int st_magn_common_probe(struct iio_dev *indio_dev)
 						ST_MAGN_TRIGGER_OPS);
 		if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return err;
 =======
 			goto st_magn_probe_trigger_error;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = iio_device_register(indio_dev);
@@ -680,10 +692,13 @@ st_magn_device_register_error:
 	if (mdata->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 st_magn_probe_trigger_error:
 	st_magn_deallocate_ring(indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 EXPORT_SYMBOL(st_magn_common_probe);
@@ -696,10 +711,13 @@ void st_magn_common_remove(struct iio_dev *indio_dev)
 	if (mdata->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	st_magn_deallocate_ring(indio_dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(st_magn_common_remove);
 

@@ -335,10 +335,14 @@
 						 <&clks IMX6QDL_CLK_ECSPI1>;
 					clock-names = "ipg", "per";
 <<<<<<< HEAD
+<<<<<<< HEAD
 					dmas = <&sdma 3 7 1>, <&sdma 4 7 2>;
 =======
 					dmas = <&sdma 3 8 1>, <&sdma 4 8 2>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					dmas = <&sdma 3 7 1>, <&sdma 4 7 2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					dma-names = "rx", "tx";
 					status = "disabled";
 				};
@@ -353,10 +357,14 @@
 						 <&clks IMX6QDL_CLK_ECSPI2>;
 					clock-names = "ipg", "per";
 <<<<<<< HEAD
+<<<<<<< HEAD
 					dmas = <&sdma 5 7 1>, <&sdma 6 7 2>;
 =======
 					dmas = <&sdma 5 8 1>, <&sdma 6 8 2>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					dmas = <&sdma 5 7 1>, <&sdma 6 7 2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					dma-names = "rx", "tx";
 					status = "disabled";
 				};
@@ -371,10 +379,14 @@
 						 <&clks IMX6QDL_CLK_ECSPI3>;
 					clock-names = "ipg", "per";
 <<<<<<< HEAD
+<<<<<<< HEAD
 					dmas = <&sdma 7 7 1>, <&sdma 8 7 2>;
 =======
 					dmas = <&sdma 7 8 1>, <&sdma 8 8 2>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					dmas = <&sdma 7 7 1>, <&sdma 8 7 2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					dma-names = "rx", "tx";
 					status = "disabled";
 				};
@@ -389,10 +401,14 @@
 						 <&clks IMX6QDL_CLK_ECSPI4>;
 					clock-names = "ipg", "per";
 <<<<<<< HEAD
+<<<<<<< HEAD
 					dmas = <&sdma 9 7 1>, <&sdma 10 7 2>;
 =======
 					dmas = <&sdma 9 8 1>, <&sdma 10 8 2>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					dmas = <&sdma 9 7 1>, <&sdma 10 7 2>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					dma-names = "rx", "tx";
 					status = "disabled";
 				};

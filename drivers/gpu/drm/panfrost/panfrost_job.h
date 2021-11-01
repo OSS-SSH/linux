@@ -20,6 +20,7 @@ struct panfrost_job {
 	struct panfrost_file_priv *file_priv;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Contains both explicit and implicit fences */
 	struct xarray deps;
 	unsigned long last_dep;
@@ -28,6 +29,11 @@ struct panfrost_job {
 	struct dma_fence **in_fences;
 	u32 in_fence_count;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Contains both explicit and implicit fences */
+	struct xarray deps;
+	unsigned long last_dep;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Fence to be signaled by IRQ handler when the job is complete. */
 	struct dma_fence *done_fence;
@@ -37,10 +43,13 @@ struct panfrost_job {
 	__u32 flush_id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Exclusive fences we have taken from the BOs to wait for */
 	struct dma_fence **implicit_fences;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct panfrost_gem_mapping **mappings;
 	struct drm_gem_object **bos;
 	u32 bo_count;

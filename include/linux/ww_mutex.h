@@ -19,6 +19,9 @@
 
 #include <linux/mutex.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/rtmutex.h>
 
 #if defined(CONFIG_DEBUG_MUTEXES) || \
@@ -37,8 +40,11 @@
 #define ww_mutex_base_trylock(l)	rt_mutex_trylock(l)
 #define ww_mutex_base_is_locked(b)	rt_mutex_base_is_locked(&(b)->rtmutex)
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct ww_class {
 	atomic_long_t stamp;
@@ -50,6 +56,9 @@ struct ww_class {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ww_mutex {
 	struct WW_MUTEX_BASE base;
 	struct ww_acquire_ctx *ctx;
@@ -58,14 +67,18 @@ struct ww_mutex {
 #endif
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ww_acquire_ctx {
 	struct task_struct *task;
 	unsigned long stamp;
 	unsigned int acquired;
 	unsigned short wounded;
 	unsigned short is_wait_die;
+<<<<<<< HEAD
 <<<<<<< HEAD
 #ifdef DEBUG_WW_MUTEXES
 	unsigned int done_acquire;
@@ -77,6 +90,12 @@ struct ww_acquire_ctx {
 	struct ww_class *ww_class;
 	struct ww_mutex *contending_lock;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef DEBUG_WW_MUTEXES
+	unsigned int done_acquire;
+	struct ww_class *ww_class;
+	void *contending_lock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 	struct lockdep_map dep_map;
@@ -114,6 +133,7 @@ static inline void ww_mutex_init(struct ww_mutex *lock,
 				 struct ww_class *ww_class)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ww_mutex_base_init(&lock->base, ww_class->mutex_name, &ww_class->mutex_key);
 	lock->ctx = NULL;
 #ifdef DEBUG_WW_MUTEXES
@@ -122,6 +142,11 @@ static inline void ww_mutex_init(struct ww_mutex *lock,
 	lock->ctx = NULL;
 #ifdef CONFIG_DEBUG_MUTEXES
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ww_mutex_base_init(&lock->base, ww_class->mutex_name, &ww_class->mutex_key);
+	lock->ctx = NULL;
+#ifdef DEBUG_WW_MUTEXES
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lock->ww_class = ww_class;
 #endif
 }
@@ -159,10 +184,14 @@ static inline void ww_acquire_init(struct ww_acquire_ctx *ctx,
 	ctx->wounded = false;
 	ctx->is_wait_die = ww_class->is_wait_die;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef DEBUG_WW_MUTEXES
 =======
 #ifdef CONFIG_DEBUG_MUTEXES
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef DEBUG_WW_MUTEXES
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ctx->ww_class = ww_class;
 	ctx->done_acquire = 0;
 	ctx->contending_lock = NULL;
@@ -193,10 +222,14 @@ static inline void ww_acquire_init(struct ww_acquire_ctx *ctx,
 static inline void ww_acquire_done(struct ww_acquire_ctx *ctx)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef DEBUG_WW_MUTEXES
 =======
 #ifdef CONFIG_DEBUG_MUTEXES
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef DEBUG_WW_MUTEXES
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lockdep_assert_held(ctx);
 
 	DEBUG_LOCKS_WARN_ON(ctx->done_acquire);
@@ -217,10 +250,14 @@ static inline void ww_acquire_fini(struct ww_acquire_ctx *ctx)
 	mutex_release(&ctx->dep_map, _THIS_IP_);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef DEBUG_WW_MUTEXES
 =======
 #ifdef CONFIG_DEBUG_MUTEXES
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef DEBUG_WW_MUTEXES
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEBUG_LOCKS_WARN_ON(ctx->acquired);
 	if (!IS_ENABLED(CONFIG_PROVE_LOCKING))
 		/*
@@ -327,10 +364,14 @@ ww_mutex_lock_slow(struct ww_mutex *lock, struct ww_acquire_ctx *ctx)
 {
 	int ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef DEBUG_WW_MUTEXES
 =======
 #ifdef CONFIG_DEBUG_MUTEXES
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef DEBUG_WW_MUTEXES
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEBUG_LOCKS_WARN_ON(!ctx->contending_lock);
 #endif
 	ret = ww_mutex_lock(lock, ctx);
@@ -367,10 +408,14 @@ ww_mutex_lock_slow_interruptible(struct ww_mutex *lock,
 				 struct ww_acquire_ctx *ctx)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef DEBUG_WW_MUTEXES
 =======
 #ifdef CONFIG_DEBUG_MUTEXES
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef DEBUG_WW_MUTEXES
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEBUG_LOCKS_WARN_ON(!ctx->contending_lock);
 #endif
 	return ww_mutex_lock_interruptible(lock, ctx);
@@ -388,10 +433,14 @@ extern void ww_mutex_unlock(struct ww_mutex *lock);
 static inline int __must_check ww_mutex_trylock(struct ww_mutex *lock)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ww_mutex_base_trylock(&lock->base);
 =======
 	return mutex_trylock(&lock->base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ww_mutex_base_trylock(&lock->base);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /***
@@ -405,12 +454,18 @@ static inline int __must_check ww_mutex_trylock(struct ww_mutex *lock)
 static inline void ww_mutex_destroy(struct ww_mutex *lock)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef CONFIG_PREEMPT_RT
 	mutex_destroy(&lock->base);
 #endif
 =======
 	mutex_destroy(&lock->base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifndef CONFIG_PREEMPT_RT
+	mutex_destroy(&lock->base);
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -422,10 +477,14 @@ static inline void ww_mutex_destroy(struct ww_mutex *lock)
 static inline bool ww_mutex_is_locked(struct ww_mutex *lock)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ww_mutex_base_is_locked(&lock->base);
 =======
 	return mutex_is_locked(&lock->base);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ww_mutex_base_is_locked(&lock->base);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #endif

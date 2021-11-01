@@ -54,6 +54,7 @@ static u32 pdc_reg_read(int reg, u32 i)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int qcom_pdc_gic_get_irqchip_state(struct irq_data *d,
 					  enum irqchip_irq_state which,
@@ -76,6 +77,8 @@ static int qcom_pdc_gic_set_irqchip_state(struct irq_data *d,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void pdc_enable_intr(struct irq_data *d, bool on)
 {
 	int pin_out = d->hwirq;
@@ -95,11 +98,14 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
 static void qcom_pdc_gic_disable(struct irq_data *d)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
 		return;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pdc_enable_intr(d, false);
 	irq_chip_disable_parent(d);
 }
@@ -107,15 +113,19 @@ static void qcom_pdc_gic_disable(struct irq_data *d)
 static void qcom_pdc_gic_enable(struct irq_data *d)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (d->hwirq == GPIO_NO_WAKE_IRQ)
 		return;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pdc_enable_intr(d, true);
 	irq_chip_enable_parent(d);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void qcom_pdc_gic_mask(struct irq_data *d)
@@ -135,6 +145,8 @@ static void qcom_pdc_gic_unmask(struct irq_data *d)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * GIC does not handle falling edge or active low. To allow falling edge and
  * active low interrupts to be handled at GIC, PDC has an inverter that inverts
@@ -172,19 +184,25 @@ enum pdc_irq_config_bits {
 static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int pin_out = d->hwirq;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum pdc_irq_config_bits pdc_type;
 	enum pdc_irq_config_bits old_pdc_type;
 	int ret;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (pin_out == GPIO_NO_WAKE_IRQ)
 		return 0;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case IRQ_TYPE_EDGE_RISING:
 		pdc_type = PDC_EDGE_RISING;
@@ -210,12 +228,17 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
 	pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
 =======
 	old_pdc_type = pdc_reg_read(IRQ_i_CFG, pin_out);
 	pdc_reg_write(IRQ_i_CFG, pin_out, pdc_type);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
+	pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = irq_chip_set_type_parent(d, type);
 	if (ret)
@@ -240,6 +263,7 @@ static struct irq_chip qcom_pdc_gic_chip = {
 	.name			= "PDC",
 	.irq_eoi		= irq_chip_eoi_parent,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.irq_mask		= irq_chip_mask_parent,
 	.irq_unmask		= irq_chip_unmask_parent,
 	.irq_disable		= qcom_pdc_gic_disable,
@@ -254,6 +278,14 @@ static struct irq_chip qcom_pdc_gic_chip = {
 	.irq_get_irqchip_state	= qcom_pdc_gic_get_irqchip_state,
 	.irq_set_irqchip_state	= qcom_pdc_gic_set_irqchip_state,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.irq_mask		= irq_chip_mask_parent,
+	.irq_unmask		= irq_chip_unmask_parent,
+	.irq_disable		= qcom_pdc_gic_disable,
+	.irq_enable		= qcom_pdc_gic_enable,
+	.irq_get_irqchip_state	= irq_chip_get_parent_state,
+	.irq_set_irqchip_state	= irq_chip_set_parent_state,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
 	.irq_set_type		= qcom_pdc_gic_set_type,
 	.flags			= IRQCHIP_MASK_ON_SUSPEND |
@@ -315,10 +347,14 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
 	parent_hwirq = get_parent_hwirq(hwirq);
 	if (parent_hwirq == PDC_NO_PARENT_IRQ)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return irq_domain_disconnect_hierarchy(domain->parent, virq);
 =======
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return irq_domain_disconnect_hierarchy(domain->parent, virq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (type & IRQ_TYPE_EDGE_BOTH)
 		type = IRQ_TYPE_EDGE_RISING;
@@ -356,16 +392,23 @@ static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
 		return ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (hwirq == GPIO_NO_WAKE_IRQ)
 		return irq_domain_disconnect_hierarchy(domain, virq);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (hwirq == GPIO_NO_WAKE_IRQ)
+		return irq_domain_disconnect_hierarchy(domain, virq);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
 					    &qcom_pdc_gic_chip, NULL);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	parent_hwirq = get_parent_hwirq(hwirq);
 	if (parent_hwirq == PDC_NO_PARENT_IRQ)
@@ -378,6 +421,11 @@ static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
 	if (parent_hwirq == PDC_NO_PARENT_IRQ)
 		return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	parent_hwirq = get_parent_hwirq(hwirq);
+	if (parent_hwirq == PDC_NO_PARENT_IRQ)
+		return irq_domain_disconnect_hierarchy(domain->parent, virq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (type & IRQ_TYPE_EDGE_BOTH)
 		type = IRQ_TYPE_EDGE_RISING;

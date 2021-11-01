@@ -291,6 +291,7 @@ static int omap_modeset_init(struct drm_device *dev)
 						pipe->output->bridge, NULL,
 						DRM_BRIDGE_ATTACH_NO_CONNECTOR);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (ret < 0)
 				return ret;
 =======
@@ -301,6 +302,10 @@ static int omap_modeset_init(struct drm_device *dev)
 				return ret;
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (ret < 0)
+				return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		id = omap_display_id(pipe->output);

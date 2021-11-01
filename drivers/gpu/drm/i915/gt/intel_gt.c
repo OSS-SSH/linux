@@ -14,9 +14,13 @@
 #include "intel_gt_pm.h"
 #include "intel_gt_requests.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "intel_migrate.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "intel_migrate.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_mocs.h"
 #include "intel_rc6.h"
 #include "intel_renderstate.h"
@@ -45,12 +49,17 @@ void intel_gt_init_early(struct intel_gt *gt, struct drm_i915_private *i915)
 	intel_gt_pm_init_early(gt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_uc_init_early(&gt->uc);
 	intel_rps_init_early(&gt->rps);
 =======
 	intel_rps_init_early(&gt->rps);
 	intel_uc_init_early(&gt->uc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_uc_init_early(&gt->uc);
+	intel_rps_init_early(&gt->rps);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int intel_gt_probe_lmem(struct intel_gt *gt)
@@ -93,6 +102,9 @@ void intel_gt_init_hw_early(struct intel_gt *gt, struct i915_ggtt *ggtt)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct intel_mmio_range icl_l3bank_steering_table[] = {
 	{ 0x00B100, 0x00B3FF },
 	{},
@@ -129,16 +141,22 @@ int intel_gt_init_mmio(struct intel_gt *gt)
 {
 	struct drm_i915_private *i915 = gt->i915;
 
+<<<<<<< HEAD
 =======
 int intel_gt_init_mmio(struct intel_gt *gt)
 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_gt_init_clock_frequency(gt);
 
 	intel_uc_init_mmio(&gt->uc);
 	intel_sseu_info_init(gt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * An mslice is unavailable only if both the meml3 for the slice is
 	 * disabled *and* all of the DSS in the slice (quadrant) are disabled.
@@ -165,8 +183,11 @@ int intel_gt_init_mmio(struct intel_gt *gt)
 		MISSING_CASE(INTEL_INFO(i915)->platform);
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return intel_engines_init_mmio(gt);
 }
 
@@ -270,10 +291,14 @@ static void clear_register(struct intel_uncore *uncore, i915_reg_t reg)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void gen6_clear_engine_error_register(struct intel_engine_cs *engine)
 =======
 static void gen8_clear_engine_error_register(struct intel_engine_cs *engine)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void gen6_clear_engine_error_register(struct intel_engine_cs *engine)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	GEN6_RING_FAULT_REG_RMW(engine, RING_FAULT_VALID, 0);
 	GEN6_RING_FAULT_REG_POSTING_READ(engine);
@@ -320,10 +345,14 @@ intel_gt_clear_error_registers(struct intel_gt *gt,
 
 		for_each_engine_masked(engine, gt, engine_mask, id)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			gen6_clear_engine_error_register(engine);
 =======
 			gen8_clear_engine_error_register(engine);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			gen6_clear_engine_error_register(engine);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -658,6 +687,9 @@ static void __intel_gt_disable(struct intel_gt *gt)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int intel_gt_wait_for_idle(struct intel_gt *gt, long timeout)
 {
 	long remaining_timeout;
@@ -677,8 +709,11 @@ int intel_gt_wait_for_idle(struct intel_gt *gt, long timeout)
 							  remaining_timeout);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int intel_gt_init(struct intel_gt *gt)
 {
 	int err;
@@ -730,19 +765,29 @@ int intel_gt_init(struct intel_gt *gt)
 		goto err_gt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_uc_init_late(&gt->uc);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_uc_init_late(&gt->uc);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = i915_inject_probe_error(gt->i915, -EIO);
 	if (err)
 		goto err_gt;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_migrate_init(&gt->migrate, gt);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_migrate_init(&gt->migrate, gt);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	goto out_fw;
 err_gt:
 	__intel_gt_disable(gt);
@@ -767,9 +812,13 @@ void intel_gt_driver_remove(struct intel_gt *gt)
 	__intel_gt_disable(gt);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_migrate_fini(&gt->migrate);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_migrate_fini(&gt->migrate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_uc_driver_remove(&gt->uc);
 
 	intel_engines_release(gt);
@@ -819,6 +868,9 @@ void intel_gt_driver_late_release(struct intel_gt *gt)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * intel_gt_reg_needs_read_steering - determine whether a register read
  *     requires explicit steering
@@ -925,8 +977,11 @@ u32 intel_gt_read_register_fw(struct intel_gt *gt, i915_reg_t reg)
 	return intel_uncore_read_fw(gt->uncore, reg);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_gt_info_print(const struct intel_gt_info *info,
 			 struct drm_printer *p)
 {

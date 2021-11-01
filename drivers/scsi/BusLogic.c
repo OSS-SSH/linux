@@ -1712,10 +1712,14 @@ static bool __init blogic_reportconfig(struct blogic_adapter *adapter)
 		blogic_info("  DMA Channel: None, ", adapter);
 		if (adapter->bios_addr > 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			blogic_info("BIOS Address: 0x%X, ", adapter,
 =======
 			blogic_info("BIOS Address: 0x%lX, ", adapter,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			blogic_info("BIOS Address: 0x%X, ", adapter,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					adapter->bios_addr);
 		else
 			blogic_info("BIOS Address: None, ", adapter);
@@ -3441,10 +3445,14 @@ static void blogic_msg(enum blogic_msglevel msglevel, char *fmt,
 
 	va_start(args, adapter);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	len = vscnprintf(buf, sizeof(buf), fmt, args);
 =======
 	len = vsprintf(buf, fmt, args);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	len = vscnprintf(buf, sizeof(buf), fmt, args);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	va_end(args);
 	if (msglevel == BLOGIC_ANNOUNCE_LEVEL) {
 		static int msglines = 0;
@@ -3460,10 +3468,14 @@ static void blogic_msg(enum blogic_msglevel msglevel, char *fmt,
 				printk("%sscsi%d: %s", blogic_msglevelmap[msglevel], adapter->host_no, buf);
 		} else
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pr_cont("%s", buf);
 =======
 			printk("%s", buf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_cont("%s", buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		if (begin) {
 			if (adapter != NULL && adapter->adapter_initd)
@@ -3472,10 +3484,14 @@ static void blogic_msg(enum blogic_msglevel msglevel, char *fmt,
 				printk("%s%s", blogic_msglevelmap[msglevel], buf);
 		} else
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pr_cont("%s", buf);
 =======
 			printk("%s", buf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_cont("%s", buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	begin = (buf[len - 1] == '\n');
 }

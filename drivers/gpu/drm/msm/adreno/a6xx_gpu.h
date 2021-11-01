@@ -20,6 +20,9 @@ struct a6xx_gpu {
 
 	struct msm_ringbuffer *cur_ring;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/**
 	 * cur_ctx_seqno:
@@ -30,9 +33,12 @@ struct a6xx_gpu {
 	 * and a new one created with the same address.
 	 */
 	int cur_ctx_seqno;
+<<<<<<< HEAD
 =======
 	struct msm_file_private *cur_ctx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct a6xx_gmu gmu;
 

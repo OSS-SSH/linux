@@ -3,6 +3,7 @@
 # Must change only cflags-y (or [yn]), not CFLAGS! That makes a difference for UML.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 tune		= $(call cc-option,-mtune=$(1),$(2))
 
 ifdef CONFIG_CC_IS_CLANG
@@ -13,10 +14,19 @@ align		:= -falign-functions=0 -falign-jumps=0 -falign-loops=0
 #-mtune exists since gcc 3.4
 HAS_MTUNE	:= $(call cc-option-yn, -mtune=i386)
 ifeq ($(HAS_MTUNE),y)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 tune		= $(call cc-option,-mtune=$(1),$(2))
+
+ifdef CONFIG_CC_IS_CLANG
+align		:= -falign-functions=0 $(call cc-option,-falign-jumps=0) $(call cc-option,-falign-loops=0)
 else
+<<<<<<< HEAD
 tune		= $(call cc-option,-mcpu=$(1),$(2))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+align		:= -falign-functions=0 -falign-jumps=0 -falign-loops=0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif
 
 cflags-$(CONFIG_M486SX)		+= -march=i486
@@ -35,6 +45,7 @@ cflags-$(CONFIG_MK6)		+= -march=k6
 cflags-$(CONFIG_MK7)		+= -march=athlon
 cflags-$(CONFIG_MK8)		+= $(call cc-option,-march=k8,-march=athlon)
 <<<<<<< HEAD
+<<<<<<< HEAD
 cflags-$(CONFIG_MCRUSOE)	+= -march=i686 $(align)
 cflags-$(CONFIG_MEFFICEON)	+= -march=i686 $(call tune,pentium3) $(align)
 cflags-$(CONFIG_MWINCHIPC6)	+= $(call cc-option,-march=winchip-c6,-march=i586)
@@ -47,6 +58,13 @@ cflags-$(CONFIG_MWINCHIPC6)	+= $(call cc-option,-march=winchip-c6,-march=i586)
 cflags-$(CONFIG_MWINCHIP3D)	+= $(call cc-option,-march=winchip2,-march=i586)
 cflags-$(CONFIG_MCYRIXIII)	+= $(call cc-option,-march=c3,-march=i486) -falign-functions=0 -falign-jumps=0 -falign-loops=0
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+cflags-$(CONFIG_MCRUSOE)	+= -march=i686 $(align)
+cflags-$(CONFIG_MEFFICEON)	+= -march=i686 $(call tune,pentium3) $(align)
+cflags-$(CONFIG_MWINCHIPC6)	+= $(call cc-option,-march=winchip-c6,-march=i586)
+cflags-$(CONFIG_MWINCHIP3D)	+= $(call cc-option,-march=winchip2,-march=i586)
+cflags-$(CONFIG_MCYRIXIII)	+= $(call cc-option,-march=c3,-march=i486) $(align)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 cflags-$(CONFIG_MVIAC3_2)	+= $(call cc-option,-march=c3-2,-march=i686)
 cflags-$(CONFIG_MVIAC7)		+= -march=i686
 cflags-$(CONFIG_MCORE2)		+= -march=i686 $(call tune,core2)

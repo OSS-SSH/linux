@@ -35,6 +35,9 @@ static void uc_expand_default_options(struct intel_uc *uc)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Intermediate platforms are HuC authentication only */
 	if (IS_DG1(i915) || IS_ALDERLAKE_S(i915)) {
 		i915->params.enable_guc = ENABLE_GUC_LOAD_HUC;
@@ -43,10 +46,13 @@ static void uc_expand_default_options(struct intel_uc *uc)
 
 	/* Default: enable HuC authentication and GuC submission */
 	i915->params.enable_guc = ENABLE_GUC_LOAD_HUC | ENABLE_GUC_SUBMISSION;
+<<<<<<< HEAD
 =======
 	/* Default: enable HuC authentication only */
 	i915->params.enable_guc = ENABLE_GUC_LOAD_HUC;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Reset GuC providing us with fresh state for both GuC and HuC.
@@ -81,6 +87,7 @@ static void __confirm_options(struct intel_uc *uc)
 
 	drm_dbg(&i915->drm,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"enable_guc=%d (guc:%s submission:%s huc:%s slpc:%s)\n",
 		i915->params.enable_guc,
 		yesno(intel_uc_wants_guc(uc)),
@@ -94,15 +101,27 @@ static void __confirm_options(struct intel_uc *uc)
 		yesno(intel_uc_wants_guc_submission(uc)),
 		yesno(intel_uc_wants_huc(uc)));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"enable_guc=%d (guc:%s submission:%s huc:%s slpc:%s)\n",
+		i915->params.enable_guc,
+		yesno(intel_uc_wants_guc(uc)),
+		yesno(intel_uc_wants_guc_submission(uc)),
+		yesno(intel_uc_wants_huc(uc)),
+		yesno(intel_uc_wants_guc_slpc(uc)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (i915->params.enable_guc == 0) {
 		GEM_BUG_ON(intel_uc_wants_guc(uc));
 		GEM_BUG_ON(intel_uc_wants_guc_submission(uc));
 		GEM_BUG_ON(intel_uc_wants_huc(uc));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		GEM_BUG_ON(intel_uc_wants_guc_slpc(uc));
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		GEM_BUG_ON(intel_uc_wants_guc_slpc(uc));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
@@ -145,13 +164,19 @@ void intel_uc_init_early(struct intel_uc *uc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_uc_init_late(struct intel_uc *uc)
 {
 	intel_guc_init_late(&uc->guc);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_uc_driver_late_release(struct intel_uc *uc)
 {
 }
@@ -192,6 +217,7 @@ void intel_uc_driver_remove(struct intel_uc *uc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static inline bool guc_communication_enabled(struct intel_guc *guc)
 {
@@ -199,6 +225,8 @@ static inline bool guc_communication_enabled(struct intel_guc *guc)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Events triggered while CT buffers are disabled are logged in the SCRATCH_15
  * register using the same bits used in the CT message payload. Since our
@@ -233,10 +261,14 @@ static void guc_handle_mmio_msg(struct intel_guc *guc)
 {
 	/* we need communication to be enabled to reply to GuC */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GEM_BUG_ON(!intel_guc_ct_enabled(&guc->ct));
 =======
 	GEM_BUG_ON(!guc_communication_enabled(guc));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(!intel_guc_ct_enabled(&guc->ct));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irq(&guc->irq_lock);
 	if (guc->mmio_msg) {
@@ -246,6 +278,7 @@ static void guc_handle_mmio_msg(struct intel_guc *guc)
 	spin_unlock_irq(&guc->irq_lock);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void guc_reset_interrupts(struct intel_guc *guc)
@@ -264,6 +297,8 @@ static void guc_disable_interrupts(struct intel_guc *guc)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int guc_enable_communication(struct intel_guc *guc)
 {
 	struct intel_gt *gt = guc_to_gt(guc);
@@ -271,10 +306,14 @@ static int guc_enable_communication(struct intel_guc *guc)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GEM_BUG_ON(intel_guc_ct_enabled(&guc->ct));
 =======
 	GEM_BUG_ON(guc_communication_enabled(guc));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(intel_guc_ct_enabled(&guc->ct));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = i915_inject_probe_error(i915, -ENXIO);
 	if (ret)
@@ -289,10 +328,14 @@ static int guc_enable_communication(struct intel_guc *guc)
 	guc_handle_mmio_msg(guc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_guc_enable_interrupts(guc);
 =======
 	guc_enable_interrupts(guc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_guc_enable_interrupts(guc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* check for CT messages received before we enabled interrupts */
 	spin_lock_irq(&gt->irq_lock);
@@ -316,10 +359,14 @@ static void guc_disable_communication(struct intel_guc *guc)
 	guc_clear_mmio_msg(guc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_guc_disable_interrupts(guc);
 =======
 	guc_disable_interrupts(guc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_guc_disable_interrupts(guc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	intel_guc_ct_disable(&guc->ct);
 
@@ -378,11 +425,14 @@ static int __uc_init(struct intel_uc *uc)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* XXX: GuC submission is unavailable for now */
 	GEM_BUG_ON(intel_uc_uses_guc_submission(uc));
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = intel_guc_init(guc);
 	if (ret)
 		return ret;
@@ -521,10 +571,14 @@ static int __uc_init_hw(struct intel_uc *uc)
 		goto err_out;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	intel_guc_reset_interrupts(guc);
 =======
 	guc_reset_interrupts(guc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_guc_reset_interrupts(guc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* WaEnableuKernelHeaderValidFix:skl */
 	/* WaEnableGuCBootHashCheckNotSet:skl,bxt,kbl */
@@ -567,14 +621,20 @@ static int __uc_init_hw(struct intel_uc *uc)
 		intel_guc_submission_enable(guc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (intel_uc_uses_guc_slpc(uc)) {
 		ret = intel_guc_slpc_enable(&guc->slpc);
 		if (ret)
 			goto err_submission;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drm_info(&i915->drm, "%s firmware %s version %u.%u %s:%s\n",
 		 intel_uc_fw_type_repr(INTEL_UC_FW_TYPE_GUC), guc->fw.path,
 		 guc->fw.major_ver_found, guc->fw.minor_ver_found,
@@ -582,11 +642,17 @@ static int __uc_init_hw(struct intel_uc *uc)
 		 enableddisabled(intel_uc_uses_guc_submission(uc)));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_info(&i915->drm, "GuC SLPC: %s\n",
 		 enableddisabled(intel_uc_uses_guc_slpc(uc)));
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_info(&i915->drm, "GuC SLPC: %s\n",
+		 enableddisabled(intel_uc_uses_guc_slpc(uc)));
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (intel_uc_uses_huc(uc)) {
 		drm_info(&i915->drm, "%s firmware %s version %u.%u %s:%s\n",
 			 intel_uc_fw_type_repr(INTEL_UC_FW_TYPE_HUC),
@@ -602,10 +668,15 @@ static int __uc_init_hw(struct intel_uc *uc)
 	 * We've failed to load the firmware :(
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 err_submission:
 	intel_guc_submission_disable(guc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_submission:
+	intel_guc_submission_disable(guc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_log_capture:
 	__uc_capture_load_err_log(uc);
 err_out:
@@ -647,10 +718,14 @@ void intel_uc_reset_prepare(struct intel_uc *uc)
 	struct intel_guc *guc = &uc->guc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uc->reset_in_progress = true;
 
 	/* Nothing to do if GuC isn't supported */
 	if (!intel_uc_supports_guc(uc))
+<<<<<<< HEAD
 		return;
 
 	/* Firmware expected to be running when this function is called */
@@ -698,21 +773,66 @@ void intel_uc_runtime_suspend(struct intel_uc *uc)
 	struct intel_guc *guc = &uc->guc;
 =======
 	if (!intel_guc_is_ready(guc))
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
+	/* Firmware expected to be running when this function is called */
+	if (!intel_guc_is_ready(guc))
+		goto sanitize;
+
+	if (intel_uc_uses_guc_submission(uc))
+		intel_guc_submission_reset_prepare(guc);
+
+sanitize:
 	__uc_sanitize(uc);
+}
+
+void intel_uc_reset(struct intel_uc *uc, bool stalled)
+{
+	struct intel_guc *guc = &uc->guc;
+
+	/* Firmware can not be running when this function is called  */
+	if (intel_uc_uses_guc_submission(uc))
+		intel_guc_submission_reset(guc, stalled);
+}
+
+void intel_uc_reset_finish(struct intel_uc *uc)
+{
+	struct intel_guc *guc = &uc->guc;
+
+	uc->reset_in_progress = false;
+
+	/* Firmware expected to be running when this function is called */
+	if (intel_guc_is_fw_running(guc) && intel_uc_uses_guc_submission(uc))
+		intel_guc_submission_reset_finish(guc);
+}
+
+void intel_uc_cancel_requests(struct intel_uc *uc)
+{
+	struct intel_guc *guc = &uc->guc;
+
+	/* Firmware can not be running when this function is called  */
+	if (intel_uc_uses_guc_submission(uc))
+		intel_guc_submission_cancel_requests(guc);
 }
 
 void intel_uc_runtime_suspend(struct intel_uc *uc)
 {
 	struct intel_guc *guc = &uc->guc;
+<<<<<<< HEAD
 	int err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!intel_guc_is_ready(guc))
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Wait for any outstanding CTB before tearing down communication /w the
 	 * GuC.
@@ -721,11 +841,14 @@ void intel_uc_runtime_suspend(struct intel_uc *uc)
 	intel_guc_wait_for_pending_msg(guc, &guc->outstanding_submission_g2h,
 				       false, OUTSTANDING_CTB_TIMEOUT_PERIOD);
 	GEM_WARN_ON(atomic_read(&guc->outstanding_submission_g2h));
+<<<<<<< HEAD
 =======
 	err = intel_guc_suspend(guc);
 	if (err)
 		DRM_DEBUG_DRIVER("Failed to suspend GuC, err=%d", err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	guc_disable_communication(guc);
 }
@@ -735,32 +858,46 @@ void intel_uc_suspend(struct intel_uc *uc)
 	struct intel_guc *guc = &uc->guc;
 	intel_wakeref_t wakeref;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!intel_guc_is_ready(guc))
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	with_intel_runtime_pm(&uc_to_gt(uc)->i915->runtime_pm, wakeref) {
 		err = intel_guc_suspend(guc);
 		if (err)
 			DRM_DEBUG_DRIVER("Failed to suspend GuC, err=%d", err);
 	}
+<<<<<<< HEAD
 =======
 	with_intel_runtime_pm(uc_to_gt(uc)->uncore->rpm, wakeref)
 		intel_uc_runtime_suspend(uc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __uc_resume(struct intel_uc *uc, bool enable_communication)
 {
 	struct intel_guc *guc = &uc->guc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct intel_gt *gt = guc_to_gt(guc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_gt *gt = guc_to_gt(guc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!intel_guc_is_fw_running(guc))
@@ -768,15 +905,22 @@ static int __uc_resume(struct intel_uc *uc, bool enable_communication)
 
 	/* Make sure we enable communication if and only if it's disabled */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	GEM_BUG_ON(enable_communication == intel_guc_ct_enabled(&guc->ct));
 =======
 	GEM_BUG_ON(enable_communication == guc_communication_enabled(guc));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(enable_communication == intel_guc_ct_enabled(&guc->ct));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (enable_communication)
 		guc_enable_communication(guc);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If we are only resuming GuC communication but not reloading
 	 * GuC, we need to ensure the ARAT timer interrupt is enabled
 	 * again. In case of GuC reload, it is enabled during SLPC enable.
@@ -784,8 +928,11 @@ static int __uc_resume(struct intel_uc *uc, bool enable_communication)
 	if (enable_communication && intel_uc_uses_guc_slpc(uc))
 		intel_guc_pm_intrmsk_enable(gt);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = intel_guc_resume(guc);
 	if (err) {
 		DRM_DEBUG_DRIVER("Failed to resume GuC, err=%d", err);

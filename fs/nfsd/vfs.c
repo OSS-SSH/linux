@@ -245,9 +245,12 @@ out_nfserr:
  * NOTE: this mountpoint crossing is not supported properly by all
  *   clients and is explicitly disallowed for NFSv3
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *      NeilBrown <neilb@cse.unsw.edu.au>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 __be32
 nfsd_lookup(struct svc_rqst *rqstp, struct svc_fh *fhp, const char *name,
@@ -337,9 +340,12 @@ nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
 {
 	struct inode *inode = d_inode(fhp->fh_dentry);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int host_err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (iap->ia_size < inode->i_size) {
 		__be32 err;
@@ -349,6 +355,7 @@ nfsd_get_write_access(struct svc_rqst *rqstp, struct svc_fh *fhp,
 		if (err)
 			return err;
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return nfserrno(get_write_access(inode));
 =======
@@ -367,6 +374,9 @@ out_put_write_access:
 out_nfserrno:
 	return nfserrno(host_err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return nfserrno(get_write_access(inode));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -761,6 +771,7 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
 	if (IS_APPEND(inode) && (may_flags & NFSD_MAY_WRITE))
 		goto out;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * We must ignore files (but only files) which might have mandatory
@@ -770,6 +781,8 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
 	if (S_ISREG((inode)->i_mode) && mandatory_lock(inode))
 		goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!inode->i_fop)
 		goto out;
@@ -861,6 +874,7 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
 	struct page **pp = rqstp->rq_next_page;
 	struct page *page = buf->page;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (rqstp->rq_res.page_len == 0) {
 		svc_rqst_replace_page(rqstp, page);
@@ -875,24 +889,23 @@ nfsd_splice_actor(struct pipe_inode_info *pipe, struct pipe_buffer *buf,
 	size_t size;
 
 	size = sd->len;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (rqstp->rq_res.page_len == 0) {
-		get_page(page);
-		put_page(*rqstp->rq_next_page);
-		*(rqstp->rq_next_page++) = page;
+		svc_rqst_replace_page(rqstp, page);
 		rqstp->rq_res.page_base = buf->offset;
-		rqstp->rq_res.page_len = size;
 	} else if (page != pp[-1]) {
-		get_page(page);
-		if (*rqstp->rq_next_page)
-			put_page(*rqstp->rq_next_page);
-		*(rqstp->rq_next_page++) = page;
-		rqstp->rq_res.page_len += size;
-	} else
-		rqstp->rq_res.page_len += size;
+		svc_rqst_replace_page(rqstp, page);
+	}
+	rqstp->rq_res.page_len += sd->len;
 
+<<<<<<< HEAD
 	return size;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sd->len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int nfsd_direct_splice_actor(struct pipe_inode_info *pipe,

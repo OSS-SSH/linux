@@ -675,6 +675,7 @@ static void target_xcopy_do_work(struct work_struct *work)
 	int rc = 0;
 	unsigned short nolb, max_nolb, copied_nolb = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	sense_reason_t sense_rc;
 
 	sense_rc = target_parse_xcopy_cmd(xop);
@@ -686,13 +687,22 @@ static void target_xcopy_do_work(struct work_struct *work)
 		goto err_free;
 	}
 =======
+=======
+	sense_reason_t sense_rc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (target_parse_xcopy_cmd(xop) != TCM_NO_SENSE)
+	sense_rc = target_parse_xcopy_cmd(xop);
+	if (sense_rc != TCM_NO_SENSE)
 		goto err_free;
 
-	if (WARN_ON_ONCE(!xop->src_dev) || WARN_ON_ONCE(!xop->dst_dev))
+	if (WARN_ON_ONCE(!xop->src_dev) || WARN_ON_ONCE(!xop->dst_dev)) {
+		sense_rc = TCM_INVALID_PARAMETER_LIST;
 		goto err_free;
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	src_dev = xop->src_dev;
 	dst_dev = xop->dst_dev;
@@ -776,19 +786,26 @@ static void target_xcopy_do_work(struct work_struct *work)
 
 out:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * The XCOPY command was aborted after some data was transferred.
 	 * Terminate command with CHECK CONDITION status, with the sense key
 	 * set to COPY ABORTED.
 	 */
 	sense_rc = TCM_COPY_TARGET_DEVICE_NOT_REACHABLE;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xcopy_pt_undepend_remotedev(xop);
 	target_free_sgl(xop->xop_data_sg, xop->xop_data_nents);
 
 err_free:
 	kfree(xop);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	pr_warn_ratelimited("target_xcopy_do_work: rc: %d, sense: %u, XCOPY operation failed\n",
 			   rc, sense_rc);
@@ -804,6 +821,11 @@ err_free:
 	}
 	target_complete_cmd(ec_cmd, ec_cmd->scsi_status);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_warn_ratelimited("target_xcopy_do_work: rc: %d, sense: %u, XCOPY operation failed\n",
+			   rc, sense_rc);
+	target_complete_cmd_with_sense(ec_cmd, SAM_STAT_CHECK_CONDITION, sense_rc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

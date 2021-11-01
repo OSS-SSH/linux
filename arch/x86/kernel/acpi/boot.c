@@ -559,6 +559,7 @@ acpi_parse_nmi_src(union acpi_subtable_headers * header, const unsigned long end
  * it may require Edge Trigger -- use "acpi_sci=edge"
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Port 0x4d0-4d1 are ELCR1 and ELCR2, the Edge/Level Control Registers
  * for the 8259 PIC.  bit[n] = 1 means irq[n] is Level, otherwise Edge.
  * ELCR1 is IRQs 0-7 (IRQ 0, 1, 2 must be 0)
@@ -569,6 +570,12 @@ acpi_parse_nmi_src(union acpi_subtable_headers * header, const unsigned long end
  * ECLR1 is IRQs 0-7 (IRQ 0, 1, 2 must be 0)
  * ECLR2 is IRQs 8-15 (IRQ 8, 13 must be 0)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Port 0x4d0-4d1 are ELCR1 and ELCR2, the Edge/Level Control Registers
+ * for the 8259 PIC.  bit[n] = 1 means irq[n] is Level, otherwise Edge.
+ * ELCR1 is IRQs 0-7 (IRQ 0, 1, 2 must be 0)
+ * ELCR2 is IRQs 8-15 (IRQ 8, 13 must be 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 void __init acpi_pic_sci_set_trigger(unsigned int irq, u16 trigger)
@@ -578,10 +585,14 @@ void __init acpi_pic_sci_set_trigger(unsigned int irq, u16 trigger)
 
 	/* Real old ELCR mask */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	old = inb(PIC_ELCR1) | (inb(PIC_ELCR2) << 8);
 =======
 	old = inb(0x4d0) | (inb(0x4d1) << 8);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	old = inb(PIC_ELCR1) | (inb(PIC_ELCR2) << 8);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * If we use ACPI to set PCI IRQs, then we should clear ELCR
@@ -608,12 +619,17 @@ void __init acpi_pic_sci_set_trigger(unsigned int irq, u16 trigger)
 
 	pr_warn("setting ELCR to %04x (from %04x)\n", new, old);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	outb(new, PIC_ELCR1);
 	outb(new >> 8, PIC_ELCR2);
 =======
 	outb(new, 0x4d0);
 	outb(new >> 8, 0x4d1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	outb(new, PIC_ELCR1);
+	outb(new >> 8, PIC_ELCR2);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int acpi_gsi_to_irq(u32 gsi, unsigned int *irqp)

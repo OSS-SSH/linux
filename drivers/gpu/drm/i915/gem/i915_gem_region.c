@@ -14,6 +14,7 @@ void i915_gem_object_init_memory_region(struct drm_i915_gem_object *obj,
 	obj->mm.region = intel_memory_region_get(mem);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_lock(&mem->objects.lock);
 	list_add(&obj->mm.region_link, &mem->objects.list);
 =======
@@ -28,6 +29,10 @@ void i915_gem_object_init_memory_region(struct drm_i915_gem_object *obj,
 		list_add(&obj->mm.region_link, &mem->objects.list);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_lock(&mem->objects.lock);
+	list_add(&obj->mm.region_link, &mem->objects.list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&mem->objects.lock);
 }
 
@@ -46,6 +51,7 @@ struct drm_i915_gem_object *
 i915_gem_object_create_region(struct intel_memory_region *mem,
 			      resource_size_t size,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      resource_size_t page_size,
 			      unsigned int flags)
 {
@@ -56,6 +62,13 @@ i915_gem_object_create_region(struct intel_memory_region *mem,
 {
 	struct drm_i915_gem_object *obj;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      resource_size_t page_size,
+			      unsigned int flags)
+{
+	struct drm_i915_gem_object *obj;
+	resource_size_t default_page_size;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	/*
@@ -70,6 +83,9 @@ i915_gem_object_create_region(struct intel_memory_region *mem,
 		return ERR_PTR(-ENODEV);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default_page_size = mem->min_page_size;
 	if (page_size)
 		default_page_size = page_size;
@@ -78,9 +94,12 @@ i915_gem_object_create_region(struct intel_memory_region *mem,
 	GEM_BUG_ON(default_page_size < PAGE_SIZE);
 
 	size = round_up(size, default_page_size);
+<<<<<<< HEAD
 =======
 	size = round_up(size, mem->min_page_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	GEM_BUG_ON(!size);
 	GEM_BUG_ON(!IS_ALIGNED(size, I915_GTT_MIN_ALIGNMENT));
@@ -93,10 +112,14 @@ i915_gem_object_create_region(struct intel_memory_region *mem,
 		return ERR_PTR(-ENOMEM);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = mem->ops->init_object(mem, obj, size, page_size, flags);
 =======
 	err = mem->ops->init_object(mem, obj, size, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = mem->ops->init_object(mem, obj, size, page_size, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto err_object_free;
 

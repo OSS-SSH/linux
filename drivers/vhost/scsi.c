@@ -1,13 +1,18 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0+
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: GPL-2.0+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*******************************************************************************
  * Vhost kernel TCM fabric driver for virtio SCSI initiators
  *
  * (C) Copyright 2010-2013 Datera, Inc.
  * (C) Copyright 2010-2012 IBM Corp.
  *
+<<<<<<< HEAD
 <<<<<<< HEAD
  * Authors: Nicholas A. Bellinger <nab@daterainc.com>
  *          Stefan Hajnoczi <stefanha@linux.vnet.ibm.com>
@@ -28,6 +33,10 @@
  * GNU General Public License for more details.
  *
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Authors: Nicholas A. Bellinger <nab@daterainc.com>
+ *          Stefan Hajnoczi <stefanha@linux.vnet.ibm.com>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  ****************************************************************************/
 
 #include <linux/module.h>

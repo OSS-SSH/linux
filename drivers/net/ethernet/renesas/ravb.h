@@ -865,10 +865,14 @@ enum GECMR_BIT {
 /* The Ethernet AVB descriptor definitions. */
 struct ravb_desc {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__le16 ds;	/* Descriptor size */
 =======
 	__le16 ds;		/* Descriptor size */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le16 ds;	/* Descriptor size */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 cc;		/* Content control MSBs (reserved) */
 	u8 die_dt;	/* Descriptor interrupt enable and type */
 	__le32 dptr;	/* Descriptor pointer */
@@ -961,12 +965,15 @@ enum RAVB_QUEUE {
 #define RX_BUF_SZ	(2048 - ETH_FCS_LEN + sizeof(__sum16))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* TX descriptors per packet */
 #define NUM_TX_DESC_GEN2	2
 #define NUM_TX_DESC_GEN3	1
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ravb_tstamp_skb {
 	struct list_head list;
 	struct sk_buff *skb;
@@ -991,6 +998,9 @@ struct ravb_ptp {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ravb_hw_info {
 	void (*rx_ring_free)(struct net_device *ndev, int q);
 	void (*rx_ring_format)(struct net_device *ndev, int q);
@@ -1014,11 +1024,14 @@ struct ravb_hw_info {
 	unsigned multi_irqs:1;		/* AVB-DMAC and E-MAC has multiple irqs */
 	unsigned no_ptp_cfg_active:1;	/* AVB-DMAC does not support gPTP active in config mode */
 	unsigned ptp_cfg_active:1;	/* AVB-DMAC has gPTP support active in config mode */
+<<<<<<< HEAD
 =======
 enum ravb_chip_id {
 	RCAR_GEN2,
 	RCAR_GEN3,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct ravb_private {
@@ -1063,9 +1076,12 @@ struct ravb_private {
 	int speed;
 	int emac_irq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	enum ravb_chip_id chip_id;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rx_irqs[NUM_RX_QUEUE];
 	int tx_irqs[NUM_TX_QUEUE];
 
@@ -1076,13 +1092,19 @@ struct ravb_private {
 	unsigned txcidm:1;		/* TX Clock Internal Delay Mode */
 	unsigned rgmii_override:1;	/* Deprecated rgmii-*id behavior */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int num_tx_desc;	/* TX descriptors per packet */
 
 	const struct ravb_hw_info *info;
 	struct reset_control *rstc;
+<<<<<<< HEAD
 =======
 	int num_tx_desc;		/* TX descriptors per packet */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline u32 ravb_read(struct net_device *ndev, enum ravb_reg reg)

@@ -1408,11 +1408,15 @@ static pci_ers_result_t aer_root_reset(struct pci_dev *dev)
 
 	if (type == PCI_EXP_TYPE_RC_EC || type == PCI_EXP_TYPE_RC_END) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc = pcie_reset_flr(dev, PCI_RESET_DO_RESET);
 		if (!rc)
 			pci_info(dev, "has been reset\n");
 		else
 			pci_info(dev, "not reset (no FLR support: %d)\n", rc);
+<<<<<<< HEAD
 =======
 		if (pcie_has_flr(dev)) {
 			rc = pcie_flr(dev);
@@ -1422,6 +1426,8 @@ static pci_ers_result_t aer_root_reset(struct pci_dev *dev)
 			rc = -ENOTTY;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		rc = pci_bus_error_reset(dev);
 		pci_info(dev, "%s Port link has been reset (%d)\n",

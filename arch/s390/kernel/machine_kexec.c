@@ -225,12 +225,17 @@ void arch_crash_save_vmcoreinfo(void)
 	VMCOREINFO_SYMBOL(high_memory);
 	VMCOREINFO_LENGTH(lowcore_ptr, NR_CPUS);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vmcoreinfo_append_str("SAMODE31=%lx\n", __samode31);
 	vmcoreinfo_append_str("EAMODE31=%lx\n", __eamode31);
 =======
 	vmcoreinfo_append_str("SDMA=%lx\n", __sdma);
 	vmcoreinfo_append_str("EDMA=%lx\n", __edma);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vmcoreinfo_append_str("SAMODE31=%lx\n", __samode31);
+	vmcoreinfo_append_str("EAMODE31=%lx\n", __eamode31);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vmcoreinfo_append_str("KERNELOFFSET=%lx\n", kaslr_offset());
 	mem_assign_absolute(S390_lowcore.vmcore_info, paddr_vmcoreinfo_note());
 }
@@ -269,9 +274,12 @@ static void __do_machine_kexec(void *data)
 static void __machine_kexec(void *data)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	__arch_local_irq_stosm(0x04); /* enable DAT */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pfault_fini();
 	tracing_off();
 	debug_locks_off();

@@ -48,9 +48,13 @@
 #include "dc_link_dp.h"
 #include "inc/link_dpcd.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "dcn10/dcn10_hw_sequencer.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "dcn10/dcn10_hw_sequencer.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define DC_LOGGER_INIT(logger)
 
@@ -230,9 +234,13 @@ void dcn31_init_hw(struct dc *dc)
 		struct dc_link *edp_links[MAX_NUM_EDP];
 		struct dc_link *edp_link;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		bool power_down = false;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		bool power_down = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		get_edp_links(dc, edp_links, &edp_num);
 		if (edp_num) {
@@ -247,6 +255,7 @@ void dcn31_init_hw(struct dc *dc)
 					dc->hwss.power_down(dc);
 					dc->hwss.edp_power_control(edp_link, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
 					power_down = true;
 				}
 			}
@@ -257,6 +266,13 @@ void dcn31_init_hw(struct dc *dc)
 			}
 		} else {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					power_down = true;
+				}
+			}
+		}
+		if (!power_down) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			for (i = 0; i < dc->link_count; i++) {
 				struct dc_link *link = dc->links[i];
 
@@ -407,10 +423,14 @@ void dcn31_update_info_frame(struct pipe_ctx *pipe_ctx)
 	is_dp = dc_is_dp_signal(pipe_ctx->stream->signal);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!is_hdmi_tmds && !is_dp)
 =======
 	if (!is_hdmi_tmds)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!is_hdmi_tmds && !is_dp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (is_hdmi_tmds)
@@ -424,6 +444,9 @@ void dcn31_update_info_frame(struct pipe_ctx *pipe_ctx)
 	}
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dcn31_z10_save_init(struct dc *dc)
 {
 	union dmub_rb_cmd cmd;
@@ -436,8 +459,11 @@ void dcn31_z10_save_init(struct dc *dc)
 	dc_dmub_srv_cmd_execute(dc->ctx->dmub_srv);
 	dc_dmub_srv_wait_idle(dc->ctx->dmub_srv);
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void dcn31_z10_restore(struct dc *dc)
 {

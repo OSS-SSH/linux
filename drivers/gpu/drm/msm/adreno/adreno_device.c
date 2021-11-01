@@ -9,10 +9,13 @@
 #include "adreno_gpu.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define ANY_ID 0xff
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool hang_debug = false;
 MODULE_PARM_DESC(hang_debug, "Dump registers when hang is detected (can be slow!)");
 module_param_named(hang_debug, hang_debug, bool, 0600);
@@ -304,6 +307,9 @@ static const struct adreno_info gpulist[] = {
 		.zapfw = "a660_zap.mdt",
 		.hwcg = a660_hwcg,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}, {
 		.rev = ADRENO_REV(6, 3, 5, ANY_ID),
 		.name = "Adreno 7c Gen 3",
@@ -328,8 +334,11 @@ static const struct adreno_info gpulist[] = {
 		.init = a6xx_gpu_init,
 		.zapfw = "a640_zap.mdt",
 		.hwcg = a640_hwcg,
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 };
 
@@ -356,6 +365,9 @@ static inline bool _rev_match(uint8_t entry, uint8_t id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2)
 {
 
@@ -365,8 +377,11 @@ bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2)
 		_rev_match(rev1.patchid, rev2.patchid);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct adreno_info *adreno_info(struct adreno_rev rev)
 {
 	int i;
@@ -375,6 +390,7 @@ const struct adreno_info *adreno_info(struct adreno_rev rev)
 	for (i = 0; i < ARRAY_SIZE(gpulist); i++) {
 		const struct adreno_info *info = &gpulist[i];
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (adreno_cmp_rev(info->rev, rev))
 =======
 		if (_rev_match(info->rev.core, rev.core) &&
@@ -382,6 +398,9 @@ const struct adreno_info *adreno_info(struct adreno_rev rev)
 				_rev_match(info->rev.minor, rev.minor) &&
 				_rev_match(info->rev.patchid, rev.patchid))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (adreno_cmp_rev(info->rev, rev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return info;
 	}
 

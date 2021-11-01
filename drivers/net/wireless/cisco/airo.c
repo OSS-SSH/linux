@@ -1145,10 +1145,14 @@ static irqreturn_t airo_interrupt(int irq, void* dev_id);
 static int airo_thread(void *data);
 static void timer_func(struct net_device *dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int airo_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *, int cmd);
 =======
 static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int airo_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct iw_statistics *airo_get_wireless_stats(struct net_device *dev);
 #ifdef CISCO_EXT
 static int readrids(struct net_device *dev, aironet_ioctl *comp);
@@ -2669,10 +2673,14 @@ static const struct net_device_ops airo11_netdev_ops = {
 	.ndo_get_stats 		= airo_get_stats,
 	.ndo_set_mac_address	= airo_set_mac_address,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= airo_siocdevprivate,
 =======
 	.ndo_do_ioctl		= airo_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= airo_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void wifi_setup(struct net_device *dev)
@@ -2773,10 +2781,14 @@ static const struct net_device_ops airo_netdev_ops = {
 	.ndo_set_rx_mode	= airo_set_multicast_list,
 	.ndo_set_mac_address	= airo_set_mac_address,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= airo_siocdevprivate,
 =======
 	.ndo_do_ioctl		= airo_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= airo_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 };
 
@@ -2788,10 +2800,14 @@ static const struct net_device_ops mpi_netdev_ops = {
 	.ndo_set_rx_mode	= airo_set_multicast_list,
 	.ndo_set_mac_address	= airo_set_mac_address,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= airo_siocdevprivate,
 =======
 	.ndo_do_ioctl		= airo_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= airo_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 };
 
@@ -7678,11 +7694,16 @@ static const struct iw_handler_def	airo_handler_def =
  * developer that added support for flashing the card.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int airo_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 			       void __user *data, int cmd)
 =======
 static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int airo_siocdevprivate(struct net_device *dev, struct ifreq *rq,
+			       void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int rc = 0;
 	struct airo_info *ai = dev->ml_priv;
@@ -7700,10 +7721,14 @@ static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 		int val = AIROMAGIC;
 		aironet_ioctl com;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_from_user(&com, data, sizeof(com)))
 =======
 		if (copy_from_user(&com, rq->ifr_data, sizeof(com)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_from_user(&com, data, sizeof(com)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = -EFAULT;
 		else if (copy_to_user(com.data, (char *)&val, sizeof(val)))
 			rc = -EFAULT;
@@ -7720,10 +7745,14 @@ static int airo_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 	{
 		aironet_ioctl com;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (copy_from_user(&com, data, sizeof(com))) {
 =======
 		if (copy_from_user(&com, rq->ifr_data, sizeof(com))) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (copy_from_user(&com, data, sizeof(com))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = -EFAULT;
 			break;
 		}

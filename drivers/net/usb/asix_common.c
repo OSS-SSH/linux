@@ -64,6 +64,9 @@ void asix_write_cmd_async(struct usbnet *dev, u8 cmd, u16 value, u16 index,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int asix_check_host_enable(struct usbnet *dev, int in_pm)
 {
 	int i, ret;
@@ -87,8 +90,11 @@ static int asix_check_host_enable(struct usbnet *dev, int in_pm)
 	return ret;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void reset_asix_rx_fixup_info(struct asix_rx_fixup_info *rx)
 {
 	/* Reset the variables that have a lifetime outside of
@@ -494,6 +500,7 @@ int asix_mdio_read(struct net_device *netdev, int phy_id, int loc)
 	struct usbnet *dev = netdev_priv(netdev);
 	__le16 res;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	mutex_lock(&dev->phy_mutex);
@@ -514,6 +521,13 @@ int asix_mdio_read(struct net_device *netdev, int phy_id, int loc)
 				    0, 0, 1, &smsr, 0);
 	} while (!(smsr & AX_HOST_EN) && (i++ < 30) && (ret != -ENODEV));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	mutex_lock(&dev->phy_mutex);
+
+	ret = asix_check_host_enable(dev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret == -ENODEV || ret == -ETIMEDOUT) {
 		mutex_unlock(&dev->phy_mutex);
 		return ret;
@@ -540,16 +554,20 @@ static int __asix_mdio_write(struct net_device *netdev, int phy_id, int loc,
 	struct usbnet *dev = netdev_priv(netdev);
 	__le16 res = cpu_to_le16(val);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u8 smsr;
 	int i = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	netdev_dbg(dev->net, "asix_mdio_write() phy_id=0x%02x, loc=0x%02x, val=0x%04x\n",
 			phy_id, loc, val);
 
 	mutex_lock(&dev->phy_mutex);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	ret = asix_check_host_enable(dev, 0);
@@ -564,6 +582,10 @@ static int __asix_mdio_write(struct net_device *netdev, int phy_id, int loc,
 	} while (!(smsr & AX_HOST_EN) && (i++ < 30) && (ret != -ENODEV));
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	ret = asix_check_host_enable(dev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret == -ENODEV)
 		goto out;
 
@@ -604,6 +626,7 @@ int asix_mdio_read_nopm(struct net_device *netdev, int phy_id, int loc)
 	struct usbnet *dev = netdev_priv(netdev);
 	__le16 res;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
 
 	mutex_lock(&dev->phy_mutex);
@@ -624,6 +647,13 @@ int asix_mdio_read_nopm(struct net_device *netdev, int phy_id, int loc)
 				    0, 0, 1, &smsr, 1);
 	} while (!(smsr & AX_HOST_EN) && (i++ < 30) && (ret != -ENODEV));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	mutex_lock(&dev->phy_mutex);
+
+	ret = asix_check_host_enable(dev, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret == -ENODEV || ret == -ETIMEDOUT) {
 		mutex_unlock(&dev->phy_mutex);
 		return ret;
@@ -646,16 +676,20 @@ asix_mdio_write_nopm(struct net_device *netdev, int phy_id, int loc, int val)
 	struct usbnet *dev = netdev_priv(netdev);
 	__le16 res = cpu_to_le16(val);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	u8 smsr;
 	int i = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	netdev_dbg(dev->net, "asix_mdio_write() phy_id=0x%02x, loc=0x%02x, val=0x%04x\n",
 			phy_id, loc, val);
 
 	mutex_lock(&dev->phy_mutex);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	ret = asix_check_host_enable(dev, 1);
@@ -669,6 +703,10 @@ asix_mdio_write_nopm(struct net_device *netdev, int phy_id, int loc, int val)
 				    0, 0, 1, &smsr, 1);
 	} while (!(smsr & AX_HOST_EN) && (i++ < 30) && (ret != -ENODEV));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	ret = asix_check_host_enable(dev, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret == -ENODEV) {
 		mutex_unlock(&dev->phy_mutex);
 		return;

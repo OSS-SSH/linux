@@ -14,9 +14,13 @@ Required Properties:
 	- "mediatek,mt8167-audiosys", "syscon"
 	- "mediatek,mt8183-audiosys", "syscon"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	- "mediatek,mt8192-audsys", "syscon"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	- "mediatek,mt8192-audsys", "syscon"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	- "mediatek,mt8516-audsys", "syscon"
 - #clock-cells: Must be 1
 

@@ -24,9 +24,12 @@
 
 static LIST_HEAD(blktrans_majors);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static DEFINE_MUTEX(blktrans_ref_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void blktrans_dev_release(struct kref *kref)
 {
@@ -40,6 +43,7 @@ static void blktrans_dev_release(struct kref *kref)
 	kfree(dev);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void blktrans_dev_put(struct mtd_blktrans_dev *dev)
 {
@@ -60,12 +64,16 @@ unlock:
 	return dev;
 }
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void blktrans_dev_put(struct mtd_blktrans_dev *dev)
 {
-	mutex_lock(&blktrans_ref_mutex);
 	kref_put(&dev->ref, blktrans_dev_release);
+<<<<<<< HEAD
 	mutex_unlock(&blktrans_ref_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -211,6 +219,7 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
 static int blktrans_open(struct block_device *bdev, fmode_t mode)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mtd_blktrans_dev *dev = bdev->bd_disk->private_data;
 	int ret = 0;
 
@@ -218,22 +227,30 @@ static int blktrans_open(struct block_device *bdev, fmode_t mode)
 
 =======
 	struct mtd_blktrans_dev *dev = blktrans_dev_get(bdev->bd_disk);
+=======
+	struct mtd_blktrans_dev *dev = bdev->bd_disk->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
-	if (!dev)
-		return -ERESTARTSYS; /* FIXME: busy loop! -arnd*/
+	kref_get(&dev->ref);
 
+<<<<<<< HEAD
 	mutex_lock(&mtd_table_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&dev->lock);
 
 	if (dev->open)
 		goto unlock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kref_get(&dev->ref);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__module_get(dev->tr->owner);
 
 	if (!dev->mtd)
@@ -254,10 +271,13 @@ unlock:
 	dev->open++;
 	mutex_unlock(&dev->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	mutex_unlock(&mtd_table_mutex);
 	blktrans_dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 
 error_release:
@@ -266,18 +286,23 @@ error_release:
 error_put:
 	module_put(dev->tr->owner);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&dev->lock);
 =======
 	kref_put(&dev->ref, blktrans_dev_release);
 	mutex_unlock(&dev->lock);
 	mutex_unlock(&mtd_table_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&dev->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blktrans_dev_put(dev);
 	return ret;
 }
 
 static void blktrans_release(struct gendisk *disk, fmode_t mode)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mtd_blktrans_dev *dev = disk->private_data;
 
@@ -289,15 +314,22 @@ static void blktrans_release(struct gendisk *disk, fmode_t mode)
 
 	mutex_lock(&mtd_table_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mtd_blktrans_dev *dev = disk->private_data;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&dev->lock);
 
 	if (--dev->open)
 		goto unlock;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kref_put(&dev->ref, blktrans_dev_release);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	module_put(dev->tr->owner);
 
 	if (dev->mtd) {
@@ -308,14 +340,18 @@ static void blktrans_release(struct gendisk *disk, fmode_t mode)
 unlock:
 	mutex_unlock(&dev->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	mutex_unlock(&mtd_table_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blktrans_dev_put(dev);
 }
 
 static int blktrans_getgeo(struct block_device *bdev, struct hd_geometry *geo)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct mtd_blktrans_dev *dev = bdev->bd_disk->private_data;
 	int ret = -ENXIO;
@@ -328,6 +364,11 @@ static int blktrans_getgeo(struct block_device *bdev, struct hd_geometry *geo)
 		return ret;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mtd_blktrans_dev *dev = bdev->bd_disk->private_data;
+	int ret = -ENXIO;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&dev->lock);
 
 	if (!dev->mtd)
@@ -337,9 +378,12 @@ static int blktrans_getgeo(struct block_device *bdev, struct hd_geometry *geo)
 unlock:
 	mutex_unlock(&dev->lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	blktrans_dev_put(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -363,6 +407,7 @@ int add_mtd_blktrans_dev(struct mtd_blktrans_dev *new)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lockdep_assert_held(&mtd_table_mutex);
 
 =======
@@ -373,6 +418,10 @@ int add_mtd_blktrans_dev(struct mtd_blktrans_dev *new)
 
 	mutex_lock(&blktrans_ref_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lockdep_assert_held(&mtd_table_mutex);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(d, &tr->devs, list) {
 		if (new->devnum == -1) {
 			/* Use first free number */
@@ -385,9 +434,12 @@ int add_mtd_blktrans_dev(struct mtd_blktrans_dev *new)
 		} else if (d->devnum == new->devnum) {
 			/* Required number taken */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			mutex_unlock(&blktrans_ref_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EBUSY;
 		} else if (d->devnum > new->devnum) {
 			/* Required number was free */
@@ -406,6 +458,7 @@ int add_mtd_blktrans_dev(struct mtd_blktrans_dev *new)
 	 * with this number. */
 	if (new->devnum > (MINORMASK >> tr->part_bits) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    (tr->part_bits && new->devnum >= 27 * 26))
 		return ret;
 
@@ -414,13 +467,18 @@ int add_mtd_blktrans_dev(struct mtd_blktrans_dev *new)
 =======
 	    (tr->part_bits && new->devnum >= 27 * 26)) {
 		mutex_unlock(&blktrans_ref_mutex);
+=======
+	    (tr->part_bits && new->devnum >= 27 * 26))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
-	}
 
 	list_add_tail(&new->list, &tr->devs);
  added:
+<<<<<<< HEAD
 	mutex_unlock(&blktrans_ref_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_init(&new->lock);
 	kref_init(&new->ref);
@@ -483,9 +541,13 @@ int add_mtd_blktrans_dev(struct mtd_blktrans_dev *new)
 		blk_queue_flag_set(QUEUE_FLAG_DISCARD, new->rq);
 		blk_queue_max_discard_sectors(new->rq, UINT_MAX);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		new->rq->limits.discard_granularity = tr->blksize;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		new->rq->limits.discard_granularity = tr->blksize;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	gd->queue = new->rq;
@@ -516,6 +578,7 @@ int del_mtd_blktrans_dev(struct mtd_blktrans_dev *old)
 	unsigned long flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	lockdep_assert_held(&mtd_table_mutex);
 =======
 	if (mutex_trylock(&mtd_table_mutex)) {
@@ -523,6 +586,9 @@ int del_mtd_blktrans_dev(struct mtd_blktrans_dev *old)
 		BUG();
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	lockdep_assert_held(&mtd_table_mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (old->disk_attributes)
 		sysfs_remove_group(&disk_to_dev(old->disk)->kobj,
@@ -597,19 +663,25 @@ int register_mtd_blktrans(struct mtd_blktrans_ops *tr)
 		register_mtd_user(&blktrans_notifier);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	mutex_lock(&mtd_table_mutex);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = register_blkdev(tr->major, tr->name);
 	if (ret < 0) {
 		printk(KERN_WARNING "Unable to register %s block device on major %d: %d\n",
 		       tr->name, tr->major, ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		mutex_unlock(&mtd_table_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	}
 
@@ -620,6 +692,7 @@ int register_mtd_blktrans(struct mtd_blktrans_ops *tr)
 
 	INIT_LIST_HEAD(&tr->devs);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	mutex_lock(&mtd_table_mutex);
 	list_add(&tr->list, &blktrans_majors);
@@ -628,12 +701,19 @@ int register_mtd_blktrans(struct mtd_blktrans_ops *tr)
 			tr->add_mtd(tr, mtd);
 =======
 	list_add(&tr->list, &blktrans_majors);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	mutex_lock(&mtd_table_mutex);
+	list_add(&tr->list, &blktrans_majors);
 	mtd_for_each_device(mtd)
 		if (mtd->type != MTD_ABSENT)
 			tr->add_mtd(tr, mtd);
+<<<<<<< HEAD
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&mtd_table_mutex);
 	return 0;
 }
@@ -651,12 +731,17 @@ int deregister_mtd_blktrans(struct mtd_blktrans_ops *tr)
 		tr->remove_dev(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mutex_unlock(&mtd_table_mutex);
 	unregister_blkdev(tr->major, tr->name);
 =======
 	unregister_blkdev(tr->major, tr->name);
 	mutex_unlock(&mtd_table_mutex);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&mtd_table_mutex);
+	unregister_blkdev(tr->major, tr->name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	BUG_ON(!list_empty(&tr->devs));
 	return 0;

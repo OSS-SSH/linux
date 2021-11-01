@@ -657,6 +657,9 @@ Bridge offloads tracepoints:
     ...
     ip-5387    [000] ...1       573713: mlx5_esw_bridge_vport_cleanup: vport_num=1
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Eswitch QoS tracepoints:
 
@@ -701,5 +704,8 @@ Eswitch QoS tracepoints:
     $ cat /sys/kernel/debug/tracing/trace
     ...
     <...>-27418   [006] .... 76547.187258: mlx5_esw_group_qos_destroy: (0000:82:00.0) group=000000007b576bb3 tsar_ix=1
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

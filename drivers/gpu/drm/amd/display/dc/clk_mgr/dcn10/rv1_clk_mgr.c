@@ -265,6 +265,7 @@ static void rv1_update_clocks(struct clk_mgr *clk_mgr_base,
 				pp_smu->set_hard_min_dcfclk_by_freq &&
 				pp_smu->set_min_deep_sleep_dcfclk) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pp_smu->set_hard_min_fclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->fclk_khz));
 			pp_smu->set_hard_min_dcfclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_khz));
 			pp_smu->set_min_deep_sleep_dcfclk(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_deep_sleep_khz));
@@ -273,6 +274,11 @@ static void rv1_update_clocks(struct clk_mgr *clk_mgr_base,
 			pp_smu->set_hard_min_dcfclk_by_freq(&pp_smu->pp_smu, new_clocks->dcfclk_khz / 1000);
 			pp_smu->set_min_deep_sleep_dcfclk(&pp_smu->pp_smu, (new_clocks->dcfclk_deep_sleep_khz + 999) / 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pp_smu->set_hard_min_fclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->fclk_khz));
+			pp_smu->set_hard_min_dcfclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_khz));
+			pp_smu->set_min_deep_sleep_dcfclk(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_deep_sleep_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -291,6 +297,7 @@ static void rv1_update_clocks(struct clk_mgr *clk_mgr_base,
 				pp_smu->set_hard_min_dcfclk_by_freq &&
 				pp_smu->set_min_deep_sleep_dcfclk) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			pp_smu->set_hard_min_fclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->fclk_khz));
 			pp_smu->set_hard_min_dcfclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_khz));
 			pp_smu->set_min_deep_sleep_dcfclk(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_deep_sleep_khz));
@@ -299,6 +306,11 @@ static void rv1_update_clocks(struct clk_mgr *clk_mgr_base,
 			pp_smu->set_hard_min_dcfclk_by_freq(&pp_smu->pp_smu, new_clocks->dcfclk_khz / 1000);
 			pp_smu->set_min_deep_sleep_dcfclk(&pp_smu->pp_smu, (new_clocks->dcfclk_deep_sleep_khz + 999) / 1000);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pp_smu->set_hard_min_fclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->fclk_khz));
+			pp_smu->set_hard_min_dcfclk_by_freq(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_khz));
+			pp_smu->set_min_deep_sleep_dcfclk(&pp_smu->pp_smu, khz_to_mhz_ceil(new_clocks->dcfclk_deep_sleep_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }

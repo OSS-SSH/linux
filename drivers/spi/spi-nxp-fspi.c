@@ -34,9 +34,13 @@
 #include <linux/acpi.h>
 #include <linux/bitops.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/bitfield.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/bitfield.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/clk.h>
 #include <linux/completion.h>
 #include <linux/delay.h>
@@ -320,9 +324,13 @@
 
 #define DCFG_RCWSR1		0x100
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SYS_PLL_RAT		GENMASK(6, 2)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SYS_PLL_RAT		GENMASK(6, 2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Access flash memory using IP bus only */
 #define FSPI_QUIRK_USE_IP_ONLY	BIT(0)
@@ -935,6 +943,7 @@ static void erratum_err050568(struct nxp_fspi *f)
 		{ /* sentinel */ }
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct regmap *map;
 	u32 val, sys_pll_ratio;
 =======
@@ -942,6 +951,10 @@ static void erratum_err050568(struct nxp_fspi *f)
 	struct regmap *map;
 	u32 val = 0, sysclk = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct regmap *map;
+	u32 val, sys_pll_ratio;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	/* Check for LS1028A family */
@@ -951,9 +964,12 @@ static void erratum_err050568(struct nxp_fspi *f)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Compute system clock frequency multiplier ratio */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	map = syscon_regmap_lookup_by_compatible("fsl,ls1028a-dcfg");
 	if (IS_ERR(map)) {
 		dev_err(f->dev, "No syscon regmap\n");
@@ -964,6 +980,7 @@ static void erratum_err050568(struct nxp_fspi *f)
 	if (ret < 0)
 		goto err;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	sys_pll_ratio = FIELD_GET(SYS_PLL_RAT, val);
 	dev_dbg(f->dev, "val: 0x%08x, sys_pll_ratio: %d\n", val, sys_pll_ratio);
@@ -989,6 +1006,13 @@ static void erratum_err050568(struct nxp_fspi *f)
 	/* Use IP bus only if PLL is 300MHz */
 	if (sysclk == 300)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sys_pll_ratio = FIELD_GET(SYS_PLL_RAT, val);
+	dev_dbg(f->dev, "val: 0x%08x, sys_pll_ratio: %d\n", val, sys_pll_ratio);
+
+	/* Use IP bus only if platform clock is 300MHz */
+	if (sys_pll_ratio == 3)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		f->devtype_data->quirks |= FSPI_QUIRK_USE_IP_ONLY;
 
 	return;

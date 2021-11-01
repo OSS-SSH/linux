@@ -102,6 +102,9 @@ static inline struct ax_device *to_ax_dev(struct net_device *dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ax_NS8390_reinit(struct net_device *dev)
 {
 	ax_NS8390_init(dev, 1);
@@ -109,8 +112,11 @@ void ax_NS8390_reinit(struct net_device *dev)
 
 EXPORT_SYMBOL_GPL(ax_NS8390_reinit);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * ax_initial_check
  *
@@ -646,10 +652,14 @@ static const struct net_device_ops ax_netdev_ops = {
 	.ndo_open		= ax_open,
 	.ndo_stop		= ax_close,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= ax_ioctl,
 =======
 	.ndo_do_ioctl		= ax_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= ax_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.ndo_start_xmit		= ax_ei_start_xmit,
 	.ndo_tx_timeout		= ax_ei_tx_timeout,

@@ -75,10 +75,14 @@ static int __ebs_rw_bvec(struct ebs_c *ec, int rw, struct bio_vec *bv, struct bv
 		return -EIO;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pa = bvec_virt(bv);
 =======
 	pa = page_address(bv->bv_page) + bv->bv_offset;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pa = bvec_virt(bv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Handle overlapping page <-> blocks */
 	while (bv_len) {
@@ -406,11 +410,17 @@ static void ebs_status(struct dm_target *ti, status_type_t type,
 			 ec->dev->name, (unsigned long long) ec->start, ec->e_bs, ec->u_bs);
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case STATUSTYPE_IMA:
 		*result = '\0';
 		break;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case STATUSTYPE_IMA:
+		*result = '\0';
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

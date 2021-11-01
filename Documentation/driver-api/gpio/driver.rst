@@ -548,10 +548,14 @@ To use the helpers please keep the following in mind:
   properly.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - Nominally set gpio_irq_chip.handler to handle_bad_irq. Then, if your irqchip
   is cascaded, set the handler to handle_level_irq() and/or handle_edge_irq()
   in the irqchip .set_type() callback depending on what your controller
   supports and what is requested by the consumer.
+<<<<<<< HEAD
 =======
 - Nominally set all handlers to handle_bad_irq() in the setup call and pass
   handle_bad_irq() as flow handler parameter in gpiochip_irqchip_add() if it is
@@ -561,6 +565,8 @@ To use the helpers please keep the following in mind:
   callback depending on what your controller supports and what is requested
   by the consumer.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 Locking IRQ usage

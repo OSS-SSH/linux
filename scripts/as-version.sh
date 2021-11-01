@@ -22,16 +22,22 @@ get_canonical_version()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Clang fails to handle -Wa,--version unless -fno-integrated-as is given.
 # We check -fintegrated-as, expecting it is explicitly passed in for the
 =======
 # Clang fails to handle -Wa,--version unless -no-integrated-as is given.
 # We check -(f)integrated-as, expecting it is explicitly passed in for the
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# Clang fails to handle -Wa,--version unless -fno-integrated-as is given.
+# We check -fintegrated-as, expecting it is explicitly passed in for the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # integrated assembler case.
 check_integrated_as()
 {
 	while [ $# -gt 0 ]; do
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if [ "$1" = -fintegrated-as ]; then
 			# For the integrated assembler, we do not check the
@@ -39,6 +45,10 @@ check_integrated_as()
 		if [ "$1" = -integrated-as -o "$1" = -fintegrated-as ]; then
 			# For the intergrated assembler, we do not check the
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if [ "$1" = -fintegrated-as ]; then
+			# For the integrated assembler, we do not check the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			# version here. It is the same as the clang version, and
 			# it has been already checked by scripts/cc-version.sh.
 			echo LLVM 0

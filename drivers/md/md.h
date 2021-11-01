@@ -765,12 +765,16 @@ struct md_rdev *md_find_rdev_rcu(struct mddev *mddev, dev_t dev);
 static inline bool is_mddev_broken(struct md_rdev *rdev, const char *md_type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!disk_live(rdev->bdev->bd_disk)) {
 =======
 	int flags = rdev->bdev->bd_disk->flags;
 
 	if (!(flags & GENHD_FL_UP)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!disk_live(rdev->bdev->bd_disk)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!test_and_set_bit(MD_BROKEN, &rdev->mddev->flags))
 			pr_warn("md: %s: %s array has a missing/failed member\n",
 				mdname(rdev->mddev), md_type);

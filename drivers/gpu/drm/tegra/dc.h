@@ -16,10 +16,15 @@
 struct tegra_output;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define TEGRA_DC_LEGACY_PLANES_NUM	7
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define TEGRA_DC_LEGACY_PLANES_NUM	7
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct tegra_dc_state {
 	struct drm_crtc_state base;
 
@@ -44,13 +49,19 @@ struct tegra_dc_stats {
 	unsigned long underflow;
 	unsigned long overflow;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	unsigned long frames_total;
 	unsigned long vblank_total;
 	unsigned long underflow_total;
 	unsigned long overflow_total;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct tegra_windowgroup_soc {
@@ -80,12 +91,18 @@ struct tegra_dc_soc_info {
 	const u64 *modifiers;
 	bool has_win_a_without_filters;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool has_win_b_vfilter_mem_client;
 	bool has_win_c_without_vert_filter;
 	bool plane_tiled_memory_bandwidth_x2;
 =======
 	bool has_win_c_without_vert_filter;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool has_win_b_vfilter_mem_client;
+	bool has_win_c_without_vert_filter;
+	bool plane_tiled_memory_bandwidth_x2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct tegra_dc {
@@ -172,10 +189,15 @@ int tegra_dc_state_setup_clock(struct tegra_dc *dc,
 			       struct clk *clk, unsigned long pclk,
 			       unsigned int div);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void tegra_crtc_atomic_post_commit(struct drm_crtc *crtc,
 				   struct drm_atomic_state *state);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void tegra_crtc_atomic_post_commit(struct drm_crtc *crtc,
+				   struct drm_atomic_state *state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* from rgb.c */
 int tegra_dc_rgb_probe(struct tegra_dc *dc);

@@ -160,11 +160,17 @@
 #define FTDI_VARDAAN_PID	0xF070
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Auto-M3 Ltd. - OP-COM USB V2 - OBD interface Adapter */
 #define FTDI_AUTO_M3_OP_COM_V2_PID	0x4f50
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Auto-M3 Ltd. - OP-COM USB V2 - OBD interface Adapter */
+#define FTDI_AUTO_M3_OP_COM_V2_PID	0x4f50
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Xsens Technologies BV products (http://www.xsens.com).
  */

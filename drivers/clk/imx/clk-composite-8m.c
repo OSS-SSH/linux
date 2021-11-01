@@ -217,11 +217,16 @@ struct clk_hw *imx8m_clk_hw_composite_flags(const char *name,
 		divider_ops = &imx8m_clk_composite_divider_ops;
 		mux_ops = &clk_mux_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!(composite_flags & IMX_COMPOSITE_FW_MANAGED))
 			flags |= CLK_SET_PARENT_GATE;
 =======
 		flags |= CLK_SET_PARENT_GATE;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!(composite_flags & IMX_COMPOSITE_FW_MANAGED))
+			flags |= CLK_SET_PARENT_GATE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	div->lock = &imx_ccm_lock;

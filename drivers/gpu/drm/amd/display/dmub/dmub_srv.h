@@ -353,10 +353,15 @@ struct dmub_srv_hw_funcs {
 	uint32_t (*get_gpint_response)(struct dmub_srv *dmub);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint32_t (*get_gpint_dataout)(struct dmub_srv *dmub);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	uint32_t (*get_gpint_dataout)(struct dmub_srv *dmub);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*send_inbox0_cmd)(struct dmub_srv *dmub, union dmub_inbox0_data_register data);
 	uint32_t (*get_current_time)(struct dmub_srv *dmub);
 
@@ -683,6 +688,9 @@ enum dmub_status dmub_srv_get_gpint_response(struct dmub_srv *dmub,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * dmub_srv_get_gpint_dataout() - Queries the GPINT DATAOUT.
  * @dmub: the dmub service
  * @dataout: the data for the GPINT DATAOUT
@@ -699,8 +707,11 @@ enum dmub_status dmub_srv_get_gpint_dataout(struct dmub_srv *dmub,
 					     uint32_t *dataout);
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * dmub_flush_buffer_mem() - Read back entire frame buffer region.
  * This ensures that the write from x86 has been flushed and will not
  * hang the DMCUB.

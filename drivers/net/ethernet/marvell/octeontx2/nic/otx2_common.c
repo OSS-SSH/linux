@@ -1,18 +1,25 @@
 // SPDX-License-Identifier: GPL-2.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Marvell RVU Ethernet driver
  *
  * Copyright (C) 2020 Marvell.
  *
 =======
 /* Marvell OcteonTx2 RVU Ethernet driver
+=======
+/* Marvell RVU Ethernet driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2020 Marvell International Ltd.
+ * Copyright (C) 2020 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/interrupt.h>
@@ -216,6 +223,7 @@ int otx2_set_mac_address(struct net_device *netdev, void *p)
 		memcpy(netdev->dev_addr, addr->sa_data, netdev->addr_len);
 		/* update dmac field in vlan offload rule */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (netif_running(netdev) &&
 		    pfvf->flags & OTX2_FLAG_RX_VLAN_SUPPORT)
 			otx2_install_rxvlan_offload_flow(pfvf);
@@ -226,6 +234,14 @@ int otx2_set_mac_address(struct net_device *netdev, void *p)
 		if (pfvf->flags & OTX2_FLAG_RX_VLAN_SUPPORT)
 			otx2_install_rxvlan_offload_flow(pfvf);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (netif_running(netdev) &&
+		    pfvf->flags & OTX2_FLAG_RX_VLAN_SUPPORT)
+			otx2_install_rxvlan_offload_flow(pfvf);
+		/* update dmac address in ntuple and DMAC filter list */
+		if (pfvf->flags & OTX2_FLAG_DMACFLTR_SUPPORT)
+			otx2_dmacflt_update_pfmac_flow(pfvf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		return -EPERM;
 	}
@@ -282,9 +298,13 @@ int otx2_set_flowkey_cfg(struct otx2_nic *pfvf)
 {
 	struct otx2_rss_info *rss = &pfvf->hw.rss_info;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nix_rss_flowkey_cfg_rsp *rsp;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct nix_rss_flowkey_cfg_rsp *rsp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nix_rss_flowkey_cfg *req;
 	int err;
 
@@ -300,6 +320,9 @@ int otx2_set_flowkey_cfg(struct otx2_nic *pfvf)
 
 	err = otx2_sync_mbox_msg(&pfvf->mbox);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto fail;
 
@@ -312,8 +335,11 @@ int otx2_set_flowkey_cfg(struct otx2_nic *pfvf)
 
 	pfvf->hw.flowkey_alg_idx = rsp->alg_idx;
 fail:
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&pfvf->mbox.lock);
 	return err;
 }
@@ -605,6 +631,7 @@ void otx2_get_mac_from_af(struct net_device *netdev)
 EXPORT_SYMBOL(otx2_get_mac_from_af);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int otx2_get_link(struct otx2_nic *pfvf)
 {
@@ -626,17 +653,25 @@ static int otx2_get_link(struct otx2_nic *pfvf)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int otx2_txschq_config(struct otx2_nic *pfvf, int lvl)
 {
 	struct otx2_hw *hw = &pfvf->hw;
 	struct nix_txschq_config *req;
 	u64 schq, parent;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u64 dwrr_val;
 
 	dwrr_val = mtu_to_dwrr_weight(pfvf, pfvf->max_frs);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 dwrr_val;
+
+	dwrr_val = mtu_to_dwrr_weight(pfvf, pfvf->max_frs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	req = otx2_mbox_alloc_msg_nix_txschq_cfg(&pfvf->mbox);
 	if (!req)
@@ -663,10 +698,14 @@ int otx2_txschq_config(struct otx2_nic *pfvf, int lvl)
 		/* Set DWRR quantum */
 		req->reg[2] = NIX_AF_MDQX_SCHEDULE(schq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		req->regval[2] =  dwrr_val;
 =======
 		req->regval[2] =  DFLT_RR_QTM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->regval[2] =  dwrr_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (lvl == NIX_TXSCH_LVL_TL4) {
 		parent =  hw->txschq_list[NIX_TXSCH_LVL_TL3][0];
 		req->reg[0] = NIX_AF_TL4X_PARENT(schq);
@@ -674,10 +713,14 @@ int otx2_txschq_config(struct otx2_nic *pfvf, int lvl)
 		req->num_regs++;
 		req->reg[1] = NIX_AF_TL4X_SCHEDULE(schq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		req->regval[1] = dwrr_val;
 =======
 		req->regval[1] = DFLT_RR_QTM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->regval[1] = dwrr_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (lvl == NIX_TXSCH_LVL_TL3) {
 		parent = hw->txschq_list[NIX_TXSCH_LVL_TL2][0];
 		req->reg[0] = NIX_AF_TL3X_PARENT(schq);
@@ -685,10 +728,14 @@ int otx2_txschq_config(struct otx2_nic *pfvf, int lvl)
 		req->num_regs++;
 		req->reg[1] = NIX_AF_TL3X_SCHEDULE(schq);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		req->regval[1] = dwrr_val;
 =======
 		req->regval[1] = DFLT_RR_QTM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->regval[1] = dwrr_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (lvl == NIX_TXSCH_LVL_TL2) {
 		parent =  hw->txschq_list[NIX_TXSCH_LVL_TL1][0];
 		req->reg[0] = NIX_AF_TL2X_PARENT(schq);
@@ -696,6 +743,7 @@ int otx2_txschq_config(struct otx2_nic *pfvf, int lvl)
 
 		req->num_regs++;
 		req->reg[1] = NIX_AF_TL2X_SCHEDULE(schq);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		req->regval[1] = TXSCH_TL1_DFLT_RR_PRIO << 24 | dwrr_val;
 
@@ -708,6 +756,12 @@ int otx2_txschq_config(struct otx2_nic *pfvf, int lvl)
 		req->reg[2] = NIX_AF_TL3_TL2X_LINKX_CFG(schq,
 							otx2_get_link(pfvf));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->regval[1] = TXSCH_TL1_DFLT_RR_PRIO << 24 | dwrr_val;
+
+		req->num_regs++;
+		req->reg[2] = NIX_AF_TL3_TL2X_LINKX_CFG(schq, hw->tx_link);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Enable this queue and backpressure */
 		req->regval[2] = BIT_ULL(13) | BIT_ULL(12);
 
@@ -717,13 +771,19 @@ int otx2_txschq_config(struct otx2_nic *pfvf, int lvl)
 		 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* On CN10K, if RR_WEIGHT is greater than 16384, HW will
 		 * clip it to 16384, so configuring a 24bit max value
 		 * will work on both OTx2 and CN10K.
 		 */
+<<<<<<< HEAD
 =======
 		/* Set DWRR quantum */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		req->reg[0] = NIX_AF_TL1X_SCHEDULE(schq);
 		req->regval[0] = TXSCH_TL1_DFLT_RR_QTM;
 
@@ -871,10 +931,14 @@ int otx2_sq_aq_init(void *dev, u16 qidx, u16 sqb_aura)
 	/* Only one SMQ is allocated, map all SQ's to that SMQ  */
 	aq->sq.smq = pfvf->hw.txschq_list[NIX_TXSCH_LVL_SMQ][0];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	aq->sq.smq_rr_quantum = mtu_to_dwrr_weight(pfvf, pfvf->max_frs);
 =======
 	aq->sq.smq_rr_quantum = DFLT_RR_QTM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	aq->sq.smq_rr_quantum = mtu_to_dwrr_weight(pfvf, pfvf->max_frs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	aq->sq.default_chan = pfvf->hw.tx_chan_base;
 	aq->sq.sqe_stype = NIX_STYPE_STF; /* Cache SQB */
 	aq->sq.sqb_aura = sqb_aura;
@@ -996,10 +1060,14 @@ static int otx2_cq_init(struct otx2_nic *pfvf, u16 qidx)
 		aq->cq.drop_ena = 1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!is_otx2_lbkvf(pfvf->pdev)) {
 			/* Enable receive CQ backpressure */
 			aq->cq.bp_ena = 1;
 			aq->cq.bpid = pfvf->bpid[0];
+<<<<<<< HEAD
 
 			/* Set backpressure level is same as cq pass level */
 			aq->cq.bp = RQ_PASS_LVL_CQ(pfvf->hw.rq_skid, qset->rqe_cnt);
@@ -1012,6 +1080,12 @@ static int otx2_cq_init(struct otx2_nic *pfvf, u16 qidx)
 		/* Set backpressure level is same as cq pass level */
 		aq->cq.bp = RQ_PASS_LVL_CQ(pfvf->hw.rq_skid, qset->rqe_cnt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+			/* Set backpressure level is same as cq pass level */
+			aq->cq.bp = RQ_PASS_LVL_CQ(pfvf->hw.rq_skid, qset->rqe_cnt);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Fill AQ info */
@@ -1269,6 +1343,7 @@ static int otx2_aura_init(struct otx2_nic *pfvf, int aura_id,
 
 	/* Enable backpressure for RQ aura */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (aura_id < pfvf->hw.rqpool_cnt && !is_otx2_lbkvf(pfvf->pdev)) {
 		aq->aura.bp_ena = 0;
 		/* If NIX1 LF is attached then specify NIX1_RX.
@@ -1289,9 +1364,30 @@ static int otx2_aura_init(struct otx2_nic *pfvf, int aura_id,
 
 =======
 	if (aura_id < pfvf->hw.rqpool_cnt) {
+=======
+	if (aura_id < pfvf->hw.rqpool_cnt && !is_otx2_lbkvf(pfvf->pdev)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		aq->aura.bp_ena = 0;
+		/* If NIX1 LF is attached then specify NIX1_RX.
+		 *
+		 * Below NPA_AURA_S[BP_ENA] is set according to the
+		 * NPA_BPINTF_E enumeration given as:
+		 * 0x0 + a*0x1 where 'a' is 0 for NIX0_RX and 1 for NIX1_RX so
+		 * NIX0_RX is 0x0 + 0*0x1 = 0
+		 * NIX1_RX is 0x0 + 1*0x1 = 1
+		 * But in HRM it is given that
+		 * "NPA_AURA_S[BP_ENA](w1[33:32]) - Enable aura backpressure to
+		 * NIX-RX based on [BP] level. One bit per NIX-RX; index
+		 * enumerated by NPA_BPINTF_E."
+		 */
+		if (pfvf->nix_blkaddr == BLKADDR_NIX1)
+			aq->aura.bp_ena = 1;
 		aq->aura.nix0_bpid = pfvf->bpid[0];
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Set backpressure level for RQ's Aura */
 		aq->aura.bp = RQ_BP_LVL_AURA;
 	}
@@ -1320,6 +1416,7 @@ static int otx2_pool_init(struct otx2_nic *pfvf, u16 pool_id,
 	pool->rbsize = buf_size;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Set LMTST addr for NPA batch free */
 	if (test_bit(CN10K_LMTST, &pfvf->hw.cap_flag))
@@ -1327,6 +1424,8 @@ static int otx2_pool_init(struct otx2_nic *pfvf, u16 pool_id,
 						 (pool_id * LMT_LINE_SIZE));
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Initialize this pool's context via AF */
 	aq = otx2_mbox_alloc_msg_npa_aq_enq(&pfvf->mbox);
 	if (!aq) {
@@ -1682,9 +1781,13 @@ void mbox_handler_nix_lf_alloc(struct otx2_nic *pfvf,
 	pfvf->hw.cgx_links = rsp->cgx_links;
 	pfvf->hw.lbk_links = rsp->lbk_links;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pfvf->hw.tx_link = rsp->tx_link;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pfvf->hw.tx_link = rsp->tx_link;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(mbox_handler_nix_lf_alloc);
 
@@ -1777,13 +1880,19 @@ u16 otx2_get_max_mtu(struct otx2_nic *pfvf)
 		 */
 		max_mtu = rsp->max_mtu - 8 - OTX2_ETH_HLEN;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Also save DWRR MTU, needed for DWRR weight calculation */
 		pfvf->hw.dwrr_mtu = rsp->rpm_dwrr_mtu;
 		if (!pfvf->hw.dwrr_mtu)
 			pfvf->hw.dwrr_mtu = 1;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 out:

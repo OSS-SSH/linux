@@ -522,22 +522,31 @@ static inline struct page *read_mapping_page(struct address_space *mapping,
 static inline pgoff_t page_to_index(struct page *page)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct page *head;
 =======
 	pgoff_t pgoff;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct page *head;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (likely(!PageTransTail(page)))
 		return page->index;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	head = compound_head(page);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	head = compound_head(page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 *  We don't initialize ->index for tail pages: calculate based on
 	 *  head page
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	return head->index + page - head;
 =======
@@ -545,6 +554,9 @@ static inline pgoff_t page_to_index(struct page *page)
 	pgoff += page - compound_head(page);
 	return pgoff;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return head->index + page - head;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 extern pgoff_t hugetlb_basepage_index(struct page *page);
@@ -749,10 +761,14 @@ extern void add_page_wait_queue(struct page *page, wait_queue_entry_t *waiter);
  * Fault everything in given userspace address range in.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int fault_in_pages_writeable(char __user *uaddr, size_t size)
 =======
 static inline int fault_in_pages_writeable(char __user *uaddr, int size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int fault_in_pages_writeable(char __user *uaddr, size_t size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	char __user *end = uaddr + size - 1;
 
@@ -780,10 +796,14 @@ static inline int fault_in_pages_writeable(char __user *uaddr, int size)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline int fault_in_pages_readable(const char __user *uaddr, size_t size)
 =======
 static inline int fault_in_pages_readable(const char __user *uaddr, int size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int fault_in_pages_readable(const char __user *uaddr, size_t size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	volatile char c;
 	const char __user *end = uaddr + size - 1;

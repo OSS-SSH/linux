@@ -90,11 +90,17 @@ int batadv_hardif_no_broadcast(struct batadv_hard_iface *if_outgoing,
 static inline void batadv_hardif_put(struct batadv_hard_iface *hard_iface)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!hard_iface)
 		return;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!hard_iface)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&hard_iface->refcount, batadv_hardif_release);
 }
 

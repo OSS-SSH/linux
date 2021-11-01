@@ -36,10 +36,15 @@
 #include "dcn20/dcn20_resource.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "dml/dcn2x/dcn2x.h"
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "dml/dcn2x/dcn2x.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "dcn10/dcn10_hubp.h"
 #include "dcn10/dcn10_ipp.h"
 #include "dcn20_hubbub.h"
@@ -1980,6 +1985,7 @@ void dcn20_split_stream_for_mpc(
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void dcn20_populate_dml_writeback_from_context(
 		struct dc *dc, struct resource_context *res_ctx, display_e2e_pipe_params_st *pipes)
@@ -2019,6 +2025,8 @@ void dcn20_populate_dml_writeback_from_context(
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int dcn20_populate_dml_pipes_from_context(
 		struct dc *dc,
 		struct dc_state *context,
@@ -2102,14 +2110,20 @@ int dcn20_populate_dml_pipes_from_context(
 		pipes[pipe_cnt].pipe.dest.htotal = timing->h_total;
 		pipes[pipe_cnt].pipe.dest.vtotal = v_total;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pipes[pipe_cnt].pipe.dest.hactive =
 			timing->h_addressable + timing->h_border_left + timing->h_border_right;
 		pipes[pipe_cnt].pipe.dest.vactive =
 			timing->v_addressable + timing->v_border_top + timing->v_border_bottom;
+<<<<<<< HEAD
 =======
 		pipes[pipe_cnt].pipe.dest.hactive = timing->h_addressable;
 		pipes[pipe_cnt].pipe.dest.vactive = timing->v_addressable;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pipes[pipe_cnt].pipe.dest.interlaced = timing->flags.INTERLACE;
 		pipes[pipe_cnt].pipe.dest.pixel_rate_mhz = timing->pix_clk_100hz/10000.0;
 		if (timing->timing_3d_format == TIMING_3D_FORMAT_HW_FRAME_PACKING)
@@ -2406,12 +2420,18 @@ int dcn20_populate_dml_pipes_from_context(
 
 	/* populate writeback information */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DC_FP_START();
 	dc->res_pool->funcs->populate_dml_writeback_from_context(dc, res_ctx, pipes);
 	DC_FP_END();
 =======
 	dc->res_pool->funcs->populate_dml_writeback_from_context(dc, res_ctx, pipes);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DC_FP_START();
+	dc->res_pool->funcs->populate_dml_writeback_from_context(dc, res_ctx, pipes);
+	DC_FP_END();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return pipe_cnt;
 }
@@ -2482,10 +2502,14 @@ void dcn20_set_mcif_arb_params(
 				wb_arb_params->pstate_watermark[k] = get_wm_writeback_dram_clock_change(&context->bw_ctx.dml, pipes, pipe_cnt) * 1000;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
 			wb_arb_params->time_per_pixel = 16.0 * 1000 / (context->res_ctx.pipe_ctx[i].stream->phy_pix_clk / 1000); /* 4 bit fraction, ms */
 =======
 			wb_arb_params->time_per_pixel = 16.0 / context->res_ctx.pipe_ctx[i].stream->phy_pix_clk; /* 4 bit fraction, ms */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			wb_arb_params->time_per_pixel = 16.0 * 1000 / (context->res_ctx.pipe_ctx[i].stream->phy_pix_clk / 1000); /* 4 bit fraction, ms */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			wb_arb_params->slice_lines = 32;
 			wb_arb_params->arbitration_slice = 2;
 			wb_arb_params->max_scaled_time = dcn20_calc_max_scaled_time(wb_arb_params->time_per_pixel,
@@ -2555,12 +2579,17 @@ struct pipe_ctx *dcn20_find_secondary_pipe(struct dc *dc,
 		 * Same logic applies for ODM pipes
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].next_odm_pipe) {
 			preferred_pipe_idx = dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].next_odm_pipe->pipe_idx;
 =======
 		if (dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].bottom_pipe) {
 			preferred_pipe_idx = dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].bottom_pipe->pipe_idx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].next_odm_pipe) {
+			preferred_pipe_idx = dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].next_odm_pipe->pipe_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (res_ctx->pipe_ctx[preferred_pipe_idx].stream == NULL) {
 				secondary_pipe = &res_ctx->pipe_ctx[preferred_pipe_idx];
 				secondary_pipe->pipe_idx = preferred_pipe_idx;
@@ -2568,12 +2597,17 @@ struct pipe_ctx *dcn20_find_secondary_pipe(struct dc *dc,
 		}
 		if (secondary_pipe == NULL &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 				dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].bottom_pipe) {
 			preferred_pipe_idx = dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].bottom_pipe->pipe_idx;
 =======
 				dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].next_odm_pipe) {
 			preferred_pipe_idx = dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].next_odm_pipe->pipe_idx;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].bottom_pipe) {
+			preferred_pipe_idx = dc->current_state->res_ctx.pipe_ctx[primary_pipe->pipe_idx].bottom_pipe->pipe_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (res_ctx->pipe_ctx[preferred_pipe_idx].stream == NULL) {
 				secondary_pipe = &res_ctx->pipe_ctx[preferred_pipe_idx];
 				secondary_pipe->pipe_idx = preferred_pipe_idx;
@@ -3115,6 +3149,9 @@ static bool is_dtbclk_required(struct dc *dc, struct dc_state *context)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struct dc_state *context)
 {
 	int plane_count;
@@ -3146,8 +3183,11 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
 		return DCN_ZSTATE_SUPPORT_DISALLOW;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dcn20_calculate_dlg_params(
 		struct dc *dc, struct dc_state *context,
 		display_e2e_pipe_params_st *pipes,
@@ -3156,9 +3196,12 @@ void dcn20_calculate_dlg_params(
 {
 	int i, pipe_idx;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int plane_count;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Writeback MCIF_WB arbitration parameters */
 	dc->res_pool->funcs->set_mcif_arb_params(dc, context, pipes, pipe_cnt);
@@ -3175,6 +3218,7 @@ void dcn20_calculate_dlg_params(
 	context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	context->bw_ctx.bw.dcn.clk.zstate_support = decide_zstate_support(dc, context);
 =======
 	context->bw_ctx.bw.dcn.clk.z9_support = (context->bw_ctx.dml.vba.StutterPeriod > 5000.0) ?
@@ -3189,6 +3233,9 @@ void dcn20_calculate_dlg_params(
 	if (plane_count == 0)
 		context->bw_ctx.bw.dcn.clk.z9_support = DCN_Z9_SUPPORT_ALLOW;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	context->bw_ctx.bw.dcn.clk.zstate_support = decide_zstate_support(dc, context);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	context->bw_ctx.bw.dcn.clk.dtbclk_en = is_dtbclk_required(dc, context);
 

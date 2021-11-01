@@ -1415,10 +1415,14 @@ no_preempt:
 		}
 		job = to_amdgpu_job(s_job);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (preempted && (&job->hw_fence) == fence)
 =======
 		if (preempted && job->fence == fence)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (preempted && (&job->hw_fence) == fence)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* mark the job as preempted */
 			job->preemption_status |= AMDGPU_IB_PREEMPTED;
 	}
@@ -1549,6 +1553,7 @@ int amdgpu_debugfs_init(struct amdgpu_device *adev)
 	int r, i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ent = debugfs_create_file("amdgpu_preempt_ib", 0600, root, adev,
 				  &fops_ib_preempt);
 	if (IS_ERR(ent)) {
@@ -1557,16 +1562,23 @@ int amdgpu_debugfs_init(struct amdgpu_device *adev)
 =======
 
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ent = debugfs_create_file("amdgpu_preempt_ib", 0600, root, adev,
 				  &fops_ib_preempt);
-	if (!ent) {
+	if (IS_ERR(ent)) {
 		DRM_ERROR("unable to create amdgpu_preempt_ib debugsfs file\n");
+<<<<<<< HEAD
 		return -EIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return PTR_ERR(ent);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ent = debugfs_create_file("amdgpu_force_sclk", 0200, root, adev,
 				  &fops_sclk_set);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (IS_ERR(ent)) {
 		DRM_ERROR("unable to create amdgpu_set_sclk debugsfs file\n");
@@ -1576,6 +1588,11 @@ int amdgpu_debugfs_init(struct amdgpu_device *adev)
 		DRM_ERROR("unable to create amdgpu_set_sclk debugsfs file\n");
 		return -EIO;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(ent)) {
+		DRM_ERROR("unable to create amdgpu_set_sclk debugsfs file\n");
+		return PTR_ERR(ent);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Register debugfs entries for amdgpu_ttm */

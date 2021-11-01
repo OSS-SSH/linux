@@ -97,6 +97,7 @@ static int cls_bpf_classify(struct sk_buff *skb, const struct tcf_proto *tp,
 			__skb_push(skb, skb->mac_len);
 			bpf_compute_data_pointers(skb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			filter_res = bpf_prog_run(prog->filter, skb);
 			__skb_pull(skb, skb->mac_len);
 		} else {
@@ -109,6 +110,13 @@ static int cls_bpf_classify(struct sk_buff *skb, const struct tcf_proto *tp,
 			bpf_compute_data_pointers(skb);
 			filter_res = BPF_PROG_RUN(prog->filter, skb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			filter_res = bpf_prog_run(prog->filter, skb);
+			__skb_pull(skb, skb->mac_len);
+		} else {
+			bpf_compute_data_pointers(skb);
+			filter_res = bpf_prog_run(prog->filter, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		if (prog->exts_integrated) {
@@ -413,10 +421,14 @@ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
 static int cls_bpf_set_parms(struct net *net, struct tcf_proto *tp,
 			     struct cls_bpf_prog *prog, unsigned long base,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     struct nlattr **tb, struct nlattr *est, u32 flags,
 =======
 			     struct nlattr **tb, struct nlattr *est, bool ovr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct nlattr **tb, struct nlattr *est, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     struct netlink_ext_ack *extack)
 {
 	bool is_bpf, is_ebpf, have_exts = false;
@@ -429,10 +441,14 @@ static int cls_bpf_set_parms(struct net *net, struct tcf_proto *tp,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = tcf_exts_validate(net, tp, tb, est, &prog->exts, flags,
 =======
 	ret = tcf_exts_validate(net, tp, tb, est, &prog->exts, ovr, true,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = tcf_exts_validate(net, tp, tb, est, &prog->exts, flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				extack);
 	if (ret < 0)
 		return ret;
@@ -472,10 +488,14 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
 			  struct tcf_proto *tp, unsigned long base,
 			  u32 handle, struct nlattr **tca,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			  void **arg, u32 flags,
 =======
 			  void **arg, bool ovr, bool rtnl_held,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  void **arg, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  struct netlink_ext_ack *extack)
 {
 	struct cls_bpf_head *head = rtnl_dereference(tp->root);
@@ -521,10 +541,14 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
 	prog->handle = handle;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = cls_bpf_set_parms(net, tp, prog, base, tb, tca[TCA_RATE], flags,
 =======
 	ret = cls_bpf_set_parms(net, tp, prog, base, tb, tca[TCA_RATE], ovr,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = cls_bpf_set_parms(net, tp, prog, base, tb, tca[TCA_RATE], flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				extack);
 	if (ret < 0)
 		goto errout_idr;

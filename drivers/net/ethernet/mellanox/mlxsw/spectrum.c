@@ -1208,10 +1208,14 @@ static const struct net_device_ops mlxsw_sp_port_netdev_ops = {
 	.ndo_set_features	= mlxsw_sp_set_features,
 	.ndo_get_devlink_port	= mlxsw_sp_port_get_devlink_port,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= mlxsw_sp_port_ioctl,
 =======
 	.ndo_do_ioctl		= mlxsw_sp_port_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= mlxsw_sp_port_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int
@@ -2722,6 +2726,9 @@ static int mlxsw_sp_netdevice_event(struct notifier_block *unused,
 				    unsigned long event, void *ptr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MLXSW_SP_DEFAULT_PARSING_DEPTH 96
 #define MLXSW_SP_INCREASED_PARSING_DEPTH 128
 #define MLXSW_SP_DEFAULT_VXLAN_UDP_DPORT 4789
@@ -2738,8 +2745,11 @@ static void mlxsw_sp_parsing_fini(struct mlxsw_sp *mlxsw_sp)
 	mutex_destroy(&mlxsw_sp->parsing.lock);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mlxsw_sp_init(struct mlxsw_core *mlxsw_core,
 			 const struct mlxsw_bus_info *mlxsw_bus_info,
 			 struct netlink_ext_ack *extack)
@@ -2751,9 +2761,13 @@ static int mlxsw_sp_init(struct mlxsw_core *mlxsw_core,
 	mlxsw_sp->bus_info = mlxsw_bus_info;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlxsw_sp_parsing_init(mlxsw_sp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlxsw_sp_parsing_init(mlxsw_sp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlxsw_core_emad_string_tlv_enable(mlxsw_core);
 
 	err = mlxsw_sp_base_mac_get(mlxsw_sp);
@@ -2954,9 +2968,13 @@ err_policers_init:
 err_fids_init:
 	mlxsw_sp_kvdl_fini(mlxsw_sp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlxsw_sp_parsing_fini(mlxsw_sp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlxsw_sp_parsing_fini(mlxsw_sp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -3078,9 +3096,13 @@ static void mlxsw_sp_fini(struct mlxsw_core *mlxsw_core)
 	mlxsw_sp_fids_fini(mlxsw_sp);
 	mlxsw_sp_kvdl_fini(mlxsw_sp);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mlxsw_sp_parsing_fini(mlxsw_sp);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mlxsw_sp_parsing_fini(mlxsw_sp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Per-FID flood tables are used for both "true" 802.1D FIDs and emulated
@@ -3647,6 +3669,9 @@ void mlxsw_sp_port_dev_put(struct mlxsw_sp_port *mlxsw_sp_port)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mlxsw_sp_parsing_depth_inc(struct mlxsw_sp *mlxsw_sp)
 {
 	char mprs_pl[MLXSW_REG_MPRS_LEN];
@@ -3710,8 +3735,11 @@ out_unlock:
 	return err;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void
 mlxsw_sp_port_lag_uppers_cleanup(struct mlxsw_sp_port *mlxsw_sp_port,
 				 struct net_device *lag_dev)

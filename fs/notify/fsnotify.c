@@ -88,11 +88,14 @@ static void fsnotify_unmount_inodes(struct super_block *sb)
 	if (iput_inode)
 		iput(iput_inode);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Wait for outstanding inode references from connectors */
 	wait_var_event(&sb->s_fsnotify_inode_refs,
 		       !atomic_long_read(&sb->s_fsnotify_inode_refs));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void fsnotify_sb_delete(struct super_block *sb)
@@ -100,11 +103,17 @@ void fsnotify_sb_delete(struct super_block *sb)
 	fsnotify_unmount_inodes(sb);
 	fsnotify_clear_marks_by_sb(sb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Wait for outstanding object references from connectors */
 	wait_var_event(&sb->s_fsnotify_connectors,
 		       !atomic_long_read(&sb->s_fsnotify_connectors));
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Wait for outstanding object references from connectors */
+	wait_var_event(&sb->s_fsnotify_connectors,
+		       !atomic_long_read(&sb->s_fsnotify_connectors));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

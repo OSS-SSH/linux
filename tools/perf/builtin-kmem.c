@@ -1954,10 +1954,14 @@ int cmd_kmem(int argc, const char **argv)
 	data.path = input_name;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	kmem_session = session = perf_session__new(&data, &perf_kmem);
 =======
 	kmem_session = session = perf_session__new(&data, false, &perf_kmem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kmem_session = session = perf_session__new(&data, &perf_kmem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session))
 		return PTR_ERR(session);
 

@@ -206,9 +206,13 @@ echo "# TORTURE_JITTER_START=\"$TORTURE_JITTER_START\"" >> $resdir/qemu-cmd
 echo "# TORTURE_JITTER_STOP=\"$TORTURE_JITTER_STOP\"" >> $resdir/qemu-cmd
 echo "# TORTURE_TRUST_MAKE=\"$TORTURE_TRUST_MAKE\"; export TORTURE_TRUST_MAKE" >> $resdir/qemu-cmd
 <<<<<<< HEAD
+<<<<<<< HEAD
 echo "# TORTURE_CPU_COUNT=$cpu_count" >> $resdir/qemu-cmd
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+echo "# TORTURE_CPU_COUNT=$cpu_count" >> $resdir/qemu-cmd
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 if test -n "$TORTURE_BUILDONLY"
 then
@@ -219,6 +223,10 @@ fi
 
 kvm-test-1-run-qemu.sh $resdir
 <<<<<<< HEAD
+<<<<<<< HEAD
 parse-console.sh $resdir/console.log $title
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+parse-console.sh $resdir/console.log $title
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

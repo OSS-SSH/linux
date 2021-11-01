@@ -428,10 +428,13 @@ config ADI
 	  driver include crash and makedumpfile.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 endmenu
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config RANDOM_TRUST_CPU
 	bool "Trust the CPU manufacturer to initialize Linux's CRNG"
 	depends on ARCH_RANDOM
@@ -456,7 +459,12 @@ config RANDOM_TRUST_BOOTLOADER
 	pool. Otherwise, say N here so it will be regarded as device input that
 	only mixes the entropy pool.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 endmenu
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+endmenu
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

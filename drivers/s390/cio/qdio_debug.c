@@ -198,10 +198,13 @@ static char *qperf_names[] = {
 	"Assumed adapter interrupts",
 	"QDIO interrupts",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	"Requested PCIs",
 	"Outbound tasklet runs",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	"SIGA read",
 	"SIGA write",
 	"SIGA sync",
@@ -210,9 +213,12 @@ static char *qperf_names[] = {
 	"Inbound queue full",
 	"Outbound calls",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	"Outbound handler",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	"Outbound queue full",
 	"Outbound fast_requeue",
 	"Outbound target_full",

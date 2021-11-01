@@ -147,15 +147,21 @@ static void xlgmac_ethtool_get_channels(struct net_device *netdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 xlgmac_ethtool_get_coalesce(struct net_device *netdev,
 			    struct ethtool_coalesce *ec,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int xlgmac_ethtool_get_coalesce(struct net_device *netdev,
 				       struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xlgmac_pdata *pdata = netdev_priv(netdev);
 
@@ -167,15 +173,21 @@ static int xlgmac_ethtool_get_coalesce(struct net_device *netdev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 xlgmac_ethtool_set_coalesce(struct net_device *netdev,
 			    struct ethtool_coalesce *ec,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+<<<<<<< HEAD
 =======
 static int xlgmac_ethtool_set_coalesce(struct net_device *netdev,
 				       struct ethtool_coalesce *ec)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xlgmac_pdata *pdata = netdev_priv(netdev);
 	struct xlgmac_hw_ops *hw_ops = &pdata->hw_ops;

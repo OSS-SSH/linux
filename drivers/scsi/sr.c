@@ -107,10 +107,15 @@ static unsigned long sr_index_bits[SR_DISKS / BITS_PER_LONG];
 static DEFINE_SPINLOCK(sr_index_lock);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct lock_class_key sr_bio_compl_lkclass;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct lock_class_key sr_bio_compl_lkclass;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* This semaphore is used to mediate the 0->1 reference get in the
  * face of object destruction (i.e. we can't allow a get on an
  * object after last put) */
@@ -126,10 +131,15 @@ static unsigned int sr_check_events(struct cdrom_device_info *cdi,
 				    unsigned int clearing, int slot);
 static int sr_packet(struct cdrom_device_info *, struct packet_command *);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int sr_read_cdda_bpc(struct cdrom_device_info *cdi, void __user *ubuf,
 		u32 lba, u32 nr, u8 *last_sense);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int sr_read_cdda_bpc(struct cdrom_device_info *cdi, void __user *ubuf,
+		u32 lba, u32 nr, u8 *last_sense);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct cdrom_device_ops sr_dops = {
 	.open			= sr_open,
@@ -144,6 +154,7 @@ static const struct cdrom_device_ops sr_dops = {
 	.reset			= sr_reset,
 	.audio_ioctl		= sr_audio_ioctl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.generic_packet		= sr_packet,
 	.read_cdda_bpc		= sr_read_cdda_bpc,
 	.capability		= SR_CAPABILITIES,
@@ -151,6 +162,11 @@ static const struct cdrom_device_ops sr_dops = {
 	.capability		= SR_CAPABILITIES,
 	.generic_packet		= sr_packet,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.generic_packet		= sr_packet,
+	.read_cdda_bpc		= sr_read_cdda_bpc,
+	.capability		= SR_CAPABILITIES,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void sr_kref_release(struct kref *kref);
@@ -238,10 +254,14 @@ static unsigned int sr_get_events(struct scsi_device *sdev)
 		return DISK_EVENT_MEDIA_CHANGE;
 	else if (med->media_event_code == 3)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return DISK_EVENT_MEDIA_CHANGE;
 =======
 		return DISK_EVENT_EJECT_REQUEST;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return DISK_EVENT_MEDIA_CHANGE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -349,11 +369,16 @@ static int sr_done(struct scsi_cmnd *SCpnt)
 	int block_sectors = 0;
 	long error_sector;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(SCpnt);
 	struct scsi_cd *cd = scsi_cd(rq->rq_disk);
 =======
 	struct scsi_cd *cd = scsi_cd(SCpnt->request->rq_disk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(SCpnt);
+	struct scsi_cd *cd = scsi_cd(rq->rq_disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef DEBUG
 	scmd_printk(KERN_INFO, SCpnt, "done: %x\n", result);
@@ -376,6 +401,7 @@ static int sr_done(struct scsi_cmnd *SCpnt)
 			error_sector =
 				get_unaligned_be32(&SCpnt->sense_buffer[3]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (rq->bio != NULL)
 				block_sectors = bio_sectors(rq->bio);
 =======
@@ -383,17 +409,25 @@ static int sr_done(struct scsi_cmnd *SCpnt)
 				block_sectors =
 					bio_sectors(SCpnt->request->bio);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (rq->bio != NULL)
+				block_sectors = bio_sectors(rq->bio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (block_sectors < 4)
 				block_sectors = 4;
 			if (cd->device->sector_size == 2048)
 				error_sector <<= 2;
 			error_sector &= ~(block_sectors - 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			good_bytes = (error_sector - blk_rq_pos(rq)) << 9;
 =======
 			good_bytes = (error_sector -
 				      blk_rq_pos(SCpnt->request)) << 9;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			good_bytes = (error_sector - blk_rq_pos(rq)) << 9;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (good_bytes < 0 || good_bytes >= this_count)
 				good_bytes = 0;
 			/*
@@ -426,10 +460,14 @@ static blk_status_t sr_init_command(struct scsi_cmnd *SCpnt)
 	int block = 0, this_count, s_size;
 	struct scsi_cd *cd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(SCpnt);
 =======
 	struct request *rq = SCpnt->request;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(SCpnt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blk_status_t ret;
 
 	ret = scsi_alloc_sgtables(SCpnt);
@@ -595,15 +633,21 @@ static int sr_block_ioctl(struct block_device *bdev, fmode_t mode, unsigned cmd,
 			  unsigned long arg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct gendisk *disk = bdev->bd_disk;
 	struct scsi_cd *cd = scsi_cd(disk);
 =======
 	struct scsi_cd *cd = scsi_cd(bdev->bd_disk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct gendisk *disk = bdev->bd_disk;
+	struct scsi_cd *cd = scsi_cd(disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct scsi_device *sdev = cd->device;
 	void __user *argp = (void __user *)arg;
 	int ret;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (bdev_is_partition(bdev) && !capable(CAP_SYS_RAWIO))
 		return -ENOIOCTLCMD;
@@ -651,6 +695,10 @@ static int sr_block_compat_ioctl(struct block_device *bdev, fmode_t mode, unsign
 	void __user *argp = compat_ptr(arg);
 	int ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (bdev_is_partition(bdev) && !capable(CAP_SYS_RAWIO))
+		return -ENOIOCTLCMD;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&cd->lock);
 
@@ -662,10 +710,14 @@ static int sr_block_compat_ioctl(struct block_device *bdev, fmode_t mode, unsign
 	scsi_autopm_get_device(sdev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret != CDROMCLOSETRAY && ret != CDROMEJECT) {
 		ret = cdrom_ioctl(&cd->cdi, bdev, mode, cmd, arg);
 		if (ret != -ENOSYS)
 			goto put;
+<<<<<<< HEAD
 	}
 	ret = scsi_ioctl(sdev, disk, mode, cmd, argp);
 
@@ -685,24 +737,22 @@ out:
 	case SCSI_IOCTL_GET_BUS_NUMBER:
 		ret = scsi_compat_ioctl(sdev, cmd, argp);
 		goto put;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
-
-	ret = cdrom_ioctl(&cd->cdi, bdev, mode, cmd, (unsigned long)argp);
-	if (ret != -ENOSYS)
-		goto put;
-
-	ret = scsi_compat_ioctl(sdev, cmd, argp);
+	ret = scsi_ioctl(sdev, disk, mode, cmd, argp);
 
 put:
 	scsi_autopm_put_device(sdev);
-
 out:
 	mutex_unlock(&cd->lock);
 	return ret;
-
 }
+<<<<<<< HEAD
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static unsigned int sr_block_check_events(struct gendisk *disk,
 					  unsigned int clearing)
@@ -728,12 +778,16 @@ static const struct block_device_operations sr_bdops =
 	.release	= sr_block_release,
 	.ioctl		= sr_block_ioctl,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.compat_ioctl	= blkdev_compat_ptr_ioctl,
 =======
 #ifdef CONFIG_COMPAT
 	.compat_ioctl	= sr_block_compat_ioctl,
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.compat_ioctl	= blkdev_compat_ptr_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.check_events	= sr_block_check_events,
 };
 
@@ -781,11 +835,16 @@ static int sr_probe(struct device *dev)
 	kref_init(&cd->kref);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	disk = __alloc_disk_node(sdev->request_queue, NUMA_NO_NODE,
 				 &sr_bio_compl_lkclass);
 =======
 	disk = alloc_disk(1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disk = __alloc_disk_node(sdev->request_queue, NUMA_NO_NODE,
+				 &sr_bio_compl_lkclass);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!disk)
 		goto fail_free;
 	mutex_init(&cd->lock);
@@ -803,9 +862,13 @@ static int sr_probe(struct device *dev)
 	disk->major = SCSI_CDROM_MAJOR;
 	disk->first_minor = minor;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	disk->minors = 1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disk->minors = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sprintf(disk->disk_name, "sr%d", minor);
 	disk->fops = &sr_bdops;
 	disk->flags = GENHD_FL_CD | GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE;
@@ -840,9 +903,12 @@ static int sr_probe(struct device *dev)
 	set_capacity(disk, cd->capacity);
 	disk->private_data = &cd->driver;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	disk->queue = sdev->request_queue;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (register_cdrom(disk, &cd->cdi))
 		goto fail_minor;
@@ -1086,6 +1152,9 @@ static int sr_packet(struct cdrom_device_info *cdi,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int sr_read_cdda_bpc(struct cdrom_device_info *cdi, void __user *ubuf,
 		u32 lba, u32 nr, u8 *last_sense)
 {
@@ -1137,8 +1206,11 @@ out_put_request:
 }
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  *	sr_kref_release - Called to free the scsi_cd structure
  *	@kref: pointer to embedded kref

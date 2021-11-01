@@ -409,10 +409,14 @@ static inline bool node_reclaim_enabled(void)
 extern void check_move_unevictable_pages(struct pagevec *pvec);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void kswapd_run(int nid);
 =======
 extern int kswapd_run(int nid);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void kswapd_run(int nid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void kswapd_stop(int nid);
 
 #ifdef CONFIG_SWAP
@@ -726,6 +730,9 @@ static inline int mem_cgroup_swappiness(struct mem_cgroup *mem)
 
 #if defined(CONFIG_SWAP) && defined(CONFIG_MEMCG) && defined(CONFIG_BLK_CGROUP)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void __cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask);
 static inline  void cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask)
 {
@@ -733,9 +740,12 @@ static inline  void cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask)
 		return;
 	__cgroup_throttle_swaprate(page, gfp_mask);
 }
+<<<<<<< HEAD
 =======
 extern void cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline void cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask)
 {
@@ -745,6 +755,9 @@ static inline void cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask)
 #ifdef CONFIG_MEMCG_SWAP
 extern void mem_cgroup_swapout(struct page *page, swp_entry_t entry);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int __mem_cgroup_try_charge_swap(struct page *page, swp_entry_t entry);
 static inline int mem_cgroup_try_charge_swap(struct page *page, swp_entry_t entry)
 {
@@ -761,10 +774,13 @@ static inline void mem_cgroup_uncharge_swap(swp_entry_t entry, unsigned int nr_p
 	__mem_cgroup_uncharge_swap(entry, nr_pages);
 }
 
+<<<<<<< HEAD
 =======
 extern int mem_cgroup_try_charge_swap(struct page *page, swp_entry_t entry);
 extern void mem_cgroup_uncharge_swap(swp_entry_t entry, unsigned int nr_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern long mem_cgroup_get_nr_swap_pages(struct mem_cgroup *memcg);
 extern bool mem_cgroup_swap_full(struct page *page);
 #else

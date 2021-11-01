@@ -39,10 +39,14 @@ xfs_trans_buf_item_match(
 		if (blip->bli_item.li_type == XFS_LI_BUF &&
 		    blip->bli_buf->b_target == target &&
 <<<<<<< HEAD
+<<<<<<< HEAD
 		    xfs_buf_daddr(blip->bli_buf) == map[0].bm_bn &&
 =======
 		    XFS_BUF_ADDR(blip->bli_buf) == map[0].bm_bn &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    xfs_buf_daddr(blip->bli_buf) == map[0].bm_bn &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    blip->bli_buf->b_length == len) {
 			ASSERT(blip->bli_buf->b_map_count == nmaps);
 			return blip->bli_buf;
@@ -143,10 +147,14 @@ xfs_trans_get_buf_map(
 	if (bp != NULL) {
 		ASSERT(xfs_buf_islocked(bp));
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_is_shutdown(tp->t_mountp)) {
 =======
 		if (XFS_FORCED_SHUTDOWN(tp->t_mountp)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_is_shutdown(tp->t_mountp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_buf_stale(bp);
 			bp->b_flags |= XBF_DONE;
 		}
@@ -253,10 +261,14 @@ xfs_trans_read_buf_map(
 		 * brelse it either. Just get out.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_is_shutdown(mp)) {
 =======
 		if (XFS_FORCED_SHUTDOWN(mp)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_is_shutdown(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			trace_xfs_trans_read_buf_shut(bp, _RET_IP_);
 			return -EIO;
 		}
@@ -313,10 +325,14 @@ xfs_trans_read_buf_map(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp)) {
 =======
 	if (XFS_FORCED_SHUTDOWN(mp)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_buf_relse(bp);
 		trace_xfs_trans_read_buf_shut(bp, _RET_IP_);
 		return -EIO;

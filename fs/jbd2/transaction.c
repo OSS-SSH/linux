@@ -224,11 +224,15 @@ static void sub_reserved_credits(journal_t *journal, int blocks)
  * transaction. Returns 1 if we had to wait, j_state_lock is dropped, and
  * caller must retry.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Note: because j_state_lock may be dropped depending on the return
  * value, we need to fake out sparse so ti doesn't complain about a
  * locking imbalance.  Callers of add_transaction_credits will need to
  * make a similar accomodation.
+<<<<<<< HEAD
  */
 static int add_transaction_credits(journal_t *journal, int blocks,
 				   int rsv_blocks)
@@ -238,6 +242,12 @@ __must_hold(&journal->j_state_lock)
 static int add_transaction_credits(journal_t *journal, int blocks,
 				   int rsv_blocks)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ */
+static int add_transaction_credits(journal_t *journal, int blocks,
+				   int rsv_blocks)
+__must_hold(&journal->j_state_lock)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	transaction_t *t = journal->j_running_transaction;
 	int needed;
@@ -251,9 +261,13 @@ static int add_transaction_credits(journal_t *journal, int blocks,
 		WARN_ON_ONCE(t->t_state >= T_FLUSH);
 		wait_transaction_locked(journal);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__acquire(&journal->j_state_lock); /* fake out sparse */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 	}
 
@@ -283,17 +297,25 @@ static int add_transaction_credits(journal_t *journal, int blocks,
 				   atomic_read(&journal->j_reserved_credits) + total <=
 				   journal->j_max_transaction_buffers);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			__acquire(&journal->j_state_lock); /* fake out sparse */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			__acquire(&journal->j_state_lock); /* fake out sparse */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 1;
 		}
 
 		wait_transaction_locked(journal);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__acquire(&journal->j_state_lock); /* fake out sparse */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 	}
 
@@ -318,9 +340,13 @@ static int add_transaction_credits(journal_t *journal, int blocks,
 			__jbd2_log_wait_for_space(journal);
 		write_unlock(&journal->j_state_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__acquire(&journal->j_state_lock); /* fake out sparse */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 	}
 
@@ -339,9 +365,13 @@ static int add_transaction_credits(journal_t *journal, int blocks,
 			 atomic_read(&journal->j_reserved_credits) + rsv_blocks
 			 <= journal->j_max_transaction_buffers / 2);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__acquire(&journal->j_state_lock); /* fake out sparse */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 	}
 	return 0;
@@ -446,18 +476,26 @@ repeat:
 	if (!handle->h_reserved) {
 		/* We may have dropped j_state_lock - restart in that case */
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (add_transaction_credits(journal, blocks, rsv_blocks)) {
 			/*
 			 * add_transaction_credits releases
 			 * j_state_lock on a non-zero return
 			 */
 			__release(&journal->j_state_lock);
+<<<<<<< HEAD
 			goto repeat;
 		}
 =======
 		if (add_transaction_credits(journal, blocks, rsv_blocks))
 			goto repeat;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto repeat;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/*
 		 * We have handle reserved so we are allowed to join T_LOCKED
@@ -1448,10 +1486,14 @@ void jbd2_journal_set_triggers(struct buffer_head *bh,
 	struct journal_head *jh = jbd2_journal_grab_journal_head(bh);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (WARN_ON_ONCE(!jh))
 =======
 	if (WARN_ON(!jh))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (WARN_ON_ONCE(!jh))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	jh->b_triggers = type;
 	jbd2_journal_put_journal_head(jh);

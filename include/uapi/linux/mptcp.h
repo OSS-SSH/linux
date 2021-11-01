@@ -74,9 +74,13 @@ enum {
 #define MPTCP_PM_ADDR_FLAG_SUBFLOW			(1 << 1)
 #define MPTCP_PM_ADDR_FLAG_BACKUP			(1 << 2)
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define MPTCP_PM_ADDR_FLAG_FULLMESH			(1 << 3)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MPTCP_PM_ADDR_FLAG_FULLMESH			(1 << 3)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum {
 	MPTCP_PM_CMD_UNSPEC,

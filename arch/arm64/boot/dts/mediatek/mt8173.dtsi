@@ -505,10 +505,14 @@
 					#power-domain-cells = <0>;
 				};
 <<<<<<< HEAD
+<<<<<<< HEAD
 				mfg_async: power-domain@MT8173_POWER_DOMAIN_MFG_ASYNC {
 =======
 				power-domain@MT8173_POWER_DOMAIN_MFG_ASYNC {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				mfg_async: power-domain@MT8173_POWER_DOMAIN_MFG_ASYNC {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					reg = <MT8173_POWER_DOMAIN_MFG_ASYNC>;
 					clocks = <&clk26m>;
 					clock-names = "mfg";

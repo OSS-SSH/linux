@@ -2207,6 +2207,7 @@ static void tb_test_credit_alloc_dma_multiple(struct kunit *test)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static struct tb_tunnel *TB_TEST_PCIE_TUNNEL(struct kunit *test,
 			struct tb_switch *host, struct tb_switch *dev)
 {
@@ -2216,13 +2217,16 @@ static struct tb_tunnel *TB_TEST_PCIE_TUNNEL(struct kunit *test,
 
 =======
 static void tb_test_credit_alloc_all(struct kunit *test)
+=======
+static struct tb_tunnel *TB_TEST_PCIE_TUNNEL(struct kunit *test,
+			struct tb_switch *host, struct tb_switch *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct tb_port *up, *down, *in, *out, *nhi, *port;
-	struct tb_tunnel *pcie_tunnel, *dp_tunnel1, *dp_tunnel2, *usb3_tunnel;
-	struct tb_tunnel *dma_tunnel1, *dma_tunnel2;
-	struct tb_switch *host, *dev;
+	struct tb_port *up, *down;
+	struct tb_tunnel *pcie_tunnel;
 	struct tb_path *path;
 
+<<<<<<< HEAD
 	/*
 	 * Create PCIe, 2 x DP, USB 3.x and two DMA tunnels from host to
 	 * device. Expectation is that all these can be established with
@@ -2233,6 +2237,8 @@ static void tb_test_credit_alloc_all(struct kunit *test)
 	dev = alloc_dev_usb4(test, host, 0x1, true);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	down = &host->ports[8];
 	up = &dev->ports[9];
 	pcie_tunnel = tb_tunnel_alloc_pci(NULL, up, down);
@@ -2254,6 +2260,9 @@ static void tb_test_credit_alloc_all(struct kunit *test)
 	KUNIT_EXPECT_EQ(test, path->hops[1].initial_credits, 64U);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return pcie_tunnel;
 }
 
@@ -2264,6 +2273,7 @@ static struct tb_tunnel *TB_TEST_DP_TUNNEL1(struct kunit *test,
 	struct tb_tunnel *dp_tunnel1;
 	struct tb_path *path;
 
+<<<<<<< HEAD
 	in = &host->ports[5];
 	out = &dev->ports[13];
 =======
@@ -2271,6 +2281,10 @@ static struct tb_tunnel *TB_TEST_DP_TUNNEL1(struct kunit *test,
 	out = &dev->ports[13];
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	in = &host->ports[5];
+	out = &dev->ports[13];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dp_tunnel1 = tb_tunnel_alloc_dp(NULL, in, out, 0, 0);
 	KUNIT_ASSERT_TRUE(test, dp_tunnel1 != NULL);
 	KUNIT_ASSERT_EQ(test, dp_tunnel1->npaths, (size_t)3);
@@ -2297,6 +2311,9 @@ static struct tb_tunnel *TB_TEST_DP_TUNNEL1(struct kunit *test,
 	KUNIT_EXPECT_EQ(test, path->hops[1].initial_credits, 1U);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dp_tunnel1;
 }
 
@@ -2307,6 +2324,7 @@ static struct tb_tunnel *TB_TEST_DP_TUNNEL2(struct kunit *test,
 	struct tb_tunnel *dp_tunnel2;
 	struct tb_path *path;
 
+<<<<<<< HEAD
 	in = &host->ports[6];
 	out = &dev->ports[14];
 =======
@@ -2314,6 +2332,10 @@ static struct tb_tunnel *TB_TEST_DP_TUNNEL2(struct kunit *test,
 	out = &dev->ports[14];
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	in = &host->ports[6];
+	out = &dev->ports[14];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dp_tunnel2 = tb_tunnel_alloc_dp(NULL, in, out, 0, 0);
 	KUNIT_ASSERT_TRUE(test, dp_tunnel2 != NULL);
 	KUNIT_ASSERT_EQ(test, dp_tunnel2->npaths, (size_t)3);
@@ -2340,6 +2362,9 @@ static struct tb_tunnel *TB_TEST_DP_TUNNEL2(struct kunit *test,
 	KUNIT_EXPECT_EQ(test, path->hops[1].initial_credits, 1U);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dp_tunnel2;
 }
 
@@ -2350,8 +2375,11 @@ static struct tb_tunnel *TB_TEST_USB3_TUNNEL(struct kunit *test,
 	struct tb_tunnel *usb3_tunnel;
 	struct tb_path *path;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	down = &host->ports[12];
 	up = &dev->ports[16];
 	usb3_tunnel = tb_tunnel_alloc_usb3(NULL, up, down, 0, 0);
@@ -2373,6 +2401,9 @@ static struct tb_tunnel *TB_TEST_USB3_TUNNEL(struct kunit *test,
 	KUNIT_EXPECT_EQ(test, path->hops[1].initial_credits, 32U);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return usb3_tunnel;
 }
 
@@ -2383,6 +2414,7 @@ static struct tb_tunnel *TB_TEST_DMA_TUNNEL1(struct kunit *test,
 	struct tb_tunnel *dma_tunnel1;
 	struct tb_path *path;
 
+<<<<<<< HEAD
 	nhi = &host->ports[7];
 	port = &dev->ports[3];
 =======
@@ -2390,6 +2422,10 @@ static struct tb_tunnel *TB_TEST_DMA_TUNNEL1(struct kunit *test,
 	port = &dev->ports[3];
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nhi = &host->ports[7];
+	port = &dev->ports[3];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_tunnel1 = tb_tunnel_alloc_dma(NULL, nhi, port, 8, 1, 8, 1);
 	KUNIT_ASSERT_TRUE(test, dma_tunnel1 != NULL);
 	KUNIT_ASSERT_EQ(test, dma_tunnel1->npaths, (size_t)2);
@@ -2409,6 +2445,9 @@ static struct tb_tunnel *TB_TEST_DMA_TUNNEL1(struct kunit *test,
 	KUNIT_EXPECT_EQ(test, path->hops[1].initial_credits, 14U);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dma_tunnel1;
 }
 
@@ -2421,8 +2460,11 @@ static struct tb_tunnel *TB_TEST_DMA_TUNNEL2(struct kunit *test,
 
 	nhi = &host->ports[7];
 	port = &dev->ports[3];
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_tunnel2 = tb_tunnel_alloc_dma(NULL, nhi, port, 9, 2, 9, 2);
 	KUNIT_ASSERT_TRUE(test, dma_tunnel2 != NULL);
 	KUNIT_ASSERT_EQ(test, dma_tunnel2->npaths, (size_t)2);
@@ -2442,6 +2484,9 @@ static struct tb_tunnel *TB_TEST_DMA_TUNNEL2(struct kunit *test,
 	KUNIT_EXPECT_EQ(test, path->hops[1].initial_credits, 1U);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dma_tunnel2;
 }
 
@@ -2467,8 +2512,11 @@ static void tb_test_credit_alloc_all(struct kunit *test)
 	dma_tunnel1 = TB_TEST_DMA_TUNNEL1(test, host, dev);
 	dma_tunnel2 = TB_TEST_DMA_TUNNEL2(test, host, dev);
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tb_tunnel_free(dma_tunnel2);
 	tb_tunnel_free(dma_tunnel1);
 	tb_tunnel_free(usb3_tunnel);

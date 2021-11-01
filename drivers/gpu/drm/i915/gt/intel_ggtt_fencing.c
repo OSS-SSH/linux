@@ -349,10 +349,14 @@ static struct i915_fence_reg *fence_find(struct i915_ggtt *ggtt)
 		return ERR_PTR(-EAGAIN);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ERR_PTR(-ENOBUFS);
 =======
 	return ERR_PTR(-EDEADLK);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ERR_PTR(-ENOBUFS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int __i915_vma_pin_fence(struct i915_vma *vma)

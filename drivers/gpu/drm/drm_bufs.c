@@ -1503,10 +1503,14 @@ int drm_legacy_freebufs(struct drm_device *dev, void *data,
  * Maps the AGP, SG or PCI buffer region with vm_mmap(), and copies information
  * about each buffer into user space. For PCI buffers, it calls vm_mmap() with
 <<<<<<< HEAD
+<<<<<<< HEAD
  * offset equal to 0, which drm_mmap() interprets as PCI buffers and calls
 =======
  * offset equal to 0, which drm_mmap() interpretes as PCI buffers and calls
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * offset equal to 0, which drm_mmap() interprets as PCI buffers and calls
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_mmap_dma().
  */
 int __drm_legacy_mapbufs(struct drm_device *dev, void *data, int *p,

@@ -71,10 +71,14 @@ static int cachefiles_read(struct netfs_cache_resources *cres,
 	_enter("%pD,%li,%llx,%zx/%llx",
 	       file, file_inode(file)->i_ino, start_pos, len,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       i_size_read(file_inode(file)));
 =======
 	       i_size_read(file->f_inode));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	       i_size_read(file_inode(file)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* If the caller asked us to seek for data before doing the read, then
 	 * we should do that now.  If we find a gap, we fill it with zeros.
@@ -199,10 +203,14 @@ static int cachefiles_write(struct netfs_cache_resources *cres,
 	_enter("%pD,%li,%llx,%zx/%llx",
 	       file, file_inode(file)->i_ino, start_pos, len,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	       i_size_read(file_inode(file)));
 =======
 	       i_size_read(file->f_inode));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	       i_size_read(file_inode(file)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ki = kzalloc(sizeof(struct cachefiles_kiocb), GFP_KERNEL);
 	if (!ki)
@@ -419,10 +427,14 @@ int cachefiles_begin_read_operation(struct netfs_read_request *rreq,
 	rreq->cache_resources.cache_priv2 = file;
 	rreq->cache_resources.ops = &cachefiles_netfs_cache_ops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rreq->cache_resources.debug_id = object->fscache.debug_id;
 =======
 	rreq->cookie_debug_id = object->fscache.debug_id;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rreq->cache_resources.debug_id = object->fscache.debug_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	_leave("");
 	return 0;
 

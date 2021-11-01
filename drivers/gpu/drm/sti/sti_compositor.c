@@ -146,10 +146,13 @@ static int sti_compositor_bind(struct device *dev,
 
 	drm_vblank_init(drm_dev, crtc_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Allow usage of vblank without having to call drm_irq_install */
 	drm_dev->irq_enabled = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

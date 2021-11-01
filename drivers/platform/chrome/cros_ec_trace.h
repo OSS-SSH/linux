@@ -16,9 +16,13 @@
 #include <linux/platform_data/cros_ec_commands.h>
 #include <linux/platform_data/cros_ec_proto.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/platform_data/cros_ec_sensorhub.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/platform_data/cros_ec_sensorhub.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/tracepoint.h>
 
@@ -75,6 +79,9 @@ TRACE_EVENT(cros_ec_request_done,
 );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TRACE_EVENT(cros_ec_sensorhub_timestamp,
 	    TP_PROTO(u32 ec_sample_timestamp, u32 ec_fifo_timestamp, s64 fifo_timestamp,
 		     s64 current_timestamp, s64 current_time),
@@ -168,8 +175,11 @@ TRACE_EVENT(cros_ec_sensorhub_filter,
 	)
 );
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _CROS_EC_TRACE_H_ */
 

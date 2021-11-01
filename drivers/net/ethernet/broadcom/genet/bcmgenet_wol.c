@@ -187,6 +187,7 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (priv->hw_params->flags & GENET_HAS_EXT) {
 		reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
@@ -195,6 +196,8 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reg = UMAC_IRQ_MPD_R;
 	if (hfb_enable)
 		reg |=  UMAC_IRQ_HFB_SM | UMAC_IRQ_HFB_MM;

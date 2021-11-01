@@ -177,9 +177,13 @@ struct drm_file *drm_file_alloc(struct drm_minor *minor)
 	file->event_space = 4096; /* set aside 4k for event buffer */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	spin_lock_init(&file->master_lookup_lock);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_init(&file->master_lookup_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&file->event_read_lock);
 
 	if (drm_core_check_feature(dev, DRIVER_GEM))
@@ -409,10 +413,14 @@ static int drm_open_helper(struct file *filp, struct drm_minor *minor)
  * RETURNS:
  *
 <<<<<<< HEAD
+<<<<<<< HEAD
  * 0 on success or negative errno value on failure.
 =======
  * 0 on success or negative errno value on falure.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * 0 on success or negative errno value on failure.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int drm_open(struct inode *inode, struct file *filp)
 {
@@ -556,10 +564,14 @@ EXPORT_SYMBOL(drm_release_noglobal);
  *
  * This function must be used by drivers as their &file_operations.read
 <<<<<<< HEAD
+<<<<<<< HEAD
  * method if they use DRM events for asynchronous signalling to userspace.
 =======
  * method iff they use DRM events for asynchronous signalling to userspace.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * method if they use DRM events for asynchronous signalling to userspace.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Since events are used by the KMS API for vblank and page flip completion this
  * means all modern display drivers must use it.
  *
@@ -653,10 +665,14 @@ EXPORT_SYMBOL(drm_read);
  *
  * This function must be used by drivers as their &file_operations.read method
 <<<<<<< HEAD
+<<<<<<< HEAD
  * if they use DRM events for asynchronous signalling to userspace.  Since
 =======
  * iff they use DRM events for asynchronous signalling to userspace.  Since
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * if they use DRM events for asynchronous signalling to userspace.  Since
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * events are used by the KMS API for vblank and page flip completion this means
  * all modern display drivers must use it.
  *

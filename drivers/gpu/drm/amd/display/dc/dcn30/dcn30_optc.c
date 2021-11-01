@@ -110,6 +110,7 @@ void optc3_lock(struct timing_generator *optc)
 		OTG_MASTER_UPDATE_LOCK, 1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	REG_WAIT(OTG_MASTER_UPDATE_LOCK,
 			UPDATE_LOCK_STATUS, 1,
 			1, 10);
@@ -120,6 +121,11 @@ void optc3_lock(struct timing_generator *optc)
 				UPDATE_LOCK_STATUS, 1,
 				1, 10);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	REG_WAIT(OTG_MASTER_UPDATE_LOCK,
+			UPDATE_LOCK_STATUS, 1,
+			1, 10);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void optc3_set_out_mux(struct timing_generator *optc, enum otg_out_mux_dest dest)

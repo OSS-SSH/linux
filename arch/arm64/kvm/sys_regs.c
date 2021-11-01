@@ -45,12 +45,15 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define reg_to_encoding(x)						\
 	sys_reg((u32)(x)->Op0, (u32)(x)->Op1,				\
 		(u32)(x)->CRn, (u32)(x)->CRm, (u32)(x)->Op2)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool read_from_write_only(struct kvm_vcpu *vcpu,
 				 struct sys_reg_params *params,
 				 const struct sys_reg_desc *r)
@@ -322,10 +325,14 @@ static bool trap_dbgauthstatus_el1(struct kvm_vcpu *vcpu,
  * We want to avoid world-switching all the DBG registers all the
  * time:
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
 =======
  * 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * - If we've touched any debug register, it is likely that we're
  *   going to touch more of them. It then makes sense to disable the
  *   traps and start doing the save/restore dance
@@ -333,10 +340,14 @@ static bool trap_dbgauthstatus_el1(struct kvm_vcpu *vcpu,
  *   then mandatory to save/restore the registers, as the guest
  *   depends on them.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
 =======
  * 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * For this, we use a DIRTY bit, indicating the guest has modified the
  * debug registers, used as follow:
  *
@@ -615,6 +626,9 @@ static unsigned int pmu_visibility(const struct kvm_vcpu *vcpu,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void reset_pmu_reg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
 {
 	u64 n, mask = BIT(ARMV8_PMU_CYCLE_IDX);
@@ -650,8 +664,11 @@ static void reset_pmselr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
 	__vcpu_sys_reg(vcpu, r->reg) &= ARMV8_PMU_COUNTER_MASK;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void reset_pmcr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
 {
 	u64 pmcr, val;
@@ -895,10 +912,14 @@ static bool access_pmcnten(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
 		}
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		p->regval = __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
 =======
 		p->regval = __vcpu_sys_reg(vcpu, PMCNTENSET_EL0) & mask;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		p->regval = __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return true;
@@ -923,10 +944,14 @@ static bool access_pminten(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
 			__vcpu_sys_reg(vcpu, PMINTENSET_EL1) &= ~val;
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		p->regval = __vcpu_sys_reg(vcpu, PMINTENSET_EL1);
 =======
 		p->regval = __vcpu_sys_reg(vcpu, PMINTENSET_EL1) & mask;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		p->regval = __vcpu_sys_reg(vcpu, PMINTENSET_EL1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return true;
@@ -949,10 +974,14 @@ static bool access_pmovs(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
 			__vcpu_sys_reg(vcpu, PMOVSSET_EL0) &= ~(p->regval & mask);
 	} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		p->regval = __vcpu_sys_reg(vcpu, PMOVSSET_EL0);
 =======
 		p->regval = __vcpu_sys_reg(vcpu, PMOVSSET_EL0) & mask;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		p->regval = __vcpu_sys_reg(vcpu, PMOVSSET_EL0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return true;
@@ -1006,27 +1035,39 @@ static bool access_pmuserenr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
 
 #define PMU_SYS_REG(r)						\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SYS_DESC(r), .reset = reset_pmu_reg, .visibility = pmu_visibility
 =======
 	SYS_DESC(r), .reset = reset_unknown, .visibility = pmu_visibility
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SYS_DESC(r), .reset = reset_pmu_reg, .visibility = pmu_visibility
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Macro to expand the PMEVCNTRn_EL0 register */
 #define PMU_PMEVCNTR_EL0(n)						\
 	{ PMU_SYS_REG(SYS_PMEVCNTRn_EL0(n)),				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  .reset = reset_pmevcntr,					\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  .reset = reset_pmevcntr,					\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  .access = access_pmu_evcntr, .reg = (PMEVCNTR0_EL0 + n), }
 
 /* Macro to expand the PMEVTYPERn_EL0 register */
 #define PMU_PMEVTYPER_EL0(n)						\
 	{ PMU_SYS_REG(SYS_PMEVTYPERn_EL0(n)),				\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  .reset = reset_pmevtyper,					\
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  .reset = reset_pmevtyper,					\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  .access = access_pmu_evtyper, .reg = (PMEVTYPER0_EL0 + n), }
 
 static bool undef_access(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
@@ -1100,10 +1141,13 @@ static bool access_arch_timer(struct kvm_vcpu *vcpu,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define FEATURE(x)	(GENMASK_ULL(x##_SHIFT + 3, x##_SHIFT))
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Read a sanitised cpufeature ID register by sys_reg_desc */
 static u64 read_id_reg(const struct kvm_vcpu *vcpu,
 		struct sys_reg_desc const *r, bool raz)
@@ -1115,12 +1159,16 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
 	case SYS_ID_AA64PFR0_EL1:
 		if (!vcpu_has_sve(vcpu))
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			val &= ~ARM64_FEATURE_MASK(ID_AA64PFR0_SVE);
 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR0_AMU);
 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR0_CSV2);
 		val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_CSV2), (u64)vcpu->kvm->arch.pfr0_csv2);
 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR0_CSV3);
 		val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_CSV3), (u64)vcpu->kvm->arch.pfr0_csv3);
+<<<<<<< HEAD
 		break;
 	case SYS_ID_AA64PFR1_EL1:
 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_MTE);
@@ -1135,25 +1183,38 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
 	case SYS_ID_AA64PFR1_EL1:
 		val &= ~FEATURE(ID_AA64PFR1_MTE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+	case SYS_ID_AA64PFR1_EL1:
+		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_MTE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (kvm_has_mte(vcpu->kvm)) {
 			u64 pfr, mte;
 
 			pfr = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
 			mte = cpuid_feature_extract_unsigned_field(pfr, ID_AA64PFR1_MTE_SHIFT);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR1_MTE), mte);
 =======
 			val |= FIELD_PREP(FEATURE(ID_AA64PFR1_MTE), mte);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR1_MTE), mte);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case SYS_ID_AA64ISAR1_EL1:
 		if (!vcpu_has_ptrauth(vcpu))
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			val &= ~(ARM64_FEATURE_MASK(ID_AA64ISAR1_APA) |
 				 ARM64_FEATURE_MASK(ID_AA64ISAR1_API) |
 				 ARM64_FEATURE_MASK(ID_AA64ISAR1_GPA) |
 				 ARM64_FEATURE_MASK(ID_AA64ISAR1_GPI));
+<<<<<<< HEAD
 		break;
 	case SYS_ID_AA64DFR0_EL1:
 		/* Limit debug to ARMv8.0 */
@@ -1170,16 +1231,27 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
 		val &= ~FEATURE(ID_AA64DFR0_DEBUGVER);
 		val |= FIELD_PREP(FEATURE(ID_AA64DFR0_DEBUGVER), 6);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+	case SYS_ID_AA64DFR0_EL1:
+		/* Limit debug to ARMv8.0 */
+		val &= ~ARM64_FEATURE_MASK(ID_AA64DFR0_DEBUGVER);
+		val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64DFR0_DEBUGVER), 6);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Limit guests to PMUv3 for ARMv8.4 */
 		val = cpuid_feature_cap_perfmon_field(val,
 						      ID_AA64DFR0_PMUVER_SHIFT,
 						      kvm_vcpu_has_pmu(vcpu) ? ID_AA64DFR0_PMUVER_8_4 : 0);
 		/* Hide SPE from guests */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		val &= ~ARM64_FEATURE_MASK(ID_AA64DFR0_PMSVER);
 =======
 		val &= ~FEATURE(ID_AA64DFR0_PMSVER);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		val &= ~ARM64_FEATURE_MASK(ID_AA64DFR0_PMSVER);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case SYS_ID_DFR0_EL1:
 		/* Limit guests to PMUv3 for ARMv8.4 */
@@ -1358,6 +1430,9 @@ static int set_raz_id_reg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *rd,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int set_wi_reg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *rd,
 		      const struct kvm_one_reg *reg, void __user *uaddr)
 {
@@ -1372,8 +1447,11 @@ static int set_wi_reg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *rd,
 	return 0;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool access_ctr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
 		       const struct sys_reg_desc *r)
 {
@@ -1718,31 +1796,46 @@ static const struct sys_reg_desc sys_reg_descs[] = {
 	{ PMU_SYS_REG(SYS_PMOVSCLR_EL0),
 	  .access = access_pmovs, .reg = PMOVSSET_EL0 },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * PM_SWINC_EL0 is exposed to userspace as RAZ/WI, as it was
 	 * previously (and pointlessly) advertised in the past...
 	 */
+<<<<<<< HEAD
 	{ PMU_SYS_REG(SYS_PMSWINC_EL0),
 	  .get_user = get_raz_id_reg, .set_user = set_wi_reg,
 	  .access = access_pmswinc, .reset = NULL },
 	{ PMU_SYS_REG(SYS_PMSELR_EL0),
 	  .access = access_pmselr, .reset = reset_pmselr, .reg = PMSELR_EL0 },
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ PMU_SYS_REG(SYS_PMSWINC_EL0),
-	  .access = access_pmswinc, .reg = PMSWINC_EL0 },
+	  .get_user = get_raz_id_reg, .set_user = set_wi_reg,
+	  .access = access_pmswinc, .reset = NULL },
 	{ PMU_SYS_REG(SYS_PMSELR_EL0),
+<<<<<<< HEAD
 	  .access = access_pmselr, .reg = PMSELR_EL0 },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  .access = access_pmselr, .reset = reset_pmselr, .reg = PMSELR_EL0 },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ PMU_SYS_REG(SYS_PMCEID0_EL0),
 	  .access = access_pmceid, .reset = NULL },
 	{ PMU_SYS_REG(SYS_PMCEID1_EL0),
 	  .access = access_pmceid, .reset = NULL },
 	{ PMU_SYS_REG(SYS_PMCCNTR_EL0),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	  .access = access_pmu_evcntr, .reset = reset_unknown, .reg = PMCCNTR_EL0 },
 =======
 	  .access = access_pmu_evcntr, .reg = PMCCNTR_EL0 },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  .access = access_pmu_evcntr, .reset = reset_unknown, .reg = PMCCNTR_EL0 },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ PMU_SYS_REG(SYS_PMXEVTYPER_EL0),
 	  .access = access_pmu_evtyper, .reset = NULL },
 	{ PMU_SYS_REG(SYS_PMXEVCNTR_EL0),
@@ -2248,6 +2341,7 @@ static int check_sysreg_table(const struct sys_reg_desc *table, unsigned int n,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int match_sys_reg(const void *key, const void *elt)
 {
@@ -2267,6 +2361,8 @@ static const struct sys_reg_desc *find_reg(const struct sys_reg_params *params,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int kvm_handle_cp14_load_store(struct kvm_vcpu *vcpu)
 {
 	kvm_inject_undefined(vcpu);
@@ -2510,6 +2606,7 @@ int kvm_handle_sys_reg(struct kvm_vcpu *vcpu)
 	trace_kvm_handle_sys_reg(esr);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	params = esr_sys64_to_params(esr);
 	params.regval = vcpu_get_reg(vcpu, Rt);
 =======
@@ -2521,6 +2618,10 @@ int kvm_handle_sys_reg(struct kvm_vcpu *vcpu)
 	params.regval = vcpu_get_reg(vcpu, Rt);
 	params.is_write = !(esr & 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	params = esr_sys64_to_params(esr);
+	params.regval = vcpu_get_reg(vcpu, Rt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = emulate_sys_reg(vcpu, &params);
 

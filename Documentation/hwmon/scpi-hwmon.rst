@@ -33,8 +33,12 @@ Usage Notes
 The driver relies on device tree node to indicate the presence of SCPI
 support in the kernel. See
 <<<<<<< HEAD
+<<<<<<< HEAD
 Documentation/devicetree/bindings/firmware/arm,scpi.yaml for details of the
 =======
 Documentation/devicetree/bindings/arm/arm,scpi.txt for details of the
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Documentation/devicetree/bindings/firmware/arm,scpi.yaml for details of the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 devicetree node.

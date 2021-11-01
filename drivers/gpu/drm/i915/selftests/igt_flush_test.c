@@ -20,10 +20,14 @@ int igt_flush_test(struct drm_i915_private *i915)
 	cond_resched();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (intel_gt_wait_for_idle(gt, HZ) == -ETIME) {
 =======
 	if (intel_gt_wait_for_idle(gt, HZ / 5) == -ETIME) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (intel_gt_wait_for_idle(gt, HZ) == -ETIME) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("%pS timed out, cancelling all further testing.\n",
 		       __builtin_return_address(0));
 

@@ -530,6 +530,9 @@ static int snd_sc6000_match(struct device *devptr, unsigned int dev)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void snd_sc6000_free(struct snd_card *card)
 {
 	char __iomem *vport = (char __force __iomem *)card->private_data;
@@ -538,8 +541,11 @@ static void snd_sc6000_free(struct snd_card *card)
 		sc6000_setup_board(vport, 0);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 {
 	static const int possible_irqs[] = { 5, 7, 9, 10, 11, -1 };
@@ -551,6 +557,7 @@ static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 	struct snd_wss *chip;
 	struct snd_opl3 *opl3;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char __iomem *vport;
 	char __iomem *vmss_port;
 
@@ -561,26 +568,35 @@ static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 
 =======
 	char __iomem **vport;
+=======
+	char __iomem *vport;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char __iomem *vmss_port;
 
-
-	err = snd_card_new(devptr, index[dev], id[dev], THIS_MODULE,
-			   sizeof(vport), &card);
+	err = snd_devm_card_new(devptr, index[dev], id[dev], THIS_MODULE,
+				0, &card);
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	vport = card->private_data;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xirq == SNDRV_AUTO_IRQ) {
 		xirq = snd_legacy_find_free_irq(possible_irqs);
 		if (xirq < 0) {
 			snd_printk(KERN_ERR PFX "unable to find a free IRQ\n");
+<<<<<<< HEAD
 <<<<<<< HEAD
 			return -EBUSY;
 =======
 			err = -EBUSY;
 			goto err_exit;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -588,6 +604,7 @@ static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 		xdma = snd_legacy_find_free_dma(possible_dmas);
 		if (xdma < 0) {
 			snd_printk(KERN_ERR PFX "unable to find a free DMA\n");
+<<<<<<< HEAD
 <<<<<<< HEAD
 			return -EBUSY;
 		}
@@ -614,47 +631,58 @@ static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 =======
 			err = -EBUSY;
 			goto err_exit;
+=======
+			return -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
-	if (!request_region(port[dev], 0x10, DRV_NAME)) {
+	if (!devm_request_region(devptr, port[dev], 0x10, DRV_NAME)) {
 		snd_printk(KERN_ERR PFX
 			   "I/O port region is already in use.\n");
-		err = -EBUSY;
-		goto err_exit;
+		return -EBUSY;
 	}
-	*vport = devm_ioport_map(devptr, port[dev], 0x10);
-	if (*vport == NULL) {
+	vport = devm_ioport_map(devptr, port[dev], 0x10);
+	if (!vport) {
 		snd_printk(KERN_ERR PFX
 			   "I/O port cannot be iomapped.\n");
-		err = -EBUSY;
-		goto err_unmap1;
+		return -EBUSY;
 	}
+	card->private_data = (void __force *)vport;
 
 	/* to make it marked as used */
-	if (!request_region(mss_port[dev], 4, DRV_NAME)) {
+	if (!devm_request_region(devptr, mss_port[dev], 4, DRV_NAME)) {
 		snd_printk(KERN_ERR PFX
 			   "SC-6000 port I/O port region is already in use.\n");
+<<<<<<< HEAD
 		err = -EBUSY;
 		goto err_unmap1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	vmss_port = devm_ioport_map(devptr, mss_port[dev], 4);
 	if (!vmss_port) {
 		snd_printk(KERN_ERR PFX
 			   "MSS port I/O cannot be iomapped.\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EBUSY;
 =======
 		err = -EBUSY;
 		goto err_unmap2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	snd_printd("Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
 		   port[dev], xirq, xdma,
 		   mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = sc6000_init_board(vport, vmss_port, dev);
 	if (err < 0)
@@ -665,43 +693,65 @@ static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 	if (err < 0)
 		goto err_unmap2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = sc6000_init_board(vport, vmss_port, dev);
+	if (err < 0)
+		return err;
+	card->private_free = snd_sc6000_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = snd_wss_create(card, mss_port[dev] + 4,  -1, xirq, xdma, -1,
 			     WSS_HW_DETECT, 0, &chip);
 	if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 =======
 		goto err_unmap2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = snd_wss_pcm(chip, 0);
 	if (err < 0) {
 		snd_printk(KERN_ERR PFX
 			   "error creating new WSS PCM device\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return err;
 =======
 		goto err_unmap2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	err = snd_wss_mixer(chip);
 	if (err < 0) {
 		snd_printk(KERN_ERR PFX "error creating new WSS mixer\n");
 <<<<<<< HEAD
-		return err;
-=======
-		goto err_unmap2;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-	}
-	err = snd_sc6000_mixer(chip);
-	if (err < 0) {
-		snd_printk(KERN_ERR PFX "the mixer rewrite failed\n");
 <<<<<<< HEAD
 		return err;
 =======
 		goto err_unmap2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	}
+	err = snd_sc6000_mixer(chip);
+	if (err < 0) {
+		snd_printk(KERN_ERR PFX "the mixer rewrite failed\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return err;
+=======
+		goto err_unmap2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (snd_opl3_create(card,
 			    0x388, 0x388 + 2,
@@ -712,10 +762,14 @@ static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
 		if (err < 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 			return err;
 =======
 			goto err_unmap2;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (mpu_port[dev] != SNDRV_AUTO_PORT) {
@@ -736,6 +790,7 @@ static int snd_sc6000_probe(struct device *devptr, unsigned int dev)
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return err;
 
@@ -770,15 +825,24 @@ static void snd_sc6000_remove(struct device *devptr, unsigned int dev)
 
 	snd_card_free(card);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+
+	dev_set_drvdata(devptr, card);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct isa_driver snd_sc6000_driver = {
 	.match		= snd_sc6000_match,
 	.probe		= snd_sc6000_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove		= snd_sc6000_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* FIXME: suspend/resume */
 	.driver		= {
 		.name	= DRV_NAME,

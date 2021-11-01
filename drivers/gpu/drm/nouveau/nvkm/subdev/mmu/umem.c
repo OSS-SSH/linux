@@ -42,10 +42,14 @@ nvkm_umem_search(struct nvkm_client *client, u64 handle)
 	object = nvkm_object_search(client, handle, &nvkm_umem);
 	if (IS_ERR(object)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (client != master) {
 =======
 		if (client->super && client != master) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (client != master) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			spin_lock(&master->lock);
 			list_for_each_entry(umem, &master->umem, head) {
 				if (umem->object.object == handle) {
@@ -58,11 +62,15 @@ nvkm_umem_search(struct nvkm_client *client, u64 handle)
 	} else {
 		umem = nvkm_umem(object);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		memory = nvkm_memory_ref(umem->memory);
 =======
 		if (!umem->priv || client->super)
 			memory = nvkm_memory_ref(umem->memory);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memory = nvkm_memory_ref(umem->memory);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return memory ? memory : ERR_PTR(-ENOENT);
@@ -176,9 +184,12 @@ nvkm_umem_new(const struct nvkm_oclass *oclass, void *argv, u32 argc,
 	umem->mmu = mmu;
 	umem->type = mmu->type[type].type;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	umem->priv = oclass->client->super;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&umem->head);
 	*pobject = &umem->object;
 

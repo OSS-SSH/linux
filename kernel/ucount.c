@@ -59,6 +59,9 @@ static struct ctl_table_root set_root = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static long ue_zero = 0;
 static long ue_int_max = INT_MAX;
 
@@ -70,6 +73,7 @@ static long ue_int_max = INT_MAX;
 		.proc_handler	= proc_doulongvec_minmax,	\
 		.extra1		= &ue_zero,			\
 		.extra2		= &ue_int_max,			\
+<<<<<<< HEAD
 =======
 #define UCOUNT_ENTRY(name)				\
 	{						\
@@ -80,6 +84,8 @@ static long ue_int_max = INT_MAX;
 		.extra1		= SYSCTL_ZERO,		\
 		.extra2		= SYSCTL_INT_MAX,	\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 static struct ctl_table user_table[] = {
 	UCOUNT_ENTRY("max_user_namespaces"),
@@ -175,9 +181,13 @@ struct ucounts *alloc_ucounts(struct user_namespace *ns, kuid_t uid)
 	struct hlist_head *hashent = ucounts_hashentry(ns, uid);
 	struct ucounts *ucounts, *new;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	long overflow;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	long overflow;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irq(&ucounts_lock);
 	ucounts = find_ucounts(ns, uid, hashent);
@@ -203,6 +213,7 @@ struct ucounts *alloc_ucounts(struct user_namespace *ns, kuid_t uid)
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	overflow = atomic_add_negative(1, &ucounts->count);
 	spin_unlock_irq(&ucounts_lock);
 	if (overflow) {
@@ -213,6 +224,14 @@ struct ucounts *alloc_ucounts(struct user_namespace *ns, kuid_t uid)
 	spin_unlock_irq(&ucounts_lock);
 	ucounts = get_ucounts(ucounts);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	overflow = atomic_add_negative(1, &ucounts->count);
+	spin_unlock_irq(&ucounts_lock);
+	if (overflow) {
+		put_ucounts(ucounts);
+		return NULL;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ucounts;
 }
 
@@ -221,11 +240,15 @@ void put_ucounts(struct ucounts *ucounts)
 	unsigned long flags;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (atomic_dec_and_lock_irqsave(&ucounts->count, &ucounts_lock, flags)) {
 =======
 	if (atomic_dec_and_test(&ucounts->count)) {
 		spin_lock_irqsave(&ucounts_lock, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (atomic_dec_and_lock_irqsave(&ucounts->count, &ucounts_lock, flags)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		hlist_del_init(&ucounts->node);
 		spin_unlock_irqrestore(&ucounts_lock, flags);
 		kfree(ucounts);

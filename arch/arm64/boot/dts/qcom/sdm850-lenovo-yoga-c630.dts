@@ -17,6 +17,9 @@
 #include "pm8998.dtsi"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Update following upstream (sdm845.dtsi) reserved
  * memory mappings for firmware loading to succeed
@@ -28,8 +31,11 @@
 /delete-node/ &adsp_mem;
 /delete-node/ &wlan_msa_mem;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 / {
 	model = "Lenovo Yoga C630";
 	compatible = "lenovo,yoga-c630", "qcom,sdm845";
@@ -73,6 +79,9 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Reserved memory changes for IPA */
 	reserved-memory {
 		wlan_msa_mem: memory@8c400000 {
@@ -96,8 +105,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sn65dsi86_refclk: sn65dsi86-refclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -456,13 +468,19 @@
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &ipa {
 	status = "okay";
 	memory-region = <&ipa_fw_mem>;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &mdss {
 	status = "okay";
 };
@@ -749,10 +767,14 @@
 			compatible = "sdw10217211000";
 			reg = <0 3>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
 =======
 			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			#thermal-sensor-cells = <0>;
 			sound-name-prefix = "SpkrLeft";
 			#sound-dai-cells = <0>;
@@ -761,10 +783,14 @@
 		right_spkr: wsa8810-right{
 			compatible = "sdw10217211000";
 <<<<<<< HEAD
+<<<<<<< HEAD
 			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
 =======
 			powerdown-gpios = <&wcdgpio 3 GPIO_ACTIVE_HIGH>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0 4>;
 			#thermal-sensor-cells = <0>;
 			sound-name-prefix = "SpkrRight";

@@ -71,9 +71,13 @@ static const char * const boot_msg =
 
 #include <linux/capability.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/compat.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/compat.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/errno.h>
@@ -108,11 +112,16 @@ static void skfp_ctl_set_multicast_list(struct net_device *dev);
 static void skfp_ctl_set_multicast_list_wo_lock(struct net_device *dev);
 static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int skfp_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 			       void __user *data, int cmd);
 =======
 static int skfp_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int skfp_siocdevprivate(struct net_device *dev, struct ifreq *rq,
+			       void __user *data, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static netdev_tx_t skfp_send_pkt(struct sk_buff *skb,
 				       struct net_device *dev);
 static void send_queued_packets(struct s_smc *smc);
@@ -174,10 +183,14 @@ static const struct net_device_ops skfp_netdev_ops = {
 	.ndo_set_rx_mode	= skfp_ctl_set_multicast_list,
 	.ndo_set_mac_address	= skfp_ctl_set_mac_address,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= skfp_siocdevprivate,
 =======
 	.ndo_do_ioctl		= skfp_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate	= skfp_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -946,6 +959,7 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * =======================
  * = skfp_siocdevprivate =
  * =======================
@@ -954,6 +968,11 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
  * = skfp_ioctl =
  * ==============
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * =======================
+ * = skfp_siocdevprivate =
+ * =======================
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   
  * Overview:
  *
@@ -974,16 +993,21 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int skfp_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
 =======
 static int skfp_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int skfp_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct s_smc *smc = netdev_priv(dev);
 	skfddi_priv *lp = &smc->os;
 	struct s_skfp_ioctl ioc;
 	int status = 0;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (copy_from_user(&ioc, data, sizeof(struct s_skfp_ioctl)))
 		return -EFAULT;
@@ -996,6 +1020,14 @@ static int skfp_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 		return -EFAULT;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_from_user(&ioc, data, sizeof(struct s_skfp_ioctl)))
+		return -EFAULT;
+
+	if (in_compat_syscall())
+		return -EOPNOTSUPP;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (ioc.cmd) {
 	case SKFP_GET_STATS:	/* Get the driver statistics */
 		ioc.len = sizeof(lp->MacStat);
@@ -1202,12 +1234,17 @@ static void send_queued_packets(struct s_smc *smc)
 		txd = (struct s_smt_fp_txd *) HWM_GET_CURR_TXD(smc, queue);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_address = dma_map_single(&(&bp->pdev)->dev, skb->data,
 					     skb->len, DMA_TO_DEVICE);
 =======
 		dma_address = pci_map_single(&bp->pdev, skb->data,
 					     skb->len, PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_address = dma_map_single(&(&bp->pdev)->dev, skb->data,
+					     skb->len, DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (frame_status & LAN_TX) {
 			txd->txd_os.skb = skb;			// save skb
 			txd->txd_os.dma_addr = dma_address;	// save dma mapping
@@ -1217,12 +1254,17 @@ static void send_queued_packets(struct s_smc *smc)
 
 		if (!(frame_status & LAN_TX)) {		// local only frame
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_single(&(&bp->pdev)->dev, dma_address,
 					 skb->len, DMA_TO_DEVICE);
 =======
 			pci_unmap_single(&bp->pdev, dma_address,
 					 skb->len, PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_single(&(&bp->pdev)->dev, dma_address,
+					 skb->len, DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_kfree_skb_irq(skb);
 		}
 		spin_unlock_irqrestore(&bp->DriverLock, Flags);
@@ -1505,6 +1547,7 @@ void dma_complete(struct s_smc *smc, volatile union s_fp_descr *descr, int flag)
 			int MaxFrameSize = bp->MaxFrameSize;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_single(&(&bp->pdev)->dev,
 					 r->rxd_os.dma_addr, MaxFrameSize,
 					 DMA_FROM_DEVICE);
@@ -1512,6 +1555,11 @@ void dma_complete(struct s_smc *smc, volatile union s_fp_descr *descr, int flag)
 			pci_unmap_single(&bp->pdev, r->rxd_os.dma_addr,
 					 MaxFrameSize, PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_single(&(&bp->pdev)->dev,
+					 r->rxd_os.dma_addr, MaxFrameSize,
+					 DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			r->rxd_os.dma_addr = 0;
 		}
 	}
@@ -1547,12 +1595,17 @@ void mac_drv_tx_complete(struct s_smc *smc, volatile struct s_smt_fp_txd *txd)
 
 	// release the DMA mapping
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dma_unmap_single(&(&smc->os.pdev)->dev, txd->txd_os.dma_addr,
 			 skb->len, DMA_TO_DEVICE);
 =======
 	pci_unmap_single(&smc->os.pdev, txd->txd_os.dma_addr,
 			 skb->len, PCI_DMA_TODEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(&(&smc->os.pdev)->dev, txd->txd_os.dma_addr,
+			 skb->len, DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	txd->txd_os.dma_addr = 0;
 
 	smc->os.MacStat.gen.tx_packets++;	// Count transmitted packets.
@@ -1756,6 +1809,7 @@ void mac_drv_requeue_rxd(struct s_smc *smc, volatile struct s_smt_fp_rxd *rxd,
 				skb_put(skb, MaxFrameSize);
 				v_addr = skb->data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				b_addr = dma_map_single(&(&smc->os.pdev)->dev,
 							v_addr, MaxFrameSize,
 							DMA_FROM_DEVICE);
@@ -1765,6 +1819,11 @@ void mac_drv_requeue_rxd(struct s_smc *smc, volatile struct s_smt_fp_rxd *rxd,
 							MaxFrameSize,
 							PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				b_addr = dma_map_single(&(&smc->os.pdev)->dev,
+							v_addr, MaxFrameSize,
+							DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				rxd->rxd_os.dma_addr = b_addr;
 			} else {
 				// no skb available, use local buffer
@@ -1778,6 +1837,7 @@ void mac_drv_requeue_rxd(struct s_smc *smc, volatile struct s_smt_fp_rxd *rxd,
 			rxd->rxd_os.skb = skb;
 			v_addr = skb->data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			b_addr = dma_map_single(&(&smc->os.pdev)->dev, v_addr,
 						MaxFrameSize, DMA_FROM_DEVICE);
 =======
@@ -1786,6 +1846,10 @@ void mac_drv_requeue_rxd(struct s_smc *smc, volatile struct s_smt_fp_rxd *rxd,
 						MaxFrameSize,
 						PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			b_addr = dma_map_single(&(&smc->os.pdev)->dev, v_addr,
+						MaxFrameSize, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rxd->rxd_os.dma_addr = b_addr;
 		}
 		hwm_rx_frag(smc, v_addr, b_addr, MaxFrameSize,
@@ -1838,6 +1902,7 @@ void mac_drv_fill_rxd(struct s_smc *smc)
 			skb_put(skb, MaxFrameSize);
 			v_addr = skb->data;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			b_addr = dma_map_single(&(&smc->os.pdev)->dev, v_addr,
 						MaxFrameSize, DMA_FROM_DEVICE);
 =======
@@ -1846,6 +1911,10 @@ void mac_drv_fill_rxd(struct s_smc *smc)
 						MaxFrameSize,
 						PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			b_addr = dma_map_single(&(&smc->os.pdev)->dev, v_addr,
+						MaxFrameSize, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rxd->rxd_os.dma_addr = b_addr;
 		} else {
 			// no skb available, use local buffer
@@ -1903,6 +1972,7 @@ void mac_drv_clear_rxd(struct s_smc *smc, volatile struct s_smt_fp_rxd *rxd,
 			int MaxFrameSize = bp->MaxFrameSize;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dma_unmap_single(&(&bp->pdev)->dev,
 					 rxd->rxd_os.dma_addr, MaxFrameSize,
 					 DMA_FROM_DEVICE);
@@ -1910,6 +1980,11 @@ void mac_drv_clear_rxd(struct s_smc *smc, volatile struct s_smt_fp_rxd *rxd,
 			pci_unmap_single(&bp->pdev, rxd->rxd_os.dma_addr,
 					 MaxFrameSize, PCI_DMA_FROMDEVICE);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_single(&(&bp->pdev)->dev,
+					 rxd->rxd_os.dma_addr, MaxFrameSize,
+					 DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			dev_kfree_skb(skb);
 			rxd->rxd_os.skb = NULL;

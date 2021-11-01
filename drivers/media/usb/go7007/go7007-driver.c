@@ -692,15 +692,19 @@ struct go7007 *go7007_alloc(const struct go7007_board_info *board,
 {
 	struct go7007 *go;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int i;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	go = kzalloc(sizeof(struct go7007), GFP_KERNEL);
 	if (go == NULL)
 		return NULL;
 	go->dev = dev;
 	go->board_info = board;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	go->tuner_type = -1;
 =======
@@ -709,10 +713,14 @@ struct go7007 *go7007_alloc(const struct go7007_board_info *board,
 	go->channel_number = 0;
 	go->name[0] = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	go->tuner_type = -1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&go->hw_lock);
 	init_waitqueue_head(&go->frame_waitq);
 	spin_lock_init(&go->spinlock);
 	go->status = STATUS_INIT;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	init_waitqueue_head(&go->interrupt_waitq);
 	go7007_update_board(go);
@@ -724,17 +732,15 @@ struct go7007 *go7007_alloc(const struct go7007_board_info *board,
 	memset(&go->i2c_adapter, 0, sizeof(go->i2c_adapter));
 	go->i2c_adapter_online = 0;
 	go->interrupt_available = 0;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	init_waitqueue_head(&go->interrupt_waitq);
-	go->input = 0;
 	go7007_update_board(go);
-	go->encoder_h_halve = 0;
-	go->encoder_v_halve = 0;
-	go->encoder_subsample = 0;
 	go->format = V4L2_PIX_FMT_MJPEG;
 	go->bitrate = 1500000;
 	go->fps_scale = 1;
-	go->pali = 0;
 	go->aspect_ratio = GO7007_RATIO_1_1;
+<<<<<<< HEAD
 	go->gop_size = 0;
 	go->ipb = 0;
 	go->closed_gop = 0;
@@ -750,6 +756,8 @@ struct go7007 *go7007_alloc(const struct go7007_board_info *board,
 	go->audio_deliver = NULL;
 	go->audio_enabled = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return go;
 }

@@ -100,16 +100,20 @@ static int remap_verify_area(struct file *file, loff_t pos, loff_t len,
 			     bool write)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct inode *inode = file_inode(file);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(pos < 0 || len < 0))
 		return -EINVAL;
 
 	if (unlikely((loff_t) (pos + len) < 0))
 		return -EINVAL;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	if (unlikely(inode->i_flctx && mandatory_lock(inode))) {
@@ -123,6 +127,8 @@ static int remap_verify_area(struct file *file, loff_t pos, loff_t len,
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return security_file_permission(file, write ? MAY_WRITE : MAY_READ);
 }
 

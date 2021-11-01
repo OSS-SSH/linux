@@ -10,10 +10,14 @@
 #include <linux/irq_work.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "intel_breadcrumbs_types.h"
 =======
 #include "intel_engine_types.h"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "intel_breadcrumbs_types.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct drm_printer;
 struct i915_request;
@@ -22,10 +26,14 @@ struct intel_breadcrumbs;
 struct intel_breadcrumbs *
 intel_breadcrumbs_create(struct intel_engine_cs *irq_engine);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void intel_breadcrumbs_free(struct kref *kref);
 =======
 void intel_breadcrumbs_free(struct intel_breadcrumbs *b);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void intel_breadcrumbs_free(struct kref *kref);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void intel_breadcrumbs_reset(struct intel_breadcrumbs *b);
 void __intel_breadcrumbs_park(struct intel_breadcrumbs *b);
@@ -57,6 +65,9 @@ void intel_context_remove_breadcrumbs(struct intel_context *ce,
 				      struct intel_breadcrumbs *b);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct intel_breadcrumbs *
 intel_breadcrumbs_get(struct intel_breadcrumbs *b)
 {
@@ -69,6 +80,9 @@ static inline void intel_breadcrumbs_put(struct intel_breadcrumbs *b)
 	kref_put(&b->ref, intel_breadcrumbs_free);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __INTEL_BREADCRUMBS__ */

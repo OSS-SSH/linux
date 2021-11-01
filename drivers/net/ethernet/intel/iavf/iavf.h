@@ -137,9 +137,13 @@ struct iavf_mac_filter {
 	struct list_head list;
 	u8 macaddr[ETH_ALEN];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool is_new_mac;	/* filter is new, wait for PF decision */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool is_new_mac;	/* filter is new, wait for PF decision */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool remove;		/* filter needs to be removed */
 	bool add;		/* filter needs to be added */
 };
@@ -190,6 +194,7 @@ enum iavf_state_t {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 enum iavf_critical_section_t {
 	__IAVF_IN_CRITICAL_TASK,	/* cannot be interrupted */
@@ -198,6 +203,8 @@ enum iavf_critical_section_t {
 };
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IAVF_CLOUD_FIELD_OMAC		0x01
 #define IAVF_CLOUD_FIELD_IMAC		0x02
 #define IAVF_CLOUD_FIELD_IVLAN	0x04
@@ -243,11 +250,17 @@ struct iavf_adapter {
 	struct list_head vlan_filter_list;
 	struct list_head mac_filter_list;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct mutex crit_lock;
 	struct mutex client_lock;
 	struct mutex remove_lock;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mutex crit_lock;
+	struct mutex client_lock;
+	struct mutex remove_lock;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Lock to protect accesses to MAC and VLAN lists */
 	spinlock_t mac_vlan_list_lock;
 	char misc_vector_name[IFNAMSIZ + 9];

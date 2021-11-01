@@ -9,6 +9,7 @@
 #if IS_ENABLED(CONFIG_NET_DSA_SJA1105_PTP)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* Timestamps are in units of 8 ns clock ticks (equivalent to
  * a fixed 125 MHz clock).
@@ -26,6 +27,8 @@ static inline s64 sja1105_ticks_to_ns(s64 ticks)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Calculate the first base_time in the future that satisfies this
  * relationship:
  *
@@ -81,12 +84,15 @@ struct sja1105_ptp_data {
 	/* Used only on SJA1105 to reconstruct partial timestamps */
 	struct sk_buff_head skb_rxtstamp_queue;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/* Used on SJA1110 where meta frames are generated only for
 	 * 2-step TX timestamps
 	 */
 	struct sk_buff_head skb_txtstamp_queue;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ptp_clock_info caps;
 	struct ptp_clock *clock;
 	struct sja1105_ptp_cmd cmd;

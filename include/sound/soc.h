@@ -713,14 +713,20 @@ struct snd_soc_dai_link {
 	unsigned int ignore:1;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* This flag will reorder stop sequence. By enabling this flag
 	 * DMA controller stop sequence will be invoked first followed by
 	 * CPU DAI driver stop sequence
 	 */
 	unsigned int stop_dma_first:1;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_SND_SOC_TOPOLOGY
 	struct snd_soc_dobj dobj; /* For topology */
 #endif

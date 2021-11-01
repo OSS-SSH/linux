@@ -15,11 +15,15 @@ allOf:
 properties:
   compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
     const: qcom,dsi-phy-20nm
 =======
     oneOf:
       - const: qcom,dsi-phy-20nm
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    const: qcom,dsi-phy-20nm
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg:
     items:

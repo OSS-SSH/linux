@@ -196,10 +196,14 @@
 &cp0_eth0 {
 	status = "okay";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phy-mode = "10gbase-r";
 =======
 	phy-mode = "10gbase-kr";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy-mode = "10gbase-r";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fixed-link {
 		speed = <10000>;
@@ -353,10 +357,14 @@
 &cp1_eth0 {
 	status = "okay";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	phy-mode = "10gbase-r";
 =======
 	phy-mode = "10gbase-kr";
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy-mode = "10gbase-r";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fixed-link {
 		speed = <10000>;

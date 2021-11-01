@@ -13,9 +13,12 @@
 #include <asm/ppc_asm.h>
 #include <asm/ptrace.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <asm/tm.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.section	".toc","aw"
 SYS_CALL_TABLE:
@@ -59,6 +62,7 @@ COMPAT_SYS_CALL_TABLE:
 system_call_vectored_\name:
 _ASM_NOKPROBE_SYMBOL(system_call_vectored_\name)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
 BEGIN_FTR_SECTION
@@ -67,6 +71,8 @@ BEGIN_FTR_SECTION
 END_FTR_SECTION_IFSET(CPU_FTR_TM)
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SCV_INTERRUPT_TO_KERNEL
 	mr	r10,r1
 	ld	r1,PACAKSAVE(r13)
@@ -254,6 +260,7 @@ _ASM_NOKPROBE_SYMBOL(system_call_common_real)
 system_call_common:
 _ASM_NOKPROBE_SYMBOL(system_call_common)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
 BEGIN_FTR_SECTION
@@ -262,6 +269,8 @@ BEGIN_FTR_SECTION
 END_FTR_SECTION_IFSET(CPU_FTR_TM)
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mr	r10,r1
 	ld	r1,PACAKSAVE(r13)
 	std	r10,0(r1)
@@ -435,6 +444,7 @@ RESTART_TABLE(.Lsyscall_rst_start, .Lsyscall_rst_end, syscall_restart)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
 tabort_syscall:
@@ -465,6 +475,8 @@ _ASM_NOKPROBE_SYMBOL(tabort_syscall)
 #endif
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If MSR EE/RI was never enabled, IRQs not reconciled, NVGPRs not
 	 * touched, no exit work created, then this can be used.

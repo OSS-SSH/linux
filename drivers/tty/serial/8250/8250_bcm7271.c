@@ -942,10 +942,14 @@ static int brcmuart_probe(struct platform_device *pdev)
 	struct uart_8250_port up;
 	struct resource *irq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void __iomem *membase = NULL;
 =======
 	void __iomem *membase = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void __iomem *membase = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	resource_size_t mapbase = 0;
 	u32 clk_rate = 0;
 	int ret;

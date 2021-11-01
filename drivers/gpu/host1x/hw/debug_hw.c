@@ -157,6 +157,7 @@ static unsigned int show_channel_command(struct output *o, u32 val,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void show_gather(struct output *o, dma_addr_t phys_addr,
 			unsigned int words, struct host1x_cdma *cdma,
 			dma_addr_t pin_addr, u32 *map_addr)
@@ -165,6 +166,11 @@ static void show_gather(struct output *o, phys_addr_t phys_addr,
 			unsigned int words, struct host1x_cdma *cdma,
 			phys_addr_t pin_addr, u32 *map_addr)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void show_gather(struct output *o, dma_addr_t phys_addr,
+			unsigned int words, struct host1x_cdma *cdma,
+			dma_addr_t pin_addr, u32 *map_addr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Map dmaget cursor to corresponding mem handle */
 	u32 offset = phys_addr - pin_addr;
@@ -183,6 +189,7 @@ static void show_gather(struct output *o, phys_addr_t phys_addr,
 
 	for (i = 0; i < words; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		dma_addr_t addr = phys_addr + i * 4;
 		u32 val = *(map_addr + offset / 4 + i);
 
@@ -195,6 +202,13 @@ static void show_gather(struct output *o, phys_addr_t phys_addr,
 		if (!data_count) {
 			host1x_debug_output(o, "%08x: %08x: ", addr, val);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_addr_t addr = phys_addr + i * 4;
+		u32 val = *(map_addr + offset / 4 + i);
+
+		if (!data_count) {
+			host1x_debug_output(o, "    %pad: %08x: ", &addr, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			data_count = show_channel_command(o, val, &payload);
 		} else {
 			host1x_debug_cont(o, "%08x%s", val,
@@ -209,6 +223,7 @@ static void show_channel_gathers(struct output *o, struct host1x_cdma *cdma)
 	struct push_buffer *pb = &cdma->push_buffer;
 	struct host1x_job *job;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	list_for_each_entry(job, &cdma->sync_queue, list) {
 		unsigned int i;
@@ -235,19 +250,31 @@ static void show_channel_gathers(struct output *o, struct host1x_cdma *cdma)
 
 	show_gather(o, pb->dma, pb->size / 4, cdma, pb->dma, pb->mapped);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(job, &cdma->sync_queue, list) {
 		unsigned int i;
 
-		host1x_debug_output(o, "\n%p: JOB, syncpt_id=%d, syncpt_val=%d, first_get=%08x, timeout=%d num_slots=%d, num_handles=%d\n",
-				    job, job->syncpt->id, job->syncpt_end,
-				    job->first_get, job->timeout,
+		host1x_debug_output(o, "JOB, syncpt %u: %u timeout: %u num_slots: %u num_handles: %u\n",
+				    job->syncpt->id, job->syncpt_end, job->timeout,
 				    job->num_slots, job->num_unpins);
 
-		for (i = 0; i < job->num_gathers; i++) {
-			struct host1x_job_gather *g = &job->gathers[i];
+		show_gather(o, pb->dma + job->first_get, job->num_slots * 2, cdma,
+			    pb->dma + job->first_get, pb->mapped + job->first_get);
+
+		for (i = 0; i < job->num_cmds; i++) {
+			struct host1x_job_gather *g;
 			u32 *mapped;
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (job->cmds[i].is_wait)
+				continue;
+
+			g = &job->cmds[i].gather;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (job->gather_copy_mapped)
 				mapped = (u32 *)job->gather_copy_mapped;
 			else
@@ -259,10 +286,14 @@ static void show_channel_gathers(struct output *o, struct host1x_cdma *cdma)
 			}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			host1x_debug_output(o, "  GATHER at %pad+%#x, %d words\n",
 =======
 			host1x_debug_output(o, "    GATHER at %pad+%#x, %d words\n",
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			host1x_debug_output(o, "  GATHER at %pad+%#x, %d words\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    &g->base, g->offset, g->words);
 
 			show_gather(o, g->base + g->offset, g->words, cdma,

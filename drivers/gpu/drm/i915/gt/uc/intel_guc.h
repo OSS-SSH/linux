@@ -7,11 +7,17 @@
 #define _INTEL_GUC_H_
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/xarray.h>
 #include <linux/delay.h>
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/xarray.h>
+#include <linux/delay.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_uncore.h"
 #include "intel_guc_fw.h"
 #include "intel_guc_fwif.h"
@@ -19,9 +25,13 @@
 #include "intel_guc_log.h"
 #include "intel_guc_reg.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "intel_guc_slpc_types.h"
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "intel_guc_slpc_types.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_uc_fw.h"
 #include "i915_utils.h"
 #include "i915_vma.h"
@@ -38,23 +48,34 @@ struct intel_guc {
 	struct intel_guc_log log;
 	struct intel_guc_ct ct;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_guc_slpc slpc;
 
 	/* Global engine used to submit requests to GuC */
 	struct i915_sched_engine *sched_engine;
 	struct i915_request *stalled_request;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* intel_guc_recv interrupt related state */
 	spinlock_t irq_lock;
 	unsigned int msg_enabled_mask;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	atomic_t outstanding_submission_g2h;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_t outstanding_submission_g2h;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct {
 		void (*reset)(struct intel_guc *guc);
 		void (*enable)(struct intel_guc *guc);
@@ -62,6 +83,9 @@ struct intel_guc {
 	} interrupts;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * contexts_lock protects the pool of free guc ids and a linked list of
 	 * guc ids available to be stolen
@@ -71,6 +95,7 @@ struct intel_guc {
 	struct list_head guc_id_list;
 
 	bool submission_supported;
+<<<<<<< HEAD
 	bool submission_selected;
 	bool rc_supported;
 	bool rc_selected;
@@ -86,14 +111,28 @@ struct intel_guc {
 	/* guc_id to intel_context lookup */
 	struct xarray context_lookup;
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool submission_selected;
+	bool rc_supported;
+	bool rc_selected;
 
 	struct i915_vma *ads_vma;
 	struct __guc_ads_blob *ads_blob;
+	u32 ads_regset_size;
+	u32 ads_golden_ctxt_size;
 
+<<<<<<< HEAD
 	struct i915_vma *stage_desc_pool;
 	void *stage_desc_pool_vaddr;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct i915_vma *lrc_desc_pool;
+	void *lrc_desc_pool_vaddr;
+
+	/* guc_id to intel_context lookup */
+	struct xarray context_lookup;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Control params for fw initialization */
 	u32 params[GUC_CTL_MAX_DWORDS];
@@ -124,6 +163,9 @@ static
 inline int intel_guc_send(struct intel_guc *guc, const u32 *action, u32 len)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return intel_guc_ct_send(&guc->ct, action, len, NULL, 0, 0);
 }
 
@@ -133,9 +175,12 @@ inline int intel_guc_send_nb(struct intel_guc *guc, const u32 *action, u32 len,
 {
 	return intel_guc_ct_send(&guc->ct, action, len, NULL, 0,
 				 MAKE_SEND_FLAGS(g2h_len_dw));
+<<<<<<< HEAD
 =======
 	return intel_guc_ct_send(&guc->ct, action, len, NULL, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int
@@ -144,6 +189,9 @@ intel_guc_send_and_receive(struct intel_guc *guc, const u32 *action, u32 len,
 {
 	return intel_guc_ct_send(&guc->ct, action, len,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 response_buf, response_buf_size, 0);
 }
 
@@ -181,9 +229,12 @@ retry:
 	}
 
 	return err;
+<<<<<<< HEAD
 =======
 				 response_buf, response_buf_size);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void intel_guc_to_host_event_handler(struct intel_guc *guc)
@@ -220,9 +271,13 @@ static inline u32 intel_guc_ggtt_offset(struct intel_guc *guc,
 
 void intel_guc_init_early(struct intel_guc *guc);
 <<<<<<< HEAD
+<<<<<<< HEAD
 void intel_guc_init_late(struct intel_guc *guc);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void intel_guc_init_late(struct intel_guc *guc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_guc_init_send_regs(struct intel_guc *guc);
 void intel_guc_write_params(struct intel_guc *guc);
 int intel_guc_init(struct intel_guc *guc);
@@ -266,6 +321,9 @@ static inline bool intel_guc_is_ready(struct intel_guc *guc)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void intel_guc_reset_interrupts(struct intel_guc *guc)
 {
 	guc->interrupts.reset(guc);
@@ -285,11 +343,14 @@ static inline int intel_guc_sanitize(struct intel_guc *guc)
 {
 	intel_uc_fw_sanitize(&guc->fw);
 	intel_guc_disable_interrupts(guc);
+<<<<<<< HEAD
 =======
 static inline int intel_guc_sanitize(struct intel_guc *guc)
 {
 	intel_uc_fw_sanitize(&guc->fw);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_guc_ct_sanitize(&guc->ct);
 	guc->mmio_msg = 0;
 
@@ -311,6 +372,9 @@ static inline void intel_guc_disable_msg(struct intel_guc *guc, u32 mask)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int intel_guc_wait_for_idle(struct intel_guc *guc, long timeout);
 
 int intel_guc_deregister_done_process_msg(struct intel_guc *guc,
@@ -332,10 +396,13 @@ void intel_guc_submission_reset_prepare(struct intel_guc *guc);
 void intel_guc_submission_reset(struct intel_guc *guc, bool stalled);
 void intel_guc_submission_reset_finish(struct intel_guc *guc);
 void intel_guc_submission_cancel_requests(struct intel_guc *guc);
+<<<<<<< HEAD
 =======
 int intel_guc_reset_engine(struct intel_guc *guc,
 			   struct intel_engine_cs *engine);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void intel_guc_load_status(struct intel_guc *guc, struct drm_printer *p);
 

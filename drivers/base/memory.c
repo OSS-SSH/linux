@@ -83,14 +83,20 @@ static struct bus_type memory_subsys = {
 static DEFINE_XARRAY(memory_blocks);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Memory groups, indexed by memory group id (mgid).
  */
 static DEFINE_XARRAY_FLAGS(memory_groups, XA_FLAGS_ALLOC);
 #define MEMORY_GROUP_MARK_DYNAMIC	XA_MARK_1
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static BLOCKING_NOTIFIER_HEAD(memory_chain);
 
 int register_memory_notifier(struct notifier_block *nb)
@@ -187,11 +193,16 @@ static int memory_block_online(struct memory_block *mem)
 	int ret;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zone = zone_for_pfn_range(mem->online_type, mem->nid, mem->group,
 				  start_pfn, nr_pages);
 =======
 	zone = zone_for_pfn_range(mem->online_type, mem->nid, start_pfn, nr_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zone = zone_for_pfn_range(mem->online_type, mem->nid, mem->group,
+				  start_pfn, nr_pages);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Although vmemmap pages have a different lifecycle than the pages
@@ -208,10 +219,14 @@ static int memory_block_online(struct memory_block *mem)
 
 	ret = online_pages(start_pfn + nr_vmemmap_pages,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			   nr_pages - nr_vmemmap_pages, zone, mem->group);
 =======
 			   nr_pages - nr_vmemmap_pages, zone);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   nr_pages - nr_vmemmap_pages, zone, mem->group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		if (nr_vmemmap_pages)
 			mhp_deinit_memmap_on_memory(start_pfn, nr_vmemmap_pages);
@@ -224,11 +239,16 @@ static int memory_block_online(struct memory_block *mem)
 	 */
 	if (nr_vmemmap_pages)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		adjust_present_page_count(pfn_to_page(start_pfn), mem->group,
 					  nr_vmemmap_pages);
 =======
 		adjust_present_page_count(zone, nr_vmemmap_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		adjust_present_page_count(pfn_to_page(start_pfn), mem->group,
+					  nr_vmemmap_pages);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -239,15 +259,19 @@ static int memory_block_offline(struct memory_block *mem)
 	unsigned long nr_pages = PAGES_PER_SECTION * sections_per_block;
 	unsigned long nr_vmemmap_pages = mem->nr_vmemmap_pages;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct zone *zone;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	/*
 	 * Unaccount before offlining, such that unpopulated zone and kthreads
 	 * can properly be torn down in offline_pages().
 	 */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (nr_vmemmap_pages)
 		adjust_present_page_count(pfn_to_page(start_pfn), mem->group,
@@ -265,14 +289,24 @@ static int memory_block_offline(struct memory_block *mem)
 		zone = page_zone(pfn_to_page(start_pfn));
 		adjust_present_page_count(zone, -nr_vmemmap_pages);
 	}
+=======
+	if (nr_vmemmap_pages)
+		adjust_present_page_count(pfn_to_page(start_pfn), mem->group,
+					  -nr_vmemmap_pages);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = offline_pages(start_pfn + nr_vmemmap_pages,
-			    nr_pages - nr_vmemmap_pages);
+			    nr_pages - nr_vmemmap_pages, mem->group);
 	if (ret) {
 		/* offline_pages() failed. Account back. */
 		if (nr_vmemmap_pages)
+<<<<<<< HEAD
 			adjust_present_page_count(zone, nr_vmemmap_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			adjust_present_page_count(pfn_to_page(start_pfn),
+						  mem->group, nr_vmemmap_pages);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	}
 
@@ -415,19 +449,27 @@ static ssize_t phys_device_show(struct device *dev,
 #ifdef CONFIG_MEMORY_HOTREMOVE
 static int print_allowed_zone(char *buf, int len, int nid,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			      struct memory_group *group,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			      struct memory_group *group,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      unsigned long start_pfn, unsigned long nr_pages,
 			      int online_type, struct zone *default_zone)
 {
 	struct zone *zone;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	zone = zone_for_pfn_range(online_type, nid, group, start_pfn, nr_pages);
 =======
 	zone = zone_for_pfn_range(online_type, nid, start_pfn, nr_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zone = zone_for_pfn_range(online_type, nid, group, start_pfn, nr_pages);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (zone == default_zone)
 		return 0;
 
@@ -441,15 +483,23 @@ static ssize_t valid_zones_show(struct device *dev,
 	unsigned long start_pfn = section_nr_to_pfn(mem->start_section_nr);
 	unsigned long nr_pages = PAGES_PER_SECTION * sections_per_block;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct memory_group *group = mem->group;
 	struct zone *default_zone;
 	int nid = mem->nid;
 	int len = 0;
 =======
+=======
+	struct memory_group *group = mem->group;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct zone *default_zone;
+	int nid = mem->nid;
 	int len = 0;
+<<<<<<< HEAD
 	int nid;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Check the existing zone. Make sure that we do that only on the
@@ -469,6 +519,7 @@ static ssize_t valid_zones_show(struct device *dev,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	default_zone = zone_for_pfn_range(MMOP_ONLINE, nid, group,
 					  start_pfn, nr_pages);
 
@@ -480,12 +531,20 @@ static ssize_t valid_zones_show(struct device *dev,
 	nid = mem->nid;
 	default_zone = zone_for_pfn_range(MMOP_ONLINE, nid, start_pfn,
 					  nr_pages);
+=======
+	default_zone = zone_for_pfn_range(MMOP_ONLINE, nid, group,
+					  start_pfn, nr_pages);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	len += sysfs_emit_at(buf, len, "%s", default_zone->name);
-	len += print_allowed_zone(buf, len, nid, start_pfn, nr_pages,
+	len += print_allowed_zone(buf, len, nid, group, start_pfn, nr_pages,
 				  MMOP_ONLINE_KERNEL, default_zone);
+<<<<<<< HEAD
 	len += print_allowed_zone(buf, len, nid, start_pfn, nr_pages,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	len += print_allowed_zone(buf, len, nid, group, start_pfn, nr_pages,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  MMOP_ONLINE_MOVABLE, default_zone);
 out:
 	len += sysfs_emit_at(buf, len, "\n");
@@ -644,6 +703,7 @@ static struct memory_block *find_memory_block_by_id(unsigned long block_id)
  * Called under device_hotplug_lock.
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct memory_block *find_memory_block(unsigned long section_nr)
 {
 	unsigned long block_id = memory_block_id(section_nr);
@@ -652,6 +712,11 @@ struct memory_block *find_memory_block(struct mem_section *section)
 {
 	unsigned long block_id = memory_block_id(__section_nr(section));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct memory_block *find_memory_block(unsigned long section_nr)
+{
+	unsigned long block_id = memory_block_id(section_nr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return find_memory_block_by_id(block_id);
 }
@@ -706,11 +771,16 @@ int register_memory(struct memory_block *memory)
 
 static int init_memory_block(unsigned long block_id, unsigned long state,
 <<<<<<< HEAD
+<<<<<<< HEAD
 			     unsigned long nr_vmemmap_pages,
 			     struct memory_group *group)
 =======
 			     unsigned long nr_vmemmap_pages)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     unsigned long nr_vmemmap_pages,
+			     struct memory_group *group)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct memory_block *mem;
 	int ret = 0;
@@ -729,14 +799,20 @@ static int init_memory_block(unsigned long block_id, unsigned long state,
 	mem->nid = NUMA_NO_NODE;
 	mem->nr_vmemmap_pages = nr_vmemmap_pages;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&mem->group_next);
 
 	if (group) {
 		mem->group = group;
 		list_add(&mem->group_next, &group->memory_blocks);
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = register_memory(mem);
 
@@ -757,10 +833,14 @@ static int add_memory_block(unsigned long base_section_nr)
 		return 0;
 	return init_memory_block(memory_block_id(base_section_nr),
 <<<<<<< HEAD
+<<<<<<< HEAD
 				 MEM_ONLINE, 0,  NULL);
 =======
 				 MEM_ONLINE, 0);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 MEM_ONLINE, 0,  NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void unregister_memory(struct memory_block *memory)
@@ -771,13 +851,19 @@ static void unregister_memory(struct memory_block *memory)
 	WARN_ON(xa_erase(&memory_blocks, memory->dev.id) == NULL);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (memory->group) {
 		list_del(&memory->group_next);
 		memory->group = NULL;
 	}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* drop the ref. we got via find_memory_block() */
 	put_device(&memory->dev);
 	device_unregister(&memory->dev);
@@ -792,11 +878,16 @@ static void unregister_memory(struct memory_block *memory)
  */
 int create_memory_block_devices(unsigned long start, unsigned long size,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				unsigned long vmemmap_pages,
 				struct memory_group *group)
 =======
 				unsigned long vmemmap_pages)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				unsigned long vmemmap_pages,
+				struct memory_group *group)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const unsigned long start_block_id = pfn_to_block_id(PFN_DOWN(start));
 	unsigned long end_block_id = pfn_to_block_id(PFN_DOWN(start + size));
@@ -810,11 +901,16 @@ int create_memory_block_devices(unsigned long start, unsigned long size,
 
 	for (block_id = start_block_id; block_id != end_block_id; block_id++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = init_memory_block(block_id, MEM_OFFLINE, vmemmap_pages,
 					group);
 =======
 		ret = init_memory_block(block_id, MEM_OFFLINE, vmemmap_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = init_memory_block(block_id, MEM_OFFLINE, vmemmap_pages,
+					group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			break;
 	}
@@ -999,6 +1095,9 @@ int for_each_memory_block(void *arg, walk_memory_blocks_func_t func)
 				for_each_memory_block_cb);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * This is an internal helper to unify allocation and initialization of
@@ -1160,5 +1259,8 @@ int walk_dynamic_memory_groups(int nid, walk_memory_groups_func_t func,
 	}
 	return ret;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

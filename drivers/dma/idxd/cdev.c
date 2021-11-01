@@ -42,10 +42,14 @@ struct idxd_user_context {
 static void idxd_cdev_dev_release(struct device *dev)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct idxd_cdev *idxd_cdev = dev_to_cdev(dev);
 =======
 	struct idxd_cdev *idxd_cdev = container_of(dev, struct idxd_cdev, dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct idxd_cdev *idxd_cdev = dev_to_cdev(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct idxd_cdev_context *cdev_ctx;
 	struct idxd_wq *wq = idxd_cdev->wq;
 
@@ -223,6 +227,7 @@ static __poll_t idxd_cdev_poll(struct file *filp,
 	struct idxd_wq *wq = ctx->wq;
 	struct idxd_device *idxd = wq->idxd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__poll_t out = 0;
 
 	poll_wait(filp, &wq->err_queue, wait);
@@ -232,14 +237,20 @@ static __poll_t idxd_cdev_poll(struct file *filp,
 	spin_unlock(&idxd->dev_lock);
 =======
 	unsigned long flags;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__poll_t out = 0;
 
 	poll_wait(filp, &wq->err_queue, wait);
-	spin_lock_irqsave(&idxd->dev_lock, flags);
+	spin_lock(&idxd->dev_lock);
 	if (idxd->sw_err.valid)
 		out = EPOLLIN | EPOLLRDNORM;
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&idxd->dev_lock, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock(&idxd->dev_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return out;
 }
@@ -271,6 +282,7 @@ int idxd_wq_add_cdev(struct idxd_wq *wq)
 		return -ENOMEM;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	idxd_cdev->idxd_dev.type = IDXD_DEV_CDEV;
 	idxd_cdev->wq = wq;
 	cdev = &idxd_cdev->cdev;
@@ -280,6 +292,12 @@ int idxd_wq_add_cdev(struct idxd_wq *wq)
 	cdev = &idxd_cdev->cdev;
 	dev = &idxd_cdev->dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	idxd_cdev->idxd_dev.type = IDXD_DEV_CDEV;
+	idxd_cdev->wq = wq;
+	cdev = &idxd_cdev->cdev;
+	dev = cdev_dev(idxd_cdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cdev_ctx = &ictx[wq->idxd->data->type];
 	minor = ida_simple_get(&cdev_ctx->minor_ida, 0, MINORMASK, GFP_KERNEL);
 	if (minor < 0) {
@@ -290,10 +308,14 @@ int idxd_wq_add_cdev(struct idxd_wq *wq)
 
 	device_initialize(dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	dev->parent = wq_confdev(wq);
 =======
 	dev->parent = &wq->conf_dev;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev->parent = wq_confdev(wq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev->bus = &dsa_bus_type;
 	dev->type = &idxd_cdev_device_type;
 	dev->devt = MKDEV(MAJOR(cdev_ctx->devt), minor);
@@ -324,6 +346,7 @@ void idxd_wq_del_cdev(struct idxd_wq *wq)
 
 	idxd_cdev = wq->idxd_cdev;
 	wq->idxd_cdev = NULL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	cdev_device_del(&idxd_cdev->cdev, cdev_dev(idxd_cdev));
 	put_device(cdev_dev(idxd_cdev));
@@ -392,6 +415,69 @@ EXPORT_SYMBOL_GPL(idxd_user_drv);
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cdev_device_del(&idxd_cdev->cdev, cdev_dev(idxd_cdev));
+	put_device(cdev_dev(idxd_cdev));
+}
+
+static int idxd_user_drv_probe(struct idxd_dev *idxd_dev)
+{
+	struct idxd_wq *wq = idxd_dev_to_wq(idxd_dev);
+	struct idxd_device *idxd = wq->idxd;
+	int rc;
+
+	if (idxd->state != IDXD_DEV_ENABLED)
+		return -ENXIO;
+
+	mutex_lock(&wq->wq_lock);
+	wq->type = IDXD_WQT_USER;
+	rc = __drv_enable_wq(wq);
+	if (rc < 0)
+		goto err;
+
+	rc = idxd_wq_add_cdev(wq);
+	if (rc < 0) {
+		idxd->cmd_status = IDXD_SCMD_CDEV_ERR;
+		goto err_cdev;
+	}
+
+	idxd->cmd_status = 0;
+	mutex_unlock(&wq->wq_lock);
+	return 0;
+
+err_cdev:
+	__drv_disable_wq(wq);
+err:
+	wq->type = IDXD_WQT_NONE;
+	mutex_unlock(&wq->wq_lock);
+	return rc;
+}
+
+static void idxd_user_drv_remove(struct idxd_dev *idxd_dev)
+{
+	struct idxd_wq *wq = idxd_dev_to_wq(idxd_dev);
+
+	mutex_lock(&wq->wq_lock);
+	idxd_wq_del_cdev(wq);
+	__drv_disable_wq(wq);
+	wq->type = IDXD_WQT_NONE;
+	mutex_unlock(&wq->wq_lock);
+}
+
+static enum idxd_dev_type dev_types[] = {
+	IDXD_DEV_WQ,
+	IDXD_DEV_NONE,
+};
+
+struct idxd_device_driver idxd_user_drv = {
+	.probe = idxd_user_drv_probe,
+	.remove = idxd_user_drv_remove,
+	.name = "user",
+	.type = dev_types,
+};
+EXPORT_SYMBOL_GPL(idxd_user_drv);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int idxd_cdev_register(void)
 {
 	int rc, i;

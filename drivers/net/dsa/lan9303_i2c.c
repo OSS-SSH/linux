@@ -68,6 +68,7 @@ static int lan9303_i2c_probe(struct i2c_client *client,
 static int lan9303_i2c_remove(struct i2c_client *client)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct lan9303_i2c *sw_dev = i2c_get_clientdata(client);
 
 	if (!sw_dev)
@@ -92,13 +93,35 @@ static void lan9303_i2c_shutdown(struct i2c_client *client)
 	i2c_set_clientdata(client, NULL);
 =======
 	struct lan9303_i2c *sw_dev;
+=======
+	struct lan9303_i2c *sw_dev = i2c_get_clientdata(client);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	sw_dev = i2c_get_clientdata(client);
 	if (!sw_dev)
-		return -ENODEV;
+		return 0;
 
+	lan9303_remove(&sw_dev->chip);
+
+	i2c_set_clientdata(client, NULL);
+
+	return 0;
+}
+
+static void lan9303_i2c_shutdown(struct i2c_client *client)
+{
+	struct lan9303_i2c *sw_dev = i2c_get_clientdata(client);
+
+	if (!sw_dev)
+		return;
+
+	lan9303_shutdown(&sw_dev->chip);
+
+<<<<<<< HEAD
 	return lan9303_remove(&sw_dev->chip);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i2c_set_clientdata(client, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*-------------------------------------------------------------------------*/
@@ -123,9 +146,13 @@ static struct i2c_driver lan9303_i2c_driver = {
 	.probe = lan9303_i2c_probe,
 	.remove = lan9303_i2c_remove,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.shutdown = lan9303_i2c_shutdown,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown = lan9303_i2c_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table = lan9303_i2c_id,
 };
 module_i2c_driver(lan9303_i2c_driver);

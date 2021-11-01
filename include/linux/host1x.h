@@ -171,10 +171,15 @@ void host1x_syncpt_release_vblank_reservation(struct host1x_client *client,
 					      u32 syncpt_id);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct dma_fence *host1x_fence_create(struct host1x_syncpt *sp, u32 threshold);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct dma_fence *host1x_fence_create(struct host1x_syncpt *sp, u32 threshold);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * host1x channel
  */
@@ -222,12 +227,17 @@ struct host1x_job {
 
 	/* Gathers and their memory */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct host1x_job_cmd *cmds;
 	unsigned int num_cmds;
 =======
 	struct host1x_job_gather *gathers;
 	unsigned int num_gathers;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct host1x_job_cmd *cmds;
+	unsigned int num_cmds;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Array of handles to be pinned & unpinned */
 	struct host1x_reloc *relocs;
@@ -245,6 +255,9 @@ struct host1x_job {
 	u32 syncpt_end;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Completion waiter ref */
 	void *waiter;
 
@@ -254,11 +267,14 @@ struct host1x_job {
 	/* Job has timed out and should be released */
 	bool cancelled;
 
+<<<<<<< HEAD
 =======
 	/* Maximum time to wait for this job */
 	unsigned int timeout;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Index and number of slots used in the push buffer */
 	unsigned int first_get;
 	unsigned int num_slots;
@@ -280,6 +296,9 @@ struct host1x_job {
 	/* Add a channel wait for previous ops to complete */
 	bool serialize;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Fast-forward syncpoint increments on job timeout */
 	bool syncpt_recovery;
@@ -290,6 +309,7 @@ struct host1x_job {
 
 	/* Whether host1x-side firewall should be ran for this job or not */
 	bool enable_firewall;
+<<<<<<< HEAD
 };
 
 struct host1x_job *host1x_job_alloc(struct host1x_channel *ch,
@@ -300,13 +320,21 @@ void host1x_job_add_gather(struct host1x_job *job, struct host1x_bo *bo,
 void host1x_job_add_wait(struct host1x_job *job, u32 id, u32 thresh,
 			 bool relative, u32 next_class);
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct host1x_job *host1x_job_alloc(struct host1x_channel *ch,
-				    u32 num_cmdbufs, u32 num_relocs);
+				    u32 num_cmdbufs, u32 num_relocs,
+				    bool skip_firewall);
 void host1x_job_add_gather(struct host1x_job *job, struct host1x_bo *bo,
 			   unsigned int words, unsigned int offset);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void host1x_job_add_wait(struct host1x_job *job, u32 id, u32 thresh,
+			 bool relative, u32 next_class);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct host1x_job *host1x_job_get(struct host1x_job *job);
 void host1x_job_put(struct host1x_job *job);
 int host1x_job_pin(struct host1x_job *job, struct device *dev);

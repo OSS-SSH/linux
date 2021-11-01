@@ -97,9 +97,13 @@ enum {
 	MCASP_VERSION_3,        /* TI81xx/AM33xx */
 	MCASP_VERSION_4,	/* DRA7xxx */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MCASP_VERSION_OMAP,	/* OMAP4/5 */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MCASP_VERSION_OMAP,	/* OMAP4/5 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum mcbsp_clk_input_pin {

@@ -2152,6 +2152,7 @@ static const struct snd_kcontrol_new snd_vt1724_mixer_pro_peak = {
 
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
  *
  */
@@ -2161,6 +2162,8 @@ static const struct snd_ice1712_card_info no_matched;
 
 /*
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ooAoo cards with no controls
 */
 static const unsigned char ooaoo_sq210_eeprom[] = {
@@ -2458,6 +2461,7 @@ static int snd_vt1724_build_controls(struct snd_ice1712 *ice)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void snd_vt1724_free(struct snd_card *card)
 {
 	struct snd_ice1712 *ice = card->private_data;
@@ -2469,33 +2473,30 @@ static void snd_vt1724_free(struct snd_card *card)
 	snd_ice1712_akm4xxx_free(ice);
 =======
 static int snd_vt1724_free(struct snd_ice1712 *ice)
+=======
+static void snd_vt1724_free(struct snd_card *card)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	if (!ice->port)
-		goto __hw_end;
+	struct snd_ice1712 *ice = card->private_data;
+
 	/* mask all interrupts */
 	outb(0xff, ICEMT1724(ice, DMA_INT_MASK));
 	outb(0xff, ICEREG1724(ice, IRQMASK));
-	/* --- */
-__hw_end:
-	if (ice->irq >= 0)
-		free_irq(ice->irq, ice);
-	pci_release_regions(ice->pci);
-	snd_ice1712_akm4xxx_free(ice);
-	pci_disable_device(ice->pci);
-	kfree(ice->spec);
-	kfree(ice);
-	return 0;
-}
 
+<<<<<<< HEAD
 static int snd_vt1724_dev_free(struct snd_device *device)
 {
 	struct snd_ice1712 *ice = device->device_data;
 	return snd_vt1724_free(ice);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	snd_ice1712_akm4xxx_free(ice);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_vt1724_create(struct snd_card *card,
 			     struct pci_dev *pci,
+<<<<<<< HEAD
 <<<<<<< HEAD
 			     const char *modelname)
 {
@@ -2510,26 +2511,27 @@ static int snd_vt1724_create(struct snd_card *card,
 =======
 			     const char *modelname,
 			     struct snd_ice1712 **r_ice1712)
+=======
+			     const char *modelname)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct snd_ice1712 *ice;
+	struct snd_ice1712 *ice = card->private_data;
 	int err;
-	static const struct snd_device_ops ops = {
-		.dev_free =	snd_vt1724_dev_free,
-	};
-
-	*r_ice1712 = NULL;
 
 	/* enable PCI device */
-	err = pci_enable_device(pci);
+	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	ice = kzalloc(sizeof(*ice), GFP_KERNEL);
 	if (ice == NULL) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ice->vt1724 = 1;
 	spin_lock_init(&ice->reg_lock);
 	mutex_init(&ice->gpio_mutex);
@@ -2548,6 +2550,7 @@ static int snd_vt1724_create(struct snd_card *card,
 	snd_vt1724_proc_init(ice);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	err = pci_request_regions(pci, "ICE1724");
 	if (err < 0)
 		return err;
@@ -2560,25 +2563,28 @@ static int snd_vt1724_create(struct snd_card *card,
 =======
 	card->private_data = ice;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = pci_request_regions(pci, "ICE1724");
-	if (err < 0) {
-		kfree(ice);
-		pci_disable_device(pci);
+	if (err < 0)
 		return err;
-	}
 	ice->port = pci_resource_start(pci, 0);
 	ice->profi_port = pci_resource_start(pci, 1);
 
-	if (request_irq(pci->irq, snd_vt1724_interrupt,
-			IRQF_SHARED, KBUILD_MODNAME, ice)) {
+	if (devm_request_irq(&pci->dev, pci->irq, snd_vt1724_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, ice)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+<<<<<<< HEAD
 		snd_vt1724_free(ice);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 	}
 
 	ice->irq = pci->irq;
 	card->sync_irq = ice->irq;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	card->private_free = snd_vt1724_free;
 
@@ -2589,17 +2595,17 @@ static int snd_vt1724_create(struct snd_card *card,
 		return -EIO;
 
 =======
+=======
+	card->private_free = snd_vt1724_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_vt1724_chip_reset(ice);
-	if (snd_vt1724_read_eeprom(ice, modelname) < 0) {
-		snd_vt1724_free(ice);
+	if (snd_vt1724_read_eeprom(ice, modelname) < 0)
 		return -EIO;
-	}
-	if (snd_vt1724_chip_init(ice) < 0) {
-		snd_vt1724_free(ice);
+	if (snd_vt1724_chip_init(ice) < 0)
 		return -EIO;
-	}
 
+<<<<<<< HEAD
 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, ice, &ops);
 	if (err < 0) {
 		snd_vt1724_free(ice);
@@ -2608,6 +2614,8 @@ static int snd_vt1724_create(struct snd_card *card,
 
 	*r_ice1712 = ice;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2626,10 +2634,14 @@ static int snd_vt1724_probe(struct pci_dev *pci,
 	struct snd_ice1712 *ice;
 	int pcm_dev = 0, err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const struct snd_ice1712_card_info *c;
 =======
 	const struct snd_ice1712_card_info * const *tbl, *c;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct snd_ice1712_card_info *c;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dev >= SNDRV_CARDS)
 		return -ENODEV;
@@ -2638,6 +2650,7 @@ static int snd_vt1724_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*ice), &card);
@@ -2650,10 +2663,18 @@ static int snd_vt1724_probe(struct pci_dev *pci,
 	if (err < 0)
 		return err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*ice), &card);
+	if (err < 0)
+		return err;
+	ice = card->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, "ICE1724");
 	strcpy(card->shortname, "ICEnsemble ICE1724");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	err = snd_vt1724_create(card, pci, model[dev]);
 	if (err < 0)
@@ -2665,11 +2686,19 @@ static int snd_vt1724_probe(struct pci_dev *pci,
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_vt1724_create(card, pci, model[dev]);
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* field init before calling chip_init */
 	ice->ext_clock_count = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	c = ice->card_info;
 	if (c) {
 		strcpy(card->shortname, c->name);
@@ -2679,6 +2708,7 @@ static int snd_vt1724_probe(struct pci_dev *pci,
 			err = c->chip_init(ice);
 			if (err < 0)
 				return err;
+<<<<<<< HEAD
 		}
 	}
 
@@ -2705,6 +2735,11 @@ static int snd_vt1724_probe(struct pci_dev *pci,
 	c = &no_matched;
 __found:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	* VT1724 has separate DMAs for the analog and the SPDIF streams while
 	* ICE1712 has only one for both (mixed up).
@@ -2735,6 +2770,7 @@ __found:
 		set_std_hw_rates(ice);
 
 	err = snd_vt1724_pcm_profi(ice, pcm_dev++);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (err < 0)
 		return err;
@@ -2771,55 +2807,50 @@ __found:
 =======
 	if (err < 0) {
 		snd_card_free(card);
+=======
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 
 	err = snd_vt1724_pcm_spdif(ice, pcm_dev++);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 
 	err = snd_vt1724_pcm_indep(ice, pcm_dev++);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 
 	err = snd_vt1724_ac97_mixer(ice);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 
 	err = snd_vt1724_build_controls(ice);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 
 	if (ice->pcm && ice->has_spdif) { /* has SPDIF I/O */
 		err = snd_vt1724_spdif_build_controls(ice);
-		if (err < 0) {
-			snd_card_free(card);
+		if (err < 0)
 			return err;
-		}
 	}
 
-	if (c->build_controls) {
+	if (c && c->build_controls) {
 		err = c->build_controls(ice);
-		if (err < 0) {
-			snd_card_free(card);
+		if (err < 0)
 			return err;
-		}
 	}
 
+<<<<<<< HEAD
 	if (!c->no_mpu401) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!c || !c->no_mpu401) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ice->eeprom.data[ICE_EEP2_SYSCONF] & VT1724_CFG_MPU401) {
 			struct snd_rawmidi *rmidi;
 
 			err = snd_rawmidi_new(card, "MIDI", 0, 1, 1, &rmidi);
+<<<<<<< HEAD
 <<<<<<< HEAD
 			if (err < 0)
 				return err;
@@ -2829,6 +2860,10 @@ __found:
 				return err;
 			}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (err < 0)
+				return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ice->rmidi[0] = rmidi;
 			rmidi->private_data = ice;
 			strcpy(rmidi->name, "ICE1724 MIDI");
@@ -2854,6 +2889,7 @@ __found:
 
 	err = snd_card_register(card);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 =======
@@ -2862,11 +2898,16 @@ __found:
 		return err;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static void snd_vt1724_remove(struct pci_dev *pci)
@@ -2880,6 +2921,8 @@ static void snd_vt1724_remove(struct pci_dev *pci)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 static int snd_vt1724_suspend(struct device *dev)
 {
@@ -2958,9 +3001,12 @@ static struct pci_driver vt1724_driver = {
 	.id_table = snd_vt1724_ids,
 	.probe = snd_vt1724_probe,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	.remove = snd_vt1724_remove,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_VT1724_PM_OPS,
 	},

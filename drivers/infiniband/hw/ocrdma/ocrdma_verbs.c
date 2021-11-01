@@ -1289,6 +1289,7 @@ static void ocrdma_store_gsi_qp_cq(struct ocrdma_dev *dev,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int ocrdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
 		     struct ib_udata *udata)
 {
@@ -1301,21 +1302,35 @@ int ocrdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
 struct ib_qp *ocrdma_create_qp(struct ib_pd *ibpd,
 			       struct ib_qp_init_attr *attrs,
 			       struct ib_udata *udata)
+=======
+int ocrdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+		     struct ib_udata *udata)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int status;
+	struct ib_pd *ibpd = ibqp->pd;
 	struct ocrdma_pd *pd = get_ocrdma_pd(ibpd);
+<<<<<<< HEAD
 	struct ocrdma_qp *qp;
 	struct ocrdma_dev *dev = get_ocrdma_dev(ibpd->device);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ocrdma_qp *qp = get_ocrdma_qp(ibqp);
+	struct ocrdma_dev *dev = get_ocrdma_dev(ibqp->device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ocrdma_create_qp_ureq ureq;
 	u16 dpp_credit_lmt, dpp_offset;
 
 	if (attrs->create_flags)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return -EOPNOTSUPP;
 =======
 		return ERR_PTR(-EOPNOTSUPP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	status = ocrdma_check_qp_params(ibpd, dev, attrs, udata);
 	if (status)
@@ -1324,6 +1339,7 @@ struct ib_qp *ocrdma_create_qp(struct ib_pd *ibpd,
 	memset(&ureq, 0, sizeof(ureq));
 	if (udata) {
 		if (ib_copy_from_udata(&ureq, udata, sizeof(ureq)))
+<<<<<<< HEAD
 <<<<<<< HEAD
 			return -EFAULT;
 =======
@@ -1334,6 +1350,9 @@ struct ib_qp *ocrdma_create_qp(struct ib_pd *ibpd,
 		status = -ENOMEM;
 		goto gen_err;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return -EFAULT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	ocrdma_set_qp_init_params(qp, pd, attrs);
 	if (udata == NULL)
@@ -1369,10 +1388,14 @@ struct ib_qp *ocrdma_create_qp(struct ib_pd *ibpd,
 	qp->ibqp.qp_num = qp->id;
 	mutex_unlock(&dev->dev_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return 0;
 =======
 	return &qp->ibqp;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 cpy_err:
 	ocrdma_del_qpn_map(dev, qp);
@@ -1383,6 +1406,7 @@ mbx_err:
 	kfree(qp->wqe_wr_id_tbl);
 	kfree(qp->rqe_wr_id_tbl);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pr_err("%s(%d) error=%d\n", __func__, dev->id, status);
 gen_err:
 	return status;
@@ -1392,6 +1416,11 @@ gen_err:
 gen_err:
 	return ERR_PTR(status);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_err("%s(%d) error=%d\n", __func__, dev->id, status);
+gen_err:
+	return status;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int _ocrdma_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
@@ -1761,9 +1790,12 @@ int ocrdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
 	kfree(qp->wqe_wr_id_tbl);
 	kfree(qp->rqe_wr_id_tbl);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	kfree(qp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

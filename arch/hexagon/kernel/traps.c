@@ -29,12 +29,15 @@
 #define TRAP_DEBUG	0xdb
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void __init trap_init(void)
 {
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_GENERIC_BUG
 /* Maybe should resemble arch/sh/kernel/traps.c ?? */
 int is_valid_bugaddr(unsigned long addr)

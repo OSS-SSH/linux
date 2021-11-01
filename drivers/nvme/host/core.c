@@ -14,9 +14,12 @@
 #include <linux/module.h>
 #include <linux/backing-dev.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include <linux/list_sort.h>
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 #include <linux/types.h>
 #include <linux/pr.h>
@@ -120,10 +123,15 @@ static void nvme_put_subsystem(struct nvme_subsystem *subsys);
 static void nvme_remove_invalid_namespaces(struct nvme_ctrl *ctrl,
 					   unsigned nsid);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void nvme_update_keep_alive(struct nvme_ctrl *ctrl,
 				   struct nvme_command *cmd);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void nvme_update_keep_alive(struct nvme_ctrl *ctrl,
+				   struct nvme_command *cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Prepare a queue for teardown.
@@ -596,11 +604,14 @@ static void nvme_free_ns(struct kref *kref)
 	struct nvme_ns *ns = container_of(kref, struct nvme_ns, kref);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (ns->ndev)
 		nvme_nvm_unregister(ns);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	put_disk(ns->disk);
 	nvme_put_ns_head(ns->head);
 	nvme_put_ctrl(ns->ctrl);
@@ -912,13 +923,19 @@ static inline blk_status_t nvme_setup_write_zeroes(struct nvme_ns *ns,
 	cmnd->write_zeroes.length =
 		cpu_to_le16((blk_rq_bytes(req) >> ns->lba_shift) - 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (nvme_ns_has_pi(ns))
 		cmnd->write_zeroes.control = cpu_to_le16(NVME_RW_PRINFO_PRACT);
 	else
 		cmnd->write_zeroes.control = 0;
+<<<<<<< HEAD
 =======
 	cmnd->write_zeroes.control = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return BLK_STS_OK;
 }
 
@@ -984,6 +1001,7 @@ void nvme_cleanup_cmd(struct request *req)
 	if (req->rq_flags & RQF_SPECIAL_PAYLOAD) {
 		struct nvme_ctrl *ctrl = nvme_req(req)->ctrl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (req->special_vec.bv_page == ctrl->discard_page)
 			clear_bit_unlock(0, &ctrl->discard_page_busy);
@@ -991,12 +1009,18 @@ void nvme_cleanup_cmd(struct request *req)
 			kfree(bvec_virt(&req->special_vec));
 =======
 		struct page *page = req->special_vec.bv_page;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		if (page == ctrl->discard_page)
+		if (req->special_vec.bv_page == ctrl->discard_page)
 			clear_bit_unlock(0, &ctrl->discard_page_busy);
 		else
+<<<<<<< HEAD
 			kfree(page_address(page) + req->special_vec.bv_offset);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			kfree(bvec_virt(&req->special_vec));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 EXPORT_SYMBOL_GPL(nvme_cleanup_cmd);
@@ -1005,9 +1029,13 @@ blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req)
 {
 	struct nvme_command *cmd = nvme_req(req)->cmd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nvme_ctrl *ctrl = nvme_req(req)->ctrl;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct nvme_ctrl *ctrl = nvme_req(req)->ctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blk_status_t ret = BLK_STS_OK;
 
 	if (!(req->rq_flags & RQF_DONTPREP)) {
@@ -1057,12 +1085,18 @@ blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!(ctrl->quirks & NVME_QUIRK_SKIP_CID_GEN))
 		nvme_req(req)->genctr++;
 	cmd->common.command_id = nvme_cid(req);
 =======
 	cmd->common.command_id = req->tag;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(ctrl->quirks & NVME_QUIRK_SKIP_CID_GEN))
+		nvme_req(req)->genctr++;
+	cmd->common.command_id = nvme_cid(req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	trace_nvme_setup_cmd(req, cmd);
 	return ret;
 }
@@ -1189,11 +1223,16 @@ static u32 nvme_passthru_start(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static void nvme_passthru_end(struct nvme_ctrl *ctrl, u32 effects,
 			      struct nvme_command *cmd, int status)
 =======
 static void nvme_passthru_end(struct nvme_ctrl *ctrl, u32 effects)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void nvme_passthru_end(struct nvme_ctrl *ctrl, u32 effects,
+			      struct nvme_command *cmd, int status)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (effects & NVME_CMD_EFFECTS_CSE_MASK) {
 		nvme_unfreeze(ctrl);
@@ -1209,6 +1248,9 @@ static void nvme_passthru_end(struct nvme_ctrl *ctrl, u32 effects)
 		flush_work(&ctrl->scan_work);
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (cmd->common.opcode) {
 	case nvme_admin_set_features:
@@ -1229,8 +1271,11 @@ static void nvme_passthru_end(struct nvme_ctrl *ctrl, u32 effects)
 	default:
 		break;
 	}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int nvme_execute_passthru_rq(struct request *rq)
@@ -1246,10 +1291,14 @@ int nvme_execute_passthru_rq(struct request *rq)
 	ret = nvme_execute_rq(disk, rq, false);
 	if (effects) /* nothing to be done for zero cmd effects */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		nvme_passthru_end(ctrl, effects, cmd, ret);
 =======
 		nvme_passthru_end(ctrl, effects);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nvme_passthru_end(ctrl, effects, cmd, ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -1338,6 +1387,9 @@ void nvme_stop_keep_alive(struct nvme_ctrl *ctrl)
 EXPORT_SYMBOL_GPL(nvme_stop_keep_alive);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nvme_update_keep_alive(struct nvme_ctrl *ctrl,
 				   struct nvme_command *cmd)
 {
@@ -1353,8 +1405,11 @@ static void nvme_update_keep_alive(struct nvme_ctrl *ctrl,
 	nvme_start_keep_alive(ctrl);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * In NVMe 1.0 the CNS field was just a binary controller or namespace
  * flag, thus sending any new CNS opcodes has a big chance of not working.
@@ -1389,6 +1444,7 @@ static int nvme_identify_ctrl(struct nvme_ctrl *dev, struct nvme_id_ctrl **id)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static bool nvme_multi_css(struct nvme_ctrl *ctrl)
 {
@@ -1396,6 +1452,8 @@ static bool nvme_multi_css(struct nvme_ctrl *ctrl)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int nvme_process_ns_desc(struct nvme_ctrl *ctrl, struct nvme_ns_ids *ids,
 		struct nvme_ns_id_desc *cur, bool *csi_seen)
 {
@@ -1909,10 +1967,14 @@ static inline bool nvme_first_scan(struct gendisk *disk)
 {
 	/* nvme_alloc_ns() scans the disk prior to adding it */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return !disk_live(disk);
 =======
 	return !(disk->flags & GENHD_FL_UP);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return !disk_live(disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void nvme_set_chunk_sectors(struct nvme_ns *ns, struct nvme_id_ns *id)
@@ -1968,9 +2030,13 @@ static int nvme_update_ns_info(struct nvme_ns *ns, struct nvme_id_ns *id)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	set_bit(NVME_NS_READY, &ns->flags);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_bit(NVME_NS_READY, &ns->flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blk_mq_unfreeze_queue(ns->disk->queue);
 
 	if (blk_queue_is_zoned(ns->queue)) {
@@ -1983,6 +2049,7 @@ static int nvme_update_ns_info(struct nvme_ns *ns, struct nvme_id_ns *id)
 		blk_mq_freeze_queue(ns->head->disk->queue);
 		nvme_update_disk_info(ns->head->disk, ns, id);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		nvme_mpath_revalidate_paths(ns);
 		blk_stack_limits(&ns->head->disk->queue->limits,
 				 &ns->queue->limits, 0);
@@ -1992,6 +2059,12 @@ static int nvme_update_ns_info(struct nvme_ns *ns, struct nvme_id_ns *id)
 				 &ns->queue->limits, 0);
 		blk_queue_update_readahead(ns->head->disk->queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nvme_mpath_revalidate_paths(ns);
+		blk_stack_limits(&ns->head->disk->queue->limits,
+				 &ns->queue->limits, 0);
+		disk_update_readahead(ns->head->disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		blk_mq_unfreeze_queue(ns->head->disk->queue);
 	}
 	return 0;
@@ -3320,11 +3393,14 @@ static const struct attribute_group nvme_ns_id_attr_group = {
 const struct attribute_group *nvme_ns_id_attr_groups[] = {
 	&nvme_ns_id_attr_group,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #ifdef CONFIG_NVM
 	&nvme_nvm_attr_group,
 #endif
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NULL,
 };
 
@@ -3600,12 +3676,18 @@ static struct nvme_ns_head *nvme_find_ns_head(struct nvme_subsystem *subsys,
 
 	list_for_each_entry(h, &subsys->nsheads, entry) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (h->ns_id != nsid)
 			continue;
 		if (!list_empty(&h->list) && nvme_tryget_ns_head(h))
 =======
 		if (h->ns_id == nsid && nvme_tryget_ns_head(h))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (h->ns_id != nsid)
+			continue;
+		if (!list_empty(&h->list) && nvme_tryget_ns_head(h))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return h;
 	}
 
@@ -3629,11 +3711,15 @@ static int __nvme_check_ids(struct nvme_subsystem *subsys,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nvme_cdev_rel(struct device *dev)
 {
 	ida_simple_remove(&nvme_ns_chr_minor_ida, MINOR(dev->devt));
 }
 
+<<<<<<< HEAD
 void nvme_cdev_del(struct cdev *cdev, struct device *cdev_device)
 {
 	cdev_device_del(cdev, cdev_device);
@@ -3644,6 +3730,12 @@ void nvme_cdev_del(struct cdev *cdev, struct device *cdev_device)
 	cdev_device_del(cdev, cdev_device);
 	ida_simple_remove(&nvme_ns_chr_minor_ida, MINOR(cdev_device->devt));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nvme_cdev_del(struct cdev *cdev, struct device *cdev_device)
+{
+	cdev_device_del(cdev, cdev_device);
+	put_device(cdev_device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int nvme_cdev_add(struct cdev *cdev, struct device *cdev_device,
@@ -3657,13 +3749,18 @@ int nvme_cdev_add(struct cdev *cdev, struct device *cdev_device,
 	cdev_device->devt = MKDEV(MAJOR(nvme_ns_chr_devt), minor);
 	cdev_device->class = nvme_ns_chr_class;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cdev_device->release = nvme_cdev_rel;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cdev_device->release = nvme_cdev_rel;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	device_initialize(cdev_device);
 	cdev_init(cdev, fops);
 	cdev->owner = owner;
 	ret = cdev_device_add(cdev, cdev_device);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (ret)
 		put_device(cdev_device);
@@ -3674,6 +3771,11 @@ int nvme_cdev_add(struct cdev *cdev, struct device *cdev_device,
 		ida_simple_remove(&nvme_ns_chr_minor_ida, minor);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret)
+		put_device(cdev_device);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -3706,6 +3808,7 @@ static int nvme_add_ns_cdev(struct nvme_ns *ns)
 	if (ret)
 		return ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	return nvme_cdev_add(&ns->cdev, &ns->cdev_device, &nvme_ns_chr_fops,
 			     ns->ctrl->ops->module);
@@ -3716,6 +3819,11 @@ static int nvme_add_ns_cdev(struct nvme_ns *ns)
 		kfree_const(ns->cdev_device.kobj.name);
 	return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return nvme_cdev_add(&ns->cdev, &ns->cdev_device, &nvme_ns_chr_fops,
+			     ns->ctrl->ops->module);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
@@ -3824,6 +3932,7 @@ out_unlock:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int ns_cmp(void *priv, const struct list_head *a,
 		const struct list_head *b)
@@ -3835,6 +3944,8 @@ static int ns_cmp(void *priv, const struct list_head *a,
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct nvme_ns *nvme_find_get_ns(struct nvme_ctrl *ctrl, unsigned nsid)
 {
 	struct nvme_ns *ns, *ret = NULL;
@@ -3856,6 +3967,9 @@ struct nvme_ns *nvme_find_get_ns(struct nvme_ctrl *ctrl, unsigned nsid)
 EXPORT_SYMBOL_NS_GPL(nvme_find_get_ns, NVME_TARGET_PASSTHRU);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Add the namespace to the controller list while keeping the list ordered.
  */
@@ -3872,8 +3986,11 @@ static void nvme_ns_add_to_ctrl_list(struct nvme_ns *ns)
 	list_add(&ns->list, &ns->ctrl->namespaces);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 		struct nvme_ns_ids *ids)
 {
@@ -3890,6 +4007,7 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 		goto out_free_id;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	disk = blk_mq_alloc_disk(ctrl->tagset, ns);
 	if (IS_ERR(disk))
 		goto out_free_ns;
@@ -3903,6 +4021,16 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 	if (IS_ERR(ns->queue))
 		goto out_free_ns;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disk = blk_mq_alloc_disk(ctrl->tagset, ns);
+	if (IS_ERR(disk))
+		goto out_free_ns;
+	disk->fops = &nvme_bdev_ops;
+	disk->private_data = ns;
+
+	ns->disk = disk;
+	ns->queue = disk->queue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ctrl->opts && ctrl->opts->data_digest)
 		blk_queue_flag_set(QUEUE_FLAG_STABLE_WRITES, ns->queue);
@@ -3912,13 +4040,17 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 		blk_queue_flag_set(QUEUE_FLAG_PCI_P2PDMA, ns->queue);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ns->queue->queuedata = ns;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ns->ctrl = ctrl;
 	kref_init(&ns->kref);
 
 	if (nvme_init_ns_head(ns, nsid, ids, id->nmic & NVME_NS_NMIC_SHARED))
+<<<<<<< HEAD
 <<<<<<< HEAD
 		goto out_cleanup_disk;
 
@@ -3933,6 +4065,10 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 	disk->private_data = ns;
 	disk->queue = ns->queue;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_cleanup_disk;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Without the multipath code enabled, multiple controller per
 	 * subsystems are visible as devices and thus we cannot use the
@@ -3941,6 +4077,7 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 	if (!nvme_mpath_set_disk_name(ns, disk->disk_name, &disk->flags))
 		sprintf(disk->disk_name, "nvme%dn%d", ctrl->instance,
 			ns->head->instance);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	if (nvme_update_ns_info(ns, id))
@@ -3956,25 +4093,25 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 
 =======
 	ns->disk = disk;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (nvme_update_ns_info(ns, id))
-		goto out_put_disk;
-
-	if ((ctrl->quirks & NVME_QUIRK_LIGHTNVM) && id->vs[0] == 0x1) {
-		if (nvme_nvm_register(ns, disk->disk_name, node)) {
-			dev_warn(ctrl->device, "LightNVM init failure\n");
-			goto out_put_disk;
-		}
-	}
+		goto out_unlink_ns;
 
 	down_write(&ctrl->namespaces_rwsem);
-	list_add_tail(&ns->list, &ctrl->namespaces);
+	nvme_ns_add_to_ctrl_list(ns);
 	up_write(&ctrl->namespaces_rwsem);
-
 	nvme_get_ctrl(ctrl);
 
+<<<<<<< HEAD
 	device_add_disk(ctrl->device, ns->disk, nvme_ns_id_attr_groups);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (device_add_disk(ctrl->device, ns->disk, nvme_ns_id_attr_groups))
+		goto out_cleanup_ns_from_list;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!nvme_ns_head_multipath(ns->head))
 		nvme_add_ns_cdev(ns);
 
@@ -3984,18 +4121,24 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 
 	return;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  out_cleanup_ns_from_list:
 	nvme_put_ctrl(ctrl);
 	down_write(&ctrl->namespaces_rwsem);
 	list_del_init(&ns->list);
 	up_write(&ctrl->namespaces_rwsem);
+<<<<<<< HEAD
 =======
  out_put_disk:
 	/* prevent double queue cleanup */
 	ns->disk->queue = NULL;
 	put_disk(ns->disk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out_unlink_ns:
 	mutex_lock(&ctrl->subsys->lock);
 	list_del_rcu(&ns->siblings);
@@ -4004,12 +4147,17 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 	mutex_unlock(&ctrl->subsys->lock);
 	nvme_put_ns_head(ns->head);
 <<<<<<< HEAD
+<<<<<<< HEAD
  out_cleanup_disk:
 	blk_cleanup_disk(disk);
 =======
  out_free_queue:
 	blk_cleanup_queue(ns->queue);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ out_cleanup_disk:
+	blk_cleanup_disk(disk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out_free_ns:
 	kfree(ns);
  out_free_id:
@@ -4018,6 +4166,7 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid,
 
 static void nvme_ns_remove(struct nvme_ns *ns)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	bool last_path = false;
 
@@ -4030,11 +4179,20 @@ static void nvme_ns_remove(struct nvme_ns *ns)
 		return;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool last_path = false;
+
+	if (test_and_set_bit(NVME_NS_REMOVING, &ns->flags))
+		return;
+
+	clear_bit(NVME_NS_READY, &ns->flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	set_capacity(ns->disk, 0);
 	nvme_fault_inject_fini(&ns->fault_inject);
 
 	mutex_lock(&ns->ctrl->subsys->lock);
 	list_del_rcu(&ns->siblings);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if (list_empty(&ns->head->list)) {
 		list_del_init(&ns->head->entry);
@@ -4055,9 +4213,15 @@ static void nvme_ns_remove(struct nvme_ns *ns)
 	blk_cleanup_queue(ns->queue);
 =======
 	if (list_empty(&ns->head->list))
+=======
+	if (list_empty(&ns->head->list)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_del_init(&ns->head->entry);
+		last_path = true;
+	}
 	mutex_unlock(&ns->ctrl->subsys->lock);
 
+<<<<<<< HEAD
 	synchronize_rcu(); /* guarantee not available in head->list */
 	nvme_mpath_clear_current_path(ns);
 	synchronize_srcu(&ns->head->srcu); /* wait for concurrent submissions */
@@ -4071,17 +4235,35 @@ static void nvme_ns_remove(struct nvme_ns *ns)
 			blk_integrity_unregister(ns->disk);
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* guarantee not available in head->list */
+	synchronize_rcu();
+
+	/* wait for concurrent submissions */
+	if (nvme_mpath_clear_current_path(ns))
+		synchronize_srcu(&ns->head->srcu);
+
+	if (!nvme_ns_head_multipath(ns->head))
+		nvme_cdev_del(&ns->cdev, &ns->cdev_device);
+	del_gendisk(ns->disk);
+	blk_cleanup_queue(ns->queue);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	down_write(&ns->ctrl->namespaces_rwsem);
 	list_del_init(&ns->list);
 	up_write(&ns->ctrl->namespaces_rwsem);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (last_path)
 		nvme_mpath_shutdown_disk(ns->head);
 =======
 	nvme_mpath_check_last_path(ns);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (last_path)
+		nvme_mpath_shutdown_disk(ns->head);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nvme_put_ns(ns);
 }
 
@@ -4294,12 +4476,15 @@ static void nvme_scan_work(struct work_struct *work)
 		nvme_scan_ns_sequential(ctrl);
 	mutex_unlock(&ctrl->scan_lock);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	down_write(&ctrl->namespaces_rwsem);
 	list_sort(NULL, &ctrl->namespaces, ns_cmp);
 	up_write(&ctrl->namespaces_rwsem);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

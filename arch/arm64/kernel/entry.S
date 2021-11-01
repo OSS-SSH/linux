@@ -30,6 +30,7 @@
 #include <asm/unistd.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * Context tracking and irqflag tracing need to instrument transitions between
@@ -42,6 +43,8 @@
 	.endm
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.macro	clear_gp_regs
 	.irp	n,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29
 	mov	x\n, xzr
@@ -137,24 +140,34 @@ alternative_cb_end
 
 	/* Check for MTE asynchronous tag check faults */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.macro check_mte_async_tcf, tmp, ti_flags, thread_sctlr
 =======
 	.macro check_mte_async_tcf, tmp, ti_flags
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.macro check_mte_async_tcf, tmp, ti_flags, thread_sctlr
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ARM64_MTE
 	.arch_extension lse
 alternative_if_not ARM64_MTE
 	b	1f
 alternative_else_nop_endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Asynchronous tag check faults are only possible in ASYNC (2) or
 	 * ASYM (3) modes. In each of these modes bit 1 of SCTLR_EL1.TCF0 is
 	 * set, so skip the check if it is unset.
 	 */
 	tbz	\thread_sctlr, #(SCTLR_EL1_TCF0_SHIFT + 1), 1f
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mrs_s	\tmp, SYS_TFSRE0_EL1
 	tbz	\tmp, #SYS_TFSR_EL1_TF0_SHIFT, 1f
 	/* Asynchronous TCF occurred for TTBR0 access, set the TI flag */
@@ -162,14 +175,18 @@ alternative_else_nop_endif
 	add	\ti_flags, tsk, #TSK_TI_FLAGS
 	stset	\tmp, [\ti_flags]
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	msr_s	SYS_TFSRE0_EL1, xzr
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:
 #endif
 	.endm
 
 	/* Clear the MTE asynchronous tag check faults */
+<<<<<<< HEAD
 <<<<<<< HEAD
 	.macro clear_mte_async_tcf thread_sctlr
 #ifdef CONFIG_ARM64_MTE
@@ -181,15 +198,25 @@ alternative_if ARM64_MTE
 1:
 =======
 	.macro clear_mte_async_tcf
+=======
+	.macro clear_mte_async_tcf thread_sctlr
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ARM64_MTE
 alternative_if ARM64_MTE
+	/* See comment in check_mte_async_tcf above. */
+	tbz	\thread_sctlr, #(SCTLR_EL1_TCF0_SHIFT + 1), 1f
 	dsb	ish
 	msr_s	SYS_TFSRE0_EL1, xzr
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+1:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 alternative_else_nop_endif
 #endif
 	.endm
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	.macro mte_set_gcr, mte_ctrl, tmp
 #ifdef CONFIG_ARM64_MTE
@@ -207,6 +234,13 @@ alternative_else_nop_endif
 	bfi	\tmp2, \tmp, #0, #16
 	msr_s	SYS_GCR_EL1, \tmp2
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.macro mte_set_gcr, mte_ctrl, tmp
+#ifdef CONFIG_ARM64_MTE
+	ubfx	\tmp, \mte_ctrl, #MTE_CTRL_GCR_USER_EXCL_SHIFT, #16
+	orr	\tmp, \tmp, #SYS_GCR_EL1_RRND
+	msr_s	SYS_GCR_EL1, \tmp
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	.endm
 
@@ -216,6 +250,7 @@ alternative_if_not ARM64_MTE
 	b	1f
 alternative_else_nop_endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mov	\tmp, KERNEL_GCR_EL1
 	msr_s	SYS_GCR_EL1, \tmp
 =======
@@ -224,6 +259,10 @@ alternative_else_nop_endif
 	mte_set_gcr \tmp, \tmp2
 	isb
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mov	\tmp, KERNEL_GCR_EL1
+	msr_s	SYS_GCR_EL1, \tmp
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:
 #endif
 	.endm
@@ -234,10 +273,14 @@ alternative_if_not ARM64_MTE
 	b	1f
 alternative_else_nop_endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ldr	\tmp, [\tsk, #THREAD_MTE_CTRL]
 =======
 	ldr	\tmp, [\tsk, #THREAD_GCR_EL1_USER]
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ldr	\tmp, [\tsk, #THREAD_MTE_CTRL]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mte_set_gcr \tmp, \tmp2
 1:
@@ -279,12 +322,17 @@ alternative_else_nop_endif
 
 	/* Check for asynchronous tag check faults in user space */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ldr	x0, [tsk, THREAD_SCTLR_USER]
 	check_mte_async_tcf x22, x23, x0
 =======
 	check_mte_async_tcf x22, x23
 	apply_ssbd 1, x22, x23
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ldr	x0, [tsk, THREAD_SCTLR_USER]
+	check_mte_async_tcf x22, x23, x0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_ARM64_PTR_AUTH
 alternative_if ARM64_HAS_ADDRESS_AUTH
@@ -298,9 +346,12 @@ alternative_if ARM64_HAS_ADDRESS_AUTH
 	 * installed so there is no need to install it again.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ldr	x0, [tsk, THREAD_SCTLR_USER]
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tbz	x0, SCTLR_ELx_ENIA_SHIFT, 1f
 	__ptrauth_keys_install_kernel_nosync tsk, x20, x22, x23
 	b	2f
@@ -309,6 +360,7 @@ alternative_if ARM64_HAS_ADDRESS_AUTH
 	orr	x0, x0, SCTLR_ELx_ENIA
 	msr	sctlr_el1, x0
 2:
+<<<<<<< HEAD
 <<<<<<< HEAD
 alternative_else_nop_endif
 #endif
@@ -332,12 +384,32 @@ alternative_else_nop_endif
 
 =======
 	isb
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 alternative_else_nop_endif
 #endif
 
+	apply_ssbd 1, x22, x23
+
 	mte_set_kernel_gcr x22, x23
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/*
+	 * Any non-self-synchronizing system register updates required for
+	 * kernel entry should be placed before this point.
+	 */
+alternative_if ARM64_MTE
+	isb
+	b	1f
+alternative_else_nop_endif
+alternative_if ARM64_HAS_ADDRESS_AUTH
+	isb
+alternative_else_nop_endif
+1:
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	scs_load tsk
 	.else
 	add	x21, sp, #PT_REGS_SIZE
@@ -441,12 +513,18 @@ alternative_else_nop_endif
 	scs_save tsk
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Ignore asynchronous tag check faults in the uaccess routines */
 	ldr	x0, [tsk, THREAD_SCTLR_USER]
 	clear_mte_async_tcf x0
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ARM64_PTR_AUTH
 alternative_if ARM64_HAS_ADDRESS_AUTH
 	/*
@@ -457,9 +535,12 @@ alternative_if ARM64_HAS_ADDRESS_AUTH
 	 * No kernel C function calls after this.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	ldr	x0, [tsk, THREAD_SCTLR_USER]
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tbz	x0, SCTLR_ELx_ENIA_SHIFT, 1f
 	__ptrauth_keys_install_user tsk, x0, x1, x2
 	b	2f
@@ -563,6 +644,7 @@ SYM_CODE_END(__swpan_exit_el0)
 tsk	.req	x28		// current thread_info
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * Interrupt handling.
@@ -577,6 +659,8 @@ tsk	.req	x28		// current thread_info
 	.endm
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.text
 
 /*
@@ -609,19 +693,27 @@ SYM_CODE_END(vectors)
 
 #ifdef CONFIG_VMAP_STACK
 <<<<<<< HEAD
+<<<<<<< HEAD
 SYM_CODE_START_LOCAL(__bad_stack)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SYM_CODE_START_LOCAL(__bad_stack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We detected an overflow in kernel_ventry, which switched to the
 	 * overflow stack. Stash the exception regs, and head to our overflow
 	 * handler.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 __bad_stack:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Restore the original x0 value */
 	mrs	x0, tpidrro_el0
 
@@ -642,9 +734,13 @@ __bad_stack:
 	bl	handle_bad_stack
 	ASM_BUG()
 <<<<<<< HEAD
+<<<<<<< HEAD
 SYM_CODE_END(__bad_stack)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SYM_CODE_END(__bad_stack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_VMAP_STACK */
 
 
@@ -689,6 +785,7 @@ SYM_CODE_START_LOCAL(ret_to_kernel)
 SYM_CODE_END(ret_to_kernel)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 SYM_CODE_START_LOCAL(ret_to_user)
 	ldr	x19, [tsk, #TSK_TI_FLAGS]	// re-check for single-step
 =======
@@ -709,11 +806,16 @@ finish_ret_to_user:
 	/* Ignore asynchronous tag check faults in the uaccess routines */
 	clear_mte_async_tcf
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SYM_CODE_START_LOCAL(ret_to_user)
+	ldr	x19, [tsk, #TSK_TI_FLAGS]	// re-check for single-step
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enable_step_tsk x19, x2
 #ifdef CONFIG_GCC_PLUGIN_STACKLEAK
 	bl	stackleak_erase
 #endif
 	kernel_exit 0
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -727,6 +829,8 @@ work_pending:
 	ldr	x19, [tsk, #TSK_TI_FLAGS]	// re-check for single-step
 	b	finish_ret_to_user
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 SYM_CODE_END(ret_to_user)
 
 	.popsection				// .entry.text
@@ -893,10 +997,15 @@ SYM_CODE_START(ret_from_fork)
 	blr	x19
 1:	get_current_task tsk
 <<<<<<< HEAD
+<<<<<<< HEAD
 	mov	x0, sp
 	bl	asm_exit_to_user_mode
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mov	x0, sp
+	bl	asm_exit_to_user_mode
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	b	ret_to_user
 SYM_CODE_END(ret_from_fork)
 NOKPROBE(ret_from_fork)

@@ -65,14 +65,20 @@ static int dump_prog_id_as_func_ptr(const struct btf_dumper *d,
 	info = &prog_info->info;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!info->btf_id || !info->nr_func_info)
 		goto print;
 	prog_btf = btf__load_from_kernel_by_id(info->btf_id);
 	if (libbpf_get_error(prog_btf))
+<<<<<<< HEAD
 =======
 	if (!info->btf_id || !info->nr_func_info ||
 	    btf__get_from_id(info->btf_id, &prog_btf))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto print;
 	finfo = u64_to_ptr(info->func_info);
 	func_type = btf__type_by_id(prog_btf, finfo->type_id);

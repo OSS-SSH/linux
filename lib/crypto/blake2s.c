@@ -74,10 +74,14 @@ void blake2s256_hmac(u8 *out, const u8 *in, const u8 *key, const size_t inlen,
 EXPORT_SYMBOL(blake2s256_hmac);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static int __init blake2s_mod_init(void)
 =======
 static int __init mod_init(void)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init blake2s_mod_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
 	    WARN_ON(!blake2s_selftest()))
@@ -85,6 +89,7 @@ static int __init mod_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static void __exit blake2s_mod_exit(void)
 {
@@ -100,6 +105,14 @@ static void __exit mod_exit(void)
 module_init(mod_init);
 module_exit(mod_exit);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit blake2s_mod_exit(void)
+{
+}
+
+module_init(blake2s_mod_init);
+module_exit(blake2s_mod_exit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_LICENSE("GPL v2");
 MODULE_DESCRIPTION("BLAKE2s hash function");
 MODULE_AUTHOR("Jason A. Donenfeld <Jason@zx2c4.com>");

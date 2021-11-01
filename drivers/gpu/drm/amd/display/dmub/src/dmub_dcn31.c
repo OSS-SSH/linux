@@ -39,13 +39,19 @@
 const struct dmub_srv_dcn31_regs dmub_srv_dcn31_regs = {
 #define DMUB_SR(reg) REG_OFFSET_EXP(reg),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		DMUB_DCN31_REGS()
 		DMCUB_INTERNAL_REGS()
 	},
+<<<<<<< HEAD
 =======
 	{ DMUB_DCN31_REGS() },
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #undef DMUB_SR
 
 #define DMUB_SF(reg, field) FD_MASK(reg, field),
@@ -88,10 +94,14 @@ void dmub_dcn31_reset(struct dmub_srv *dmub)
 {
 	union dmub_gpint_data_register cmd;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const uint32_t timeout = 100;
 =======
 	const uint32_t timeout = 30;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const uint32_t timeout = 100;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t in_reset, scratch, i;
 
 	REG_GET(DMCUB_CNTL2, DMCUB_SOFT_RESET, &in_reset);
@@ -107,22 +117,30 @@ void dmub_dcn31_reset(struct dmub_srv *dmub)
 		 * Timeout covers both the ACK and the wait
 		 * for remaining work to finish.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		 *
 		 * This is mostly bound by the PHY disable sequence.
 		 * Each register check will be greater than 1us, so
 		 * don't bother using udelay.
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
 
 		for (i = 0; i < timeout; ++i) {
 			if (dmub->hw_funcs.is_gpint_acked(dmub, cmd))
 				break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			udelay(1);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+			udelay(1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		for (i = 0; i < timeout; ++i) {
@@ -130,16 +148,18 @@ void dmub_dcn31_reset(struct dmub_srv *dmub)
 			if (scratch == DMUB_GPINT__STOP_FW_RESPONSE)
 				break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			udelay(1);
 		}
 
 =======
 		}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		/* Clear the GPINT command manually so we don't reset again. */
-		cmd.all = 0;
-		dmub->hw_funcs.set_gpint(dmub, cmd);
+			udelay(1);
+		}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Force reset in case we timed out, DMCUB is likely hung. */
@@ -154,12 +174,18 @@ void dmub_dcn31_reset(struct dmub_srv *dmub)
 	REG_WRITE(DMCUB_OUTBOX1_WPTR, 0);
 	REG_WRITE(DMCUB_SCRATCH0, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Clear the GPINT command manually so we don't send anything during boot. */
 	cmd.all = 0;
 	dmub->hw_funcs.set_gpint(dmub, cmd);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void dmub_dcn31_reset_release(struct dmub_srv *dmub)
@@ -301,6 +327,7 @@ void dmub_dcn31_set_outbox1_rptr(struct dmub_srv *dmub, uint32_t rptr_offset)
 bool dmub_dcn31_is_hw_init(struct dmub_srv *dmub)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	union dmub_fw_boot_status status;
 	uint32_t is_enable;
 
@@ -310,11 +337,20 @@ bool dmub_dcn31_is_hw_init(struct dmub_srv *dmub)
 	return is_enable != 0 && status.bits.dal_fw;
 =======
 	uint32_t is_hw_init;
+=======
+	union dmub_fw_boot_status status;
+	uint32_t is_enable;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	REG_GET(DMCUB_CNTL, DMCUB_ENABLE, &is_hw_init);
+	status.all = REG_READ(DMCUB_SCRATCH0);
+	REG_GET(DMCUB_CNTL, DMCUB_ENABLE, &is_enable);
 
+<<<<<<< HEAD
 	return is_hw_init != 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return is_enable != 0 && status.bits.dal_fw;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 bool dmub_dcn31_is_supported(struct dmub_srv *dmub)
@@ -349,6 +385,9 @@ uint32_t dmub_dcn31_get_gpint_response(struct dmub_srv *dmub)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 uint32_t dmub_dcn31_get_gpint_dataout(struct dmub_srv *dmub)
 {
 	uint32_t dataout = REG_READ(DMCUB_GPINT_DATAOUT);
@@ -364,8 +403,11 @@ uint32_t dmub_dcn31_get_gpint_dataout(struct dmub_srv *dmub)
 	return dataout;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 union dmub_fw_boot_status dmub_dcn31_get_fw_boot_status(struct dmub_srv *dmub)
 {
 	union dmub_fw_boot_status status;

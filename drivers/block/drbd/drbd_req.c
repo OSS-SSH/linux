@@ -906,13 +906,17 @@ static bool remote_due_to_read_balancing(struct drbd_device *device, sector_t se
 		enum drbd_read_balancing rbm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct backing_dev_info *bdi;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int stripe_shift;
 
 	switch (rbm) {
 	case RB_CONGESTED_REMOTE:
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return bdi_read_congested(
 			device->ldev->backing_bdev->bd_disk->bdi);
@@ -920,6 +924,10 @@ static bool remote_due_to_read_balancing(struct drbd_device *device, sector_t se
 		bdi = device->ldev->backing_bdev->bd_disk->queue->backing_dev_info;
 		return bdi_read_congested(bdi);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return bdi_read_congested(
+			device->ldev->backing_bdev->bd_disk->bdi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case RB_LEAST_PENDING:
 		return atomic_read(&device->local_cnt) >
 			atomic_read(&device->ap_pending_cnt) + atomic_read(&device->rs_pending_cnt);

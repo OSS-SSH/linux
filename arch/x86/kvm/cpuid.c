@@ -66,12 +66,17 @@ static inline struct kvm_cpuid_entry2 *cpuid_entry2_find(
 		e = &entries[i];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (e->function == function &&
 		    (!(e->flags & KVM_CPUID_FLAG_SIGNIFCANT_INDEX) || e->index == index))
 =======
 		if (e->function == function && (e->index == index ||
 		    !(e->flags & KVM_CPUID_FLAG_SIGNIFCANT_INDEX)))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (e->function == function &&
+		    (!(e->flags & KVM_CPUID_FLAG_SIGNIFCANT_INDEX) || e->index == index))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return e;
 	}
 
@@ -214,6 +219,7 @@ static void kvm_vcpu_after_set_cpuid(struct kvm_vcpu *vcpu)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 static int is_efer_nx(void)
 {
@@ -240,6 +246,8 @@ static void cpuid_fix_nx_cap(struct kvm_vcpu *vcpu)
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int cpuid_query_maxphyaddr(struct kvm_vcpu *vcpu)
 {
 	struct kvm_cpuid_entry2 *best;
@@ -311,9 +319,12 @@ int kvm_vcpu_ioctl_set_cpuid(struct kvm_vcpu *vcpu,
 	vcpu->arch.cpuid_nent = cpuid->nent;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	cpuid_fix_nx_cap(vcpu);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kvm_update_cpuid_runtime(vcpu);
 	kvm_vcpu_after_set_cpuid(vcpu);
 
@@ -413,9 +424,12 @@ static __always_inline void kvm_cpu_cap_mask(enum cpuid_leafs leaf, u32 mask)
 void kvm_set_cpu_caps(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	unsigned int f_nx = is_efer_nx() ? F(NX) : 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_X86_64
 	unsigned int f_gbpages = F(GBPAGES);
 	unsigned int f_lm = F(LM);
@@ -530,10 +544,14 @@ void kvm_set_cpu_caps(void)
 		F(MTRR) | F(PGE) | F(MCA) | F(CMOV) |
 		F(PAT) | F(PSE36) | 0 /* Reserved */ |
 <<<<<<< HEAD
+<<<<<<< HEAD
 		F(NX) | 0 /* Reserved */ | F(MMXEXT) | F(MMX) |
 =======
 		f_nx | 0 /* Reserved */ | F(MMXEXT) | F(MMX) |
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		F(NX) | 0 /* Reserved */ | F(MMXEXT) | F(MMX) |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		F(FXSR) | F(FXSR_OPT) | f_gbpages | F(RDTSCP) |
 		0 /* Reserved */ | f_lm | F(3DNOWEXT) | F(3DNOW)
 	);
@@ -784,11 +802,16 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
 		edx.split.num_counters_fixed = min(cap.num_counters_fixed, MAX_FIXED_COUNTERS);
 		edx.split.bit_width_fixed = cap.bit_width_fixed;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (cap.version)
 			edx.split.anythread_deprecated = 1;
 =======
 		edx.split.anythread_deprecated = 1;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (cap.version)
+			edx.split.anythread_deprecated = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		edx.split.reserved1 = 0;
 		edx.split.reserved2 = 0;
 
@@ -964,6 +987,9 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
 		unsigned phys_as = entry->eax & 0xff;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * If TDP (NPT) is disabled use the adjusted host MAXPHYADDR as
 		 * the guest operates in the same PA space as the host, i.e.
@@ -977,12 +1003,17 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
 		if (!tdp_enabled)
 			g_phys_as = boot_cpu_data.x86_phys_bits;
 		else if (!g_phys_as)
+<<<<<<< HEAD
 			g_phys_as = phys_as;
 
 =======
 		if (!g_phys_as)
 			g_phys_as = phys_as;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			g_phys_as = phys_as;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		entry->eax = g_phys_as | (virt_as << 8);
 		entry->edx = 0;
 		cpuid_entry_override(entry, CPUID_8000_0008_EBX);
@@ -1006,6 +1037,7 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
 	case 0x8000001e:
 		break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case 0x8000001F:
 		if (!kvm_cpu_cap_has(X86_FEATURE_SEV)) {
 			entry->eax = entry->ebx = entry->ecx = entry->edx = 0;
@@ -1020,12 +1052,24 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
 		}
 =======
 	/* Support memory encryption cpuid if host supports it */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 0x8000001F:
-		if (!kvm_cpu_cap_has(X86_FEATURE_SEV))
+		if (!kvm_cpu_cap_has(X86_FEATURE_SEV)) {
 			entry->eax = entry->ebx = entry->ecx = entry->edx = 0;
-		else
+		} else {
 			cpuid_entry_override(entry, CPUID_8000_001F_EAX);
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+			/*
+			 * Enumerate '0' for "PA bits reduction", the adjusted
+			 * MAXPHYADDR is enumerated directly (see 0x80000008).
+			 */
+			entry->ebx &= ~GENMASK(11, 6);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	/*Add support for Centaur's CPUID instruction*/
 	case 0xC0000000:

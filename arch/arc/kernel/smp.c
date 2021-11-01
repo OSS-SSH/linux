@@ -30,6 +30,7 @@
 #ifndef CONFIG_ARC_HAS_LLSC
 arch_spinlock_t smp_atomic_ops_lock = __ARCH_SPIN_LOCK_UNLOCKED;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 EXPORT_SYMBOL_GPL(smp_atomic_ops_lock);
 =======
@@ -38,6 +39,10 @@ arch_spinlock_t smp_bitops_lock = __ARCH_SPIN_LOCK_UNLOCKED;
 EXPORT_SYMBOL_GPL(smp_atomic_ops_lock);
 EXPORT_SYMBOL_GPL(smp_bitops_lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+EXPORT_SYMBOL_GPL(smp_atomic_ops_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 struct plat_smp_ops  __weak plat_smp_ops;
@@ -289,10 +294,14 @@ static void ipi_send_msg_one(int cpu, enum ipi_msg_type msg)
 	 * Call the platform specific IPI kick function, but avoid if possible:
 	 * Only do so if there's no pending msg from other concurrent sender(s).
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Otherwise, receiver will see this msg as well when it takes the
 =======
 	 * Otherwise, recevier will see this msg as well when it takes the
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * Otherwise, receiver will see this msg as well when it takes the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * IPI corresponding to that msg. This is true, even if it is already in
 	 * IPI handler, because !@old means it has not yet dequeued the msg(s)
 	 * so @new msg can be a free-loader

@@ -656,9 +656,13 @@ int mlx5dr_cmd_set_fte(struct mlx5_core_dev *dev,
 	MLX5_SET(set_fte_in, in, table_id, ft->id);
 	MLX5_SET(set_fte_in, in, flow_index, fte->index);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	MLX5_SET(set_fte_in, in, ignore_flow_level, fte->ignore_flow_level);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MLX5_SET(set_fte_in, in, ignore_flow_level, fte->ignore_flow_level);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ft->vport) {
 		MLX5_SET(set_fte_in, in, vport_number, ft->vport);
 		MLX5_SET(set_fte_in, in, other_vport, 1);

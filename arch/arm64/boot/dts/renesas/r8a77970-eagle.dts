@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Device Tree Source for the Eagle board with R-Car V3M
 =======
  * Device Tree Source for the Eagle board
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Device Tree Source for the Eagle board with R-Car V3M
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2016-2017 Renesas Electronics Corp.
  * Copyright (C) 2017 Cogent Embedded, Inc.

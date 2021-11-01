@@ -77,14 +77,20 @@
 	};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	firmware {
 		scm {
 			compatible = "qcom,scm-ipq8074", "qcom,scm";
 		};
 	};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	soc: soc {
 		#address-cells = <0x1>;
 		#size-cells = <0x1>;
@@ -208,6 +214,9 @@
 		};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		prng: rng@e3000 {
 			compatible = "qcom,prng-ee";
 			reg = <0x000e3000 0x1000>;
@@ -240,8 +249,11 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tlmm: pinctrl@1000000 {
 			compatible = "qcom,ipq8074-pinctrl";
 			reg = <0x01000000 0x300000>;
@@ -488,19 +500,26 @@
 			status = "disabled";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dwc_0: dwc3@8a00000 {
 =======
 			dwc_0: usb@8a00000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dwc_0: dwc3@8a00000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0x8a00000 0xcd00>;
 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
 				phys = <&qusb_phy_0>, <&usb0_ssphy>;
 				phy-names = "usb2-phy", "usb3-phy";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				tx-fifo-resize;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				snps,is-utmi-l1-suspend;
 				snps,hird-threshold = /bits/ 8 <0x0>;
 				snps,dis_u2_susphy_quirk;
@@ -536,19 +555,26 @@
 			status = "disabled";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			dwc_1: dwc3@8c00000 {
 =======
 			dwc_1: usb@8c00000 {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dwc_1: dwc3@8c00000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0x8c00000 0xcd00>;
 				interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
 				phys = <&qusb_phy_1>, <&usb1_ssphy>;
 				phy-names = "usb2-phy", "usb3-phy";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 				tx-fifo-resize;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				snps,is-utmi-l1-suspend;
 				snps,hird-threshold = /bits/ 8 <0x0>;
 				snps,dis_u2_susphy_quirk;
@@ -642,16 +668,22 @@
 		pcie1: pci@10000000 {
 			compatible = "qcom,pcie-ipq8074";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg =  <0x10000000 0xf1d>,
 			       <0x10000f20 0xa8>,
 			       <0x00088000 0x2000>,
 			       <0x10100000 0x1000>;
+<<<<<<< HEAD
 =======
 			reg =  <0x10000000 0xf1d
 				0x10000f20 0xa8
 				0x00088000 0x2000
 				0x10100000 0x1000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg-names = "dbi", "elbi", "parf", "config";
 			device_type = "pci";
 			linux,pci-domain = <1>;
@@ -711,16 +743,22 @@
 		pcie0: pci@20000000 {
 			compatible = "qcom,pcie-ipq8074";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x20000000 0xf1d>,
 			      <0x20000f20 0xa8>,
 			      <0x00080000 0x2000>,
 			      <0x20100000 0x1000>;
+<<<<<<< HEAD
 =======
 			reg =  <0x20000000 0xf1d
 				0x20000f20 0xa8
 				0x00080000 0x2000
 				0x20100000 0x1000>;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg-names = "dbi", "elbi", "parf", "config";
 			device_type = "pci";
 			linux,pci-domain = <0>;

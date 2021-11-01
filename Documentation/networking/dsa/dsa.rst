@@ -201,6 +201,7 @@ setting the ``promisc_on_master`` property of the ``struct dsa_device_ops``.
 Note that this assumes a DSA-unaware master driver, which is the norm.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 Hardware manufacturers are strongly discouraged to do this, but some tagging
 protocols might not provide source port information on RX for all packets, but
@@ -216,6 +217,8 @@ cleanly into any of the above 3 categories. DSA does not support this
 configuration.
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Master network devices
 ----------------------
 
@@ -667,6 +670,9 @@ Bridge layer
   lack of an explicit address filtering mechanism in the DSA core.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - ``port_bridge_tx_fwd_offload``: bridge layer function invoked after
   ``port_bridge_join`` when a driver sets ``ds->num_fwd_offloading_bridges`` to
   a non-zero value. Returning success in this function activates the TX
@@ -683,8 +689,11 @@ Bridge layer
 - ``port_bridge_tx_fwd_unoffload``: bridge layer function invoken when a driver
   leaves a bridge port which had the TX forwarding offload feature enabled.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Bridge VLAN filtering
 ---------------------
 

@@ -13,6 +13,7 @@
 #include <asm/page.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
  * int __strncpy_user(char *to, char *from, int len);
@@ -105,6 +106,8 @@ __strnlen_user:
 	.word	1b,4b
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Loop unrolling for __copy_tofrom_user */
 #define COPY(offset)	\
 1:	lwi	r4 , r6, 0x0000 + offset;	\

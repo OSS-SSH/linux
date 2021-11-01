@@ -68,11 +68,17 @@
 /* Filtering Registers */
 #define IGC_ETQF(_n)		(0x05CB0 + (4 * (_n))) /* EType Queue Fltr */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IGC_FHFT(_n)		(0x09000 + (256 * (_n))) /* Flexible Host Filter */
 #define IGC_FHFT_EXT(_n)	(0x09A00 + (256 * (_n))) /* Flexible Host Filter Extended */
 #define IGC_FHFTSL		0x05804 /* Flex Filter indirect table select */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IGC_FHFT(_n)		(0x09000 + (256 * (_n))) /* Flexible Host Filter */
+#define IGC_FHFT_EXT(_n)	(0x09A00 + (256 * (_n))) /* Flexible Host Filter Extended */
+#define IGC_FHFTSL		0x05804 /* Flex Filter indirect table select */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* ETQF register bit definitions */
 #define IGC_ETQF_FILTER_ENABLE	BIT(26)
@@ -82,6 +88,9 @@
 #define IGC_ETQF_ETYPE_MASK	0x0000FFFF
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* FHFT register bit definitions */
 #define IGC_FHFT_LENGTH_MASK	GENMASK(7, 0)
 #define IGC_FHFT_QUEUE_SHIFT	8
@@ -95,8 +104,11 @@
 #define IGC_FHFTSL_FTSL_SHIFT	0
 #define IGC_FHFTSL_FTSL_MASK	GENMASK(1, 0)
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Redirection Table - RW Array */
 #define IGC_RETA(_i)		(0x05C00 + ((_i) * 4))
 /* RSS Random Key - RW Array */
@@ -243,11 +255,17 @@
 #define IGC_DTXMXPKTSZ		0x355C
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IGC_TQAVCC(_n)		(0x3004 + ((_n) * 0x40))
 #define IGC_TQAVHC(_n)		(0x300C + ((_n) * 0x40))
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IGC_TQAVCC(_n)		(0x3004 + ((_n) * 0x40))
+#define IGC_TQAVHC(_n)		(0x300C + ((_n) * 0x40))
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* System Time Registers */
 #define IGC_SYSTIML	0x0B600  /* System time register Low - RO */
 #define IGC_SYSTIMH	0x0B604  /* System time register High - RO */
@@ -258,6 +276,9 @@
 #define IGC_TXSTMPH	0x0B61C  /* Tx timestamp value High - RO */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IGC_TIMADJ	0x0B60C  /* Time Adjustment Offset Register */
 
 /* PCIe Registers */
@@ -281,8 +302,11 @@
 #define IGC_PCIE_DIG_DELAY	0x12550  /* PCIe Digital Delay */
 #define IGC_PCIE_PHY_DELAY	0x12554  /* PCIe PHY Delay */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Management registers */
 #define IGC_MANC	0x05820  /* Management Control - RW */
 
@@ -295,9 +319,13 @@
 #define IGC_WUS		0x05810  /* Wakeup Status - R/W1C */
 #define IGC_WUPL	0x05900  /* Wakeup Packet Length - RW */
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IGC_WUFC_EXT	0x0580C  /* Wakeup Filter Control Register Extended - RW */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IGC_WUFC_EXT	0x0580C  /* Wakeup Filter Control Register Extended - RW */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Wake Up packet memory */
 #define IGC_WUPM_REG(_i)	(0x05A00 + ((_i) * 4))

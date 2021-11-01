@@ -2,10 +2,14 @@
 /*
  * Copyright (C) 2015-2017 Intel Deutschland GmbH
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Copyright (C) 2018-2021 Intel Corporation
 =======
  * Copyright (C) 2018-2020 Intel Corporation
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2018-2021 Intel Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #ifndef __iwl_fw_api_location_h__
 #define __iwl_fw_api_location_h__
@@ -156,12 +160,18 @@ enum iwl_tof_mcsi_enable {
  * @IWL_TOF_RESPONDER_CMD_VALID_NDP_PARAMS: NDP parameters are valid
  * @IWL_TOF_RESPONDER_CMD_VALID_LMR_FEEDBACK: LMR feedback support is valid
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @IWL_TOF_RESPONDER_CMD_VALID_SESSION_ID: session id flag is valid
  * @IWL_TOF_RESPONDER_CMD_VALID_BSS_COLOR: the bss_color field is valid
  * @IWL_TOF_RESPONDER_CMD_VALID_MIN_MAX_TIME_BETWEEN_MSR: the
  *	min_time_between_msr and max_time_between_msr fields are valid
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 enum iwl_tof_responder_cmd_valid_field {
 	IWL_TOF_RESPONDER_CMD_VALID_CHAN_INFO = BIT(0),
@@ -181,11 +191,17 @@ enum iwl_tof_responder_cmd_valid_field {
 	IWL_TOF_RESPONDER_CMD_VALID_NDP_PARAMS = BIT(23),
 	IWL_TOF_RESPONDER_CMD_VALID_LMR_FEEDBACK = BIT(24),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	IWL_TOF_RESPONDER_CMD_VALID_SESSION_ID = BIT(25),
 	IWL_TOF_RESPONDER_CMD_VALID_BSS_COLOR = BIT(26),
 	IWL_TOF_RESPONDER_CMD_VALID_MIN_MAX_TIME_BETWEEN_MSR = BIT(27),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IWL_TOF_RESPONDER_CMD_VALID_SESSION_ID = BIT(25),
+	IWL_TOF_RESPONDER_CMD_VALID_BSS_COLOR = BIT(26),
+	IWL_TOF_RESPONDER_CMD_VALID_MIN_MAX_TIME_BETWEEN_MSR = BIT(27),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -204,10 +220,15 @@ enum iwl_tof_responder_cmd_valid_field {
  * @IWL_TOF_RESPONDER_FLAGS_LMR_FEEDBACK: request for LMR feedback if the
  *	initiator supports it
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @IWL_TOF_RESPONDER_FLAGS_SESSION_ID: send the session id in the initial FTM
  *	frame.
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @IWL_TOF_RESPONDER_FLAGS_SESSION_ID: send the session id in the initial FTM
+ *	frame.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 enum iwl_tof_responder_cfg_flags {
 	IWL_TOF_RESPONDER_FLAGS_NON_ASAP_SUPPORT = BIT(0),
@@ -223,9 +244,13 @@ enum iwl_tof_responder_cfg_flags {
 	IWL_TOF_RESPONDER_FLAGS_NDP_SUPPORT = BIT(24),
 	IWL_TOF_RESPONDER_FLAGS_LMR_FEEDBACK = BIT(25),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	IWL_TOF_RESPONDER_FLAGS_SESSION_ID = BIT(27),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IWL_TOF_RESPONDER_FLAGS_SESSION_ID = BIT(27),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -324,6 +349,7 @@ struct iwl_tof_responder_config_cmd_v7 {
  *	bits 0 - 2: max number of LTF repetitions
  *	bits 3 - 5: max number of spatial streams (supported values are < 2)
 <<<<<<< HEAD
+<<<<<<< HEAD
  *	bits 6 - 7: max number of total LTFs see
  *	&enum ieee80211_range_params_max_total_ltf
  * @i2r_ndp_params: parameters for I2R NDP.
@@ -340,6 +366,15 @@ struct iwl_tof_responder_config_cmd_v7 {
  *	bits 6 - 7: max number of total LTFs
  *		    (&enum ieee80211_range_params_max_total_ltf)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *	bits 6 - 7: max number of total LTFs see
+ *	&enum ieee80211_range_params_max_total_ltf
+ * @i2r_ndp_params: parameters for I2R NDP.
+ *	bits 0 - 2: max number of LTF repetitions
+ *	bits 3 - 5: max number of spatial streams
+ *	bits 6 - 7: max number of total LTFs see
+ *	&enum ieee80211_range_params_max_total_ltf
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct iwl_tof_responder_config_cmd_v8 {
 	__le32 cmd_valid_fields;
@@ -359,6 +394,9 @@ struct iwl_tof_responder_config_cmd_v8 {
 } __packed; /* TOF_RESPONDER_CONFIG_CMD_API_S_VER_8 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct iwl_tof_responder_config_cmd_v9 - ToF AP mode (for debug)
  * @cmd_valid_fields: &iwl_tof_responder_cmd_valid_field
@@ -411,8 +449,11 @@ struct iwl_tof_responder_config_cmd_v9 {
 	__le16 max_time_between_msr;
 } __packed; /* TOF_RESPONDER_CONFIG_CMD_API_S_VER_8 */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IWL_LCI_CIVIC_IE_MAX_SIZE	400
 
 /**
@@ -581,12 +622,18 @@ struct iwl_tof_range_req_ap_entry_v2 {
  * @IWL_INITIATOR_AP_FLAGS_PMF: request to protect the negotiation and LMR
  *      frames with protected management frames.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @IWL_INITIATOR_AP_FLAGS_TERMINATE_ON_LMR_FEEDBACK: terminate the session if
  *	the responder asked for LMR feedback although the initiator did not set
  *	the LMR feedback bit in the FTM request. If not set, the initiator will
  *	continue with the session and will provide the LMR feedback.
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 enum iwl_initiator_ap_flags {
 	IWL_INITIATOR_AP_FLAGS_ASAP = BIT(1),
@@ -603,9 +650,13 @@ enum iwl_initiator_ap_flags {
 	IWL_INITIATOR_AP_FLAGS_USE_CALIB = BIT(13),
 	IWL_INITIATOR_AP_FLAGS_PMF = BIT(14),
 <<<<<<< HEAD
+<<<<<<< HEAD
 	IWL_INITIATOR_AP_FLAGS_TERMINATE_ON_LMR_FEEDBACK = BIT(15),
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IWL_INITIATOR_AP_FLAGS_TERMINATE_ON_LMR_FEEDBACK = BIT(15),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -898,6 +949,9 @@ struct iwl_tof_range_req_ap_entry_v8 {
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct iwl_tof_range_req_ap_entry_v9 - AP configuration parameters
  * @initiator_ap_flags: see &enum iwl_initiator_ap_flags.
  * @channel_num: AP Channel number
@@ -982,8 +1036,11 @@ struct iwl_tof_range_req_ap_entry_v9 {
 } __packed; /* LOCATION_RANGE_REQ_AP_ENTRY_CMD_API_S_VER_9 */
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * enum iwl_tof_response_mode
  * @IWL_MVM_TOF_RESPONSE_ASAP: report each AP measurement separately as soon as
  *			       possible (not supported for this release)
@@ -1233,6 +1290,9 @@ struct iwl_tof_range_req_cmd_v12 {
 } __packed; /* LOCATION_RANGE_REQ_CMD_API_S_VER_12 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct iwl_tof_range_req_cmd_v13 - start measurement cmd
  * @initiator_flags: see flags @ iwl_tof_initiator_flags
@@ -1261,8 +1321,11 @@ struct iwl_tof_range_req_cmd_v13 {
 	struct iwl_tof_range_req_ap_entry_v9 ap[IWL_MVM_TOF_MAX_APS];
 } __packed; /* LOCATION_RANGE_REQ_CMD_API_S_VER_13 */
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * enum iwl_tof_range_request_status - status of the sent request
  * @IWL_TOF_RANGE_REQUEST_STATUS_SUCCESSFUL - FW successfully received the

@@ -20,15 +20,20 @@ static int mdp4_hw_init(struct msm_kms *kms)
 	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
 	struct drm_device *dev = mdp4_kms->dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 dmap_cfg, vg_cfg;
 =======
 	uint32_t version, major, minor, dmap_cfg, vg_cfg;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 dmap_cfg, vg_cfg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long clk;
 	int ret = 0;
 
 	pm_runtime_get_sync(dev->dev);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 	mdp4_enable(mdp4_kms);
@@ -50,6 +55,8 @@ static int mdp4_hw_init(struct msm_kms *kms)
 	mdp4_kms->rev = minor;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (mdp4_kms->rev > 1) {
 		mdp4_write(mdp4_kms, REG_MDP4_CS_CONTROLLER0, 0x0707ffff);
 		mdp4_write(mdp4_kms, REG_MDP4_CS_CONTROLLER1, 0x03073f3f);
@@ -96,9 +103,12 @@ static int mdp4_hw_init(struct msm_kms *kms)
 		mdp4_write(mdp4_kms, REG_MDP4_RESET_STATUS, 1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 out:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_put_sync(dev->dev);
 
 	return ret;
@@ -119,6 +129,7 @@ static void mdp4_disable_commit(struct msm_kms *kms)
 static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	int i;
 	struct drm_crtc *crtc;
@@ -128,6 +139,8 @@ static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *st
 	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
 		drm_crtc_vblank_get(crtc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mdp4_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
@@ -147,6 +160,7 @@ static void mdp4_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
 static void mdp4_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
 	struct drm_crtc *crtc;
@@ -155,6 +169,8 @@ static void mdp4_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
 	for_each_crtc_mask(mdp4_kms->dev, crtc, crtc_mask)
 		drm_crtc_vblank_put(crtc);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static long mdp4_round_pixclk(struct msm_kms *kms, unsigned long rate,
@@ -428,6 +444,9 @@ fail:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void read_mdp_hw_revision(struct mdp4_kms *mdp4_kms,
 				 u32 *major, u32 *minor)
 {
@@ -444,24 +463,35 @@ static void read_mdp_hw_revision(struct mdp4_kms *mdp4_kms,
 	DRM_DEV_INFO(dev->dev, "MDP4 version v%d.%d", *major, *minor);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct msm_kms *mdp4_kms_init(struct drm_device *dev)
 {
 	struct platform_device *pdev = to_platform_device(dev->dev);
 	struct mdp4_platform_config *config = mdp4_get_config(pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct msm_drm_private *priv = dev->dev_private;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct msm_drm_private *priv = dev->dev_private;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mdp4_kms *mdp4_kms;
 	struct msm_kms *kms = NULL;
 	struct msm_gem_address_space *aspace;
 	int irq, ret;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	u32 major, minor;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 major, minor;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mdp4_kms = kzalloc(sizeof(*mdp4_kms), GFP_KERNEL);
 	if (!mdp4_kms) {
@@ -477,11 +507,16 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	priv->kms = &mdp4_kms->base.base;
 	kms = priv->kms;
 =======
 	kms = &mdp4_kms->base.base;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	priv->kms = &mdp4_kms->base.base;
+	kms = priv->kms;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mdp4_kms->dev = dev;
 
@@ -528,6 +563,7 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
 		mdp4_kms->pclk = NULL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (mdp4_kms->rev >= 2) {
 		mdp4_kms->lut_clk = devm_clk_get(&pdev->dev, "lut_clk");
@@ -539,6 +575,8 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
 	}
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mdp4_kms->axi_clk = devm_clk_get(&pdev->dev, "bus_clk");
 	if (IS_ERR(mdp4_kms->axi_clk)) {
 		DRM_DEV_ERROR(dev->dev, "failed to get axi_clk\n");
@@ -548,6 +586,9 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
 
 	clk_set_rate(mdp4_kms->clk, config->max_clk);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	read_mdp_hw_revision(mdp4_kms, &major, &minor);
 
@@ -567,12 +608,17 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
 			ret = PTR_ERR(mdp4_kms->lut_clk);
 			goto fail;
 		}
+<<<<<<< HEAD
 		clk_set_rate(mdp4_kms->lut_clk, config->max_clk);
 	}
 =======
 	if (mdp4_kms->lut_clk)
 		clk_set_rate(mdp4_kms->lut_clk, config->max_clk);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clk_set_rate(mdp4_kms->lut_clk, config->max_clk);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pm_runtime_enable(dev->dev);
 	mdp4_kms->rpm_enabled = true;

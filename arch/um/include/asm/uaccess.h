@@ -24,10 +24,13 @@
 extern unsigned long raw_copy_from_user(void *to, const void __user *from, unsigned long n);
 extern unsigned long raw_copy_to_user(void __user *to, const void *from, unsigned long n);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern long __strncpy_from_user(char *dst, const char __user *src, long count);
 extern long __strnlen_user(const void __user *str, long len);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern unsigned long __clear_user(void __user *mem, unsigned long len);
 static inline int __access_ok(unsigned long addr, unsigned long size);
 
@@ -35,11 +38,15 @@ static inline int __access_ok(unsigned long addr, unsigned long size);
 #define __access_ok __access_ok
 #define __clear_user __clear_user
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 #define __strnlen_user __strnlen_user
 #define __strncpy_from_user __strncpy_from_user
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define INLINE_COPY_FROM_USER
 #define INLINE_COPY_TO_USER
 

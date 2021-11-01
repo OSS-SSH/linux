@@ -34,6 +34,9 @@ Description:
 		parts per billion.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:		/sys/class/ptp/ptpN/max_vclocks
 Date:		May 2021
 Contact:	Yangbo Lu <yangbo.lu@nxp.com>
@@ -41,8 +44,11 @@ Description:
 		This file contains the maximum number of ptp vclocks.
 		Write integer to re-configure it.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:		/sys/class/ptp/ptpN/n_alarms
 Date:		September 2010
 Contact:	Richard Cochran <richardcochran@gmail.com>
@@ -72,6 +78,9 @@ Description:
 		offered by the PTP hardware clock.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:		/sys/class/ptp/ptpN/n_vclocks
 Date:		May 2021
 Contact:	Yangbo Lu <yangbo.lu@nxp.com>
@@ -85,8 +94,11 @@ Description:
 		switches the physical clock back to normal, adjustable
 		operation.
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 What:		/sys/class/ptp/ptpN/pins
 Date:		March 2014
 Contact:	Richard Cochran <richardcochran@gmail.com>

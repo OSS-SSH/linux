@@ -98,6 +98,9 @@ unsigned int snd_dma_pointer(unsigned long dma, unsigned int size)
 }
 EXPORT_SYMBOL(snd_dma_pointer);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct snd_dma_data {
 	int dma;
@@ -136,5 +139,8 @@ int snd_devm_request_dma(struct device *dev, int dma, const char *name)
 	return 0;
 }
 EXPORT_SYMBOL_GPL(snd_devm_request_dma);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

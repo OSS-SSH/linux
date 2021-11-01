@@ -583,10 +583,14 @@ void nvmet_passthru_ctrl_disable(struct nvmet_subsys *subsys);
 u16 nvmet_parse_passthru_admin_cmd(struct nvmet_req *req);
 u16 nvmet_parse_passthru_io_cmd(struct nvmet_req *req);
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool nvmet_is_passthru_subsys(struct nvmet_subsys *subsys)
 =======
 static inline struct nvme_ctrl *nvmet_passthru_ctrl(struct nvmet_subsys *subsys)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline bool nvmet_is_passthru_subsys(struct nvmet_subsys *subsys)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return subsys->passthru_ctrl;
 }
@@ -606,15 +610,20 @@ static inline u16 nvmet_parse_passthru_io_cmd(struct nvmet_req *req)
 	return 0;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline bool nvmet_is_passthru_subsys(struct nvmet_subsys *subsys)
 =======
 static inline struct nvme_ctrl *nvmet_passthru_ctrl(struct nvmet_subsys *subsys)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline bool nvmet_is_passthru_subsys(struct nvmet_subsys *subsys)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return NULL;
 }
 #endif /* CONFIG_NVME_TARGET_PASSTHRU */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 static inline bool nvmet_is_passthru_req(struct nvmet_req *req)
 {
@@ -626,11 +635,19 @@ void nvmet_passthrough_override_cap(struct nvmet_ctrl *ctrl);
 =======
 static inline struct nvme_ctrl *
 nvmet_req_passthru_ctrl(struct nvmet_req *req)
+=======
+static inline bool nvmet_is_passthru_req(struct nvmet_req *req)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	return nvmet_passthru_ctrl(nvmet_req_subsys(req));
+	return nvmet_is_passthru_subsys(nvmet_req_subsys(req));
 }
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nvmet_passthrough_override_cap(struct nvmet_ctrl *ctrl);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u16 errno_to_nvme_status(struct nvmet_req *req, int errno);
 u16 nvmet_report_invalid_opcode(struct nvmet_req *req);
 

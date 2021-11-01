@@ -171,6 +171,9 @@ qla24xx_process_abts(struct scsi_qla_host *vha, struct purex_item *pkt)
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * __qla_consume_iocb - this routine is used to tell fw driver has processed
  *   or consumed the head IOCB along with the continuation IOCB's from the
  *   provided respond queue.
@@ -314,8 +317,11 @@ int __qla_copy_purex_to_buffer(struct scsi_qla_host *vha,
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * qla2100_intr_handler() - Process interrupts for the ISP2100 and ISP2200.
  * @irq: interrupt number
  * @dev_id: SCSI driver HA context
@@ -652,10 +658,14 @@ qla2x00_get_link_speed_str(struct qla_hw_data *ha, uint16_t speed)
 {
 	static const char *const link_speeds[] = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"1", "2", "?", "4", "8", "16", "32", "64", "10"
 =======
 		"1", "2", "?", "4", "8", "16", "32", "10"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"1", "2", "?", "4", "8", "16", "32", "64", "10"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 #define	QLA_LAST_SPEED (ARRAY_SIZE(link_speeds) - 1)
 
@@ -1878,11 +1888,17 @@ qla2x00_get_sp_from_handle(scsi_qla_host_t *vha, const char *func,
 	uint16_t index;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pkt->handle == QLA_SKIP_HANDLE)
 		return NULL;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (pkt->handle == QLA_SKIP_HANDLE)
+		return NULL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	index = LSW(pkt->handle);
 	if (index >= req->num_outstanding_cmds) {
 		ql_log(ql_log_warn, vha, 0x5031,
@@ -2128,10 +2144,14 @@ qla2x00_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 
 static void
 <<<<<<< HEAD
+<<<<<<< HEAD
 qla24xx_els_ct_entry(scsi_qla_host_t *v, struct req_que *req,
 =======
 qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+qla24xx_els_ct_entry(scsi_qla_host_t *v, struct req_que *req,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     struct sts_entry_24xx *pkt, int iocb_type)
 {
 	struct els_sts_entry_24xx *ese = (struct els_sts_entry_24xx *)pkt;
@@ -2142,6 +2162,7 @@ qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 	struct fc_bsg_reply *bsg_reply;
 	uint16_t comp_status;
 	uint32_t fw_status[3];
+<<<<<<< HEAD
 <<<<<<< HEAD
 	int res, logit = 1;
 	struct srb_iocb *els;
@@ -2197,18 +2218,64 @@ qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 		}
 =======
 	int res;
+=======
+	int res, logit = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct srb_iocb *els;
+	uint n;
+	scsi_qla_host_t *vha;
+	struct els_sts_entry_24xx *e = (struct els_sts_entry_24xx *)pkt;
 
-	sp = qla2x00_get_sp_from_handle(vha, func, req, pkt);
+	sp = qla2x00_get_sp_from_handle(v, func, req, pkt);
 	if (!sp)
 		return;
+	bsg_job = sp->u.bsg_job;
+	vha = sp->vha;
 
 	type = NULL;
+
+	comp_status = fw_status[0] = le16_to_cpu(pkt->comp_status);
+	fw_status[1] = le32_to_cpu(((struct els_sts_entry_24xx *)pkt)->error_subcode_1);
+	fw_status[2] = le32_to_cpu(((struct els_sts_entry_24xx *)pkt)->error_subcode_2);
+
 	switch (sp->type) {
 	case SRB_ELS_CMD_RPT:
 	case SRB_ELS_CMD_HST:
+		type = "rpt hst";
+		break;
+	case SRB_ELS_CMD_HST_NOLOGIN:
 		type = "els";
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{
+			struct els_entry_24xx *els = (void *)pkt;
+			struct qla_bsg_auth_els_request *p =
+				(struct qla_bsg_auth_els_request *)bsg_job->request;
+
+			ql_dbg(ql_dbg_user, vha, 0x700f,
+			     "%s %s. portid=%02x%02x%02x status %x xchg %x bsg ptr %p\n",
+			     __func__, sc_to_str(p->e.sub_cmd),
+			     e->d_id[2], e->d_id[1], e->d_id[0],
+			     comp_status, p->e.extra_rx_xchg_address, bsg_job);
+
+			if (!(le16_to_cpu(els->control_flags) & ECF_PAYLOAD_DESCR_MASK)) {
+				if (sp->remap.remapped) {
+					n = sg_copy_from_buffer(bsg_job->reply_payload.sg_list,
+						bsg_job->reply_payload.sg_cnt,
+						sp->remap.rsp.buf,
+						sp->remap.rsp.len);
+					ql_dbg(ql_dbg_user + ql_dbg_verbose, vha, 0x700e,
+					   "%s: SG copied %x of %x\n",
+					   __func__, n, sp->remap.rsp.len);
+				} else {
+					ql_dbg(ql_dbg_user, vha, 0x700f,
+					   "%s: NOT REMAPPED (error)...!!!\n",
+					   __func__);
+				}
+			}
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case SRB_CT_CMD:
 		type = "ct pass-through";
@@ -2239,12 +2306,15 @@ qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	comp_status = fw_status[0] = le16_to_cpu(pkt->comp_status);
 	fw_status[1] = le32_to_cpu(ese->error_subcode_1);
 	fw_status[2] = le32_to_cpu(ese->error_subcode_2);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (iocb_type == ELS_IOCB_TYPE) {
 		els = &sp->u.iocb_cmd;
 		els->u.els_plogi.fw_status[0] = cpu_to_le32(fw_status[0]);
@@ -2259,6 +2329,9 @@ qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 				els->u.els_plogi.len = cpu_to_le16(le32_to_cpu(
 					ese->total_byte_count));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				if (sp->remap.remapped &&
 				    ((u8 *)sp->remap.rsp.buf)[0] == ELS_LS_ACC) {
@@ -2273,13 +2346,19 @@ qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 				els->u.els_plogi.len = 0;
 				res = DID_IMM_RETRY << 16;
 				qlt_schedule_sess_for_deletion(sp->fcport);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			} else {
 				els->u.els_plogi.len = 0;
 				res = DID_ERROR << 16;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (logit) {
 				if (sp->remap.remapped &&
@@ -2308,6 +2387,7 @@ qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 					    e->d_id[2], e->d_id[1], e->d_id[0]);
 				}
 			}
+<<<<<<< HEAD
 		}
 =======
 		}
@@ -2316,6 +2396,9 @@ qla24xx_els_ct_entry(scsi_qla_host_t *vha, struct req_que *req,
 		    type, sp->handle, comp_status, fw_status[1], fw_status[2],
 		    le32_to_cpu(ese->total_byte_count));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto els_ct_done;
 	}
 
@@ -2375,9 +2458,13 @@ qla24xx_logio_entry(scsi_qla_host_t *vha, struct req_que *req,
 	uint16_t *data;
 	uint32_t iop[2];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int logit = 1;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int logit = 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sp = qla2x00_get_sp_from_handle(vha, func, req, logio);
 	if (!sp)
@@ -2425,12 +2512,18 @@ qla24xx_logio_entry(scsi_qla_host_t *vha, struct req_que *req,
 			goto logio_done;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lio->u.logio.iop[1] = le32_to_cpu(logio->io_parameter[5]);
 		if (le32_to_cpu(logio->io_parameter[5]) & LIO_COMM_FEAT_FCSP)
 			fcport->flags |= FCF_FCSP_DEVICE;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iop[0] = le32_to_cpu(logio->io_parameter[0]);
 		if (iop[0] & BIT_4) {
 			fcport->port_type = FCT_TARGET;
@@ -2459,16 +2552,22 @@ qla24xx_logio_entry(scsi_qla_host_t *vha, struct req_que *req,
 		data[0] = MBS_PORT_ID_USED;
 		data[1] = LSW(iop[1]);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		logit = 0;
 		break;
 	case LSC_SCODE_NPORT_USED:
 		data[0] = MBS_LOOP_ID_USED;
 		logit = 0;
+<<<<<<< HEAD
 =======
 		break;
 	case LSC_SCODE_NPORT_USED:
 		data[0] = MBS_LOOP_ID_USED;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case LSC_SCODE_CMD_FAILED:
 		if (iop[1] == 0x0606) {
@@ -2502,6 +2601,9 @@ qla24xx_logio_entry(scsi_qla_host_t *vha, struct req_que *req,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (logit)
 		ql_log(ql_log_warn, sp->vha, 0x5037, "Async-%s failed: "
 		       "handle=%x pid=%06x wwpn=%8phC comp_status=%x iop0=%x iop1=%x\n",
@@ -2516,6 +2618,7 @@ qla24xx_logio_entry(scsi_qla_host_t *vha, struct req_que *req,
 		       le16_to_cpu(logio->comp_status),
 		       le32_to_cpu(logio->io_parameter[0]),
 		       le32_to_cpu(logio->io_parameter[1]));
+<<<<<<< HEAD
 =======
 	ql_log(ql_log_warn, sp->vha, 0x5037,
 	       "Async-%s failed: handle=%x pid=%06x wwpn=%8phC comp_status=%x iop0=%x iop1=%x\n",
@@ -2524,6 +2627,8 @@ qla24xx_logio_entry(scsi_qla_host_t *vha, struct req_que *req,
 	       le32_to_cpu(logio->io_parameter[0]),
 	       le32_to_cpu(logio->io_parameter[1]));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 logio_done:
 	sp->done(sp, 0);
@@ -2703,10 +2808,14 @@ static void qla24xx_nvme_iocb_entry(scsi_qla_host_t *vha, struct req_que *req,
 
 	if (unlikely(logit))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ql_log(ql_dbg_io, fcport->vha, 0x5060,
 =======
 		ql_log(ql_log_warn, fcport->vha, 0x5060,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ql_log(ql_dbg_io, fcport->vha, 0x5060,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		   "NVME-%s ERR Handling - hdl=%x status(%x) tr_len:%x resid=%x  ox_id=%x\n",
 		   sp->name, sp->handle, comp_status,
 		   fd->transferred_length, le32_to_cpu(sts->residual_len),
@@ -2725,6 +2834,9 @@ static void qla24xx_nvme_iocb_entry(scsi_qla_host_t *vha, struct req_que *req,
 	case CS_PORT_LOGGED_OUT:
 		fcport->nvme_flag |= NVME_FLAG_RESETTING;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (atomic_read(&fcport->state) == FCS_ONLINE) {
 			ql_dbg(ql_dbg_disc, fcport->vha, 0x3021,
 			       "Port to be marked lost on fcport=%06x, current "
@@ -2734,8 +2846,11 @@ static void qla24xx_nvme_iocb_entry(scsi_qla_host_t *vha, struct req_que *req,
 
 			qlt_schedule_sess_for_deletion(fcport);
 		}
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fallthrough;
 	case CS_ABORTED:
 	case CS_PORT_BUSY:
@@ -3289,6 +3404,7 @@ qla2x00_status_entry(scsi_qla_host_t *vha, struct rsp_que *rsp, void *pkt)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* Fast path completion. */
 	qla_chk_edif_rx_sa_delete_pending(vha, sp, sts24);
 	sp->qpair->cmd_completion_cnt++;
@@ -3298,6 +3414,12 @@ qla2x00_status_entry(scsi_qla_host_t *vha, struct rsp_que *rsp, void *pkt)
 
 	/* Fast path completion. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Fast path completion. */
+	qla_chk_edif_rx_sa_delete_pending(vha, sp, sts24);
+	sp->qpair->cmd_completion_cnt++;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (comp_status == CS_COMPLETE && scsi_status == 0) {
 		qla2x00_process_completed_request(vha, req, handle);
 
@@ -3573,10 +3695,14 @@ check_scsi_status:
 out:
 	if (logit)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ql_log(ql_dbg_io, fcport->vha, 0x3022,
 =======
 		ql_log(ql_log_warn, fcport->vha, 0x3022,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ql_log(ql_dbg_io, fcport->vha, 0x3022,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       "FCP command status: 0x%x-0x%x (0x%x) nexus=%ld:%d:%llu portid=%02x%02x%02x oxid=0x%x cdb=%10phN len=0x%x rsp_info=0x%x resid=0x%x fw_resid=0x%x sp=%p cp=%p.\n",
 		       comp_status, scsi_status, res, vha->host_no,
 		       cp->device->id, cp->device->lun, fcport->d_id.b.domain,
@@ -3697,9 +3823,13 @@ qla2x00_error_entry(scsi_qla_host_t *vha, struct rsp_que *rsp, sts_entry_t *pkt)
 		break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case SA_UPDATE_IOCB_TYPE:
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SA_UPDATE_IOCB_TYPE:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ABTS_RESP_24XX:
 	case CTIO_TYPE7:
 	case CTIO_CRC2:
@@ -3788,6 +3918,9 @@ void qla24xx_nvme_ls4_iocb(struct scsi_qla_host *vha,
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * qla_chk_cont_iocb_avail - check for all continuation iocbs are available
  *   before iocb processing can start.
  * @vha: host adapter pointer
@@ -3845,8 +3978,11 @@ static int qla_chk_cont_iocb_avail(struct scsi_qla_host *vha,
 }
 
 /**
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * qla24xx_process_response_queue() - Process response queue entries.
  * @vha: SCSI driver HA context
  * @rsp: response queue
@@ -3987,6 +4123,9 @@ process_err:
 				break;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			case ELS_AUTH_ELS:
 				if (qla_chk_cont_iocb_avail(vha, rsp, (response_t *)pkt)) {
 					ql_dbg(ql_dbg_init, vha, 0x5091,
@@ -3996,8 +4135,11 @@ process_err:
 				}
 				qla24xx_auth_els(vha, (void **)&pkt, &rsp);
 				break;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			default:
 				ql_log(ql_log_warn, vha, 0x509c,
 				       "Discarding ELS Request opcode 0x%x\n",
@@ -4005,13 +4147,19 @@ process_err:
 			}
 			break;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case SA_UPDATE_IOCB_TYPE:
 			qla28xx_sa_update_iocb_entry(vha, rsp->req,
 				(struct sa_update_28xx *)pkt);
 			break;
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			/* Type Not Supported. */
 			ql_dbg(ql_dbg_async, vha, 0x5042,
@@ -4616,10 +4764,15 @@ skip_msi:
 		    "INTa mode: Enabled.\n");
 		ha->flags.mr_intr_valid = 1;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Set max_qpair to 0, as MSI-X and MSI in not enabled */
 		ha->max_qpairs = 0;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Set max_qpair to 0, as MSI-X and MSI in not enabled */
+		ha->max_qpairs = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 clear_risc_ints:

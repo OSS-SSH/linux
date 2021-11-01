@@ -74,6 +74,9 @@ quiet_cmd_tprog-cobjs	= CC  $@
 $(tprog-cobjs): $(obj)/%.o: $(src)/%.c FORCE
 	$(call if_changed_dep,tprog-cobjs)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # Override includes for xdp_sample_user.o because $(srctree)/usr/include in
 # TPROGS_CFLAGS causes conflicts
@@ -85,5 +88,8 @@ XDP_SAMPLE_CFLAGS += -Wall -O2 -lm \
 $(obj)/xdp_sample_user.o: $(src)/xdp_sample_user.c \
 	$(src)/xdp_sample_user.h $(src)/xdp_sample_shared.h
 	$(CC) $(XDP_SAMPLE_CFLAGS) -c -o $@ $<
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

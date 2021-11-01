@@ -21,9 +21,14 @@
 #define PHY_TYPE_SGMII		8
 #define PHY_TYPE_QSGMII		9
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PHY_TYPE_DPHY		10
 #define PHY_TYPE_CPHY		11
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PHY_TYPE_DPHY		10
+#define PHY_TYPE_CPHY		11
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _DT_BINDINGS_PHY */

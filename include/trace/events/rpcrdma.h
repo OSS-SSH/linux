@@ -794,6 +794,9 @@ TRACE_EVENT(xprtrdma_post_send,
 );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TRACE_EVENT(xprtrdma_post_send_err,
 	TP_PROTO(
 		const struct rpcrdma_xprt *r_xprt,
@@ -827,8 +830,11 @@ TRACE_EVENT(xprtrdma_post_send_err,
 	)
 );
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TRACE_EVENT(xprtrdma_post_recv,
 	TP_PROTO(
 		const struct rpcrdma_rep *rep
@@ -855,6 +861,7 @@ TRACE_EVENT(xprtrdma_post_recvs,
 	TP_PROTO(
 		const struct rpcrdma_xprt *r_xprt,
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned int count
 	),
 
@@ -866,14 +873,23 @@ TRACE_EVENT(xprtrdma_post_recvs,
 
 	TP_ARGS(r_xprt, count, status),
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned int count
+	),
+
+	TP_ARGS(r_xprt, count),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TP_STRUCT__entry(
 		__field(u32, cq_id)
 		__field(unsigned int, count)
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		__field(int, status)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__field(int, posted)
 		__string(addr, rpcrdma_addrstr(r_xprt))
 		__string(port, rpcrdma_portstr(r_xprt))
@@ -884,6 +900,7 @@ TRACE_EVENT(xprtrdma_post_recvs,
 
 		__entry->cq_id = ep->re_attr.recv_cq->res.id;
 		__entry->count = count;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		__entry->posted = ep->re_receive_count;
 		__assign_str(addr, rpcrdma_addrstr(r_xprt));
@@ -918,12 +935,15 @@ TRACE_EVENT(xprtrdma_post_recvs_err,
 		__entry->status = status;
 =======
 		__entry->status = status;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__entry->posted = ep->re_receive_count;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		__assign_str(addr, rpcrdma_addrstr(r_xprt));
 		__assign_str(port, rpcrdma_portstr(r_xprt));
 	),
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	TP_printk("peer=[%s]:%s cq.id=%d rc=%d",
 		__get_str(addr), __get_str(port), __entry->cq_id,
@@ -933,6 +953,41 @@ TRACE_EVENT(xprtrdma_post_recvs_err,
 		__get_str(addr), __get_str(port), __entry->cq_id,
 		__entry->count, __entry->posted, __entry->status
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_printk("peer=[%s]:%s cq.id=%d %u new recvs, %d active",
+		__get_str(addr), __get_str(port), __entry->cq_id,
+		__entry->count, __entry->posted
+	)
+);
+
+TRACE_EVENT(xprtrdma_post_recvs_err,
+	TP_PROTO(
+		const struct rpcrdma_xprt *r_xprt,
+		int status
+	),
+
+	TP_ARGS(r_xprt, status),
+
+	TP_STRUCT__entry(
+		__field(u32, cq_id)
+		__field(int, status)
+		__string(addr, rpcrdma_addrstr(r_xprt))
+		__string(port, rpcrdma_portstr(r_xprt))
+	),
+
+	TP_fast_assign(
+		const struct rpcrdma_ep *ep = r_xprt->rx_ep;
+
+		__entry->cq_id = ep->re_attr.recv_cq->res.id;
+		__entry->status = status;
+		__assign_str(addr, rpcrdma_addrstr(r_xprt));
+		__assign_str(port, rpcrdma_portstr(r_xprt));
+	),
+
+	TP_printk("peer=[%s]:%s cq.id=%d rc=%d",
+		__get_str(addr), __get_str(port), __entry->cq_id,
+		__entry->status
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	)
 );
 

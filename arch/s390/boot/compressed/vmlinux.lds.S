@@ -2,11 +2,17 @@
 #include <asm-generic/vmlinux.lds.h>
 #include <asm/vmlinux.lds.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <asm/thread_info.h>
 #include <asm/page.h>
 #include <asm/sclp.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/thread_info.h>
+#include <asm/page.h>
+#include <asm/sclp.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 OUTPUT_FORMAT("elf64-s390", "elf64-s390", "elf64-s390")
 OUTPUT_ARCH(s390:64-bit)
@@ -41,6 +47,7 @@ SECTIONS
 		_edata = . ;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	* .dma section for code, data, ex_table that need to stay below 2 GB,
@@ -64,6 +71,8 @@ SECTIONS
 	. = ALIGN(PAGE_SIZE);
 	_edma = .;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	BOOT_DATA
 	BOOT_DATA_PRESERVED
@@ -79,6 +88,9 @@ SECTIONS
 		*(.bss.*)
 		*(COMMON)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Stacks for the decompressor
 		 */
@@ -90,8 +102,11 @@ SECTIONS
 		_stack_start = .;
 		. += BOOT_STACK_SIZE;
 		_stack_end = .;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		_ebss = .;
 	}
 

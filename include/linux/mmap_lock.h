@@ -102,16 +102,22 @@ static inline bool mmap_write_trylock(struct mm_struct *mm)
 static inline void mmap_write_unlock(struct mm_struct *mm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__mmap_lock_trace_released(mm, true);
 	up_write(&mm->mmap_lock);
 =======
 	up_write(&mm->mmap_lock);
 	__mmap_lock_trace_released(mm, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__mmap_lock_trace_released(mm, true);
+	up_write(&mm->mmap_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void mmap_write_downgrade(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	__mmap_lock_trace_acquire_returned(mm, false, true);
 	downgrade_write(&mm->mmap_lock);
@@ -119,6 +125,10 @@ static inline void mmap_write_downgrade(struct mm_struct *mm)
 	downgrade_write(&mm->mmap_lock);
 	__mmap_lock_trace_acquire_returned(mm, false, true);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__mmap_lock_trace_acquire_returned(mm, false, true);
+	downgrade_write(&mm->mmap_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void mmap_read_lock(struct mm_struct *mm)
@@ -151,6 +161,7 @@ static inline bool mmap_read_trylock(struct mm_struct *mm)
 static inline void mmap_read_unlock(struct mm_struct *mm)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__mmap_lock_trace_released(mm, false);
 	up_read(&mm->mmap_lock);
 =======
@@ -166,10 +177,15 @@ static inline bool mmap_read_trylock_non_owner(struct mm_struct *mm)
 	}
 	return false;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__mmap_lock_trace_released(mm, false);
+	up_read(&mm->mmap_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void mmap_read_unlock_non_owner(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	__mmap_lock_trace_released(mm, false);
 	up_read_non_owner(&mm->mmap_lock);
@@ -177,6 +193,10 @@ static inline void mmap_read_unlock_non_owner(struct mm_struct *mm)
 	up_read_non_owner(&mm->mmap_lock);
 	__mmap_lock_trace_released(mm, false);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__mmap_lock_trace_released(mm, false);
+	up_read_non_owner(&mm->mmap_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void mmap_assert_locked(struct mm_struct *mm)

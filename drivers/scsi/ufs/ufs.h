@@ -123,20 +123,29 @@ enum flag_idn {
 	QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN                 = 0x0F,
 	QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8     = 0x10,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	QUERY_FLAG_IDN_HPB_RESET                        = 0x11,
 	QUERY_FLAG_IDN_HPB_EN				= 0x12,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	QUERY_FLAG_IDN_HPB_RESET                        = 0x11,
+	QUERY_FLAG_IDN_HPB_EN				= 0x12,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* Attribute idn for Query requests */
 enum attr_idn {
 	QUERY_ATTR_IDN_BOOT_LU_EN		= 0x00,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	QUERY_ATTR_IDN_MAX_HPB_SINGLE_CMD	= 0x01,
 =======
 	QUERY_ATTR_IDN_RESERVED			= 0x01,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	QUERY_ATTR_IDN_MAX_HPB_SINGLE_CMD	= 0x01,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	QUERY_ATTR_IDN_POWER_MODE		= 0x02,
 	QUERY_ATTR_IDN_ACTIVE_ICC_LVL		= 0x03,
 	QUERY_ATTR_IDN_OOO_DATA_EN		= 0x04,
@@ -205,11 +214,17 @@ enum unit_desc_param {
 	UNIT_DESC_PARAM_CTX_CAPABILITIES	= 0x20,
 	UNIT_DESC_PARAM_LARGE_UNIT_SIZE_M1	= 0x22,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	UNIT_DESC_PARAM_HPB_LU_MAX_ACTIVE_RGNS	= 0x23,
 	UNIT_DESC_PARAM_HPB_PIN_RGN_START_OFF	= 0x25,
 	UNIT_DESC_PARAM_HPB_NUM_PIN_RGNS	= 0x27,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	UNIT_DESC_PARAM_HPB_LU_MAX_ACTIVE_RGNS	= 0x23,
+	UNIT_DESC_PARAM_HPB_PIN_RGN_START_OFF	= 0x25,
+	UNIT_DESC_PARAM_HPB_NUM_PIN_RGNS	= 0x27,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	UNIT_DESC_PARAM_WB_BUF_ALLOC_UNITS	= 0x29,
 };
 
@@ -251,10 +266,15 @@ enum device_desc_param {
 	DEVICE_DESC_PARAM_PSA_TMT		= 0x29,
 	DEVICE_DESC_PARAM_PRDCT_REV		= 0x2A,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	DEVICE_DESC_PARAM_HPB_VER		= 0x40,
 	DEVICE_DESC_PARAM_HPB_CONTROL		= 0x42,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DEVICE_DESC_PARAM_HPB_VER		= 0x40,
+	DEVICE_DESC_PARAM_HPB_CONTROL		= 0x42,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP	= 0x4F,
 	DEVICE_DESC_PARAM_WB_PRESRV_USRSPC_EN	= 0x53,
 	DEVICE_DESC_PARAM_WB_TYPE		= 0x54,
@@ -304,12 +324,18 @@ enum geometry_desc_param {
 	GEOMETRY_DESC_PARAM_ENM4_CAP_ADJ_FCTR	= 0x42,
 	GEOMETRY_DESC_PARAM_OPT_LOG_BLK_SIZE	= 0x44,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEOMETRY_DESC_PARAM_HPB_REGION_SIZE	= 0x48,
 	GEOMETRY_DESC_PARAM_HPB_NUMBER_LU	= 0x49,
 	GEOMETRY_DESC_PARAM_HPB_SUBREGION_SIZE	= 0x4A,
 	GEOMETRY_DESC_PARAM_HPB_MAX_ACTIVE_REGS	= 0x4B,
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEOMETRY_DESC_PARAM_WB_MAX_ALLOC_UNITS	= 0x4F,
 	GEOMETRY_DESC_PARAM_WB_MAX_WB_LUNS	= 0x53,
 	GEOMETRY_DESC_PARAM_WB_BUFF_CAP_ADJ	= 0x54,
@@ -355,14 +381,20 @@ enum {
 /* Possible values for dExtendedUFSFeaturesSupport */
 enum {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	UFS_DEV_HPB_SUPPORT		= BIT(7),
 	UFS_DEV_WRITE_BOOSTER_SUP	= BIT(8),
 };
 #define UFS_DEV_HPB_SUPPORT_VERSION		0x310
+<<<<<<< HEAD
 =======
 	UFS_DEV_WRITE_BOOSTER_SUP	= BIT(8),
 };
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define POWER_DESC_MAX_ACTV_ICC_LVLS		16
 
@@ -501,6 +533,9 @@ struct utp_cmd_rsp {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ufshpb_active_field {
 	__be16 active_rgn;
 	__be16 active_srgn;
@@ -536,8 +571,11 @@ struct utp_hpb_rsp {
 };
 #define UTP_HPB_RSP_SIZE 40
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct utp_upiu_rsp - general upiu response structure
  * @header: UPIU header structure DW-0 to DW-2
@@ -549,9 +587,13 @@ struct utp_upiu_rsp {
 	union {
 		struct utp_cmd_rsp sr;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		struct utp_hpb_rsp hr;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct utp_hpb_rsp hr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct utp_upiu_query qr;
 	};
 };
@@ -621,11 +663,17 @@ struct ufs_dev_info {
 	u32	clk_gating_wait_us;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/* UFS HPB related flag */
 	bool	hpb_enabled;
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* UFS HPB related flag */
+	bool	hpb_enabled;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* UFS WB related flags */
 	bool    wb_enabled;
 	bool    wb_buf_flush_enabled;

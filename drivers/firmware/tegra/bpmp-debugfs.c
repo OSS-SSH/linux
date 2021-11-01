@@ -297,6 +297,7 @@ static int bpmp_debug_show(struct seq_file *m, void *p)
 	struct inode *inode = file_inode(file);
 	struct tegra_bpmp *bpmp = inode->i_private;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	char fnamebuf[256];
 	const char *filename;
 	struct mrq_debug_request req = {
@@ -328,12 +329,36 @@ static int bpmp_debug_show(struct seq_file *m, void *p)
 	if (!databuf)
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char fnamebuf[256];
+	const char *filename;
+	struct mrq_debug_request req = {
+		.cmd = cpu_to_le32(CMD_DEBUG_READ),
+	};
+	struct mrq_debug_response resp;
+	struct tegra_bpmp_message msg = {
+		.mrq = MRQ_DEBUG,
+		.tx = {
+			.data = &req,
+			.size = sizeof(req),
+		},
+		.rx = {
+			.data = &resp,
+			.size = sizeof(resp),
+		},
+	};
+	uint32_t fd = 0, len = 0;
+	int remaining, err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	filename = get_filename(bpmp, file, fnamebuf, sizeof(fnamebuf));
 	if (!filename)
 		return -ENOENT;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&bpmp_debug_lock);
 	err = mrq_debug_open(bpmp, filename, &fd, &len, 0);
 	if (err)
@@ -350,6 +375,7 @@ static int bpmp_debug_show(struct seq_file *m, void *p)
 			err = -EINVAL;
 			goto close;
 		}
+<<<<<<< HEAD
 
 		if (resp.frd.readlen > remaining) {
 			pr_err("%s: read data length invalid\n", __func__);
@@ -371,6 +397,23 @@ out:
 		seq_commit(m, nbytes);
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		if (resp.frd.readlen > remaining) {
+			pr_err("%s: read data length invalid\n", __func__);
+			err = -EINVAL;
+			goto close;
+		}
+
+		seq_write(m, resp.frd.data, resp.frd.readlen);
+		remaining -= resp.frd.readlen;
+	}
+
+close:
+	err = mrq_debug_close(bpmp, fd);
+out:
+	mutex_unlock(&bpmp_debug_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 

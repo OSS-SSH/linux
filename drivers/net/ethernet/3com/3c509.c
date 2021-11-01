@@ -303,9 +303,12 @@ static int el3_isa_match(struct device *pdev, unsigned int ndev)
 
 	SET_NETDEV_DEV(dev, pdev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	netdev_boot_setup_check(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!request_region(ioaddr, EL3_IO_EXTENT, "3c509-isa")) {
 		free_netdev(dev);
@@ -425,9 +428,12 @@ static int el3_pnp_probe(struct pnp_dev *pdev, const struct pnp_device_id *id)
 	}
 	SET_NETDEV_DEV(dev, &pdev->dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	netdev_boot_setup_check(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	el3_dev_fill(dev, phys_addr, ioaddr, irq, if_port, EL3_PNP);
 	pnp_set_drvdata(pdev, dev);
@@ -521,12 +527,18 @@ static int el3_common_init(struct net_device *dev)
 	struct el3_private *lp = netdev_priv(dev);
 	int err;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	static const char * const if_names[] = {
 		"10baseT", "AUI", "undefined", "BNC"
 	};
 =======
 	const char *if_names[] = {"10baseT", "AUI", "undefined", "BNC"};
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const char * const if_names[] = {
+		"10baseT", "AUI", "undefined", "BNC"
+	};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_init(&lp->lock);
 
@@ -601,9 +613,12 @@ static int el3_eisa_probe(struct device *device)
 
 	SET_NETDEV_DEV(dev, device);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	netdev_boot_setup_check(dev);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	el3_dev_fill(dev, phys_addr, ioaddr, irq, if_port, EL3_EISA);
 	eisa_set_drvdata (edev, dev);

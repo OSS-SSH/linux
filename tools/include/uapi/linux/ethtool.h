@@ -49,6 +49,9 @@ struct ethtool_channels {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ETHTOOL_FWVERS_LEN	32
 #define ETHTOOL_BUSINFO_LEN	32
 #define ETHTOOL_EROMVERS_LEN	32
@@ -102,6 +105,9 @@ struct ethtool_drvinfo {
 
 #define ETHTOOL_GDRVINFO	0x00000003
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _UAPI_LINUX_ETHTOOL_H */

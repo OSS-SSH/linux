@@ -5,9 +5,13 @@
 #include <linux/debugfs.h>
 #include <linux/mm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/kfence.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/kfence.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kasan.h>
 #include <asm/ptdump.h>
 #include <asm/kasan.h>
@@ -26,12 +30,18 @@ enum address_markers_idx {
 	KERNEL_START_NR,
 	KERNEL_END_NR,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_KFENCE
 	KFENCE_START_NR,
 	KFENCE_END_NR,
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	IDENTITY_AFTER_NR,
 	IDENTITY_AFTER_END_NR,
 #ifdef CONFIG_KASAN
@@ -52,12 +62,18 @@ static struct addr_marker address_markers[] = {
 	[KERNEL_START_NR]	= {(unsigned long)_stext, "Kernel Image Start"},
 	[KERNEL_END_NR]		= {(unsigned long)_end, "Kernel Image End"},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_KFENCE
 	[KFENCE_START_NR]	= {0, "KFence Pool Start"},
 	[KFENCE_END_NR]		= {0, "KFence Pool End"},
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[IDENTITY_AFTER_NR]	= {(unsigned long)_end, "Identity Mapping Start"},
 	[IDENTITY_AFTER_END_NR]	= {0, "Identity Mapping End"},
 #ifdef CONFIG_KASAN
@@ -267,11 +283,17 @@ static void sort_address_markers(void)
 static int pt_dump_init(void)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_KFENCE
 	unsigned long kfence_start = (unsigned long)__kfence_pool;
 #endif
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_KFENCE
+	unsigned long kfence_start = (unsigned long)__kfence_pool;
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Figure out the maximum virtual address being accessible with the
 	 * kernel ASCE. We need this to keep the page table walker functions
@@ -287,12 +309,18 @@ static int pt_dump_init(void)
 	address_markers[VMALLOC_NR].start_address = VMALLOC_START;
 	address_markers[VMALLOC_END_NR].start_address = VMALLOC_END;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_KFENCE
 	address_markers[KFENCE_START_NR].start_address = kfence_start;
 	address_markers[KFENCE_END_NR].start_address = kfence_start + KFENCE_POOL_SIZE;
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sort_address_markers();
 #ifdef CONFIG_PTDUMP_DEBUGFS
 	debugfs_create_file("kernel_page_tables", 0400, NULL, NULL, &ptdump_fops);

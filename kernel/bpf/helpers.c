@@ -290,10 +290,14 @@ static inline void __bpf_spin_unlock(struct bpf_spin_lock *lock)
 static DEFINE_PER_CPU(unsigned long, irqsave_flags);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void __bpf_spin_lock_irqsave(struct bpf_spin_lock *lock)
 =======
 notrace BPF_CALL_1(bpf_spin_lock, struct bpf_spin_lock *, lock)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void __bpf_spin_lock_irqsave(struct bpf_spin_lock *lock)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long flags;
 
@@ -301,13 +305,19 @@ notrace BPF_CALL_1(bpf_spin_lock, struct bpf_spin_lock *, lock)
 	__bpf_spin_lock(lock);
 	__this_cpu_write(irqsave_flags, flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 notrace BPF_CALL_1(bpf_spin_lock, struct bpf_spin_lock *, lock)
 {
 	__bpf_spin_lock_irqsave(lock);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -319,10 +329,14 @@ const struct bpf_func_proto bpf_spin_lock_proto = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static inline void __bpf_spin_unlock_irqrestore(struct bpf_spin_lock *lock)
 =======
 notrace BPF_CALL_1(bpf_spin_unlock, struct bpf_spin_lock *, lock)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void __bpf_spin_unlock_irqrestore(struct bpf_spin_lock *lock)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long flags;
 
@@ -330,13 +344,19 @@ notrace BPF_CALL_1(bpf_spin_unlock, struct bpf_spin_lock *, lock)
 	__bpf_spin_unlock(lock);
 	local_irq_restore(flags);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 notrace BPF_CALL_1(bpf_spin_unlock, struct bpf_spin_lock *, lock)
 {
 	__bpf_spin_unlock_irqrestore(lock);
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -358,6 +378,7 @@ void copy_map_value_locked(struct bpf_map *map, void *dst, void *src,
 		lock = dst + map->spin_lock_off;
 	preempt_disable();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	__bpf_spin_lock_irqsave(lock);
 	copy_map_value(map, dst, src);
 	__bpf_spin_unlock_irqrestore(lock);
@@ -366,6 +387,11 @@ void copy_map_value_locked(struct bpf_map *map, void *dst, void *src,
 	copy_map_value(map, dst, src);
 	____bpf_spin_unlock(lock);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__bpf_spin_lock_irqsave(lock);
+	copy_map_value(map, dst, src);
+	__bpf_spin_unlock_irqrestore(lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	preempt_enable();
 }
 
@@ -384,6 +410,9 @@ const struct bpf_func_proto bpf_jiffies64_proto = {
 BPF_CALL_0(bpf_get_current_cgroup_id)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cgroup *cgrp;
 	u64 cgrp_id;
 
@@ -391,6 +420,7 @@ BPF_CALL_0(bpf_get_current_cgroup_id)
 	cgrp = task_dfl_cgroup(current);
 	cgrp_id = cgroup_id(cgrp);
 	rcu_read_unlock();
+<<<<<<< HEAD
 
 	return cgrp_id;
 =======
@@ -398,6 +428,10 @@ BPF_CALL_0(bpf_get_current_cgroup_id)
 
 	return cgroup_id(cgrp);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return cgrp_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 const struct bpf_func_proto bpf_get_current_cgroup_id_proto = {
@@ -408,6 +442,7 @@ const struct bpf_func_proto bpf_get_current_cgroup_id_proto = {
 
 BPF_CALL_1(bpf_get_current_ancestor_cgroup_id, int, ancestor_level)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct cgroup *cgrp;
 	struct cgroup *ancestor;
@@ -422,13 +457,26 @@ BPF_CALL_1(bpf_get_current_ancestor_cgroup_id, int, ancestor_level)
 	return cgrp_id;
 =======
 	struct cgroup *cgrp = task_dfl_cgroup(current);
+=======
+	struct cgroup *cgrp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cgroup *ancestor;
+	u64 cgrp_id;
 
+	rcu_read_lock();
+	cgrp = task_dfl_cgroup(current);
 	ancestor = cgroup_ancestor(cgrp, ancestor_level);
+<<<<<<< HEAD
 	if (!ancestor)
 		return 0;
 	return cgroup_id(ancestor);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cgrp_id = ancestor ? cgroup_id(ancestor) : 0;
+	rcu_read_unlock();
+
+	return cgrp_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 const struct bpf_func_proto bpf_get_current_ancestor_cgroup_id_proto = {
@@ -440,10 +488,13 @@ const struct bpf_func_proto bpf_get_current_ancestor_cgroup_id_proto = {
 
 #ifdef CONFIG_CGROUP_BPF
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 DECLARE_PER_CPU(struct bpf_cgroup_storage_info,
 		bpf_cgroup_storage_info[BPF_CGROUP_STORAGE_NEST_MAX]);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 BPF_CALL_2(bpf_get_local_storage, struct bpf_map *, map, u64, flags)
 {
@@ -452,6 +503,7 @@ BPF_CALL_2(bpf_get_local_storage, struct bpf_map *, map, u64, flags)
 	 * verifier checks that its value is correct.
 	 */
 	enum bpf_cgroup_storage_type stype = cgroup_storage_type(map);
+<<<<<<< HEAD
 <<<<<<< HEAD
 	struct bpf_cgroup_storage *storage;
 	struct bpf_cg_run_ctx *ctx;
@@ -462,17 +514,22 @@ BPF_CALL_2(bpf_get_local_storage, struct bpf_map *, map, u64, flags)
 	storage = ctx->prog_item->cgroup_storage[stype];
 =======
 	struct bpf_cgroup_storage *storage = NULL;
+=======
+	struct bpf_cgroup_storage *storage;
+	struct bpf_cg_run_ctx *ctx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *ptr;
-	int i;
 
-	for (i = 0; i < BPF_CGROUP_STORAGE_NEST_MAX; i++) {
-		if (unlikely(this_cpu_read(bpf_cgroup_storage_info[i].task) != current))
-			continue;
-
+<<<<<<< HEAD
 		storage = this_cpu_read(bpf_cgroup_storage_info[i].storage[stype]);
 		break;
 	}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* get current cgroup storage from BPF run context */
+	ctx = container_of(current->bpf_ctx, struct bpf_cg_run_ctx, run_ctx);
+	storage = ctx->prog_item->cgroup_storage[stype];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (stype == BPF_CGROUP_STORAGE_SHARED)
 		ptr = &READ_ONCE(storage->buf)->data[0];
@@ -974,6 +1031,9 @@ fmt_str:
 
 			continue;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else if (fmt[i] == 'c') {
 			if (!tmp_buf)
 				goto nocopy_fmt;
@@ -988,8 +1048,11 @@ fmt_str:
 			num_spec++;
 
 			continue;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		sizeof_cur_arg = sizeof(int);
@@ -1076,6 +1139,9 @@ const struct bpf_func_proto bpf_snprintf_proto = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* BPF map elements can contain 'struct bpf_timer'.
  * Such map owns all of its BPF timers.
  * 'struct bpf_timer' is allocated as part of map element allocation
@@ -1390,19 +1456,28 @@ out:
 	kfree(t);
 }
 
+<<<<<<< HEAD
 const struct bpf_func_proto bpf_get_current_task_proto __weak;
 const struct bpf_func_proto bpf_get_current_task_btf_proto __weak;
 =======
 const struct bpf_func_proto bpf_get_current_task_proto __weak;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const struct bpf_func_proto bpf_get_current_task_proto __weak;
+const struct bpf_func_proto bpf_get_current_task_btf_proto __weak;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct bpf_func_proto bpf_probe_read_user_proto __weak;
 const struct bpf_func_proto bpf_probe_read_user_str_proto __weak;
 const struct bpf_func_proto bpf_probe_read_kernel_proto __weak;
 const struct bpf_func_proto bpf_probe_read_kernel_str_proto __weak;
 <<<<<<< HEAD
+<<<<<<< HEAD
 const struct bpf_func_proto bpf_task_pt_regs_proto __weak;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const struct bpf_func_proto bpf_task_pt_regs_proto __weak;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 const struct bpf_func_proto *
 bpf_base_func_proto(enum bpf_func_id func_id)
@@ -1465,6 +1540,9 @@ bpf_base_func_proto(enum bpf_func_id func_id)
 	case BPF_FUNC_this_cpu_ptr:
 		return &bpf_this_cpu_ptr_proto;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case BPF_FUNC_timer_init:
 		return &bpf_timer_init_proto;
 	case BPF_FUNC_timer_set_callback:
@@ -1473,8 +1551,11 @@ bpf_base_func_proto(enum bpf_func_id func_id)
 		return &bpf_timer_start_proto;
 	case BPF_FUNC_timer_cancel:
 		return &bpf_timer_cancel_proto;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -1488,6 +1569,7 @@ bpf_base_func_proto(enum bpf_func_id func_id)
 	case BPF_FUNC_get_current_task:
 		return &bpf_get_current_task_proto;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case BPF_FUNC_get_current_task_btf:
 		return &bpf_get_current_task_btf_proto;
 	case BPF_FUNC_probe_read_user:
@@ -1500,25 +1582,42 @@ bpf_base_func_proto(enum bpf_func_id func_id)
 	case BPF_FUNC_probe_read_kernel:
 		return security_locked_down(LOCKDOWN_BPF_READ) < 0 ?
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case BPF_FUNC_get_current_task_btf:
+		return &bpf_get_current_task_btf_proto;
+	case BPF_FUNC_probe_read_user:
+		return &bpf_probe_read_user_proto;
+	case BPF_FUNC_probe_read_kernel:
+		return security_locked_down(LOCKDOWN_BPF_READ_KERNEL) < 0 ?
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       NULL : &bpf_probe_read_kernel_proto;
 	case BPF_FUNC_probe_read_user_str:
 		return &bpf_probe_read_user_str_proto;
 	case BPF_FUNC_probe_read_kernel_str:
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return security_locked_down(LOCKDOWN_BPF_READ_KERNEL) < 0 ?
 =======
 		return security_locked_down(LOCKDOWN_BPF_READ) < 0 ?
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return security_locked_down(LOCKDOWN_BPF_READ_KERNEL) < 0 ?
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       NULL : &bpf_probe_read_kernel_str_proto;
 	case BPF_FUNC_snprintf_btf:
 		return &bpf_snprintf_btf_proto;
 	case BPF_FUNC_snprintf:
 		return &bpf_snprintf_proto;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	case BPF_FUNC_task_pt_regs:
 		return &bpf_task_pt_regs_proto;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case BPF_FUNC_task_pt_regs:
+		return &bpf_task_pt_regs_proto;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return NULL;
 	}

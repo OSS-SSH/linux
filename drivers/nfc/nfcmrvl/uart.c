@@ -50,10 +50,14 @@ static void nfcmrvl_uart_nci_update_config(struct nfcmrvl_private *priv,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 static const struct nfcmrvl_if_ops uart_ops = {
 =======
 static struct nfcmrvl_if_ops uart_ops = {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nfcmrvl_if_ops uart_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.nci_open = nfcmrvl_uart_nci_open,
 	.nci_close = nfcmrvl_uart_nci_close,
 	.nci_send = nfcmrvl_uart_nci_send,
@@ -103,12 +107,17 @@ static int nfcmrvl_nci_uart_open(struct nci_uart *nu)
 {
 	struct nfcmrvl_private *priv;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct nfcmrvl_platform_data config;
 	const struct nfcmrvl_platform_data *pdata = NULL;
 =======
 	struct nfcmrvl_platform_data *pdata = NULL;
 	struct nfcmrvl_platform_data config;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct nfcmrvl_platform_data config;
+	const struct nfcmrvl_platform_data *pdata = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct device *dev = nu->tty->dev;
 
 	/*

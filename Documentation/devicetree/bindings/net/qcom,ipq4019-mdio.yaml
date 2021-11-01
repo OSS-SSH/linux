@@ -15,12 +15,18 @@ allOf:
 properties:
   compatible:
 <<<<<<< HEAD
+<<<<<<< HEAD
     enum:
       - qcom,ipq4019-mdio
       - qcom,ipq5018-mdio
 =======
     const: qcom,ipq4019-mdio
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    enum:
+      - qcom,ipq4019-mdio
+      - qcom,ipq5018-mdio
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   "#address-cells":
     const: 1
@@ -30,6 +36,9 @@ properties:
 
   reg:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     minItems: 1
     maxItems: 2
     description:
@@ -38,6 +47,7 @@ properties:
       address range is only required by the platform IPQ50xx.
 
   clocks:
+<<<<<<< HEAD
     maxItems: 1
     description: |
       MDIO clock source frequency fixed to 100MHZ, this clock should be specified
@@ -45,6 +55,12 @@ properties:
 =======
     maxItems: 1
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    maxItems: 1
+    description: |
+      MDIO clock source frequency fixed to 100MHZ, this clock should be specified
+      by the platform IPQ807x, IPQ60xx and IPQ50xx.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 required:
   - compatible

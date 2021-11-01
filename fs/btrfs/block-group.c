@@ -1499,6 +1499,9 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
 		return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Long running balances can keep us blocked here for eternity, so
 	 * simply skip reclaim if we're unable to get the mutex.
@@ -1508,6 +1511,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
 		return;
 	}
 
+<<<<<<< HEAD
 	spin_lock(&fs_info->unused_bgs_lock);
 	while (!list_empty(&fs_info->reclaim_bgs)) {
 		u64 zone_unusable;
@@ -1516,6 +1520,11 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
 	spin_lock(&fs_info->unused_bgs_lock);
 	while (!list_empty(&fs_info->reclaim_bgs)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock(&fs_info->unused_bgs_lock);
+	while (!list_empty(&fs_info->reclaim_bgs)) {
+		u64 zone_unusable;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int ret = 0;
 
 		bg = list_first_entry(&fs_info->reclaim_bgs,
@@ -1550,6 +1559,9 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Cache the zone_unusable value before turning the block group
 		 * to read only. As soon as the blog group is read only it's
@@ -1557,18 +1569,25 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
 		 * bytes and isn't available for calculations anymore.
 		 */
 		zone_unusable = bg->zone_unusable;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = inc_block_group_ro(bg, 0);
 		up_write(&space_info->groups_sem);
 		if (ret < 0)
 			goto next;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		btrfs_info(fs_info,
 			"reclaiming chunk %llu with %llu%% used %llu%% unusable",
 				bg->start, div_u64(bg->used * 100, bg->length),
 				div64_u64(zone_unusable * 100, bg->length));
+<<<<<<< HEAD
 		trace_btrfs_reclaim_block_group(bg);
 		ret = btrfs_relocate_chunk(fs_info, bg->start);
 		if (ret && ret != -EAGAIN)
@@ -1579,6 +1598,11 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
 		ret = btrfs_relocate_chunk(fs_info, bg->start);
 		if (ret)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		trace_btrfs_reclaim_block_group(bg);
+		ret = btrfs_relocate_chunk(fs_info, bg->start);
+		if (ret && ret != -EAGAIN)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			btrfs_err(fs_info, "error relocating chunk %llu",
 				  bg->start);
 
@@ -2123,6 +2147,9 @@ static int fill_dummy_bgs(struct btrfs_fs_info *fs_info)
 		bg->flags = map->type;
 		ret = btrfs_add_block_group_cache(fs_info, bg);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * We may have some valid block group cache added already, in
 		 * that case we skip to the next one.
@@ -2133,17 +2160,24 @@ static int fill_dummy_bgs(struct btrfs_fs_info *fs_info)
 			continue;
 		}
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret) {
 			btrfs_remove_free_space_cache(bg);
 			btrfs_put_block_group(bg);
 			break;
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		btrfs_update_space_info(fs_info, bg->flags, em->len, em->len,
 					0, 0, &space_info);
 		bg->space_info = space_info;
@@ -2247,6 +2281,9 @@ int btrfs_read_block_groups(struct btrfs_fs_info *info)
 error:
 	btrfs_free_path(path);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We've hit some error while reading the extent tree, and have
 	 * rescue=ibadroots mount option.
@@ -2255,6 +2292,7 @@ error:
 	 */
 	if (ret && btrfs_test_opt(info, IGNOREBADROOTS))
 		ret = fill_dummy_bgs(info);
+<<<<<<< HEAD
 	return ret;
 }
 
@@ -2270,6 +2308,18 @@ error:
 }
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+}
+
+/*
+ * This function, insert_block_group_item(), belongs to the phase 2 of chunk
+ * allocation.
+ *
+ * See the comment at btrfs_chunk_alloc() for details about the chunk allocation
+ * phases.
+ */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int insert_block_group_item(struct btrfs_trans_handle *trans,
 				   struct btrfs_block_group *block_group)
 {
@@ -2293,6 +2343,9 @@ static int insert_block_group_item(struct btrfs_trans_handle *trans,
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int insert_dev_extent(struct btrfs_trans_handle *trans,
 			    struct btrfs_device *device, u64 chunk_offset,
 			    u64 start, u64 num_bytes)
@@ -2389,8 +2442,11 @@ static int insert_dev_extents(struct btrfs_trans_handle *trans,
  * See the comment at btrfs_chunk_alloc() for details about the chunk allocation
  * phases.
  */
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
 {
 	struct btrfs_fs_info *fs_info = trans->fs_info;
@@ -2398,11 +2454,14 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
 	int ret = 0;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!trans->can_flush_pending_bgs)
 		return;
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (!list_empty(&trans->new_bgs)) {
 		int index;
 
@@ -2418,6 +2477,9 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
 		if (ret)
 			btrfs_abort_transaction(trans, ret);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!block_group->chunk_item_inserted) {
 			mutex_lock(&fs_info->chunk_mutex);
 			ret = btrfs_chunk_alloc_add_chunk_item(trans, block_group);
@@ -2427,10 +2489,13 @@ void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans)
 		}
 		ret = insert_dev_extents(trans, block_group->start,
 					 block_group->length);
+<<<<<<< HEAD
 =======
 		ret = btrfs_finish_chunk_alloc(trans, block_group->start,
 					block_group->length);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			btrfs_abort_transaction(trans, ret);
 		add_block_group_free_space(trans, block_group);
@@ -2453,6 +2518,7 @@ next:
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *trans,
 						 u64 bytes_used, u64 type,
 						 u64 chunk_offset, u64 size)
@@ -2460,6 +2526,11 @@ struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *tran
 int btrfs_make_block_group(struct btrfs_trans_handle *trans, u64 bytes_used,
 			   u64 type, u64 chunk_offset, u64 size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *trans,
+						 u64 bytes_used, u64 type,
+						 u64 chunk_offset, u64 size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct btrfs_fs_info *fs_info = trans->fs_info;
 	struct btrfs_block_group *cache;
@@ -2470,10 +2541,14 @@ int btrfs_make_block_group(struct btrfs_trans_handle *trans, u64 bytes_used,
 	cache = btrfs_create_block_group_cache(fs_info, chunk_offset);
 	if (!cache)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ERR_PTR(-ENOMEM);
 =======
 		return -ENOMEM;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ERR_PTR(-ENOMEM);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cache->length = size;
 	set_free_space_tree_thresholds(cache);
@@ -2488,10 +2563,14 @@ int btrfs_make_block_group(struct btrfs_trans_handle *trans, u64 bytes_used,
 	if (ret) {
 		btrfs_put_block_group(cache);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ERR_PTR(ret);
 =======
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ERR_PTR(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = exclude_super_stripes(cache);
@@ -2500,10 +2579,14 @@ int btrfs_make_block_group(struct btrfs_trans_handle *trans, u64 bytes_used,
 		btrfs_free_excluded_extents(cache);
 		btrfs_put_block_group(cache);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ERR_PTR(ret);
 =======
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ERR_PTR(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	add_new_free_space(cache, chunk_offset, chunk_offset + size);
@@ -2531,10 +2614,14 @@ int btrfs_make_block_group(struct btrfs_trans_handle *trans, u64 bytes_used,
 		btrfs_remove_free_space_cache(cache);
 		btrfs_put_block_group(cache);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return ERR_PTR(ret);
 =======
 		return ret;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ERR_PTR(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -2554,10 +2641,14 @@ int btrfs_make_block_group(struct btrfs_trans_handle *trans, u64 bytes_used,
 
 	set_avail_alloc_bits(fs_info, type);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return cache;
 =======
 	return 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return cache;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -3436,6 +3527,9 @@ int btrfs_force_chunk_alloc(struct btrfs_trans_handle *trans, u64 type)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int do_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags)
 {
 	struct btrfs_block_group *bg;
@@ -3538,6 +3632,7 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 /*
  * Chunk allocation is done in 2 phases:
  *
@@ -3634,12 +3729,108 @@ out:
  *    - return errors including -ENOSPC otherwise.
  * If @force is NOT CHUNK_ALLOC_FORCE:
 =======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
- * If force is CHUNK_ALLOC_FORCE:
+ * Chunk allocation is done in 2 phases:
+ *
+ * 1) Phase 1 - through btrfs_chunk_alloc() we allocate device extents for
+ *    the chunk, the chunk mapping, create its block group and add the items
+ *    that belong in the chunk btree to it - more specifically, we need to
+ *    update device items in the chunk btree and add a new chunk item to it.
+ *
+ * 2) Phase 2 - through btrfs_create_pending_block_groups(), we add the block
+ *    group item to the extent btree and the device extent items to the devices
+ *    btree.
+ *
+ * This is done to prevent deadlocks. For example when COWing a node from the
+ * extent btree we are holding a write lock on the node's parent and if we
+ * trigger chunk allocation and attempted to insert the new block group item
+ * in the extent btree right way, we could deadlock because the path for the
+ * insertion can include that parent node. At first glance it seems impossible
+ * to trigger chunk allocation after starting a transaction since tasks should
+ * reserve enough transaction units (metadata space), however while that is true
+ * most of the time, chunk allocation may still be triggered for several reasons:
+ *
+ * 1) When reserving metadata, we check if there is enough free space in the
+ *    metadata space_info and therefore don't trigger allocation of a new chunk.
+ *    However later when the task actually tries to COW an extent buffer from
+ *    the extent btree or from the device btree for example, it is forced to
+ *    allocate a new block group (chunk) because the only one that had enough
+ *    free space was just turned to RO mode by a running scrub for example (or
+ *    device replace, block group reclaim thread, etc), so we can not use it
+ *    for allocating an extent and end up being forced to allocate a new one;
+ *
+ * 2) Because we only check that the metadata space_info has enough free bytes,
+ *    we end up not allocating a new metadata chunk in that case. However if
+ *    the filesystem was mounted in degraded mode, none of the existing block
+ *    groups might be suitable for extent allocation due to their incompatible
+ *    profile (for e.g. mounting a 2 devices filesystem, where all block groups
+ *    use a RAID1 profile, in degraded mode using a single device). In this case
+ *    when the task attempts to COW some extent buffer of the extent btree for
+ *    example, it will trigger allocation of a new metadata block group with a
+ *    suitable profile (SINGLE profile in the example of the degraded mount of
+ *    the RAID1 filesystem);
+ *
+ * 3) The task has reserved enough transaction units / metadata space, but when
+ *    it attempts to COW an extent buffer from the extent or device btree for
+ *    example, it does not find any free extent in any metadata block group,
+ *    therefore forced to try to allocate a new metadata block group.
+ *    This is because some other task allocated all available extents in the
+ *    meanwhile - this typically happens with tasks that don't reserve space
+ *    properly, either intentionally or as a bug. One example where this is
+ *    done intentionally is fsync, as it does not reserve any transaction units
+ *    and ends up allocating a variable number of metadata extents for log
+ *    tree extent buffers.
+ *
+ * We also need this 2 phases setup when adding a device to a filesystem with
+ * a seed device - we must create new metadata and system chunks without adding
+ * any of the block group items to the chunk, extent and device btrees. If we
+ * did not do it this way, we would get ENOSPC when attempting to update those
+ * btrees, since all the chunks from the seed device are read-only.
+ *
+ * Phase 1 does the updates and insertions to the chunk btree because if we had
+ * it done in phase 2 and have a thundering herd of tasks allocating chunks in
+ * parallel, we risk having too many system chunks allocated by many tasks if
+ * many tasks reach phase 1 without the previous ones completing phase 2. In the
+ * extreme case this leads to exhaustion of the system chunk array in the
+ * superblock. This is easier to trigger if using a btree node/leaf size of 64K
+ * and with RAID filesystems (so we have more device items in the chunk btree).
+ * This has happened before and commit eafa4fd0ad0607 ("btrfs: fix exhaustion of
+ * the system chunk array due to concurrent allocations") provides more details.
+ *
+ * For allocation of system chunks, we defer the updates and insertions into the
+ * chunk btree to phase 2. This is to prevent deadlocks on extent buffers because
+ * if the chunk allocation is triggered while COWing an extent buffer of the
+ * chunk btree, we are holding a lock on the parent of that extent buffer and
+ * doing the chunk btree updates and insertions can require locking that parent.
+ * This is for the very few and rare cases where we update the chunk btree that
+ * are not chunk allocation or chunk removal: adding a device, removing a device
+ * or resizing a device.
+ *
+ * The reservation of system space, done through check_system_chunk(), as well
+ * as all the updates and insertions into the chunk btree must be done while
+ * holding fs_info->chunk_mutex. This is important to guarantee that while COWing
+ * an extent buffer from the chunks btree we never trigger allocation of a new
+ * system chunk, which would result in a deadlock (trying to lock twice an
+ * extent buffer of the chunk btree, first time before triggering the chunk
+ * allocation and the second time during chunk allocation while attempting to
+ * update the chunks btree). The system chunk array is also updated while holding
+ * that mutex. The same logic applies to removing chunks - we must reserve system
+ * space, update the chunk btree and the system chunk array in the superblock
+ * while holding fs_info->chunk_mutex.
+ *
+ * This function, btrfs_chunk_alloc(), belongs to phase 1.
+ *
+ * If @force is CHUNK_ALLOC_FORCE:
  *    - return 1 if it successfully allocates a chunk,
  *    - return errors including -ENOSPC otherwise.
+<<<<<<< HEAD
  * If force is NOT CHUNK_ALLOC_FORCE:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * If @force is NOT CHUNK_ALLOC_FORCE:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *    - return 0 if it doesn't need to allocate a new chunk,
  *    - return 1 if it successfully allocates a chunk,
  *    - return errors including -ENOSPC otherwise.
@@ -3657,6 +3848,9 @@ int btrfs_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags,
 	if (trans->allocating_chunk)
 		return -ENOSPC;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If we are removing a chunk, don't re-enter or we would deadlock.
 	 * System space reservation and system chunk allocation is done by the
@@ -3664,8 +3858,11 @@ int btrfs_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags,
 	 */
 	if (trans->removing_chunk)
 		return -ENOSPC;
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	space_info = btrfs_find_space_info(fs_info, flags);
 	ASSERT(space_info);
@@ -3730,6 +3927,7 @@ int btrfs_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags,
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	ret = do_chunk_alloc(trans, flags);
 =======
 	/*
@@ -3740,6 +3938,9 @@ int btrfs_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags,
 
 	ret = btrfs_alloc_chunk(trans, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = do_chunk_alloc(trans, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	trans->allocating_chunk = false;
 
 	spin_lock(&space_info->lock);
@@ -3759,6 +3960,7 @@ out:
 	spin_unlock(&space_info->lock);
 	mutex_unlock(&fs_info->chunk_mutex);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * When we allocate a new chunk we reserve space in the chunk block
@@ -3777,6 +3979,8 @@ out:
 	if (trans->chunk_bytes_reserved >= (u64)SZ_2M)
 		btrfs_create_pending_block_groups(trans);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -3798,9 +4002,12 @@ static u64 get_profile_num_devs(struct btrfs_fs_info *fs_info, u64 type)
 void check_system_chunk(struct btrfs_trans_handle *trans, u64 type)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	struct btrfs_transaction *cur_trans = trans->transaction;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct btrfs_fs_info *fs_info = trans->fs_info;
 	struct btrfs_space_info *info;
 	u64 left;
@@ -3816,9 +4023,12 @@ void check_system_chunk(struct btrfs_trans_handle *trans, u64 type)
 
 	info = btrfs_find_space_info(fs_info, BTRFS_BLOCK_GROUP_SYSTEM);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 again:
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock(&info->lock);
 	left = info->total_bytes - btrfs_space_info_used(info, true);
 	spin_unlock(&info->lock);
@@ -3837,6 +4047,7 @@ again:
 
 	if (left < thresh) {
 		u64 flags = btrfs_system_alloc_profile(fs_info);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		struct btrfs_block_group *bg;
 =======
@@ -3893,6 +4104,9 @@ again:
 			goto again;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct btrfs_block_group *bg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Ignore failure to create system chunk. We might end up not
@@ -3900,11 +4114,15 @@ again:
 		 * the paths we visit in the chunk tree (they were already COWed
 		 * or created in the current transaction for example).
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 *
 		 * Also, if our caller is allocating a system chunk, do not
 		 * attempt to insert the chunk item in the chunk btree, as we
 		 * could deadlock on an extent buffer since our caller may be
 		 * COWing an extent buffer from the chunk btree.
+<<<<<<< HEAD
 		 */
 		bg = btrfs_alloc_chunk(trans, flags);
 		if (IS_ERR(bg)) {
@@ -3922,12 +4140,28 @@ again:
 		 */
 		ret = btrfs_alloc_chunk(trans, flags);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 */
+		bg = btrfs_alloc_chunk(trans, flags);
+		if (IS_ERR(bg)) {
+			ret = PTR_ERR(bg);
+		} else if (!(type & BTRFS_BLOCK_GROUP_SYSTEM)) {
+			/*
+			 * If we fail to add the chunk item here, we end up
+			 * trying again at phase 2 of chunk allocation, at
+			 * btrfs_create_pending_block_groups(). So ignore
+			 * any error here.
+			 */
+			btrfs_chunk_alloc_add_chunk_item(trans, bg);
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!ret) {
 		ret = btrfs_block_rsv_add(fs_info->chunk_root,
 					  &fs_info->chunk_block_rsv,
 					  thresh, BTRFS_RESERVE_NO_FLUSH);
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (!ret)
 			trans->chunk_bytes_reserved += thresh;
@@ -3937,6 +4171,10 @@ again:
 			trans->chunk_bytes_reserved += thresh;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!ret)
+			trans->chunk_bytes_reserved += thresh;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

@@ -1746,6 +1746,7 @@ static int ipoib_ioctl(struct net_device *dev, struct ifreq *ifr,
 	struct ipoib_dev_priv *priv = ipoib_priv(dev);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!priv->rn_ops->ndo_eth_ioctl)
 		return -EOPNOTSUPP;
 
@@ -1756,6 +1757,12 @@ static int ipoib_ioctl(struct net_device *dev, struct ifreq *ifr,
 
 	return priv->rn_ops->ndo_do_ioctl(dev, ifr, cmd);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!priv->rn_ops->ndo_eth_ioctl)
+		return -EOPNOTSUPP;
+
+	return priv->rn_ops->ndo_eth_ioctl(dev, ifr, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ipoib_dev_init(struct net_device *dev)
@@ -2086,10 +2093,14 @@ static const struct net_device_ops ipoib_netdev_ops_pf = {
 	.ndo_set_mac_address	 = ipoib_set_mac,
 	.ndo_get_stats64	 = ipoib_get_stats,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		 = ipoib_ioctl,
 =======
 	.ndo_do_ioctl		 = ipoib_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		 = ipoib_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct net_device_ops ipoib_netdev_ops_vf = {
@@ -2105,10 +2116,14 @@ static const struct net_device_ops ipoib_netdev_ops_vf = {
 	.ndo_get_iflink		 = ipoib_get_iflink,
 	.ndo_get_stats64	 = ipoib_get_stats,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.ndo_eth_ioctl		 = ipoib_ioctl,
 =======
 	.ndo_do_ioctl		 = ipoib_ioctl,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		 = ipoib_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct net_device_ops ipoib_netdev_default_pf = {

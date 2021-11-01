@@ -10,6 +10,7 @@
 #define __HALHWOUTSRC_H__
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 /*--------------------------Define -------------------------------------------*/
@@ -29,6 +30,8 @@
 
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*  */
 /*  structure and define */
 /*  */
@@ -80,6 +83,7 @@ struct phy_status_rpt_8192cd_t {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void odm_phy_status_query(struct dm_odm_t *dm_odm, struct odm_phy_info *phy_info,
 			  u8 *phy_status, struct odm_packet_info *pkt_info);
 =======
@@ -90,6 +94,10 @@ void ODM_PhyStatusQuery(
 	struct odm_packet_info *pPktinfo
 );
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void odm_phy_status_query(struct dm_odm_t *dm_odm, struct odm_phy_info *phy_info,
+			  u8 *phy_status, struct odm_packet_info *pkt_info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum hal_status ODM_ConfigRFWithTxPwrTrackHeaderFile(struct dm_odm_t *pDM_Odm);
 
@@ -97,10 +105,14 @@ enum hal_status ODM_ConfigRFWithHeaderFile(
 	struct dm_odm_t *pDM_Odm,
 	enum ODM_RF_Config_Type ConfigType,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	enum rf_path eRFPath
 =======
 	enum odm_rf_radio_path_e eRFPath
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum rf_path eRFPath
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 );
 
 enum hal_status ODM_ConfigBBWithHeaderFile(
@@ -115,9 +127,13 @@ enum hal_status ODM_ConfigFWWithHeaderFile(
 );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 s32 odm_signal_scale_mapping(struct dm_odm_t *pDM_Odm, s32 CurrSig);
 =======
 s32 odm_SignalScaleMapping(struct dm_odm_t *pDM_Odm, s32 CurrSig);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+s32 odm_signal_scale_mapping(struct dm_odm_t *pDM_Odm, s32 CurrSig);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

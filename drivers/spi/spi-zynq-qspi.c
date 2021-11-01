@@ -546,10 +546,14 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
 		zynq_qspi_write(xqspi, ZYNQ_QSPI_IEN_OFFSET,
 				ZYNQ_QSPI_IXR_RXTX_MASK);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!wait_for_completion_timeout(&xqspi->data_completion,
 =======
 		if (!wait_for_completion_interruptible_timeout(&xqspi->data_completion,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!wait_for_completion_timeout(&xqspi->data_completion,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							       msecs_to_jiffies(1000)))
 			err = -ETIMEDOUT;
 	}
@@ -568,10 +572,14 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
 		zynq_qspi_write(xqspi, ZYNQ_QSPI_IEN_OFFSET,
 				ZYNQ_QSPI_IXR_RXTX_MASK);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!wait_for_completion_timeout(&xqspi->data_completion,
 =======
 		if (!wait_for_completion_interruptible_timeout(&xqspi->data_completion,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!wait_for_completion_timeout(&xqspi->data_completion,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							       msecs_to_jiffies(1000)))
 			err = -ETIMEDOUT;
 	}
@@ -588,10 +596,14 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
 		zynq_qspi_write(xqspi, ZYNQ_QSPI_IEN_OFFSET,
 				ZYNQ_QSPI_IXR_RXTX_MASK);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!wait_for_completion_timeout(&xqspi->data_completion,
 =======
 		if (!wait_for_completion_interruptible_timeout(&xqspi->data_completion,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!wait_for_completion_timeout(&xqspi->data_completion,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							       msecs_to_jiffies(1000)))
 			err = -ETIMEDOUT;
 
@@ -616,10 +628,14 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
 		zynq_qspi_write(xqspi, ZYNQ_QSPI_IEN_OFFSET,
 				ZYNQ_QSPI_IXR_RXTX_MASK);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!wait_for_completion_timeout(&xqspi->data_completion,
 =======
 		if (!wait_for_completion_interruptible_timeout(&xqspi->data_completion,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!wait_for_completion_timeout(&xqspi->data_completion,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							       msecs_to_jiffies(1000)))
 			err = -ETIMEDOUT;
 	}

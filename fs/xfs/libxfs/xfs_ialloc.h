@@ -107,11 +107,16 @@ int xfs_read_agi(struct xfs_mount *mp, struct xfs_trans *tp,
 
 union xfs_btree_rec;
 <<<<<<< HEAD
+<<<<<<< HEAD
 void xfs_inobt_btrec_to_irec(struct xfs_mount *mp,
 		const union xfs_btree_rec *rec,
 =======
 void xfs_inobt_btrec_to_irec(struct xfs_mount *mp, union xfs_btree_rec *rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void xfs_inobt_btrec_to_irec(struct xfs_mount *mp,
+		const union xfs_btree_rec *rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct xfs_inobt_rec_incore *irec);
 int xfs_ialloc_has_inodes_at_extent(struct xfs_btree_cur *cur,
 		xfs_agblock_t bno, xfs_extlen_t len, bool *exists);
@@ -128,9 +133,15 @@ void xfs_ialloc_setup_geometry(struct xfs_mount *mp);
 xfs_ino_t xfs_ialloc_calc_rootino(struct xfs_mount *mp, int sunit);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int xfs_ialloc_check_shrink(struct xfs_trans *tp, xfs_agnumber_t agno,
 		struct xfs_buf *agibp, xfs_agblock_t new_length);
 
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int xfs_ialloc_check_shrink(struct xfs_trans *tp, xfs_agnumber_t agno,
+		struct xfs_buf *agibp, xfs_agblock_t new_length);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif	/* __XFS_IALLOC_H__ */

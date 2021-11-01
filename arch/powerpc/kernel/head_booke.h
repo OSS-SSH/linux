@@ -169,10 +169,13 @@ ALT_FTR_SECTION_END_IFSET(CPU_FTR_EMB_HV)
 #define DBG_STACK_BASE		dbgirq_ctx
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #define EXC_LVL_FRAME_OVERHEAD	(THREAD_SIZE - INT_FRAME_SIZE - EXC_LVL_SIZE)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_SMP
 #define BOOKE_LOAD_EXC_LEVEL_STACK(level)		\
 	mfspr	r8,SPRN_PIR;				\
@@ -180,19 +183,27 @@ ALT_FTR_SECTION_END_IFSET(CPU_FTR_EMB_HV)
 	addis	r8,r8,level##_STACK_BASE@ha;		\
 	lwz	r8,level##_STACK_BASE@l(r8);		\
 <<<<<<< HEAD
-	addi	r8,r8,THREAD_SIZE - INT_FRAME_SIZE;
-=======
-	addi	r8,r8,EXC_LVL_FRAME_OVERHEAD;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-#else
-#define BOOKE_LOAD_EXC_LEVEL_STACK(level)		\
-	lis	r8,level##_STACK_BASE@ha;		\
-	lwz	r8,level##_STACK_BASE@l(r8);		\
 <<<<<<< HEAD
 	addi	r8,r8,THREAD_SIZE - INT_FRAME_SIZE;
 =======
 	addi	r8,r8,EXC_LVL_FRAME_OVERHEAD;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addi	r8,r8,THREAD_SIZE - INT_FRAME_SIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#else
+#define BOOKE_LOAD_EXC_LEVEL_STACK(level)		\
+	lis	r8,level##_STACK_BASE@ha;		\
+	lwz	r8,level##_STACK_BASE@l(r8);		\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	addi	r8,r8,THREAD_SIZE - INT_FRAME_SIZE;
+=======
+	addi	r8,r8,EXC_LVL_FRAME_OVERHEAD;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addi	r8,r8,THREAD_SIZE - INT_FRAME_SIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /*
@@ -220,10 +231,14 @@ ALT_FTR_SECTION_END_IFSET(CPU_FTR_EMB_HV)
 	mfspr	r11,SPRN_SPRG_THREAD;	/* if from user, start at top of   */\
 	lwz	r11, TASK_STACK - THREAD(r11); /* this thread's kernel stack */\
 <<<<<<< HEAD
+<<<<<<< HEAD
 	addi	r11,r11,THREAD_SIZE - INT_FRAME_SIZE;	/* allocate stack frame    */\
 =======
 	addi	r11,r11,EXC_LVL_FRAME_OVERHEAD;	/* allocate stack frame    */\
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	addi	r11,r11,THREAD_SIZE - INT_FRAME_SIZE;	/* allocate stack frame    */\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	beq	1f;							     \
 	/* COMING FROM USER MODE */					     \
 	stw	r9,_CCR(r11);		/* save CR			   */\
@@ -532,6 +547,7 @@ label:
 	b	interrupt_return
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #else /* __ASSEMBLY__ */
 struct exception_regs {
@@ -553,5 +569,7 @@ struct exception_regs {
 #define STACK_EXC_LVL_FRAME_SIZE	ALIGN(sizeof (struct exception_regs), 16)
 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __ASSEMBLY__ */
 #endif /* __HEAD_BOOKE_H__ */

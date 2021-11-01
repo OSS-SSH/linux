@@ -11,9 +11,13 @@ extern struct mutex cpa_mutex;
 #define SET_MEMORY_NX	4UL
 #define SET_MEMORY_X	8UL
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define SET_MEMORY_4K  16UL
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SET_MEMORY_4K  16UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int __set_memory(unsigned long addr, int numpages, unsigned long flags);
 
@@ -38,11 +42,17 @@ static inline int set_memory_x(unsigned long addr, int numpages)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int set_memory_4k(unsigned long addr, int numpages)
 {
 	return __set_memory(addr, numpages, SET_MEMORY_4K);
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

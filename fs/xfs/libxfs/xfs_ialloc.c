@@ -59,10 +59,14 @@ xfs_inobt_update(
 
 	rec.inobt.ir_startino = cpu_to_be32(irec->ir_startino);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_sparseinodes(cur->bc_mp)) {
 =======
 	if (xfs_sb_version_hassparseinodes(&cur->bc_mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_sparseinodes(cur->bc_mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rec.inobt.ir_u.sp.ir_holemask = cpu_to_be16(irec->ir_holemask);
 		rec.inobt.ir_u.sp.ir_count = irec->ir_count;
 		rec.inobt.ir_u.sp.ir_freecount = irec->ir_freecount;
@@ -79,6 +83,7 @@ void
 xfs_inobt_btrec_to_irec(
 	struct xfs_mount		*mp,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_rec	*rec,
 	struct xfs_inobt_rec_incore	*irec)
 {
@@ -91,6 +96,13 @@ xfs_inobt_btrec_to_irec(
 	irec->ir_startino = be32_to_cpu(rec->inobt.ir_startino);
 	if (xfs_sb_version_hassparseinodes(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_rec	*rec,
+	struct xfs_inobt_rec_incore	*irec)
+{
+	irec->ir_startino = be32_to_cpu(rec->inobt.ir_startino);
+	if (xfs_has_sparseinodes(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		irec->ir_holemask = be16_to_cpu(rec->inobt.ir_u.sp.ir_holemask);
 		irec->ir_count = rec->inobt.ir_u.sp.ir_count;
 		irec->ir_freecount = rec->inobt.ir_u.sp.ir_freecount;
@@ -254,10 +266,14 @@ xfs_check_agi_freecount(
 		} while (i == 1);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (!xfs_is_shutdown(cur->bc_mp))
 =======
 		if (!XFS_FORCED_SHUTDOWN(cur->bc_mp))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!xfs_is_shutdown(cur->bc_mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ASSERT(freecount == cur->bc_ag.pag->pagi_freecount);
 	}
 	return 0;
@@ -319,10 +335,14 @@ xfs_ialloc_inode_init(
 	 * inode cores.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(mp)) {
 =======
 	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_v3inodes(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		version = 3;
 		ino = XFS_AGINO_TO_INO(mp, agno, XFS_AGB_TO_AGINO(mp, agbno));
 
@@ -358,9 +378,12 @@ xfs_ialloc_inode_init(
 		for (i = 0; i < M_IGEO(mp)->inodes_per_cluster; i++) {
 			int	ioffset = i << mp->m_sb.sb_inodelog;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			uint	isize = XFS_DINODE_SIZE(&mp->m_sb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			free = xfs_make_iptr(mp, fbuf, i);
 			free->di_magic = cpu_to_be16(XFS_DINODE_MAGIC);
@@ -378,10 +401,14 @@ xfs_ialloc_inode_init(
 				/* just log the inode core */
 				xfs_trans_log_buf(tp, fbuf, ioffset,
 <<<<<<< HEAD
+<<<<<<< HEAD
 					  ioffset + XFS_DINODE_SIZE(mp) - 1);
 =======
 						  ioffset + isize - 1);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  ioffset + XFS_DINODE_SIZE(mp) - 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 
@@ -663,10 +690,14 @@ xfs_ialloc_ag_alloc(
 #ifdef DEBUG
 	/* randomly do sparse inode allocations */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_sparseinodes(tp->t_mountp) &&
 =======
 	if (xfs_sb_version_hassparseinodes(&tp->t_mountp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_sparseinodes(tp->t_mountp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    igeo->ialloc_min_blks < igeo->ialloc_blks)
 		do_sparse = prandom_u32() & 1;
 #endif
@@ -744,10 +775,14 @@ xfs_ialloc_ag_alloc(
 		isaligned = 0;
 		if (igeo->ialloc_align) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			ASSERT(!xfs_has_noalign(args.mp));
 =======
 			ASSERT(!(args.mp->m_flags & XFS_MOUNT_NOALIGN));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ASSERT(!xfs_has_noalign(args.mp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			args.alignment = args.mp->m_dalign;
 			isaligned = 1;
 		} else
@@ -790,10 +825,14 @@ xfs_ialloc_ag_alloc(
 	 * the sparse allocation length is smaller than a full chunk.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_sparseinodes(args.mp) &&
 =======
 	if (xfs_sb_version_hassparseinodes(&args.mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_sparseinodes(args.mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    igeo->ialloc_min_blks < igeo->ialloc_blks &&
 	    args.fsbno == NULLFSBLOCK) {
 sparse_alloc:
@@ -896,10 +935,14 @@ sparse_alloc:
 		 * existing record with this one.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_has_finobt(args.mp)) {
 =======
 		if (xfs_sb_version_hasfinobt(&args.mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_finobt(args.mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			error = xfs_inobt_insert_sprec(args.mp, tp, agbp, pag,
 				       XFS_BTNUM_FINO, &rec, false);
 			if (error)
@@ -913,10 +956,14 @@ sparse_alloc:
 			return error;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_has_finobt(args.mp)) {
 =======
 		if (xfs_sb_version_hasfinobt(&args.mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_finobt(args.mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			error = xfs_inobt_insert(args.mp, tp, agbp, pag, newino,
 						 newlen, XFS_BTNUM_FINO);
 			if (error)
@@ -1496,10 +1543,14 @@ xfs_dialloc_ag(
 	int				i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_finobt(mp))
 =======
 	if (!xfs_sb_version_hasfinobt(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_finobt(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return xfs_dialloc_ag_inobt(tp, agbp, pag, parent, inop);
 
 	/*
@@ -1836,10 +1887,14 @@ xfs_dialloc(
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (xfs_is_shutdown(mp)) {
 =======
 		if (XFS_FORCED_SHUTDOWN(mp)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_is_shutdown(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			error = -EFSCORRUPTED;
 			break;
 		}
@@ -2009,11 +2064,15 @@ xfs_difree_inobt(
 	 * chunks (that might not be free).
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_ikeep(mp) && rec.ir_free == XFS_INOBT_ALL_FREE &&
 =======
 	if (!(mp->m_flags & XFS_MOUNT_IKEEP) &&
 	    rec.ir_free == XFS_INOBT_ALL_FREE &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_ikeep(mp) && rec.ir_free == XFS_INOBT_ALL_FREE &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    mp->m_sb.sb_inopblock <= XFS_INODES_PER_CHUNK) {
 		struct xfs_perag	*pag = agbp->b_pag;
 
@@ -2054,10 +2113,14 @@ xfs_difree_inobt(
 		}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 =======
 		/* 
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * Change the inode free counts and log the ag/sb changes.
 		 */
 		be32_add_cpu(&agi->agi_freecount, 1);
@@ -2162,6 +2225,7 @@ xfs_difree_finobt(
 	 * with the inobt.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_ikeep(mp) && rec.ir_free == XFS_INOBT_ALL_FREE &&
 	    mp->m_sb.sb_inopblock <= XFS_INODES_PER_CHUNK) {
 =======
@@ -2169,6 +2233,10 @@ xfs_difree_finobt(
 	    mp->m_sb.sb_inopblock <= XFS_INODES_PER_CHUNK &&
 	    !(mp->m_flags & XFS_MOUNT_IKEEP)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_ikeep(mp) && rec.ir_free == XFS_INOBT_ALL_FREE &&
+	    mp->m_sb.sb_inopblock <= XFS_INODES_PER_CHUNK) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xfs_btree_delete(cur, &i);
 		if (error)
 			goto error;
@@ -2258,10 +2326,14 @@ xfs_difree(
 	 * Fix up the free inode btree.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_finobt(mp)) {
 =======
 	if (xfs_sb_version_hasfinobt(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_finobt(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xfs_difree_finobt(mp, tp, agbp, pag, agino, &rec);
 		if (error)
 			goto error0;
@@ -2551,10 +2623,14 @@ xfs_agi_verify(
 	int		i;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!uuid_equal(&agi->agi_uuid, &mp->m_sb.sb_meta_uuid))
 			return __this_address;
 		if (!xfs_log_check_lsn(mp, be64_to_cpu(agi->agi_lsn)))
@@ -2574,10 +2650,14 @@ xfs_agi_verify(
 		return __this_address;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_finobt(mp) &&
 =======
 	if (xfs_sb_version_hasfinobt(&mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_finobt(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    (be32_to_cpu(agi->agi_free_level) < 1 ||
 	     be32_to_cpu(agi->agi_free_level) > M_IGEO(mp)->inobt_maxlevels))
 		return __this_address;
@@ -2609,10 +2689,14 @@ xfs_agi_read_verify(
 	xfs_failaddr_t	fa;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_crc(mp) &&
 =======
 	if (xfs_sb_version_hascrc(&mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !xfs_buf_verify_cksum(bp, XFS_AGI_CRC_OFF))
 		xfs_verifier_error(bp, -EFSBADCRC, __this_address);
 	else {
@@ -2638,10 +2722,14 @@ xfs_agi_write_verify(
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 =======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_crc(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (bip)
@@ -2715,10 +2803,14 @@ xfs_ialloc_read_agi(
 	 */
 	ASSERT(pag->pagi_freecount == be32_to_cpu(agi->agi_freecount) ||
 <<<<<<< HEAD
+<<<<<<< HEAD
 		xfs_is_shutdown(mp));
 =======
 		XFS_FORCED_SHUTDOWN(mp));
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		xfs_is_shutdown(mp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2809,10 +2901,14 @@ STATIC int
 xfs_ialloc_count_inodes_rec(
 	struct xfs_btree_cur		*cur,
 <<<<<<< HEAD
+<<<<<<< HEAD
 	const union xfs_btree_rec	*rec,
 =======
 	union xfs_btree_rec		*rec,
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const union xfs_btree_rec	*rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void				*priv)
 {
 	struct xfs_inobt_rec_incore	irec;
@@ -2870,10 +2966,14 @@ xfs_ialloc_setup_geometry(
 
 	igeo->new_diflags2 = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_bigtime(mp))
 =======
 	if (xfs_sb_version_hasbigtime(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_bigtime(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		igeo->new_diflags2 |= XFS_DIFLAG2_BIGTIME;
 
 	/* Compute inode btree geometry. */
@@ -2929,10 +3029,14 @@ xfs_ialloc_setup_geometry(
 	 */
 	igeo->inode_cluster_size_raw = XFS_INODE_BIG_CLUSTER_SIZE;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(mp)) {
 =======
 	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_v3inodes(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int	new_size = igeo->inode_cluster_size_raw;
 
 		new_size *= mp->m_sb.sb_inodesize / XFS_DINODE_MIN_SIZE;
@@ -2951,10 +3055,14 @@ xfs_ialloc_setup_geometry(
 
 	/* Calculate inode cluster alignment. */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_align(mp) &&
 =======
 	if (xfs_sb_version_hasalign(&mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_align(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    mp->m_sb.sb_inoalignmt >= igeo->blocks_per_cluster)
 		igeo->cluster_align = mp->m_sb.sb_inoalignmt;
 	else
@@ -3003,6 +3111,7 @@ xfs_ialloc_calc_rootino(
 
 	/* ...the free inode btree root... */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_finobt(mp))
 		first_bno++;
 
@@ -3014,15 +3123,22 @@ xfs_ialloc_calc_rootino(
 	if (xfs_has_reflink(mp))
 =======
 	if (xfs_sb_version_hasfinobt(&mp->m_sb))
+=======
+	if (xfs_has_finobt(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		first_bno++;
 
 	/* ...the reverse mapping btree root... */
-	if (xfs_sb_version_hasrmapbt(&mp->m_sb))
+	if (xfs_has_rmapbt(mp))
 		first_bno++;
 
 	/* ...the reference count btree... */
+<<<<<<< HEAD
 	if (xfs_sb_version_hasreflink(&mp->m_sb))
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		first_bno++;
 
 	/*
@@ -3041,6 +3157,7 @@ xfs_ialloc_calc_rootino(
 	 * by the filesystem or was passed in.
 	 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (xfs_has_dalign(mp) && igeo->ialloc_align > 0)
 		first_bno = roundup(first_bno, sunit);
 	else if (xfs_has_align(mp) &&
@@ -3049,12 +3166,20 @@ xfs_ialloc_calc_rootino(
 		first_bno = roundup(first_bno, sunit);
 	else if (xfs_sb_version_hasalign(&mp->m_sb) &&
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_dalign(mp) && igeo->ialloc_align > 0)
+		first_bno = roundup(first_bno, sunit);
+	else if (xfs_has_align(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mp->m_sb.sb_inoalignmt > 1)
 		first_bno = roundup(first_bno, mp->m_sb.sb_inoalignmt);
 
 	return XFS_AGINO_TO_INO(mp, 0, XFS_AGB_TO_AGINO(mp, first_bno));
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Ensure there are not sparse inode clusters that cross the new EOAG.
@@ -3110,5 +3235,8 @@ out:
 	xfs_perag_put(pag);
 	return error;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

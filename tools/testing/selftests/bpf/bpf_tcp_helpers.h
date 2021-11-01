@@ -13,12 +13,18 @@ SEC("struct_ops/"#name) \
 BPF_PROG(name, args)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef SOL_TCP
 #define SOL_TCP 6
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define tcp_jiffies32 ((__u32)bpf_jiffies64())
 
 struct sock_common {
@@ -35,9 +41,13 @@ enum sk_pacing {
 struct sock {
 	struct sock_common	__sk_common;
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define sk_state		__sk_common.skc_state
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define sk_state		__sk_common.skc_state
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long		sk_pacing_rate;
 	__u32			sk_pacing_status; /* see enum sk_pacing */
 } __attribute__((preserve_access_index));
@@ -215,6 +225,9 @@ static __always_inline bool tcp_is_cwnd_limited(const struct sock *sk)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static __always_inline bool tcp_cc_eq(const char *a, const char *b)
 {
 	int i;
@@ -229,8 +242,11 @@ static __always_inline bool tcp_cc_eq(const char *a, const char *b)
 	return true;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern __u32 tcp_slow_start(struct tcp_sock *tp, __u32 acked) __ksym;
 extern void tcp_cong_avoid_ai(struct tcp_sock *tp, __u32 w, __u32 acked) __ksym;
 

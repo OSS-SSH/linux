@@ -9,11 +9,15 @@
 static inline bool xfs_is_always_cow_inode(struct xfs_inode *ip)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	return ip->i_mount->m_always_cow && xfs_has_reflink(ip->i_mount);
 =======
 	return ip->i_mount->m_always_cow &&
 		xfs_sb_version_hasreflink(&ip->i_mount->m_sb);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ip->i_mount->m_always_cow && xfs_has_reflink(ip->i_mount);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline bool xfs_is_cow_inode(struct xfs_inode *ip)

@@ -90,14 +90,18 @@ static int rtw_beamform_cap = 0x2;
 static int rtw_lowrate_two_xmit = 1;/* Use 2 path Tx to transmit MCS0~7 and legacy mode */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /* int rf_config = RF_1T2R;  1T2R */
 static int rtw_rf_config = RF_MAX_TYPE;  /* auto */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rtw_low_power;
 static int rtw_wifi_spec;
 static int rtw_channel_plan = RT_CHANNEL_DOMAIN_MAX;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 static int rtw_btcoex_enable = 1;
@@ -107,6 +111,8 @@ static int rtw_bt_iso = 2;/*  0:Low, 1:High, 2:From Efuse */
 static int rtw_bt_sco = 3;/*  0:Idle, 1:None-SCO, 2:SCO, 3:From Counter, 4.Busy, 5.OtherBusy */
 static int rtw_bt_ampdu = 1 ;/*  0:Disable BT control A-MPDU, 1:Enable BT control A-MPDU. */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rtw_ant_num = -1; /*  <0: undefined, >0: Antenna number */
 module_param(rtw_ant_num, int, 0644);
 MODULE_PARM_DESC(rtw_ant_num, "Antenna number setting");
@@ -115,6 +121,7 @@ static int rtw_antdiv_cfg = 1; /*  0:OFF , 1:ON, 2:decide by Efuse config */
 static int rtw_antdiv_type; /* 0:decide by efuse  1: for 88EE, 1Tx and 1RxCG are diversity.(2 Ant with SPDT), 2:  for 88EE, 1Tx and 2Rx are diversity.(2 Ant, Tx and RxCG are both on aux port, RxCS is on main port), 3: for 88EE, 1Tx and 1RxCG are fixed.(1Ant, Tx and RxCG are both on aux port) */
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 static int rtw_hw_wps_pbc;
@@ -131,6 +138,12 @@ static int rtw_hw_wps_pbc;
 
 int rtw_mc2u_disable = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+static int rtw_hw_wps_pbc;
+
+int rtw_mc2u_disable;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int rtw_80211d;
 
@@ -142,10 +155,14 @@ module_param(ifname, charp, 0644);
 MODULE_PARM_DESC(ifname, "The default name to allocate for first interface");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 char *rtw_initmac;  /*  temp mac address if users want to use instead of the mac address in Efuse */
 =======
 char *rtw_initmac = NULL;  /*  temp mac address if users want to use instead of the mac address in Efuse */
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+char *rtw_initmac;  /*  temp mac address if users want to use instead of the mac address in Efuse */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 module_param(rtw_initmac, charp, 0644);
 module_param(rtw_channel_plan, int, 0644);
@@ -168,9 +185,12 @@ module_param(rtw_ampdu_amsdu, int, 0644);
 module_param(rtw_lowrate_two_xmit, int, 0644);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 module_param(rtw_rf_config, int, 0644);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 module_param(rtw_power_mgnt, int, 0644);
 module_param(rtw_smart_ps, int, 0644);
 module_param(rtw_low_power, int, 0644);
@@ -180,11 +200,14 @@ module_param(rtw_antdiv_cfg, int, 0644);
 module_param(rtw_antdiv_type, int, 0644);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 module_param(rtw_enusbss, int, 0644);
 module_param(rtw_hwpdn_mode, int, 0644);
 module_param(rtw_hwpwrp_detect, int, 0644);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 module_param(rtw_hw_wps_pbc, int, 0644);
 
@@ -229,12 +252,17 @@ static void loadparam(struct adapter *padapter, struct net_device *pnetdev)
 	registry_par->network_mode  = (u8)rtw_network_mode;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	memcpy(registry_par->ssid.ssid, "ANY", 3);
 	registry_par->ssid.ssid_length = 3;
 =======
 	memcpy(registry_par->ssid.Ssid, "ANY", 3);
 	registry_par->ssid.SsidLength = 3;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memcpy(registry_par->ssid.ssid, "ANY", 3);
+	registry_par->ssid.ssid_length = 3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	registry_par->channel = (u8)rtw_channel;
 	registry_par->wireless_mode = (u8)rtw_wireless_mode;
@@ -284,9 +312,12 @@ static void loadparam(struct adapter *padapter, struct net_device *pnetdev)
 
 	registry_par->lowrate_two_xmit = (u8)rtw_lowrate_two_xmit;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	registry_par->rf_config = (u8)rtw_rf_config;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	registry_par->low_power = (u8)rtw_low_power;
 
 
@@ -295,12 +326,15 @@ static void loadparam(struct adapter *padapter, struct net_device *pnetdev)
 	registry_par->channel_plan = (u8)rtw_channel_plan;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	registry_par->btcoex = (u8)rtw_btcoex_enable;
 	registry_par->bt_iso = (u8)rtw_bt_iso;
 	registry_par->bt_sco = (u8)rtw_bt_sco;
 	registry_par->bt_ampdu = (u8)rtw_bt_ampdu;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	registry_par->ant_num = (s8)rtw_ant_num;
 
 	registry_par->accept_addba_req = true;
@@ -531,9 +565,12 @@ struct net_device *rtw_init_netdev(struct adapter *old_padapter)
 	/* pnetdev->tx_timeout = NULL; */
 	pnetdev->watchdog_timeo = HZ * 3; /* 3 second timeout */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	pnetdev->wireless_handlers = (struct iw_handler_def *)&rtw_handlers_def;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* step 2. */
 	loadparam(padapter, pnetdev);

@@ -335,10 +335,14 @@ void flush_dcache_page(struct page *page)
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	flush_kernel_dcache_page_addr(page_address(page));
 =======
 	flush_kernel_dcache_page(page);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	flush_kernel_dcache_page_addr(page_address(page));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!mapping)
 		return;
@@ -380,9 +384,12 @@ EXPORT_SYMBOL(flush_dcache_page);
 /* Defined in arch/parisc/kernel/pacache.S */
 EXPORT_SYMBOL(flush_kernel_dcache_range_asm);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 EXPORT_SYMBOL(flush_kernel_dcache_page_asm);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXPORT_SYMBOL(flush_data_cache_local);
 EXPORT_SYMBOL(flush_kernel_icache_range_asm);
 

@@ -17,6 +17,9 @@ menuconfig X86_PLATFORM_DRIVERS_INTEL
 if X86_PLATFORM_DRIVERS_INTEL
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "drivers/platform/x86/intel/atomisp2/Kconfig"
 source "drivers/platform/x86/intel/int1092/Kconfig"
 source "drivers/platform/x86/intel/int33fe/Kconfig"
@@ -168,9 +171,12 @@ config INTEL_UNCORE_FREQ_CONTROL
 
 	  To compile this driver as a module, choose M here: the module
 	  will be called intel-uncore-frequency.
+<<<<<<< HEAD
 =======
 source "drivers/platform/x86/intel/int33fe/Kconfig"
 source "drivers/platform/x86/intel/int3472/Kconfig"
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 endif # X86_PLATFORM_DRIVERS_INTEL
