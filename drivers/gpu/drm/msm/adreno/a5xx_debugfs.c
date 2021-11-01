@@ -117,29 +117,13 @@ reset_set(void *data, u64 val)
 
 	if (a5xx_gpu->pm4_bo) {
 		msm_gem_unpin_iova(a5xx_gpu->pm4_bo, gpu->aspace);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		drm_gem_object_put(a5xx_gpu->pm4_bo);
-=======
 		drm_gem_object_put_locked(a5xx_gpu->pm4_bo);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		drm_gem_object_put(a5xx_gpu->pm4_bo);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		a5xx_gpu->pm4_bo = NULL;
 	}
 
 	if (a5xx_gpu->pfp_bo) {
 		msm_gem_unpin_iova(a5xx_gpu->pfp_bo, gpu->aspace);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		drm_gem_object_put(a5xx_gpu->pfp_bo);
-=======
 		drm_gem_object_put_locked(a5xx_gpu->pfp_bo);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		drm_gem_object_put(a5xx_gpu->pfp_bo);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		a5xx_gpu->pfp_bo = NULL;
 	}
 

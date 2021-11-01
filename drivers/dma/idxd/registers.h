@@ -7,18 +7,6 @@
 #define PCI_DEVICE_ID_INTEL_DSA_SPR0	0x0b25
 #define PCI_DEVICE_ID_INTEL_IAX_SPR0	0x0cfe
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define DEVICE_VERSION_1		0x100
-#define DEVICE_VERSION_2		0x200
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define DEVICE_VERSION_1		0x100
-#define DEVICE_VERSION_2		0x200
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IDXD_MMIO_BAR		0
 #define IDXD_WQ_BAR		2
 #define IDXD_PORTAL_SIZE	PAGE_SIZE
@@ -361,18 +349,6 @@ union wqcfg {
 } __packed;
 
 #define WQCFG_PASID_IDX                2
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define WQCFG_OCCUP_IDX		6
-
-#define WQCFG_OCCUP_MASK	0xffff
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define WQCFG_OCCUP_IDX		6
-
-#define WQCFG_OCCUP_MASK	0xffff
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * This macro calculates the offset into the WQCFG register

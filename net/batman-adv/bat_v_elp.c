@@ -486,29 +486,14 @@ static void batadv_v_elp_neigh_update(struct batadv_priv *bat_priv,
 	hardif_neigh->bat_v.elp_interval = ntohl(elp_packet->elp_interval);
 
 hardif_free:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_neigh_put(hardif_neigh);
-neigh_free:
-	batadv_neigh_node_put(neigh);
-orig_free:
-	batadv_orig_node_put(orig_neigh);
-=======
 	if (hardif_neigh)
 		batadv_hardif_neigh_put(hardif_neigh);
-=======
-	batadv_hardif_neigh_put(hardif_neigh);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 neigh_free:
-	batadv_neigh_node_put(neigh);
+	if (neigh)
+		batadv_neigh_node_put(neigh);
 orig_free:
-<<<<<<< HEAD
 	if (orig_neigh)
 		batadv_orig_node_put(orig_neigh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_orig_node_put(orig_neigh);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

@@ -4,16 +4,6 @@
  * Copyright (C) 2017 SiFive
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define RO_EXCEPTION_TABLE_ALIGN	16
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define RO_EXCEPTION_TABLE_ALIGN	16
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_XIP_KERNEL
 #include "vmlinux-xip.lds.S"
 #else
@@ -122,14 +112,8 @@ SECTIONS
 		*(.srodata*)
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	EXCEPTION_TABLE(0x10)
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	. = ALIGN(SECTION_ALIGN);
 	_data = .;
 

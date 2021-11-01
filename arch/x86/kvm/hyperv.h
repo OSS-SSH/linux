@@ -83,15 +83,7 @@ static inline u32 kvm_hv_get_vpindex(struct kvm_vcpu *vcpu)
 {
 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(vcpu);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return hv_vcpu ? hv_vcpu->vp_index : vcpu->vcpu_idx;
-=======
 	return hv_vcpu ? hv_vcpu->vp_index : kvm_vcpu_get_idx(vcpu);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return hv_vcpu ? hv_vcpu->vp_index : vcpu->vcpu_idx;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int kvm_hv_set_msr_common(struct kvm_vcpu *vcpu, u32 msr, u64 data, bool host);

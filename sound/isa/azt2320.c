@@ -169,69 +169,33 @@ static int snd_card_azt2320_probe(int dev,
 	struct snd_wss *chip;
 	struct snd_opl3 *opl3;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	error = snd_devm_card_new(&pcard->card->dev,
-				  index[dev], id[dev], THIS_MODULE,
-				  sizeof(struct snd_card_azt2320), &card);
-=======
 	error = snd_card_new(&pcard->card->dev,
 			     index[dev], id[dev], THIS_MODULE,
 			     sizeof(struct snd_card_azt2320), &card);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	error = snd_devm_card_new(&pcard->card->dev,
-				  index[dev], id[dev], THIS_MODULE,
-				  sizeof(struct snd_card_azt2320), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0)
 		return error;
 	acard = card->private_data;
 
 	error = snd_card_azt2320_pnp(dev, acard, pcard, pid);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error)
-		return error;
-
-	error = snd_card_azt2320_enable_wss(port[dev]);
-	if (error)
-		return error;
-=======
 	if (error) {
 		snd_card_free(card);
-=======
-	if (error)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
+	}
 
 	error = snd_card_azt2320_enable_wss(port[dev]);
-	if (error)
+	if (error) {
+		snd_card_free(card);
 		return error;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = snd_wss_create(card, wss_port[dev], -1,
 			       irq[dev],
 			       dma1[dev], dma2[dev],
 			       WSS_HW_DETECT, 0, &chip);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error < 0)
-		return error;
-=======
 	if (error < 0) {
 		snd_card_free(card);
 		return error;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (error < 0)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, "AZT2320");
 	strcpy(card->shortname, "Aztech AZT2320");
@@ -239,34 +203,20 @@ static int snd_card_azt2320_probe(int dev,
 		card->shortname, chip->port, irq[dev], dma1[dev], dma2[dev]);
 
 	error = snd_wss_pcm(chip, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error < 0)
-		return error;
-	error = snd_wss_mixer(chip);
-	if (error < 0)
-		return error;
-	error = snd_wss_timer(chip, 0);
-	if (error < 0)
-		return error;
-=======
 	if (error < 0) {
 		snd_card_free(card);
-=======
-	if (error < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
-	error = snd_wss_mixer(chip);
-	if (error < 0)
-		return error;
-	error = snd_wss_timer(chip, 0);
-	if (error < 0)
-		return error;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	error = snd_wss_mixer(chip);
+	if (error < 0) {
+		snd_card_free(card);
+		return error;
+	}
+	error = snd_wss_timer(chip, 0);
+	if (error < 0) {
+		snd_card_free(card);
+		return error;
+	}
 
 	if (mpu_port[dev] > 0 && mpu_port[dev] != SNDRV_AUTO_PORT) {
 		if (snd_mpu401_uart_new(card, 0, MPU401_HW_AZT2320,
@@ -283,46 +233,23 @@ static int snd_card_azt2320_probe(int dev,
 				   fm_port[dev], fm_port[dev] + 2);
 		} else {
 			error = snd_opl3_timer_new(opl3, 1, 2);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (error < 0)
-				return error;
-			error = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
-			if (error < 0)
-				return error;
-=======
 			if (error < 0) {
 				snd_card_free(card);
-=======
-			if (error < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return error;
-			error = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
-			if (error < 0)
-				return error;
-<<<<<<< HEAD
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			error = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
+			if (error < 0) {
+				snd_card_free(card);
+				return error;
+			}
 		}
 	}
 
 	error = snd_card_register(card);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error < 0)
-		return error;
-=======
 	if (error < 0) {
 		snd_card_free(card);
 		return error;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (error < 0)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pnp_set_card_drvdata(pcard, card);
 	return 0;
 }
@@ -348,18 +275,12 @@ static int snd_azt2320_pnp_detect(struct pnp_card_link *card,
         return -ENODEV;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void snd_azt2320_pnp_remove(struct pnp_card_link *pcard)
 {
 	snd_card_free(pnp_get_card_drvdata(pcard));
 	pnp_set_card_drvdata(pcard, NULL);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int snd_azt2320_pnp_suspend(struct pnp_card_link *pcard, pm_message_t state)
 {
@@ -389,13 +310,7 @@ static struct pnp_card_driver azt2320_pnpc_driver = {
 	.name           = "azt2320",
 	.id_table       = snd_azt2320_pnpids,
 	.probe          = snd_azt2320_pnp_detect,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove         = snd_azt2320_pnp_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_azt2320_pnp_suspend,
 	.resume		= snd_azt2320_pnp_resume,

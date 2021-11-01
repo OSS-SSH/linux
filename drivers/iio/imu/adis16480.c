@@ -144,14 +144,6 @@ struct adis16480_chip_info {
 	unsigned int max_dec_rate;
 	const unsigned int *filter_freqs;
 	bool has_pps_clk_mode;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool has_sleep_cnt;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool has_sleep_cnt;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct adis_data adis_data;
 };
 
@@ -947,14 +939,6 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.temp_scale = 5650, /* 5.65 milli degree Celsius */
 		.int_clk = 2460000,
 		.max_dec_rate = 2048,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.has_sleep_cnt = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.has_sleep_cnt = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.filter_freqs = adis16480_def_filter_freqs,
 		.adis_data = ADIS16480_DATA(16375, &adis16485_timeouts, 0),
 	},
@@ -968,14 +952,6 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.temp_scale = 5650, /* 5.65 milli degree Celsius */
 		.int_clk = 2460000,
 		.max_dec_rate = 2048,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.has_sleep_cnt = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.has_sleep_cnt = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.filter_freqs = adis16480_def_filter_freqs,
 		.adis_data = ADIS16480_DATA(16480, &adis16480_timeouts, 0),
 	},
@@ -989,14 +965,6 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.temp_scale = 5650, /* 5.65 milli degree Celsius */
 		.int_clk = 2460000,
 		.max_dec_rate = 2048,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.has_sleep_cnt = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.has_sleep_cnt = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.filter_freqs = adis16480_def_filter_freqs,
 		.adis_data = ADIS16480_DATA(16485, &adis16485_timeouts, 0),
 	},
@@ -1010,14 +978,6 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.temp_scale = 5650, /* 5.65 milli degree Celsius */
 		.int_clk = 2460000,
 		.max_dec_rate = 2048,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.has_sleep_cnt = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.has_sleep_cnt = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.filter_freqs = adis16480_def_filter_freqs,
 		.adis_data = ADIS16480_DATA(16488, &adis16485_timeouts, 0),
 	},
@@ -1465,24 +1425,9 @@ static int adis16480_probe(struct spi_device *spi)
 	if (ret)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (st->chip_info->has_sleep_cnt) {
-		ret = devm_add_action_or_reset(&spi->dev, adis16480_stop,
-					       indio_dev);
-		if (ret)
-			return ret;
-	}
-<<<<<<< HEAD
-=======
 	ret = devm_add_action_or_reset(&spi->dev, adis16480_stop, indio_dev);
 	if (ret)
 		return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = adis16480_config_irq_pin(spi->dev.of_node, st);
 	if (ret)

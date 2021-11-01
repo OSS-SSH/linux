@@ -670,15 +670,7 @@ static void create_tasks(struct perf_sched *sched)
 	err = pthread_attr_init(&attr);
 	BUG_ON(err);
 	err = pthread_attr_setstacksize(&attr,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			(size_t) max(16 * 1024, (int)PTHREAD_STACK_MIN));
-=======
 			(size_t) max(16 * 1024, PTHREAD_STACK_MIN));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			(size_t) max(16 * 1024, (int)PTHREAD_STACK_MIN));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	BUG_ON(err);
 	err = pthread_mutex_lock(&sched->start_work_mutex);
 	BUG_ON(err);
@@ -1812,15 +1804,7 @@ static int perf_sched__read_events(struct perf_sched *sched)
 	};
 	int rc = -1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	session = perf_session__new(&data, &sched->tool);
-=======
 	session = perf_session__new(&data, false, &sched->tool);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	session = perf_session__new(&data, &sched->tool);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session)) {
 		pr_debug("Error creating perf session");
 		return PTR_ERR(session);
@@ -3027,15 +3011,7 @@ static int perf_sched__timehist(struct perf_sched *sched)
 
 	symbol_conf.use_callchain = sched->show_callchain;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	session = perf_session__new(&data, &sched->tool);
-=======
 	session = perf_session__new(&data, false, &sched->tool);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	session = perf_session__new(&data, &sched->tool);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session))
 		return PTR_ERR(session);
 
@@ -3359,25 +3335,6 @@ static void setup_sorting(struct perf_sched *sched, const struct option *options
 	sort_dimension__add("pid", &sched->cmp_pid);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static bool schedstat_events_exposed(void)
-{
-	/*
-	 * Select "sched:sched_stat_wait" event to check
-	 * whether schedstat tracepoints are exposed.
-	 */
-	return IS_ERR(trace_event__tp_format("sched", "sched_stat_wait")) ?
-		false : true;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __cmd_record(int argc, const char **argv)
 {
 	unsigned int rec_argc, i, j;
@@ -3389,59 +3346,21 @@ static int __cmd_record(int argc, const char **argv)
 		"-m", "1024",
 		"-c", "1",
 		"-e", "sched:sched_switch",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		"-e", "sched:sched_stat_wait",
 		"-e", "sched:sched_stat_sleep",
 		"-e", "sched:sched_stat_iowait",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"-e", "sched:sched_stat_runtime",
 		"-e", "sched:sched_process_fork",
 		"-e", "sched:sched_wakeup_new",
 		"-e", "sched:sched_migrate_task",
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/*
-	 * The tracepoints trace_sched_stat_{wait, sleep, iowait}
-	 * are not exposed to user if CONFIG_SCHEDSTATS is not set,
-	 * to prevent "perf sched record" execution failure, determine
-	 * whether to record schedstat events according to actual situation.
-	 */
-	const char * const schedstat_args[] = {
-		"-e", "sched:sched_stat_wait",
-		"-e", "sched:sched_stat_sleep",
-		"-e", "sched:sched_stat_iowait",
-	};
-	unsigned int schedstat_argc = schedstat_events_exposed() ?
-		ARRAY_SIZE(schedstat_args) : 0;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct tep_event *waking_event;
 
 	/*
 	 * +2 for either "-e", "sched:sched_wakeup" or
 	 * "-e", "sched:sched_waking"
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rec_argc = ARRAY_SIZE(record_args) + 2 + schedstat_argc + argc - 1;
-=======
 	rec_argc = ARRAY_SIZE(record_args) + 2 + argc - 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rec_argc = ARRAY_SIZE(record_args) + 2 + schedstat_argc + argc - 1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rec_argv = calloc(rec_argc + 1, sizeof(char *));
 
 	if (rec_argv == NULL)
@@ -3457,18 +3376,6 @@ static int __cmd_record(int argc, const char **argv)
 	else
 		rec_argv[i++] = strdup("sched:sched_wakeup");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (j = 0; j < schedstat_argc; j++)
-		rec_argv[i++] = strdup(schedstat_args[j]);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (j = 0; j < schedstat_argc; j++)
-		rec_argv[i++] = strdup(schedstat_args[j]);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (j = 1; j < (unsigned int)argc; j++, i++)
 		rec_argv[i] = argv[j];
 

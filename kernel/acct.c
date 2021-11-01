@@ -478,15 +478,7 @@ static void do_acct_process(struct bsd_acct_struct *acct)
 	/*
 	 * Accounting records are not subject to resource limits.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	flim = rlimit(RLIMIT_FSIZE);
-=======
 	flim = current->signal->rlim[RLIMIT_FSIZE].rlim_cur;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	flim = rlimit(RLIMIT_FSIZE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	current->signal->rlim[RLIMIT_FSIZE].rlim_cur = RLIM_INFINITY;
 	/* Perform file operations on behalf of whoever enabled accounting */
 	orig_cred = override_creds(file->f_cred);

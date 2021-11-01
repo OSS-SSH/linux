@@ -149,89 +149,26 @@ objtool_link()
 # ${2}, ${3}, ... - optional extra .o files
 vmlinux_link()
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	local output=${1}
-	local objs
-	local libs
-	local ld
-	local ldflags
-	local ldlibs
-=======
 	local lds="${objtree}/${KBUILD_LDS}"
 	local output=${1}
 	local objects
 	local strip_debug
 	local map_option
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	local output=${1}
-	local objs
-	local libs
-	local ld
-	local ldflags
-	local ldlibs
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info LD ${output}
 
 	# skip output file argument
 	shift
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if [ -n "${CONFIG_LTO_CLANG}" ]; then
-		# Use vmlinux.o instead of performing the slow LTO link again.
-		objs=vmlinux.o
-		libs=
-	else
-		objs="${KBUILD_VMLINUX_OBJS}"
-		libs="${KBUILD_VMLINUX_LIBS}"
-	fi
-
-	if [ "${SRCARCH}" = "um" ]; then
-		wl=-Wl,
-		ld="${CC}"
-		ldflags="${CFLAGS_vmlinux}"
-		ldlibs="-lutil -lrt -lpthread"
-	else
-		wl=
-		ld="${LD}"
-		ldflags="${KBUILD_LDFLAGS} ${LDFLAGS_vmlinux}"
-		ldlibs=
-	fi
-
-	ldflags="${ldflags} ${wl}--script=${objtree}/${KBUILD_LDS}"
-
-<<<<<<< HEAD
 	# The kallsyms linking does not need debug symbols included.
 	if [ "$output" != "${output#.tmp_vmlinux.kallsyms}" ] ; then
-		ldflags="${ldflags} ${wl}--strip-debug"
+		strip_debug=-Wl,--strip-debug
 	fi
 
 	if [ -n "${CONFIG_VMLINUX_MAP}" ]; then
-		ldflags="${ldflags} ${wl}-Map=${output}.map"
+		map_option="-Map=${output}.map"
 	fi
 
-	${ld} ${ldflags} -o ${output}					\
-		${wl}--whole-archive ${objs} ${wl}--no-whole-archive	\
-		${wl}--start-group ${libs} ${wl}--end-group		\
-		$@ ${ldlibs}
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	# The kallsyms linking does not need debug symbols included.
-	if [ "$output" != "${output#.tmp_vmlinux.kallsyms}" ] ; then
-		ldflags="${ldflags} ${wl}--strip-debug"
-	fi
-
-	if [ -n "${CONFIG_VMLINUX_MAP}" ]; then
-		ldflags="${ldflags} ${wl}-Map=${output}.map"
-	fi
-
-<<<<<<< HEAD
 	if [ "${SRCARCH}" != "um" ]; then
 		if [ -n "${CONFIG_LTO_CLANG}" ]; then
 			# Use vmlinux.o instead of performing the slow LTO
@@ -273,13 +210,6 @@ vmlinux_link()
 			-lutil -lrt -lpthread
 		rm -f linux
 	fi
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	${ld} ${ldflags} -o ${output}					\
-		${wl}--whole-archive ${objs} ${wl}--no-whole-archive	\
-		${wl}--start-group ${libs} ${wl}--end-group		\
-		$@ ${ldlibs}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 # generate .BTF typeinfo from DWARF debuginfo

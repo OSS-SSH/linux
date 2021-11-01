@@ -4,20 +4,11 @@
  */
 
 #include "intel_memory_region.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include "intel_region_ttm.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "gem/i915_gem_region.h"
 #include "gem/i915_gem_lmem.h"
 #include "i915_drv.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void lmem_put_pages(struct drm_i915_gem_object *obj,
 			   struct sg_table *pages)
 {
@@ -81,9 +72,6 @@ const struct drm_i915_gem_object_ops i915_gem_lmem_obj_ops = {
 	.release = i915_gem_object_release_memory_region,
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __iomem *
 i915_gem_object_lmem_io_map(struct drm_i915_gem_object *obj,
 			    unsigned long n,
@@ -99,152 +87,12 @@ i915_gem_object_lmem_io_map(struct drm_i915_gem_object *obj,
 	return io_mapping_map_wc(&obj->mm.region->iomap, offset, size);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * i915_gem_object_is_lmem - Whether the object is resident in
- * lmem
- * @obj: The object to check.
- *
- * Even if an object is allowed to migrate and change memory region,
- * this function checks whether it will always be present in lmem when
- * valid *or* if that's not the case, whether it's currently resident in lmem.
- * For migratable and evictable objects, the latter only makes sense when
- * the object is locked.
- *
- * Return: Whether the object migratable but resident in lmem, or not
- * migratable and will be present in lmem when valid.
- */
-<<<<<<< HEAD
 bool i915_gem_object_is_lmem(struct drm_i915_gem_object *obj)
 {
-	struct intel_memory_region *mr = READ_ONCE(obj->mm.region);
+	struct intel_memory_region *mr = obj->mm.region;
 
-#ifdef CONFIG_LOCKDEP
-	if (i915_gem_object_migratable(obj) &&
-	    i915_gem_object_evictable(obj))
-		assert_object_held(obj);
-#endif
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-bool i915_gem_object_is_lmem(struct drm_i915_gem_object *obj)
-{
-	struct intel_memory_region *mr = READ_ONCE(obj->mm.region);
-
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return mr && (mr->type == INTEL_MEMORY_LOCAL ||
 		      mr->type == INTEL_MEMORY_STOLEN_LOCAL);
-}
-
-<<<<<<< HEAD
-/**
- * __i915_gem_object_is_lmem - Whether the object is resident in
- * lmem while in the fence signaling critical path.
- * @obj: The object to check.
- *
- * This function is intended to be called from within the fence signaling
- * path where the fence keeps the object from being migrated. For example
- * during gpu reset or similar.
- *
- * Return: Whether the object is resident in lmem.
- */
-bool __i915_gem_object_is_lmem(struct drm_i915_gem_object *obj)
-{
-	struct intel_memory_region *mr = READ_ONCE(obj->mm.region);
-
-#ifdef CONFIG_LOCKDEP
-	GEM_WARN_ON(dma_resv_test_signaled(obj->base.resv, true));
-=======
-#ifdef CONFIG_LOCKDEP
-	if (i915_gem_object_migratable(obj) &&
-	    i915_gem_object_evictable(obj))
-		assert_object_held(obj);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#endif
-	return mr && (mr->type == INTEL_MEMORY_LOCAL ||
-		      mr->type == INTEL_MEMORY_STOLEN_LOCAL);
-}
-
-/**
-<<<<<<< HEAD
-=======
- * __i915_gem_object_is_lmem - Whether the object is resident in
- * lmem while in the fence signaling critical path.
- * @obj: The object to check.
- *
- * This function is intended to be called from within the fence signaling
- * path where the fence keeps the object from being migrated. For example
- * during gpu reset or similar.
- *
- * Return: Whether the object is resident in lmem.
- */
-bool __i915_gem_object_is_lmem(struct drm_i915_gem_object *obj)
-{
-	struct intel_memory_region *mr = READ_ONCE(obj->mm.region);
-
-#ifdef CONFIG_LOCKDEP
-	GEM_WARN_ON(dma_resv_test_signaled(obj->base.resv, true));
-#endif
-	return mr && (mr->type == INTEL_MEMORY_LOCAL ||
-		      mr->type == INTEL_MEMORY_STOLEN_LOCAL);
-}
-
-/**
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * __i915_gem_object_create_lmem_with_ps - Create lmem object and force the
- * minimum page size for the backing pages.
- * @i915: The i915 instance.
- * @size: The size in bytes for the object. Note that we need to round the size
- * up depending on the @page_size. The final object size can be fished out from
- * the drm GEM object.
- * @page_size: The requested minimum page size in bytes for this object. This is
- * useful if we need something bigger than the regions min_page_size due to some
- * hw restriction, or in some very specialised cases where it needs to be
- * smaller, where the internal fragmentation cost is too great when rounding up
- * the object size.
- * @flags: The optional BO allocation flags.
- *
- * Note that this interface assumes you know what you are doing when forcing the
- * @page_size. If this is smaller than the regions min_page_size then it can
- * never be inserted into any GTT, otherwise it might lead to undefined
- * behaviour.
- *
- * Return: The object pointer, which might be an ERR_PTR in the case of failure.
- */
-<<<<<<< HEAD
-struct drm_i915_gem_object *
-__i915_gem_object_create_lmem_with_ps(struct drm_i915_private *i915,
-				      resource_size_t size,
-				      resource_size_t page_size,
-				      unsigned int flags)
-{
-	return i915_gem_object_create_region(i915->mm.regions[INTEL_REGION_LMEM],
-					     size, page_size, flags);
-}
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct drm_i915_gem_object *
-__i915_gem_object_create_lmem_with_ps(struct drm_i915_private *i915,
-				      resource_size_t size,
-				      resource_size_t page_size,
-				      unsigned int flags)
-{
-	return i915_gem_object_create_region(i915->mm.regions[INTEL_REGION_LMEM],
-<<<<<<< HEAD
-<<<<<<< HEAD
-					     size, 0, flags);
-=======
-					     size, flags);
-=======
-					     size, page_size, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct drm_i915_gem_object *
@@ -252,7 +100,15 @@ i915_gem_object_create_lmem(struct drm_i915_private *i915,
 			    resource_size_t size,
 			    unsigned int flags)
 {
-<<<<<<< HEAD
+	return i915_gem_object_create_region(i915->mm.regions[INTEL_REGION_LMEM],
+					     size, flags);
+}
+
+int __i915_gem_lmem_object_init(struct intel_memory_region *mem,
+				struct drm_i915_gem_object *obj,
+				resource_size_t size,
+				unsigned int flags)
+{
 	static struct lock_class_key lock_class;
 	struct drm_i915_private *i915 = mem->i915;
 
@@ -266,9 +122,4 @@ i915_gem_object_create_lmem(struct drm_i915_private *i915,
 	i915_gem_object_init_memory_region(obj, mem);
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return i915_gem_object_create_region(i915->mm.regions[INTEL_REGION_LMEM],
-					     size, 0, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

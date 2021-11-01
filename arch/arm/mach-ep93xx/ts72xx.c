@@ -354,13 +354,7 @@ MACHINE_START(TS72XX, "Technologic Systems TS-72xx SBC")
 	.init_irq	= ep93xx_init_irq,
 	.init_time	= ep93xx_timer_init,
 	.init_machine	= ts72xx_init_machine,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.init_late	= ep93xx_init_late,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.restart	= ep93xx_restart,
 MACHINE_END
 
@@ -424,12 +418,6 @@ MACHINE_START(BK3, "Liebherr controller BK3.1")
 	.init_irq	= ep93xx_init_irq,
 	.init_time	= ep93xx_timer_init,
 	.init_machine	= bk3_init_machine,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.init_late	= ep93xx_init_late,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.restart	= ep93xx_restart,
 MACHINE_END

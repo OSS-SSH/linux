@@ -27,61 +27,12 @@ struct gmii2rgmii {
 	struct mdio_device *mdio;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void xgmiitorgmii_configure(struct gmii2rgmii *priv, int speed)
-{
-	struct mii_bus *bus = priv->mdio->bus;
-	int addr = priv->mdio->addr;
-	u16 val;
-
-	val = mdiobus_read(bus, addr, XILINX_GMII2RGMII_REG);
-	val &= ~XILINX_GMII2RGMII_SPEED_MASK;
-
-	if (speed == SPEED_1000)
-		val |= BMCR_SPEED1000;
-	else if (speed == SPEED_100)
-		val |= BMCR_SPEED100;
-	else
-		val |= BMCR_SPEED10;
-
-	mdiobus_write(bus, addr, XILINX_GMII2RGMII_REG, val);
-}
-
 static int xgmiitorgmii_read_status(struct phy_device *phydev)
 {
 	struct gmii2rgmii *priv = mdiodev_get_drvdata(&phydev->mdio);
-=======
-static int xgmiitorgmii_read_status(struct phy_device *phydev)
-=======
-static void xgmiitorgmii_configure(struct gmii2rgmii *priv, int speed)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-{
 	struct mii_bus *bus = priv->mdio->bus;
 	int addr = priv->mdio->addr;
-<<<<<<< HEAD
 	u16 val = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u16 val;
-
-	val = mdiobus_read(bus, addr, XILINX_GMII2RGMII_REG);
-	val &= ~XILINX_GMII2RGMII_SPEED_MASK;
-
-	if (speed == SPEED_1000)
-		val |= BMCR_SPEED1000;
-	else if (speed == SPEED_100)
-		val |= BMCR_SPEED100;
-	else
-		val |= BMCR_SPEED10;
-
-	mdiobus_write(bus, addr, XILINX_GMII2RGMII_REG, val);
-}
-
-static int xgmiitorgmii_read_status(struct phy_device *phydev)
-{
-	struct gmii2rgmii *priv = mdiodev_get_drvdata(&phydev->mdio);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (priv->phy_drv->read_status)
@@ -91,54 +42,17 @@ static int xgmiitorgmii_read_status(struct phy_device *phydev)
 	if (err < 0)
 		return err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xgmiitorgmii_configure(priv, phydev->speed);
-
-	return 0;
-}
-
-static int xgmiitorgmii_set_loopback(struct phy_device *phydev, bool enable)
-{
-	struct gmii2rgmii *priv = mdiodev_get_drvdata(&phydev->mdio);
-	int err;
-
-	if (priv->phy_drv->set_loopback)
-		err = priv->phy_drv->set_loopback(phydev, enable);
-	else
-		err = genphy_loopback(phydev, enable);
-	if (err < 0)
-		return err;
-
-	xgmiitorgmii_configure(priv, phydev->speed);
-=======
 	val = mdiobus_read(bus, addr, XILINX_GMII2RGMII_REG);
 	val &= ~XILINX_GMII2RGMII_SPEED_MASK;
-=======
-	xgmiitorgmii_configure(priv, phydev->speed);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	return 0;
-}
-
-static int xgmiitorgmii_set_loopback(struct phy_device *phydev, bool enable)
-{
-	struct gmii2rgmii *priv = mdiodev_get_drvdata(&phydev->mdio);
-	int err;
-
-	if (priv->phy_drv->set_loopback)
-		err = priv->phy_drv->set_loopback(phydev, enable);
+	if (phydev->speed == SPEED_1000)
+		val |= BMCR_SPEED1000;
+	else if (phydev->speed == SPEED_100)
+		val |= BMCR_SPEED100;
 	else
-		err = genphy_loopback(phydev, enable);
-	if (err < 0)
-		return err;
+		val |= BMCR_SPEED10;
 
-<<<<<<< HEAD
 	mdiobus_write(bus, addr, XILINX_GMII2RGMII_REG, val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xgmiitorgmii_configure(priv, phydev->speed);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -176,14 +90,6 @@ static int xgmiitorgmii_probe(struct mdio_device *mdiodev)
 	memcpy(&priv->conv_phy_drv, priv->phy_dev->drv,
 	       sizeof(struct phy_driver));
 	priv->conv_phy_drv.read_status = xgmiitorgmii_read_status;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	priv->conv_phy_drv.set_loopback = xgmiitorgmii_set_loopback;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	priv->conv_phy_drv.set_loopback = xgmiitorgmii_set_loopback;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mdiodev_set_drvdata(&priv->phy_dev->mdio, priv);
 	priv->phy_dev->drv = &priv->conv_phy_drv;
 

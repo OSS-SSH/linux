@@ -309,13 +309,7 @@ int erofs_try_to_free_all_cached_pages(struct erofs_sb_info *sbi,
 {
 	struct z_erofs_pcluster *const pcl =
 		container_of(grp, struct z_erofs_pcluster, obj);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct address_space *const mapping = MNGD_MAPPING(sbi);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	/*
@@ -332,15 +326,7 @@ int erofs_try_to_free_all_cached_pages(struct erofs_sb_info *sbi,
 		if (!trylock_page(page))
 			return -EBUSY;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!erofs_page_is_managed(sbi, page))
-=======
 		if (page->mapping != mapping)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!erofs_page_is_managed(sbi, page))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 
 		/* barrier is implied in the following 'unlock_page' */
@@ -351,16 +337,8 @@ int erofs_try_to_free_all_cached_pages(struct erofs_sb_info *sbi,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int erofs_try_to_free_cached_page(struct page *page)
-=======
 int erofs_try_to_free_cached_page(struct address_space *mapping,
 				  struct page *page)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int erofs_try_to_free_cached_page(struct page *page)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct z_erofs_pcluster *const pcl = (void *)page_private(page);
 	int ret = 0;	/* 0 - busy */

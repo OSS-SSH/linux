@@ -764,18 +764,8 @@ static void test_sockmap(unsigned int tasks, void *data)
 	udp = socket(AF_INET, SOCK_DGRAM, 0);
 	i = 0;
 	err = bpf_map_update_elem(fd, &i, &udp, BPF_ANY);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err) {
-		printf("Failed socket update SOCK_DGRAM '%i:%i'\n",
-=======
 	if (!err) {
 		printf("Failed socket SOCK_DGRAM allowed '%i:%i'\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err) {
-		printf("Failed socket update SOCK_DGRAM '%i:%i'\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       i, udp);
 		goto out_sockmap;
 	}
@@ -995,15 +985,7 @@ static void test_sockmap(unsigned int tasks, void *data)
 
 		FD_ZERO(&w);
 		FD_SET(sfd[3], &w);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		to.tv_sec = 30;
-=======
 		to.tv_sec = 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		to.tv_sec = 30;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		to.tv_usec = 0;
 		s = select(sfd[3] + 1, &w, NULL, NULL, &to);
 		if (s == -1) {
@@ -1171,33 +1153,12 @@ out_sockmap:
 }
 
 #define MAPINMAP_PROG "./test_map_in_map.o"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MAPINMAP_INVALID_PROG "./test_map_in_map_invalid.o"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MAPINMAP_INVALID_PROG "./test_map_in_map_invalid.o"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void test_map_in_map(void)
 {
 	struct bpf_object *obj;
 	struct bpf_map *map;
 	int mim_fd, fd, err;
 	int pos = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct bpf_map_info info = {};
-	__u32 len = sizeof(info);
-	__u32 id = 0;
-	libbpf_print_fn_t old_print_fn;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	obj = bpf_object__open(MAPINMAP_PROG);
 
@@ -1267,148 +1228,11 @@ static void test_map_in_map(void)
 	}
 
 	close(fd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fd = -1;
 	bpf_object__close(obj);
-
-	/* Test that failing bpf_object__create_map() destroys the inner map */
-	obj = bpf_object__open(MAPINMAP_INVALID_PROG);
-	err = libbpf_get_error(obj);
-	if (err) {
-		printf("Failed to load %s program: %d %d",
-		       MAPINMAP_INVALID_PROG, err, errno);
-		goto out_map_in_map;
-	}
-
-	map = bpf_object__find_map_by_name(obj, "mim");
-	if (!map) {
-		printf("Failed to load array of maps from test prog\n");
-		goto out_map_in_map;
-	}
-
-	old_print_fn = libbpf_set_print(NULL);
-
-	err = bpf_object__load(obj);
-	if (!err) {
-		printf("Loading obj supposed to fail\n");
-		goto out_map_in_map;
-	}
-
-	libbpf_set_print(old_print_fn);
-
-	/* Iterate over all maps to check whether the internal map
-	 * ("mim.internal") has been destroyed.
-	 */
-	while (true) {
-		err = bpf_map_get_next_id(id, &id);
-		if (err) {
-			if (errno == ENOENT)
-				break;
-			printf("Failed to get next map: %d", errno);
-			goto out_map_in_map;
-		}
-
-		fd = bpf_map_get_fd_by_id(id);
-		if (fd < 0) {
-			if (errno == ENOENT)
-				continue;
-			printf("Failed to get map by id %u: %d", id, errno);
-			goto out_map_in_map;
-		}
-
-		err = bpf_obj_get_info_by_fd(fd, &info, &len);
-		if (err) {
-			printf("Failed to get map info by fd %d: %d", fd,
-			       errno);
-			goto out_map_in_map;
-		}
-
-		if (!strcmp(info.name, "mim.inner")) {
-			printf("Inner map mim.inner was not destroyed\n");
-			goto out_map_in_map;
-		}
-	}
-
 	return;
 
 out_map_in_map:
-	if (fd >= 0)
-		close(fd);
-=======
-=======
-	fd = -1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	bpf_object__close(obj);
-
-	/* Test that failing bpf_object__create_map() destroys the inner map */
-	obj = bpf_object__open(MAPINMAP_INVALID_PROG);
-	err = libbpf_get_error(obj);
-	if (err) {
-		printf("Failed to load %s program: %d %d",
-		       MAPINMAP_INVALID_PROG, err, errno);
-		goto out_map_in_map;
-	}
-
-	map = bpf_object__find_map_by_name(obj, "mim");
-	if (!map) {
-		printf("Failed to load array of maps from test prog\n");
-		goto out_map_in_map;
-	}
-
-	old_print_fn = libbpf_set_print(NULL);
-
-	err = bpf_object__load(obj);
-	if (!err) {
-		printf("Loading obj supposed to fail\n");
-		goto out_map_in_map;
-	}
-
-	libbpf_set_print(old_print_fn);
-
-	/* Iterate over all maps to check whether the internal map
-	 * ("mim.internal") has been destroyed.
-	 */
-	while (true) {
-		err = bpf_map_get_next_id(id, &id);
-		if (err) {
-			if (errno == ENOENT)
-				break;
-			printf("Failed to get next map: %d", errno);
-			goto out_map_in_map;
-		}
-
-		fd = bpf_map_get_fd_by_id(id);
-		if (fd < 0) {
-			if (errno == ENOENT)
-				continue;
-			printf("Failed to get map by id %u: %d", id, errno);
-			goto out_map_in_map;
-		}
-
-		err = bpf_obj_get_info_by_fd(fd, &info, &len);
-		if (err) {
-			printf("Failed to get map info by fd %d: %d", fd,
-			       errno);
-			goto out_map_in_map;
-		}
-
-		if (!strcmp(info.name, "mim.inner")) {
-			printf("Inner map mim.inner was not destroyed\n");
-			goto out_map_in_map;
-		}
-	}
-
-	return;
-
-out_map_in_map:
-<<<<<<< HEAD
 	close(fd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (fd >= 0)
-		close(fd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	exit(1);
 }
 
@@ -1506,48 +1330,15 @@ static void test_map_stress(void)
 #define DO_DELETE 0
 
 #define MAP_RETRIES 20
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MAX_DELAY_US 50000
-#define MIN_DELAY_RANGE_US 5000
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MAX_DELAY_US 50000
-#define MIN_DELAY_RANGE_US 5000
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int map_update_retriable(int map_fd, const void *key, const void *value,
 				int flags, int attempts)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int delay = rand() % MIN_DELAY_RANGE_US;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int delay = rand() % MIN_DELAY_RANGE_US;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (bpf_map_update_elem(map_fd, key, value, flags)) {
 		if (!attempts || (errno != EAGAIN && errno != EBUSY))
 			return -errno;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (delay <= MAX_DELAY_US / 2)
-			delay *= 2;
-
-		usleep(delay);
-<<<<<<< HEAD
-=======
 		usleep(1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		attempts--;
 	}
 
@@ -1556,34 +1347,11 @@ static int map_update_retriable(int map_fd, const void *key, const void *value,
 
 static int map_delete_retriable(int map_fd, const void *key, int attempts)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int delay = rand() % MIN_DELAY_RANGE_US;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int delay = rand() % MIN_DELAY_RANGE_US;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (bpf_map_delete_elem(map_fd, key)) {
 		if (!attempts || (errno != EAGAIN && errno != EBUSY))
 			return -errno;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (delay <= MAX_DELAY_US / 2)
-			delay *= 2;
-
-		usleep(delay);
-<<<<<<< HEAD
-=======
 		usleep(1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		attempts--;
 	}
 

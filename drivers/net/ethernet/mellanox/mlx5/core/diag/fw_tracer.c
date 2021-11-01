@@ -1007,15 +1007,7 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
 	err = mlx5_core_alloc_pd(dev, &tracer->buff.pdn);
 	if (err) {
 		mlx5_core_warn(dev, "FWTracer: Failed to allocate PD %d\n", err);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_cancel_work;
-=======
 		return err;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_cancel_work;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = mlx5_fw_tracer_create_mkey(tracer);
@@ -1027,43 +1019,12 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
 	MLX5_NB_INIT(&tracer->nb, fw_tracer_event, DEVICE_TRACER);
 	mlx5_eq_notifier_register(dev, &tracer->nb);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	err = mlx5_fw_tracer_start(tracer);
-	if (err) {
-		mlx5_core_warn(dev, "FWTracer: Failed to start tracer %d\n", err);
-		goto err_notifier_unregister;
-	}
-<<<<<<< HEAD
-	return 0;
-
-err_notifier_unregister:
-	mlx5_eq_notifier_unregister(dev, &tracer->nb);
-	mlx5_core_destroy_mkey(dev, &tracer->buff.mkey);
-err_dealloc_pd:
-	mlx5_core_dealloc_pd(dev, tracer->buff.pdn);
-err_cancel_work:
-	cancel_work_sync(&tracer->read_fw_strings_work);
-=======
 	mlx5_fw_tracer_start(tracer);
 
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
-err_notifier_unregister:
-	mlx5_eq_notifier_unregister(dev, &tracer->nb);
-	mlx5_core_destroy_mkey(dev, &tracer->buff.mkey);
 err_dealloc_pd:
 	mlx5_core_dealloc_pd(dev, tracer->buff.pdn);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-err_cancel_work:
-	cancel_work_sync(&tracer->read_fw_strings_work);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 

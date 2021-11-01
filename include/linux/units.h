@@ -4,41 +4,9 @@
 
 #include <linux/math.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Metric prefixes in accordance with Système international (d'unités) */
-#define PETA	1000000000000000ULL
-#define TERA	1000000000000ULL
-#define GIGA	1000000000UL
-#define MEGA	1000000UL
-#define KILO	1000UL
-#define HECTO	100UL
-#define DECA	10UL
-#define DECI	10UL
-#define CENTI	100UL
-#define MILLI	1000UL
-#define MICRO	1000000UL
-#define NANO	1000000000UL
-#define PICO	1000000000000ULL
-#define FEMTO	1000000000000000ULL
-
-#define HZ_PER_KHZ		1000UL
-#define KHZ_PER_MHZ		1000UL
-#define HZ_PER_MHZ		1000000UL
-
-#define MILLIWATT_PER_WATT	1000UL
-#define MICROWATT_PER_MILLIWATT	1000UL
-#define MICROWATT_PER_WATT	1000000UL
-<<<<<<< HEAD
-=======
 #define MILLIWATT_PER_WATT	1000L
 #define MICROWATT_PER_MILLIWATT	1000L
 #define MICROWATT_PER_WATT	1000000L
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define ABSOLUTE_ZERO_MILLICELSIUS -273150
 

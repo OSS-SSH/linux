@@ -1391,18 +1391,12 @@ skip_defrtr:
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 *	Send a notify if RA changed managed/otherconf flags or timer settings
 	 */
 	if (send_ifinfo_notify)
 		inet6_ifinfo_notify(RTM_NEWLINK, in6_dev);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 skip_linkparms:
 
 	/*
@@ -1502,20 +1496,6 @@ skip_routeinfo:
 		memcpy(&n, ((u8 *)(ndopts.nd_opts_mtu+1))+2, sizeof(mtu));
 		mtu = ntohl(n);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (in6_dev->ra_mtu != mtu) {
-			in6_dev->ra_mtu = mtu;
-			send_ifinfo_notify = true;
-		}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mtu < IPV6_MIN_MTU || mtu > skb->dev->mtu) {
 			ND_PRINTK(2, warn, "RA: invalid mtu: %d\n", mtu);
 		} else if (in6_dev->cnf.mtu6 != mtu) {
@@ -1539,21 +1519,6 @@ skip_routeinfo:
 		ND_PRINTK(2, warn, "RA: invalid RA options\n");
 	}
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Send a notify if RA changed managed/otherconf flags or
-	 * timer settings or ra_mtu value
-	 */
-	if (send_ifinfo_notify)
-		inet6_ifinfo_notify(RTM_NEWLINK, in6_dev);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fib6_info_release(rt);
 	if (neigh)
 		neigh_release(neigh);

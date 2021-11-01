@@ -317,15 +317,7 @@ static const struct pinctrl_pin_desc imx8mn_pinctrl_pads[] = {
 	IMX_PINCTRL_PIN(MX8MN_IOMUXC_UART4_TXD),
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct imx_pinctrl_soc_info imx8mn_pinctrl_info = {
-=======
 static struct imx_pinctrl_soc_info imx8mn_pinctrl_info = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct imx_pinctrl_soc_info imx8mn_pinctrl_info = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pins = imx8mn_pinctrl_pads,
 	.npins = ARRAY_SIZE(imx8mn_pinctrl_pads),
 	.gpr_compatible = "fsl,imx8mn-iomuxc-gpr",

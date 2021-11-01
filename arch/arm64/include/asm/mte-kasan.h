@@ -130,16 +130,10 @@ static inline void mte_set_mem_tag_range(void *addr, size_t size, u8 tag,
 
 void mte_enable_kernel_sync(void);
 void mte_enable_kernel_async(void);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void mte_init_tags(u64 max_tag);
 
 void mte_set_report_once(bool state);
 bool mte_report_once(void);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else /* CONFIG_ARM64_MTE */
 
@@ -171,9 +165,6 @@ static inline void mte_enable_kernel_async(void)
 {
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline void mte_init_tags(u64 max_tag)
 {
 }
@@ -187,9 +178,6 @@ static inline bool mte_report_once(void)
 	return false;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_ARM64_MTE */
 
 #endif /* __ASSEMBLY__ */

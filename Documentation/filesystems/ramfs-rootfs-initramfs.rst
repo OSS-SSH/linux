@@ -170,15 +170,7 @@ Documentation/driver-api/early-userspace/early_userspace_support.rst for more de
 The kernel does not depend on external cpio tools.  If you specify a
 directory instead of a configuration file, the kernel's build infrastructure
 creates a configuration file from that directory (usr/Makefile calls
-<<<<<<< HEAD
-<<<<<<< HEAD
-usr/gen_initramfs.sh), and proceeds to package up that directory
-=======
 usr/gen_initramfs_list.sh), and proceeds to package up that directory
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-usr/gen_initramfs.sh), and proceeds to package up that directory
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 using the config file (by feeding it to usr/gen_init_cpio, which is created
 from usr/gen_init_cpio.c).  The kernel's build-time cpio creation code is
 entirely self-contained, and the kernel's boot-time extractor is also

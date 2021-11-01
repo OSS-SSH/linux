@@ -1076,16 +1076,6 @@ static int __init tty3215_init(void)
 	if (!CONSOLE_IS_3215)
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	driver = tty_alloc_driver(NR_3215, TTY_DRIVER_REAL_RAW);
-	if (IS_ERR(driver))
-		return PTR_ERR(driver);
-
-	ret = ccw_driver_register(&raw3215_ccw_driver);
-	if (ret) {
-		tty_driver_kref_put(driver);
-=======
 	driver = alloc_tty_driver(NR_3215);
 	if (!driver)
 		return -ENOMEM;
@@ -1093,16 +1083,6 @@ static int __init tty3215_init(void)
 	ret = ccw_driver_register(&raw3215_ccw_driver);
 	if (ret) {
 		put_tty_driver(driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	driver = tty_alloc_driver(NR_3215, TTY_DRIVER_REAL_RAW);
-	if (IS_ERR(driver))
-		return PTR_ERR(driver);
-
-	ret = ccw_driver_register(&raw3215_ccw_driver);
-	if (ret) {
-		tty_driver_kref_put(driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	}
 	/*
@@ -1121,25 +1101,11 @@ static int __init tty3215_init(void)
 	driver->init_termios.c_iflag = IGNBRK | IGNPAR;
 	driver->init_termios.c_oflag = ONLCR;
 	driver->init_termios.c_lflag = ISIG;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tty_set_operations(driver, &tty3215_ops);
-	ret = tty_register_driver(driver);
-	if (ret) {
-		tty_driver_kref_put(driver);
-=======
 	driver->flags = TTY_DRIVER_REAL_RAW;
 	tty_set_operations(driver, &tty3215_ops);
 	ret = tty_register_driver(driver);
 	if (ret) {
 		put_tty_driver(driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tty_set_operations(driver, &tty3215_ops);
-	ret = tty_register_driver(driver);
-	if (ret) {
-		tty_driver_kref_put(driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	}
 	tty3215_driver = driver;

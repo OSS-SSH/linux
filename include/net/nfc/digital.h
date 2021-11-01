@@ -191,15 +191,7 @@ struct digital_poll_tech {
 
 struct nfc_digital_dev {
 	struct nfc_dev *nfc_dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nfc_digital_ops *ops;
-=======
 	struct nfc_digital_ops *ops;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nfc_digital_ops *ops;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u32 protocols;
 
@@ -244,15 +236,7 @@ struct nfc_digital_dev {
 	void (*skb_add_crc)(struct sk_buff *skb);
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct nfc_digital_dev *nfc_digital_allocate_device(const struct nfc_digital_ops *ops,
-=======
 struct nfc_digital_dev *nfc_digital_allocate_device(struct nfc_digital_ops *ops,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct nfc_digital_dev *nfc_digital_allocate_device(const struct nfc_digital_ops *ops,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						    __u32 supported_protocols,
 						    __u32 driver_capabilities,
 						    int tx_headroom,

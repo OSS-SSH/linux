@@ -28,18 +28,6 @@
 
 #include "vkms_drv.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <drm/drm_print.h>
-#include <drm/drm_debugfs.h>
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <drm/drm_print.h>
-#include <drm/drm_debugfs.h>
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DRIVER_NAME	"vkms"
 #define DRIVER_DESC	"Virtual Kernel Mode Setting"
 #define DRIVER_DATE	"20180514"
@@ -64,15 +52,7 @@ DEFINE_DRM_GEM_FOPS(vkms_driver_fops);
 
 static void vkms_release(struct drm_device *dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct vkms_device *vkms = drm_device_to_vkms_device(dev);
-=======
 	struct vkms_device *vkms = container_of(dev, struct vkms_device, drm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct vkms_device *vkms = drm_device_to_vkms_device(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	destroy_workqueue(vkms->output.composer_workq);
 }
@@ -106,54 +86,12 @@ static void vkms_atomic_commit_tail(struct drm_atomic_state *old_state)
 	drm_atomic_helper_cleanup_planes(dev, old_state);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int vkms_config_show(struct seq_file *m, void *data)
-{
-	struct drm_info_node *node = (struct drm_info_node *)m->private;
-	struct drm_device *dev = node->minor->dev;
-	struct vkms_device *vkmsdev = drm_device_to_vkms_device(dev);
-
-	seq_printf(m, "writeback=%d\n", vkmsdev->config->writeback);
-	seq_printf(m, "cursor=%d\n", vkmsdev->config->cursor);
-	seq_printf(m, "overlay=%d\n", vkmsdev->config->overlay);
-
-	return 0;
-}
-
-static const struct drm_info_list vkms_config_debugfs_list[] = {
-	{ "vkms_config", vkms_config_show, 0 },
-};
-
-static void vkms_config_debugfs_init(struct drm_minor *minor)
-{
-	drm_debugfs_create_files(vkms_config_debugfs_list, ARRAY_SIZE(vkms_config_debugfs_list),
-				 minor->debugfs_root, minor);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct drm_driver vkms_driver = {
 	.driver_features	= DRIVER_MODESET | DRIVER_ATOMIC | DRIVER_GEM,
 	.release		= vkms_release,
 	.fops			= &vkms_driver_fops,
 	DRM_GEM_SHMEM_DRIVER_OPS,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.debugfs_init           = vkms_config_debugfs_init,
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.debugfs_init           = vkms_config_debugfs_init,
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.name			= DRIVER_NAME,
 	.desc			= DRIVER_DESC,
 	.date			= DRIVER_DATE,
@@ -225,14 +163,8 @@ static int vkms_create(struct vkms_config *config)
 		goto out_devres;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	vkms_device->drm.irq_enabled = true;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = drm_vblank_init(&vkms_device->drm, 1);
 	if (ret) {
 		DRM_ERROR("Failed to vblank\n");

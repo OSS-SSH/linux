@@ -300,17 +300,7 @@ void ext4_free_inode(handle_t *handle, struct inode *inode)
 	}
 
 	BUFFER_TRACE(bitmap_bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fatal = ext4_journal_get_write_access(handle, sb, bitmap_bh,
-					      EXT4_JTR_NONE);
-=======
 	fatal = ext4_journal_get_write_access(handle, bitmap_bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	fatal = ext4_journal_get_write_access(handle, sb, bitmap_bh,
-					      EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fatal)
 		goto error_return;
 
@@ -318,17 +308,7 @@ void ext4_free_inode(handle_t *handle, struct inode *inode)
 	gdp = ext4_get_group_desc(sb, block_group, &bh2);
 	if (gdp) {
 		BUFFER_TRACE(bh2, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fatal = ext4_journal_get_write_access(handle, sb, bh2,
-						      EXT4_JTR_NONE);
-=======
 		fatal = ext4_journal_get_write_access(handle, bh2);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fatal = ext4_journal_get_write_access(handle, sb, bh2,
-						      EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	ext4_lock_group(sb, block_group);
 	cleared = ext4_test_and_clear_bit(bit, bitmap_bh->b_data);
@@ -1105,17 +1085,7 @@ repeat_in_this_group:
 			}
 		}
 		BUFFER_TRACE(inode_bitmap_bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = ext4_journal_get_write_access(handle, sb, inode_bitmap_bh,
-						    EXT4_JTR_NONE);
-=======
 		err = ext4_journal_get_write_access(handle, inode_bitmap_bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = ext4_journal_get_write_access(handle, sb, inode_bitmap_bh,
-						    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			ext4_std_error(sb, err);
 			goto out;
@@ -1157,17 +1127,7 @@ got:
 	}
 
 	BUFFER_TRACE(group_desc_bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, sb, group_desc_bh,
-					    EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, group_desc_bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, sb, group_desc_bh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		ext4_std_error(sb, err);
 		goto out;
@@ -1184,17 +1144,7 @@ got:
 			goto out;
 		}
 		BUFFER_TRACE(block_bitmap_bh, "get block bitmap access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = ext4_journal_get_write_access(handle, sb, block_bitmap_bh,
-						    EXT4_JTR_NONE);
-=======
 		err = ext4_journal_get_write_access(handle, block_bitmap_bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = ext4_journal_get_write_access(handle, sb, block_bitmap_bh,
-						    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			brelse(block_bitmap_bh);
 			ext4_std_error(sb, err);
@@ -1633,18 +1583,8 @@ int ext4_init_inode_table(struct super_block *sb, ext4_group_t group,
 	num = sbi->s_itb_per_group - used_blks;
 
 	BUFFER_TRACE(group_desc_bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = ext4_journal_get_write_access(handle, sb, group_desc_bh,
-					    EXT4_JTR_NONE);
-=======
 	ret = ext4_journal_get_write_access(handle,
 					    group_desc_bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = ext4_journal_get_write_access(handle, sb, group_desc_bh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto err_out;
 

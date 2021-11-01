@@ -248,66 +248,44 @@ static int UVERBS_HANDLER(UVERBS_METHOD_QP_CREATE)(
 	set_caps(&attr, &cap, true);
 	mutex_init(&obj->mcast_lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	qp = ib_create_qp_user(device, pd, &attr, &attrs->driver_udata, obj,
-			       KBUILD_MODNAME);
-=======
 	if (attr.qp_type == IB_QPT_XRC_TGT)
 		qp = ib_create_qp(pd, &attr);
 	else
 		qp = _ib_create_qp(device, pd, &attr, &attrs->driver_udata, obj,
 				   NULL);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	qp = ib_create_qp_user(device, pd, &attr, &attrs->driver_udata, obj,
-			       KBUILD_MODNAME);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(qp)) {
 		ret = PTR_ERR(qp);
 		goto err_put;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ib_qp_usecnt_inc(qp);
 
-	if (attr.qp_type == IB_QPT_XRC_TGT) {
+	if (attr.qp_type != IB_QPT_XRC_TGT) {
+		atomic_inc(&pd->usecnt);
+		if (attr.send_cq)
+			atomic_inc(&attr.send_cq->usecnt);
+		if (attr.recv_cq)
+			atomic_inc(&attr.recv_cq->usecnt);
+		if (attr.srq)
+			atomic_inc(&attr.srq->usecnt);
+		if (attr.rwq_ind_tbl)
+			atomic_inc(&attr.rwq_ind_tbl->usecnt);
+	} else {
 		obj->uxrcd = container_of(xrcd_uobj, struct ib_uxrcd_object,
 					  uobject);
 		atomic_inc(&obj->uxrcd->refcnt);
-=======
-=======
-	ib_qp_usecnt_inc(qp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (attr.qp_type == IB_QPT_XRC_TGT) {
-		obj->uxrcd = container_of(xrcd_uobj, struct ib_uxrcd_object,
-					  uobject);
-		atomic_inc(&obj->uxrcd->refcnt);
-<<<<<<< HEAD
 		/* It is done in _ib_create_qp for other QP types */
 		qp->uobject = obj;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	obj->uevent.uobject.object = qp;
 	uverbs_finalize_uobj_create(attrs, UVERBS_ATTR_CREATE_QP_HANDLE);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (attr.qp_type != IB_QPT_XRC_TGT) {
 		ret = ib_create_qp_security(qp, device);
 		if (ret)
 			return ret;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	set_caps(&attr, &cap, false);
 	ret = uverbs_copy_to_struct_or_zero(attrs,
 					UVERBS_ATTR_CREATE_QP_RESP_CAP, &cap,

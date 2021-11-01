@@ -1253,36 +1253,6 @@ struct cfg80211_csa_settings {
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * struct cfg80211_color_change_settings - color change settings
- *
- * Used for bss color change
- *
- * @beacon_color_change: beacon data while performing the color countdown
- * @counter_offsets_beacon: offsets of the counters within the beacon (tail)
- * @counter_offsets_presp: offsets of the counters within the probe response
- * @beacon_next: beacon data to be used after the color change
- * @count: number of beacons until the color change
- * @color: the color used after the change
- */
-struct cfg80211_color_change_settings {
-	struct cfg80211_beacon_data beacon_color_change;
-	u16 counter_offset_beacon;
-	u16 counter_offset_presp;
-	struct cfg80211_beacon_data beacon_next;
-	u8 count;
-	u8 color;
-};
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct iface_combination_params - input parameters for interface combinations
  *
  * Used to pass interface combination parameters
@@ -4025,16 +3995,6 @@ struct mgmt_frame_regs {
  *	given TIDs. This callback may sleep.
  *
  * @set_sar_specs: Update the SAR (TX power) settings.
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * @color_change: Initiate a color change.
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * @color_change: Initiate a color change.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct cfg80211_ops {
 	int	(*suspend)(struct wiphy *wiphy, struct cfg80211_wowlan *wow);
@@ -4362,18 +4322,6 @@ struct cfg80211_ops {
 				    const u8 *peer, u8 tids);
 	int	(*set_sar_specs)(struct wiphy *wiphy,
 				 struct cfg80211_sar_specs *sar);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int	(*color_change)(struct wiphy *wiphy,
-				struct net_device *dev,
-				struct cfg80211_color_change_settings *params);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int	(*color_change)(struct wiphy *wiphy,
-				struct net_device *dev,
-				struct cfg80211_color_change_settings *params);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -5402,10 +5350,6 @@ static inline void wiphy_unlock(struct wiphy *wiphy)
  *	netdev and may otherwise be used by driver read-only, will be update
  *	by cfg80211 on change_interface
  * @mgmt_registrations: list of registrations for management frames
-<<<<<<< HEAD
- * @mgmt_registrations_lock: lock for the list
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @mgmt_registrations_need_update: mgmt registrations were updated,
  *	need to propagate the update to the driver
  * @mtx: mutex used to lock data in this struct, may be used by drivers
@@ -5452,10 +5396,6 @@ struct wireless_dev {
 	u32 identifier;
 
 	struct list_head mgmt_registrations;
-<<<<<<< HEAD
-	spinlock_t mgmt_registrations_lock;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 mgmt_registrations_need_update:1;
 
 	struct mutex mtx;
@@ -8276,79 +8216,4 @@ void cfg80211_update_owe_info_event(struct net_device *netdev,
  */
 void cfg80211_bss_flush(struct wiphy *wiphy);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * cfg80211_bss_color_notify - notify about bss color event
- * @dev: network device
- * @gfp: allocation flags
- * @cmd: the actual event we want to notify
- * @count: the number of TBTTs until the color change happens
- * @color_bitmap: representations of the colors that the local BSS is aware of
- */
-int cfg80211_bss_color_notify(struct net_device *dev, gfp_t gfp,
-			      enum nl80211_commands cmd, u8 count,
-			      u64 color_bitmap);
-
-/**
- * cfg80211_obss_color_collision_notify - notify about bss color collision
- * @dev: network device
- * @color_bitmap: representations of the colors that the local BSS is aware of
- */
-static inline int cfg80211_obss_color_collision_notify(struct net_device *dev,
-						       u64 color_bitmap)
-{
-	return cfg80211_bss_color_notify(dev, GFP_KERNEL,
-					 NL80211_CMD_OBSS_COLOR_COLLISION,
-					 0, color_bitmap);
-}
-
-/**
- * cfg80211_color_change_started_notify - notify color change start
- * @dev: the device on which the color is switched
- * @count: the number of TBTTs until the color change happens
- *
- * Inform the userspace about the color change that has started.
- */
-static inline int cfg80211_color_change_started_notify(struct net_device *dev,
-						       u8 count)
-{
-	return cfg80211_bss_color_notify(dev, GFP_KERNEL,
-					 NL80211_CMD_COLOR_CHANGE_STARTED,
-					 count, 0);
-}
-
-/**
- * cfg80211_color_change_aborted_notify - notify color change abort
- * @dev: the device on which the color is switched
- *
- * Inform the userspace about the color change that has aborted.
- */
-static inline int cfg80211_color_change_aborted_notify(struct net_device *dev)
-{
-	return cfg80211_bss_color_notify(dev, GFP_KERNEL,
-					 NL80211_CMD_COLOR_CHANGE_ABORTED,
-					 0, 0);
-}
-
-/**
- * cfg80211_color_change_notify - notify color change completion
- * @dev: the device on which the color was switched
- *
- * Inform the userspace about the color change that has completed.
- */
-static inline int cfg80211_color_change_notify(struct net_device *dev)
-{
-	return cfg80211_bss_color_notify(dev, GFP_KERNEL,
-					 NL80211_CMD_COLOR_CHANGE_COMPLETED,
-					 0, 0);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __NET_CFG80211_H */

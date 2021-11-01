@@ -9,9 +9,6 @@
  *
  * Copyright (c) 2020 Oracle and/or its affiliates.
  * Author: Daniel Jordan <daniel.m.jordan@oracle.com>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -25,9 +22,6 @@
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St - Fifth Floor, Boston, MA 02110-1301 USA.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/completion.h>
@@ -217,15 +211,7 @@ int padata_do_parallel(struct padata_shell *ps,
 	if ((pinst->flags & PADATA_RESET))
 		goto out;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_inc(&pd->refcnt);
-=======
 	atomic_inc(&pd->refcnt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_inc(&pd->refcnt);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	padata->pd = pd;
 	padata->cb_cpu = *cb_cpu;
 
@@ -397,15 +383,7 @@ static void padata_serial_worker(struct work_struct *serial_work)
 	}
 	local_bh_enable();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (refcount_sub_and_test(cnt, &pd->refcnt))
-=======
 	if (atomic_sub_and_test(cnt, &pd->refcnt))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (refcount_sub_and_test(cnt, &pd->refcnt))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		padata_free_pd(pd);
 }
 
@@ -615,15 +593,7 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
 	padata_init_reorder_list(pd);
 	padata_init_squeues(pd);
 	pd->seq_nr = -1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_set(&pd->refcnt, 1);
-=======
 	atomic_set(&pd->refcnt, 1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_set(&pd->refcnt, 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&pd->lock);
 	pd->cpu = cpumask_first(pd->cpumask.pcpu);
 	INIT_WORK(&pd->reorder_work, invoke_padata_reorder);
@@ -697,15 +667,7 @@ static int padata_replace(struct padata_instance *pinst)
 	synchronize_rcu();
 
 	list_for_each_entry_continue_reverse(ps, &pinst->pslist, list)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (refcount_dec_and_test(&ps->opd->refcnt))
-=======
 		if (atomic_dec_and_test(&ps->opd->refcnt))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (refcount_dec_and_test(&ps->opd->refcnt))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			padata_free_pd(ps->opd);
 
 	pinst->flags &= ~PADATA_RESET;
@@ -771,15 +733,7 @@ int padata_set_cpumask(struct padata_instance *pinst, int cpumask_type,
 	struct cpumask *serial_mask, *parallel_mask;
 	int err = -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-=======
 	get_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&pinst->lock);
 
 	switch (cpumask_type) {
@@ -799,15 +753,7 @@ int padata_set_cpumask(struct padata_instance *pinst, int cpumask_type,
 
 out:
 	mutex_unlock(&pinst->lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_unlock();
-=======
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return err;
 }
@@ -1046,15 +992,7 @@ struct padata_instance *padata_alloc(const char *name)
 	if (!pinst->parallel_wq)
 		goto err_free_inst;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-=======
 	get_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pinst->serial_wq = alloc_workqueue("%s_serial", WQ_MEM_RECLAIM |
 					   WQ_CPU_INTENSIVE, 1, name);
@@ -1088,15 +1026,7 @@ struct padata_instance *padata_alloc(const char *name)
 						    &pinst->cpu_dead_node);
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_unlock();
-=======
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return pinst;
 
@@ -1106,15 +1036,7 @@ err_free_masks:
 err_free_serial_wq:
 	destroy_workqueue(pinst->serial_wq);
 err_put_cpus:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_unlock();
-=======
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	destroy_workqueue(pinst->parallel_wq);
 err_free_inst:
 	kfree(pinst);
@@ -1152,21 +1074,9 @@ struct padata_shell *padata_alloc_shell(struct padata_instance *pinst)
 
 	ps->pinst = pinst;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-	pd = padata_alloc_pd(ps);
-	cpus_read_unlock();
-=======
 	get_online_cpus();
 	pd = padata_alloc_pd(ps);
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_lock();
-	pd = padata_alloc_pd(ps);
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!pd)
 		goto out_free_ps;

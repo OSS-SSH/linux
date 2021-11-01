@@ -346,13 +346,7 @@ struct irdma_device {
 	bool roce_mode:1;
 	bool roce_dcqcn_en:1;
 	bool dcb:1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	bool reset:1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool iw_ooo:1;
 	enum init_completion_state init_state;
 

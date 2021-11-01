@@ -602,19 +602,7 @@
 		iic3: i2c@e60b0000 {
 			#address-cells = <1>;
 			#size-cells = <0>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			compatible = "renesas,iic-r8a7742",
-				     "renesas,rcar-gen2-iic",
-				     "renesas,rmobile-iic";
-=======
 			compatible = "renesas,iic-r8a7742";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			compatible = "renesas,iic-r8a7742",
-				     "renesas,rcar-gen2-iic",
-				     "renesas,rmobile-iic";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0 0xe60b0000 0 0x425>;
 			interrupts = <GIC_SPI 173 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&cpg CPG_MOD 926>;

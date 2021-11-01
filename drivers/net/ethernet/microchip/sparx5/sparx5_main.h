@@ -73,72 +73,8 @@ enum sparx5_vlan_port_type {
 #define XTR_QUEUE     0
 #define INJ_QUEUE     0
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define FDMA_DCB_MAX			64
-#define FDMA_RX_DCB_MAX_DBS		15
-#define FDMA_TX_DCB_MAX_DBS		1
-
 struct sparx5;
 
-struct sparx5_db_hw {
-	u64 dataptr;
-	u64 status;
-};
-
-struct sparx5_rx_dcb_hw {
-	u64 nextptr;
-	u64 info;
-	struct sparx5_db_hw db[FDMA_RX_DCB_MAX_DBS];
-};
-
-struct sparx5_tx_dcb_hw {
-	u64 nextptr;
-	u64 info;
-	struct sparx5_db_hw db[FDMA_TX_DCB_MAX_DBS];
-};
-
-/* Frame DMA receive state:
- * For each DB, there is a SKB, and the skb data pointer is mapped in
- * the DB. Once a frame is received the skb is given to the upper layers
- * and a new skb is added to the dcb.
- * When the db_index reached FDMA_RX_DCB_MAX_DBS the DB is reused.
- */
-struct sparx5_rx {
-	struct sparx5_rx_dcb_hw *dcb_entries;
-	struct sparx5_rx_dcb_hw *last_entry;
-	struct sk_buff *skb[FDMA_DCB_MAX][FDMA_RX_DCB_MAX_DBS];
-	int db_index;
-	int dcb_index;
-	dma_addr_t dma;
-	struct napi_struct napi;
-	u32 channel_id;
-	struct net_device *ndev;
-	u64 packets;
-};
-
-/* Frame DMA transmit state:
- * DCBs are chained using the DCBs nextptr field.
- */
-struct sparx5_tx {
-	struct sparx5_tx_dcb_hw *curr_entry;
-	struct sparx5_tx_dcb_hw *first_entry;
-	struct list_head db_list;
-	dma_addr_t dma;
-	u32 channel_id;
-	u64 packets;
-	u64 dropped;
-};
-
-<<<<<<< HEAD
-=======
-struct sparx5;
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct sparx5_port_config {
 	phy_interface_t portmode;
 	u32 bandwidth;
@@ -231,19 +167,6 @@ struct sparx5 {
 	bool sd_sgpio_remapping;
 	/* Register based inj/xtr */
 	int xtr_irq;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Frame DMA */
-	int fdma_irq;
-	struct sparx5_rx rx;
-	struct sparx5_tx tx;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* sparx5_switchdev.c */
@@ -251,41 +174,11 @@ int sparx5_register_notifier_blocks(struct sparx5 *sparx5);
 void sparx5_unregister_notifier_blocks(struct sparx5 *sparx5);
 
 /* sparx5_packet.c */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct frame_info {
-	int src_port;
-};
-
-void sparx5_xtr_flush(struct sparx5 *sparx5, u8 grp);
-void sparx5_ifh_parse(u32 *ifh, struct frame_info *info);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 irqreturn_t sparx5_xtr_handler(int irq, void *_priv);
 int sparx5_port_xmit_impl(struct sk_buff *skb, struct net_device *dev);
 int sparx5_manual_injection_mode(struct sparx5 *sparx5);
 void sparx5_port_inj_timer_setup(struct sparx5_port *port);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* sparx5_fdma.c */
-int sparx5_fdma_start(struct sparx5 *sparx5);
-int sparx5_fdma_stop(struct sparx5 *sparx5);
-int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb);
-irqreturn_t sparx5_fdma_handler(int irq, void *args);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* sparx5_mactable.c */
 void sparx5_mact_pull_work(struct work_struct *work);
 int sparx5_mact_learn(struct sparx5 *sparx5, int port,

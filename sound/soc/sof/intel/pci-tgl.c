@@ -89,14 +89,6 @@ static const struct sof_dev_desc adls_desc = {
 static const struct sof_dev_desc adl_desc = {
 	.machines               = snd_soc_acpi_intel_adl_machines,
 	.alt_machines           = snd_soc_acpi_intel_adl_sdw_machines,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.use_acpi_target_states = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.use_acpi_target_states = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.resindex_lpe_base      = 0,
 	.resindex_pcicfg_base   = -1,
 	.resindex_imr_base      = -1,

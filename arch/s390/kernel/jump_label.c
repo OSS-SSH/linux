@@ -36,15 +36,7 @@ static void jump_label_bug(struct jump_entry *entry, struct insn *expected,
 	unsigned char *ipe = (unsigned char *)expected;
 	unsigned char *ipn = (unsigned char *)new;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pr_emerg("Jump label code mismatch at %pS [%px]\n", ipc, ipc);
-=======
 	pr_emerg("Jump label code mismatch at %pS [%p]\n", ipc, ipc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pr_emerg("Jump label code mismatch at %pS [%px]\n", ipc, ipc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pr_emerg("Found:    %6ph\n", ipc);
 	pr_emerg("Expected: %6ph\n", ipe);
 	pr_emerg("New:      %6ph\n", ipn);

@@ -20,21 +20,9 @@
 #include <linux/sched.h>
 #include <linux/uaccess.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "encoding.h"
-#include "kcsan.h"
-#include "permissive.h"
-=======
 #include "atomic.h"
 #include "encoding.h"
 #include "kcsan.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "encoding.h"
-#include "kcsan.h"
-#include "permissive.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static bool kcsan_early_enable = IS_ENABLED(CONFIG_KCSAN_EARLY_ENABLE);
 unsigned int kcsan_udelay_task = CONFIG_KCSAN_UDELAY_TASK;
@@ -313,21 +301,9 @@ static inline void reset_kcsan_skip(void)
 	this_cpu_write(kcsan_skip, skip_count);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static __always_inline bool kcsan_is_enabled(struct kcsan_ctx *ctx)
-{
-	return READ_ONCE(kcsan_enabled) && !ctx->disable_count;
-=======
 static __always_inline bool kcsan_is_enabled(void)
 {
 	return READ_ONCE(kcsan_enabled) && get_ctx()->disable_count == 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static __always_inline bool kcsan_is_enabled(struct kcsan_ctx *ctx)
-{
-	return READ_ONCE(kcsan_enabled) && !ctx->disable_count;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Introduce delay depending on context and configuration. */
@@ -377,40 +353,10 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 					    atomic_long_t *watchpoint,
 					    long encoded_watchpoint)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const bool is_assert = (type & KCSAN_ACCESS_ASSERT) != 0;
-	struct kcsan_ctx *ctx = get_ctx();
-	unsigned long flags;
-	bool consumed;
-
-	/*
-	 * We know a watchpoint exists. Let's try to keep the race-window
-	 * between here and finally consuming the watchpoint below as small as
-	 * possible -- avoid unneccessarily complex code until consumed.
-	 */
-
-	if (!kcsan_is_enabled(ctx))
-=======
 	unsigned long flags;
 	bool consumed;
 
 	if (!kcsan_is_enabled())
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const bool is_assert = (type & KCSAN_ACCESS_ASSERT) != 0;
-	struct kcsan_ctx *ctx = get_ctx();
-	unsigned long flags;
-	bool consumed;
-
-	/*
-	 * We know a watchpoint exists. Let's try to keep the race-window
-	 * between here and finally consuming the watchpoint below as small as
-	 * possible -- avoid unneccessarily complex code until consumed.
-	 */
-
-	if (!kcsan_is_enabled(ctx))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	/*
@@ -418,25 +364,6 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 	 * reporting a race where e.g. the writer set up the watchpoint, but the
 	 * reader has access_mask!=0, we have to ignore the found watchpoint.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ctx->access_mask)
-		return;
-
-	/*
-	 * If the other thread does not want to ignore the access, and there was
-	 * a value change as a result of this thread's operation, we will still
-	 * generate a report of unknown origin.
-	 *
-	 * Use CONFIG_KCSAN_REPORT_RACE_UNKNOWN_ORIGIN=n to filter.
-	 */
-	if (!is_assert && kcsan_ignore_address(ptr))
-		return;
-
-	/*
-	 * Consuming the watchpoint must be guarded by kcsan_is_enabled() to
-	 * avoid erroneously triggering reports if the context is disabled.
-=======
 	if (get_ctx()->access_mask != 0)
 		return;
 
@@ -445,25 +372,6 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 	 * of !consumed. Consuming the watchpoint must always be guarded by
 	 * kcsan_is_enabled() check, as otherwise we might erroneously
 	 * triggering reports when disabled.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ctx->access_mask)
-		return;
-
-	/*
-	 * If the other thread does not want to ignore the access, and there was
-	 * a value change as a result of this thread's operation, we will still
-	 * generate a report of unknown origin.
-	 *
-	 * Use CONFIG_KCSAN_REPORT_RACE_UNKNOWN_ORIGIN=n to filter.
-	 */
-	if (!is_assert && kcsan_ignore_address(ptr))
-		return;
-
-	/*
-	 * Consuming the watchpoint must be guarded by kcsan_is_enabled() to
-	 * avoid erroneously triggering reports if the context is disabled.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	consumed = try_consume_watchpoint(watchpoint, encoded_watchpoint);
 
@@ -483,15 +391,7 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 		atomic_long_inc(&kcsan_counters[KCSAN_COUNTER_REPORT_RACES]);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (is_assert)
-=======
 	if ((type & KCSAN_ACCESS_ASSERT) != 0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (is_assert)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		atomic_long_inc(&kcsan_counters[KCSAN_COUNTER_ASSERT_FAILURES]);
 	else
 		atomic_long_inc(&kcsan_counters[KCSAN_COUNTER_DATA_RACES]);
@@ -509,14 +409,6 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	unsigned long access_mask;
 	enum kcsan_value_change value_change = KCSAN_VALUE_CHANGE_MAYBE;
 	unsigned long ua_flags = user_access_save();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct kcsan_ctx *ctx = get_ctx();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct kcsan_ctx *ctx = get_ctx();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long irq_flags = 0;
 
 	/*
@@ -525,33 +417,16 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	 */
 	reset_kcsan_skip();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!kcsan_is_enabled(ctx))
-		goto out;
-
-	/*
-	 * Check to-ignore addresses after kcsan_is_enabled(), as we may access
-	 * memory that is not yet initialized during early boot.
-	 */
-	if (!is_assert && kcsan_ignore_address(ptr))
-=======
 	if (!kcsan_is_enabled())
-=======
-	if (!kcsan_is_enabled(ctx))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	/*
-	 * Check to-ignore addresses after kcsan_is_enabled(), as we may access
-	 * memory that is not yet initialized during early boot.
+	 * Special atomic rules: unlikely to be true, so we check them here in
+	 * the slow-path, and not in the fast-path in is_atomic(). Call after
+	 * kcsan_is_enabled(), as we may access memory that is not yet
+	 * initialized during early boot.
 	 */
-<<<<<<< HEAD
 	if (!is_assert && kcsan_is_atomic_special(ptr))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!is_assert && kcsan_ignore_address(ptr))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	if (!check_encodable((unsigned long)ptr, size)) {
@@ -604,9 +479,6 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 		break; /* ignore; we do not diff the values */
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (IS_ENABLED(CONFIG_KCSAN_DEBUG)) {
 		kcsan_disable_current();
 		pr_err("watching %s, size: %zu, addr: %px [slot: %d, encoded: %lx]\n",
@@ -616,9 +488,6 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 		kcsan_enable_current();
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Delay this thread, to increase probability of observing a racy
 	 * conflicting access.
@@ -629,15 +498,7 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	 * Re-read value, and check if it is as expected; if not, we infer a
 	 * racy access.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	access_mask = ctx->access_mask;
-=======
 	access_mask = get_ctx()->access_mask;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	access_mask = ctx->access_mask;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	new = 0;
 	switch (size) {
 	case 1:
@@ -660,25 +521,8 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	if (access_mask)
 		diff &= access_mask;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Check if we observed a value change.
-	 *
-	 * Also check if the data race should be ignored (the rules depend on
-	 * non-zero diff); if it is to be ignored, the below rules for
-	 * KCSAN_VALUE_CHANGE_MAYBE apply.
-	 */
-	if (diff && !kcsan_ignore_data_race(size, type, old, new, diff))
-<<<<<<< HEAD
-=======
 	/* Were we able to observe a value-change? */
 	if (diff != 0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		value_change = KCSAN_VALUE_CHANGE_TRUE;
 
 	/* Check if this access raced with another. */
@@ -800,24 +644,6 @@ void __init kcsan_init(void)
 		pr_info("enabled early\n");
 		WRITE_ONCE(kcsan_enabled, true);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (IS_ENABLED(CONFIG_KCSAN_REPORT_VALUE_CHANGE_ONLY) ||
-	    IS_ENABLED(CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC) ||
-	    IS_ENABLED(CONFIG_KCSAN_PERMISSIVE) ||
-	    IS_ENABLED(CONFIG_KCSAN_IGNORE_ATOMICS)) {
-		pr_warn("non-strict mode configured - use CONFIG_KCSAN_STRICT=y to see all data races\n");
-	} else {
-		pr_info("strict mode configured\n");
-	}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* === Exported interface =================================================== */

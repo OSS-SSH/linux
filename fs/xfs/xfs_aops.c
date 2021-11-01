@@ -97,15 +97,7 @@ xfs_end_ioend(
 	/*
 	 * Just clean up the in-memory structures if the fs has been shut down.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_is_shutdown(ip->i_mount)) {
-=======
 	if (XFS_FORCED_SHUTDOWN(ip->i_mount)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_is_shutdown(ip->i_mount)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = -EIO;
 		goto done;
 	}
@@ -268,15 +260,7 @@ xfs_map_blocks(
 	int			retries = 0;
 	int			error = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_is_shutdown(mp))
-=======
 	if (XFS_FORCED_SHUTDOWN(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_is_shutdown(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	/*
@@ -456,15 +440,7 @@ xfs_discard_page(
 	xfs_fileoff_t		pageoff_fsb = XFS_B_TO_FSBT(mp, pageoff);
 	int			error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_is_shutdown(mp))
-=======
 	if (XFS_FORCED_SHUTDOWN(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_is_shutdown(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_invalidate;
 
 	xfs_alert_ratelimited(mp,
@@ -473,15 +449,7 @@ xfs_discard_page(
 
 	error = xfs_bmap_punch_delalloc_range(ip, start_fsb,
 			i_blocks_per_page(inode, page) - pageoff_fsb);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error && !xfs_is_shutdown(mp))
-=======
 	if (error && !XFS_FORCED_SHUTDOWN(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (error && !xfs_is_shutdown(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_alert(mp, "page discard unable to remove delalloc mapping.");
 out_invalidate:
 	iomap_invalidatepage(page, pageoff, PAGE_SIZE - pageoff);
@@ -494,9 +462,6 @@ static const struct iomap_writeback_ops xfs_writeback_ops = {
 };
 
 STATIC int
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 xfs_vm_writepage(
 	struct page		*page,
 	struct writeback_control *wbc)
@@ -513,9 +478,6 @@ xfs_vm_writepage(
 }
 
 STATIC int
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 xfs_vm_writepages(
 	struct address_space	*mapping,
 	struct writeback_control *wbc)
@@ -597,13 +559,7 @@ xfs_iomap_swapfile_activate(
 const struct address_space_operations xfs_address_space_operations = {
 	.readpage		= xfs_vm_readpage,
 	.readahead		= xfs_vm_readahead,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.writepage		= xfs_vm_writepage,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.writepages		= xfs_vm_writepages,
 	.set_page_dirty		= __set_page_dirty_nobuffers,
 	.releasepage		= iomap_releasepage,

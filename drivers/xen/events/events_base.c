@@ -198,28 +198,12 @@ static void disable_dynirq(struct irq_data *data);
 
 static DEFINE_PER_CPU(unsigned int, irq_epoch);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void clear_evtchn_to_irq_row(int *evtchn_row)
-=======
 static void clear_evtchn_to_irq_row(unsigned row)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void clear_evtchn_to_irq_row(int *evtchn_row)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned col;
 
 	for (col = 0; col < EVTCHN_PER_ROW; col++)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		WRITE_ONCE(evtchn_row[col], -1);
-=======
 		WRITE_ONCE(evtchn_to_irq[row][col], -1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		WRITE_ONCE(evtchn_row[col], -1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void clear_evtchn_to_irq_all(void)
@@ -229,15 +213,7 @@ static void clear_evtchn_to_irq_all(void)
 	for (row = 0; row < EVTCHN_ROW(xen_evtchn_max_channels()); row++) {
 		if (evtchn_to_irq[row] == NULL)
 			continue;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		clear_evtchn_to_irq_row(evtchn_to_irq[row]);
-=======
 		clear_evtchn_to_irq_row(row);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		clear_evtchn_to_irq_row(evtchn_to_irq[row]);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -245,14 +221,6 @@ static int set_evtchn_to_irq(evtchn_port_t evtchn, unsigned int irq)
 {
 	unsigned row;
 	unsigned col;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int *evtchn_row;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int *evtchn_row;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (evtchn >= xen_evtchn_max_channels())
 		return -EINVAL;
@@ -265,41 +233,11 @@ static int set_evtchn_to_irq(evtchn_port_t evtchn, unsigned int irq)
 		if (irq == -1)
 			return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		evtchn_row = (int *) __get_free_pages(GFP_KERNEL, 0);
-		if (evtchn_row == NULL)
-			return -ENOMEM;
-
-		clear_evtchn_to_irq_row(evtchn_row);
-
-		/*
-		 * We've prepared an empty row for the mapping. If a different
-		 * thread was faster inserting it, we can drop ours.
-		 */
-		if (cmpxchg(&evtchn_to_irq[row], NULL, evtchn_row) != NULL)
-			free_page((unsigned long) evtchn_row);
-=======
 		evtchn_to_irq[row] = (int *)get_zeroed_page(GFP_KERNEL);
 		if (evtchn_to_irq[row] == NULL)
 			return -ENOMEM;
 
 		clear_evtchn_to_irq_row(row);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		evtchn_row = (int *) __get_free_pages(GFP_KERNEL, 0);
-		if (evtchn_row == NULL)
-			return -ENOMEM;
-
-		clear_evtchn_to_irq_row(evtchn_row);
-
-		/*
-		 * We've prepared an empty row for the mapping. If a different
-		 * thread was faster inserting it, we can drop ours.
-		 */
-		if (cmpxchg(&evtchn_to_irq[row], NULL, evtchn_row) != NULL)
-			free_page((unsigned long) evtchn_row);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	WRITE_ONCE(evtchn_to_irq[row][col], irq);
@@ -1071,15 +1009,7 @@ static void __unbind_from_irq(unsigned int irq)
 int xen_bind_pirq_gsi_to_irq(unsigned gsi,
 			     unsigned pirq, int shareable, char *name)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int irq;
-=======
 	int irq = -1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int irq;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct physdev_irq irq_op;
 	int ret;
 

@@ -639,18 +639,12 @@ static const struct tpm_class_ops cr50_i2c = {
 	.req_canceled = &tpm_cr50_i2c_req_canceled,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static const struct i2c_device_id cr50_i2c_table[] = {
 	{"cr50_i2c", 0},
 	{}
 };
 MODULE_DEVICE_TABLE(i2c, cr50_i2c_table);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ACPI
 static const struct acpi_device_id cr50_i2c_acpi_id[] = {
 	{ "GOOG0005", 0 },
@@ -676,16 +670,8 @@ MODULE_DEVICE_TABLE(of, of_cr50_i2c_match);
  * - 0:		Success.
  * - -errno:	A POSIX error code.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int tpm_cr50_i2c_probe(struct i2c_client *client)
-=======
 static int tpm_cr50_i2c_probe(struct i2c_client *client,
 			      const struct i2c_device_id *id)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int tpm_cr50_i2c_probe(struct i2c_client *client)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tpm_i2c_cr50_priv_data *priv;
 	struct device *dev = &client->dev;
@@ -788,16 +774,8 @@ static int tpm_cr50_i2c_remove(struct i2c_client *client)
 static SIMPLE_DEV_PM_OPS(cr50_i2c_pm, tpm_pm_suspend, tpm_pm_resume);
 
 static struct i2c_driver cr50_i2c_driver = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.probe_new = tpm_cr50_i2c_probe,
-=======
 	.id_table = cr50_i2c_table,
 	.probe = tpm_cr50_i2c_probe,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.probe_new = tpm_cr50_i2c_probe,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.remove = tpm_cr50_i2c_remove,
 	.driver = {
 		.name = "cr50_i2c",

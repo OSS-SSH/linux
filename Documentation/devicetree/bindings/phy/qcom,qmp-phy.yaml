@@ -18,14 +18,6 @@ properties:
   compatible:
     enum:
       - qcom,ipq6018-qmp-pcie-phy
-<<<<<<< HEAD
-<<<<<<< HEAD
-      - qcom,ipq6018-qmp-usb3-phy
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      - qcom,ipq6018-qmp-usb3-phy
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,ipq8074-qmp-pcie-phy
       - qcom,ipq8074-qmp-usb3-phy
       - qcom,msm8996-qmp-pcie-phy
@@ -35,14 +27,6 @@ properties:
       - qcom,msm8998-qmp-ufs-phy
       - qcom,msm8998-qmp-usb3-phy
       - qcom,sc7180-qmp-usb3-phy
-<<<<<<< HEAD
-<<<<<<< HEAD
-      - qcom,sc8180x-qmp-pcie-phy
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      - qcom,sc8180x-qmp-pcie-phy
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,sc8180x-qmp-ufs-phy
       - qcom,sc8180x-qmp-usb3-phy
       - qcom,sdm845-qhp-pcie-phy
@@ -50,14 +34,6 @@ properties:
       - qcom,sdm845-qmp-ufs-phy
       - qcom,sdm845-qmp-usb3-phy
       - qcom,sdm845-qmp-usb3-uni-phy
-<<<<<<< HEAD
-<<<<<<< HEAD
-      - qcom,sm6115-qmp-ufs-phy
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      - qcom,sm6115-qmp-ufs-phy
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,sm8150-qmp-ufs-phy
       - qcom,sm8150-qmp-usb3-phy
       - qcom,sm8150-qmp-usb3-uni-phy
@@ -350,14 +326,6 @@ allOf:
         compatible:
           contains:
             enum:
-<<<<<<< HEAD
-<<<<<<< HEAD
-              - qcom,sc8180x-qmp-pcie-phy
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-              - qcom,sc8180x-qmp-pcie-phy
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - qcom,sdm845-qhp-pcie-phy
               - qcom,sdm845-qmp-pcie-phy
               - qcom,sdx55-qmp-pcie-phy

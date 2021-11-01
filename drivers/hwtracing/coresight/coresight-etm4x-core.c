@@ -39,16 +39,6 @@
 
 #include "coresight-etm4x.h"
 #include "coresight-etm-perf.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "coresight-etm4x-cfg.h"
-#include "coresight-syscfg.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "coresight-etm4x-cfg.h"
-#include "coresight-syscfg.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int boot_enable;
 module_param(boot_enable, int, 0444);
@@ -571,34 +561,12 @@ out:
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int etm4_parse_event_config(struct coresight_device *csdev,
-				   struct perf_event *event)
-{
-	int ret = 0;
-	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-	struct etmv4_config *config = &drvdata->config;
-	struct perf_event_attr *attr = &event->attr;
-	unsigned long cfg_hash;
-	int preset;
-=======
 static int etm4_parse_event_config(struct etmv4_drvdata *drvdata,
-=======
-static int etm4_parse_event_config(struct coresight_device *csdev,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct perf_event *event)
 {
 	int ret = 0;
-	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
 	struct etmv4_config *config = &drvdata->config;
 	struct perf_event_attr *attr = &event->attr;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned long cfg_hash;
-	int preset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Clear configuration from previous run */
 	memset(config, 0, sizeof(struct etmv4_config));
@@ -664,29 +632,6 @@ static int etm4_parse_event_config(struct coresight_device *csdev,
 		/* bit[12], Return stack enable bit */
 		config->cfg |= BIT(12);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Set any selected configuration and preset.
-	 *
-	 * This extracts the values of PMU_FORMAT_ATTR(configid) and PMU_FORMAT_ATTR(preset)
-	 * in the perf attributes defined in coresight-etm-perf.c.
-	 * configid uses bits 63:32 of attr->config2, preset uses bits 3:0 of attr->config.
-	 * A zero configid means no configuration active, preset = 0 means no preset selected.
-	 */
-	if (attr->config2 & GENMASK_ULL(63, 32)) {
-		cfg_hash = (u32)(attr->config2 >> 32);
-		preset = attr->config & 0xF;
-		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return ret;
 }
@@ -703,15 +648,7 @@ static int etm4_enable_perf(struct coresight_device *csdev,
 	}
 
 	/* Configure the tracer based on the session's specifics */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = etm4_parse_event_config(csdev, event);
-=======
 	ret = etm4_parse_event_config(drvdata, event);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = etm4_parse_event_config(csdev, event);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto out;
 	/* And enable it */
@@ -857,34 +794,11 @@ static int etm4_disable_perf(struct coresight_device *csdev,
 	u32 control;
 	struct etm_filters *filters = event->hw.addr_filters;
 	struct etmv4_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct perf_event_attr *attr = &event->attr;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct perf_event_attr *attr = &event->attr;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (WARN_ON_ONCE(drvdata->cpu != smp_processor_id()))
 		return -EINVAL;
 
 	etm4_disable_hw(drvdata);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * The config_id occupies bits 63:32 of the config2 perf event attr
-	 * field. If this is non-zero then we will have enabled a config.
-	 */
-	if (attr->config2 & GENMASK_ULL(63, 32))
-		cscfg_csdev_disable_active_config(csdev);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Check if the start/stop logic was active when the unit was stopped.
@@ -2025,22 +1939,6 @@ static int etm4_probe(struct device *dev, void __iomem *base, u32 etm_pid)
 		return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* register with config infrastructure & load any current features */
-	ret = etm4_cscfg_register(drvdata->csdev);
-	if (ret) {
-		coresight_unregister(drvdata->csdev);
-		return ret;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	etmdrvdata[drvdata->cpu] = drvdata;
 
 	dev_info(&drvdata->csdev->dev, "CPU%d: %s v%d.%d initialized\n",
@@ -2127,14 +2025,6 @@ static int __exit etm4_remove_dev(struct etmv4_drvdata *drvdata)
 
 	cpus_read_unlock();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cscfg_unregister_csdev(drvdata->csdev);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cscfg_unregister_csdev(drvdata->csdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	coresight_unregister(drvdata->csdev);
 
 	return 0;

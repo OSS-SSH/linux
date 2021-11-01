@@ -87,35 +87,14 @@ cat <<EoHEADER
 
 EoHEADER
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Create list of architectures that have a specific errno.h.
-archlist=""
-for arch in $(find $toolsdir/arch -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort -r); do
-	test -f $toolsdir/arch/$arch/include/uapi/asm/errno.h && archlist="$archlist $arch"
-done
-
-for arch in generic $archlist; do
-	process_arch "$arch"
-done
-create_arch_errno_table_func "$archlist" "generic"
-=======
 # Create list of architectures and ignore those that do not appear
 # in tools/perf/arch
-=======
-# Create list of architectures that have a specific errno.h.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 archlist=""
-for arch in $(find $toolsdir/arch -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort -r); do
-	test -f $toolsdir/arch/$arch/include/uapi/asm/errno.h && archlist="$archlist $arch"
+for arch in $(find $toolsdir/arch -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | grep -v x86 | sort); do
+	test -d $toolsdir/perf/arch/$arch && archlist="$archlist $arch"
 done
 
-for arch in generic $archlist; do
+for arch in x86 $archlist generic; do
 	process_arch "$arch"
 done
-<<<<<<< HEAD
 create_arch_errno_table_func "x86 $archlist" "generic"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-create_arch_errno_table_func "$archlist" "generic"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

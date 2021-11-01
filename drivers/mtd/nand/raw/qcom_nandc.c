@@ -1676,39 +1676,13 @@ qcom_nandc_read_cw_raw(struct mtd_info *mtd, struct nand_chip *chip,
 	struct nand_ecc_ctrl *ecc = &chip->ecc;
 	int data_size1, data_size2, oob_size1, oob_size2;
 	int ret, reg_off = FLASH_BUF_ACC, read_loc = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int raw_cw = cw;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int raw_cw = cw;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	nand_read_page_op(chip, page, 0, NULL, 0);
 	host->use_ecc = false;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (nandc->props->qpic_v2)
-		raw_cw = ecc->steps - 1;
-
-	clear_bam_transaction(nandc);
-	set_address(host, host->cw_size * cw, page);
-	update_rw_regs(host, 1, true, raw_cw);
-=======
 	clear_bam_transaction(nandc);
 	set_address(host, host->cw_size * cw, page);
 	update_rw_regs(host, 1, true, cw);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (nandc->props->qpic_v2)
-		raw_cw = ecc->steps - 1;
-
-	clear_bam_transaction(nandc);
-	set_address(host, host->cw_size * cw, page);
-	update_rw_regs(host, 1, true, raw_cw);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	config_nand_page_read(chip);
 
 	data_size1 = mtd->writesize - host->cw_size * (ecc->steps - 1);
@@ -1737,15 +1711,7 @@ qcom_nandc_read_cw_raw(struct mtd_info *mtd, struct nand_chip *chip,
 		nandc_set_read_loc(chip, cw, 3, read_loc, oob_size2, 1);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	config_nand_cw_read(chip, false, raw_cw);
-=======
 	config_nand_cw_read(chip, false, cw);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	config_nand_cw_read(chip, false, raw_cw);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	read_data_dma(nandc, reg_off, data_buf, data_size1, 0);
 	reg_off += data_size1;

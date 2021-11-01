@@ -522,13 +522,7 @@ static void ultra_pio_input(struct net_device *dev, int count,
 	/* We know skbuffs are padded to at least word alignment. */
 	insw(ioaddr + IOPD, buf, (count+1)>>1);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ultra_pio_output(struct net_device *dev, int count,
 							const unsigned char *buf, const int start_page)
 {
@@ -578,16 +572,8 @@ MODULE_LICENSE("GPL");
 
 /* This is set up so that only a single autoprobe takes place per call.
 ISA device autoprobes on a running machine are not recommended. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int __init ultra_init_module(void)
-=======
 int __init
 init_module(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int __init ultra_init_module(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_device *dev;
 	int this_dev, found = 0;
@@ -614,14 +600,6 @@ static int __init ultra_init_module(void)
 		return 0;
 	return -ENXIO;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_init(ultra_init_module);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_init(ultra_init_module);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void cleanup_card(struct net_device *dev)
 {
@@ -635,16 +613,8 @@ static void cleanup_card(struct net_device *dev)
 	iounmap(ei_status.mem);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void __exit ultra_cleanup_module(void)
-=======
 void __exit
 cleanup_module(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void __exit ultra_cleanup_module(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int this_dev;
 
@@ -657,12 +627,4 @@ static void __exit ultra_cleanup_module(void)
 		}
 	}
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_exit(ultra_cleanup_module);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_exit(ultra_cleanup_module);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* MODULE */

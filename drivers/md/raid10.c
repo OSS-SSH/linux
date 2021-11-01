@@ -471,28 +471,12 @@ static void raid10_end_write_request(struct bio *bio)
 			/*
 			 * When the device is faulty, it is not necessary to
 			 * handle write error.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			 * For failfast, this is the only remaining device,
 			 * We need to retry the write without FailFast.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 */
 			if (!test_bit(Faulty, &rdev->flags))
 				set_bit(R10BIO_WriteError, &r10_bio->state);
 			else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				/* Fail the request */
-				set_bit(R10BIO_Degraded, &r10_bio->state);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				/* Fail the request */
-				set_bit(R10BIO_Degraded, &r10_bio->state);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				r10_bio->devs[slot].bio = NULL;
 				to_put = bio;
 				dec_rdev = 1;
@@ -1728,20 +1712,6 @@ retry_discard:
 	} else
 		r10_bio->master_bio = (struct bio *)first_r10bio;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * first select target devices under rcu_lock and
-	 * inc refcount on their rdev.  Record them by setting
-	 * bios[x] to bio
-	 */
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_lock();
 	for (disk = 0; disk < geo->raid_disks; disk++) {
 		struct md_rdev *rdev = rcu_dereference(conf->mirrors[disk].rdev);
@@ -1773,15 +1743,9 @@ retry_discard:
 	for (disk = 0; disk < geo->raid_disks; disk++) {
 		sector_t dev_start, dev_end;
 		struct bio *mbio, *rbio = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		struct md_rdev *rdev = rcu_dereference(conf->mirrors[disk].rdev);
 		struct md_rdev *rrdev = rcu_dereference(
 			conf->mirrors[disk].replacement);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Now start to calculate the start and end address for each disk.
@@ -1811,27 +1775,9 @@ retry_discard:
 
 		/*
 		 * It only handles discard bio which size is >= stripe size, so
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * dev_end > dev_start all the time.
-		 * It doesn't need to use rcu lock to get rdev here. We already
-		 * add rdev->nr_pending in the first loop.
-		 */
-		if (r10_bio->devs[disk].bio) {
-			struct md_rdev *rdev = conf->mirrors[disk].rdev;
-=======
 		 * dev_end > dev_start all the time
 		 */
 		if (r10_bio->devs[disk].bio) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 * dev_end > dev_start all the time.
-		 * It doesn't need to use rcu lock to get rdev here. We already
-		 * add rdev->nr_pending in the first loop.
-		 */
-		if (r10_bio->devs[disk].bio) {
-			struct md_rdev *rdev = conf->mirrors[disk].rdev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mbio = bio_clone_fast(bio, GFP_NOIO, &mddev->bio_set);
 			mbio->bi_end_io = raid10_end_discard_request;
 			mbio->bi_private = r10_bio;
@@ -1844,14 +1790,6 @@ retry_discard:
 			bio_endio(mbio);
 		}
 		if (r10_bio->devs[disk].repl_bio) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			struct md_rdev *rrdev = conf->mirrors[disk].replacement;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			struct md_rdev *rrdev = conf->mirrors[disk].replacement;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rbio = bio_clone_fast(bio, GFP_NOIO, &mddev->bio_set);
 			rbio->bi_end_io = raid10_end_discard_request;
 			rbio->bi_private = r10_bio;

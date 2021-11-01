@@ -20,32 +20,6 @@
 /* For bsearch. We try to unwind functions in shared object. */
 #include <stdlib.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/*
- * The test will assert frames are on the stack but tail call optimizations lose
- * the frame of the caller. Clang can disable this optimization on a called
- * function but GCC currently (11/2020) lacks this attribute. The barrier is
- * used to inhibit tail calls in these cases.
- */
-#ifdef __has_attribute
-#if __has_attribute(disable_tail_calls)
-#define NO_TAIL_CALL_ATTRIBUTE __attribute__((disable_tail_calls))
-#define NO_TAIL_CALL_BARRIER
-#endif
-#endif
-#ifndef NO_TAIL_CALL_ATTRIBUTE
-#define NO_TAIL_CALL_ATTRIBUTE
-#define NO_TAIL_CALL_BARRIER __asm__ __volatile__("" : : : "memory");
-#endif
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mmap_handler(struct perf_tool *tool __maybe_unused,
 			union perf_event *event,
 			struct perf_sample *sample,
@@ -117,15 +91,7 @@ static int unwind_entry(struct unwind_entry *entry, void *arg)
 	return strcmp((const char *) symbol, funcs[idx]);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__thread(struct thread *thread)
-=======
 noinline int test_dwarf_unwind__thread(struct thread *thread)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__thread(struct thread *thread)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct perf_sample sample;
 	unsigned long cnt = 0;
@@ -156,15 +122,7 @@ NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__thread(struct thread *thr
 
 static int global_unwind_retval = -INT_MAX;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__compare(void *p1, void *p2)
-=======
 noinline int test_dwarf_unwind__compare(void *p1, void *p2)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__compare(void *p1, void *p2)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Any possible value should be 'thread' */
 	struct thread *thread = *(struct thread **)p1;
@@ -183,15 +141,7 @@ NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__compare(void *p1, void *p
 	return p1 - p2;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__krava_3(struct thread *thread)
-=======
 noinline int test_dwarf_unwind__krava_3(struct thread *thread)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__krava_3(struct thread *thread)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct thread *array[2] = {thread, thread};
 	void *fp = &bsearch;
@@ -210,49 +160,14 @@ NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__krava_3(struct thread *th
 	return global_unwind_retval;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__krava_2(struct thread *thread)
-{
-	int ret;
-
-	ret =  test_dwarf_unwind__krava_3(thread);
-	NO_TAIL_CALL_BARRIER;
-	return ret;
-}
-
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__krava_1(struct thread *thread)
-{
-	int ret;
-
-	ret =  test_dwarf_unwind__krava_2(thread);
-	NO_TAIL_CALL_BARRIER;
-	return ret;
-=======
 noinline int test_dwarf_unwind__krava_2(struct thread *thread)
-=======
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__krava_2(struct thread *thread)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	int ret;
-
-	ret =  test_dwarf_unwind__krava_3(thread);
-	NO_TAIL_CALL_BARRIER;
-	return ret;
+	return test_dwarf_unwind__krava_3(thread);
 }
 
-NO_TAIL_CALL_ATTRIBUTE noinline int test_dwarf_unwind__krava_1(struct thread *thread)
+noinline int test_dwarf_unwind__krava_1(struct thread *thread)
 {
-<<<<<<< HEAD
 	return test_dwarf_unwind__krava_2(thread);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
-
-	ret =  test_dwarf_unwind__krava_2(thread);
-	NO_TAIL_CALL_BARRIER;
-	return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int test__dwarf_unwind(struct test *test __maybe_unused, int subtest __maybe_unused)

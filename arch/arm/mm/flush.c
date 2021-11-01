@@ -346,9 +346,6 @@ void flush_dcache_page(struct page *page)
 EXPORT_SYMBOL(flush_dcache_page);
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * Ensure cache coherency for the kernel mapping of this page. We can
  * assume that the page is pinned via kmap.
  *
@@ -382,9 +379,6 @@ void flush_kernel_dcache_page(struct page *page)
 EXPORT_SYMBOL(flush_kernel_dcache_page);
 
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Flush an anonymous page so that users of get_user_pages()
  * can safely access the data.  The expected sequence is:
  *

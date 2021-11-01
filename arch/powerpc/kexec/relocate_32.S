@@ -93,15 +93,7 @@ wmmucr:
 	 * Invalidate all the TLB entries except the current entry
 	 * where we are running from
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4			/* Find our address */
-=======
 	bl	0f				/* Find our address */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4			/* Find our address */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0:	mflr	r5				/* Make it accessible */
 	tlbsx	r23,0,r5			/* Find entry we are in */
 	li	r4,0				/* Start at TLB entry 0 */
@@ -166,15 +158,7 @@ write_out:
 	/* Switch to other address space in MSR */
 	insrwi	r9, r7, 1, 26		/* Set MSR[IS] = r7 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	1f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r8
 	addi	r8, r8, (2f-1b)		/* Find the target offset */
 
@@ -218,15 +202,7 @@ next_tlb:
 	li	r9,0
 	insrwi	r9, r7, 1, 26			/* Set MSR[IS] = r7 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	1f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r8
 	and	r8, r8, r11			/* Get our offset within page */
 	addi	r8, r8, (2f-1b)
@@ -264,15 +240,7 @@ setup_map_47x:
 	sync
 
 	/* Find the entry we are running from */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	2f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 2:	mflr	r23
 	tlbsx	r23, 0, r23
 	tlbre	r24, r23, 0			/* TLB Word 0 */
@@ -328,15 +296,7 @@ clear_utlb_entry:
 	/* Update the msr to the new TS */
 	insrwi	r5, r7, 1, 26
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	1f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r6
 	addi	r6, r6, (2f-1b)
 
@@ -395,15 +355,7 @@ write_utlb:
 	/* Defaults to 256M */
 	lis	r10, 0x1000
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	1f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r4
 	addi	r4, r4, (2f-1b)			/* virtual address  of 2f */
 

@@ -431,14 +431,8 @@ struct iwl_mvm_vif {
 static inline struct iwl_mvm_vif *
 iwl_mvm_vif_from_mac80211(struct ieee80211_vif *vif)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (!vif)
 		return NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return (void *)vif->drv_priv;
 }
 
@@ -2051,14 +2045,6 @@ void iwl_mvm_event_frame_timeout_callback(struct iwl_mvm *mvm,
 int iwl_mvm_sar_select_profile(struct iwl_mvm *mvm, int prof_a, int prof_b);
 int iwl_mvm_get_sar_geo_profile(struct iwl_mvm *mvm);
 int iwl_mvm_ppag_send_cmd(struct iwl_mvm *mvm);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_IWLWIFI_DEBUGFS
 void iwl_mvm_sta_add_debugfs(struct ieee80211_hw *hw,
 			     struct ieee80211_vif *vif,

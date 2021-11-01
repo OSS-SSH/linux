@@ -88,18 +88,6 @@ consider though:
 - The DMA buffer FD is also pollable, see `Implicit Fence Poll Support`_ below for
   details.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-- The DMA buffer FD also supports a few dma-buf-specific ioctls, see
-  `DMA Buffer ioctls`_ below for details.
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-- The DMA buffer FD also supports a few dma-buf-specific ioctls, see
-  `DMA Buffer ioctls`_ below for details.
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Basic Operation and Device DMA Access
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -118,25 +106,6 @@ Implicit Fence Poll Support
 .. kernel-doc:: drivers/dma-buf/dma-buf.c
    :doc: implicit fence polling
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-DMA-BUF statistics
-~~~~~~~~~~~~~~~~~~
-.. kernel-doc:: drivers/dma-buf/dma-buf-sysfs-stats.c
-   :doc: overview
-
-DMA Buffer ioctls
-~~~~~~~~~~~~~~~~~
-
-.. kernel-doc:: include/uapi/linux/dma-buf.h
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Kernel Functions and Structures Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

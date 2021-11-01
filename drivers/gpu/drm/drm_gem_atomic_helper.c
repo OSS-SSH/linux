@@ -52,15 +52,7 @@
  *
  * The helpers for shadow-buffered planes establish and release mappings,
  * and provide struct drm_shadow_plane_state, which stores the plane's mapping
-<<<<<<< HEAD
-<<<<<<< HEAD
- * for commit-tail functions.
-=======
  * for commit-tail functons.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * for commit-tail functions.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Shadow-buffered planes can easily be enabled by using the provided macros
  * %DRM_GEM_SHADOW_PLANE_FUNCS and %DRM_GEM_SHADOW_PLANE_HELPER_FUNCS.
@@ -143,18 +135,6 @@
  * GEM based framebuffer drivers which have their buffers always pinned in
  * memory.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * This function is the default implementation for GEM drivers of
- * &drm_plane_helper_funcs.prepare_fb if no callback is provided.
- *
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * This function is the default implementation for GEM drivers of
- * &drm_plane_helper_funcs.prepare_fb if no callback is provided.
- *
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * See drm_atomic_set_fence_for_plane() for a discussion of implicit and
  * explicit fencing in atomic modeset updates.
  */
@@ -200,36 +180,6 @@ EXPORT_SYMBOL(drm_gem_simple_display_pipe_prepare_fb);
  */
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * __drm_gem_duplicate_shadow_plane_state - duplicates shadow-buffered plane state
- * @plane: the plane
- * @new_shadow_plane_state: the new shadow-buffered plane state
- *
- * This function duplicates shadow-buffered plane state. This is helpful for drivers
- * that subclass struct drm_shadow_plane_state.
- *
- * The function does not duplicate existing mappings of the shadow buffers.
- * Mappings are maintained during the atomic commit by the plane's prepare_fb
- * and cleanup_fb helpers. See drm_gem_prepare_shadow_fb() and drm_gem_cleanup_shadow_fb()
- * for corresponding helpers.
- */
-void
-__drm_gem_duplicate_shadow_plane_state(struct drm_plane *plane,
-				       struct drm_shadow_plane_state *new_shadow_plane_state)
-{
-	__drm_atomic_helper_plane_duplicate_state(plane, &new_shadow_plane_state->base);
-}
-EXPORT_SYMBOL(__drm_gem_duplicate_shadow_plane_state);
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_gem_duplicate_shadow_plane_state - duplicates shadow-buffered plane state
  * @plane: the plane
  *
@@ -258,43 +208,13 @@ drm_gem_duplicate_shadow_plane_state(struct drm_plane *plane)
 	new_shadow_plane_state = kzalloc(sizeof(*new_shadow_plane_state), GFP_KERNEL);
 	if (!new_shadow_plane_state)
 		return NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__drm_gem_duplicate_shadow_plane_state(plane, new_shadow_plane_state);
-=======
 	__drm_atomic_helper_plane_duplicate_state(plane, &new_shadow_plane_state->base);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__drm_gem_duplicate_shadow_plane_state(plane, new_shadow_plane_state);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return &new_shadow_plane_state->base;
 }
 EXPORT_SYMBOL(drm_gem_duplicate_shadow_plane_state);
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * __drm_gem_destroy_shadow_plane_state - cleans up shadow-buffered plane state
- * @shadow_plane_state: the shadow-buffered plane state
- *
- * This function cleans up shadow-buffered plane state. Helpful for drivers that
- * subclass struct drm_shadow_plane_state.
- */
-void __drm_gem_destroy_shadow_plane_state(struct drm_shadow_plane_state *shadow_plane_state)
-{
-	__drm_atomic_helper_plane_destroy_state(&shadow_plane_state->base);
-}
-EXPORT_SYMBOL(__drm_gem_destroy_shadow_plane_state);
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_gem_destroy_shadow_plane_state - deletes shadow-buffered plane state
  * @plane: the plane
  * @plane_state: the plane state of type struct drm_shadow_plane_state
@@ -309,44 +229,12 @@ void drm_gem_destroy_shadow_plane_state(struct drm_plane *plane,
 	struct drm_shadow_plane_state *shadow_plane_state =
 		to_drm_shadow_plane_state(plane_state);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__drm_gem_destroy_shadow_plane_state(shadow_plane_state);
-=======
 	__drm_atomic_helper_plane_destroy_state(&shadow_plane_state->base);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__drm_gem_destroy_shadow_plane_state(shadow_plane_state);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(shadow_plane_state);
 }
 EXPORT_SYMBOL(drm_gem_destroy_shadow_plane_state);
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * __drm_gem_reset_shadow_plane - resets a shadow-buffered plane
- * @plane: the plane
- * @shadow_plane_state: the shadow-buffered plane state
- *
- * This function resets state for shadow-buffered planes. Helpful
- * for drivers that subclass struct drm_shadow_plane_state.
- */
-void __drm_gem_reset_shadow_plane(struct drm_plane *plane,
-				  struct drm_shadow_plane_state *shadow_plane_state)
-{
-	__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
-}
-EXPORT_SYMBOL(__drm_gem_reset_shadow_plane);
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * drm_gem_reset_shadow_plane - resets a shadow-buffered plane
  * @plane: the plane
  *
@@ -367,15 +255,7 @@ void drm_gem_reset_shadow_plane(struct drm_plane *plane)
 	shadow_plane_state = kzalloc(sizeof(*shadow_plane_state), GFP_KERNEL);
 	if (!shadow_plane_state)
 		return;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__drm_gem_reset_shadow_plane(plane, shadow_plane_state);
-=======
 	__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__drm_gem_reset_shadow_plane(plane, shadow_plane_state);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(drm_gem_reset_shadow_plane);
 
@@ -398,18 +278,10 @@ int drm_gem_prepare_shadow_fb(struct drm_plane *plane, struct drm_plane_state *p
 {
 	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
 	struct drm_framebuffer *fb = plane_state->fb;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 	struct drm_gem_object *obj;
 	struct dma_buf_map map;
 	int ret;
 	size_t i;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!fb)
 		return 0;
@@ -418,10 +290,6 @@ int drm_gem_prepare_shadow_fb(struct drm_plane *plane, struct drm_plane_state *p
 	if (ret)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return drm_gem_fb_vmap(fb, shadow_plane_state->map, shadow_plane_state->data);
-=======
 	for (i = 0; i < ARRAY_SIZE(shadow_plane_state->map); ++i) {
 		obj = drm_gem_fb_get_obj(fb, i);
 		if (!obj)
@@ -443,10 +311,6 @@ err_drm_gem_vunmap:
 		drm_gem_vunmap(obj, &shadow_plane_state->map[i]);
 	}
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return drm_gem_fb_vmap(fb, shadow_plane_state->map, shadow_plane_state->data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(drm_gem_prepare_shadow_fb);
 
@@ -458,36 +322,18 @@ EXPORT_SYMBOL(drm_gem_prepare_shadow_fb);
  * This function implements struct &drm_plane_helper_funcs.cleanup_fb.
  * This function unmaps all buffer objects of the plane's framebuffer.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * See drm_gem_prepare_shadow_fb() for more information.
-=======
  * See drm_gem_prepare_shadow_fb() for more inforamtion.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * See drm_gem_prepare_shadow_fb() for more information.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void drm_gem_cleanup_shadow_fb(struct drm_plane *plane, struct drm_plane_state *plane_state)
 {
 	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
 	struct drm_framebuffer *fb = plane_state->fb;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	size_t i = ARRAY_SIZE(shadow_plane_state->map);
 	struct drm_gem_object *obj;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!fb)
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	drm_gem_fb_vunmap(fb, shadow_plane_state->map);
-=======
 	while (i) {
 		--i;
 		obj = drm_gem_fb_get_obj(fb, i);
@@ -495,10 +341,6 @@ void drm_gem_cleanup_shadow_fb(struct drm_plane *plane, struct drm_plane_state *
 			continue;
 		drm_gem_vunmap(obj, &shadow_plane_state->map[i]);
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	drm_gem_fb_vunmap(fb, shadow_plane_state->map);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(drm_gem_cleanup_shadow_fb);
 

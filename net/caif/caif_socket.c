@@ -539,17 +539,7 @@ static int caif_seqpkt_sendmsg(struct socket *sock, struct msghdr *msg,
 		goto err;
 
 	ret = -EINVAL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (unlikely(msg->msg_iter.nr_segs == 0) ||
-	    unlikely(msg->msg_iter.iov->iov_base == NULL))
-=======
 	if (unlikely(msg->msg_iter.iov->iov_base == NULL))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (unlikely(msg->msg_iter.nr_segs == 0) ||
-	    unlikely(msg->msg_iter.iov->iov_base == NULL))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err;
 	noblock = msg->msg_flags & MSG_DONTWAIT;
 

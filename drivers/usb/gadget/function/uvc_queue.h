@@ -34,18 +34,6 @@ struct uvc_buffer {
 
 	enum uvc_buffer_state state;
 	void *mem;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct sg_table *sgt;
-	struct scatterlist *sg;
-	unsigned int offset;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct sg_table *sgt;
-	struct scatterlist *sg;
-	unsigned int offset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int length;
 	unsigned int bytesused;
 };
@@ -62,16 +50,6 @@ struct uvc_video_queue {
 
 	unsigned int buf_used;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool use_sg;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool use_sg;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spinlock_t irqlock;	/* Protects flags and irqqueue */
 	struct list_head irqqueue;
 };
@@ -81,15 +59,7 @@ static inline int uvc_queue_streaming(struct uvc_video_queue *queue)
 	return vb2_is_streaming(&queue->queue);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int uvcg_queue_init(struct uvc_video_queue *queue, struct device *dev, enum v4l2_buf_type type,
-=======
 int uvcg_queue_init(struct uvc_video_queue *queue, enum v4l2_buf_type type,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int uvcg_queue_init(struct uvc_video_queue *queue, struct device *dev, enum v4l2_buf_type type,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    struct mutex *lock);
 
 void uvcg_free_buffers(struct uvc_video_queue *queue);

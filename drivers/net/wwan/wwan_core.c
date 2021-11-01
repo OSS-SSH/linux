@@ -164,32 +164,11 @@ static struct wwan_device *wwan_create_dev(struct device *parent)
 		goto done_unlock;
 
 	id = ida_alloc(&wwan_dev_ids, GFP_KERNEL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (id < 0) {
-		wwandev = ERR_PTR(id);
-		goto done_unlock;
-	}
-
-	wwandev = kzalloc(sizeof(*wwandev), GFP_KERNEL);
-	if (!wwandev) {
-		wwandev = ERR_PTR(-ENOMEM);
-=======
 	if (id < 0)
-=======
-	if (id < 0) {
-		wwandev = ERR_PTR(id);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto done_unlock;
-	}
 
 	wwandev = kzalloc(sizeof(*wwandev), GFP_KERNEL);
 	if (!wwandev) {
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		wwandev = ERR_PTR(-ENOMEM);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ida_free(&wwan_dev_ids, id);
 		goto done_unlock;
 	}
@@ -203,17 +182,7 @@ static struct wwan_device *wwan_create_dev(struct device *parent)
 	err = device_register(&wwandev->dev);
 	if (err) {
 		put_device(&wwandev->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		wwandev = ERR_PTR(err);
-		goto done_unlock;
-=======
 		wwandev = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		wwandev = ERR_PTR(err);
-		goto done_unlock;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 done_unlock:
@@ -386,18 +355,8 @@ struct wwan_port *wwan_create_port(struct device *parent,
 {
 	struct wwan_device *wwandev;
 	struct wwan_port *port;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	char namefmt[0x20];
-	int minor, err;
-=======
 	int minor, err = -ENOMEM;
 	char namefmt[0x20];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	char namefmt[0x20];
-	int minor, err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (type > WWAN_PORT_MAX || !ops)
 		return ERR_PTR(-EINVAL);
@@ -411,32 +370,11 @@ struct wwan_port *wwan_create_port(struct device *parent,
 
 	/* A port is exposed as character device, get a minor */
 	minor = ida_alloc_range(&minors, 0, WWAN_MAX_MINORS - 1, GFP_KERNEL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (minor < 0) {
-		err = minor;
-		goto error_wwandev_remove;
-	}
-
-	port = kzalloc(sizeof(*port), GFP_KERNEL);
-	if (!port) {
-		err = -ENOMEM;
-=======
 	if (minor < 0)
-=======
-	if (minor < 0) {
-		err = minor;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto error_wwandev_remove;
-	}
 
 	port = kzalloc(sizeof(*port), GFP_KERNEL);
 	if (!port) {
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = -ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ida_free(&minors, minor);
 		goto error_wwandev_remove;
 	}
@@ -1046,16 +984,6 @@ static void wwan_create_default_link(struct wwan_device *wwandev,
 		goto unlock;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rtnl_configure_link(dev, NULL); /* Link initialized, notify new link */
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rtnl_configure_link(dev, NULL); /* Link initialized, notify new link */
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unlock:
 	rtnl_unlock();
 
@@ -1084,18 +1012,8 @@ int wwan_register_ops(struct device *parent, const struct wwan_ops *ops,
 		return -EINVAL;
 
 	wwandev = wwan_create_dev(parent);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (IS_ERR(wwandev))
-		return PTR_ERR(wwandev);
-=======
 	if (!wwandev)
 		return -ENOMEM;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (IS_ERR(wwandev))
-		return PTR_ERR(wwandev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (WARN_ON(wwandev->ops)) {
 		wwan_remove_dev(wwandev);

@@ -7,25 +7,11 @@
 
 #define pr_fmt(fmt)			"habanalabs: " fmt
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <uapi/misc/habanalabs.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <uapi/misc/habanalabs.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "habanalabs.h"
 
 #include <linux/pci.h>
 #include <linux/hwmon.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <uapi/misc/habanalabs.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum hl_device_status hl_device_status(struct hl_device *hdev)
 {
@@ -37,16 +23,6 @@ enum hl_device_status hl_device_status(struct hl_device *hdev)
 		status = HL_DEVICE_STATUS_NEEDS_RESET;
 	else if (hdev->disabled)
 		status = HL_DEVICE_STATUS_MALFUNCTION;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	else if (!hdev->init_done)
-		status = HL_DEVICE_STATUS_IN_DEVICE_CREATION;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	else if (!hdev->init_done)
-		status = HL_DEVICE_STATUS_IN_DEVICE_CREATION;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		status = HL_DEVICE_STATUS_OPERATIONAL;
 
@@ -68,14 +44,6 @@ bool hl_device_operational(struct hl_device *hdev,
 	case HL_DEVICE_STATUS_NEEDS_RESET:
 		return false;
 	case HL_DEVICE_STATUS_OPERATIONAL:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	case HL_DEVICE_STATUS_IN_DEVICE_CREATION:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	case HL_DEVICE_STATUS_IN_DEVICE_CREATION:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return true;
 	}
@@ -161,18 +129,8 @@ static int hl_device_release(struct inode *inode, struct file *filp)
 	hl_ctx_mgr_fini(hdev, &hpriv->ctx_mgr);
 
 	if (!hl_hpriv_put(hpriv))
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_notice(hdev->dev,
-			"User process closed FD but device still in use\n");
-=======
 		dev_warn(hdev->dev,
 			"Device is still in use because there are live CS and/or memory mappings\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_notice(hdev->dev,
-			"User process closed FD but device still in use\n");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hdev->last_open_session_duration_jif =
 		jiffies - hdev->last_successful_open_jif;
@@ -350,33 +308,9 @@ static void device_hard_reset_pending(struct work_struct *work)
 		container_of(work, struct hl_device_reset_work,
 				reset_work.work);
 	struct hl_device *hdev = device_reset_work->hdev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 flags;
-	int rc;
-
-	flags = HL_RESET_HARD | HL_RESET_FROM_RESET_THREAD;
-
-	if (device_reset_work->fw_reset)
-		flags |= HL_RESET_FW;
-
-	rc = hl_device_reset(hdev, flags);
-=======
 	int rc;
 
 	rc = hl_device_reset(hdev, HL_RESET_HARD | HL_RESET_FROM_RESET_THREAD);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 flags;
-	int rc;
-
-	flags = HL_RESET_HARD | HL_RESET_FROM_RESET_THREAD;
-
-	if (device_reset_work->fw_reset)
-		flags |= HL_RESET_FW;
-
-	rc = hl_device_reset(hdev, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((rc == -EBUSY) && !hdev->device_fini_pending) {
 		dev_info(hdev->dev,
 			"Could not reset device. will try again in %u seconds",
@@ -748,53 +682,6 @@ out:
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void take_release_locks(struct hl_device *hdev)
-{
-	/* Flush anyone that is inside the critical section of enqueue
-	 * jobs to the H/W
-	 */
-	hdev->asic_funcs->hw_queues_lock(hdev);
-	hdev->asic_funcs->hw_queues_unlock(hdev);
-
-	/* Flush processes that are sending message to CPU */
-	mutex_lock(&hdev->send_cpu_message_lock);
-	mutex_unlock(&hdev->send_cpu_message_lock);
-
-	/* Flush anyone that is inside device open */
-	mutex_lock(&hdev->fpriv_list_lock);
-	mutex_unlock(&hdev->fpriv_list_lock);
-}
-
-static void cleanup_resources(struct hl_device *hdev, bool hard_reset, bool fw_reset)
-{
-	if (hard_reset)
-		device_late_fini(hdev);
-
-	/*
-	 * Halt the engines and disable interrupts so we won't get any more
-	 * completions from H/W and we won't have any accesses from the
-	 * H/W to the host machine
-	 */
-	hdev->asic_funcs->halt_engines(hdev, hard_reset, fw_reset);
-
-	/* Go over all the queues, release all CS and their jobs */
-	hl_cs_rollback_all(hdev);
-
-	/* Release all pending user interrupts, each pending user interrupt
-	 * holds a reference to user context
-	 */
-	hl_release_pending_user_interrupts(hdev);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * hl_device_suspend - initiate device suspend
  *
@@ -820,10 +707,6 @@ int hl_device_suspend(struct hl_device *hdev)
 	/* This blocks all other stuff that is not blocked by in_reset */
 	hdev->disabled = true;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	take_release_locks(hdev);
-=======
 	/*
 	 * Flush anyone that is inside the critical section of enqueue
 	 * jobs to the H/W
@@ -834,10 +717,6 @@ int hl_device_suspend(struct hl_device *hdev)
 	/* Flush processes that are sending message to CPU */
 	mutex_lock(&hdev->send_cpu_message_lock);
 	mutex_unlock(&hdev->send_cpu_message_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	take_release_locks(hdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rc = hdev->asic_funcs->suspend(hdev);
 	if (rc)
@@ -940,20 +819,6 @@ static int device_kill_open_processes(struct hl_device *hdev, u32 timeout)
 			usleep_range(1000, 10000);
 
 			put_task_struct(task);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		} else {
-			dev_warn(hdev->dev,
-				"Can't get task struct for PID so giving up on killing process\n");
-			mutex_unlock(&hdev->fpriv_list_lock);
-			return -ETIME;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -1020,15 +885,7 @@ static void device_disable_open_processes(struct hl_device *hdev)
 int hl_device_reset(struct hl_device *hdev, u32 flags)
 {
 	u64 idle_mask[HL_BUSY_ENGINES_MASK_EXT_SIZE] = {0};
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool hard_reset, from_hard_reset_thread, fw_reset, hard_instead_soft = false;
-=======
 	bool hard_reset, from_hard_reset_thread, hard_instead_soft = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool hard_reset, from_hard_reset_thread, fw_reset, hard_instead_soft = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, rc;
 
 	if (!hdev->init_done) {
@@ -1037,20 +894,8 @@ int hl_device_reset(struct hl_device *hdev, u32 flags)
 		return 0;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hard_reset = !!(flags & HL_RESET_HARD);
-	from_hard_reset_thread = !!(flags & HL_RESET_FROM_RESET_THREAD);
-	fw_reset = !!(flags & HL_RESET_FW);
-=======
 	hard_reset = (flags & HL_RESET_HARD) != 0;
 	from_hard_reset_thread = (flags & HL_RESET_FROM_RESET_THREAD) != 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hard_reset = !!(flags & HL_RESET_HARD);
-	from_hard_reset_thread = !!(flags & HL_RESET_FROM_RESET_THREAD);
-	fw_reset = !!(flags & HL_RESET_FW);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!hard_reset && !hdev->supports_soft_reset) {
 		hard_instead_soft = true;
@@ -1102,29 +947,11 @@ do_reset:
 		else
 			hdev->curr_reset_cause = HL_RESET_CAUSE_UNKNOWN;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/* If reset is due to heartbeat, device CPU is no responsive in
-		 * which case no point sending PCI disable message to it.
-		 *
-		 * If F/W is performing the reset, no need to send it a message to disable
-		 * PCI access
-<<<<<<< HEAD
-		 */
-		if (hard_reset && !(flags & (HL_RESET_HEARTBEAT | HL_RESET_FW))) {
-=======
 		/*
 		 * if reset is due to heartbeat, device CPU is no responsive in
 		 * which case no point sending PCI disable message to it
 		 */
 		if (hard_reset && !(flags & HL_RESET_HEARTBEAT)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 */
-		if (hard_reset && !(flags & (HL_RESET_HEARTBEAT | HL_RESET_FW))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* Disable PCI access from device F/W so he won't send
 			 * us additional interrupts. We disable MSI/MSI-X at
 			 * the halt_engines function and we can't have the F/W
@@ -1143,10 +970,6 @@ do_reset:
 		/* This also blocks future CS/VM/JOB completion operations */
 		hdev->disabled = true;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		take_release_locks(hdev);
-=======
 		/* Flush anyone that is inside the critical section of enqueue
 		 * jobs to the H/W
 		 */
@@ -1156,10 +979,6 @@ do_reset:
 		/* Flush anyone that is inside device open */
 		mutex_lock(&hdev->fpriv_list_lock);
 		mutex_unlock(&hdev->fpriv_list_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		take_release_locks(hdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		dev_err(hdev->dev, "Going to RESET device!\n");
 	}
@@ -1170,16 +989,6 @@ again:
 
 		hdev->process_kill_trial_cnt = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		hdev->device_reset_work.fw_reset = fw_reset;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		hdev->device_reset_work.fw_reset = fw_reset;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Because the reset function can't run from heartbeat work,
 		 * we need to call the reset function from a dedicated work.
@@ -1190,10 +999,6 @@ again:
 		return 0;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cleanup_resources(hdev, hard_reset, fw_reset);
-=======
 	if (hard_reset) {
 		device_late_fini(hdev);
 
@@ -1219,10 +1024,6 @@ again:
 	 * holds a reference to user context
 	 */
 	hl_release_pending_user_interrupts(hdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cleanup_resources(hdev, hard_reset, fw_reset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 kill_processes:
 	if (hard_reset) {
@@ -1256,34 +1057,12 @@ kill_processes:
 	}
 
 	/* Reset the H/W. It will be in idle state after this returns */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hdev->asic_funcs->hw_fini(hdev, hard_reset, fw_reset);
-
-	if (hard_reset) {
-		hdev->fw_loader.linux_loaded = false;
-
-		/* Release kernel context */
-		if (hdev->kernel_ctx && hl_ctx_put(hdev->kernel_ctx) == 1)
-			hdev->kernel_ctx = NULL;
-
-=======
 	hdev->asic_funcs->hw_fini(hdev, hard_reset);
-=======
-	hdev->asic_funcs->hw_fini(hdev, hard_reset, fw_reset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (hard_reset) {
-		hdev->fw_loader.linux_loaded = false;
-
 		/* Release kernel context */
 		if (hdev->kernel_ctx && hl_ctx_put(hdev->kernel_ctx) == 1)
 			hdev->kernel_ctx = NULL;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		hl_vm_fini(hdev);
 		hl_mmu_fini(hdev);
 		hl_eq_reset(hdev, &hdev->event_queue);
@@ -1513,19 +1292,6 @@ int hl_device_init(struct hl_device *hdev, struct class *hclass)
 	if (rc)
 		goto user_interrupts_fini;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/* initialize completion structure for multi CS wait */
-	hl_multi_cs_completion_init(hdev);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Initialize the H/W queues. Must be done before hw_init, because
 	 * there the addresses of the kernel queue are being written to the
@@ -1595,16 +1361,6 @@ int hl_device_init(struct hl_device *hdev, struct class *hclass)
 
 	hdev->compute_ctx = NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hdev->asic_funcs->state_dump_init(hdev);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hdev->asic_funcs->state_dump_init(hdev);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hl_debugfs_add_device(hdev);
 
 	/* debugfs nodes are created in hl_ctx_init so it must be called after
@@ -1811,10 +1567,6 @@ void hl_device_fini(struct hl_device *hdev)
 	/* Mark device as disabled */
 	hdev->disabled = true;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	take_release_locks(hdev);
-=======
 	/* Flush anyone that is inside the critical section of enqueue
 	 * jobs to the H/W
 	 */
@@ -1824,19 +1576,11 @@ void hl_device_fini(struct hl_device *hdev)
 	/* Flush anyone that is inside device open */
 	mutex_lock(&hdev->fpriv_list_lock);
 	mutex_unlock(&hdev->fpriv_list_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	take_release_locks(hdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hdev->hard_reset_pending = true;
 
 	hl_hwmon_fini(hdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cleanup_resources(hdev, true, false);
-=======
 	device_late_fini(hdev);
 
 	/*
@@ -1848,10 +1592,6 @@ void hl_device_fini(struct hl_device *hdev)
 
 	/* Go over all the queues, release all CS and their jobs */
 	hl_cs_rollback_all(hdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cleanup_resources(hdev, true, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Kill processes here after CS rollback. This is because the process
 	 * can't really exit until all its CSs are done, which is what we
@@ -1870,19 +1610,7 @@ void hl_device_fini(struct hl_device *hdev)
 	hl_cb_pool_fini(hdev);
 
 	/* Reset the H/W. It will be in idle state after this returns */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hdev->asic_funcs->hw_fini(hdev, true, false);
-
-	hdev->fw_loader.linux_loaded = false;
-=======
 	hdev->asic_funcs->hw_fini(hdev, true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hdev->asic_funcs->hw_fini(hdev, true, false);
-
-	hdev->fw_loader.linux_loaded = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Release kernel context */
 	if ((hdev->kernel_ctx) && (hl_ctx_put(hdev->kernel_ctx) != 1))

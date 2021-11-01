@@ -546,39 +546,10 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
 				return -EFAULT;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rtnl_lock();
 		lock_sock(sk);
 
-		if (ro->bound && ro->ifindex) {
+		if (ro->bound && ro->ifindex)
 			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
-			if (!dev) {
-				if (count > 1)
-					kfree(filter);
-				err = -ENODEV;
-				goto out_fil;
-			}
-		}
-=======
-=======
-		rtnl_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		lock_sock(sk);
-
-		if (ro->bound && ro->ifindex) {
-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (!dev) {
-				if (count > 1)
-					kfree(filter);
-				err = -ENODEV;
-				goto out_fil;
-			}
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (ro->bound) {
 			/* (try to) register the new filters */
@@ -613,22 +584,10 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
 		ro->count  = count;
 
  out_fil:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_put(dev);
-		release_sock(sk);
-		rtnl_unlock();
-=======
 		if (dev)
 			dev_put(dev);
 
 		release_sock(sk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_put(dev);
-		release_sock(sk);
-		rtnl_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		break;
 
@@ -641,35 +600,10 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
 
 		err_mask &= CAN_ERR_MASK;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rtnl_lock();
 		lock_sock(sk);
 
-		if (ro->bound && ro->ifindex) {
+		if (ro->bound && ro->ifindex)
 			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
-			if (!dev) {
-				err = -ENODEV;
-				goto out_err;
-			}
-		}
-=======
-=======
-		rtnl_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		lock_sock(sk);
-
-		if (ro->bound && ro->ifindex) {
-			dev = dev_get_by_index(sock_net(sk), ro->ifindex);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (!dev) {
-				err = -ENODEV;
-				goto out_err;
-			}
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* remove current error mask */
 		if (ro->bound) {
@@ -689,22 +623,10 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
 		ro->err_mask = err_mask;
 
  out_err:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_put(dev);
-		release_sock(sk);
-		rtnl_unlock();
-=======
 		if (dev)
 			dev_put(dev);
 
 		release_sock(sk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_put(dev);
-		release_sock(sk);
-		rtnl_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		break;
 

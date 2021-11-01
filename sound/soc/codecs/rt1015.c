@@ -547,9 +547,6 @@ static int rt1015_bypass_boost_put(struct snd_kcontrol *kcontrol,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void rt1015_flush_work(struct work_struct *work)
 {
 	struct rt1015_priv *rt1015 = container_of(work, struct rt1015_priv,
@@ -575,9 +572,6 @@ static void rt1015_flush_work(struct work_struct *work)
 		dev_warn(component->dev, "Fail to flush DAC data.\n");
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct snd_kcontrol_new rt1015_snd_controls[] = {
 	SOC_SINGLE_TLV("DAC Playback Volume", RT1015_DAC1, RT1015_DAC_VOL_SFT,
 		127, 0, dac_vol_tlv),
@@ -636,16 +630,10 @@ static int r1015_dac_event(struct snd_soc_dapm_widget *w,
 		}
 		break;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	case SND_SOC_DAPM_POST_PMU:
 		regmap_write(rt1015->regmap, RT1015_MAN_I2C, 0x00a8);
 		break;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SND_SOC_DAPM_POST_PMD:
 		if (rt1015->bypass_boost == RT1015_Enable_Boost) {
 			snd_soc_component_write(component,
@@ -665,14 +653,8 @@ static int r1015_dac_event(struct snd_soc_dapm_widget *w,
 				RT1015_SYS_RST2, 0x0b9a);
 		}
 		rt1015->dac_is_used = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 		cancel_delayed_work_sync(&rt1015->flush_work);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	default:
@@ -705,14 +687,8 @@ static int rt1015_amp_drv_event(struct snd_soc_dapm_widget *w,
 		}
 		break;
 	case SND_SOC_DAPM_POST_PMU:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		if (rt1015->hw_config == RT1015_HW_28)
 			schedule_delayed_work(&rt1015->flush_work, msecs_to_jiffies(10));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		msleep(rt1015->pdata.power_up_delay_ms);
 		break;
 	default:
@@ -726,15 +702,7 @@ static const struct snd_soc_dapm_widget rt1015_dapm_widgets[] = {
 		NULL, 0),
 	SND_SOC_DAPM_AIF_IN("AIFRX", "AIF Playback", 0, SND_SOC_NOPM, 0, 0),
 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		r1015_dac_event, SND_SOC_DAPM_PRE_PMU |
-=======
 		r1015_dac_event, SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		r1015_dac_event, SND_SOC_DAPM_PRE_PMU |
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		SND_SOC_DAPM_POST_PMD),
 	SND_SOC_DAPM_OUT_DRV_E("Amp Drv", SND_SOC_NOPM, 0, 0, NULL, 0,
 			rt1015_amp_drv_event, SND_SOC_DAPM_PRE_PMU |
@@ -754,15 +722,7 @@ static int rt1015_hw_params(struct snd_pcm_substream *substream,
 {
 	struct snd_soc_component *component = dai->component;
 	struct rt1015_priv *rt1015 = snd_soc_component_get_drvdata(component);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int pre_div, frame_size, lrck;
-=======
 	int pre_div, bclk_ms, frame_size, lrck;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int pre_div, frame_size, lrck;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int val_len = 0;
 
 	lrck = params_rate(params);
@@ -779,18 +739,10 @@ static int rt1015_hw_params(struct snd_pcm_substream *substream,
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_dbg(component->dev, "pre_div is %d for iis %d\n", pre_div, dai->id);
-=======
 	bclk_ms = frame_size > 32;
 
 	dev_dbg(component->dev, "bclk_ms is %d and pre_div is %d for iis %d\n",
 				bclk_ms, pre_div, dai->id);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_dbg(component->dev, "pre_div is %d for iis %d\n", pre_div, dai->id);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(component->dev, "lrck is %dHz and pre_div is %d for iis %d\n",
 				lrck, pre_div, dai->id);
@@ -1076,13 +1028,7 @@ static int rt1015_probe(struct snd_soc_component *component)
 		snd_soc_component_get_drvdata(component);
 
 	rt1015->component = component;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	INIT_DELAYED_WORK(&rt1015->flush_work, rt1015_flush_work);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1091,13 +1037,7 @@ static void rt1015_remove(struct snd_soc_component *component)
 {
 	struct rt1015_priv *rt1015 = snd_soc_component_get_drvdata(component);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	cancel_delayed_work_sync(&rt1015->flush_work);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regmap_write(rt1015->regmap, RT1015_RESET, 0);
 }
 
@@ -1240,14 +1180,8 @@ static int rt1015_i2c_probe(struct i2c_client *i2c,
 		return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	rt1015->hw_config = (i2c->addr == 0x29) ? RT1015_HW_29 : RT1015_HW_28;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = regmap_read(rt1015->regmap, RT1015_DEVICE_ID, &val);
 	if (ret) {
 		dev_err(&i2c->dev,

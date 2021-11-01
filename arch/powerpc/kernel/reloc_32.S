@@ -30,15 +30,7 @@ R_PPC_RELATIVE = 22
 _GLOBAL(relocate)
 
 	mflr	r0		/* Save our LR */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4	/* Find our current runtime address */
-=======
 	bl	0f		/* Find our current runtime address */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4	/* Find our current runtime address */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0:	mflr	r12		/* Make it accessible */
 	mtlr	r0
 

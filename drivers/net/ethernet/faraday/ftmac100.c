@@ -1043,15 +1043,7 @@ static const struct net_device_ops ftmac100_netdev_ops = {
 	.ndo_start_xmit		= ftmac100_hard_start_xmit,
 	.ndo_set_mac_address	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= ftmac100_do_ioctl,
-=======
 	.ndo_do_ioctl		= ftmac100_do_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= ftmac100_do_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /******************************************************************************

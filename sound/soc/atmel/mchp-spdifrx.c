@@ -56,15 +56,7 @@
 /* Validity Bit Mode */
 #define SPDIFRX_MR_VBMODE_MASK		GENAMSK(1, 1)
 #define SPDIFRX_MR_VBMODE_ALWAYS_LOAD \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	(0 << 1)	/* Load sample regardless of validity bit value */
-=======
 	(0 << 1)	/* Load sample regardles of validity bit value */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	(0 << 1)	/* Load sample regardless of validity bit value */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SPDIFRX_MR_VBMODE_DISCARD_IF_VB1 \
 	(1 << 1)	/* Load sample only if validity bit is 0 */
 
@@ -527,15 +519,7 @@ static int mchp_spdifrx_cs_get(struct mchp_spdifrx_dev *dev,
 	/* check for new data available */
 	ret = wait_for_completion_interruptible_timeout(&ch_stat->done,
 							msecs_to_jiffies(100));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* IP might not be started or valid stream might not be present */
-=======
 	/* IP might not be started or valid stream might not be prezent */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* IP might not be started or valid stream might not be present */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		dev_dbg(dev->dev, "channel status for channel %d timeout\n",
 			channel);
@@ -587,15 +571,7 @@ static int mchp_spdifrx_subcode_ch_get(struct mchp_spdifrx_dev *dev,
 	mchp_spdifrx_isr_blockend_en(dev);
 	ret = wait_for_completion_interruptible_timeout(&user_data->done,
 							msecs_to_jiffies(100));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* IP might not be started or valid stream might not be present */
-=======
 	/* IP might not be started or valid stream might not be prezent */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* IP might not be started or valid stream might not be present */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret <= 0) {
 		dev_dbg(dev->dev, "user data for channel %d timeout\n",
 			channel);

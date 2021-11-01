@@ -44,15 +44,7 @@ def read_spdxdata(repo):
                 continue
 
             exception = None
-<<<<<<< HEAD
-<<<<<<< HEAD
-            for l in open(el.path, encoding="utf-8").readlines():
-=======
             for l in open(el.path).readlines():
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            for l in open(el.path, encoding="utf-8").readlines():
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
                 if l.startswith('Valid-License-Identifier:'):
                     lid = l.split(':')[1].strip().upper()
                     if lid in spdx.licenses:

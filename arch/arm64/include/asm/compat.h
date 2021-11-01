@@ -5,18 +5,6 @@
 #ifndef __ASM_COMPAT_H
 #define __ASM_COMPAT_H
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define compat_mode_t compat_mode_t
-typedef u16		compat_mode_t;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define compat_mode_t compat_mode_t
-typedef u16		compat_mode_t;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm-generic/compat.h>
 
 #ifdef CONFIG_COMPAT
@@ -39,12 +27,6 @@ typedef u16		__compat_uid_t;
 typedef u16		__compat_gid_t;
 typedef u16		__compat_uid16_t;
 typedef u16		__compat_gid16_t;
-<<<<<<< HEAD
-<<<<<<< HEAD
-typedef u32		compat_dev_t;
-typedef s32		compat_nlink_t;
-typedef u16		compat_ipc_pid_t;
-=======
 typedef u32		__compat_uid32_t;
 typedef u32		__compat_gid32_t;
 typedef u16		compat_mode_t;
@@ -52,12 +34,6 @@ typedef u32		compat_dev_t;
 typedef s32		compat_nlink_t;
 typedef u16		compat_ipc_pid_t;
 typedef u32		compat_caddr_t;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-typedef u32		compat_dev_t;
-typedef s32		compat_nlink_t;
-typedef u16		compat_ipc_pid_t;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 typedef __kernel_fsid_t	compat_fsid_t;
 
 struct compat_stat {
@@ -127,9 +103,6 @@ struct compat_statfs {
 
 #define COMPAT_RLIM_INFINITY		0xffffffff
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 typedef u32		compat_old_sigset_t;
 
 #define _COMPAT_NSIG		64
@@ -137,25 +110,16 @@ typedef u32		compat_old_sigset_t;
 
 typedef u32		compat_sigset_word;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define COMPAT_OFF_T_MAX	0x7fffffff
 
 #define compat_user_stack_pointer() (user_stack_pointer(task_pt_regs(current)))
 #define COMPAT_MINSIGSTKSZ	2048
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline void __user *arch_compat_alloc_user_space(long len)
 {
 	return (void __user *)compat_user_stack_pointer() - len;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct compat_ipc64_perm {
 	compat_key_t key;
 	__compat_uid32_t uid;

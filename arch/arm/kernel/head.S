@@ -49,17 +49,7 @@
 
 	/*
 	 * This needs to be assigned at runtime when the linker symbols are
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * resolved. These are unsigned 64bit really, but in this assembly code
-	 * We store them as 32bit.
-=======
 	 * resolved.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * resolved. These are unsigned 64bit really, but in this assembly code
-	 * We store them as 32bit.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	.pushsection .data
 	.align	2
@@ -67,21 +57,8 @@
 	.globl	kernel_sec_end
 kernel_sec_start:
 	.long	0
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	.long	0
 kernel_sec_end:
 	.long	0
-	.long	0
-<<<<<<< HEAD
-=======
-kernel_sec_end:
-	.long	0
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.popsection
 
 	.macro	pgtbl, rd, phys
@@ -273,21 +250,7 @@ __create_page_tables:
 	add	r0, r4, #KERNEL_OFFSET >> (SECTION_SHIFT - PMD_ORDER)
 	ldr	r6, =(_end - 1)
 	adr_l	r5, kernel_sec_start		@ _pa(kernel_sec_start)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#ifdef CONFIG_CPU_ENDIAN_BE8
-	str	r8, [r5, #4]			@ Save physical start of kernel (BE)
-#else
-	str	r8, [r5]			@ Save physical start of kernel (LE)
-#endif
-<<<<<<< HEAD
-=======
 	str	r8, [r5]			@ Save physical start of kernel
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	orr	r3, r8, r7			@ Add the MMU flags
 	add	r6, r4, r6, lsr #(SECTION_SHIFT - PMD_ORDER)
 1:	str	r3, [r0], #1 << PMD_ORDER
@@ -296,21 +259,7 @@ __create_page_tables:
 	bls	1b
 	eor	r3, r3, r7			@ Remove the MMU flags
 	adr_l	r5, kernel_sec_end		@ _pa(kernel_sec_end)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#ifdef CONFIG_CPU_ENDIAN_BE8
-	str	r3, [r5, #4]			@ Save physical end of kernel (BE)
-#else
-	str	r3, [r5]			@ Save physical end of kernel (LE)
-#endif
-<<<<<<< HEAD
-=======
 	str	r3, [r5]			@ Save physical end of kernel
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_XIP_KERNEL
 	/*

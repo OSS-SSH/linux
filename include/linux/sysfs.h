@@ -176,15 +176,7 @@ struct bin_attribute {
 	struct attribute	attr;
 	size_t			size;
 	void			*private;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct address_space *(*f_mapping)(void);
-=======
 	struct address_space	*mapping;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct address_space *(*f_mapping)(void);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t (*read)(struct file *, struct kobject *, struct bin_attribute *,
 			char *, loff_t, size_t);
 	ssize_t (*write)(struct file *, struct kobject *, struct bin_attribute *,

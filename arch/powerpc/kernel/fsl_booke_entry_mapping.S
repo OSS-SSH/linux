@@ -1,15 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0 */
 
 /* 1. Find the index of the entry we're executing in */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4				/* Find our address */
-=======
 	bl	invstr				/* Find our address */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4				/* Find our address */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 invstr:	mflr	r6				/* Make it accessible */
 	mfmsr	r7
 	rlwinm	r4,r7,27,31,31			/* extract MSR[IS] */
@@ -93,15 +85,7 @@ skpinv:	addi	r6,r6,1				/* Increment */
 	addi	r6,r6,10
 	slw	r6,r8,r6	/* convert to mask */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4	/* Find our address */
-=======
 	bl	1f		/* Find our address */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4	/* Find our address */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r7
 
 	mfspr	r8,SPRN_MAS3
@@ -133,15 +117,7 @@ skpinv:	addi	r6,r6,1				/* Increment */
 
 	xori	r6,r4,1
 	slwi	r6,r6,5		/* setup new context with other address space */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4	/* Find our address */
-=======
 	bl	1f		/* Find our address */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4	/* Find our address */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r9
 	rlwimi	r7,r9,0,20,31
 	addi	r7,r7,(2f - 1b)
@@ -231,15 +207,7 @@ next_tlb_setup:
 
 	lis	r7,MSR_KERNEL@h
 	ori	r7,r7,MSR_KERNEL@l
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4		/* Find our address */
-=======
 	bl	1f			/* Find our address */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4		/* Find our address */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 1:	mflr	r9
 	rlwimi	r6,r9,0,20,31
 	addi	r6,r6,(2f - 1b)

@@ -199,14 +199,6 @@ static int etnaviv_iommu_find_iova(struct etnaviv_iommu_context *context,
 		 */
 		list_for_each_entry_safe(m, n, &list, scan_node) {
 			etnaviv_iommu_remove_mapping(context, m);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			etnaviv_iommu_context_put(m->context);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			etnaviv_iommu_context_put(m->context);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			m->context = NULL;
 			list_del_init(&m->mmu_node);
 			list_del_init(&m->scan_node);

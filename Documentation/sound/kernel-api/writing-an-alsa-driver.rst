@@ -3368,15 +3368,7 @@ This ensures that the device can be closed and the driver unloaded
 without losing data.
 
 This callback is optional. If you do not set ``drain`` in the struct
-<<<<<<< HEAD
-<<<<<<< HEAD
-snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
-=======
 snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 instead.
 
 Miscellaneous Devices
@@ -4180,48 +4172,6 @@ module license as GPL, etc., otherwise the system is shown as “tainted”.
   MODULE_LICENSE("GPL");
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-Device-Managed Resources
-========================
-
-In the examples above, all resources are allocated and released
-manually.  But human beings are lazy in nature, especially developers
-are lazier.  So there are some ways to automate the release part; it's
-the (device-)managed resources aka devres or devm family.  For
-example, an object allocated via :c:func:`devm_kmalloc()` will be
-freed automatically at unbinding the device.
-
-ALSA core provides also the device-managed helper, namely,
-:c:func:`snd_devm_card_new()` for creating a card object.
-Call this functions instead of the normal :c:func:`snd_card_new()`,
-and you can forget the explicit :c:func:`snd_card_free()` call, as
-it's called automagically at error and removal paths.
-
-One caveat is that the call of :c:func:`snd_card_free()` would be put
-at the beginning of the call chain only after you call
-:c:func:`snd_card_register()`.
-
-Also, the ``private_free`` callback is always called at the card free,
-so be careful to put the hardware clean-up procedure in
-``private_free`` callback.  It might be called even before you
-actually set up at an earlier error path.  For avoiding such an
-invalid initialization, you can set ``private_free`` callback after
-:c:func:`snd_card_register()` call succeeds.
-
-Another thing to be remarked is that you should use device-managed
-helpers for each component as much as possible once when you manage
-the card in that way.  Mixing up with the normal and the managed
-resources may screw up the release order.
-
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 How To Put Your Driver Into ALSA Tree
 =====================================
 

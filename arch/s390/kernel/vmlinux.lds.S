@@ -5,14 +5,6 @@
 
 #include <asm/thread_info.h>
 #include <asm/page.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <asm/ftrace.lds.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <asm/ftrace.lds.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Put .bss..swapper_pg_dir as the first thing in .bss. This will
@@ -54,14 +46,6 @@ SECTIONS
 		KPROBES_TEXT
 		IRQENTRY_TEXT
 		SOFTIRQENTRY_TEXT
-<<<<<<< HEAD
-<<<<<<< HEAD
-		FTRACE_HOTPATCH_TRAMPOLINES_TEXT
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		FTRACE_HOTPATCH_TRAMPOLINES_TEXT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*(.text.*_indirect_*)
 		*(.fixup)
 		*(.gnu.warning)
@@ -87,22 +71,6 @@ SECTIONS
 	RW_DATA(0x100, PAGE_SIZE, THREAD_SIZE)
 	BOOT_DATA_PRESERVED
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	. = ALIGN(8);
-	.amode31.refs : {
-		_start_amode31_refs = .;
-		*(.amode31.refs)
-		_end_amode31_refs = .;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	_edata = .;		/* End of data section */
 
 	/* will be freed after init */
@@ -168,41 +136,6 @@ SECTIONS
 
 	BOOT_DATA
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * .amode31 section for code, data, ex_table that need to stay
-	 * below 2 GB, even when the kernel is relocated above 2 GB.
-	 */
-	. = ALIGN(PAGE_SIZE);
-	_samode31 = .;
-	.amode31.text : {
-		_stext_amode31 = .;
-		*(.amode31.text)
-		*(.amode31.text.*_indirect_*)
-		. = ALIGN(PAGE_SIZE);
-		_etext_amode31 = .;
-	}
-	. = ALIGN(16);
-	.amode31.ex_table : {
-		_start_amode31_ex_table = .;
-		KEEP(*(.amode31.ex_table))
-		_stop_amode31_ex_table = .;
-	}
-	. = ALIGN(PAGE_SIZE);
-	.amode31.data : {
-		*(.amode31.data)
-	}
-	. = ALIGN(PAGE_SIZE);
-	_eamode31 = .;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* early.c uses stsi, which requires page aligned data. */
 	. = ALIGN(PAGE_SIZE);
 	INIT_DATA_SECTION(0x100)

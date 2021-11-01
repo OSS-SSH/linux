@@ -74,13 +74,6 @@
 
 /* Data structures. */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEFINE_PER_CPU_SHARED_ALIGNED(struct rcu_data, rcu_data) = {
-	.dynticks_nesting = 1,
-	.dynticks_nmi_nesting = DYNTICK_IRQ_NONIDLE,
-	.dynticks = ATOMIC_INIT(1),
-=======
 /*
  * Steal a bit from the bottom of ->dynticks for idle entry/exit
  * control.  Initially this is for TLB flushing.
@@ -92,13 +85,6 @@ static DEFINE_PER_CPU_SHARED_ALIGNED(struct rcu_data, rcu_data) = {
 	.dynticks_nesting = 1,
 	.dynticks_nmi_nesting = DYNTICK_IRQ_NONIDLE,
 	.dynticks = ATOMIC_INIT(RCU_DYNTICK_CTRL_CTR),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEFINE_PER_CPU_SHARED_ALIGNED(struct rcu_data, rcu_data) = {
-	.dynticks_nesting = 1,
-	.dynticks_nmi_nesting = DYNTICK_IRQ_NONIDLE,
-	.dynticks = ATOMIC_INIT(1),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_RCU_NOCB_CPU
 	.cblist.flags = SEGCBLIST_SOFTIRQ_ONLY,
 #endif
@@ -273,24 +259,6 @@ void rcu_softirq_qs(void)
 }
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * Increment the current CPU's rcu_data structure's ->dynticks field
- * with ordering.  Return the new value.
- */
-static noinline noinstr unsigned long rcu_dynticks_inc(int incby)
-{
-	return arch_atomic_add_return(incby, this_cpu_ptr(&rcu_data.dynticks));
-}
-
-/*
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Record entry into an extended quiescent state.  This is only to be
  * called when not already in an extended quiescent state, that is,
  * RCU is watching prior to the call to this function and is no longer
@@ -298,13 +266,7 @@ static noinline noinstr unsigned long rcu_dynticks_inc(int incby)
  */
 static noinstr void rcu_dynticks_eqs_enter(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct rcu_data *rdp = this_cpu_ptr(&rcu_data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int seq;
 
 	/*
@@ -313,12 +275,6 @@ static noinstr void rcu_dynticks_eqs_enter(void)
 	 * next idle sojourn.
 	 */
 	rcu_dynticks_task_trace_enter();  // Before ->dynticks update!
-<<<<<<< HEAD
-<<<<<<< HEAD
-	seq = rcu_dynticks_inc(1);
-	// RCU is no longer watching.  Better be in extended quiescent state!
-	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) && (seq & 0x1));
-=======
 	seq = arch_atomic_add_return(RCU_DYNTICK_CTRL_CTR, &rdp->dynticks);
 	// RCU is no longer watching.  Better be in extended quiescent state!
 	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) &&
@@ -326,12 +282,6 @@ static noinstr void rcu_dynticks_eqs_enter(void)
 	/* Better not have special action (TLB flush) pending! */
 	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) &&
 		     (seq & RCU_DYNTICK_CTRL_MASK));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	seq = rcu_dynticks_inc(1);
-	// RCU is no longer watching.  Better be in extended quiescent state!
-	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) && (seq & 0x1));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -341,13 +291,7 @@ static noinstr void rcu_dynticks_eqs_enter(void)
  */
 static noinstr void rcu_dynticks_eqs_exit(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct rcu_data *rdp = this_cpu_ptr(&rcu_data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int seq;
 
 	/*
@@ -355,13 +299,6 @@ static noinstr void rcu_dynticks_eqs_exit(void)
 	 * and we also must force ordering with the next RCU read-side
 	 * critical section.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	seq = rcu_dynticks_inc(1);
-	// RCU is now watching.  Better not be in an extended quiescent state!
-	rcu_dynticks_task_trace_exit();  // After ->dynticks update!
-	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) && !(seq & 0x1));
-=======
 	seq = arch_atomic_add_return(RCU_DYNTICK_CTRL_CTR, &rdp->dynticks);
 	// RCU is now watching.  Better not be in an extended quiescent state!
 	rcu_dynticks_task_trace_exit();  // After ->dynticks update!
@@ -371,13 +308,6 @@ static noinstr void rcu_dynticks_eqs_exit(void)
 		arch_atomic_andnot(RCU_DYNTICK_CTRL_MASK, &rdp->dynticks);
 		smp_mb__after_atomic(); /* _exit after clearing mask. */
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	seq = rcu_dynticks_inc(1);
-	// RCU is now watching.  Better not be in an extended quiescent state!
-	rcu_dynticks_task_trace_exit();  // After ->dynticks update!
-	WARN_ON_ONCE(IS_ENABLED(CONFIG_RCU_EQS_DEBUG) && !(seq & 0x1));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -394,21 +324,9 @@ static void rcu_dynticks_eqs_online(void)
 {
 	struct rcu_data *rdp = this_cpu_ptr(&rcu_data);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (atomic_read(&rdp->dynticks) & 0x1)
-		return;
-	rcu_dynticks_inc(1);
-=======
 	if (atomic_read(&rdp->dynticks) & RCU_DYNTICK_CTRL_CTR)
 		return;
 	atomic_add(RCU_DYNTICK_CTRL_CTR, &rdp->dynticks);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (atomic_read(&rdp->dynticks) & 0x1)
-		return;
-	rcu_dynticks_inc(1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -418,17 +336,9 @@ static void rcu_dynticks_eqs_online(void)
  */
 static __always_inline bool rcu_dynticks_curr_cpu_in_eqs(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return !(atomic_read(this_cpu_ptr(&rcu_data.dynticks)) & 0x1);
-=======
 	struct rcu_data *rdp = this_cpu_ptr(&rcu_data);
 
 	return !(arch_atomic_read(&rdp->dynticks) & RCU_DYNTICK_CTRL_CTR);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return !(atomic_read(this_cpu_ptr(&rcu_data.dynticks)) & 0x1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -437,19 +347,9 @@ static __always_inline bool rcu_dynticks_curr_cpu_in_eqs(void)
  */
 static int rcu_dynticks_snap(struct rcu_data *rdp)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	smp_mb();  // Fundamental RCU ordering guarantee.
-	return atomic_read_acquire(&rdp->dynticks);
-=======
 	int snap = atomic_add_return(0, &rdp->dynticks);
 
 	return snap & ~RCU_DYNTICK_CTRL_MASK;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	smp_mb();  // Fundamental RCU ordering guarantee.
-	return atomic_read_acquire(&rdp->dynticks);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -458,15 +358,7 @@ static int rcu_dynticks_snap(struct rcu_data *rdp)
  */
 static bool rcu_dynticks_in_eqs(int snap)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return !(snap & 0x1);
-=======
 	return !(snap & RCU_DYNTICK_CTRL_CTR);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return !(snap & 0x1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Return true if the specified CPU is currently idle from an RCU viewpoint.  */
@@ -497,16 +389,8 @@ bool rcu_dynticks_zero_in_eqs(int cpu, int *vp)
 	int snap;
 
 	// If not quiescent, force back to earlier extended quiescent state.
-<<<<<<< HEAD
-<<<<<<< HEAD
-	snap = atomic_read(&rdp->dynticks) & ~0x1;
-=======
 	snap = atomic_read(&rdp->dynticks) & ~(RCU_DYNTICK_CTRL_MASK |
 					       RCU_DYNTICK_CTRL_CTR);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	snap = atomic_read(&rdp->dynticks) & ~0x1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	smp_rmb(); // Order ->dynticks and *vp reads.
 	if (READ_ONCE(*vp))
@@ -514,10 +398,6 @@ bool rcu_dynticks_zero_in_eqs(int cpu, int *vp)
 	smp_rmb(); // Order *vp read and ->dynticks re-read.
 
 	// If still in the same extended quiescent state, we are good!
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return snap == atomic_read(&rdp->dynticks);
-=======
 	return snap == (atomic_read(&rdp->dynticks) & ~RCU_DYNTICK_CTRL_MASK);
 }
 
@@ -544,10 +424,6 @@ bool rcu_eqs_special_set(int cpu)
 		new_old = atomic_cmpxchg(&rdp->dynticks, old, new);
 	} while (new_old != old);
 	return true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return snap == atomic_read(&rdp->dynticks);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -563,29 +439,13 @@ bool rcu_eqs_special_set(int cpu)
  */
 notrace void rcu_momentary_dyntick_idle(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int seq;
-
-	raw_cpu_write(rcu_data.rcu_need_heavy_qs, false);
-	seq = rcu_dynticks_inc(2);
-	/* It is illegal to call this from idle state. */
-	WARN_ON_ONCE(!(seq & 0x1));
-=======
 	int special;
-=======
-	int seq;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	raw_cpu_write(rcu_data.rcu_need_heavy_qs, false);
-	seq = rcu_dynticks_inc(2);
+	special = atomic_add_return(2 * RCU_DYNTICK_CTRL_CTR,
+				    &this_cpu_ptr(&rcu_data)->dynticks);
 	/* It is illegal to call this from idle state. */
-<<<<<<< HEAD
 	WARN_ON_ONCE(!(special & RCU_DYNTICK_CTRL_CTR));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	WARN_ON_ONCE(!(seq & 0x1));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_preempt_deferred_qs(current);
 }
 EXPORT_SYMBOL_GPL(rcu_momentary_dyntick_idle);
@@ -1465,15 +1325,7 @@ static int rcu_implicit_dynticks_qs(struct rcu_data *rdp)
 	 */
 	jtsq = READ_ONCE(jiffies_to_sched_qs);
 	ruqp = per_cpu_ptr(&rcu_data.rcu_urgent_qs, rdp->cpu);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rnhqp = per_cpu_ptr(&rcu_data.rcu_need_heavy_qs, rdp->cpu);
-=======
 	rnhqp = &per_cpu(rcu_data.rcu_need_heavy_qs, rdp->cpu);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rnhqp = per_cpu_ptr(&rcu_data.rcu_need_heavy_qs, rdp->cpu);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!READ_ONCE(*rnhqp) &&
 	    (time_after(jiffies, rcu_state.gp_start + jtsq * 2) ||
 	     time_after(jiffies, rcu_state.jiffies_resched) ||
@@ -1920,15 +1772,7 @@ static void rcu_strict_gp_boundary(void *unused)
 /*
  * Initialize a new grace period.  Return false if no grace period required.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static noinline_for_stack bool rcu_gp_init(void)
-=======
 static bool rcu_gp_init(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static noinline_for_stack bool rcu_gp_init(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long firstseq;
 	unsigned long flags;
@@ -2122,15 +1966,7 @@ static void rcu_gp_fqs(bool first_time)
 /*
  * Loop doing repeated quiescent-state forcing until the grace period ends.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static noinline_for_stack void rcu_gp_fqs_loop(void)
-=======
 static void rcu_gp_fqs_loop(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static noinline_for_stack void rcu_gp_fqs_loop(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	bool first_gp_fqs;
 	int gf = 0;
@@ -2157,18 +1993,8 @@ static noinline_for_stack void rcu_gp_fqs_loop(void)
 		trace_rcu_grace_period(rcu_state.name, rcu_state.gp_seq,
 				       TPS("fqswait"));
 		WRITE_ONCE(rcu_state.gp_state, RCU_GP_WAIT_FQS);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		(void)swait_event_idle_timeout_exclusive(rcu_state.gp_wq,
-				 rcu_gp_fqs_check_wake(&gf), j);
-=======
 		ret = swait_event_idle_timeout_exclusive(
 				rcu_state.gp_wq, rcu_gp_fqs_check_wake(&gf), j);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		(void)swait_event_idle_timeout_exclusive(rcu_state.gp_wq,
-				 rcu_gp_fqs_check_wake(&gf), j);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rcu_gp_torture_wait();
 		WRITE_ONCE(rcu_state.gp_state, RCU_GP_DOING_FQS);
 		/* Locking provides needed memory barriers. */
@@ -2645,15 +2471,9 @@ int rcutree_dead_cpu(unsigned int cpu)
 	WRITE_ONCE(rcu_state.n_online_cpus, rcu_state.n_online_cpus - 1);
 	/* Adjust any no-longer-needed kthreads. */
 	rcu_boost_kthread_setaffinity(rnp, -1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* Do any needed no-CB deferred wakeups from this CPU. */
 	do_nocb_deferred_wakeup(per_cpu_ptr(&rcu_data, cpu));
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	// Stop-machine done, so allow nohz_full to disable tick.
 	tick_dep_clear(TICK_DEP_BIT_RCU);
 	return 0;
@@ -4230,15 +4050,7 @@ void rcu_barrier(void)
 	 */
 	init_completion(&rcu_state.barrier_completion);
 	atomic_set(&rcu_state.barrier_cpu_count, 2);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-=======
 	get_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Force each CPU with callbacks to register a new callback.
@@ -4269,15 +4081,7 @@ void rcu_barrier(void)
 					  rcu_state.barrier_sequence);
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_unlock();
-=======
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Now that we have an rcu_barrier_callback() callback on each
@@ -4980,12 +4784,4 @@ void __init rcu_init(void)
 
 #include "tree_stall.h"
 #include "tree_exp.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "tree_nocb.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "tree_nocb.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "tree_plugin.h"

@@ -80,18 +80,6 @@ MODULE_FIRMWARE("amdgpu/beige_goby_ta.bin");
 /* For large FW files the time to complete can be very long */
 #define USBC_PD_POLLING_LIMIT_S 240
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Read USB-PD from LFB */
-#define GFX_CMD_USB_PD_USE_LFB 0x480
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Read USB-PD from LFB */
-#define GFX_CMD_USB_PD_USE_LFB 0x480
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int psp_v11_0_init_microcode(struct psp_context *psp)
 {
 	struct amdgpu_device *adev = psp->adev;
@@ -160,18 +148,6 @@ static int psp_v11_0_init_microcode(struct psp_context *psp)
 				goto out2;
 
 			ta_hdr = (const struct ta_firmware_header_v1_0 *)adev->psp.ta_fw->data;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			adev->psp.xgmi.feature_version = le32_to_cpu(ta_hdr->xgmi.fw_version);
-			adev->psp.xgmi.size_bytes = le32_to_cpu(ta_hdr->xgmi.size_bytes);
-			adev->psp.xgmi.start_addr = (uint8_t *)ta_hdr +
-				le32_to_cpu(ta_hdr->header.ucode_array_offset_bytes);
-			adev->psp.ta_fw_version = le32_to_cpu(ta_hdr->header.ucode_version);
-			adev->psp.ras.feature_version = le32_to_cpu(ta_hdr->ras.fw_version);
-			adev->psp.ras.size_bytes = le32_to_cpu(ta_hdr->ras.size_bytes);
-			adev->psp.ras.start_addr = (uint8_t *)adev->psp.xgmi.start_addr +
-				le32_to_cpu(ta_hdr->ras.offset_bytes);
-=======
 			adev->psp.ta_xgmi_ucode_version = le32_to_cpu(ta_hdr->ta_xgmi_ucode_version);
 			adev->psp.ta_xgmi_ucode_size = le32_to_cpu(ta_hdr->ta_xgmi_size_bytes);
 			adev->psp.ta_xgmi_start_addr = (uint8_t *)ta_hdr +
@@ -181,18 +157,6 @@ static int psp_v11_0_init_microcode(struct psp_context *psp)
 			adev->psp.ta_ras_ucode_size = le32_to_cpu(ta_hdr->ta_ras_size_bytes);
 			adev->psp.ta_ras_start_addr = (uint8_t *)adev->psp.ta_xgmi_start_addr +
 				le32_to_cpu(ta_hdr->ta_ras_offset_bytes);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			adev->psp.xgmi.feature_version = le32_to_cpu(ta_hdr->xgmi.fw_version);
-			adev->psp.xgmi.size_bytes = le32_to_cpu(ta_hdr->xgmi.size_bytes);
-			adev->psp.xgmi.start_addr = (uint8_t *)ta_hdr +
-				le32_to_cpu(ta_hdr->header.ucode_array_offset_bytes);
-			adev->psp.ta_fw_version = le32_to_cpu(ta_hdr->header.ucode_version);
-			adev->psp.ras.feature_version = le32_to_cpu(ta_hdr->ras.fw_version);
-			adev->psp.ras.size_bytes = le32_to_cpu(ta_hdr->ras.size_bytes);
-			adev->psp.ras.start_addr = (uint8_t *)adev->psp.xgmi.start_addr +
-				le32_to_cpu(ta_hdr->ras.offset_bytes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case CHIP_NAVI10:
@@ -219,42 +183,17 @@ static int psp_v11_0_init_microcode(struct psp_context *psp)
 				goto out2;
 
 			ta_hdr = (const struct ta_firmware_header_v1_0 *)adev->psp.ta_fw->data;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			adev->psp.hdcp.feature_version = le32_to_cpu(ta_hdr->hdcp.fw_version);
-			adev->psp.hdcp.size_bytes = le32_to_cpu(ta_hdr->hdcp.size_bytes);
-			adev->psp.hdcp.start_addr = (uint8_t *)ta_hdr +
-=======
 			adev->psp.ta_hdcp_ucode_version = le32_to_cpu(ta_hdr->ta_hdcp_ucode_version);
 			adev->psp.ta_hdcp_ucode_size = le32_to_cpu(ta_hdr->ta_hdcp_size_bytes);
 			adev->psp.ta_hdcp_start_addr = (uint8_t *)ta_hdr +
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			adev->psp.hdcp.feature_version = le32_to_cpu(ta_hdr->hdcp.fw_version);
-			adev->psp.hdcp.size_bytes = le32_to_cpu(ta_hdr->hdcp.size_bytes);
-			adev->psp.hdcp.start_addr = (uint8_t *)ta_hdr +
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				le32_to_cpu(ta_hdr->header.ucode_array_offset_bytes);
 
 			adev->psp.ta_fw_version = le32_to_cpu(ta_hdr->header.ucode_version);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			adev->psp.dtm.feature_version = le32_to_cpu(ta_hdr->dtm.fw_version);
-			adev->psp.dtm.size_bytes = le32_to_cpu(ta_hdr->dtm.size_bytes);
-			adev->psp.dtm.start_addr = (uint8_t *)adev->psp.hdcp.start_addr +
-				le32_to_cpu(ta_hdr->dtm.offset_bytes);
-<<<<<<< HEAD
-=======
 			adev->psp.ta_dtm_ucode_version = le32_to_cpu(ta_hdr->ta_dtm_ucode_version);
 			adev->psp.ta_dtm_ucode_size = le32_to_cpu(ta_hdr->ta_dtm_size_bytes);
 			adev->psp.ta_dtm_start_addr = (uint8_t *)adev->psp.ta_hdcp_start_addr +
 				le32_to_cpu(ta_hdr->ta_dtm_offset_bytes);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case CHIP_SIENNA_CICHLID:
@@ -345,15 +284,7 @@ static int psp_v11_0_bootloader_load_kdb(struct psp_context *psp)
 		return ret;
 
 	/* Copy PSP KDB binary to memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	psp_copy_fw(psp, psp->kdb.start_addr, psp->kdb.size_bytes);
-=======
 	psp_copy_fw(psp, psp->kdb_start_addr, psp->kdb_bin_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	psp_copy_fw(psp, psp->kdb.start_addr, psp->kdb.size_bytes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Provide the PSP KDB to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
@@ -384,15 +315,7 @@ static int psp_v11_0_bootloader_load_spl(struct psp_context *psp)
 		return ret;
 
 	/* Copy PSP SPL binary to memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	psp_copy_fw(psp, psp->spl.start_addr, psp->spl.size_bytes);
-=======
 	psp_copy_fw(psp, psp->spl_start_addr, psp->spl_bin_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	psp_copy_fw(psp, psp->spl.start_addr, psp->spl.size_bytes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Provide the PSP SPL to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
@@ -423,15 +346,7 @@ static int psp_v11_0_bootloader_load_sysdrv(struct psp_context *psp)
 		return ret;
 
 	/* Copy PSP System Driver binary to memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
-=======
 	psp_copy_fw(psp, psp->sys_start_addr, psp->sys_bin_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Provide the sys driver to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
@@ -465,15 +380,7 @@ static int psp_v11_0_bootloader_load_sos(struct psp_context *psp)
 		return ret;
 
 	/* Copy Secure OS binary to PSP memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-=======
 	psp_copy_fw(psp, psp->sos_start_addr, psp->sos_bin_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Provide the PSP secure OS to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
@@ -846,32 +753,12 @@ static void psp_v11_0_ring_set_wptr(struct psp_context *psp, uint32_t value)
 		WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_67, value);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int psp_v11_0_load_usbc_pd_fw(struct psp_context *psp, uint64_t fw_pri_mc_addr)
-=======
 static int psp_v11_0_load_usbc_pd_fw(struct psp_context *psp, dma_addr_t dma_addr)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int psp_v11_0_load_usbc_pd_fw(struct psp_context *psp, uint64_t fw_pri_mc_addr)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct amdgpu_device *adev = psp->adev;
 	uint32_t reg_status;
 	int ret, i = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * LFB address which is aligned to 1MB address and has to be
-	 * right-shifted by 20 so that LFB address can be passed on a 32-bit C2P
-	 * register
-	 */
-	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36, (fw_pri_mc_addr >> 20));
-<<<<<<< HEAD
-=======
 	/* Write lower 32-bit address of the PD Controller FW */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36, lower_32_bits(dma_addr));
 	ret = psp_wait_for(psp, SOC15_REG_OFFSET(MP0, 0, mmMP0_SMN_C2PMSG_35),
@@ -896,27 +783,14 @@ static int psp_v11_0_load_usbc_pd_fw(struct psp_context *psp, uint64_t fw_pri_mc
 
 	/* Write upper 32-bit address of the PD Controller FW */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36, upper_32_bits(dma_addr));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = psp_wait_for(psp, SOC15_REG_OFFSET(MP0, 0, mmMP0_SMN_C2PMSG_35),
 			     0x80000000, 0x80000000, false);
 	if (ret)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Fireup interrupt so PSP can pick up the address */
-	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_35, (GFX_CMD_USB_PD_USE_LFB << 16));
-=======
 	/* Fireup interrupt so PSP can pick up the upper address */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_35, 0x4000000);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Fireup interrupt so PSP can pick up the address */
-	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_35, (GFX_CMD_USB_PD_USE_LFB << 16));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* FW load takes very long time */
 	do {
@@ -932,15 +806,7 @@ static int psp_v11_0_load_usbc_pd_fw(struct psp_context *psp, uint64_t fw_pri_mc
 done:
 
 	if ((reg_status & 0xFFFF) != 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		DRM_ERROR("Address load failed - MP0_SMN_C2PMSG_35.Bits [15:0] = 0x%04x\n",
-=======
 		DRM_ERROR("Upper address load failed - MP0_SMN_C2PMSG_35.Bits [15:0] = x%04x\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		DRM_ERROR("Address load failed - MP0_SMN_C2PMSG_35.Bits [15:0] = 0x%04x\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				reg_status & 0xFFFF);
 		return -EIO;
 	}

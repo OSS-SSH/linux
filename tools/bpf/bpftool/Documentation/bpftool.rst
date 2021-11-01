@@ -18,37 +18,15 @@ SYNOPSIS
 
 	*OBJECT* := { **map** | **program** | **cgroup** | **perf** | **net** | **feature** }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	*OPTIONS* := { { **-V** | **--version** } |
-		{ **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } }
-
-	*MAP-COMMANDS* :=
-	{ **show** | **list** | **create** | **dump** | **update** | **lookup** | **getnext** |
-		**delete** | **pin** | **event_pipe** | **help** }
-
-	*PROG-COMMANDS* := { **show** | **list** | **dump jited** | **dump xlated** | **pin** |
-		**load** | **attach** | **detach** | **help** }
-=======
 	*OPTIONS* := { { **-V** | **--version** } | { **-h** | **--help** }
 	| { **-j** | **--json** } [{ **-p** | **--pretty** }] }
-=======
-	*OPTIONS* := { { **-V** | **--version** } |
-		{ **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } }
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*MAP-COMMANDS* :=
-	{ **show** | **list** | **create** | **dump** | **update** | **lookup** | **getnext** |
-		**delete** | **pin** | **event_pipe** | **help** }
+	{ **show** | **list** | **create** | **dump** | **update** | **lookup** | **getnext**
+	| **delete** | **pin** | **event_pipe** | **help** }
 
-<<<<<<< HEAD
 	*PROG-COMMANDS* := { **show** | **list** | **dump jited** | **dump xlated** | **pin**
 	| **load** | **attach** | **detach** | **help** }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	*PROG-COMMANDS* := { **show** | **list** | **dump jited** | **dump xlated** | **pin** |
-		**load** | **attach** | **detach** | **help** }
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*CGROUP-COMMANDS* := { **show** | **list** | **attach** | **detach** | **help** }
 

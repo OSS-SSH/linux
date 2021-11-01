@@ -451,18 +451,6 @@ void phylink_mac_change(struct phylink *, bool up);
 void phylink_start(struct phylink *);
 void phylink_stop(struct phylink *);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void phylink_suspend(struct phylink *pl, bool mac_wol);
-void phylink_resume(struct phylink *pl);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void phylink_suspend(struct phylink *pl, bool mac_wol);
-void phylink_resume(struct phylink *pl);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void phylink_ethtool_get_wol(struct phylink *, struct ethtool_wolinfo *);
 int phylink_ethtool_set_wol(struct phylink *, struct ethtool_wolinfo *);
 

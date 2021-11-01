@@ -210,32 +210,10 @@ static bool vcpu_allowed_register_width(struct kvm_vcpu *vcpu)
  */
 int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct vcpu_reset_state reset_state;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct vcpu_reset_state reset_state;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 	bool loaded;
 	u32 pstate;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	mutex_lock(&vcpu->kvm->lock);
-	reset_state = vcpu->arch.reset_state;
-	WRITE_ONCE(vcpu->arch.reset_state.reset, false);
-	mutex_unlock(&vcpu->kvm->lock);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Reset PMU outside of the non-preemptible section */
 	kvm_pmu_vcpu_reset(vcpu);
 
@@ -298,18 +276,8 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
 	 * Additional reset state handling that PSCI may have imposed on us.
 	 * Must be done after all the sys_reg reset.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (reset_state.reset) {
-		unsigned long target_pc = reset_state.pc;
-=======
 	if (vcpu->arch.reset_state.reset) {
 		unsigned long target_pc = vcpu->arch.reset_state.pc;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (reset_state.reset) {
-		unsigned long target_pc = reset_state.pc;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Gracefully handle Thumb2 entry point */
 		if (vcpu_mode_is_32bit(vcpu) && (target_pc & 1)) {
@@ -318,14 +286,6 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
 		}
 
 		/* Propagate caller endianness */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (reset_state.be)
-			kvm_vcpu_set_be(vcpu);
-
-		*vcpu_pc(vcpu) = target_pc;
-		vcpu_set_reg(vcpu, 0, reset_state.r0);
-=======
 		if (vcpu->arch.reset_state.be)
 			kvm_vcpu_set_be(vcpu);
 
@@ -333,14 +293,6 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
 		vcpu_set_reg(vcpu, 0, vcpu->arch.reset_state.r0);
 
 		vcpu->arch.reset_state.reset = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (reset_state.be)
-			kvm_vcpu_set_be(vcpu);
-
-		*vcpu_pc(vcpu) = target_pc;
-		vcpu_set_reg(vcpu, 0, reset_state.r0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Reset timer */
@@ -359,46 +311,17 @@ u32 get_kvm_ipa_limit(void)
 
 int kvm_set_ipa_limit(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int parange;
-=======
 	unsigned int parange, tgran_2;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int parange;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 mmfr0;
 
 	mmfr0 = read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1);
 	parange = cpuid_feature_extract_unsigned_field(mmfr0,
 				ID_AA64MMFR0_PARANGE_SHIFT);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * IPA size beyond 48 bits could not be supported
-	 * on either 4K or 16K page size. Hence let's cap
-	 * it to 48 bits, in case it's reported as larger
-	 * on the system.
-	 */
-	if (PAGE_SIZE != SZ_64K)
-		parange = min(parange, (unsigned int)ID_AA64MMFR0_PARANGE_48);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Check with ARMv8.5-GTG that our PAGE_SIZE is supported at
 	 * Stage-2. If not, things will stop very quickly.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	switch (cpuid_feature_extract_unsigned_field(mmfr0, ID_AA64MMFR0_TGRAN_2_SHIFT)) {
-=======
 	switch (PAGE_SIZE) {
 	default:
 	case SZ_4K:
@@ -413,10 +336,6 @@ int kvm_set_ipa_limit(void)
 	}
 
 	switch (cpuid_feature_extract_unsigned_field(mmfr0, tgran_2)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	switch (cpuid_feature_extract_unsigned_field(mmfr0, ID_AA64MMFR0_TGRAN_2_SHIFT)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ID_AA64MMFR0_TGRAN_2_SUPPORTED_NONE:
 		kvm_err("PAGE_SIZE not supported at Stage-2, giving up\n");
 		return -EINVAL;
@@ -450,15 +369,7 @@ int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type)
 	phys_shift = KVM_VM_TYPE_ARM_IPA_SIZE(type);
 	if (phys_shift) {
 		if (phys_shift > kvm_ipa_limit ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    phys_shift < ARM64_MIN_PARANGE_BITS)
-=======
 		    phys_shift < 32)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    phys_shift < ARM64_MIN_PARANGE_BITS)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 	} else {
 		phys_shift = KVM_PHYS_SHIFT;

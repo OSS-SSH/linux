@@ -9,17 +9,7 @@ snd-soc-acpi-intel-match-objs := soc-acpi-intel-byt-match.o soc-acpi-intel-cht-m
 	soc-acpi-intel-cml-match.o soc-acpi-intel-icl-match.o \
 	soc-acpi-intel-tgl-match.o soc-acpi-intel-ehl-match.o \
 	soc-acpi-intel-jsl-match.o soc-acpi-intel-adl-match.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	soc-acpi-intel-hda-match.o \
-	soc-acpi-intel-sdw-mockup-match.o
-=======
 	soc-acpi-intel-hda-match.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	soc-acpi-intel-hda-match.o \
-	soc-acpi-intel-sdw-mockup-match.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 obj-$(CONFIG_SND_SOC_INTEL_SST) += snd-soc-sst-dsp.o snd-soc-sst-ipc.o
 obj-$(CONFIG_SND_SOC_ACPI_INTEL_MATCH) += snd-soc-acpi-intel-match.o

@@ -315,19 +315,7 @@ static int be_read_dump_data(struct be_adapter *adapter, u32 dump_len,
 }
 
 static int be_get_coalesce(struct net_device *netdev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			   struct ethtool_coalesce *et,
-			   struct kernel_ethtool_coalesce *kernel_coal,
-			   struct netlink_ext_ack *extack)
-=======
 			   struct ethtool_coalesce *et)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			   struct ethtool_coalesce *et,
-			   struct kernel_ethtool_coalesce *kernel_coal,
-			   struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct be_adapter *adapter = netdev_priv(netdev);
 	struct be_aic_obj *aic = &adapter->aic_obj[0];
@@ -350,19 +338,7 @@ static int be_get_coalesce(struct net_device *netdev,
  * eqd cmd is issued in the worker thread.
  */
 static int be_set_coalesce(struct net_device *netdev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			   struct ethtool_coalesce *et,
-			   struct kernel_ethtool_coalesce *kernel_coal,
-			   struct netlink_ext_ack *extack)
-=======
 			   struct ethtool_coalesce *et)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			   struct ethtool_coalesce *et,
-			   struct kernel_ethtool_coalesce *kernel_coal,
-			   struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct be_adapter *adapter = netdev_priv(netdev);
 	struct be_aic_obj *aic = &adapter->aic_obj[0];

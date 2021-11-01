@@ -106,15 +106,7 @@
 #define UART_OMAP_EFR2_TIMEOUT_BEHAVE	BIT(6)
 
 /* RX FIFO occupancy indicator */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define UART_OMAP_RX_LVL		0x19
-=======
 #define UART_OMAP_RX_LVL		0x64
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define UART_OMAP_RX_LVL		0x19
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct omap8250_priv {
 	int line;
@@ -546,15 +538,7 @@ static void omap_8250_pm(struct uart_port *port, unsigned int state,
 static void omap_serial_fill_features_erratas(struct uart_8250_port *up,
 					      struct omap8250_priv *priv)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const struct soc_device_attribute k3_soc_devices[] = {
-=======
 	const struct soc_device_attribute k3_soc_devices[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const struct soc_device_attribute k3_soc_devices[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ .family = "AM65X",  },
 		{ .family = "J721E", .revision = "SR1.0" },
 		{ /* sentinel */ }
@@ -633,15 +617,7 @@ static irqreturn_t omap8250_irq(int irq, void *dev_id)
 	struct uart_port *port = dev_id;
 	struct omap8250_priv *priv = port->private_data;
 	struct uart_8250_port *up = up_to_u8250p(port);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int iir, lsr;
-=======
 	unsigned int iir;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int iir, lsr;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 #ifdef CONFIG_SERIAL_8250_DMA
@@ -652,14 +628,6 @@ static irqreturn_t omap8250_irq(int irq, void *dev_id)
 #endif
 
 	serial8250_rpm_get(up);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lsr = serial_port_in(port, UART_LSR);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lsr = serial_port_in(port, UART_LSR);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iir = serial_port_in(port, UART_IIR);
 	ret = serial8250_handle_irq(port, iir);
 
@@ -674,33 +642,6 @@ static irqreturn_t omap8250_irq(int irq, void *dev_id)
 		serial_port_in(port, UART_RX);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Stop processing interrupts on input overrun */
-	if ((lsr & UART_LSR_OE) && up->overrun_backoff_time_ms > 0) {
-		unsigned long delay;
-
-		up->ier = port->serial_in(port, UART_IER);
-		if (up->ier & (UART_IER_RLSI | UART_IER_RDI)) {
-			port->ops->stop_rx(port);
-		} else {
-			/* Keep restarting the timer until
-			 * the input overrun subsides.
-			 */
-			cancel_delayed_work(&up->overrun_backoff);
-		}
-
-		delay = msecs_to_jiffies(up->overrun_backoff_time_ms);
-		schedule_delayed_work(&up->overrun_backoff, delay);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	serial8250_rpm_put(up);
 
 	return IRQ_RETVAL(ret);
@@ -1412,19 +1353,6 @@ static int omap8250_probe(struct platform_device *pdev)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (of_property_read_u32(np, "overrun-throttle-ms",
-				 &up.overrun_backoff_time_ms) != 0)
-		up.overrun_backoff_time_ms = 0;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->wakeirq = irq_of_parse_and_map(np, 1);
 
 	pdata = of_device_get_match_data(&pdev->dev);

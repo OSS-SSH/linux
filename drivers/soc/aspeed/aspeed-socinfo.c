@@ -26,14 +26,6 @@ static struct {
 	{ "AST2600", 0x05000303 },
 	{ "AST2620", 0x05010203 },
 	{ "AST2605", 0x05030103 },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ "AST2625", 0x05030403 },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ "AST2625", 0x05030403 },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const char *siliconid_to_name(u32 siliconid)

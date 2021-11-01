@@ -91,20 +91,8 @@ static int qla_nvme_alloc_queue(struct nvme_fc_local_port *lport,
 	struct qla_hw_data *ha;
 	struct qla_qpair *qpair;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Map admin queue and 1st IO queue to index 0 */
-	if (qidx)
-		qidx--;
-=======
 	if (!qidx)
 		qidx++;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Map admin queue and 1st IO queue to index 0 */
-	if (qidx)
-		qidx--;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	vha = (struct scsi_qla_host *)lport->private;
 	ha = vha->hw;
@@ -120,30 +108,6 @@ static int qla_nvme_alloc_queue(struct nvme_fc_local_port *lport,
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Use base qpair if max_qpairs is 0 */
-	if (!ha->max_qpairs) {
-		qpair = ha->base_qpair;
-	} else {
-		if (ha->queue_pair_map[qidx]) {
-			*handle = ha->queue_pair_map[qidx];
-			ql_log(ql_log_info, vha, 0x2121,
-			       "Returning existing qpair of %p for idx=%x\n",
-			       *handle, qidx);
-			return 0;
-		}
-<<<<<<< HEAD
-
-		qpair = qla2xxx_create_qpair(vha, 5, vha->vp_idx, true);
-		if (!qpair) {
-			ql_log(ql_log_warn, vha, 0x2122,
-			       "Failed to allocate qpair\n");
-			return -EINVAL;
-		}
-=======
 	if (ha->queue_pair_map[qidx]) {
 		*handle = ha->queue_pair_map[qidx];
 		ql_log(ql_log_info, vha, 0x2121,
@@ -157,16 +121,6 @@ static int qla_nvme_alloc_queue(struct nvme_fc_local_port *lport,
 		ql_log(ql_log_warn, vha, 0x2122,
 		    "Failed to allocate qpair\n");
 		return -EINVAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		qpair = qla2xxx_create_qpair(vha, 5, vha->vp_idx, true);
-		if (!qpair) {
-			ql_log(ql_log_warn, vha, 0x2122,
-			       "Failed to allocate qpair\n");
-			return -EINVAL;
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	*handle = qpair;
 
@@ -267,31 +221,13 @@ static void qla_nvme_abort_work(struct work_struct *work)
 	srb_t *sp = priv->sp;
 	fc_port_t *fcport = sp->fcport;
 	struct qla_hw_data *ha = fcport->vha->hw;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int rval, abts_done_called = 1;
-
-	ql_dbg(ql_dbg_io, fcport->vha, 0xffff,
-	       "%s called for sp=%p, hndl=%x on fcport=%p desc=%p deleted=%d\n",
-	       __func__, sp, sp->handle, fcport, sp->u.iocb_cmd.u.nvme.desc, fcport->deleted);
-
-	if (!ha->flags.fw_started || fcport->deleted == QLA_SESS_DELETED)
-=======
 	int rval;
-=======
-	int rval, abts_done_called = 1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ql_dbg(ql_dbg_io, fcport->vha, 0xffff,
-	       "%s called for sp=%p, hndl=%x on fcport=%p desc=%p deleted=%d\n",
-	       __func__, sp, sp->handle, fcport, sp->u.iocb_cmd.u.nvme.desc, fcport->deleted);
+	       "%s called for sp=%p, hndl=%x on fcport=%p deleted=%d\n",
+	       __func__, sp, sp->handle, fcport, fcport->deleted);
 
-<<<<<<< HEAD
 	if (!ha->flags.fw_started || fcport->deleted)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!ha->flags.fw_started || fcport->deleted == QLA_SESS_DELETED)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	if (ha->flags.host_shutting_down) {
@@ -310,36 +246,11 @@ static void qla_nvme_abort_work(struct work_struct *work)
 	    sp, sp->handle, fcport, rval);
 
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	 * If async tmf is enabled, the abort callback is called only on
-	 * return codes QLA_SUCCESS and QLA_ERR_FROM_FW.
-	 */
-	if (ql2xasynctmfenable &&
-	    rval != QLA_SUCCESS && rval != QLA_ERR_FROM_FW)
-		abts_done_called = 0;
-
-	/*
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Returned before decreasing kref so that I/O requests
 	 * are waited until ABTS complete. This kref is decreased
 	 * at qla24xx_abort_sp_done function.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (abts_done_called && ql2xabts_wait_nvme && QLA_ABTS_WAIT_ENABLED(sp))
-=======
 	if (ql2xabts_wait_nvme && QLA_ABTS_WAIT_ENABLED(sp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (abts_done_called && ql2xabts_wait_nvme && QLA_ABTS_WAIT_ENABLED(sp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 out:
 	/* kref_get was done before work was schedule. */
@@ -552,19 +463,6 @@ static inline int qla2x00_start_nvme_mq(srb_t *sp)
 	} else if (fd->io_dir == 0) {
 		cmd_pkt->control_flags = 0;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (sp->fcport->edif.enable && fd->io_dir != 0)
-		cmd_pkt->control_flags |= cpu_to_le16(CF_EN_EDIF);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Set BIT_13 of control flags for Async event */
 	if (vha->flags.nvme2_enabled &&
 	    cmd->sqe.common.opcode == nvme_admin_async_event) {
@@ -829,12 +727,6 @@ int qla_nvme_register_hba(struct scsi_qla_host *vha)
 
 	WARN_ON(vha->nvme_local_port);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	qla_nvme_fc_transport.max_hw_queues =
-	    min((uint8_t)(qla_nvme_fc_transport.max_hw_queues),
-		(uint8_t)(ha->max_qpairs ? ha->max_qpairs : 1));
-=======
 	if (ha->max_req_queues < 3) {
 		if (!ha->flags.max_req_queue_warned)
 			ql_log(ql_log_info, vha, 0x2120,
@@ -847,12 +739,6 @@ int qla_nvme_register_hba(struct scsi_qla_host *vha)
 	qla_nvme_fc_transport.max_hw_queues =
 	    min((uint8_t)(qla_nvme_fc_transport.max_hw_queues),
 		(uint8_t)(ha->max_req_queues - 2));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	qla_nvme_fc_transport.max_hw_queues =
-	    min((uint8_t)(qla_nvme_fc_transport.max_hw_queues),
-		(uint8_t)(ha->max_qpairs ? ha->max_qpairs : 1));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pinfo.node_name = wwn_to_u64(vha->node_name);
 	pinfo.port_name = wwn_to_u64(vha->port_name);
@@ -917,30 +803,14 @@ void qla_nvme_abort_process_comp_status(struct abort_entry_24xx *abt, srb_t *ori
 	case CS_PORT_LOGGED_OUT:
 	/* BA_RJT was received for the ABTS */
 	case CS_PORT_CONFIG_CHG:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ql_dbg(ql_dbg_async, vha, 0xf09d,
-=======
 		ql_dbg(ql_dbg_async + ql_dbg_mbx, vha, 0xf09d,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ql_dbg(ql_dbg_async, vha, 0xf09d,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       "Abort I/O IOCB completed with error, comp_status=%x\n",
 		comp_status);
 		break;
 
 	/* BA_RJT was received for the ABTS */
 	case CS_REJECT_RECEIVED:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ql_dbg(ql_dbg_async, vha, 0xf09e,
-=======
 		ql_dbg(ql_dbg_async + ql_dbg_mbx, vha, 0xf09e,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ql_dbg(ql_dbg_async, vha, 0xf09e,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       "BA_RJT was received for the ABTS rjt_vendorUnique = %u",
 			abt->fw.ba_rjt_vendorUnique);
 		ql_dbg(ql_dbg_async + ql_dbg_mbx, vha, 0xf09e,
@@ -949,42 +819,18 @@ void qla_nvme_abort_process_comp_status(struct abort_entry_24xx *abt, srb_t *ori
 		break;
 
 	case CS_COMPLETE:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ql_dbg(ql_dbg_async + ql_dbg_verbose, vha, 0xf09f,
-=======
 		ql_dbg(ql_dbg_async + ql_dbg_mbx, vha, 0xf09f,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ql_dbg(ql_dbg_async + ql_dbg_verbose, vha, 0xf09f,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       "IOCB request is completed successfully comp_status=%x\n",
 		comp_status);
 		break;
 
 	case CS_IOCB_ERROR:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ql_dbg(ql_dbg_async, vha, 0xf0a0,
-=======
 		ql_dbg(ql_dbg_async + ql_dbg_mbx, vha, 0xf0a0,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ql_dbg(ql_dbg_async, vha, 0xf0a0,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       "IOCB request is failed, comp_status=%x\n", comp_status);
 		break;
 
 	default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ql_dbg(ql_dbg_async, vha, 0xf0a1,
-=======
 		ql_dbg(ql_dbg_async + ql_dbg_mbx, vha, 0xf0a1,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ql_dbg(ql_dbg_async, vha, 0xf0a1,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       "Invalid Abort IO IOCB Completion Status %x\n",
 		comp_status);
 		break;

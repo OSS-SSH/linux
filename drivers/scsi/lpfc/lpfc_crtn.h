@@ -58,16 +58,6 @@ void lpfc_request_features(struct lpfc_hba *, struct lpfcMboxq *);
 int lpfc_sli4_mbox_rsrc_extent(struct lpfc_hba *, struct lpfcMboxq *,
 			   uint16_t, uint16_t, bool);
 int lpfc_get_sli4_parameters(struct lpfc_hba *, LPFC_MBOXQ_t *);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int lpfc_reg_congestion_buf(struct lpfc_hba *phba);
-int lpfc_unreg_congestion_buf(struct lpfc_hba *phba);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int lpfc_reg_congestion_buf(struct lpfc_hba *phba);
-int lpfc_unreg_congestion_buf(struct lpfc_hba *phba);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct lpfc_vport *lpfc_find_vport_by_did(struct lpfc_hba *, uint32_t);
 void lpfc_cleanup_rcv_buffers(struct lpfc_vport *);
 void lpfc_rcv_seq_check_edtov(struct lpfc_vport *);
@@ -84,29 +74,6 @@ int lpfc_init_iocb_list(struct lpfc_hba *phba, int cnt);
 void lpfc_free_iocb_list(struct lpfc_hba *phba);
 int lpfc_post_rq_buffer(struct lpfc_hba *phba, struct lpfc_queue *hrq,
 			struct lpfc_queue *drq, int count, int idx);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-uint32_t lpfc_calc_cmf_latency(struct lpfc_hba *phba);
-void lpfc_cmf_signal_init(struct lpfc_hba *phba);
-void lpfc_cmf_start(struct lpfc_hba *phba);
-void lpfc_cmf_stop(struct lpfc_hba *phba);
-void lpfc_init_congestion_stat(struct lpfc_hba *phba);
-void lpfc_init_congestion_buf(struct lpfc_hba *phba);
-int lpfc_sli4_cgn_params_read(struct lpfc_hba *phba);
-uint32_t lpfc_cgn_calc_crc32(void *bufp, uint32_t sz, uint32_t seed);
-int lpfc_config_cgn_signal(struct lpfc_hba *phba);
-int lpfc_issue_cmf_sync_wqe(struct lpfc_hba *phba, u32 ms, u64 total);
-void lpfc_cgn_dump_rxmonitor(struct lpfc_hba *phba);
-void lpfc_cgn_update_stat(struct lpfc_hba *phba, uint32_t dtag);
-void lpfc_unblock_requests(struct lpfc_hba *phba);
-void lpfc_block_requests(struct lpfc_hba *phba);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void lpfc_mbx_cmpl_local_config_link(struct lpfc_hba *, LPFC_MBOXQ_t *);
 void lpfc_mbx_cmpl_reg_login(struct lpfc_hba *, LPFC_MBOXQ_t *);
@@ -120,16 +87,6 @@ void lpfc_unregister_vfi_cmpl(struct lpfc_hba *, LPFC_MBOXQ_t *);
 void lpfc_enqueue_node(struct lpfc_vport *, struct lpfc_nodelist *);
 void lpfc_dequeue_node(struct lpfc_vport *, struct lpfc_nodelist *);
 void lpfc_nlp_set_state(struct lpfc_vport *, struct lpfc_nodelist *, int);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void lpfc_nlp_reg_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp);
-void lpfc_nlp_unreg_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void lpfc_nlp_reg_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp);
-void lpfc_nlp_unreg_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void lpfc_drop_node(struct lpfc_vport *, struct lpfc_nodelist *);
 void lpfc_set_disctmo(struct lpfc_vport *);
 int  lpfc_can_disctmo(struct lpfc_vport *);
@@ -184,16 +141,6 @@ int lpfc_issue_els_scr(struct lpfc_vport *vport, uint8_t retry);
 int lpfc_issue_els_rscn(struct lpfc_vport *vport, uint8_t retry);
 int lpfc_issue_fabric_reglogin(struct lpfc_vport *);
 int lpfc_issue_els_rdf(struct lpfc_vport *vport, uint8_t retry);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int lpfc_issue_els_edc(struct lpfc_vport *vport, uint8_t retry);
-void lpfc_els_rcv_fpin(struct lpfc_vport *vport, void *p, u32 fpin_length);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int lpfc_issue_els_edc(struct lpfc_vport *vport, uint8_t retry);
-void lpfc_els_rcv_fpin(struct lpfc_vport *vport, void *p, u32 fpin_length);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int lpfc_els_free_iocb(struct lpfc_hba *, struct lpfc_iocbq *);
 int lpfc_ct_free_iocb(struct lpfc_hba *, struct lpfc_iocbq *);
 int lpfc_els_rsp_acc(struct lpfc_vport *, uint32_t, struct lpfc_iocbq *,
@@ -266,18 +213,6 @@ irqreturn_t lpfc_sli_fp_intr_handler(int, void *);
 irqreturn_t lpfc_sli4_intr_handler(int, void *);
 irqreturn_t lpfc_sli4_hba_intr_handler(int, void *);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int lpfc_read_object(struct lpfc_hba *phba, char *s, uint32_t *datap,
-		     uint32_t len);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int lpfc_read_object(struct lpfc_hba *phba, char *s, uint32_t *datap,
-		     uint32_t len);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void lpfc_sli4_cleanup_poll_list(struct lpfc_hba *phba);
 int lpfc_sli4_poll_eq(struct lpfc_queue *q, uint8_t path);
 void lpfc_sli4_poll_hbtimer(struct timer_list *t);
@@ -524,18 +459,6 @@ void lpfc_free_fast_evt(struct lpfc_hba *, struct lpfc_fast_path_event *);
 void lpfc_create_static_vport(struct lpfc_hba *);
 void lpfc_stop_hba_timers(struct lpfc_hba *);
 void lpfc_stop_port(struct lpfc_hba *);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int lpfc_update_cmf_cmd(struct lpfc_hba *phba, uint32_t sz);
-int lpfc_update_cmf_cmpl(struct lpfc_hba *phba, uint64_t val, uint32_t sz,
-			 struct Scsi_Host *shost);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int lpfc_update_cmf_cmd(struct lpfc_hba *phba, uint32_t sz);
-int lpfc_update_cmf_cmpl(struct lpfc_hba *phba, uint64_t val, uint32_t sz,
-			 struct Scsi_Host *shost);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __lpfc_sli4_stop_fcf_redisc_wait_timer(struct lpfc_hba *);
 void lpfc_sli4_stop_fcf_redisc_wait_timer(struct lpfc_hba *);
 void lpfc_parse_fcoe_conf(struct lpfc_hba *, uint8_t *, uint32_t);
@@ -682,19 +605,6 @@ extern int lpfc_enable_nvmet_cnt;
 extern unsigned long long lpfc_enable_nvmet[];
 extern int lpfc_no_hba_reset_cnt;
 extern unsigned long lpfc_no_hba_reset[];
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-extern int lpfc_acqe_cgn_frequency;
-extern int lpfc_fabric_cgn_frequency;
-extern int lpfc_use_cgn_signal;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern union lpfc_wqe128 lpfc_iread_cmd_template;
 extern union lpfc_wqe128 lpfc_iwrite_cmd_template;
 extern union lpfc_wqe128 lpfc_icmnd_cmd_template;

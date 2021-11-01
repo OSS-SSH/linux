@@ -366,9 +366,6 @@ struct ib_sa_mcmember_rec {
 
 #define IB_DEFAULT_SERVICE_LEASE 	0xFFFFFFFF
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 struct ib_sa_service_rec {
 	u64		id;
 	union ib_gid	gid;
@@ -383,9 +380,6 @@ struct ib_sa_service_rec {
 	u64		data64[2];
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IB_SA_GUIDINFO_REC_LID		IB_SA_COMP_MASK(0)
 #define IB_SA_GUIDINFO_REC_BLOCK_NUM	IB_SA_COMP_MASK(1)
 #define IB_SA_GUIDINFO_REC_RES1		IB_SA_COMP_MASK(2)
@@ -436,9 +430,6 @@ int ib_sa_path_rec_get(struct ib_sa_client *client, struct ib_device *device,
 					void *context),
 		       void *context, struct ib_sa_query **query);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 int ib_sa_service_rec_query(struct ib_sa_client *client,
 			    struct ib_device *device, u32 port_num, u8 method,
 			    struct ib_sa_service_rec *rec,
@@ -449,9 +440,6 @@ int ib_sa_service_rec_query(struct ib_sa_client *client,
 					     void *context),
 			    void *context, struct ib_sa_query **sa_query);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ib_sa_multicast {
 	struct ib_sa_mcmember_rec rec;
 	ib_sa_comp_mask		comp_mask;

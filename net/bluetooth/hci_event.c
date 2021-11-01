@@ -40,16 +40,6 @@
 #define ZERO_KEY "\x00\x00\x00\x00\x00\x00\x00\x00" \
 		 "\x00\x00\x00\x00\x00\x00\x00\x00"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define secs_to_jiffies(_secs) msecs_to_jiffies((_secs) * 1000)
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define secs_to_jiffies(_secs) msecs_to_jiffies((_secs) * 1000)
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Handle HCI Event packets */
 
 static void hci_cc_inquiry_cancel(struct hci_dev *hdev, struct sk_buff *skb,
@@ -1181,21 +1171,6 @@ static void hci_cc_le_set_random_addr(struct hci_dev *hdev, struct sk_buff *skb)
 
 	bacpy(&hdev->random_addr, sent);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!bacmp(&hdev->rpa, sent)) {
-		hci_dev_clear_flag(hdev, HCI_RPA_EXPIRED);
-		queue_delayed_work(hdev->workqueue, &hdev->rpa_expired,
-				   secs_to_jiffies(hdev->rpa_timeout));
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hci_dev_unlock(hdev);
 }
 
@@ -1226,54 +1201,17 @@ static void hci_cc_le_set_adv_set_random_addr(struct hci_dev *hdev,
 {
 	__u8 status = *((__u8 *) skb->data);
 	struct hci_cp_le_set_adv_set_rand_addr *cp;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct adv_info *adv;
-=======
 	struct adv_info *adv_instance;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct adv_info *adv;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (status)
 		return;
 
 	cp = hci_sent_cmd_data(hdev, HCI_OP_LE_SET_ADV_SET_RAND_ADDR);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Update only in case the adv instance since handle 0x00 shall be using
-	 * HCI_OP_LE_SET_RANDOM_ADDR since that allows both extended and
-	 * non-extended adverting.
-	 */
-	if (!cp || !cp->handle)
-<<<<<<< HEAD
-=======
 	if (!cp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	hci_dev_lock(hdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	adv = hci_find_adv_instance(hdev, cp->handle);
-	if (adv) {
-		bacpy(&adv->random_addr, &cp->bdaddr);
-		if (!bacmp(&hdev->rpa, &cp->bdaddr)) {
-			adv->rpa_expired = false;
-			queue_delayed_work(hdev->workqueue,
-					   &adv->rpa_expired_cb,
-					   secs_to_jiffies(hdev->rpa_timeout));
-		}
-<<<<<<< HEAD
-=======
 	if (!cp->handle) {
 		/* Store in hdev for instance 0 (Set adv and Directed advs) */
 		bacpy(&hdev->random_addr, &cp->bdaddr);
@@ -1281,9 +1219,6 @@ static void hci_cc_le_set_adv_set_random_addr(struct hci_dev *hdev,
 		adv_instance = hci_find_adv_instance(hdev, cp->handle);
 		if (adv_instance)
 			bacpy(&adv_instance->random_addr, &cp->bdaddr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	hci_dev_unlock(hdev);
@@ -1342,19 +1277,7 @@ static void hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev,
 					 struct sk_buff *skb)
 {
 	struct hci_cp_le_set_ext_adv_enable *cp;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct hci_cp_ext_adv_set *set;
 	__u8 status = *((__u8 *) skb->data);
-	struct adv_info *adv = NULL, *n;
-=======
-	__u8 status = *((__u8 *) skb->data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct hci_cp_ext_adv_set *set;
-	__u8 status = *((__u8 *) skb->data);
-	struct adv_info *adv = NULL, *n;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	BT_DBG("%s status 0x%2.2x", hdev->name, status);
 
@@ -1365,84 +1288,22 @@ static void hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev,
 	if (!cp)
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	set = (void *)cp->data;
-
 	hci_dev_lock(hdev);
 
-	if (cp->num_of_sets)
-		adv = hci_find_adv_instance(hdev, set->handle);
-
-<<<<<<< HEAD
-=======
-	hci_dev_lock(hdev);
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cp->enable) {
 		struct hci_conn *conn;
 
 		hci_dev_set_flag(hdev, HCI_LE_ADV);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (adv)
-			adv->enabled = true;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (adv)
-			adv->enabled = true;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		conn = hci_lookup_le_connect(hdev);
 		if (conn)
 			queue_delayed_work(hdev->workqueue,
 					   &conn->le_conn_timeout,
 					   conn->conn_timeout);
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (adv) {
-			adv->enabled = false;
-			/* If just one instance was disabled check if there are
-			 * any other instance enabled before clearing HCI_LE_ADV
-			 */
-			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
-						 list) {
-				if (adv->enabled)
-					goto unlock;
-			}
-		} else {
-			/* All instances shall be considered disabled */
-			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
-						 list)
-				adv->enabled = false;
-		}
-
-<<<<<<< HEAD
 		hci_dev_clear_flag(hdev, HCI_LE_ADV);
 	}
 
-unlock:
-=======
-		hci_dev_clear_flag(hdev, HCI_LE_ADV);
-	}
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		hci_dev_clear_flag(hdev, HCI_LE_ADV);
-	}
-
-unlock:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hci_dev_unlock(hdev);
 }
 
@@ -2445,47 +2306,19 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
 
 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
 	if (conn) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mgmt_disconnect_failed(hdev, &conn->dst, conn->type,
-				       conn->dst_type, status);
-
-		if (conn->type == LE_LINK) {
-			hdev->cur_adv_instance = conn->adv_instance;
-			hci_req_reenable_advertising(hdev);
-		}
-
-=======
 		u8 type = conn->type;
 
 		mgmt_disconnect_failed(hdev, &conn->dst, conn->type,
 				       conn->dst_type, status);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mgmt_disconnect_failed(hdev, &conn->dst, conn->type,
-				       conn->dst_type, status);
-
-		if (conn->type == LE_LINK) {
-			hdev->cur_adv_instance = conn->adv_instance;
-			hci_req_reenable_advertising(hdev);
-		}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* If the disconnection failed for any reason, the upper layer
 		 * does not retry to disconnect in current implementation.
 		 * Hence, we need to do some basic cleanup here and re-enable
 		 * advertising if necessary.
 		 */
 		hci_conn_del(conn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		if (type == LE_LINK)
 			hci_req_reenable_advertising(hdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	hci_dev_unlock(hdev);
@@ -3011,13 +2844,7 @@ static void hci_disconn_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
 	struct hci_conn_params *params;
 	struct hci_conn *conn;
 	bool mgmt_connected;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u8 type;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
 
@@ -3072,18 +2899,10 @@ static void hci_disconn_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hci_disconn_cfm(conn, ev->reason);
-=======
 	type = conn->type;
 
 	hci_disconn_cfm(conn, ev->reason);
 	hci_conn_del(conn);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hci_disconn_cfm(conn, ev->reason);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The suspend notifier is waiting for all devices to disconnect so
 	 * clear the bit from pending tasks and inform the wait queue.
@@ -3103,26 +2922,8 @@ static void hci_disconn_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
 	 * or until a connection is created or until the Advertising
 	 * is timed out due to Directed Advertising."
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (conn->type == LE_LINK) {
-		hdev->cur_adv_instance = conn->adv_instance;
-		hci_req_reenable_advertising(hdev);
-	}
-
-	hci_conn_del(conn);
-=======
 	if (type == LE_LINK)
 		hci_req_reenable_advertising(hdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (conn->type == LE_LINK) {
-		hdev->cur_adv_instance = conn->adv_instance;
-		hci_req_reenable_advertising(hdev);
-	}
-
-	hci_conn_del(conn);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 unlock:
 	hci_dev_unlock(hdev);
@@ -3467,23 +3268,11 @@ unlock:
 	hci_dev_unlock(hdev);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline void handle_cmd_cnt_and_timer(struct hci_dev *hdev, u8 ncmd)
-{
-	cancel_delayed_work(&hdev->cmd_timer);
-=======
 static inline void handle_cmd_cnt_and_timer(struct hci_dev *hdev,
 					    u16 opcode, u8 ncmd)
 {
 	if (opcode != HCI_OP_NOP)
 		cancel_delayed_work(&hdev->cmd_timer);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline void handle_cmd_cnt_and_timer(struct hci_dev *hdev, u8 ncmd)
-{
-	cancel_delayed_work(&hdev->cmd_timer);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!test_bit(HCI_RESET, &hdev->flags)) {
 		if (ncmd) {
@@ -3858,15 +3647,7 @@ static void hci_cmd_complete_evt(struct hci_dev *hdev, struct sk_buff *skb,
 		break;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	handle_cmd_cnt_and_timer(hdev, ev->ncmd);
-=======
 	handle_cmd_cnt_and_timer(hdev, *opcode, ev->ncmd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	handle_cmd_cnt_and_timer(hdev, ev->ncmd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hci_req_cmd_complete(hdev, *opcode, *status, req_complete,
 			     req_complete_skb);
@@ -3967,15 +3748,7 @@ static void hci_cmd_status_evt(struct hci_dev *hdev, struct sk_buff *skb,
 		break;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	handle_cmd_cnt_and_timer(hdev, ev->ncmd);
-=======
 	handle_cmd_cnt_and_timer(hdev, *opcode, ev->ncmd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	handle_cmd_cnt_and_timer(hdev, ev->ncmd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Indicate request completion if the command failed. Also, if
 	 * we're not waiting for a special event and we get a success
@@ -4609,30 +4382,6 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev,
 
 	switch (ev->status) {
 	case 0x00:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/* The synchronous connection complete event should only be
-		 * sent once per new connection. Receiving a successful
-		 * complete event when the connection status is already
-		 * BT_CONNECTED means that the device is misbehaving and sent
-		 * multiple complete event packets for the same new connection.
-		 *
-		 * Registering the device more than once can corrupt kernel
-		 * memory, hence upon detecting this invalid event, we report
-		 * an error and ignore the packet.
-		 */
-		if (conn->state == BT_CONNECTED) {
-			bt_dev_err(hdev, "Ignoring connect complete event for existing connection");
-			goto unlock;
-		}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		conn->handle = __le16_to_cpu(ev->handle);
 		conn->state  = BT_CONNECTED;
 		conn->type   = ev->link_type;
@@ -5355,81 +5104,9 @@ static void hci_disconn_phylink_complete_evt(struct hci_dev *hdev,
 }
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void le_conn_update_addr(struct hci_conn *conn, bdaddr_t *bdaddr,
-				u8 bdaddr_type, bdaddr_t *local_rpa)
-{
-	if (conn->out) {
-		conn->dst_type = bdaddr_type;
-		conn->resp_addr_type = bdaddr_type;
-		bacpy(&conn->resp_addr, bdaddr);
-
-		/* Check if the controller has set a Local RPA then it must be
-		 * used instead or hdev->rpa.
-		 */
-		if (local_rpa && bacmp(local_rpa, BDADDR_ANY)) {
-			conn->init_addr_type = ADDR_LE_DEV_RANDOM;
-			bacpy(&conn->init_addr, local_rpa);
-		} else if (hci_dev_test_flag(conn->hdev, HCI_PRIVACY)) {
-			conn->init_addr_type = ADDR_LE_DEV_RANDOM;
-			bacpy(&conn->init_addr, &conn->hdev->rpa);
-		} else {
-			hci_copy_identity_address(conn->hdev, &conn->init_addr,
-						  &conn->init_addr_type);
-		}
-	} else {
-		conn->resp_addr_type = conn->hdev->adv_addr_type;
-		/* Check if the controller has set a Local RPA then it must be
-		 * used instead or hdev->rpa.
-		 */
-		if (local_rpa && bacmp(local_rpa, BDADDR_ANY)) {
-			conn->resp_addr_type = ADDR_LE_DEV_RANDOM;
-			bacpy(&conn->resp_addr, local_rpa);
-		} else if (conn->hdev->adv_addr_type == ADDR_LE_DEV_RANDOM) {
-			/* In case of ext adv, resp_addr will be updated in
-			 * Adv Terminated event.
-			 */
-			if (!ext_adv_capable(conn->hdev))
-				bacpy(&conn->resp_addr,
-				      &conn->hdev->random_addr);
-		} else {
-			bacpy(&conn->resp_addr, &conn->hdev->bdaddr);
-		}
-
-		conn->init_addr_type = bdaddr_type;
-		bacpy(&conn->init_addr, bdaddr);
-
-		/* For incoming connections, set the default minimum
-		 * and maximum connection interval. They will be used
-		 * to check if the parameters are in range and if not
-		 * trigger the connection update procedure.
-		 */
-		conn->le_conn_min_interval = conn->hdev->le_conn_min_interval;
-		conn->le_conn_max_interval = conn->hdev->le_conn_max_interval;
-	}
-}
-
-<<<<<<< HEAD
-static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
-				 bdaddr_t *bdaddr, u8 bdaddr_type,
-				 bdaddr_t *local_rpa, u8 role, u16 handle,
-				 u16 interval, u16 latency,
-				 u16 supervision_timeout)
-=======
 static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
 			bdaddr_t *bdaddr, u8 bdaddr_type, u8 role, u16 handle,
 			u16 interval, u16 latency, u16 supervision_timeout)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
-				 bdaddr_t *bdaddr, u8 bdaddr_type,
-				 bdaddr_t *local_rpa, u8 role, u16 handle,
-				 u16 interval, u16 latency,
-				 u16 supervision_timeout)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hci_conn_params *params;
 	struct hci_conn *conn;
@@ -5477,10 +5154,6 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
 		cancel_delayed_work(&conn->le_conn_timeout);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	le_conn_update_addr(conn, bdaddr, bdaddr_type, local_rpa);
-=======
 	if (!conn->out) {
 		/* Set the responder (our side) address type based on
 		 * the advertising address type.
@@ -5507,10 +5180,6 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
 		conn->le_conn_min_interval = hdev->le_conn_min_interval;
 		conn->le_conn_max_interval = hdev->le_conn_max_interval;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	le_conn_update_addr(conn, bdaddr, bdaddr_type, local_rpa);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Lookup the identity address from the stored connection
 	 * address and address type.
@@ -5567,22 +5236,6 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
 	conn->handle = handle;
 	conn->state = BT_CONFIG;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Store current advertising instance as connection advertising instance
-	 * when sotfware rotation is in use so it can be re-enabled when
-	 * disconnected.
-	 */
-	if (!ext_adv_capable(hdev))
-		conn->adv_instance = hdev->cur_adv_instance;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	conn->le_conn_interval = interval;
 	conn->le_conn_latency = latency;
 	conn->le_supv_timeout = supervision_timeout;
@@ -5637,15 +5290,7 @@ static void hci_le_conn_complete_evt(struct hci_dev *hdev, struct sk_buff *skb)
 	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
 
 	le_conn_complete_evt(hdev, ev->status, &ev->bdaddr, ev->bdaddr_type,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     NULL, ev->role, le16_to_cpu(ev->handle),
-=======
 			     ev->role, le16_to_cpu(ev->handle),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     NULL, ev->role, le16_to_cpu(ev->handle),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     le16_to_cpu(ev->interval),
 			     le16_to_cpu(ev->latency),
 			     le16_to_cpu(ev->supervision_timeout));
@@ -5659,15 +5304,7 @@ static void hci_le_enh_conn_complete_evt(struct hci_dev *hdev,
 	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
 
 	le_conn_complete_evt(hdev, ev->status, &ev->bdaddr, ev->bdaddr_type,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     &ev->local_rpa, ev->role, le16_to_cpu(ev->handle),
-=======
 			     ev->role, le16_to_cpu(ev->handle),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     &ev->local_rpa, ev->role, le16_to_cpu(ev->handle),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     le16_to_cpu(ev->interval),
 			     le16_to_cpu(ev->latency),
 			     le16_to_cpu(ev->supervision_timeout));
@@ -5682,30 +5319,13 @@ static void hci_le_ext_adv_term_evt(struct hci_dev *hdev, struct sk_buff *skb)
 {
 	struct hci_evt_le_ext_adv_set_term *ev = (void *) skb->data;
 	struct hci_conn *conn;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct adv_info *adv;
 
 	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
-
-	adv = hci_find_adv_instance(hdev, ev->handle);
 
 	if (ev->status) {
-=======
-=======
-	struct adv_info *adv;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		struct adv_info *adv;
 
-	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
-
-	adv = hci_find_adv_instance(hdev, ev->handle);
-
-<<<<<<< HEAD
 		adv = hci_find_adv_instance(hdev, ev->handle);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ev->status) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!adv)
 			return;
 
@@ -5716,40 +5336,11 @@ static void hci_le_ext_adv_term_evt(struct hci_dev *hdev, struct sk_buff *skb)
 		return;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (adv)
-		adv->enabled = false;
-
 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(ev->conn_handle));
 	if (conn) {
-		/* Store handle in the connection so the correct advertising
-		 * instance can be re-enabled when disconnected.
-		 */
-		conn->adv_instance = ev->handle;
+		struct adv_info *adv_instance;
 
-		if (hdev->adv_addr_type != ADDR_LE_DEV_RANDOM ||
-		    bacmp(&conn->resp_addr, BDADDR_ANY))
-=======
-=======
-	if (adv)
-		adv->enabled = false;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(ev->conn_handle));
-	if (conn) {
-		/* Store handle in the connection so the correct advertising
-		 * instance can be re-enabled when disconnected.
-		 */
-		conn->adv_instance = ev->handle;
-
-<<<<<<< HEAD
 		if (hdev->adv_addr_type != ADDR_LE_DEV_RANDOM)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (hdev->adv_addr_type != ADDR_LE_DEV_RANDOM ||
-		    bacmp(&conn->resp_addr, BDADDR_ANY))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return;
 
 		if (!ev->handle) {
@@ -5757,19 +5348,9 @@ static void hci_le_ext_adv_term_evt(struct hci_dev *hdev, struct sk_buff *skb)
 			return;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (adv)
-			bacpy(&conn->resp_addr, &adv->random_addr);
-=======
 		adv_instance = hci_find_adv_instance(hdev, ev->handle);
 		if (adv_instance)
 			bacpy(&conn->resp_addr, &adv_instance->random_addr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (adv)
-			bacpy(&conn->resp_addr, &adv->random_addr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

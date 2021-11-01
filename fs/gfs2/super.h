@@ -43,16 +43,8 @@ extern void gfs2_statfs_change_in(struct gfs2_statfs_change_host *sc,
 				  const void *buf);
 extern void gfs2_statfs_change_out(const struct gfs2_statfs_change_host *sc,
 				   void *buf);
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern void update_statfs(struct gfs2_sbd *sdp, struct buffer_head *m_bh);
-=======
 extern void update_statfs(struct gfs2_sbd *sdp, struct buffer_head *m_bh,
 			  struct buffer_head *l_bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern void update_statfs(struct gfs2_sbd *sdp, struct buffer_head *m_bh);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int gfs2_statfs_sync(struct super_block *sb, int type);
 extern void gfs2_freeze_func(struct work_struct *work);
 

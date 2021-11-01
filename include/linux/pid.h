@@ -78,14 +78,6 @@ struct file;
 
 extern struct pid *pidfd_pid(const struct file *file);
 struct pid *pidfd_get_pid(unsigned int fd, unsigned int *flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int pidfd_create(struct pid *pid, unsigned int flags);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int pidfd_create(struct pid *pid, unsigned int flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline struct pid *get_pid(struct pid *pid)
 {

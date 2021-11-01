@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-=======
 # SPDX-License-Identifier: GPL-2.0-only
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 %YAML 1.2
 ---
 $id: http://devicetree.org/schemas/clock/qcom,gpucc.yaml#
@@ -19,27 +11,11 @@ maintainers:
 
 description: |
   Qualcomm graphics clock control module which supports the clocks, resets and
-<<<<<<< HEAD
-<<<<<<< HEAD
-  power domains on Qualcomm SoCs.
-=======
   power domains on SDM845/SC7180/SM8150/SM8250.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  power domains on Qualcomm SoCs.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   See also:
     dt-bindings/clock/qcom,gpucc-sdm845.h
     dt-bindings/clock/qcom,gpucc-sc7180.h
-<<<<<<< HEAD
-<<<<<<< HEAD
-    dt-bindings/clock/qcom,gpucc-sc7280.h
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-    dt-bindings/clock/qcom,gpucc-sc7280.h
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     dt-bindings/clock/qcom,gpucc-sm8150.h
     dt-bindings/clock/qcom,gpucc-sm8250.h
 
@@ -48,16 +24,6 @@ properties:
     enum:
       - qcom,sdm845-gpucc
       - qcom,sc7180-gpucc
-<<<<<<< HEAD
-<<<<<<< HEAD
-      - qcom,sc7280-gpucc
-      - qcom,sc8180x-gpucc
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      - qcom,sc7280-gpucc
-      - qcom,sc8180x-gpucc
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,sm8150-gpucc
       - qcom,sm8250-gpucc
 

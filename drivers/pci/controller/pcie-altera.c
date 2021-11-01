@@ -646,15 +646,7 @@ static void altera_pcie_isr(struct irq_desc *desc)
 	struct device *dev;
 	unsigned long status;
 	u32 bit;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 	u32 virq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_enter(chip, desc);
 	pcie = irq_desc_get_handler_data(desc);
@@ -666,23 +658,11 @@ static void altera_pcie_isr(struct irq_desc *desc)
 			/* clear interrupts */
 			cra_writel(pcie, 1 << bit, P2A_INT_STATUS);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ret = generic_handle_domain_irq(pcie->irq_domain, bit);
-			if (ret)
-				dev_err_ratelimited(dev, "unexpected IRQ, INT%d\n", bit);
-=======
 			virq = irq_find_mapping(pcie->irq_domain, bit);
 			if (virq)
 				generic_handle_irq(virq);
 			else
 				dev_err(dev, "unexpected IRQ, INT%d\n", bit);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ret = generic_handle_domain_irq(pcie->irq_domain, bit);
-			if (ret)
-				dev_err_ratelimited(dev, "unexpected IRQ, INT%d\n", bit);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

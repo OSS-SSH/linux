@@ -129,20 +129,10 @@ static int wilc_sdio_probe(struct sdio_func *func,
 
 	ret = wilc_cfg80211_init(&wilc, &func->dev, WILC_HIF_SDIO,
 				 &wilc_hif_sdio);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret)
-		goto free;
-=======
 	if (ret) {
 		kfree(sdio_priv);
 		return ret;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret)
-		goto free;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (IS_ENABLED(CONFIG_WILC1000_HW_OOB_INTR)) {
 		struct device_node *np = func->card->dev.of_node;
@@ -158,28 +148,6 @@ static int wilc_sdio_probe(struct sdio_func *func,
 	wilc->bus_data = sdio_priv;
 	wilc->dev = &func->dev;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	wilc->rtc_clk = devm_clk_get_optional(&func->card->dev, "rtc");
-	if (IS_ERR(wilc->rtc_clk)) {
-		ret = PTR_ERR(wilc->rtc_clk);
-		goto dispose_irq;
-	}
-	clk_prepare_enable(wilc->rtc_clk);
-<<<<<<< HEAD
-
-	dev_info(&func->dev, "Driver Initializing success\n");
-	return 0;
-
-dispose_irq:
-	irq_dispose_mapping(wilc->dev_irq_num);
-	wilc_netdev_cleanup(wilc);
-free:
-	kfree(sdio_priv);
-	return ret;
-=======
 	wilc->rtc_clk = devm_clk_get(&func->card->dev, "rtc");
 	if (PTR_ERR_OR_ZERO(wilc->rtc_clk) == -EPROBE_DEFER) {
 		kfree(sdio_priv);
@@ -189,36 +157,15 @@ free:
 
 	dev_info(&func->dev, "Driver Initializing success\n");
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	dev_info(&func->dev, "Driver Initializing success\n");
-	return 0;
-
-dispose_irq:
-	irq_dispose_mapping(wilc->dev_irq_num);
-	wilc_netdev_cleanup(wilc);
-free:
-	kfree(sdio_priv);
-	return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void wilc_sdio_remove(struct sdio_func *func)
 {
 	struct wilc *wilc = sdio_get_drvdata(func);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clk_disable_unprepare(wilc->rtc_clk);
-=======
 	if (!IS_ERR(wilc->rtc_clk))
 		clk_disable_unprepare(wilc->rtc_clk);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clk_disable_unprepare(wilc->rtc_clk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wilc_netdev_cleanup(wilc);
 }
 

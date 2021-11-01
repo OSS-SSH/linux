@@ -2,14 +2,6 @@
 /*
  * Copyright (C) 2017-2018 HUAWEI, Inc.
  *             https://www.huawei.com/
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Copyright (C) 2021, Alibaba Cloud
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Copyright (C) 2021, Alibaba Cloud
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #ifndef __EROFS_INTERNAL_H
 #define __EROFS_INTERNAL_H
@@ -23,14 +15,6 @@
 #include <linux/magic.h>
 #include <linux/slab.h>
 #include <linux/vmalloc.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/iomap.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/iomap.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "erofs_fs.h"
 
 /* redefine pr_fmt "erofs: " */
@@ -99,14 +83,6 @@ struct erofs_sb_info {
 
 	struct erofs_sb_lz4_info lz4;
 #endif	/* CONFIG_EROFS_FS_ZIP */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct dax_device *dax_dev;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct dax_device *dax_dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 blocks;
 	u32 meta_blkaddr;
 #ifdef CONFIG_EROFS_FS_XATTR
@@ -139,16 +115,6 @@ struct erofs_sb_info {
 /* Mount flags set via mount options or defaults */
 #define EROFS_MOUNT_XATTR_USER		0x00000010
 #define EROFS_MOUNT_POSIX_ACL		0x00000020
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define EROFS_MOUNT_DAX_ALWAYS		0x00000040
-#define EROFS_MOUNT_DAX_NEVER		0x00000080
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define EROFS_MOUNT_DAX_ALWAYS		0x00000040
-#define EROFS_MOUNT_DAX_NEVER		0x00000080
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define clear_opt(ctx, option)	((ctx)->mount_opt &= ~EROFS_MOUNT_##option)
 #define set_opt(ctx, option)	((ctx)->mount_opt |= EROFS_MOUNT_##option)
@@ -291,19 +257,6 @@ struct erofs_inode {
 
 	union {
 		erofs_blk_t raw_blkaddr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		struct {
-			unsigned short	chunkformat;
-			unsigned char	chunkbits;
-		};
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_EROFS_FS_ZIP
 		struct {
 			unsigned short z_advise;
@@ -400,26 +353,8 @@ struct erofs_map_blocks {
 
 /* Flags used by erofs_map_blocks_flatmode() */
 #define EROFS_GET_BLOCKS_RAW    0x0001
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/*
- * Used to get the exact decompressed length, e.g. fiemap (consider lookback
- * approach instead if possible since it's more metadata lightweight.)
- */
-#define EROFS_GET_BLOCKS_FIEMAP	0x0002
 
 /* zmap.c */
-extern const struct iomap_ops z_erofs_iomap_report_ops;
-
-<<<<<<< HEAD
-=======
-
-/* zmap.c */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_EROFS_FS_ZIP
 int z_erofs_fill_inode(struct inode *inode);
 int z_erofs_map_blocks_iter(struct inode *inode,
@@ -436,21 +371,7 @@ static inline int z_erofs_map_blocks_iter(struct inode *inode,
 #endif	/* !CONFIG_EROFS_FS_ZIP */
 
 /* data.c */
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern const struct file_operations erofs_file_fops;
 struct page *erofs_get_meta_page(struct super_block *sb, erofs_blk_t blkaddr);
-int erofs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
-		 u64 start, u64 len);
-=======
-struct page *erofs_get_meta_page(struct super_block *sb, erofs_blk_t blkaddr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern const struct file_operations erofs_file_fops;
-struct page *erofs_get_meta_page(struct super_block *sb, erofs_blk_t blkaddr);
-int erofs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
-		 u64 start, u64 len);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* inode.c */
 static inline unsigned long erofs_inode_hash(erofs_nid_t nid)
@@ -520,16 +441,8 @@ int __init z_erofs_init_zip_subsystem(void);
 void z_erofs_exit_zip_subsystem(void);
 int erofs_try_to_free_all_cached_pages(struct erofs_sb_info *sbi,
 				       struct erofs_workgroup *egrp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int erofs_try_to_free_cached_page(struct page *page);
-=======
 int erofs_try_to_free_cached_page(struct address_space *mapping,
 				  struct page *page);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int erofs_try_to_free_cached_page(struct page *page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int z_erofs_load_lz4_config(struct super_block *sb,
 			    struct erofs_super_block *dsb,
 			    struct z_erofs_lz4_cfgs *lz4, int len);

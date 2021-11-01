@@ -30,29 +30,11 @@
 #define SMU11_DRIVER_IF_VERSION_NV10 0x37
 #define SMU11_DRIVER_IF_VERSION_NV12 0x38
 #define SMU11_DRIVER_IF_VERSION_NV14 0x38
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define SMU11_DRIVER_IF_VERSION_Sienna_Cichlid 0x40
-#define SMU11_DRIVER_IF_VERSION_Navy_Flounder 0xE
-#define SMU11_DRIVER_IF_VERSION_VANGOGH 0x03
-#define SMU11_DRIVER_IF_VERSION_Dimgrey_Cavefish 0xF
-#define SMU11_DRIVER_IF_VERSION_Beige_Goby 0xD
-#define SMU11_DRIVER_IF_VERSION_Cyan_Skillfish 0x8
-=======
 #define SMU11_DRIVER_IF_VERSION_Sienna_Cichlid 0x3D
 #define SMU11_DRIVER_IF_VERSION_Navy_Flounder 0xE
 #define SMU11_DRIVER_IF_VERSION_VANGOGH 0x03
 #define SMU11_DRIVER_IF_VERSION_Dimgrey_Cavefish 0xF
 #define SMU11_DRIVER_IF_VERSION_Beige_Goby 0x9
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define SMU11_DRIVER_IF_VERSION_Sienna_Cichlid 0x40
-#define SMU11_DRIVER_IF_VERSION_Navy_Flounder 0xE
-#define SMU11_DRIVER_IF_VERSION_VANGOGH 0x03
-#define SMU11_DRIVER_IF_VERSION_Dimgrey_Cavefish 0xF
-#define SMU11_DRIVER_IF_VERSION_Beige_Goby 0xD
-#define SMU11_DRIVER_IF_VERSION_Cyan_Skillfish 0x8
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* MP Apertures */
 #define MP0_Public			0x03800000
@@ -238,39 +220,9 @@ int
 smu_v11_0_set_fan_control_mode(struct smu_context *smu,
 			       uint32_t mode);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int smu_v11_0_set_fan_speed_pwm(struct smu_context *smu,
-				    uint32_t speed);
-
-int smu_v11_0_set_fan_speed_rpm(struct smu_context *smu,
-				uint32_t speed);
-
-int smu_v11_0_get_fan_speed_pwm(struct smu_context *smu,
-				    uint32_t *speed);
-
-int smu_v11_0_get_fan_speed_rpm(struct smu_context *smu,
-				uint32_t *speed);
-
-=======
 int smu_v11_0_set_fan_speed_percent(struct smu_context *smu,
 				    uint32_t speed);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int smu_v11_0_set_fan_speed_pwm(struct smu_context *smu,
-				    uint32_t speed);
-
-int smu_v11_0_set_fan_speed_rpm(struct smu_context *smu,
-				uint32_t speed);
-
-int smu_v11_0_get_fan_speed_pwm(struct smu_context *smu,
-				    uint32_t *speed);
-
-int smu_v11_0_get_fan_speed_rpm(struct smu_context *smu,
-				uint32_t *speed);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int smu_v11_0_set_xgmi_pstate(struct smu_context *smu,
 				     uint32_t pstate);
 
@@ -350,15 +302,5 @@ void smu_v11_0_interrupt_work(struct smu_context *smu);
 
 int smu_v11_0_set_light_sbr(struct smu_context *smu, bool enable);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int smu_v11_0_restore_user_od_settings(struct smu_context *smu);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int smu_v11_0_restore_user_od_settings(struct smu_context *smu);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 #endif

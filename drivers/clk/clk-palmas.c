@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-// SPDX-License-Identifier: GPL-2.0
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-// SPDX-License-Identifier: GPL-2.0
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Clock driver for Palmas device.
  *
@@ -14,9 +6,6 @@
  *
  * Author:	Laxman Dewangan <ldewangan@nvidia.com>
  *		Peter Ujfalusi <peter.ujfalusi@ti.com>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -26,9 +15,6 @@
  * whether express or implied; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/clk.h>

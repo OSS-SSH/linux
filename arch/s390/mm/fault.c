@@ -31,14 +31,6 @@
 #include <linux/kprobes.h>
 #include <linux/uaccess.h>
 #include <linux/hugetlb.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/kfence.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/kfence.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/asm-offsets.h>
 #include <asm/diag.h>
 #include <asm/gmap.h>
@@ -238,18 +230,8 @@ const struct exception_table_entry *s390_search_extables(unsigned long addr)
 {
 	const struct exception_table_entry *fixup;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fixup = search_extable(__start_amode31_ex_table,
-			       __stop_amode31_ex_table - __start_amode31_ex_table,
-=======
 	fixup = search_extable(__start_dma_ex_table,
 			       __stop_dma_ex_table - __start_dma_ex_table,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	fixup = search_extable(__start_amode31_ex_table,
-			       __stop_amode31_ex_table - __start_amode31_ex_table,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       addr);
 	if (!fixup)
 		fixup = search_exception_tables(addr);
@@ -374,14 +356,6 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
 	unsigned long address;
 	unsigned int flags;
 	vm_fault_t fault;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool is_write;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool is_write;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tsk = current;
 	/*
@@ -395,16 +369,6 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
 
 	mm = tsk->mm;
 	trans_exc_code = regs->int_parm_long;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	address = trans_exc_code & __FAIL_ADDR_MASK;
-	is_write = (trans_exc_code & store_indication) == 0x400;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	address = trans_exc_code & __FAIL_ADDR_MASK;
-	is_write = (trans_exc_code & store_indication) == 0x400;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Verify that the fault happened in user space, that
@@ -415,16 +379,6 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
 	type = get_fault_type(regs);
 	switch (type) {
 	case KERNEL_FAULT:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (kfence_handle_page_fault(address, is_write, regs))
-			return 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (kfence_handle_page_fault(address, is_write, regs))
-			return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	case USER_FAULT:
 	case GMAP_FAULT:
@@ -433,26 +387,12 @@ static inline vm_fault_t do_exception(struct pt_regs *regs, int access)
 		break;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	address = trans_exc_code & __FAIL_ADDR_MASK;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	perf_sw_event(PERF_COUNT_SW_PAGE_FAULTS, 1, regs, address);
 	flags = FAULT_FLAG_DEFAULT;
 	if (user_mode(regs))
 		flags |= FAULT_FLAG_USER;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (access == VM_WRITE || is_write)
-=======
 	if (access == VM_WRITE || (trans_exc_code & store_indication) == 0x400)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (access == VM_WRITE || is_write)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		flags |= FAULT_FLAG_WRITE;
 	mmap_read_lock(mm);
 

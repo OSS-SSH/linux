@@ -104,18 +104,8 @@ void sctp_packet_config(struct sctp_packet *packet, __u32 vtag,
 		if (asoc->param_flags & SPP_PMTUD_ENABLE)
 			sctp_assoc_sync_pmtu(asoc);
 	} else if (!sctp_transport_pl_enabled(tp) &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-		   asoc->param_flags & SPP_PMTUD_ENABLE) {
-		if (!sctp_transport_pmtu_check(tp))
-=======
 		   !sctp_transport_pmtu_check(tp)) {
 		if (asoc->param_flags & SPP_PMTUD_ENABLE)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		   asoc->param_flags & SPP_PMTUD_ENABLE) {
-		if (!sctp_transport_pmtu_check(tp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sctp_assoc_sync_pmtu(asoc);
 	}
 

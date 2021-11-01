@@ -3338,17 +3338,7 @@ int dwc2_port_suspend(struct dwc2_hsotg *hsotg, u16 windex)
 		 * If not hibernation nor partial power down are supported,
 		 * clock gating is used to save power.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!hsotg->params.no_clock_gating)
-			dwc2_host_enter_clock_gating(hsotg);
-=======
 		dwc2_host_enter_clock_gating(hsotg);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!hsotg->params.no_clock_gating)
-			dwc2_host_enter_clock_gating(hsotg);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 
@@ -4412,17 +4402,7 @@ static int _dwc2_hcd_suspend(struct usb_hcd *hcd)
 		 * If not hibernation nor partial power down are supported,
 		 * clock gating is used to save power.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!hsotg->params.no_clock_gating)
-			dwc2_host_enter_clock_gating(hsotg);
-=======
 		dwc2_host_enter_clock_gating(hsotg);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!hsotg->params.no_clock_gating)
-			dwc2_host_enter_clock_gating(hsotg);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* After entering suspend, hardware is not accessible */
 		clear_bit(HCD_FLAG_HW_ACCESSIBLE, &hcd->flags);
@@ -5209,19 +5189,6 @@ int dwc2_hcd_init(struct dwc2_hsotg *hsotg)
 	hcd->has_tt = 1;
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!res) {
-		retval = -EINVAL;
-		goto error1;
-	}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hcd->rsrc_start = res->start;
 	hcd->rsrc_len = resource_size(res);
 

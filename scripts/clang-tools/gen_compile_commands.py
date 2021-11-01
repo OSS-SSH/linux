@@ -13,28 +13,12 @@ import logging
 import os
 import re
 import subprocess
-<<<<<<< HEAD
-<<<<<<< HEAD
-import sys
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-import sys
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 _DEFAULT_OUTPUT = 'compile_commands.json'
 _DEFAULT_LOG_LEVEL = 'WARNING'
 
 _FILENAME_PATTERN = r'^\..*\.cmd$'
-<<<<<<< HEAD
-<<<<<<< HEAD
-_LINE_PATTERN = r'^cmd_[^ ]*\.o := (.* )([^ ]*\.c) *(;|$)'
-=======
 _LINE_PATTERN = r'^cmd_[^ ]*\.o := (.* )([^ ]*\.c)$'
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-_LINE_PATTERN = r'^cmd_[^ ]*\.o := (.* )([^ ]*\.c) *(;|$)'
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 _VALID_LOG_LEVELS = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
 # The tools/ directory adopts a different build system, and produces .cmd
 # files in a different format. Do not support it.

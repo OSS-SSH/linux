@@ -1,13 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Copyright 2021 NXP
-=======
 /* Copyright 2021, NXP Semiconductors
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Copyright 2021 NXP
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include <linux/pcs/pcs-xpcs.h>
 #include <linux/of_mdio.h>
@@ -292,16 +284,8 @@ static int sja1105_mdiobus_base_tx_register(struct sja1105_private *priv,
 	struct mii_bus *bus;
 	int rc = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	np = of_get_compatible_child(mdio_node, "nxp,sja1110-base-tx-mdio");
-=======
 	np = of_find_compatible_node(mdio_node, NULL,
 				     "nxp,sja1110-base-tx-mdio");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	np = of_get_compatible_child(mdio_node, "nxp,sja1110-base-tx-mdio");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!np)
 		return 0;
 
@@ -355,16 +339,8 @@ static int sja1105_mdiobus_base_t1_register(struct sja1105_private *priv,
 	struct mii_bus *bus;
 	int rc = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	np = of_get_compatible_child(mdio_node, "nxp,sja1110-base-t1-mdio");
-=======
 	np = of_find_compatible_node(mdio_node, NULL,
 				     "nxp,sja1110-base-t1-mdio");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	np = of_get_compatible_child(mdio_node, "nxp,sja1110-base-t1-mdio");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!np)
 		return 0;
 

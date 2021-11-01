@@ -26,17 +26,9 @@ struct ib_umem {
 	u32 is_odp : 1;
 	u32 is_dmabuf : 1;
 	struct work_struct	work;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct sg_append_table sgt_append;
-=======
 	struct sg_table sg_head;
 	int             nmap;
 	unsigned int    sg_nents;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct sg_append_table sgt_append;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct ib_umem_dmabuf {
@@ -64,15 +56,7 @@ static inline int ib_umem_offset(struct ib_umem *umem)
 static inline unsigned long ib_umem_dma_offset(struct ib_umem *umem,
 					       unsigned long pgsz)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return (sg_dma_address(umem->sgt_append.sgt.sgl) + ib_umem_offset(umem)) &
-=======
 	return (sg_dma_address(umem->sg_head.sgl) + ib_umem_offset(umem)) &
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return (sg_dma_address(umem->sgt_append.sgt.sgl) + ib_umem_offset(umem)) &
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       (pgsz - 1);
 }
 
@@ -93,17 +77,7 @@ static inline void __rdma_umem_block_iter_start(struct ib_block_iter *biter,
 						struct ib_umem *umem,
 						unsigned long pgsz)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__rdma_block_iter_start(biter, umem->sgt_append.sgt.sgl,
-				umem->sgt_append.sgt.nents, pgsz);
-=======
 	__rdma_block_iter_start(biter, umem->sg_head.sgl, umem->nmap, pgsz);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__rdma_block_iter_start(biter, umem->sgt_append.sgt.sgl,
-				umem->sgt_append.sgt.nents, pgsz);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -154,15 +128,7 @@ static inline unsigned long ib_umem_find_best_pgoff(struct ib_umem *umem,
 						    unsigned long pgsz_bitmap,
 						    u64 pgoff_bitmask)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct scatterlist *sg = umem->sgt_append.sgt.sgl;
-=======
 	struct scatterlist *sg = umem->sg_head.sgl;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct scatterlist *sg = umem->sgt_append.sgt.sgl;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_addr_t dma_addr;
 
 	dma_addr = sg_dma_address(sg) + (umem->address & ~PAGE_MASK);

@@ -70,17 +70,7 @@ static struct buffer_head *ext4_append(handle_t *handle,
 	inode->i_size += inode->i_sb->s_blocksize;
 	EXT4_I(inode)->i_disksize = inode->i_size;
 	BUFFER_TRACE(bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, inode->i_sb, bh,
-					    EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, inode->i_sb, bh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		brelse(bh);
 		ext4_std_error(inode->i_sb, err);
@@ -1937,32 +1927,12 @@ static struct ext4_dir_entry_2 *do_split(handle_t *handle, struct inode *dir,
 	}
 
 	BUFFER_TRACE(*bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, dir->i_sb, *bh,
-					    EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, *bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, dir->i_sb, *bh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto journal_error;
 
 	BUFFER_TRACE(frame->bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, dir->i_sb, frame->bh,
-					    EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, frame->bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, dir->i_sb, frame->bh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto journal_error;
 
@@ -2139,17 +2109,7 @@ static int add_dirent_to_buf(handle_t *handle, struct ext4_filename *fname,
 			return err;
 	}
 	BUFFER_TRACE(bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, dir->i_sb, bh,
-					    EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, dir->i_sb, bh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		ext4_std_error(dir->i_sb, err);
 		return err;
@@ -2207,17 +2167,7 @@ static int make_indexed_dir(handle_t *handle, struct ext4_filename *fname,
 	blocksize =  dir->i_sb->s_blocksize;
 	dxtrace(printk(KERN_DEBUG "Creating index: inode %lu\n", dir->i_ino));
 	BUFFER_TRACE(bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	retval = ext4_journal_get_write_access(handle, dir->i_sb, bh,
-					       EXT4_JTR_NONE);
-=======
 	retval = ext4_journal_get_write_access(handle, bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	retval = ext4_journal_get_write_access(handle, dir->i_sb, bh,
-					       EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (retval) {
 		ext4_std_error(dir->i_sb, retval);
 		brelse(bh);
@@ -2469,15 +2419,7 @@ again:
 	}
 
 	BUFFER_TRACE(bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, sb, bh, EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, sb, bh, EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto journal_error;
 
@@ -2534,17 +2476,7 @@ again:
 		node2->fake.rec_len = ext4_rec_len_to_disk(sb->s_blocksize,
 							   sb->s_blocksize);
 		BUFFER_TRACE(frame->bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = ext4_journal_get_write_access(handle, sb, frame->bh,
-						    EXT4_JTR_NONE);
-=======
 		err = ext4_journal_get_write_access(handle, frame->bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = ext4_journal_get_write_access(handle, sb, frame->bh,
-						    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			goto journal_error;
 		if (!add_level) {
@@ -2554,20 +2486,8 @@ again:
 				       icount1, icount2));
 
 			BUFFER_TRACE(frame->bh, "get_write_access"); /* index root */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			err = ext4_journal_get_write_access(handle, sb,
-							    (frame - 1)->bh,
-							    EXT4_JTR_NONE);
-=======
 			err = ext4_journal_get_write_access(handle,
 							     (frame - 1)->bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			err = ext4_journal_get_write_access(handle, sb,
-							    (frame - 1)->bh,
-							    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (err)
 				goto journal_error;
 
@@ -2597,15 +2517,7 @@ again:
 				goto journal_error;
 			err = ext4_handle_dirty_dx_node(handle, dir,
 							frame->bh);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (restart || err)
-=======
 			if (err)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (restart || err)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto journal_error;
 		} else {
 			struct dx_root *dxroot;
@@ -2724,17 +2636,7 @@ static int ext4_delete_entry(handle_t *handle,
 		csum_size = sizeof(struct ext4_dir_entry_tail);
 
 	BUFFER_TRACE(bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, dir->i_sb, bh,
-					    EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, dir->i_sb, bh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err))
 		goto out;
 
@@ -3144,9 +3046,6 @@ bool ext4_empty_dir(struct inode *inode)
 	return true;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*
  * ext4_orphan_add() links an unlinked or truncated inode into a list of
  * such inodes, starting at the superblock, in case we crash before the
@@ -3327,9 +3226,6 @@ out_brelse:
 	goto out_err;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ext4_rmdir(struct inode *dir, struct dentry *dentry)
 {
 	int retval;
@@ -3779,17 +3675,7 @@ static int ext4_rename_dir_prepare(handle_t *handle, struct ext4_renament *ent)
 	if (le32_to_cpu(ent->parent_de->inode) != ent->dir->i_ino)
 		return -EFSCORRUPTED;
 	BUFFER_TRACE(ent->dir_bh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return ext4_journal_get_write_access(handle, ent->dir->i_sb,
-					     ent->dir_bh, EXT4_JTR_NONE);
-=======
 	return ext4_journal_get_write_access(handle, ent->dir_bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return ext4_journal_get_write_access(handle, ent->dir->i_sb,
-					     ent->dir_bh, EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ext4_rename_dir_finish(handle_t *handle, struct ext4_renament *ent,
@@ -3824,17 +3710,7 @@ static int ext4_setent(handle_t *handle, struct ext4_renament *ent,
 	int retval, retval2;
 
 	BUFFER_TRACE(ent->bh, "get write access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	retval = ext4_journal_get_write_access(handle, ent->dir->i_sb, ent->bh,
-					       EXT4_JTR_NONE);
-=======
 	retval = ext4_journal_get_write_access(handle, ent->bh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	retval = ext4_journal_get_write_access(handle, ent->dir->i_sb, ent->bh,
-					       EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (retval)
 		return retval;
 	ent->de->inode = cpu_to_le32(ino);

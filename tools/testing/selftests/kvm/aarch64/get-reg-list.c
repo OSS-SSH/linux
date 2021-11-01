@@ -1019,17 +1019,7 @@ static __u64 sve_rejects_set[] = {
 #define VREGS_SUBLIST \
 	{ "vregs", .regs = vregs, .regs_n = ARRAY_SIZE(vregs), }
 #define PMU_SUBLIST \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ "pmu", .capability = KVM_CAP_ARM_PMU_V3, .feature = KVM_ARM_VCPU_PMU_V3, \
-	  .regs = pmu_regs, .regs_n = ARRAY_SIZE(pmu_regs), }
-=======
 	{ "pmu", .regs = pmu_regs, .regs_n = ARRAY_SIZE(pmu_regs), }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ "pmu", .capability = KVM_CAP_ARM_PMU_V3, .feature = KVM_ARM_VCPU_PMU_V3, \
-	  .regs = pmu_regs, .regs_n = ARRAY_SIZE(pmu_regs), }
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SVE_SUBLIST \
 	{ "sve", .capability = KVM_CAP_ARM_SVE, .feature = KVM_ARM_VCPU_SVE, .finalize = true, \
 	  .regs = sve_regs, .regs_n = ARRAY_SIZE(sve_regs), \

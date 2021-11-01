@@ -36,13 +36,7 @@
 #include <linux/linkage.h>
 #include <asm/errno.h>
 #include <asm/setup.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <asm/segment.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/traps.h>
 #include <asm/unistd.h>
 #include <asm/asm-offsets.h>
@@ -84,79 +78,20 @@ ENTRY(__sys_clone3)
 
 ENTRY(sys_sigreturn)
 	SAVE_SWITCH_STACK
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	movel	%sp,%a1			  	| switch_stack pointer
-	lea	%sp@(SWITCH_STACK_SIZE),%a0	| pt_regs pointer
-	lea     %sp@(-84),%sp			| leave a gap
-	movel	%a1,%sp@-
-	movel	%a0,%sp@-
-<<<<<<< HEAD
-	jbsr	do_sigreturn
-	jra	1f				| shared with rt_sigreturn()
-
-ENTRY(sys_rt_sigreturn)
-	SAVE_SWITCH_STACK
-	movel	%sp,%a1			  	| switch_stack pointer
-	lea	%sp@(SWITCH_STACK_SIZE),%a0	| pt_regs pointer
-	lea     %sp@(-84),%sp			| leave a gap
-	movel	%a1,%sp@-
-	movel	%a0,%sp@-
-	| stack contents:
-	|   [original pt_regs address] [original switch_stack address]
-	|   [gap] [switch_stack] [pt_regs] [exception frame]
-	jbsr	do_rt_sigreturn
-
-1:
-	| stack contents now:
-	|   [original pt_regs address] [original switch_stack address]
-	|   [unused part of the gap] [moved switch_stack] [moved pt_regs]
-	|   [replacement exception frame]
-	| return value of do_{rt_,}sigreturn() points to moved switch_stack.
-
-	movel	%d0,%sp				| discard the leftover junk
-	RESTORE_SWITCH_STACK
-	| stack contents now is just [syscall return address] [pt_regs] [frame]
-	| return pt_regs.d0
-	movel	%sp@(PT_OFF_D0+4),%d0
-=======
 	movel	%sp,%sp@-		  | switch_stack pointer
 	pea	%sp@(SWITCH_STACK_SIZE+4) | pt_regs pointer
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	jbsr	do_sigreturn
-	jra	1f				| shared with rt_sigreturn()
+	addql	#8,%sp
+	RESTORE_SWITCH_STACK
+	rts
 
 ENTRY(sys_rt_sigreturn)
 	SAVE_SWITCH_STACK
-	movel	%sp,%a1			  	| switch_stack pointer
-	lea	%sp@(SWITCH_STACK_SIZE),%a0	| pt_regs pointer
-	lea     %sp@(-84),%sp			| leave a gap
-	movel	%a1,%sp@-
-	movel	%a0,%sp@-
-	| stack contents:
-	|   [original pt_regs address] [original switch_stack address]
-	|   [gap] [switch_stack] [pt_regs] [exception frame]
+	movel	%sp,%sp@-		  | switch_stack pointer
+	pea	%sp@(SWITCH_STACK_SIZE+4) | pt_regs pointer
 	jbsr	do_rt_sigreturn
-
-1:
-	| stack contents now:
-	|   [original pt_regs address] [original switch_stack address]
-	|   [unused part of the gap] [moved switch_stack] [moved pt_regs]
-	|   [replacement exception frame]
-	| return value of do_{rt_,}sigreturn() points to moved switch_stack.
-
-	movel	%d0,%sp				| discard the leftover junk
+	addql	#8,%sp
 	RESTORE_SWITCH_STACK
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	| stack contents now is just [syscall return address] [pt_regs] [frame]
-	| return pt_regs.d0
-	movel	%sp@(PT_OFF_D0+4),%d0
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rts
 
 ENTRY(buserr)
@@ -247,9 +182,6 @@ do_trace_exit:
 	addql	#4,%sp
 	jra	.Lret_from_exception
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 ENTRY(ret_from_signal)
 	movel	%curptr@(TASK_STACK),%a1
 	tstb	%a1@(TINFO_FLAGS+2)
@@ -269,9 +201,6 @@ ENTRY(ret_from_signal)
 #endif
 	jra	.Lret_from_exception
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ENTRY(system_call)
 	SAVE_ALL_SYS
 
@@ -409,15 +338,7 @@ resume:
 
 	/* save fs (sfc,%dfc) (may be pointing to kernel memory) */
 	movec	%sfc,%d0
-<<<<<<< HEAD
-<<<<<<< HEAD
-	movew	%d0,%a0@(TASK_THREAD+THREAD_FC)
-=======
 	movew	%d0,%a0@(TASK_THREAD+THREAD_FS)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	movew	%d0,%a0@(TASK_THREAD+THREAD_FC)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* save usp */
 	/* it is better to use a movel here instead of a movew 8*) */
@@ -503,15 +424,7 @@ resume:
 	movel	%a0,%usp
 
 	/* restore fs (sfc,%dfc) */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	movew	%a1@(TASK_THREAD+THREAD_FC),%a0
-=======
 	movew	%a1@(TASK_THREAD+THREAD_FS),%a0
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	movew	%a1@(TASK_THREAD+THREAD_FC),%a0
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	movec	%a0,%sfc
 	movec	%a0,%dfc
 

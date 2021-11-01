@@ -160,15 +160,7 @@ static void qla4xxx_build_scsi_iocbs(struct srb *srb,
 
 	if (!scsi_bufflen(cmd) || cmd->sc_data_direction == DMA_NONE) {
 		/* No data being transferred */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		cmd_entry->ttlByteCnt = cpu_to_le32(0);
-=======
 		cmd_entry->ttlByteCnt = __constant_cpu_to_le32(0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		cmd_entry->ttlByteCnt = cpu_to_le32(0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
@@ -296,15 +288,7 @@ int qla4xxx_send_command_to_isp(struct scsi_qla_host *ha, struct srb * srb)
 	/* Acquire hardware specific lock */
 	spin_lock_irqsave(&ha->hardware_lock, flags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	index = scsi_cmd_to_rq(cmd)->tag;
-=======
 	index = (uint32_t)cmd->request->tag;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	index = scsi_cmd_to_rq(cmd)->tag;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Check to see if adapter is online before placing request on

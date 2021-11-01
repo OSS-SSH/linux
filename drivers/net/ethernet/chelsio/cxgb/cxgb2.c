@@ -748,19 +748,7 @@ static int set_sge_param(struct net_device *dev, struct ethtool_ringparam *e)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int set_coalesce(struct net_device *dev, struct ethtool_coalesce *c,
-			struct kernel_ethtool_coalesce *kernel_coal,
-			struct netlink_ext_ack *extack)
-=======
 static int set_coalesce(struct net_device *dev, struct ethtool_coalesce *c)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int set_coalesce(struct net_device *dev, struct ethtool_coalesce *c,
-			struct kernel_ethtool_coalesce *kernel_coal,
-			struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct adapter *adapter = dev->ml_priv;
 
@@ -771,19 +759,7 @@ static int set_coalesce(struct net_device *dev, struct ethtool_coalesce *c,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int get_coalesce(struct net_device *dev, struct ethtool_coalesce *c,
-			struct kernel_ethtool_coalesce *kernel_coal,
-			struct netlink_ext_ack *extack)
-=======
 static int get_coalesce(struct net_device *dev, struct ethtool_coalesce *c)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int get_coalesce(struct net_device *dev, struct ethtool_coalesce *c,
-			struct kernel_ethtool_coalesce *kernel_coal,
-			struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct adapter *adapter = dev->ml_priv;
 
@@ -948,15 +924,7 @@ static const struct net_device_ops cxgb_netdev_ops = {
 	.ndo_get_stats		= t1_get_stats,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_rx_mode	= t1_set_rxmode,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= t1_ioctl,
-=======
 	.ndo_do_ioctl		= t1_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= t1_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= t1_change_mtu,
 	.ndo_set_mac_address	= t1_set_mac_addr,
 	.ndo_fix_features	= t1_fix_features,
@@ -1139,14 +1107,6 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (!adapter->registered_device_map) {
 		pr_err("%s: could not register any net devices\n",
 		       pci_name(pdev));
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = -EINVAL;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_release_adapter_res;
 	}
 

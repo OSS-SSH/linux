@@ -1059,11 +1059,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
 	if (ret)
 		goto error_setup_irq;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Setup BHI INTVEC */
-	write_lock_irq(&mhi_cntrl->pm_lock);
-=======
 	/* Setup BHI offset & INTVEC */
 	write_lock_irq(&mhi_cntrl->pm_lock);
 	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, BHIOFF, &val);
@@ -1086,11 +1081,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
 		mhi_cntrl->bhie = mhi_cntrl->regs + val;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Setup BHI INTVEC */
-	write_lock_irq(&mhi_cntrl->pm_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
 	mhi_cntrl->pm_state = MHI_PM_POR;
 	mhi_cntrl->ee = MHI_EE_MAX;
@@ -1099,36 +1089,12 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
 
 	/* Confirm that the device is in valid exec env */
 	if (!MHI_IN_PBL(current_ee) && current_ee != MHI_EE_AMSS) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_err(dev, "%s is not a valid EE for power on\n",
-			TO_MHI_EXEC_STR(current_ee));
-		ret = -EIO;
-		goto error_async_power_up;
-	}
-
-	state = mhi_get_mhi_state(mhi_cntrl);
-	dev_dbg(dev, "Attempting power on with EE: %s, state: %s\n",
-		TO_MHI_EXEC_STR(current_ee), TO_MHI_STATE_STR(state));
-
-=======
 		dev_err(dev, "Not a valid EE for power on\n");
-=======
-		dev_err(dev, "%s is not a valid EE for power on\n",
-			TO_MHI_EXEC_STR(current_ee));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EIO;
-		goto error_async_power_up;
+		goto error_bhi_offset;
 	}
 
 	state = mhi_get_mhi_state(mhi_cntrl);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_dbg(dev, "Attempting power on with EE: %s, state: %s\n",
-		TO_MHI_EXEC_STR(current_ee), TO_MHI_STATE_STR(state));
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (state == MHI_STATE_SYS_ERR) {
 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
 		ret = wait_event_timeout(mhi_cntrl->state_event,
@@ -1144,15 +1110,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
 		if (!ret) {
 			ret = -EIO;
 			dev_info(dev, "Failed to reset MHI due to syserr state\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-			goto error_async_power_up;
-=======
 			goto error_bhi_offset;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			goto error_async_power_up;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/*
@@ -1174,15 +1132,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
 
 	return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-error_async_power_up:
-=======
 error_bhi_offset:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-error_async_power_up:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mhi_deinit_free_irq(mhi_cntrl);
 
 error_setup_irq:

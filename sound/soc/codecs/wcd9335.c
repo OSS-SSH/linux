@@ -4076,25 +4076,6 @@ static int wcd9335_setup_irqs(struct wcd9335_codec *wcd)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void wcd9335_teardown_irqs(struct wcd9335_codec *wcd)
-{
-	int i;
-
-	/* disable interrupts on all slave ports */
-	for (i = 0; i < WCD9335_SLIM_NUM_PORT_REG; i++)
-		regmap_write(wcd->if_regmap, WCD9335_SLIM_PGD_PORT_INT_EN0 + i,
-			     0x00);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void wcd9335_cdc_sido_ccl_enable(struct wcd9335_codec *wcd,
 					bool ccl_flag)
 {
@@ -4863,14 +4844,6 @@ static void wcd9335_codec_init(struct snd_soc_component *component)
 static int wcd9335_codec_probe(struct snd_soc_component *component)
 {
 	struct wcd9335_codec *wcd = dev_get_drvdata(component->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	snd_soc_component_init_regmap(component, wcd->regmap);
@@ -4888,25 +4861,7 @@ static int wcd9335_codec_probe(struct snd_soc_component *component)
 	for (i = 0; i < NUM_CODEC_DAIS; i++)
 		INIT_LIST_HEAD(&wcd->dai[i].slim_ch_list);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = wcd9335_setup_irqs(wcd);
-	if (ret)
-		goto free_clsh_ctrl;
-
-	return 0;
-
-free_clsh_ctrl:
-	wcd_clsh_ctrl_free(wcd->clsh_ctrl);
-	return ret;
-<<<<<<< HEAD
-=======
 	return wcd9335_setup_irqs(wcd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void wcd9335_codec_remove(struct snd_soc_component *comp)
@@ -4914,15 +4869,7 @@ static void wcd9335_codec_remove(struct snd_soc_component *comp)
 	struct wcd9335_codec *wcd = dev_get_drvdata(comp->dev);
 
 	wcd_clsh_ctrl_free(wcd->clsh_ctrl);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	wcd9335_teardown_irqs(wcd);
-=======
 	free_irq(regmap_irq_get_virq(wcd->irq_data, WCD9335_IRQ_SLIMBUS), wcd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	wcd9335_teardown_irqs(wcd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int wcd9335_codec_set_sysclk(struct snd_soc_component *comp,

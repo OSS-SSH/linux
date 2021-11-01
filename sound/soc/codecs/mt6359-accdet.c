@@ -234,15 +234,7 @@ static void recover_eint_setting(struct mt6359_accdet *priv)
 
 static void mt6359_accdet_recover_jd_setting(struct mt6359_accdet *priv)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 	int ret = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int value = 0;
 
 	regmap_update_bits(priv->regmap, ACCDET_IRQ_ADDR,
@@ -469,15 +461,7 @@ static irqreturn_t mt6359_accdet_irq(int irq, void *data)
 {
 	struct mt6359_accdet *priv = data;
 	unsigned int irq_val = 0, val = 0, value = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 	int ret = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&priv->res_lock);
 	regmap_read(priv->regmap, ACCDET_IRQ_ADDR, &irq_val);
@@ -567,15 +551,7 @@ static irqreturn_t mt6359_accdet_irq(int irq, void *data)
 
 static int mt6359_accdet_parse_dt(struct mt6359_accdet *priv)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 	int ret = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct device *dev = priv->dev;
 	struct device_node *node = NULL;
 	int pwm_deb[15] = {0};
@@ -950,15 +926,7 @@ static int mt6359_accdet_probe(struct platform_device *pdev)
 {
 	struct mt6359_accdet *priv;
 	struct mt6397_chip *mt6397 = dev_get_drvdata(pdev->dev.parent);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 	int ret = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(&pdev->dev, "%s(), dev name %s\n",
 		__func__, dev_name(&pdev->dev));
@@ -1089,10 +1057,6 @@ static struct platform_driver mt6359_accdet_driver = {
 	.probe = mt6359_accdet_probe,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_platform_driver(mt6359_accdet_driver)
-=======
 static int __init mt6359_accdet_driver_init(void)
 {
 	int ret = 0;
@@ -1109,10 +1073,6 @@ static void __exit mt6359_accdet_driver_exit(void)
 }
 module_init(mt6359_accdet_driver_init);
 module_exit(mt6359_accdet_driver_exit);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_platform_driver(mt6359_accdet_driver)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Module information */
 MODULE_DESCRIPTION("MT6359 ALSA SoC codec jack driver");

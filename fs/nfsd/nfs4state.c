@@ -2687,21 +2687,9 @@ static void force_expire_client(struct nfs4_client *clp)
 
 	trace_nfsd_clid_admin_expired(&clp->cl_clientid);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock(&nn->client_lock);
-	clp->cl_time = 0;
-	spin_unlock(&nn->client_lock);
-=======
 	spin_lock(&clp->cl_lock);
 	clp->cl_time = 0;
 	spin_unlock(&clp->cl_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock(&nn->client_lock);
-	clp->cl_time = 0;
-	spin_unlock(&nn->client_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	wait_event(expiry_wq, atomic_read(&clp->cl_rpc_users) == 0);
 	spin_lock(&nn->client_lock);
@@ -3582,15 +3570,7 @@ static struct nfsd4_conn *__nfsd4_find_conn(struct svc_xprt *xpt, struct nfsd4_s
 }
 
 static __be32 nfsd4_match_existing_connection(struct svc_rqst *rqst,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		struct nfsd4_session *session, u32 req, struct nfsd4_conn **conn)
-=======
 				struct nfsd4_session *session, u32 req)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		struct nfsd4_session *session, u32 req, struct nfsd4_conn **conn)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nfs4_client *clp = session->se_client;
 	struct svc_xprt *xpt = rqst->rq_xprt;
@@ -3613,16 +3593,6 @@ static __be32 nfsd4_match_existing_connection(struct svc_rqst *rqst,
 	else
 		status = nfserr_inval;
 	spin_unlock(&clp->cl_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (status == nfs_ok && conn)
-		*conn = c;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (status == nfs_ok && conn)
-		*conn = c;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return status;
 }
 
@@ -3647,27 +3617,8 @@ __be32 nfsd4_bind_conn_to_session(struct svc_rqst *rqstp,
 	status = nfserr_wrong_cred;
 	if (!nfsd4_mach_creds_match(session->se_client, rqstp))
 		goto out;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	status = nfsd4_match_existing_connection(rqstp, session,
-			bcts->dir, &conn);
-	if (status == nfs_ok) {
-		if (bcts->dir == NFS4_CDFC4_FORE_OR_BOTH ||
-				bcts->dir == NFS4_CDFC4_BACK)
-			conn->cn_flags |= NFS4_CDFC4_BACK;
-		nfsd4_probe_callback(session->se_client);
-		goto out;
-	}
-	if (status == nfserr_inval)
-<<<<<<< HEAD
-=======
 	status = nfsd4_match_existing_connection(rqstp, session, bcts->dir);
 	if (status == nfs_ok || status == nfserr_inval)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	status = nfsd4_map_bcts_dir(&bcts->dir);
 	if (status)
@@ -5784,9 +5735,6 @@ check_special_stateids(struct net *net, svc_fh *current_fh, stateid_t *stateid, 
 				NFS4_SHARE_DENY_READ);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*
  * Allow READ/WRITE during grace period on recovered state only for files
  * that are not able to provide mandatory locking.
@@ -5797,9 +5745,6 @@ grace_disallows_io(struct net *net, struct inode *inode)
 	return opens_in_grace(net) && mandatory_lock(inode);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static __be32 check_stateid_generation(stateid_t *in, stateid_t *ref, bool has_session)
 {
 	/*
@@ -6081,13 +6026,7 @@ nfs4_preprocess_stateid_op(struct svc_rqst *rqstp,
 		stateid_t *stateid, int flags, struct nfsd_file **nfp,
 		struct nfs4_stid **cstid)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct inode *ino = d_inode(fhp->fh_dentry);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net *net = SVC_NET(rqstp);
 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
 	struct nfs4_stid *s = NULL;
@@ -6096,15 +6035,9 @@ nfs4_preprocess_stateid_op(struct svc_rqst *rqstp,
 	if (nfp)
 		*nfp = NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (grace_disallows_io(net, ino))
 		return nfserr_grace;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ZERO_STATEID(stateid) || ONE_STATEID(stateid)) {
 		status = check_special_stateids(net, fhp, stateid, flags);
 		goto done;
@@ -6902,14 +6835,6 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
 	struct nfsd4_blocked_lock *nbl = NULL;
 	struct file_lock *file_lock = NULL;
 	struct file_lock *conflock = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct super_block *sb;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct super_block *sb;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__be32 status = 0;
 	int lkflg;
 	int err;
@@ -6931,14 +6856,6 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
 		dprintk("NFSD: nfsd4_lock: permission denied!\n");
 		return status;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sb = cstate->current_fh.fh_dentry->d_sb;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sb = cstate->current_fh.fh_dentry->d_sb;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (lock->lk_is_new) {
 		if (nfsd4_has_session(cstate))
@@ -6984,32 +6901,10 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
 	if (!locks_in_grace(net) && lock->lk_reclaim)
 		goto out;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (lock->lk_reclaim)
-		fl_flags |= FL_RECLAIM;
-
-	fp = lock_stp->st_stid.sc_file;
-	switch (lock->lk_type) {
-		case NFS4_READW_LT:
-			if (nfsd4_has_session(cstate) &&
-			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
-=======
 	fp = lock_stp->st_stid.sc_file;
 	switch (lock->lk_type) {
 		case NFS4_READW_LT:
 			if (nfsd4_has_session(cstate))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (lock->lk_reclaim)
-		fl_flags |= FL_RECLAIM;
-
-	fp = lock_stp->st_stid.sc_file;
-	switch (lock->lk_type) {
-		case NFS4_READW_LT:
-			if (nfsd4_has_session(cstate) &&
-			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				fl_flags |= FL_SLEEP;
 			fallthrough;
 		case NFS4_READ_LT:
@@ -7021,17 +6916,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
 			fl_type = F_RDLCK;
 			break;
 		case NFS4_WRITEW_LT:
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (nfsd4_has_session(cstate) &&
-			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
-=======
 			if (nfsd4_has_session(cstate))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (nfsd4_has_session(cstate) &&
-			    !(sb->s_export_op->flags & EXPORT_OP_SYNC_LOCKS))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				fl_flags |= FL_SLEEP;
 			fallthrough;
 		case NFS4_WRITE_LT:
@@ -7151,16 +7036,8 @@ out:
 /*
  * The NFSv4 spec allows a client to do a LOCKT without holding an OPEN,
  * so we do a temporary open here just to get an open file to pass to
-<<<<<<< HEAD
-<<<<<<< HEAD
- * vfs_test_lock.
-=======
  * vfs_test_lock.  (Arguably perhaps test_lock should be done with an
  * inode operation.)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * vfs_test_lock.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static __be32 nfsd_test_lock(struct svc_rqst *rqstp, struct svc_fh *fhp, struct file_lock *lock)
 {
@@ -7175,19 +7052,7 @@ static __be32 nfsd_test_lock(struct svc_rqst *rqstp, struct svc_fh *fhp, struct 
 							NFSD_MAY_READ));
 	if (err)
 		goto out;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lock->fl_file = nf->nf_file;
 	err = nfserrno(vfs_test_lock(nf->nf_file, lock));
-	lock->fl_file = NULL;
-=======
-	err = nfserrno(vfs_test_lock(nf->nf_file, lock));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lock->fl_file = nf->nf_file;
-	err = nfserrno(vfs_test_lock(nf->nf_file, lock));
-	lock->fl_file = NULL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	fh_unlock(fhp);
 	nfsd_file_put(nf);

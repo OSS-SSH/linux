@@ -39,13 +39,7 @@ int amdgpu_nbio_ras_late_init(struct amdgpu_device *adev)
 		adev->nbio.ras_if->block = AMDGPU_RAS_BLOCK__PCIE_BIF;
 		adev->nbio.ras_if->type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
 		adev->nbio.ras_if->sub_block_index = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		strcpy(adev->nbio.ras_if->name, "pcie_bif");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	ih_info.head = fs_info.head = *adev->nbio.ras_if;
 	r = amdgpu_ras_late_init(adev, adev->nbio.ras_if,

@@ -166,15 +166,7 @@ void irq_migrate_all_off_this_cpu(void)
 		raw_spin_unlock(&desc->lock);
 
 		if (affinity_broken) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			pr_debug_ratelimited("IRQ %u: no longer affine to CPU%u\n",
-=======
 			pr_warn_ratelimited("IRQ %u: no longer affine to CPU%u\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			pr_debug_ratelimited("IRQ %u: no longer affine to CPU%u\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    irq, smp_processor_id());
 		}
 	}

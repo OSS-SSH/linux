@@ -855,18 +855,8 @@ clean:
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int vector2eqnirqn(struct mlx5_core_dev *dev, int vector, int *eqn,
-			  unsigned int *irqn)
-=======
 int mlx5_vector2eqn(struct mlx5_core_dev *dev, int vector, int *eqn,
 		    unsigned int *irqn)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int vector2eqnirqn(struct mlx5_core_dev *dev, int vector, int *eqn,
-			  unsigned int *irqn)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5_eq_table *table = dev->priv.eq_table;
 	struct mlx5_eq_comp *eq, *n;
@@ -875,21 +865,8 @@ static int vector2eqnirqn(struct mlx5_core_dev *dev, int vector, int *eqn,
 
 	list_for_each_entry_safe(eq, n, &table->comp_eqs_list, list) {
 		if (i++ == vector) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (irqn)
-				*irqn = eq->core.irqn;
-			if (eqn)
-				*eqn = eq->core.eqn;
-<<<<<<< HEAD
-=======
 			*eqn = eq->core.eqn;
 			*irqn = eq->core.irqn;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = 0;
 			break;
 		}
@@ -897,36 +874,8 @@ static int vector2eqnirqn(struct mlx5_core_dev *dev, int vector, int *eqn,
 
 	return err;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-int mlx5_vector2eqn(struct mlx5_core_dev *dev, int vector, int *eqn)
-{
-	return vector2eqnirqn(dev, vector, eqn, NULL);
-}
-<<<<<<< HEAD
 EXPORT_SYMBOL(mlx5_vector2eqn);
 
-int mlx5_vector2irqn(struct mlx5_core_dev *dev, int vector, unsigned int *irqn)
-{
-	return vector2eqnirqn(dev, vector, NULL, irqn);
-}
-
-=======
-EXPORT_SYMBOL(mlx5_vector2eqn);
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-EXPORT_SYMBOL(mlx5_vector2eqn);
-
-int mlx5_vector2irqn(struct mlx5_core_dev *dev, int vector, unsigned int *irqn)
-{
-	return vector2eqnirqn(dev, vector, NULL, irqn);
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned int mlx5_comp_vectors_count(struct mlx5_core_dev *dev)
 {
 	return dev->priv.eq_table->num_comp_eqs;

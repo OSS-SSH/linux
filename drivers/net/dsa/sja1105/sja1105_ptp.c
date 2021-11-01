@@ -64,14 +64,6 @@ enum sja1105_ptp_clk_mode {
 static int sja1105_change_rxtstamping(struct sja1105_private *priv,
 				      bool on)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct sja1105_tagger_data *tagger_data = &priv->tagger_data;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct sja1105_tagger_data *tagger_data = &priv->tagger_data;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sja1105_ptp_data *ptp_data = &priv->ptp_data;
 	struct sja1105_general_params_entry *general_params;
 	struct sja1105_table *table;
@@ -87,15 +79,7 @@ static int sja1105_change_rxtstamping(struct sja1105_private *priv,
 		priv->tagger_data.stampable_skb = NULL;
 	}
 	ptp_cancel_worker_sync(ptp_data->clock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	skb_queue_purge(&tagger_data->skb_txtstamp_queue);
-=======
 	skb_queue_purge(&ptp_data->skb_txtstamp_queue);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	skb_queue_purge(&tagger_data->skb_txtstamp_queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	skb_queue_purge(&ptp_data->skb_rxtstamp_queue);
 
 	return sja1105_static_config_reload(priv, SJA1105_RX_HWTSTAMPING);
@@ -468,9 +452,6 @@ bool sja1105_port_rxtstamp(struct dsa_switch *ds, int port,
 	return priv->info->rxtstamp(ds, port, skb);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void sja1110_process_meta_tstamp(struct dsa_switch *ds, int port, u8 ts_id,
 				 enum sja1110_meta_tstamp dir, u64 tstamp)
 {
@@ -505,9 +486,6 @@ void sja1110_process_meta_tstamp(struct dsa_switch *ds, int port, u8 ts_id,
 }
 EXPORT_SYMBOL_GPL(sja1110_process_meta_tstamp);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* In addition to cloning the skb which is done by the common
  * sja1105_port_txtstamp, we need to generate a timestamp ID and save the
  * packet to the TX timestamping queue.
@@ -516,13 +494,7 @@ void sja1110_txtstamp(struct dsa_switch *ds, int port, struct sk_buff *skb)
 {
 	struct sk_buff *clone = SJA1105_SKB_CB(skb)->clone;
 	struct sja1105_private *priv = ds->priv;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct sja1105_ptp_data *ptp_data = &priv->ptp_data;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sja1105_port *sp = &priv->ports[port];
 	u8 ts_id;
 
@@ -538,15 +510,7 @@ void sja1110_txtstamp(struct dsa_switch *ds, int port, struct sk_buff *skb)
 
 	spin_unlock(&sp->data->meta_lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	skb_queue_tail(&sp->data->skb_txtstamp_queue, clone);
-=======
 	skb_queue_tail(&ptp_data->skb_txtstamp_queue, clone);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	skb_queue_tail(&sp->data->skb_txtstamp_queue, clone);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Called from dsa_skb_tx_timestamp. This callback is just to clone
@@ -989,15 +953,7 @@ int sja1105_ptp_clock_register(struct dsa_switch *ds)
 	/* Only used on SJA1105 */
 	skb_queue_head_init(&ptp_data->skb_rxtstamp_queue);
 	/* Only used on SJA1110 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	skb_queue_head_init(&tagger_data->skb_txtstamp_queue);
-=======
 	skb_queue_head_init(&ptp_data->skb_txtstamp_queue);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	skb_queue_head_init(&tagger_data->skb_txtstamp_queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&tagger_data->meta_lock);
 
 	ptp_data->clock = ptp_clock_register(&ptp_data->caps, ds->dev);
@@ -1015,14 +971,6 @@ int sja1105_ptp_clock_register(struct dsa_switch *ds)
 void sja1105_ptp_clock_unregister(struct dsa_switch *ds)
 {
 	struct sja1105_private *priv = ds->priv;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct sja1105_tagger_data *tagger_data = &priv->tagger_data;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct sja1105_tagger_data *tagger_data = &priv->tagger_data;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sja1105_ptp_data *ptp_data = &priv->ptp_data;
 
 	if (IS_ERR_OR_NULL(ptp_data->clock))
@@ -1030,15 +978,7 @@ void sja1105_ptp_clock_unregister(struct dsa_switch *ds)
 
 	del_timer_sync(&ptp_data->extts_timer);
 	ptp_cancel_worker_sync(ptp_data->clock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	skb_queue_purge(&tagger_data->skb_txtstamp_queue);
-=======
 	skb_queue_purge(&ptp_data->skb_txtstamp_queue);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	skb_queue_purge(&tagger_data->skb_txtstamp_queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	skb_queue_purge(&ptp_data->skb_rxtstamp_queue);
 	ptp_clock_unregister(ptp_data->clock);
 	ptp_data->clock = NULL;

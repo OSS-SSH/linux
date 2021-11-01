@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
-/*
- * Copyright(c) 2015 - 2020 Intel Corporation.
-=======
 /*
  * Copyright(c) 2015 - 2020 Intel Corporation.
  *
@@ -49,12 +43,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
-/*
- * Copyright(c) 2015 - 2020 Intel Corporation.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 /*
@@ -14426,15 +14414,7 @@ static void init_qos(struct hfi1_devdata *dd, struct rsm_map_table *rmt)
 	if (rmt->used + rmt_entries >= NUM_MAP_ENTRIES)
 		goto bail;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* add qos entries to the RSM map table */
-=======
 	/* add qos entries to the the RSM map table */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* add qos entries to the RSM map table */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0, ctxt = FIRST_KERNEL_KCTXT; i < num_vls; i++) {
 		unsigned tctxt;
 
@@ -14913,15 +14893,7 @@ int hfi1_clear_ctxt_pkey(struct hfi1_devdata *dd, struct hfi1_ctxtdata *ctxt)
 }
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Start doing the clean up the chip. Our clean up happens in multiple
-=======
  * Start doing the clean up the the chip. Our clean up happens in multiple
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Start doing the clean up the chip. Our clean up happens in multiple
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * stages and this is just the first.
  */
 void hfi1_start_cleanup(struct hfi1_devdata *dd)
@@ -15364,15 +15336,7 @@ int hfi1_init_dd(struct hfi1_devdata *dd)
 	init_completion(&dd->user_comp);
 
 	/* The user refcount starts with one to inidicate an active device */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_set(&dd->user_refcount, 1);
-=======
 	atomic_set(&dd->user_refcount, 1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_set(&dd->user_refcount, 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	goto bail;
 

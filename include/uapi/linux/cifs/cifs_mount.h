@@ -1,12 +1,6 @@
 /* SPDX-License-Identifier: LGPL-2.1+ WITH Linux-syscall-note */
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *   include/uapi/linux/cifs/cifs_mount.h
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Author(s): Scott Lovenberg (scott.lovenberg@gmail.com)
  *

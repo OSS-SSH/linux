@@ -60,25 +60,12 @@
 #include <drm/drm.h>
 #include <drm/drm_device.h>
 #include <drm/drm_drv.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <drm/drm_legacy.h>
-=======
 #include <drm/drm_irq.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <drm/drm_legacy.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_print.h>
 #include <drm/drm_vblank.h>
 
 #include "drm_internal.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#if IS_ENABLED(CONFIG_DRM_LEGACY)
-static int drm_legacy_irq_install(struct drm_device *dev, int irq)
-=======
 /**
  * DOC: irq helpers
  *
@@ -117,11 +104,6 @@ static int drm_legacy_irq_install(struct drm_device *dev, int irq)
  * Zero on success or a negative error code on failure.
  */
 int drm_irq_install(struct drm_device *dev, int irq)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#if IS_ENABLED(CONFIG_DRM_LEGACY)
-static int drm_legacy_irq_install(struct drm_device *dev, int irq)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 	unsigned long sh_flags = 0;
@@ -158,15 +140,7 @@ static int drm_legacy_irq_install(struct drm_device *dev, int irq)
 	if (ret < 0) {
 		dev->irq_enabled = false;
 		if (drm_core_check_feature(dev, DRIVER_LEGACY))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			vga_client_unregister(to_pci_dev(dev->dev));
-=======
 			vga_client_register(to_pci_dev(dev->dev), NULL, NULL, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			vga_client_unregister(to_pci_dev(dev->dev));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		free_irq(irq, dev);
 	} else {
 		dev->irq = irq;
@@ -174,11 +148,6 @@ static int drm_legacy_irq_install(struct drm_device *dev, int irq)
 
 	return ret;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-int drm_legacy_irq_uninstall(struct drm_device *dev)
-=======
 EXPORT_SYMBOL(drm_irq_install);
 
 /**
@@ -198,11 +167,6 @@ EXPORT_SYMBOL(drm_irq_install);
  * Zero on success or a negative error code on failure.
  */
 int drm_irq_uninstall(struct drm_device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-int drm_legacy_irq_uninstall(struct drm_device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long irqflags;
 	bool irq_enabled;
@@ -239,15 +203,7 @@ int drm_legacy_irq_uninstall(struct drm_device *dev)
 	DRM_DEBUG("irq=%d\n", dev->irq);
 
 	if (drm_core_check_feature(dev, DRIVER_LEGACY))
-<<<<<<< HEAD
-<<<<<<< HEAD
-		vga_client_unregister(to_pci_dev(dev->dev));
-=======
 		vga_client_register(to_pci_dev(dev->dev), NULL, NULL, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		vga_client_unregister(to_pci_dev(dev->dev));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dev->driver->irq_uninstall)
 		dev->driver->irq_uninstall(dev);
@@ -256,11 +212,6 @@ int drm_legacy_irq_uninstall(struct drm_device *dev)
 
 	return 0;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-EXPORT_SYMBOL(drm_legacy_irq_uninstall);
-
-=======
 EXPORT_SYMBOL(drm_irq_uninstall);
 
 static void devm_drm_irq_uninstall(void *data)
@@ -296,11 +247,6 @@ int devm_drm_irq_install(struct drm_device *dev, int irq)
 EXPORT_SYMBOL(devm_drm_irq_install);
 
 #if IS_ENABLED(CONFIG_DRM_LEGACY)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-EXPORT_SYMBOL(drm_legacy_irq_uninstall);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int drm_legacy_irq_control(struct drm_device *dev, void *data,
 			   struct drm_file *file_priv)
 {
@@ -329,29 +275,13 @@ int drm_legacy_irq_control(struct drm_device *dev, void *data,
 		    ctl->irq != irq)
 			return -EINVAL;
 		mutex_lock(&dev->struct_mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = drm_legacy_irq_install(dev, irq);
-=======
 		ret = drm_irq_install(dev, irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = drm_legacy_irq_install(dev, irq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mutex_unlock(&dev->struct_mutex);
 
 		return ret;
 	case DRM_UNINST_HANDLER:
 		mutex_lock(&dev->struct_mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = drm_legacy_irq_uninstall(dev);
-=======
 		ret = drm_irq_uninstall(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = drm_legacy_irq_uninstall(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mutex_unlock(&dev->struct_mutex);
 
 		return ret;

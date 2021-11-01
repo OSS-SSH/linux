@@ -6,16 +6,6 @@
 #include <linux/percpu-defs.h>
 #include <linux/lockdep.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifndef CONFIG_PREEMPT_RT
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifndef CONFIG_PREEMPT_RT
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 typedef struct {
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 	struct lockdep_map	dep_map;
@@ -24,33 +14,29 @@ typedef struct {
 } local_lock_t;
 
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
-<<<<<<< HEAD
-<<<<<<< HEAD
-# define LOCAL_LOCK_DEBUG_INIT(lockname)		\
-	.dep_map = {					\
-		.name = #lockname,			\
-		.wait_type_inner = LD_WAIT_CONFIG,	\
-		.lock_type = LD_LOCK_PERCPU,		\
-	},						\
-	.owner = NULL,
-
-=======
 # define LL_DEP_MAP_INIT(lockname)			\
-=======
-# define LOCAL_LOCK_DEBUG_INIT(lockname)		\
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.dep_map = {					\
 		.name = #lockname,			\
 		.wait_type_inner = LD_WAIT_CONFIG,	\
-		.lock_type = LD_LOCK_PERCPU,		\
-	},						\
-	.owner = NULL,
+		.lock_type = LD_LOCK_PERCPU,			\
+	}
+#else
+# define LL_DEP_MAP_INIT(lockname)
+#endif
 
-<<<<<<< HEAD
+#define INIT_LOCAL_LOCK(lockname)	{ LL_DEP_MAP_INIT(lockname) }
+
+#define __local_lock_init(lock)					\
+do {								\
+	static struct lock_class_key __key;			\
+								\
+	debug_check_no_locks_freed((void *)lock, sizeof(*lock));\
+	lockdep_init_map_type(&(lock)->dep_map, #lock, &__key, 0, \
+			      LD_WAIT_CONFIG, LD_WAIT_INV,	\
+			      LD_LOCK_PERCPU);			\
+} while (0)
+
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void local_lock_acquire(local_lock_t *l)
 {
 	lock_map_acquire(&l->dep_map);
@@ -65,62 +51,11 @@ static inline void local_lock_release(local_lock_t *l)
 	lock_map_release(&l->dep_map);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline void local_lock_debug_init(local_lock_t *l)
-{
-	l->owner = NULL;
-}
-<<<<<<< HEAD
 #else /* CONFIG_DEBUG_LOCK_ALLOC */
-# define LOCAL_LOCK_DEBUG_INIT(lockname)
 static inline void local_lock_acquire(local_lock_t *l) { }
 static inline void local_lock_release(local_lock_t *l) { }
-static inline void local_lock_debug_init(local_lock_t *l) { }
 #endif /* !CONFIG_DEBUG_LOCK_ALLOC */
 
-#define INIT_LOCAL_LOCK(lockname)	{ LOCAL_LOCK_DEBUG_INIT(lockname) }
-
-#define __local_lock_init(lock)					\
-do {								\
-	static struct lock_class_key __key;			\
-								\
-	debug_check_no_locks_freed((void *)lock, sizeof(*lock));\
-	lockdep_init_map_type(&(lock)->dep_map, #lock, &__key,  \
-			      0, LD_WAIT_CONFIG, LD_WAIT_INV,	\
-			      LD_LOCK_PERCPU);			\
-	local_lock_debug_init(lock);				\
-} while (0)
-
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#else /* CONFIG_DEBUG_LOCK_ALLOC */
-# define LOCAL_LOCK_DEBUG_INIT(lockname)
-static inline void local_lock_acquire(local_lock_t *l) { }
-static inline void local_lock_release(local_lock_t *l) { }
-static inline void local_lock_debug_init(local_lock_t *l) { }
-#endif /* !CONFIG_DEBUG_LOCK_ALLOC */
-
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define INIT_LOCAL_LOCK(lockname)	{ LOCAL_LOCK_DEBUG_INIT(lockname) }
-
-#define __local_lock_init(lock)					\
-do {								\
-	static struct lock_class_key __key;			\
-								\
-	debug_check_no_locks_freed((void *)lock, sizeof(*lock));\
-	lockdep_init_map_type(&(lock)->dep_map, #lock, &__key,  \
-			      0, LD_WAIT_CONFIG, LD_WAIT_INV,	\
-			      LD_LOCK_PERCPU);			\
-	local_lock_debug_init(lock);				\
-} while (0)
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define __local_lock(lock)					\
 	do {							\
 		preempt_disable();				\
@@ -156,54 +91,3 @@ do {								\
 		local_lock_release(this_cpu_ptr(lock));		\
 		local_irq_restore(flags);			\
 	} while (0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-#else /* !CONFIG_PREEMPT_RT */
-
-/*
- * On PREEMPT_RT local_lock maps to a per CPU spinlock, which protects the
- * critical section while staying preemptible.
- */
-typedef spinlock_t local_lock_t;
-
-#define INIT_LOCAL_LOCK(lockname) __LOCAL_SPIN_LOCK_UNLOCKED((lockname))
-
-#define __local_lock_init(l)					\
-	do {							\
-		local_spin_lock_init((l));			\
-	} while (0)
-
-#define __local_lock(__lock)					\
-	do {							\
-		migrate_disable();				\
-		spin_lock(this_cpu_ptr((__lock)));		\
-	} while (0)
-
-#define __local_lock_irq(lock)			__local_lock(lock)
-
-#define __local_lock_irqsave(lock, flags)			\
-	do {							\
-		typecheck(unsigned long, flags);		\
-		flags = 0;					\
-		__local_lock(lock);				\
-	} while (0)
-
-#define __local_unlock(__lock)					\
-	do {							\
-		spin_unlock(this_cpu_ptr((__lock)));		\
-		migrate_enable();				\
-	} while (0)
-
-#define __local_unlock_irq(lock)		__local_unlock(lock)
-
-#define __local_unlock_irqrestore(lock, flags)	__local_unlock(lock)
-
-#endif /* CONFIG_PREEMPT_RT */
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

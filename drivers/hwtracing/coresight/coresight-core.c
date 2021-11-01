@@ -21,14 +21,6 @@
 
 #include "coresight-etm-perf.h"
 #include "coresight-priv.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "coresight-syscfg.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "coresight-syscfg.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static DEFINE_MUTEX(coresight_mutex);
 static DEFINE_PER_CPU(struct coresight_device *, csdev_sink);
@@ -1771,47 +1763,13 @@ static int __init coresight_init(void)
 
 	ret = etm_perf_init();
 	if (ret)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto exit_bus_unregister;
-
-	/* initialise the coresight syscfg API */
-	ret = cscfg_init();
-	if (!ret)
-		return 0;
-
-	etm_perf_exit();
-exit_bus_unregister:
-	bus_unregister(&coresight_bustype);
-=======
 		bus_unregister(&coresight_bustype);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto exit_bus_unregister;
-
-	/* initialise the coresight syscfg API */
-	ret = cscfg_init();
-	if (!ret)
-		return 0;
-
-	etm_perf_exit();
-exit_bus_unregister:
-	bus_unregister(&coresight_bustype);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
 static void __exit coresight_exit(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cscfg_exit();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cscfg_exit();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	etm_perf_exit();
 	bus_unregister(&coresight_bustype);
 }

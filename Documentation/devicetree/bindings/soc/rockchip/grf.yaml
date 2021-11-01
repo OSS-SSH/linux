@@ -15,13 +15,7 @@ properties:
       - items:
           - enum:
               - rockchip,rk3288-sgrf
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
               - rockchip,rv1108-pmugrf
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - rockchip,rv1108-usbgrf
           - const: syscon
       - items:
@@ -47,14 +41,6 @@ properties:
               - rockchip,rk3568-grf
               - rockchip,rk3568-pmugrf
               - rockchip,rv1108-grf
-<<<<<<< HEAD
-<<<<<<< HEAD
-              - rockchip,rv1108-pmugrf
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-              - rockchip,rv1108-pmugrf
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: syscon
           - const: simple-mfd
 
@@ -212,62 +198,21 @@ allOf:
         compatible:
           contains:
             enum:
-<<<<<<< HEAD
-<<<<<<< HEAD
-              - rockchip,px30-grf
               - rockchip,px30-pmugrf
-              - rockchip,rk3188-grf
+              - rockchip,px30-grf
               - rockchip,rk3228-grf
               - rockchip,rk3288-grf
               - rockchip,rk3328-grf
-              - rockchip,rk3368-grf
               - rockchip,rk3368-pmugrf
-              - rockchip,rk3399-grf
-              - rockchip,rk3399-pmugrf
-              - rockchip,rk3568-pmugrf
-              - rockchip,rv1108-grf
-              - rockchip,rv1108-pmugrf
-=======
-              - rockchip,px30-pmugrf
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-              - rockchip,px30-grf
-              - rockchip,px30-pmugrf
-              - rockchip,rk3188-grf
-              - rockchip,rk3228-grf
-              - rockchip,rk3288-grf
-              - rockchip,rk3328-grf
               - rockchip,rk3368-grf
-              - rockchip,rk3368-pmugrf
-              - rockchip,rk3399-grf
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
               - rockchip,rk3399-pmugrf
-              - rockchip,rk3568-pmugrf
-              - rockchip,rv1108-grf
-              - rockchip,rv1108-pmugrf
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+              - rockchip,rk3399-grf
 
     then:
       properties:
         io-domains:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-          type: object
-
-          $ref: "/schemas/power/rockchip-io-domain.yaml#"
-
-          unevaluatedProperties: false
-<<<<<<< HEAD
-=======
           description:
             Documentation/devicetree/bindings/power/rockchip-io-domain.txt
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 examples:
   - |

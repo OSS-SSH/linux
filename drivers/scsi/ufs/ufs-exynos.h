@@ -184,15 +184,7 @@ struct exynos_ufs {
 	u32 pclk_div;
 	u32 pclk_avail_min;
 	u32 pclk_avail_max;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned long mclk_rate;
-=======
 	u32 mclk_rate;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned long mclk_rate;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int avail_ln_rx;
 	int avail_ln_tx;
 	int rx_sel_idx;

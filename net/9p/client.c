@@ -30,16 +30,6 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/9p.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define DEFAULT_MSIZE (128 * 1024)
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define DEFAULT_MSIZE (128 * 1024)
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
   * Client Option Parsing (code inspired by NFS code)
   *  - a little lazy - parse all client options
@@ -75,15 +65,7 @@ EXPORT_SYMBOL(p9_is_proto_dotu);
 
 int p9_show_client_options(struct seq_file *m, struct p9_client *clnt)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (clnt->msize != DEFAULT_MSIZE)
-=======
 	if (clnt->msize != 8192)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (clnt->msize != DEFAULT_MSIZE)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		seq_printf(m, ",msize=%u", clnt->msize);
 	seq_printf(m, ",trans=%s", clnt->trans_mod->name);
 
@@ -157,15 +139,7 @@ static int parse_opts(char *opts, struct p9_client *clnt)
 	int ret = 0;
 
 	clnt->proto_version = p9_proto_2000L;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clnt->msize = DEFAULT_MSIZE;
-=======
 	clnt->msize = 8192;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clnt->msize = DEFAULT_MSIZE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!opts)
 		return 0;

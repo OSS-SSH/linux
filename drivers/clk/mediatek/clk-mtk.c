@@ -13,14 +13,6 @@
 #include <linux/clkdev.h>
 #include <linux/mfd/syscon.h>
 #include <linux/device.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/of_device.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/of_device.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "clk-mtk.h"
 #include "clk-gate.h"
@@ -114,15 +106,7 @@ int mtk_clk_register_gates_with_dev(struct device_node *node,
 	if (!clk_data)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	regmap = device_node_to_regmap(node);
-=======
 	regmap = syscon_node_to_regmap(node);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	regmap = device_node_to_regmap(node);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(regmap)) {
 		pr_err("Cannot find regmap for %pOF: %ld\n", node,
 				PTR_ERR(regmap));
@@ -302,34 +286,3 @@ void mtk_clk_register_dividers(const struct mtk_clk_divider *mcds,
 			clk_data->clks[mcd->id] = clk;
 	}
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-int mtk_clk_simple_probe(struct platform_device *pdev)
-{
-	const struct mtk_clk_desc *mcd;
-	struct clk_onecell_data *clk_data;
-	struct device_node *node = pdev->dev.of_node;
-	int r;
-
-	mcd = of_device_get_match_data(&pdev->dev);
-	if (!mcd)
-		return -EINVAL;
-
-	clk_data = mtk_alloc_clk_data(mcd->num_clks);
-	if (!clk_data)
-		return -ENOMEM;
-
-	r = mtk_clk_register_gates(node, mcd->clks, mcd->num_clks, clk_data);
-	if (r)
-		return r;
-
-	return of_clk_add_provider(node, of_clk_src_onecell_get, clk_data);
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

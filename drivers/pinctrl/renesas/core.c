@@ -571,45 +571,17 @@ static const struct of_device_id sh_pfc_of_table[] = {
 		.data = &r8a7794_pinmux_info,
 	},
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/*
- * Both r8a7795 entries must be present to make sanity checks work, but only
- * the first entry is actually used.
- * R-Car H3 ES1.x is matched using soc_device_match() instead.
- */
-#ifdef CONFIG_PINCTRL_PFC_R8A77951
-<<<<<<< HEAD
-	{
-		.compatible = "renesas,pfc-r8a7795",
-		.data = &r8a77951_pinmux_info,
-	},
-#endif
-#ifdef CONFIG_PINCTRL_PFC_R8A77950
-	{
-		.compatible = "renesas,pfc-r8a7795",
-		.data = &r8a77950_pinmux_info,
-=======
 /* Both r8a7795 entries must be present to make sanity checks work */
 #ifdef CONFIG_PINCTRL_PFC_R8A77950
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.compatible = "renesas,pfc-r8a7795",
-		.data = &r8a77951_pinmux_info,
+		.data = &r8a77950_pinmux_info,
 	},
 #endif
-#ifdef CONFIG_PINCTRL_PFC_R8A77950
+#ifdef CONFIG_PINCTRL_PFC_R8A77951
 	{
 		.compatible = "renesas,pfc-r8a7795",
-<<<<<<< HEAD
 		.data = &r8a77951_pinmux_info,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.data = &r8a77950_pinmux_info,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 #endif
 #ifdef CONFIG_PINCTRL_PFC_R8A77960
@@ -1113,50 +1085,26 @@ static inline void sh_pfc_check_driver(struct platform_driver *pdrv) {}
 #ifdef CONFIG_OF
 static const void *sh_pfc_quirk_match(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_PINCTRL_PFC_R8A77950
-=======
 #if defined(CONFIG_PINCTRL_PFC_R8A77950) || \
     defined(CONFIG_PINCTRL_PFC_R8A77951)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifdef CONFIG_PINCTRL_PFC_R8A77950
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct soc_device_attribute *match;
 	static const struct soc_device_attribute quirks[] = {
 		{
 			.soc_id = "r8a7795", .revision = "ES1.*",
 			.data = &r8a77950_pinmux_info,
 		},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		{
 			.soc_id = "r8a7795",
 			.data = &r8a77951_pinmux_info,
 		},
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ /* sentinel */ }
 	};
 
 	match = soc_device_match(quirks);
 	if (match)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return match->data;
-#endif /* CONFIG_PINCTRL_PFC_R8A77950 */
-=======
 		return match->data ?: ERR_PTR(-ENODEV);
 #endif /* CONFIG_PINCTRL_PFC_R8A77950 || CONFIG_PINCTRL_PFC_R8A77951 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return match->data;
-#endif /* CONFIG_PINCTRL_PFC_R8A77950 */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return NULL;
 }
@@ -1171,15 +1119,9 @@ static int sh_pfc_probe(struct platform_device *pdev)
 #ifdef CONFIG_OF
 	if (pdev->dev.of_node) {
 		info = sh_pfc_quirk_match();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		if (IS_ERR(info))
 			return PTR_ERR(info);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!info)
 			info = of_device_get_match_data(&pdev->dev);
 	} else

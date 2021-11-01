@@ -44,28 +44,6 @@
 #include "internal.h"
 #include "pgalloc-track.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#ifdef CONFIG_HAVE_ARCH_HUGE_VMAP
-static unsigned int __ro_after_init ioremap_max_page_shift = BITS_PER_LONG - 1;
-
-static int __init set_nohugeiomap(char *str)
-{
-	ioremap_max_page_shift = PAGE_SHIFT;
-	return 0;
-}
-early_param("nohugeiomap", set_nohugeiomap);
-#else /* CONFIG_HAVE_ARCH_HUGE_VMAP */
-static const unsigned int ioremap_max_page_shift = PAGE_SHIFT;
-#endif	/* CONFIG_HAVE_ARCH_HUGE_VMAP */
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_HAVE_ARCH_HUGE_VMALLOC
 static bool __ro_after_init vmap_allow_huge = true;
 
@@ -320,35 +298,15 @@ static int vmap_range_noflush(unsigned long addr, unsigned long end,
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int ioremap_page_range(unsigned long addr, unsigned long end,
-		phys_addr_t phys_addr, pgprot_t prot)
-{
-	int err;
-
-	err = vmap_range_noflush(addr, end, phys_addr, pgprot_nx(prot),
-				 ioremap_max_page_shift);
-	flush_cache_vmap(addr, end);
-=======
 int vmap_range(unsigned long addr, unsigned long end,
 			phys_addr_t phys_addr, pgprot_t prot,
 			unsigned int max_page_shift)
-=======
-int ioremap_page_range(unsigned long addr, unsigned long end,
-		phys_addr_t phys_addr, pgprot_t prot)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err;
 
-	err = vmap_range_noflush(addr, end, phys_addr, pgprot_nx(prot),
-				 ioremap_max_page_shift);
+	err = vmap_range_noflush(addr, end, phys_addr, prot, max_page_shift);
 	flush_cache_vmap(addr, end);
-<<<<<<< HEAD
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -829,37 +787,6 @@ unsigned long vmalloc_nr_pages(void)
 	return atomic_long_read(&nr_vmalloc_pages);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static struct vmap_area *find_vmap_area_exceed_addr(unsigned long addr)
-{
-	struct vmap_area *va = NULL;
-	struct rb_node *n = vmap_area_root.rb_node;
-
-	while (n) {
-		struct vmap_area *tmp;
-
-		tmp = rb_entry(n, struct vmap_area, rb_node);
-		if (tmp->va_end > addr) {
-			va = tmp;
-			if (tmp->va_start <= addr)
-				break;
-
-			n = n->rb_left;
-		} else
-			n = n->rb_right;
-	}
-
-	return va;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct vmap_area *__find_vmap_area(unsigned long addr)
 {
 	struct rb_node *n = vmap_area_root.rb_node;
@@ -1552,14 +1479,6 @@ static struct vmap_area *alloc_vmap_area(unsigned long size,
 				int node, gfp_t gfp_mask)
 {
 	struct vmap_area *va;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned long freed;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned long freed;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long addr;
 	int purged = 0;
 	int ret;
@@ -1623,18 +1542,6 @@ overflow:
 		goto retry;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	freed = 0;
-	blocking_notifier_call_chain(&vmap_notify_list, 0, &freed);
-
-	if (freed > 0) {
-		purged = 0;
-		goto retry;
-<<<<<<< HEAD
-=======
 	if (gfpflags_allow_blocking(gfp_mask)) {
 		unsigned long freed = 0;
 		blocking_notifier_call_chain(&vmap_notify_list, 0, &freed);
@@ -1642,9 +1549,6 @@ overflow:
 			purged = 0;
 			goto retry;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!(gfp_mask & __GFP_NOWARN) && printk_ratelimit())
@@ -2875,15 +2779,7 @@ EXPORT_SYMBOL_GPL(vmap_pfn);
 
 static inline unsigned int
 vm_area_alloc_pages(gfp_t gfp, int nid,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		unsigned int order, unsigned int nr_pages, struct page **pages)
-=======
 		unsigned int order, unsigned long nr_pages, struct page **pages)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		unsigned int order, unsigned int nr_pages, struct page **pages)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int nr_allocated = 0;
 
@@ -2893,45 +2789,10 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
 	 * to fails, fallback to a single page allocator that is
 	 * more permissive.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!order) {
-		while (nr_allocated < nr_pages) {
-			unsigned int nr, nr_pages_request;
-
-			/*
-			 * A maximum allowed request is hard-coded and is 100
-			 * pages per call. That is done in order to prevent a
-			 * long preemption off scenario in the bulk-allocator
-			 * so the range is [1:100].
-			 */
-			nr_pages_request = min(100U, nr_pages - nr_allocated);
-
-			nr = alloc_pages_bulk_array_node(gfp, nid,
-				nr_pages_request, pages + nr_allocated);
-
-			nr_allocated += nr;
-			cond_resched();
-
-			/*
-			 * If zero or pages were obtained partly,
-			 * fallback to a single page allocator.
-			 */
-			if (nr != nr_pages_request)
-				break;
-		}
-	} else
-<<<<<<< HEAD
-=======
 	if (!order)
 		nr_allocated = alloc_pages_bulk_array_node(
 			gfp, nid, nr_pages, pages);
 	else
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Compound pages required for remap_vmalloc_page if
 		 * high-order pages.
@@ -2955,17 +2816,9 @@ vm_area_alloc_pages(gfp_t gfp, int nid,
 		for (i = 0; i < (1U << order); i++)
 			pages[nr_allocated + i] = page + i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		cond_resched();
-=======
 		if (gfpflags_allow_blocking(gfp))
 			cond_resched();
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		cond_resched();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nr_allocated += 1U << order;
 	}
 
@@ -3414,31 +3267,9 @@ long vread(char *buf, char *addr, unsigned long count)
 		count = -(unsigned long) addr;
 
 	spin_lock(&vmap_area_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	va = find_vmap_area_exceed_addr((unsigned long)addr);
-	if (!va)
-		goto finished;
-
-	/* no intersects with alive vmap_area */
-	if ((unsigned long)addr + count <= va->va_start)
-		goto finished;
-
-=======
 	va = __find_vmap_area((unsigned long)addr);
 	if (!va)
 		goto finished;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	va = find_vmap_area_exceed_addr((unsigned long)addr);
-	if (!va)
-		goto finished;
-
-	/* no intersects with alive vmap_area */
-	if ((unsigned long)addr + count <= va->va_start)
-		goto finished;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry_from(va, &vmap_area_list, list) {
 		if (!count)
 			break;

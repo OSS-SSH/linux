@@ -276,27 +276,7 @@ enum hl_device_status {
 	HL_DEVICE_STATUS_OPERATIONAL,
 	HL_DEVICE_STATUS_IN_RESET,
 	HL_DEVICE_STATUS_MALFUNCTION,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	HL_DEVICE_STATUS_NEEDS_RESET,
-	HL_DEVICE_STATUS_IN_DEVICE_CREATION,
-	HL_DEVICE_STATUS_LAST = HL_DEVICE_STATUS_IN_DEVICE_CREATION
-};
-
-enum hl_server_type {
-	HL_SERVER_TYPE_UNKNOWN = 0,
-	HL_SERVER_GAUDI_HLS1 = 1,
-	HL_SERVER_GAUDI_HLS1H = 2,
-	HL_SERVER_GAUDI_TYPE1 = 3,
-	HL_SERVER_GAUDI_TYPE2 = 4
-<<<<<<< HEAD
-=======
 	HL_DEVICE_STATUS_NEEDS_RESET
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* Opcode for management ioctl
@@ -357,74 +337,17 @@ enum hl_server_type {
 #define HL_INFO_VERSION_MAX_LEN	128
 #define HL_INFO_CARD_NAME_MAX_LEN	16
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * struct hl_info_hw_ip_info - hardware information on various IPs in the ASIC
- * @sram_base_address: The first SRAM physical base address that is free to be
- *                     used by the user.
- * @dram_base_address: The first DRAM virtual or physical base address that is
- *                     free to be used by the user.
- * @dram_size: The DRAM size that is available to the user.
- * @sram_size: The SRAM size that is available to the user.
- * @num_of_events: The number of events that can be received from the f/w. This
- *                 is needed so the user can what is the size of the h/w events
- *                 array he needs to pass to the kernel when he wants to fetch
- *                 the event counters.
- * @device_id: PCI device ID of the ASIC.
- * @module_id: Module ID of the ASIC for mezzanine cards in servers
- *             (From OCP spec).
- * @first_available_interrupt_id: The first available interrupt ID for the user
- *                                to be used when it works with user interrupts.
- * @server_type: Server type that the Gaudi ASIC is currently installed in.
- *               The value is according to enum hl_server_type
- * @cpld_version: CPLD version on the board.
- * @psoc_pci_pll_nr: PCI PLL NR value. Needed by the profiler in some ASICs.
- * @psoc_pci_pll_nf: PCI PLL NF value. Needed by the profiler in some ASICs.
- * @psoc_pci_pll_od: PCI PLL OD value. Needed by the profiler in some ASICs.
- * @psoc_pci_pll_div_factor: PCI PLL DIV factor value. Needed by the profiler
- *                           in some ASICs.
- * @tpc_enabled_mask: Bit-mask that represents which TPCs are enabled. Relevant
- *                    for Goya/Gaudi only.
- * @dram_enabled: Whether the DRAM is enabled.
- * @cpucp_version: The CPUCP f/w version.
- * @card_name: The card name as passed by the f/w.
- * @dram_page_size: The DRAM physical page size.
- */
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hl_info_hw_ip_info {
 	__u64 sram_base_address;
 	__u64 dram_base_address;
 	__u64 dram_size;
 	__u32 sram_size;
 	__u32 num_of_events;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__u32 device_id;
-	__u32 module_id;
-	__u32 reserved;
-	__u16 first_available_interrupt_id;
-	__u16 server_type;
-=======
 	__u32 device_id; /* PCI Device ID */
 	__u32 module_id; /* For mezzanine cards in servers (From OCP spec.) */
 	__u32 reserved;
 	__u16 first_available_interrupt_id;
 	__u16 reserved2;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__u32 device_id;
-	__u32 module_id;
-	__u32 reserved;
-	__u16 first_available_interrupt_id;
-	__u16 server_type;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32 cpld_version;
 	__u32 psoc_pci_pll_nr;
 	__u32 psoc_pci_pll_nf;
@@ -435,15 +358,7 @@ struct hl_info_hw_ip_info {
 	__u8 pad[2];
 	__u8 cpucp_version[HL_INFO_VERSION_MAX_LEN];
 	__u8 card_name[HL_INFO_CARD_NAME_MAX_LEN];
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__u64 reserved2;
-=======
 	__u64 reserved3;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__u64 reserved2;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u64 dram_page_size;
 };
 
@@ -713,46 +628,12 @@ struct hl_cs_chunk {
 		__u64 cb_handle;
 
 		/* Relevant only when HL_CS_FLAGS_WAIT or
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set
-		 * This holds address of array of u64 values that contain
-		 * signal CS sequence numbers. The wait described by
-		 * this job will listen on all those signals
-		 * (wait event per signal)
-		 */
-		__u64 signal_seq_arr;
-
-		/*
-		 * Relevant only when HL_CS_FLAGS_WAIT or
-		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set
-		 * along with HL_CS_FLAGS_ENCAP_SIGNALS.
-		 * This is the CS sequence which has the encapsulated signals.
-		 */
-		__u64 encaps_signal_seq;
-=======
 		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set.
-=======
-		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * This holds address of array of u64 values that contain
-		 * signal CS sequence numbers. The wait described by
-		 * this job will listen on all those signals
-		 * (wait event per signal)
+		 * signal CS sequence numbers. The wait described by this job
+		 * will listen on all those signals (wait event per signal)
 		 */
 		__u64 signal_seq_arr;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		/*
-		 * Relevant only when HL_CS_FLAGS_WAIT or
-		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set
-		 * along with HL_CS_FLAGS_ENCAP_SIGNALS.
-		 * This is the CS sequence which has the encapsulated signals.
-		 */
-		__u64 encaps_signal_seq;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	/* Index of queue to put the CB on */
@@ -770,26 +651,6 @@ struct hl_cs_chunk {
 		 * Number of entries in signal_seq_arr
 		 */
 		__u32 num_signal_seq_arr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		/* Relevant only when HL_CS_FLAGS_WAIT or
-		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set along
-		 * with HL_CS_FLAGS_ENCAP_SIGNALS
-		 * This set the signals range that the user want to wait for
-		 * out of the whole reserved signals range.
-		 * e.g if the signals range is 20, and user don't want
-		 * to wait for signal 8, so he set this offset to 7, then
-		 * he call the API again with 9 and so on till 20.
-		 */
-		__u32 encaps_signal_offset;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	/* HL_CS_CHUNK_FLAGS_* */
@@ -817,37 +678,6 @@ struct hl_cs_chunk {
 #define HL_CS_FLAGS_CUSTOM_TIMEOUT		0x200
 #define HL_CS_FLAGS_SKIP_RESET_ON_TIMEOUT	0x400
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/*
- * The encapsulated signals CS is merged into the existing CS ioctls.
- * In order to use this feature need to follow the below procedure:
- * 1. Reserve signals, set the CS type to HL_CS_FLAGS_RESERVE_SIGNALS_ONLY
- *    the output of this API will be the SOB offset from CFG_BASE.
- *    this address will be used to patch CB cmds to do the signaling for this
- *    SOB by incrementing it's value.
- *    for reverting the reservation use HL_CS_FLAGS_UNRESERVE_SIGNALS_ONLY
- *    CS type, note that this might fail if out-of-sync happened to the SOB
- *    value, in case other signaling request to the same SOB occurred between
- *    reserve-unreserve calls.
- * 2. Use the staged CS to do the encapsulated signaling jobs.
- *    use HL_CS_FLAGS_STAGED_SUBMISSION and HL_CS_FLAGS_STAGED_SUBMISSION_FIRST
- *    along with HL_CS_FLAGS_ENCAP_SIGNALS flag, and set encaps_signal_offset
- *    field. This offset allows app to wait on part of the reserved signals.
- * 3. Use WAIT/COLLECTIVE WAIT CS along with HL_CS_FLAGS_ENCAP_SIGNALS flag
- *    to wait for the encapsulated signals.
- */
-#define HL_CS_FLAGS_ENCAP_SIGNALS		0x800
-#define HL_CS_FLAGS_RESERVE_SIGNALS_ONLY	0x1000
-#define HL_CS_FLAGS_UNRESERVE_SIGNALS_ONLY	0x2000
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HL_CS_STATUS_SUCCESS		0
 
 #define HL_MAX_JOBS_PER_CS		512
@@ -860,48 +690,10 @@ struct hl_cs_in {
 	/* holds address of array of hl_cs_chunk for execution phase */
 	__u64 chunks_execute;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	union {
-		/*
-		 * Sequence number of a staged submission CS
-		 * valid only if HL_CS_FLAGS_STAGED_SUBMISSION is set and
-		 * HL_CS_FLAGS_STAGED_SUBMISSION_FIRST is unset.
-		 */
-		__u64 seq;
-
-		/*
-		 * Encapsulated signals handle id
-		 * Valid for two flows:
-		 * 1. CS with encapsulated signals:
-		 *    when HL_CS_FLAGS_STAGED_SUBMISSION and
-		 *    HL_CS_FLAGS_STAGED_SUBMISSION_FIRST
-		 *    and HL_CS_FLAGS_ENCAP_SIGNALS are set.
-		 * 2. unreserve signals:
-		 *    valid when HL_CS_FLAGS_UNRESERVE_SIGNALS_ONLY is set.
-		 */
-		__u32 encaps_sig_handle_id;
-
-		/* Valid only when HL_CS_FLAGS_RESERVE_SIGNALS_ONLY is set */
-		struct {
-			/* Encapsulated signals number */
-			__u32 encaps_signals_count;
-
-			/* Encapsulated signals queue index (stream) */
-			__u32 encaps_signals_q_idx;
-		};
-	};
-<<<<<<< HEAD
-=======
 	/* Sequence number of a staged submission CS
 	 * valid only if HL_CS_FLAGS_STAGED_SUBMISSION is set
 	 */
 	__u64 seq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Number of chunks in restore phase array. Maximum number is
 	 * HL_MAX_JOBS_PER_CS
@@ -926,52 +718,14 @@ struct hl_cs_in {
 };
 
 struct hl_cs_out {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	union {
-		/*
-		 * seq holds the sequence number of the CS to pass to wait
-		 * ioctl. All values are valid except for 0 and ULLONG_MAX
-		 */
-		__u64 seq;
-
-		/* Valid only when HL_CS_FLAGS_RESERVE_SIGNALS_ONLY is set */
-		struct {
-			/* This is the resereved signal handle id */
-			__u32 handle_id;
-
-			/* This is the signals count */
-			__u32 count;
-		};
-	};
-
-	/* HL_CS_STATUS */
-	__u32 status;
-
-<<<<<<< HEAD
 	/*
-	 * SOB base address offset
-	 * Valid only when HL_CS_FLAGS_RESERVE_SIGNALS_ONLY is set
+	 * seq holds the sequence number of the CS to pass to wait ioctl. All
+	 * values are valid except for 0 and ULLONG_MAX
 	 */
-	__u32 sob_base_addr_offset;
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * SOB base address offset
-	 * Valid only when HL_CS_FLAGS_RESERVE_SIGNALS_ONLY is set
-	 */
-<<<<<<< HEAD
 	__u64 seq;
 	/* HL_CS_STATUS_* */
 	__u32 status;
 	__u32 pad;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__u32 sob_base_addr_offset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 union hl_cs_args {
@@ -981,37 +735,11 @@ union hl_cs_args {
 
 #define HL_WAIT_CS_FLAGS_INTERRUPT	0x2
 #define HL_WAIT_CS_FLAGS_INTERRUPT_MASK 0xFFF00000
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define HL_WAIT_CS_FLAGS_MULTI_CS	0x4
-
-#define HL_WAIT_MULTI_CS_LIST_MAX_LEN	32
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define HL_WAIT_CS_FLAGS_MULTI_CS	0x4
-
-#define HL_WAIT_MULTI_CS_LIST_MAX_LEN	32
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct hl_wait_cs_in {
 	union {
 		struct {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			/*
-			 * In case of wait_cs holds the CS sequence number.
-			 * In case of wait for multi CS hold a user pointer to
-			 * an array of CS sequence numbers
-			 */
-<<<<<<< HEAD
-=======
 			/* Command submission sequence number */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__u64 seq;
 			/* Absolute timeout to wait for command submission
 			 * in microseconds
@@ -1039,46 +767,19 @@ struct hl_wait_cs_in {
 
 	/* Context ID - Currently not in use */
 	__u32 ctx_id;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* HL_WAIT_CS_FLAGS_*
 	 * If HL_WAIT_CS_FLAGS_INTERRUPT is set, this field should include
 	 * interrupt id according to HL_WAIT_CS_FLAGS_INTERRUPT_MASK, in order
 	 * not to specify an interrupt id ,set mask to all 1s.
 	 */
 	__u32 flags;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/* Multi CS API info- valid entries in multi-CS array */
-	__u8 seq_arr_len;
-	__u8 pad[7];
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define HL_WAIT_CS_STATUS_COMPLETED	0
 #define HL_WAIT_CS_STATUS_BUSY		1
 #define HL_WAIT_CS_STATUS_TIMEDOUT	2
 #define HL_WAIT_CS_STATUS_ABORTED	3
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define HL_WAIT_CS_STATUS_INTERRUPTED	4
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HL_WAIT_CS_STATUS_FLAG_GONE		0x1
 #define HL_WAIT_CS_STATUS_FLAG_TIMESTAMP_VLD	0x2
@@ -1088,30 +789,8 @@ struct hl_wait_cs_out {
 	__u32 status;
 	/* HL_WAIT_CS_STATUS_FLAG* */
 	__u32 flags;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * valid only if HL_WAIT_CS_STATUS_FLAG_TIMESTAMP_VLD is set
-	 * for wait_cs: timestamp of CS completion
-	 * for wait_multi_cs: timestamp of FIRST CS completion
-	 */
-<<<<<<< HEAD
-	__s64 timestamp_nsec;
-	/* multi CS completion bitmap */
-	__u32 cs_completion_map;
-	__u32 pad;
-=======
 	/* valid only if HL_WAIT_CS_STATUS_FLAG_TIMESTAMP_VLD is set */
 	__s64 timestamp_nsec;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__s64 timestamp_nsec;
-	/* multi CS completion bitmap */
-	__u32 cs_completion_map;
-	__u32 pad;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 union hl_wait_cs_args {
@@ -1134,14 +813,6 @@ union hl_wait_cs_args {
 #define HL_MEM_CONTIGUOUS	0x1
 #define HL_MEM_SHARED		0x2
 #define HL_MEM_USERPTR		0x4
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define HL_MEM_FORCE_HINT	0x8
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define HL_MEM_FORCE_HINT	0x8
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct hl_mem_in {
 	union {
@@ -1469,17 +1140,7 @@ struct hl_debug_args {
  * EIO       - The CS was aborted (usually because the device was reset)
  * ENODEV    - The device wants to do hard-reset (so user need to close FD)
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * The driver also returns a custom define in case the IOCTL call returned 0.
- * The define can be one of the following:
-=======
  * The driver also returns a custom define inside the IOCTL which can be:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * The driver also returns a custom define in case the IOCTL call returned 0.
- * The define can be one of the following:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * HL_WAIT_CS_STATUS_COMPLETED   - The CS has been completed successfully (0)
  * HL_WAIT_CS_STATUS_BUSY        - The CS is still executing (0)
@@ -1487,14 +1148,8 @@ struct hl_debug_args {
  *                                 (ETIMEDOUT)
  * HL_WAIT_CS_STATUS_ABORTED     - The CS was aborted, usually because the
  *                                 device was reset (EIO)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * HL_WAIT_CS_STATUS_INTERRUPTED - Waiting for the CS was interrupted (EINTR)
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #define HL_IOCTL_WAIT_CS			\

@@ -159,15 +159,7 @@ static int rcar_pcie_ep_get_pdata(struct rcar_pcie_endpoint *ep,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int rcar_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
-=======
 static int rcar_pcie_ep_write_header(struct pci_epc *epc, u8 fn,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rcar_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     struct pci_epf_header *hdr)
 {
 	struct rcar_pcie_endpoint *ep = epc_get_drvdata(epc);
@@ -203,15 +195,7 @@ static int rcar_pcie_ep_write_header(struct pci_epc *epc, u8 fn, u8 vfn,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int rcar_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
-=======
 static int rcar_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rcar_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				struct pci_epf_bar *epf_bar)
 {
 	int flags = epf_bar->flags | LAR_ENABLE | LAM_64BIT;
@@ -262,15 +246,7 @@ static int rcar_pcie_ep_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void rcar_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn, u8 vfn,
-=======
 static void rcar_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void rcar_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn, u8 vfn,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct pci_epf_bar *epf_bar)
 {
 	struct rcar_pcie_endpoint *ep = epc_get_drvdata(epc);
@@ -283,17 +259,7 @@ static void rcar_pcie_ep_clear_bar(struct pci_epc *epc, u8 fn, u8 vfn,
 	clear_bit(atu_index + 1, ep->ib_window_map);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int rcar_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 vfn,
-				u8 interrupts)
-=======
 static int rcar_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 interrupts)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rcar_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 vfn,
-				u8 interrupts)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rcar_pcie_endpoint *ep = epc_get_drvdata(epc);
 	struct rcar_pcie *pcie = &ep->pcie;
@@ -306,15 +272,7 @@ static int rcar_pcie_ep_set_msi(struct pci_epc *epc, u8 fn, u8 vfn,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int rcar_pcie_ep_get_msi(struct pci_epc *epc, u8 fn, u8 vfn)
-=======
 static int rcar_pcie_ep_get_msi(struct pci_epc *epc, u8 fn)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rcar_pcie_ep_get_msi(struct pci_epc *epc, u8 fn, u8 vfn)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rcar_pcie_endpoint *ep = epc_get_drvdata(epc);
 	struct rcar_pcie *pcie = &ep->pcie;
@@ -327,15 +285,7 @@ static int rcar_pcie_ep_get_msi(struct pci_epc *epc, u8 fn, u8 vfn)
 	return ((flags & MSICAP0_MMESE_MASK) >> MSICAP0_MMESE_OFFSET);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int rcar_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, u8 vfn,
-=======
 static int rcar_pcie_ep_map_addr(struct pci_epc *epc, u8 fn,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rcar_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, u8 vfn,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 phys_addr_t addr, u64 pci_addr, size_t size)
 {
 	struct rcar_pcie_endpoint *ep = epc_get_drvdata(epc);
@@ -372,15 +322,7 @@ static int rcar_pcie_ep_map_addr(struct pci_epc *epc, u8 fn, u8 vfn,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void rcar_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn, u8 vfn,
-=======
 static void rcar_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void rcar_pcie_ep_unmap_addr(struct pci_epc *epc, u8 fn, u8 vfn,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    phys_addr_t addr)
 {
 	struct rcar_pcie_endpoint *ep = epc_get_drvdata(epc);
@@ -461,15 +403,7 @@ static int rcar_pcie_ep_assert_msi(struct rcar_pcie *pcie,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int rcar_pcie_ep_raise_irq(struct pci_epc *epc, u8 fn, u8 vfn,
-=======
 static int rcar_pcie_ep_raise_irq(struct pci_epc *epc, u8 fn,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rcar_pcie_ep_raise_irq(struct pci_epc *epc, u8 fn, u8 vfn,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  enum pci_epc_irq_type type,
 				  u16 interrupt_num)
 {
@@ -517,15 +451,7 @@ static const struct pci_epc_features rcar_pcie_epc_features = {
 };
 
 static const struct pci_epc_features*
-<<<<<<< HEAD
-<<<<<<< HEAD
-rcar_pcie_ep_get_features(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
-=======
 rcar_pcie_ep_get_features(struct pci_epc *epc, u8 func_no)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-rcar_pcie_ep_get_features(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return &rcar_pcie_epc_features;
 }
@@ -566,21 +492,9 @@ static int rcar_pcie_ep_probe(struct platform_device *pdev)
 	pcie->dev = dev;
 
 	pm_runtime_enable(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = pm_runtime_resume_and_get(dev);
-	if (err < 0) {
-		dev_err(dev, "pm_runtime_resume_and_get failed\n");
-=======
 	err = pm_runtime_get_sync(dev);
 	if (err < 0) {
 		dev_err(dev, "pm_runtime_get_sync failed\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = pm_runtime_resume_and_get(dev);
-	if (err < 0) {
-		dev_err(dev, "pm_runtime_resume_and_get failed\n");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err_pm_disable;
 	}
 

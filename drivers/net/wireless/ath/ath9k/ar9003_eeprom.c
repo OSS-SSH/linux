@@ -3351,17 +3351,7 @@ found:
 			"Found block at %x: code=%d ref=%d length=%d major=%d minor=%d\n",
 			cptr, code, reference, length, major, minor);
 		if ((!AR_SREV_9485(ah) && length >= 1024) ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    (AR_SREV_9485(ah) && length > EEPROM_DATA_LEN_9485) ||
-		    (length > cptr)) {
-=======
 		    (AR_SREV_9485(ah) && length > EEPROM_DATA_LEN_9485)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    (AR_SREV_9485(ah) && length > EEPROM_DATA_LEN_9485) ||
-		    (length > cptr)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ath_dbg(common, EEPROM, "Skipping bad header\n");
 			cptr -= COMP_HDR_LEN;
 			continue;

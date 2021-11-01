@@ -673,39 +673,11 @@ static const struct file_operations spidev_fops = {
 
 static struct class *spidev_class;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct spi_device_id spidev_spi_ids[] = {
-	{ .name = "dh2228fv" },
-	{ .name = "ltc2488" },
-	{ .name = "sx1301" },
-	{ .name = "bk4" },
-	{ .name = "dhcom-board" },
-	{ .name = "m53cpld" },
-	{ .name = "spi-petra" },
-	{ .name = "spi-authenta" },
-	{},
-};
-MODULE_DEVICE_TABLE(spi, spidev_spi_ids);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_OF
 static const struct of_device_id spidev_dt_ids[] = {
 	{ .compatible = "rohm,dh2228fv" },
 	{ .compatible = "lineartechnology,ltc2488" },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	{ .compatible = "ge,achc" },
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "semtech,sx1301" },
 	{ .compatible = "lwn,bk4" },
 	{ .compatible = "dh,dhcom-board" },
@@ -847,14 +819,6 @@ static struct spi_driver spidev_spi_driver = {
 	},
 	.probe =	spidev_probe,
 	.remove =	spidev_remove,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.id_table =	spidev_spi_ids,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.id_table =	spidev_spi_ids,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* NOTE:  suspend/resume methods are not necessary here.
 	 * We don't do anything except pass the requests to/from

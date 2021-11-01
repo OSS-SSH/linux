@@ -430,9 +430,6 @@ extern unsigned long __must_check __arch_copy_to_user(void __user *to, const voi
 	__actu_ret;							\
 })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 extern unsigned long __must_check __arch_copy_in_user(void __user *to, const void __user *from, unsigned long n);
 #define raw_copy_in_user(to, from, n)					\
 ({									\
@@ -444,9 +441,6 @@ extern unsigned long __must_check __arch_copy_in_user(void __user *to, const voi
 	__aciu_ret;							\
 })
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define INLINE_COPY_TO_USER
 #define INLINE_COPY_FROM_USER
 

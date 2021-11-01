@@ -13,14 +13,6 @@ perf-y += synthesize.o
 perf-y += kallsyms-parse.o
 perf-y += find-bit-bench.o
 perf-y += inject-buildid.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-perf-y += evlist-open-close.o
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-perf-y += evlist-open-close.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 perf-$(CONFIG_X86_64) += mem-memcpy-x86-64-asm.o
 perf-$(CONFIG_X86_64) += mem-memset-x86-64-asm.o

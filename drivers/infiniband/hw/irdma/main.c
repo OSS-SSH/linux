@@ -215,24 +215,10 @@ static void irdma_remove(struct auxiliary_device *aux_dev)
 	pr_debug("INIT: Gen2 PF[%d] device remove success\n", PCI_FUNC(pf->pdev->devfn));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void irdma_fill_device_info(struct irdma_device *iwdev, struct ice_pf *pf,
-				   struct ice_vsi *vsi)
-{
-	struct irdma_pci_f *rf = iwdev->rf;
-=======
 static void irdma_fill_device_info(struct irdma_device *iwdev, struct ice_pf *pf)
 {
 	struct irdma_pci_f *rf = iwdev->rf;
 	struct ice_vsi *vsi = ice_get_main_vsi(pf);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void irdma_fill_device_info(struct irdma_device *iwdev, struct ice_pf *pf,
-				   struct ice_vsi *vsi)
-{
-	struct irdma_pci_f *rf = iwdev->rf;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rf->cdev = pf;
 	rf->gen_ops.register_qset = irdma_lan_register_qset;
@@ -267,30 +253,12 @@ static int irdma_probe(struct auxiliary_device *aux_dev, const struct auxiliary_
 							    struct iidc_auxiliary_dev,
 							    adev);
 	struct ice_pf *pf = iidc_adev->pf;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct ice_vsi *vsi = ice_get_main_vsi(pf);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct ice_vsi *vsi = ice_get_main_vsi(pf);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct iidc_qos_params qos_info = {};
 	struct irdma_device *iwdev;
 	struct irdma_pci_f *rf;
 	struct irdma_l2params l2params = {};
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!vsi)
-		return -EIO;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!vsi)
-		return -EIO;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iwdev = ib_alloc_device(irdma_device, ibdev);
 	if (!iwdev)
 		return -ENOMEM;
@@ -300,15 +268,7 @@ static int irdma_probe(struct auxiliary_device *aux_dev, const struct auxiliary_
 		return -ENOMEM;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	irdma_fill_device_info(iwdev, pf, vsi);
-=======
 	irdma_fill_device_info(iwdev, pf);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	irdma_fill_device_info(iwdev, pf, vsi);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rf = iwdev->rf;
 
 	if (irdma_ctrl_init_hw(rf)) {

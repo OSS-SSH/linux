@@ -377,44 +377,18 @@ static int hid_submit_ctrl(struct hid_device *hid)
 	len = hid_report_len(report);
 	if (dir == USB_DIR_OUT) {
 		usbhid->urbctrl->pipe = usb_sndctrlpipe(hid_to_usb_dev(hid), 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		usbhid->urbctrl->transfer_buffer_length = len;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (raw_report) {
 			memcpy(usbhid->ctrlbuf, raw_report, len);
 			kfree(raw_report);
 			usbhid->ctrl[usbhid->ctrltail].raw_report = NULL;
 		}
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		int maxpacket;
-=======
 		int maxpacket, padlen;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		int maxpacket;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		usbhid->urbctrl->pipe = usb_rcvctrlpipe(hid_to_usb_dev(hid), 0);
 		maxpacket = usb_maxpacket(hid_to_usb_dev(hid),
 					  usbhid->urbctrl->pipe, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		len += (len == 0);	/* Don't allow 0-length reports */
-		len = round_up(len, maxpacket);
-		if (len > usbhid->bufsize)
-			len = usbhid->bufsize;
-<<<<<<< HEAD
-	}
-	usbhid->urbctrl->transfer_buffer_length = len;
-=======
 		if (maxpacket > 0) {
 			padlen = DIV_ROUND_UP(len, maxpacket);
 			padlen *= maxpacket;
@@ -424,11 +398,6 @@ static int hid_submit_ctrl(struct hid_device *hid)
 			padlen = 0;
 		usbhid->urbctrl->transfer_buffer_length = padlen;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	}
-	usbhid->urbctrl->transfer_buffer_length = len;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usbhid->urbctrl->dev = hid_to_usb_dev(hid);
 
 	usbhid->cr->bRequestType = USB_TYPE_CLASS | USB_RECIP_INTERFACE | dir;
@@ -536,15 +505,7 @@ static void hid_ctrl(struct urb *urb)
 
 	if (unplug) {
 		usbhid->ctrltail = usbhid->ctrlhead;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else if (usbhid->ctrlhead != usbhid->ctrltail) {
-=======
 	} else {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else if (usbhid->ctrlhead != usbhid->ctrltail) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		usbhid->ctrltail = (usbhid->ctrltail + 1) & (HID_CONTROL_FIFO_SIZE - 1);
 
 		if (usbhid->ctrlhead != usbhid->ctrltail &&
@@ -1262,43 +1223,9 @@ static void usbhid_stop(struct hid_device *hid)
 	mutex_lock(&usbhid->mutex);
 
 	clear_bit(HID_STARTED, &usbhid->iofl);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 	spin_lock_irq(&usbhid->lock);	/* Sync with error and led handlers */
 	set_bit(HID_DISCONNECTED, &usbhid->iofl);
-	while (usbhid->ctrltail != usbhid->ctrlhead) {
-		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_OUT) {
-			kfree(usbhid->ctrl[usbhid->ctrltail].raw_report);
-			usbhid->ctrl[usbhid->ctrltail].raw_report = NULL;
-		}
-
-		usbhid->ctrltail = (usbhid->ctrltail + 1) &
-			(HID_CONTROL_FIFO_SIZE - 1);
-	}
 	spin_unlock_irq(&usbhid->lock);
-
-=======
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	spin_lock_irq(&usbhid->lock);	/* Sync with error and led handlers */
-	set_bit(HID_DISCONNECTED, &usbhid->iofl);
-	while (usbhid->ctrltail != usbhid->ctrlhead) {
-		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_OUT) {
-			kfree(usbhid->ctrl[usbhid->ctrltail].raw_report);
-			usbhid->ctrl[usbhid->ctrltail].raw_report = NULL;
-		}
-
-		usbhid->ctrltail = (usbhid->ctrltail + 1) &
-			(HID_CONTROL_FIFO_SIZE - 1);
-	}
-	spin_unlock_irq(&usbhid->lock);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_kill_urb(usbhid->urbin);
 	usb_kill_urb(usbhid->urbout);
 	usb_kill_urb(usbhid->urbctrl);

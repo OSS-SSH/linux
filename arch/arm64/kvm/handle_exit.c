@@ -113,51 +113,34 @@ static int kvm_handle_wfx(struct kvm_vcpu *vcpu)
  * guest and host are using the same debug facilities it will be up to
  * userspace to re-inject the correct exception for guest delivery.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @return: 0 (while setting vcpu->run->exit_reason)
-=======
  * @return: 0 (while setting vcpu->run->exit_reason), -1 for error
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @return: 0 (while setting vcpu->run->exit_reason)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int kvm_handle_guest_debug(struct kvm_vcpu *vcpu)
 {
 	struct kvm_run *run = vcpu->run;
 	u32 esr = kvm_vcpu_get_esr(vcpu);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int ret = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	run->exit_reason = KVM_EXIT_DEBUG;
 	run->debug.arch.hsr = esr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ESR_ELx_EC(esr) == ESR_ELx_EC_WATCHPT_LOW)
-		run->debug.arch.far = vcpu->arch.fault.far_el2;
-
-	return 0;
-=======
 	switch (ESR_ELx_EC(esr)) {
 	case ESR_ELx_EC_WATCHPT_LOW:
-=======
-	if (ESR_ELx_EC(esr) == ESR_ELx_EC_WATCHPT_LOW)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		run->debug.arch.far = vcpu->arch.fault.far_el2;
+		fallthrough;
+	case ESR_ELx_EC_SOFTSTP_LOW:
+	case ESR_ELx_EC_BREAKPT_LOW:
+	case ESR_ELx_EC_BKPT32:
+	case ESR_ELx_EC_BRK64:
+		break;
+	default:
+		kvm_err("%s: un-handled case esr: %#08x\n",
+			__func__, (unsigned int) esr);
+		ret = -1;
+		break;
+	}
 
-<<<<<<< HEAD
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int kvm_handle_unknown_ec(struct kvm_vcpu *vcpu)
@@ -309,29 +292,11 @@ void handle_exit_early(struct kvm_vcpu *vcpu, int exception_index)
 		kvm_handle_guest_serror(vcpu, kvm_vcpu_get_esr(vcpu));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr,
-					      u64 elr_virt, u64 elr_phys,
-					      u64 par, uintptr_t vcpu,
-					      u64 far, u64 hpfar) {
-	u64 elr_in_kimg = __phys_to_kimg(elr_phys);
-	u64 hyp_offset = elr_in_kimg - kaslr_offset() - elr_virt;
-=======
 void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr, u64 elr,
 					      u64 par, uintptr_t vcpu,
 					      u64 far, u64 hpfar) {
 	u64 elr_in_kimg = __phys_to_kimg(__hyp_pa(elr));
 	u64 hyp_offset = elr_in_kimg - kaslr_offset() - elr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr,
-					      u64 elr_virt, u64 elr_phys,
-					      u64 par, uintptr_t vcpu,
-					      u64 far, u64 hpfar) {
-	u64 elr_in_kimg = __phys_to_kimg(elr_phys);
-	u64 hyp_offset = elr_in_kimg - kaslr_offset() - elr_virt;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 mode = spsr & PSR_MODE_MASK;
 
 	/*
@@ -344,54 +309,20 @@ void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr,
 		kvm_err("Invalid host exception to nVHE hyp!\n");
 	} else if (ESR_ELx_EC(esr) == ESR_ELx_EC_BRK64 &&
 		   (esr & ESR_ELx_BRK64_ISS_COMMENT_MASK) == BUG_BRK_IMM) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		struct bug_entry *bug = find_bug(elr_in_kimg);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		const char *file = NULL;
 		unsigned int line = 0;
 
 		/* All hyp bugs, including warnings, are treated as fatal. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (!is_protected_kvm_enabled() ||
-		    IS_ENABLED(CONFIG_NVHE_EL2_DEBUG)) {
-			struct bug_entry *bug = find_bug(elr_in_kimg);
-
-			if (bug)
-				bug_get_file_line(bug, &file, &line);
-		}
-<<<<<<< HEAD
-=======
 		if (bug)
 			bug_get_file_line(bug, &file, &line);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (file)
 			kvm_err("nVHE hyp BUG at: %s:%u!\n", file, line);
 		else
-<<<<<<< HEAD
-<<<<<<< HEAD
-			kvm_err("nVHE hyp BUG at: %016llx!\n", elr_virt + hyp_offset);
-	} else {
-		kvm_err("nVHE hyp panic at: %016llx!\n", elr_virt + hyp_offset);
-=======
 			kvm_err("nVHE hyp BUG at: %016llx!\n", elr + hyp_offset);
 	} else {
 		kvm_err("nVHE hyp panic at: %016llx!\n", elr + hyp_offset);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			kvm_err("nVHE hyp BUG at: %016llx!\n", elr_virt + hyp_offset);
-	} else {
-		kvm_err("nVHE hyp panic at: %016llx!\n", elr_virt + hyp_offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -403,13 +334,5 @@ void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr,
 	kvm_err("Hyp Offset: 0x%llx\n", hyp_offset);
 
 	panic("HYP panic:\nPS:%08llx PC:%016llx ESR:%08llx\nFAR:%016llx HPFAR:%016llx PAR:%016llx\nVCPU:%016lx\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-	      spsr, elr_virt, esr, far, hpfar, par, vcpu);
-=======
 	      spsr, elr, esr, far, hpfar, par, vcpu);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	      spsr, elr_virt, esr, far, hpfar, par, vcpu);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

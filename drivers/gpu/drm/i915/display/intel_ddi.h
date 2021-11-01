@@ -40,18 +40,8 @@ bool hsw_ddi_is_clock_enabled(struct intel_encoder *encoder);
 void hsw_ddi_get_config(struct intel_encoder *encoder,
 			struct intel_crtc_state *crtc_state);
 struct intel_shared_dpll *icl_ddi_combo_get_pll(struct intel_encoder *encoder);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void hsw_prepare_dp_ddi_buffers(struct intel_encoder *encoder,
-				const struct intel_crtc_state *crtc_state);
-=======
 void intel_prepare_dp_ddi_buffers(struct intel_encoder *encoder,
 				  const struct intel_crtc_state *crtc_state);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void hsw_prepare_dp_ddi_buffers(struct intel_encoder *encoder,
-				const struct intel_crtc_state *crtc_state);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_wait_ddi_buf_idle(struct drm_i915_private *dev_priv,
 			     enum port port);
 void intel_ddi_init(struct drm_i915_private *dev_priv, enum port port);

@@ -54,14 +54,6 @@ void down(struct semaphore *sem)
 {
 	unsigned long flags;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	might_sleep();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	might_sleep();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	raw_spin_lock_irqsave(&sem->lock, flags);
 	if (likely(sem->count > 0))
 		sem->count--;
@@ -85,14 +77,6 @@ int down_interruptible(struct semaphore *sem)
 	unsigned long flags;
 	int result = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	might_sleep();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	might_sleep();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	raw_spin_lock_irqsave(&sem->lock, flags);
 	if (likely(sem->count > 0))
 		sem->count--;
@@ -119,14 +103,6 @@ int down_killable(struct semaphore *sem)
 	unsigned long flags;
 	int result = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	might_sleep();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	might_sleep();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	raw_spin_lock_irqsave(&sem->lock, flags);
 	if (likely(sem->count > 0))
 		sem->count--;
@@ -181,14 +157,6 @@ int down_timeout(struct semaphore *sem, long timeout)
 	unsigned long flags;
 	int result = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	might_sleep();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	might_sleep();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	raw_spin_lock_irqsave(&sem->lock, flags);
 	if (likely(sem->count > 0))
 		sem->count--;

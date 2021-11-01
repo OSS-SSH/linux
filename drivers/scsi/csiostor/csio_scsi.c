@@ -1786,15 +1786,7 @@ csio_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *cmnd)
 	struct csio_scsi_qset *sqset;
 	struct fc_rport *rport = starget_to_rport(scsi_target(cmnd->device));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sqset = &hw->sqset[ln->portid][blk_mq_rq_cpu(scsi_cmd_to_rq(cmnd))];
-=======
 	sqset = &hw->sqset[ln->portid][blk_mq_rq_cpu(cmnd->request)];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sqset = &hw->sqset[ln->portid][blk_mq_rq_cpu(scsi_cmd_to_rq(cmnd))];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	nr = fc_remote_port_chkready(rport);
 	if (nr) {
@@ -1997,29 +1989,13 @@ inval_scmnd:
 		csio_info(hw,
 			"Aborted SCSI command to (%d:%llu) tag %u\n",
 			cmnd->device->id, cmnd->device->lun,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			scsi_cmd_to_rq(cmnd)->tag);
-=======
 			cmnd->request->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			scsi_cmd_to_rq(cmnd)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return SUCCESS;
 	} else {
 		csio_info(hw,
 			"Failed to abort SCSI command, (%d:%llu) tag %u\n",
 			cmnd->device->id, cmnd->device->lun,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			scsi_cmd_to_rq(cmnd)->tag);
-=======
 			cmnd->request->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			scsi_cmd_to_rq(cmnd)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return FAILED;
 	}
 }

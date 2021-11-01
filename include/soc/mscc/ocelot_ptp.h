@@ -13,18 +13,6 @@
 #include <linux/ptp_clock_kernel.h>
 #include <soc/mscc/ocelot.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define OCELOT_MAX_PTP_ID		63
-#define OCELOT_PTP_FIFO_SIZE		128
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define OCELOT_MAX_PTP_ID		63
-#define OCELOT_PTP_FIFO_SIZE		128
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PTP_PIN_CFG_RSZ			0x20
 #define PTP_PIN_TOD_SEC_MSB_RSZ		PTP_PIN_CFG_RSZ
 #define PTP_PIN_TOD_SEC_LSB_RSZ		PTP_PIN_CFG_RSZ

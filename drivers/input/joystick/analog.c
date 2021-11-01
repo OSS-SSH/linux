@@ -28,16 +28,10 @@ MODULE_AUTHOR("Vojtech Pavlik <vojtech@ucw.cz>");
 MODULE_DESCRIPTION(DRIVER_DESC);
 MODULE_LICENSE("GPL");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static bool use_ktime = true;
 module_param(use_ktime, bool, 0400);
 MODULE_PARM_DESC(use_ktime, "Use ktime for measuring I/O speed");
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Option parsing.
  */
@@ -116,13 +110,7 @@ struct analog_port {
 	char cooked;
 	int bads;
 	int reads;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int speed;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int loop;
 	int fuzz;
 	int axes[4];
@@ -132,9 +120,6 @@ struct analog_port {
 };
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * Time macros.
  */
 
@@ -195,9 +180,6 @@ static inline unsigned int delta(u64 x, u64 y)
 }
 
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * analog_decode() decodes analog joystick data and reports input events.
  */
 
@@ -252,42 +234,18 @@ static void analog_decode(struct analog *analog, int *axes, int *initial, int bu
 static int analog_cooked_read(struct analog_port *port)
 {
 	struct gameport *gameport = port->gameport;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ktime_t time[4], start, loop, now;
-=======
 	u64 time[4], start, loop, now;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ktime_t time[4], start, loop, now;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int loopout, timeout;
 	unsigned char data[4], this, last;
 	unsigned long flags;
 	int i, j;
 
 	loopout = (ANALOG_LOOP_TIME * port->loop) / 1000;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	timeout = ANALOG_MAX_TIME * NSEC_PER_MSEC;
-
-	local_irq_save(flags);
-	gameport_trigger(gameport);
-	now = ktime_get();
-=======
 	timeout = ANALOG_MAX_TIME * port->speed;
 
 	local_irq_save(flags);
 	gameport_trigger(gameport);
 	now = get_time();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	timeout = ANALOG_MAX_TIME * NSEC_PER_MSEC;
-
-	local_irq_save(flags);
-	gameport_trigger(gameport);
-	now = ktime_get();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	local_irq_restore(flags);
 
 	start = now;
@@ -300,38 +258,16 @@ static int analog_cooked_read(struct analog_port *port)
 
 		local_irq_disable();
 		this = gameport_read(gameport) & port->mask;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		now = ktime_get();
-		local_irq_restore(flags);
-
-		if ((last ^ this) && (ktime_sub(now, loop) < loopout)) {
-=======
 		now = get_time();
 		local_irq_restore(flags);
 
 		if ((last ^ this) && (delta(loop, now) < loopout)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		now = ktime_get();
-		local_irq_restore(flags);
-
-		if ((last ^ this) && (ktime_sub(now, loop) < loopout)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			data[i] = last ^ this;
 			time[i] = now;
 			i++;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} while (this && (i < 4) && (ktime_sub(now, start) < timeout));
-=======
 	} while (this && (i < 4) && (delta(start, now) < timeout));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} while (this && (i < 4) && (ktime_sub(now, start) < timeout));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	this <<= 4;
 
@@ -339,15 +275,7 @@ static int analog_cooked_read(struct analog_port *port)
 		this |= data[i];
 		for (j = 0; j < 4; j++)
 			if (data[i] & (1 << j))
-<<<<<<< HEAD
-<<<<<<< HEAD
-				port->axes[j] = ((u32)ktime_sub(time[i], start) << ANALOG_FUZZ_BITS) / port->loop;
-=======
 				port->axes[j] = (delta(start, time[i]) << ANALOG_FUZZ_BITS) / port->loop;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				port->axes[j] = ((u32)ktime_sub(time[i], start) << ANALOG_FUZZ_BITS) / port->loop;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return -(this != port->mask);
@@ -447,12 +375,6 @@ static void analog_calibrate_timer(struct analog_port *port)
 {
 	struct gameport *gameport = port->gameport;
 	unsigned int i, t, tx;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ktime_t t1, t2, t3;
-	unsigned long flags;
-
-=======
 	u64 t1, t2, t3;
 	unsigned long flags;
 
@@ -472,45 +394,19 @@ static void analog_calibrate_timer(struct analog_port *port)
 		port->speed = delta(t1, t2) - delta(t2, t3);
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ktime_t t1, t2, t3;
-	unsigned long flags;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tx = ~0;
 
 	for (i = 0; i < 50; i++) {
 		local_irq_save(flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		t1 = ktime_get();
-		for (t = 0; t < 50; t++) {
-			gameport_read(gameport);
-			t2 = ktime_get();
-		}
-		t3 = ktime_get();
-		local_irq_restore(flags);
-		udelay(i);
-		t = ktime_sub(t2, t1) - ktime_sub(t3, t2);
-=======
 		t1 = get_time();
-=======
-		t1 = ktime_get();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (t = 0; t < 50; t++) {
 			gameport_read(gameport);
-			t2 = ktime_get();
+			t2 = get_time();
 		}
-		t3 = ktime_get();
+		t3 = get_time();
 		local_irq_restore(flags);
 		udelay(i);
-<<<<<<< HEAD
 		t = delta(t1, t2) - delta(t2, t3);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		t = ktime_sub(t2, t1) - ktime_sub(t3, t2);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (t < tx) tx = t;
 	}
 
@@ -715,15 +611,7 @@ static int analog_init_port(struct gameport *gameport, struct gameport_driver *d
 		t = gameport_read(gameport);
 		msleep(ANALOG_MAX_TIME);
 		port->mask = (gameport_read(gameport) ^ t) & t & 0xf;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		port->fuzz = (NSEC_PER_MSEC * ANALOG_FUZZ_MAGIC) / port->loop / 1000 + ANALOG_FUZZ_BITS;
-=======
 		port->fuzz = (port->speed * ANALOG_FUZZ_MAGIC) / port->loop / 1000 + ANALOG_FUZZ_BITS;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		port->fuzz = (NSEC_PER_MSEC * ANALOG_FUZZ_MAGIC) / port->loop / 1000 + ANALOG_FUZZ_BITS;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		for (i = 0; i < ANALOG_INIT_RETRIES; i++) {
 			if (!analog_cooked_read(port))

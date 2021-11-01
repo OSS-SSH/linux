@@ -455,19 +455,9 @@ static irqreturn_t pxa_gpio_demux_handler(int in_irq, void *d)
 			for_each_set_bit(n, &gedr, BITS_PER_LONG) {
 				loop = 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-				generic_handle_domain_irq(pchip->irqdomain,
-							  gpio + n);
-=======
 				generic_handle_irq(
 					irq_find_mapping(pchip->irqdomain,
 							 gpio + n));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				generic_handle_domain_irq(pchip->irqdomain,
-							  gpio + n);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 		handled += loop;
@@ -481,21 +471,9 @@ static irqreturn_t pxa_gpio_direct_handler(int in_irq, void *d)
 	struct pxa_gpio_chip *pchip = d;
 
 	if (in_irq == pchip->irq0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		generic_handle_domain_irq(pchip->irqdomain, 0);
-	} else if (in_irq == pchip->irq1) {
-		generic_handle_domain_irq(pchip->irqdomain, 1);
-=======
 		generic_handle_irq(irq_find_mapping(pchip->irqdomain, 0));
 	} else if (in_irq == pchip->irq1) {
 		generic_handle_irq(irq_find_mapping(pchip->irqdomain, 1));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		generic_handle_domain_irq(pchip->irqdomain, 0);
-	} else if (in_irq == pchip->irq1) {
-		generic_handle_domain_irq(pchip->irqdomain, 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		pr_err("%s() unknown irq %d\n", __func__, in_irq);
 		return IRQ_NONE;

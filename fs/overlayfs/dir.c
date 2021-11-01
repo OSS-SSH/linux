@@ -233,23 +233,9 @@ struct dentry *ovl_create_temp(struct dentry *workdir, struct ovl_cattr *attr)
 static int ovl_set_opaque_xerr(struct dentry *dentry, struct dentry *upper,
 			       int xerr)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
-	int err;
-
-	err = ovl_check_setxattr(ofs, upper, OVL_XATTR_OPAQUE, "y", 1, xerr);
-=======
 	int err;
 
 	err = ovl_check_setxattr(dentry, upper, OVL_XATTR_OPAQUE, "y", 1, xerr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
-	int err;
-
-	err = ovl_check_setxattr(ofs, upper, OVL_XATTR_OPAQUE, "y", 1, xerr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!err)
 		ovl_dentry_set_opaque(dentry);
 
@@ -334,14 +320,6 @@ static bool ovl_type_origin(struct dentry *dentry)
 static int ovl_create_upper(struct dentry *dentry, struct inode *inode,
 			    struct ovl_cattr *attr)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dentry *upperdir = ovl_dentry_upper(dentry->d_parent);
 	struct inode *udir = upperdir->d_inode;
 	struct dentry *newdentry;
@@ -360,17 +338,7 @@ static int ovl_create_upper(struct dentry *dentry, struct inode *inode,
 	if (IS_ERR(newdentry))
 		goto out_unlock;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ovl_type_merge(dentry->d_parent) && d_is_dir(newdentry) &&
-	    !ovl_allow_offline_changes(ofs)) {
-=======
 	if (ovl_type_merge(dentry->d_parent) && d_is_dir(newdentry)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ovl_type_merge(dentry->d_parent) && d_is_dir(newdentry) &&
-	    !ovl_allow_offline_changes(ofs)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Setting opaque here is just an optimization, allow to fail */
 		ovl_set_opaque(dentry, newdentry);
 	}
@@ -574,21 +542,8 @@ static int ovl_create_over_whiteout(struct dentry *dentry, struct inode *inode,
 			goto out_cleanup;
 	}
 	err = ovl_instantiate(dentry, inode, newdentry, hardlink);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (err) {
-		ovl_cleanup(udir, newdentry);
-		dput(newdentry);
-	}
-<<<<<<< HEAD
-=======
 	if (err)
 		goto out_cleanup;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_dput:
 	dput(upper);
 out_unlock:
@@ -1088,14 +1043,6 @@ static bool ovl_need_absolute_redirect(struct dentry *dentry, bool samedir)
 static int ovl_set_redirect(struct dentry *dentry, bool samedir)
 {
 	int err;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char *redirect = ovl_dentry_get_redirect(dentry);
 	bool absolute_redirect = ovl_need_absolute_redirect(dentry, samedir);
 
@@ -1106,15 +1053,7 @@ static int ovl_set_redirect(struct dentry *dentry, bool samedir)
 	if (IS_ERR(redirect))
 		return PTR_ERR(redirect);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ovl_check_setxattr(ofs, ovl_dentry_upper(dentry),
-=======
 	err = ovl_check_setxattr(dentry, ovl_dentry_upper(dentry),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ovl_check_setxattr(ofs, ovl_dentry_upper(dentry),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 OVL_XATTR_REDIRECT,
 				 redirect, strlen(redirect), -EXDEV);
 	if (!err) {
@@ -1274,25 +1213,9 @@ static int ovl_rename(struct user_namespace *mnt_userns, struct inode *olddir,
 				goto out_dput;
 		}
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (!d_is_negative(newdentry)) {
-			if (!new_opaque || !ovl_is_whiteout(newdentry))
-				goto out_dput;
-		} else {
-			if (flags & RENAME_EXCHANGE)
-				goto out_dput;
-		}
-<<<<<<< HEAD
-=======
 		if (!d_is_negative(newdentry) &&
 		    (!new_opaque || !ovl_is_whiteout(newdentry)))
 			goto out_dput;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (olddentry == trap)

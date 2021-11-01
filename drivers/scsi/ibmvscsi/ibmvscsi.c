@@ -1072,15 +1072,7 @@ static int ibmvscsi_queuecommand_lck(struct scsi_cmnd *cmnd,
 	init_event_struct(evt_struct,
 			  handle_cmd_rsp,
 			  VIOSRP_SRP_FORMAT,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			  scsi_cmd_to_rq(cmnd)->timeout / HZ);
-=======
 			  cmnd->request->timeout/HZ);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			  scsi_cmd_to_rq(cmnd)->timeout / HZ);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	evt_struct->cmnd = cmnd;
 	evt_struct->cmnd_done = done;

@@ -124,60 +124,28 @@ static int snd_card_ad1816a_probe(int dev, struct pnp_card_link *pcard,
 	struct snd_ad1816a *chip;
 	struct snd_opl3 *opl3;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	error = snd_devm_card_new(&pcard->card->dev,
-				  index[dev], id[dev], THIS_MODULE,
-				  sizeof(struct snd_ad1816a), &card);
-=======
 	error = snd_card_new(&pcard->card->dev,
 			     index[dev], id[dev], THIS_MODULE,
 			     sizeof(struct snd_ad1816a), &card);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	error = snd_devm_card_new(&pcard->card->dev,
-				  index[dev], id[dev], THIS_MODULE,
-				  sizeof(struct snd_ad1816a), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0)
 		return error;
 	chip = card->private_data;
 
 	error = snd_card_ad1816a_pnp(dev, pcard, pid);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error)
-		return error;
-=======
 	if (error) {
 		snd_card_free(card);
 		return error;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (error)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = snd_ad1816a_create(card, port[dev],
 				   irq[dev],
 				   dma1[dev],
 				   dma2[dev],
 				   chip);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error)
-		return error;
-=======
 	if (error) {
 		snd_card_free(card);
 		return error;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (error)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (clockfreq[dev] >= 5000 && clockfreq[dev] <= 100000)
 		chip->clock_freq = clockfreq[dev];
 
@@ -187,38 +155,22 @@ static int snd_card_ad1816a_probe(int dev, struct pnp_card_link *pcard,
 		card->shortname, chip->port, irq[dev], dma1[dev], dma2[dev]);
 
 	error = snd_ad1816a_pcm(chip, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error < 0)
-		return error;
-
-	error = snd_ad1816a_mixer(chip);
-	if (error < 0)
-		return error;
-
-	error = snd_ad1816a_timer(chip, 0);
-	if (error < 0)
-		return error;
-=======
 	if (error < 0) {
 		snd_card_free(card);
-=======
-	if (error < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
+	}
 
 	error = snd_ad1816a_mixer(chip);
-	if (error < 0)
+	if (error < 0) {
+		snd_card_free(card);
 		return error;
+	}
 
 	error = snd_ad1816a_timer(chip, 0);
-	if (error < 0)
+	if (error < 0) {
+		snd_card_free(card);
 		return error;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mpu_port[dev] > 0) {
 		if (snd_mpu401_uart_new(card, 0, MPU401_HW_MPU401,
@@ -234,38 +186,18 @@ static int snd_card_ad1816a_probe(int dev, struct pnp_card_link *pcard,
 			printk(KERN_ERR PFX "no OPL device at 0x%lx-0x%lx.\n", fm_port[dev], fm_port[dev] + 2);
 		} else {
 			error = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (error < 0)
-				return error;
-=======
 			if (error < 0) {
 				snd_card_free(card);
 				return error;
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (error < 0)
-				return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
 	error = snd_card_register(card);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (error < 0)
-		return error;
-=======
 	if (error < 0) {
 		snd_card_free(card);
 		return error;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (error < 0)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pnp_set_card_drvdata(pcard, card);
 	return 0;
 }
@@ -291,18 +223,12 @@ static int snd_ad1816a_pnp_detect(struct pnp_card_link *card,
         return -ENODEV;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void snd_ad1816a_pnp_remove(struct pnp_card_link *pcard)
 {
 	snd_card_free(pnp_get_card_drvdata(pcard));
 	pnp_set_card_drvdata(pcard, NULL);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int snd_ad1816a_pnp_suspend(struct pnp_card_link *pcard,
 				   pm_message_t state)
@@ -329,13 +255,7 @@ static struct pnp_card_driver ad1816a_pnpc_driver = {
 	.name		= "ad1816a",
 	.id_table	= snd_ad1816a_pnpids,
 	.probe		= snd_ad1816a_pnp_detect,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove		= snd_ad1816a_pnp_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.suspend	= snd_ad1816a_pnp_suspend,
 	.resume		= snd_ad1816a_pnp_resume,

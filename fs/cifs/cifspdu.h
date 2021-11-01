@@ -1,12 +1,6 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *   fs/cifs/cifspdu.h
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (c) International Business Machines  Corp., 2002,2009
  *   Author(s): Steve French (sfrench@us.ibm.com)
@@ -18,23 +12,15 @@
 
 #include <net/sock.h>
 #include <asm/unaligned.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "../smbfs_common/smbfsctl.h"
-
-#define CIFS_PROT   0
-=======
 #include "smbfsctl.h"
-=======
-#include "../smbfs_common/smbfsctl.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+#ifdef CONFIG_CIFS_WEAK_PW_HASH
+#define LANMAN_PROT 0
+#define LANMAN2_PROT 1
+#define CIFS_PROT   2
+#else
 #define CIFS_PROT   0
-<<<<<<< HEAD
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define POSIX_PROT  (CIFS_PROT+1)
 #define BAD_PROT 0xFFFF
 
@@ -519,11 +505,6 @@ typedef struct negotiate_req {
 	unsigned char DialectsArray[1];
 } __attribute__((packed)) NEGOTIATE_REQ;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MIN_TZ_ADJ (15 * 60) /* minimum grid for timezones in seconds */
-
-=======
 /* Dialect index is 13 for LANMAN */
 
 #define MIN_TZ_ADJ (15 * 60) /* minimum grid for timezones in seconds */
@@ -548,11 +529,6 @@ typedef struct lanman_neg_rsp {
 	unsigned char EncryptionKey[1];
 } __attribute__((packed)) LANMAN_NEG_RSP;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MIN_TZ_ADJ (15 * 60) /* minimum grid for timezones in seconds */
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define READ_RAW_ENABLE 1
 #define WRITE_RAW_ENABLE 2
 #define RAW_ENABLE (READ_RAW_ENABLE | WRITE_RAW_ENABLE)

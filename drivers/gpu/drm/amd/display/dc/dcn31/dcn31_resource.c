@@ -220,14 +220,6 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_1_soc = {
 	.sr_exit_z8_time_us = 402.0,
 	.sr_enter_plus_exit_z8_time_us = 520.0,
 	.writeback_latency_us = 12.0,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.dram_channel_width_bytes = 4,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.dram_channel_width_bytes = 4,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.round_trip_ping_latency_dcfclk_cycles = 106,
 	.urgent_latency_pixel_data_only_us = 4.0,
 	.urgent_latency_pixel_mixed_with_vm_data_us = 4.0,
@@ -749,14 +741,6 @@ static const struct dccg_mask dccg_mask = {
 
 #define HWSEQ_DCN31_REG_LIST()\
 	SR(DCHUBBUB_GLOBAL_TIMER_CNTL), \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	SR(DCHUBBUB_ARB_HOSTVM_CNTL), \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	SR(DCHUBBUB_ARB_HOSTVM_CNTL), \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SR(DIO_MEM_PWR_CTRL), \
 	SR(ODM_MEM_PWR_CTRL3), \
 	SR(DMU_MEM_PWR_CNTL), \
@@ -817,14 +801,6 @@ static const struct dce_hwseq_registers hwseq_reg = {
 #define HWSEQ_DCN31_MASK_SH_LIST(mask_sh)\
 	HWSEQ_DCN_MASK_SH_LIST(mask_sh), \
 	HWS_SF(, DCHUBBUB_GLOBAL_TIMER_CNTL, DCHUBBUB_GLOBAL_TIMER_REFDIV, mask_sh), \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	HWS_SF(, DCHUBBUB_ARB_HOSTVM_CNTL, DISABLE_HOSTVM_FORCE_ALLOW_PSTATE, mask_sh), \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	HWS_SF(, DCHUBBUB_ARB_HOSTVM_CNTL, DISABLE_HOSTVM_FORCE_ALLOW_PSTATE, mask_sh), \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	HWS_SF(, DOMAIN0_PG_CONFIG, DOMAIN_POWER_FORCEON, mask_sh), \
 	HWS_SF(, DOMAIN0_PG_CONFIG, DOMAIN_POWER_GATE, mask_sh), \
 	HWS_SF(, DOMAIN1_PG_CONFIG, DOMAIN_POWER_FORCEON, mask_sh), \
@@ -949,15 +925,7 @@ static const struct dc_debug_options debug_defaults_drv = {
 	.disable_dcc = DCC_ENABLE,
 	.vsr_support = true,
 	.performance_trace = false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.max_downscale_src_width = 3840,/*upto 4K*/
-=======
 	.max_downscale_src_width = 7680,/*upto 8K*/
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.max_downscale_src_width = 3840,/*upto 4K*/
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.disable_pplib_wm_range = false,
 	.scl_reset_length10 = true,
 	.sanity_checks = false,
@@ -1313,21 +1281,6 @@ static struct stream_encoder *dcn31_stream_encoder_create(
 	if (!enc1 || !vpg || !afmt)
 		return NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (ctx->asic_id.chip_family == FAMILY_YELLOW_CARP &&
-			ctx->asic_id.hw_internal_rev == YELLOW_CARP_B0) {
-		if ((eng_id == ENGINE_ID_DIGC) || (eng_id == ENGINE_ID_DIGD))
-			eng_id = eng_id + 3; // For B0 only. C->F, D->G.
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios,
 					eng_id, vpg, afmt,
 					&stream_enc_regs[eng_id],
@@ -2011,31 +1964,6 @@ static bool dcn31_resource_construct(
 	dc->caps.color.mpc.ogam_rom_caps.hlg = 0;
 	dc->caps.color.mpc.ocsc = 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* read VBIOS LTTPR caps */
-	{
-		if (ctx->dc_bios->funcs->get_lttpr_caps) {
-			enum bp_result bp_query_result;
-			uint8_t is_vbios_lttpr_enable = 0;
-
-			bp_query_result = ctx->dc_bios->funcs->get_lttpr_caps(ctx->dc_bios, &is_vbios_lttpr_enable);
-			dc->caps.vbios_lttpr_enable = (bp_query_result == BP_RESULT_OK) && !!is_vbios_lttpr_enable;
-		}
-
-		/* interop bit is implicit */
-		{
-			dc->caps.vbios_lttpr_aware = true;
-		}
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dc->ctx->dce_environment == DCE_ENV_PRODUCTION_DRV)
 		dc->debug = debug_defaults_drv;
 	else if (dc->ctx->dce_environment == DCE_ENV_FPGA_MAXIMUS) {

@@ -47,24 +47,12 @@ struct etnaviv_drm_private {
 int etnaviv_ioctl_gem_submit(struct drm_device *dev, void *data,
 		struct drm_file *file);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int etnaviv_gem_mmap_offset(struct drm_gem_object *obj, u64 *offset);
-struct sg_table *etnaviv_gem_prime_get_sg_table(struct drm_gem_object *obj);
-int etnaviv_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map *map);
-=======
 int etnaviv_gem_mmap(struct file *filp, struct vm_area_struct *vma);
 int etnaviv_gem_mmap_offset(struct drm_gem_object *obj, u64 *offset);
 struct sg_table *etnaviv_gem_prime_get_sg_table(struct drm_gem_object *obj);
 int etnaviv_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map *map);
 int etnaviv_gem_prime_mmap(struct drm_gem_object *obj,
 			   struct vm_area_struct *vma);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int etnaviv_gem_mmap_offset(struct drm_gem_object *obj, u64 *offset);
-struct sg_table *etnaviv_gem_prime_get_sg_table(struct drm_gem_object *obj);
-int etnaviv_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map *map);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_gem_object *etnaviv_gem_prime_import_sg_table(struct drm_device *dev,
 	struct dma_buf_attachment *attach, struct sg_table *sg);
 int etnaviv_gem_prime_pin(struct drm_gem_object *obj);

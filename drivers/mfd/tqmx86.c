@@ -35,21 +35,7 @@
 #define TQMX86_REG_BOARD_ID_E39x	7
 #define TQMX86_REG_BOARD_ID_70EB	8
 #define TQMX86_REG_BOARD_ID_80UC	9
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define TQMX86_REG_BOARD_ID_110EB	11
-#define TQMX86_REG_BOARD_ID_E40M	12
-#define TQMX86_REG_BOARD_ID_E40S	13
-#define TQMX86_REG_BOARD_ID_E40C1	14
-#define TQMX86_REG_BOARD_ID_E40C2	15
-<<<<<<< HEAD
-=======
 #define TQMX86_REG_BOARD_ID_90UC	10
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define TQMX86_REG_BOARD_REV	0x21
 #define TQMX86_REG_IO_EXT_INT	0x26
 #define TQMX86_REG_IO_EXT_INT_NONE		0
@@ -91,15 +77,7 @@ static struct i2c_board_info tqmx86_i2c_devices[] = {
 	},
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static struct ocores_i2c_platform_data ocores_platform_data = {
-=======
 static struct ocores_i2c_platform_data ocores_platfom_data = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct ocores_i2c_platform_data ocores_platform_data = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.num_devices = ARRAY_SIZE(tqmx86_i2c_devices),
 	.devices = tqmx86_i2c_devices,
 };
@@ -107,18 +85,8 @@ static struct ocores_i2c_platform_data ocores_platform_data = {
 static const struct mfd_cell tqmx86_i2c_soft_dev[] = {
 	{
 		.name = "ocores-i2c",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.platform_data = &ocores_platform_data,
-		.pdata_size = sizeof(ocores_platform_data),
-=======
 		.platform_data = &ocores_platfom_data,
 		.pdata_size = sizeof(ocores_platfom_data),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.platform_data = &ocores_platform_data,
-		.pdata_size = sizeof(ocores_platform_data),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.resources = tqmx_i2c_soft_resources,
 		.num_resources = ARRAY_SIZE(tqmx_i2c_soft_resources),
 	},
@@ -160,62 +128,21 @@ static const char *tqmx86_board_id_to_name(u8 board_id)
 		return "TQMx70EB";
 	case TQMX86_REG_BOARD_ID_80UC:
 		return "TQMx80UC";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	case TQMX86_REG_BOARD_ID_110EB:
-		return "TQMx110EB";
-	case TQMX86_REG_BOARD_ID_E40M:
-		return "TQMxE40M";
-	case TQMX86_REG_BOARD_ID_E40S:
-		return "TQMxE40S";
-	case TQMX86_REG_BOARD_ID_E40C1:
-		return "TQMxE40C1";
-	case TQMX86_REG_BOARD_ID_E40C2:
-		return "TQMxE40C2";
-<<<<<<< HEAD
-=======
 	case TQMX86_REG_BOARD_ID_90UC:
 		return "TQMx90UC";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return "Unknown";
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
-=======
 static int tqmx86_board_id_to_clk_rate(u8 board_id)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	switch (board_id) {
 	case TQMX86_REG_BOARD_ID_50UC:
 	case TQMX86_REG_BOARD_ID_60EB:
 	case TQMX86_REG_BOARD_ID_70EB:
 	case TQMX86_REG_BOARD_ID_80UC:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	case TQMX86_REG_BOARD_ID_110EB:
-	case TQMX86_REG_BOARD_ID_E40M:
-	case TQMX86_REG_BOARD_ID_E40S:
-	case TQMX86_REG_BOARD_ID_E40C1:
-	case TQMX86_REG_BOARD_ID_E40C2:
-<<<<<<< HEAD
-=======
 	case TQMX86_REG_BOARD_ID_90UC:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 24000;
 	case TQMX86_REG_BOARD_ID_E39M:
 	case TQMX86_REG_BOARD_ID_E39C:
@@ -225,19 +152,7 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
 	case TQMX86_REG_BOARD_ID_E38C:
 		return 33000;
 	default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_warn(dev, "unknown board %d, assuming 24MHz LPC clock\n",
-			 board_id);
-		return 24000;
-=======
 		return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_warn(dev, "unknown board %d, assuming 24MHz LPC clock\n",
-			 board_id);
-		return 24000;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -294,25 +209,9 @@ static int tqmx86_probe(struct platform_device *pdev)
 
 		/* Assumes the IRQ resource is first. */
 		tqmx_gpio_resources[0].start = gpio_irq;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else {
-		tqmx_gpio_resources[0].flags = 0;
-	}
-
-	ocores_platform_data.clock_khz = tqmx86_board_id_to_clk_rate(dev, board_id);
-=======
 	}
 
 	ocores_platfom_data.clock_khz = tqmx86_board_id_to_clk_rate(board_id);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else {
-		tqmx_gpio_resources[0].flags = 0;
-	}
-
-	ocores_platform_data.clock_khz = tqmx86_board_id_to_clk_rate(dev, board_id);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (i2c_det == TQMX86_REG_I2C_DETECT_SOFT) {
 		err = devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE,
@@ -354,23 +253,6 @@ static const struct dmi_system_id tqmx86_dmi_table[] __initconst = {
 		},
 		.callback = tqmx86_create_platform_device,
 	},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{
-		.ident = "TQMX86",
-		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TQ-Systems"),
-			DMI_MATCH(DMI_PRODUCT_NAME, "TQMx"),
-		},
-		.callback = tqmx86_create_platform_device,
-	},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 MODULE_DEVICE_TABLE(dmi, tqmx86_dmi_table);

@@ -404,24 +404,11 @@ static int vprbrd_gpio_probe(struct platform_device *pdev)
 	vb_gpio->gpioa.get = vprbrd_gpioa_get;
 	vb_gpio->gpioa.direction_input = vprbrd_gpioa_direction_input;
 	vb_gpio->gpioa.direction_output = vprbrd_gpioa_direction_output;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 	ret = devm_gpiochip_add_data(&pdev->dev, &vb_gpio->gpioa, vb_gpio);
-	if (ret < 0)
+	if (ret < 0) {
+		dev_err(vb_gpio->gpioa.parent, "could not add gpio a");
 		return ret;
-=======
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = devm_gpiochip_add_data(&pdev->dev, &vb_gpio->gpioa, vb_gpio);
-	if (ret < 0)
-		return ret;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* registering gpio b */
 	vb_gpio->gpiob.label = "viperboard gpio b";
@@ -434,11 +421,6 @@ static int vprbrd_gpio_probe(struct platform_device *pdev)
 	vb_gpio->gpiob.get = vprbrd_gpiob_get;
 	vb_gpio->gpiob.direction_input = vprbrd_gpiob_direction_input;
 	vb_gpio->gpiob.direction_output = vprbrd_gpiob_direction_output;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	return devm_gpiochip_add_data(&pdev->dev, &vb_gpio->gpiob, vb_gpio);
-=======
 	ret = devm_gpiochip_add_data(&pdev->dev, &vb_gpio->gpiob, vb_gpio);
 	if (ret < 0) {
 		dev_err(vb_gpio->gpiob.parent, "could not add gpio b");
@@ -448,11 +430,6 @@ static int vprbrd_gpio_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, vb_gpio);
 
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	return devm_gpiochip_add_data(&pdev->dev, &vb_gpio->gpiob, vb_gpio);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct platform_driver vprbrd_gpio_driver = {

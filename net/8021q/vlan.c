@@ -67,15 +67,7 @@ static int vlan_group_prealloc_vid(struct vlan_group *vg,
 		return 0;
 
 	size = sizeof(struct net_device *) * VLAN_GROUP_ARRAY_PART_LEN;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	array = kzalloc(size, GFP_KERNEL_ACCOUNT);
-=======
 	array = kzalloc(size, GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	array = kzalloc(size, GFP_KERNEL_ACCOUNT);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (array == NULL)
 		return -ENOBUFS;
 

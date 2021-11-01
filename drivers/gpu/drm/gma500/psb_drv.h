@@ -624,17 +624,11 @@ static inline struct drm_psb_private *psb_priv(struct drm_device *dev)
 }
 
 /* psb_irq.c */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 extern irqreturn_t psb_irq_handler(int irq, void *arg);
 extern void psb_irq_preinstall(struct drm_device *dev);
 extern int psb_irq_postinstall(struct drm_device *dev);
 extern void psb_irq_uninstall(struct drm_device *dev);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void psb_irq_uninstall_islands(struct drm_device *dev, int hw_islands);
 extern int psb_vblank_wait2(struct drm_device *dev, unsigned int *sequence);
 extern int psb_vblank_wait(struct drm_device *dev, unsigned int *sequence);

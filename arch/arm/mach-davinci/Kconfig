@@ -9,13 +9,7 @@ menuconfig ARCH_DAVINCI
 	select PM_GENERIC_DOMAINS_OF if PM && OF
 	select REGMAP_MMIO
 	select RESET_CONTROLLER
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	select HAVE_IDE
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select PINCTRL_SINGLE
 
 if ARCH_DAVINCI

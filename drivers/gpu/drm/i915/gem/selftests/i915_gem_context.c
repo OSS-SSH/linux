@@ -680,15 +680,7 @@ static int igt_ctx_exec(void *arg)
 			struct i915_gem_context *ctx;
 			struct intel_context *ce;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ctx = kernel_context(i915, NULL);
-=======
 			ctx = kernel_context(i915);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ctx = kernel_context(i915, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (IS_ERR(ctx)) {
 				err = PTR_ERR(ctx);
 				goto out_file;
@@ -821,30 +813,16 @@ static int igt_shared_ctx_exec(void *arg)
 			struct i915_gem_context *ctx;
 			struct intel_context *ce;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ctx = kernel_context(i915, ctx_vm(parent));
-=======
 			ctx = kernel_context(i915);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ctx = kernel_context(i915, ctx_vm(parent));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (IS_ERR(ctx)) {
 				err = PTR_ERR(ctx);
 				goto out_test;
 			}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			mutex_lock(&ctx->mutex);
 			__assign_ppgtt(ctx, ctx_vm(parent));
 			mutex_unlock(&ctx->mutex);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ce = i915_gem_context_get_engine(ctx, engine->legacy_idx);
 			GEM_BUG_ON(IS_ERR(ce));
 
@@ -1897,9 +1875,6 @@ out_file:
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static bool skip_unused_engines(struct intel_context *ce, void *data)
 {
 	return !ce->state;
@@ -2019,9 +1994,6 @@ int i915_gem_context_mock_selftests(void)
 	return err;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int i915_gem_context_live_selftests(struct drm_i915_private *i915)
 {
 	static const struct i915_subtest tests[] = {

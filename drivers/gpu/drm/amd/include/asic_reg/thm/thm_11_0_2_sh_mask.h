@@ -92,17 +92,5 @@
 #define THM_TCON_THERM_TRIP__RSVD3_MASK                                                                       0x7FFFC000L
 #define THM_TCON_THERM_TRIP__SW_THERM_TP_MASK                                                                 0x80000000L
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CG_THERMAL_STATUS__FDO_PWM_DUTY__SHIFT                                                                0x9
-#define CG_THERMAL_STATUS__FDO_PWM_DUTY_MASK                                                                  0x0001FE00L
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CG_THERMAL_STATUS__FDO_PWM_DUTY__SHIFT                                                                0x9
-#define CG_THERMAL_STATUS__FDO_PWM_DUTY_MASK                                                                  0x0001FE00L
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 

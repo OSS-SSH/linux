@@ -395,18 +395,8 @@ static void bcm2835_gpio_irq_handle_bank(struct bcm2835_pinctrl *pc,
 	events &= pc->enabled_irq_map[bank];
 	for_each_set_bit(offset, &events, 32) {
 		gpio = (32 * bank) + offset;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		generic_handle_domain_irq(pc->gpio_chip.irq.domain,
-					  gpio);
-=======
 		generic_handle_irq(irq_linear_revmap(pc->gpio_chip.irq.domain,
 						     gpio));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		generic_handle_domain_irq(pc->gpio_chip.irq.domain,
-					  gpio);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -426,16 +416,8 @@ static void bcm2835_gpio_irq_handler(struct irq_desc *desc)
 		}
 	}
 	/* This should not happen, every IRQ has a bank */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	BUG_ON(i == BCM2835_NUM_IRQS);
-=======
 	if (i == BCM2835_NUM_IRQS)
 		BUG();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	BUG_ON(i == BCM2835_NUM_IRQS);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_enter(host_chip, desc);
 

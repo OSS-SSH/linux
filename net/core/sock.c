@@ -139,16 +139,6 @@
 #include <net/tcp.h>
 #include <net/busy_poll.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/ethtool.h>
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/ethtool.h>
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEFINE_MUTEX(proto_list_mutex);
 static LIST_HEAD(proto_list);
 
@@ -234,14 +224,6 @@ static struct lock_class_key af_family_kern_slock_keys[AF_MAX];
   x "AF_IEEE802154",	x "AF_CAIF"	,	x "AF_ALG"      , \
   x "AF_NFC"   ,	x "AF_VSOCK"    ,	x "AF_KCM"      , \
   x "AF_QIPCRTR",	x "AF_SMC"	,	x "AF_XDP"	, \
-<<<<<<< HEAD
-<<<<<<< HEAD
-  x "AF_MCTP"  , \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  x "AF_MCTP"  , \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   x "AF_MAX"
 
 static const char *const af_family_key_strings[AF_MAX+1] = {
@@ -828,96 +810,8 @@ void sock_set_timestamp(struct sock *sk, int optname, bool valbool)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int sock_timestamping_bind_phc(struct sock *sk, int phc_index)
-{
-	struct net *net = sock_net(sk);
-	struct net_device *dev = NULL;
-	bool match = false;
-	int *vclock_index;
-	int i, num;
-
-	if (sk->sk_bound_dev_if)
-		dev = dev_get_by_index(net, sk->sk_bound_dev_if);
-
-	if (!dev) {
-		pr_err("%s: sock not bind to device\n", __func__);
-		return -EOPNOTSUPP;
-	}
-
-	num = ethtool_get_phc_vclocks(dev, &vclock_index);
-	for (i = 0; i < num; i++) {
-		if (*(vclock_index + i) == phc_index) {
-			match = true;
-			break;
-		}
-	}
-
-	if (num > 0)
-		kfree(vclock_index);
-
-	if (!match)
-		return -EINVAL;
-
-	sk->sk_bind_phc = phc_index;
-
-	return 0;
-}
-
-int sock_set_timestamping(struct sock *sk, int optname,
-			  struct so_timestamping timestamping)
-{
-	int val = timestamping.flags;
-	int ret;
-
-=======
 int sock_set_timestamping(struct sock *sk, int optname, int val)
 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int sock_timestamping_bind_phc(struct sock *sk, int phc_index)
-{
-	struct net *net = sock_net(sk);
-	struct net_device *dev = NULL;
-	bool match = false;
-	int *vclock_index;
-	int i, num;
-
-	if (sk->sk_bound_dev_if)
-		dev = dev_get_by_index(net, sk->sk_bound_dev_if);
-
-	if (!dev) {
-		pr_err("%s: sock not bind to device\n", __func__);
-		return -EOPNOTSUPP;
-	}
-
-	num = ethtool_get_phc_vclocks(dev, &vclock_index);
-	for (i = 0; i < num; i++) {
-		if (*(vclock_index + i) == phc_index) {
-			match = true;
-			break;
-		}
-	}
-
-	if (num > 0)
-		kfree(vclock_index);
-
-	if (!match)
-		return -EINVAL;
-
-	sk->sk_bind_phc = phc_index;
-
-	return 0;
-}
-
-int sock_set_timestamping(struct sock *sk, int optname,
-			  struct so_timestamping timestamping)
-{
-	int val = timestamping.flags;
-	int ret;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (val & ~SOF_TIMESTAMPING_MASK)
 		return -EINVAL;
 
@@ -938,21 +832,6 @@ int sock_set_timestamping(struct sock *sk, int optname,
 	    !(val & SOF_TIMESTAMPING_OPT_TSONLY))
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (val & SOF_TIMESTAMPING_BIND_PHC) {
-		ret = sock_timestamping_bind_phc(sk, timestamping.bind_phc);
-		if (ret)
-			return ret;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sk->sk_tsflags = val;
 	sock_valbool_flag(sk, SOCK_TSTAMP_NEW, optname == SO_TIMESTAMPING_NEW);
 
@@ -1028,14 +907,6 @@ EXPORT_SYMBOL(sock_set_mark);
 int sock_setsockopt(struct socket *sock, int level, int optname,
 		    sockptr_t optval, unsigned int optlen)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct so_timestamping timestamping;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct so_timestamping timestamping;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sock_txtime sk_txtime;
 	struct sock *sk = sock->sk;
 	int val;
@@ -1197,40 +1068,12 @@ set_sndbuf:
 	case SO_TIMESTAMP_NEW:
 	case SO_TIMESTAMPNS_OLD:
 	case SO_TIMESTAMPNS_NEW:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		sock_set_timestamp(sk, optname, valbool);
-=======
 		sock_set_timestamp(sk, valbool, optname);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		sock_set_timestamp(sk, optname, valbool);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case SO_TIMESTAMPING_NEW:
 	case SO_TIMESTAMPING_OLD:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (optlen == sizeof(timestamping)) {
-			if (copy_from_sockptr(&timestamping, optval,
-					      sizeof(timestamping))) {
-				ret = -EFAULT;
-				break;
-			}
-		} else {
-			memset(&timestamping, 0, sizeof(timestamping));
-			timestamping.flags = val;
-		}
-		ret = sock_set_timestamping(sk, optname, timestamping);
-<<<<<<< HEAD
-=======
 		ret = sock_set_timestamping(sk, optname, val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case SO_RCVLOWAT:
@@ -1358,15 +1201,7 @@ set_sndbuf:
 			if (val < 0)
 				ret = -EINVAL;
 			else
-<<<<<<< HEAD
-<<<<<<< HEAD
-				WRITE_ONCE(sk->sk_ll_usec, val);
-=======
 				sk->sk_ll_usec = val;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				WRITE_ONCE(sk->sk_ll_usec, val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case SO_PREFER_BUSY_POLL:
@@ -1464,24 +1299,6 @@ set_sndbuf:
 		ret = sock_bindtoindex_locked(sk, val);
 		break;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	case SO_BUF_LOCK:
-		if (val & ~SOCK_BUF_LOCK_MASK) {
-			ret = -EINVAL;
-			break;
-		}
-		sk->sk_userlocks = val | (sk->sk_userlocks &
-					  ~SOCK_BUF_LOCK_MASK);
-		break;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		ret = -ENOPROTOOPT;
 		break;
@@ -1491,25 +1308,6 @@ set_sndbuf:
 }
 EXPORT_SYMBOL(sock_setsockopt);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct cred *sk_get_peer_cred(struct sock *sk)
-{
-	const struct cred *cred;
-
-	spin_lock(&sk->sk_peer_lock);
-	cred = get_cred(sk->sk_peer_cred);
-	spin_unlock(&sk->sk_peer_lock);
-
-	return cred;
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void cred_to_ucred(struct pid *pid, const struct cred *cred,
 			  struct ucred *ucred)
@@ -1550,14 +1348,6 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 		struct __kernel_old_timeval tm;
 		struct  __kernel_sock_timeval stm;
 		struct sock_txtime txtime;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		struct so_timestamping timestamping;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		struct so_timestamping timestamping;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} v;
 
 	int lv = sizeof(int);
@@ -1661,19 +1451,7 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 		break;
 
 	case SO_TIMESTAMPING_OLD:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		lv = sizeof(v.timestamping);
-		v.timestamping.flags = sk->sk_tsflags;
-		v.timestamping.bind_phc = sk->sk_bind_phc;
-=======
 		v.val = sk->sk_tsflags;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		lv = sizeof(v.timestamping);
-		v.timestamping.flags = sk->sk_tsflags;
-		v.timestamping.bind_phc = sk->sk_bind_phc;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case SO_RCVTIMEO_OLD:
@@ -1703,21 +1481,7 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 		struct ucred peercred;
 		if (len > sizeof(peercred))
 			len = sizeof(peercred);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		spin_lock(&sk->sk_peer_lock);
 		cred_to_ucred(sk->sk_peer_pid, sk->sk_peer_cred, &peercred);
-		spin_unlock(&sk->sk_peer_lock);
-
-<<<<<<< HEAD
-=======
-		cred_to_ucred(sk->sk_peer_pid, sk->sk_peer_cred, &peercred);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (copy_to_user(optval, &peercred, len))
 			return -EFAULT;
 		goto lenout;
@@ -1725,53 +1489,20 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 
 	case SO_PEERGROUPS:
 	{
-<<<<<<< HEAD
-<<<<<<< HEAD
-		const struct cred *cred;
 		int ret, n;
 
-		cred = sk_get_peer_cred(sk);
-		if (!cred)
+		if (!sk->sk_peer_cred)
 			return -ENODATA;
 
-		n = cred->group_info->ngroups;
+		n = sk->sk_peer_cred->group_info->ngroups;
 		if (len < n * sizeof(gid_t)) {
 			len = n * sizeof(gid_t);
-			put_cred(cred);
-=======
-=======
-		const struct cred *cred;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		int ret, n;
-
-		cred = sk_get_peer_cred(sk);
-		if (!cred)
-			return -ENODATA;
-
-		n = cred->group_info->ngroups;
-		if (len < n * sizeof(gid_t)) {
-			len = n * sizeof(gid_t);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			put_cred(cred);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return put_user(len, optlen) ? -EFAULT : -ERANGE;
 		}
 		len = n * sizeof(gid_t);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = groups_to_user((gid_t __user *)optval, cred->group_info);
-		put_cred(cred);
-=======
 		ret = groups_to_user((gid_t __user *)optval,
 				     sk->sk_peer_cred->group_info);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = groups_to_user((gid_t __user *)optval, cred->group_info);
-		put_cred(cred);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 		goto lenout;
@@ -1927,19 +1658,6 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 		v.val64 = sock_net(sk)->net_cookie;
 		break;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	case SO_BUF_LOCK:
-		v.val = sk->sk_userlocks & SOCK_BUF_LOCK_MASK;
-		break;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		/* We implement the SO_SNDLOWAT etc to not be settable
 		 * (1003.1g 7).
@@ -2142,23 +1860,9 @@ static void __sk_destruct(struct rcu_head *head)
 		sk->sk_frag.page = NULL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* We do not need to acquire sk->sk_peer_lock, we are the last user. */
-	put_cred(sk->sk_peer_cred);
-	put_pid(sk->sk_peer_pid);
-
-=======
 	if (sk->sk_peer_cred)
 		put_cred(sk->sk_peer_cred);
 	put_pid(sk->sk_peer_pid);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* We do not need to acquire sk->sk_peer_lock, we are the last user. */
-	put_cred(sk->sk_peer_cred);
-	put_pid(sk->sk_peer_pid);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (likely(sk->sk_net_refcnt))
 		put_net(sock_net(sk));
 	sk_prot_free(sk->sk_prot_creator, sk);
@@ -2795,13 +2499,7 @@ static void sk_leave_memory_pressure(struct sock *sk)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define SKB_FRAG_PAGE_ORDER	get_order(32768)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DEFINE_STATIC_KEY_FALSE(net_high_order_alloc_disable_key);
 
 /**
@@ -2955,28 +2653,10 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
 {
 	struct proto *prot = sk->sk_prot;
 	long allocated = sk_memory_allocated_add(sk, amt);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool memcg_charge = mem_cgroup_sockets_enabled && sk->sk_memcg;
-	bool charged = true;
-
-	if (memcg_charge &&
-	    !(charged = mem_cgroup_charge_skmem(sk->sk_memcg, amt,
-						gfp_memcg_charge())))
-=======
 	bool charged = true;
 
 	if (mem_cgroup_sockets_enabled && sk->sk_memcg &&
 	    !(charged = mem_cgroup_charge_skmem(sk->sk_memcg, amt)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool memcg_charge = mem_cgroup_sockets_enabled && sk->sk_memcg;
-	bool charged = true;
-
-	if (memcg_charge &&
-	    !(charged = mem_cgroup_charge_skmem(sk->sk_memcg, amt,
-						gfp_memcg_charge())))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto suppress_allocation;
 
 	/* Under limit. */
@@ -3030,27 +2710,8 @@ suppress_allocation:
 		/* Fail only if socket is _under_ its sndbuf.
 		 * In this case we cannot block, so that we have to fail.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (sk->sk_wmem_queued + size >= sk->sk_sndbuf) {
-			/* Force charge with __GFP_NOFAIL */
-			if (memcg_charge && !charged) {
-				mem_cgroup_charge_skmem(sk->sk_memcg, amt,
-					gfp_memcg_charge() | __GFP_NOFAIL);
-			}
-<<<<<<< HEAD
-			return 1;
-		}
-=======
 		if (sk->sk_wmem_queued + size >= sk->sk_sndbuf)
 			return 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return 1;
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (kind == SK_MEM_SEND || (kind == SK_MEM_RECV && charged))
@@ -3058,15 +2719,7 @@ suppress_allocation:
 
 	sk_memory_allocated_sub(sk, amt);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (memcg_charge && charged)
-=======
 	if (mem_cgroup_sockets_enabled && sk->sk_memcg)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (memcg_charge && charged)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mem_cgroup_uncharge_skmem(sk->sk_memcg, amt);
 
 	return 0;
@@ -3410,16 +3063,6 @@ void sock_init_data(struct socket *sock, struct sock *sk)
 
 	sk->sk_peer_pid 	=	NULL;
 	sk->sk_peer_cred	=	NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock_init(&sk->sk_peer_lock);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_init(&sk->sk_peer_lock);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sk->sk_write_pending	=	0;
 	sk->sk_rcvlowat		=	1;
 	sk->sk_rcvtimeo		=	MAX_SCHEDULE_TIMEOUT;
@@ -3454,37 +3097,17 @@ EXPORT_SYMBOL(sock_init_data);
 
 void lock_sock_nested(struct sock *sk, int subclass)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* The sk_lock has mutex_lock() semantics here. */
-	mutex_acquire(&sk->sk_lock.dep_map, subclass, 0, _RET_IP_);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* The sk_lock has mutex_lock() semantics here. */
-	mutex_acquire(&sk->sk_lock.dep_map, subclass, 0, _RET_IP_);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	might_sleep();
 	spin_lock_bh(&sk->sk_lock.slock);
 	if (sk->sk_lock.owned)
 		__lock_sock(sk);
 	sk->sk_lock.owned = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_unlock_bh(&sk->sk_lock.slock);
-=======
 	spin_unlock(&sk->sk_lock.slock);
 	/*
 	 * The sk_lock has mutex_lock() semantics here:
 	 */
 	mutex_acquire(&sk->sk_lock.dep_map, subclass, 0, _RET_IP_);
 	local_bh_enable();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_unlock_bh(&sk->sk_lock.slock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(lock_sock_nested);
 
@@ -3507,10 +3130,6 @@ void release_sock(struct sock *sk)
 }
 EXPORT_SYMBOL(release_sock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-bool __lock_sock_fast(struct sock *sk) __acquires(&sk->sk_lock.slock)
-=======
 /**
  * lock_sock_fast - fast version of lock_sock
  * @sk: socket
@@ -3525,77 +3144,28 @@ bool __lock_sock_fast(struct sock *sk) __acquires(&sk->sk_lock.slock)
  *   sk_lock.slock unlocked, owned = 1, BH enabled
  */
 bool lock_sock_fast(struct sock *sk) __acquires(&sk->sk_lock.slock)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-bool __lock_sock_fast(struct sock *sk) __acquires(&sk->sk_lock.slock)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	might_sleep();
 	spin_lock_bh(&sk->sk_lock.slock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!sk->sk_lock.owned) {
-		/*
-		 * Fast path return with bottom halves disabled and
-		 * sock::sk_lock.slock held.
-		 *
-		 * The 'mutex' is not contended and holding
-		 * sock::sk_lock.slock prevents all other lockers to
-		 * proceed so the corresponding unlock_sock_fast() can
-		 * avoid the slow path of release_sock() completely and
-		 * just release slock.
-		 *
-		 * From a semantical POV this is equivalent to 'acquiring'
-		 * the 'mutex', hence the corresponding lockdep
-		 * mutex_release() has to happen in the fast path of
-		 * unlock_sock_fast().
-		 */
-		return false;
-	}
-
-	__lock_sock(sk);
-	sk->sk_lock.owned = 1;
-	__acquire(&sk->sk_lock.slock);
-	spin_unlock_bh(&sk->sk_lock.slock);
-	return true;
-}
-EXPORT_SYMBOL(__lock_sock_fast);
-=======
 	if (!sk->sk_lock.owned)
-=======
-	if (!sk->sk_lock.owned) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
-		 * Fast path return with bottom halves disabled and
-		 * sock::sk_lock.slock held.
-		 *
-		 * The 'mutex' is not contended and holding
-		 * sock::sk_lock.slock prevents all other lockers to
-		 * proceed so the corresponding unlock_sock_fast() can
-		 * avoid the slow path of release_sock() completely and
-		 * just release slock.
-		 *
-		 * From a semantical POV this is equivalent to 'acquiring'
-		 * the 'mutex', hence the corresponding lockdep
-		 * mutex_release() has to happen in the fast path of
-		 * unlock_sock_fast().
+		 * Note : We must disable BH
 		 */
 		return false;
-	}
 
 	__lock_sock(sk);
 	sk->sk_lock.owned = 1;
+	spin_unlock(&sk->sk_lock.slock);
+	/*
+	 * The sk_lock has mutex_lock() semantics here:
+	 */
+	mutex_acquire(&sk->sk_lock.dep_map, 0, 0, _RET_IP_);
 	__acquire(&sk->sk_lock.slock);
-	spin_unlock_bh(&sk->sk_lock.slock);
+	local_bh_enable();
 	return true;
 }
-<<<<<<< HEAD
 EXPORT_SYMBOL(lock_sock_fast);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-EXPORT_SYMBOL(__lock_sock_fast);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int sock_gettstamp(struct socket *sock, void __user *userstamp,
 		   bool timeval, bool time32)

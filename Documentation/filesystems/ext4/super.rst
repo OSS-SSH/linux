@@ -479,21 +479,7 @@ The ext4 superblock is laid out as follows in
      - Filename charset encoding flags.
    * - 0x280
      - \_\_le32
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-     - s\_orphan\_file\_inum
-     - Orphan file inode number.
-   * - 0x284
-     - \_\_le32
-     - s\_reserved[94]
-<<<<<<< HEAD
-=======
      - s\_reserved[95]
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
      - Padding to the end of the block.
    * - 0x3FC
      - \_\_le32
@@ -617,20 +603,6 @@ following:
        the journal, JBD2 incompat feature
        (JBD2\_FEATURE\_INCOMPAT\_FAST\_COMMIT) gets
        set (COMPAT\_FAST\_COMMIT).
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-   * - 0x1000
-     - Orphan file allocated. This is the special file for more efficient
-       tracking of unlinked but still open inodes. When there may be any
-       entries in the file, we additionally set proper rocompat feature
-       (RO\_COMPAT\_ORPHAN\_PRESENT).
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 .. _super_incompat:
 
@@ -741,19 +713,6 @@ the following:
      - Filesystem tracks project quotas. (RO\_COMPAT\_PROJECT)
    * - 0x8000
      - Verity inodes may be present on the filesystem. (RO\_COMPAT\_VERITY)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-   * - 0x10000
-     - Indicates orphan file may have valid orphan entries and thus we need
-       to clean them up when mounting the filesystem
-       (RO\_COMPAT\_ORPHAN\_PRESENT).
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 .. _super_def_hash:
 

@@ -494,15 +494,7 @@ static const struct snd_kcontrol_new rt5514_sto2_dmic_mux =
  */
 static int rt5514_calc_dmic_clk(struct snd_soc_component *component, int rate)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const int div[] = {2, 3, 4, 8, 12, 16, 24, 32};
-=======
 	int div[] = {2, 3, 4, 8, 12, 16, 24, 32};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const int div[] = {2, 3, 4, 8, 12, 16, 24, 32};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	if (rate < 1000000 * div[0]) {

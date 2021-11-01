@@ -398,41 +398,12 @@ void dcn30_program_all_writeback_pipes_in_tree(
 			for (i_pipe = 0; i_pipe < dc->res_pool->pipe_count; i_pipe++) {
 				struct pipe_ctx *pipe_ctx = &context->res_ctx.pipe_ctx[i_pipe];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-				if (!pipe_ctx->plane_state)
-					continue;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				if (!pipe_ctx->plane_state)
-					continue;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (pipe_ctx->plane_state == wb_info.writeback_source_plane) {
 					wb_info.mpcc_inst = pipe_ctx->plane_res.mpcc_inst;
 					break;
 				}
 			}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-			if (wb_info.mpcc_inst == -1) {
-				/* Disable writeback pipe and disconnect from MPCC
-				 * if source plane has been removed
-				 */
-				dc->hwss.disable_writeback(dc, wb_info.dwb_pipe_inst);
-				continue;
-			}
-<<<<<<< HEAD
-=======
 			ASSERT(wb_info.mpcc_inst != -1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			ASSERT(wb_info.dwb_pipe_inst < dc->res_pool->res_cap->num_dwb);
 			dwb = dc->res_pool->dwbc[wb_info.dwb_pipe_inst];
@@ -609,22 +580,6 @@ void dcn30_init_hw(struct dc *dc)
 	 */
 	if (dc->config.power_down_display_on_boot) {
 		struct dc_link *edp_links[MAX_NUM_EDP];
-<<<<<<< HEAD
-<<<<<<< HEAD
-		struct dc_link *edp_link = NULL;
-
-		get_edp_links(dc, edp_links, &edp_num);
-		if (edp_num)
-			edp_link = edp_links[0];
-		if (edp_link && edp_link->link_enc->funcs->is_dig_enabled &&
-				edp_link->link_enc->funcs->is_dig_enabled(edp_link->link_enc) &&
-				dc->hwss.edp_backlight_control &&
-				dc->hwss.power_down &&
-				dc->hwss.edp_power_control) {
-			dc->hwss.edp_backlight_control(edp_link, false);
-			dc->hwss.power_down(dc);
-			dc->hwss.edp_power_control(edp_link, false);
-=======
 		struct dc_link *edp_link;
 
 		get_edp_links(dc, edp_links, &edp_num);
@@ -641,22 +596,6 @@ void dcn30_init_hw(struct dc *dc)
 					dc->hwss.edp_power_control(edp_link, false);
 				}
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		struct dc_link *edp_link = NULL;
-
-		get_edp_links(dc, edp_links, &edp_num);
-		if (edp_num)
-			edp_link = edp_links[0];
-		if (edp_link && edp_link->link_enc->funcs->is_dig_enabled &&
-				edp_link->link_enc->funcs->is_dig_enabled(edp_link->link_enc) &&
-				dc->hwss.edp_backlight_control &&
-				dc->hwss.power_down &&
-				dc->hwss.edp_power_control) {
-			dc->hwss.edp_backlight_control(edp_link, false);
-			dc->hwss.power_down(dc);
-			dc->hwss.edp_power_control(edp_link, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			for (i = 0; i < dc->link_count; i++) {
 				struct dc_link *link = dc->links[i];

@@ -747,13 +747,7 @@ static const struct drm_plane_helper_funcs meson_overlay_helper_funcs = {
 	.atomic_check	= meson_overlay_atomic_check,
 	.atomic_disable	= meson_overlay_atomic_disable,
 	.atomic_update	= meson_overlay_atomic_update,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.prepare_fb	= drm_gem_plane_helper_prepare_fb,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static bool meson_overlay_format_mod_supported(struct drm_plane *plane,

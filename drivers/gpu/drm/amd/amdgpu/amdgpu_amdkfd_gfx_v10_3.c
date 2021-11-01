@@ -537,18 +537,6 @@ static int hqd_destroy_v10_3(struct kgd_dev *kgd, void *mqd,
 	case KFD_PREEMPT_TYPE_WAVEFRONT_RESET:
 		type = RESET_WAVES;
 		break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	case KFD_PREEMPT_TYPE_WAVEFRONT_SAVE:
-		type = SAVE_WAVES;
-		break;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	case KFD_PREEMPT_TYPE_WAVEFRONT_SAVE:
-		type = SAVE_WAVES;
-		break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		type = DRAIN_PIPE;
 		break;
@@ -670,42 +658,6 @@ static void set_vm_context_page_table_base_v10_3(struct kgd_dev *kgd, uint32_t v
 	adev->gfxhub.funcs->setup_vm_pt_regs(adev, vmid, page_table_base);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void program_trap_handler_settings_v10_3(struct kgd_dev *kgd,
-			uint32_t vmid, uint64_t tba_addr, uint64_t tma_addr)
-{
-	struct amdgpu_device *adev = get_amdgpu_device(kgd);
-
-	lock_srbm(kgd, 0, 0, 0, vmid);
-
-	/*
-	 * Program TBA registers
-	 */
-	WREG32(SOC15_REG_OFFSET(GC, 0, mmSQ_SHADER_TBA_LO),
-			lower_32_bits(tba_addr >> 8));
-	WREG32(SOC15_REG_OFFSET(GC, 0, mmSQ_SHADER_TBA_HI),
-			upper_32_bits(tba_addr >> 8) |
-			(1 << SQ_SHADER_TBA_HI__TRAP_EN__SHIFT));
-
-	/*
-	 * Program TMA registers
-	 */
-	WREG32(SOC15_REG_OFFSET(GC, 0, mmSQ_SHADER_TMA_LO),
-			lower_32_bits(tma_addr >> 8));
-	WREG32(SOC15_REG_OFFSET(GC, 0, mmSQ_SHADER_TMA_HI),
-			 upper_32_bits(tma_addr >> 8));
-
-	unlock_srbm(kgd);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if 0
 uint32_t enable_debug_trap_v10_3(struct kgd_dev *kgd,
 				uint32_t trap_debug_wave_launch_mode,
@@ -868,14 +820,6 @@ const struct kfd2kgd_calls gfx_v10_3_kfd2kgd = {
 	.address_watch_get_offset = address_watch_get_offset_v10_3,
 	.get_atc_vmid_pasid_mapping_info = NULL,
 	.set_vm_context_page_table_base = set_vm_context_page_table_base_v10_3,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.program_trap_handler_settings = program_trap_handler_settings_v10_3,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.program_trap_handler_settings = program_trap_handler_settings_v10_3,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if 0
 	.enable_debug_trap = enable_debug_trap_v10_3,
 	.disable_debug_trap = disable_debug_trap_v10_3,

@@ -1238,18 +1238,8 @@ static const struct media_device_ops fimc_md_ops = {
 	.link_notify = fimc_md_link_notify,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t subdev_conf_mode_show(struct device *dev,
-				     struct device_attribute *attr, char *buf)
-=======
 static ssize_t fimc_md_sysfs_show(struct device *dev,
 				  struct device_attribute *attr, char *buf)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t subdev_conf_mode_show(struct device *dev,
-				     struct device_attribute *attr, char *buf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fimc_md *fmd = dev_get_drvdata(dev);
 
@@ -1259,21 +1249,9 @@ static ssize_t subdev_conf_mode_show(struct device *dev,
 	return strscpy(buf, "V4L2 video node only API (vid-dev)\n", PAGE_SIZE);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t subdev_conf_mode_store(struct device *dev,
-				      struct device_attribute *attr,
-				      const char *buf, size_t count)
-=======
 static ssize_t fimc_md_sysfs_store(struct device *dev,
 				   struct device_attribute *attr,
 				   const char *buf, size_t count)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t subdev_conf_mode_store(struct device *dev,
-				      struct device_attribute *attr,
-				      const char *buf, size_t count)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fimc_md *fmd = dev_get_drvdata(dev);
 	bool subdev_api;
@@ -1300,16 +1278,8 @@ static ssize_t subdev_conf_mode_store(struct device *dev,
  *  sub-dev - for media controller API, subdevs must be configured in user
  *  space before starting streaming.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RW(subdev_conf_mode);
-=======
 static DEVICE_ATTR(subdev_conf_mode, S_IWUSR | S_IRUGO,
 		   fimc_md_sysfs_show, fimc_md_sysfs_store);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RW(subdev_conf_mode);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int cam_clk_prepare(struct clk_hw *hw)
 {

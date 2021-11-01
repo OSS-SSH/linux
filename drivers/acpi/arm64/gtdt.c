@@ -36,15 +36,7 @@ struct acpi_gtdt_descriptor {
 
 static struct acpi_gtdt_descriptor acpi_gtdt_desc __initdata;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline __init void *next_platform_timer(void *platform_timer)
-=======
 static inline void *next_platform_timer(void *platform_timer)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline __init void *next_platform_timer(void *platform_timer)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct acpi_gtdt_header *gh = platform_timer;
 

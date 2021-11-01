@@ -1110,47 +1110,13 @@ static ssize_t alua_support_store(struct config_item *item,
 {
 	struct se_dev_attrib *da = to_attrib(item);
 	struct se_device *dev = da->da_dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool flag, oldflag;
-	int ret;
-
-	ret = strtobool(page, &flag);
-	if (ret < 0)
-		return ret;
-
-	oldflag = !(dev->transport_flags & TRANSPORT_FLAG_PASSTHROUGH_ALUA);
-	if (flag == oldflag)
-		return count;
-
-=======
 	bool flag;
 	int ret;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool flag, oldflag;
-	int ret;
-
-	ret = strtobool(page, &flag);
-	if (ret < 0)
-		return ret;
-
-	oldflag = !(dev->transport_flags & TRANSPORT_FLAG_PASSTHROUGH_ALUA);
-	if (flag == oldflag)
-		return count;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(dev->transport->transport_flags_changeable &
 	      TRANSPORT_FLAG_PASSTHROUGH_ALUA)) {
 		pr_err("dev[%p]: Unable to change SE Device alua_support:"
 			" alua_support has fixed value\n", dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -ENOSYS;
-	}
-
-=======
 		return -EINVAL;
 	}
 
@@ -1158,12 +1124,6 @@ static ssize_t alua_support_store(struct config_item *item,
 	if (ret < 0)
 		return ret;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -ENOSYS;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flag)
 		dev->transport_flags &= ~TRANSPORT_FLAG_PASSTHROUGH_ALUA;
 	else
@@ -1185,47 +1145,13 @@ static ssize_t pgr_support_store(struct config_item *item,
 {
 	struct se_dev_attrib *da = to_attrib(item);
 	struct se_device *dev = da->da_dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool flag, oldflag;
-	int ret;
-
-	ret = strtobool(page, &flag);
-	if (ret < 0)
-		return ret;
-
-	oldflag = !(dev->transport_flags & TRANSPORT_FLAG_PASSTHROUGH_PGR);
-	if (flag == oldflag)
-		return count;
-
-=======
 	bool flag;
 	int ret;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool flag, oldflag;
-	int ret;
-
-	ret = strtobool(page, &flag);
-	if (ret < 0)
-		return ret;
-
-	oldflag = !(dev->transport_flags & TRANSPORT_FLAG_PASSTHROUGH_PGR);
-	if (flag == oldflag)
-		return count;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(dev->transport->transport_flags_changeable &
 	      TRANSPORT_FLAG_PASSTHROUGH_PGR)) {
 		pr_err("dev[%p]: Unable to change SE Device pgr_support:"
 			" pgr_support has fixed value\n", dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -ENOSYS;
-	}
-
-=======
 		return -EINVAL;
 	}
 
@@ -1233,12 +1159,6 @@ static ssize_t pgr_support_store(struct config_item *item,
 	if (ret < 0)
 		return ret;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -ENOSYS;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flag)
 		dev->transport_flags &= ~TRANSPORT_FLAG_PASSTHROUGH_PGR;
 	else

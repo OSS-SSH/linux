@@ -534,19 +534,6 @@ int
 gp100_vmm_mthd(struct nvkm_vmm *vmm,
 	       struct nvkm_client *client, u32 mthd, void *argv, u32 argc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	switch (mthd) {
-	case GP100_VMM_VN_FAULT_REPLAY:
-		return gp100_vmm_fault_replay(vmm, argv, argc);
-	case GP100_VMM_VN_FAULT_CANCEL:
-		return gp100_vmm_fault_cancel(vmm, argv, argc);
-	default:
-		break;
-<<<<<<< HEAD
-=======
 	if (client->super) {
 		switch (mthd) {
 		case GP100_VMM_VN_FAULT_REPLAY:
@@ -556,9 +543,6 @@ gp100_vmm_mthd(struct nvkm_vmm *vmm,
 		default:
 			break;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return -EINVAL;
 }

@@ -3,18 +3,8 @@
 #include <errno.h>
 #include <libunwind.h>
 #include "perf_regs.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "../../../util/unwind.h"
-#include "../../../util/debug.h"
-=======
 #include "../../util/unwind.h"
 #include "../../util/debug.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "../../../util/unwind.h"
-#include "../../../util/debug.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int libunwind__arch_reg_id(int regnum)
 {

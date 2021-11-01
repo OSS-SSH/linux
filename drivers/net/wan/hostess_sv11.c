@@ -142,17 +142,11 @@ static int hostess_close(struct net_device *d)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int hostess_ioctl(struct net_device *d, struct ifreq *ifr, int cmd)
 {
 	return hdlc_ioctl(d, ifr, cmd);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*	Passed network frames, fire them downwind.
  */
 
@@ -177,15 +171,7 @@ static const struct net_device_ops hostess_ops = {
 	.ndo_open       = hostess_open,
 	.ndo_stop       = hostess_close,
 	.ndo_start_xmit = hdlc_start_xmit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_siocwandev = hdlc_ioctl,
-=======
 	.ndo_do_ioctl   = hostess_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_siocwandev = hdlc_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct z8530_dev *sv11_init(int iobase, int irq)
@@ -338,44 +324,16 @@ MODULE_DESCRIPTION("Modular driver for the Comtrol Hostess SV11");
 
 static struct z8530_dev *sv11_unit;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int sv11_module_init(void)
-=======
 int init_module(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int sv11_module_init(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	sv11_unit = sv11_init(io, irq);
 	if (!sv11_unit)
 		return -ENODEV;
 	return 0;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_init(sv11_module_init);
-
-static void sv11_module_cleanup(void)
-=======
 
 void cleanup_module(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_init(sv11_module_init);
-
-static void sv11_module_cleanup(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (sv11_unit)
 		sv11_shutdown(sv11_unit);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_exit(sv11_module_cleanup);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_exit(sv11_module_cleanup);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

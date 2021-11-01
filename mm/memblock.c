@@ -315,15 +315,7 @@ static phys_addr_t __init_memblock memblock_find_in_range_node(phys_addr_t size,
  * Return:
  * Found address on success, 0 on failure.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static phys_addr_t __init_memblock memblock_find_in_range(phys_addr_t start,
-=======
 phys_addr_t __init_memblock memblock_find_in_range(phys_addr_t start,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static phys_addr_t __init_memblock memblock_find_in_range(phys_addr_t start,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					phys_addr_t end, phys_addr_t size,
 					phys_addr_t align)
 {
@@ -480,15 +472,7 @@ static int __init_memblock memblock_double_array(struct memblock_type *type,
 		kfree(old_array);
 	else if (old_array != memblock_memory_init_regions &&
 		 old_array != memblock_reserved_init_regions)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		memblock_free_ptr(old_array, old_alloc_size);
-=======
 		memblock_free(__pa(old_array), old_alloc_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		memblock_free_ptr(old_array, old_alloc_size);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Reserve the new array if that comes from the memblock.  Otherwise, we
@@ -681,20 +665,6 @@ repeat:
 int __init_memblock memblock_add_node(phys_addr_t base, phys_addr_t size,
 				       int nid)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	phys_addr_t end = base + size - 1;
-
-	memblock_dbg("%s: [%pa-%pa] nid=%d %pS\n", __func__,
-		     &base, &end, nid, (void *)_RET_IP_);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return memblock_add_range(&memblock.memory, base, size, nid, 0);
 }
 
@@ -821,29 +791,6 @@ int __init_memblock memblock_remove(phys_addr_t base, phys_addr_t size)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * memblock_free_ptr - free boot memory allocation
- * @ptr: starting address of the  boot memory allocation
- * @size: size of the boot memory block in bytes
- *
- * Free boot memory block previously allocated by memblock_alloc_xx() API.
- * The freeing memory will not be released to the buddy allocator.
- */
-void __init_memblock memblock_free_ptr(void *ptr, size_t size)
-{
-	if (ptr)
-		memblock_free(__pa(ptr), size);
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * memblock_free - free boot memory block
  * @base: phys starting address of the  boot memory block
  * @size: size of the boot memory block in bytes
@@ -970,22 +917,7 @@ int __init_memblock memblock_mark_mirror(phys_addr_t base, phys_addr_t size)
  */
 int __init_memblock memblock_mark_nomap(phys_addr_t base, phys_addr_t size)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	int ret = memblock_setclr_flag(base, size, 1, MEMBLOCK_NOMAP);
-
-	if (!ret)
-		kmemleak_free_part_phys(base, size);
-
-	return ret;
-<<<<<<< HEAD
-=======
 	return memblock_setclr_flag(base, size, 1, MEMBLOCK_NOMAP);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1015,17 +947,7 @@ static bool should_skip_region(struct memblock_type *type,
 		return true;
 
 	/* skip hotpluggable memory regions if needed */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (movable_node_is_enabled() && memblock_is_hotpluggable(m) &&
-	    !(flags & MEMBLOCK_HOTPLUG))
-=======
 	if (movable_node_is_enabled() && memblock_is_hotpluggable(m))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (movable_node_is_enabled() && memblock_is_hotpluggable(m) &&
-	    !(flags & MEMBLOCK_HOTPLUG))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 
 	/* if we want mirror memory skip non-mirror memory regions */
@@ -1568,34 +1490,18 @@ void * __init memblock_alloc_exact_nid_raw(
 			phys_addr_t min_addr, phys_addr_t max_addr,
 			int nid)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	void *ptr;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memblock_dbg("%s: %llu bytes align=0x%llx nid=%d from=%pa max_addr=%pa %pS\n",
 		     __func__, (u64)size, (u64)align, nid, &min_addr,
 		     &max_addr, (void *)_RET_IP_);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return memblock_alloc_internal(size, align, min_addr, max_addr, nid,
-				       true);
-=======
 	ptr = memblock_alloc_internal(size, align,
 					   min_addr, max_addr, nid, true);
 	if (ptr && size > 0)
 		page_init_poison(ptr, size);
 
 	return ptr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return memblock_alloc_internal(size, align, min_addr, max_addr, nid,
-				       true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1622,34 +1528,18 @@ void * __init memblock_alloc_try_nid_raw(
 			phys_addr_t min_addr, phys_addr_t max_addr,
 			int nid)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	void *ptr;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memblock_dbg("%s: %llu bytes align=0x%llx nid=%d from=%pa max_addr=%pa %pS\n",
 		     __func__, (u64)size, (u64)align, nid, &min_addr,
 		     &max_addr, (void *)_RET_IP_);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return memblock_alloc_internal(size, align, min_addr, max_addr, nid,
-				       false);
-=======
 	ptr = memblock_alloc_internal(size, align,
 					   min_addr, max_addr, nid, false);
 	if (ptr && size > 0)
 		page_init_poison(ptr, size);
 
 	return ptr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return memblock_alloc_internal(size, align, min_addr, max_addr, nid,
-				       false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1789,20 +1679,6 @@ void __init memblock_cap_memory_range(phys_addr_t base, phys_addr_t size)
 	if (!size)
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (memblock.memory.cnt <= 1) {
-		pr_warn("%s: No memory registered yet\n", __func__);
-		return;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = memblock_isolate_range(&memblock.memory, base, size,
 						&start_rgn, &end_rgn);
 	if (ret)

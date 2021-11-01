@@ -35,15 +35,7 @@ static void mlx5e_hv_vhca_fill_stats(struct mlx5e_priv *priv, void *data,
 {
 	int ch, i = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (ch = 0; ch < priv->stats_nch; ch++) {
-=======
 	for (ch = 0; ch < priv->max_nch; ch++) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (ch = 0; ch < priv->stats_nch; ch++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		void *buf = data + i;
 
 		if (WARN_ON_ONCE(buf +
@@ -59,15 +51,7 @@ static void mlx5e_hv_vhca_fill_stats(struct mlx5e_priv *priv, void *data,
 static int mlx5e_hv_vhca_stats_buf_size(struct mlx5e_priv *priv)
 {
 	return (sizeof(struct mlx5e_hv_vhca_per_ring_stats) *
-<<<<<<< HEAD
-<<<<<<< HEAD
-		priv->stats_nch);
-=======
 		priv->max_nch);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		priv->stats_nch);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mlx5e_hv_vhca_stats_work(struct work_struct *work)
@@ -116,15 +100,7 @@ static void mlx5e_hv_vhca_stats_control(struct mlx5_hv_vhca_agent *agent,
 	sagent = &priv->stats_agent;
 
 	block->version = MLX5_HV_VHCA_STATS_VERSION;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	block->rings   = priv->stats_nch;
-=======
 	block->rings   = priv->max_nch;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	block->rings   = priv->stats_nch;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!block->command) {
 		cancel_delayed_work_sync(&priv->stats_agent.work);

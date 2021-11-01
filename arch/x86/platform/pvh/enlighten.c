@@ -16,35 +16,15 @@
 /*
  * PVH variables.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * pvh_bootparams and pvh_start_info need to live in a data segment since
- * they are used after startup_{32|64}, which clear .bss, are invoked.
- */
-struct boot_params __initdata pvh_bootparams;
-struct hvm_start_info __initdata pvh_start_info;
-
-const unsigned int __initconst pvh_start_info_sz = sizeof(pvh_start_info);
-
-static u64 __init pvh_get_root_pointer(void)
-=======
  * pvh_bootparams and pvh_start_info need to live in the data segment since
-=======
- * pvh_bootparams and pvh_start_info need to live in a data segment since
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * they are used after startup_{32|64}, which clear .bss, are invoked.
  */
-struct boot_params __initdata pvh_bootparams;
-struct hvm_start_info __initdata pvh_start_info;
+struct boot_params pvh_bootparams __section(".data");
+struct hvm_start_info pvh_start_info __section(".data");
 
-const unsigned int __initconst pvh_start_info_sz = sizeof(pvh_start_info);
+unsigned int pvh_start_info_sz = sizeof(pvh_start_info);
 
-<<<<<<< HEAD
 static u64 pvh_get_root_pointer(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static u64 __init pvh_get_root_pointer(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return pvh_start_info.rsdp_paddr;
 }
@@ -127,15 +107,7 @@ void __init __weak xen_pvh_init(struct boot_params *boot_params)
 	BUG();
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void __init hypervisor_specific_init(bool xen_guest)
-=======
 static void hypervisor_specific_init(bool xen_guest)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void __init hypervisor_specific_init(bool xen_guest)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (xen_guest)
 		xen_pvh_init(&pvh_bootparams);

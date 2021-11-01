@@ -17,25 +17,9 @@
 };
 
 &fec1 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	compatible = "fsl,imx8qxp-fec", "fsl,imx8qm-fec", "fsl,imx6sx-fec";
-};
-
-&fec2 {
-	compatible = "fsl,imx8qxp-fec", "fsl,imx8qm-fec", "fsl,imx6sx-fec";
-=======
 	compatible = "fsl,imx8qxp-fec", "fsl,imx6sx-fec";
 };
 
 &fec2 {
 	compatible = "fsl,imx8qxp-fec", "fsl,imx6sx-fec";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	compatible = "fsl,imx8qxp-fec", "fsl,imx8qm-fec", "fsl,imx6sx-fec";
-};
-
-&fec2 {
-	compatible = "fsl,imx8qxp-fec", "fsl,imx8qm-fec", "fsl,imx6sx-fec";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

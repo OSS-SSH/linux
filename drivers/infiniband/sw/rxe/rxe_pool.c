@@ -41,15 +41,7 @@ struct rxe_type_info rxe_type_info[RXE_NUM_TYPES] = {
 		.size		= sizeof(struct rxe_qp),
 		.elem_offset	= offsetof(struct rxe_qp, pelem),
 		.cleanup	= rxe_qp_cleanup,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.flags		= RXE_POOL_INDEX | RXE_POOL_NO_ALLOC,
-=======
 		.flags		= RXE_POOL_INDEX,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.flags		= RXE_POOL_INDEX | RXE_POOL_NO_ALLOC,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.min_index	= RXE_MIN_QP_INDEX,
 		.max_index	= RXE_MAX_QP_INDEX,
 	},

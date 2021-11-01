@@ -85,106 +85,32 @@ int main(void)
 
 	for (i = 0, test = tests; test->expected_segments; test++, i++) {
 		int left_pages = test->pfn_app ? test->num_pages : 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		struct sg_append_table append = {};
 		struct page *pages[MAX_PAGES];
-		int ret;
+		struct sg_table st;
+		struct scatterlist *sg;
 
 		set_pages(pages, test->pfn, test->num_pages);
 
-		if (test->pfn_app)
-			ret = sg_alloc_append_table_from_pages(
-				&append, pages, test->num_pages, 0, test->size,
-				test->max_seg, left_pages, GFP_KERNEL);
-		else
-			ret = sg_alloc_table_from_pages_segment(
-				&append.sgt, pages, test->num_pages, 0,
-				test->size, test->max_seg, GFP_KERNEL);
-
-		assert(ret == test->alloc_ret);
-=======
-=======
-		struct sg_append_table append = {};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		struct page *pages[MAX_PAGES];
-		int ret;
-
-		set_pages(pages, test->pfn, test->num_pages);
-
-<<<<<<< HEAD
 		sg = __sg_alloc_table_from_pages(&st, pages, test->num_pages, 0,
 				test->size, test->max_seg, NULL, left_pages, GFP_KERNEL);
 		assert(PTR_ERR_OR_ZERO(sg) == test->alloc_ret);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (test->pfn_app)
-			ret = sg_alloc_append_table_from_pages(
-				&append, pages, test->num_pages, 0, test->size,
-				test->max_seg, left_pages, GFP_KERNEL);
-		else
-			ret = sg_alloc_table_from_pages_segment(
-				&append.sgt, pages, test->num_pages, 0,
-				test->size, test->max_seg, GFP_KERNEL);
-
-		assert(ret == test->alloc_ret);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (test->alloc_ret)
 			continue;
 
 		if (test->pfn_app) {
 			set_pages(pages, test->pfn_app, test->num_pages);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ret = sg_alloc_append_table_from_pages(
-				&append, pages, test->num_pages, 0, test->size,
-				test->max_seg, 0, GFP_KERNEL);
-
-			assert(ret == test->alloc_ret);
-		}
-
-		VALIDATE(append.sgt.nents == test->expected_segments,
-			 &append.sgt, test);
-		if (!test->pfn_app)
-			VALIDATE(append.sgt.orig_nents ==
-					 test->expected_segments,
-				 &append.sgt, test);
-
-		if (test->pfn_app)
-			sg_free_append_table(&append);
-		else
-			sg_free_table(&append.sgt);
-=======
 			sg = __sg_alloc_table_from_pages(&st, pages, test->num_pages, 0,
 					test->size, test->max_seg, sg, 0, GFP_KERNEL);
-=======
-			ret = sg_alloc_append_table_from_pages(
-				&append, pages, test->num_pages, 0, test->size,
-				test->max_seg, 0, GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-			assert(ret == test->alloc_ret);
+			assert(PTR_ERR_OR_ZERO(sg) == test->alloc_ret);
 		}
 
-		VALIDATE(append.sgt.nents == test->expected_segments,
-			 &append.sgt, test);
+		VALIDATE(st.nents == test->expected_segments, &st, test);
 		if (!test->pfn_app)
-<<<<<<< HEAD
 			VALIDATE(st.orig_nents == test->expected_segments, &st, test);
 
 		sg_free_table(&st);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			VALIDATE(append.sgt.orig_nents ==
-					 test->expected_segments,
-				 &append.sgt, test);
-
-		if (test->pfn_app)
-			sg_free_append_table(&append);
-		else
-			sg_free_table(&append.sgt);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	assert(i == (sizeof(tests) / sizeof(tests[0])) - 1);

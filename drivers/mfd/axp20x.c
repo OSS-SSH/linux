@@ -125,28 +125,12 @@ static const struct regmap_range axp288_writeable_ranges[] = {
 
 static const struct regmap_range axp288_volatile_ranges[] = {
 	regmap_reg_range(AXP20X_PWR_INPUT_STATUS, AXP288_POWER_REASON),
-<<<<<<< HEAD
-<<<<<<< HEAD
-	regmap_reg_range(AXP22X_PWR_OUT_CTRL1, AXP22X_ALDO3_V_OUT),
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	regmap_reg_range(AXP22X_PWR_OUT_CTRL1, AXP22X_ALDO3_V_OUT),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regmap_reg_range(AXP288_BC_GLOBAL, AXP288_BC_GLOBAL),
 	regmap_reg_range(AXP288_BC_DET_STAT, AXP20X_VBUS_IPSOUT_MGMT),
 	regmap_reg_range(AXP20X_CHRG_BAK_CTRL, AXP20X_CHRG_BAK_CTRL),
 	regmap_reg_range(AXP20X_IRQ1_EN, AXP20X_IPSOUT_V_HIGH_L),
 	regmap_reg_range(AXP20X_TIMER_CTRL, AXP20X_TIMER_CTRL),
-<<<<<<< HEAD
-<<<<<<< HEAD
-	regmap_reg_range(AXP20X_GPIO1_CTRL, AXP22X_GPIO_STATE),
-=======
 	regmap_reg_range(AXP22X_GPIO_STATE, AXP22X_GPIO_STATE),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	regmap_reg_range(AXP20X_GPIO1_CTRL, AXP22X_GPIO_STATE),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regmap_reg_range(AXP288_RT_BATT_V_H, AXP288_RT_BATT_V_L),
 	regmap_reg_range(AXP20X_FG_RES, AXP288_FG_CC_CAP_REG),
 };
@@ -715,27 +699,6 @@ static const struct resource axp288_charger_resources[] = {
 	DEFINE_RES_IRQ(AXP288_IRQ_CBTO),
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const char * const axp288_fuel_gauge_suppliers[] = { "axp288_charger" };
-
-static const struct property_entry axp288_fuel_gauge_properties[] = {
-	PROPERTY_ENTRY_STRING_ARRAY("supplied-from", axp288_fuel_gauge_suppliers),
-	{ }
-};
-
-static const struct software_node axp288_fuel_gauge_sw_node = {
-	.name = "axp288_fuel_gauge",
-	.properties = axp288_fuel_gauge_properties,
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct mfd_cell axp288_cells[] = {
 	{
 		.name		= "axp288_adc",
@@ -753,14 +716,6 @@ static const struct mfd_cell axp288_cells[] = {
 		.name		= "axp288_fuel_gauge",
 		.num_resources	= ARRAY_SIZE(axp288_fuel_gauge_resources),
 		.resources	= axp288_fuel_gauge_resources,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.swnode		= &axp288_fuel_gauge_sw_node,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.swnode		= &axp288_fuel_gauge_sw_node,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}, {
 		.name		= "axp221-pek",
 		.num_resources	= ARRAY_SIZE(axp288_power_button_resources),

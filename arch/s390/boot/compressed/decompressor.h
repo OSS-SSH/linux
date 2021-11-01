@@ -26,22 +26,7 @@ struct vmlinux_info {
 	unsigned long rela_dyn_end;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Symbols defined by linker scripts */
-extern char _end[];
-extern unsigned char _compressed_start[];
-extern unsigned char _compressed_end[];
 extern char _vmlinux_info[];
-
-<<<<<<< HEAD
-=======
-extern char _vmlinux_info[];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define vmlinux (*(struct vmlinux_info *)_vmlinux_info)
 
 #endif /* BOOT_COMPRESSED_DECOMPRESSOR_H */

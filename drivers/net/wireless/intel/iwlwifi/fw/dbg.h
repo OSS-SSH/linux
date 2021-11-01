@@ -46,17 +46,7 @@ int iwl_fw_dbg_collect_desc(struct iwl_fw_runtime *fwrt,
 int iwl_fw_dbg_error_collect(struct iwl_fw_runtime *fwrt,
 			     enum iwl_fw_dbg_trigger trig_type);
 int iwl_fw_dbg_ini_collect(struct iwl_fw_runtime *fwrt,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			   struct iwl_fwrt_dump_data *dump_data,
-			   bool sync);
-=======
 			   struct iwl_fwrt_dump_data *dump_data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			   struct iwl_fwrt_dump_data *dump_data,
-			   bool sync);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
 		       enum iwl_fw_dbg_trigger trig, const char *str,
 		       size_t len, struct iwl_fw_dbg_trigger_tlv *trigger);
@@ -294,15 +284,7 @@ static inline void iwl_fw_umac_set_alive_err_table(struct iwl_trans *trans,
 		trans->dbg.umac_error_event_table = umac_error_event_table;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline void iwl_fw_error_collect(struct iwl_fw_runtime *fwrt, bool sync)
-=======
 static inline void iwl_fw_error_collect(struct iwl_fw_runtime *fwrt)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline void iwl_fw_error_collect(struct iwl_fw_runtime *fwrt, bool sync)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	enum iwl_fw_ini_time_point tp_id;
 
@@ -318,15 +300,7 @@ static inline void iwl_fw_error_collect(struct iwl_fw_runtime *fwrt, bool sync)
 		tp_id = IWL_FW_INI_TIME_POINT_FW_ASSERT;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	_iwl_dbg_tlv_time_point(fwrt, tp_id, NULL, sync);
-=======
 	iwl_dbg_tlv_time_point(fwrt, tp_id, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	_iwl_dbg_tlv_time_point(fwrt, tp_id, NULL, sync);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void iwl_fw_error_print_fseq_regs(struct iwl_fw_runtime *fwrt);

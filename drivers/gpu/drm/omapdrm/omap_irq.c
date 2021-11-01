@@ -253,9 +253,6 @@ static const u32 omap_underflow_irqs[] = {
 	[OMAP_DSS_VIDEO3] = DISPC_IRQ_VID3_FIFO_UNDERFLOW,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*
  * We need a special version, instead of just using drm_irq_install(),
  * because we need to register the irq via omapdss.  Once omapdss and
@@ -263,9 +260,6 @@ static const u32 omap_underflow_irqs[] = {
  * ourselves and drop these and just use drm_irq_{install,uninstall}()
  */
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int omap_drm_irq_install(struct drm_device *dev)
 {
 	struct omap_drm_private *priv = dev->dev_private;
@@ -297,15 +291,7 @@ int omap_drm_irq_install(struct drm_device *dev)
 	if (ret < 0)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	priv->irq_enabled = true;
-=======
 	dev->irq_enabled = true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	priv->irq_enabled = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -314,24 +300,10 @@ void omap_drm_irq_uninstall(struct drm_device *dev)
 {
 	struct omap_drm_private *priv = dev->dev_private;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!priv->irq_enabled)
-		return;
-
-	priv->irq_enabled = false;
-=======
 	if (!dev->irq_enabled)
 		return;
 
 	dev->irq_enabled = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!priv->irq_enabled)
-		return;
-
-	priv->irq_enabled = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dispc_free_irq(priv->dispc, dev);
 }

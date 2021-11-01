@@ -75,21 +75,9 @@ __rtrs_get_permit(struct rtrs_clt *clt, enum rtrs_clt_con_type con_type)
 	 */
 	do {
 		bit = find_first_zero_bit(clt->permits_map, max_depth);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (bit >= max_depth)
-			return NULL;
-	} while (test_and_set_bit_lock(bit, clt->permits_map));
-=======
 		if (unlikely(bit >= max_depth))
 			return NULL;
 	} while (unlikely(test_and_set_bit_lock(bit, clt->permits_map)));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (bit >= max_depth)
-			return NULL;
-	} while (test_and_set_bit_lock(bit, clt->permits_map));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	permit = get_permit(clt, bit);
 	WARN_ON(permit->mem_id != bit);
@@ -127,30 +115,14 @@ struct rtrs_permit *rtrs_clt_get_permit(struct rtrs_clt *clt,
 	DEFINE_WAIT(wait);
 
 	permit = __rtrs_get_permit(clt, con_type);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (permit || !can_wait)
-=======
 	if (likely(permit) || !can_wait)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (permit || !can_wait)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return permit;
 
 	do {
 		prepare_to_wait(&clt->permits_wait, &wait,
 				TASK_UNINTERRUPTIBLE);
 		permit = __rtrs_get_permit(clt, con_type);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (permit)
-=======
 		if (likely(permit))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (permit)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 
 		io_schedule();
@@ -203,15 +175,7 @@ struct rtrs_clt_con *rtrs_permit_to_clt_con(struct rtrs_clt_sess *sess,
 {
 	int id = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (permit->con_type == RTRS_IO_CON)
-=======
 	if (likely(permit->con_type == RTRS_IO_CON))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (permit->con_type == RTRS_IO_CON)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		id = (permit->cpu_id % (sess->s.irq_con_num - 1)) + 1;
 
 	return to_clt_con(sess->s.con[id]);
@@ -365,15 +329,7 @@ static void rtrs_clt_fast_reg_done(struct ib_cq *cq, struct ib_wc *wc)
 {
 	struct rtrs_clt_con *con = to_clt_con(wc->qp->qp_context);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->status != IB_WC_SUCCESS) {
-=======
 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->status != IB_WC_SUCCESS) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(con->c.sess, "Failed IB_WR_REG_MR: %s\n",
 			  ib_wc_status_msg(wc->status));
 		rtrs_rdma_error_recovery(con);
@@ -393,29 +349,13 @@ static void rtrs_clt_inv_rkey_done(struct ib_cq *cq, struct ib_wc *wc)
 		container_of(wc->wr_cqe, typeof(*req), inv_cqe);
 	struct rtrs_clt_con *con = to_clt_con(wc->qp->qp_context);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->status != IB_WC_SUCCESS) {
-=======
 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->status != IB_WC_SUCCESS) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(con->c.sess, "Failed IB_WR_LOCAL_INV: %s\n",
 			  ib_wc_status_msg(wc->status));
 		rtrs_rdma_error_recovery(con);
 	}
 	req->need_inv = false;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (req->need_inv_comp)
-=======
 	if (likely(req->need_inv_comp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (req->need_inv_comp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		complete(&req->inv_comp);
 	else
 		/* Complete request from INV callback */
@@ -450,15 +390,7 @@ static void complete_rdma_req(struct rtrs_clt_io_req *req, int errno,
 	sess = to_clt_sess(con->c.sess);
 
 	if (req->sg_cnt) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (req->dir == DMA_FROM_DEVICE && req->need_inv) {
-=======
 		if (unlikely(req->dir == DMA_FROM_DEVICE && req->need_inv)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (req->dir == DMA_FROM_DEVICE && req->need_inv) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * We are here to invalidate read requests
 			 * ourselves.  In normal scenario server should
@@ -473,15 +405,7 @@ static void complete_rdma_req(struct rtrs_clt_io_req *req, int errno,
 			 *        should do that ourselves.
 			 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (can_wait) {
-=======
 			if (likely(can_wait)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (can_wait) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				req->need_inv_comp = true;
 			} else {
 				/* This should be IO path, so always notify */
@@ -492,24 +416,10 @@ static void complete_rdma_req(struct rtrs_clt_io_req *req, int errno,
 
 			refcount_inc(&req->ref);
 			err = rtrs_inv_rkey(req);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (err) {
-				rtrs_err(con->c.sess, "Send INV WR key=%#x: %d\n",
-					  req->mr->rkey, err);
-			} else if (can_wait) {
-=======
 			if (unlikely(err)) {
 				rtrs_err(con->c.sess, "Send INV WR key=%#x: %d\n",
 					  req->mr->rkey, err);
 			} else if (likely(can_wait)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (err) {
-				rtrs_err(con->c.sess, "Send INV WR key=%#x: %d\n",
-					  req->mr->rkey, err);
-			} else if (can_wait) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				wait_for_completion(&req->inv_comp);
 			} else {
 				/*
@@ -528,15 +438,7 @@ static void complete_rdma_req(struct rtrs_clt_io_req *req, int errno,
 	}
 	if (!refcount_dec_and_test(&req->ref))
 		return;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
-=======
 	if (sess->clt->mp_policy == MP_POLICY_MIN_INFLIGHT)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		atomic_dec(&sess->stats->inflight);
 
 	req->in_use = false;
@@ -561,15 +463,7 @@ static int rtrs_post_send_rdma(struct rtrs_clt_con *con,
 	enum ib_send_flags flags;
 	struct ib_sge sge;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!req->sg_size) {
-=======
 	if (unlikely(!req->sg_size)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!req->sg_size) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_wrn(con->c.sess,
 			 "Doing RDMA Write failed, no data supplied\n");
 		return -EINVAL;
@@ -584,15 +478,7 @@ static int rtrs_post_send_rdma(struct rtrs_clt_con *con,
 	 * From time to time we have to post signalled sends,
 	 * or send queue will fill up and only QP reset can help.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	flags = atomic_inc_return(&con->c.wr_cnt) % sess->s.signal_interval ?
-=======
 	flags = atomic_inc_return(&con->io_cnt) % sess->queue_depth ?
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	flags = atomic_inc_return(&con->c.wr_cnt) % sess->s.signal_interval ?
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			0 : IB_SEND_SIGNALED;
 
 	ib_dma_sync_single_for_device(sess->s.dev->ib_dev, req->iu->dma_addr,
@@ -627,15 +513,7 @@ static void rtrs_clt_recv_done(struct rtrs_clt_con *con, struct ib_wc *wc)
 	iu = container_of(wc->wr_cqe, struct rtrs_iu,
 			  cqe);
 	err = rtrs_iu_post_recv(&con->c, iu);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err) {
-=======
 	if (unlikely(err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(con->c.sess, "post iu failed %d\n", err);
 		rtrs_rdma_error_recovery(con);
 	}
@@ -655,15 +533,7 @@ static void rtrs_clt_rkey_rsp_done(struct rtrs_clt_con *con, struct ib_wc *wc)
 
 	iu = container_of(wc->wr_cqe, struct rtrs_iu, cqe);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->byte_len < sizeof(*msg)) {
-=======
 	if (unlikely(wc->byte_len < sizeof(*msg))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->byte_len < sizeof(*msg)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(con->c.sess, "rkey response is malformed: size %d\n",
 			  wc->byte_len);
 		goto out;
@@ -671,15 +541,7 @@ static void rtrs_clt_rkey_rsp_done(struct rtrs_clt_con *con, struct ib_wc *wc)
 	ib_dma_sync_single_for_cpu(sess->s.dev->ib_dev, iu->dma_addr,
 				   iu->size, DMA_FROM_DEVICE);
 	msg = iu->buf;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (le16_to_cpu(msg->type) != RTRS_MSG_RKEY_RSP) {
-=======
 	if (unlikely(le16_to_cpu(msg->type) != RTRS_MSG_RKEY_RSP)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (le16_to_cpu(msg->type) != RTRS_MSG_RKEY_RSP) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "rkey response is malformed: type %d\n",
 			  le16_to_cpu(msg->type));
 		goto out;
@@ -689,18 +551,8 @@ static void rtrs_clt_rkey_rsp_done(struct rtrs_clt_con *con, struct ib_wc *wc)
 		goto out;
 
 	rtrs_from_imm(be32_to_cpu(wc->ex.imm_data), &imm_type, &imm_payload);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (imm_type == RTRS_IO_RSP_IMM ||
-	    imm_type == RTRS_IO_RSP_W_INV_IMM) {
-=======
 	if (likely(imm_type == RTRS_IO_RSP_IMM ||
 		   imm_type == RTRS_IO_RSP_W_INV_IMM)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (imm_type == RTRS_IO_RSP_IMM ||
-	    imm_type == RTRS_IO_RSP_W_INV_IMM) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u32 msg_id;
 
 		w_inval = (imm_type == RTRS_IO_RSP_W_INV_IMM);
@@ -753,15 +605,7 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
 	bool w_inval = false;
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->status != IB_WC_SUCCESS) {
-=======
 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->status != IB_WC_SUCCESS) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
 			rtrs_err(sess->clt, "RDMA failed: %s\n",
 				  ib_wc_status_msg(wc->status));
@@ -781,18 +625,8 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
 			return;
 		rtrs_from_imm(be32_to_cpu(wc->ex.imm_data),
 			       &imm_type, &imm_payload);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (imm_type == RTRS_IO_RSP_IMM ||
-		    imm_type == RTRS_IO_RSP_W_INV_IMM) {
-=======
 		if (likely(imm_type == RTRS_IO_RSP_IMM ||
 			   imm_type == RTRS_IO_RSP_W_INV_IMM)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (imm_type == RTRS_IO_RSP_IMM ||
-		    imm_type == RTRS_IO_RSP_W_INV_IMM) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			u32 msg_id;
 
 			w_inval = (imm_type == RTRS_IO_RSP_W_INV_IMM);
@@ -823,15 +657,7 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
 			err = rtrs_post_recv_empty_x2(&con->c, &io_comp_cqe);
 		else
 			err = rtrs_post_recv_empty(&con->c, &io_comp_cqe);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err) {
-=======
 		if (unlikely(err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtrs_err(con->c.sess, "rtrs_post_recv_empty(): %d\n",
 				  err);
 			rtrs_rdma_error_recovery(con);
@@ -854,14 +680,6 @@ static void rtrs_clt_rdma_done(struct ib_cq *cq, struct ib_wc *wc)
 	case IB_WC_RDMA_WRITE:
 		/*
 		 * post_send() RDMA write completions of IO reqs (read/write)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * and hb.
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 * and hb.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 */
 		break;
 
@@ -884,15 +702,7 @@ static int post_recv_io(struct rtrs_clt_con *con, size_t q_size)
 		} else {
 			err = rtrs_post_recv_empty(&con->c, &io_comp_cqe);
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err)
-=======
 		if (unlikely(err))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return err;
 	}
 
@@ -917,15 +727,7 @@ static int post_recv_sess(struct rtrs_clt_sess *sess)
 		q_size *= 2;
 
 		err = post_recv_io(to_clt_con(sess->s.con[cid]), q_size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err) {
-=======
 		if (unlikely(err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtrs_err(sess->clt, "post_recv_io(), err: %d\n", err);
 			return err;
 		}
@@ -986,15 +788,7 @@ static struct rtrs_clt_sess *get_next_path_rr(struct path_it *it)
 
 	ppcpu_path = this_cpu_ptr(clt->pcpu_path);
 	path = rcu_dereference(*ppcpu_path);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!path)
-=======
 	if (unlikely(!path))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!path)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		path = list_first_or_null_rcu(&clt->paths_list,
 					      typeof(*path), s.entry);
 	else
@@ -1025,24 +819,10 @@ static struct rtrs_clt_sess *get_next_path_min_inflight(struct path_it *it)
 	int inflight;
 
 	list_for_each_entry_rcu(sess, &clt->paths_list, s.entry) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED)
-			continue;
-
-		if (!list_empty(raw_cpu_ptr(sess->mp_skip_entry)))
-=======
 		if (unlikely(READ_ONCE(sess->state) != RTRS_CLT_CONNECTED))
 			continue;
 
 		if (unlikely(!list_empty(raw_cpu_ptr(sess->mp_skip_entry))))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED)
-			continue;
-
-		if (!list_empty(raw_cpu_ptr(sess->mp_skip_entry)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 
 		inflight = atomic_read(&sess->stats->inflight);
@@ -1090,24 +870,10 @@ static struct rtrs_clt_sess *get_next_path_min_latency(struct path_it *it)
 	ktime_t latency;
 
 	list_for_each_entry_rcu(sess, &clt->paths_list, s.entry) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED)
-			continue;
-
-		if (!list_empty(raw_cpu_ptr(sess->mp_skip_entry)))
-=======
 		if (unlikely(READ_ONCE(sess->state) != RTRS_CLT_CONNECTED))
 			continue;
 
 		if (unlikely(!list_empty(raw_cpu_ptr(sess->mp_skip_entry))))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED)
-			continue;
-
-		if (!list_empty(raw_cpu_ptr(sess->mp_skip_entry)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 
 		latency = sess->s.hb_cur_latency;
@@ -1197,14 +963,6 @@ static void rtrs_clt_init_req(struct rtrs_clt_io_req *req,
 	req->need_inv_comp = false;
 	req->inv_errno = 0;
 	refcount_set(&req->ref, 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	req->mp_policy = sess->clt->mp_policy;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	req->mp_policy = sess->clt->mp_policy;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iov_iter_kvec(&iter, READ, vec, 1, usr_len);
 	len = _copy_from_iter(req->iu->buf, usr_len, &iter);
@@ -1285,15 +1043,7 @@ static int rtrs_post_rdma_write_sg(struct rtrs_clt_con *con,
 	 * From time to time we have to post signalled sends,
 	 * or send queue will fill up and only QP reset can help.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	flags = atomic_inc_return(&con->c.wr_cnt) % sess->s.signal_interval ?
-=======
 	flags = atomic_inc_return(&con->io_cnt) % sess->queue_depth ?
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	flags = atomic_inc_return(&con->c.wr_cnt) % sess->s.signal_interval ?
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			0 : IB_SEND_SIGNALED;
 
 	ib_dma_sync_single_for_device(sess->s.dev->ib_dev, req->iu->dma_addr,
@@ -1312,15 +1062,7 @@ static int rtrs_map_sg_fr(struct rtrs_clt_io_req *req, size_t count)
 	nr = ib_map_mr_sg(req->mr, req->sglist, count, NULL, SZ_4K);
 	if (nr < 0)
 		return nr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (nr < req->sg_cnt)
-=======
 	if (unlikely(nr < req->sg_cnt))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (nr < req->sg_cnt)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	ib_update_fast_reg_key(req->mr, ib_inc_rkey(req->mr->rkey));
 
@@ -1344,15 +1086,7 @@ static int rtrs_clt_write_req(struct rtrs_clt_io_req *req)
 
 	const size_t tsize = sizeof(*msg) + req->data_len + req->usr_len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (tsize > sess->chunk_size) {
-=======
 	if (unlikely(tsize > sess->chunk_size)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (tsize > sess->chunk_size) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_wrn(s, "Write request failed, size too big %zu > %d\n",
 			  tsize, sess->chunk_size);
 		return -EMSGSIZE;
@@ -1360,15 +1094,7 @@ static int rtrs_clt_write_req(struct rtrs_clt_io_req *req)
 	if (req->sg_cnt) {
 		count = ib_dma_map_sg(sess->s.dev->ib_dev, req->sglist,
 				      req->sg_cnt, req->dir);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!count) {
-=======
 		if (unlikely(!count)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!count) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtrs_wrn(s, "Write request failed, map failed\n");
 			return -EINVAL;
 		}
@@ -1422,28 +1148,12 @@ static int rtrs_clt_write_req(struct rtrs_clt_io_req *req)
 	ret = rtrs_post_rdma_write_sg(req->con, req, rbuf, fr_en,
 				      req->usr_len + sizeof(*msg),
 				      imm, wr, &inv_wr);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret) {
-=======
 	if (unlikely(ret)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err_rl(s,
 			    "Write request failed: error=%d path=%s [%s:%u]\n",
 			    ret, kobject_name(&sess->kobj), sess->hca_name,
 			    sess->hca_port);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
-=======
 		if (sess->clt->mp_policy == MP_POLICY_MIN_INFLIGHT)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			atomic_dec(&sess->stats->inflight);
 		if (req->sg_cnt)
 			ib_dma_unmap_sg(sess->s.dev->ib_dev, req->sglist,
@@ -1469,15 +1179,7 @@ static int rtrs_clt_read_req(struct rtrs_clt_io_req *req)
 
 	const size_t tsize = sizeof(*msg) + req->data_len + req->usr_len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (tsize > sess->chunk_size) {
-=======
 	if (unlikely(tsize > sess->chunk_size)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (tsize > sess->chunk_size) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_wrn(s,
 			  "Read request failed, message size is %zu, bigger than CHUNK_SIZE %d\n",
 			  tsize, sess->chunk_size);
@@ -1487,15 +1189,7 @@ static int rtrs_clt_read_req(struct rtrs_clt_io_req *req)
 	if (req->sg_cnt) {
 		count = ib_dma_map_sg(dev->ib_dev, req->sglist, req->sg_cnt,
 				      req->dir);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!count) {
-=======
 		if (unlikely(!count)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!count) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtrs_wrn(s,
 				  "Read request failed, dma map failed\n");
 			return -EINVAL;
@@ -1560,28 +1254,12 @@ static int rtrs_clt_read_req(struct rtrs_clt_io_req *req)
 
 	ret = rtrs_post_send_rdma(req->con, req, &sess->rbufs[buf_id],
 				   req->data_len, imm, wr);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret) {
-=======
 	if (unlikely(ret)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err_rl(s,
 			    "Read request failed: error=%d path=%s [%s:%u]\n",
 			    ret, kobject_name(&sess->kobj), sess->hca_name,
 			    sess->hca_port);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
-=======
 		if (sess->clt->mp_policy == MP_POLICY_MIN_INFLIGHT)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (req->mp_policy == MP_POLICY_MIN_INFLIGHT)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			atomic_dec(&sess->stats->inflight);
 		req->need_inv = false;
 		if (req->sg_cnt)
@@ -1609,31 +1287,15 @@ static int rtrs_clt_failover_req(struct rtrs_clt *clt,
 	for (path_it_init(&it, clt);
 	     (alive_sess = it.next_path(&it)) && it.i < it.clt->paths_num;
 	     it.i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (READ_ONCE(alive_sess->state) != RTRS_CLT_CONNECTED)
-=======
 		if (unlikely(READ_ONCE(alive_sess->state) !=
 			     RTRS_CLT_CONNECTED))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (READ_ONCE(alive_sess->state) != RTRS_CLT_CONNECTED)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		req = rtrs_clt_get_copy_req(alive_sess, fail_req);
 		if (req->dir == DMA_TO_DEVICE)
 			err = rtrs_clt_write_req(req);
 		else
 			err = rtrs_clt_read_req(req);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err) {
-=======
 		if (unlikely(err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			req->in_use = false;
 			continue;
 		}
@@ -1668,15 +1330,7 @@ static void fail_all_outstanding_reqs(struct rtrs_clt_sess *sess)
 		complete_rdma_req(req, -ECONNABORTED, false, true);
 
 		err = rtrs_clt_failover_req(clt, req);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err)
-=======
 		if (unlikely(err))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* Failover failed, notify anyway */
 			req->conf(req->priv, err);
 	}
@@ -1947,17 +1601,7 @@ static int create_con(struct rtrs_clt_sess *sess, unsigned int cid)
 	con->cpu  = (cid ? cid - 1 : 0) % nr_cpu_ids;
 	con->c.cid = cid;
 	con->c.sess = &sess->s;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Align with srv, init as 1 */
-	atomic_set(&con->c.wr_cnt, 1);
-=======
 	atomic_set(&con->io_cnt, 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Align with srv, init as 1 */
-	atomic_set(&con->c.wr_cnt, 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&con->con_mutex);
 
 	sess->s.con[cid] = &con->c;
@@ -2034,14 +1678,6 @@ static int create_con_cq_qp(struct rtrs_clt_con *con)
 			      sess->queue_depth * 3 + 1);
 		max_send_sge = 2;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	atomic_set(&con->c.sq_wr_avail, max_send_wr);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	atomic_set(&con->c.sq_wr_avail, max_send_wr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cq_num = max_send_wr + max_recv_wr;
 	/* alloc iu to recv new rkey reply when server reports flags set */
 	if (sess->flags & RTRS_MSG_NEW_RKEY_F || con->c.cid == 0) {
@@ -2205,29 +1841,13 @@ static int rtrs_rdma_conn_established(struct rtrs_clt_con *con,
 		}
 
 		if (!sess->rbufs) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			kfree(sess->rbufs);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sess->rbufs = kcalloc(queue_depth, sizeof(*sess->rbufs),
 					      GFP_KERNEL);
 			if (!sess->rbufs)
 				return -ENOMEM;
 		}
 		sess->queue_depth = queue_depth;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		sess->s.signal_interval = min_not_zero(queue_depth,
-						(unsigned short) SERVICE_CON_QUEUE_DEPTH);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		sess->s.signal_interval = min_not_zero(queue_depth,
-						(unsigned short) SERVICE_CON_QUEUE_DEPTH);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sess->max_hdr_size = le32_to_cpu(msg->max_hdr_size);
 		sess->max_io_size = le32_to_cpu(msg->max_io_size);
 		sess->flags = le32_to_cpu(msg->flags);
@@ -2338,15 +1958,7 @@ static int rtrs_clt_rdma_cm_handler(struct rdma_cm_id *cm_id,
 		break;
 	case RDMA_CM_EVENT_ESTABLISHED:
 		cm_err = rtrs_rdma_conn_established(con, ev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!cm_err) {
-=======
 		if (likely(!cm_err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!cm_err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * Report success and wake up. Here we abuse state_wq,
 			 * i.e. wake up without state change, but we set cm_err.
@@ -2765,15 +2377,7 @@ static void rtrs_clt_info_req_done(struct ib_cq *cq, struct ib_wc *wc)
 	iu = container_of(wc->wr_cqe, struct rtrs_iu, cqe);
 	rtrs_iu_free(iu, sess->s.dev->ib_dev, 1);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->status != IB_WC_SUCCESS) {
-=======
 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->status != IB_WC_SUCCESS) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "Sess info request send failed: %s\n",
 			  ib_wc_status_msg(wc->status));
 		rtrs_clt_change_state_get_old(sess, RTRS_CLT_CONNECTING_ERR, NULL);
@@ -2790,15 +2394,7 @@ static int process_info_rsp(struct rtrs_clt_sess *sess,
 	int i, sgi;
 
 	sg_cnt = le16_to_cpu(msg->sg_cnt);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!sg_cnt || (sess->queue_depth % sg_cnt)) {
-=======
 	if (unlikely(!sg_cnt || (sess->queue_depth % sg_cnt))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!sg_cnt || (sess->queue_depth % sg_cnt)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "Incorrect sg_cnt %d, is not multiple\n",
 			  sg_cnt);
 		return -EINVAL;
@@ -2808,19 +2404,9 @@ static int process_info_rsp(struct rtrs_clt_sess *sess,
 	 * Check if IB immediate data size is enough to hold the mem_id and
 	 * the offset inside the memory chunk.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if ((ilog2(sg_cnt - 1) + 1) + (ilog2(sess->chunk_size - 1) + 1) >
-	    MAX_IMM_PAYL_BITS) {
-=======
 	if (unlikely((ilog2(sg_cnt - 1) + 1) +
 		     (ilog2(sess->chunk_size - 1) + 1) >
 		     MAX_IMM_PAYL_BITS)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if ((ilog2(sg_cnt - 1) + 1) + (ilog2(sess->chunk_size - 1) + 1) >
-	    MAX_IMM_PAYL_BITS) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt,
 			  "RDMA immediate size (%db) not enough to encode %d buffers of size %dB\n",
 			  MAX_IMM_PAYL_BITS, sg_cnt, sess->chunk_size);
@@ -2838,15 +2424,7 @@ static int process_info_rsp(struct rtrs_clt_sess *sess,
 
 		total_len += len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!len || (len % sess->chunk_size)) {
-=======
 		if (unlikely(!len || (len % sess->chunk_size))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!len || (len % sess->chunk_size)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtrs_err(sess->clt, "Incorrect [%d].len %d\n", sgi,
 				  len);
 			return -EINVAL;
@@ -2860,27 +2438,11 @@ static int process_info_rsp(struct rtrs_clt_sess *sess,
 		}
 	}
 	/* Sanity check */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (sgi != sg_cnt || i != sess->queue_depth) {
-		rtrs_err(sess->clt, "Incorrect sg vector, not fully mapped\n");
-		return -EINVAL;
-	}
-	if (total_len != sess->chunk_size * sess->queue_depth) {
-=======
 	if (unlikely(sgi != sg_cnt || i != sess->queue_depth)) {
 		rtrs_err(sess->clt, "Incorrect sg vector, not fully mapped\n");
 		return -EINVAL;
 	}
 	if (unlikely(total_len != sess->chunk_size * sess->queue_depth)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (sgi != sg_cnt || i != sess->queue_depth) {
-		rtrs_err(sess->clt, "Incorrect sg vector, not fully mapped\n");
-		return -EINVAL;
-	}
-	if (total_len != sess->chunk_size * sess->queue_depth) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "Incorrect total_len %d\n", total_len);
 		return -EINVAL;
 	}
@@ -2902,30 +2464,14 @@ static void rtrs_clt_info_rsp_done(struct ib_cq *cq, struct ib_wc *wc)
 
 	WARN_ON(con->c.cid);
 	iu = container_of(wc->wr_cqe, struct rtrs_iu, cqe);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->status != IB_WC_SUCCESS) {
-=======
 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->status != IB_WC_SUCCESS) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "Sess info response recv failed: %s\n",
 			  ib_wc_status_msg(wc->status));
 		goto out;
 	}
 	WARN_ON(wc->opcode != IB_WC_RECV);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->byte_len < sizeof(*msg)) {
-=======
 	if (unlikely(wc->byte_len < sizeof(*msg))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->byte_len < sizeof(*msg)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "Sess info response is malformed: size %d\n",
 			  wc->byte_len);
 		goto out;
@@ -2933,56 +2479,24 @@ static void rtrs_clt_info_rsp_done(struct ib_cq *cq, struct ib_wc *wc)
 	ib_dma_sync_single_for_cpu(sess->s.dev->ib_dev, iu->dma_addr,
 				   iu->size, DMA_FROM_DEVICE);
 	msg = iu->buf;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (le16_to_cpu(msg->type) != RTRS_MSG_INFO_RSP) {
-=======
 	if (unlikely(le16_to_cpu(msg->type) != RTRS_MSG_INFO_RSP)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (le16_to_cpu(msg->type) != RTRS_MSG_INFO_RSP) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "Sess info response is malformed: type %d\n",
 			  le16_to_cpu(msg->type));
 		goto out;
 	}
 	rx_sz  = sizeof(*msg);
 	rx_sz += sizeof(msg->desc[0]) * le16_to_cpu(msg->sg_cnt);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (wc->byte_len < rx_sz) {
-=======
 	if (unlikely(wc->byte_len < rx_sz)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wc->byte_len < rx_sz) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "Sess info response is malformed: size %d\n",
 			  wc->byte_len);
 		goto out;
 	}
 	err = process_info_rsp(sess, msg);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err)
-		goto out;
-
-	err = post_recv_sess(sess);
-	if (err)
-=======
 	if (unlikely(err))
 		goto out;
 
 	err = post_recv_sess(sess);
 	if (unlikely(err))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err)
-		goto out;
-
-	err = post_recv_sess(sess);
-	if (err)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	state = RTRS_CLT_CONNECTED;
@@ -3009,29 +2523,13 @@ static int rtrs_send_sess_info(struct rtrs_clt_sess *sess)
 			       rtrs_clt_info_req_done);
 	rx_iu = rtrs_iu_alloc(1, rx_sz, GFP_KERNEL, sess->s.dev->ib_dev,
 			       DMA_FROM_DEVICE, rtrs_clt_info_rsp_done);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!tx_iu || !rx_iu) {
-=======
 	if (unlikely(!tx_iu || !rx_iu)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!tx_iu || !rx_iu) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = -ENOMEM;
 		goto out;
 	}
 	/* Prepare for getting info response */
 	err = rtrs_iu_post_recv(&usr_con->c, rx_iu);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err) {
-=======
 	if (unlikely(err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "rtrs_iu_post_recv(), err: %d\n", err);
 		goto out;
 	}
@@ -3046,15 +2544,7 @@ static int rtrs_send_sess_info(struct rtrs_clt_sess *sess)
 
 	/* Send info request */
 	err = rtrs_iu_post_send(&usr_con->c, tx_iu, sizeof(*msg), NULL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err) {
-=======
 	if (unlikely(err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_err(sess->clt, "rtrs_iu_post_send(), err: %d\n", err);
 		goto out;
 	}
@@ -3065,15 +2555,7 @@ static int rtrs_send_sess_info(struct rtrs_clt_sess *sess)
 					 sess->state != RTRS_CLT_CONNECTING,
 					 msecs_to_jiffies(
 						 RTRS_CONNECT_TIMEOUT_MS));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED) {
-=======
 	if (unlikely(READ_ONCE(sess->state) != RTRS_CLT_CONNECTED)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (READ_ONCE(sess->state) == RTRS_CLT_CONNECTING_ERR)
 			err = -ECONNRESET;
 		else
@@ -3085,15 +2567,7 @@ out:
 		rtrs_iu_free(tx_iu, sess->s.dev->ib_dev, 1);
 	if (rx_iu)
 		rtrs_iu_free(rx_iu, sess->s.dev->ib_dev, 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err)
-=======
 	if (unlikely(err))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* If we've never taken async path because of malloc problems */
 		rtrs_clt_change_state_get_old(sess, RTRS_CLT_CONNECTING_ERR, NULL);
 
@@ -3441,15 +2915,7 @@ int rtrs_clt_remove_path_from_sysfs(struct rtrs_clt_sess *sess,
 							&old_state);
 	} while (!changed && old_state != RTRS_CLT_DEAD);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (changed) {
-=======
 	if (likely(changed)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (changed) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rtrs_clt_remove_path_from_arr(sess);
 		rtrs_clt_destroy_sess_files(sess, sysfs_self);
 		kobject_put(&sess->kobj);
@@ -3521,24 +2987,10 @@ int rtrs_clt_request(int dir, struct rtrs_clt_req_ops *ops,
 	rcu_read_lock();
 	for (path_it_init(&it, clt);
 	     (sess = it.next_path(&it)) && it.i < it.clt->paths_num; it.i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED)
-			continue;
-
-		if (usr_len + hdr_len > sess->max_hdr_size) {
-=======
 		if (unlikely(READ_ONCE(sess->state) != RTRS_CLT_CONNECTED))
 			continue;
 
 		if (unlikely(usr_len + hdr_len > sess->max_hdr_size)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (READ_ONCE(sess->state) != RTRS_CLT_CONNECTED)
-			continue;
-
-		if (usr_len + hdr_len > sess->max_hdr_size) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rtrs_wrn_rl(sess->clt,
 				     "%s request failed, user message size is %zu and header length %zu, but max size is %u\n",
 				     dir == READ ? "Read" : "Write",
@@ -3553,15 +3005,7 @@ int rtrs_clt_request(int dir, struct rtrs_clt_req_ops *ops,
 			err = rtrs_clt_read_req(req);
 		else
 			err = rtrs_clt_write_req(req);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err) {
-=======
 		if (unlikely(err)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			req->in_use = false;
 			continue;
 		}
@@ -3634,27 +3078,6 @@ int rtrs_clt_create_path_from_sysfs(struct rtrs_clt *clt,
 	if (IS_ERR(sess))
 		return PTR_ERR(sess);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	mutex_lock(&clt->paths_mutex);
-	if (clt->paths_num == 0) {
-		/*
-		 * When all the paths are removed for a session,
-		 * the addition of the first path is like a new session for
-		 * the storage server
-		 */
-		sess->for_new_clt = 1;
-	}
-
-	mutex_unlock(&clt->paths_mutex);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * It is totally safe to add path in CONNECTING state: coming
 	 * IO will never grab it.  Also it is very important to add

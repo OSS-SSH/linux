@@ -62,36 +62,14 @@ static int snd_trident_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*trident), &card);
-	if (err < 0)
-		return err;
-	trident = card->private_data;
-=======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
 	if (err < 0)
 		return err;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*trident), &card);
-	if (err < 0)
-		return err;
-	trident = card->private_data;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = snd_trident_create(card, pci,
 				 pcm_channels[dev],
 				 ((pci->vendor << 16) | pci->device) == TRIDENT_DEVICE_ID_SI7018 ? 1 : 2,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 wavetable_size[dev]);
-	if (err < 0)
-		return err;
-=======
 				 wavetable_size[dev],
 				 &trident);
 	if (err < 0) {
@@ -99,12 +77,6 @@ static int snd_trident_probe(struct pci_dev *pci,
 		return err;
 	}
 	card->private_data = trident;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				 wavetable_size[dev]);
-	if (err < 0)
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (trident->device) {
 	case TRIDENT_DEVICE_ID_DX:
@@ -130,56 +102,26 @@ static int snd_trident_probe(struct pci_dev *pci,
 		card->shortname, trident->port, trident->irq);
 
 	err = snd_trident_pcm(trident, pcm_dev++);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (trident->device) {
 	case TRIDENT_DEVICE_ID_DX:
 	case TRIDENT_DEVICE_ID_NX:
 		err = snd_trident_foldback_pcm(trident, pcm_dev++);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err < 0)
-			return err;
-=======
 		if (err < 0) {
 			snd_card_free(card);
 			return err;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err < 0)
-			return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 	if (trident->device == TRIDENT_DEVICE_ID_NX || trident->device == TRIDENT_DEVICE_ID_SI7018) {
 		err = snd_trident_spdif_pcm(trident, pcm_dev++);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err < 0)
-			return err;
-=======
 		if (err < 0) {
 			snd_card_free(card);
 			return err;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err < 0)
-			return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (trident->device != TRIDENT_DEVICE_ID_SI7018) {
 		err = snd_mpu401_uart_new(card, 0, MPU401_HW_TRID4DWAVE,
@@ -187,66 +129,34 @@ static int snd_trident_probe(struct pci_dev *pci,
 					  MPU401_INFO_INTEGRATED |
 					  MPU401_INFO_IRQ_HOOK,
 					  -1, &trident->rmidi);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err < 0)
-			return err;
-=======
 		if (err < 0) {
 			snd_card_free(card);
 			return err;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err < 0)
-			return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	snd_trident_create_gameport(trident);
 
 	err = snd_card_register(card);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void snd_trident_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct pci_driver trident_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_trident_ids,
 	.probe = snd_trident_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = snd_trident_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 	.driver = {
 		.pm = &snd_trident_pm,

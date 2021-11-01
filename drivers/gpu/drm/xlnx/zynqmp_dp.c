@@ -402,16 +402,10 @@ static int zynqmp_dp_phy_init(struct zynqmp_dp *dp)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	ret = zynqmp_dp_reset(dp, false);
 	if (ret < 0)
 		return ret;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zynqmp_dp_clr(dp, ZYNQMP_DP_PHY_RESET, ZYNQMP_DP_PHY_RESET_ALL_RESET);
 
 	/*
@@ -447,14 +441,8 @@ static void zynqmp_dp_phy_exit(struct zynqmp_dp *dp)
 				ret);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	zynqmp_dp_reset(dp, true);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < dp->num_lanes; i++) {
 		ret = phy_exit(dp->phy[i]);
 		if (ret)
@@ -1695,28 +1683,9 @@ int zynqmp_dp_probe(struct zynqmp_dpsub *dpsub, struct drm_device *drm)
 		return PTR_ERR(dp->reset);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = zynqmp_dp_reset(dp, false);
-	if (ret < 0)
-		return ret;
-
-<<<<<<< HEAD
-	ret = zynqmp_dp_phy_probe(dp);
-	if (ret)
-		goto err_reset;
-=======
 	ret = zynqmp_dp_phy_probe(dp);
 	if (ret)
 		return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = zynqmp_dp_phy_probe(dp);
-	if (ret)
-		goto err_reset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Initialize the hardware. */
 	zynqmp_dp_write(dp, ZYNQMP_DP_TX_PHY_POWER_DOWN,
@@ -1728,15 +1697,7 @@ int zynqmp_dp_probe(struct zynqmp_dpsub *dpsub, struct drm_device *drm)
 
 	ret = zynqmp_dp_phy_init(dp);
 	if (ret)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_reset;
-=======
 		return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_reset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	zynqmp_dp_write(dp, ZYNQMP_DP_TRANSMITTER_ENABLE, 1);
 
@@ -1748,39 +1709,15 @@ int zynqmp_dp_probe(struct zynqmp_dpsub *dpsub, struct drm_device *drm)
 					zynqmp_dp_irq_handler, IRQF_ONESHOT,
 					dev_name(dp->dev), dp);
 	if (ret < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_phy_exit;
-=======
 		goto error;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_phy_exit;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(dp->dev, "ZynqMP DisplayPort Tx probed with %u lanes\n",
 		dp->num_lanes);
 
 	return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-err_phy_exit:
-	zynqmp_dp_phy_exit(dp);
-err_reset:
-	zynqmp_dp_reset(dp, true);
-
-=======
 error:
 	zynqmp_dp_phy_exit(dp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-err_phy_exit:
-	zynqmp_dp_phy_exit(dp);
-err_reset:
-	zynqmp_dp_reset(dp, true);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1798,12 +1735,4 @@ void zynqmp_dp_remove(struct zynqmp_dpsub *dpsub)
 	zynqmp_dp_write(dp, ZYNQMP_DP_INT_DS, 0xffffffff);
 
 	zynqmp_dp_phy_exit(dp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	zynqmp_dp_reset(dp, true);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	zynqmp_dp_reset(dp, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

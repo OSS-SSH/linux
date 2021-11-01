@@ -204,9 +204,6 @@ unsigned long raw_copy_to_user(void __user *to, const void *from, unsigned long 
 }
 EXPORT_SYMBOL(raw_copy_to_user);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline unsigned long copy_in_user_mvcos(void __user *to, const void __user *from,
 					       unsigned long size)
 {
@@ -270,9 +267,6 @@ unsigned long raw_copy_in_user(void __user *to, const void __user *from, unsigne
 }
 EXPORT_SYMBOL(raw_copy_in_user);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline unsigned long clear_user_mvcos(void __user *to, unsigned long size)
 {
 	unsigned long tmp1, tmp2;
@@ -344,9 +338,6 @@ unsigned long __clear_user(void __user *to, unsigned long size)
 	return clear_user_xc(to, size);
 }
 EXPORT_SYMBOL(__clear_user);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 static inline unsigned long strnlen_user_srst(const char __user *src,
 					      unsigned long size)
@@ -399,6 +390,3 @@ long __strncpy_from_user(char *dst, const char __user *src, long size)
 	return done;
 }
 EXPORT_SYMBOL(__strncpy_from_user);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

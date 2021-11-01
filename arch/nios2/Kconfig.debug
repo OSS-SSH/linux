@@ -3,23 +3,9 @@
 config EARLY_PRINTK
 	bool "Activate early kernel debugging"
 	default y
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on TTY
-	select SERIAL_CORE_CONSOLE
-	help
-	  Enable early printk on console.
-=======
 	select SERIAL_CORE_CONSOLE
 	help
 	  Enable early printk on console
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on TTY
-	select SERIAL_CORE_CONSOLE
-	help
-	  Enable early printk on console.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  This is useful for kernel debugging when your machine crashes very
 	  early before the console code is initialized.
 	  You should normally say N here, unless you want to debug such a crash.

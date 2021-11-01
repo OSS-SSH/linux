@@ -9,15 +9,7 @@
 /*
  * XFS On Disk Format Definitions
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * This header file defines all the on-disk format definitions for
-=======
  * This header file defines all the on-disk format definitions for 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * This header file defines all the on-disk format definitions for
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * general XFS objects. Directory and attribute related objects are defined in
  * xfs_da_format.h, which log and log item formats are defined in
  * xfs_log_format.h. Everything else goes here.
@@ -273,13 +265,7 @@ typedef struct xfs_dsb {
 	/* must be padded to 64 bit alignment */
 } xfs_dsb_t;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Misc. Flags - warning - these will be cleared by xfs_repair unless
  * a feature bit is set when the flag is used.
@@ -294,12 +280,6 @@ typedef struct xfs_dsb {
 
 #define	XFS_SB_VERSION_NUM(sbp)	((sbp)->sb_versionnum & XFS_SB_VERSION_NUMBITS)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline bool xfs_sb_is_v5(struct xfs_sb *sbp)
-{
-	return XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5;
-=======
 /*
  * The first XFS version we support is a v4 superblock with V2 directories.
  */
@@ -331,12 +311,6 @@ static inline bool xfs_sb_good_version(struct xfs_sb *sbp)
 static inline bool xfs_sb_version_hasrealtime(struct xfs_sb *sbp)
 {
 	return sbp->sb_rblocks > 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline bool xfs_sb_is_v5(struct xfs_sb *sbp)
-{
-	return XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -348,23 +322,9 @@ static inline bool xfs_sb_has_mismatched_features2(struct xfs_sb *sbp)
 	return sbp->sb_bad_features2 != sbp->sb_features2;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline bool xfs_sb_version_hasmorebits(struct xfs_sb *sbp)
-{
-	return xfs_sb_is_v5(sbp) ||
-	       (sbp->sb_versionnum & XFS_SB_VERSION_MOREBITSBIT);
-=======
 static inline bool xfs_sb_version_hasattr(struct xfs_sb *sbp)
 {
 	return (sbp->sb_versionnum & XFS_SB_VERSION_ATTRBIT);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline bool xfs_sb_version_hasmorebits(struct xfs_sb *sbp)
-{
-	return xfs_sb_is_v5(sbp) ||
-	       (sbp->sb_versionnum & XFS_SB_VERSION_MOREBITSBIT);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void xfs_sb_version_addattr(struct xfs_sb *sbp)
@@ -372,25 +332,16 @@ static inline void xfs_sb_version_addattr(struct xfs_sb *sbp)
 	sbp->sb_versionnum |= XFS_SB_VERSION_ATTRBIT;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline bool xfs_sb_version_hasquota(struct xfs_sb *sbp)
 {
 	return (sbp->sb_versionnum & XFS_SB_VERSION_QUOTABIT);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void xfs_sb_version_addquota(struct xfs_sb *sbp)
 {
 	sbp->sb_versionnum |= XFS_SB_VERSION_QUOTABIT;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline bool xfs_sb_version_hasalign(struct xfs_sb *sbp)
 {
 	return (XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5 ||
@@ -441,19 +392,12 @@ static inline bool xfs_sb_version_hasattr2(struct xfs_sb *sbp)
 		(sbp->sb_features2 & XFS_SB_VERSION2_ATTR2BIT));
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void xfs_sb_version_addattr2(struct xfs_sb *sbp)
 {
 	sbp->sb_versionnum |= XFS_SB_VERSION_MOREBITSBIT;
 	sbp->sb_features2 |= XFS_SB_VERSION2_ATTR2BIT;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline void xfs_sb_version_addprojid32(struct xfs_sb *sbp)
-=======
 static inline void xfs_sb_version_removeattr2(struct xfs_sb *sbp)
 {
 	sbp->sb_features2 &= ~XFS_SB_VERSION2_ATTR2BIT;
@@ -469,10 +413,6 @@ static inline bool xfs_sb_version_hasprojid32bit(struct xfs_sb *sbp)
 }
 
 static inline void xfs_sb_version_addprojid32bit(struct xfs_sb *sbp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline void xfs_sb_version_addprojid32(struct xfs_sb *sbp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	sbp->sb_versionnum |= XFS_SB_VERSION_MOREBITSBIT;
 	sbp->sb_features2 |= XFS_SB_VERSION2_PROJID32BIT;
@@ -555,24 +495,6 @@ xfs_sb_has_incompat_log_feature(
 	return (sbp->sb_features_log_incompat & feature) != 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline void
-xfs_sb_remove_incompat_log_features(
-	struct xfs_sb	*sbp)
-{
-	sbp->sb_features_log_incompat &= ~XFS_SB_FEAT_INCOMPAT_LOG_ALL;
-}
-
-static inline void
-xfs_sb_add_incompat_log_features(
-	struct xfs_sb	*sbp,
-	unsigned int	features)
-{
-	sbp->sb_features_log_incompat |= features;
-}
-
-=======
 /*
  * V5 superblock specific feature checks
  */
@@ -659,30 +581,20 @@ static inline bool xfs_sb_version_hasbigtime(struct xfs_sb *sbp)
  * setting up per-AG reservations.
  */
 static inline bool xfs_sb_version_hasinobtcounts(struct xfs_sb *sbp)
-=======
-static inline void
-xfs_sb_remove_incompat_log_features(
-	struct xfs_sb	*sbp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	sbp->sb_features_log_incompat &= ~XFS_SB_FEAT_INCOMPAT_LOG_ALL;
+	return XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5 &&
+		(sbp->sb_features_ro_compat & XFS_SB_FEAT_RO_COMPAT_INOBTCNT);
 }
 
-static inline void
-xfs_sb_add_incompat_log_features(
-	struct xfs_sb	*sbp,
-	unsigned int	features)
+static inline bool xfs_sb_version_needsrepair(struct xfs_sb *sbp)
 {
-	sbp->sb_features_log_incompat |= features;
+	return XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5 &&
+		(sbp->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_NEEDSREPAIR);
 }
 
-<<<<<<< HEAD
 /*
  * end of superblock version macros
  */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline bool
 xfs_is_quota_inode(struct xfs_sb *sbp, xfs_ino_t ino)
@@ -1150,30 +1062,12 @@ enum xfs_dinode_fmt {
 /*
  * Inode size for given fs.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define XFS_DINODE_SIZE(mp) \
-	(xfs_has_v3inodes(mp) ? \
-		sizeof(struct xfs_dinode) : \
-		offsetof(struct xfs_dinode, di_crc))
-#define XFS_LITINO(mp) \
-	((mp)->m_sb.sb_inodesize - XFS_DINODE_SIZE(mp))
-=======
 #define XFS_DINODE_SIZE(sbp) \
 	(xfs_sb_version_has_v3inode(sbp) ? \
 		sizeof(struct xfs_dinode) : \
 		offsetof(struct xfs_dinode, di_crc))
 #define XFS_LITINO(mp) \
 	((mp)->m_sb.sb_inodesize - XFS_DINODE_SIZE(&(mp)->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define XFS_DINODE_SIZE(mp) \
-	(xfs_has_v3inodes(mp) ? \
-		sizeof(struct xfs_dinode) : \
-		offsetof(struct xfs_dinode, di_crc))
-#define XFS_LITINO(mp) \
-	((mp)->m_sb.sb_inodesize - XFS_DINODE_SIZE(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Inode data & attribute fork sizes, per inode.
@@ -1560,15 +1454,7 @@ struct xfs_dsymlink_hdr {
 #define XFS_SYMLINK_MAPS 3
 
 #define XFS_SYMLINK_BUF_SPACE(mp, bufsize)	\
-<<<<<<< HEAD
-<<<<<<< HEAD
-	((bufsize) - (xfs_has_crc((mp)) ? \
-=======
 	((bufsize) - (xfs_sb_version_hascrc(&(mp)->m_sb) ? \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	((bufsize) - (xfs_has_crc((mp)) ? \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sizeof(struct xfs_dsymlink_hdr) : 0))
 
 
@@ -1800,15 +1686,7 @@ struct xfs_rmap_key {
 typedef __be32 xfs_rmap_ptr_t;
 
 #define	XFS_RMAP_BLOCK(mp) \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	(xfs_has_finobt(((mp))) ? \
-=======
 	(xfs_sb_version_hasfinobt(&((mp)->m_sb)) ? \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	(xfs_has_finobt(((mp))) ? \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 XFS_FIBT_BLOCK(mp) + 1 : \
 	 XFS_IBT_BLOCK(mp) + 1)
 
@@ -2040,15 +1918,7 @@ struct xfs_acl {
  * limited only by the maximum size of the xattr that stores the information.
  */
 #define XFS_ACL_MAX_ENTRIES(mp)	\
-<<<<<<< HEAD
-<<<<<<< HEAD
-	(xfs_has_crc(mp) \
-=======
 	(xfs_sb_version_hascrc(&mp->m_sb) \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	(xfs_has_crc(mp) \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		?  (XFS_XATTR_SIZE_MAX - sizeof(struct xfs_acl)) / \
 						sizeof(struct xfs_acl_entry) \
 		: 25)

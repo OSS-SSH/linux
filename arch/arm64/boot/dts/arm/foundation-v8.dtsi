@@ -115,13 +115,7 @@
 
 	bus@8000000 {
 		compatible = "arm,vexpress,v2m-p1", "simple-bus";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		arm,v2m-memory-map = "rs1";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		#address-cells = <2>; /* SMB chipselect number and offset */
 		#size-cells = <1>;
 

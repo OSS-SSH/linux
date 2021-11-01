@@ -743,17 +743,7 @@ int iwl_mvm_sar_select_profile(struct iwl_mvm *mvm, int prof_a, int prof_b)
 	/* all structs have the same common part, add it */
 	len += sizeof(cmd.common);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = iwl_sar_select_profile(&mvm->fwrt, per_chain,
-				     IWL_NUM_CHAIN_TABLES,
-=======
 	ret = iwl_sar_select_profile(&mvm->fwrt, per_chain, ACPI_SAR_NUM_TABLES,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = iwl_sar_select_profile(&mvm->fwrt, per_chain,
-				     IWL_NUM_CHAIN_TABLES,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     n_subbands, prof_a, prof_b);
 
 	/* return on error or if the profile is disabled (positive number) */
@@ -1067,10 +1057,6 @@ static const struct dmi_system_id dmi_ppag_approved_list[] = {
 
 static int iwl_mvm_ppag_init(struct iwl_mvm *mvm)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* no need to read the table, done in INIT stage */
-=======
 	int ret;
 
 	ret = iwl_mvm_get_ppag_table(mvm);
@@ -1081,10 +1067,6 @@ static int iwl_mvm_ppag_init(struct iwl_mvm *mvm)
 		return 0;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* no need to read the table, done in INIT stage */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dmi_check_system(dmi_ppag_approved_list)) {
 		IWL_DEBUG_RADIO(mvm,
 				"System vendor '%s' is not in the approved list, disabling PPAG.\n",
@@ -1209,82 +1191,12 @@ static void iwl_mvm_lari_cfg(struct iwl_mvm *mvm)
 					ret);
 	}
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm)
-{
-	int ret;
-
-	/* read PPAG table */
-	ret = iwl_mvm_get_ppag_table(mvm);
-	if (ret < 0) {
-		IWL_DEBUG_RADIO(mvm,
-				"PPAG BIOS table invalid or unavailable. (%d)\n",
-				ret);
-	}
-
-	/* read SAR tables */
-	ret = iwl_sar_get_wrds_table(&mvm->fwrt);
-	if (ret < 0) {
-		IWL_DEBUG_RADIO(mvm,
-				"WRDS SAR BIOS table invalid or unavailable. (%d)\n",
-				ret);
-		/*
-		 * If not available, don't fail and don't bother with EWRD and
-		 * WGDS */
-
-		if (!iwl_sar_get_wgds_table(&mvm->fwrt)) {
-			/*
-			 * If basic SAR is not available, we check for WGDS,
-			 * which should *not* be available either.  If it is
-			 * available, issue an error, because we can't use SAR
-			 * Geo without basic SAR.
-			 */
-			IWL_ERR(mvm, "BIOS contains WGDS but no WRDS\n");
-		}
-
-	} else {
-		ret = iwl_sar_get_ewrd_table(&mvm->fwrt);
-		/* if EWRD is not available, we can still use
-		* WRDS, so don't fail */
-		if (ret < 0)
-			IWL_DEBUG_RADIO(mvm,
-					"EWRD SAR BIOS table invalid or unavailable. (%d)\n",
-					ret);
-
-		/* read geo SAR table */
-		if (iwl_sar_geo_support(&mvm->fwrt)) {
-			ret = iwl_sar_get_wgds_table(&mvm->fwrt);
-			if (ret < 0)
-				IWL_DEBUG_RADIO(mvm,
-						"Geo SAR BIOS table invalid or unavailable. (%d)\n",
-						ret);
-				/* we don't fail if the table is not available */
-		}
-	}
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else /* CONFIG_ACPI */
 
 inline int iwl_mvm_sar_select_profile(struct iwl_mvm *mvm,
 				      int prof_a, int prof_b)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 1;
-=======
 	return -ENOENT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 inline int iwl_mvm_get_sar_geo_profile(struct iwl_mvm *mvm)
@@ -1319,19 +1231,6 @@ static u8 iwl_mvm_eval_dsm_rfi(struct iwl_mvm *mvm)
 {
 	return DSM_VALUE_RFI_DISABLE;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm)
-{
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_ACPI */
 
 void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
@@ -1387,9 +1286,6 @@ void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
 
 static int iwl_mvm_sar_init(struct iwl_mvm *mvm)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int ret;
 
 	ret = iwl_sar_get_wrds_table(&mvm->fwrt);
@@ -1411,9 +1307,6 @@ static int iwl_mvm_sar_init(struct iwl_mvm *mvm)
 				"EWRD SAR BIOS table invalid or unavailable. (%d)\n",
 				ret);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return iwl_mvm_sar_select_profile(mvm, 1, 1);
 }
 
@@ -1649,12 +1542,6 @@ int iwl_mvm_up(struct iwl_mvm *mvm)
 		goto error;
 
 	ret = iwl_mvm_sar_init(mvm);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret == 0)
-		ret = iwl_mvm_sar_geo_init(mvm);
-	else if (ret < 0)
-=======
 	if (ret == 0) {
 		ret = iwl_mvm_sar_geo_init(mvm);
 	} else if (ret == -ENOENT && !iwl_sar_get_wgds_table(&mvm->fwrt)) {
@@ -1668,12 +1555,6 @@ int iwl_mvm_up(struct iwl_mvm *mvm)
 	}
 
 	if (ret < 0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret == 0)
-		ret = iwl_mvm_sar_geo_init(mvm);
-	else if (ret < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto error;
 
 	iwl_mvm_tas_init(mvm);

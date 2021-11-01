@@ -2103,36 +2103,16 @@ int c4iw_destroy_qp(struct ib_qp *ib_qp, struct ib_udata *udata)
 		   ucontext ? &ucontext->uctx : &rhp->rdev.uctx, !qhp->srq);
 
 	c4iw_put_wr_wait(qhp->wr_waitp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 0;
-}
-
-int c4iw_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *attrs,
-		   struct ib_udata *udata)
-{
-	struct ib_pd *pd = qp->pd;
-	struct c4iw_dev *rhp;
-	struct c4iw_qp *qhp = to_c4iw_qp(qp);
-=======
 
 	kfree(qhp);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
-int c4iw_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *attrs,
-		   struct ib_udata *udata)
+struct ib_qp *c4iw_create_qp(struct ib_pd *pd, struct ib_qp_init_attr *attrs,
+			     struct ib_udata *udata)
 {
-	struct ib_pd *pd = qp->pd;
 	struct c4iw_dev *rhp;
-<<<<<<< HEAD
 	struct c4iw_qp *qhp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct c4iw_qp *qhp = to_c4iw_qp(qp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct c4iw_pd *php;
 	struct c4iw_cq *schp;
 	struct c4iw_cq *rchp;
@@ -2144,78 +2124,35 @@ int c4iw_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *attrs,
 	struct c4iw_mm_entry *sq_key_mm, *rq_key_mm = NULL, *sq_db_key_mm;
 	struct c4iw_mm_entry *rq_db_key_mm = NULL, *ma_sync_key_mm = NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (attrs->qp_type != IB_QPT_RC || attrs->create_flags)
-		return -EOPNOTSUPP;
-=======
 	pr_debug("ib_pd %p\n", pd);
 
 	if (attrs->qp_type != IB_QPT_RC || attrs->create_flags)
 		return ERR_PTR(-EOPNOTSUPP);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (attrs->qp_type != IB_QPT_RC || attrs->create_flags)
-		return -EOPNOTSUPP;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	php = to_c4iw_pd(pd);
 	rhp = php->rhp;
 	schp = get_chp(rhp, ((struct c4iw_cq *)attrs->send_cq)->cq.cqid);
 	rchp = get_chp(rhp, ((struct c4iw_cq *)attrs->recv_cq)->cq.cqid);
 	if (!schp || !rchp)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -EINVAL;
-
-	if (attrs->cap.max_inline_data > T4_MAX_SEND_INLINE)
-		return -EINVAL;
-
-	if (!attrs->srq) {
-		if (attrs->cap.max_recv_wr > rhp->rdev.hw_queue.t4_max_rq_size)
-			return -E2BIG;
-=======
 		return ERR_PTR(-EINVAL);
-=======
-		return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (attrs->cap.max_inline_data > T4_MAX_SEND_INLINE)
-		return -EINVAL;
+		return ERR_PTR(-EINVAL);
 
 	if (!attrs->srq) {
 		if (attrs->cap.max_recv_wr > rhp->rdev.hw_queue.t4_max_rq_size)
-<<<<<<< HEAD
 			return ERR_PTR(-E2BIG);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return -E2BIG;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rqsize = attrs->cap.max_recv_wr + 1;
 		if (rqsize < 8)
 			rqsize = 8;
 	}
 
 	if (attrs->cap.max_send_wr > rhp->rdev.hw_queue.t4_max_sq_size)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -E2BIG;
-=======
 		return ERR_PTR(-E2BIG);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -E2BIG;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sqsize = attrs->cap.max_send_wr + 1;
 	if (sqsize < 8)
 		sqsize = 8;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	qhp->wr_waitp = c4iw_alloc_wr_wait(GFP_KERNEL);
-	if (!qhp->wr_waitp)
-		return -ENOMEM;
-=======
 	qhp = kzalloc(sizeof(*qhp), GFP_KERNEL);
 	if (!qhp)
 		return ERR_PTR(-ENOMEM);
@@ -2225,12 +2162,6 @@ int c4iw_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *attrs,
 		ret = -ENOMEM;
 		goto err_free_qhp;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	qhp->wr_waitp = c4iw_alloc_wr_wait(GFP_KERNEL);
-	if (!qhp->wr_waitp)
-		return -ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	qhp->wq.sq.size = sqsize;
 	qhp->wq.sq.memsize =
@@ -2408,15 +2339,7 @@ int c4iw_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *attrs,
 		 qhp->wq.sq.qid, qhp->wq.sq.size, qhp->wq.sq.memsize,
 		 attrs->cap.max_send_wr, qhp->wq.rq.qid, qhp->wq.rq.size,
 		 qhp->wq.rq.memsize, attrs->cap.max_recv_wr);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 0;
-=======
 	return &qhp->ibqp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_ma_sync_key:
 	kfree(ma_sync_key_mm);
 err_free_rq_db_key:
@@ -2436,17 +2359,9 @@ err_destroy_qp:
 		   ucontext ? &ucontext->uctx : &rhp->rdev.uctx, !attrs->srq);
 err_free_wr_wait:
 	c4iw_put_wr_wait(qhp->wr_waitp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return ret;
-=======
 err_free_qhp:
 	kfree(qhp);
 	return ERR_PTR(ret);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int c4iw_ib_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,

@@ -807,22 +807,6 @@ static int ibmvfc_init_event_pool(struct ibmvfc_host *vhost,
 	for (i = 0; i < size; ++i) {
 		struct ibmvfc_event *evt = &pool->events[i];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/*
-		 * evt->active states
-		 *  1 = in flight
-		 *  0 = being completed
-		 * -1 = free/freed
-		 */
-		atomic_set(&evt->active, -1);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		atomic_set(&evt->free, 1);
 		evt->crq.valid = 0x80;
 		evt->crq.ioba = cpu_to_be64(pool->iu_token + (sizeof(*evt->xfer_iu) * i));
@@ -1033,14 +1017,6 @@ static void ibmvfc_free_event(struct ibmvfc_event *evt)
 
 	BUG_ON(!ibmvfc_valid_event(pool, evt));
 	BUG_ON(atomic_inc_return(&evt->free) != 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	BUG_ON(atomic_dec_and_test(&evt->active));
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	BUG_ON(atomic_dec_and_test(&evt->active));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&evt->queue->l_lock, flags);
 	list_add_tail(&evt->queue_list, &evt->queue->free);
@@ -1096,21 +1072,6 @@ static void ibmvfc_complete_purge(struct list_head *purge_list)
  **/
 static void ibmvfc_fail_request(struct ibmvfc_event *evt, int error_code)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Anything we are failing should still be active. Otherwise, it
-	 * implies we already got a response for the command and are doing
-	 * something bad like double completing it.
-	 */
-	BUG_ON(!atomic_dec_and_test(&evt->active));
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (evt->cmnd) {
 		evt->cmnd->result = (error_code << 16);
 		evt->done = ibmvfc_scsi_eh_done;
@@ -1762,14 +1723,6 @@ static int ibmvfc_send_event(struct ibmvfc_event *evt,
 
 		evt->done(evt);
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		atomic_set(&evt->active, 1);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		atomic_set(&evt->active, 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_unlock_irqrestore(&evt->queue->l_lock, flags);
 		ibmvfc_trc_start(evt);
 	}
@@ -1958,15 +1911,7 @@ static int ibmvfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 	struct ibmvfc_cmd *vfc_cmd;
 	struct ibmvfc_fcp_cmd_iu *iu;
 	struct ibmvfc_event *evt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 tag_and_hwq = blk_mq_unique_tag(scsi_cmd_to_rq(cmnd));
-=======
 	u32 tag_and_hwq = blk_mq_unique_tag(cmnd->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 tag_and_hwq = blk_mq_unique_tag(scsi_cmd_to_rq(cmnd));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 hwq = blk_mq_unique_tag_to_hwq(tag_and_hwq);
 	u16 scsi_channel;
 	int rc;
@@ -1996,15 +1941,7 @@ static int ibmvfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 	memcpy(iu->cdb, cmnd->cmnd, cmnd->cmd_len);
 
 	if (cmnd->flags & SCMD_TAGGED) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		vfc_cmd->task_tag = cpu_to_be64(scsi_cmd_to_rq(cmnd)->tag);
-=======
 		vfc_cmd->task_tag = cpu_to_be64(cmnd->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		vfc_cmd->task_tag = cpu_to_be64(scsi_cmd_to_rq(cmnd)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iu->pri_task_attr = IBMVFC_SIMPLE_TASK;
 	}
 
@@ -3314,15 +3251,7 @@ static void ibmvfc_handle_crq(struct ibmvfc_crq *crq, struct ibmvfc_host *vhost,
 		return;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (unlikely(atomic_dec_if_positive(&evt->active))) {
-=======
 	if (unlikely(atomic_read(&evt->free))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (unlikely(atomic_dec_if_positive(&evt->active))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(vhost->dev, "Received duplicate correlation_token 0x%08llx!\n",
 			crq->ioba);
 		return;
@@ -3348,40 +3277,14 @@ static int ibmvfc_scan_finished(struct Scsi_Host *shost, unsigned long time)
 	int done = 0;
 
 	spin_lock_irqsave(shost->host_lock, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!vhost->scan_timeout)
-		done = 1;
-	else if (time >= (vhost->scan_timeout * HZ)) {
-		dev_info(vhost->dev, "Scan taking longer than %d seconds, "
-			 "continuing initialization\n", vhost->scan_timeout);
-		done = 1;
-	}
-
-	if (vhost->scan_complete) {
-		vhost->scan_timeout = init_timeout;
-		done = 1;
-	}
-=======
 	if (time >= (init_timeout * HZ)) {
-=======
-	if (!vhost->scan_timeout)
-		done = 1;
-	else if (time >= (vhost->scan_timeout * HZ)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_info(vhost->dev, "Scan taking longer than %d seconds, "
-			 "continuing initialization\n", vhost->scan_timeout);
+			 "continuing initialization\n", init_timeout);
 		done = 1;
 	}
 
-	if (vhost->scan_complete) {
-		vhost->scan_timeout = init_timeout;
+	if (vhost->scan_complete)
 		done = 1;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(shost->host_lock, flags);
 	return done;
 }
@@ -3875,15 +3778,7 @@ static void ibmvfc_handle_scrq(struct ibmvfc_crq *crq, struct ibmvfc_host *vhost
 		return;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (unlikely(atomic_dec_if_positive(&evt->active))) {
-=======
 	if (unlikely(atomic_read(&evt->free))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (unlikely(atomic_dec_if_positive(&evt->active))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(vhost->dev, "Received duplicate correlation_token 0x%08llx!\n",
 			crq->ioba);
 		return;
@@ -6174,14 +6069,6 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
 	vhost->client_scsi_channels = min(shost->nr_hw_queues, nr_scsi_channels);
 	vhost->using_channels = 0;
 	vhost->do_enquiry = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	vhost->scan_timeout = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	vhost->scan_timeout = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(vhost->partition_name, "UNKNOWN");
 	init_waitqueue_head(&vhost->work_wait_q);

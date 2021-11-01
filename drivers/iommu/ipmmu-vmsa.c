@@ -8,13 +8,7 @@
 
 #include <linux/bitmap.h>
 #include <linux/delay.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <linux/dma-iommu.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/dma-mapping.h>
 #include <linux/err.h>
 #include <linux/export.h>
@@ -570,30 +564,10 @@ static irqreturn_t ipmmu_irq(int irq, void *dev)
  * IOMMU Operations
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
-{
-	struct ipmmu_vmsa_domain *domain;
-
-	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
-		return NULL;
-
-=======
 static struct iommu_domain *__ipmmu_domain_alloc(unsigned type)
 {
 	struct ipmmu_vmsa_domain *domain;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
-{
-	struct ipmmu_vmsa_domain *domain;
-
-	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
-		return NULL;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
 	if (!domain)
 		return NULL;
@@ -603,9 +577,6 @@ static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
 	return &domain->io_domain;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
 {
 	struct iommu_domain *io_domain = NULL;
@@ -627,9 +598,6 @@ static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
 	return io_domain;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ipmmu_domain_free(struct iommu_domain *io_domain)
 {
 	struct ipmmu_vmsa_domain *domain = to_vmsa_domain(io_domain);
@@ -638,13 +606,7 @@ static void ipmmu_domain_free(struct iommu_domain *io_domain)
 	 * Free the domain resources. We assume that all devices have already
 	 * been detached.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	iommu_put_dma_cookie(io_domain);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ipmmu_domain_destroy_context(domain);
 	free_io_pgtable_ops(domain->iop);
 	kfree(domain);

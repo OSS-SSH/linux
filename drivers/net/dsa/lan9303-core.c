@@ -557,30 +557,12 @@ static int lan9303_alr_make_entry_raw(struct lan9303 *chip, u32 dat0, u32 dat1)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-typedef int alr_loop_cb_t(struct lan9303 *chip, u32 dat0, u32 dat1,
-			  int portmap, void *ctx);
-
-static int lan9303_alr_loop(struct lan9303 *chip, alr_loop_cb_t *cb, void *ctx)
-{
-	int ret = 0, i;
-=======
 typedef void alr_loop_cb_t(struct lan9303 *chip, u32 dat0, u32 dat1,
 			   int portmap, void *ctx);
-=======
-typedef int alr_loop_cb_t(struct lan9303 *chip, u32 dat0, u32 dat1,
-			  int portmap, void *ctx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-static int lan9303_alr_loop(struct lan9303 *chip, alr_loop_cb_t *cb, void *ctx)
+static void lan9303_alr_loop(struct lan9303 *chip, alr_loop_cb_t *cb, void *ctx)
 {
-<<<<<<< HEAD
 	int i;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret = 0, i;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&chip->alr_mutex);
 	lan9303_write_switch_reg(chip, LAN9303_SWE_ALR_CMD,
@@ -600,35 +582,13 @@ static int lan9303_alr_loop(struct lan9303 *chip, alr_loop_cb_t *cb, void *ctx)
 						LAN9303_ALR_DAT1_PORT_BITOFFS;
 		portmap = alrport_2_portmap[alrport];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = cb(chip, dat0, dat1, portmap, ctx);
-		if (ret)
-			break;
-=======
 		cb(chip, dat0, dat1, portmap, ctx);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = cb(chip, dat0, dat1, portmap, ctx);
-		if (ret)
-			break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		lan9303_write_switch_reg(chip, LAN9303_SWE_ALR_CMD,
 					 LAN9303_ALR_CMD_GET_NEXT);
 		lan9303_write_switch_reg(chip, LAN9303_SWE_ALR_CMD, 0);
 	}
 	mutex_unlock(&chip->alr_mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	return ret;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void alr_reg_to_mac(u32 dat0, u32 dat1, u8 mac[6])
@@ -646,46 +606,18 @@ struct del_port_learned_ctx {
 };
 
 /* Clear learned (non-static) entry on given port */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int alr_loop_cb_del_port_learned(struct lan9303 *chip, u32 dat0,
-					u32 dat1, int portmap, void *ctx)
-=======
 static void alr_loop_cb_del_port_learned(struct lan9303 *chip, u32 dat0,
 					 u32 dat1, int portmap, void *ctx)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int alr_loop_cb_del_port_learned(struct lan9303 *chip, u32 dat0,
-					u32 dat1, int portmap, void *ctx)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct del_port_learned_ctx *del_ctx = ctx;
 	int port = del_ctx->port;
 
 	if (((BIT(port) & portmap) == 0) || (dat1 & LAN9303_ALR_DAT1_STATIC))
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return 0;
-=======
 		return;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* learned entries has only one port, we can just delete */
 	dat1 &= ~LAN9303_ALR_DAT1_VALID; /* delete entry */
 	lan9303_alr_make_entry_raw(chip, dat0, dat1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	return 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct port_fdb_dump_ctx {
@@ -694,45 +626,19 @@ struct port_fdb_dump_ctx {
 	dsa_fdb_dump_cb_t *cb;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int alr_loop_cb_fdb_port_dump(struct lan9303 *chip, u32 dat0,
-				     u32 dat1, int portmap, void *ctx)
-=======
 static void alr_loop_cb_fdb_port_dump(struct lan9303 *chip, u32 dat0,
 				      u32 dat1, int portmap, void *ctx)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int alr_loop_cb_fdb_port_dump(struct lan9303 *chip, u32 dat0,
-				     u32 dat1, int portmap, void *ctx)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct port_fdb_dump_ctx *dump_ctx = ctx;
 	u8 mac[ETH_ALEN];
 	bool is_static;
 
 	if ((BIT(dump_ctx->port) & portmap) == 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return 0;
-
-	alr_reg_to_mac(dat0, dat1, mac);
-	is_static = !!(dat1 & LAN9303_ALR_DAT1_STATIC);
-	return dump_ctx->cb(mac, 0, is_static, dump_ctx->data);
-=======
 		return;
 
 	alr_reg_to_mac(dat0, dat1, mac);
 	is_static = !!(dat1 & LAN9303_ALR_DAT1_STATIC);
 	dump_ctx->cb(mac, 0, is_static, dump_ctx->data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return 0;
-
-	alr_reg_to_mac(dat0, dat1, mac);
-	is_static = !!(dat1 & LAN9303_ALR_DAT1_STATIC);
-	return dump_ctx->cb(mac, 0, is_static, dump_ctx->data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Set a static ALR entry. Delete entry if port_map is zero */
@@ -1304,17 +1210,9 @@ static int lan9303_port_fdb_dump(struct dsa_switch *ds, int port,
 	};
 
 	dev_dbg(chip->dev, "%s(%d)\n", __func__, port);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return lan9303_alr_loop(chip, alr_loop_cb_fdb_port_dump, &dump_ctx);
-=======
 	lan9303_alr_loop(chip, alr_loop_cb_fdb_port_dump, &dump_ctx);
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return lan9303_alr_loop(chip, alr_loop_cb_fdb_port_dump, &dump_ctx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lan9303_port_mdb_prepare(struct dsa_switch *ds, int port,
@@ -1477,21 +1375,6 @@ int lan9303_remove(struct lan9303 *chip)
 }
 EXPORT_SYMBOL(lan9303_remove);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-void lan9303_shutdown(struct lan9303 *chip)
-{
-	dsa_switch_shutdown(chip->ds);
-}
-EXPORT_SYMBOL(lan9303_shutdown);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_AUTHOR("Juergen Borleis <kernel@pengutronix.de>");
 MODULE_DESCRIPTION("Core driver for SMSC/Microchip LAN9303 three port ethernet switch");
 MODULE_LICENSE("GPL v2");

@@ -448,15 +448,7 @@ static int dma_4u_map_sg(struct device *dev, struct scatterlist *sglist,
 	iommu = dev->archdata.iommu;
 	strbuf = dev->archdata.stc;
 	if (nelems == 0 || !iommu)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -EINVAL;
-=======
 		return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&iommu->lock, flags);
 
@@ -554,13 +546,7 @@ static int dma_4u_map_sg(struct device *dev, struct scatterlist *sglist,
 
 	if (outcount < incount) {
 		outs = sg_next(outs);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		outs->dma_address = DMA_MAPPING_ERROR;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		outs->dma_length = 0;
 	}
 
@@ -586,13 +572,7 @@ iommu_map_failed:
 			iommu_tbl_range_free(&iommu->tbl, vaddr, npages,
 					     IOMMU_ERROR_CODE);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			s->dma_address = DMA_MAPPING_ERROR;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			s->dma_length = 0;
 		}
 		if (s == outs)
@@ -600,15 +580,7 @@ iommu_map_failed:
 	}
 	spin_unlock_irqrestore(&iommu->lock, flags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return -EINVAL;
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* If contexts are being used, they are the same in all of the mappings

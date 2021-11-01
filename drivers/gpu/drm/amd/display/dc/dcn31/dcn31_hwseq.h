@@ -44,14 +44,6 @@ void dcn31_enable_power_gating_plane(
 void dcn31_update_info_frame(struct pipe_ctx *pipe_ctx);
 
 void dcn31_z10_restore(struct dc *dc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void dcn31_z10_save_init(struct dc *dc);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void dcn31_z10_save_init(struct dc *dc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void dcn31_hubp_pg_control(struct dce_hwseq *hws, unsigned int hubp_inst, bool power_on);
 int dcn31_init_sys_ctx(struct dce_hwseq *hws, struct dc *dc, struct dc_phy_addr_space_config *pa_config);
@@ -60,13 +52,5 @@ void dcn31_reset_hw_ctx_wrap(
 		struct dc_state *context);
 bool dcn31_is_abm_supported(struct dc *dc,
 		struct dc_state *context, struct dc_stream_state *stream);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void dcn31_init_pipes(struct dc *dc, struct dc_state *context);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void dcn31_init_pipes(struct dc *dc, struct dc_state *context);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* __DC_HWSS_DCN31_H__ */

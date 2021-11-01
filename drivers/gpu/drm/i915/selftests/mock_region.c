@@ -3,14 +3,6 @@
  * Copyright © 2019-2021 Intel Corporation
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <drm/ttm/ttm_placement.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <drm/ttm/ttm_placement.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/scatterlist.h>
 
 #include <drm/ttm/ttm_placement.h>
@@ -24,15 +16,7 @@
 static void mock_region_put_pages(struct drm_i915_gem_object *obj,
 				  struct sg_table *pages)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	intel_region_ttm_resource_free(obj->mm.region, obj->mm.res);
-=======
 	intel_region_ttm_node_free(obj->mm.region, obj->mm.st_mm_node);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	intel_region_ttm_resource_free(obj->mm.region, obj->mm.res);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sg_free_table(pages);
 	kfree(pages);
 }
@@ -41,67 +25,26 @@ static int mock_region_get_pages(struct drm_i915_gem_object *obj)
 {
 	unsigned int flags;
 	struct sg_table *pages;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int err;
 
-	flags = 0;
+	flags = I915_ALLOC_MIN_PAGE_SIZE;
 	if (obj->flags & I915_BO_ALLOC_CONTIGUOUS)
-		flags |= TTM_PL_FLAG_CONTIGUOUS;
+		flags |= I915_ALLOC_CONTIGUOUS;
 
-	obj->mm.res = intel_region_ttm_resource_alloc(obj->mm.region,
-						      obj->base.size,
-						      flags);
-	if (IS_ERR(obj->mm.res))
-		return PTR_ERR(obj->mm.res);
+	obj->mm.st_mm_node = intel_region_ttm_node_alloc(obj->mm.region,
+							 obj->base.size,
+							 flags);
+	if (IS_ERR(obj->mm.st_mm_node))
+		return PTR_ERR(obj->mm.st_mm_node);
 
-	pages = intel_region_ttm_resource_to_st(obj->mm.region, obj->mm.res);
+	pages = intel_region_ttm_node_to_st(obj->mm.region, obj->mm.st_mm_node);
 	if (IS_ERR(pages)) {
-		err = PTR_ERR(pages);
-		goto err_free_resource;
-=======
-=======
-	int err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	flags = 0;
-	if (obj->flags & I915_BO_ALLOC_CONTIGUOUS)
-		flags |= TTM_PL_FLAG_CONTIGUOUS;
-
-	obj->mm.res = intel_region_ttm_resource_alloc(obj->mm.region,
-						      obj->base.size,
-						      flags);
-	if (IS_ERR(obj->mm.res))
-		return PTR_ERR(obj->mm.res);
-
-	pages = intel_region_ttm_resource_to_st(obj->mm.region, obj->mm.res);
-	if (IS_ERR(pages)) {
-<<<<<<< HEAD
 		intel_region_ttm_node_free(obj->mm.region, obj->mm.st_mm_node);
 		return PTR_ERR(pages);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = PTR_ERR(pages);
-		goto err_free_resource;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	__i915_gem_object_set_pages(obj, pages, i915_sg_dma_sizes(pages->sgl));
 
 	return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-err_free_resource:
-	intel_region_ttm_resource_free(obj->mm.region, obj->mm.res);
-	return err;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct drm_i915_gem_object_ops mock_region_obj_ops = {
@@ -114,14 +57,6 @@ static const struct drm_i915_gem_object_ops mock_region_obj_ops = {
 static int mock_object_init(struct intel_memory_region *mem,
 			    struct drm_i915_gem_object *obj,
 			    resource_size_t size,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    resource_size_t page_size,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    resource_size_t page_size,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    unsigned int flags)
 {
 	static struct lock_class_key lock_class;

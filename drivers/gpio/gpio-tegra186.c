@@ -456,15 +456,7 @@ static void tegra186_gpio_irq(struct irq_desc *desc)
 
 	for (i = 0; i < gpio->soc->num_ports; i++) {
 		const struct tegra_gpio_port *port = &gpio->soc->ports[i];
-<<<<<<< HEAD
-<<<<<<< HEAD
-		unsigned int pin;
-=======
 		unsigned int pin, irq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		unsigned int pin;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unsigned long value;
 		void __iomem *base;
 
@@ -477,21 +469,11 @@ static void tegra186_gpio_irq(struct irq_desc *desc)
 		value = readl(base + TEGRA186_GPIO_INTERRUPT_STATUS(1));
 
 		for_each_set_bit(pin, &value, port->pins) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			int ret = generic_handle_domain_irq(domain, offset + pin);
-			WARN_RATELIMIT(ret, "hwirq = %d", offset + pin);
-=======
 			irq = irq_find_mapping(domain, offset + pin);
 			if (WARN_ON(irq == 0))
 				continue;
 
 			generic_handle_irq(irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			int ret = generic_handle_domain_irq(domain, offset + pin);
-			WARN_RATELIMIT(ret, "hwirq = %d", offset + pin);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 skip:
@@ -628,48 +610,15 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
 	if (!gpio)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	gpio->soc = device_get_match_data(&pdev->dev);
-
-	gpio->secure = devm_platform_ioremap_resource_byname(pdev, "security");
-	if (IS_ERR(gpio->secure)) {
-		gpio->secure = devm_platform_ioremap_resource(pdev, 0);
-		if (IS_ERR(gpio->secure))
-			return PTR_ERR(gpio->secure);
-	}
-
-	gpio->base = devm_platform_ioremap_resource_byname(pdev, "gpio");
-	if (IS_ERR(gpio->base)) {
-		gpio->base = devm_platform_ioremap_resource(pdev, 1);
-		if (IS_ERR(gpio->base))
-			return PTR_ERR(gpio->base);
-	}
-=======
 	gpio->soc = of_device_get_match_data(&pdev->dev);
-=======
-	gpio->soc = device_get_match_data(&pdev->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	gpio->secure = devm_platform_ioremap_resource_byname(pdev, "security");
-	if (IS_ERR(gpio->secure)) {
-		gpio->secure = devm_platform_ioremap_resource(pdev, 0);
-		if (IS_ERR(gpio->secure))
-			return PTR_ERR(gpio->secure);
-	}
+	if (IS_ERR(gpio->secure))
+		return PTR_ERR(gpio->secure);
 
 	gpio->base = devm_platform_ioremap_resource_byname(pdev, "gpio");
-<<<<<<< HEAD
 	if (IS_ERR(gpio->base))
 		return PTR_ERR(gpio->base);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (IS_ERR(gpio->base)) {
-		gpio->base = devm_platform_ioremap_resource(pdev, 1);
-		if (IS_ERR(gpio->base))
-			return PTR_ERR(gpio->base);
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = platform_irq_count(pdev);
 	if (err < 0)
@@ -731,30 +680,11 @@ static int tegra186_gpio_probe(struct platform_device *pdev)
 
 	gpio->gpio.names = (const char * const *)names;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#if defined(CONFIG_OF_GPIO)
 	gpio->gpio.of_node = pdev->dev.of_node;
 	gpio->gpio.of_gpio_n_cells = 2;
 	gpio->gpio.of_xlate = tegra186_gpio_of_xlate;
-#endif /* CONFIG_OF_GPIO */
 
-	gpio->intc.name = dev_name(&pdev->dev);
-=======
-=======
-#if defined(CONFIG_OF_GPIO)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	gpio->gpio.of_node = pdev->dev.of_node;
-	gpio->gpio.of_gpio_n_cells = 2;
-	gpio->gpio.of_xlate = tegra186_gpio_of_xlate;
-#endif /* CONFIG_OF_GPIO */
-
-<<<<<<< HEAD
 	gpio->intc.name = pdev->dev.of_node->name;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	gpio->intc.name = dev_name(&pdev->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gpio->intc.irq_ack = tegra186_irq_ack;
 	gpio->intc.irq_mask = tegra186_irq_mask;
 	gpio->intc.irq_unmask = tegra186_irq_unmask;
@@ -966,36 +896,10 @@ static const struct of_device_id tegra186_gpio_of_match[] = {
 };
 MODULE_DEVICE_TABLE(of, tegra186_gpio_of_match);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct acpi_device_id  tegra186_gpio_acpi_match[] = {
-	{ .id = "NVDA0108", .driver_data = (kernel_ulong_t)&tegra186_main_soc },
-	{ .id = "NVDA0208", .driver_data = (kernel_ulong_t)&tegra186_aon_soc },
-	{ .id = "NVDA0308", .driver_data = (kernel_ulong_t)&tegra194_main_soc },
-	{ .id = "NVDA0408", .driver_data = (kernel_ulong_t)&tegra194_aon_soc },
-	{}
-};
-MODULE_DEVICE_TABLE(acpi, tegra186_gpio_acpi_match);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct platform_driver tegra186_gpio_driver = {
 	.driver = {
 		.name = "tegra186-gpio",
 		.of_match_table = tegra186_gpio_of_match,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.acpi_match_table = tegra186_gpio_acpi_match,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.acpi_match_table = tegra186_gpio_acpi_match,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	.probe = tegra186_gpio_probe,
 };

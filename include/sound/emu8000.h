@@ -56,15 +56,9 @@ struct snd_emu8000 {
 	unsigned long port1;	/* Port usually base+0 */
 	unsigned long port2;	/* Port usually at base+0x400 */
 	unsigned long port3;	/* Port usually at base+0x800 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct resource *res_port1;
 	struct resource *res_port2;
 	struct resource *res_port3;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned short last_reg;/* Last register command */
 	spinlock_t reg_lock;
 

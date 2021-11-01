@@ -347,18 +347,6 @@ static const struct of_device_id samsung_ufs_phy_match[] = {
 	{
 		.compatible = "samsung,exynos7-ufs-phy",
 		.data = &exynos7_ufs_phy,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	}, {
-		.compatible = "samsung,exynosautov9-ufs-phy",
-		.data = &exynosautov9_ufs_phy,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	}, {
-		.compatible = "samsung,exynosautov9-ufs-phy",
-		.data = &exynosautov9_ufs_phy,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{},
 };

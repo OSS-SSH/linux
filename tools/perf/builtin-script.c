@@ -368,9 +368,6 @@ static inline int output_type(unsigned int type)
 	return OUTPUT_TYPE_OTHER;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline unsigned int attr_type(unsigned int type)
 {
 	switch (type) {
@@ -381,9 +378,6 @@ static inline unsigned int attr_type(unsigned int type)
 	}
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool output_set_by_user(void)
 {
 	int j;
@@ -562,27 +556,6 @@ static void set_print_ip_opts(struct perf_event_attr *attr)
 		output[type].print_ip_opts |= EVSEL__PRINT_SRCLINE;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static struct evsel *find_first_output_type(struct evlist *evlist,
-					    unsigned int type)
-{
-	struct evsel *evsel;
-
-	evlist__for_each_entry(evlist, evsel) {
-		if (output_type(evsel->core.attr.type) == (int)type)
-			return evsel;
-	}
-	return NULL;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * verify all user requested events exist and the samples
  * have the expected data
@@ -594,15 +567,7 @@ static int perf_session__check_output_opt(struct perf_session *session)
 	struct evsel *evsel;
 
 	for (j = 0; j < OUTPUT_TYPE_MAX; ++j) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		evsel = find_first_output_type(session->evlist, j);
-=======
 		evsel = perf_session__find_first_evtype(session, attr_type(j));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		evsel = find_first_output_type(session->evlist, j);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * even if fields is set to 0 (ie., show nothing) event must
@@ -2247,15 +2212,7 @@ static int process_sample_event(struct perf_tool *tool,
 	if (filter_cpu(sample))
 		goto out_put;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!al.thread && machine__resolve(machine, &al, sample) < 0) {
-=======
 	if (machine__resolve(machine, &al, sample) < 0) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!al.thread && machine__resolve(machine, &al, sample) < 0) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("problem processing %d event, skipping it.\n",
 		       event->header.type);
 		ret = -1;
@@ -2536,26 +2493,6 @@ process_lost_event(struct perf_tool *tool,
 }
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-process_throttle_event(struct perf_tool *tool __maybe_unused,
-		       union perf_event *event,
-		       struct perf_sample *sample,
-		       struct machine *machine)
-{
-	if (scripting_ops && scripting_ops->process_throttle)
-		scripting_ops->process_throttle(event, sample, machine);
-	return 0;
-}
-
-static int
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 process_finished_round_event(struct perf_tool *tool __maybe_unused,
 			     union perf_event *event,
 			     struct ordered_events *oe __maybe_unused)
@@ -2664,21 +2601,6 @@ static void perf_script__exit_per_event_dump_stats(struct perf_script *script)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void perf_script__exit(struct perf_script *script)
-{
-	perf_thread_map__put(script->threads);
-	perf_cpu_map__put(script->cpus);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __cmd_script(struct perf_script *script)
 {
 	int ret;
@@ -3366,15 +3288,7 @@ int find_scripts(char **scripts_array, char **scripts_path_array, int num,
 	char *temp;
 	int i = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	session = perf_session__new(&data, NULL);
-=======
 	session = perf_session__new(&data, false, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	session = perf_session__new(&data, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session))
 		return PTR_ERR(session);
 
@@ -3732,16 +3646,6 @@ int cmd_script(int argc, const char **argv)
 			.stat_config	 = process_stat_config_event,
 			.thread_map	 = process_thread_map_event,
 			.cpu_map	 = process_cpu_map_event,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			.throttle	 = process_throttle_event,
-			.unthrottle	 = process_throttle_event,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			.throttle	 = process_throttle_event,
-			.unthrottle	 = process_throttle_event,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			.ordered_events	 = true,
 			.ordering_requires_timestamps = true,
 		},
@@ -4097,15 +4001,7 @@ script_found:
 		use_browser = 0;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	session = perf_session__new(&data, &script.tool);
-=======
 	session = perf_session__new(&data, false, &script.tool);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	session = perf_session__new(&data, &script.tool);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session))
 		return PTR_ERR(session);
 
@@ -4247,22 +4143,8 @@ out_delete:
 		zfree(&script.ptime_range);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	zstd_fini(&(session->zstd_data));
 	evlist__free_stats(session->evlist);
 	perf_session__delete(session);
-	perf_script__exit(&script);
-=======
-	evlist__free_stats(session->evlist);
-	perf_session__delete(session);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	zstd_fini(&(session->zstd_data));
-	evlist__free_stats(session->evlist);
-	perf_session__delete(session);
-	perf_script__exit(&script);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (script_started)
 		cleanup_scripting();

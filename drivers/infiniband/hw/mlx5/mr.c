@@ -531,18 +531,8 @@ static void __cache_work_func(struct mlx5_cache_ent *ent)
 		 */
 		spin_unlock_irq(&ent->lock);
 		need_delay = need_resched() || someone_adding(cache) ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     !time_after(jiffies,
-					 READ_ONCE(cache->last_add) + 300 * HZ);
-=======
 			     time_after(jiffies,
 					READ_ONCE(cache->last_add) + 300 * HZ);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     !time_after(jiffies,
-					 READ_ONCE(cache->last_add) + 300 * HZ);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_lock_irq(&ent->lock);
 		if (ent->disabled)
 			goto out;
@@ -1005,15 +995,7 @@ static struct mlx5_ib_mr *alloc_cacheable_mr(struct ib_pd *pd,
 static void *mlx5_ib_alloc_xlt(size_t *nents, size_t ent_size, gfp_t gfp_mask)
 {
 	const size_t xlt_chunk_align =
-<<<<<<< HEAD
-<<<<<<< HEAD
-		MLX5_UMR_MTT_ALIGNMENT / ent_size;
-=======
 		MLX5_UMR_MTT_ALIGNMENT / sizeof(ent_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		MLX5_UMR_MTT_ALIGNMENT / ent_size;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size_t size;
 	void *res = NULL;
 
@@ -1042,15 +1024,7 @@ static void *mlx5_ib_alloc_xlt(size_t *nents, size_t ent_size, gfp_t gfp_mask)
 
 	if (size > MLX5_SPARE_UMR_CHUNK) {
 		size = MLX5_SPARE_UMR_CHUNK;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		*nents = size / ent_size;
-=======
 		*nents = get_order(size) / ent_size;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		*nents = size / ent_size;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		res = (void *)__get_free_pages(gfp_mask | __GFP_NOWARN,
 					       get_order(size));
 		if (res)
@@ -1252,17 +1226,7 @@ int mlx5_ib_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags)
 	orig_sg_length = sg.length;
 
 	cur_mtt = mtt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rdma_for_each_block (mr->umem->sgt_append.sgt.sgl, &biter,
-			     mr->umem->sgt_append.sgt.nents,
-=======
 	rdma_for_each_block (mr->umem->sg_head.sgl, &biter, mr->umem->nmap,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rdma_for_each_block (mr->umem->sgt_append.sgt.sgl, &biter,
-			     mr->umem->sgt_append.sgt.nents,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     BIT(mr->page_shift)) {
 		if (cur_mtt == (void *)mtt + sg.length) {
 			dma_sync_single_for_device(ddev, sg.addr, sg.length,

@@ -184,15 +184,7 @@ static irqreturn_t regulator_notifier_isr(int irq, void *data)
 	 * If retry_count exceeds the given safety limit we call IC specific die
 	 * handler which can try disabling regulator(s).
 	 *
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * If no die handler is given we will just power-off as a last resort.
-=======
 	 * If no die handler is given we will just bug() as a last resort.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * If no die handler is given we will just power-off as a last resort.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *
 	 * We could try disabling all associated rdevs - but we might shoot
 	 * ourselves in the head and leave the problematic regulator enabled. So

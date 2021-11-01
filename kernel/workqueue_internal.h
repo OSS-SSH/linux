@@ -30,17 +30,7 @@ struct worker {
 
 	struct work_struct	*current_work;	/* L: work being processed */
 	work_func_t		current_func;	/* L: current_work's fn */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct pool_workqueue	*current_pwq;	/* L: current_work's pwq */
-	unsigned int		current_color;	/* L: current_work's color */
-=======
 	struct pool_workqueue	*current_pwq; /* L: current_work's pwq */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct pool_workqueue	*current_pwq;	/* L: current_work's pwq */
-	unsigned int		current_color;	/* L: current_work's color */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	scheduled;	/* L: scheduled works */
 
 	/* 64 bytes boundary on 64bit, 32 on 32bit */

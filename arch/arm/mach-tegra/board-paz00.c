@@ -36,15 +36,7 @@ static struct gpiod_lookup_table wifi_gpio_lookup = {
 
 void __init tegra_paz00_wifikill_init(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	device_create_managed_software_node(&wifi_rfkill_device.dev, wifi_rfkill_prop, NULL);
-=======
 	platform_device_add_properties(&wifi_rfkill_device, wifi_rfkill_prop);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	device_create_managed_software_node(&wifi_rfkill_device.dev, wifi_rfkill_prop, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gpiod_add_lookup_table(&wifi_gpio_lookup);
 	platform_device_register(&wifi_rfkill_device);
 }

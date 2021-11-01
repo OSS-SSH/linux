@@ -984,14 +984,6 @@ struct sctp_transport {
 	} cacc;
 
 	struct {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		__u32 last_rtx_chunks;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__u32 last_rtx_chunks;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__u16 pmtu;
 		__u16 probe_size;
 		__u16 probe_high;
@@ -1032,18 +1024,8 @@ bool sctp_transport_update_pmtu(struct sctp_transport *t, u32 pmtu);
 void sctp_transport_immediate_rtx(struct sctp_transport *);
 void sctp_transport_dst_release(struct sctp_transport *t);
 void sctp_transport_dst_confirm(struct sctp_transport *t);
-<<<<<<< HEAD
-<<<<<<< HEAD
-bool sctp_transport_pl_send(struct sctp_transport *t);
-bool sctp_transport_pl_recv(struct sctp_transport *t);
-=======
 void sctp_transport_pl_send(struct sctp_transport *t);
 void sctp_transport_pl_recv(struct sctp_transport *t);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-bool sctp_transport_pl_send(struct sctp_transport *t);
-bool sctp_transport_pl_recv(struct sctp_transport *t);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 /* This is the structure we use to queue packets as they come into

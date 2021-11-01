@@ -68,9 +68,6 @@ static __init int init_emergency_pool(void)
 __initcall(init_emergency_pool);
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * highmem version, map in to vec
  */
 static void bounce_copy_vec(struct bio_vec *to, unsigned char *vfrom)
@@ -83,22 +80,13 @@ static void bounce_copy_vec(struct bio_vec *to, unsigned char *vfrom)
 }
 
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Simple bounce buffer support for highmem pages. Depending on the
  * queue gfp mask set, *to may or may not be a highmem page. kmap it
  * always, it will do the Right Thing
  */
 static void copy_to_high_bio_irq(struct bio *to, struct bio *from)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned char *vfrom;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bio_vec tovec, fromvec;
 	struct bvec_iter iter;
 	/*
@@ -116,21 +104,11 @@ static void copy_to_high_bio_irq(struct bio *to, struct bio *from)
 			 * been modified by the block layer, so use the original
 			 * copy, bounce_copy_vec already uses tovec->bv_len
 			 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			memcpy_to_bvec(&tovec, page_address(fromvec.bv_page) +
-				       tovec.bv_offset);
-=======
 			vfrom = page_address(fromvec.bv_page) +
 				tovec.bv_offset;
 
 			bounce_copy_vec(&tovec, vfrom);
 			flush_dcache_page(tovec.bv_page);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			memcpy_to_bvec(&tovec, page_address(fromvec.bv_page) +
-				       tovec.bv_offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		bio_advance_iter(from, &from_iter, tovec.bv_len);
 	}
@@ -277,42 +255,24 @@ void __blk_queue_bounce(struct request_queue *q, struct bio **bio_orig)
 	 * because the 'bio' is single-page bvec.
 	 */
 	for (i = 0, to = bio->bi_io_vec; i < bio->bi_vcnt; to++, i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		struct page *bounce_page;
-
-		if (!PageHighMem(to->bv_page))
-			continue;
-
-		bounce_page = mempool_alloc(&page_pool, GFP_NOIO);
-		inc_zone_page_state(bounce_page, NR_BOUNCE);
-
-		if (rw == WRITE) {
-			flush_dcache_page(to->bv_page);
-			memcpy_from_bvec(page_address(bounce_page), to);
-		}
-		to->bv_page = bounce_page;
-=======
 		struct page *page = to->bv_page;
-=======
-		struct page *bounce_page;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		if (!PageHighMem(to->bv_page))
+		if (!PageHighMem(page))
 			continue;
 
-		bounce_page = mempool_alloc(&page_pool, GFP_NOIO);
-		inc_zone_page_state(bounce_page, NR_BOUNCE);
+		to->bv_page = mempool_alloc(&page_pool, GFP_NOIO);
+		inc_zone_page_state(to->bv_page, NR_BOUNCE);
 
 		if (rw == WRITE) {
-			flush_dcache_page(to->bv_page);
-			memcpy_from_bvec(page_address(bounce_page), to);
+			char *vto, *vfrom;
+
+			flush_dcache_page(page);
+
+			vto = page_address(to->bv_page) + to->bv_offset;
+			vfrom = kmap_atomic(page) + to->bv_offset;
+			memcpy(vto, vfrom, to->bv_len);
+			kunmap_atomic(vfrom);
 		}
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		to->bv_page = bounce_page;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	trace_block_bio_bounce(*bio_orig);

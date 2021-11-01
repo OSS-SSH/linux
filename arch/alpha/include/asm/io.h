@@ -60,15 +60,7 @@ extern inline void set_hae(unsigned long new_hae)
  * Change virtual addresses to physical addresses and vv.
  */
 #ifdef USE_48_BIT_KSEG
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline unsigned long virt_to_phys(volatile void *address)
-=======
 static inline unsigned long virt_to_phys(void *address)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline unsigned long virt_to_phys(volatile void *address)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return (unsigned long)address - IDENT_ADDR;
 }
@@ -78,15 +70,7 @@ static inline void * phys_to_virt(unsigned long address)
 	return (void *) (address + IDENT_ADDR);
 }
 #else
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline unsigned long virt_to_phys(volatile void *address)
-=======
 static inline unsigned long virt_to_phys(void *address)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline unsigned long virt_to_phys(volatile void *address)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
         unsigned long phys = (unsigned long)address;
 
@@ -122,15 +106,7 @@ static inline void * phys_to_virt(unsigned long address)
 extern unsigned long __direct_map_base;
 extern unsigned long __direct_map_size;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline unsigned long __deprecated virt_to_bus(volatile void *address)
-=======
 static inline unsigned long __deprecated virt_to_bus(void *address)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline unsigned long __deprecated virt_to_bus(volatile void *address)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long phys = virt_to_phys(address);
 	unsigned long bus = phys + __direct_map_base;

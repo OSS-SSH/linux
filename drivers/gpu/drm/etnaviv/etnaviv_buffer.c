@@ -397,16 +397,8 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
 		if (switch_mmu_context) {
 			struct etnaviv_iommu_context *old_context = gpu->mmu_context;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			gpu->mmu_context = etnaviv_iommu_context_get(mmu_context);
-=======
 			etnaviv_iommu_context_get(mmu_context);
 			gpu->mmu_context = mmu_context;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			gpu->mmu_context = etnaviv_iommu_context_get(mmu_context);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			etnaviv_iommu_context_put(old_context);
 		}
 

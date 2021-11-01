@@ -72,25 +72,11 @@ additionalProperties: false
 if:
   properties:
     compatible:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-      enum:
-        - ti,omap2420-i2c
-        - ti,omap2430-i2c
-        - ti,omap3-i2c
-        - ti,omap4-i2c
-<<<<<<< HEAD
-=======
       oneOf:
         - const: ti,omap2420-i2c
         - const: ti,omap2430-i2c
         - const: ti,omap3-i2c
         - const: ti,omap4-i2c
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 then:
   properties:

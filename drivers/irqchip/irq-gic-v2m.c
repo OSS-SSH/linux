@@ -269,15 +269,7 @@ static void gicv2m_teardown(void)
 
 	list_for_each_entry_safe(v2m, tmp, &v2m_nodes, entry) {
 		list_del(&v2m->entry);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		bitmap_free(v2m->bm);
-=======
 		kfree(v2m->bm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		bitmap_free(v2m->bm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		iounmap(v2m->base);
 		of_node_put(to_of_node(v2m->fwnode));
 		if (is_fwnode_irqchip(v2m->fwnode))
@@ -394,16 +386,8 @@ static int __init gicv2m_init_one(struct fwnode_handle *fwnode,
 			break;
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	v2m->bm = bitmap_zalloc(v2m->nr_spis, GFP_KERNEL);
-=======
 	v2m->bm = kcalloc(BITS_TO_LONGS(v2m->nr_spis), sizeof(long),
 			  GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	v2m->bm = bitmap_zalloc(v2m->nr_spis, GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!v2m->bm) {
 		ret = -ENOMEM;
 		goto err_iounmap;

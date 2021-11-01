@@ -15,14 +15,6 @@
 
 #include <asm/alternative.h>
 #include <asm/lse.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <asm/rwonce.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <asm/rwonce.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 typedef union hyp_spinlock {
 	u32	__val;
@@ -97,37 +89,4 @@ static inline void hyp_spin_unlock(hyp_spinlock_t *lock)
 	: "memory");
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline bool hyp_spin_is_locked(hyp_spinlock_t *lock)
-{
-	hyp_spinlock_t lockval = READ_ONCE(*lock);
-
-	return lockval.owner != lockval.next;
-}
-
-#ifdef CONFIG_NVHE_EL2_DEBUG
-static inline void hyp_assert_lock_held(hyp_spinlock_t *lock)
-{
-	/*
-	 * The __pkvm_init() path accesses protected data-structures without
-	 * holding locks as the other CPUs are guaranteed to not enter EL2
-	 * concurrently at this point in time. The point by which EL2 is
-	 * initialized on all CPUs is reflected in the pkvm static key, so
-	 * wait until it is set before checking the lock state.
-	 */
-	if (static_branch_likely(&kvm_protected_mode_initialized))
-		BUG_ON(!hyp_spin_is_locked(lock));
-}
-#else
-static inline void hyp_assert_lock_held(hyp_spinlock_t *lock) { }
-#endif
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __ARM64_KVM_NVHE_SPINLOCK_H__ */

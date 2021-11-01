@@ -172,9 +172,6 @@ int atomic_notifier_chain_unregister(struct atomic_notifier_head *nh,
 }
 EXPORT_SYMBOL_GPL(atomic_notifier_chain_unregister);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 int atomic_notifier_call_chain_robust(struct atomic_notifier_head *nh,
 		unsigned long val_up, unsigned long val_down, void *v)
 {
@@ -194,9 +191,6 @@ int atomic_notifier_call_chain_robust(struct atomic_notifier_head *nh,
 EXPORT_SYMBOL_GPL(atomic_notifier_call_chain_robust);
 NOKPROBE_SYMBOL(atomic_notifier_call_chain_robust);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  *	atomic_notifier_call_chain - Call functions in an atomic notifier chain
  *	@nh: Pointer to head of the atomic notifier chain

@@ -181,14 +181,6 @@ static int trace_define_common_fields(void)
 
 	__common_field(unsigned short, type);
 	__common_field(unsigned char, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Holds both preempt_count and migrate_disable */
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Holds both preempt_count and migrate_disable */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__common_field(unsigned char, preempt_count);
 	__common_field(int, pid);
 
@@ -2533,20 +2525,7 @@ __register_event(struct trace_event_call *call, struct module *mod)
 		return ret;
 
 	list_add(&call->list, &ftrace_events);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (call->flags & TRACE_EVENT_FL_DYNAMIC)
-		atomic_set(&call->refcnt, 0);
-	else
-		call->module = mod;
-<<<<<<< HEAD
-=======
 	call->mod = mod;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -2860,19 +2839,7 @@ static void trace_module_remove_events(struct module *mod)
 
 	down_write(&trace_event_sem);
 	list_for_each_entry_safe(call, p, &ftrace_events, list) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if ((call->flags & TRACE_EVENT_FL_DYNAMIC) || !call->module)
-			continue;
-		if (call->module == mod)
-=======
 		if (call->mod == mod)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if ((call->flags & TRACE_EVENT_FL_DYNAMIC) || !call->module)
-			continue;
-		if (call->module == mod)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__trace_remove_event_call(call);
 	}
 	up_write(&trace_event_sem);
@@ -3015,15 +2982,7 @@ struct trace_event_file *trace_get_event_file(const char *instance,
 	}
 
 	/* Don't let event modules unload while in use */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = trace_event_try_get_ref(file->event_call);
-=======
 	ret = try_module_get(file->event_call->mod);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = trace_event_try_get_ref(file->event_call);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ret) {
 		trace_array_put(tr);
 		ret = -EBUSY;
@@ -3053,15 +3012,7 @@ EXPORT_SYMBOL_GPL(trace_get_event_file);
 void trace_put_event_file(struct trace_event_file *file)
 {
 	mutex_lock(&event_mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_event_put_ref(file->event_call);
-=======
 	module_put(file->event_call->mod);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_event_put_ref(file->event_call);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&event_mutex);
 
 	trace_array_put(file->tr);
@@ -3196,15 +3147,7 @@ static int free_probe_data(void *data)
 	if (!edata->ref) {
 		/* Remove the SOFT_MODE flag */
 		__ftrace_event_enable_disable(edata->file, 0, 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		trace_event_put_ref(edata->file->event_call);
-=======
 		module_put(edata->file->event_call->mod);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		trace_event_put_ref(edata->file->event_call);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(edata);
 	}
 	return 0;
@@ -3337,15 +3280,7 @@ event_enable_func(struct trace_array *tr, struct ftrace_hash *hash,
 
  out_reg:
 	/* Don't let event modules unload while probe registered */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = trace_event_try_get_ref(file->event_call);
-=======
 	ret = try_module_get(file->event_call->mod);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = trace_event_try_get_ref(file->event_call);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ret) {
 		ret = -EBUSY;
 		goto out_free;
@@ -3375,15 +3310,7 @@ event_enable_func(struct trace_array *tr, struct ftrace_hash *hash,
  out_disable:
 	__ftrace_event_enable_disable(file, 0, 1);
  out_put:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_event_put_ref(file->event_call);
-=======
 	module_put(file->event_call->mod);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_event_put_ref(file->event_call);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out_free:
 	kfree(data);
 	goto out;
@@ -3449,17 +3376,7 @@ void __trace_early_add_events(struct trace_array *tr)
 
 	list_for_each_entry(call, &ftrace_events, list) {
 		/* Early boot up should not have any modules loaded */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!(call->flags & TRACE_EVENT_FL_DYNAMIC) &&
-		    WARN_ON_ONCE(call->module))
-=======
 		if (WARN_ON_ONCE(call->mod))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!(call->flags & TRACE_EVENT_FL_DYNAMIC) &&
-		    WARN_ON_ONCE(call->module))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 
 		ret = __trace_early_add_new_event(call, tr);

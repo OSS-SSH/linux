@@ -434,14 +434,6 @@ static int qeth_l3_correct_routing_type(struct qeth_card *card,
 			if (qeth_is_ipafunc_supported(card, prot,
 						      IPA_OSA_MC_ROUTER))
 				return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			goto out_inval;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			goto out_inval;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			goto out_inval;
 		}
@@ -1519,15 +1511,7 @@ static int qeth_l3_arp_flush_cache(struct qeth_card *card)
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int qeth_l3_do_ioctl(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
-=======
 static int qeth_l3_do_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int qeth_l3_do_ioctl(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct qeth_card *card = dev->ml_priv;
 	struct qeth_arp_cache_entry arp_entry;
@@ -1547,29 +1531,13 @@ static int qeth_l3_do_ioctl(struct net_device *dev, struct ifreq *rq, void __use
 			rc = -EPERM;
 			break;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rc = qeth_l3_arp_query(card, data);
-=======
 		rc = qeth_l3_arp_query(card, rq->ifr_ifru.ifru_data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rc = qeth_l3_arp_query(card, data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case SIOC_QETH_ARP_ADD_ENTRY:
 	case SIOC_QETH_ARP_REMOVE_ENTRY:
 		if (!capable(CAP_NET_ADMIN))
 			return -EPERM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (copy_from_user(&arp_entry, data, sizeof(arp_entry)))
-=======
 		if (copy_from_user(&arp_entry, rq->ifr_data, sizeof(arp_entry)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (copy_from_user(&arp_entry, data, sizeof(arp_entry)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 
 		arp_cmd = (cmd == SIOC_QETH_ARP_ADD_ENTRY) ?
@@ -1872,17 +1840,7 @@ static const struct net_device_ops qeth_l3_netdev_ops = {
 	.ndo_select_queue	= qeth_l3_iqd_select_queue,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_rx_mode	= qeth_l3_set_rx_mode,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= qeth_do_ioctl,
-	.ndo_siocdevprivate	= qeth_siocdevprivate,
-=======
 	.ndo_do_ioctl		= qeth_do_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= qeth_do_ioctl,
-	.ndo_siocdevprivate	= qeth_siocdevprivate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_fix_features	= qeth_fix_features,
 	.ndo_set_features	= qeth_set_features,
 	.ndo_tx_timeout		= qeth_tx_timeout,
@@ -1897,17 +1855,7 @@ static const struct net_device_ops qeth_l3_osa_netdev_ops = {
 	.ndo_select_queue	= qeth_l3_osa_select_queue,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_rx_mode	= qeth_l3_set_rx_mode,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= qeth_do_ioctl,
-	.ndo_siocdevprivate	= qeth_siocdevprivate,
-=======
 	.ndo_do_ioctl		= qeth_do_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= qeth_do_ioctl,
-	.ndo_siocdevprivate	= qeth_siocdevprivate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_fix_features	= qeth_fix_features,
 	.ndo_set_features	= qeth_set_features,
 	.ndo_tx_timeout		= qeth_tx_timeout,
@@ -1991,30 +1939,12 @@ static int qeth_l3_probe_device(struct ccwgroup_device *gdev)
 	if (!card->cmd_wq)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (gdev->dev.type) {
-=======
 	if (gdev->dev.type == &qeth_generic_devtype) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (gdev->dev.type) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc = device_add_groups(&gdev->dev, qeth_l3_attr_groups);
 		if (rc) {
 			destroy_workqueue(card->cmd_wq);
 			return rc;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else {
-		gdev->dev.type = &qeth_l3_devtype;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else {
-		gdev->dev.type = &qeth_l3_devtype;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	INIT_WORK(&card->rx_mode_work, qeth_l3_rx_mode_work);
@@ -2025,15 +1955,7 @@ static void qeth_l3_remove_device(struct ccwgroup_device *cgdev)
 {
 	struct qeth_card *card = dev_get_drvdata(&cgdev->dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (cgdev->dev.type != &qeth_l3_devtype)
-=======
 	if (cgdev->dev.type == &qeth_generic_devtype)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (cgdev->dev.type != &qeth_l3_devtype)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		device_remove_groups(&cgdev->dev, qeth_l3_attr_groups);
 
 	qeth_set_allowed_threads(card, 0, 1);
@@ -2042,13 +1964,7 @@ static void qeth_l3_remove_device(struct ccwgroup_device *cgdev)
 	if (cgdev->state == CCWGROUP_ONLINE)
 		qeth_set_offline(card, card->discipline, false);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	cancel_work_sync(&card->close_dev_work);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (card->dev->reg_state == NETREG_REGISTERED)
 		unregister_netdev(card->dev);
 
@@ -2148,13 +2064,7 @@ static int qeth_l3_control_event(struct qeth_card *card,
 }
 
 const struct qeth_discipline qeth_l3_discipline = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.devtype = &qeth_l3_devtype,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.setup = qeth_l3_probe_device,
 	.remove = qeth_l3_remove_device,
 	.set_online = qeth_l3_set_online,

@@ -22,17 +22,7 @@
 
 #define EX_TABLE(_fault, _target)					\
 	__EX_TABLE(__ex_table, _fault, _target)
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define EX_TABLE_AMODE31(_fault, _target)				\
-	__EX_TABLE(.amode31.ex_table, _fault, _target)
-=======
 #define EX_TABLE_DMA(_fault, _target)					\
 	__EX_TABLE(.dma.ex_table, _fault, _target)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define EX_TABLE_AMODE31(_fault, _target)				\
-	__EX_TABLE(.amode31.ex_table, _fault, _target)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

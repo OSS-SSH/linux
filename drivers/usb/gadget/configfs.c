@@ -55,15 +55,7 @@ struct gadget_info {
 
 static inline struct gadget_info *to_gadget_info(struct config_item *item)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return container_of(to_config_group(item), struct gadget_info, group);
-=======
 	 return container_of(to_config_group(item), struct gadget_info, group);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return container_of(to_config_group(item), struct gadget_info, group);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct config_usb_cfg {
@@ -373,45 +365,21 @@ static struct configfs_attribute *gadget_root_attrs[] = {
 
 static inline struct gadget_strings *to_gadget_strings(struct config_item *item)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return container_of(to_config_group(item), struct gadget_strings,
-=======
 	 return container_of(to_config_group(item), struct gadget_strings,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return container_of(to_config_group(item), struct gadget_strings,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 group);
 }
 
 static inline struct gadget_config_name *to_gadget_config_name(
 		struct config_item *item)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return container_of(to_config_group(item), struct gadget_config_name,
-=======
 	 return container_of(to_config_group(item), struct gadget_config_name,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return container_of(to_config_group(item), struct gadget_config_name,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 group);
 }
 
 static inline struct usb_function_instance *to_usb_function_instance(
 		struct config_item *item)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return container_of(to_config_group(item),
-=======
 	 return container_of(to_config_group(item),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return container_of(to_config_group(item),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 struct usb_function_instance, group);
 }
 
@@ -1436,19 +1404,6 @@ static int configfs_composite_bind(struct usb_gadget *gadget,
 				goto err_purge_funcs;
 			}
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		ret = usb_gadget_check_config(cdev->gadget);
-		if (ret)
-			goto err_purge_funcs;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		usb_ep_autoconfig_reset(cdev->gadget);
 	}
 	if (cdev->use_os_string) {

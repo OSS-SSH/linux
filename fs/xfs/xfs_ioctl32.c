@@ -50,15 +50,7 @@ xfs_compat_ioc_fsgeometry_v1(
 {
 	struct xfs_fsop_geom	  fsgeo;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xfs_fs_geometry(mp, &fsgeo, 3);
-=======
 	xfs_fs_geometry(&mp->m_sb, &fsgeo, 3);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xfs_fs_geometry(mp, &fsgeo, 3);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* The 32-bit variant simply has some padding at the end */
 	if (copy_to_user(arg32, &fsgeo, sizeof(struct compat_xfs_fsop_geom_v1)))
 		return -EFAULT;
@@ -262,15 +254,7 @@ xfs_compat_ioc_fsbulkstat(
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_is_shutdown(mp))
-=======
 	if (XFS_FORCED_SHUTDOWN(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_is_shutdown(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	if (get_user(addr, &p32->lastip))

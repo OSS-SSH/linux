@@ -912,14 +912,6 @@ static int hellcreek_fdb_dump(struct dsa_switch *ds, int port,
 {
 	struct hellcreek *hellcreek = ds->priv;
 	u16 entries;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size_t i;
 
 	mutex_lock(&hellcreek->reg_lock);
@@ -951,32 +943,12 @@ static int hellcreek_fdb_dump(struct dsa_switch *ds, int port,
 		if (!(entry.portmask & BIT(port)))
 			continue;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = cb(entry.mac, 0, entry.is_static, data);
-		if (ret)
-			break;
-=======
 		cb(entry.mac, 0, entry.is_static, data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = cb(entry.mac, 0, entry.is_static, data);
-		if (ret)
-			break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mutex_unlock(&hellcreek->reg_lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return ret;
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int hellcreek_vlan_filtering(struct dsa_switch *ds, int port,
@@ -1370,14 +1342,6 @@ static int hellcreek_setup(struct dsa_switch *ds)
 	 * filtering setups are not supported.
 	 */
 	ds->vlan_filtering_is_global = true;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ds->needs_standalone_vlan_filtering = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ds->needs_standalone_vlan_filtering = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Intercept _all_ PTP multicast traffic */
 	ret = hellcreek_setup_fdb(hellcreek);
@@ -1505,15 +1469,9 @@ static void hellcreek_setup_gcl(struct hellcreek *hellcreek, int port,
 		u16 data;
 		u8 gates;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		cur++;
 		next++;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (i == schedule->num_entries)
 			gates = initial->gate_mask ^
 				cur->gate_mask;
@@ -1542,18 +1500,6 @@ static void hellcreek_setup_gcl(struct hellcreek *hellcreek, int port,
 			(initial->gate_mask <<
 			 TR_GCLCMD_INIT_GATE_STATES_SHIFT);
 		hellcreek_write(hellcreek, data, TR_GCLCMD);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		cur++;
-		next++;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		cur++;
-		next++;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1601,15 +1547,7 @@ static bool hellcreek_schedule_startable(struct hellcreek *hellcreek, int port)
 	/* Calculate difference to admin base time */
 	base_time_ns = ktime_to_ns(hellcreek_port->current_schedule->base_time);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return base_time_ns - current_ns < (s64)4 * NSEC_PER_SEC;
-=======
 	return base_time_ns - current_ns < (s64)8 * NSEC_PER_SEC;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return base_time_ns - current_ns < (s64)4 * NSEC_PER_SEC;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void hellcreek_start_schedule(struct hellcreek *hellcreek, int port)
@@ -1974,18 +1912,6 @@ static int hellcreek_remove(struct platform_device *pdev)
 {
 	struct hellcreek *hellcreek = platform_get_drvdata(pdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!hellcreek)
-		return 0;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!hellcreek)
-		return 0;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hellcreek_hwtstamp_free(hellcreek);
 	hellcreek_ptp_free(hellcreek);
 	dsa_unregister_switch(hellcreek->ds);
@@ -1994,27 +1920,6 @@ static int hellcreek_remove(struct platform_device *pdev)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void hellcreek_shutdown(struct platform_device *pdev)
-{
-	struct hellcreek *hellcreek = platform_get_drvdata(pdev);
-
-	if (!hellcreek)
-		return;
-
-	dsa_switch_shutdown(hellcreek->ds);
-
-	platform_set_drvdata(pdev, NULL);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct hellcreek_platform_data de1soc_r1_pdata = {
 	.name		 = "r4c30",
 	.num_ports	 = 4,
@@ -2037,14 +1942,6 @@ MODULE_DEVICE_TABLE(of, hellcreek_of_match);
 static struct platform_driver hellcreek_driver = {
 	.probe	= hellcreek_probe,
 	.remove = hellcreek_remove,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.shutdown = hellcreek_shutdown,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.shutdown = hellcreek_shutdown,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.name = "hellcreek",
 		.of_match_table = hellcreek_of_match,

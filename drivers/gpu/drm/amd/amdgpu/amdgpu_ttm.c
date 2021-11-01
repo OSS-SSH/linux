@@ -149,34 +149,14 @@ static void amdgpu_evict_flags(struct ttm_buffer_object *bo,
 			 * BOs to be evicted from VRAM
 			 */
 			amdgpu_bo_placement_from_domain(abo, AMDGPU_GEM_DOMAIN_VRAM |
-<<<<<<< HEAD
-<<<<<<< HEAD
-							AMDGPU_GEM_DOMAIN_GTT |
-							AMDGPU_GEM_DOMAIN_CPU);
-=======
 							 AMDGPU_GEM_DOMAIN_GTT);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-							AMDGPU_GEM_DOMAIN_GTT |
-							AMDGPU_GEM_DOMAIN_CPU);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			abo->placements[0].fpfn = adev->gmc.visible_vram_size >> PAGE_SHIFT;
 			abo->placements[0].lpfn = 0;
 			abo->placement.busy_placement = &abo->placements[1];
 			abo->placement.num_busy_placement = 1;
 		} else {
 			/* Move to GTT memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_bo_placement_from_domain(abo, AMDGPU_GEM_DOMAIN_GTT |
-							AMDGPU_GEM_DOMAIN_CPU);
-=======
 			amdgpu_bo_placement_from_domain(abo, AMDGPU_GEM_DOMAIN_GTT);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_bo_placement_from_domain(abo, AMDGPU_GEM_DOMAIN_GTT |
-							AMDGPU_GEM_DOMAIN_CPU);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case TTM_PL_TT:
@@ -533,24 +513,6 @@ static int amdgpu_bo_move(struct ttm_buffer_object *bo, bool evict,
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (bo->type == ttm_bo_type_device &&
-	    new_mem->mem_type == TTM_PL_VRAM &&
-	    old_mem->mem_type != TTM_PL_VRAM) {
-		/* amdgpu_bo_fault_reserve_notify will re-set this if the CPU
-		 * accesses the BO after it's moved.
-		 */
-		abo->flags &= ~AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (adev->mman.buffer_funcs_enabled) {
 		if (((old_mem->mem_type == TTM_PL_SYSTEM &&
 		      new_mem->mem_type == TTM_PL_VRAM) ||
@@ -559,15 +521,7 @@ static int amdgpu_bo_move(struct ttm_buffer_object *bo, bool evict,
 			hop->fpfn = 0;
 			hop->lpfn = 0;
 			hop->mem_type = TTM_PL_TT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			hop->flags = TTM_PL_FLAG_TEMPORARY;
-=======
 			hop->flags = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			hop->flags = TTM_PL_FLAG_TEMPORARY;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EMULTIHOP;
 		}
 
@@ -589,9 +543,6 @@ static int amdgpu_bo_move(struct ttm_buffer_object *bo, bool evict,
 			return r;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (bo->type == ttm_bo_type_device &&
 	    new_mem->mem_type == TTM_PL_VRAM &&
 	    old_mem->mem_type != TTM_PL_VRAM) {
@@ -601,9 +552,6 @@ static int amdgpu_bo_move(struct ttm_buffer_object *bo, bool evict,
 		abo->flags &= ~AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	/* update statistics */
 	atomic64_add(bo->base.size, &adev->num_bytes_moved);
@@ -1173,15 +1121,7 @@ static int amdgpu_ttm_tt_populate(struct ttm_device *bdev,
 	struct amdgpu_ttm_tt *gtt = (void *)ttm;
 
 	/* user pages are bound by amdgpu_ttm_tt_pin_userptr() */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (gtt->userptr) {
-=======
 	if (gtt && gtt->userptr) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (gtt->userptr) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ttm->sg = kzalloc(sizeof(struct sg_table), GFP_KERNEL);
 		if (!ttm->sg)
 			return -ENOMEM;
@@ -1206,15 +1146,7 @@ static void amdgpu_ttm_tt_unpopulate(struct ttm_device *bdev,
 	struct amdgpu_ttm_tt *gtt = (void *)ttm;
 	struct amdgpu_device *adev;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (gtt->userptr) {
-=======
 	if (gtt && gtt->userptr) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (gtt->userptr) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		amdgpu_ttm_tt_set_user_pages(ttm, NULL);
 		kfree(ttm->sg);
 		ttm->sg = NULL;
@@ -1462,50 +1394,6 @@ static bool amdgpu_ttm_bo_eviction_valuable(struct ttm_buffer_object *bo,
 	return ttm_bo_eviction_valuable(bo, place);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void amdgpu_ttm_vram_mm_access(struct amdgpu_device *adev, loff_t pos,
-				      void *buf, size_t size, bool write)
-{
-	while (size) {
-		uint64_t aligned_pos = ALIGN_DOWN(pos, 4);
-		uint64_t bytes = 4 - (pos & 0x3);
-		uint32_t shift = (pos & 0x3) * 8;
-		uint32_t mask = 0xffffffff << shift;
-		uint32_t value = 0;
-
-		if (size < bytes) {
-			mask &= 0xffffffff >> (bytes - size) * 8;
-			bytes = size;
-		}
-
-		if (mask != 0xffffffff) {
-			amdgpu_device_mm_access(adev, aligned_pos, &value, 4, false);
-			if (write) {
-				value &= ~mask;
-				value |= (*(uint32_t *)buf << shift) & mask;
-				amdgpu_device_mm_access(adev, aligned_pos, &value, 4, true);
-			} else {
-				value = (value & mask) >> shift;
-				memcpy(buf, &value, bytes);
-			}
-		} else {
-			amdgpu_device_mm_access(adev, aligned_pos, buf, 4, write);
-		}
-
-		pos += bytes;
-		buf += bytes;
-		size -= bytes;
-	}
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * amdgpu_ttm_access_memory - Read or Write memory that backs a buffer object.
  *
@@ -1525,14 +1413,8 @@ static int amdgpu_ttm_access_memory(struct ttm_buffer_object *bo,
 	struct amdgpu_bo *abo = ttm_to_amdgpu_bo(bo);
 	struct amdgpu_device *adev = amdgpu_ttm_adev(abo->tbo.bdev);
 	struct amdgpu_res_cursor cursor;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned long flags;
 	uint32_t value = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	if (bo->resource->mem_type != TTM_PL_VRAM)
@@ -1540,27 +1422,6 @@ static int amdgpu_ttm_access_memory(struct ttm_buffer_object *bo,
 
 	amdgpu_res_first(bo->resource, offset, len, &cursor);
 	while (cursor.remaining) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		size_t count, size = cursor.size;
-		loff_t pos = cursor.start;
-
-		count = amdgpu_device_aper_access(adev, pos, buf, size, write);
-		size -= count;
-		if (size) {
-			/* using MM to access rest vram and handle un-aligned address */
-			pos += count;
-			buf += count;
-			amdgpu_ttm_vram_mm_access(adev, pos, buf, size, write);
-<<<<<<< HEAD
-		}
-
-		ret += cursor.size;
-		buf += cursor.size;
-		amdgpu_res_next(&cursor, cursor.size);
-=======
 		uint64_t aligned_pos = cursor.start & ~(uint64_t)3;
 		uint64_t bytes = 4 - (cursor.start & 3);
 		uint32_t shift = (cursor.start & 3) * 8;
@@ -1596,14 +1457,6 @@ static int amdgpu_ttm_access_memory(struct ttm_buffer_object *bo,
 		ret += bytes;
 		buf = (uint8_t *)buf + bytes;
 		amdgpu_res_next(&cursor, bytes);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		}
-
-		ret += cursor.size;
-		buf += cursor.size;
-		amdgpu_res_next(&cursor, cursor.size);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return ret;
@@ -2293,13 +2146,7 @@ static ssize_t amdgpu_ttm_vram_write(struct file *f, const char __user *buf,
 		return -ENXIO;
 
 	while (size) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		unsigned long flags;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint32_t value;
 
 		if (*pos >= adev->gmc.mc_vram_size)
@@ -2309,19 +2156,11 @@ static ssize_t amdgpu_ttm_vram_write(struct file *f, const char __user *buf,
 		if (r)
 			return r;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		amdgpu_device_mm_access(adev, *pos, &value, 4, true);
-=======
 		spin_lock_irqsave(&adev->mmio_idx_lock, flags);
 		WREG32_NO_KIQ(mmMM_INDEX, ((uint32_t)*pos) | 0x80000000);
 		WREG32_NO_KIQ(mmMM_INDEX_HI, *pos >> 31);
 		WREG32_NO_KIQ(mmMM_DATA, value);
 		spin_unlock_irqrestore(&adev->mmio_idx_lock, flags);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		amdgpu_device_mm_access(adev, *pos, &value, 4, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		result += 4;
 		buf += 4;

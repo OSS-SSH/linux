@@ -234,14 +234,6 @@ enum ice_pf_state {
 	ICE_VFLR_EVENT_PENDING,
 	ICE_FLTR_OVERFLOW_PROMISC,
 	ICE_VF_DIS,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ICE_VF_DEINIT_IN_PROGRESS,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ICE_VF_DEINIT_IN_PROGRESS,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ICE_CFG_BUSY,
 	ICE_SERVICE_SCHED,
 	ICE_SERVICE_DIS,
@@ -702,14 +694,6 @@ static inline void ice_set_rdma_cap(struct ice_pf *pf)
 {
 	if (pf->hw.func_caps.common_cap.rdma && pf->num_rdma_msix) {
 		set_bit(ICE_FLAG_RDMA_ENA, pf->flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		set_bit(ICE_FLAG_AUX_ENA, pf->flags);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		set_bit(ICE_FLAG_AUX_ENA, pf->flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ice_plug_aux_dev(pf);
 	}
 }
@@ -722,13 +706,5 @@ static inline void ice_clear_rdma_cap(struct ice_pf *pf)
 {
 	ice_unplug_aux_dev(pf);
 	clear_bit(ICE_FLAG_RDMA_ENA, pf->flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clear_bit(ICE_FLAG_AUX_ENA, pf->flags);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clear_bit(ICE_FLAG_AUX_ENA, pf->flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif /* _ICE_H_ */

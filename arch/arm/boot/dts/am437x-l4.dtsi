@@ -1595,15 +1595,7 @@
 				compatible = "ti,am4372-d_can", "ti,am3352-d_can";
 				reg = <0x0 0x2000>;
 				clocks = <&dcan1_fck>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				clock-names = "fck";
-=======
 				clock-name = "fck";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				clock-names = "fck";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				syscon-raminit = <&scm_conf 0x644 1>;
 				interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
 				status = "disabled";

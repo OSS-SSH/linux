@@ -594,20 +594,7 @@ static int netlink_insert(struct sock *sk, u32 portid)
 
 	/* We need to ensure that the socket is hashed and visible. */
 	smp_wmb();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Paired with lockless reads from netlink_bind(),
-	 * netlink_connect() and netlink_sendmsg().
-	 */
-	WRITE_ONCE(nlk_sk(sk)->bound, portid);
-<<<<<<< HEAD
-=======
 	nlk_sk(sk)->bound = portid;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 err:
 	release_sock(sk);
@@ -1025,17 +1012,7 @@ static int netlink_bind(struct socket *sock, struct sockaddr *addr,
 	if (nlk->ngroups < BITS_PER_LONG)
 		groups &= (1UL << nlk->ngroups) - 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Paired with WRITE_ONCE() in netlink_insert() */
-	bound = READ_ONCE(nlk->bound);
-=======
 	bound = nlk->bound;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Paired with WRITE_ONCE() in netlink_insert() */
-	bound = READ_ONCE(nlk->bound);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bound) {
 		/* Ensure nlk->portid is up-to-date. */
 		smp_rmb();
@@ -1121,20 +1098,8 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
 
 	/* No need for barriers here as we return to user-space without
 	 * using any of the bound attributes.
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * Paired with WRITE_ONCE() in netlink_insert().
-	 */
-	if (!READ_ONCE(nlk->bound))
-=======
 	 */
 	if (!nlk->bound)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * Paired with WRITE_ONCE() in netlink_insert().
-	 */
-	if (!READ_ONCE(nlk->bound))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = netlink_autobind(sock);
 
 	if (err == 0) {
@@ -1923,17 +1888,7 @@ static int netlink_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
 		dst_group = nlk->dst_group;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Paired with WRITE_ONCE() in netlink_insert() */
-	if (!READ_ONCE(nlk->bound)) {
-=======
 	if (!nlk->bound) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Paired with WRITE_ONCE() in netlink_insert() */
-	if (!READ_ONCE(nlk->bound)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = netlink_autobind(sock);
 		if (err)
 			goto out;
@@ -2516,15 +2471,7 @@ void netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh, int err,
 
 	nlmsg_end(skb, rep);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	nlmsg_unicast(in_skb->sk, skb, NETLINK_CB(in_skb).portid);
-=======
 	netlink_unicast(in_skb->sk, skb, NETLINK_CB(in_skb).portid, MSG_DONTWAIT);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	nlmsg_unicast(in_skb->sk, skb, NETLINK_CB(in_skb).portid);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(netlink_ack);
 
@@ -2598,31 +2545,13 @@ int nlmsg_notify(struct sock *sk, struct sk_buff *skb, u32 portid,
 		/* errors reported via destination sk->sk_err, but propagate
 		 * delivery errors if NETLINK_BROADCAST_ERROR flag is set */
 		err = nlmsg_multicast(sk, skb, exclude_portid, group, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err == -ESRCH)
-			err = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (err == -ESRCH)
-			err = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (report) {
 		int err2;
 
 		err2 = nlmsg_unicast(sk, skb, portid);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!err)
-=======
 		if (!err || err == -ESRCH)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!err)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = err2;
 	}
 

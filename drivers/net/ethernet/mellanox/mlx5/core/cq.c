@@ -89,17 +89,7 @@ static void mlx5_add_cq_to_tasklet(struct mlx5_core_cq *cq,
 int mlx5_core_create_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq,
 			u32 *in, int inlen, u32 *out, int outlen)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int eqn = MLX5_GET(cqc, MLX5_ADDR_OF(create_cq_in, in, cq_context),
-			   c_eqn_or_apu_element);
-=======
 	int eqn = MLX5_GET(cqc, MLX5_ADDR_OF(create_cq_in, in, cq_context), c_eqn);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int eqn = MLX5_GET(cqc, MLX5_ADDR_OF(create_cq_in, in, cq_context),
-			   c_eqn_or_apu_element);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 din[MLX5_ST_SZ_DW(destroy_cq_in)] = {};
 	struct mlx5_eq_comp *eq;
 	int err;
@@ -144,14 +134,6 @@ int mlx5_core_create_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq,
 			      cq->cqn);
 
 	cq->uar = dev->priv.uar;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cq->irqn = eq->core.irqn;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cq->irqn = eq->core.irqn;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 
@@ -171,16 +153,6 @@ int mlx5_core_destroy_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq)
 	u32 in[MLX5_ST_SZ_DW(destroy_cq_in)] = {};
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mlx5_debug_cq_remove(dev, cq);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mlx5_debug_cq_remove(dev, cq);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlx5_eq_del_cq(mlx5_get_async_eq(dev), cq);
 	mlx5_eq_del_cq(&cq->eq->core, cq);
 
@@ -188,32 +160,16 @@ int mlx5_core_destroy_cq(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq)
 	MLX5_SET(destroy_cq_in, in, cqn, cq->cqn);
 	MLX5_SET(destroy_cq_in, in, uid, cq->uid);
 	err = mlx5_cmd_exec_in(dev, destroy_cq, in);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	synchronize_irq(cq->irqn);
-
-	mlx5_cq_put(cq);
-	wait_for_completion(&cq->free);
-
-	return err;
-=======
 	if (err)
 		return err;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	synchronize_irq(cq->irqn);
 
+	mlx5_debug_cq_remove(dev, cq);
 	mlx5_cq_put(cq);
 	wait_for_completion(&cq->free);
 
-<<<<<<< HEAD
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(mlx5_core_destroy_cq);
 

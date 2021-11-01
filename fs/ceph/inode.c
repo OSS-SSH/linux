@@ -581,12 +581,6 @@ void ceph_evict_inode(struct inode *inode)
 	 */
 	if (ci->i_snap_realm) {
 		if (ceph_snap(inode) == CEPH_NOSNAP) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dout(" dropping residual ref to snap realm %p\n",
-			     ci->i_snap_realm);
-			ceph_change_snap_realm(inode, NULL);
-=======
 			struct ceph_snap_realm *realm = ci->i_snap_realm;
 			dout(" dropping residual ref to snap realm %p\n",
 			     realm);
@@ -597,12 +591,6 @@ void ceph_evict_inode(struct inode *inode)
 				realm->inode = NULL;
 			spin_unlock(&realm->inodes_with_caps_lock);
 			ceph_put_snap_realm(mdsc, realm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dout(" dropping residual ref to snap realm %p\n",
-			     ci->i_snap_realm);
-			ceph_change_snap_realm(inode, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			ceph_put_snapid_map(mdsc, ci->i_snapid_map);
 			ci->i_snap_realm = NULL;

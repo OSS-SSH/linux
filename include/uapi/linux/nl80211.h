@@ -1185,30 +1185,6 @@
  *	passed using %NL80211_ATTR_SAR_SPEC. %NL80211_ATTR_WIPHY is used to
  *	specify the wiphy index to be applied to.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * @NL80211_CMD_OBSS_COLOR_COLLISION: This notification is sent out whenever
- *	mac80211/drv detects a bss color collision.
- *
- * @NL80211_CMD_COLOR_CHANGE_REQUEST: This command is used to indicate that
- *	userspace wants to change the BSS color.
- *
- * @NL80211_CMD_COLOR_CHANGE_STARTED: Notify userland, that a color change has
- *	started
- *
- * @NL80211_CMD_COLOR_CHANGE_ABORTED: Notify userland, that the color change has
- *	been aborted
- *
- * @NL80211_CMD_COLOR_CHANGE_COMPLETED: Notify userland that the color change
- *	has completed
- *
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @NL80211_CMD_MAX: highest used command number
  * @__NL80211_CMD_AFTER_LAST: internal use
  */
@@ -1441,23 +1417,6 @@ enum nl80211_commands {
 
 	NL80211_CMD_SET_SAR_SPECS,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	NL80211_CMD_OBSS_COLOR_COLLISION,
-
-	NL80211_CMD_COLOR_CHANGE_REQUEST,
-
-	NL80211_CMD_COLOR_CHANGE_STARTED,
-	NL80211_CMD_COLOR_CHANGE_ABORTED,
-	NL80211_CMD_COLOR_CHANGE_COMPLETED,
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* add new commands above here */
 
 	/* used to define NL80211_CMD_MAX below */
@@ -2601,25 +2560,6 @@ enum nl80211_commands {
  *	disassoc events to indicate that an immediate reconnect to the AP
  *	is desired.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * @NL80211_ATTR_OBSS_COLOR_BITMAP: bitmap of the u64 BSS colors for the
- *	%NL80211_CMD_OBSS_COLOR_COLLISION event.
- *
- * @NL80211_ATTR_COLOR_CHANGE_COUNT: u8 attribute specifying the number of TBTT's
- *	until the color switch event.
- * @NL80211_ATTR_COLOR_CHANGE_COLOR: u8 attribute specifying the color that we are
- *	switching to
- * @NL80211_ATTR_COLOR_CHANGE_ELEMS: Nested set of attributes containing the IE
- *	information for the time while performing a color switch.
- *
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
  * @__NL80211_ATTR_AFTER_LAST: internal use
@@ -3117,21 +3057,6 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_DISABLE_HE,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	NL80211_ATTR_OBSS_COLOR_BITMAP,
-
-	NL80211_ATTR_COLOR_CHANGE_COUNT,
-	NL80211_ATTR_COLOR_CHANGE_COLOR,
-	NL80211_ATTR_COLOR_CHANGE_ELEMS,
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* add attributes here, update the policy in nl80211.c */
 
 	__NL80211_ATTR_AFTER_LAST,
@@ -6028,18 +5953,6 @@ enum nl80211_feature_flags {
  *      frame protection for all management frames exchanged during the
  *      negotiation and range measurement procedure.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @NL80211_EXT_FEATURE_BSS_COLOR: The driver supports BSS color collision
- *	detection and change announcemnts.
- *
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @NL80211_EXT_FEATURE_BSS_COLOR: The driver supports BSS color collision
- *	detection and change announcemnts.
- *
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @NUM_NL80211_EXT_FEATURES: number of extended features.
  * @MAX_NL80211_EXT_FEATURES: highest extended feature index.
  */
@@ -6104,14 +6017,6 @@ enum nl80211_ext_feature_index {
 	NL80211_EXT_FEATURE_SECURE_LTF,
 	NL80211_EXT_FEATURE_SECURE_RTT,
 	NL80211_EXT_FEATURE_PROT_RANGE_NEGO_AND_MEASURE,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	NL80211_EXT_FEATURE_BSS_COLOR,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	NL80211_EXT_FEATURE_BSS_COLOR,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* add new features before the definition below */
 	NUM_NL80211_EXT_FEATURES,

@@ -17,26 +17,12 @@ struct intel_guc;
 
 #ifdef CONFIG_DRM_I915_DEBUG_GUC
 #define CRASH_BUFFER_SIZE	SZ_2M
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define DEBUG_BUFFER_SIZE	SZ_16M
-#else
-#define CRASH_BUFFER_SIZE	SZ_8K
-#define DEBUG_BUFFER_SIZE	SZ_64K
-=======
 #define DPC_BUFFER_SIZE		SZ_8M
 #define ISR_BUFFER_SIZE		SZ_8M
 #else
 #define CRASH_BUFFER_SIZE	SZ_8K
 #define DPC_BUFFER_SIZE		SZ_32K
 #define ISR_BUFFER_SIZE		SZ_32K
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define DEBUG_BUFFER_SIZE	SZ_16M
-#else
-#define CRASH_BUFFER_SIZE	SZ_8K
-#define DEBUG_BUFFER_SIZE	SZ_64K
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /*

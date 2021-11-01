@@ -27,9 +27,6 @@
 #define __DCN31_CLK_MGR_H__
 #include "clk_mgr_internal.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 //CLK1_CLK_PLL_REQ
 #ifndef CLK11_CLK1_CLK_PLL_REQ__FbMult_int__SHIFT
 #define CLK11_CLK1_CLK_PLL_REQ__FbMult_int__SHIFT                                                                   0x0
@@ -84,9 +81,6 @@
 #define mmCLK11_CLK1_CLK_PLL_REQ                        0x1B20D
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct dcn31_watermarks;
 
 struct dcn31_smu_watermark_set {

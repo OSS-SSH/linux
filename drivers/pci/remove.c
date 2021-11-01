@@ -19,13 +19,7 @@ static void pci_stop_dev(struct pci_dev *dev)
 	pci_pme_active(dev, false);
 
 	if (pci_dev_is_added(dev)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		dev->reset_fn = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		device_release_driver(&dev->dev);
 		pci_proc_detach_device(dev);

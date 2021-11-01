@@ -109,30 +109,14 @@ static u32 __init allocate_aperture(void)
 	 * memory. Unfortunately we cannot move it up because that would
 	 * make the IOMMU useless.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	addr = memblock_phys_alloc_range(aper_size, aper_size,
-					 GART_MIN_ADDR, GART_MAX_ADDR);
-=======
 	addr = memblock_find_in_range(GART_MIN_ADDR, GART_MAX_ADDR,
 				      aper_size, aper_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	addr = memblock_phys_alloc_range(aper_size, aper_size,
-					 GART_MIN_ADDR, GART_MAX_ADDR);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!addr) {
 		pr_err("Cannot allocate aperture memory hole [mem %#010lx-%#010lx] (%uKB)\n",
 		       addr, addr + aper_size - 1, aper_size >> 10);
 		return 0;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	memblock_reserve(addr, aper_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pr_info("Mapping aperture over RAM [mem %#010lx-%#010lx] (%uKB)\n",
 		addr, addr + aper_size - 1, aper_size >> 10);
 	register_nosave_region(addr >> PAGE_SHIFT,

@@ -37,14 +37,6 @@
 #define RTK_PCIE_LINK_CFG	0x0719
 #define BIT_CLKREQ_SW_EN	BIT(4)
 #define BIT_L1_SW_EN		BIT(3)
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define BIT_CLKREQ_N_PAD	BIT(0)
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define BIT_CLKREQ_N_PAD	BIT(0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define RTK_PCIE_CLKDLY_CTRL	0x0725
 
 #define BIT_PCI_BCNQ_FLAG	BIT(4)

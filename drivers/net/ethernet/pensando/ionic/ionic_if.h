@@ -2936,16 +2936,6 @@ struct ionic_hwstamp_regs {
  * @asic_type:       Asic type
  * @asic_rev:        Asic revision
  * @fw_status:       Firmware status
-<<<<<<< HEAD
-<<<<<<< HEAD
- *			bit 0   - 1 = fw running
- *			bit 4-7 - 4 bit generation number, changes on fw restart
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *			bit 0   - 1 = fw running
- *			bit 4-7 - 4 bit generation number, changes on fw restart
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @fw_heartbeat:    Firmware heartbeat counter
  * @serial_num:      Serial number
  * @fw_version:      Firmware version
@@ -2959,17 +2949,7 @@ union ionic_dev_info_regs {
 		u8     version;
 		u8     asic_type;
 		u8     asic_rev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define IONIC_FW_STS_F_RUNNING		0x01
-#define IONIC_FW_STS_F_GENERATION	0xF0
-=======
 #define IONIC_FW_STS_F_RUNNING	0x1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define IONIC_FW_STS_F_RUNNING		0x01
-#define IONIC_FW_STS_F_GENERATION	0xF0
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u8     fw_status;
 		u32    fw_heartbeat;
 		char   fw_version[IONIC_DEVINFO_FWVERS_BUFLEN];

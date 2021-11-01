@@ -9,14 +9,6 @@
 
 / {
 	model = "Qualcomm Technologies, Inc. MSM 8916 MTP";
-<<<<<<< HEAD
-<<<<<<< HEAD
-	compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1", "qcom,msm8916";
-=======
 	compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1",
 			"qcom,msm8916", "qcom,mtp";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1", "qcom,msm8916";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

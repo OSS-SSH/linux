@@ -32,15 +32,5 @@ selftest(vma, i915_vma_mock_selftests)
 selftest(evict, i915_gem_evict_mock_selftests)
 selftest(gtt, i915_gem_gtt_mock_selftests)
 selftest(hugepages, i915_gem_huge_page_mock_selftests)
-<<<<<<< HEAD
-<<<<<<< HEAD
-selftest(memory_region, intel_memory_region_mock_selftests)
-selftest(buddy, i915_buddy_mock_selftests)
-=======
 selftest(contexts, i915_gem_context_mock_selftests)
 selftest(memory_region, intel_memory_region_mock_selftests)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-selftest(memory_region, intel_memory_region_mock_selftests)
-selftest(buddy, i915_buddy_mock_selftests)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

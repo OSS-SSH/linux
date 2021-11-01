@@ -239,15 +239,7 @@ err:
 
 static int rfd_ftl_readsect(struct mtd_blktrans_dev *dev, u_long sector, char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct partition *part = container_of(dev, struct partition, mbd);
-=======
 	struct partition *part = (struct partition*)dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct partition *part = container_of(dev, struct partition, mbd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u_long addr;
 	size_t retlen;
 	int rc;
@@ -608,15 +600,7 @@ static int find_free_sector(const struct partition *part, const struct block *bl
 
 static int do_writesect(struct mtd_blktrans_dev *dev, u_long sector, char *buf, ulong *old_addr)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct partition *part = container_of(dev, struct partition, mbd);
-=======
 	struct partition *part = (struct partition*)dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct partition *part = container_of(dev, struct partition, mbd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct block *block;
 	u_long addr;
 	int i;
@@ -682,15 +666,7 @@ err:
 
 static int rfd_ftl_writesect(struct mtd_blktrans_dev *dev, u_long sector, char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct partition *part = container_of(dev, struct partition, mbd);
-=======
 	struct partition *part = (struct partition*)dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct partition *part = container_of(dev, struct partition, mbd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u_long old_addr;
 	int i;
 	int rc = 0;
@@ -729,52 +705,9 @@ err:
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int rfd_ftl_discardsect(struct mtd_blktrans_dev *dev,
-			       unsigned long sector, unsigned int nr_sects)
-{
-	struct partition *part = container_of(dev, struct partition, mbd);
-	u_long addr;
-	int rc;
-
-	while (nr_sects) {
-		if (sector >= part->sector_count)
-			return -EIO;
-
-		addr = part->sector_map[sector];
-
-		if (addr != -1) {
-			rc = mark_sector_deleted(part, addr);
-			if (rc)
-				return rc;
-
-			part->sector_map[sector] = -1;
-		}
-
-		sector++;
-		nr_sects--;
-	}
-
-	return 0;
-}
-
-<<<<<<< HEAD
-static int rfd_ftl_getgeo(struct mtd_blktrans_dev *dev, struct hd_geometry *geo)
-{
-	struct partition *part = container_of(dev, struct partition, mbd);
-=======
 static int rfd_ftl_getgeo(struct mtd_blktrans_dev *dev, struct hd_geometry *geo)
 {
 	struct partition *part = (struct partition*)dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rfd_ftl_getgeo(struct mtd_blktrans_dev *dev, struct hd_geometry *geo)
-{
-	struct partition *part = container_of(dev, struct partition, mbd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	geo->heads = 1;
 	geo->sectors = SECTORS_PER_TRACK;
@@ -787,17 +720,7 @@ static void rfd_ftl_add_mtd(struct mtd_blktrans_ops *tr, struct mtd_info *mtd)
 {
 	struct partition *part;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if ((mtd->type != MTD_NORFLASH && mtd->type != MTD_RAM) ||
-	    mtd->size > UINT_MAX)
-=======
 	if (mtd->type != MTD_NORFLASH || mtd->size > UINT_MAX)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if ((mtd->type != MTD_NORFLASH && mtd->type != MTD_RAM) ||
-	    mtd->size > UINT_MAX)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	part = kzalloc(sizeof(struct partition), GFP_KERNEL);
@@ -831,15 +754,7 @@ static void rfd_ftl_add_mtd(struct mtd_blktrans_ops *tr, struct mtd_info *mtd)
 		printk(KERN_INFO PREFIX "name: '%s' type: %d flags %x\n",
 				mtd->name, mtd->type, mtd->flags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!add_mtd_blktrans_dev(&part->mbd))
-=======
 		if (!add_mtd_blktrans_dev((void*)part))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!add_mtd_blktrans_dev(&part->mbd))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return;
 	}
 out:
@@ -848,15 +763,7 @@ out:
 
 static void rfd_ftl_remove_dev(struct mtd_blktrans_dev *dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct partition *part = container_of(dev, struct partition, mbd);
-=======
 	struct partition *part = (struct partition*)dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct partition *part = container_of(dev, struct partition, mbd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	for (i=0; i<part->total_blocks; i++) {
@@ -864,24 +771,10 @@ static void rfd_ftl_remove_dev(struct mtd_blktrans_dev *dev)
 			part->mbd.mtd->name, i, part->blocks[i].erases);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	vfree(part->sector_map);
-	kfree(part->header_cache);
-	kfree(part->blocks);
-	del_mtd_blktrans_dev(&part->mbd);
-=======
 	del_mtd_blktrans_dev(dev);
 	vfree(part->sector_map);
 	kfree(part->header_cache);
 	kfree(part->blocks);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	vfree(part->sector_map);
-	kfree(part->header_cache);
-	kfree(part->blocks);
-	del_mtd_blktrans_dev(&part->mbd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct mtd_blktrans_ops rfd_ftl_tr = {
@@ -892,14 +785,6 @@ static struct mtd_blktrans_ops rfd_ftl_tr = {
 
 	.readsect	= rfd_ftl_readsect,
 	.writesect	= rfd_ftl_writesect,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.discard	= rfd_ftl_discardsect,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.discard	= rfd_ftl_discardsect,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.getgeo		= rfd_ftl_getgeo,
 	.add_mtd	= rfd_ftl_add_mtd,
 	.remove_dev	= rfd_ftl_remove_dev,

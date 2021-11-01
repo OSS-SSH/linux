@@ -108,22 +108,10 @@ static int ehci_brcm_reset(struct usb_hcd *hcd)
 	/*
 	 * SWLINUX-1705: Avoid OUT packet underflows during high memory
 	 *   bus usage
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 */
-	ehci_writel(ehci, 0x00800040, &ehci->regs->brcm_insnreg[1]);
-	ehci_writel(ehci, 0x00000001, &ehci->regs->brcm_insnreg[3]);
-=======
 	 * port_status[0x0f] = Broadcom-proprietary USB_EHCI_INSNREG00 @ 0x90
 	 */
 	ehci_writel(ehci, 0x00800040, &ehci->regs->port_status[0x10]);
 	ehci_writel(ehci, 0x00000001, &ehci->regs->port_status[0x12]);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 */
-	ehci_writel(ehci, 0x00800040, &ehci->regs->brcm_insnreg[1]);
-	ehci_writel(ehci, 0x00000001, &ehci->regs->brcm_insnreg[3]);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ehci_setup(hcd);
 }
@@ -235,23 +223,11 @@ static int __maybe_unused ehci_brcm_resume(struct device *dev)
 	/*
 	 * SWLINUX-1705: Avoid OUT packet underflows during high memory
 	 *   bus usage
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 */
-	ehci_writel(ehci, 0x00800040, &ehci->regs->brcm_insnreg[1]);
-	ehci_writel(ehci, 0x00000001, &ehci->regs->brcm_insnreg[3]);
-=======
 	 * port_status[0x0f] = Broadcom-proprietary USB_EHCI_INSNREG00
 	 * @ 0x90
 	 */
 	ehci_writel(ehci, 0x00800040, &ehci->regs->port_status[0x10]);
 	ehci_writel(ehci, 0x00000001, &ehci->regs->port_status[0x12]);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 */
-	ehci_writel(ehci, 0x00800040, &ehci->regs->brcm_insnreg[1]);
-	ehci_writel(ehci, 0x00000001, &ehci->regs->brcm_insnreg[3]);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ehci_resume(hcd, false);
 

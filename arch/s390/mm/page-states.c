@@ -228,9 +228,6 @@ void arch_set_page_dat(struct page *page, int order)
 		return;
 	set_page_stable_dat(page, order);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 void arch_set_page_nodat(struct page *page, int order)
 {
@@ -274,6 +271,3 @@ void arch_set_page_states(int make_stable)
 		spin_unlock_irqrestore(&zone->lock, flags);
 	}
 }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

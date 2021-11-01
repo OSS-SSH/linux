@@ -163,28 +163,6 @@ static const struct hantro_fmt rk3399_vpu_dec_fmts[] = {
 		.codec_mode = HANTRO_MODE_NONE,
 	},
 	{
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		.fourcc = V4L2_PIX_FMT_H264_SLICE,
-		.codec_mode = HANTRO_MODE_H264_DEC,
-		.max_depth = 2,
-		.frmsize = {
-			.min_width = 48,
-			.max_width = 1920,
-			.step_width = MB_DIM,
-			.min_height = 48,
-			.max_height = 1088,
-			.step_height = MB_DIM,
-		},
-	},
-	{
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.fourcc = V4L2_PIX_FMT_MPEG2_SLICE,
 		.codec_mode = HANTRO_MODE_MPEG2_DEC,
 		.max_depth = 2,
@@ -410,21 +388,6 @@ static const struct hantro_codec_ops rk3399_vpu_codec_ops[] = {
 		.init = hantro_jpeg_enc_init,
 		.exit = hantro_jpeg_enc_exit,
 	},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	[HANTRO_MODE_H264_DEC] = {
-		.run = rockchip_vpu2_h264_dec_run,
-		.reset = rockchip_vpu2_dec_reset,
-		.init = hantro_h264_dec_init,
-		.exit = hantro_h264_dec_exit,
-	},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[HANTRO_MODE_MPEG2_DEC] = {
 		.run = rockchip_vpu2_mpeg2_dec_run,
 		.reset = rockchip_vpu2_dec_reset,
@@ -470,16 +433,6 @@ static const char * const rockchip_vpu_clk_names[] = {
 	"aclk", "hclk"
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* VDPU1/VEPU1 */
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* VDPU1/VEPU1 */
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct hantro_variant rk3036_vpu_variant = {
 	.dec_offset = 0x400,
 	.dec_fmts = rk3066_vpu_dec_fmts,
@@ -542,31 +495,11 @@ const struct hantro_variant rk3288_vpu_variant = {
 	.num_clocks = ARRAY_SIZE(rockchip_vpu_clk_names)
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* VDPU2/VEPU2 */
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* VDPU2/VEPU2 */
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct hantro_variant rk3328_vpu_variant = {
 	.dec_offset = 0x400,
 	.dec_fmts = rk3399_vpu_dec_fmts,
 	.num_dec_fmts = ARRAY_SIZE(rk3399_vpu_dec_fmts),
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.codec = HANTRO_MPEG2_DECODER | HANTRO_VP8_DECODER |
-		 HANTRO_H264_DECODER,
-=======
 	.codec = HANTRO_MPEG2_DECODER | HANTRO_VP8_DECODER,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.codec = HANTRO_MPEG2_DECODER | HANTRO_VP8_DECODER |
-		 HANTRO_H264_DECODER,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.codec_ops = rk3399_vpu_codec_ops,
 	.irqs = rockchip_vdpu2_irqs,
 	.num_irqs = ARRAY_SIZE(rockchip_vdpu2_irqs),
@@ -591,29 +524,3 @@ const struct hantro_variant rk3399_vpu_variant = {
 	.clk_names = rockchip_vpu_clk_names,
 	.num_clocks = ARRAY_SIZE(rockchip_vpu_clk_names)
 };
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-const struct hantro_variant px30_vpu_variant = {
-	.enc_offset = 0x0,
-	.enc_fmts = rockchip_vpu_enc_fmts,
-	.num_enc_fmts = ARRAY_SIZE(rockchip_vpu_enc_fmts),
-	.dec_offset = 0x400,
-	.dec_fmts = rk3399_vpu_dec_fmts,
-	.num_dec_fmts = ARRAY_SIZE(rk3399_vpu_dec_fmts),
-	.codec = HANTRO_JPEG_ENCODER | HANTRO_MPEG2_DECODER |
-		 HANTRO_VP8_DECODER | HANTRO_H264_DECODER,
-	.codec_ops = rk3399_vpu_codec_ops,
-	.irqs = rockchip_vpu2_irqs,
-	.num_irqs = ARRAY_SIZE(rockchip_vpu2_irqs),
-	.init = rk3036_vpu_hw_init,
-	.clk_names = rockchip_vpu_clk_names,
-	.num_clocks = ARRAY_SIZE(rockchip_vpu_clk_names)
-};
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

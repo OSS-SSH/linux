@@ -605,26 +605,6 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
 	 */
 	mutex_lock(&vmbus_connection.channel_mutex);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	list_for_each_entry(channel, &vmbus_connection.chn_list, listentry) {
-		if (guid_equal(&channel->offermsg.offer.if_type,
-			       &newchannel->offermsg.offer.if_type) &&
-		    guid_equal(&channel->offermsg.offer.if_instance,
-			       &newchannel->offermsg.offer.if_instance)) {
-			fnew = false;
-			newchannel->primary_channel = channel;
-			break;
-		}
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	init_vp_index(newchannel);
 
 	/* Remember the channels that should be cleaned up upon suspend. */
@@ -637,9 +617,6 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
 	 */
 	atomic_dec(&vmbus_connection.offer_in_progress);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	list_for_each_entry(channel, &vmbus_connection.chn_list, listentry) {
 		if (guid_equal(&channel->offermsg.offer.if_type,
 			       &newchannel->offermsg.offer.if_type) &&
@@ -650,9 +627,6 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
 		}
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fnew) {
 		list_add_tail(&newchannel->listentry,
 			      &vmbus_connection.chn_list);
@@ -673,13 +647,7 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
 		/*
 		 * Process the sub-channel.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		newchannel->primary_channel = channel;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_add_tail(&newchannel->sc_list, &channel->sc_list);
 	}
 
@@ -716,39 +684,6 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
 }
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * Check if CPUs used by other channels of the same device.
- * It should only be called by init_vp_index().
- */
-static bool hv_cpuself_used(u32 cpu, struct vmbus_channel *chn)
-{
-	struct vmbus_channel *primary = chn->primary_channel;
-	struct vmbus_channel *sc;
-
-	lockdep_assert_held(&vmbus_connection.channel_mutex);
-
-	if (!primary)
-		return false;
-
-	if (primary->target_cpu == cpu)
-		return true;
-
-	list_for_each_entry(sc, &primary->sc_list, sc_list)
-		if (sc != chn && sc->target_cpu == cpu)
-			return true;
-
-	return false;
-}
-
-/*
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * We use this state to statically distribute the channel interrupt load.
  */
 static int next_numa_node_id;
@@ -767,14 +702,6 @@ static int next_numa_node_id;
 static void init_vp_index(struct vmbus_channel *channel)
 {
 	bool perf_chn = hv_is_perf_channel(channel);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 i, ncpu = num_online_cpus();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 i, ncpu = num_online_cpus();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpumask_var_t available_mask;
 	struct cpumask *alloced_mask;
 	u32 target_cpu;
@@ -797,69 +724,31 @@ static void init_vp_index(struct vmbus_channel *channel)
 		return;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	for (i = 1; i <= ncpu + 1; i++) {
-		while (true) {
-			numa_node = next_numa_node_id++;
-			if (numa_node == nr_node_ids) {
-				next_numa_node_id = 0;
-				continue;
-			}
-			if (cpumask_empty(cpumask_of_node(numa_node)))
-				continue;
-			break;
-		}
-		alloced_mask = &hv_context.hv_numa_map[numa_node];
-
-		if (cpumask_weight(alloced_mask) ==
-		    cpumask_weight(cpumask_of_node(numa_node))) {
-			/*
-			 * We have cycled through all the CPUs in the node;
-			 * reset the alloced map.
-			 */
-			cpumask_clear(alloced_mask);
-<<<<<<< HEAD
-		}
-
-		cpumask_xor(available_mask, alloced_mask,
-			    cpumask_of_node(numa_node));
-
-		target_cpu = cpumask_first(available_mask);
-		cpumask_set_cpu(target_cpu, alloced_mask);
-
-		if (channel->offermsg.offer.sub_channel_index >= ncpu ||
-		    i > ncpu || !hv_cpuself_used(target_cpu, channel))
-			break;
-	}
-=======
 	while (true) {
 		numa_node = next_numa_node_id++;
 		if (numa_node == nr_node_ids) {
 			next_numa_node_id = 0;
 			continue;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
+		if (cpumask_empty(cpumask_of_node(numa_node)))
+			continue;
+		break;
+	}
+	alloced_mask = &hv_context.hv_numa_map[numa_node];
 
-		cpumask_xor(available_mask, alloced_mask,
-			    cpumask_of_node(numa_node));
+	if (cpumask_weight(alloced_mask) ==
+	    cpumask_weight(cpumask_of_node(numa_node))) {
+		/*
+		 * We have cycled through all the CPUs in the node;
+		 * reset the alloced map.
+		 */
+		cpumask_clear(alloced_mask);
+	}
 
-		target_cpu = cpumask_first(available_mask);
-		cpumask_set_cpu(target_cpu, alloced_mask);
+	cpumask_xor(available_mask, alloced_mask, cpumask_of_node(numa_node));
 
-<<<<<<< HEAD
 	target_cpu = cpumask_first(available_mask);
 	cpumask_set_cpu(target_cpu, alloced_mask);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (channel->offermsg.offer.sub_channel_index >= ncpu ||
-		    i > ncpu || !hv_cpuself_used(target_cpu, channel))
-			break;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	channel->target_cpu = target_cpu;
 

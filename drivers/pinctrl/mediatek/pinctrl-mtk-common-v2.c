@@ -925,26 +925,12 @@ int mtk_pinconf_adv_pull_set(struct mtk_pinctrl *hw,
 			err = hw->soc->bias_set(hw, desc, pullup);
 			if (err)
 				return err;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		} else {
-			err = mtk_pinconf_bias_set_rev1(hw, desc, pullup);
-			if (err)
-				err = mtk_pinconf_bias_set(hw, desc, pullup);
-=======
 		} else if (hw->soc->bias_set_combo) {
 			err = hw->soc->bias_set_combo(hw, desc, pullup, arg);
 			if (err)
 				return err;
 		} else {
 			return -ENOTSUPP;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		} else {
-			err = mtk_pinconf_bias_set_rev1(hw, desc, pullup);
-			if (err)
-				err = mtk_pinconf_bias_set(hw, desc, pullup);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

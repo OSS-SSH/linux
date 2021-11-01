@@ -636,15 +636,7 @@ error:
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int nfc_set_remote_general_bytes(struct nfc_dev *dev, const u8 *gb, u8 gb_len)
-=======
 int nfc_set_remote_general_bytes(struct nfc_dev *dev, u8 *gb, u8 gb_len)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int nfc_set_remote_general_bytes(struct nfc_dev *dev, const u8 *gb, u8 gb_len)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	pr_debug("dev_name=%s gb_len=%d\n", dev_name(&dev->dev), gb_len);
 
@@ -673,15 +665,7 @@ int nfc_tm_data_received(struct nfc_dev *dev, struct sk_buff *skb)
 EXPORT_SYMBOL(nfc_tm_data_received);
 
 int nfc_tm_activated(struct nfc_dev *dev, u32 protocol, u8 comm_mode,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		     const u8 *gb, size_t gb_len)
-=======
 		     u8 *gb, size_t gb_len)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		     const u8 *gb, size_t gb_len)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int rc;
 
@@ -840,15 +824,7 @@ EXPORT_SYMBOL(nfc_targets_found);
  */
 int nfc_target_lost(struct nfc_dev *dev, u32 target_idx)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nfc_target *tg;
-=======
 	struct nfc_target *tg;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nfc_target *tg;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	pr_debug("dev_name %s n_target %d\n", dev_name(&dev->dev), target_idx);
@@ -1072,15 +1048,7 @@ struct nfc_dev *nfc_get_device(unsigned int idx)
  * @tx_headroom: reserved space at beginning of skb
  * @tx_tailroom: reserved space at end of skb
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct nfc_dev *nfc_allocate_device(const struct nfc_ops *ops,
-=======
 struct nfc_dev *nfc_allocate_device(struct nfc_ops *ops,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct nfc_dev *nfc_allocate_device(const struct nfc_ops *ops,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    u32 supported_protocols,
 				    int tx_headroom, int tx_tailroom)
 {

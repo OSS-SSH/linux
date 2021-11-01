@@ -23,16 +23,6 @@ properties:
     enum:
       - ingenic,jz4725b-adc
       - ingenic,jz4740-adc
-<<<<<<< HEAD
-<<<<<<< HEAD
-      - ingenic,jz4760-adc
-      - ingenic,jz4760b-adc
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      - ingenic,jz4760-adc
-      - ingenic,jz4760b-adc
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - ingenic,jz4770-adc
 
   '#io-channel-cells':
@@ -53,32 +43,6 @@ properties:
   interrupts:
     maxItems: 1
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  ingenic,use-internal-divider:
-    description:
-      If present, battery voltage is read from the VBAT_IR pin, which has an
-      internal 1/4 divider. If absent, it is read through the VBAT_ER pin,
-      which does not have such a divider.
-    type: boolean
-
-if:
-  not:
-    properties:
-      compatible:
-        contains:
-          const: ingenic,jz4760b-adc
-then:
-  properties:
-    ingenic,use-internal-divider: false
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 required:
   - compatible
   - '#io-channel-cells'

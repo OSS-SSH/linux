@@ -1,15 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-only 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "util/cgroup.h"
-#include "util/data.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "util/cgroup.h"
-#include "util/data.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "util/debug.h"
 #include "util/dso.h"
 #include "util/event.h"
@@ -26,13 +16,7 @@
 #include "util/synthetic-events.h"
 #include "util/target.h"
 #include "util/time-utils.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include "util/cgroup.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/bitops.h>
 #include <linux/kernel.h>
 #include <linux/string.h>
@@ -2195,62 +2179,3 @@ int perf_event__synthesize_features(struct perf_tool *tool, struct perf_session 
 	free(ff.buf);
 	return ret;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-int perf_event__synthesize_for_pipe(struct perf_tool *tool,
-				    struct perf_session *session,
-				    struct perf_data *data,
-				    perf_event__handler_t process)
-{
-	int err;
-	int ret = 0;
-	struct evlist *evlist = session->evlist;
-
-	/*
-	 * We need to synthesize events first, because some
-	 * features works on top of them (on report side).
-	 */
-	err = perf_event__synthesize_attrs(tool, evlist, process);
-	if (err < 0) {
-		pr_err("Couldn't synthesize attrs.\n");
-		return err;
-	}
-	ret += err;
-
-	err = perf_event__synthesize_features(tool, session, evlist, process);
-	if (err < 0) {
-		pr_err("Couldn't synthesize features.\n");
-		return err;
-	}
-	ret += err;
-
-	if (have_tracepoints(&evlist->core.entries)) {
-		int fd = perf_data__fd(data);
-
-		/*
-		 * FIXME err <= 0 here actually means that
-		 * there were no tracepoints so its not really
-		 * an error, just that we don't need to
-		 * synthesize anything.  We really have to
-		 * return this more properly and also
-		 * propagate errors that now are calling die()
-		 */
-		err = perf_event__synthesize_tracing_data(tool,	fd, evlist,
-							  process);
-		if (err <= 0) {
-			pr_err("Couldn't record tracing data.\n");
-			return err;
-		}
-		ret += err;
-	}
-
-	return ret;
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

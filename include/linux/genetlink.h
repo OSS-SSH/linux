@@ -8,23 +8,14 @@
 /* All generic netlink requests are serialized by a global lock.  */
 extern void genl_lock(void);
 extern void genl_unlock(void);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_LOCKDEP
 extern bool lockdep_genl_is_held(void);
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* for synchronisation between af_netlink and genetlink */
 extern atomic_t genl_sk_destructing_cnt;
 extern wait_queue_head_t genl_sk_destructing_waitq;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /**
  * rcu_dereference_genl - rcu_dereference with debug checking
  * @p: The pointer to read, prior to dereferencing
@@ -45,9 +36,6 @@ extern wait_queue_head_t genl_sk_destructing_waitq;
 #define genl_dereference(p)					\
 	rcu_dereference_protected(p, lockdep_genl_is_held())
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MODULE_ALIAS_GENL_FAMILY(family)\
  MODULE_ALIAS_NET_PF_PROTO_NAME(PF_NETLINK, NETLINK_GENERIC, "-family-" family)
 

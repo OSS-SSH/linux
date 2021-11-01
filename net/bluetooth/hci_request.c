@@ -2072,14 +2072,8 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
 	 * current RPA has expired then generate a new one.
 	 */
 	if (use_rpa) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		int to;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* If Controller supports LL Privacy use own address type is
 		 * 0x03
 		 */
@@ -2090,27 +2084,14 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
 			*own_addr_type = ADDR_LE_DEV_RANDOM;
 
 		if (adv_instance) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (adv_rpa_valid(adv_instance))
-				return 0;
-		} else {
-			if (rpa_valid(hdev))
-=======
 			if (!adv_instance->rpa_expired &&
 			    !bacmp(&adv_instance->random_addr, &hdev->rpa))
-=======
-			if (adv_rpa_valid(adv_instance))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return 0;
+
+			adv_instance->rpa_expired = false;
 		} else {
-<<<<<<< HEAD
 			if (!hci_dev_test_and_clear_flag(hdev, HCI_RPA_EXPIRED) &&
 			    !bacmp(&hdev->random_addr, &hdev->rpa))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (rpa_valid(hdev))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return 0;
 		}
 
@@ -2122,9 +2103,6 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
 
 		bacpy(rand_addr, &hdev->rpa);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		to = msecs_to_jiffies(hdev->rpa_timeout * 1000);
 		if (adv_instance)
 			queue_delayed_work(hdev->workqueue,
@@ -2133,9 +2111,6 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
 			queue_delayed_work(hdev->workqueue,
 					   &hdev->rpa_expired, to);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 
@@ -2178,39 +2153,6 @@ void __hci_req_clear_ext_adv_sets(struct hci_request *req)
 	hci_req_add(req, HCI_OP_LE_CLEAR_ADV_SETS, 0, NULL);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void set_random_addr(struct hci_request *req, bdaddr_t *rpa)
-{
-	struct hci_dev *hdev = req->hdev;
-
-	/* If we're advertising or initiating an LE connection we can't
-	 * go ahead and change the random address at this time. This is
-	 * because the eventual initiator address used for the
-	 * subsequently created connection will be undefined (some
-	 * controllers use the new address and others the one we had
-	 * when the operation started).
-	 *
-	 * In this kind of scenario skip the update and let the random
-	 * address be updated at the next cycle.
-	 */
-	if (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
-	    hci_lookup_le_connect(hdev)) {
-		bt_dev_dbg(hdev, "Deferring random address update");
-		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
-		return;
-	}
-
-	hci_req_add(req, HCI_OP_LE_SET_RANDOM_ADDR, 6, rpa);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
 {
 	struct hci_cp_le_set_ext_adv_params cp;
@@ -2313,22 +2255,6 @@ int __hci_req_setup_ext_adv_instance(struct hci_request *req, u8 instance)
 		} else {
 			if (!bacmp(&random_addr, &hdev->random_addr))
 				return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			/* Instance 0x00 doesn't have an adv_info, instead it
-			 * uses hdev->random_addr to track its address so
-			 * whenever it needs to be updated this also set the
-			 * random address since hdev->random_addr is shared with
-			 * scan state machine.
-			 */
-			set_random_addr(req, &random_addr);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		memset(&cp, 0, sizeof(cp));
@@ -2586,9 +2512,6 @@ void hci_req_clear_adv_instance(struct hci_dev *hdev, struct sock *sk,
 						false);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void set_random_addr(struct hci_request *req, bdaddr_t *rpa)
 {
 	struct hci_dev *hdev = req->hdev;
@@ -2613,9 +2536,6 @@ static void set_random_addr(struct hci_request *req, bdaddr_t *rpa)
 	hci_req_add(req, HCI_OP_LE_SET_RANDOM_ADDR, 6, rpa);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hci_update_random_address(struct hci_request *req, bool require_privacy,
 			      bool use_rpa, u8 *own_addr_type)
 {
@@ -2627,14 +2547,8 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
 	 * the current RPA in use, then generate a new one.
 	 */
 	if (use_rpa) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		int to;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* If Controller supports LL Privacy use own address type is
 		 * 0x03
 		 */
@@ -2644,16 +2558,8 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
 		else
 			*own_addr_type = ADDR_LE_DEV_RANDOM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (rpa_valid(hdev))
-=======
 		if (!hci_dev_test_and_clear_flag(hdev, HCI_RPA_EXPIRED) &&
 		    !bacmp(&hdev->random_addr, &hdev->rpa))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (rpa_valid(hdev))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 0;
 
 		err = smp_generate_rpa(hdev, hdev->irk, &hdev->rpa);
@@ -2664,15 +2570,9 @@ int hci_update_random_address(struct hci_request *req, bool require_privacy,
 
 		set_random_addr(req, &hdev->rpa);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		to = msecs_to_jiffies(hdev->rpa_timeout * 1000);
 		queue_delayed_work(hdev->workqueue, &hdev->rpa_expired, to);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 

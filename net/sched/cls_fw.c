@@ -198,33 +198,15 @@ static const struct nla_policy fw_policy[TCA_FW_MAX + 1] = {
 
 static int fw_set_parms(struct net *net, struct tcf_proto *tp,
 			struct fw_filter *f, struct nlattr **tb,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			struct nlattr **tca, unsigned long base, u32 flags,
-=======
 			struct nlattr **tca, unsigned long base, bool ovr,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			struct nlattr **tca, unsigned long base, u32 flags,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct netlink_ext_ack *extack)
 {
 	struct fw_head *head = rtnl_dereference(tp->root);
 	u32 mask;
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = tcf_exts_validate(net, tp, tb, tca[TCA_RATE], &f->exts, flags,
-				extack);
-=======
 	err = tcf_exts_validate(net, tp, tb, tca[TCA_RATE], &f->exts, ovr,
 				true, extack);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = tcf_exts_validate(net, tp, tb, tca[TCA_RATE], &f->exts, flags,
-				extack);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -255,16 +237,8 @@ static int fw_set_parms(struct net *net, struct tcf_proto *tp,
 static int fw_change(struct net *net, struct sk_buff *in_skb,
 		     struct tcf_proto *tp, unsigned long base,
 		     u32 handle, struct nlattr **tca, void **arg,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		     u32 flags, struct netlink_ext_ack *extack)
-=======
 		     bool ovr, bool rtnl_held,
 		     struct netlink_ext_ack *extack)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		     u32 flags, struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fw_head *head = rtnl_dereference(tp->root);
 	struct fw_filter *f = *arg;
@@ -303,15 +277,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
 			return err;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = fw_set_parms(net, tp, fnew, tb, tca, base, flags, extack);
-=======
 		err = fw_set_parms(net, tp, fnew, tb, tca, base, ovr, extack);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = fw_set_parms(net, tp, fnew, tb, tca, base, flags, extack);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err < 0) {
 			tcf_exts_destroy(&fnew->exts);
 			kfree(fnew);
@@ -360,15 +326,7 @@ static int fw_change(struct net *net, struct sk_buff *in_skb,
 	f->id = handle;
 	f->tp = tp;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = fw_set_parms(net, tp, f, tb, tca, base, flags, extack);
-=======
 	err = fw_set_parms(net, tp, f, tb, tca, base, ovr, extack);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = fw_set_parms(net, tp, f, tb, tca, base, flags, extack);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		goto errout;
 

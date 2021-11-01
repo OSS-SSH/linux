@@ -56,14 +56,6 @@ enum ctattr_type {
 	CTA_LABELS_MASK,
 	CTA_SYNPROXY,
 	CTA_FILTER,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	CTA_STATUS_MASK,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	CTA_STATUS_MASK,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__CTA_MAX
 };
 #define CTA_MAX (__CTA_MAX - 1)
@@ -265,14 +257,6 @@ enum ctattr_stats_cpu {
 	CTA_STATS_ERROR,
 	CTA_STATS_SEARCH_RESTART,
 	CTA_STATS_CLASH_RESOLVE,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	CTA_STATS_CHAIN_TOOLONG,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	CTA_STATS_CHAIN_TOOLONG,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__CTA_STATS_MAX,
 };
 #define CTA_STATS_MAX (__CTA_STATS_MAX - 1)

@@ -452,18 +452,8 @@ static int xlnx_formatter_pcm_hw_params(struct snd_soc_component *component,
 
 	stream_data->buffer_size = size;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	low = lower_32_bits(runtime->dma_addr);
-	high = upper_32_bits(runtime->dma_addr);
-=======
 	low = lower_32_bits(substream->dma_buffer.addr);
 	high = upper_32_bits(substream->dma_buffer.addr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	low = lower_32_bits(runtime->dma_addr);
-	high = upper_32_bits(runtime->dma_addr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writel(low, stream_data->mmio + XLNX_AUD_BUFF_ADDR_LSB);
 	writel(high, stream_data->mmio + XLNX_AUD_BUFF_ADDR_MSB);
 

@@ -266,25 +266,12 @@ static int find_grant_ptes(pte_t *pte, unsigned long addr, void *data)
 {
 	struct gntdev_grant_map *map = data;
 	unsigned int pgnr = (addr - map->vma->vm_start) >> PAGE_SHIFT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int flags = map->flags | GNTMAP_application_map | GNTMAP_contains_pte |
-		    (1 << _GNTMAP_guest_avail0);
-=======
 	int flags = map->flags | GNTMAP_application_map | GNTMAP_contains_pte;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int flags = map->flags | GNTMAP_application_map | GNTMAP_contains_pte |
-		    (1 << _GNTMAP_guest_avail0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 pte_maddr;
 
 	BUG_ON(pgnr >= map->count);
 	pte_maddr = arbitrary_virt_to_machine(pte).maddr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 * Set the PTE as special to force get_user_pages_fast() fall
 	 * back to the slow path.  If this is not supported as part of
@@ -293,9 +280,6 @@ static int find_grant_ptes(pte_t *pte, unsigned long addr, void *data)
 	if (xen_feature(XENFEAT_gnttab_map_avail_bits))
 		flags |= (1 << _GNTMAP_guest_avail0);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gnttab_set_map_op(&map->map_ops[pgnr], pte_maddr, flags,
 			  map->grants[pgnr].ref,
 			  map->grants[pgnr].domid);
@@ -304,9 +288,6 @@ static int find_grant_ptes(pte_t *pte, unsigned long addr, void *data)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_X86
 static int set_grant_ptes_as_special(pte_t *pte, unsigned long addr, void *data)
 {
@@ -315,9 +296,6 @@ static int set_grant_ptes_as_special(pte_t *pte, unsigned long addr, void *data)
 }
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int gntdev_map_grant_pages(struct gntdev_grant_map *map)
 {
 	int i, err = 0;
@@ -418,23 +396,6 @@ static int __unmap_grant_pages(struct gntdev_grant_map *map, int offset,
 			map->unmap_ops[offset+i].handle,
 			map->unmap_ops[offset+i].status);
 		map->unmap_ops[offset+i].handle = INVALID_GRANT_HANDLE;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (use_ptemod) {
-			if (map->kunmap_ops[offset+i].status)
-				err = -EINVAL;
-			pr_debug("kunmap handle=%u st=%d\n",
-				 map->kunmap_ops[offset+i].handle,
-				 map->kunmap_ops[offset+i].status);
-			map->kunmap_ops[offset+i].handle = INVALID_GRANT_HANDLE;
-		}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return err;
 }
@@ -1094,9 +1055,6 @@ static int gntdev_mmap(struct file *flip, struct vm_area_struct *vma)
 		err = vm_map_pages_zero(vma, map->pages, map->count);
 		if (err)
 			goto out_put_map;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	} else {
 #ifdef CONFIG_X86
 		/*
@@ -1114,9 +1072,6 @@ static int gntdev_mmap(struct file *flip, struct vm_area_struct *vma)
 					    set_grant_ptes_as_special, NULL);
 		}
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;

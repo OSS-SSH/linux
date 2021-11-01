@@ -41,56 +41,11 @@ TRACE_EVENT(qdisc_dequeue,
 		__entry->txq_state	= txq->state;
 	),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	TP_printk("dequeue ifindex=%d qdisc handle=0x%X parent=0x%X txq_state=0x%lX packets=%d skbaddr=%px",
-=======
 	TP_printk("dequeue ifindex=%d qdisc handle=0x%X parent=0x%X txq_state=0x%lX packets=%d skbaddr=%p",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	TP_printk("dequeue ifindex=%d qdisc handle=0x%X parent=0x%X txq_state=0x%lX packets=%d skbaddr=%px",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  __entry->ifindex, __entry->handle, __entry->parent,
 		  __entry->txq_state, __entry->packets, __entry->skbaddr )
 );
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-TRACE_EVENT(qdisc_enqueue,
-
-	TP_PROTO(struct Qdisc *qdisc, const struct netdev_queue *txq, struct sk_buff *skb),
-
-	TP_ARGS(qdisc, txq, skb),
-
-	TP_STRUCT__entry(
-		__field(struct Qdisc *, qdisc)
-		__field(const struct netdev_queue *, txq)
-		__field(void *,	skbaddr)
-		__field(int, ifindex)
-		__field(u32, handle)
-		__field(u32, parent)
-	),
-
-	TP_fast_assign(
-		__entry->qdisc = qdisc;
-		__entry->txq	 = txq;
-		__entry->skbaddr = skb;
-		__entry->ifindex = txq->dev ? txq->dev->ifindex : 0;
-		__entry->handle	 = qdisc->handle;
-		__entry->parent	 = qdisc->parent;
-	),
-
-	TP_printk("enqueue ifindex=%d qdisc handle=0x%X parent=0x%X skbaddr=%px",
-		  __entry->ifindex, __entry->handle, __entry->parent, __entry->skbaddr)
-);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TRACE_EVENT(qdisc_reset,
 
 	TP_PROTO(struct Qdisc *q),

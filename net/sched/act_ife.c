@@ -479,25 +479,11 @@ static int populate_metalist(struct tcf_ife_info *ife, struct nlattr **tb,
 
 static int tcf_ife_init(struct net *net, struct nlattr *nla,
 			struct nlattr *est, struct tc_action **a,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			int ovr, int bind, bool rtnl_held,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct tcf_proto *tp, u32 flags,
 			struct netlink_ext_ack *extack)
 {
 	struct tc_action_net *tn = net_generic(net, ife_net_id);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool bind = flags & TCA_ACT_FLAGS_BIND;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool bind = flags & TCA_ACT_FLAGS_BIND;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nlattr *tb[TCA_IFE_MAX + 1];
 	struct nlattr *tb2[IFE_META_MAX + 1];
 	struct tcf_chain *goto_ch = NULL;
@@ -546,15 +532,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
 			kfree(p);
 			return err;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = load_metalist(tb2, !(flags & TCA_ACT_FLAGS_NO_RTNL));
-=======
 		err = load_metalist(tb2, rtnl_held);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = load_metalist(tb2, !(flags & TCA_ACT_FLAGS_NO_RTNL));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			kfree(p);
 			return err;
@@ -582,15 +560,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
 			return ret;
 		}
 		ret = ACT_P_CREATED;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
-=======
 	} else if (!ovr) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tcf_idr_release(*a, bind);
 		kfree(p);
 		return -EEXIST;
@@ -630,17 +600,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
 	}
 
 	if (tb[TCA_IFE_METALST]) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = populate_metalist(ife, tb2, exists,
-					!(flags & TCA_ACT_FLAGS_NO_RTNL));
-=======
 		err = populate_metalist(ife, tb2, exists, rtnl_held);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = populate_metalist(ife, tb2, exists,
-					!(flags & TCA_ACT_FLAGS_NO_RTNL));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			goto metadata_parse_err;
 	} else {

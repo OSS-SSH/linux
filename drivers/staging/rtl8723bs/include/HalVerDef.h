@@ -50,9 +50,6 @@ enum hal_vendor_e { /* tag_HAL_Manufacturer_Version_Definition */
 	CHIP_VENDOR_SMIC	=	2,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 enum hal_rf_type_e { /* tag_HAL_RF_Type_Definition */
 	RF_TYPE_1T1R	=	0,
 	RF_TYPE_1T2R	=	1,
@@ -64,21 +61,12 @@ enum hal_rf_type_e { /* tag_HAL_RF_Type_Definition */
 	RF_TYPE_4T4R	=	7,
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hal_version { /* tag_HAL_VERSION */
 	enum hal_ic_type_e		ICType;
 	enum hal_chip_type_e		ChipType;
 	enum hal_cut_version_e	CUTVersion;
 	enum hal_vendor_e		VendorType;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	enum hal_rf_type_e		RFType;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 			ROMVer;
 };
 
@@ -88,13 +76,7 @@ struct hal_version { /* tag_HAL_VERSION */
 /*  Get element */
 #define GET_CVID_IC_TYPE(version)			((enum hal_ic_type_e)((version).ICType))
 #define GET_CVID_CHIP_TYPE(version)			((enum hal_chip_type_e)((version).ChipType))
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define GET_CVID_RF_TYPE(version)			((enum hal_rf_type_e)((version).RFType))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define GET_CVID_MANUFACTUER(version)		((enum hal_vendor_e)((version).VendorType))
 #define GET_CVID_CUT_VERSION(version)		((enum hal_cut_version_e)((version).CUTVersion))
 #define GET_CVID_ROM_VERSION(version)		(((version).ROMVer) & ROM_VERSION_MASK)
@@ -123,15 +105,9 @@ struct hal_version { /* tag_HAL_VERSION */
 #define IS_CHIP_VENDOR_UMC(version)	((GET_CVID_MANUFACTUER(version) == CHIP_VENDOR_UMC) ? true : false)
 #define IS_CHIP_VENDOR_SMIC(version)	((GET_CVID_MANUFACTUER(version) == CHIP_VENDOR_SMIC) ? true : false)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* hal_rf_type_e */
 #define IS_1T1R(version)					((GET_CVID_RF_TYPE(version) == RF_TYPE_1T1R) ? true : false)
 #define IS_1T2R(version)					((GET_CVID_RF_TYPE(version) == RF_TYPE_1T2R) ? true : false)
 #define IS_2T2R(version)					((GET_CVID_RF_TYPE(version) == RF_TYPE_2T2R) ? true : false)
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

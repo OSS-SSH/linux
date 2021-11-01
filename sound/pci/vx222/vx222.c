@@ -100,9 +100,6 @@ static const struct snd_vx_hardware vx222_mic_hw = {
 
 /*
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int snd_vx222_free(struct vx_core *chip)
 {
 	struct snd_vx222 *vx = to_vx222(chip);
@@ -123,9 +120,6 @@ static int snd_vx222_dev_free(struct snd_device *device)
 }
 
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_vx222_create(struct snd_card *card, struct pci_dev *pci,
 			    const struct snd_vx_hardware *hw,
 			    struct snd_vx222 **rchip)
@@ -133,13 +127,6 @@ static int snd_vx222_create(struct snd_card *card, struct pci_dev *pci,
 	struct vx_core *chip;
 	struct snd_vx222 *vx;
 	int i, err;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct snd_vx_ops *vx_ops;
-
-	/* enable PCI device */
-	err = pcim_enable_device(pci);
-=======
 	static const struct snd_device_ops ops = {
 		.dev_free =	snd_vx222_dev_free,
 	};
@@ -147,13 +134,6 @@ static int snd_vx222_create(struct snd_card *card, struct pci_dev *pci,
 
 	/* enable PCI device */
 	err = pci_enable_device(pci);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct snd_vx_ops *vx_ops;
-
-	/* enable PCI device */
-	err = pcim_enable_device(pci);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 	pci_set_master(pci);
@@ -161,63 +141,30 @@ static int snd_vx222_create(struct snd_card *card, struct pci_dev *pci,
 	vx_ops = hw->type == VX_TYPE_BOARD ? &vx222_old_ops : &vx222_ops;
 	chip = snd_vx_create(card, hw, vx_ops,
 			     sizeof(struct snd_vx222) - sizeof(struct vx_core));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!chip)
-		return -ENOMEM;
-=======
 	if (! chip) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!chip)
-		return -ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vx = to_vx222(chip);
 	vx->pci = pci;
 
 	err = pci_request_regions(pci, CARD_NAME);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-	for (i = 0; i < 2; i++)
-		vx->port[i] = pci_resource_start(pci, i + 1);
-
-	if (devm_request_threaded_irq(&pci->dev, pci->irq, snd_vx_irq_handler,
-				      snd_vx_threaded_irq_handler, IRQF_SHARED,
-				      KBUILD_MODNAME, chip)) {
-		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
-=======
 	if (err < 0) {
 		snd_vx222_free(chip);
-=======
-	if (err < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
+	}
 	for (i = 0; i < 2; i++)
 		vx->port[i] = pci_resource_start(pci, i + 1);
 
-	if (devm_request_threaded_irq(&pci->dev, pci->irq, snd_vx_irq_handler,
-				      snd_vx_threaded_irq_handler, IRQF_SHARED,
-				      KBUILD_MODNAME, chip)) {
+	if (request_threaded_irq(pci->irq, snd_vx_irq_handler,
+				 snd_vx_threaded_irq_handler, IRQF_SHARED,
+				 KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
-<<<<<<< HEAD
 		snd_vx222_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	*rchip = vx;
-
-=======
 
 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
 	if (err < 0) {
@@ -226,11 +173,6 @@ static int snd_vx222_create(struct snd_card *card, struct pci_dev *pci,
 	}
 
 	*rchip = vx;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	*rchip = vx;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -251,18 +193,8 @@ static int snd_vx222_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				0, &card);
-=======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				0, &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -279,20 +211,10 @@ static int snd_vx222_probe(struct pci_dev *pci,
 		break;
 	}
 	err = snd_vx222_create(card, pci, hw, &vx);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	card->private_data = vx;
 	vx->core.ibl.size = ibl[dev];
 
@@ -306,47 +228,27 @@ static int snd_vx222_probe(struct pci_dev *pci,
 #endif
 
 	err = snd_vx_setup_firmware(&vx->core);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-
-	err = snd_card_register(card);
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		snd_card_free(card);
-=======
-	if (err < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
+	}
 
 	err = snd_card_register(card);
-	if (err < 0)
+	if (err < 0) {
+		snd_card_free(card);
 		return err;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void snd_vx222_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 static int snd_vx222_suspend(struct device *dev)
 {
@@ -374,13 +276,7 @@ static struct pci_driver vx222_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_vx222_ids,
 	.probe = snd_vx222_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = snd_vx222_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_VX222_PM_OPS,
 	},

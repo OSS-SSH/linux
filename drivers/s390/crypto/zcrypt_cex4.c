@@ -75,21 +75,9 @@ static ssize_t cca_serialnr_show(struct device *dev,
 				 struct device_attribute *attr,
 				 char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct cca_info ci;
-	struct ap_card *ac = to_ap_card(dev);
-=======
 	struct cca_info ci;
 	struct ap_card *ac = to_ap_card(dev);
 	struct zcrypt_card *zc = ac->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct cca_info ci;
-	struct ap_card *ac = to_ap_card(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&ci, 0, sizeof(ci));
 
@@ -118,21 +106,9 @@ static ssize_t cca_mkvps_show(struct device *dev,
 			      struct device_attribute *attr,
 			      char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_queue *zq = dev_get_drvdata(dev);
-	int n = 0;
-	struct cca_info ci;
-=======
 	int n = 0;
 	struct cca_info ci;
 	struct zcrypt_queue *zq = to_ap_queue(dev)->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_queue *zq = dev_get_drvdata(dev);
-	int n = 0;
-	struct cca_info ci;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static const char * const cao_state[] = { "invalid", "valid" };
 	static const char * const new_state[] = { "empty", "partial", "full" };
 
@@ -211,21 +187,9 @@ static ssize_t ep11_api_ordinalnr_show(struct device *dev,
 				       struct device_attribute *attr,
 				       char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
-=======
 	struct ep11_card_info ci;
 	struct ap_card *ac = to_ap_card(dev);
 	struct zcrypt_card *zc = ac->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&ci, 0, sizeof(ci));
 
@@ -244,21 +208,9 @@ static ssize_t ep11_fw_version_show(struct device *dev,
 				    struct device_attribute *attr,
 				    char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
-=======
 	struct ep11_card_info ci;
 	struct ap_card *ac = to_ap_card(dev);
 	struct zcrypt_card *zc = ac->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&ci, 0, sizeof(ci));
 
@@ -279,21 +231,9 @@ static ssize_t ep11_serialnr_show(struct device *dev,
 				  struct device_attribute *attr,
 				  char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
-=======
 	struct ep11_card_info ci;
 	struct ap_card *ac = to_ap_card(dev);
 	struct zcrypt_card *zc = ac->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&ci, 0, sizeof(ci));
 
@@ -324,24 +264,10 @@ static ssize_t ep11_card_op_modes_show(struct device *dev,
 				       struct device_attribute *attr,
 				       char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	int i, n = 0;
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
-=======
 	int i, n = 0;
 	struct ep11_card_info ci;
 	struct ap_card *ac = to_ap_card(dev);
 	struct zcrypt_card *zc = ac->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_card *zc = dev_get_drvdata(dev);
-	int i, n = 0;
-	struct ep11_card_info ci;
-	struct ap_card *ac = to_ap_card(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&ci, 0, sizeof(ci));
 
@@ -383,21 +309,9 @@ static ssize_t ep11_mkvps_show(struct device *dev,
 			       struct device_attribute *attr,
 			       char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_queue *zq = dev_get_drvdata(dev);
-	int n = 0;
-	struct ep11_domain_info di;
-=======
 	int n = 0;
 	struct ep11_domain_info di;
 	struct zcrypt_queue *zq = to_ap_queue(dev)->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_queue *zq = dev_get_drvdata(dev);
-	int n = 0;
-	struct ep11_domain_info di;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static const char * const cwk_state[] = { "invalid", "valid" };
 	static const char * const nwk_state[] = { "empty", "uncommitted",
 						  "committed" };
@@ -443,21 +357,9 @@ static ssize_t ep11_queue_op_modes_show(struct device *dev,
 					struct device_attribute *attr,
 					char *buf)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_queue *zq = dev_get_drvdata(dev);
-	int i, n = 0;
-	struct ep11_domain_info di;
-=======
 	int i, n = 0;
 	struct ep11_domain_info di;
 	struct zcrypt_queue *zq = to_ap_queue(dev)->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_queue *zq = dev_get_drvdata(dev);
-	int i, n = 0;
-	struct ep11_domain_info di;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&di, 0, sizeof(di));
 
@@ -492,15 +394,7 @@ static const struct attribute_group ep11_queue_attr_grp = {
 	.attrs = ep11_queue_attrs,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Probe function for CEX4/CEX5/CEX6/CEX7 card device. It always
  * accepts the AP device since the bus_match already checked
  * the hardware type.
@@ -547,15 +441,7 @@ static int zcrypt_cex4_card_probe(struct ap_device *ap_dev)
 	if (!zc)
 		return -ENOMEM;
 	zc->card = ac;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_set_drvdata(&ap_dev->device, zc);
-=======
 	ac->private = zc;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_set_drvdata(&ap_dev->device, zc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ap_test_bit(&ac->functions, AP_FUNC_ACCEL)) {
 		if (ac->ap_dev.device_type == AP_DEVICE_TYPE_CEX4) {
 			zc->type_string = "CEX4A";
@@ -653,13 +539,7 @@ static int zcrypt_cex4_card_probe(struct ap_device *ap_dev)
 
 	rc = zcrypt_card_register(zc);
 	if (rc) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		ac->private = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		zcrypt_card_free(zc);
 		return rc;
 	}
@@ -669,13 +549,7 @@ static int zcrypt_cex4_card_probe(struct ap_device *ap_dev)
 					&cca_card_attr_grp);
 		if (rc) {
 			zcrypt_card_unregister(zc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			ac->private = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			zcrypt_card_free(zc);
 		}
 	} else if (ap_test_bit(&ac->functions, AP_FUNC_EP11)) {
@@ -683,13 +557,7 @@ static int zcrypt_cex4_card_probe(struct ap_device *ap_dev)
 					&ep11_card_attr_grp);
 		if (rc) {
 			zcrypt_card_unregister(zc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			ac->private = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			zcrypt_card_free(zc);
 		}
 	}
@@ -697,49 +565,21 @@ static int zcrypt_cex4_card_probe(struct ap_device *ap_dev)
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * This is called to remove the CEX4/CEX5/CEX6/CEX7 card driver
  * information if an AP card device is removed.
  */
 static void zcrypt_cex4_card_remove(struct ap_device *ap_dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_card *zc = dev_get_drvdata(&ap_dev->device);
-	struct ap_card *ac = to_ap_card(&ap_dev->device);
-=======
 	struct ap_card *ac = to_ap_card(&ap_dev->device);
 	struct zcrypt_card *zc = ac->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_card *zc = dev_get_drvdata(&ap_dev->device);
-	struct ap_card *ac = to_ap_card(&ap_dev->device);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ap_test_bit(&ac->functions, AP_FUNC_COPRO))
 		sysfs_remove_group(&ap_dev->device.kobj, &cca_card_attr_grp);
 	else if (ap_test_bit(&ac->functions, AP_FUNC_EP11))
 		sysfs_remove_group(&ap_dev->device.kobj, &ep11_card_attr_grp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	zcrypt_card_unregister(zc);
-=======
 	if (zc)
 		zcrypt_card_unregister(zc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	zcrypt_card_unregister(zc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct ap_driver zcrypt_cex4_card_driver = {
@@ -749,15 +589,7 @@ static struct ap_driver zcrypt_cex4_card_driver = {
 	.flags = AP_DRIVER_FLAG_DEFAULT,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Probe function for CEX4/CEX5/CEX6/CEX7 queue device. It always
  * accepts the AP device since the bus_match already checked
  * the hardware type.
@@ -797,22 +629,10 @@ static int zcrypt_cex4_queue_probe(struct ap_device *ap_dev)
 	ap_queue_init_state(aq);
 	ap_queue_init_reply(aq, &zq->reply);
 	aq->request_timeout = CEX4_CLEANUP_TIME;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_set_drvdata(&ap_dev->device, zq);
-	rc = zcrypt_queue_register(zq);
-	if (rc) {
-=======
 	aq->private = zq;
 	rc = zcrypt_queue_register(zq);
 	if (rc) {
 		aq->private = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_set_drvdata(&ap_dev->device, zq);
-	rc = zcrypt_queue_register(zq);
-	if (rc) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		zcrypt_queue_free(zq);
 		return rc;
 	}
@@ -822,13 +642,7 @@ static int zcrypt_cex4_queue_probe(struct ap_device *ap_dev)
 					&cca_queue_attr_grp);
 		if (rc) {
 			zcrypt_queue_unregister(zq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			aq->private = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			zcrypt_queue_free(zq);
 		}
 	} else if (ap_test_bit(&aq->card->functions, AP_FUNC_EP11)) {
@@ -836,13 +650,7 @@ static int zcrypt_cex4_queue_probe(struct ap_device *ap_dev)
 					&ep11_queue_attr_grp);
 		if (rc) {
 			zcrypt_queue_unregister(zq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			aq->private = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			zcrypt_queue_free(zq);
 		}
 	}
@@ -850,49 +658,21 @@ static int zcrypt_cex4_queue_probe(struct ap_device *ap_dev)
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * This is called to remove the CEX4/CEX5/CEX6/CEX7 queue driver
  * information if an AP queue device is removed.
  */
 static void zcrypt_cex4_queue_remove(struct ap_device *ap_dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct zcrypt_queue *zq = dev_get_drvdata(&ap_dev->device);
-	struct ap_queue *aq = to_ap_queue(&ap_dev->device);
-=======
 	struct ap_queue *aq = to_ap_queue(&ap_dev->device);
 	struct zcrypt_queue *zq = aq->private;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct zcrypt_queue *zq = dev_get_drvdata(&ap_dev->device);
-	struct ap_queue *aq = to_ap_queue(&ap_dev->device);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ap_test_bit(&aq->card->functions, AP_FUNC_COPRO))
 		sysfs_remove_group(&ap_dev->device.kobj, &cca_queue_attr_grp);
 	else if (ap_test_bit(&aq->card->functions, AP_FUNC_EP11))
 		sysfs_remove_group(&ap_dev->device.kobj, &ep11_queue_attr_grp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	zcrypt_queue_unregister(zq);
-=======
 	if (zq)
 		zcrypt_queue_unregister(zq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	zcrypt_queue_unregister(zq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct ap_driver zcrypt_cex4_queue_driver = {

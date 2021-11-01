@@ -54,28 +54,12 @@ extern int vega10_thermal_get_temperature(struct pp_hwmgr *hwmgr);
 extern int vega10_thermal_stop_thermal_controller(struct pp_hwmgr *hwmgr);
 extern int vega10_fan_ctrl_get_fan_speed_info(struct pp_hwmgr *hwmgr,
 		struct phm_fan_speed_info *fan_speed_info);
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern int vega10_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
-=======
 extern int vega10_fan_ctrl_get_fan_speed_percent(struct pp_hwmgr *hwmgr,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern int vega10_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint32_t *speed);
 extern int vega10_fan_ctrl_set_default_mode(struct pp_hwmgr *hwmgr);
 extern int vega10_fan_ctrl_set_static_mode(struct pp_hwmgr *hwmgr,
 		uint32_t mode);
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern int vega10_fan_ctrl_set_fan_speed_pwm(struct pp_hwmgr *hwmgr,
-=======
 extern int vega10_fan_ctrl_set_fan_speed_percent(struct pp_hwmgr *hwmgr,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern int vega10_fan_ctrl_set_fan_speed_pwm(struct pp_hwmgr *hwmgr,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint32_t speed);
 extern int vega10_fan_ctrl_reset_fan_speed_to_default(struct pp_hwmgr *hwmgr);
 extern int vega10_thermal_ctrl_uninitialize_thermal_controller(

@@ -119,15 +119,7 @@ static int cfi_use_status_reg(struct cfi_private *cfi)
 	struct cfi_pri_amdstd *extp = cfi->cmdset_priv;
 	u8 poll_mask = CFI_POLL_STATUS_REG | CFI_POLL_DQ;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return extp && extp->MinorVersion >= '5' &&
-=======
 	return extp->MinorVersion >= '5' &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return extp && extp->MinorVersion >= '5' &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		(extp->SoftwareFeatures & poll_mask) == CFI_POLL_STATUS_REG;
 }
 

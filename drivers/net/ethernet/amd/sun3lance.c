@@ -245,15 +245,7 @@ static void set_multicast_list( struct net_device *dev );
 
 /************************* End of Prototypes **************************/
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static struct net_device * __init sun3lance_probe(void)
-=======
 struct net_device * __init sun3lance_probe(int unit)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct net_device * __init sun3lance_probe(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_device *dev;
 	static int found;
@@ -280,16 +272,10 @@ static struct net_device * __init sun3lance_probe(void)
 	dev = alloc_etherdev(sizeof(struct lance_private));
 	if (!dev)
 		return ERR_PTR(-ENOMEM);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (unit >= 0) {
 		sprintf(dev->name, "eth%d", unit);
 		netdev_boot_setup_check(dev);
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!lance_probe(dev))
 		goto out;
@@ -938,38 +924,17 @@ static void set_multicast_list( struct net_device *dev )
 }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static struct net_device *sun3lance_dev;
-
-static int __init sun3lance_init(void)
-{
-	sun3lance_dev = sun3lance_probe();
-	return PTR_ERR_OR_ZERO(sun3lance_dev);
-}
-module_init(sun3lance_init);
-
-static void __exit sun3lance_cleanup(void)
-=======
 #ifdef MODULE
 
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct net_device *sun3lance_dev;
 
-static int __init sun3lance_init(void)
+int __init init_module(void)
 {
-	sun3lance_dev = sun3lance_probe();
+	sun3lance_dev = sun3lance_probe(-1);
 	return PTR_ERR_OR_ZERO(sun3lance_dev);
 }
-module_init(sun3lance_init);
 
-<<<<<<< HEAD
 void __exit cleanup_module(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void __exit sun3lance_cleanup(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unregister_netdev(sun3lance_dev);
 #ifdef CONFIG_SUN3
@@ -977,14 +942,6 @@ static void __exit sun3lance_cleanup(void)
 #endif
 	free_netdev(sun3lance_dev);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_exit(sun3lance_cleanup);
-=======
 
 #endif /* MODULE */
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_exit(sun3lance_cleanup);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

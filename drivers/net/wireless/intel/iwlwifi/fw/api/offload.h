@@ -3,14 +3,6 @@
  * Copyright (C) 2012-2014 Intel Corporation
  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Copyright (C) 2021 Intel Corporation
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Copyright (C) 2021 Intel Corporation
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #ifndef __iwl_fw_api_offload_h__
 #define __iwl_fw_api_offload_h__
@@ -28,15 +20,7 @@ enum iwl_prot_offload_subcmd_ids {
 #define MAX_STORED_BEACON_SIZE 600
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct iwl_stored_beacon_notif_common - Stored beacon notif common fields
-=======
  * struct iwl_stored_beacon_notif - Stored beacon notification
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct iwl_stored_beacon_notif_common - Stored beacon notif common fields
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @system_time: system time on air rise
  * @tsf: TSF on air rise
@@ -45,19 +29,9 @@ enum iwl_prot_offload_subcmd_ids {
  * @channel: channel this beacon was received on
  * @rates: rate in ucode internal format
  * @byte_count: frame's byte count
-<<<<<<< HEAD
-<<<<<<< HEAD
- */
-struct iwl_stored_beacon_notif_common {
-=======
  * @data: beacon data, length in @byte_count
  */
 struct iwl_stored_beacon_notif {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- */
-struct iwl_stored_beacon_notif_common {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le32 system_time;
 	__le64 tsf;
 	__le32 beacon_timestamp;
@@ -65,62 +39,7 @@ struct iwl_stored_beacon_notif_common {
 	__le16 channel;
 	__le32 rates;
 	__le32 byte_count;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-} __packed;
-
-/**
- * struct iwl_stored_beacon_notif - Stored beacon notification
- *
- * @common: fields common for all versions
- * @data: beacon data, length in @byte_count
- */
-struct iwl_stored_beacon_notif_v2 {
-	struct iwl_stored_beacon_notif_common common;
-<<<<<<< HEAD
 	u8 data[MAX_STORED_BEACON_SIZE];
 } __packed; /* WOWLAN_STROED_BEACON_INFO_S_VER_2 */
 
-/**
- * struct iwl_stored_beacon_notif_v3 - Stored beacon notification
- *
- * @common: fields common for all versions
- * @sta_id: station for which the beacon was received
- * @reserved: reserved for alignment
- * @data: beacon data, length in @byte_count
- */
-struct iwl_stored_beacon_notif_v3 {
-	struct iwl_stored_beacon_notif_common common;
-	u8 sta_id;
-	u8 reserved[3];
-	u8 data[MAX_STORED_BEACON_SIZE];
-} __packed; /* WOWLAN_STROED_BEACON_INFO_S_VER_3 */
-
-=======
-	u8 data[MAX_STORED_BEACON_SIZE];
-} __packed; /* WOWLAN_STROED_BEACON_INFO_S_VER_2 */
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u8 data[MAX_STORED_BEACON_SIZE];
-} __packed; /* WOWLAN_STROED_BEACON_INFO_S_VER_2 */
-
-/**
- * struct iwl_stored_beacon_notif_v3 - Stored beacon notification
- *
- * @common: fields common for all versions
- * @sta_id: station for which the beacon was received
- * @reserved: reserved for alignment
- * @data: beacon data, length in @byte_count
- */
-struct iwl_stored_beacon_notif_v3 {
-	struct iwl_stored_beacon_notif_common common;
-	u8 sta_id;
-	u8 reserved[3];
-	u8 data[MAX_STORED_BEACON_SIZE];
-} __packed; /* WOWLAN_STROED_BEACON_INFO_S_VER_3 */
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __iwl_fw_api_offload_h__ */

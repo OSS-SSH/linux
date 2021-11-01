@@ -1,21 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Marvell CN10K RPM driver
- *
- * Copyright (C) 2020 Marvell.
- *
-=======
 /*  Marvell OcteonTx2 RPM driver
  *
  * Copyright (C) 2020 Marvell.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Marvell CN10K RPM driver
- *
- * Copyright (C) 2020 Marvell.
- *
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #ifndef LMAC_COMMON_H
@@ -24,44 +10,17 @@
 #include "rvu.h"
 #include "cgx.h"
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct lmac - per lmac locks and properties
-=======
  * struct lmac
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct lmac - per lmac locks and properties
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @wq_cmd_cmplt:	waitq to keep the process blocked until cmd completion
  * @cmd_lock:		Lock to serialize the command interface
  * @resp:		command response
  * @link_info:		link related information
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @mac_to_index_bmap:	Mac address to CGX table index mapping
  * @event_cb:		callback for linkchange events
  * @event_cb_lock:	lock for serializing callback with unregister
- * @cgx:		parent cgx port
- * @mcast_filters_count:  Number of multicast filters installed
- * @lmac_id:		lmac port id
  * @cmd_pend:		flag set before new command is started
  *			flag cleared after command response is received
-=======
-=======
- * @mac_to_index_bmap:	Mac address to CGX table index mapping
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * @event_cb:		callback for linkchange events
- * @event_cb_lock:	lock for serializing callback with unregister
  * @cgx:		parent cgx port
- * @mcast_filters_count:  Number of multicast filters installed
  * @lmac_id:		lmac port id
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @cmd_pend:		flag set before new command is started
- *			flag cleared after command response is received
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @name:		lmac port name
  */
 struct lmac {
@@ -70,31 +29,12 @@ struct lmac {
 	struct mutex cmd_lock;
 	u64 resp;
 	struct cgx_link_user_info link_info;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct rsrc_bmap mac_to_index_bmap;
 	struct cgx_event_cb event_cb;
 	/* lock for serializing callback with unregister */
 	spinlock_t event_cb_lock;
-	struct cgx *cgx;
-	u8 mcast_filters_count;
-	u8 lmac_id;
 	bool cmd_pend;
-=======
-=======
-	struct rsrc_bmap mac_to_index_bmap;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct cgx_event_cb event_cb;
-	/* lock for serializing callback with unregister */
-	spinlock_t event_cb_lock;
 	struct cgx *cgx;
-	u8 mcast_filters_count;
 	u8 lmac_id;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool cmd_pend;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char *name;
 };
 

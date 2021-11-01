@@ -41,24 +41,10 @@
 		interrupt-controller;
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	serial0: serial@e0006800 {
-		device_type = "serial";
-		compatible = "litex,liteuart";
-		reg = <0xe0006800 0x100>;
-=======
 	serial0: serial@e0002000 {
 		device_type = "serial";
 		compatible = "litex,liteuart";
 		reg = <0xe0002000 0x100>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	serial0: serial@e0006800 {
-		device_type = "serial";
-		compatible = "litex,liteuart";
-		reg = <0xe0006800 0x100>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	soc_ctrl0: soc_controller@e0000000 {
@@ -66,22 +52,4 @@
 			reg = <0xe0000000 0xc>;
 			status = "okay";
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	ethernet@e0001000 {
-		compatible = "litex,liteeth";
-		reg = <0xe0001000 0x7c>,
-		      <0xe0001800 0x0a>,
-		      <0x80000000 0x2000>;
-		reg-names = "mac", "mdio", "buffer";
-		interrupts = <2>;
-	};
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

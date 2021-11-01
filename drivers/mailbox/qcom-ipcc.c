@@ -277,14 +277,6 @@ static struct platform_driver qcom_ipcc_driver = {
 	.driver = {
 		.name = "qcom-ipcc",
 		.of_match_table = qcom_ipcc_of_match,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.suppress_bind_attrs = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.suppress_bind_attrs = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 };
 

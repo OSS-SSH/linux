@@ -168,9 +168,6 @@ config OSF4_COMPAT
 	  with v4 shared libraries freely available from Compaq. If you're
 	  going to use shared libraries from Tru64 version 5.0 or later, say N.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 config BINFMT_EM86
 	tristate "Kernel support for Linux/Intel ELF binaries"
 	depends on ALPHA
@@ -186,9 +183,6 @@ config BINFMT_EM86
 	  later load the module when you want to use a Linux/Intel binary. The
 	  module will be called binfmt_em86. If unsure, say Y.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config BINFMT_MISC
 	tristate "Kernel support for MISC binaries"
 	help

@@ -249,16 +249,8 @@ static s32 igc_phy_setup_autoneg(struct igc_hw *hw)
 			return ret_val;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (phy->autoneg_mask & ADVERTISE_2500_FULL) {
-=======
 	if ((phy->autoneg_mask & ADVERTISE_2500_FULL) &&
 	    hw->phy.id == I225_I_PHY_ID) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (phy->autoneg_mask & ADVERTISE_2500_FULL) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Read the MULTI GBT AN Control Register - reg 7.32 */
 		ret_val = phy->ops.read_reg(hw, (STANDARD_AN_REG_MASK <<
 					    MMD_DEVADDR_SHIFT) |
@@ -398,16 +390,8 @@ static s32 igc_phy_setup_autoneg(struct igc_hw *hw)
 		ret_val = phy->ops.write_reg(hw, PHY_1000T_CTRL,
 					     mii_1000t_ctrl_reg);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (phy->autoneg_mask & ADVERTISE_2500_FULL)
-=======
 	if ((phy->autoneg_mask & ADVERTISE_2500_FULL) &&
 	    hw->phy.id == I225_I_PHY_ID)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (phy->autoneg_mask & ADVERTISE_2500_FULL)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret_val = phy->ops.write_reg(hw,
 					     (STANDARD_AN_REG_MASK <<
 					     MMD_DEVADDR_SHIFT) |

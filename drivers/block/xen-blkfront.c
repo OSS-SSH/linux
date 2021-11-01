@@ -80,14 +80,6 @@ enum blkif_state {
 	BLKIF_STATE_DISCONNECTED,
 	BLKIF_STATE_CONNECTED,
 	BLKIF_STATE_SUSPENDED,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	BLKIF_STATE_ERROR,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	BLKIF_STATE_ERROR,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct grant {
@@ -97,14 +89,6 @@ struct grant {
 };
 
 enum blk_req_status {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	REQ_PROCESSING,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	REQ_PROCESSING,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	REQ_WAITING,
 	REQ_DONE,
 	REQ_ERROR,
@@ -518,58 +502,34 @@ static int blkif_getgeo(struct block_device *bd, struct hd_geometry *hg)
 static int blkif_ioctl(struct block_device *bdev, fmode_t mode,
 		       unsigned command, unsigned long argument)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int i;
-
-	switch (command) {
-	case CDROMMULTISESSION:
-=======
 	struct blkfront_info *info = bdev->bd_disk->private_data;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
+
+	dev_dbg(&info->xbdev->dev, "command: 0x%x, argument: 0x%lx\n",
+		command, (long)argument);
 
 	switch (command) {
 	case CDROMMULTISESSION:
-<<<<<<< HEAD
 		dev_dbg(&info->xbdev->dev, "FIXME: support multisession CDs later\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (i = 0; i < sizeof(struct cdrom_multisession); i++)
 			if (put_user(0, (char __user *)(argument + i)))
 				return -EFAULT;
 		return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	case CDROM_GET_CAPABILITY:
-		if (bdev->bd_disk->flags & GENHD_FL_CD)
-			return 0;
-		return -EINVAL;
-	default:
-		return -EINVAL;
-	}
-=======
 
 	case CDROM_GET_CAPABILITY: {
 		struct gendisk *gd = info->gd;
 		if (gd->flags & GENHD_FL_CD)
-=======
-	case CDROM_GET_CAPABILITY:
-		if (bdev->bd_disk->flags & GENHD_FL_CD)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 0;
 		return -EINVAL;
-	default:
-		return -EINVAL;
 	}
-<<<<<<< HEAD
+
+	default:
+		/*printk(KERN_ALERT "ioctl %08x not supported by Xen blkdev\n",
+		  command);*/
+		return -EINVAL; /* same return as native Linux */
+	}
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static unsigned long blkif_ring_get_request(struct blkfront_ring_info *rinfo,
@@ -583,24 +543,10 @@ static unsigned long blkif_ring_get_request(struct blkfront_ring_info *rinfo,
 
 	id = get_id_from_freelist(rinfo);
 	rinfo->shadow[id].request = req;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rinfo->shadow[id].status = REQ_PROCESSING;
-	rinfo->shadow[id].associated_id = NO_ASSOCIATED_ID;
-
-	rinfo->shadow[id].req.u.rw.id = id;
-=======
 	rinfo->shadow[id].status = REQ_WAITING;
 	rinfo->shadow[id].associated_id = NO_ASSOCIATED_ID;
 
 	(*ring_req)->u.rw.id = id;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rinfo->shadow[id].status = REQ_PROCESSING;
-	rinfo->shadow[id].associated_id = NO_ASSOCIATED_ID;
-
-	rinfo->shadow[id].req.u.rw.id = id;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return id;
 }
@@ -608,29 +554,11 @@ static unsigned long blkif_ring_get_request(struct blkfront_ring_info *rinfo,
 static int blkif_queue_discard_req(struct request *req, struct blkfront_ring_info *rinfo)
 {
 	struct blkfront_info *info = rinfo->dev_info;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct blkif_request *ring_req, *final_ring_req;
-	unsigned long id;
-
-	/* Fill out a communications ring structure. */
-	id = blkif_ring_get_request(rinfo, req, &final_ring_req);
-	ring_req = &rinfo->shadow[id].req;
-=======
 	struct blkif_request *ring_req;
 	unsigned long id;
 
 	/* Fill out a communications ring structure. */
 	id = blkif_ring_get_request(rinfo, req, &ring_req);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct blkif_request *ring_req, *final_ring_req;
-	unsigned long id;
-
-	/* Fill out a communications ring structure. */
-	id = blkif_ring_get_request(rinfo, req, &final_ring_req);
-	ring_req = &rinfo->shadow[id].req;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ring_req->operation = BLKIF_OP_DISCARD;
 	ring_req->u.discard.nr_sectors = blk_rq_sectors(req);
@@ -641,20 +569,8 @@ static int blkif_queue_discard_req(struct request *req, struct blkfront_ring_inf
 	else
 		ring_req->u.discard.flag = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Copy the request to the ring page. */
-	*final_ring_req = *ring_req;
-	rinfo->shadow[id].status = REQ_WAITING;
-=======
 	/* Keep a private copy so we can reissue requests when recovering. */
 	rinfo->shadow[id].req = *ring_req;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Copy the request to the ring page. */
-	*final_ring_req = *ring_req;
-	rinfo->shadow[id].status = REQ_WAITING;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -787,14 +703,6 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
 {
 	struct blkfront_info *info = rinfo->dev_info;
 	struct blkif_request *ring_req, *extra_ring_req = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct blkif_request *final_ring_req, *final_extra_ring_req = NULL;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct blkif_request *final_ring_req, *final_extra_ring_req = NULL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long id, extra_id = NO_ASSOCIATED_ID;
 	bool require_extra_req = false;
 	int i;
@@ -839,17 +747,7 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
 	}
 
 	/* Fill out a communications ring structure. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	id = blkif_ring_get_request(rinfo, req, &final_ring_req);
-	ring_req = &rinfo->shadow[id].req;
-=======
 	id = blkif_ring_get_request(rinfo, req, &ring_req);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	id = blkif_ring_get_request(rinfo, req, &final_ring_req);
-	ring_req = &rinfo->shadow[id].req;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	num_sg = blk_rq_map_sg(req->q, req, rinfo->shadow[id].sg);
 	num_grant = 0;
@@ -900,19 +798,7 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
 		ring_req->u.rw.nr_segments = num_grant;
 		if (unlikely(require_extra_req)) {
 			extra_id = blkif_ring_get_request(rinfo, req,
-<<<<<<< HEAD
-<<<<<<< HEAD
-							  &final_extra_ring_req);
-			extra_ring_req = &rinfo->shadow[extra_id].req;
-
-=======
 							  &extra_ring_req);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-							  &final_extra_ring_req);
-			extra_ring_req = &rinfo->shadow[extra_id].req;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * Only the first request contains the scatter-gather
 			 * list.
@@ -954,26 +840,10 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
 	if (setup.segments)
 		kunmap_atomic(setup.segments);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Copy request(s) to the ring page. */
-	*final_ring_req = *ring_req;
-	rinfo->shadow[id].status = REQ_WAITING;
-	if (unlikely(require_extra_req)) {
-		*final_extra_ring_req = *extra_ring_req;
-		rinfo->shadow[extra_id].status = REQ_WAITING;
-	}
-<<<<<<< HEAD
-=======
 	/* Keep a private copy so we can reissue requests when recovering. */
 	rinfo->shadow[id].req = *ring_req;
 	if (unlikely(require_extra_req))
 		rinfo->shadow[extra_id].req = *extra_ring_req;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (new_persistent_gnts)
 		gnttab_free_grant_references(setup.gref_head);
@@ -1235,13 +1105,7 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
 	err = xlbd_reserve_minors(minor, nr_minors);
 	if (err)
 		return err;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	err = -ENODEV;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(&info->tag_set, 0, sizeof(info->tag_set));
 	info->tag_set.ops = &blkfront_mq_ops;
@@ -1313,9 +1177,6 @@ out_release_minors:
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void xlvbd_release_gendisk(struct blkfront_info *info)
 {
 	unsigned int minor, nr_minors, i;
@@ -1346,9 +1207,6 @@ static void xlvbd_release_gendisk(struct blkfront_info *info)
 	blk_mq_free_tag_set(&info->tag_set);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Already hold rinfo->ring_lock. */
 static inline void kick_pending_request_queues_locked(struct blkfront_ring_info *rinfo)
 {
@@ -1539,18 +1397,8 @@ static enum blk_req_status blkif_rsp_to_req_status(int rsp)
 static int blkif_get_final_status(enum blk_req_status s1,
 				  enum blk_req_status s2)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	BUG_ON(s1 < REQ_DONE);
-	BUG_ON(s2 < REQ_DONE);
-=======
 	BUG_ON(s1 == REQ_WAITING);
 	BUG_ON(s2 == REQ_WAITING);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	BUG_ON(s1 < REQ_DONE);
-	BUG_ON(s2 < REQ_DONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (s1 == REQ_ERROR || s2 == REQ_ERROR)
 		return BLKIF_RSP_ERROR;
@@ -1583,15 +1431,7 @@ static bool blkif_completion(unsigned long *id,
 		s->status = blkif_rsp_to_req_status(bret->status);
 
 		/* Wait the second response if not yet here. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (s2->status < REQ_DONE)
-=======
 		if (s2->status == REQ_WAITING)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (s2->status < REQ_DONE)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return false;
 
 		bret->status = blkif_get_final_status(s->status,
@@ -1699,15 +1539,7 @@ static bool blkif_completion(unsigned long *id,
 static irqreturn_t blkif_interrupt(int irq, void *dev_id)
 {
 	struct request *req;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct blkif_response bret;
-=======
 	struct blkif_response *bret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct blkif_response bret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RING_IDX i, rp;
 	unsigned long flags;
 	struct blkfront_ring_info *rinfo = (struct blkfront_ring_info *)dev_id;
@@ -1718,176 +1550,54 @@ static irqreturn_t blkif_interrupt(int irq, void *dev_id)
 
 	spin_lock_irqsave(&rinfo->ring_lock, flags);
  again:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	rp = READ_ONCE(rinfo->ring.sring->rsp_prod);
-	virt_rmb(); /* Ensure we see queued responses up to 'rp'. */
-	if (RING_RESPONSE_PROD_OVERFLOW(&rinfo->ring, rp)) {
-		pr_alert("%s: illegal number of responses %u\n",
-			 info->gd->disk_name, rp - rinfo->ring.rsp_cons);
-		goto err;
-	}
-<<<<<<< HEAD
-
-	for (i = rinfo->ring.rsp_cons; i != rp; i++) {
-		unsigned long id;
-		unsigned int op;
-
-		RING_COPY_RESPONSE(&rinfo->ring, i, &bret);
-		id = bret.id;
-
-=======
 	rp = rinfo->ring.sring->rsp_prod;
 	rmb(); /* Ensure we see queued responses up to 'rp'. */
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = rinfo->ring.rsp_cons; i != rp; i++) {
 		unsigned long id;
-		unsigned int op;
 
-		RING_COPY_RESPONSE(&rinfo->ring, i, &bret);
-		id = bret.id;
-
-<<<<<<< HEAD
 		bret = RING_GET_RESPONSE(&rinfo->ring, i);
 		id   = bret->id;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * The backend has messed up and given us an id that we would
 		 * never have given to it (we stamp it up to BLK_RING_SIZE -
 		 * look in get_id_from_freelist.
 		 */
 		if (id >= BLK_RING_SIZE(info)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			pr_alert("%s: response has incorrect id (%ld)\n",
-				 info->gd->disk_name, id);
-			goto err;
-		}
-		if (rinfo->shadow[id].status != REQ_WAITING) {
-			pr_alert("%s: response references no pending request\n",
-				 info->gd->disk_name);
-			goto err;
-<<<<<<< HEAD
-		}
-
-		rinfo->shadow[id].status = REQ_PROCESSING;
-		req  = rinfo->shadow[id].request;
-
-		op = rinfo->shadow[id].req.operation;
-		if (op == BLKIF_OP_INDIRECT)
-			op = rinfo->shadow[id].req.u.indirect.indirect_op;
-		if (bret.operation != op) {
-			pr_alert("%s: response has wrong operation (%u instead of %u)\n",
-				 info->gd->disk_name, bret.operation, op);
-			goto err;
-		}
-
-		if (bret.operation != BLKIF_OP_DISCARD) {
-=======
 			WARN(1, "%s: response to %s has incorrect id (%ld)\n",
 			     info->gd->disk_name, op_name(bret->operation), id);
 			/* We can't safely get the 'struct request' as
 			 * the id is busted. */
 			continue;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
-
-		rinfo->shadow[id].status = REQ_PROCESSING;
 		req  = rinfo->shadow[id].request;
 
-<<<<<<< HEAD
 		if (bret->operation != BLKIF_OP_DISCARD) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		op = rinfo->shadow[id].req.operation;
-		if (op == BLKIF_OP_INDIRECT)
-			op = rinfo->shadow[id].req.u.indirect.indirect_op;
-		if (bret.operation != op) {
-			pr_alert("%s: response has wrong operation (%u instead of %u)\n",
-				 info->gd->disk_name, bret.operation, op);
-			goto err;
-		}
-
-		if (bret.operation != BLKIF_OP_DISCARD) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/*
 			 * We may need to wait for an extra response if the
 			 * I/O request is split in 2
 			 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (!blkif_completion(&id, rinfo, &bret))
-=======
 			if (!blkif_completion(&id, rinfo, bret))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (!blkif_completion(&id, rinfo, &bret))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				continue;
 		}
 
 		if (add_id_to_freelist(rinfo, id)) {
 			WARN(1, "%s: response to %s (id %ld) couldn't be recycled!\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     info->gd->disk_name, op_name(bret.operation), id);
-			continue;
-		}
-
-		if (bret.status == BLKIF_RSP_OKAY)
-=======
 			     info->gd->disk_name, op_name(bret->operation), id);
 			continue;
 		}
 
 		if (bret->status == BLKIF_RSP_OKAY)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     info->gd->disk_name, op_name(bret.operation), id);
-			continue;
-		}
-
-		if (bret.status == BLKIF_RSP_OKAY)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			blkif_req(req)->error = BLK_STS_OK;
 		else
 			blkif_req(req)->error = BLK_STS_IOERR;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		switch (bret.operation) {
-		case BLKIF_OP_DISCARD:
-			if (unlikely(bret.status == BLKIF_RSP_EOPNOTSUPP)) {
-				struct request_queue *rq = info->rq;
-
-				pr_warn_ratelimited("blkfront: %s: %s op failed\n",
-					   info->gd->disk_name, op_name(bret.operation));
-=======
 		switch (bret->operation) {
-=======
-		switch (bret.operation) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case BLKIF_OP_DISCARD:
-			if (unlikely(bret.status == BLKIF_RSP_EOPNOTSUPP)) {
+			if (unlikely(bret->status == BLKIF_RSP_EOPNOTSUPP)) {
 				struct request_queue *rq = info->rq;
-<<<<<<< HEAD
 				printk(KERN_WARNING "blkfront: %s: %s op failed\n",
 					   info->gd->disk_name, op_name(bret->operation));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-				pr_warn_ratelimited("blkfront: %s: %s op failed\n",
-					   info->gd->disk_name, op_name(bret.operation));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				blkif_req(req)->error = BLK_STS_NOTSUPP;
 				info->feature_discard = 0;
 				info->feature_secdiscard = 0;
@@ -1897,38 +1607,15 @@ static irqreturn_t blkif_interrupt(int irq, void *dev_id)
 			break;
 		case BLKIF_OP_FLUSH_DISKCACHE:
 		case BLKIF_OP_WRITE_BARRIER:
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (unlikely(bret.status == BLKIF_RSP_EOPNOTSUPP)) {
-				pr_warn_ratelimited("blkfront: %s: %s op failed\n",
-				       info->gd->disk_name, op_name(bret.operation));
-				blkif_req(req)->error = BLK_STS_NOTSUPP;
-			}
-			if (unlikely(bret.status == BLKIF_RSP_ERROR &&
-				     rinfo->shadow[id].req.u.rw.nr_segments == 0)) {
-				pr_warn_ratelimited("blkfront: %s: empty %s op failed\n",
-				       info->gd->disk_name, op_name(bret.operation));
-=======
 			if (unlikely(bret->status == BLKIF_RSP_EOPNOTSUPP)) {
 				printk(KERN_WARNING "blkfront: %s: %s op failed\n",
 				       info->gd->disk_name, op_name(bret->operation));
-=======
-			if (unlikely(bret.status == BLKIF_RSP_EOPNOTSUPP)) {
-				pr_warn_ratelimited("blkfront: %s: %s op failed\n",
-				       info->gd->disk_name, op_name(bret.operation));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				blkif_req(req)->error = BLK_STS_NOTSUPP;
 			}
-			if (unlikely(bret.status == BLKIF_RSP_ERROR &&
+			if (unlikely(bret->status == BLKIF_RSP_ERROR &&
 				     rinfo->shadow[id].req.u.rw.nr_segments == 0)) {
-<<<<<<< HEAD
 				printk(KERN_WARNING "blkfront: %s: empty %s op failed\n",
 				       info->gd->disk_name, op_name(bret->operation));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				pr_warn_ratelimited("blkfront: %s: empty %s op failed\n",
-				       info->gd->disk_name, op_name(bret.operation));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				blkif_req(req)->error = BLK_STS_NOTSUPP;
 			}
 			if (unlikely(blkif_req(req)->error)) {
@@ -1941,22 +1628,9 @@ static irqreturn_t blkif_interrupt(int irq, void *dev_id)
 			fallthrough;
 		case BLKIF_OP_READ:
 		case BLKIF_OP_WRITE:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (unlikely(bret.status != BLKIF_RSP_OKAY))
-				dev_dbg_ratelimited(&info->xbdev->dev,
-					"Bad return from blkdev data request: %#x\n",
-					bret.status);
-<<<<<<< HEAD
-=======
 			if (unlikely(bret->status != BLKIF_RSP_OKAY))
 				dev_dbg(&info->xbdev->dev, "Bad return from blkdev data "
 					"request: %x\n", bret->status);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			break;
 		default:
@@ -1982,23 +1656,6 @@ static irqreturn_t blkif_interrupt(int irq, void *dev_id)
 	spin_unlock_irqrestore(&rinfo->ring_lock, flags);
 
 	return IRQ_HANDLED;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
- err:
-	info->connected = BLKIF_STATE_ERROR;
-
-	spin_unlock_irqrestore(&rinfo->ring_lock, flags);
-
-	pr_alert("%s disabled for further use\n", info->gd->disk_name);
-	return IRQ_HANDLED;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -2099,18 +1756,12 @@ abort_transaction:
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void free_info(struct blkfront_info *info)
 {
 	list_del(&info->info_list);
 	kfree(info);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Common code used when first setting up, and when resuming. */
 static int talk_to_blkback(struct xenbus_device *dev,
 			   struct blkfront_info *info)
@@ -2229,9 +1880,6 @@ again:
 		xenbus_dev_fatal(dev, err, "%s", message);
  destroy_blkring:
 	blkif_free(info, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	mutex_lock(&blkfront_mutex);
 	free_info(info);
@@ -2239,9 +1887,6 @@ again:
 
 	dev_set_drvdata(&dev->dev, NULL);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -2481,60 +2126,38 @@ static int blkfront_resume(struct xenbus_device *dev)
 static void blkfront_closing(struct blkfront_info *info)
 {
 	struct xenbus_device *xbdev = info->xbdev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct blkfront_ring_info *rinfo;
-	unsigned int i;
-
-	if (xbdev->state == XenbusStateClosing)
-		return;
-
-	/* No more blkif_request(). */
-	blk_mq_stop_hw_queues(info->rq);
-	blk_set_queue_dying(info->rq);
-	set_capacity(info->gd, 0);
-
-	for_each_rinfo(info, rinfo, i) {
-		/* No more gnttab callback work. */
-		gnttab_cancel_free_callback(&rinfo->callback);
-
-		/* Flush gnttab callback work. Must be done with no locks held. */
-		flush_work(&rinfo->work);
-	}
-
-	xenbus_frontend_closed(xbdev);
-=======
 	struct block_device *bdev = NULL;
 
 	mutex_lock(&info->mutex);
-=======
-	struct blkfront_ring_info *rinfo;
-	unsigned int i;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (xbdev->state == XenbusStateClosing)
+	if (xbdev->state == XenbusStateClosing) {
+		mutex_unlock(&info->mutex);
 		return;
-
-	/* No more blkif_request(). */
-	blk_mq_stop_hw_queues(info->rq);
-	blk_set_queue_dying(info->rq);
-	set_capacity(info->gd, 0);
-
-	for_each_rinfo(info, rinfo, i) {
-		/* No more gnttab callback work. */
-		gnttab_cancel_free_callback(&rinfo->callback);
-
-		/* Flush gnttab callback work. Must be done with no locks held. */
-		flush_work(&rinfo->work);
 	}
 
-<<<<<<< HEAD
+	if (info->gd)
+		bdev = bdgrab(info->gd->part0);
+
+	mutex_unlock(&info->mutex);
+
+	if (!bdev) {
+		xenbus_frontend_closed(xbdev);
+		return;
+	}
+
+	mutex_lock(&bdev->bd_disk->open_mutex);
+
+	if (bdev->bd_openers) {
+		xenbus_dev_error(xbdev, -EBUSY,
+				 "Device in use; refusing to close");
+		xenbus_switch_state(xbdev, XenbusStateClosing);
+	} else {
+		xlvbd_release_gendisk(info);
+		xenbus_frontend_closed(xbdev);
+	}
+
 	mutex_unlock(&bdev->bd_disk->open_mutex);
 	bdput(bdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xenbus_frontend_closed(xbdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void blkfront_setup_discard(struct blkfront_info *info)
@@ -2849,16 +2472,8 @@ static void blkback_changed(struct xenbus_device *dev,
 			break;
 		fallthrough;
 	case XenbusStateClosing:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		blkfront_closing(info);
-=======
 		if (info)
 			blkfront_closing(info);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		blkfront_closing(info);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 }
@@ -2866,47 +2481,56 @@ static void blkback_changed(struct xenbus_device *dev,
 static int blkfront_remove(struct xenbus_device *xbdev)
 {
 	struct blkfront_info *info = dev_get_drvdata(&xbdev->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	dev_dbg(&xbdev->dev, "%s removed", xbdev->nodename);
-
-	del_gendisk(info->gd);
-
-	mutex_lock(&blkfront_mutex);
-	list_del(&info->info_list);
-	mutex_unlock(&blkfront_mutex);
-
-	blkif_free(info, 0);
-	xlbd_release_minors(info->gd->first_minor, info->gd->minors);
-	blk_cleanup_disk(info->gd);
-	blk_mq_free_tag_set(&info->tag_set);
-
-	kfree(info);
-=======
 	struct block_device *bdev = NULL;
 	struct gendisk *disk;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(&xbdev->dev, "%s removed", xbdev->nodename);
 
-	del_gendisk(info->gd);
-
-	mutex_lock(&blkfront_mutex);
-	list_del(&info->info_list);
-	mutex_unlock(&blkfront_mutex);
+	if (!info)
+		return 0;
 
 	blkif_free(info, 0);
-	xlbd_release_minors(info->gd->first_minor, info->gd->minors);
-	blk_cleanup_disk(info->gd);
-	blk_mq_free_tag_set(&info->tag_set);
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kfree(info);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	mutex_lock(&info->mutex);
+
+	disk = info->gd;
+	if (disk)
+		bdev = bdgrab(disk->part0);
+
+	info->xbdev = NULL;
+	mutex_unlock(&info->mutex);
+
+	if (!bdev) {
+		mutex_lock(&blkfront_mutex);
+		free_info(info);
+		mutex_unlock(&blkfront_mutex);
+		return 0;
+	}
+
+	/*
+	 * The xbdev was removed before we reached the Closed
+	 * state. See if it's safe to remove the disk. If the bdev
+	 * isn't closed yet, we let release take care of it.
+	 */
+
+	mutex_lock(&disk->open_mutex);
+	info = disk->private_data;
+
+	dev_warn(disk_to_dev(disk),
+		 "%s was hot-unplugged, %d stale handles\n",
+		 xbdev->nodename, bdev->bd_openers);
+
+	if (info && !bdev->bd_openers) {
+		xlvbd_release_gendisk(info);
+		disk->private_data = NULL;
+		mutex_lock(&blkfront_mutex);
+		free_info(info);
+		mutex_unlock(&blkfront_mutex);
+	}
+
+	mutex_unlock(&disk->open_mutex);
+	bdput(bdev);
+
 	return 0;
 }
 
@@ -2917,12 +2541,6 @@ static int blkfront_is_ready(struct xenbus_device *dev)
 	return info->is_ready && info->xbdev;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct block_device_operations xlvbd_block_fops =
-{
-	.owner = THIS_MODULE,
-=======
 static int blkif_open(struct block_device *bdev, fmode_t mode)
 {
 	struct gendisk *disk = bdev->bd_disk;
@@ -2994,12 +2612,6 @@ static const struct block_device_operations xlvbd_block_fops =
 	.owner = THIS_MODULE,
 	.open = blkif_open,
 	.release = blkif_release,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct block_device_operations xlvbd_block_fops =
-{
-	.owner = THIS_MODULE,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.getgeo = blkif_getgeo,
 	.ioctl = blkif_ioctl,
 	.compat_ioctl = blkdev_compat_ptr_ioctl,

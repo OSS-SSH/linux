@@ -157,15 +157,7 @@ xfs_qm_dqpurge(
 	}
 
 	ASSERT(atomic_read(&dqp->q_pincount) == 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ASSERT(xfs_is_shutdown(mp) ||
-=======
 	ASSERT(XFS_FORCED_SHUTDOWN(mp) ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ASSERT(xfs_is_shutdown(mp) ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		!test_bit(XFS_LI_IN_AIL, &dqp->q_logitem.qli_item.li_flags));
 
 	xfs_dqfunlock(dqp);
@@ -193,36 +185,17 @@ out_unlock:
 /*
  * Purge the dquot cache.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void
-xfs_qm_dqpurge_all(
-	struct xfs_mount	*mp)
-{
-	xfs_qm_dquot_walk(mp, XFS_DQTYPE_USER, xfs_qm_dqpurge, NULL);
-	xfs_qm_dquot_walk(mp, XFS_DQTYPE_GROUP, xfs_qm_dqpurge, NULL);
-	xfs_qm_dquot_walk(mp, XFS_DQTYPE_PROJ, xfs_qm_dqpurge, NULL);
-=======
 void
-=======
-static void
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 xfs_qm_dqpurge_all(
-	struct xfs_mount	*mp)
+	struct xfs_mount	*mp,
+	uint			flags)
 {
-<<<<<<< HEAD
 	if (flags & XFS_QMOPT_UQUOTA)
 		xfs_qm_dquot_walk(mp, XFS_DQTYPE_USER, xfs_qm_dqpurge, NULL);
 	if (flags & XFS_QMOPT_GQUOTA)
 		xfs_qm_dquot_walk(mp, XFS_DQTYPE_GROUP, xfs_qm_dqpurge, NULL);
 	if (flags & XFS_QMOPT_PQUOTA)
 		xfs_qm_dquot_walk(mp, XFS_DQTYPE_PROJ, xfs_qm_dqpurge, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xfs_qm_dquot_walk(mp, XFS_DQTYPE_USER, xfs_qm_dqpurge, NULL);
-	xfs_qm_dquot_walk(mp, XFS_DQTYPE_GROUP, xfs_qm_dqpurge, NULL);
-	xfs_qm_dquot_walk(mp, XFS_DQTYPE_PROJ, xfs_qm_dqpurge, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -233,15 +206,7 @@ xfs_qm_unmount(
 	struct xfs_mount	*mp)
 {
 	if (mp->m_quotainfo) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		xfs_qm_dqpurge_all(mp);
-=======
 		xfs_qm_dqpurge_all(mp, XFS_QMOPT_QUOTALL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		xfs_qm_dqpurge_all(mp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_qm_destroy_quotainfo(mp);
 	}
 }
@@ -334,14 +299,8 @@ xfs_qm_need_dqattach(
 {
 	struct xfs_mount	*mp = ip->i_mount;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (!XFS_IS_QUOTA_RUNNING(mp))
 		return false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!XFS_IS_QUOTA_ON(mp))
 		return false;
 	if (!XFS_NOT_DQATTACHED(mp, ip))
@@ -676,15 +635,7 @@ xfs_qm_init_quotainfo(
 	struct xfs_quotainfo	*qinf;
 	int			error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ASSERT(XFS_IS_QUOTA_ON(mp));
-=======
 	ASSERT(XFS_IS_QUOTA_RUNNING(mp));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ASSERT(XFS_IS_QUOTA_ON(mp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	qinf = mp->m_quotainfo = kmem_zalloc(sizeof(struct xfs_quotainfo), 0);
 
@@ -711,15 +662,7 @@ xfs_qm_init_quotainfo(
 	/* Precalc some constants */
 	qinf->qi_dqchunklen = XFS_FSB_TO_BB(mp, XFS_DQUOT_CLUSTER_SIZE_FSB);
 	qinf->qi_dqperchunk = xfs_calc_dquots_per_chunk(qinf->qi_dqchunklen);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_bigtime(mp)) {
-=======
 	if (xfs_sb_version_hasbigtime(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_bigtime(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qinf->qi_expiry_min =
 			xfs_dq_bigtime_to_unix(XFS_DQ_BIGTIME_EXPIRY_MIN);
 		qinf->qi_expiry_max =
@@ -737,27 +680,11 @@ xfs_qm_init_quotainfo(
 	xfs_qm_init_timelimits(mp, XFS_DQTYPE_GROUP);
 	xfs_qm_init_timelimits(mp, XFS_DQTYPE_PROJ);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (XFS_IS_UQUOTA_ON(mp))
-		xfs_qm_set_defquota(mp, XFS_DQTYPE_USER, qinf);
-	if (XFS_IS_GQUOTA_ON(mp))
-		xfs_qm_set_defquota(mp, XFS_DQTYPE_GROUP, qinf);
-	if (XFS_IS_PQUOTA_ON(mp))
-=======
 	if (XFS_IS_UQUOTA_RUNNING(mp))
-=======
-	if (XFS_IS_UQUOTA_ON(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_qm_set_defquota(mp, XFS_DQTYPE_USER, qinf);
-	if (XFS_IS_GQUOTA_ON(mp))
+	if (XFS_IS_GQUOTA_RUNNING(mp))
 		xfs_qm_set_defquota(mp, XFS_DQTYPE_GROUP, qinf);
-<<<<<<< HEAD
 	if (XFS_IS_PQUOTA_RUNNING(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (XFS_IS_PQUOTA_ON(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_qm_set_defquota(mp, XFS_DQTYPE_PROJ, qinf);
 
 	qinf->qi_shrinker.count_objects = xfs_qm_shrink_count;
@@ -828,15 +755,7 @@ xfs_qm_qino_alloc(
 	 * with PQUOTA, just use sb_gquotino for sb_pquotino and
 	 * vice-versa.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_pquotino(mp) &&
-=======
 	if (!xfs_sb_version_has_pquotino(&mp->m_sb) &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_pquotino(mp) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			(flags & (XFS_QMOPT_PQUOTA|XFS_QMOPT_GQUOTA))) {
 		xfs_ino_t ino = NULLFSINO;
 
@@ -889,21 +808,9 @@ xfs_qm_qino_alloc(
 	 */
 	spin_lock(&mp->m_sb_lock);
 	if (flags & XFS_QMOPT_SBVERSION) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ASSERT(!xfs_has_quota(mp));
-
-		xfs_add_quota(mp);
-=======
 		ASSERT(!xfs_sb_version_hasquota(&mp->m_sb));
 
 		xfs_sb_version_addquota(&mp->m_sb);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ASSERT(!xfs_has_quota(mp));
-
-		xfs_add_quota(mp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mp->m_sb.sb_uquotino = NULLFSINO;
 		mp->m_sb.sb_gquotino = NULLFSINO;
 		mp->m_sb.sb_pquotino = NULLFSINO;
@@ -922,15 +829,7 @@ xfs_qm_qino_alloc(
 
 	error = xfs_trans_commit(tp);
 	if (error) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ASSERT(xfs_is_shutdown(mp));
-=======
 		ASSERT(XFS_FORCED_SHUTDOWN(mp));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ASSERT(xfs_is_shutdown(mp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_alert(mp, "%s failed (error %d)!", __func__, error);
 	}
 	if (need_alloc)
@@ -997,27 +896,11 @@ xfs_qm_reset_dqcounts(
 			ddq->d_bwarns = 0;
 			ddq->d_iwarns = 0;
 			ddq->d_rtbwarns = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (xfs_has_bigtime(mp))
-				ddq->d_type |= XFS_DQTYPE_BIGTIME;
-		}
-
-		if (xfs_has_crc(mp)) {
-=======
 			if (xfs_sb_version_hasbigtime(&mp->m_sb))
 				ddq->d_type |= XFS_DQTYPE_BIGTIME;
 		}
 
 		if (xfs_sb_version_hascrc(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (xfs_has_bigtime(mp))
-				ddq->d_type |= XFS_DQTYPE_BIGTIME;
-		}
-
-		if (xfs_has_crc(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_update_cksum((char *)&dqb[j],
 					 sizeof(struct xfs_dqblk),
 					 XFS_DQUOT_CRC_OFF);
@@ -1264,15 +1147,7 @@ xfs_qm_dqusage_adjust(
 	xfs_filblks_t		rtblks = 0;	/* total rt blks */
 	int			error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ASSERT(XFS_IS_QUOTA_ON(mp));
-=======
 	ASSERT(XFS_IS_QUOTA_RUNNING(mp));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ASSERT(XFS_IS_QUOTA_ON(mp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * rootino must have its resources accounted for, not so with the quota
@@ -1413,15 +1288,7 @@ xfs_qm_quotacheck(
 	flags = 0;
 
 	ASSERT(uip || gip || pip);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ASSERT(XFS_IS_QUOTA_ON(mp));
-=======
 	ASSERT(XFS_IS_QUOTA_RUNNING(mp));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ASSERT(XFS_IS_QUOTA_ON(mp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	xfs_notice(mp, "Quotacheck needed: Please wait.");
 
@@ -1492,15 +1359,7 @@ xfs_qm_quotacheck(
 	 * at this point (because we intentionally didn't in dqget_noattach).
 	 */
 	if (error) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		xfs_qm_dqpurge_all(mp);
-=======
 		xfs_qm_dqpurge_all(mp, XFS_QMOPT_QUOTALL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		xfs_qm_dqpurge_all(mp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto error_return;
 	}
 
@@ -1559,15 +1418,7 @@ xfs_qm_mount_quotas(
 		goto write_changes;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ASSERT(XFS_IS_QUOTA_ON(mp));
-=======
 	ASSERT(XFS_IS_QUOTA_RUNNING(mp));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ASSERT(XFS_IS_QUOTA_ON(mp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Allocate the quotainfo structure inside the mount struct, and
@@ -1622,15 +1473,7 @@ xfs_qm_mount_quotas(
 			 * the incore structures are convinced that quotas are
 			 * off, but the on disk superblock doesn't know that !
 			 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ASSERT(!(XFS_IS_QUOTA_ON(mp)));
-=======
 			ASSERT(!(XFS_IS_QUOTA_RUNNING(mp)));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ASSERT(!(XFS_IS_QUOTA_ON(mp)));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_alert(mp, "%s: Superblock update failed!",
 				__func__);
 		}
@@ -1661,15 +1504,7 @@ xfs_qm_init_quotainos(
 	/*
 	 * Get the uquota and gquota inodes
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_quota(mp)) {
-=======
 	if (xfs_sb_version_hasquota(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_quota(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (XFS_IS_UQUOTA_ON(mp) &&
 		    mp->m_sb.sb_uquotino != NULLFSINO) {
 			ASSERT(mp->m_sb.sb_uquotino > 0);
@@ -1810,15 +1645,7 @@ xfs_qm_vop_dqalloc(
 	int			error;
 	uint			lockflags;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!XFS_IS_QUOTA_ON(mp))
-=======
 	if (!XFS_IS_QUOTA_RUNNING(mp) || !XFS_IS_QUOTA_ON(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!XFS_IS_QUOTA_ON(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	lockflags = XFS_ILOCK_EXCL;
@@ -1949,15 +1776,7 @@ xfs_qm_vop_chown(
 
 
 	ASSERT(xfs_isilocked(ip, XFS_ILOCK_EXCL));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ASSERT(XFS_IS_QUOTA_ON(ip->i_mount));
-=======
 	ASSERT(XFS_IS_QUOTA_RUNNING(ip->i_mount));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ASSERT(XFS_IS_QUOTA_ON(ip->i_mount));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* old dquot */
 	prevdq = *IO_olddq;
@@ -2010,15 +1829,7 @@ xfs_qm_vop_rename_dqattach(
 	struct xfs_mount	*mp = i_tab[0]->i_mount;
 	int			i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!XFS_IS_QUOTA_ON(mp))
-=======
 	if (!XFS_IS_QUOTA_RUNNING(mp) || !XFS_IS_QUOTA_ON(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!XFS_IS_QUOTA_ON(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	for (i = 0; (i < 4 && i_tab[i]); i++) {
@@ -2049,15 +1860,7 @@ xfs_qm_vop_create_dqattach(
 {
 	struct xfs_mount	*mp = tp->t_mountp;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!XFS_IS_QUOTA_ON(mp))
-=======
 	if (!XFS_IS_QUOTA_RUNNING(mp) || !XFS_IS_QUOTA_ON(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!XFS_IS_QUOTA_ON(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	ASSERT(xfs_isilocked(ip, XFS_ILOCK_EXCL));
@@ -2085,46 +1888,3 @@ xfs_qm_vop_create_dqattach(
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Decide if this inode's dquot is near an enforcement boundary. */
-bool
-xfs_inode_near_dquot_enforcement(
-	struct xfs_inode	*ip,
-	xfs_dqtype_t		type)
-{
-	struct xfs_dquot	*dqp;
-	int64_t			freesp;
-
-	/* We only care for quotas that are enabled and enforced. */
-	dqp = xfs_inode_dquot(ip, type);
-	if (!dqp || !xfs_dquot_is_enforced(dqp))
-		return false;
-
-	if (xfs_dquot_res_over_limits(&dqp->q_ino) ||
-	    xfs_dquot_res_over_limits(&dqp->q_rtb))
-		return true;
-
-	/* For space on the data device, check the various thresholds. */
-	if (!dqp->q_prealloc_hi_wmark)
-		return false;
-
-	if (dqp->q_blk.reserved < dqp->q_prealloc_lo_wmark)
-		return false;
-
-	if (dqp->q_blk.reserved >= dqp->q_prealloc_hi_wmark)
-		return true;
-
-	freesp = dqp->q_prealloc_hi_wmark - dqp->q_blk.reserved;
-	if (freesp < dqp->q_low_space[XFS_QLOWSP_5_PCNT])
-		return true;
-
-	return false;
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

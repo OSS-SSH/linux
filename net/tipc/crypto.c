@@ -898,16 +898,6 @@ static int tipc_aead_decrypt(struct net *net, struct tipc_aead *aead,
 	if (unlikely(!aead))
 		return -ENOKEY;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	nsg = skb_cow_data(skb, 0, &unused);
-	if (unlikely(nsg < 0)) {
-		pr_err("RX: skb_cow_data() returned %d\n", nsg);
-		return nsg;
-<<<<<<< HEAD
-=======
 	/* Cow skb data if needed */
 	if (likely(!skb_cloned(skb) &&
 		   (!skb_is_nonlinear(skb) || !skb_has_frag_list(skb)))) {
@@ -918,9 +908,6 @@ static int tipc_aead_decrypt(struct net *net, struct tipc_aead *aead,
 			pr_err("RX: skb_cow_data() returned %d\n", nsg);
 			return nsg;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Allocate memory for the AEAD operation */
@@ -2304,8 +2291,6 @@ static bool tipc_crypto_key_rcv(struct tipc_crypto *rx, struct tipc_msg *hdr)
 	u16 key_gen = msg_key_gen(hdr);
 	u16 size = msg_data_sz(hdr);
 	u8 *data = msg_data(hdr);
-<<<<<<< HEAD
-=======
 	unsigned int keylen;
 
 	/* Verify whether the size can exist in the packet */
@@ -2322,66 +2307,37 @@ static bool tipc_crypto_key_rcv(struct tipc_crypto *rx, struct tipc_msg *hdr)
 		pr_debug("%s: invalid MSG_CRYPTO key size\n", rx->name);
 		goto exit;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock(&rx->lock);
 	if (unlikely(rx->skey || (key_gen == rx->key_gen && rx->key.keys))) {
 		pr_err("%s: key existed <%p>, gen %d vs %d\n", rx->name,
 		       rx->skey, key_gen, rx->key_gen);
-<<<<<<< HEAD
-		goto exit;
-=======
 		goto exit_unlock;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* Allocate memory for the key */
 	skey = kmalloc(size, GFP_ATOMIC);
 	if (unlikely(!skey)) {
 		pr_err("%s: unable to allocate memory for skey\n", rx->name);
-<<<<<<< HEAD
-		goto exit;
-	}
-
-	/* Copy key from msg data */
-	skey->keylen = ntohl(*((__be32 *)(data + TIPC_AEAD_ALG_NAME)));
-=======
 		goto exit_unlock;
 	}
 
 	/* Copy key from msg data */
 	skey->keylen = keylen;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memcpy(skey->alg_name, data, TIPC_AEAD_ALG_NAME);
 	memcpy(skey->key, data + TIPC_AEAD_ALG_NAME + sizeof(__be32),
 	       skey->keylen);
 
-<<<<<<< HEAD
-	/* Sanity check */
-	if (unlikely(size != tipc_aead_key_size(skey))) {
-		kfree(skey);
-		skey = NULL;
-		goto exit;
-	}
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rx->key_gen = key_gen;
 	rx->skey_mode = msg_key_mode(hdr);
 	rx->skey = skey;
 	rx->nokey = 0;
 	mb(); /* for nokey flag */
 
-<<<<<<< HEAD
-exit:
-	spin_unlock(&rx->lock);
-
-=======
 exit_unlock:
 	spin_unlock(&rx->lock);
 
 exit:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Schedule the key attaching on this crypto */
 	if (likely(skey && queue_delayed_work(tx->wq, &rx->work, 0)))
 		return true;

@@ -332,15 +332,7 @@ int blk_crypto_init_key(struct blk_crypto_key *blk_key, const u8 *raw_key,
 	if (mode->keysize == 0)
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (dun_bytes == 0 || dun_bytes > mode->ivsize)
-=======
 	if (dun_bytes == 0 || dun_bytes > BLK_CRYPTO_MAX_IV_SIZE)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (dun_bytes == 0 || dun_bytes > mode->ivsize)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	if (!is_power_of_2(data_unit_size))

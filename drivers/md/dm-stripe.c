@@ -428,30 +428,6 @@ static void stripe_status(struct dm_target *ti, status_type_t type,
 			DMEMIT(" %s %llu", sc->stripe[i].dev->name,
 			    (unsigned long long)sc->stripe[i].physical_start);
 		break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	case STATUSTYPE_IMA:
-		DMEMIT_TARGET_NAME_VERSION(ti->type);
-		DMEMIT(",stripes=%d,chunk_size=%llu", sc->stripes,
-		       (unsigned long long)sc->chunk_size);
-
-		for (i = 0; i < sc->stripes; i++) {
-			DMEMIT(",stripe_%d_device_name=%s", i, sc->stripe[i].dev->name);
-			DMEMIT(",stripe_%d_physical_start=%llu", i,
-			       (unsigned long long)sc->stripe[i].physical_start);
-			DMEMIT(",stripe_%d_status=%c", i,
-			       atomic_read(&(sc->stripe[i].error_count)) ? 'D' : 'A');
-		}
-		DMEMIT(";");
-		break;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

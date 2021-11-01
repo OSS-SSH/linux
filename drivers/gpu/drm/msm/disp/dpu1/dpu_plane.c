@@ -1339,17 +1339,9 @@ static void dpu_plane_reset(struct drm_plane *plane)
 		return;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__drm_atomic_helper_plane_reset(plane, &pstate->base);
-=======
 	pstate->base.plane = plane;
 
 	plane->state = &pstate->base;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__drm_atomic_helper_plane_reset(plane, &pstate->base);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_DEBUG_FS
@@ -1655,21 +1647,6 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
 	if (ret)
 		DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	drm_plane_create_alpha_property(plane);
-	drm_plane_create_blend_mode_property(plane,
-			BIT(DRM_MODE_BLEND_PIXEL_NONE) |
-			BIT(DRM_MODE_BLEND_PREMULTI) |
-			BIT(DRM_MODE_BLEND_COVERAGE));
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drm_plane_create_rotation_property(plane,
 			DRM_MODE_ROTATE_0,
 			DRM_MODE_ROTATE_0 |

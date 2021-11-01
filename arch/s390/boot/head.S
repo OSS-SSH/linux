@@ -25,34 +25,13 @@
 #include <linux/init.h>
 #include <linux/linkage.h>
 #include <asm/asm-offsets.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <asm/page.h>
-#include <asm/ptrace.h>
-#include <asm/sclp.h>
-
-#define ARCH_OFFSET	4
-
-#define EP_OFFSET	0x10008
-#define EP_STRING	"S390EP"
-
-=======
 #include <asm/thread_info.h>
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/page.h>
 #include <asm/ptrace.h>
-#include <asm/sclp.h>
+#include "boot.h"
 
 #define ARCH_OFFSET	4
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define EP_OFFSET	0x10008
-#define EP_STRING	"S390EP"
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 __HEAD
 
 #define IPL_BS	0x730
@@ -296,27 +275,11 @@ iplstart:
 .Lcpuid:.fill	8,1,0
 
 #
-<<<<<<< HEAD
-<<<<<<< HEAD
-# normal startup-code, running in absolute addressing mode
-# this is called either by the ipl loader or directly by PSW restart
-# or linload or SALIPL
-#
-	.org	STARTUP_NORMAL_OFFSET
-=======
 # startup-code at 0x10000, running in absolute addressing mode
 # this is called either by the ipl loader or directly by PSW restart
 # or linload or SALIPL
 #
 	.org	0x10000
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-# normal startup-code, running in absolute addressing mode
-# this is called either by the ipl loader or directly by PSW restart
-# or linload or SALIPL
-#
-	.org	STARTUP_NORMAL_OFFSET
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 SYM_CODE_START(startup)
 	j	startup_normal
 	.org	EP_OFFSET
@@ -329,21 +292,9 @@ SYM_CODE_START(startup)
 	.ascii	EP_STRING
 	.byte	0x00,0x01
 #
-<<<<<<< HEAD
-<<<<<<< HEAD
-# kdump startup-code, running in 64 bit absolute addressing mode
-#
-	.org	STARTUP_KDUMP_OFFSET
-=======
 # kdump startup-code at 0x10010, running in 64 bit absolute addressing mode
 #
 	.org	0x10010
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-# kdump startup-code, running in 64 bit absolute addressing mode
-#
-	.org	STARTUP_KDUMP_OFFSET
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	j	startup_kdump
 SYM_CODE_END(startup)
 SYM_CODE_START_LOCAL(startup_normal)
@@ -364,40 +315,18 @@ SYM_CODE_START_LOCAL(startup_normal)
 	xc	0x300(256),0x300
 	xc	0xe00(256),0xe00
 	xc	0xf00(256),0xf00
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	lctlg	%c0,%c15,.Lctl-.LPG0(%r13)	# load control registers
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	stcke	__LC_BOOT_CLOCK
 	mvc	__LC_LAST_UPDATE_CLOCK(8),__LC_BOOT_CLOCK+1
 	spt	6f-.LPG0(%r13)
 	mvc	__LC_LAST_UPDATE_TIMER(8),6f-.LPG0(%r13)
-<<<<<<< HEAD
-<<<<<<< HEAD
-	larl	%r15,_stack_end-STACK_FRAME_OVERHEAD
-	brasl	%r14,sclp_early_setup_buffer
-=======
 	l	%r15,.Lstack-.LPG0(%r13)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	larl	%r15,_stack_end-STACK_FRAME_OVERHEAD
-	brasl	%r14,sclp_early_setup_buffer
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	brasl	%r14,verify_facilities
 	brasl	%r14,startup_kernel
 SYM_CODE_END(startup_normal)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 .Lstack:
 	.long	BOOT_STACK_OFFSET + BOOT_STACK_SIZE - STACK_FRAME_OVERHEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.align	8
 6:	.long	0x7fffffff,0xffffffff
 .Lext_new_psw:
@@ -406,9 +335,6 @@ SYM_CODE_END(startup_normal)
 	.quad	0x0000000180000000,startup_pgm_check_handler
 .Lio_new_psw:
 	.quad	0x0002000180000000,0x1f0	# disabled wait
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 .Lctl:	.quad	0x04040000		# cr0: AFP registers & secondary space
 	.quad	0			# cr1: primary space segment table
 	.quad	.Lduct			# cr2: dispatchable unit control table
@@ -438,9 +364,6 @@ SYM_CODE_END(startup_normal)
 	.long	0x80000000,0,0,0	# invalid access-list entries
 	.endr
 	.previous
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "head_kdump.S"
 
@@ -463,29 +386,15 @@ SYM_CODE_START_LOCAL(startup_pgm_check_handler)
 	oi	__LC_RETURN_PSW+1,0x2	# set wait state bit
 	larl	%r9,.Lold_psw_disabled_wait
 	stg	%r9,__LC_PGM_NEW_PSW+8
-<<<<<<< HEAD
-<<<<<<< HEAD
-	larl	%r15,_dump_info_stack_end-STACK_FRAME_OVERHEAD
-=======
 	l	%r15,.Ldump_info_stack-.Lold_psw_disabled_wait(%r9)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	larl	%r15,_dump_info_stack_end-STACK_FRAME_OVERHEAD
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	brasl	%r14,print_pgm_check_info
 .Lold_psw_disabled_wait:
 	la	%r8,4095
 	lmg	%r0,%r15,__LC_GPREGS_SAVE_AREA-4095(%r8)
 	lpswe	__LC_RETURN_PSW		# disabled wait
 SYM_CODE_END(startup_pgm_check_handler)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 .Ldump_info_stack:
 	.long	0x5000 + PAGE_SIZE - STACK_FRAME_OVERHEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #
 # params at 10400 (setup.h)
@@ -506,13 +415,7 @@ SYM_DATA_START(parmarea)
 	.org	PARMAREA+__PARMAREA_SIZE
 SYM_DATA_END(parmarea)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.org	EARLY_SCCB_OFFSET
 	.fill	4096
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.org	HEAD_END

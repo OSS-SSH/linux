@@ -4265,15 +4265,7 @@ static void TranslateRxSignalStuff819xUsb(struct sk_buff *skb,
 	bpacket_match_bssid = (type != IEEE80211_FTYPE_CTL) &&
 			       (ether_addr_equal(priv->ieee80211->current_network.bssid,  (fc & IEEE80211_FCTL_TODS) ? hdr->addr1 : (fc & IEEE80211_FCTL_FROMDS) ? hdr->addr2 : hdr->addr3))
 			       && (!pstats->bHwError) && (!pstats->bCRC) && (!pstats->bICV);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bpacket_toself =  bpacket_match_bssid &&
-=======
 	bpacket_toself =  bpacket_match_bssid &
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bpacket_toself =  bpacket_match_bssid &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  (ether_addr_equal(praddr, priv->ieee80211->dev->dev_addr));
 
 	if (WLAN_FC_GET_FRAMETYPE(fc) == IEEE80211_STYPE_BEACON)

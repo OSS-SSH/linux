@@ -499,14 +499,6 @@ static const struct ib_device_ops c4iw_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_cq, c4iw_cq, ibcq),
 	INIT_RDMA_OBJ_SIZE(ib_mw, c4iw_mw, ibmw),
 	INIT_RDMA_OBJ_SIZE(ib_pd, c4iw_pd, ibpd),
-<<<<<<< HEAD
-<<<<<<< HEAD
-	INIT_RDMA_OBJ_SIZE(ib_qp, c4iw_qp, ibqp),
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	INIT_RDMA_OBJ_SIZE(ib_qp, c4iw_qp, ibqp),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_RDMA_OBJ_SIZE(ib_srq, c4iw_srq, ibsrq),
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, c4iw_ucontext, ibucontext),
 };

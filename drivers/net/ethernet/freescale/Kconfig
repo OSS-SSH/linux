@@ -25,24 +25,10 @@ config FEC
 	depends on (M523x || M527x || M5272 || M528x || M520x || M532x || \
 		   ARCH_MXC || SOC_IMX28 || COMPILE_TEST)
 	default ARCH_MXC || SOC_IMX28 if ARM
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on PTP_1588_CLOCK_OPTIONAL
-	select CRC32
-	select PHYLIB
-	imply NET_SELFTESTS
-=======
 	select CRC32
 	select PHYLIB
 	imply NET_SELFTESTS
 	imply PTP_1588_CLOCK
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on PTP_1588_CLOCK_OPTIONAL
-	select CRC32
-	select PHYLIB
-	imply NET_SELFTESTS
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here if you want to use the built-in 10/100 Fast ethernet
 	  controller on some Motorola ColdFire and Freescale i.MX processors.

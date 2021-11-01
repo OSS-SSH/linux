@@ -155,13 +155,7 @@ struct iso9660_options{
 	unsigned int overriderockperm:1;
 	unsigned int uid_set:1;
 	unsigned int gid_set:1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned int utf8:1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned char map;
 	unsigned char check;
 	unsigned int blocksize;
@@ -362,13 +356,7 @@ static int parse_options(char *options, struct iso9660_options *popt)
 	popt->gid = GLOBAL_ROOT_GID;
 	popt->uid = GLOBAL_ROOT_UID;
 	popt->iocharset = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	popt->utf8 = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	popt->overriderockperm = 0;
 	popt->session=-1;
 	popt->sbsector=-1;
@@ -401,30 +389,10 @@ static int parse_options(char *options, struct iso9660_options *popt)
 		case Opt_cruft:
 			popt->cruft = 1;
 			break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_JOLIET
 		case Opt_utf8:
-			kfree(popt->iocharset);
-			popt->iocharset = kstrdup("utf8", GFP_KERNEL);
-			if (!popt->iocharset)
-				return 0;
+			popt->utf8 = 1;
 			break;
-=======
-=======
 #ifdef CONFIG_JOLIET
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		case Opt_utf8:
-			kfree(popt->iocharset);
-			popt->iocharset = kstrdup("utf8", GFP_KERNEL);
-			if (!popt->iocharset)
-				return 0;
-			break;
-<<<<<<< HEAD
-#ifdef CONFIG_JOLIET
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case Opt_iocharset:
 			kfree(popt->iocharset);
 			popt->iocharset = match_strdup(&args[0]);
@@ -527,13 +495,7 @@ static int isofs_show_options(struct seq_file *m, struct dentry *root)
 	if (sbi->s_nocompress)		seq_puts(m, ",nocompress");
 	if (sbi->s_overriderockperm)	seq_puts(m, ",overriderockperm");
 	if (sbi->s_showassoc)		seq_puts(m, ",showassoc");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (sbi->s_utf8)		seq_puts(m, ",utf8");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (sbi->s_check)		seq_printf(m, ",check=%c", sbi->s_check);
 	if (sbi->s_mapping)		seq_printf(m, ",map=%c", sbi->s_mapping);
@@ -556,23 +518,9 @@ static int isofs_show_options(struct seq_file *m, struct dentry *root)
 		seq_printf(m, ",fmode=%o", sbi->s_fmode);
 
 #ifdef CONFIG_JOLIET
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (sbi->s_nls_iocharset)
-		seq_printf(m, ",iocharset=%s", sbi->s_nls_iocharset->charset);
-	else
-		seq_puts(m, ",iocharset=utf8");
-=======
 	if (sbi->s_nls_iocharset &&
 	    strcmp(sbi->s_nls_iocharset->charset, CONFIG_NLS_DEFAULT) != 0)
 		seq_printf(m, ",iocharset=%s", sbi->s_nls_iocharset->charset);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (sbi->s_nls_iocharset)
-		seq_printf(m, ",iocharset=%s", sbi->s_nls_iocharset->charset);
-	else
-		seq_puts(m, ",iocharset=utf8");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	return 0;
 }
@@ -915,31 +863,14 @@ root_found:
 	sbi->s_nls_iocharset = NULL;
 
 #ifdef CONFIG_JOLIET
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (joliet_level) {
-		char *p = opt.iocharset ? opt.iocharset : CONFIG_NLS_DEFAULT;
-		if (strcmp(p, "utf8") != 0) {
-			sbi->s_nls_iocharset = opt.iocharset ?
-				load_nls(opt.iocharset) : load_nls_default();
-			if (!sbi->s_nls_iocharset)
-				goto out_freesbi;
-=======
 	if (joliet_level && opt.utf8 == 0) {
-=======
-	if (joliet_level) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		char *p = opt.iocharset ? opt.iocharset : CONFIG_NLS_DEFAULT;
-		if (strcmp(p, "utf8") != 0) {
-			sbi->s_nls_iocharset = opt.iocharset ?
-				load_nls(opt.iocharset) : load_nls_default();
-			if (!sbi->s_nls_iocharset)
+		sbi->s_nls_iocharset = load_nls(p);
+		if (! sbi->s_nls_iocharset) {
+			/* Fail only if explicit charset specified */
+			if (opt.iocharset)
 				goto out_freesbi;
-<<<<<<< HEAD
 			sbi->s_nls_iocharset = load_nls_default();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 #endif
@@ -955,13 +886,7 @@ root_found:
 	sbi->s_gid = opt.gid;
 	sbi->s_uid_set = opt.uid_set;
 	sbi->s_gid_set = opt.gid_set;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	sbi->s_utf8 = opt.utf8;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sbi->s_nocompress = opt.nocompress;
 	sbi->s_overriderockperm = opt.overriderockperm;
 	/*

@@ -29,14 +29,6 @@ properties:
           - fsl,imx53-esdhc
           - fsl,imx6q-usdhc
           - fsl,imx6sl-usdhc
-<<<<<<< HEAD
-<<<<<<< HEAD
-          - fsl,imx6sll-usdhc
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-          - fsl,imx6sll-usdhc
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - fsl,imx6sx-usdhc
           - fsl,imx6ull-usdhc
           - fsl,imx7d-usdhc
@@ -123,32 +115,12 @@ properties:
       - const: per
 
   pinctrl-names:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-    oneOf:
-      - minItems: 3
-        items:
-          - const: default
-          - const: state_100mhz
-          - const: state_200mhz
-          - const: sleep
-      - minItems: 1
-        items:
-          - const: default
-          - const: sleep
-<<<<<<< HEAD
-=======
     minItems: 1
     items:
       - const: default
       - const: state_100mhz
       - const: state_200mhz
       - const: sleep
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 required:
   - compatible

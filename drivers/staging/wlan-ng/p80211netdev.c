@@ -98,18 +98,8 @@ static int p80211knetdev_stop(struct net_device *netdev);
 static netdev_tx_t p80211knetdev_hard_start_xmit(struct sk_buff *skb,
 						 struct net_device *netdev);
 static void p80211knetdev_set_multicast_list(struct net_device *dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int p80211knetdev_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-					void __user *data, int cmd);
-=======
 static int p80211knetdev_do_ioctl(struct net_device *dev, struct ifreq *ifr,
 				  int cmd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int p80211knetdev_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-					void __user *data, int cmd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int p80211knetdev_set_mac_address(struct net_device *dev, void *addr);
 static void p80211knetdev_tx_timeout(struct net_device *netdev, unsigned int txqueue);
 static int p80211_rx_typedrop(struct wlandevice *wlandev, u16 fc);
@@ -245,24 +235,10 @@ void p80211netdev_rx(struct wlandevice *wlandev, struct sk_buff *skb)
 static int p80211_convert_to_ether(struct wlandevice *wlandev,
 				   struct sk_buff *skb)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct p80211_hdr *hdr;
-
-	hdr = (struct p80211_hdr *)skb->data;
-	if (p80211_rx_typedrop(wlandev, le16_to_cpu(hdr->frame_control)))
-=======
 	struct p80211_hdr_a3 *hdr;
 
 	hdr = (struct p80211_hdr_a3 *)skb->data;
 	if (p80211_rx_typedrop(wlandev, le16_to_cpu(hdr->fc)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct p80211_hdr *hdr;
-
-	hdr = (struct p80211_hdr *)skb->data;
-	if (p80211_rx_typedrop(wlandev, le16_to_cpu(hdr->frame_control)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return CONV_TO_ETHER_SKIPPED;
 
 	/* perform mcast filtering: allow my local address through but reject
@@ -270,18 +246,8 @@ static int p80211_convert_to_ether(struct wlandevice *wlandev,
 	 */
 	if (wlandev->netdev->flags & IFF_ALLMULTI) {
 		if (!ether_addr_equal_unaligned(wlandev->netdev->dev_addr,
-<<<<<<< HEAD
-<<<<<<< HEAD
-						hdr->address1)) {
-			if (!is_multicast_ether_addr(hdr->address1))
-=======
 						hdr->a1)) {
 			if (!is_multicast_ether_addr(hdr->a1))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						hdr->address1)) {
-			if (!is_multicast_ether_addr(hdr->address1))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return CONV_TO_ETHER_SKIPPED;
 		}
 	}
@@ -361,15 +327,7 @@ static netdev_tx_t p80211knetdev_hard_start_xmit(struct sk_buff *skb,
 	int result = 0;
 	int txresult;
 	struct wlandevice *wlandev = netdev->ml_priv;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct p80211_hdr p80211_hdr;
-=======
 	union p80211_hdr p80211_hdr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct p80211_hdr p80211_hdr;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct p80211_metawep p80211_wep;
 
 	p80211_wep.data = NULL;
@@ -503,11 +461,6 @@ static void p80211knetdev_set_multicast_list(struct net_device *dev)
 		wlandev->set_multicast_list(wlandev, dev);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*----------------------------------------------------------------
- * p80211knetdev_siocdevprivate
-=======
 #ifdef SIOCETHTOOL
 
 static int p80211netdev_ethtool(struct wlandevice *wlandev,
@@ -558,11 +511,6 @@ static int p80211netdev_ethtool(struct wlandevice *wlandev,
 
 /*----------------------------------------------------------------
  * p80211knetdev_do_ioctl
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*----------------------------------------------------------------
- * p80211knetdev_siocdevprivate
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Handle an ioctl call on one of our devices.  Everything Linux
  * ioctl specific is done here.  Then we pass the contents of the
@@ -589,20 +537,8 @@ static int p80211netdev_ethtool(struct wlandevice *wlandev,
  *	locks.
  *----------------------------------------------------------------
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int p80211knetdev_siocdevprivate(struct net_device *dev,
-					struct ifreq *ifr,
-					void __user *data, int cmd)
-=======
 static int p80211knetdev_do_ioctl(struct net_device *dev,
 				  struct ifreq *ifr, int cmd)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int p80211knetdev_siocdevprivate(struct net_device *dev,
-					struct ifreq *ifr,
-					void __user *data, int cmd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int result = 0;
 	struct p80211ioctl_req *req = (struct p80211ioctl_req *)ifr;
@@ -611,11 +547,6 @@ static int p80211knetdev_siocdevprivate(struct net_device *dev,
 
 	netdev_dbg(dev, "rx'd ioctl, cmd=%d, len=%d\n", cmd, req->len);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (in_compat_syscall())
-		return -EOPNOTSUPP;
-=======
 #ifdef SIOCETHTOOL
 	if (cmd == SIOCETHTOOL) {
 		result =
@@ -623,11 +554,6 @@ static int p80211knetdev_siocdevprivate(struct net_device *dev,
 		goto bail;
 	}
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (in_compat_syscall())
-		return -EOPNOTSUPP;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Test the magic, assume ifr is good if it's there */
 	if (req->magic != P80211_IOCTL_MAGIC) {
@@ -643,15 +569,7 @@ static int p80211knetdev_siocdevprivate(struct net_device *dev,
 		goto bail;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	msgbuf = memdup_user(data, req->len);
-=======
 	msgbuf = memdup_user(req->data, req->len);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	msgbuf = memdup_user(data, req->len);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(msgbuf)) {
 		result = PTR_ERR(msgbuf);
 		goto bail;
@@ -660,20 +578,10 @@ static int p80211knetdev_siocdevprivate(struct net_device *dev,
 	result = p80211req_dorequest(wlandev, msgbuf);
 
 	if (result == 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (copy_to_user(data, msgbuf, req->len))
-			result = -EFAULT;
-=======
 		if (copy_to_user
 		    (req->data, msgbuf, req->len)) {
 			result = -EFAULT;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (copy_to_user(data, msgbuf, req->len))
-			result = -EFAULT;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	kfree(msgbuf);
 
@@ -774,15 +682,7 @@ static const struct net_device_ops p80211_netdev_ops = {
 	.ndo_stop = p80211knetdev_stop,
 	.ndo_start_xmit = p80211knetdev_hard_start_xmit,
 	.ndo_set_rx_mode = p80211knetdev_set_multicast_list,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_siocdevprivate = p80211knetdev_siocdevprivate,
-=======
 	.ndo_do_ioctl = p80211knetdev_do_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_siocdevprivate = p80211knetdev_siocdevprivate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address = p80211knetdev_set_mac_address,
 	.ndo_tx_timeout = p80211knetdev_tx_timeout,
 	.ndo_validate_addr = eth_validate_addr,

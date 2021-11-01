@@ -295,15 +295,7 @@ config DEBUG_INFO_DWARF4
 
 config DEBUG_INFO_DWARF5
 	bool "Generate DWARF Version 5 debuginfo"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
-=======
 	depends on GCC_VERSION >= 50000 || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on !CC_IS_CLANG || (CC_IS_CLANG && (AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on !DEBUG_INFO_BTF
 	help
 	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
@@ -354,15 +346,7 @@ config FRAME_WARN
 	int "Warn for stack frames larger than"
 	range 0 8192
 	default 2048 if GCC_PLUGIN_LATENT_ENTROPY
-<<<<<<< HEAD
-<<<<<<< HEAD
-	default 1536 if (!64BIT && (PARISC || XTENSA))
-=======
 	default 1280 if (!64BIT && PARISC)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	default 1536 if (!64BIT && (PARISC || XTENSA))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default 1024 if (!64BIT && !PARISC)
 	default 2048 if 64BIT
 	help
@@ -381,14 +365,6 @@ config STRIP_ASM_SYMS
 config READABLE_ASM
 	bool "Generate readable assembler code"
 	depends on DEBUG_KERNEL
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on CC_IS_GCC
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on CC_IS_GCC
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Disable some compiler optimizations that tend to generate human unreadable
 	  assembler output. This may make the kernel slightly slower, but it helps
@@ -407,14 +383,6 @@ config HEADERS_INSTALL
 
 config DEBUG_SECTION_MISMATCH
 	bool "Enable full Section mismatch analysis"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on CC_IS_GCC
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on CC_IS_GCC
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  The section mismatch analysis checks if there are illegal
 	  references from one section to another section.
@@ -1094,13 +1062,7 @@ config HARDLOCKUP_DETECTOR
 	depends on HAVE_HARDLOCKUP_DETECTOR_PERF || HAVE_HARDLOCKUP_DETECTOR_ARCH
 	select LOCKUP_DETECTOR
 	select HARDLOCKUP_DETECTOR_PERF if HAVE_HARDLOCKUP_DETECTOR_PERF
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	select HARDLOCKUP_DETECTOR_ARCH if HAVE_HARDLOCKUP_DETECTOR_ARCH
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here to enable the kernel to act as a watchdog to detect
 	  hard lockups.
@@ -1273,15 +1235,7 @@ config PROVE_LOCKING
 	depends on DEBUG_KERNEL && LOCK_DEBUGGING_SUPPORT
 	select LOCKDEP
 	select DEBUG_SPINLOCK
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select DEBUG_MUTEXES if !PREEMPT_RT
-=======
 	select DEBUG_MUTEXES
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select DEBUG_MUTEXES if !PREEMPT_RT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select DEBUG_RT_MUTEXES if RT_MUTEXES
 	select DEBUG_RWSEMS
 	select DEBUG_WW_MUTEX_SLOWPATH
@@ -1345,15 +1299,7 @@ config LOCK_STAT
 	depends on DEBUG_KERNEL && LOCK_DEBUGGING_SUPPORT
 	select LOCKDEP
 	select DEBUG_SPINLOCK
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select DEBUG_MUTEXES if !PREEMPT_RT
-=======
 	select DEBUG_MUTEXES
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select DEBUG_MUTEXES if !PREEMPT_RT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select DEBUG_RT_MUTEXES if RT_MUTEXES
 	select DEBUG_LOCK_ALLOC
 	default n
@@ -1389,15 +1335,7 @@ config DEBUG_SPINLOCK
 
 config DEBUG_MUTEXES
 	bool "Mutex debugging: basic checks"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on DEBUG_KERNEL && !PREEMPT_RT
-=======
 	depends on DEBUG_KERNEL
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on DEBUG_KERNEL && !PREEMPT_RT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	 This feature allows mutex semantics violations to be detected and
 	 reported.
@@ -1407,17 +1345,7 @@ config DEBUG_WW_MUTEX_SLOWPATH
 	depends on DEBUG_KERNEL && LOCK_DEBUGGING_SUPPORT
 	select DEBUG_LOCK_ALLOC
 	select DEBUG_SPINLOCK
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select DEBUG_MUTEXES if !PREEMPT_RT
-	select DEBUG_RT_MUTEXES if PREEMPT_RT
-=======
 	select DEBUG_MUTEXES
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select DEBUG_MUTEXES if !PREEMPT_RT
-	select DEBUG_RT_MUTEXES if PREEMPT_RT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	 This feature enables slowpath testing for w/w mutex users by
 	 injecting additional -EDEADLK wound/backoff cases. Together with
@@ -1440,15 +1368,7 @@ config DEBUG_LOCK_ALLOC
 	bool "Lock debugging: detect incorrect freeing of live locks"
 	depends on DEBUG_KERNEL && LOCK_DEBUGGING_SUPPORT
 	select DEBUG_SPINLOCK
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select DEBUG_MUTEXES if !PREEMPT_RT
-=======
 	select DEBUG_MUTEXES
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select DEBUG_MUTEXES if !PREEMPT_RT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select DEBUG_RT_MUTEXES if RT_MUTEXES
 	select LOCKDEP
 	help
@@ -1759,9 +1679,6 @@ config DEBUG_WQ_FORCE_RR_CPU
 	  feature by default.  When enabled, memory and cache locality will
 	  be impacted.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 config DEBUG_BLOCK_EXT_DEVT
 	bool "Force extended block device numbers and spread them"
 	depends on DEBUG_KERNEL
@@ -1789,9 +1706,6 @@ config DEBUG_BLOCK_EXT_DEVT
 
 	  Say N if you are unsure.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config CPU_HOTPLUG_STATE_CONTROL
 	bool "Enable CPU hotplug state control"
 	depends on DEBUG_KERNEL
@@ -2057,22 +1971,6 @@ config FAIL_MMC_REQUEST
 	  and to test how the mmc host driver handles retries from
 	  the block device.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-config FAIL_SUNRPC
-	bool "Fault-injection capability for SunRPC"
-	depends on FAULT_INJECTION_DEBUG_FS && SUNRPC_DEBUG
-	help
-	  Provide fault-injection capability for SunRPC and
-	  its consumers.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config FAULT_INJECTION_STACKTRACE_FILTER
 	bool "stacktrace filter for fault-injection capabilities"
 	depends on FAULT_INJECTION_DEBUG_FS && STACKTRACE_SUPPORT
@@ -2180,20 +2078,8 @@ config TEST_MIN_HEAP
 	  If unsure, say N.
 
 config TEST_SORT
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tristate "Array-based sort test" if !KUNIT_ALL_TESTS
-	depends on KUNIT
-	default KUNIT_ALL_TESTS
-=======
 	tristate "Array-based sort test"
 	depends on DEBUG_KERNEL || m
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tristate "Array-based sort test" if !KUNIT_ALL_TESTS
-	depends on KUNIT
-	default KUNIT_ALL_TESTS
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This option enables the self-test function of 'sort()' at boot,
 	  or at module load time.
@@ -2294,18 +2180,6 @@ config ASYNC_RAID6_TEST
 config TEST_HEXDUMP
 	tristate "Test functions located in the hexdump module at runtime"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-config STRING_SELFTEST
-	tristate "Test string functions at runtime"
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-config STRING_SELFTEST
-	tristate "Test string functions at runtime"
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config TEST_STRING_HELPERS
 	tristate "Test functions located in the string_helpers module at runtime"
 
@@ -2583,16 +2457,8 @@ config SLUB_KUNIT_TEST
 
 config RATIONAL_KUNIT_TEST
 	tristate "KUnit test for rational.c" if !KUNIT_ALL_TESTS
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on KUNIT && RATIONAL
-=======
 	depends on KUNIT
 	select RATIONAL
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on KUNIT && RATIONAL
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default KUNIT_ALL_TESTS
 	help
 	  This builds the rational math unit test.

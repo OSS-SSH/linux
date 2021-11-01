@@ -90,17 +90,9 @@ struct iwpm_remote_info {
 };
 
 struct iwpm_admin_data {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	atomic_t nlmsg_seq;
-=======
 	refcount_t refcount;
 	atomic_t nlmsg_seq;
 	int      client_list[RDMA_NL_NUM_CLIENTS];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	atomic_t nlmsg_seq;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32      reg_list[RDMA_NL_NUM_CLIENTS];
 };
 
@@ -156,9 +148,6 @@ int iwpm_get_nlmsg_seq(void);
 void iwpm_add_remote_info(struct iwpm_remote_info *reminfo);
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * iwpm_valid_client - Check if the port mapper client is valid
  * @nl_client: The index of the netlink client
  *
@@ -175,9 +164,6 @@ int iwpm_valid_client(u8 nl_client);
 void iwpm_set_valid(u8 nl_client, int valid);
 
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * iwpm_check_registration - Check if the client registration
  *			      matches the given one
  * @nl_client: The index of the netlink client

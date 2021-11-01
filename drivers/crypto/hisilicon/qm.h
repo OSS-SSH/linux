@@ -4,14 +4,6 @@
 #define HISI_ACC_QM_H
 
 #include <linux/bitfield.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/debugfs.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/debugfs.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/iopoll.h>
 #include <linux/module.h>
 #include <linux/pci.h>
@@ -438,20 +430,4 @@ void hisi_qm_dev_shutdown(struct pci_dev *pdev);
 void hisi_qm_wait_task_finish(struct hisi_qm *qm, struct hisi_qm_list *qm_list);
 int hisi_qm_alg_register(struct hisi_qm *qm, struct hisi_qm_list *qm_list);
 void hisi_qm_alg_unregister(struct hisi_qm *qm, struct hisi_qm_list *qm_list);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-int hisi_qm_resume(struct device *dev);
-int hisi_qm_suspend(struct device *dev);
-void hisi_qm_pm_uninit(struct hisi_qm *qm);
-void hisi_qm_pm_init(struct hisi_qm *qm);
-int hisi_qm_get_dfx_access(struct hisi_qm *qm);
-void hisi_qm_put_dfx_access(struct hisi_qm *qm);
-void hisi_qm_regs_dump(struct seq_file *s, struct debugfs_regset32 *regset);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

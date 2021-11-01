@@ -34,13 +34,7 @@ int amiga_partition(struct parsed_partitions *state)
 	int start_sect, nr_sects, blk, part, res = 0;
 	int blksize = 1;	/* Multiplier for disk block size */
 	int slot = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	char b[BDEVNAME_SIZE];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (blk = 0; ; blk++, put_dev_sector(sect)) {
 		if (blk == RDB_ALLOCATION_LIMIT)
@@ -48,15 +42,7 @@ int amiga_partition(struct parsed_partitions *state)
 		data = read_part_sector(state, blk, &sect);
 		if (!data) {
 			pr_err("Dev %s: unable to read RDB block %d\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       state->disk->disk_name, blk);
-=======
 			       bdevname(state->bdev, b), blk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       state->disk->disk_name, blk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			res = -1;
 			goto rdb_done;
 		}
@@ -78,15 +64,7 @@ int amiga_partition(struct parsed_partitions *state)
 		}
 
 		pr_err("Dev %s: RDB in block %d has bad checksum\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       state->disk->disk_name, blk);
-=======
 		       bdevname(state->bdev, b), blk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       state->disk->disk_name, blk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* blksize is blocks per 512 byte standard block */
@@ -106,15 +84,7 @@ int amiga_partition(struct parsed_partitions *state)
 		data = read_part_sector(state, blk, &sect);
 		if (!data) {
 			pr_err("Dev %s: unable to read partition block %d\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       state->disk->disk_name, blk);
-=======
 			       bdevname(state->bdev, b), blk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       state->disk->disk_name, blk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			res = -1;
 			goto rdb_done;
 		}

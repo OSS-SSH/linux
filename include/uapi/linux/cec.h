@@ -642,15 +642,7 @@ struct cec_event {
 #define CEC_OP_REC_SEQ_WEDNESDAY			0x08
 #define CEC_OP_REC_SEQ_THURSDAY				0x10
 #define CEC_OP_REC_SEQ_FRIDAY				0x20
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CEC_OP_REC_SEQ_SATURDAY				0x40
-=======
 #define CEC_OP_REC_SEQ_SATERDAY				0x40
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CEC_OP_REC_SEQ_SATURDAY				0x40
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CEC_OP_REC_SEQ_ONCE_ONLY			0x00
 
 #define CEC_MSG_CLEAR_DIGITAL_TIMER			0x99

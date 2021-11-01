@@ -138,18 +138,12 @@ panfrost_lookup_bos(struct drm_device *dev,
 	if (!job->bo_count)
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	job->implicit_fences = kvmalloc_array(job->bo_count,
 				  sizeof(struct dma_fence *),
 				  GFP_KERNEL | __GFP_ZERO);
 	if (!job->implicit_fences)
 		return -ENOMEM;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = drm_gem_objects_lookup(file_priv,
 				     (void __user *)(uintptr_t)args->bo_handles,
 				     job->bo_count, &job->bos);
@@ -180,15 +174,7 @@ panfrost_lookup_bos(struct drm_device *dev,
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * panfrost_copy_in_sync() - Sets up job->deps with the sync objects
-=======
  * panfrost_copy_in_sync() - Sets up job->in_fences[] with the sync objects
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * panfrost_copy_in_sync() - Sets up job->deps with the sync objects
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * referenced by the job.
  * @dev: DRM device
  * @file_priv: DRM file for this fd
@@ -208,28 +194,13 @@ panfrost_copy_in_sync(struct drm_device *dev,
 {
 	u32 *handles;
 	int ret = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int i, in_fence_count;
-
-	in_fence_count = args->in_sync_count;
-
-	if (!in_fence_count)
-		return 0;
-
-	handles = kvmalloc_array(in_fence_count, sizeof(u32), GFP_KERNEL);
-=======
 	int i;
-=======
-	int i, in_fence_count;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	in_fence_count = args->in_sync_count;
+	job->in_fence_count = args->in_sync_count;
 
-	if (!in_fence_count)
+	if (!job->in_fence_count)
 		return 0;
 
-<<<<<<< HEAD
 	job->in_fences = kvmalloc_array(job->in_fence_count,
 					sizeof(struct dma_fence *),
 					GFP_KERNEL | __GFP_ZERO);
@@ -239,10 +210,6 @@ panfrost_copy_in_sync(struct drm_device *dev,
 	}
 
 	handles = kvmalloc_array(job->in_fence_count, sizeof(u32), GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	handles = kvmalloc_array(in_fence_count, sizeof(u32), GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!handles) {
 		ret = -ENOMEM;
 		DRM_DEBUG("Failed to allocate incoming syncobj handles\n");
@@ -251,52 +218,16 @@ panfrost_copy_in_sync(struct drm_device *dev,
 
 	if (copy_from_user(handles,
 			   (void __user *)(uintptr_t)args->in_syncs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			   in_fence_count * sizeof(u32))) {
-=======
 			   job->in_fence_count * sizeof(u32))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			   in_fence_count * sizeof(u32))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EFAULT;
 		DRM_DEBUG("Failed to copy in syncobj handles\n");
 		goto fail;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (i = 0; i < in_fence_count; i++) {
-		struct dma_fence *fence;
-
-		ret = drm_syncobj_find_fence(file_priv, handles[i], 0, 0,
-					     &fence);
-		if (ret)
-			goto fail;
-
-		ret = drm_gem_fence_array_add(&job->deps, fence);
-
-		if (ret)
-=======
 	for (i = 0; i < job->in_fence_count; i++) {
 		ret = drm_syncobj_find_fence(file_priv, handles[i], 0, 0,
 					     &job->in_fences[i]);
 		if (ret == -EINVAL)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (i = 0; i < in_fence_count; i++) {
-		struct dma_fence *fence;
-
-		ret = drm_syncobj_find_fence(file_priv, handles[i], 0, 0,
-					     &fence);
-		if (ret)
-			goto fail;
-
-		ret = drm_gem_fence_array_add(&job->deps, fence);
-
-		if (ret)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto fail;
 	}
 
@@ -334,16 +265,6 @@ static int panfrost_ioctl_submit(struct drm_device *dev, void *data,
 
 	kref_init(&job->refcount);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xa_init_flags(&job->deps, XA_FLAGS_ALLOC);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xa_init_flags(&job->deps, XA_FLAGS_ALLOC);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	job->pfdev = pfdev;
 	job->jc = args->jc;
 	job->requirements = args->requirements;
@@ -496,15 +417,7 @@ static int panfrost_ioctl_madvise(struct drm_device *dev, void *data,
 		 * anyway, so let's not bother.
 		 */
 		if (!list_is_singular(&bo->mappings.list) ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    WARN_ON_ONCE(first->mmu != priv->mmu)) {
-=======
 		    WARN_ON_ONCE(first->mmu != &priv->mmu)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    WARN_ON_ONCE(first->mmu != priv->mmu)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = -EINVAL;
 			goto out_unlock_mappings;
 		}
@@ -536,9 +449,6 @@ int panfrost_unstable_ioctl_check(void)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define PFN_4G		(SZ_4G >> PAGE_SHIFT)
 #define PFN_4G_MASK	(PFN_4G - 1)
 #define PFN_16M		(SZ_16M >> PAGE_SHIFT)
@@ -565,9 +475,6 @@ static void panfrost_drm_mm_color_adjust(const struct drm_mm_node *node,
 	}
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 panfrost_open(struct drm_device *dev, struct drm_file *file)
 {
@@ -582,17 +489,6 @@ panfrost_open(struct drm_device *dev, struct drm_file *file)
 	panfrost_priv->pfdev = pfdev;
 	file->driver_priv = panfrost_priv;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	panfrost_priv->mmu = panfrost_mmu_ctx_create(pfdev);
-	if (IS_ERR(panfrost_priv->mmu)) {
-		ret = PTR_ERR(panfrost_priv->mmu);
-		goto err_free;
-	}
-<<<<<<< HEAD
-=======
 	spin_lock_init(&panfrost_priv->mm_lock);
 
 	/* 4G enough for now. can be 48-bit */
@@ -602,9 +498,6 @@ panfrost_open(struct drm_device *dev, struct drm_file *file)
 	ret = panfrost_mmu_pgtable_alloc(panfrost_priv);
 	if (ret)
 		goto err_pgtable;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = panfrost_job_open(panfrost_priv);
 	if (ret)
@@ -613,19 +506,9 @@ panfrost_open(struct drm_device *dev, struct drm_file *file)
 	return 0;
 
 err_job:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	panfrost_mmu_ctx_put(panfrost_priv->mmu);
-err_free:
-=======
 	panfrost_mmu_pgtable_free(panfrost_priv);
 err_pgtable:
 	drm_mm_takedown(&panfrost_priv->mm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	panfrost_mmu_ctx_put(panfrost_priv->mmu);
-err_free:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(panfrost_priv);
 	return ret;
 }
@@ -638,16 +521,8 @@ panfrost_postclose(struct drm_device *dev, struct drm_file *file)
 	panfrost_perfcnt_close(file);
 	panfrost_job_close(panfrost_priv);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	panfrost_mmu_ctx_put(panfrost_priv->mmu);
-=======
 	panfrost_mmu_pgtable_free(panfrost_priv);
 	drm_mm_takedown(&panfrost_priv->mm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	panfrost_mmu_ctx_put(panfrost_priv->mmu);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(panfrost_priv);
 }
 

@@ -64,13 +64,7 @@ struct drm_atomic_helper_damage_iter {
 	bool full_update;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void drm_plane_enable_fb_damage_clips(struct drm_plane *plane);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void drm_atomic_helper_check_plane_damage(struct drm_atomic_state *state,
 					  struct drm_plane_state *plane_state);
 int drm_atomic_helper_dirtyfb(struct drm_framebuffer *fb,
@@ -88,9 +82,6 @@ bool drm_atomic_helper_damage_merged(const struct drm_plane_state *old_state,
 				     struct drm_plane_state *state,
 				     struct drm_rect *rect);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /**
  * drm_helper_get_plane_damage_clips - Returns damage clips in &drm_rect.
  * @state: Plane state.
@@ -108,7 +99,4 @@ drm_helper_get_plane_damage_clips(const struct drm_plane_state *state)
 	return (struct drm_rect *)drm_plane_get_damage_clips(state);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

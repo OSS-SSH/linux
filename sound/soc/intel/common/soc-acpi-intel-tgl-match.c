@@ -8,14 +8,6 @@
 
 #include <sound/soc-acpi.h>
 #include <sound/soc-acpi-intel-match.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "soc-acpi-intel-sdw-mockup-match.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "soc-acpi-intel-sdw-mockup-match.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct snd_soc_acpi_codecs tgl_codecs = {
 	.num_codecs = 1,
@@ -204,24 +196,6 @@ static const struct snd_soc_acpi_link_adr tgl_rvp[] = {
 	{}
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct snd_soc_acpi_link_adr tgl_rvp_headset_only[] = {
-	{
-		.mask = BIT(0),
-		.num_adr = ARRAY_SIZE(rt711_0_adr),
-		.adr_d = rt711_0_adr,
-	},
-	{}
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct snd_soc_acpi_link_adr tgl_hp[] = {
 	{
 		.mask = BIT(0),
@@ -377,37 +351,6 @@ EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_tgl_machines);
 
 /* this table is used when there is no I2S codec present */
 struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_sdw_machines[] = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* mockup tests need to be first */
-	{
-		.link_mask = GENMASK(3, 0),
-		.links = sdw_mockup_headset_2amps_mic,
-		.drv_name = "sof_sdw",
-		.sof_fw_filename = "sof-tgl.ri",
-		.sof_tplg_filename = "sof-tgl-rt711-rt1308-rt715.tplg",
-	},
-	{
-		.link_mask = BIT(0) | BIT(1) | BIT(3),
-		.links = sdw_mockup_headset_1amp_mic,
-		.drv_name = "sof_sdw",
-		.sof_fw_filename = "sof-tgl.ri",
-		.sof_tplg_filename = "sof-tgl-rt711-rt1308-mono-rt715.tplg",
-	},
-	{
-		.link_mask = BIT(0) | BIT(1) | BIT(2),
-		.links = sdw_mockup_mic_headset_1amp,
-		.drv_name = "sof_sdw",
-		.sof_fw_filename = "sof-tgl.ri",
-		.sof_tplg_filename = "sof-tgl-rt715-rt711-rt1308-mono.tplg",
-	},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.link_mask = 0x7,
 		.links = tgl_sdw_rt711_link1_rt1308_link2_rt715_link0,
@@ -455,21 +398,6 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_sdw_machines[] = {
 		.drv_name = "sof_sdw",
 		.sof_tplg_filename = "sof-tgl-sdw-max98373-rt5682.tplg",
 	},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{
-		.link_mask = 0x1, /* rt711 on link 0 */
-		.links = tgl_rvp_headset_only,
-		.drv_name = "sof_sdw",
-		.sof_tplg_filename = "sof-tgl-rt711.tplg",
-	},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{},
 };
 EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_tgl_sdw_machines);

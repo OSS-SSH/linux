@@ -143,21 +143,11 @@ struct rockchip_rgb *rockchip_rgb_init(struct device *dev,
 	rgb->bridge = bridge;
 
 	ret = drm_bridge_attach(encoder, rgb->bridge, NULL, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret)
-		goto err_free_encoder;
-=======
 	if (ret) {
 		DRM_DEV_ERROR(drm_dev->dev,
 			      "failed to attach bridge: %d\n", ret);
 		goto err_free_encoder;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret)
-		goto err_free_encoder;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rgb;
 

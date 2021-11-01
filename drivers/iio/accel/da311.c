@@ -212,20 +212,6 @@ static const struct iio_info da311_info = {
 	.read_raw	= da311_read_raw,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void da311_disable(void *client)
-{
-	da311_enable(client, false);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int da311_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
@@ -243,13 +229,7 @@ static int da311_probe(struct i2c_client *client,
 
 	data = iio_priv(indio_dev);
 	data->client = client;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	i2c_set_clientdata(client, indio_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	indio_dev->info = &da311_info;
 	indio_dev->name = "da311";
@@ -265,14 +245,6 @@ static int da311_probe(struct i2c_client *client,
 	if (ret < 0)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = devm_add_action_or_reset(&client->dev, da311_disable, client);
-	if (ret)
-		return ret;
-
-	return devm_iio_device_register(&client->dev, indio_dev);
-=======
 	ret = iio_device_register(indio_dev);
 	if (ret < 0) {
 		dev_err(&client->dev, "device_register failed\n");
@@ -289,14 +261,6 @@ static int da311_remove(struct i2c_client *client)
 	iio_device_unregister(indio_dev);
 
 	return da311_enable(client, false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = devm_add_action_or_reset(&client->dev, da311_disable, client);
-	if (ret)
-		return ret;
-
-	return devm_iio_device_register(&client->dev, indio_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP
@@ -325,13 +289,7 @@ static struct i2c_driver da311_driver = {
 		.pm = &da311_pm_ops,
 	},
 	.probe		= da311_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove		= da311_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= da311_i2c_id,
 };
 

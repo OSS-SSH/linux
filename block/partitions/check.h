@@ -9,15 +9,7 @@
  * description.
  */
 struct parsed_partitions {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct gendisk *disk;
-=======
 	struct block_device *bdev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct gendisk *disk;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char name[BDEVNAME_SIZE];
 	struct {
 		sector_t from;

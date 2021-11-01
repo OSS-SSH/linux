@@ -122,15 +122,7 @@ on various other factors also like;
 	so the device should have enough free bytes available its OOB/Spare
 	area to accommodate ECC for entire page. In general following expression
 	helps in determining if given device can accommodate ECC syndrome:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	"2 + (PAGESIZE / 512) * ECC_BYTES" <= OOBSIZE"
-=======
 	"2 + (PAGESIZE / 512) * ECC_BYTES" >= OOBSIZE"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	"2 + (PAGESIZE / 512) * ECC_BYTES" <= OOBSIZE"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	where
 		OOBSIZE		number of bytes in OOB/spare area
 		PAGESIZE	number of bytes in main-area of device page

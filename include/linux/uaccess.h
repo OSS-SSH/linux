@@ -200,9 +200,6 @@ copy_to_user(void __user *to, const void *from, unsigned long n)
 		n = _copy_to_user(to, from, n);
 	return n;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_COMPAT
 static __always_inline unsigned long __must_check
 copy_in_user(void __user *to, const void __user *from, unsigned long n)
@@ -213,9 +210,6 @@ copy_in_user(void __user *to, const void __user *from, unsigned long n)
 	return n;
 }
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef copy_mc_to_kernel
 /*

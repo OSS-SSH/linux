@@ -834,28 +834,14 @@ static int locomo_bus_probe(struct device *dev)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void locomo_bus_remove(struct device *dev)
-=======
 static int locomo_bus_remove(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void locomo_bus_remove(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct locomo_dev *ldev = LOCOMO_DEV(dev);
 	struct locomo_driver *drv = LOCOMO_DRV(dev->driver);
 
 	if (drv->remove)
 		drv->remove(ldev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct bus_type locomo_bus_type = {

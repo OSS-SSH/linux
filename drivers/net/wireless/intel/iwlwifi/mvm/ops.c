@@ -78,13 +78,7 @@ module_exit(iwl_mvm_exit);
 static void iwl_mvm_nic_config(struct iwl_op_mode *op_mode)
 {
 	struct iwl_mvm *mvm = IWL_OP_MODE_GET_MVM(op_mode);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct iwl_trans_debug *dbg = &mvm->trans->dbg;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 radio_cfg_type, radio_cfg_step, radio_cfg_dash;
 	u32 reg_val = 0;
 	u32 phy_config = iwl_mvm_get_phy_config(mvm);
@@ -121,18 +115,10 @@ static void iwl_mvm_nic_config(struct iwl_op_mode *op_mode)
 	if (mvm->trans->trans_cfg->device_family < IWL_DEVICE_FAMILY_8000)
 		reg_val |= CSR_HW_IF_CONFIG_REG_BIT_RADIO_SI;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (iwl_fw_dbg_is_d3_debug_enabled(&mvm->fwrt))
-=======
 	if (iwl_fw_dbg_is_d3_debug_enabled(&mvm->fwrt) ||
 	    (iwl_trans_dbg_ini_valid(mvm->trans) &&
 	     dbg->fw_mon_cfg[IWL_FW_INI_ALLOCATION_ID_INTERNAL].buf_location)
 	    )
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (iwl_fw_dbg_is_d3_debug_enabled(&mvm->fwrt))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg_val |= CSR_HW_IF_CONFIG_REG_D3_DEBUG;
 
 	iwl_trans_set_bits_mask(mvm->trans, CSR_HW_IF_CONFIG_REG,
@@ -228,33 +214,11 @@ void iwl_mvm_apply_fw_smps_request(struct ieee80211_vif *vif)
 {
 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
 	struct iwl_mvm *mvm = mvmvif->mvm;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	enum ieee80211_smps_mode mode = IEEE80211_SMPS_AUTOMATIC;
-
-	if (mvm->fw_static_smps_request &&
-	    vif->bss_conf.chandef.width == NL80211_CHAN_WIDTH_160 &&
-	    vif->bss_conf.he_support)
-		mode = IEEE80211_SMPS_STATIC;
-
-	iwl_mvm_update_smps(mvm, vif, IWL_MVM_SMPS_REQ_FW, mode);
-=======
 
 	iwl_mvm_update_smps(mvm, vif, IWL_MVM_SMPS_REQ_FW,
 			    mvm->fw_static_smps_request ?
 				IEEE80211_SMPS_STATIC :
 				IEEE80211_SMPS_AUTOMATIC);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	enum ieee80211_smps_mode mode = IEEE80211_SMPS_AUTOMATIC;
-
-	if (mvm->fw_static_smps_request &&
-	    vif->bss_conf.chandef.width == NL80211_CHAN_WIDTH_160 &&
-	    vif->bss_conf.he_support)
-		mode = IEEE80211_SMPS_STATIC;
-
-	iwl_mvm_update_smps(mvm, vif, IWL_MVM_SMPS_REQ_FW, mode);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void iwl_mvm_intf_dual_chain_req(void *data, u8 *mac,
@@ -410,15 +374,7 @@ static const struct iwl_rx_handlers iwl_mvm_rx_handlers[] = {
 		       struct iwl_mfu_assert_dump_notif),
 	RX_HANDLER_GRP(PROT_OFFLOAD_GROUP, STORED_BEACON_NTF,
 		       iwl_mvm_rx_stored_beacon_notif, RX_HANDLER_SYNC,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       struct iwl_stored_beacon_notif_v2),
-=======
 		       struct iwl_stored_beacon_notif),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       struct iwl_stored_beacon_notif_v2),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RX_HANDLER_GRP(DATA_PATH_GROUP, MU_GROUP_MGMT_NOTIF,
 		       iwl_mvm_mu_mimo_grp_notif, RX_HANDLER_SYNC,
 		       struct iwl_mu_group_mgmt_notif),
@@ -731,46 +687,17 @@ static int iwl_mvm_start_get_nvm(struct iwl_mvm *mvm)
 {
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rtnl_lock();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rtnl_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&mvm->mutex);
 
 	ret = iwl_run_init_mvm_ucode(mvm);
 
 	if (ret && ret != -ERFKILL)
 		iwl_fw_dbg_error_collect(&mvm->fwrt, FW_DBG_TRIGGER_DRIVER);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!ret && iwl_mvm_is_lar_supported(mvm)) {
-		mvm->hw->wiphy->regulatory_flags |= REGULATORY_WIPHY_SELF_MANAGED;
-		ret = iwl_mvm_init_mcc(mvm);
-	}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!iwlmvm_mod_params.init_dbg || !ret)
 		iwl_mvm_stop_device(mvm);
 
 	mutex_unlock(&mvm->mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rtnl_unlock();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rtnl_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret < 0)
 		IWL_ERR(mvm, "Failed to run INIT ucode: %d\n", ret);
@@ -845,16 +772,6 @@ iwl_op_mode_mvm_start(struct iwl_trans *trans, const struct iwl_cfg *cfg,
 	iwl_fw_runtime_init(&mvm->fwrt, trans, fw, &iwl_mvm_fwrt_ops, mvm,
 			    dbgfs_dir);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	iwl_mvm_get_acpi_tables(mvm);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	iwl_mvm_get_acpi_tables(mvm);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mvm->init_status = 0;
 
 	if (iwl_mvm_has_new_rx_api(mvm)) {
@@ -875,39 +792,10 @@ iwl_op_mode_mvm_start(struct iwl_trans *trans, const struct iwl_cfg *cfg,
 
 	mvm->fw_restart = iwlwifi_mod_params.fw_restart ? -1 : 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (iwl_mvm_has_new_tx_api(mvm)) {
-		/*
-		 * If we have the new TX/queue allocation API initialize them
-		 * all to invalid numbers. We'll rewrite the ones that we need
-		 * later, but that doesn't happen for all of them all of the
-		 * time (e.g. P2P Device is optional), and if a dynamic queue
-		 * ends up getting number 2 (IWL_MVM_DQA_P2P_DEVICE_QUEUE) then
-		 * iwl_mvm_is_static_queue() erroneously returns true, and we
-		 * might have things getting stuck.
-		 */
-		mvm->aux_queue = IWL_MVM_INVALID_QUEUE;
-		mvm->snif_queue = IWL_MVM_INVALID_QUEUE;
-		mvm->probe_queue = IWL_MVM_INVALID_QUEUE;
-		mvm->p2p_dev_queue = IWL_MVM_INVALID_QUEUE;
-	} else {
-		mvm->aux_queue = IWL_MVM_DQA_AUX_QUEUE;
-		mvm->snif_queue = IWL_MVM_DQA_INJECT_MONITOR_QUEUE;
-		mvm->probe_queue = IWL_MVM_DQA_AP_PROBE_RESP_QUEUE;
-		mvm->p2p_dev_queue = IWL_MVM_DQA_P2P_DEVICE_QUEUE;
-	}
-<<<<<<< HEAD
-=======
 	mvm->aux_queue = IWL_MVM_DQA_AUX_QUEUE;
 	mvm->snif_queue = IWL_MVM_DQA_INJECT_MONITOR_QUEUE;
 	mvm->probe_queue = IWL_MVM_DQA_AP_PROBE_RESP_QUEUE;
 	mvm->p2p_dev_queue = IWL_MVM_DQA_P2P_DEVICE_QUEUE;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mvm->sf_state = SF_UNINIT;
 	if (iwl_mvm_has_unified_ucode(mvm))
@@ -1512,15 +1400,7 @@ void iwl_mvm_nic_restart(struct iwl_mvm *mvm, bool fw_error)
 	 * can't recover this since we're already half suspended.
 	 */
 	if (!mvm->fw_restart && fw_error) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		iwl_fw_error_collect(&mvm->fwrt, false);
-=======
 		iwl_fw_error_collect(&mvm->fwrt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		iwl_fw_error_collect(&mvm->fwrt, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status)) {
 		struct iwl_mvm_reprobe *reprobe;
 
@@ -1571,15 +1451,7 @@ void iwl_mvm_nic_restart(struct iwl_mvm *mvm, bool fw_error)
 			}
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		iwl_fw_error_collect(&mvm->fwrt, false);
-=======
 		iwl_fw_error_collect(&mvm->fwrt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		iwl_fw_error_collect(&mvm->fwrt, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (fw_error && mvm->fw_restart > 0)
 			mvm->fw_restart--;
@@ -1587,48 +1459,13 @@ void iwl_mvm_nic_restart(struct iwl_mvm *mvm, bool fw_error)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void iwl_mvm_nic_error(struct iwl_op_mode *op_mode, bool sync)
-=======
 static void iwl_mvm_nic_error(struct iwl_op_mode *op_mode)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void iwl_mvm_nic_error(struct iwl_op_mode *op_mode, bool sync)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct iwl_mvm *mvm = IWL_OP_MODE_GET_MVM(op_mode);
 
 	if (!test_bit(STATUS_TRANS_DEAD, &mvm->trans->status))
 		iwl_mvm_dump_nic_error_log(mvm);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (sync) {
-		iwl_fw_error_collect(&mvm->fwrt, true);
-		/*
-		 * Currently, the only case for sync=true is during
-		 * shutdown, so just stop in this case. If/when that
-		 * changes, we need to be a bit smarter here.
-		 */
-		return;
-	}
-
-	/*
-	 * If the firmware crashes while we're already considering it
-	 * to be dead then don't ask for a restart, that cannot do
-	 * anything useful anyway.
-	 */
-	if (!test_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING, &mvm->status))
-		return;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iwl_mvm_nic_restart(mvm, true);
 }
 

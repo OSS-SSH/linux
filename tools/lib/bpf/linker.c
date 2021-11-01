@@ -1649,34 +1649,11 @@ static bool btf_is_non_static(const struct btf_type *t)
 static int find_glob_sym_btf(struct src_obj *obj, Elf64_Sym *sym, const char *sym_name,
 			     int *out_btf_sec_id, int *out_btf_id)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int i, j, n, m, btf_id = 0;
-=======
 	int i, j, n = btf__get_nr_types(obj->btf), m, btf_id = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int i, j, n, m, btf_id = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct btf_type *t;
 	const struct btf_var_secinfo *vi;
 	const char *name;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!obj->btf) {
-		pr_warn("failed to find BTF info for object '%s'\n", obj->filename);
-		return -EINVAL;
-	}
-
-	n = btf__get_nr_types(obj->btf);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 1; i <= n; i++) {
 		t = btf__type_by_id(obj->btf, i);
 

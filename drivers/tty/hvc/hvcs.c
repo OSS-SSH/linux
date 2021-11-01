@@ -1445,26 +1445,10 @@ static int hvcs_initialize(void)
 	} else
 		num_ttys_to_alloc = hvcs_parm_num_devs;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hvcs_tty_driver = tty_alloc_driver(num_ttys_to_alloc,
-			TTY_DRIVER_REAL_RAW);
-	if (IS_ERR(hvcs_tty_driver)) {
-		mutex_unlock(&hvcs_init_mutex);
-		return PTR_ERR(hvcs_tty_driver);
-=======
 	hvcs_tty_driver = alloc_tty_driver(num_ttys_to_alloc);
 	if (!hvcs_tty_driver) {
 		mutex_unlock(&hvcs_init_mutex);
 		return -ENOMEM;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hvcs_tty_driver = tty_alloc_driver(num_ttys_to_alloc,
-			TTY_DRIVER_REAL_RAW);
-	if (IS_ERR(hvcs_tty_driver)) {
-		mutex_unlock(&hvcs_init_mutex);
-		return PTR_ERR(hvcs_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (hvcs_alloc_index_list(num_ttys_to_alloc)) {
@@ -1489,13 +1473,7 @@ static int hvcs_initialize(void)
 	 * throw us into a horrible recursive echo-echo-echo loop.
 	 */
 	hvcs_tty_driver->init_termios = hvcs_tty_termios;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	hvcs_tty_driver->flags = TTY_DRIVER_REAL_RAW;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tty_set_operations(hvcs_tty_driver, &hvcs_ops);
 
@@ -1531,15 +1509,7 @@ buff_alloc_fail:
 register_fail:
 	hvcs_free_index_list();
 index_fail:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tty_driver_kref_put(hvcs_tty_driver);
-=======
 	put_tty_driver(hvcs_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tty_driver_kref_put(hvcs_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hvcs_tty_driver = NULL;
 	mutex_unlock(&hvcs_init_mutex);
 	return rc;
@@ -1592,15 +1562,7 @@ static void __exit hvcs_module_exit(void)
 
 	hvcs_free_index_list();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tty_driver_kref_put(hvcs_tty_driver);
-=======
 	put_tty_driver(hvcs_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tty_driver_kref_put(hvcs_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	printk(KERN_INFO "HVCS: driver module removed.\n");
 }

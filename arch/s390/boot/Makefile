@@ -7,14 +7,6 @@ KCOV_INSTRUMENT := n
 GCOV_PROFILE := n
 UBSAN_SANITIZE := n
 KASAN_SANITIZE := n
-<<<<<<< HEAD
-<<<<<<< HEAD
-KCSAN_SANITIZE := n
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-KCSAN_SANITIZE := n
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 KBUILD_AFLAGS := $(KBUILD_AFLAGS_DECOMPRESSOR)
 KBUILD_CFLAGS := $(KBUILD_CFLAGS_DECOMPRESSOR)
@@ -44,15 +36,7 @@ CFLAGS_sclp_early_core.o += -I$(srctree)/drivers/s390/char
 
 obj-y	:= head.o als.o startup.o mem_detect.o ipl_parm.o ipl_report.o
 obj-y	+= string.o ebcdic.o sclp_early_core.o mem.o ipl_vmparm.o cmdline.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-obj-y	+= version.o pgm_check_info.o ctype.o
-=======
 obj-y	+= version.o pgm_check_info.o ctype.o text_dma.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-obj-y	+= version.o pgm_check_info.o ctype.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(findstring y, $(CONFIG_PROTECTED_VIRTUALIZATION_GUEST) $(CONFIG_PGSTE))	+= uv.o
 obj-$(CONFIG_RELOCATABLE)	+= machine_kexec_reloc.o
 obj-$(CONFIG_RANDOMIZE_BASE)	+= kaslr.o
@@ -85,13 +69,7 @@ $(obj)/compressed/vmlinux: $(obj)/startup.a FORCE
 
 $(obj)/startup.a: $(OBJECTS) FORCE
 	$(call if_changed,ar)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 install:
 	sh -x  $(srctree)/$(obj)/install.sh $(KERNELRELEASE) $(obj)/bzImage \
 	      System.map "$(INSTALL_PATH)"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

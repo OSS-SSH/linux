@@ -220,16 +220,6 @@ int xfs_free_extent_fix_freelist(struct xfs_trans *tp, struct xfs_perag *pag,
 xfs_extlen_t xfs_prealloc_blocks(struct xfs_mount *mp);
 
 typedef int (*xfs_alloc_query_range_fn)(
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct xfs_btree_cur			*cur,
-	const struct xfs_alloc_rec_incore	*rec,
-	void					*priv);
-
-int xfs_alloc_query_range(struct xfs_btree_cur *cur,
-		const struct xfs_alloc_rec_incore *low_rec,
-		const struct xfs_alloc_rec_incore *high_rec,
-=======
 	struct xfs_btree_cur		*cur,
 	struct xfs_alloc_rec_incore	*rec,
 	void				*priv);
@@ -237,16 +227,6 @@ int xfs_alloc_query_range(struct xfs_btree_cur *cur,
 int xfs_alloc_query_range(struct xfs_btree_cur *cur,
 		struct xfs_alloc_rec_incore *low_rec,
 		struct xfs_alloc_rec_incore *high_rec,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct xfs_btree_cur			*cur,
-	const struct xfs_alloc_rec_incore	*rec,
-	void					*priv);
-
-int xfs_alloc_query_range(struct xfs_btree_cur *cur,
-		const struct xfs_alloc_rec_incore *low_rec,
-		const struct xfs_alloc_rec_incore *high_rec,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_alloc_query_range_fn fn, void *priv);
 int xfs_alloc_query_all(struct xfs_btree_cur *cur, xfs_alloc_query_range_fn fn,
 		void *priv);
@@ -263,15 +243,7 @@ static inline __be32 *
 xfs_buf_to_agfl_bno(
 	struct xfs_buf		*bp)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(bp->b_mount))
-=======
 	if (xfs_sb_version_hascrc(&bp->b_mount->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(bp->b_mount))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return bp->b_addr + sizeof(struct xfs_agfl);
 	return bp->b_addr;
 }

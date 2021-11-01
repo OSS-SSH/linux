@@ -36,30 +36,12 @@ properties:
           switching frequency must be one of following corresponding value
           1.1MHz, 1.65MHz, 2.2MHz, 2.75MHz
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-      ldortc:
-        type: object
-        $ref: regulator.yaml#
-
-    patternProperties:
-      "^ldo[1-4]$":
-=======
     patternProperties:
       "^ldo[1-4]$":
         type: object
         $ref: regulator.yaml#
 
       "^ldortc$":
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      ldortc:
-        type: object
-        $ref: regulator.yaml#
-
-    patternProperties:
-      "^ldo[1-4]$":
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         type: object
         $ref: regulator.yaml#
 

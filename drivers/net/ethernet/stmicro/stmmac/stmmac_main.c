@@ -309,15 +309,7 @@ static void stmmac_clk_csr_set(struct stmmac_priv *priv)
 			priv->clk_csr = STMMAC_CSR_100_150M;
 		else if ((clk_rate >= CSR_F_150M) && (clk_rate < CSR_F_250M))
 			priv->clk_csr = STMMAC_CSR_150_250M;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		else if ((clk_rate >= CSR_F_250M) && (clk_rate <= CSR_F_300M))
-=======
 		else if ((clk_rate >= CSR_F_250M) && (clk_rate < CSR_F_300M))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		else if ((clk_rate >= CSR_F_250M) && (clk_rate <= CSR_F_300M))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			priv->clk_csr = STMMAC_CSR_250_300M;
 	}
 
@@ -485,19 +477,6 @@ bool stmmac_eee_init(struct stmmac_priv *priv)
 			stmmac_lpi_entry_timer_config(priv, 0);
 			del_timer_sync(&priv->eee_ctrl_timer);
 			stmmac_set_eee_timer(priv, priv->hw, 0, eee_tw_timer);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (priv->hw->xpcs)
-				xpcs_config_eee(priv->hw->xpcs,
-						priv->plat->mult_fact_100ns,
-						false);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		mutex_unlock(&priv->lock);
 		return false;
@@ -507,19 +486,6 @@ bool stmmac_eee_init(struct stmmac_priv *priv)
 		timer_setup(&priv->eee_ctrl_timer, stmmac_eee_ctrl_timer, 0);
 		stmmac_set_eee_timer(priv, priv->hw, STMMAC_DEFAULT_LIT_LS,
 				     eee_tw_timer);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (priv->hw->xpcs)
-			xpcs_config_eee(priv->hw->xpcs,
-					priv->plat->mult_fact_100ns,
-					true);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (priv->plat->has_gmac4 && priv->tx_lpi_timer <= STMMAC_ET_MAX) {
@@ -1068,15 +1034,7 @@ static void stmmac_mac_link_down(struct phylink_config *config,
 	stmmac_mac_set(priv, priv->ioaddr, false);
 	priv->eee_active = false;
 	priv->tx_lpi_enabled = false;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	priv->eee_enabled = stmmac_eee_init(priv);
-=======
 	stmmac_eee_init(priv);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	priv->eee_enabled = stmmac_eee_init(priv);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	stmmac_set_eee_pls(priv, priv->hw, false);
 
 	if (priv->dma_cap.fpesel)
@@ -2542,14 +2500,6 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue)
 			} else {
 				priv->dev->stats.tx_packets++;
 				priv->xstats.tx_pkt_n++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				priv->xstats.txq_stats[queue].tx_pkt_n++;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				priv->xstats.txq_stats[queue].tx_pkt_n++;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 			if (skb)
 				stmmac_get_tx_hwtstamp(priv, p, skb);
@@ -4964,19 +4914,6 @@ read_again:
 
 		prefetch(np);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/* Ensure a valid XSK buffer before proceed */
-		if (!buf->xdp)
-			break;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (priv->extend_desc)
 			stmmac_rx_extended_status(priv, &priv->dev->stats,
 						  &priv->xstats,
@@ -4997,16 +4934,10 @@ read_again:
 			continue;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		/* Ensure a valid XSK buffer before proceed */
 		if (!buf->xdp)
 			break;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* XSK pool expects RX frame 1:1 mapped to XSK buffer */
 		if (likely(status & rx_not_ls)) {
 			xsk_buff_free(buf->xdp);
@@ -5069,18 +5000,6 @@ read_again:
 
 	stmmac_finalize_xdp_rx(priv, xdp_status);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	priv->xstats.rx_pkt_n += count;
-	priv->xstats.rxq_stats[queue].rx_pkt_n += count;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	priv->xstats.rx_pkt_n += count;
-	priv->xstats.rxq_stats[queue].rx_pkt_n += count;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xsk_uses_need_wakeup(rx_q->xsk_pool)) {
 		if (failure || stmmac_rx_dirty(priv, queue) > 0)
 			xsk_set_rx_need_wakeup(rx_q->xsk_pool);
@@ -5368,14 +5287,6 @@ drain_data:
 	stmmac_rx_refill(priv, queue);
 
 	priv->xstats.rx_pkt_n += count;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	priv->xstats.rxq_stats[queue].rx_pkt_n += count;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	priv->xstats.rxq_stats[queue].rx_pkt_n += count;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return count;
 }
@@ -5431,15 +5342,7 @@ static int stmmac_napi_poll_rxtx(struct napi_struct *napi, int budget)
 	struct stmmac_channel *ch =
 		container_of(napi, struct stmmac_channel, rxtx_napi);
 	struct stmmac_priv *priv = ch->priv_data;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int rx_done, tx_done, rxtx_done;
-=======
 	int rx_done, tx_done;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int rx_done, tx_done, rxtx_done;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 chan = ch->index;
 
 	priv->xstats.napi_poll++;
@@ -5449,36 +5352,14 @@ static int stmmac_napi_poll_rxtx(struct napi_struct *napi, int budget)
 
 	rx_done = stmmac_rx_zc(priv, budget, chan);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rxtx_done = max(tx_done, rx_done);
-
 	/* If either TX or RX work is not complete, return budget
 	 * and keep pooling
 	 */
-	if (rxtx_done >= budget)
+	if (tx_done >= budget || rx_done >= budget)
 		return budget;
 
 	/* all work done, exit the polling mode */
-	if (napi_complete_done(napi, rxtx_done)) {
-=======
-=======
-	rxtx_done = max(tx_done, rx_done);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* If either TX or RX work is not complete, return budget
-	 * and keep pooling
-	 */
-	if (rxtx_done >= budget)
-		return budget;
-
-	/* all work done, exit the polling mode */
-<<<<<<< HEAD
 	if (napi_complete_done(napi, rx_done)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (napi_complete_done(napi, rxtx_done)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unsigned long flags;
 
 		spin_lock_irqsave(&ch->lock, flags);
@@ -5489,15 +5370,7 @@ static int stmmac_napi_poll_rxtx(struct napi_struct *napi, int budget)
 		spin_unlock_irqrestore(&ch->lock, flags);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return min(rxtx_done, budget - 1);
-=======
 	return min(rx_done, budget - 1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return min(rxtx_done, budget - 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -6578,15 +6451,7 @@ static const struct net_device_ops stmmac_netdev_ops = {
 	.ndo_set_features = stmmac_set_features,
 	.ndo_set_rx_mode = stmmac_set_rx_mode,
 	.ndo_tx_timeout = stmmac_tx_timeout,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl = stmmac_ioctl,
-=======
 	.ndo_do_ioctl = stmmac_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl = stmmac_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_setup_tc = stmmac_setup_tc,
 	.ndo_select_queue = stmmac_select_queue,
 #ifdef CONFIG_NET_POLL_CONTROLLER
@@ -7246,25 +7111,13 @@ int stmmac_suspend(struct device *dev)
 	struct net_device *ndev = dev_get_drvdata(dev);
 	struct stmmac_priv *priv = netdev_priv(ndev);
 	u32 chan;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!ndev || !netif_running(ndev))
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	phylink_mac_change(priv->phylink, false);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&priv->lock);
 
 	netif_device_detach(ndev);
@@ -7290,11 +7143,6 @@ int stmmac_suspend(struct device *dev)
 		stmmac_pmt(priv, priv->hw, priv->wolopts);
 		priv->irq_wake = 1;
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		stmmac_mac_set(priv, priv->ioaddr, false);
-		pinctrl_pm_select_sleep_state(priv->device);
-=======
 		mutex_unlock(&priv->lock);
 		rtnl_lock();
 		if (device_may_wakeup(priv->device))
@@ -7312,34 +7160,10 @@ int stmmac_suspend(struct device *dev)
 			mutex_unlock(&priv->lock);
 			return ret;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		stmmac_mac_set(priv, priv->ioaddr, false);
-		pinctrl_pm_select_sleep_state(priv->device);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mutex_unlock(&priv->lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	rtnl_lock();
-	if (device_may_wakeup(priv->device) && priv->plat->pmt) {
-		phylink_suspend(priv->phylink, true);
-	} else {
-		if (device_may_wakeup(priv->device))
-			phylink_speed_down(priv->phylink, false);
-		phylink_suspend(priv->phylink, false);
-	}
-	rtnl_unlock();
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (priv->dma_cap.fpesel) {
 		/* Disable FPE */
 		stmmac_fpe_configure(priv, priv->ioaddr,
@@ -7347,14 +7171,6 @@ int stmmac_suspend(struct device *dev)
 				     priv->plat->rx_queues_to_use, false);
 
 		stmmac_fpe_handshake(priv, false);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		stmmac_fpe_stop_wq(priv);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		stmmac_fpe_stop_wq(priv);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	priv->speed = SPEED_UNKNOWN;
@@ -7418,18 +7234,12 @@ int stmmac_resume(struct device *dev)
 		priv->irq_wake = 0;
 	} else {
 		pinctrl_pm_select_default_state(priv->device);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		/* enable the clk previously disabled */
 		ret = pm_runtime_force_resume(dev);
 		if (ret)
 			return ret;
 		if (priv->plat->clk_ptp_ref)
 			clk_prepare_enable(priv->plat->clk_ptp_ref);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* reset the phy so that it's ready */
 		if (priv->mii)
 			stmmac_mdio_reset(priv->mii);
@@ -7443,21 +7253,6 @@ int stmmac_resume(struct device *dev)
 			return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	rtnl_lock();
-	if (device_may_wakeup(priv->device) && priv->plat->pmt) {
-		phylink_resume(priv->phylink);
-	} else {
-		phylink_resume(priv->phylink);
-		if (device_may_wakeup(priv->device))
-			phylink_speed_up(priv->phylink);
-<<<<<<< HEAD
-	}
-	rtnl_unlock();
-=======
 	if (!device_may_wakeup(priv->device) || !priv->plat->pmt) {
 		rtnl_lock();
 		phylink_start(priv->phylink);
@@ -7465,11 +7260,6 @@ int stmmac_resume(struct device *dev)
 		phylink_speed_up(priv->phylink);
 		rtnl_unlock();
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	}
-	rtnl_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rtnl_lock();
 	mutex_lock(&priv->lock);
@@ -7490,14 +7280,8 @@ int stmmac_resume(struct device *dev)
 	mutex_unlock(&priv->lock);
 	rtnl_unlock();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	phylink_mac_change(priv->phylink, true);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netif_device_attach(ndev);
 
 	return 0;

@@ -140,13 +140,7 @@ struct cxl_device_reg_map {
 };
 
 struct cxl_register_map {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct list_head list;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 block_offset;
 	u8 reg_type;
 	u8 barno;

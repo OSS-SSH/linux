@@ -160,19 +160,7 @@ int esw_acl_ingress_lgcy_setup(struct mlx5_eswitch *esw,
 
 	esw_acl_ingress_lgcy_rules_destroy(vport);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (vport->ingress.legacy.drop_counter) {
-		counter = vport->ingress.legacy.drop_counter;
-	} else if (MLX5_CAP_ESW_INGRESS_ACL(esw->dev, flow_counter)) {
-=======
 	if (MLX5_CAP_ESW_INGRESS_ACL(esw->dev, flow_counter)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (vport->ingress.legacy.drop_counter) {
-		counter = vport->ingress.legacy.drop_counter;
-	} else if (MLX5_CAP_ESW_INGRESS_ACL(esw->dev, flow_counter)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		counter = mlx5_fc_create(esw->dev, false);
 		if (IS_ERR(counter)) {
 			esw_warn(esw->dev,

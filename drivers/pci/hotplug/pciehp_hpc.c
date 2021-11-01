@@ -870,15 +870,7 @@ void pcie_disable_interrupt(struct controller *ctrl)
  * momentarily, if we see that they could interfere. Also, clear any spurious
  * events after.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, bool probe)
-=======
 int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, int probe)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int pciehp_reset_slot(struct hotplug_slot *hotplug_slot, bool probe)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct controller *ctrl = to_ctrl(hotplug_slot);
 	struct pci_dev *pdev = ctrl_dev(ctrl);

@@ -179,16 +179,8 @@ static int dvfsrc_vcore_regulator_probe(struct platform_device *pdev)
 	for (i = 0; i < regulator_init_data->size; i++) {
 		config.dev = dev->parent;
 		config.driver_data = (mt_regulators + i);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rdev = devm_regulator_register(dev, &(mt_regulators + i)->desc,
-=======
 		rdev = devm_regulator_register(dev->parent,
 					       &(mt_regulators + i)->desc,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rdev = devm_regulator_register(dev, &(mt_regulators + i)->desc,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					       &config);
 		if (IS_ERR(rdev)) {
 			dev_err(dev, "failed to register %s\n",

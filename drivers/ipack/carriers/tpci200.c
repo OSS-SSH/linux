@@ -89,32 +89,16 @@ static void tpci200_unregister(struct tpci200_board *tpci200)
 	free_irq(tpci200->info->pdev->irq, (void *) tpci200);
 
 	pci_iounmap(tpci200->info->pdev, tpci200->info->interface_regs);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	pci_iounmap(tpci200->info->pdev, tpci200->info->cfg_regs);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_release_region(tpci200->info->pdev, TPCI200_IP_INTERFACE_BAR);
 	pci_release_region(tpci200->info->pdev, TPCI200_IO_ID_INT_SPACES_BAR);
 	pci_release_region(tpci200->info->pdev, TPCI200_MEM16_SPACE_BAR);
 	pci_release_region(tpci200->info->pdev, TPCI200_MEM8_SPACE_BAR);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	pci_disable_device(tpci200->info->pdev);
-=======
 	pci_release_region(tpci200->info->pdev, TPCI200_CFG_MEM_BAR);
 
 	pci_disable_device(tpci200->info->pdev);
 	pci_dev_put(tpci200->info->pdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	pci_disable_device(tpci200->info->pdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void tpci200_enable_irq(struct tpci200_board *tpci200,
@@ -273,15 +257,7 @@ static int tpci200_register(struct tpci200_board *tpci200)
 			"(bn 0x%X, sn 0x%X) failed to allocate PCI resource for BAR 2 !",
 			tpci200->info->pdev->bus->number,
 			tpci200->info->pdev->devfn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_disable_device;
-=======
 		goto out_disable_pci;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_disable_device;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Request IO ID INT space (Bar 3) */
@@ -293,15 +269,7 @@ static int tpci200_register(struct tpci200_board *tpci200)
 			"(bn 0x%X, sn 0x%X) failed to allocate PCI resource for BAR 3 !",
 			tpci200->info->pdev->bus->number,
 			tpci200->info->pdev->devfn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_ip_interface_bar;
-=======
 		goto out_release_ip_space;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_ip_interface_bar;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Request MEM8 space (Bar 5) */
@@ -312,15 +280,7 @@ static int tpci200_register(struct tpci200_board *tpci200)
 			"(bn 0x%X, sn 0x%X) failed to allocate PCI resource for BAR 5!",
 			tpci200->info->pdev->bus->number,
 			tpci200->info->pdev->devfn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_io_id_int_spaces_bar;
-=======
 		goto out_release_ioid_int_space;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_io_id_int_spaces_bar;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Request MEM16 space (Bar 4) */
@@ -331,15 +291,7 @@ static int tpci200_register(struct tpci200_board *tpci200)
 			"(bn 0x%X, sn 0x%X) failed to allocate PCI resource for BAR 4!",
 			tpci200->info->pdev->bus->number,
 			tpci200->info->pdev->devfn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_mem8_space_bar;
-=======
 		goto out_release_mem8_space;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_mem8_space_bar;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Map internal tpci200 driver user space */
@@ -353,15 +305,7 @@ static int tpci200_register(struct tpci200_board *tpci200)
 			tpci200->info->pdev->bus->number,
 			tpci200->info->pdev->devfn);
 		res = -ENOMEM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_mem16_space_bar;
-=======
 		goto out_release_mem8_space;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_mem16_space_bar;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Initialize lock that protects interface_regs */
@@ -400,50 +344,18 @@ static int tpci200_register(struct tpci200_board *tpci200)
 			"(bn 0x%X, sn 0x%X) unable to register IRQ !",
 			tpci200->info->pdev->bus->number,
 			tpci200->info->pdev->devfn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_interface_regs;
-=======
 		goto out_release_ioid_int_space;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_interface_regs;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-err_interface_regs:
-	pci_iounmap(tpci200->info->pdev, tpci200->info->interface_regs);
-err_mem16_space_bar:
-	pci_release_region(tpci200->info->pdev, TPCI200_MEM16_SPACE_BAR);
-err_mem8_space_bar:
-<<<<<<< HEAD
-	pci_release_region(tpci200->info->pdev, TPCI200_MEM8_SPACE_BAR);
-err_io_id_int_spaces_bar:
-	pci_release_region(tpci200->info->pdev, TPCI200_IO_ID_INT_SPACES_BAR);
-err_ip_interface_bar:
-	pci_release_region(tpci200->info->pdev, TPCI200_IP_INTERFACE_BAR);
-err_disable_device:
-=======
 out_release_mem8_space:
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_release_region(tpci200->info->pdev, TPCI200_MEM8_SPACE_BAR);
-err_io_id_int_spaces_bar:
+out_release_ioid_int_space:
 	pci_release_region(tpci200->info->pdev, TPCI200_IO_ID_INT_SPACES_BAR);
-err_ip_interface_bar:
+out_release_ip_space:
 	pci_release_region(tpci200->info->pdev, TPCI200_IP_INTERFACE_BAR);
-<<<<<<< HEAD
 out_disable_pci:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-err_disable_device:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_disable_device(tpci200->info->pdev);
 	return res;
 }
@@ -615,15 +527,7 @@ static int tpci200_pci_probe(struct pci_dev *pdev,
 	tpci200->info = kzalloc(sizeof(struct tpci200_infos), GFP_KERNEL);
 	if (!tpci200->info) {
 		ret = -ENOMEM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_tpci200;
-=======
 		goto out_err_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_tpci200;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pci_dev_get(pdev);
@@ -634,15 +538,7 @@ static int tpci200_pci_probe(struct pci_dev *pdev,
 	if (ret) {
 		dev_err(&pdev->dev, "Failed to allocate PCI Configuration Memory");
 		ret = -EBUSY;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_tpci200_info;
-=======
 		goto out_err_pci_request;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_tpci200_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	tpci200->info->cfg_regs = ioremap(
 			pci_resource_start(pdev, TPCI200_CFG_MEM_BAR),
@@ -650,15 +546,7 @@ static int tpci200_pci_probe(struct pci_dev *pdev,
 	if (!tpci200->info->cfg_regs) {
 		dev_err(&pdev->dev, "Failed to map PCI Configuration Memory");
 		ret = -EFAULT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_request_region;
-=======
 		goto out_err_ioremap;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_request_region;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Disable byte swapping for 16 bit IP module access. This will ensure
@@ -681,15 +569,7 @@ static int tpci200_pci_probe(struct pci_dev *pdev,
 	if (ret) {
 		dev_err(&pdev->dev, "error during tpci200 install\n");
 		ret = -ENODEV;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_cfg_regs;
-=======
 		goto out_err_install;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_cfg_regs;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Register the carrier in the industry pack bus driver */
@@ -701,15 +581,7 @@ static int tpci200_pci_probe(struct pci_dev *pdev,
 		dev_err(&pdev->dev,
 			"error registering the carrier on ipack driver\n");
 		ret = -EFAULT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_tpci200_install;
-=======
 		goto out_err_bus_register;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_tpci200_install;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* save the bus number given by ipack to logging purpose */
@@ -720,37 +592,19 @@ static int tpci200_pci_probe(struct pci_dev *pdev,
 		tpci200_create_device(tpci200, i);
 	return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-err_tpci200_install:
-	tpci200_uninstall(tpci200);
-err_cfg_regs:
-	pci_iounmap(tpci200->info->pdev, tpci200->info->cfg_regs);
-err_request_region:
-	pci_release_region(pdev, TPCI200_CFG_MEM_BAR);
-err_tpci200_info:
-	kfree(tpci200->info);
-	pci_dev_put(pdev);
-err_tpci200:
-=======
 out_err_bus_register:
-=======
-err_tpci200_install:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tpci200_uninstall(tpci200);
-err_cfg_regs:
-	pci_iounmap(tpci200->info->pdev, tpci200->info->cfg_regs);
-err_request_region:
+	/* tpci200->info->cfg_regs is unmapped in tpci200_uninstall */
+	tpci200->info->cfg_regs = NULL;
+out_err_install:
+	if (tpci200->info->cfg_regs)
+		iounmap(tpci200->info->cfg_regs);
+out_err_ioremap:
 	pci_release_region(pdev, TPCI200_CFG_MEM_BAR);
-err_tpci200_info:
-	kfree(tpci200->info);
-<<<<<<< HEAD
-out_err_info:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
+out_err_pci_request:
 	pci_dev_put(pdev);
-err_tpci200:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	kfree(tpci200->info);
+out_err_info:
 	kfree(tpci200);
 	return ret;
 }
@@ -760,21 +614,6 @@ static void __tpci200_pci_remove(struct tpci200_board *tpci200)
 	ipack_bus_unregister(tpci200->info->ipack_bus);
 	tpci200_uninstall(tpci200);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	pci_iounmap(tpci200->info->pdev, tpci200->info->cfg_regs);
-
-	pci_release_region(tpci200->info->pdev, TPCI200_CFG_MEM_BAR);
-
-	pci_dev_put(tpci200->info->pdev);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(tpci200->info);
 	kfree(tpci200);
 }

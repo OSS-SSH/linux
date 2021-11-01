@@ -46,10 +46,6 @@ extern unsigned long *xen_contiguous_bitmap;
 int xen_create_contiguous_region(phys_addr_t pstart, unsigned int order,
 				unsigned int address_bits,
 				dma_addr_t *dma_handle);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void xen_destroy_contiguous_region(phys_addr_t pstart, unsigned int order);
-=======
 
 void xen_destroy_contiguous_region(phys_addr_t pstart, unsigned int order);
 #else
@@ -63,37 +59,17 @@ static inline int xen_create_contiguous_region(phys_addr_t pstart,
 
 static inline void xen_destroy_contiguous_region(phys_addr_t pstart,
 						 unsigned int order) { }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void xen_destroy_contiguous_region(phys_addr_t pstart, unsigned int order);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #if defined(CONFIG_XEN_PV)
 int xen_remap_pfn(struct vm_area_struct *vma, unsigned long addr,
 		  xen_pfn_t *pfn, int nr, int *err_ptr, pgprot_t prot,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		  unsigned int domid, bool no_translate);
-=======
 		  unsigned int domid, bool no_translate, struct page **pages);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		  unsigned int domid, bool no_translate);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline int xen_remap_pfn(struct vm_area_struct *vma, unsigned long addr,
 				xen_pfn_t *pfn, int nr, int *err_ptr,
 				pgprot_t prot,  unsigned int domid,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				bool no_translate)
-=======
 				bool no_translate, struct page **pages)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				bool no_translate)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	BUG();
 	return 0;
@@ -170,15 +146,7 @@ static inline int xen_remap_domain_gfn_array(struct vm_area_struct *vma,
 	 */
 	BUG_ON(err_ptr == NULL);
 	return xen_remap_pfn(vma, addr, gfn, nr, err_ptr, prot, domid,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     false);
-=======
 			     false, pages);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -190,13 +158,7 @@ static inline int xen_remap_domain_gfn_array(struct vm_area_struct *vma,
  * @err_ptr: Returns per-MFN error status.
  * @prot:    page protection mask
  * @domid:   Domain owning the pages
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * @pages:   Array of pages if this domain has an auto-translated physmap
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @mfn and @err_ptr may point to the same buffer, the MFNs will be
  * overwritten by the error codes after they are mapped.
@@ -207,30 +169,14 @@ static inline int xen_remap_domain_gfn_array(struct vm_area_struct *vma,
 static inline int xen_remap_domain_mfn_array(struct vm_area_struct *vma,
 					     unsigned long addr, xen_pfn_t *mfn,
 					     int nr, int *err_ptr,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					     pgprot_t prot, unsigned int domid)
-=======
 					     pgprot_t prot, unsigned int domid,
 					     struct page **pages)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					     pgprot_t prot, unsigned int domid)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (xen_feature(XENFEAT_auto_translated_physmap))
 		return -EOPNOTSUPP;
 
 	return xen_remap_pfn(vma, addr, mfn, nr, err_ptr, prot, domid,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     true);
-=======
 			     true, pages);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* xen_remap_domain_gfn_range() - map a range of foreign frames
@@ -254,16 +200,8 @@ static inline int xen_remap_domain_gfn_range(struct vm_area_struct *vma,
 	if (xen_feature(XENFEAT_auto_translated_physmap))
 		return -EOPNOTSUPP;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return xen_remap_pfn(vma, addr, &gfn, nr, NULL, prot, domid, false);
-=======
 	return xen_remap_pfn(vma, addr, &gfn, nr, NULL, prot, domid, false,
 			     pages);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return xen_remap_pfn(vma, addr, &gfn, nr, NULL, prot, domid, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int xen_unmap_domain_gfn_range(struct vm_area_struct *vma,

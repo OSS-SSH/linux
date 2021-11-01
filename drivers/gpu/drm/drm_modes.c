@@ -1542,15 +1542,7 @@ static int drm_mode_parse_cmdline_int(const char *delim, unsigned int *int_ret)
 
 	/*
 	 * delim must point to the '=', otherwise it is a syntax error and
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * if delim points to the terminating zero, then delim + 1 will point
-=======
 	 * if delim points to the terminating zero, then delim + 1 wil point
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * if delim points to the terminating zero, then delim + 1 will point
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * past the end of the string.
 	 */
 	if (*delim != '=')
@@ -1980,15 +1972,7 @@ int drm_mode_convert_umode(struct drm_device *dev,
 	out->flags = in->flags;
 	/*
 	 * Old xf86-video-vmware (possibly others too) used to
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * leave 'type' uninitialized. Just ignore any bits we
-=======
 	 * leave 'type' unititialized. Just ignore any bits we
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * leave 'type' uninitialized. Just ignore any bits we
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * don't like. It's a just hint after all, and more
 	 * useful for the kernel->userspace direction anyway.
 	 */

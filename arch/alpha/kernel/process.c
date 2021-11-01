@@ -256,15 +256,7 @@ int copy_thread(unsigned long clone_flags, unsigned long usp,
 		childstack->r26 = (unsigned long) ret_from_kernel_thread;
 		childstack->r9 = usp;	/* function */
 		childstack->r10 = kthread_arg;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		childregs->hae = alpha_mv.hae_cache;
-=======
 		childregs->hae = alpha_mv.hae_cache,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		childregs->hae = alpha_mv.hae_cache;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		childti->pcb.usp = 0;
 		return 0;
 	}

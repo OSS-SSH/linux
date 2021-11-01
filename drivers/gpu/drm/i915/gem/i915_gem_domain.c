@@ -268,18 +268,6 @@ int i915_gem_get_caching_ioctl(struct drm_device *dev, void *data,
 	struct drm_i915_gem_object *obj;
 	int err = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (IS_DGFX(to_i915(dev)))
-		return -ENODEV;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (IS_DGFX(to_i915(dev)))
-		return -ENODEV;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_lock();
 	obj = i915_gem_object_lookup_rcu(file, args->handle);
 	if (!obj) {
@@ -315,18 +303,6 @@ int i915_gem_set_caching_ioctl(struct drm_device *dev, void *data,
 	enum i915_cache_level level;
 	int ret = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (IS_DGFX(i915))
-		return -ENODEV;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (IS_DGFX(i915))
-		return -ENODEV;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (args->caching) {
 	case I915_CACHING_NONE:
 		level = I915_CACHE_NONE;
@@ -399,15 +375,7 @@ i915_gem_object_pin_to_display_plane(struct drm_i915_gem_object *obj,
 	struct i915_vma *vma;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Frame buffer must be in LMEM */
-=======
 	/* Frame buffer must be in LMEM (no migration yet) */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Frame buffer must be in LMEM */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (HAS_LMEM(i915) && !i915_gem_object_is_lmem(obj))
 		return ERR_PTR(-EINVAL);
 
@@ -516,18 +484,6 @@ i915_gem_set_domain_ioctl(struct drm_device *dev, void *data,
 	u32 write_domain = args->write_domain;
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (IS_DGFX(to_i915(dev)))
-		return -ENODEV;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (IS_DGFX(to_i915(dev)))
-		return -ENODEV;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Only handle setting domains to types used by the CPU. */
 	if ((write_domain | read_domains) & I915_GEM_GPU_DOMAINS)
 		return -EINVAL;

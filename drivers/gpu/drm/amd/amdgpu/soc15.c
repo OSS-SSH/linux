@@ -74,15 +74,7 @@
 #include "smuio_v9_0.h"
 #include "smuio_v11_0.h"
 #include "smuio_v13_0.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "amdgpu_vkms.h"
-=======
 #include "dce_virtual.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "amdgpu_vkms.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "mxgpu_ai.h"
 #include "amdgpu_ras.h"
 #include "amdgpu_xgmi.h"
@@ -96,11 +88,6 @@
 /* Vega, Raven, Arcturus */
 static const struct amdgpu_video_codec_info vega_video_codecs_encode_array[] =
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
-=======
 	{
 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC,
 		.max_width = 4096,
@@ -115,11 +102,6 @@ static const struct amdgpu_video_codec_info vega_video_codecs_encode_array[] =
 		.max_pixels_per_frame = 4096 * 2304,
 		.max_level = 0,
 	},
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct amdgpu_video_codecs vega_video_codecs_encode =
@@ -131,18 +113,6 @@ static const struct amdgpu_video_codecs vega_video_codecs_encode =
 /* Vega */
 static const struct amdgpu_video_codec_info vega_video_codecs_decode_array[] =
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4906, 3)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4906, 5)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4906, 52)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4906, 4)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 186)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
-<<<<<<< HEAD
-=======
 	{
 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2,
 		.max_width = 4096,
@@ -185,9 +155,6 @@ static const struct amdgpu_video_codec_info vega_video_codecs_decode_array[] =
 		.max_pixels_per_frame = 4096 * 4096,
 		.max_level = 0,
 	},
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct amdgpu_video_codecs vega_video_codecs_decode =
@@ -199,19 +166,6 @@ static const struct amdgpu_video_codecs vega_video_codecs_decode =
 /* Raven */
 static const struct amdgpu_video_codec_info rv_video_codecs_decode_array[] =
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4906, 3)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4906, 5)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4906, 52)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4906, 4)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 4096, 186)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 4096, 4096, 0)},
-<<<<<<< HEAD
-=======
 	{
 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2,
 		.max_width = 4096,
@@ -261,9 +215,6 @@ static const struct amdgpu_video_codec_info rv_video_codecs_decode_array[] =
 		.max_pixels_per_frame = 4096 * 4096,
 		.max_level = 0,
 	},
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct amdgpu_video_codecs rv_video_codecs_decode =
@@ -275,19 +226,6 @@ static const struct amdgpu_video_codecs rv_video_codecs_decode =
 /* Renoir, Arcturus */
 static const struct amdgpu_video_codec_info rn_video_codecs_decode_array[] =
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4906, 3)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4, 4096, 4906, 5)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 4906, 52)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VC1, 4096, 4906, 4)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 186)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG, 4096, 4096, 0)},
-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_VP9, 8192, 4352, 0)},
-<<<<<<< HEAD
-=======
 	{
 		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2,
 		.max_width = 4096,
@@ -337,9 +275,6 @@ static const struct amdgpu_video_codec_info rn_video_codecs_decode_array[] =
 		.max_pixels_per_frame = 4096 * 4096,
 		.max_level = 0,
 	},
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct amdgpu_video_codecs rn_video_codecs_decode =
@@ -772,15 +707,7 @@ soc15_asic_reset_method(struct amdgpu_device *adev)
 		baco_reset = amdgpu_dpm_is_baco_supported(adev);
 		break;
 	case CHIP_VEGA20:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (adev->psp.sos.fw_version >= 0x80067)
-=======
 		if (adev->psp.sos_fw_version >= 0x80067)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (adev->psp.sos.fw_version >= 0x80067)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			baco_reset = amdgpu_dpm_is_baco_supported(adev);
 
 		/*
@@ -840,15 +767,7 @@ static bool soc15_supports_baco(struct amdgpu_device *adev)
 	case CHIP_ARCTURUS:
 		return amdgpu_dpm_is_baco_supported(adev);
 	case CHIP_VEGA20:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (adev->psp.sos.fw_version >= 0x80067)
-=======
 		if (adev->psp.sos_fw_version >= 0x80067)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (adev->psp.sos.fw_version >= 0x80067)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return amdgpu_dpm_is_baco_supported(adev);
 		return false;
 	default:
@@ -1056,15 +975,7 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
 			amdgpu_device_ip_block_add(adev, &pp_smu_ip_block);
 		}
 		if (adev->enable_virtual_display || amdgpu_sriov_vf(adev))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC)
 		else if (amdgpu_device_has_dc_support(adev))
 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
@@ -1084,15 +995,7 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
 		amdgpu_device_ip_block_add(adev, &sdma_v4_0_ip_block);
 		amdgpu_device_ip_block_add(adev, &pp_smu_ip_block);
 		if (adev->enable_virtual_display || amdgpu_sriov_vf(adev))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC)
 		else if (amdgpu_device_has_dc_support(adev))
 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
@@ -1114,15 +1017,7 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
 		}
 
 		if (adev->enable_virtual_display || amdgpu_sriov_vf(adev))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		amdgpu_device_ip_block_add(adev, &gfx_v9_0_ip_block);
 		amdgpu_device_ip_block_add(adev, &sdma_v4_0_ip_block);
 		amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
@@ -1146,15 +1041,7 @@ int soc15_set_ip_blocks(struct amdgpu_device *adev)
 		amdgpu_device_ip_block_add(adev, &gfx_v9_0_ip_block);
 		amdgpu_device_ip_block_add(adev, &sdma_v4_0_ip_block);
 		if (adev->enable_virtual_display || amdgpu_sriov_vf(adev))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC)
                 else if (amdgpu_device_has_dc_support(adev))
 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
@@ -1598,14 +1485,8 @@ static int soc15_common_early_init(void *handle)
 		adev->asic_funcs = &vega20_asic_funcs;
 		adev->cg_flags = AMD_CG_SUPPORT_GFX_MGCG |
 			AMD_CG_SUPPORT_GFX_MGLS |
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			AMD_CG_SUPPORT_GFX_CGCG |
 			AMD_CG_SUPPORT_GFX_CGLS |
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			AMD_CG_SUPPORT_GFX_CP_LS |
 			AMD_CG_SUPPORT_HDP_LS |
 			AMD_CG_SUPPORT_SDMA_MGCG |

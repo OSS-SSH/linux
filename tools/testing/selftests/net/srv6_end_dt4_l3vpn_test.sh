@@ -163,18 +163,6 @@
 # +---------------------------------------------------+
 #
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Kselftest framework requirement - SKIP code is 4.
-ksft_skip=4
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-# Kselftest framework requirement - SKIP code is 4.
-ksft_skip=4
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 readonly LOCALSID_TABLE_ID=90
 readonly IPv6_RT_NETWORK=fd00
 readonly IPv4_HS_NETWORK=10.0.0
@@ -476,42 +464,18 @@ host_vpn_isolation_tests()
 
 if [ "$(id -u)" -ne 0 ];then
 	echo "SKIP: Need root privileges"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	exit $ksft_skip
-=======
 	exit 0
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 if [ ! -x "$(command -v ip)" ]; then
 	echo "SKIP: Could not run test without ip tool"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	exit $ksft_skip
-=======
 	exit 0
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 modprobe vrf &>/dev/null
 if [ ! -e /proc/sys/net/vrf/strict_mode ]; then
         echo "SKIP: vrf sysctl does not exist"
-<<<<<<< HEAD
-<<<<<<< HEAD
-        exit $ksft_skip
-=======
         exit 0
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-        exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 cleanup &>/dev/null

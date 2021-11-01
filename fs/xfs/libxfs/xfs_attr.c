@@ -146,15 +146,7 @@ xfs_attr_get(
 
 	XFS_STATS_INC(args->dp->i_mount, xs_attr_get);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_is_shutdown(args->dp->i_mount))
-=======
 	if (XFS_FORCED_SHUTDOWN(args->dp->i_mount))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_is_shutdown(args->dp->i_mount))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	args->geo = args->dp->i_mount->m_attr_geo;
@@ -232,15 +224,7 @@ xfs_attr_try_sf_addname(
 	if (!error && !(args->op_flags & XFS_DA_OP_NOTIME))
 		xfs_trans_ichgtime(args->trans, dp, XFS_ICHGTIME_CHG);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_wsync(dp->i_mount))
-=======
 	if (dp->i_mount->m_flags & XFS_MOUNT_WSYNC)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_wsync(dp->i_mount))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_trans_set_sync(args->trans);
 
 	return error;
@@ -351,14 +335,6 @@ xfs_attr_sf_addname(
 	 * the attr fork to leaf format and will restart with the leaf
 	 * add.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_xfs_attr_sf_addname_return(XFS_DAS_UNINIT, args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_xfs_attr_sf_addname_return(XFS_DAS_UNINIT, args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dac->flags |= XFS_DAC_DEFER_FINISH;
 	return -EAGAIN;
 }
@@ -418,16 +394,6 @@ xfs_attr_set_iter(
 				 * handling code below
 				 */
 				dac->flags |= XFS_DAC_DEFER_FINISH;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				trace_xfs_attr_set_iter_return(
-					dac->dela_state, args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				trace_xfs_attr_set_iter_return(
-					dac->dela_state, args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return -EAGAIN;
 			} else if (error) {
 				return error;
@@ -445,14 +411,6 @@ xfs_attr_set_iter(
 
 			dac->dela_state = XFS_DAS_FOUND_NBLK;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		trace_xfs_attr_set_iter_return(dac->dela_state,	args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		trace_xfs_attr_set_iter_return(dac->dela_state,	args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EAGAIN;
 	case XFS_DAS_FOUND_LBLK:
 		/*
@@ -480,16 +438,6 @@ xfs_attr_set_iter(
 			error = xfs_attr_rmtval_set_blk(dac);
 			if (error)
 				return error;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			trace_xfs_attr_set_iter_return(dac->dela_state,
-						       args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			trace_xfs_attr_set_iter_return(dac->dela_state,
-						       args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EAGAIN;
 		}
 
@@ -524,14 +472,6 @@ xfs_attr_set_iter(
 		 * series.
 		 */
 		dac->dela_state = XFS_DAS_FLIP_LFLAG;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EAGAIN;
 	case XFS_DAS_FLIP_LFLAG:
 		/*
@@ -543,57 +483,20 @@ xfs_attr_set_iter(
 		if (error)
 			return error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fallthrough;
-=======
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_RM_LBLK:
 		/* Set state in case xfs_attr_rmtval_remove returns -EAGAIN */
 		dac->dela_state = XFS_DAS_RM_LBLK;
 		if (args->rmtblkno) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			error = xfs_attr_rmtval_remove(dac);
-			if (error == -EAGAIN)
-				trace_xfs_attr_set_iter_return(
-					dac->dela_state, args->dp);
-<<<<<<< HEAD
-=======
 			error = __xfs_attr_rmtval_remove(dac);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (error)
 				return error;
 
 			dac->dela_state = XFS_DAS_RD_LEAF;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
-=======
 			return -EAGAIN;
 		}
 
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_RD_LEAF:
 		/*
 		 * This is the last step for leaf format. Read the block with
@@ -625,15 +528,7 @@ xfs_attr_set_iter(
 				return error;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fallthrough;
-=======
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_ALLOC_NODE:
 		/*
 		 * If there was an out-of-line value, allocate the blocks we
@@ -647,16 +542,6 @@ xfs_attr_set_iter(
 				error = xfs_attr_rmtval_set_blk(dac);
 				if (error)
 					return error;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				trace_xfs_attr_set_iter_return(
-					dac->dela_state, args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				trace_xfs_attr_set_iter_return(
-					dac->dela_state, args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return -EAGAIN;
 			}
 
@@ -692,14 +577,6 @@ xfs_attr_set_iter(
 		 * series
 		 */
 		dac->dela_state = XFS_DAS_FLIP_NFLAG;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EAGAIN;
 
 	case XFS_DAS_FLIP_NFLAG:
@@ -713,58 +590,20 @@ xfs_attr_set_iter(
 		if (error)
 			return error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fallthrough;
-=======
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_RM_NBLK:
 		/* Set state in case xfs_attr_rmtval_remove returns -EAGAIN */
 		dac->dela_state = XFS_DAS_RM_NBLK;
 		if (args->rmtblkno) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			error = xfs_attr_rmtval_remove(dac);
-			if (error == -EAGAIN)
-				trace_xfs_attr_set_iter_return(
-					dac->dela_state, args->dp);
-
-<<<<<<< HEAD
-=======
 			error = __xfs_attr_rmtval_remove(dac);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (error)
 				return error;
 
 			dac->dela_state = XFS_DAS_CLR_FLAG;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
-=======
 			return -EAGAIN;
 		}
 
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			trace_xfs_attr_set_iter_return(dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_CLR_FLAG:
 		/*
 		 * The last state for node format. Look up the old attr and
@@ -784,18 +623,8 @@ out:
 /*
  * Return EEXIST if attr is found, or ENOATTR if not
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int
-xfs_attr_lookup(
-=======
 int
 xfs_has_attr(
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int
-xfs_attr_lookup(
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xfs_da_args	*args)
 {
 	struct xfs_inode	*dp = args->dp;
@@ -862,15 +691,7 @@ xfs_attr_set(
 	int			rmt_blks = 0;
 	unsigned int		total;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_is_shutdown(dp->i_mount))
-=======
 	if (XFS_FORCED_SHUTDOWN(dp->i_mount))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_is_shutdown(dp->i_mount))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	error = xfs_qm_dqattach(dp);
@@ -940,18 +761,8 @@ xfs_attr_set(
 			goto out_trans_cancel;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	error = xfs_attr_lookup(args);
-	if (args->value) {
-=======
 	if (args->value) {
 		error = xfs_has_attr(args);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	error = xfs_attr_lookup(args);
-	if (args->value) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error == -EEXIST && (args->attr_flags & XATTR_CREATE))
 			goto out_trans_cancel;
 		if (error == -ENOATTR && (args->attr_flags & XATTR_REPLACE))
@@ -966,13 +777,7 @@ xfs_attr_set(
 		if (!args->trans)
 			goto out_unlock;
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		error = xfs_has_attr(args);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error != -EEXIST)
 			goto out_trans_cancel;
 
@@ -985,15 +790,7 @@ xfs_attr_set(
 	 * If this is a synchronous mount, make sure that the
 	 * transaction goes to disk before returning to the user.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_wsync(mp))
-=======
 	if (mp->m_flags & XFS_MOUNT_WSYNC)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_wsync(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_trans_set_sync(args->trans);
 
 	if (!(args->op_flags & XFS_DA_OP_NOTIME))
@@ -1379,16 +1176,6 @@ xfs_attr_node_addname(
 			 * this point.
 			 */
 			dac->flags |= XFS_DAC_DEFER_FINISH;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			trace_xfs_attr_node_addname_return(
-					dac->dela_state, args->dp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			trace_xfs_attr_node_addname_return(
-					dac->dela_state, args->dp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EAGAIN;
 		}
 
@@ -1619,15 +1406,7 @@ xfs_attr_remove_iter(
 			state = dac->da_state;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fallthrough;
-=======
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_RMTBLK:
 		dac->dela_state = XFS_DAS_RMTBLK;
 
@@ -1642,32 +1421,11 @@ xfs_attr_remove_iter(
 			 * May return -EAGAIN. Roll and repeat until all remote
 			 * blocks are removed.
 			 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			error = xfs_attr_rmtval_remove(dac);
-			if (error == -EAGAIN) {
-				trace_xfs_attr_remove_iter_return(
-						dac->dela_state, args->dp);
-<<<<<<< HEAD
-				return error;
-			} else if (error) {
-				goto out;
-			}
-=======
 			error = __xfs_attr_rmtval_remove(dac);
 			if (error == -EAGAIN)
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return error;
-			} else if (error) {
+			else if (error)
 				goto out;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/*
 			 * Refill the state structure with buffers (the prior
@@ -1680,26 +1438,10 @@ xfs_attr_remove_iter(
 				goto out;
 			dac->dela_state = XFS_DAS_RM_NAME;
 			dac->flags |= XFS_DAC_DEFER_FINISH;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			trace_xfs_attr_remove_iter_return(dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
-=======
 			return -EAGAIN;
 		}
 
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			trace_xfs_attr_remove_iter_return(dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_RM_NAME:
 		/*
 		 * If we came here fresh from a transaction roll, reattach all
@@ -1724,28 +1466,10 @@ xfs_attr_remove_iter(
 
 			dac->flags |= XFS_DAC_DEFER_FINISH;
 			dac->dela_state = XFS_DAS_RM_SHRINK;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			trace_xfs_attr_remove_iter_return(
-					dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
-=======
 			return -EAGAIN;
 		}
 
 		/* fallthrough */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			trace_xfs_attr_remove_iter_return(
-					dac->dela_state, args->dp);
-			return -EAGAIN;
-		}
-
-		fallthrough;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DAS_RM_SHRINK:
 		/*
 		 * If the result is small enough, push it all into the inode.
@@ -1790,15 +1514,7 @@ xfs_attr_fillstate(xfs_da_state_t *state)
 	ASSERT((path->active >= 0) && (path->active < XFS_DA_NODE_MAXDEPTH));
 	for (blk = path->blk, level = 0; level < path->active; blk++, level++) {
 		if (blk->bp) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			blk->disk_blkno = xfs_buf_daddr(blk->bp);
-=======
 			blk->disk_blkno = XFS_BUF_ADDR(blk->bp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			blk->disk_blkno = xfs_buf_daddr(blk->bp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			blk->bp = NULL;
 		} else {
 			blk->disk_blkno = 0;
@@ -1813,15 +1529,7 @@ xfs_attr_fillstate(xfs_da_state_t *state)
 	ASSERT((path->active >= 0) && (path->active < XFS_DA_NODE_MAXDEPTH));
 	for (blk = path->blk, level = 0; level < path->active; blk++, level++) {
 		if (blk->bp) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			blk->disk_blkno = xfs_buf_daddr(blk->bp);
-=======
 			blk->disk_blkno = XFS_BUF_ADDR(blk->bp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			blk->disk_blkno = xfs_buf_daddr(blk->bp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			blk->bp = NULL;
 		} else {
 			blk->disk_blkno = 0;

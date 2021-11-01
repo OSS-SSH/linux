@@ -65,9 +65,6 @@
         "Unit": "iMC"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         "BriefDescription": "Pre-charge for writes",
         "Counter": "0,1,2,3",
         "EventCode": "0x2",
@@ -77,9 +74,6 @@
         "Unit": "iMC"
     },
     {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "BriefDescription": "DRAM Page Activate commands sent due to a write request",
         "Counter": "0,1,2,3",
         "EventCode": "0x1",

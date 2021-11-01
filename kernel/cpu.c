@@ -41,41 +41,14 @@
 #include "smpboot.h"
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct cpuhp_cpu_state - Per cpu hotplug state storage
- * @state:	The current cpu state
- * @target:	The target state
- * @fail:	Current CPU hotplug callback state
-=======
  * cpuhp_cpu_state - Per cpu hotplug state storage
  * @state:	The current cpu state
  * @target:	The target state
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct cpuhp_cpu_state - Per cpu hotplug state storage
- * @state:	The current cpu state
- * @target:	The target state
- * @fail:	Current CPU hotplug callback state
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @thread:	Pointer to the hotplug thread
  * @should_run:	Thread should execute
  * @rollback:	Perform a rollback
  * @single:	Single callback invocation
  * @bringup:	Single callback bringup or teardown selector
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * @cpu:	CPU number
- * @node:	Remote CPU node; for multi-instance, do a
- *		single entry callback for install/remove
- * @last:	For multi-instance rollback, remember how far we got
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cb_state:	The state for a single callback (install/uninstall)
  * @result:	Result of the operation
  * @done_up:	Signal completion to the issuer of the task for cpu-up
@@ -133,27 +106,11 @@ static inline void cpuhp_lock_release(bool bringup) { }
 #endif
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct cpuhp_step - Hotplug state machine step
-=======
  * cpuhp_step - Hotplug state machine step
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct cpuhp_step - Hotplug state machine step
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @name:	Name of the step
  * @startup:	Startup function of the step
  * @teardown:	Teardown function of the step
  * @cant_stop:	Bringup/teardown can't be stopped at this step
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @multi_instance:	State has multiple instances which get added afterwards
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @multi_instance:	State has multiple instances which get added afterwards
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct cpuhp_step {
 	const char		*name;
@@ -167,19 +124,7 @@ struct cpuhp_step {
 		int		(*multi)(unsigned int cpu,
 					 struct hlist_node *node);
 	} teardown;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* private: */
 	struct hlist_head	list;
-	/* public: */
-=======
-	struct hlist_head	list;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* private: */
-	struct hlist_head	list;
-	/* public: */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool			cant_stop;
 	bool			multi_instance;
 };
@@ -198,15 +143,7 @@ static bool cpuhp_step_empty(bool bringup, struct cpuhp_step *step)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * cpuhp_invoke_callback - Invoke the callbacks for a given state
-=======
  * cpuhp_invoke_callback _ Invoke the callbacks for a given state
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * cpuhp_invoke_callback - Invoke the callbacks for a given state
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @cpu:	The cpu for which the callback should be invoked
  * @state:	The state to do callbacks for
  * @bringup:	True if the bringup callback should be invoked
@@ -214,16 +151,6 @@ static bool cpuhp_step_empty(bool bringup, struct cpuhp_step *step)
  * @lastp:	For multi-instance rollback, remember how far we got
  *
  * Called from cpu hotplug and from the state register machinery.
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * Return: %0 on success or a negative errno code
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * Return: %0 on success or a negative errno code
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int cpuhp_invoke_callback(unsigned int cpu, enum cpuhp_state state,
 				 bool bringup, struct hlist_node *node,
@@ -755,19 +682,6 @@ static int cpuhp_up_callbacks(unsigned int cpu, struct cpuhp_cpu_state *st,
 
 	ret = cpuhp_invoke_callback_range(true, cpu, st, target);
 	if (ret) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		pr_debug("CPU UP failed (%d) CPU %u state %s (%d)\n",
-			 ret, cpu, cpuhp_get_step(st->state)->name,
-			 st->state);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpuhp_reset_state(st, prev_state);
 		if (can_rollback_cpu(st))
 			WARN_ON(cpuhp_invoke_callback_range(false, cpu, st,
@@ -1167,18 +1081,6 @@ static int cpuhp_down_callbacks(unsigned int cpu, struct cpuhp_cpu_state *st,
 
 	ret = cpuhp_invoke_callback_range(false, cpu, st, target);
 	if (ret) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		pr_debug("CPU DOWN failed (%d) CPU %u state %s (%d)\n",
-			 ret, cpu, cpuhp_get_step(st->state)->name,
-			 st->state);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		pr_debug("CPU DOWN failed (%d) CPU %u state %s (%d)\n",
-			 ret, cpu, cpuhp_get_step(st->state)->name,
-			 st->state);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		cpuhp_reset_state(st, prev_state);
 
@@ -1281,16 +1183,6 @@ static int cpu_down(unsigned int cpu, enum cpuhp_state target)
  * This function is meant to be used by device core cpu subsystem only.
  *
  * Other subsystems should use remove_cpu() instead.
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * Return: %0 on success or a negative errno code
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * Return: %0 on success or a negative errno code
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int cpu_device_down(struct device *dev)
 {
@@ -1503,16 +1395,6 @@ out:
  * This function is meant to be used by device core cpu subsystem only.
  *
  * Other subsystems should use add_cpu() instead.
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * Return: %0 on success or a negative errno code
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * Return: %0 on success or a negative errno code
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int cpu_device_up(struct device *dev)
 {
@@ -1538,16 +1420,6 @@ EXPORT_SYMBOL_GPL(add_cpu);
  * On some architectures like arm64, we can hibernate on any CPU, but on
  * wake up the CPU we hibernated on might be offline as a side effect of
  * using maxcpus= for example.
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * Return: %0 on success or a negative errno code
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * Return: %0 on success or a negative errno code
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int bringup_hibernate_cpu(unsigned int sleep_cpu)
 {
@@ -2104,14 +1976,6 @@ EXPORT_SYMBOL_GPL(__cpuhp_state_add_instance);
 /**
  * __cpuhp_setup_state_cpuslocked - Setup the callbacks for an hotplug machine state
  * @state:		The state to setup
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @name:		Name of the step
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @name:		Name of the step
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @invoke:		If true, the startup function is invoked for cpus where
  *			cpu state >= @state
  * @startup:		startup callback function
@@ -2120,21 +1984,9 @@ EXPORT_SYMBOL_GPL(__cpuhp_state_add_instance);
  *			added afterwards.
  *
  * The caller needs to hold cpus read locked while calling this function.
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Return:
- *   On success:
- *      Positive state number if @state is CPUHP_AP_ONLINE_DYN;
-=======
  * Returns:
  *   On success:
  *      Positive state number if @state is CPUHP_AP_ONLINE_DYN
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Return:
- *   On success:
- *      Positive state number if @state is CPUHP_AP_ONLINE_DYN;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *      0 for all other states
  *   On failure: proper (negative) error code
  */
@@ -2380,42 +2232,18 @@ int cpuhp_smt_enable(void)
 #endif
 
 #if defined(CONFIG_SYSFS) && defined(CONFIG_HOTPLUG_CPU)
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t state_show(struct device *dev,
-			  struct device_attribute *attr, char *buf)
-=======
 static ssize_t show_cpuhp_state(struct device *dev,
 				struct device_attribute *attr, char *buf)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t state_show(struct device *dev,
-			  struct device_attribute *attr, char *buf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, dev->id);
 
 	return sprintf(buf, "%d\n", st->state);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(state);
-
-static ssize_t target_store(struct device *dev, struct device_attribute *attr,
-			    const char *buf, size_t count)
-=======
 static DEVICE_ATTR(state, 0444, show_cpuhp_state, NULL);
 
 static ssize_t write_cpuhp_target(struct device *dev,
 				  struct device_attribute *attr,
 				  const char *buf, size_t count)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(state);
-
-static ssize_t target_store(struct device *dev, struct device_attribute *attr,
-			    const char *buf, size_t count)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, dev->id);
 	struct cpuhp_step *sp;
@@ -2453,43 +2281,19 @@ out:
 	return ret ? ret : count;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t target_show(struct device *dev,
-			   struct device_attribute *attr, char *buf)
-=======
 static ssize_t show_cpuhp_target(struct device *dev,
 				 struct device_attribute *attr, char *buf)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t target_show(struct device *dev,
-			   struct device_attribute *attr, char *buf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, dev->id);
 
 	return sprintf(buf, "%d\n", st->target);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RW(target);
-
-static ssize_t fail_store(struct device *dev, struct device_attribute *attr,
-			  const char *buf, size_t count)
-=======
 static DEVICE_ATTR(target, 0644, show_cpuhp_target, write_cpuhp_target);
 
 
 static ssize_t write_cpuhp_fail(struct device *dev,
 				struct device_attribute *attr,
 				const char *buf, size_t count)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RW(target);
-
-static ssize_t fail_store(struct device *dev, struct device_attribute *attr,
-			  const char *buf, size_t count)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, dev->id);
 	struct cpuhp_step *sp;
@@ -2538,33 +2342,15 @@ static ssize_t fail_store(struct device *dev, struct device_attribute *attr,
 	return count;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t fail_show(struct device *dev,
-			 struct device_attribute *attr, char *buf)
-=======
 static ssize_t show_cpuhp_fail(struct device *dev,
 			       struct device_attribute *attr, char *buf)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t fail_show(struct device *dev,
-			 struct device_attribute *attr, char *buf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, dev->id);
 
 	return sprintf(buf, "%d\n", st->fail);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RW(fail);
-=======
 static DEVICE_ATTR(fail, 0644, show_cpuhp_fail, write_cpuhp_fail);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RW(fail);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct attribute *cpuhp_cpu_attrs[] = {
 	&dev_attr_state.attr,
@@ -2579,15 +2365,7 @@ static const struct attribute_group cpuhp_cpu_attr_group = {
 	NULL
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t states_show(struct device *dev,
-=======
 static ssize_t show_cpuhp_states(struct device *dev,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t states_show(struct device *dev,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 struct device_attribute *attr, char *buf)
 {
 	ssize_t cur, res = 0;
@@ -2606,15 +2384,7 @@ static ssize_t states_show(struct device *dev,
 	mutex_unlock(&cpuhp_state_mutex);
 	return res;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(states);
-=======
 static DEVICE_ATTR(states, 0444, show_cpuhp_states, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(states);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct attribute *cpuhp_cpu_root_attrs[] = {
 	&dev_attr_states.attr,
@@ -2687,63 +2457,28 @@ static const char *smt_states[] = {
 	[CPU_SMT_NOT_IMPLEMENTED]	= "notimplemented",
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t control_show(struct device *dev,
-			    struct device_attribute *attr, char *buf)
-=======
 static ssize_t
 show_smt_control(struct device *dev, struct device_attribute *attr, char *buf)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t control_show(struct device *dev,
-			    struct device_attribute *attr, char *buf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const char *state = smt_states[cpu_smt_control];
 
 	return snprintf(buf, PAGE_SIZE - 2, "%s\n", state);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t control_store(struct device *dev, struct device_attribute *attr,
-			     const char *buf, size_t count)
-{
-	return __store_smt_control(dev, attr, buf, count);
-}
-static DEVICE_ATTR_RW(control);
-
-static ssize_t active_show(struct device *dev,
-			   struct device_attribute *attr, char *buf)
-{
-	return snprintf(buf, PAGE_SIZE - 2, "%d\n", sched_smt_active());
-}
-static DEVICE_ATTR_RO(active);
-=======
 static ssize_t
 store_smt_control(struct device *dev, struct device_attribute *attr,
 		  const char *buf, size_t count)
-=======
-static ssize_t control_store(struct device *dev, struct device_attribute *attr,
-			     const char *buf, size_t count)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __store_smt_control(dev, attr, buf, count);
 }
-static DEVICE_ATTR_RW(control);
+static DEVICE_ATTR(control, 0644, show_smt_control, store_smt_control);
 
-static ssize_t active_show(struct device *dev,
-			   struct device_attribute *attr, char *buf)
+static ssize_t
+show_smt_active(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	return snprintf(buf, PAGE_SIZE - 2, "%d\n", sched_smt_active());
 }
-<<<<<<< HEAD
 static DEVICE_ATTR(active, 0444, show_smt_active, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(active);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct attribute *cpuhp_smt_attrs[] = {
 	&dev_attr_control.attr,

@@ -79,15 +79,7 @@ static inline int is_vcpu_stopped(struct kvm_vcpu *vcpu)
 
 static inline int is_vcpu_idle(struct kvm_vcpu *vcpu)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return test_bit(vcpu->vcpu_idx, vcpu->kvm->arch.idle_mask);
-=======
 	return test_bit(vcpu->vcpu_id, vcpu->kvm->arch.idle_mask);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return test_bit(vcpu->vcpu_idx, vcpu->kvm->arch.idle_mask);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int kvm_is_ucontrol(struct kvm *kvm)

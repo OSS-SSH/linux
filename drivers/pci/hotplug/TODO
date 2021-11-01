@@ -40,15 +40,9 @@ ibmphp:
 
 * The return value of pci_hp_register() is not checked.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 * iounmap(io_mem) is called in the error path of ebda_rsrc_controller()
   and once more in the error path of its caller ibmphp_access_ebda().
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 * The various slot data structures are difficult to follow and need to be
   simplified.  A lot of functions are too large and too complex, they need
   to be broken up into smaller, manageable pieces.  Negative examples are

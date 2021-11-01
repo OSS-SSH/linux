@@ -11,13 +11,7 @@
 struct thread_info {
 	struct task_struct *task;	/* main task structure */
 	unsigned long flags;		/* thread_info flags (see TIF_*) */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	mm_segment_t addr_limit;	/* user-level address space limit */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u32 cpu;			/* current CPU */
 	int preempt_count;		/* 0=premptable, <0=BUG; will also serve as bh-counter */
 };
@@ -27,13 +21,7 @@ struct thread_info {
 	.task		= &tsk,			\
 	.flags		= 0,			\
 	.cpu		= 0,			\
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.addr_limit	= KERNEL_DS,		\
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.preempt_count	= INIT_PREEMPT_COUNT,	\
 }
 

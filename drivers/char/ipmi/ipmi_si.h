@@ -73,15 +73,7 @@ irqreturn_t ipmi_si_irq_handler(int irq, void *data);
 void ipmi_irq_start_cleanup(struct si_sm_io *io);
 int ipmi_std_irq_setup(struct si_sm_io *io);
 void ipmi_irq_finish_setup(struct si_sm_io *io);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void ipmi_si_remove_by_dev(struct device *dev);
-=======
 int ipmi_si_remove_by_dev(struct device *dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void ipmi_si_remove_by_dev(struct device *dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct device *ipmi_si_remove_by_data(int addr_space, enum si_type si_type,
 				      unsigned long addr);
 void ipmi_hardcode_init(void);

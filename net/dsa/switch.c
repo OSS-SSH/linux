@@ -90,120 +90,38 @@ static int dsa_switch_bridge_join(struct dsa_switch *ds,
 				  struct dsa_notifier_bridge_info *info)
 {
 	struct dsa_switch_tree *dst = ds->dst;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int err;
 
-	if (dst->index == info->tree_index && ds->index == info->sw_index) {
-		if (!ds->ops->port_bridge_join)
-			return -EOPNOTSUPP;
-
-		err = ds->ops->port_bridge_join(ds, info->port, info->br);
-		if (err)
-			return err;
-	}
+	if (dst->index == info->tree_index && ds->index == info->sw_index &&
+	    ds->ops->port_bridge_join)
+		return ds->ops->port_bridge_join(ds, info->port, info->br);
 
 	if ((dst->index != info->tree_index || ds->index != info->sw_index) &&
-	    ds->ops->crosschip_bridge_join) {
-		err = ds->ops->crosschip_bridge_join(ds, info->tree_index,
-						     info->sw_index,
-						     info->port, info->br);
-		if (err)
-			return err;
-	}
+	    ds->ops->crosschip_bridge_join)
+		return ds->ops->crosschip_bridge_join(ds, info->tree_index,
+						      info->sw_index,
+						      info->port, info->br);
 
-	return dsa_tag_8021q_bridge_join(ds, info);
-=======
-=======
-	int err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (dst->index == info->tree_index && ds->index == info->sw_index) {
-		if (!ds->ops->port_bridge_join)
-			return -EOPNOTSUPP;
-
-		err = ds->ops->port_bridge_join(ds, info->port, info->br);
-		if (err)
-			return err;
-	}
-
-	if ((dst->index != info->tree_index || ds->index != info->sw_index) &&
-	    ds->ops->crosschip_bridge_join) {
-		err = ds->ops->crosschip_bridge_join(ds, info->tree_index,
-						     info->sw_index,
-						     info->port, info->br);
-		if (err)
-			return err;
-	}
-
-<<<<<<< HEAD
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return dsa_tag_8021q_bridge_join(ds, info);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dsa_switch_bridge_leave(struct dsa_switch *ds,
 				   struct dsa_notifier_bridge_info *info)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct dsa_switch_tree *dst = ds->dst;
-	struct netlink_ext_ack extack = {0};
-	bool change_vlan_filtering = false;
-	bool vlan_filtering;
-	int err, port;
-
-	if (dst->index == info->tree_index && ds->index == info->sw_index &&
-	    ds->ops->port_bridge_leave)
-		ds->ops->port_bridge_leave(ds, info->port, info->br);
-
-	if ((dst->index != info->tree_index || ds->index != info->sw_index) &&
-	    ds->ops->crosschip_bridge_leave)
-=======
 	bool unset_vlan_filtering = br_vlan_enabled(info->br);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dsa_switch_tree *dst = ds->dst;
 	struct netlink_ext_ack extack = {0};
-	bool change_vlan_filtering = false;
-	bool vlan_filtering;
 	int err, port;
 
 	if (dst->index == info->tree_index && ds->index == info->sw_index &&
-	    ds->ops->port_bridge_leave)
+	    ds->ops->port_bridge_join)
 		ds->ops->port_bridge_leave(ds, info->port, info->br);
 
 	if ((dst->index != info->tree_index || ds->index != info->sw_index) &&
-<<<<<<< HEAD
 	    ds->ops->crosschip_bridge_join)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    ds->ops->crosschip_bridge_leave)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ds->ops->crosschip_bridge_leave(ds, info->tree_index,
 						info->sw_index, info->port,
 						info->br);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (ds->needs_standalone_vlan_filtering && !br_vlan_enabled(info->br)) {
-		change_vlan_filtering = true;
-		vlan_filtering = true;
-	} else if (!ds->needs_standalone_vlan_filtering &&
-		   br_vlan_enabled(info->br)) {
-		change_vlan_filtering = true;
-		vlan_filtering = false;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If the bridge was vlan_filtering, the bridge core doesn't trigger an
 	 * event for changing vlan_filtering setting upon slave ports leaving
 	 * it. That is a good thing, because that lets us handle it and also
@@ -212,69 +130,28 @@ static int dsa_switch_bridge_leave(struct dsa_switch *ds,
 	 * vlan_filtering callback is only when the last port leaves the last
 	 * VLAN-aware bridge.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (change_vlan_filtering && ds->vlan_filtering_is_global) {
-=======
 	if (unset_vlan_filtering && ds->vlan_filtering_is_global) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (change_vlan_filtering && ds->vlan_filtering_is_global) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (port = 0; port < ds->num_ports; port++) {
 			struct net_device *bridge_dev;
 
 			bridge_dev = dsa_to_port(ds, port)->bridge_dev;
 
 			if (bridge_dev && br_vlan_enabled(bridge_dev)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				change_vlan_filtering = false;
-=======
 				unset_vlan_filtering = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				change_vlan_filtering = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			}
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	if (change_vlan_filtering) {
-		err = dsa_port_vlan_filtering(dsa_to_port(ds, info->port),
-					      vlan_filtering, &extack);
-		if (extack._msg)
-			dev_err(ds->dev, "port %d: %s\n", info->port,
-				extack._msg);
-		if (err && err != -EOPNOTSUPP)
-			return err;
-	}
-
-	return dsa_tag_8021q_bridge_leave(ds, info);
-=======
 	if (unset_vlan_filtering) {
-=======
-
-	if (change_vlan_filtering) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = dsa_port_vlan_filtering(dsa_to_port(ds, info->port),
-					      vlan_filtering, &extack);
+					      false, &extack);
 		if (extack._msg)
 			dev_err(ds->dev, "port %d: %s\n", info->port,
 				extack._msg);
-		if (err && err != -EOPNOTSUPP)
+		if (err && err != EOPNOTSUPP)
 			return err;
 	}
-<<<<<<< HEAD
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	return dsa_tag_8021q_bridge_leave(ds, info);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Matches for all upstream-facing ports (the CPU port and all upstream-facing
@@ -550,15 +427,7 @@ static int dsa_switch_lag_join(struct dsa_switch *ds,
 						   info->port, info->lag,
 						   info->info);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return -EOPNOTSUPP;
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return -EOPNOTSUPP;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dsa_switch_lag_leave(struct dsa_switch *ds,
@@ -571,15 +440,7 @@ static int dsa_switch_lag_leave(struct dsa_switch *ds,
 		return ds->ops->crosschip_lag_leave(ds, info->sw_index,
 						    info->port, info->lag);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return -EOPNOTSUPP;
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return -EOPNOTSUPP;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dsa_switch_mdb_add(struct dsa_switch *ds,
@@ -865,21 +726,6 @@ static int dsa_switch_event(struct notifier_block *nb,
 	case DSA_NOTIFIER_MRP_DEL_RING_ROLE:
 		err = dsa_switch_mrp_del_ring_role(ds, info);
 		break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	case DSA_NOTIFIER_TAG_8021Q_VLAN_ADD:
-		err = dsa_switch_tag_8021q_vlan_add(ds, info);
-		break;
-	case DSA_NOTIFIER_TAG_8021Q_VLAN_DEL:
-		err = dsa_switch_tag_8021q_vlan_del(ds, info);
-		break;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		err = -EOPNOTSUPP;
 		break;

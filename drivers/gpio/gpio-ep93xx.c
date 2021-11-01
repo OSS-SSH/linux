@@ -128,16 +128,6 @@ static void ep93xx_gpio_ab_irq_handler(struct irq_desc *desc)
 	 */
 	stat = readb(epg->base + EP93XX_GPIO_A_INT_STATUS);
 	for_each_set_bit(offset, &stat, 8)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		generic_handle_domain_irq(epg->gc[0].gc.irq.domain,
-					  offset);
-
-	stat = readb(epg->base + EP93XX_GPIO_B_INT_STATUS);
-	for_each_set_bit(offset, &stat, 8)
-		generic_handle_domain_irq(epg->gc[1].gc.irq.domain,
-					  offset);
-=======
 		generic_handle_irq(irq_find_mapping(epg->gc[0].gc.irq.domain,
 						    offset));
 
@@ -145,16 +135,6 @@ static void ep93xx_gpio_ab_irq_handler(struct irq_desc *desc)
 	for_each_set_bit(offset, &stat, 8)
 		generic_handle_irq(irq_find_mapping(epg->gc[1].gc.irq.domain,
 						    offset));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		generic_handle_domain_irq(epg->gc[0].gc.irq.domain,
-					  offset);
-
-	stat = readb(epg->base + EP93XX_GPIO_B_INT_STATUS);
-	for_each_set_bit(offset, &stat, 8)
-		generic_handle_domain_irq(epg->gc[1].gc.irq.domain,
-					  offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_exit(irqchip, desc);
 }

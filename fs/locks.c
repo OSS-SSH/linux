@@ -1397,9 +1397,6 @@ static int posix_lock_inode_wait(struct inode *inode, struct file_lock *fl)
 	return error;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_MANDATORY_FILE_LOCKING
 /**
  * locks_mandatory_locked - Check for an active lock
@@ -1497,9 +1494,6 @@ int locks_mandatory_area(struct inode *inode, struct file *filp, loff_t start,
 EXPORT_SYMBOL(locks_mandatory_area);
 #endif /* CONFIG_MANDATORY_FILE_LOCKING */
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void lease_clear_pending(struct file_lock *fl, int arg)
 {
 	switch (arg) {
@@ -2492,9 +2486,6 @@ int fcntl_setlk(unsigned int fd, struct file *filp, unsigned int cmd,
 	if (file_lock == NULL)
 		return -ENOLCK;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* Don't allow mandatory locks on files that may be memory mapped
 	 * and shared.
 	 */
@@ -2503,9 +2494,6 @@ int fcntl_setlk(unsigned int fd, struct file *filp, unsigned int cmd,
 		goto out;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = flock_to_posix_lock(filp, file_lock, flock);
 	if (error)
 		goto out;
@@ -2623,22 +2611,13 @@ int fcntl_setlk64(unsigned int fd, struct file *filp, unsigned int cmd,
 		struct flock64 *flock)
 {
 	struct file_lock *file_lock = locks_alloc_lock();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct inode *inode = locks_inode(filp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct file *f;
 	int error;
 
 	if (file_lock == NULL)
 		return -ENOLCK;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* Don't allow mandatory locks on files that may be memory mapped
 	 * and shared.
 	 */
@@ -2647,9 +2626,6 @@ int fcntl_setlk64(unsigned int fd, struct file *filp, unsigned int cmd,
 		goto out;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = flock64_to_posix_lock(filp, file_lock, flock);
 	if (error)
 		goto out;
@@ -2881,16 +2857,8 @@ static void lock_get_status(struct seq_file *f, struct file_lock *fl,
 			seq_puts(f, "POSIX ");
 
 		seq_printf(f, " %s ",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     (inode == NULL) ? "*NOINODE*" : "ADVISORY ");
-=======
 			     (inode == NULL) ? "*NOINODE*" :
 			     mandatory_lock(inode) ? "MANDATORY" : "ADVISORY ");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     (inode == NULL) ? "*NOINODE*" : "ADVISORY ");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (IS_FLOCK(fl)) {
 		if (fl->fl_type & LOCK_MAND) {
 			seq_puts(f, "FLOCK  MSNFS     ");

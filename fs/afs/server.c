@@ -235,14 +235,6 @@ static struct afs_server *afs_alloc_server(struct afs_cell *cell,
 	server->addr_version = alist->version;
 	server->uuid = *uuid;
 	rwlock_init(&server->fs_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	INIT_WORK(&server->initcb_work, afs_server_init_callback_work);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	INIT_WORK(&server->initcb_work, afs_server_init_callback_work);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	init_waitqueue_head(&server->probe_wq);
 	INIT_LIST_HEAD(&server->probe_link);
 	spin_lock_init(&server->probe_lock);
@@ -475,14 +467,6 @@ static void afs_destroy_server(struct afs_net *net, struct afs_server *server)
 	if (test_bit(AFS_SERVER_FL_MAY_HAVE_CB, &server->flags))
 		afs_give_up_callbacks(net, server);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	flush_work(&server->initcb_work);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	flush_work(&server->initcb_work);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	afs_put_server(net, server, afs_server_trace_destroy);
 }
 

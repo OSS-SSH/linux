@@ -210,19 +210,7 @@
 #define  MIPI_VIDEO_STABLE_CNT           0x0A
 
 #define  MIPI_LANE_CTRL_10               0x0F
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define  MIPI_DIGITAL_ADJ_1     0x1B
-#define  IVO_MID0               0x26
-#define  IVO_MID1               0xCF
-=======
 #define  MIPI_DIGITAL_ADJ_1   0x1B
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define  MIPI_DIGITAL_ADJ_1     0x1B
-#define  IVO_MID0               0x26
-#define  IVO_MID1               0xCF
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define  MIPI_PLL_M_NUM_23_16   0x1E
 #define  MIPI_PLL_M_NUM_15_8    0x1F

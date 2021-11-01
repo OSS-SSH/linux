@@ -187,14 +187,6 @@ static void jsm_tty_break(struct uart_port *port, int break_state)
 
 static int jsm_tty_open(struct uart_port *port)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned long lock_flags;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned long lock_flags;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct jsm_board *brd;
 	struct jsm_channel *channel =
 		container_of(port, struct jsm_channel, uart_port);
@@ -248,14 +240,6 @@ static int jsm_tty_open(struct uart_port *port)
 	channel->ch_cached_lsr = 0;
 	channel->ch_stops_sent = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock_irqsave(&port->lock, lock_flags);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_irqsave(&port->lock, lock_flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	termios = &port->state->port.tty->termios;
 	channel->ch_c_cflag	= termios->c_cflag;
 	channel->ch_c_iflag	= termios->c_iflag;
@@ -275,14 +259,6 @@ static int jsm_tty_open(struct uart_port *port)
 	jsm_carrier(channel);
 
 	channel->ch_open_count++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_unlock_irqrestore(&port->lock, lock_flags);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_unlock_irqrestore(&port->lock, lock_flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	jsm_dbg(OPEN, &channel->ch_bd->pci_dev, "finish\n");
 	return 0;

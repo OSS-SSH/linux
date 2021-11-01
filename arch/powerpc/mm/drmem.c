@@ -18,14 +18,6 @@ static int n_root_addr_cells, n_root_size_cells;
 
 static struct drmem_lmb_info __drmem_info;
 struct drmem_lmb_info *drmem_info = &__drmem_info;
-<<<<<<< HEAD
-<<<<<<< HEAD
-static bool in_drmem_update;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static bool in_drmem_update;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 u64 drmem_lmb_memory_max(void)
 {
@@ -186,20 +178,6 @@ int drmem_update_dt(void)
 	if (!memory)
 		return -1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Set in_drmem_update to prevent the notifier callback to process the
-	 * DT property back since the change is coming from the LMB tree.
-	 */
-	in_drmem_update = true;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prop = of_find_property(memory, "ibm,dynamic-memory", NULL);
 	if (prop) {
 		rc = drmem_update_dt_v1(memory, prop);
@@ -208,14 +186,6 @@ int drmem_update_dt(void)
 		if (prop)
 			rc = drmem_update_dt_v2(memory, prop);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	in_drmem_update = false;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	in_drmem_update = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	of_node_put(memory);
 	return rc;
@@ -337,54 +307,6 @@ int __init walk_drmem_lmbs_early(unsigned long node, void *data,
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/*
- * Update the LMB associativity index.
- */
-static int update_lmb(struct drmem_lmb *updated_lmb,
-		      __maybe_unused const __be32 **usm,
-		      __maybe_unused void *data)
-{
-	struct drmem_lmb *lmb;
-
-	for_each_drmem_lmb(lmb) {
-		if (lmb->drc_index != updated_lmb->drc_index)
-			continue;
-
-		lmb->aa_index = updated_lmb->aa_index;
-		break;
-	}
-	return 0;
-}
-
-/*
- * Update the LMB associativity index.
- *
- * This needs to be called when the hypervisor is updating the
- * dynamic-reconfiguration-memory node property.
- */
-void drmem_update_lmbs(struct property *prop)
-{
-	/*
-	 * Don't update the LMBs if triggered by the update done in
-	 * drmem_update_dt(), the LMB values have been used to the update the DT
-	 * property in that case.
-	 */
-	if (in_drmem_update)
-		return;
-	if (!strcmp(prop->name, "ibm,dynamic-memory"))
-		__walk_drmem_v1_lmbs(prop->value, NULL, NULL, update_lmb);
-	else if (!strcmp(prop->name, "ibm,dynamic-memory-v2"))
-		__walk_drmem_v2_lmbs(prop->value, NULL, NULL, update_lmb);
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static int init_drmem_lmb_size(struct device_node *dn)

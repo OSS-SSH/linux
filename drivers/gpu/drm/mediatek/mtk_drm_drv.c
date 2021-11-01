@@ -110,26 +110,6 @@ static const enum mtk_ddp_comp_id mt2712_mtk_ddp_third[] = {
 	DDP_COMPONENT_PWM2,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static enum mtk_ddp_comp_id mt8167_mtk_ddp_main[] = {
-	DDP_COMPONENT_OVL0,
-	DDP_COMPONENT_COLOR0,
-	DDP_COMPONENT_CCORR,
-	DDP_COMPONENT_AAL0,
-	DDP_COMPONENT_GAMMA,
-	DDP_COMPONENT_DITHER,
-	DDP_COMPONENT_RDMA0,
-	DDP_COMPONENT_DSI0,
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const enum mtk_ddp_comp_id mt8173_mtk_ddp_main[] = {
 	DDP_COMPONENT_OVL0,
 	DDP_COMPONENT_COLOR0,
@@ -192,20 +172,6 @@ static const struct mtk_mmsys_driver_data mt2712_mmsys_driver_data = {
 	.third_len = ARRAY_SIZE(mt2712_mtk_ddp_third),
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct mtk_mmsys_driver_data mt8167_mmsys_driver_data = {
-	.main_path = mt8167_mtk_ddp_main,
-	.main_len = ARRAY_SIZE(mt8167_mtk_ddp_main),
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct mtk_mmsys_driver_data mt8173_mmsys_driver_data = {
 	.main_path = mt8173_mtk_ddp_main,
 	.main_len = ARRAY_SIZE(mt8173_mtk_ddp_main),
@@ -304,18 +270,12 @@ static int mtk_drm_kms_init(struct drm_device *drm)
 		goto err_component_unbind;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 * We don't use the drm_irq_install() helpers provided by the DRM
 	 * core, so we need to set this manually in order to allow the
 	 * DRM_IOCTL_WAIT_VBLANK to operate correctly.
 	 */
 	drm->irq_enabled = true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = drm_vblank_init(drm, MAX_CRTC);
 	if (ret < 0)
 		goto err_component_unbind;
@@ -340,10 +300,6 @@ static void mtk_drm_kms_deinit(struct drm_device *drm)
 	component_unbind_all(drm->dev, drm);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-DEFINE_DRM_GEM_FOPS(mtk_drm_fops);
-=======
 static const struct file_operations mtk_drm_fops = {
 	.owner = THIS_MODULE,
 	.open = drm_open,
@@ -354,10 +310,6 @@ static const struct file_operations mtk_drm_fops = {
 	.read = drm_read,
 	.compat_ioctl = drm_compat_ioctl,
 };
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-DEFINE_DRM_GEM_FOPS(mtk_drm_fops);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * We need to override this because the device used to import the memory is
@@ -380,15 +332,7 @@ static const struct drm_driver mtk_drm_driver = {
 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
 	.gem_prime_import = mtk_drm_gem_prime_import,
 	.gem_prime_import_sg_table = mtk_gem_prime_import_sg_table,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.gem_prime_mmap = drm_gem_prime_mmap,
-=======
 	.gem_prime_mmap = mtk_drm_gem_mmap_buf,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.gem_prime_mmap = drm_gem_prime_mmap,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.fops = &mtk_drm_fops,
 
 	.name = DRIVER_NAME,
@@ -454,16 +398,6 @@ static const struct component_master_ops mtk_drm_ops = {
 static const struct of_device_id mtk_ddp_comp_dt_ids[] = {
 	{ .compatible = "mediatek,mt2701-disp-ovl",
 	  .data = (void *)MTK_DISP_OVL },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-disp-ovl",
-	  .data = (void *)MTK_DISP_OVL },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-disp-ovl",
-	  .data = (void *)MTK_DISP_OVL },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8173-disp-ovl",
 	  .data = (void *)MTK_DISP_OVL },
 	{ .compatible = "mediatek,mt8183-disp-ovl",
@@ -472,99 +406,30 @@ static const struct of_device_id mtk_ddp_comp_dt_ids[] = {
 	  .data = (void *)MTK_DISP_OVL_2L },
 	{ .compatible = "mediatek,mt2701-disp-rdma",
 	  .data = (void *)MTK_DISP_RDMA },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-disp-rdma",
-	  .data = (void *)MTK_DISP_RDMA },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-disp-rdma",
-	  .data = (void *)MTK_DISP_RDMA },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8173-disp-rdma",
 	  .data = (void *)MTK_DISP_RDMA },
 	{ .compatible = "mediatek,mt8183-disp-rdma",
 	  .data = (void *)MTK_DISP_RDMA },
 	{ .compatible = "mediatek,mt8173-disp-wdma",
 	  .data = (void *)MTK_DISP_WDMA },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-disp-ccorr",
-	  .data = (void *)MTK_DISP_CCORR },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-disp-ccorr",
-	  .data = (void *)MTK_DISP_CCORR },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8183-disp-ccorr",
 	  .data = (void *)MTK_DISP_CCORR },
 	{ .compatible = "mediatek,mt2701-disp-color",
 	  .data = (void *)MTK_DISP_COLOR },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-disp-color",
-	  .data = (void *)MTK_DISP_COLOR },
 	{ .compatible = "mediatek,mt8173-disp-color",
 	  .data = (void *)MTK_DISP_COLOR },
-	{ .compatible = "mediatek,mt8167-disp-aal",
-	  .data = (void *)MTK_DISP_AAL},
 	{ .compatible = "mediatek,mt8173-disp-aal",
 	  .data = (void *)MTK_DISP_AAL},
-	{ .compatible = "mediatek,mt8183-disp-aal",
-	  .data = (void *)MTK_DISP_AAL},
-	{ .compatible = "mediatek,mt8167-disp-gamma",
-	  .data = (void *)MTK_DISP_GAMMA, },
-=======
-=======
-	{ .compatible = "mediatek,mt8167-disp-color",
-	  .data = (void *)MTK_DISP_COLOR },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{ .compatible = "mediatek,mt8173-disp-color",
-	  .data = (void *)MTK_DISP_COLOR },
-	{ .compatible = "mediatek,mt8167-disp-aal",
-	  .data = (void *)MTK_DISP_AAL},
-	{ .compatible = "mediatek,mt8173-disp-aal",
-	  .data = (void *)MTK_DISP_AAL},
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8183-disp-aal",
-	  .data = (void *)MTK_DISP_AAL},
-	{ .compatible = "mediatek,mt8167-disp-gamma",
-	  .data = (void *)MTK_DISP_GAMMA, },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8173-disp-gamma",
 	  .data = (void *)MTK_DISP_GAMMA, },
 	{ .compatible = "mediatek,mt8183-disp-gamma",
 	  .data = (void *)MTK_DISP_GAMMA, },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-disp-dither",
-	  .data = (void *)MTK_DISP_DITHER },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-disp-dither",
-	  .data = (void *)MTK_DISP_DITHER },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8183-disp-dither",
 	  .data = (void *)MTK_DISP_DITHER },
 	{ .compatible = "mediatek,mt8173-disp-ufoe",
 	  .data = (void *)MTK_DISP_UFOE },
 	{ .compatible = "mediatek,mt2701-dsi",
 	  .data = (void *)MTK_DSI },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-dsi",
-	  .data = (void *)MTK_DSI },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-dsi",
-	  .data = (void *)MTK_DSI },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8173-dsi",
 	  .data = (void *)MTK_DSI },
 	{ .compatible = "mediatek,mt8183-dsi",
@@ -579,32 +444,12 @@ static const struct of_device_id mtk_ddp_comp_dt_ids[] = {
 	  .data = (void *)MTK_DISP_MUTEX },
 	{ .compatible = "mediatek,mt2712-disp-mutex",
 	  .data = (void *)MTK_DISP_MUTEX },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-disp-mutex",
-	  .data = (void *)MTK_DISP_MUTEX },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-disp-mutex",
-	  .data = (void *)MTK_DISP_MUTEX },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8173-disp-mutex",
 	  .data = (void *)MTK_DISP_MUTEX },
 	{ .compatible = "mediatek,mt8183-disp-mutex",
 	  .data = (void *)MTK_DISP_MUTEX },
 	{ .compatible = "mediatek,mt2701-disp-pwm",
 	  .data = (void *)MTK_DISP_BLS },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-disp-pwm",
-	  .data = (void *)MTK_DISP_PWM },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-disp-pwm",
-	  .data = (void *)MTK_DISP_PWM },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8173-disp-pwm",
 	  .data = (void *)MTK_DISP_PWM },
 	{ .compatible = "mediatek,mt8173-disp-od",
@@ -619,16 +464,6 @@ static const struct of_device_id mtk_drm_of_ids[] = {
 	  .data = &mt7623_mmsys_driver_data},
 	{ .compatible = "mediatek,mt2712-mmsys",
 	  .data = &mt2712_mmsys_driver_data},
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "mediatek,mt8167-mmsys",
-	  .data = &mt8167_mmsys_driver_data},
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "mediatek,mt8167-mmsys",
-	  .data = &mt8167_mmsys_driver_data},
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "mediatek,mt8173-mmsys",
 	  .data = &mt8173_mmsys_driver_data},
 	{ .compatible = "mediatek,mt8183-mmsys",
@@ -697,29 +532,11 @@ static int mtk_drm_probe(struct platform_device *pdev)
 		private->comp_node[comp_id] = of_node_get(node);
 
 		/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * Currently only the AAL, CCORR, COLOR, GAMMA, OVL, RDMA, DSI, and DPI
-		 * blocks have separate component platform drivers and initialize their own
-		 * DDP component structure. The others are initialized here.
-		 */
-		if (comp_type == MTK_DISP_AAL ||
-		    comp_type == MTK_DISP_CCORR ||
-=======
 		 * Currently only the CCORR, COLOR, GAMMA, OVL, RDMA, DSI, and DPI
 		 * blocks have separate component platform drivers and initialize their own
 		 * DDP component structure. The others are initialized here.
 		 */
 		if (comp_type == MTK_DISP_CCORR ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 * Currently only the AAL, CCORR, COLOR, GAMMA, OVL, RDMA, DSI, and DPI
-		 * blocks have separate component platform drivers and initialize their own
-		 * DDP component structure. The others are initialized here.
-		 */
-		if (comp_type == MTK_DISP_AAL ||
-		    comp_type == MTK_DISP_CCORR ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    comp_type == MTK_DISP_COLOR ||
 		    comp_type == MTK_DISP_GAMMA ||
 		    comp_type == MTK_DISP_OVL ||
@@ -819,14 +636,6 @@ static struct platform_driver mtk_drm_platform_driver = {
 };
 
 static struct platform_driver * const mtk_drm_drivers[] = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	&mtk_disp_aal_driver,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	&mtk_disp_aal_driver,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	&mtk_disp_ccorr_driver,
 	&mtk_disp_color_driver,
 	&mtk_disp_gamma_driver,

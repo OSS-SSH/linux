@@ -3,13 +3,7 @@ config PARISC
 	def_bool y
 	select ARCH_32BIT_OFF_T if !64BIT
 	select ARCH_MIGHT_HAVE_PC_PARPORT
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	select HAVE_IDE
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select HAVE_FUNCTION_TRACER
 	select HAVE_FUNCTION_GRAPH_TRACER
 	select HAVE_SYSCALL_TRACEPOINTS
@@ -40,13 +34,7 @@ config PARISC
 	select ARCH_HAVE_NMI_SAFE_CMPXCHG
 	select GENERIC_SMP_IDLE_THREAD
 	select GENERIC_CPU_DEVICES
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	select GENERIC_STRNCPY_FROM_USER
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select GENERIC_LIB_DEVMEM_IS_ALLOWED
 	select SYSCTL_ARCH_UNALIGN_ALLOW
 	select SYSCTL_EXCEPTION_TRACE
@@ -78,15 +66,7 @@ config PARISC
 	select HAVE_KPROBES_ON_FTRACE
 	select HAVE_DYNAMIC_FTRACE_WITH_REGS
 	select HAVE_SOFTIRQ_ON_OWN_STACK if IRQSTACKS
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select TRACE_IRQFLAGS_SUPPORT
-=======
 	select SET_FS
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select TRACE_IRQFLAGS_SUPPORT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	help
 	  The PA-RISC microprocessor is designed by Hewlett-Packard and used
@@ -406,12 +386,6 @@ config KEXEC_FILE
 
 endmenu
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 source "drivers/firmware/Kconfig"
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "drivers/parisc/Kconfig"

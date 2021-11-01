@@ -34,14 +34,6 @@ properties:
               - allwinner,sun6i-a31-ehci
               - allwinner,sun7i-a20-ehci
               - allwinner,sun8i-a23-ehci
-<<<<<<< HEAD
-<<<<<<< HEAD
-              - allwinner,sun8i-a83t-ehci
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-              - allwinner,sun8i-a83t-ehci
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - allwinner,sun8i-h3-ehci
               - allwinner,sun8i-r40-ehci
               - allwinner,sun9i-a80-ehci
@@ -150,20 +142,6 @@ properties:
   iommus:
     maxItems: 1
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  dr_mode:
-    enum:
-      - host
-      - otg
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 required:
   - compatible
   - reg

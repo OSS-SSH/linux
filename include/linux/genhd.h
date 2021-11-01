@@ -60,15 +60,9 @@ struct partition_meta_info {
  * device.
  * Affects responses to the ``CDROM_GET_CAPABILITY`` ioctl.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * ``GENHD_FL_UP`` (0x0010): indicates that the block device is "up",
  * with a similar meaning to network interfaces.
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ``GENHD_FL_SUPPRESS_PARTITION_INFO`` (0x0020): don't include
  * partition information in ``/proc/partitions`` or in the output of
  * printk_all_partitions().
@@ -103,13 +97,7 @@ struct partition_meta_info {
 /* 2 is unused (used to be GENHD_FL_DRIVERFS) */
 /* 4 is unused (used to be GENHD_FL_MEDIA_CHANGE_NOTIFY) */
 #define GENHD_FL_CD				0x0008
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define GENHD_FL_UP				0x0010
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define GENHD_FL_SUPPRESS_PARTITION_INFO	0x0020
 #define GENHD_FL_EXT_DEVT			0x0040
 #define GENHD_FL_NATIVE_CAPACITY		0x0080
@@ -165,37 +153,13 @@ struct gendisk {
 	unsigned long state;
 #define GD_NEED_PART_SCAN		0
 #define GD_READ_ONLY			1
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define GD_DEAD				2
-=======
 #define GD_QUEUE_REF			2
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define GD_DEAD				2
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct mutex open_mutex;	/* open/close mutex */
 	unsigned open_partitions;	/* number of open partitions */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct backing_dev_info	*bdi;
-	struct kobject *slave_dir;
-#ifdef CONFIG_BLOCK_HOLDER_DEPRECATED
-	struct list_head slave_bdevs;
-#endif
-=======
 	struct kobject *slave_dir;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct backing_dev_info	*bdi;
-	struct kobject *slave_dir;
-#ifdef CONFIG_BLOCK_HOLDER_DEPRECATED
-	struct list_head slave_bdevs;
-#endif
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct timer_rand_state *random;
 	atomic_t sync_io;		/* RAID */
 	struct disk_events *ev;
@@ -208,30 +172,8 @@ struct gendisk {
 	int node_id;
 	struct badblocks *bb;
 	struct lockdep_map lockdep_map;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u64 diskseq;
 };
 
-static inline bool disk_live(struct gendisk *disk)
-{
-	return !inode_unhashed(disk->part0->bd_inode);
-}
-
-=======
-};
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u64 diskseq;
-};
-
-static inline bool disk_live(struct gendisk *disk)
-{
-	return !inode_unhashed(disk->part0->bd_inode);
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The gendisk is refcounted by the part0 block_device, and the bd_device
  * therein is also used for device model presentation in sysfs.
@@ -268,36 +210,18 @@ static inline dev_t disk_devt(struct gendisk *disk)
 void disk_uevent(struct gendisk *disk, enum kobject_action action);
 
 /* block/genhd.c */
-<<<<<<< HEAD
-<<<<<<< HEAD
-int device_add_disk(struct device *parent, struct gendisk *disk,
-		const struct attribute_group **groups);
-static inline int add_disk(struct gendisk *disk)
-{
-	return device_add_disk(NULL, disk, NULL);
-}
-=======
 extern void device_add_disk(struct device *parent, struct gendisk *disk,
 			    const struct attribute_group **groups);
 static inline void add_disk(struct gendisk *disk)
-=======
-int device_add_disk(struct device *parent, struct gendisk *disk,
-		const struct attribute_group **groups);
-static inline int add_disk(struct gendisk *disk)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	return device_add_disk(NULL, disk, NULL);
+	device_add_disk(NULL, disk, NULL);
 }
-<<<<<<< HEAD
 extern void device_add_disk_no_queue_reg(struct device *parent, struct gendisk *disk);
 static inline void add_disk_no_queue_reg(struct gendisk *disk)
 {
 	device_add_disk_no_queue_reg(NULL, disk);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void del_gendisk(struct gendisk *gp);
 
 void set_disk_ro(struct gendisk *disk, bool read_only);
@@ -312,14 +236,6 @@ extern void disk_block_events(struct gendisk *disk);
 extern void disk_unblock_events(struct gendisk *disk);
 extern void disk_flush_events(struct gendisk *disk, unsigned int mask);
 bool set_capacity_and_notify(struct gendisk *disk, sector_t size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-bool disk_force_media_change(struct gendisk *disk, unsigned int events);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-bool disk_force_media_change(struct gendisk *disk, unsigned int events);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* drivers/char/random.c */
 extern void add_disk_randomness(struct gendisk *disk) __latent_entropy;
@@ -343,13 +259,6 @@ static inline sector_t get_capacity(struct gendisk *disk)
 int bdev_disk_changed(struct gendisk *disk, bool invalidate);
 void blk_drop_partitions(struct gendisk *disk);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct gendisk *__alloc_disk_node(struct request_queue *q, int node_id,
-		struct lock_class_key *lkclass);
-extern void put_disk(struct gendisk *disk);
-struct gendisk *__blk_alloc_disk(int node, struct lock_class_key *lkclass);
-=======
 extern struct gendisk *__alloc_disk_node(int minors, int node_id);
 extern void put_disk(struct gendisk *disk);
 
@@ -370,13 +279,6 @@ extern void put_disk(struct gendisk *disk);
 })
 
 #define alloc_disk(minors) alloc_disk_node(minors, NUMA_NO_NODE)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct gendisk *__alloc_disk_node(struct request_queue *q, int node_id,
-		struct lock_class_key *lkclass);
-extern void put_disk(struct gendisk *disk);
-struct gendisk *__blk_alloc_disk(int node, struct lock_class_key *lkclass);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * blk_alloc_disk - allocate a gendisk structure
@@ -389,25 +291,15 @@ struct gendisk *__blk_alloc_disk(int node, struct lock_class_key *lkclass);
  */
 #define blk_alloc_disk(node_id)						\
 ({									\
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static struct lock_class_key __key;				\
-									\
-	__blk_alloc_disk(node_id, &__key);				\
-})
-=======
 	struct gendisk *__disk = __blk_alloc_disk(node_id);		\
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static struct lock_class_key __key;				\
 									\
-	__blk_alloc_disk(node_id, &__key);				\
+	if (__disk)							\
+		lockdep_init_map(&__disk->lockdep_map,			\
+			"(bio completion)", &__key, 0);			\
+	__disk;								\
 })
-<<<<<<< HEAD
 struct gendisk *__blk_alloc_disk(int node);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void blk_cleanup_disk(struct gendisk *disk);
 
 int __register_blkdev(unsigned int major, const char *name,
@@ -424,23 +316,9 @@ void set_capacity(struct gendisk *disk, sector_t size);
 int blkdev_ioctl(struct block_device *, fmode_t, unsigned, unsigned long);
 long compat_blkdev_ioctl(struct file *, unsigned, unsigned long);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_BLOCK_HOLDER_DEPRECATED
-int bd_link_disk_holder(struct block_device *bdev, struct gendisk *disk);
-void bd_unlink_disk_holder(struct block_device *bdev, struct gendisk *disk);
-int bd_register_pending_holders(struct gendisk *disk);
-=======
 #ifdef CONFIG_SYSFS
 int bd_link_disk_holder(struct block_device *bdev, struct gendisk *disk);
 void bd_unlink_disk_holder(struct block_device *bdev, struct gendisk *disk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifdef CONFIG_BLOCK_HOLDER_DEPRECATED
-int bd_link_disk_holder(struct block_device *bdev, struct gendisk *disk);
-void bd_unlink_disk_holder(struct block_device *bdev, struct gendisk *disk);
-int bd_register_pending_holders(struct gendisk *disk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline int bd_link_disk_holder(struct block_device *bdev,
 				      struct gendisk *disk)
@@ -451,29 +329,9 @@ static inline void bd_unlink_disk_holder(struct block_device *bdev,
 					 struct gendisk *disk)
 {
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline int bd_register_pending_holders(struct gendisk *disk)
-{
-	return 0;
-}
-#endif /* CONFIG_BLOCK_HOLDER_DEPRECATED */
-<<<<<<< HEAD
-
-dev_t part_devt(struct gendisk *disk, u8 partno);
-void inc_diskseq(struct gendisk *disk);
-=======
 #endif /* CONFIG_SYSFS */
 
 dev_t part_devt(struct gendisk *disk, u8 partno);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-dev_t part_devt(struct gendisk *disk, u8 partno);
-void inc_diskseq(struct gendisk *disk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dev_t blk_lookup_devt(const char *name, int partno);
 void blk_request_module(dev_t devt);
 #ifdef CONFIG_BLOCK

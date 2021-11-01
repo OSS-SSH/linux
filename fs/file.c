@@ -596,66 +596,18 @@ void fd_install(unsigned int fd, struct file *file)
 
 EXPORT_SYMBOL(fd_install);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * pick_file - return file associatd with fd
- * @files: file struct to retrieve file from
- * @fd: file descriptor to retrieve file for
- *
- * If this functions returns an EINVAL error pointer the fd was beyond the
- * current maximum number of file descriptors for that fdtable.
- *
- * Returns: The file associated with @fd, on error returns an error pointer.
- */
-<<<<<<< HEAD
-static struct file *pick_file(struct files_struct *files, unsigned fd)
-{
-	struct file *file;
-=======
 static struct file *pick_file(struct files_struct *files, unsigned fd)
 {
 	struct file *file = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct file *pick_file(struct files_struct *files, unsigned fd)
-{
-	struct file *file;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fdtable *fdt;
 
 	spin_lock(&files->file_lock);
 	fdt = files_fdtable(files);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (fd >= fdt->max_fds) {
-		file = ERR_PTR(-EINVAL);
-		goto out_unlock;
-	}
-	file = fdt->fd[fd];
-	if (!file) {
-		file = ERR_PTR(-EBADF);
-		goto out_unlock;
-	}
-=======
 	if (fd >= fdt->max_fds)
-=======
-	if (fd >= fdt->max_fds) {
-		file = ERR_PTR(-EINVAL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_unlock;
-	}
 	file = fdt->fd[fd];
-	if (!file) {
-		file = ERR_PTR(-EBADF);
+	if (!file)
 		goto out_unlock;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_assign_pointer(fdt->fd[fd], NULL);
 	__put_unused_fd(files, fd);
 
@@ -670,15 +622,7 @@ int close_fd(unsigned fd)
 	struct file *file;
 
 	file = pick_file(files, fd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (IS_ERR(file))
-=======
 	if (!file)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (IS_ERR(file))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBADF;
 
 	return filp_close(file, files);
@@ -719,37 +663,11 @@ static inline void __range_close(struct files_struct *cur_fds, unsigned int fd,
 		struct file *file;
 
 		file = pick_file(cur_fds, fd++);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (!IS_ERR(file)) {
-			/* found a valid file to close */
-			filp_close(file, cur_fds);
-			cond_resched();
-<<<<<<< HEAD
-			continue;
-		}
-
-		/* beyond the last fd in that table */
-		if (PTR_ERR(file) == -EINVAL)
-			return;
-=======
 		if (!file)
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
-		}
 
-<<<<<<< HEAD
 		filp_close(file, cur_fds);
 		cond_resched();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		/* beyond the last fd in that table */
-		if (PTR_ERR(file) == -EINVAL)
-			return;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -764,13 +682,7 @@ static inline void __range_close(struct files_struct *cur_fds, unsigned int fd,
  */
 int __close_range(unsigned fd, unsigned max_fd, unsigned int flags)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned int cur_max;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct task_struct *me = current;
 	struct files_struct *cur_fds = me->files, *fds = NULL;
 
@@ -780,9 +692,6 @@ int __close_range(unsigned fd, unsigned max_fd, unsigned int flags)
 	if (fd > max_fd)
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	rcu_read_lock();
 	cur_max = files_fdtable(cur_fds)->max_fds;
 	rcu_read_unlock();
@@ -790,32 +699,11 @@ int __close_range(unsigned fd, unsigned max_fd, unsigned int flags)
 	/* cap to last valid index into fdtable */
 	cur_max--;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flags & CLOSE_RANGE_UNSHARE) {
 		int ret;
 		unsigned int max_unshare_fds = NR_OPEN_MAX;
 
 		/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * If the caller requested all fds to be made cloexec we always
-		 * copy all of the file descriptors since they still want to
-		 * use them.
-		 */
-		if (!(flags & CLOSE_RANGE_CLOEXEC)) {
-			/*
-			 * If the requested range is greater than the current
-			 * maximum, we're closing everything so only copy all
-			 * file descriptors beneath the lowest file descriptor.
-			 */
-			rcu_read_lock();
-			if (max_fd >= last_fd(files_fdtable(cur_fds)))
-				max_unshare_fds = fd;
-			rcu_read_unlock();
-		}
-=======
 		 * If the requested range is greater than the current maximum,
 		 * we're closing everything so only copy all file descriptors
 		 * beneath the lowest file descriptor.
@@ -824,24 +712,6 @@ int __close_range(unsigned fd, unsigned max_fd, unsigned int flags)
 		 */
 		if (!(flags & CLOSE_RANGE_CLOEXEC) && (max_fd >= cur_max))
 			max_unshare_fds = fd;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 * If the caller requested all fds to be made cloexec we always
-		 * copy all of the file descriptors since they still want to
-		 * use them.
-		 */
-		if (!(flags & CLOSE_RANGE_CLOEXEC)) {
-			/*
-			 * If the requested range is greater than the current
-			 * maximum, we're closing everything so only copy all
-			 * file descriptors beneath the lowest file descriptor.
-			 */
-			rcu_read_lock();
-			if (max_fd >= last_fd(files_fdtable(cur_fds)))
-				max_unshare_fds = fd;
-			rcu_read_unlock();
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ret = unshare_fd(CLONE_FILES, max_unshare_fds, &fds);
 		if (ret)
@@ -855,14 +725,8 @@ int __close_range(unsigned fd, unsigned max_fd, unsigned int flags)
 			swap(cur_fds, fds);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	max_fd = min(max_fd, cur_max);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (flags & CLOSE_RANGE_CLOEXEC)
 		__range_cloexec(cur_fds, fd, max_fd);
 	else
@@ -1270,21 +1134,6 @@ int receive_fd_replace(int new_fd, struct file *file, unsigned int o_flags)
 	return new_fd;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-int receive_fd(struct file *file, unsigned int o_flags)
-{
-	return __receive_fd(file, NULL, o_flags);
-}
-EXPORT_SYMBOL_GPL(receive_fd);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ksys_dup3(unsigned int oldfd, unsigned int newfd, int flags)
 {
 	int err = -EBADF;

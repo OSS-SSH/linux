@@ -522,14 +522,6 @@ uint32_t amdgpu_display_supported_domains(struct amdgpu_device *adev,
 			break;
 		case CHIP_RENOIR:
 		case CHIP_VANGOGH:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		case CHIP_YELLOW_CARP:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		case CHIP_YELLOW_CARP:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			domain |= AMDGPU_GEM_DOMAIN_GTT;
 			break;
 
@@ -844,37 +836,6 @@ static int convert_tiling_flags_to_modifier(struct amdgpu_framebuffer *afb)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Mirrors the is_displayable check in radeonsi's gfx6_compute_surface */
-static int check_tiling_flags_gfx6(struct amdgpu_framebuffer *afb)
-{
-	u64 micro_tile_mode;
-
-	/* Zero swizzle mode means linear */
-	if (AMDGPU_TILING_GET(afb->tiling_flags, SWIZZLE_MODE) == 0)
-		return 0;
-
-	micro_tile_mode = AMDGPU_TILING_GET(afb->tiling_flags, MICRO_TILE_MODE);
-	switch (micro_tile_mode) {
-	case 0: /* DISPLAY */
-	case 3: /* RENDER */
-		return 0;
-	default:
-		drm_dbg_kms(afb->base.dev,
-			    "Micro tile mode %llu not supported for scanout\n",
-			    micro_tile_mode);
-		return -EINVAL;
-	}
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void get_block_dimensions(unsigned int block_log2, unsigned int cpp,
 				 unsigned int *width, unsigned int *height)
 {
@@ -1141,14 +1102,6 @@ int amdgpu_display_framebuffer_init(struct drm_device *dev,
 				    const struct drm_mode_fb_cmd2 *mode_cmd,
 				    struct drm_gem_object *obj)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct amdgpu_device *adev = drm_to_adev(dev);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct amdgpu_device *adev = drm_to_adev(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret, i;
 
 	/*
@@ -1168,23 +1121,6 @@ int amdgpu_display_framebuffer_init(struct drm_device *dev,
 	if (ret)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!dev->mode_config.allow_fb_modifiers) {
-		drm_WARN_ONCE(dev, adev->family >= AMDGPU_FAMILY_AI,
-			      "GFX9+ requires FB check based on format modifier\n");
-		ret = check_tiling_flags_gfx6(rfb);
-		if (ret)
-			return ret;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dev->mode_config.allow_fb_modifiers &&
 	    !(rfb->base.flags & DRM_MODE_FB_MODIFIERS)) {
 		ret = convert_tiling_flags_to_modifier(rfb);

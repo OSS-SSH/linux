@@ -458,21 +458,9 @@ static void sh_mobile_i2c_cleanup_dma(struct sh_mobile_i2c_data *pd)
 	if (pd->dma_direction == DMA_NONE)
 		return;
 	else if (pd->dma_direction == DMA_FROM_DEVICE)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dmaengine_terminate_sync(pd->dma_rx);
-	else if (pd->dma_direction == DMA_TO_DEVICE)
-		dmaengine_terminate_sync(pd->dma_tx);
-=======
 		dmaengine_terminate_all(pd->dma_rx);
 	else if (pd->dma_direction == DMA_TO_DEVICE)
 		dmaengine_terminate_all(pd->dma_tx);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dmaengine_terminate_sync(pd->dma_rx);
-	else if (pd->dma_direction == DMA_TO_DEVICE)
-		dmaengine_terminate_sync(pd->dma_tx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sh_mobile_i2c_dma_unmap(pd);
 }

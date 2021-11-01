@@ -20,14 +20,6 @@ properties:
       - qcom,ipq8074-apcs-apps-global
       - qcom,msm8916-apcs-kpss-global
       - qcom,msm8939-apcs-kpss-global
-<<<<<<< HEAD
-<<<<<<< HEAD
-      - qcom,msm8953-apcs-kpss-global
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      - qcom,msm8953-apcs-kpss-global
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,msm8994-apcs-kpss-global
       - qcom,msm8996-apcs-hmss-global
       - qcom,msm8998-apcs-hmss-global
@@ -37,14 +29,6 @@ properties:
       - qcom,sdm660-apcs-hmss-global
       - qcom,sdm845-apss-shared
       - qcom,sm6125-apcs-hmss-global
-<<<<<<< HEAD
-<<<<<<< HEAD
-      - qcom,sm6115-apcs-hmss-global
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-      - qcom,sm6115-apcs-hmss-global
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - qcom,sm8150-apss-shared
 
   reg:

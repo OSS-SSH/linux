@@ -14,14 +14,6 @@ config FSCACHE
 config FSCACHE_STATS
 	bool "Gather statistical information on local caching"
 	depends on FSCACHE && PROC_FS
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select NETFS_STATS
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select NETFS_STATS
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This option causes statistical information to be gathered on local
 	  caching and exported through file:
@@ -36,9 +28,6 @@ config FSCACHE_STATS
 
 	  See Documentation/filesystems/caching/fscache.rst for more information.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 config FSCACHE_HISTOGRAM
 	bool "Gather latency information on local caching"
 	depends on FSCACHE && PROC_FS
@@ -56,9 +45,6 @@ config FSCACHE_HISTOGRAM
 
 	  See Documentation/filesystems/caching/fscache.rst for more information.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config FSCACHE_DEBUG
 	bool "Debug FS-Cache"
 	depends on FSCACHE
@@ -68,9 +54,6 @@ config FSCACHE_DEBUG
 	  enabled by setting bits in /sys/modules/fscache/parameter/debug.
 
 	  See Documentation/filesystems/caching/fscache.rst for more information.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 config FSCACHE_OBJECT_LIST
 	bool "Maintain global object list for debugging purposes"
@@ -78,6 +61,3 @@ config FSCACHE_OBJECT_LIST
 	help
 	  Maintain a global list of active fscache objects that can be
 	  retrieved through /proc/fs/fscache/objects for debugging purposes
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

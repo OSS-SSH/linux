@@ -139,27 +139,11 @@ static void *c2c_he_zalloc(size_t size)
 	if (!c2c_he)
 		return NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	c2c_he->cpuset = bitmap_zalloc(c2c.cpus_cnt);
-	if (!c2c_he->cpuset)
-		return NULL;
-
-	c2c_he->nodeset = bitmap_zalloc(c2c.nodes_cnt);
-=======
 	c2c_he->cpuset = bitmap_alloc(c2c.cpus_cnt);
 	if (!c2c_he->cpuset)
 		return NULL;
 
 	c2c_he->nodeset = bitmap_alloc(c2c.nodes_cnt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	c2c_he->cpuset = bitmap_zalloc(c2c.cpus_cnt);
-	if (!c2c_he->cpuset)
-		return NULL;
-
-	c2c_he->nodeset = bitmap_zalloc(c2c.nodes_cnt);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!c2c_he->nodeset)
 		return NULL;
 
@@ -2063,15 +2047,7 @@ static int setup_nodes(struct perf_session *session)
 		struct perf_cpu_map *map = n[node].map;
 		unsigned long *set;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		set = bitmap_zalloc(c2c.cpus_cnt);
-=======
 		set = bitmap_alloc(c2c.cpus_cnt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		set = bitmap_zalloc(c2c.cpus_cnt);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!set)
 			return -ENOMEM;
 
@@ -2814,15 +2790,7 @@ static int perf_c2c__report(int argc, const char **argv)
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	session = perf_session__new(&data, &c2c.tool);
-=======
 	session = perf_session__new(&data, 0, &c2c.tool);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	session = perf_session__new(&data, &c2c.tool);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session)) {
 		err = PTR_ERR(session);
 		pr_debug("Error creating perf session\n");

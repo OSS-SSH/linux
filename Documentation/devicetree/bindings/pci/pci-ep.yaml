@@ -23,22 +23,6 @@ properties:
     default: 1
     maximum: 255
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  max-virtual-functions:
-    description: Array representing the number of virtual functions corresponding to each physical
-      function
-    $ref: /schemas/types.yaml#/definitions/uint8-array
-    minItems: 1
-    maxItems: 255
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   max-link-speed:
     $ref: /schemas/types.yaml#/definitions/uint32
     enum: [ 1, 2, 3, 4 ]

@@ -608,16 +608,6 @@
 				     <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			clocks = <&mstp9_clks R7S72100_CLK_I2C0>;
 			clock-frequency = <100000>;
 			power-domains = <&cpg_clocks>;
@@ -637,16 +627,6 @@
 				     <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 172 IRQ_TYPE_LEVEL_HIGH>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			clocks = <&mstp9_clks R7S72100_CLK_I2C1>;
 			clock-frequency = <100000>;
 			power-domains = <&cpg_clocks>;
@@ -666,16 +646,6 @@
 				     <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 179 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			clocks = <&mstp9_clks R7S72100_CLK_I2C2>;
 			clock-frequency = <100000>;
 			power-domains = <&cpg_clocks>;
@@ -695,16 +665,6 @@
 				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			interrupt-names = "tei", "ri", "ti", "spi", "sti",
-					  "naki", "ali", "tmoi";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			clocks = <&mstp9_clks R7S72100_CLK_I2C3>;
 			clock-frequency = <100000>;
 			power-domains = <&cpg_clocks>;

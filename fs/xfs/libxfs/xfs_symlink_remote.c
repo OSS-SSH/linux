@@ -42,15 +42,7 @@ xfs_symlink_hdr_set(
 {
 	struct xfs_dsymlink_hdr	*dsl = bp->b_addr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_crc(mp))
-=======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_crc(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	memset(dsl, 0, sizeof(struct xfs_dsymlink_hdr));
@@ -59,15 +51,7 @@ xfs_symlink_hdr_set(
 	dsl->sl_bytes = cpu_to_be32(size);
 	uuid_copy(&dsl->sl_uuid, &mp->m_sb.sb_meta_uuid);
 	dsl->sl_owner = cpu_to_be64(ino);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dsl->sl_blkno = cpu_to_be64(xfs_buf_daddr(bp));
-=======
 	dsl->sl_blkno = cpu_to_be64(bp->b_bn);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dsl->sl_blkno = cpu_to_be64(xfs_buf_daddr(bp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bp->b_ops = &xfs_symlink_buf_ops;
 
 	return sizeof(struct xfs_dsymlink_hdr);
@@ -105,29 +89,13 @@ xfs_symlink_verify(
 	struct xfs_mount	*mp = bp->b_mount;
 	struct xfs_dsymlink_hdr	*dsl = bp->b_addr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_crc(mp))
-=======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_crc(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return __this_address;
 	if (!xfs_verify_magic(bp, dsl->sl_magic))
 		return __this_address;
 	if (!uuid_equal(&dsl->sl_uuid, &mp->m_sb.sb_meta_uuid))
 		return __this_address;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_buf_daddr(bp) != be64_to_cpu(dsl->sl_blkno))
-=======
 	if (bp->b_bn != be64_to_cpu(dsl->sl_blkno))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_buf_daddr(bp) != be64_to_cpu(dsl->sl_blkno))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return __this_address;
 	if (be32_to_cpu(dsl->sl_offset) +
 				be32_to_cpu(dsl->sl_bytes) >= XFS_SYMLINK_MAXLEN)
@@ -148,15 +116,7 @@ xfs_symlink_read_verify(
 	xfs_failaddr_t	fa;
 
 	/* no verification of non-crc buffers */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_crc(mp))
-=======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_crc(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (!xfs_buf_verify_cksum(bp, XFS_SYMLINK_CRC_OFF))
@@ -177,15 +137,7 @@ xfs_symlink_write_verify(
 	xfs_failaddr_t		fa;
 
 	/* no verification of non-crc buffers */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_crc(mp))
-=======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_crc(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	fa = xfs_symlink_verify(bp);
@@ -221,15 +173,7 @@ xfs_symlink_local_to_remote(
 
 	xfs_trans_buf_set_type(tp, bp, XFS_BLFT_SYMLINK_BUF);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_crc(mp)) {
-=======
 	if (!xfs_sb_version_hascrc(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_crc(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bp->b_ops = NULL;
 		memcpy(bp->b_addr, ifp->if_u1.if_data, ifp->if_bytes);
 		xfs_trans_log_buf(tp, bp, 0, ifp->if_bytes - 1);

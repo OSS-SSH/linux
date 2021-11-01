@@ -83,16 +83,10 @@ static struct trace_uprobe *to_trace_uprobe(struct dyn_event *ev)
 	for_each_dyn_event(dpos)		\
 		if (is_trace_uprobe(dpos) && (pos = to_trace_uprobe(dpos)))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define SIZEOF_TRACE_UPROBE(n)				\
 	(offsetof(struct trace_uprobe, tp.args) +	\
 	(sizeof(struct probe_arg) * (n)))
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int register_uprobe_event(struct trace_uprobe *tu);
 static int unregister_uprobe_event(struct trace_uprobe *tu);
 
@@ -223,23 +217,9 @@ static unsigned long translate_user_vaddr(unsigned long file_offset)
 
 /* Note that we don't verify it, since the code does not come from user space */
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-process_fetch_insn(struct fetch_insn *code, void *rec, void *dest,
-		   void *base)
-{
-	struct pt_regs *regs = rec;
-=======
 process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs, void *dest,
 		   void *base)
 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-process_fetch_insn(struct fetch_insn *code, void *rec, void *dest,
-		   void *base)
-{
-	struct pt_regs *regs = rec;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long val;
 
 	/* 1st stage: get value from context */
@@ -360,15 +340,7 @@ alloc_trace_uprobe(const char *group, const char *event, int nargs, bool is_ret)
 	struct trace_uprobe *tu;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tu = kzalloc(struct_size(tu, tp.args, nargs), GFP_KERNEL);
-=======
 	tu = kzalloc(SIZEOF_TRACE_UPROBE(nargs), GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tu = kzalloc(struct_size(tu, tp.args, nargs), GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!tu)
 		return ERR_PTR(-ENOMEM);
 
@@ -421,19 +393,6 @@ static int unregister_trace_uprobe(struct trace_uprobe *tu)
 	if (trace_probe_has_sibling(&tu->tp))
 		goto unreg;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* If there's a reference to the dynamic event */
-	if (trace_event_dyn_busy(trace_probe_event_call(&tu->tp)))
-		return -EBUSY;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = unregister_uprobe_event(tu);
 	if (ret)
 		return ret;
@@ -496,15 +455,7 @@ static int append_trace_uprobe(struct trace_uprobe *tu, struct trace_uprobe *to)
 	/* Append to existing event */
 	ret = trace_probe_append(&tu->tp, &to->tp);
 	if (!ret)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dyn_event_add(&tu->devent, trace_probe_event_call(&tu->tp));
-=======
 		dyn_event_add(&tu->devent);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dyn_event_add(&tu->devent, trace_probe_event_call(&tu->tp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -563,33 +514,11 @@ static int register_trace_uprobe(struct trace_uprobe *tu)
 
 	ret = register_uprobe_event(tu);
 	if (ret) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (ret == -EEXIST) {
-			trace_probe_log_set_index(0);
-			trace_probe_log_err(0, EVENT_EXIST);
-		} else
-			pr_warn("Failed to register probe event(%d)\n", ret);
-<<<<<<< HEAD
-		goto end;
-	}
-
-	dyn_event_add(&tu->devent, trace_probe_event_call(&tu->tp));
-=======
 		pr_warn("Failed to register probe event(%d)\n", ret);
 		goto end;
 	}
 
 	dyn_event_add(&tu->devent);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto end;
-	}
-
-	dyn_event_add(&tu->devent, trace_probe_event_call(&tu->tp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 end:
 	mutex_unlock(&event_mutex);
@@ -607,14 +536,6 @@ static int __trace_uprobe_create(int argc, const char **argv)
 	const char *event = NULL, *group = UPROBE_EVENT_SYSTEM;
 	char *arg, *filename, *rctr, *rctr_end, *tmp;
 	char buf[MAX_EVENT_NAME_LEN];
-<<<<<<< HEAD
-<<<<<<< HEAD
-	enum probe_print_type ptype;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	enum probe_print_type ptype;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct path path;
 	unsigned long offset, ref_ctr_offset;
 	bool is_return = false;
@@ -759,43 +680,21 @@ static int __trace_uprobe_create(int argc, const char **argv)
 
 	/* parse arguments */
 	for (i = 0; i < argc && i < MAX_TRACE_ARGS; i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		trace_probe_log_set_index(i + 2);
-		ret = traceprobe_parse_probe_arg(&tu->tp, i, argv[i],
-					is_return ? TPARG_FL_RETURN : 0);
-=======
 		tmp = kstrdup(argv[i], GFP_KERNEL);
 		if (!tmp) {
 			ret = -ENOMEM;
 			goto error;
 		}
 
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		trace_probe_log_set_index(i + 2);
-		ret = traceprobe_parse_probe_arg(&tu->tp, i, argv[i],
+		ret = traceprobe_parse_probe_arg(&tu->tp, i, tmp,
 					is_return ? TPARG_FL_RETURN : 0);
-<<<<<<< HEAD
 		kfree(tmp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			goto error;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ptype = is_ret_probe(tu) ? PROBE_PRINT_RETURN : PROBE_PRINT_NORMAL;
-	ret = traceprobe_set_print_fmt(&tu->tp, ptype);
-=======
 	ret = traceprobe_set_print_fmt(&tu->tp, is_ret_probe(tu));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ptype = is_ret_probe(tu) ? PROBE_PRINT_RETURN : PROBE_PRINT_NORMAL;
-	ret = traceprobe_set_print_fmt(&tu->tp, ptype);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		goto error;
 
@@ -1686,14 +1585,6 @@ struct trace_event_call *
 create_local_trace_uprobe(char *name, unsigned long offs,
 			  unsigned long ref_ctr_offset, bool is_return)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	enum probe_print_type ptype;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	enum probe_print_type ptype;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct trace_uprobe *tu;
 	struct path path;
 	int ret;
@@ -1728,17 +1619,7 @@ create_local_trace_uprobe(char *name, unsigned long offs,
 	tu->filename = kstrdup(name, GFP_KERNEL);
 	init_trace_event_call(tu);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ptype = is_ret_probe(tu) ? PROBE_PRINT_RETURN : PROBE_PRINT_NORMAL;
-	if (traceprobe_set_print_fmt(&tu->tp, ptype) < 0) {
-=======
 	if (traceprobe_set_print_fmt(&tu->tp, is_ret_probe(tu)) < 0) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ptype = is_ret_probe(tu) ? PROBE_PRINT_RETURN : PROBE_PRINT_NORMAL;
-	if (traceprobe_set_print_fmt(&tu->tp, ptype) < 0) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -ENOMEM;
 		goto error;
 	}

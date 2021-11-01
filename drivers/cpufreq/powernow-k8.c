@@ -1180,15 +1180,7 @@ static int powernowk8_init(void)
 	if (!x86_match_cpu(powernow_k8_ids))
 		return -ENODEV;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-=======
 	get_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_online_cpu(i) {
 		smp_call_function_single(i, check_supported_cpu, &ret, 1);
 		if (!ret)
@@ -1196,24 +1188,10 @@ static int powernowk8_init(void)
 	}
 
 	if (supported_cpus != num_online_cpus()) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		cpus_read_unlock();
-		return -ENODEV;
-	}
-	cpus_read_unlock();
-=======
 		put_online_cpus();
 		return -ENODEV;
 	}
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		cpus_read_unlock();
-		return -ENODEV;
-	}
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = cpufreq_register_driver(&cpufreq_amd64_driver);
 	if (ret)

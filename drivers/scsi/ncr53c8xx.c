@@ -1453,17 +1453,11 @@ struct head {
 #define  xerr_status   phys.xerr_st
 #define  nego_status   phys.nego_st
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0
 #define  sync_status   phys.sync_st
 #define  wide_status   phys.wide_st
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*==========================================================
 **
 **      Declaration of structs:     Data structure block
@@ -1950,21 +1944,11 @@ static	void	ncr_start_next_ccb (struct ncb *np, struct lcb * lp, int maxn);
 static	void	ncr_put_start_queue(struct ncb *np, struct ccb *cp);
 
 static void insert_into_waiting_list(struct ncb *np, struct scsi_cmnd *cmd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void process_waiting_list(struct ncb *np, int sts);
-
-=======
 static struct scsi_cmnd *retrieve_from_waiting_list(int to_remove, struct ncb *np, struct scsi_cmnd *cmd);
 static void process_waiting_list(struct ncb *np, int sts);
 
 #define remove_from_waiting_list(np, cmd) \
 		retrieve_from_waiting_list(1, (np), (cmd))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void process_waiting_list(struct ncb *np, int sts);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define requeue_waiting_list(np) process_waiting_list((np), DID_OK)
 #define reset_waiting_list(np) process_waiting_list((np), DID_RESET)
 
@@ -1996,15 +1980,9 @@ static inline char *ncr_name (struct ncb *np)
 #define	RELOC_SOFTC	0x40000000
 #define	RELOC_LABEL	0x50000000
 #define	RELOC_REGISTER	0x60000000
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0
 #define	RELOC_KVAR	0x70000000
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define	RELOC_LABELH	0x80000000
 #define	RELOC_MASK	0xf0000000
 
@@ -2013,10 +1991,6 @@ static inline char *ncr_name (struct ncb *np)
 #define PADDRH(label)   (RELOC_LABELH | offsetof(struct scripth, label))
 #define	RADDR(label)	(RELOC_REGISTER | REG(label))
 #define	FADDR(label,ofs)(RELOC_REGISTER | ((REG(label))+(ofs)))
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
 #if 0
 #define	KVAR(which)	(RELOC_KVAR | (which))
 #endif
@@ -2032,10 +2006,6 @@ static inline char *ncr_name (struct ncb *np)
 static void *script_kvars[] __initdata =
 	{ (void *)&jiffies };
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static	struct script script0 __initdata = {
 /*--------------------------< START >-----------------------*/ {
@@ -2192,17 +2162,11 @@ static	struct script script0 __initdata = {
 	SCR_COPY (1),
 		RADDR (scratcha),
 		NADDR (msgout),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0
 	SCR_COPY (1),
 		RADDR (scratcha),
 		NADDR (msgin),
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	**	Anticipate the COMMAND phase.
 	**	This is the normal case for initial selection.
@@ -4200,18 +4164,8 @@ static int ncr_queue_command (struct ncb *np, struct scsi_cmnd *cmd)
 	**
 	**----------------------------------------------------
 	*/
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (np->settle_time && scsi_cmd_to_rq(cmd)->timeout >= HZ) {
-		u_long tlimit = jiffies + scsi_cmd_to_rq(cmd)->timeout - HZ;
-=======
 	if (np->settle_time && cmd->request->timeout >= HZ) {
 		u_long tlimit = jiffies + cmd->request->timeout - HZ;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (np->settle_time && scsi_cmd_to_rq(cmd)->timeout >= HZ) {
-		u_long tlimit = jiffies + scsi_cmd_to_rq(cmd)->timeout - HZ;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (time_after(np->settle_time, tlimit))
 			np->settle_time = tlimit;
 	}
@@ -4424,16 +4378,10 @@ static int ncr_queue_command (struct ncb *np, struct scsi_cmnd *cmd)
 	cp->parity_status		= 0;
 
 	cp->xerr_status			= XE_OK;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0
 	cp->sync_status			= tp->sval;
 	cp->wide_status			= tp->wval;
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*----------------------------------------------------
 	**
@@ -4605,22 +4553,12 @@ static void ncr_start_reset(struct ncb *np)
 **
 **==========================================================
 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int ncr_reset_bus (struct ncb *np)
-{
-=======
 static int ncr_reset_bus (struct ncb *np, struct scsi_cmnd *cmd, int sync_reset)
 {
 /*	struct scsi_device        *device    = cmd->device; */
 	struct ccb *cp;
 	int found;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int ncr_reset_bus (struct ncb *np)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Return immediately if reset is in progress.
  */
@@ -4635,9 +4573,6 @@ static int ncr_reset_bus (struct ncb *np)
  */
 	ncr_start_reset(np);
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * First, look in the wakeup list
  */
 	for (found=0, cp=np->ccb; cp; cp=cp->link_ccb) {
@@ -4656,9 +4591,6 @@ static int ncr_reset_bus (struct ncb *np)
 	if (!found && retrieve_from_waiting_list(0, np, cmd))
 		found = 1;
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Wake-up all awaiting commands with DID_RESET.
  */
 	reset_waiting_list(np);
@@ -4666,9 +4598,6 @@ static int ncr_reset_bus (struct ncb *np)
  * Wake-up all pending commands with HS_RESET -> DID_RESET.
  */
 	ncr_wakeup(np, HS_RESET);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*
  * If the involved command was not in a driver queue, and the 
  * scsi driver told us reset is synchronous, and the command is not 
@@ -4679,16 +4608,10 @@ static int ncr_reset_bus (struct ncb *np)
 		set_host_byte(cmd, DID_RESET);
 		ncr_queue_done_cmd(np, cmd);
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return SUCCESS;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0 /* unused and broken.. */
 /*==========================================================
 **
@@ -4772,9 +4695,6 @@ static int ncr_abort_command (struct ncb *np, struct scsi_cmnd *cmd)
 }
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ncr_detach(struct ncb *np)
 {
 	struct ccb *cp;
@@ -5533,9 +5453,6 @@ static void ncr_getsync(struct ncb *np, u_char sfac, u_char *fakp, u_char *scntl
 	*/
 	fak = (kpc - 1) / div_10M[div] + 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0	/* This optimization does not seem very useful */
 
 	per = (fak * div_10M[div]) / clk;
@@ -5557,9 +5474,6 @@ static void ncr_getsync(struct ncb *np, u_char sfac, u_char *fakp, u_char *scntl
 	}
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fak < 4) fak = 4;	/* Should never happen, too bad ... */
 
 	/*
@@ -5597,16 +5511,10 @@ static void ncr_set_sync_wide_status (struct ncb *np, u_char target)
 	for (cp = np->ccb; cp; cp = cp->link_ccb) {
 		if (!cp->cmd) continue;
 		if (scmd_id(cp->cmd) != target) continue;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0
 		cp->sync_status = tp->sval;
 		cp->wide_status = tp->wval;
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cp->phys.select.sel_scntl3 = tp->wval;
 		cp->phys.select.sel_sxfer  = tp->sval;
 	}
@@ -8217,15 +8125,7 @@ static int ncr53c8xx_bus_reset(struct scsi_cmnd *cmd)
 	 */
 
 	spin_lock_irqsave(&np->smp_lock, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sts = ncr_reset_bus(np);
-=======
 	sts = ncr_reset_bus(np, cmd, 1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sts = ncr_reset_bus(np);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	done_list     = np->done_list;
 	np->done_list = NULL;
@@ -8236,9 +8136,6 @@ static int ncr53c8xx_bus_reset(struct scsi_cmnd *cmd)
 	return sts;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if 0 /* unused and broken */
 static int ncr53c8xx_abort(struct scsi_cmnd *cmd)
 {
@@ -8263,9 +8160,6 @@ out:
 }
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
 **	Scsi command waiting list management.
@@ -8298,9 +8192,6 @@ static void insert_into_waiting_list(struct ncb *np, struct scsi_cmnd *cmd)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static struct scsi_cmnd *retrieve_from_waiting_list(int to_remove, struct ncb *np, struct scsi_cmnd *cmd)
 {
 	struct scsi_cmnd **pcmd = &np->waiting_list;
@@ -8321,9 +8212,6 @@ static struct scsi_cmnd *retrieve_from_waiting_list(int to_remove, struct ncb *n
 	return NULL;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void process_waiting_list(struct ncb *np, int sts)
 {
 	struct scsi_cmnd *waiting_list, *wcmd;

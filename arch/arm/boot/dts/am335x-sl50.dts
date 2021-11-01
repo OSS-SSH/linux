@@ -661,55 +661,20 @@
 	};
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-&cpsw_port1 {
-	phy-mode = "mii";
-	phy-handle = <&ethphy0>;
-	ti,dual-emac-pvid = <1>;
-};
-
-&cpsw_port2 {
-	status = "disabled";
-};
-
-&mac_sw {
-=======
 &cpsw_emac0 {
-=======
-&cpsw_port1 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-mode = "mii";
 	phy-handle = <&ethphy0>;
-	ti,dual-emac-pvid = <1>;
 };
 
-<<<<<<< HEAD
 &mac {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-&cpsw_port2 {
-	status = "disabled";
-};
-
-&mac_sw {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&cpsw_default>;
 	pinctrl-1 = <&cpsw_sleep>;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-&davinci_mdio_sw {
-=======
 &davinci_mdio {
 	status = "okay";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-&davinci_mdio_sw {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&davinci_mdio_default>;
 	pinctrl-1 = <&davinci_mdio_sleep>;

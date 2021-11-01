@@ -41,34 +41,20 @@ static inline long do_mmap2(unsigned long addr, size_t len,
 			unsigned long prot, unsigned long flags,
 			unsigned long fd, unsigned long off, int shift)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!arch_validate_prot(prot, addr))
-		return -EINVAL;
-
-	if (!IS_ALIGNED(off, 1 << shift))
-		return -EINVAL;
-
-	return ksys_mmap_pgoff(addr, len, prot, flags, fd, off >> shift);
-=======
 	long ret = -EINVAL;
 
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!arch_validate_prot(prot, addr))
-		return -EINVAL;
+		goto out;
 
-	if (!IS_ALIGNED(off, 1 << shift))
-		return -EINVAL;
+	if (shift) {
+		if (off & ((1 << shift) - 1))
+			goto out;
+		off >>= shift;
+	}
 
-<<<<<<< HEAD
 	ret = ksys_mmap_pgoff(addr, len, prot, flags, fd, off);
 out:
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return ksys_mmap_pgoff(addr, len, prot, flags, fd, off >> shift);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 SYSCALL_DEFINE6(mmap2, unsigned long, addr, size_t, len,

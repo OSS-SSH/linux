@@ -1,14 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Device Tree Source for the Ebisu board with R-Car E3
-=======
  * Device Tree Source for the ebisu board
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Device Tree Source for the Ebisu board with R-Car E3
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2018 Renesas Electronics Corp.
  */
@@ -16,14 +8,6 @@
 /dts-v1/;
 #include "r8a77990.dtsi"
 #include <dt-bindings/gpio/gpio.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <dt-bindings/input/input.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <dt-bindings/input/input.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 / {
 	model = "Renesas Ebisu board based on r8a77990";
@@ -96,51 +80,6 @@
 		};
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	keys {
-		compatible = "gpio-keys";
-
-		pinctrl-0 = <&keys_pins>;
-		pinctrl-names = "default";
-
-		key-1 {
-			gpios = <&gpio5 10 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_1>;
-			label = "SW4-1";
-			wakeup-source;
-			debounce-interval = <20>;
-		};
-		key-2 {
-			gpios = <&gpio5 11 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_2>;
-			label = "SW4-2";
-			wakeup-source;
-			debounce-interval = <20>;
-		};
-		key-3 {
-			gpios = <&gpio5 12 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_3>;
-			label = "SW4-3";
-			wakeup-source;
-			debounce-interval = <20>;
-		};
-		key-4 {
-			gpios = <&gpio5 13 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_4>;
-			label = "SW4-4";
-			wakeup-source;
-			debounce-interval = <20>;
-		};
-	};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lvds-decoder {
 		compatible = "thine,thc63lvd1024";
 		vcc-supply = <&reg_3p3v>;
@@ -534,21 +473,6 @@
 		rohm,ddr-backup-power = <0x1>;
 		rohm,rstbmode-level;
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	eeprom@50 {
-		compatible = "rohm,br24t01", "atmel,24c01";
-		reg = <0x50>;
-		pagesize = <8>;
-	};
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &lvds0 {
@@ -616,20 +540,6 @@
 		function = "intc_ex";
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	keys_pins: keys {
-		pins = "GP_5_10", "GP_5_11", "GP_5_12", "GP_5_13";
-		bias-pull-up;
-	};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pwm3_pins: pwm3 {
 		groups = "pwm3_b";
 		function = "pwm3";

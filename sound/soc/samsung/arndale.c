@@ -48,15 +48,7 @@ static int arndale_rt5631_hw_params(struct snd_pcm_substream *substream,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct snd_soc_ops arndale_rt5631_ops = {
-=======
 static struct snd_soc_ops arndale_rt5631_ops = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct snd_soc_ops arndale_rt5631_ops = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.hw_params = arndale_rt5631_hw_params,
 };
 
@@ -88,15 +80,7 @@ static int arndale_wm1811_hw_params(struct snd_pcm_substream *substream,
 					rclk + 1, SND_SOC_CLOCK_IN);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct snd_soc_ops arndale_wm1811_ops = {
-=======
 static struct snd_soc_ops arndale_wm1811_ops = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct snd_soc_ops arndale_wm1811_ops = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.hw_params = arndale_wm1811_hw_params,
 };
 

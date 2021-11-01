@@ -134,21 +134,9 @@ enum stm32_lptim_cnt_function {
 	STM32_LPTIM_ENCODER_BOTH_EDGE,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const enum counter_function stm32_lptim_cnt_functions[] = {
-	[STM32_LPTIM_COUNTER_INCREASE] = COUNTER_FUNCTION_INCREASE,
-	[STM32_LPTIM_ENCODER_BOTH_EDGE] = COUNTER_FUNCTION_QUADRATURE_X4,
-=======
 static const enum counter_count_function stm32_lptim_cnt_functions[] = {
 	[STM32_LPTIM_COUNTER_INCREASE] = COUNTER_COUNT_FUNCTION_INCREASE,
 	[STM32_LPTIM_ENCODER_BOTH_EDGE] = COUNTER_COUNT_FUNCTION_QUADRATURE_X4,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const enum counter_function stm32_lptim_cnt_functions[] = {
-	[STM32_LPTIM_COUNTER_INCREASE] = COUNTER_FUNCTION_INCREASE,
-	[STM32_LPTIM_ENCODER_BOTH_EDGE] = COUNTER_FUNCTION_QUADRATURE_X4,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum stm32_lptim_synapse_action {
@@ -218,23 +206,9 @@ static int stm32_lptim_cnt_function_set(struct counter_device *counter,
 		priv->quadrature_mode = 1;
 		priv->polarity = STM32_LPTIM_SYNAPSE_ACTION_BOTH_EDGES;
 		return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	default:
-		/* should never reach this path */
-		return -EINVAL;
-	}
-=======
 	}
 
 	return -EINVAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	default:
-		/* should never reach this path */
-		return -EINVAL;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t stm32_lptim_cnt_enable_read(struct counter_device *counter,
@@ -308,15 +282,7 @@ static ssize_t stm32_lptim_cnt_ceiling_write(struct counter_device *counter,
 		return ret;
 
 	if (ceiling > STM32_LPTIM_MAX_ARR)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -ERANGE;
-=======
 		return -EINVAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -ERANGE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	priv->ceiling = ceiling;
 
@@ -360,23 +326,9 @@ static int stm32_lptim_cnt_action_get(struct counter_device *counter,
 	case STM32_LPTIM_ENCODER_BOTH_EDGE:
 		*action = priv->polarity;
 		return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	default:
-		/* should never reach this path */
-		return -EINVAL;
-	}
-=======
 	}
 
 	return -EINVAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	default:
-		/* should never reach this path */
-		return -EINVAL;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int stm32_lptim_cnt_action_set(struct counter_device *counter,

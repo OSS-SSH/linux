@@ -1742,15 +1742,7 @@ xpc_init_mq_node(int nid)
 {
 	int cpu;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-=======
 	get_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for_each_cpu(cpu, cpumask_of_node(nid)) {
 		xpc_activate_mq_uv =
@@ -1761,15 +1753,7 @@ xpc_init_mq_node(int nid)
 			break;
 	}
 	if (IS_ERR(xpc_activate_mq_uv)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		cpus_read_unlock();
-=======
 		put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return PTR_ERR(xpc_activate_mq_uv);
 	}
 
@@ -1783,27 +1767,11 @@ xpc_init_mq_node(int nid)
 	}
 	if (IS_ERR(xpc_notify_mq_uv)) {
 		xpc_destroy_gru_mq_uv(xpc_activate_mq_uv);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		cpus_read_unlock();
-		return PTR_ERR(xpc_notify_mq_uv);
-	}
-
-	cpus_read_unlock();
-=======
 		put_online_cpus();
 		return PTR_ERR(xpc_notify_mq_uv);
 	}
 
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		cpus_read_unlock();
-		return PTR_ERR(xpc_notify_mq_uv);
-	}
-
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

@@ -338,14 +338,6 @@ static const struct of_device_id pruss_of_match[] = {
 	{ .compatible = "ti,k2g-pruss" },
 	{ .compatible = "ti,am654-icssg", .data = &am65x_j721e_pruss_data, },
 	{ .compatible = "ti,j721e-icssg", .data = &am65x_j721e_pruss_data, },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "ti,am642-icssg", .data = &am65x_j721e_pruss_data, },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "ti,am642-icssg", .data = &am65x_j721e_pruss_data, },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{},
 };
 MODULE_DEVICE_TABLE(of, pruss_of_match);

@@ -45,14 +45,6 @@ enum vm_guest_mode {
 	VM_MODE_P40V48_64K,
 	VM_MODE_PXXV48_4K,	/* For 48bits VA but ANY bits PA */
 	VM_MODE_P47V64_4K,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	VM_MODE_P44V64_4K,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	VM_MODE_P44V64_4K,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NUM_VM_MODES,
 };
 
@@ -70,15 +62,7 @@ enum vm_guest_mode {
 
 #elif defined(__s390x__)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define VM_MODE_DEFAULT			VM_MODE_P44V64_4K
-=======
 #define VM_MODE_DEFAULT			VM_MODE_P47V64_4K
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define VM_MODE_DEFAULT			VM_MODE_P44V64_4K
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MIN_PAGE_SHIFT			12U
 #define ptes_per_page(page_size)	((page_size) / 16)
 

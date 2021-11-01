@@ -4,18 +4,6 @@
 ##############################################################################
 # Defines
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Kselftest framework requirement - SKIP code is 4.
-ksft_skip=4
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-# Kselftest framework requirement - SKIP code is 4.
-ksft_skip=4
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # Can be overridden by the configuration file.
 PING=${PING:=ping}
 PING6=${PING6:=ping6}
@@ -50,15 +38,7 @@ check_tc_version()
 	tc -j &> /dev/null
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: iproute2 too old; tc is missing JSON support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		exit $ksft_skip
-=======
 		exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 }
 
@@ -71,15 +51,7 @@ check_tc_mpls_support()
 		matchall action pipe &> /dev/null
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: iproute2 too old; tc is missing MPLS support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return $ksft_skip
-=======
 		return 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 	tc filter del dev $dev ingress protocol mpls_uc pref 1 handle 1 \
 		matchall
@@ -97,15 +69,7 @@ check_tc_mpls_lse_stats()
 
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: iproute2 too old; tc-flower is missing extended MPLS support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return $ksft_skip
-=======
 		return 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 
 	tc -j filter show dev $dev ingress protocol mpls_uc | jq . &> /dev/null
@@ -115,15 +79,7 @@ check_tc_mpls_lse_stats()
 
 	if [[ $ret -ne 0 ]]; then
 		echo "SKIP: iproute2 too old; tc-flower produces invalid json output for extended MPLS filters"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return $ksft_skip
-=======
 		return 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 }
 
@@ -132,15 +88,7 @@ check_tc_shblock_support()
 	tc filter help 2>&1 | grep block &> /dev/null
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: iproute2 too old; tc is missing shared block support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		exit $ksft_skip
-=======
 		exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 }
 
@@ -149,15 +97,7 @@ check_tc_chain_support()
 	tc help 2>&1|grep chain &> /dev/null
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: iproute2 too old; tc is missing chain support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		exit $ksft_skip
-=======
 		exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 }
 
@@ -166,15 +106,7 @@ check_tc_action_hw_stats_support()
 	tc actions help 2>&1 | grep -q hw_stats
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: iproute2 too old; tc is missing action hw_stats support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		exit $ksft_skip
-=======
 		exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 }
 
@@ -183,29 +115,13 @@ check_ethtool_lanes_support()
 	ethtool --help 2>&1| grep lanes &> /dev/null
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: ethtool too old; it is missing lanes support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		exit $ksft_skip
-=======
 		exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 }
 
 if [[ "$(id -u)" -ne 0 ]]; then
 	echo "SKIP: need root privileges"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	exit $ksft_skip
-=======
 	exit 0
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 if [[ "$CHECK_TC" = "yes" ]]; then
@@ -218,15 +134,7 @@ require_command()
 
 	if [[ ! -x "$(command -v "$cmd")" ]]; then
 		echo "SKIP: $cmd not installed"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		exit $ksft_skip
-=======
 		exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 }
 
@@ -235,15 +143,7 @@ require_command $MZ
 
 if [[ ! -v NUM_NETIFS ]]; then
 	echo "SKIP: importer does not define \"NUM_NETIFS\""
-<<<<<<< HEAD
-<<<<<<< HEAD
-	exit $ksft_skip
-=======
 	exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 ##############################################################################
@@ -303,15 +203,7 @@ for ((i = 1; i <= NUM_NETIFS; ++i)); do
 	ip link show dev ${NETIFS[p$i]} &> /dev/null
 	if [[ $? -ne 0 ]]; then
 		echo "SKIP: could not find all required interfaces"
-<<<<<<< HEAD
-<<<<<<< HEAD
-		exit $ksft_skip
-=======
 		exit 1
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		exit $ksft_skip
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fi
 done
 

@@ -116,15 +116,7 @@ config RESET_LPC18XX
 
 config RESET_MCHP_SPARX5
 	bool "Microchip Sparx5 reset driver"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on ARCH_SPARX5 || COMPILE_TEST
-=======
 	depends on HAS_IOMEM || COMPILE_TEST
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on ARCH_SPARX5 || COMPILE_TEST
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default y if SPARX5_SWITCH
 	select MFD_SYSCON
 	help
@@ -189,22 +181,6 @@ config RESET_RASPBERRYPI
 	  interfacing with RPi4's co-processor and model these firmware
 	  initialization routines as reset lines.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-config RESET_RZG2L_USBPHY_CTRL
-	tristate "Renesas RZ/G2L USBPHY control driver"
-	depends on ARCH_R9A07G044 || COMPILE_TEST
-	help
-	  Support for USBPHY Control found on RZ/G2L family. It mainly
-	  controls reset and power down of the USB/PHY.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config RESET_SCMI
 	tristate "Reset driver controlled via ARM SCMI interface"
 	depends on ARM_SCMI_PROTOCOL || COMPILE_TEST
@@ -231,13 +207,7 @@ config RESET_SIMPLE
 	   - Realtek SoCs
 	   - RCC reset controller in STM32 MCUs
 	   - Allwinner SoCs
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	   - ZTE's zx2967 family
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	   - SiFive FU740 SoCs
 
 config RESET_SOCFPGA

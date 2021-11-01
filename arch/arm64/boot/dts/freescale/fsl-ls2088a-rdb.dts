@@ -92,53 +92,21 @@
 
 	mdio2_phy1: ethernet-phy@0 {
 		compatible = "ethernet-phy-id03a1.b4b0", "ethernet-phy-ieee802.3-c45";
-<<<<<<< HEAD
-<<<<<<< HEAD
-		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x0>;
 	};
 
 	mdio2_phy2: ethernet-phy@1 {
 		compatible = "ethernet-phy-id03a1.b4b0", "ethernet-phy-ieee802.3-c45";
-<<<<<<< HEAD
-<<<<<<< HEAD
-		interrupts-extended = <&extirq 2 IRQ_TYPE_LEVEL_LOW>;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		interrupts-extended = <&extirq 2 IRQ_TYPE_LEVEL_LOW>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x1>;
 	};
 
 	mdio2_phy3: ethernet-phy@2 {
 		compatible = "ethernet-phy-id03a1.b4b0", "ethernet-phy-ieee802.3-c45";
-<<<<<<< HEAD
-<<<<<<< HEAD
-		interrupts-extended = <&extirq 4 IRQ_TYPE_LEVEL_LOW>;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		interrupts-extended = <&extirq 4 IRQ_TYPE_LEVEL_LOW>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x2>;
 	};
 
 	mdio2_phy4: ethernet-phy@3 {
 		compatible = "ethernet-phy-id03a1.b4b0", "ethernet-phy-ieee802.3-c45";
-<<<<<<< HEAD
-<<<<<<< HEAD
-		interrupts-extended = <&extirq 5 IRQ_TYPE_LEVEL_LOW>;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		interrupts-extended = <&extirq 5 IRQ_TYPE_LEVEL_LOW>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0x3>;
 	};
 };

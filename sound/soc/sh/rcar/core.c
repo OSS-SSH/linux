@@ -426,43 +426,19 @@ u32 rsnd_get_dalign(struct rsnd_mod *mod, struct rsnd_dai_stream *io)
 
 u32 rsnd_get_busif_shift(struct rsnd_dai_stream *io, struct rsnd_mod *mod)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const enum rsnd_mod_type playback_mods[] = {
-=======
 	enum rsnd_mod_type playback_mods[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const enum rsnd_mod_type playback_mods[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		RSND_MOD_SRC,
 		RSND_MOD_CMD,
 		RSND_MOD_SSIU,
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const enum rsnd_mod_type capture_mods[] = {
-=======
 	enum rsnd_mod_type capture_mods[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const enum rsnd_mod_type capture_mods[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		RSND_MOD_CMD,
 		RSND_MOD_SRC,
 		RSND_MOD_SSIU,
 	};
 	struct snd_pcm_runtime *runtime = rsnd_io_to_runtime(io);
 	struct rsnd_mod *tmod = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const enum rsnd_mod_type *mods =
-=======
 	enum rsnd_mod_type *mods =
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const enum rsnd_mod_type *mods =
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rsnd_io_is_play(io) ?
 		playback_mods : capture_mods;
 	int i;

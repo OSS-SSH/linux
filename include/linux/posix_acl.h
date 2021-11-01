@@ -72,16 +72,6 @@ extern struct posix_acl *get_posix_acl(struct inode *, int);
 extern int set_posix_acl(struct user_namespace *, struct inode *, int,
 			 struct posix_acl *);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct posix_acl *get_cached_acl_rcu(struct inode *inode, int type);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct posix_acl *get_cached_acl_rcu(struct inode *inode, int type);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_FS_POSIX_ACL
 int posix_acl_chmod(struct user_namespace *, struct inode *, umode_t);
 extern int posix_acl_create(struct inode *, umode_t *, struct posix_acl **,
@@ -94,13 +84,7 @@ extern int simple_set_acl(struct user_namespace *, struct inode *,
 extern int simple_acl_create(struct inode *, struct inode *);
 
 struct posix_acl *get_cached_acl(struct inode *inode, int type);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 struct posix_acl *get_cached_acl_rcu(struct inode *inode, int type);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void set_cached_acl(struct inode *inode, int type, struct posix_acl *acl);
 void forget_cached_acl(struct inode *inode, int type);
 void forget_all_cached_acls(struct inode *inode);

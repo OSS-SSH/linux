@@ -18,15 +18,7 @@
 #include <linux/platform_device.h>
 #include <linux/input.h>
 #include <linux/i2c.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/gpio/driver.h>
-=======
 #include <linux/gpio.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/gpio/driver.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 
 #include <linux/input/adp5589.h>

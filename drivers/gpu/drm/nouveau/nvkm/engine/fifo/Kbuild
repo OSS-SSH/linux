@@ -18,14 +18,6 @@ nvkm-y += nvkm/engine/fifo/gp100.o
 nvkm-y += nvkm/engine/fifo/gp10b.o
 nvkm-y += nvkm/engine/fifo/gv100.o
 nvkm-y += nvkm/engine/fifo/tu102.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-nvkm-y += nvkm/engine/fifo/ga102.o
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-nvkm-y += nvkm/engine/fifo/ga102.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 nvkm-y += nvkm/engine/fifo/chan.o
 nvkm-y += nvkm/engine/fifo/channv50.o
@@ -35,14 +27,8 @@ nvkm-y += nvkm/engine/fifo/dmanv04.o
 nvkm-y += nvkm/engine/fifo/dmanv10.o
 nvkm-y += nvkm/engine/fifo/dmanv17.o
 nvkm-y += nvkm/engine/fifo/dmanv40.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 nvkm-y += nvkm/engine/fifo/dmanv50.o
 nvkm-y += nvkm/engine/fifo/dmag84.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 nvkm-y += nvkm/engine/fifo/gpfifonv50.o
 nvkm-y += nvkm/engine/fifo/gpfifog84.o

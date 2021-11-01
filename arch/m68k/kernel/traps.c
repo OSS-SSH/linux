@@ -181,19 +181,9 @@ static inline void access_error060 (struct frame *fp)
 static inline unsigned long probe040(int iswrite, unsigned long addr, int wbs)
 {
 	unsigned long mmusr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	set_fc(wbs);
-=======
 	mm_segment_t old_fs = get_fs();
 
 	set_fs(MAKE_MM_SEG(wbs));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	set_fc(wbs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (iswrite)
 		asm volatile (".chip 68040; ptestw (%0); .chip 68k" : : "a" (addr));
@@ -202,15 +192,7 @@ static inline unsigned long probe040(int iswrite, unsigned long addr, int wbs)
 
 	asm volatile (".chip 68040; movec %%mmusr,%0; .chip 68k" : "=r" (mmusr));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	set_fc(USER_DATA);
-=======
 	set_fs(old_fs);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	set_fc(USER_DATA);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return mmusr;
 }
@@ -219,20 +201,10 @@ static inline int do_040writeback1(unsigned short wbs, unsigned long wba,
 				   unsigned long wbd)
 {
 	int res = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	set_fc(wbs);
-=======
 	mm_segment_t old_fs = get_fs();
 
 	/* set_fs can not be moved, otherwise put_user() may oops */
 	set_fs(MAKE_MM_SEG(wbs));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	set_fc(wbs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (wbs & WBSIZ_040) {
 	case BA_SIZE_BYTE:
@@ -246,17 +218,9 @@ static inline int do_040writeback1(unsigned short wbs, unsigned long wba,
 		break;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	set_fc(USER_DATA);
-=======
 	/* set_fs can not be moved, otherwise put_user() may oops */
 	set_fs(old_fs);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	set_fc(USER_DATA);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("do_040writeback1, res=%d\n", res);
 
@@ -1186,15 +1150,7 @@ asmlinkage void set_esp0(unsigned long ssp)
  */
 asmlinkage void fpsp040_die(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	force_sigsegv(SIGSEGV);
-=======
 	do_exit(SIGSEGV);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	force_sigsegv(SIGSEGV);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_M68KFPU_EMU

@@ -264,15 +264,9 @@ struct w83792d_data {
 	char valid;		/* !=0 if following fields are valid */
 	unsigned long last_updated;	/* In jiffies */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* array of 2 pointers to subclients */
 	struct i2c_client *lm75[2];
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 in[9];		/* Register value */
 	u8 in_max[9];		/* Register value */
 	u8 in_min[9];		/* Register value */
@@ -933,13 +927,7 @@ w83792d_detect_subclients(struct i2c_client *new_client)
 	int address = new_client->addr;
 	u8 val;
 	struct i2c_adapter *adapter = new_client->adapter;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct w83792d_data *data = i2c_get_clientdata(new_client);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	id = i2c_adapter_id(adapter);
 	if (force_subclients[0] == id && force_subclients[1] == address) {
@@ -958,24 +946,6 @@ w83792d_detect_subclients(struct i2c_client *new_client)
 	}
 
 	val = w83792d_read_value(new_client, W83792D_REG_I2C_SUBADDR);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (!(val & 0x88) && (val & 0x7) == ((val >> 4) & 0x7)) {
-		dev_err(&new_client->dev,
-			"duplicate addresses 0x%x, use force_subclient\n", 0x48 + (val & 0x7));
-		return -ENODEV;
-<<<<<<< HEAD
-	}
-
-	if (!(val & 0x08))
-		devm_i2c_new_dummy_device(&new_client->dev, adapter, 0x48 + (val & 0x7));
-
-	if (!(val & 0x80))
-		devm_i2c_new_dummy_device(&new_client->dev, adapter, 0x48 + ((val >> 4) & 0x7));
-=======
 	if (!(val & 0x08))
 		data->lm75[0] = devm_i2c_new_dummy_device(&new_client->dev, adapter,
 							  0x48 + (val & 0x7));
@@ -989,16 +959,7 @@ w83792d_detect_subclients(struct i2c_client *new_client)
 		}
 		data->lm75[1] = devm_i2c_new_dummy_device(&new_client->dev, adapter,
 							  0x48 + ((val >> 4) & 0x7));
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-
-	if (!(val & 0x08))
-		devm_i2c_new_dummy_device(&new_client->dev, adapter, 0x48 + (val & 0x7));
-
-	if (!(val & 0x80))
-		devm_i2c_new_dummy_device(&new_client->dev, adapter, 0x48 + ((val >> 4) & 0x7));
 
 	return 0;
 }

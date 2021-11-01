@@ -162,29 +162,6 @@ static const struct dmi_system_id sof_rt5682_quirk_table[] = {
 					SOF_RT5682_SSP_AMP(2) |
 					SOF_RT5682_NUM_HDMIDEV(4)),
 	},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{
-		.callback = sof_rt5682_quirk_cb,
-		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-			DMI_MATCH(DMI_PRODUCT_NAME, "Alder Lake Client Platform"),
-			DMI_MATCH(DMI_OEM_STRING, "AUDIO-ADL_MAX98373_ALC5682I_I2S"),
-		},
-		.driver_data = (void *)(SOF_RT5682_MCLK_EN |
-					SOF_RT5682_SSP_CODEC(0) |
-					SOF_SPEAKER_AMP_PRESENT |
-					SOF_MAX98373_SPEAKER_AMP_PRESENT |
-					SOF_RT5682_SSP_AMP(2) |
-					SOF_RT5682_NUM_HDMIDEV(4)),
-	},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 
@@ -479,16 +456,10 @@ static const struct snd_kcontrol_new sof_controls[] = {
 
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static const struct snd_kcontrol_new speaker_controls[] = {
 	SOC_DAPM_PIN_SWITCH("Spk"),
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct snd_soc_dapm_widget sof_widgets[] = {
 	SND_SOC_DAPM_HP("Headphone Jack", NULL),
 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
@@ -496,16 +467,10 @@ static const struct snd_soc_dapm_widget sof_widgets[] = {
 	SND_SOC_DAPM_SPK("Right Spk", NULL),
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static const struct snd_soc_dapm_widget speaker_widgets[] = {
 	SND_SOC_DAPM_SPK("Spk", NULL),
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct snd_soc_dapm_widget dmic_widgets[] = {
 	SND_SOC_DAPM_MIC("SoC DMIC", NULL),
 };
@@ -519,17 +484,11 @@ static const struct snd_soc_dapm_route sof_map[] = {
 	{ "IN1P", NULL, "Headset Mic" },
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static const struct snd_soc_dapm_route speaker_map[] = {
 	/* speaker */
 	{ "Spk", NULL, "Speaker" },
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct snd_soc_dapm_route speaker_map_lr[] = {
 	{ "Left Spk", NULL, "Left SPO" },
 	{ "Right Spk", NULL, "Right SPO" },
@@ -546,9 +505,6 @@ static int speaker_codec_init_lr(struct snd_soc_pcm_runtime *rtd)
 				       ARRAY_SIZE(speaker_map_lr));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int speaker_codec_init(struct snd_soc_pcm_runtime *rtd)
 {
 	struct snd_soc_card *card = rtd->card;
@@ -577,9 +533,6 @@ static int speaker_codec_init(struct snd_soc_pcm_runtime *rtd)
 	return ret;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dmic_init(struct snd_soc_pcm_runtime *rtd)
 {
 	struct snd_soc_card *card = rtd->card;
@@ -641,9 +594,6 @@ static struct snd_soc_dai_link_component dmic_component[] = {
 	}
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static struct snd_soc_dai_link_component max98360a_component[] = {
 	{
 		.name = "MX98360A:00",
@@ -651,9 +601,6 @@ static struct snd_soc_dai_link_component max98360a_component[] = {
 	}
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct snd_soc_dai_link_component rt1015_components[] = {
 	{
 		.name = "i2c-10EC1015:00",
@@ -828,17 +775,9 @@ static struct snd_soc_dai_link *sof_card_dai_links_create(struct device *dev,
 			links[id].dpcm_capture = 1;
 		} else if (sof_rt5682_quirk &
 				SOF_MAX98360A_SPEAKER_AMP_PRESENT) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			max_98360a_dai_link(&links[id]);
-=======
 			links[id].codecs = max98360a_component;
 			links[id].num_codecs = ARRAY_SIZE(max98360a_component);
 			links[id].init = speaker_codec_init;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			max_98360a_dai_link(&links[id]);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else if (sof_rt5682_quirk &
 				SOF_RT1011_SPEAKER_AMP_PRESENT) {
 			sof_rt1011_dai_link(&links[id]);

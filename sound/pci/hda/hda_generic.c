@@ -3460,15 +3460,7 @@ static int cap_put_caller(struct snd_kcontrol *kcontrol,
 	struct hda_gen_spec *spec = codec->spec;
 	const struct hda_input_mux *imux;
 	struct nid_path *path;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int i, adc_idx, ret, err = 0;
-=======
 	int i, adc_idx, err = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int i, adc_idx, ret, err = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	imux = &spec->input_mux;
 	adc_idx = kcontrol->id.index;
@@ -3478,29 +3470,9 @@ static int cap_put_caller(struct snd_kcontrol *kcontrol,
 		if (!path || !path->ctls[type])
 			continue;
 		kcontrol->private_value = path->ctls[type];
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = func(kcontrol, ucontrol);
-		if (ret < 0) {
-			err = ret;
-			break;
-		}
-		if (ret > 0)
-			err = 1;
-=======
 		err = func(kcontrol, ucontrol);
 		if (err < 0)
 			break;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = func(kcontrol, ucontrol);
-		if (ret < 0) {
-			err = ret;
-			break;
-		}
-		if (ret > 0)
-			err = 1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	mutex_unlock(&codec->control_mutex);
 	if (err >= 0 && spec->cap_sync_hook)
@@ -6028,9 +6000,6 @@ void snd_hda_gen_free(struct hda_codec *codec)
 }
 EXPORT_SYMBOL_GPL(snd_hda_gen_free);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /**
  * snd_hda_gen_reboot_notify - Make codec enter D3 before rebooting
  * @codec: the HDA codec
@@ -6049,9 +6018,6 @@ void snd_hda_gen_reboot_notify(struct hda_codec *codec)
 }
 EXPORT_SYMBOL_GPL(snd_hda_gen_reboot_notify);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 /**
  * snd_hda_gen_check_power_status - check the loopback power save state
@@ -6079,13 +6045,7 @@ static const struct hda_codec_ops generic_patch_ops = {
 	.init = snd_hda_gen_init,
 	.free = snd_hda_gen_free,
 	.unsol_event = snd_hda_jack_unsol_event,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.reboot_notify = snd_hda_gen_reboot_notify,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 	.check_power_status = snd_hda_gen_check_power_status,
 #endif

@@ -49,30 +49,10 @@ enum amdgpu_ras_block {
 	AMDGPU_RAS_BLOCK__MP0,
 	AMDGPU_RAS_BLOCK__MP1,
 	AMDGPU_RAS_BLOCK__FUSE,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	AMDGPU_RAS_BLOCK__MPIO,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	AMDGPU_RAS_BLOCK__MPIO,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	AMDGPU_RAS_BLOCK__LAST
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern const char *ras_block_string[];
-
-#define ras_block_str(i) (ras_block_string[i])
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern const char *ras_block_string[];
-
-#define ras_block_str(i) (ras_block_string[i])
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define AMDGPU_RAS_BLOCK_COUNT	AMDGPU_RAS_BLOCK__LAST
 #define AMDGPU_RAS_BLOCK_MASK	((1ULL << AMDGPU_RAS_BLOCK_COUNT) - 1)
 
@@ -326,13 +306,7 @@ struct ras_common_if {
 	enum amdgpu_ras_block block;
 	enum amdgpu_ras_error_type type;
 	uint32_t sub_block_index;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* block name */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char name[32];
 };
 
@@ -344,14 +318,6 @@ struct amdgpu_ras {
 	/* sysfs */
 	struct device_attribute features_attr;
 	struct bin_attribute badpages_attr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct dentry *de_ras_eeprom_table;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct dentry *de_ras_eeprom_table;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* block array */
 	struct ras_manager *objs;
 
@@ -451,15 +417,7 @@ struct ras_badpage {
 /* interfaces for IP */
 struct ras_fs_if {
 	struct ras_common_if head;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const char* sysfs_name;
-=======
 	char sysfs_name[32];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const char* sysfs_name;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char debugfs_name[32];
 };
 
@@ -511,18 +469,8 @@ struct ras_debug_if {
  * 8: feature disable
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define amdgpu_ras_get_context(adev)		((adev)->psp.ras_context.ras)
-#define amdgpu_ras_set_context(adev, ras_con)	((adev)->psp.ras_context.ras = (ras_con))
-=======
 #define amdgpu_ras_get_context(adev)		((adev)->psp.ras.ras)
 #define amdgpu_ras_set_context(adev, ras_con)	((adev)->psp.ras.ras = (ras_con))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define amdgpu_ras_get_context(adev)		((adev)->psp.ras_context.ras)
-#define amdgpu_ras_set_context(adev, ras_con)	((adev)->psp.ras_context.ras = (ras_con))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* check if ras is supported on block, say, sdma, gfx */
 static inline int amdgpu_ras_is_supported(struct amdgpu_device *adev,
@@ -542,21 +490,9 @@ int amdgpu_ras_request_reset_on_boot(struct amdgpu_device *adev,
 void amdgpu_ras_resume(struct amdgpu_device *adev);
 void amdgpu_ras_suspend(struct amdgpu_device *adev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int amdgpu_ras_query_error_count(struct amdgpu_device *adev,
-				 unsigned long *ce_count,
-				 unsigned long *ue_count);
-=======
 void amdgpu_ras_query_error_count(struct amdgpu_device *adev,
 				  unsigned long *ce_count,
 				  unsigned long *ue_count);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int amdgpu_ras_query_error_count(struct amdgpu_device *adev,
-				 unsigned long *ce_count,
-				 unsigned long *ue_count);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* error handling functions */
 int amdgpu_ras_add_bad_pages(struct amdgpu_device *adev,

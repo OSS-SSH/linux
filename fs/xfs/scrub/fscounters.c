@@ -148,21 +148,9 @@ xchk_fscount_btreeblks(
 	xfs_extlen_t		blocks;
 	int			error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	error = xchk_ag_init_existing(sc, agno, &sc->sa);
-	if (error)
-		goto out_free;
-=======
 	error = xchk_ag_init(sc, agno, &sc->sa);
 	if (error)
 		return error;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	error = xchk_ag_init_existing(sc, agno, &sc->sa);
-	if (error)
-		goto out_free;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = xfs_btree_count_blocks(sc->sa.bno_cur, &blocks);
 	if (error)
@@ -219,15 +207,7 @@ retry:
 		/* Add up the free/freelist/bnobt/cntbt blocks */
 		fsc->fdblocks += pag->pagf_freeblks;
 		fsc->fdblocks += pag->pagf_flcount;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (xfs_has_lazysbcount(sc->mp)) {
-=======
 		if (xfs_sb_version_haslazysbcount(&sc->mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (xfs_has_lazysbcount(sc->mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			fsc->fdblocks += pag->pagf_btreeblks;
 		} else {
 			error = xchk_fscount_btreeblks(sc, fsc, agno);

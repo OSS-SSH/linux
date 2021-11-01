@@ -541,39 +541,17 @@ static int picdev_slave_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
 			    addr, len, val);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int picdev_elcr_write(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
-			     gpa_t addr, int len, const void *val)
-{
-	return picdev_write(container_of(dev, struct kvm_pic, dev_elcr),
-			    addr, len, val);
-}
-
-static int picdev_elcr_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
-			    gpa_t addr, int len, void *val)
-{
-	return picdev_read(container_of(dev, struct kvm_pic, dev_elcr),
-=======
 static int picdev_eclr_write(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
-=======
-static int picdev_elcr_write(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     gpa_t addr, int len, const void *val)
 {
-	return picdev_write(container_of(dev, struct kvm_pic, dev_elcr),
+	return picdev_write(container_of(dev, struct kvm_pic, dev_eclr),
 			    addr, len, val);
 }
 
-static int picdev_elcr_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
+static int picdev_eclr_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
 			    gpa_t addr, int len, void *val)
 {
-<<<<<<< HEAD
 	return picdev_read(container_of(dev, struct kvm_pic, dev_eclr),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return picdev_read(container_of(dev, struct kvm_pic, dev_elcr),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    addr, len, val);
 }
 
@@ -599,21 +577,9 @@ static const struct kvm_io_device_ops picdev_slave_ops = {
 	.write    = picdev_slave_write,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct kvm_io_device_ops picdev_elcr_ops = {
-	.read     = picdev_elcr_read,
-	.write    = picdev_elcr_write,
-=======
 static const struct kvm_io_device_ops picdev_eclr_ops = {
 	.read     = picdev_eclr_read,
 	.write    = picdev_eclr_write,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct kvm_io_device_ops picdev_elcr_ops = {
-	.read     = picdev_elcr_read,
-	.write    = picdev_elcr_write,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int kvm_pic_init(struct kvm *kvm)
@@ -636,15 +602,7 @@ int kvm_pic_init(struct kvm *kvm)
 	 */
 	kvm_iodevice_init(&s->dev_master, &picdev_master_ops);
 	kvm_iodevice_init(&s->dev_slave, &picdev_slave_ops);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kvm_iodevice_init(&s->dev_elcr, &picdev_elcr_ops);
-=======
 	kvm_iodevice_init(&s->dev_eclr, &picdev_eclr_ops);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kvm_iodevice_init(&s->dev_elcr, &picdev_elcr_ops);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&kvm->slots_lock);
 	ret = kvm_io_bus_register_dev(kvm, KVM_PIO_BUS, 0x20, 2,
 				      &s->dev_master);
@@ -655,15 +613,7 @@ int kvm_pic_init(struct kvm *kvm)
 	if (ret < 0)
 		goto fail_unreg_2;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = kvm_io_bus_register_dev(kvm, KVM_PIO_BUS, 0x4d0, 2, &s->dev_elcr);
-=======
 	ret = kvm_io_bus_register_dev(kvm, KVM_PIO_BUS, 0x4d0, 2, &s->dev_eclr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = kvm_io_bus_register_dev(kvm, KVM_PIO_BUS, 0x4d0, 2, &s->dev_elcr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		goto fail_unreg_1;
 
@@ -697,15 +647,7 @@ void kvm_pic_destroy(struct kvm *kvm)
 	mutex_lock(&kvm->slots_lock);
 	kvm_io_bus_unregister_dev(vpic->kvm, KVM_PIO_BUS, &vpic->dev_master);
 	kvm_io_bus_unregister_dev(vpic->kvm, KVM_PIO_BUS, &vpic->dev_slave);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kvm_io_bus_unregister_dev(vpic->kvm, KVM_PIO_BUS, &vpic->dev_elcr);
-=======
 	kvm_io_bus_unregister_dev(vpic->kvm, KVM_PIO_BUS, &vpic->dev_eclr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kvm_io_bus_unregister_dev(vpic->kvm, KVM_PIO_BUS, &vpic->dev_elcr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&kvm->slots_lock);
 
 	kvm->arch.vpic = NULL;

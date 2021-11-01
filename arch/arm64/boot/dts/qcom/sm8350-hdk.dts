@@ -219,15 +219,7 @@
 	firmware-name = "qcom/sm8350/modem.mbn";
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-&qupv3_id_0 {
-=======
 &qupv3_id_1 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-&qupv3_id_0 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
 };
 

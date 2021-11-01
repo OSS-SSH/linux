@@ -528,13 +528,7 @@ int __encap_ip6vxlan_eth(struct __sk_buff *skb)
 
 static int decap_internal(struct __sk_buff *skb, int off, int len, char proto)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	char buf[sizeof(struct v6hdr)];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct gre_hdr greh;
 	struct udphdr udph;
 	int olen = len;

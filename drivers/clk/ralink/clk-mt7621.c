@@ -131,10 +131,6 @@ static int mt7621_gate_ops_init(struct device *dev,
 				struct mt7621_gate *sclk)
 {
 	struct clk_init_data init = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.flags = CLK_SET_RATE_PARENT,
-=======
 		/*
 		 * Until now no clock driver existed so
 		 * these SoC drivers are not prepared
@@ -143,10 +139,6 @@ static int mt7621_gate_ops_init(struct device *dev,
 		 * flag here.
 		 */
 		.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.flags = CLK_SET_RATE_PARENT,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.num_parents = 1,
 		.parent_names = &sclk->parent_name,
 		.ops = &mt7621_gate_ops,

@@ -1245,72 +1245,18 @@ err_alloc_felix:
 
 static int seville_remove(struct platform_device *pdev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct felix *felix = platform_get_drvdata(pdev);
-
-	if (!felix)
-		return 0;
-=======
 	struct felix *felix;
 
 	felix = platform_get_drvdata(pdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct felix *felix = platform_get_drvdata(pdev);
-
-	if (!felix)
-		return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dsa_unregister_switch(felix->ds);
 
 	kfree(felix->ds);
 	kfree(felix);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	platform_set_drvdata(pdev, NULL);
-
 	return 0;
 }
 
-static void seville_shutdown(struct platform_device *pdev)
-{
-	struct felix *felix = platform_get_drvdata(pdev);
-
-	if (!felix)
-		return;
-
-	dsa_switch_shutdown(felix->ds);
-
-	platform_set_drvdata(pdev, NULL);
-}
-
-=======
-	return 0;
-}
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	platform_set_drvdata(pdev, NULL);
-
-	return 0;
-}
-
-static void seville_shutdown(struct platform_device *pdev)
-{
-	struct felix *felix = platform_get_drvdata(pdev);
-
-	if (!felix)
-		return;
-
-	dsa_switch_shutdown(felix->ds);
-
-	platform_set_drvdata(pdev, NULL);
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id seville_of_match[] = {
 	{ .compatible = "mscc,vsc9953-switch" },
 	{ },
@@ -1320,14 +1266,6 @@ MODULE_DEVICE_TABLE(of, seville_of_match);
 static struct platform_driver seville_vsc9953_driver = {
 	.probe		= seville_probe,
 	.remove		= seville_remove,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.shutdown	= seville_shutdown,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.shutdown	= seville_shutdown,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.name		= "mscc_seville",
 		.of_match_table	= of_match_ptr(seville_of_match),

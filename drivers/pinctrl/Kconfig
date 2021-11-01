@@ -248,32 +248,12 @@ config PINCTRL_SX150X
 	  - 16 bits: sx1509q, sx1506q
 
 config PINCTRL_PISTACHIO
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool "IMG Pistachio SoC pinctrl driver"
-	depends on OF && (MIPS || COMPILE_TEST)
-=======
 	def_bool y if MACH_PISTACHIO
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool "IMG Pistachio SoC pinctrl driver"
-	depends on OF && (MIPS || COMPILE_TEST)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on GPIOLIB
 	select PINMUX
 	select GENERIC_PINCONF
 	select GPIOLIB_IRQCHIP
 	select OF_GPIO
-<<<<<<< HEAD
-<<<<<<< HEAD
-    help
-	  This support pinctrl and gpio driver for IMG Pistachio SoC.
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-    help
-	  This support pinctrl and gpio driver for IMG Pistachio SoC.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config PINCTRL_ST
 	bool
@@ -424,34 +404,6 @@ config PINCTRL_K210
 	  Add support for the Canaan Kendryte K210 RISC-V SOC Field
 	  Programmable IO Array (FPIOA) controller.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-config PINCTRL_KEEMBAY
-	tristate "Pinctrl driver for Intel Keem Bay SoC"
-	depends on ARCH_KEEMBAY || (ARM64 && COMPILE_TEST)
-	depends on HAS_IOMEM
-	select PINMUX
-	select PINCONF
-	select GENERIC_PINCONF
-	select GENERIC_PINCTRL_GROUPS
-	select GENERIC_PINMUX_FUNCTIONS
-	select GPIOLIB
-	select GPIOLIB_IRQCHIP
-	select GPIO_GENERIC
-	help
-	  This selects pin control driver for the Intel Keembay SoC.
-	  It provides pin config functions such as pullup, pulldown,
-	  interrupt, drive strength, sec lock, schmitt trigger, slew
-	  rate control and direction control. This module will be
-	  called as pinctrl-keembay.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "drivers/pinctrl/actions/Kconfig"
 source "drivers/pinctrl/aspeed/Kconfig"
 source "drivers/pinctrl/bcm/Kconfig"

@@ -110,15 +110,7 @@ static inline __init bool xbc_node_is_leaf(struct xbc_node *node)
 }
 
 /* Tree-based key-value access APIs */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct xbc_node * __init xbc_node_find_subkey(struct xbc_node *parent,
-=======
 struct xbc_node * __init xbc_node_find_child(struct xbc_node *parent,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct xbc_node * __init xbc_node_find_subkey(struct xbc_node *parent,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					     const char *key);
 
 const char * __init xbc_node_find_value(struct xbc_node *parent,
@@ -156,15 +148,7 @@ xbc_find_value(const char *key, struct xbc_node **vnode)
  */
 static inline struct xbc_node * __init xbc_find_node(const char *key)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return xbc_node_find_subkey(NULL, key);
-=======
 	return xbc_node_find_child(NULL, key);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return xbc_node_find_subkey(NULL, key);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

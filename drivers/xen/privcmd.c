@@ -257,15 +257,7 @@ static long privcmd_ioctl_mmap(struct file *file, void __user *udata)
 	LIST_HEAD(pagelist);
 	struct mmap_gfn_state state;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* We only support privcmd_ioctl_mmap_batch for non-auto-translated. */
-=======
 	/* We only support privcmd_ioctl_mmap_batch for auto translated. */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* We only support privcmd_ioctl_mmap_batch for non-auto-translated. */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xen_feature(XENFEAT_auto_translated_physmap))
 		return -ENOSYS;
 
@@ -428,15 +420,7 @@ static int alloc_empty_pages(struct vm_area_struct *vma, int numpgs)
 	int rc;
 	struct page **pages;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pages = kvcalloc(numpgs, sizeof(pages[0]), GFP_KERNEL);
-=======
 	pages = kcalloc(numpgs, sizeof(pages[0]), GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pages = kvcalloc(numpgs, sizeof(pages[0]), GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (pages == NULL)
 		return -ENOMEM;
 
@@ -444,15 +428,7 @@ static int alloc_empty_pages(struct vm_area_struct *vma, int numpgs)
 	if (rc != 0) {
 		pr_warn("%s Could not alloc %d pfns rc:%d\n", __func__,
 			numpgs, rc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		kvfree(pages);
-=======
 		kfree(pages);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		kvfree(pages);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 	}
 	BUG_ON(vma->vm_private_data != NULL);
@@ -827,49 +803,21 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
 		unsigned int domid =
 			(xdata.flags & XENMEM_rsrc_acq_caller_owned) ?
 			DOMID_SELF : kdata.dom;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		int num, *errs = (int *)pfns;
-
-		BUILD_BUG_ON(sizeof(*errs) > sizeof(*pfns));
-		num = xen_remap_domain_mfn_array(vma,
-						 kdata.addr & PAGE_MASK,
-						 pfns, kdata.num, errs,
-						 vma->vm_page_prot,
-						 domid);
-=======
 		int num;
-=======
-		int num, *errs = (int *)pfns;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		BUILD_BUG_ON(sizeof(*errs) > sizeof(*pfns));
 		num = xen_remap_domain_mfn_array(vma,
 						 kdata.addr & PAGE_MASK,
-						 pfns, kdata.num, errs,
+						 pfns, kdata.num, (int *)pfns,
 						 vma->vm_page_prot,
-<<<<<<< HEAD
 						 domid,
 						 vma->vm_private_data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						 domid);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (num < 0)
 			rc = num;
 		else if (num != kdata.num) {
 			unsigned int i;
 
 			for (i = 0; i < num; i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				rc = errs[i];
-=======
 				rc = pfns[i];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				rc = errs[i];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (rc < 0)
 					break;
 			}
@@ -964,15 +912,7 @@ static void privcmd_close(struct vm_area_struct *vma)
 	else
 		pr_crit("unable to unmap MFN range: leaking %d pages. rc=%d\n",
 			numpgs, rc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kvfree(pages);
-=======
 	kfree(pages);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kvfree(pages);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static vm_fault_t privcmd_fault(struct vm_fault *vmf)

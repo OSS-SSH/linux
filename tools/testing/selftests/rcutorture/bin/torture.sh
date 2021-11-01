@@ -53,14 +53,6 @@ do_refscale=yes
 do_kvfree=yes
 do_kasan=yes
 do_kcsan=no
-<<<<<<< HEAD
-<<<<<<< HEAD
-do_clocksourcewd=yes
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-do_clocksourcewd=yes
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # doyesno - Helper function for yes/no arguments
 function doyesno () {
@@ -80,14 +72,6 @@ usage () {
 	echo "       --configs-scftorture \"config-file list w/ repeat factor (2*CFLIST)\""
 	echo "       --doall"
 	echo "       --doallmodconfig / --do-no-allmodconfig"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	echo "       --do-clocksourcewd / --do-no-clocksourcewd"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	echo "       --do-clocksourcewd / --do-no-clocksourcewd"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	echo "       --do-kasan / --do-no-kasan"
 	echo "       --do-kcsan / --do-no-kcsan"
 	echo "       --do-kvfree / --do-no-kvfree"
@@ -125,15 +109,7 @@ do
 		configs_scftorture="$configs_scftorture $2"
 		shift
 		;;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	--do-all|--doall)
-=======
 	--doall)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	--do-all|--doall)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		do_allmodconfig=yes
 		do_rcutorture=yes
 		do_locktorture=yes
@@ -143,30 +119,10 @@ do
 		do_kvfree=yes
 		do_kasan=yes
 		do_kcsan=yes
-<<<<<<< HEAD
-<<<<<<< HEAD
-		do_clocksourcewd=yes
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		do_clocksourcewd=yes
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		;;
 	--do-allmodconfig|--do-no-allmodconfig)
 		do_allmodconfig=`doyesno "$1" --do-allmodconfig`
 		;;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	--do-clocksourcewd|--do-no-clocksourcewd)
-		do_clocksourcewd=`doyesno "$1" --do-clocksourcewd`
-		;;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	--do-clocksourcewd|--do-no-clocksourcewd)
-		do_clocksourcewd=`doyesno "$1" --do-clocksourcewd`
-		;;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	--do-kasan|--do-no-kasan)
 		do_kasan=`doyesno "$1" --do-kasan`
 		;;
@@ -179,15 +135,7 @@ do
 	--do-locktorture|--do-no-locktorture)
 		do_locktorture=`doyesno "$1" --do-locktorture`
 		;;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	--do-none|--donone)
-=======
 	--do-none)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	--do-none|--donone)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		do_allmodconfig=no
 		do_rcutorture=no
 		do_locktorture=no
@@ -197,14 +145,6 @@ do
 		do_kvfree=no
 		do_kasan=no
 		do_kcsan=no
-<<<<<<< HEAD
-<<<<<<< HEAD
-		do_clocksourcewd=no
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		do_clocksourcewd=no
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		;;
 	--do-rcuscale|--do-no-rcuscale)
 		do_rcuscale=`doyesno "$1" --do-rcuscale`
@@ -339,21 +279,9 @@ function torture_one {
 #	torture_bootargs="[ kernel boot arguments ]"
 #	torture_set flavor [ kvm.sh arguments ]
 #
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Note that "flavor" is an arbitrary string that does not affect kvm.sh
-# in any way.  So also supply --torture if you need something other than
-# the default.
-=======
 # Note that "flavor" is an arbitrary string.  Supply --torture if needed.
 # Note that quoting is problematic.  So on the command line, pass multiple
 # values with multiple kvm.sh argument instances.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-# Note that "flavor" is an arbitrary string that does not affect kvm.sh
-# in any way.  So also supply --torture if you need something other than
-# the default.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 function torture_set {
 	local cur_kcsan_kmake_args=
 	local kcsan_kmake_tag=
@@ -449,31 +377,6 @@ then
 	torture_set "rcuscale-kvfree" tools/testing/selftests/rcutorture/bin/kvm.sh --torture rcuscale --allcpus --duration 10 --kconfig "CONFIG_NR_CPUS=$HALF_ALLOTED_CPUS" --memory 1G --trust-make
 fi
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-if test "$do_clocksourcewd" = "yes"
-then
-	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000"
-	torture_set "clocksourcewd-1" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --kconfig "CONFIG_TEST_CLOCKSOURCE_WATCHDOG=y" --trust-make
-
-	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 clocksource.max_cswd_read_retries=1"
-	torture_set "clocksourcewd-2" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --kconfig "CONFIG_TEST_CLOCKSOURCE_WATCHDOG=y" --trust-make
-
-	# In case our work is already done...
-	if test "$do_rcutorture" != "yes"
-	then
-		torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000"
-		torture_set "clocksourcewd-3" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --trust-make
-	fi
-fi
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 echo " --- " $scriptname $args
 echo " --- " Done `date` | tee -a $T/log
 ret=0
@@ -492,19 +395,6 @@ then
 	nfailures="`wc -l "$T/failures" | awk '{ print $1 }'`"
 	ret=2
 fi
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-if test "$do_kcsan" = "yes"
-then
-	TORTURE_KCONFIG_KCSAN_ARG=1 tools/testing/selftests/rcutorture/bin/kcsan-collapse.sh tools/testing/selftests/rcutorture/res/$ds > tools/testing/selftests/rcutorture/res/$ds/kcsan.sum
-fi
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 echo Started at $startdate, ended at `date`, duration `get_starttime_duration $starttime`. | tee -a $T/log
 echo Summary: Successes: $nsuccesses Failures: $nfailures. | tee -a $T/log
 tdir="`cat $T/successes $T/failures | head -1 | awk '{ print $NF }' | sed -e 's,/[^/]\+/*$,,'`"

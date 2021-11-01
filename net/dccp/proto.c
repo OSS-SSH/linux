@@ -1126,15 +1126,7 @@ static int __init dccp_init(void)
 	dccp_hashinfo.bind_bucket_cachep =
 		kmem_cache_create("dccp_bind_bucket",
 				  sizeof(struct inet_bind_bucket), 0,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				  SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT, NULL);
-=======
 				  SLAB_HWCACHE_ALIGN, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				  SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dccp_hashinfo.bind_bucket_cachep)
 		goto out_free_hashinfo2;
 

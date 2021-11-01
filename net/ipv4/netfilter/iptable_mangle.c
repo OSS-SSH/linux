@@ -25,27 +25,15 @@ MODULE_DESCRIPTION("iptables mangle table");
 			    (1 << NF_INET_LOCAL_OUT) | \
 			    (1 << NF_INET_POST_ROUTING))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int __net_init iptable_mangle_table_init(struct net *net);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct xt_table packet_mangler = {
 	.name		= "mangle",
 	.valid_hooks	= MANGLE_VALID_HOOKS,
 	.me		= THIS_MODULE,
 	.af		= NFPROTO_IPV4,
 	.priority	= NF_IP_PRI_MANGLE,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.table_init	= iptable_mangle_table_init,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static unsigned int
@@ -95,15 +83,7 @@ iptable_mangle_hook(void *priv,
 }
 
 static struct nf_hook_ops *mangle_ops __read_mostly;
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int iptable_mangle_table_init(struct net *net)
-=======
 static int __net_init iptable_mangle_table_init(struct net *net)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int iptable_mangle_table_init(struct net *net)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ipt_replace *repl;
 	int ret;
@@ -133,75 +113,32 @@ static struct pernet_operations iptable_mangle_net_ops = {
 
 static int __init iptable_mangle_init(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	int ret = xt_register_template(&packet_mangler,
-				       iptable_mangle_table_init);
-	if (ret < 0)
-		return ret;
-<<<<<<< HEAD
-
-	mangle_ops = xt_hook_ops_alloc(&packet_mangler, iptable_mangle_hook);
-	if (IS_ERR(mangle_ops)) {
-		xt_unregister_template(&packet_mangler);
-=======
 	int ret;
 
 	mangle_ops = xt_hook_ops_alloc(&packet_mangler, iptable_mangle_hook);
 	if (IS_ERR(mangle_ops)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	mangle_ops = xt_hook_ops_alloc(&packet_mangler, iptable_mangle_hook);
-	if (IS_ERR(mangle_ops)) {
-		xt_unregister_template(&packet_mangler);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = PTR_ERR(mangle_ops);
 		return ret;
 	}
 
 	ret = register_pernet_subsys(&iptable_mangle_net_ops);
 	if (ret < 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		xt_unregister_template(&packet_mangler);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		xt_unregister_template(&packet_mangler);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(mangle_ops);
 		return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	ret = iptable_mangle_table_init(&init_net);
 	if (ret) {
 		unregister_pernet_subsys(&iptable_mangle_net_ops);
 		kfree(mangle_ops);
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
 static void __exit iptable_mangle_fini(void)
 {
 	unregister_pernet_subsys(&iptable_mangle_net_ops);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xt_unregister_template(&packet_mangler);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xt_unregister_template(&packet_mangler);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(mangle_ops);
 }
 

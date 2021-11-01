@@ -9,14 +9,6 @@
 #include <linux/module.h>
 #include <linux/of_net.h>
 #include <linux/netdevice.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/phylink.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/phylink.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/of_mdio.h>
 #include <linux/of_platform.h>
 #include <linux/mfd/syscon.h>
@@ -953,23 +945,13 @@ static int mscc_ocelot_init_ports(struct platform_device *pdev,
 	for_each_available_child_of_node(ports, portnp) {
 		struct ocelot_port_private *priv;
 		struct ocelot_port *ocelot_port;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		struct devlink_port *dlp;
-		struct regmap *target;
-		struct resource *res;
-=======
 		struct device_node *phy_node;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct devlink_port *dlp;
+		phy_interface_t phy_mode;
+		struct phy_device *phy;
 		struct regmap *target;
 		struct resource *res;
-<<<<<<< HEAD
 		struct phy *serdes;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		char res_name[8];
 
 		if (of_property_read_u32(portnp, "reg", &reg))
@@ -993,9 +975,6 @@ static int mscc_ocelot_init_ports(struct platform_device *pdev,
 			goto out_teardown;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		phy_node = of_parse_phandle(portnp, "phy-handle", 0);
 		if (!phy_node)
 			continue;
@@ -1005,51 +984,25 @@ static int mscc_ocelot_init_ports(struct platform_device *pdev,
 		if (!phy)
 			continue;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = ocelot_port_devlink_init(ocelot, port,
 					       DEVLINK_PORT_FLAVOUR_PHYSICAL);
 		if (err) {
 			of_node_put(portnp);
 			goto out_teardown;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
+		devlink_ports_registered |= BIT(port);
 
-		err = ocelot_probe_port(ocelot, port, target, portnp);
+		err = ocelot_probe_port(ocelot, port, target, phy);
 		if (err) {
-			ocelot_port_devlink_teardown(ocelot, port);
-			continue;
+			of_node_put(portnp);
+			goto out_teardown;
 		}
 
-		devlink_ports_registered |= BIT(port);
-
-=======
-		devlink_ports_registered |= BIT(port);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		err = ocelot_probe_port(ocelot, port, target, portnp);
-		if (err) {
-			ocelot_port_devlink_teardown(ocelot, port);
-			continue;
-		}
-
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		devlink_ports_registered |= BIT(port);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ocelot_port = ocelot->ports[port];
 		priv = container_of(ocelot_port, struct ocelot_port_private,
 				    port);
 		dlp = &ocelot->devlink_ports[port];
 		devlink_port_type_eth_set(dlp, priv->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 		of_get_phy_mode(portnp, &phy_mode);
 
@@ -1093,9 +1046,6 @@ static int mscc_ocelot_init_ports(struct platform_device *pdev,
 		}
 
 		priv->serdes = serdes;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Initialize unused devlink ports at the end */
@@ -1153,17 +1103,7 @@ static int mscc_ocelot_probe(struct platform_device *pdev)
 	if (!np && !pdev->dev.platform_data)
 		return -ENODEV;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	devlink =
-		devlink_alloc(&ocelot_devlink_ops, sizeof(*ocelot), &pdev->dev);
-=======
 	devlink = devlink_alloc(&ocelot_devlink_ops, sizeof(*ocelot));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	devlink =
-		devlink_alloc(&ocelot_devlink_ops, sizeof(*ocelot), &pdev->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!devlink)
 		return -ENOMEM;
 
@@ -1247,15 +1187,7 @@ static int mscc_ocelot_probe(struct platform_device *pdev)
 	if (err)
 		goto out_put_ports;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = devlink_register(devlink);
-=======
 	err = devlink_register(devlink, ocelot->dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = devlink_register(devlink);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto out_ocelot_deinit;
 

@@ -834,15 +834,7 @@ int set_guest_storage_key(struct mm_struct *mm, unsigned long addr,
 }
 EXPORT_SYMBOL(set_guest_storage_key);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Conditionally set a guest storage key (handling csske).
  * oldkey will be updated when either mr or mc is set and a pointer is given.
  *
@@ -875,15 +867,7 @@ int cond_set_guest_storage_key(struct mm_struct *mm, unsigned long addr,
 }
 EXPORT_SYMBOL(cond_set_guest_storage_key);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Reset a guest reference bit (rrbe), returning the reference and changed bit.
  *
  * Returns < 0 in case of error, otherwise the cc to be reported to the guest.

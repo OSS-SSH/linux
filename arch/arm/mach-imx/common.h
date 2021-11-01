@@ -68,13 +68,7 @@ void imx_set_cpu_arg(int cpu, u32 arg);
 void v7_secondary_startup(void);
 void imx_scu_map_io(void);
 void imx_smp_prepare(void);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void imx_gpcv2_set_core1_pdn_pup_by_software(bool pdn);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline void imx_scu_map_io(void) {}
 static inline void imx_smp_prepare(void) {}
@@ -87,14 +81,6 @@ void imx_gpc_mask_all(void);
 void imx_gpc_restore_all(void);
 void imx_gpc_hwirq_mask(unsigned int hwirq);
 void imx_gpc_hwirq_unmask(unsigned int hwirq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void imx_gpcv2_set_core1_pdn_pup_by_software(bool pdn);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void imx_gpcv2_set_core1_pdn_pup_by_software(bool pdn);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void imx_anatop_init(void);
 void imx_anatop_pre_suspend(void);
 void imx_anatop_post_resume(void);

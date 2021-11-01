@@ -371,15 +371,7 @@ xfs_buf_corruption_error(
 
 	xfs_alert_tag(mp, XFS_PTAG_VERIFIER_ERROR,
 		  "Metadata corruption detected at %pS, %s block 0x%llx",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		  fa, bp->b_ops->name, xfs_buf_daddr(bp));
-=======
 		  fa, bp->b_ops->name, bp->b_bn);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		  fa, bp->b_ops->name, xfs_buf_daddr(bp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	xfs_alert(mp, "Unmount and run xfs_repair");
 
@@ -410,15 +402,7 @@ xfs_buf_verifier_error(
 	xfs_alert_tag(mp, XFS_PTAG_VERIFIER_ERROR,
 		  "Metadata %s detected at %pS, %s block 0x%llx %s",
 		  bp->b_error == -EFSBADCRC ? "CRC error" : "corruption",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		  fa, bp->b_ops->name, xfs_buf_daddr(bp), name);
-=======
 		  fa, bp->b_ops->name, bp->b_bn, name);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		  fa, bp->b_ops->name, xfs_buf_daddr(bp), name);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	xfs_alert(mp, "Unmount and run xfs_repair");
 

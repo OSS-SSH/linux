@@ -25,15 +25,7 @@ if test -z "$nscfs"
 then
 	echo "$configfile ------- "
 else
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dur="`grep -v '^#' $i/qemu-cmd | sed -e 's/^.* scftorture.shutdown_secs=//' -e 's/ .*$//' 2> /dev/null`"
-=======
 	dur="`sed -e 's/^.* scftorture.shutdown_secs=//' -e 's/ .*$//' < $i/qemu-cmd 2> /dev/null`"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dur="`grep -v '^#' $i/qemu-cmd | sed -e 's/^.* scftorture.shutdown_secs=//' -e 's/ .*$//' 2> /dev/null`"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if test -z "$dur"
 	then
 		rate=""

@@ -34,14 +34,6 @@ void ODM_CfoTrackingInit(void *pDM_VOID);
 
 void ODM_CfoTracking(void *pDM_VOID);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void odm_parsing_cfo(void *pDM_VOID, void *pPktinfo_VOID, s8 *pcfotail);
-=======
 void ODM_ParsingCFO(void *pDM_VOID, void *pPktinfo_VOID, s8 *pcfotail);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void odm_parsing_cfo(void *pDM_VOID, void *pPktinfo_VOID, s8 *pcfotail);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

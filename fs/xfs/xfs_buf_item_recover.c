@@ -219,15 +219,7 @@ xlog_recover_validate_buf_type(
 	 * inconsistent state resulting in verification failures. Hence for now
 	 * just avoid the verification stage for non-crc filesystems
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_crc(mp))
-=======
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_crc(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	magic32 = be32_to_cpu(*(__be32 *)bp->b_addr);
@@ -505,15 +497,7 @@ xlog_recover_do_reg_buffer(
 			if (fa) {
 				xfs_alert(mp,
 	"dquot corrupt at %pS trying to replay into block 0x%llx",
-<<<<<<< HEAD
-<<<<<<< HEAD
-					fa, xfs_buf_daddr(bp));
-=======
 					fa, bp->b_bn);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					fa, xfs_buf_daddr(bp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto next;
 			}
 		}
@@ -613,15 +597,7 @@ xlog_recover_do_inode_buffer(
 	 * Post recovery validation only works properly on CRC enabled
 	 * filesystems.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(mp))
-=======
 	if (xfs_sb_version_hascrc(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bp->b_ops = &xfs_inode_buf_ops;
 
 	inodes_per_buf = BBTOB(bp->b_length) >> mp->m_sb.sb_inodelog;
@@ -722,17 +698,7 @@ xlog_recover_do_inode_buffer(
 static xfs_lsn_t
 xlog_recover_get_buf_lsn(
 	struct xfs_mount	*mp,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct xfs_buf		*bp,
-	struct xfs_buf_log_format *buf_f)
-=======
 	struct xfs_buf		*bp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct xfs_buf		*bp,
-	struct xfs_buf_log_format *buf_f)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	uint32_t		magic32;
 	uint16_t		magic16;
@@ -740,39 +706,9 @@ xlog_recover_get_buf_lsn(
 	void			*blk = bp->b_addr;
 	uuid_t			*uuid;
 	xfs_lsn_t		lsn = -1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint16_t		blft;
-
-	/* v4 filesystems always recover immediately */
-	if (!xfs_has_crc(mp))
-		goto recover_immediately;
-
-	/*
-	 * realtime bitmap and summary file blocks do not have magic numbers or
-	 * UUIDs, so we must recover them immediately.
-	 */
-	blft = xfs_blft_from_flags(buf_f);
-	if (blft == XFS_BLFT_RTBITMAP_BUF || blft == XFS_BLFT_RTSUMMARY_BUF)
-=======
 
 	/* v4 filesystems always recover immediately */
 	if (!xfs_sb_version_hascrc(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint16_t		blft;
-
-	/* v4 filesystems always recover immediately */
-	if (!xfs_has_crc(mp))
-		goto recover_immediately;
-
-	/*
-	 * realtime bitmap and summary file blocks do not have magic numbers or
-	 * UUIDs, so we must recover them immediately.
-	 */
-	blft = xfs_blft_from_flags(buf_f);
-	if (blft == XFS_BLFT_RTBITMAP_BUF || blft == XFS_BLFT_RTSUMMARY_BUF)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto recover_immediately;
 
 	magic32 = be32_to_cpu(*(__be32 *)blk);
@@ -841,15 +777,7 @@ xlog_recover_get_buf_lsn(
 		 * the relevant UUID in the superblock.
 		 */
 		lsn = be64_to_cpu(((struct xfs_dsb *)blk)->sb_lsn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (xfs_has_metauuid(mp))
-=======
 		if (xfs_sb_version_hasmetauuid(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (xfs_has_metauuid(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			uuid = &((struct xfs_dsb *)blk)->sb_meta_uuid;
 		else
 			uuid = &((struct xfs_dsb *)blk)->sb_uuid;
@@ -868,14 +796,6 @@ xlog_recover_get_buf_lsn(
 	switch (magicda) {
 	case XFS_DIR3_LEAF1_MAGIC:
 	case XFS_DIR3_LEAFN_MAGIC:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	case XFS_ATTR3_LEAF_MAGIC:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	case XFS_ATTR3_LEAF_MAGIC:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case XFS_DA3_NODE_MAGIC:
 		lsn = be64_to_cpu(((struct xfs_da3_blkinfo *)blk)->lsn);
 		uuid = &((struct xfs_da3_blkinfo *)blk)->uuid;
@@ -999,15 +919,7 @@ xlog_recover_buf_commit_pass2(
 	 * the verifier will be reset to match whatever recover turns that
 	 * buffer into.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lsn = xlog_recover_get_buf_lsn(mp, bp, buf_f);
-=======
 	lsn = xlog_recover_get_buf_lsn(mp, bp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lsn = xlog_recover_get_buf_lsn(mp, bp, buf_f);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (lsn && lsn != -1 && XFS_LSN_CMP(lsn, current_lsn) >= 0) {
 		trace_xfs_log_recover_buf_skip(log, buf_f);
 		xlog_recover_validate_buf_type(mp, bp, buf_f, NULLCOMMITLSN);

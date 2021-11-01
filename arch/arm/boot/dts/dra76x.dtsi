@@ -9,9 +9,6 @@
 	compatible = "ti,dra762", "ti,dra7";
 
 	ocp {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		emif1: emif@4c000000 {
 			compatible = "ti,emif-dra7xx";
 			reg = <0x4c000000 0x200>;
@@ -19,9 +16,6 @@
 			status = "disabled";
 		};
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		target-module@42c01900 {
 			compatible = "ti,sysc-dra7-mcan", "ti,sysc";
 			ranges = <0x0 0x42c00000 0x2000>;
@@ -96,17 +90,11 @@
 	};
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* MCAN interrupts are hard-wired to irqs 67, 68 */
 &crossbar_mpu {
 	ti,irqs-skip = <10 67 68 133 139 140>;
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &scm_conf_clocks {
 	dpll_gmac_h14x2_ctrl_ck: dpll_gmac_h14x2_ctrl_ck@3fc {
 		#clock-cells = <0>;

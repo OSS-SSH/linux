@@ -1145,88 +1145,19 @@ find_reg(const struct intel_engine_cs *engine, u32 addr)
 static u32 *copy_batch(struct drm_i915_gem_object *dst_obj,
 		       struct drm_i915_gem_object *src_obj,
 		       unsigned long offset, unsigned long length,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       bool *needs_clflush_after)
-{
-	unsigned int src_needs_clflush;
-	unsigned int dst_needs_clflush;
-	void *dst, *src;
-	int ret;
-
-	ret = i915_gem_object_prepare_write(dst_obj, &dst_needs_clflush);
-	if (ret)
-		return ERR_PTR(ret);
-
-	dst = i915_gem_object_pin_map(dst_obj, I915_MAP_WB);
-	i915_gem_object_finish_access(dst_obj);
-	if (IS_ERR(dst))
-		return dst;
-
-	ret = i915_gem_object_prepare_read(src_obj, &src_needs_clflush);
-	if (ret) {
-		i915_gem_object_unpin_map(dst_obj);
-		return ERR_PTR(ret);
-	}
-
-	src = ERR_PTR(-ENODEV);
-	if (src_needs_clflush && i915_has_memcpy_from_wc()) {
-		src = i915_gem_object_pin_map(src_obj, I915_MAP_WC);
-		if (!IS_ERR(src)) {
-			i915_unaligned_memcpy_from_wc(dst,
-						      src + offset,
-						      length);
-			i915_gem_object_unpin_map(src_obj);
-		}
-	}
-	if (IS_ERR(src)) {
-		unsigned long x, n, remain;
-		void *ptr;
-=======
 		       void *dst, const void *src)
-=======
-		       bool *needs_clflush_after)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	unsigned int src_needs_clflush;
-	unsigned int dst_needs_clflush;
-	void *dst, *src;
-	int ret;
+	bool needs_clflush =
+		!(src_obj->cache_coherent & I915_BO_CACHE_COHERENT_FOR_READ);
 
-	ret = i915_gem_object_prepare_write(dst_obj, &dst_needs_clflush);
-	if (ret)
-		return ERR_PTR(ret);
-
-	dst = i915_gem_object_pin_map(dst_obj, I915_MAP_WB);
-	i915_gem_object_finish_access(dst_obj);
-	if (IS_ERR(dst))
-		return dst;
-
-	ret = i915_gem_object_prepare_read(src_obj, &src_needs_clflush);
-	if (ret) {
-		i915_gem_object_unpin_map(dst_obj);
-		return ERR_PTR(ret);
-	}
-
-	src = ERR_PTR(-ENODEV);
-	if (src_needs_clflush && i915_has_memcpy_from_wc()) {
-		src = i915_gem_object_pin_map(src_obj, I915_MAP_WC);
-		if (!IS_ERR(src)) {
-			i915_unaligned_memcpy_from_wc(dst,
-						      src + offset,
-						      length);
-			i915_gem_object_unpin_map(src_obj);
-		}
-	}
-	if (IS_ERR(src)) {
-		unsigned long x, n, remain;
+	if (src) {
+		GEM_BUG_ON(!needs_clflush);
+		i915_unaligned_memcpy_from_wc(dst, src + offset, length);
+	} else {
+		struct scatterlist *sg;
 		void *ptr;
-<<<<<<< HEAD
 		unsigned int x, sg_ofs;
 		unsigned long remain;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * We can avoid clflushing partial cachelines before the write
@@ -1237,48 +1168,12 @@ static u32 *copy_batch(struct drm_i915_gem_object *dst_obj,
 		 * validate up to the end of the batch.
 		 */
 		remain = length;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (dst_needs_clflush & CLFLUSH_BEFORE)
-=======
 		if (!(dst_obj->cache_coherent & I915_BO_CACHE_COHERENT_FOR_READ))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (dst_needs_clflush & CLFLUSH_BEFORE)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			remain = round_up(remain,
 					  boot_cpu_data.x86_clflush_size);
 
 		ptr = dst;
 		x = offset_in_page(offset);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		for (n = offset >> PAGE_SHIFT; remain; n++) {
-			int len = min(remain, PAGE_SIZE - x);
-
-			src = kmap_atomic(i915_gem_object_get_page(src_obj, n));
-			if (src_needs_clflush)
-				drm_clflush_virt_range(src + x, len);
-			memcpy(ptr, src + x, len);
-			kunmap_atomic(src);
-
-			ptr += len;
-			remain -= len;
-			x = 0;
-<<<<<<< HEAD
-		}
-	}
-
-	i915_gem_object_finish_access(src_obj);
-
-	memset32(dst + length, 0, (dst_obj->base.size - length) / sizeof(u32));
-
-	/* dst_obj is returned with vmap pinned */
-	*needs_clflush_after = dst_needs_clflush & CLFLUSH_AFTER;
-
-=======
 		sg = i915_gem_object_get_sg(src_obj, offset >> PAGE_SHIFT, &sg_ofs, false);
 
 		while (remain) {
@@ -1301,22 +1196,12 @@ static u32 *copy_batch(struct drm_i915_gem_object *dst_obj,
 
 			sg_ofs = 0;
 			sg = sg_next(sg);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
-
-	i915_gem_object_finish_access(src_obj);
 
 	memset32(dst + length, 0, (dst_obj->base.size - length) / sizeof(u32));
 
 	/* dst_obj is returned with vmap pinned */
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	*needs_clflush_after = dst_needs_clflush & CLFLUSH_AFTER;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dst;
 }
 
@@ -1475,18 +1360,6 @@ static int check_bbstart(u32 *cmd, u32 offset, u32 length,
 	if (target_cmd_index == offset)
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (IS_ERR(jump_whitelist))
-		return PTR_ERR(jump_whitelist);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (IS_ERR(jump_whitelist))
-		return PTR_ERR(jump_whitelist);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!test_bit(target_cmd_index, jump_whitelist)) {
 		DRM_DEBUG("CMD: BB_START to 0x%llx not a previously executed cmd\n",
 			  jump_target);
@@ -1496,13 +1369,6 @@ static int check_bbstart(u32 *cmd, u32 offset, u32 length,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static unsigned long *alloc_whitelist(u32 batch_length)
-{
-	unsigned long *jmp;
-
-=======
 /**
  * intel_engine_cmd_parser_alloc_jump_whitelist() - preallocate jump whitelist for intel_engine_cmd_parser()
  * @batch_length: length of the commands in batch_obj
@@ -1525,13 +1391,6 @@ unsigned long *intel_engine_cmd_parser_alloc_jump_whitelist(u32 batch_length,
 	if (trampoline)
 		return NULL;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static unsigned long *alloc_whitelist(u32 batch_length)
-{
-	unsigned long *jmp;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We expect batch_length to be less than 256KiB for known users,
 	 * i.e. we need at most an 8KiB bitmap allocation which should be
@@ -1556,17 +1415,9 @@ static unsigned long *alloc_whitelist(u32 batch_length)
  * @batch_offset: byte offset in the batch at which execution starts
  * @batch_length: length of the commands in batch_obj
  * @shadow: validated copy of the batch buffer in question
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @trampoline: true if we need to trampoline into privileged execution
-=======
  * @jump_whitelist: buffer preallocated with intel_engine_cmd_parser_alloc_jump_whitelist()
  * @shadow_map: mapping to @shadow vma
  * @batch_map: mapping to @batch vma
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @trampoline: true if we need to trampoline into privileged execution
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Parses the specified batch buffer looking for privilege violations as
  * described in the overview.
@@ -1574,51 +1425,21 @@ static unsigned long *alloc_whitelist(u32 batch_length)
  * Return: non-zero if the parser finds violations or otherwise fails; -EACCES
  * if the batch appears legal but should use hardware parsing
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int intel_engine_cmd_parser(struct intel_engine_cs *engine,
 			    struct i915_vma *batch,
 			    unsigned long batch_offset,
 			    unsigned long batch_length,
 			    struct i915_vma *shadow,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    bool trampoline)
-=======
 			    unsigned long *jump_whitelist,
 			    void *shadow_map,
 			    const void *batch_map)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    bool trampoline)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 *cmd, *batch_end, offset = 0;
 	struct drm_i915_cmd_descriptor default_desc = noop_desc;
 	const struct drm_i915_cmd_descriptor *desc = &default_desc;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool needs_clflush_after = false;
-	unsigned long *jump_whitelist;
-	u64 batch_addr, shadow_addr;
-	int ret = 0;
-=======
 	u64 batch_addr, shadow_addr;
 	int ret = 0;
 	bool trampoline = !jump_whitelist;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool needs_clflush_after = false;
-	unsigned long *jump_whitelist;
-	u64 batch_addr, shadow_addr;
-	int ret = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	GEM_BUG_ON(!IS_ALIGNED(batch_offset, sizeof(*cmd)));
 	GEM_BUG_ON(!IS_ALIGNED(batch_length, sizeof(*cmd)));
@@ -1626,29 +1447,8 @@ int intel_engine_cmd_parser(struct intel_engine_cs *engine,
 				     batch->size));
 	GEM_BUG_ON(!batch_length);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	cmd = copy_batch(shadow->obj, batch->obj,
-			 batch_offset, batch_length,
-			 &needs_clflush_after);
-	if (IS_ERR(cmd)) {
-		DRM_DEBUG("CMD: Failed to copy batch\n");
-		return PTR_ERR(cmd);
-	}
-
-	jump_whitelist = NULL;
-	if (!trampoline)
-		/* Defer failure until attempted use */
-		jump_whitelist = alloc_whitelist(batch_length);
-<<<<<<< HEAD
-=======
 	cmd = copy_batch(shadow->obj, batch->obj, batch_offset, batch_length,
 			 shadow_map, batch_map);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	shadow_addr = gen8_canonical_addr(shadow->node.start);
 	batch_addr = gen8_canonical_addr(batch->node.start + batch_offset);
@@ -1659,46 +1459,6 @@ int intel_engine_cmd_parser(struct intel_engine_cs *engine,
 	 * space. Parsing should be faster in some cases this way.
 	 */
 	batch_end = cmd + batch_length / sizeof(*batch_end);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	do {
-		u32 length;
-
-		if (*cmd == MI_BATCH_BUFFER_END)
-			break;
-
-		desc = find_cmd(engine, *cmd, desc, &default_desc);
-		if (!desc) {
-			DRM_DEBUG("CMD: Unrecognized command: 0x%08X\n", *cmd);
-			ret = -EINVAL;
-			break;
-		}
-
-		if (desc->flags & CMD_DESC_FIXED)
-			length = desc->length.fixed;
-		else
-			length = (*cmd & desc->length.mask) + LENGTH_BIAS;
-
-		if ((batch_end - cmd) < length) {
-			DRM_DEBUG("CMD: Command length exceeds batch length: 0x%08X length=%u batchlen=%td\n",
-				  *cmd,
-				  length,
-				  batch_end - cmd);
-			ret = -EINVAL;
-			break;
-		}
-
-		if (!check_cmd(engine, desc, cmd, length)) {
-			ret = -EACCES;
-			break;
-		}
-
-		if (cmd_desc_is(desc, MI_BATCH_BUFFER_START)) {
-			ret = check_bbstart(cmd, offset, length, batch_length,
-					    batch_addr, shadow_addr,
-					    jump_whitelist);
-			break;
-=======
 	while (*cmd != MI_BATCH_BUFFER_END) {
 		u32 length = 1;
 
@@ -1709,55 +1469,32 @@ int intel_engine_cmd_parser(struct intel_engine_cs *engine,
 				ret = -EINVAL;
 				break;
 			}
-=======
-	do {
-		u32 length;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		if (*cmd == MI_BATCH_BUFFER_END)
-			break;
+			if (desc->flags & CMD_DESC_FIXED)
+				length = desc->length.fixed;
+			else
+				length = (*cmd & desc->length.mask) + LENGTH_BIAS;
 
-		desc = find_cmd(engine, *cmd, desc, &default_desc);
-		if (!desc) {
-			DRM_DEBUG("CMD: Unrecognized command: 0x%08X\n", *cmd);
-			ret = -EINVAL;
-			break;
-		}
+			if ((batch_end - cmd) < length) {
+				DRM_DEBUG("CMD: Command length exceeds batch length: 0x%08X length=%u batchlen=%td\n",
+					  *cmd,
+					  length,
+					  batch_end - cmd);
+				ret = -EINVAL;
+				break;
+			}
 
-		if (desc->flags & CMD_DESC_FIXED)
-			length = desc->length.fixed;
-		else
-			length = (*cmd & desc->length.mask) + LENGTH_BIAS;
+			if (!check_cmd(engine, desc, cmd, length)) {
+				ret = -EACCES;
+				break;
+			}
 
-<<<<<<< HEAD
 			if (cmd_desc_is(desc, MI_BATCH_BUFFER_START)) {
 				ret = check_bbstart(cmd, offset, length, batch_length,
 						    batch_addr, shadow_addr,
 						    jump_whitelist);
 				break;
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if ((batch_end - cmd) < length) {
-			DRM_DEBUG("CMD: Command length exceeds batch length: 0x%08X length=%u batchlen=%td\n",
-				  *cmd,
-				  length,
-				  batch_end - cmd);
-			ret = -EINVAL;
-			break;
-		}
-
-		if (!check_cmd(engine, desc, cmd, length)) {
-			ret = -EACCES;
-			break;
-		}
-
-		if (cmd_desc_is(desc, MI_BATCH_BUFFER_START)) {
-			ret = check_bbstart(cmd, offset, length, batch_length,
-					    batch_addr, shadow_addr,
-					    jump_whitelist);
-			break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		if (!IS_ERR_OR_NULL(jump_whitelist))
@@ -1770,15 +1507,7 @@ int intel_engine_cmd_parser(struct intel_engine_cs *engine,
 			ret = -EINVAL;
 			break;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} while (1);
-=======
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} while (1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (trampoline) {
 		/*
@@ -1820,18 +1549,6 @@ int intel_engine_cmd_parser(struct intel_engine_cs *engine,
 
 	i915_gem_object_flush_map(shadow->obj);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!IS_ERR_OR_NULL(jump_whitelist))
-		kfree(jump_whitelist);
-	i915_gem_object_unpin_map(shadow->obj);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!IS_ERR_OR_NULL(jump_whitelist))
-		kfree(jump_whitelist);
-	i915_gem_object_unpin_map(shadow->obj);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

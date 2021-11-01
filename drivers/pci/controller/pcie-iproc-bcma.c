@@ -35,13 +35,7 @@ static int iproc_pcie_bcma_probe(struct bcma_device *bdev)
 {
 	struct device *dev = &bdev->dev;
 	struct iproc_pcie *pcie;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	LIST_HEAD(resources);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct pci_host_bridge *bridge;
 	int ret;
 
@@ -66,36 +60,19 @@ static int iproc_pcie_bcma_probe(struct bcma_device *bdev)
 	pcie->mem.end = bdev->addr_s[0] + SZ_128M - 1;
 	pcie->mem.name = "PCIe MEM space";
 	pcie->mem.flags = IORESOURCE_MEM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	pci_add_resource(&bridge->windows, &pcie->mem);
-	ret = devm_request_pci_bus_resources(dev, &bridge->windows);
-	if (ret)
-		return ret;
-<<<<<<< HEAD
-
-	pcie->map_irq = iproc_pcie_bcma_map_irq;
-
-	bcma_set_drvdata(bdev, pcie);
-
-	return iproc_pcie_setup(pcie, &bridge->windows);
-=======
 	pci_add_resource(&resources, &pcie->mem);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pcie->map_irq = iproc_pcie_bcma_map_irq;
 
-	bcma_set_drvdata(bdev, pcie);
-<<<<<<< HEAD
-	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
+	ret = iproc_pcie_setup(pcie, &resources);
+	if (ret) {
+		dev_err(dev, "PCIe controller setup failed\n");
+		pci_free_resource_list(&resources);
+		return ret;
+	}
 
-	return iproc_pcie_setup(pcie, &bridge->windows);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	bcma_set_drvdata(bdev, pcie);
+	return 0;
 }
 
 static void iproc_pcie_bcma_remove(struct bcma_device *bdev)

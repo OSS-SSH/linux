@@ -2,27 +2,11 @@
 .. include:: ../disclaimer-zh_CN.rst
 
 :Original: Documentation/core-api/workqueue.rst
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-:翻译:
-
- 司延腾 Yanteng Si <siyanteng@loongson.cn>
-
-.. _cn_workqueue.rst:
-
-=======
 :Translator: Yanteng Si <siyanteng@loongson.cn>
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-:翻译:
-
- 司延腾 Yanteng Si <siyanteng@loongson.cn>
 
 .. _cn_workqueue.rst:
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
 =========================
 并发管理的工作队列 (cmwq)
 =========================

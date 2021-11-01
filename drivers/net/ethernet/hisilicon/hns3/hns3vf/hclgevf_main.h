@@ -6,14 +6,6 @@
 #include <linux/fs.h>
 #include <linux/if_vlan.h>
 #include <linux/types.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <net/devlink.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <net/devlink.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "hclge_mbx.h"
 #include "hclgevf_cmd.h"
 #include "hnae3.h"
@@ -40,23 +32,6 @@
 #define HCLGEVF_VECTOR_VF_OFFSET		0x100000
 
 /* bar registers for cmdq */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define HCLGEVF_NIC_CSQ_BASEADDR_L_REG		0x27000
-#define HCLGEVF_NIC_CSQ_BASEADDR_H_REG		0x27004
-#define HCLGEVF_NIC_CSQ_DEPTH_REG		0x27008
-#define HCLGEVF_NIC_CSQ_TAIL_REG		0x27010
-#define HCLGEVF_NIC_CSQ_HEAD_REG		0x27014
-#define HCLGEVF_NIC_CRQ_BASEADDR_L_REG		0x27018
-#define HCLGEVF_NIC_CRQ_BASEADDR_H_REG		0x2701C
-#define HCLGEVF_NIC_CRQ_DEPTH_REG		0x27020
-#define HCLGEVF_NIC_CRQ_TAIL_REG		0x27024
-#define HCLGEVF_NIC_CRQ_HEAD_REG		0x27028
-
-<<<<<<< HEAD
-=======
 #define HCLGEVF_CMDQ_TX_ADDR_L_REG		0x27000
 #define HCLGEVF_CMDQ_TX_ADDR_H_REG		0x27004
 #define HCLGEVF_CMDQ_TX_DEPTH_REG		0x27008
@@ -67,9 +42,6 @@
 #define HCLGEVF_CMDQ_RX_DEPTH_REG		0x27020
 #define HCLGEVF_CMDQ_RX_TAIL_REG		0x27024
 #define HCLGEVF_CMDQ_RX_HEAD_REG		0x27028
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGEVF_CMDQ_INTR_EN_REG		0x27108
 #define HCLGEVF_CMDQ_INTR_GEN_REG		0x2710C
 
@@ -338,27 +310,11 @@ struct hclgevf_dev {
 	u16 *vector_status;
 	int *vector_irq;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool gro_en;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool gro_en;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long vlan_del_fail_bmap[BITS_TO_LONGS(VLAN_N_VID)];
 
 	struct hclgevf_mac_table_cfg mac_table;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	bool mbx_event_pending;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hclgevf_mbx_resp_status mbx_resp; /* mailbox response */
 	struct hclgevf_mbx_arq_ring arq; /* mailbox async rx queue */
 
@@ -374,16 +330,6 @@ struct hclgevf_dev {
 	u32 flag;
 	unsigned long serv_processed_cnt;
 	unsigned long last_serv_processed;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	struct devlink *devlink;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	struct devlink *devlink;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline bool hclgevf_is_reset_pending(struct hclgevf_dev *hdev)

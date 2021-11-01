@@ -14,14 +14,6 @@ ev6-$(CONFIG_ALPHA_EV6) := ev6-
 ev67-$(CONFIG_ALPHA_EV67) := ev67-
 
 lib-y =	__divqu.o __remqu.o __divlu.o __remlu.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	udiv-qrnnd.o \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	udiv-qrnnd.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	udelay.o \
 	$(ev6-y)memset.o \
 	$(ev6-y)memcpy.o \

@@ -135,14 +135,6 @@ struct cppc_cpudata {
 
 #ifdef CONFIG_ACPI_CPPC_LIB
 extern int cppc_get_desired_perf(int cpunum, u64 *desired_perf);
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern int cppc_get_nominal_perf(int cpunum, u64 *nominal_perf);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern int cppc_get_nominal_perf(int cpunum, u64 *nominal_perf);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int cppc_get_perf_ctrs(int cpu, struct cppc_perf_fb_ctrs *perf_fb_ctrs);
 extern int cppc_set_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls);
 extern int cppc_get_perf_caps(int cpu, struct cppc_perf_caps *caps);
@@ -157,19 +149,6 @@ static inline int cppc_get_desired_perf(int cpunum, u64 *desired_perf)
 {
 	return -ENOTSUPP;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline int cppc_get_nominal_perf(int cpunum, u64 *nominal_perf)
-{
-	return -ENOTSUPP;
-}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int cppc_get_perf_ctrs(int cpu, struct cppc_perf_fb_ctrs *perf_fb_ctrs)
 {
 	return -ENOTSUPP;

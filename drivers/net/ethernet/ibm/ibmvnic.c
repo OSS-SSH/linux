@@ -1731,13 +1731,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
 		tx_send_failed++;
 		tx_dropped++;
 		ret = NETDEV_TX_OK;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		ibmvnic_tx_scrq_flush(adapter, tx_scrq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 	}
 
@@ -1759,14 +1753,6 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
 		dev_kfree_skb_any(skb);
 		tx_send_failed++;
 		tx_dropped++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ibmvnic_tx_scrq_flush(adapter, tx_scrq);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ibmvnic_tx_scrq_flush(adapter, tx_scrq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = NETDEV_TX_OK;
 		goto out;
 	}
@@ -2434,23 +2420,9 @@ out:
 
 static void __ibmvnic_reset(struct work_struct *work)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct ibmvnic_adapter *adapter;
-	bool saved_state = false;
-	struct ibmvnic_rwi *tmprwi;
-	struct ibmvnic_rwi *rwi;
-=======
 	struct ibmvnic_rwi *rwi;
 	struct ibmvnic_adapter *adapter;
 	bool saved_state = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct ibmvnic_adapter *adapter;
-	bool saved_state = false;
-	struct ibmvnic_rwi *tmprwi;
-	struct ibmvnic_rwi *rwi;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 	u32 reset_state;
 	int rc = 0;
@@ -2517,15 +2489,7 @@ static void __ibmvnic_reset(struct work_struct *work)
 		} else {
 			rc = do_reset(adapter, rwi, reset_state);
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		tmprwi = rwi;
-=======
 		kfree(rwi);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		tmprwi = rwi;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adapter->last_reset_time = jiffies;
 
 		if (rc)
@@ -2533,36 +2497,8 @@ static void __ibmvnic_reset(struct work_struct *work)
 
 		rwi = get_next_rwi(adapter);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/*
-		 * If there is another reset queued, free the previous rwi
-		 * and process the new reset even if previous reset failed
-		 * (the previous reset could have failed because of a fail
-		 * over for instance, so process the fail over).
-		 *
-		 * If there are no resets queued and the previous reset failed,
-		 * the adapter would be in an undefined state. So retry the
-		 * previous reset as a hard reset.
-		 */
-		if (rwi)
-			kfree(tmprwi);
-		else if (rc)
-			rwi = tmprwi;
-
-<<<<<<< HEAD
-		if (rwi && (rwi->reset_reason == VNIC_RESET_FAILOVER ||
-			    rwi->reset_reason == VNIC_RESET_MOBILITY || rc))
-=======
 		if (rwi && (rwi->reset_reason == VNIC_RESET_FAILOVER ||
 			    rwi->reset_reason == VNIC_RESET_MOBILITY))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (rwi && (rwi->reset_reason == VNIC_RESET_FAILOVER ||
-			    rwi->reset_reason == VNIC_RESET_MOBILITY || rc))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			adapter->force_reset_recovery = true;
 	}
 
@@ -4748,23 +4684,6 @@ static int handle_login_rsp(union ibmvnic_crq *login_rsp_crq,
 		return 0;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (adapter->failover_pending) {
-		adapter->init_done_rc = -EAGAIN;
-		netdev_dbg(netdev, "Failover pending, ignoring login response\n");
-		complete(&adapter->init_done);
-		/* login response buffer will be released on reset */
-		return 0;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netdev->mtu = adapter->req_mtu - ETH_HLEN;
 
 	netdev_dbg(adapter->netdev, "Login Response Buffer:\n");

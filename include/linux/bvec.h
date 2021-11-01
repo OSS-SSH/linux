@@ -4,23 +4,9 @@
  *
  * Copyright (C) 2001 Ming Lei <ming.lei@canonical.com>
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifndef __LINUX_BVEC_H
-#define __LINUX_BVEC_H
-
-#include <linux/highmem.h>
-=======
 #ifndef __LINUX_BVEC_ITER_H
 #define __LINUX_BVEC_ITER_H
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifndef __LINUX_BVEC_H
-#define __LINUX_BVEC_H
-
-#include <linux/highmem.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/bug.h>
 #include <linux/errno.h>
 #include <linux/limits.h>
@@ -197,71 +183,4 @@ static inline void bvec_advance(const struct bio_vec *bvec,
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * bvec_kmap_local - map a bvec into the kernel virtual address space
- * @bvec: bvec to map
- *
- * Must be called on single-page bvecs only.  Call kunmap_local on the returned
- * address to unmap.
- */
-static inline void *bvec_kmap_local(struct bio_vec *bvec)
-{
-	return kmap_local_page(bvec->bv_page) + bvec->bv_offset;
-}
-
-/**
- * memcpy_from_bvec - copy data from a bvec
- * @bvec: bvec to copy from
- *
- * Must be called on single-page bvecs only.
- */
-static inline void memcpy_from_bvec(char *to, struct bio_vec *bvec)
-{
-	memcpy_from_page(to, bvec->bv_page, bvec->bv_offset, bvec->bv_len);
-}
-
-/**
- * memcpy_to_bvec - copy data to a bvec
- * @bvec: bvec to copy to
- *
- * Must be called on single-page bvecs only.
- */
-static inline void memcpy_to_bvec(struct bio_vec *bvec, const char *from)
-{
-	memcpy_to_page(bvec->bv_page, bvec->bv_offset, from, bvec->bv_len);
-}
-
-/**
- * memzero_bvec - zero all data in a bvec
- * @bvec: bvec to zero
- *
- * Must be called on single-page bvecs only.
- */
-static inline void memzero_bvec(struct bio_vec *bvec)
-{
-	memzero_page(bvec->bv_page, bvec->bv_offset, bvec->bv_len);
-}
-
-/**
- * bvec_virt - return the virtual address for a bvec
- * @bvec: bvec to return the virtual address for
- *
- * Note: the caller must ensure that @bvec->bv_page is not a highmem page.
- */
-static inline void *bvec_virt(struct bio_vec *bvec)
-{
-	WARN_ON_ONCE(PageHighMem(bvec->bv_page));
-	return page_address(bvec->bv_page) + bvec->bv_offset;
-}
-
-#endif /* __LINUX_BVEC_H */
-<<<<<<< HEAD
-=======
 #endif /* __LINUX_BVEC_ITER_H */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

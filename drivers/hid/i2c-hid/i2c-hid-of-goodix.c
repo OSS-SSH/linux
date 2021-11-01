@@ -26,27 +26,10 @@ struct i2c_hid_of_goodix {
 	struct i2chid_ops ops;
 
 	struct regulator *vdd;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct notifier_block nb;
-	struct mutex regulator_mutex;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct notifier_block nb;
-	struct mutex regulator_mutex;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct gpio_desc *reset_gpio;
 	const struct goodix_i2c_hid_timing_data *timings;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void goodix_i2c_hid_deassert_reset(struct i2c_hid_of_goodix *ihid_goodix,
-					  bool regulator_just_turned_on)
-{
-	if (regulator_just_turned_on && ihid_goodix->timings->post_power_delay_ms)
-=======
 static int goodix_i2c_hid_power_up(struct i2chid_ops *ops)
 {
 	struct i2c_hid_of_goodix *ihid_goodix =
@@ -58,42 +41,13 @@ static int goodix_i2c_hid_power_up(struct i2chid_ops *ops)
 		return ret;
 
 	if (ihid_goodix->timings->post_power_delay_ms)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void goodix_i2c_hid_deassert_reset(struct i2c_hid_of_goodix *ihid_goodix,
-					  bool regulator_just_turned_on)
-{
-	if (regulator_just_turned_on && ihid_goodix->timings->post_power_delay_ms)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		msleep(ihid_goodix->timings->post_power_delay_ms);
 
 	gpiod_set_value_cansleep(ihid_goodix->reset_gpio, 0);
 	if (ihid_goodix->timings->post_gpio_reset_delay_ms)
 		msleep(ihid_goodix->timings->post_gpio_reset_delay_ms);
-<<<<<<< HEAD
-<<<<<<< HEAD
-}
-
-static int goodix_i2c_hid_power_up(struct i2chid_ops *ops)
-{
-	struct i2c_hid_of_goodix *ihid_goodix =
-		container_of(ops, struct i2c_hid_of_goodix, ops);
-
-	return regulator_enable(ihid_goodix->vdd);
-=======
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-}
-
-static int goodix_i2c_hid_power_up(struct i2chid_ops *ops)
-{
-	struct i2c_hid_of_goodix *ihid_goodix =
-		container_of(ops, struct i2c_hid_of_goodix, ops);
-
-	return regulator_enable(ihid_goodix->vdd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void goodix_i2c_hid_power_down(struct i2chid_ops *ops)
@@ -101,116 +55,20 @@ static void goodix_i2c_hid_power_down(struct i2chid_ops *ops)
 	struct i2c_hid_of_goodix *ihid_goodix =
 		container_of(ops, struct i2c_hid_of_goodix, ops);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	regulator_disable(ihid_goodix->vdd);
-}
-
-static int ihid_goodix_vdd_notify(struct notifier_block *nb,
-				    unsigned long event,
-				    void *ignored)
-{
-	struct i2c_hid_of_goodix *ihid_goodix =
-		container_of(nb, struct i2c_hid_of_goodix, nb);
-	int ret = NOTIFY_OK;
-
-	mutex_lock(&ihid_goodix->regulator_mutex);
-
-	switch (event) {
-	case REGULATOR_EVENT_PRE_DISABLE:
-		gpiod_set_value_cansleep(ihid_goodix->reset_gpio, 1);
-		break;
-
-	case REGULATOR_EVENT_ENABLE:
-		goodix_i2c_hid_deassert_reset(ihid_goodix, true);
-		break;
-
-	case REGULATOR_EVENT_ABORT_DISABLE:
-		goodix_i2c_hid_deassert_reset(ihid_goodix, false);
-		break;
-
-	default:
-		ret = NOTIFY_DONE;
-		break;
-	}
-
-	mutex_unlock(&ihid_goodix->regulator_mutex);
-
-	return ret;
-}
-
-=======
 	gpiod_set_value_cansleep(ihid_goodix->reset_gpio, 1);
 	regulator_disable(ihid_goodix->vdd);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	regulator_disable(ihid_goodix->vdd);
-}
-
-static int ihid_goodix_vdd_notify(struct notifier_block *nb,
-				    unsigned long event,
-				    void *ignored)
-{
-	struct i2c_hid_of_goodix *ihid_goodix =
-		container_of(nb, struct i2c_hid_of_goodix, nb);
-	int ret = NOTIFY_OK;
-
-	mutex_lock(&ihid_goodix->regulator_mutex);
-
-	switch (event) {
-	case REGULATOR_EVENT_PRE_DISABLE:
-		gpiod_set_value_cansleep(ihid_goodix->reset_gpio, 1);
-		break;
-
-	case REGULATOR_EVENT_ENABLE:
-		goodix_i2c_hid_deassert_reset(ihid_goodix, true);
-		break;
-
-	case REGULATOR_EVENT_ABORT_DISABLE:
-		goodix_i2c_hid_deassert_reset(ihid_goodix, false);
-		break;
-
-	default:
-		ret = NOTIFY_DONE;
-		break;
-	}
-
-	mutex_unlock(&ihid_goodix->regulator_mutex);
-
-	return ret;
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int i2c_hid_of_goodix_probe(struct i2c_client *client,
 				   const struct i2c_device_id *id)
 {
 	struct i2c_hid_of_goodix *ihid_goodix;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ihid_goodix = devm_kzalloc(&client->dev, sizeof(*ihid_goodix),
 				   GFP_KERNEL);
 	if (!ihid_goodix)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mutex_init(&ihid_goodix->regulator_mutex);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mutex_init(&ihid_goodix->regulator_mutex);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ihid_goodix->ops.power_up = goodix_i2c_hid_power_up;
 	ihid_goodix->ops.power_down = goodix_i2c_hid_power_down;
 
@@ -226,46 +84,6 @@ static int i2c_hid_of_goodix_probe(struct i2c_client *client,
 
 	ihid_goodix->timings = device_get_match_data(&client->dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * We need to control the "reset" line in lockstep with the regulator
-	 * actually turning on an off instead of just when we make the request.
-	 * This matters if the regulator is shared with another consumer.
-	 * - If the regulator is off then we must assert reset. The reset
-	 *   line is active low and on some boards it could cause a current
-	 *   leak if left high.
-	 * - If the regulator is on then we don't want reset asserted for very
-	 *   long. Holding the controller in reset apparently draws extra
-	 *   power.
-	 */
-	mutex_lock(&ihid_goodix->regulator_mutex);
-	ihid_goodix->nb.notifier_call = ihid_goodix_vdd_notify;
-	ret = devm_regulator_register_notifier(ihid_goodix->vdd, &ihid_goodix->nb);
-	if (ret) {
-		mutex_unlock(&ihid_goodix->regulator_mutex);
-		return dev_err_probe(&client->dev, ret,
-			"regulator notifier request failed\n");
-	}
-
-	/*
-	 * If someone else is holding the regulator on (or the regulator is
-	 * an always-on one) we might never be told to deassert reset. Do it
-	 * now. Here we'll assume that someone else might have _just
-	 * barely_ turned the regulator on so we'll do the full
-	 * "post_power_delay" just in case.
-	 */
-	if (ihid_goodix->reset_gpio && regulator_is_enabled(ihid_goodix->vdd))
-		goodix_i2c_hid_deassert_reset(ihid_goodix, true);
-	mutex_unlock(&ihid_goodix->regulator_mutex);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return i2c_hid_core_probe(client, &ihid_goodix->ops, 0x0001);
 }
 

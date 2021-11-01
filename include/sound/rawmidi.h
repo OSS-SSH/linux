@@ -98,14 +98,6 @@ struct snd_rawmidi_file {
 	struct snd_rawmidi *rmidi;
 	struct snd_rawmidi_substream *input;
 	struct snd_rawmidi_substream *output;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int user_pversion;	/* supported protocol version */
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int user_pversion;	/* supported protocol version */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct snd_rawmidi_str {

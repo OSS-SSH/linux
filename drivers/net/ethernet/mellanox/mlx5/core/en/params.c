@@ -167,27 +167,6 @@ u16 mlx5e_get_rq_headroom(struct mlx5_core_dev *mdev,
 	return is_linear_skb ? mlx5e_get_linear_rq_headroom(params, xsk) : 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct mlx5e_lro_param mlx5e_get_lro_param(struct mlx5e_params *params)
-{
-	struct mlx5e_lro_param lro_param;
-
-	lro_param = (struct mlx5e_lro_param) {
-		.enabled = params->lro_en,
-		.timeout = params->lro_timeout,
-	};
-
-	return lro_param;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 u16 mlx5e_calc_sq_stop_room(struct mlx5_core_dev *mdev, struct mlx5e_params *params)
 {
 	bool is_mpwqe = MLX5E_GET_PFLAG(params, MLX5E_PFLAG_SKB_TX_MPWQE);
@@ -492,24 +471,6 @@ static void mlx5e_build_rx_cq_param(struct mlx5_core_dev *mdev,
 	param->cq_period_mode = params->rx_cq_moderation.cq_period_mode;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static u8 rq_end_pad_mode(struct mlx5_core_dev *mdev, struct mlx5e_params *params)
-{
-	bool ro = pcie_relaxed_ordering_enabled(mdev->pdev) &&
-		MLX5_CAP_GEN(mdev, relaxed_ordering_write);
-
-	return ro && params->lro_en ?
-		MLX5_WQ_END_PAD_MODE_NONE : MLX5_WQ_END_PAD_MODE_ALIGN;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mlx5e_build_rq_param(struct mlx5_core_dev *mdev,
 			 struct mlx5e_params *params,
 			 struct mlx5e_xsk_param *xsk,
@@ -547,15 +508,7 @@ int mlx5e_build_rq_param(struct mlx5_core_dev *mdev,
 	}
 
 	MLX5_SET(wq, wq, wq_type,          params->rq_wq_type);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	MLX5_SET(wq, wq, end_padding_mode, rq_end_pad_mode(mdev, params));
-=======
 	MLX5_SET(wq, wq, end_padding_mode, MLX5_WQ_END_PAD_MODE_ALIGN);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	MLX5_SET(wq, wq, end_padding_mode, rq_end_pad_mode(mdev, params));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MLX5_SET(wq, wq, log_wq_stride,
 		 mlx5e_get_rqwq_log_stride(params->rq_wq_type, ndsegs));
 	MLX5_SET(wq, wq, pd,               mdev->mlx5e_res.hw_objs.pdn);

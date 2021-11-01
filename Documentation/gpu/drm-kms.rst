@@ -159,16 +159,6 @@ KMS Core Structures and Functions
 .. kernel-doc:: drivers/gpu/drm/drm_mode_config.c
    :export:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-.. _kms_base_object_abstraction:
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-.. _kms_base_object_abstraction:
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Modeset Base Object Abstraction
 ===============================
 
@@ -473,44 +463,6 @@ KMS Properties
 This section of the documentation is primarily aimed at user-space developers.
 For the driver APIs, see the other sections.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-Requirements
-------------
-
-KMS drivers might need to add extra properties to support new features. Each
-new property introduced in a driver needs to meet a few requirements, in
-addition to the one mentioned above:
-
-* It must be standardized, documenting:
-
-  * The full, exact, name string;
-  * If the property is an enum, all the valid value name strings;
-  * What values are accepted, and what these values mean;
-  * What the property does and how it can be used;
-  * How the property might interact with other, existing properties.
-
-* It must provide a generic helper in the core code to register that
-  property on the object it attaches to.
-
-* Its content must be decoded by the core and provided in the object's
-  associated state structure. That includes anything drivers might want
-  to precompute, like struct drm_clip_rect for planes.
-
-* Its initial state must match the behavior prior to the property
-  introduction. This might be a fixed value matching what the hardware
-  does, or it may be inherited from the state the firmware left the
-  system in during boot.
-
-* An IGT test must be submitted where reasonable.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Property Types and Blob Property Support
 ----------------------------------------
 
@@ -556,18 +508,8 @@ Plane Composition Properties
 Damage Tracking Properties
 --------------------------
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-.. kernel-doc:: drivers/gpu/drm/drm_plane.c
-   :doc: damage tracking
-=======
 .. kernel-doc:: drivers/gpu/drm/drm_damage_helper.c
    :doc: overview
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-.. kernel-doc:: drivers/gpu/drm/drm_plane.c
-   :doc: damage tracking
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Color Management Properties
 ---------------------------

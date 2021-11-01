@@ -5,14 +5,6 @@
 
 #include <linux/clk-provider.h>
 #include <linux/platform_device.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <dt-bindings/phy/phy.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <dt-bindings/phy/phy.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "dsi_phy.h"
 
@@ -469,60 +461,6 @@ int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-int msm_dsi_cphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
-	struct msm_dsi_phy_clk_request *clk_req)
-{
-	const unsigned long bit_rate = clk_req->bitclk_rate;
-	const unsigned long esc_rate = clk_req->escclk_rate;
-	s32 ui, ui_x7;
-	s32 tmax, tmin;
-	s32 coeff = 1000; /* Precision, should avoid overflow */
-	s32 temp;
-
-	if (!bit_rate || !esc_rate)
-		return -EINVAL;
-
-	ui = mult_frac(NSEC_PER_MSEC, coeff, bit_rate / 1000);
-	ui_x7 = ui * 7;
-
-	temp = S_DIV_ROUND_UP(38 * coeff, ui_x7);
-	tmin = max_t(s32, temp, 0);
-	temp = (95 * coeff) / ui_x7;
-	tmax = max_t(s32, temp, 0);
-	timing->clk_prepare = linear_inter(tmax, tmin, 50, 0, false);
-
-	tmin = DIV_ROUND_UP(50 * coeff, ui_x7);
-	tmax = 255;
-	timing->hs_rqst = linear_inter(tmax, tmin, 1, 0, false);
-
-	tmin = DIV_ROUND_UP(100 * coeff, ui_x7) - 1;
-	tmax = 255;
-	timing->hs_exit = linear_inter(tmax, tmin, 10, 0, false);
-
-	tmin = 1;
-	tmax = 32;
-	timing->shared_timings.clk_post = linear_inter(tmax, tmin, 80, 0, false);
-
-	tmin = min_t(s32, 64, S_DIV_ROUND_UP(262 * coeff, ui_x7) - 1);
-	tmax = 64;
-	timing->shared_timings.clk_pre = linear_inter(tmax, tmin, 20, 0, false);
-
-	DBG("%d, %d, %d, %d, %d",
-		timing->shared_timings.clk_pre, timing->shared_timings.clk_post,
-		timing->clk_prepare, timing->hs_exit, timing->hs_rqst);
-
-	return 0;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dsi_phy_regulator_init(struct msm_dsi_phy *phy)
 {
 	struct regulator_bulk_data *s = phy->supplies;
@@ -655,16 +593,6 @@ static const struct of_device_id dsi_phy_dt_match[] = {
 	  .data = &dsi_phy_7nm_cfgs },
 	{ .compatible = "qcom,dsi-phy-7nm-8150",
 	  .data = &dsi_phy_7nm_8150_cfgs },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "qcom,sc7280-dsi-phy-7nm",
-	  .data = &dsi_phy_7nm_7280_cfgs },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "qcom,sc7280-dsi-phy-7nm",
-	  .data = &dsi_phy_7nm_7280_cfgs },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	{}
 };
@@ -697,31 +625,17 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
 {
 	struct msm_dsi_phy *phy;
 	struct device *dev = &pdev->dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 phy_type;
-=======
 	const struct of_device_id *match;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 phy_type;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	phy = devm_kzalloc(dev, sizeof(*phy), GFP_KERNEL);
 	if (!phy)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	match = of_match_node(dsi_phy_dt_match, dev->of_node);
 	if (!match)
 		return -ENODEV;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy->provided_clocks = devm_kzalloc(dev,
 			struct_size(phy->provided_clocks, hws, NUM_PROVIDED_CLKS),
 			GFP_KERNEL);
@@ -730,20 +644,7 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
 
 	phy->provided_clocks->num = NUM_PROVIDED_CLKS;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	phy->cfg = of_device_get_match_data(&pdev->dev);
-	if (!phy->cfg)
-		return -ENODEV;
-
-<<<<<<< HEAD
-=======
 	phy->cfg = match->data;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy->pdev = pdev;
 
 	phy->id = dsi_phy_get_id(phy);
@@ -756,16 +657,6 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
 
 	phy->regulator_ldo_mode = of_property_read_bool(dev->of_node,
 				"qcom,dsi-phy-regulator-ldo-mode");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!of_property_read_u32(dev->of_node, "phy-type", &phy_type))
-		phy->cphy_mode = (phy_type == PHY_TYPE_CPHY);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!of_property_read_u32(dev->of_node, "phy-type", &phy_type))
-		phy->cphy_mode = (phy_type == PHY_TYPE_CPHY);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	phy->base = msm_ioremap_size(pdev, "dsi_phy", "DSI_PHY", &phy->base_size);
 	if (IS_ERR(phy->base)) {
@@ -863,17 +754,7 @@ void __exit msm_dsi_phy_driver_unregister(void)
 }
 
 int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			struct msm_dsi_phy_clk_request *clk_req,
-			struct msm_dsi_phy_shared_timings *shared_timings)
-=======
 			struct msm_dsi_phy_clk_request *clk_req)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			struct msm_dsi_phy_clk_request *clk_req,
-			struct msm_dsi_phy_shared_timings *shared_timings)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device *dev = &phy->pdev->dev;
 	int ret;
@@ -901,18 +782,6 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
 		goto phy_en_fail;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	memcpy(shared_timings, &phy->timing.shared_timings,
-	       sizeof(*shared_timings));
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	memcpy(shared_timings, &phy->timing.shared_timings,
-	       sizeof(*shared_timings));
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Resetting DSI PHY silently changes its PLL registers to reset status,
 	 * which will confuse clock driver and result in wrong output rate of
@@ -952,9 +821,6 @@ void msm_dsi_phy_disable(struct msm_dsi_phy *phy)
 	dsi_phy_disable_resource(phy);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void msm_dsi_phy_get_shared_timings(struct msm_dsi_phy *phy,
 			struct msm_dsi_phy_shared_timings *shared_timings)
 {
@@ -962,9 +828,6 @@ void msm_dsi_phy_get_shared_timings(struct msm_dsi_phy *phy,
 	       sizeof(*shared_timings));
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void msm_dsi_phy_set_usecase(struct msm_dsi_phy *phy,
 			     enum msm_dsi_phy_usecase uc)
 {
@@ -972,24 +835,6 @@ void msm_dsi_phy_set_usecase(struct msm_dsi_phy *phy,
 		phy->usecase = uc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Returns true if we have to clear DSI_LANE_CTRL.HS_REQ_SEL_PHY */
-bool msm_dsi_phy_set_continuous_clock(struct msm_dsi_phy *phy, bool enable)
-{
-	if (!phy || !phy->cfg->ops.set_continuous_clock)
-		return false;
-
-	return phy->cfg->ops.set_continuous_clock(phy, enable);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy *phy,
 	struct clk **byte_clk_provider, struct clk **pixel_clk_provider)
 {

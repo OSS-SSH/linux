@@ -14,14 +14,6 @@
 #include <linux/socket.h>
 #include <linux/in.h>
 #include <linux/in6.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/refcount.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/refcount.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/sunrpc/msg_prot.h>
 #include <linux/sunrpc/sched.h>
@@ -43,15 +35,7 @@ struct rpc_sysfs_client;
  * The high-level client handle
  */
 struct rpc_clnt {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_t		cl_count;	/* Number of references */
-=======
 	atomic_t		cl_count;	/* Number of references */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_t		cl_count;	/* Number of references */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int		cl_clid;	/* client id */
 	struct list_head	cl_clients;	/* Global list of clients */
 	struct list_head	cl_tasks;	/* List of tasks */
@@ -97,14 +81,6 @@ struct rpc_clnt {
 		struct work_struct	cl_work;
 	};
 	const struct cred	*cl_cred;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int		cl_max_connect; /* max number of transports not to the same IP */
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int		cl_max_connect; /* max number of transports not to the same IP */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -159,14 +135,6 @@ struct rpc_create_args {
 	char			*client_name;
 	struct svc_xprt		*bc_xprt;	/* NFSv4.1 backchannel */
 	const struct cred	*cred;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int		max_connect;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int		max_connect;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct rpc_add_xprt_test {

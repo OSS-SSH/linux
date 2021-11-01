@@ -29,9 +29,6 @@ kmem_alloc(size_t size, xfs_km_flags_t flags)
 		congestion_wait(BLK_RW_ASYNC, HZ/50);
 	} while (1);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 
 /*
@@ -96,6 +93,3 @@ kmem_alloc_large(size_t size, xfs_km_flags_t flags)
 		return ptr;
 	return __kmem_vmalloc(size, flags);
 }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

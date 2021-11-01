@@ -10,12 +10,6 @@
 #include <linux/init.h>
 
 #include "timekeeping.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "tick-internal.h"
-
-
-=======
 
 
 /* Since jiffies uses a simple TICK_NSEC multiplier
@@ -38,12 +32,6 @@
 #define JIFFIES_SHIFT	8
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "tick-internal.h"
-
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u64 jiffies_read(struct clocksource *cs)
 {
 	return (u64) jiffies;

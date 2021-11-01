@@ -656,18 +656,8 @@ static void nvme_rdma_free_queue(struct nvme_rdma_queue *queue)
 	if (!test_and_clear_bit(NVME_RDMA_Q_ALLOCATED, &queue->flags))
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rdma_destroy_id(queue->cm_id);
-	nvme_rdma_destroy_queue_ib(queue);
-=======
 	nvme_rdma_destroy_queue_ib(queue);
 	rdma_destroy_id(queue->cm_id);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rdma_destroy_id(queue->cm_id);
-	nvme_rdma_destroy_queue_ib(queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_destroy(&queue->queue_lock);
 }
 
@@ -745,29 +735,13 @@ static int nvme_rdma_alloc_io_queues(struct nvme_rdma_ctrl *ctrl)
 	if (ret)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (nr_io_queues == 0) {
-=======
 	ctrl->ctrl.queue_count = nr_io_queues + 1;
 	if (ctrl->ctrl.queue_count < 2) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (nr_io_queues == 0) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(ctrl->ctrl.device,
 			"unable to set any I/O queues\n");
 		return -ENOMEM;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ctrl->ctrl.queue_count = nr_io_queues + 1;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ctrl->ctrl.queue_count = nr_io_queues + 1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_info(ctrl->ctrl.device,
 		"creating %d I/O queues.\n", nr_io_queues);
 
@@ -1756,24 +1730,10 @@ static void nvme_rdma_process_nvme_rsp(struct nvme_rdma_queue *queue,
 	struct request *rq;
 	struct nvme_rdma_request *req;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rq = nvme_find_rq(nvme_rdma_tagset(queue), cqe->command_id);
-	if (!rq) {
-		dev_err(queue->ctrl->ctrl.device,
-			"got bad command_id %#x on QP %#x\n",
-=======
 	rq = blk_mq_tag_to_rq(nvme_rdma_tagset(queue), cqe->command_id);
 	if (!rq) {
 		dev_err(queue->ctrl->ctrl.device,
 			"tag 0x%x on QP %#x not found\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rq = nvme_find_rq(nvme_rdma_tagset(queue), cqe->command_id);
-	if (!rq) {
-		dev_err(queue->ctrl->ctrl.device,
-			"got bad command_id %#x on QP %#x\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cqe->command_id, queue->qp->qp_num);
 		nvme_rdma_error_recovery(queue->ctrl);
 		return;
@@ -1855,13 +1815,6 @@ static int nvme_rdma_conn_established(struct nvme_rdma_queue *queue)
 	for (i = 0; i < queue->queue_size; i++) {
 		ret = nvme_rdma_post_recv(queue, &queue->rsp_ring[i]);
 		if (ret)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return ret;
-	}
-
-	return 0;
-=======
 			goto out_destroy_queue_ib;
 	}
 
@@ -1870,13 +1823,6 @@ static int nvme_rdma_conn_established(struct nvme_rdma_queue *queue)
 out_destroy_queue_ib:
 	nvme_rdma_destroy_queue_ib(queue);
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return ret;
-	}
-
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int nvme_rdma_conn_rejected(struct nvme_rdma_queue *queue,
@@ -1970,13 +1916,6 @@ static int nvme_rdma_route_resolved(struct nvme_rdma_queue *queue)
 	if (ret) {
 		dev_err(ctrl->ctrl.device,
 			"rdma_connect_locked failed (%d).\n", ret);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ret;
-	}
-
-	return 0;
-=======
 		goto out_destroy_queue_ib;
 	}
 
@@ -1985,13 +1924,6 @@ static int nvme_rdma_route_resolved(struct nvme_rdma_queue *queue)
 out_destroy_queue_ib:
 	nvme_rdma_destroy_queue_ib(queue);
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ret;
-	}
-
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int nvme_rdma_cm_handler(struct rdma_cm_id *cm_id,
@@ -2022,14 +1954,8 @@ static int nvme_rdma_cm_handler(struct rdma_cm_id *cm_id,
 	case RDMA_CM_EVENT_ROUTE_ERROR:
 	case RDMA_CM_EVENT_CONNECT_ERROR:
 	case RDMA_CM_EVENT_UNREACHABLE:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		nvme_rdma_destroy_queue_ib(queue);
 		fallthrough;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case RDMA_CM_EVENT_ADDR_ERROR:
 		dev_dbg(queue->ctrl->ctrl.device,
 			"CM error event %d\n", ev->event);

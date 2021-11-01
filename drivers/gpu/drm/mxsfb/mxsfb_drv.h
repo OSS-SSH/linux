@@ -22,14 +22,6 @@ struct mxsfb_devdata {
 	unsigned int	hs_wdth_mask;
 	unsigned int	hs_wdth_shift;
 	bool		has_overlay;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool		has_ctrl2;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool		has_ctrl2;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct mxsfb_drm_private {
@@ -40,16 +32,6 @@ struct mxsfb_drm_private {
 	struct clk			*clk_axi;
 	struct clk			*clk_disp_axi;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int			irq;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int			irq;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_device		*drm;
 	struct {
 		struct drm_plane	primary;

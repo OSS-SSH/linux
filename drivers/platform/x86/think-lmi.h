@@ -60,16 +60,6 @@ struct think_lmi {
 	bool can_get_bios_selections;
 	bool can_set_bios_password;
 	bool can_get_password_settings;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool pending_changes;
-	bool can_debug_cmd;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool pending_changes;
-	bool can_debug_cmd;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct tlmi_attr_setting *setting[TLMI_SETTINGS_COUNT];
 	struct device *class_dev;

@@ -259,30 +259,14 @@ static void ks_pcie_handle_legacy_irq(struct keystone_pcie *ks_pcie,
 	struct dw_pcie *pci = ks_pcie->pci;
 	struct device *dev = pci->dev;
 	u32 pending;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int virq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pending = ks_pcie_app_readl(ks_pcie, IRQ_STATUS(offset));
 
 	if (BIT(0) & pending) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_dbg(dev, ": irq: irq_offset %d", offset);
-		generic_handle_domain_irq(ks_pcie->legacy_irq_domain, offset);
-=======
 		virq = irq_linear_revmap(ks_pcie->legacy_irq_domain, offset);
 		dev_dbg(dev, ": irq: irq_offset %d, virq %d\n", offset, virq);
 		generic_handle_irq(virq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_dbg(dev, ": irq: irq_offset %d", offset);
-		generic_handle_domain_irq(ks_pcie->legacy_irq_domain, offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* EOI the INTx interrupt */
@@ -595,15 +579,7 @@ static void ks_pcie_msi_irq_handler(struct irq_desc *desc)
 	struct pcie_port *pp = &pci->pp;
 	struct device *dev = pci->dev;
 	struct irq_chip *chip = irq_desc_get_chip(desc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 vector, reg, pos;
-=======
 	u32 vector, virq, reg, pos;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 vector, reg, pos;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(dev, "%s, irq %d\n", __func__, irq);
 
@@ -624,20 +600,10 @@ static void ks_pcie_msi_irq_handler(struct irq_desc *desc)
 			continue;
 
 		vector = offset + (pos << 3);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_dbg(dev, "irq: bit %d, vector %d\n", pos, vector);
-		generic_handle_domain_irq(pp->irq_domain, vector);
-=======
 		virq = irq_linear_revmap(pp->irq_domain, vector);
 		dev_dbg(dev, "irq: bit %d, vector %d, virq %d\n", pos, vector,
 			virq);
 		generic_handle_irq(virq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_dbg(dev, "irq: bit %d, vector %d\n", pos, vector);
-		generic_handle_domain_irq(pp->irq_domain, vector);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chained_irq_exit(chip, desc);

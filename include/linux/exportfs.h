@@ -221,16 +221,6 @@ struct export_operations {
 #define EXPORT_OP_NOATOMIC_ATTR		(0x10) /* Filesystem cannot supply
 						  atomic attribute updates
 						*/
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define EXPORT_OP_SYNC_LOCKS		(0x20) /* Filesystem can't do
-						  asychronous blocking locks */
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define EXPORT_OP_SYNC_LOCKS		(0x20) /* Filesystem can't do
-						  asychronous blocking locks */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long	flags;
 };
 

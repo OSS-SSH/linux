@@ -19,15 +19,7 @@
 #include "es58x_core.h"
 
 #define DRV_VERSION "1.00"
-<<<<<<< HEAD
-<<<<<<< HEAD
-MODULE_AUTHOR("Vincent Mailhol <mailhol.vincent@wanadoo.fr>");
-=======
 MODULE_AUTHOR("Mailhol Vincent <mailhol.vincent@wanadoo.fr>");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-MODULE_AUTHOR("Vincent Mailhol <mailhol.vincent@wanadoo.fr>");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_AUTHOR("Arunachalam Santhanam <arunachalam.santhanam@in.bosch.com>");
 MODULE_DESCRIPTION("Socket CAN driver for ETAS ES58X USB adapters");
 MODULE_VERSION(DRV_VERSION);
@@ -78,15 +70,7 @@ MODULE_DEVICE_TABLE(usb, es58x_id_table);
  * bytes (the start of frame) are skipped and the CRC calculation
  * starts on the third byte.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define ES58X_CRC_CALC_OFFSET sizeof_field(union es58x_urb_cmd, sof)
-=======
 #define ES58X_CRC_CALC_OFFSET 2
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define ES58X_CRC_CALC_OFFSET sizeof_field(union es58x_urb_cmd, sof)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * es58x_calculate_crc() - Compute the crc16 of a given URB.
@@ -2124,34 +2108,6 @@ static int es58x_init_netdev(struct es58x_device *es58x_dev, int channel_idx)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * es58x_free_netdevs() - Release all network resources of the device.
- * @es58x_dev: ES58X device.
- */
-static void es58x_free_netdevs(struct es58x_device *es58x_dev)
-{
-	int i;
-
-	for (i = 0; i < es58x_dev->num_can_ch; i++) {
-		struct net_device *netdev = es58x_dev->netdev[i];
-
-		if (!netdev)
-			continue;
-		unregister_candev(netdev);
-		es58x_dev->netdev[i] = NULL;
-		free_candev(netdev);
-	}
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * es58x_get_product_info() - Get the product information and print them.
  * @es58x_dev: ES58X device.
  *
@@ -2196,33 +2152,14 @@ static int es58x_get_product_info(struct es58x_device *es58x_dev)
 /**
  * es58x_init_es58x_dev() - Initialize the ES58X device.
  * @intf: USB interface.
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @driver_info: Quirks of the device.
- *
- * Return: pointer to an ES58X device on success, error pointer when
- *	any error occurs.
- */
-static struct es58x_device *es58x_init_es58x_dev(struct usb_interface *intf,
-						 kernel_ulong_t driver_info)
-=======
  * @p_es58x_dev: pointer to the address of the ES58X device.
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @driver_info: Quirks of the device.
  *
- * Return: pointer to an ES58X device on success, error pointer when
- *	any error occurs.
+ * Return: zero on success, errno when any error occurs.
  */
-<<<<<<< HEAD
 static int es58x_init_es58x_dev(struct usb_interface *intf,
 				struct es58x_device **p_es58x_dev,
 				kernel_ulong_t driver_info)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct es58x_device *es58x_init_es58x_dev(struct usb_interface *intf,
-						 kernel_ulong_t driver_info)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device *dev = &intf->dev;
 	struct es58x_device *es58x_dev;
@@ -2239,15 +2176,7 @@ static struct es58x_device *es58x_init_es58x_dev(struct usb_interface *intf,
 	ret = usb_find_common_endpoints(intf->cur_altsetting, &ep_in, &ep_out,
 					NULL, NULL);
 	if (ret)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ERR_PTR(ret);
-=======
 		return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ERR_PTR(ret);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (driver_info & ES58X_FD_FAMILY) {
 		param = &es58x_fd_param;
@@ -2257,23 +2186,9 @@ static struct es58x_device *es58x_init_es58x_dev(struct usb_interface *intf,
 		ops = &es581_4_ops;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	es58x_dev = devm_kzalloc(dev, es58x_sizeof_es58x_device(param),
-				 GFP_KERNEL);
-	if (!es58x_dev)
-		return ERR_PTR(-ENOMEM);
-=======
 	es58x_dev = kzalloc(es58x_sizeof_es58x_device(param), GFP_KERNEL);
 	if (!es58x_dev)
 		return -ENOMEM;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	es58x_dev = devm_kzalloc(dev, es58x_sizeof_es58x_device(param),
-				 GFP_KERNEL);
-	if (!es58x_dev)
-		return ERR_PTR(-ENOMEM);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	es58x_dev->param = param;
 	es58x_dev->ops = ops;
@@ -2298,17 +2213,9 @@ static struct es58x_device *es58x_init_es58x_dev(struct usb_interface *intf,
 					     ep_out->bEndpointAddress);
 	es58x_dev->rx_max_packet_size = le16_to_cpu(ep_in->wMaxPacketSize);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return es58x_dev;
-=======
 	*p_es58x_dev = es58x_dev;
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return es58x_dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -2325,49 +2232,32 @@ static int es58x_probe(struct usb_interface *intf,
 	struct es58x_device *es58x_dev;
 	int ch_idx, ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	es58x_dev = es58x_init_es58x_dev(intf, id->driver_info);
-	if (IS_ERR(es58x_dev))
-		return PTR_ERR(es58x_dev);
-
-	ret = es58x_get_product_info(es58x_dev);
-	if (ret)
-		return ret;
-
-	for (ch_idx = 0; ch_idx < es58x_dev->num_can_ch; ch_idx++) {
-		ret = es58x_init_netdev(es58x_dev, ch_idx);
-		if (ret) {
-			es58x_free_netdevs(es58x_dev);
-			return ret;
-		}
-	}
-
-	return ret;
-=======
 	ret = es58x_init_es58x_dev(intf, &es58x_dev, id->driver_info);
 	if (ret)
 		return ret;
-=======
-	es58x_dev = es58x_init_es58x_dev(intf, id->driver_info);
-	if (IS_ERR(es58x_dev))
-		return PTR_ERR(es58x_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = es58x_get_product_info(es58x_dev);
 	if (ret)
-		return ret;
+		goto cleanup_es58x_dev;
 
 	for (ch_idx = 0; ch_idx < es58x_dev->num_can_ch; ch_idx++) {
 		ret = es58x_init_netdev(es58x_dev, ch_idx);
-		if (ret) {
-			es58x_free_netdevs(es58x_dev);
-			return ret;
-		}
+		if (ret)
+			goto cleanup_candev;
 	}
 
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+ cleanup_candev:
+	for (ch_idx = 0; ch_idx < es58x_dev->num_can_ch; ch_idx++)
+		if (es58x_dev->netdev[ch_idx]) {
+			unregister_candev(es58x_dev->netdev[ch_idx]);
+			free_candev(es58x_dev->netdev[ch_idx]);
+		}
+ cleanup_es58x_dev:
+	kfree(es58x_dev);
+
+	return ret;
 }
 
 /**
@@ -2380,23 +2270,12 @@ static int es58x_probe(struct usb_interface *intf,
 static void es58x_disconnect(struct usb_interface *intf)
 {
 	struct es58x_device *es58x_dev = usb_get_intfdata(intf);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct net_device *netdev;
 	int i;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_info(&intf->dev, "Disconnecting %s %s\n",
 		 es58x_dev->udev->manufacturer, es58x_dev->udev->product);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	es58x_free_netdevs(es58x_dev);
-	es58x_free_urbs(es58x_dev);
-=======
 	for (i = 0; i < es58x_dev->num_can_ch; i++) {
 		netdev = es58x_dev->netdev[i];
 		if (!netdev)
@@ -2409,11 +2288,6 @@ static void es58x_disconnect(struct usb_interface *intf)
 	es58x_free_urbs(es58x_dev);
 
 	kfree(es58x_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	es58x_free_netdevs(es58x_dev);
-	es58x_free_urbs(es58x_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_set_intfdata(intf, NULL);
 }
 

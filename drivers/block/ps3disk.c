@@ -83,35 +83,26 @@ static void ps3disk_scatter_gather(struct ps3_storage_device *dev,
 	unsigned int offset = 0;
 	struct req_iterator iter;
 	struct bio_vec bvec;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	rq_for_each_segment(bvec, req, iter) {
-		if (gather)
-			memcpy_from_bvec(dev->bounce_buf + offset, &bvec);
-		else
-			memcpy_to_bvec(&bvec, dev->bounce_buf + offset);
-=======
 	unsigned int i = 0;
 	size_t size;
 	void *buf;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rq_for_each_segment(bvec, req, iter) {
+		unsigned long flags;
+		dev_dbg(&dev->sbd.core, "%s:%u: bio %u: %u sectors from %llu\n",
+			__func__, __LINE__, i, bio_sectors(iter.bio),
+			iter.bio->bi_iter.bi_sector);
+
+		size = bvec.bv_len;
+		buf = bvec_kmap_irq(&bvec, &flags);
 		if (gather)
-			memcpy_from_bvec(dev->bounce_buf + offset, &bvec);
+			memcpy(dev->bounce_buf+offset, buf, size);
 		else
-<<<<<<< HEAD
 			memcpy(buf, dev->bounce_buf+offset, size);
 		offset += size;
 		flush_kernel_dcache_page(bvec.bv_page);
 		bvec_kunmap_irq(buf, &flags);
 		i++;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			memcpy_to_bvec(&bvec, dev->bounce_buf + offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

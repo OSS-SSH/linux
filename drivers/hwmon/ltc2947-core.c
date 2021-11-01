@@ -989,23 +989,8 @@ static int ltc2947_setup(struct ltc2947_data *st)
 		return ret;
 
 	/* check external clock presence */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	extclk = devm_clk_get_optional(st->dev, NULL);
-	if (IS_ERR(extclk))
-		return dev_err_probe(st->dev, PTR_ERR(extclk),
-				     "Failed to get external clock\n");
-
-	if (extclk) {
-<<<<<<< HEAD
-=======
 	extclk = devm_clk_get(st->dev, NULL);
 	if (!IS_ERR(extclk)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unsigned long rate_hz;
 		u8 pre = 0, div, tbctl;
 		u64 aux;

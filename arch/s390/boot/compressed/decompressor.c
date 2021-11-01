@@ -23,17 +23,11 @@
 #define memmove memmove
 #define memzero(s, n) memset((s), 0, (n))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* Symbols defined by linker scripts */
 extern char _end[];
 extern unsigned char _compressed_start[];
 extern unsigned char _compressed_end[];
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_KERNEL_BZIP2
 #define BOOT_HEAP_SIZE	0x400000
 #elif CONFIG_KERNEL_ZSTD

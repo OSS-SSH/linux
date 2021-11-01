@@ -110,9 +110,6 @@ static inline void mga_wait_busy(struct mga_device *mdev)
 	} while ((status & 0x01) && time_before(jiffies, timeout));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*
  * PLL setup
  */
@@ -819,9 +816,6 @@ static int mgag200_crtc_set_plls(struct mga_device *mdev, long clock)
 	return 0;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mgag200_g200wb_hold_bmc(struct mga_device *mdev)
 {
 	u8 tmp;
@@ -1143,26 +1137,10 @@ static void mgag200_set_mode_regs(struct mga_device *mdev,
 	WREG8(MGA_MISC_OUT, misc);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static u8 mgag200_get_bpp_shift(const struct drm_format_info *format)
-{
-	static const u8 bpp_shift[] = {0, 1, 0, 2};
-
-	return bpp_shift[format->cpp[0] - 1];
-=======
 static u8 mgag200_get_bpp_shift(struct mga_device *mdev,
 				const struct drm_format_info *format)
 {
 	return mdev->bpp_shifts[format->cpp[0] - 1];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static u8 mgag200_get_bpp_shift(const struct drm_format_info *format)
-{
-	static const u8 bpp_shift[] = {0, 1, 0, 2};
-
-	return bpp_shift[format->cpp[0] - 1];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1174,15 +1152,7 @@ static u32 mgag200_calculate_offset(struct mga_device *mdev,
 				    const struct drm_framebuffer *fb)
 {
 	u32 offset = fb->pitches[0] / fb->format->cpp[0];
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u8 bppshift = mgag200_get_bpp_shift(fb->format);
-=======
 	u8 bppshift = mgag200_get_bpp_shift(mdev, fb->format);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u8 bppshift = mgag200_get_bpp_shift(fb->format);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (fb->format->cpp[0] * 8 == 24)
 		offset = (offset * 3) >> (4 - bppshift);
@@ -1219,15 +1189,7 @@ static void mgag200_set_format_regs(struct mga_device *mdev,
 
 	bpp = format->cpp[0] * 8;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bppshift = mgag200_get_bpp_shift(format);
-=======
 	bppshift = mgag200_get_bpp_shift(mdev, format);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bppshift = mgag200_get_bpp_shift(format);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (bpp) {
 	case 24:
 		scale = ((1 << bppshift) * 3) - 1;
@@ -1607,19 +1569,7 @@ mgag200_simple_display_pipe_enable(struct drm_simple_display_pipe *pipe,
 	struct drm_crtc *crtc = &pipe->crtc;
 	struct drm_device *dev = crtc->dev;
 	struct mga_device *mdev = to_mga_device(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct mgag200_pll *pixpll = &mdev->pixpll;
 	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
-	struct mgag200_crtc_state *mgag200_crtc_state = to_mgag200_crtc_state(crtc_state);
-=======
-	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct mgag200_pll *pixpll = &mdev->pixpll;
-	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
-	struct mgag200_crtc_state *mgag200_crtc_state = to_mgag200_crtc_state(crtc_state);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_framebuffer *fb = plane_state->fb;
 	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
 	struct drm_rect fullscreen = {
@@ -1634,17 +1584,7 @@ mgag200_simple_display_pipe_enable(struct drm_simple_display_pipe *pipe,
 
 	mgag200_set_format_regs(mdev, fb);
 	mgag200_set_mode_regs(mdev, adjusted_mode);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	pixpll->funcs->update(pixpll, &mgag200_crtc_state->pixpllc);
-=======
 	mgag200_crtc_set_plls(mdev, adjusted_mode->clock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	pixpll->funcs->update(pixpll, &mgag200_crtc_state->pixpllc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mdev->type == G200_ER)
 		mgag200_g200er_reset_tagfifo(mdev);
@@ -1660,15 +1600,7 @@ mgag200_simple_display_pipe_enable(struct drm_simple_display_pipe *pipe,
 	mga_crtc_load_lut(crtc);
 	mgag200_enable_display(mdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mgag200_handle_damage(mdev, fb, &fullscreen, &shadow_plane_state->data[0]);
-=======
 	mgag200_handle_damage(mdev, fb, &fullscreen, &shadow_plane_state->map[0]);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mgag200_handle_damage(mdev, fb, &fullscreen, &shadow_plane_state->data[0]);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -1686,27 +1618,8 @@ mgag200_simple_display_pipe_check(struct drm_simple_display_pipe *pipe,
 				  struct drm_crtc_state *crtc_state)
 {
 	struct drm_plane *plane = plane_state->plane;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct drm_device *dev = plane->dev;
-	struct mga_device *mdev = to_mga_device(dev);
-	struct mgag200_pll *pixpll = &mdev->pixpll;
-	struct mgag200_crtc_state *mgag200_crtc_state = to_mgag200_crtc_state(crtc_state);
-<<<<<<< HEAD
 	struct drm_framebuffer *new_fb = plane_state->fb;
 	struct drm_framebuffer *fb = NULL;
-	int ret;
-=======
-	struct drm_framebuffer *new_fb = plane_state->fb;
-	struct drm_framebuffer *fb = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct drm_framebuffer *new_fb = plane_state->fb;
-	struct drm_framebuffer *fb = NULL;
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!new_fb)
 		return 0;
@@ -1717,22 +1630,6 @@ mgag200_simple_display_pipe_check(struct drm_simple_display_pipe *pipe,
 	if (!fb || (fb->format != new_fb->format))
 		crtc_state->mode_changed = true; /* update PLL settings */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (crtc_state->mode_changed) {
-		ret = pixpll->funcs->compute(pixpll, crtc_state->mode.clock,
-					     &mgag200_crtc_state->pixpllc);
-		if (ret)
-			return ret;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1752,64 +1649,7 @@ mgag200_simple_display_pipe_update(struct drm_simple_display_pipe *pipe,
 		return;
 
 	if (drm_atomic_helper_damage_merged(old_state, state, &damage))
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		mgag200_handle_damage(mdev, fb, &damage, &shadow_plane_state->data[0]);
-}
-
-static struct drm_crtc_state *
-mgag200_simple_display_pipe_duplicate_crtc_state(struct drm_simple_display_pipe *pipe)
-{
-	struct drm_crtc *crtc = &pipe->crtc;
-	struct drm_crtc_state *crtc_state = crtc->state;
-	struct mgag200_crtc_state *mgag200_crtc_state = to_mgag200_crtc_state(crtc_state);
-	struct mgag200_crtc_state *new_mgag200_crtc_state;
-
-	if (!crtc_state)
-		return NULL;
-
-	new_mgag200_crtc_state = kzalloc(sizeof(*new_mgag200_crtc_state), GFP_KERNEL);
-	if (!new_mgag200_crtc_state)
-		return NULL;
-	__drm_atomic_helper_crtc_duplicate_state(crtc, &new_mgag200_crtc_state->base);
-
-	memcpy(&new_mgag200_crtc_state->pixpllc, &mgag200_crtc_state->pixpllc,
-	       sizeof(new_mgag200_crtc_state->pixpllc));
-
-	return &new_mgag200_crtc_state->base;
-}
-
-static void mgag200_simple_display_pipe_destroy_crtc_state(struct drm_simple_display_pipe *pipe,
-							   struct drm_crtc_state *crtc_state)
-{
-	struct mgag200_crtc_state *mgag200_crtc_state = to_mgag200_crtc_state(crtc_state);
-
-	__drm_atomic_helper_crtc_destroy_state(&mgag200_crtc_state->base);
-	kfree(mgag200_crtc_state);
-}
-
-static void mgag200_simple_display_pipe_reset_crtc(struct drm_simple_display_pipe *pipe)
-{
-	struct drm_crtc *crtc = &pipe->crtc;
-	struct mgag200_crtc_state *mgag200_crtc_state;
-
-	if (crtc->state) {
-		mgag200_simple_display_pipe_destroy_crtc_state(pipe, crtc->state);
-		crtc->state = NULL; /* must be set to NULL here */
-	}
-
-	mgag200_crtc_state = kzalloc(sizeof(*mgag200_crtc_state), GFP_KERNEL);
-	if (!mgag200_crtc_state)
-		return;
-	__drm_atomic_helper_crtc_reset(crtc, &mgag200_crtc_state->base);
-<<<<<<< HEAD
-=======
 		mgag200_handle_damage(mdev, fb, &damage, &shadow_plane_state->map[0]);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct drm_simple_display_pipe_funcs
@@ -1819,18 +1659,6 @@ mgag200_simple_display_pipe_funcs = {
 	.disable    = mgag200_simple_display_pipe_disable,
 	.check	    = mgag200_simple_display_pipe_check,
 	.update	    = mgag200_simple_display_pipe_update,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.reset_crtc = mgag200_simple_display_pipe_reset_crtc,
-	.duplicate_crtc_state = mgag200_simple_display_pipe_duplicate_crtc_state,
-	.destroy_crtc_state = mgag200_simple_display_pipe_destroy_crtc_state,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.reset_crtc = mgag200_simple_display_pipe_reset_crtc,
-	.duplicate_crtc_state = mgag200_simple_display_pipe_duplicate_crtc_state,
-	.destroy_crtc_state = mgag200_simple_display_pipe_destroy_crtc_state,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DRM_GEM_SIMPLE_DISPLAY_PIPE_SHADOW_PLANE_FUNCS,
 };
 
@@ -1871,17 +1699,11 @@ int mgag200_modeset_init(struct mga_device *mdev)
 	size_t format_count = ARRAY_SIZE(mgag200_simple_display_pipe_formats);
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	mdev->bpp_shifts[0] = 0;
 	mdev->bpp_shifts[1] = 1;
 	mdev->bpp_shifts[2] = 0;
 	mdev->bpp_shifts[3] = 2;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mgag200_init_regs(mdev);
 
 	ret = drmm_mode_config_init(dev);
@@ -1908,19 +1730,6 @@ int mgag200_modeset_init(struct mga_device *mdev)
 		return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = mgag200_pixpll_init(&mdev->pixpll, mdev);
-	if (ret)
-		return ret;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = drm_simple_display_pipe_init(dev, pipe,
 					   &mgag200_simple_display_pipe_funcs,
 					   mgag200_simple_display_pipe_formats,

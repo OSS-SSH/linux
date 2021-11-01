@@ -395,15 +395,7 @@ static struct irq_chip dln2_gpio_irqchip = {
 static void dln2_gpio_event(struct platform_device *pdev, u16 echo,
 			    const void *data, int len)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int pin, ret;
-=======
 	int pin, irq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int pin, ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	const struct {
 		__le16 count;
@@ -424,49 +416,24 @@ static void dln2_gpio_event(struct platform_device *pdev, u16 echo,
 		return;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	switch (dln2->irq_type[pin]) {
-	case DLN2_GPIO_EVENT_CHANGE_RISING:
-		if (!event->value)
-			return;
-		break;
-	case DLN2_GPIO_EVENT_CHANGE_FALLING:
-		if (event->value)
-			return;
-		break;
-	}
-
-	ret = generic_handle_domain_irq(dln2->gpio.irq.domain, pin);
-	if (unlikely(ret))
-		dev_err(dln2->gpio.parent, "pin %d not mapped to IRQ\n", pin);
-=======
 	irq = irq_find_mapping(dln2->gpio.irq.domain, pin);
 	if (!irq) {
 		dev_err(dln2->gpio.parent, "pin %d not mapped to IRQ\n", pin);
 		return;
 	}
 
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (dln2->irq_type[pin]) {
 	case DLN2_GPIO_EVENT_CHANGE_RISING:
-		if (!event->value)
-			return;
+		if (event->value)
+			generic_handle_irq(irq);
 		break;
 	case DLN2_GPIO_EVENT_CHANGE_FALLING:
-		if (event->value)
-			return;
+		if (!event->value)
+			generic_handle_irq(irq);
 		break;
+	default:
+		generic_handle_irq(irq);
 	}
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	ret = generic_handle_domain_irq(dln2->gpio.irq.domain, pin);
-	if (unlikely(ret))
-		dev_err(dln2->gpio.parent, "pin %d not mapped to IRQ\n", pin);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dln2_gpio_probe(struct platform_device *pdev)

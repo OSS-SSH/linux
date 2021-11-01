@@ -149,24 +149,5 @@
 #define RPM_SMD_CE2_A_CLK			103
 #define RPM_SMD_CE3_CLK				104
 #define RPM_SMD_CE3_A_CLK			105
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define RPM_SMD_QUP_CLK				106
-#define RPM_SMD_QUP_A_CLK			107
-#define RPM_SMD_MMRT_CLK			108
-#define RPM_SMD_MMRT_A_CLK			109
-#define RPM_SMD_MMNRT_CLK			110
-#define RPM_SMD_MMNRT_A_CLK			111
-#define RPM_SMD_SNOC_PERIPH_CLK			112
-#define RPM_SMD_SNOC_PERIPH_A_CLK		113
-#define RPM_SMD_SNOC_LPASS_CLK			114
-#define RPM_SMD_SNOC_LPASS_A_CLK		115
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

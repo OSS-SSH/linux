@@ -53,15 +53,7 @@ void __rcu_read_unlock(void);
  * nesting depth, but makes sense only if CONFIG_PREEMPT_RCU -- in other
  * types of kernel builds, the rcu_read_lock() nesting depth is unknowable.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define rcu_preempt_depth() READ_ONCE(current->rcu_read_lock_nesting)
-=======
 #define rcu_preempt_depth() (current->rcu_read_lock_nesting)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define rcu_preempt_depth() READ_ONCE(current->rcu_read_lock_nesting)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else /* #ifdef CONFIG_PREEMPT_RCU */
 
@@ -175,15 +167,7 @@ void synchronize_rcu_tasks(void);
 # define synchronize_rcu_tasks synchronize_rcu
 # endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# ifdef CONFIG_TASKS_TRACE_RCU
-=======
 # ifdef CONFIG_TASKS_RCU_TRACE
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-# ifdef CONFIG_TASKS_TRACE_RCU
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # define rcu_tasks_trace_qs(t)						\
 	do {								\
 		if (!likely(READ_ONCE((t)->trc_reader_checked)) &&	\

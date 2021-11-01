@@ -37,12 +37,6 @@ enum kasan_arg_stacktrace {
 	KASAN_ARG_STACKTRACE_ON,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static enum kasan_arg kasan_arg __ro_after_init;
-static enum kasan_arg_mode kasan_arg_mode __ro_after_init;
-static enum kasan_arg_stacktrace kasan_arg_stacktrace __ro_after_init;
-=======
 enum kasan_arg_fault {
 	KASAN_ARG_FAULT_DEFAULT,
 	KASAN_ARG_FAULT_REPORT,
@@ -53,12 +47,6 @@ static enum kasan_arg kasan_arg __ro_after_init;
 static enum kasan_arg_mode kasan_arg_mode __ro_after_init;
 static enum kasan_arg_stacktrace kasan_arg_stacktrace __ro_after_init;
 static enum kasan_arg_fault kasan_arg_fault __ro_after_init;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static enum kasan_arg kasan_arg __ro_after_init;
-static enum kasan_arg_mode kasan_arg_mode __ro_after_init;
-static enum kasan_arg_stacktrace kasan_arg_stacktrace __ro_after_init;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Whether KASAN is enabled at all. */
 DEFINE_STATIC_KEY_FALSE(kasan_flag_enabled);
@@ -71,15 +59,9 @@ EXPORT_SYMBOL_GPL(kasan_flag_async);
 /* Whether to collect alloc/free stack traces. */
 DEFINE_STATIC_KEY_FALSE(kasan_flag_stacktrace);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* Whether to panic or print a report and disable tag checking on fault. */
 bool kasan_flag_panic __ro_after_init;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* kasan=off/on */
 static int __init early_kasan_flag(char *arg)
 {
@@ -131,9 +113,6 @@ static int __init early_kasan_flag_stacktrace(char *arg)
 }
 early_param("kasan.stacktrace", early_kasan_flag_stacktrace);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* kasan.fault=report/panic */
 static int __init early_kasan_fault(char *arg)
 {
@@ -151,9 +130,6 @@ static int __init early_kasan_fault(char *arg)
 }
 early_param("kasan.fault", early_kasan_fault);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* kasan_init_hw_tags_cpu() is called for each CPU. */
 void kasan_init_hw_tags_cpu(void)
 {
@@ -166,14 +142,8 @@ void kasan_init_hw_tags_cpu(void)
 	if (kasan_arg == KASAN_ARG_OFF)
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	hw_init_tags(KASAN_TAG_MAX);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Enable async mode only when explicitly requested through
 	 * the command line.
@@ -227,9 +197,6 @@ void __init kasan_init_hw_tags(void)
 		break;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	switch (kasan_arg_fault) {
 	case KASAN_ARG_FAULT_DEFAULT:
 		/*
@@ -246,9 +213,6 @@ void __init kasan_init_hw_tags(void)
 		break;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pr_info("KernelAddressSanitizer initialized\n");
 }
 
@@ -286,18 +250,12 @@ void kasan_free_pages(struct page *page, unsigned int order)
 
 #if IS_ENABLED(CONFIG_KASAN_KUNIT_TEST)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void kasan_set_tagging_report_once(bool state)
 {
 	hw_set_tagging_report_once(state);
 }
 EXPORT_SYMBOL_GPL(kasan_set_tagging_report_once);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void kasan_enable_tagging_sync(void)
 {
 	hw_enable_tagging_sync();

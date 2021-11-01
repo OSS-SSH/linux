@@ -1441,15 +1441,7 @@ static u64 nsim_fib_nexthops_res_occ_get(void *priv)
 static void nsim_fib_set_max_all(struct nsim_fib_data *data,
 				 struct devlink *devlink)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const enum nsim_resource_id res_ids[] = {
-=======
 	enum nsim_resource_id res_ids[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const enum nsim_resource_id res_ids[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		NSIM_RESOURCE_IPV4_FIB, NSIM_RESOURCE_IPV4_FIB_RULES,
 		NSIM_RESOURCE_IPV6_FIB, NSIM_RESOURCE_IPV6_FIB_RULES,
 		NSIM_RESOURCE_NEXTHOPS,

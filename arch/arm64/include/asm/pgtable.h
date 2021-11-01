@@ -715,15 +715,7 @@ static inline pud_t *p4d_pgtable(p4d_t p4d)
 	return (pud_t *)__va(p4d_page_paddr(p4d));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Find an entry in the first-level page table. */
-=======
 /* Find an entry in the frst-level page table. */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Find an entry in the first-level page table. */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define pud_offset_phys(dir, addr)	(p4d_page_paddr(READ_ONCE(*(dir))) + pud_index(addr) * sizeof(pud_t))
 
 #define pud_set_fixmap(addr)		((pud_t *)set_fixmap_offset(FIX_PUD, addr))

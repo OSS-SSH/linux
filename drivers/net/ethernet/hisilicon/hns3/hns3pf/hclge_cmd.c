@@ -169,25 +169,6 @@ static bool hclge_is_special_opcode(u16 opcode)
 	/* these commands have several descriptors,
 	 * and use the first one to save opcode and return value
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	static const u16 spec_opcode[] = {
-		HCLGE_OPC_STATS_64_BIT,
-		HCLGE_OPC_STATS_32_BIT,
-		HCLGE_OPC_STATS_MAC,
-		HCLGE_OPC_STATS_MAC_ALL,
-		HCLGE_OPC_QUERY_32_BIT_REG,
-		HCLGE_OPC_QUERY_64_BIT_REG,
-		HCLGE_QUERY_CLEAR_MPF_RAS_INT,
-		HCLGE_QUERY_CLEAR_PF_RAS_INT,
-		HCLGE_QUERY_CLEAR_ALL_MPF_MSIX_INT,
-		HCLGE_QUERY_CLEAR_ALL_PF_MSIX_INT,
-		HCLGE_QUERY_ALL_ERR_INFO
-	};
-<<<<<<< HEAD
-=======
 	u16 spec_opcode[] = {HCLGE_OPC_STATS_64_BIT,
 			     HCLGE_OPC_STATS_32_BIT,
 			     HCLGE_OPC_STATS_MAC,
@@ -199,9 +180,6 @@ static bool hclge_is_special_opcode(u16 opcode)
 			     HCLGE_QUERY_CLEAR_ALL_MPF_MSIX_INT,
 			     HCLGE_QUERY_CLEAR_ALL_PF_MSIX_INT,
 			     HCLGE_QUERY_ALL_ERR_INFO};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	for (i = 0; i < ARRAY_SIZE(spec_opcode); i++) {
@@ -382,46 +360,10 @@ static void hclge_set_default_capability(struct hclge_dev *hdev)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct hclge_caps_bit_map hclge_cmd_caps_bit_map0[] = {
-	{HCLGE_CAP_UDP_GSO_B, HNAE3_DEV_SUPPORT_UDP_GSO_B},
-	{HCLGE_CAP_PTP_B, HNAE3_DEV_SUPPORT_PTP_B},
-	{HCLGE_CAP_INT_QL_B, HNAE3_DEV_SUPPORT_INT_QL_B},
-	{HCLGE_CAP_TQP_TXRX_INDEP_B, HNAE3_DEV_SUPPORT_TQP_TXRX_INDEP_B},
-	{HCLGE_CAP_HW_TX_CSUM_B, HNAE3_DEV_SUPPORT_HW_TX_CSUM_B},
-	{HCLGE_CAP_UDP_TUNNEL_CSUM_B, HNAE3_DEV_SUPPORT_UDP_TUNNEL_CSUM_B},
-	{HCLGE_CAP_FD_FORWARD_TC_B, HNAE3_DEV_SUPPORT_FD_FORWARD_TC_B},
-	{HCLGE_CAP_FEC_B, HNAE3_DEV_SUPPORT_FEC_B},
-	{HCLGE_CAP_PAUSE_B, HNAE3_DEV_SUPPORT_PAUSE_B},
-	{HCLGE_CAP_PHY_IMP_B, HNAE3_DEV_SUPPORT_PHY_IMP_B},
-	{HCLGE_CAP_RAS_IMP_B, HNAE3_DEV_SUPPORT_RAS_IMP_B},
-	{HCLGE_CAP_RXD_ADV_LAYOUT_B, HNAE3_DEV_SUPPORT_RXD_ADV_LAYOUT_B},
-	{HCLGE_CAP_PORT_VLAN_BYPASS_B, HNAE3_DEV_SUPPORT_PORT_VLAN_BYPASS_B},
-	{HCLGE_CAP_PORT_VLAN_BYPASS_B, HNAE3_DEV_SUPPORT_VLAN_FLTR_MDF_B},
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void hclge_parse_capability(struct hclge_dev *hdev,
 				   struct hclge_query_version_cmd *cmd)
 {
 	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(hdev->pdev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 caps, i;
-
-	caps = __le32_to_cpu(cmd->caps[0]);
-	for (i = 0; i < ARRAY_SIZE(hclge_cmd_caps_bit_map0); i++)
-		if (hnae3_get_bit(caps, hclge_cmd_caps_bit_map0[i].imp_bit))
-			set_bit(hclge_cmd_caps_bit_map0[i].local_bit,
-				ae_dev->caps);
-=======
 	u32 caps;
 
 	caps = __le32_to_cpu(cmd->caps[0]);
@@ -453,16 +395,6 @@ static void hclge_parse_capability(struct hclge_dev *hdev,
 		set_bit(HNAE3_DEV_SUPPORT_PORT_VLAN_BYPASS_B, ae_dev->caps);
 		set_bit(HNAE3_DEV_SUPPORT_VLAN_FLTR_MDF_B, ae_dev->caps);
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 caps, i;
-
-	caps = __le32_to_cpu(cmd->caps[0]);
-	for (i = 0; i < ARRAY_SIZE(hclge_cmd_caps_bit_map0); i++)
-		if (hnae3_get_bit(caps, hclge_cmd_caps_bit_map0[i].imp_bit))
-			set_bit(hclge_cmd_caps_bit_map0[i].local_bit,
-				ae_dev->caps);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static __le32 hclge_build_api_caps(void)
@@ -540,15 +472,7 @@ err_csq:
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int hclge_firmware_compat_config(struct hclge_dev *hdev, bool en)
-=======
 static int hclge_firmware_compat_config(struct hclge_dev *hdev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int hclge_firmware_compat_config(struct hclge_dev *hdev, bool en)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hclge_firmware_compat_cmd *req;
 	struct hclge_desc desc;
@@ -556,19 +480,6 @@ static int hclge_firmware_compat_config(struct hclge_dev *hdev, bool en)
 
 	hclge_cmd_setup_basic_desc(&desc, HCLGE_OPC_IMP_COMPAT_CFG, false);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (en) {
-		req = (struct hclge_firmware_compat_cmd *)desc.data;
-
-		hnae3_set_bit(compat, HCLGE_LINK_EVENT_REPORT_EN_B, 1);
-		hnae3_set_bit(compat, HCLGE_NCSI_ERROR_REPORT_EN_B, 1);
-		if (hnae3_dev_phy_imp_supported(hdev))
-			hnae3_set_bit(compat, HCLGE_PHY_IMP_EN_B, 1);
-
-		req->compat = cpu_to_le32(compat);
-	}
-=======
 	req = (struct hclge_firmware_compat_cmd *)desc.data;
 
 	hnae3_set_bit(compat, HCLGE_LINK_EVENT_REPORT_EN_B, 1);
@@ -576,19 +487,6 @@ static int hclge_firmware_compat_config(struct hclge_dev *hdev, bool en)
 	if (hnae3_dev_phy_imp_supported(hdev))
 		hnae3_set_bit(compat, HCLGE_PHY_IMP_EN_B, 1);
 	req->compat = cpu_to_le32(compat);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (en) {
-		req = (struct hclge_firmware_compat_cmd *)desc.data;
-
-		hnae3_set_bit(compat, HCLGE_LINK_EVENT_REPORT_EN_B, 1);
-		hnae3_set_bit(compat, HCLGE_NCSI_ERROR_REPORT_EN_B, 1);
-		if (hnae3_dev_phy_imp_supported(hdev))
-			hnae3_set_bit(compat, HCLGE_PHY_IMP_EN_B, 1);
-
-		req->compat = cpu_to_le32(compat);
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return hclge_cmd_send(&hdev->hw, &desc, 1);
 }
@@ -645,15 +543,7 @@ int hclge_cmd_init(struct hclge_dev *hdev)
 	/* ask the firmware to enable some features, driver can work without
 	 * it.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = hclge_firmware_compat_config(hdev, true);
-=======
 	ret = hclge_firmware_compat_config(hdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = hclge_firmware_compat_config(hdev, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		dev_warn(&hdev->pdev->dev,
 			 "Firmware compatible features not enabled(%d).\n",
@@ -683,29 +573,9 @@ static void hclge_cmd_uninit_regs(struct hclge_hw *hw)
 
 void hclge_cmd_uninit(struct hclge_dev *hdev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	hclge_firmware_compat_config(hdev, false);
-
-	set_bit(HCLGE_STATE_CMD_DISABLE, &hdev->state);
-	/* wait to ensure that the firmware completes the possible left
-	 * over commands.
-	 */
-	msleep(HCLGE_CMDQ_CLEAR_WAIT_TIME);
-<<<<<<< HEAD
-	spin_lock_bh(&hdev->hw.cmq.csq.lock);
-	spin_lock(&hdev->hw.cmq.crq.lock);
-=======
 	spin_lock_bh(&hdev->hw.cmq.csq.lock);
 	spin_lock(&hdev->hw.cmq.crq.lock);
 	set_bit(HCLGE_STATE_CMD_DISABLE, &hdev->state);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_bh(&hdev->hw.cmq.csq.lock);
-	spin_lock(&hdev->hw.cmq.crq.lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hclge_cmd_uninit_regs(&hdev->hw);
 	spin_unlock(&hdev->hw.cmq.crq.lock);
 	spin_unlock_bh(&hdev->hw.cmq.csq.lock);

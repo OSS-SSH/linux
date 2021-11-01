@@ -107,14 +107,6 @@ struct watchdog_device {
 	unsigned int max_hw_heartbeat_ms;
 	struct notifier_block reboot_nb;
 	struct notifier_block restart_nb;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct notifier_block pm_nb;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct notifier_block pm_nb;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *driver_data;
 	struct watchdog_core_data *wd_data;
 	unsigned long status;
@@ -124,14 +116,6 @@ struct watchdog_device {
 #define WDOG_STOP_ON_REBOOT	2	/* Should be stopped on reboot */
 #define WDOG_HW_RUNNING		3	/* True if HW watchdog running */
 #define WDOG_STOP_ON_UNREGISTER	4	/* Should be stopped on unregister */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define WDOG_NO_PING_ON_SUSPEND	5	/* Ping worker should be stopped on suspend */
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define WDOG_NO_PING_ON_SUSPEND	5	/* Ping worker should be stopped on suspend */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head deferred;
 };
 
@@ -172,21 +156,6 @@ static inline void watchdog_stop_on_unregister(struct watchdog_device *wdd)
 	set_bit(WDOG_STOP_ON_UNREGISTER, &wdd->status);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Use the following function to stop the wdog ping worker when suspending */
-static inline void watchdog_stop_ping_on_suspend(struct watchdog_device *wdd)
-{
-	set_bit(WDOG_NO_PING_ON_SUSPEND, &wdd->status);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Use the following function to check if a timeout value is invalid */
 static inline bool watchdog_timeout_invalid(struct watchdog_device *wdd, unsigned int t)
 {
@@ -240,16 +209,6 @@ extern int watchdog_init_timeout(struct watchdog_device *wdd,
 				  unsigned int timeout_parm, struct device *dev);
 extern int watchdog_register_device(struct watchdog_device *);
 extern void watchdog_unregister_device(struct watchdog_device *);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int watchdog_dev_suspend(struct watchdog_device *wdd);
-int watchdog_dev_resume(struct watchdog_device *wdd);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int watchdog_dev_suspend(struct watchdog_device *wdd);
-int watchdog_dev_resume(struct watchdog_device *wdd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int watchdog_set_last_hw_keepalive(struct watchdog_device *, unsigned int);
 

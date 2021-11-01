@@ -5,24 +5,11 @@
 / {
 	cpus {
 		cpu@300 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			operating-points = <998400 0
-					    798720 0
-					    399360 0
-					    199680 0>;
-<<<<<<< HEAD
-=======
 			/* cpufreq controls */
 			operating-points = <1152000 0
 					    800000 0
 					    400000 0
 					    200000 0>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 	};
 

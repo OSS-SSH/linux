@@ -65,9 +65,6 @@ If that changed setting can be transmitted to the switch through the dynamic
 reconfiguration interface, it is; otherwise the switch is reset and
 reprogrammed with the updated static configuration.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 Traffic support
 ===============
 
@@ -261,9 +258,6 @@ SJA1105 switch 2 also consumes 11 retagging entries, but organized as follows:
 - 4 retagging entries for VLAN 100 installed on the user ports of SJA1105
   switch 1 (``sw1p0`` - ``sw1p3``).
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Switching features
 ==================
 
@@ -288,13 +282,6 @@ untagged), and therefore this mode is also supported.
 
 Segregating the switch ports in multiple bridges is supported (e.g. 2 + 2), but
 all bridges should have the same level of VLAN awareness (either both have
-<<<<<<< HEAD
-<<<<<<< HEAD
-``vlan_filtering`` 0, or both 1).
-
-Topology and loop detection through STP is supported.
-
-=======
 ``vlan_filtering`` 0, or both 1). Also an inevitable limitation of the fact
 that VLAN awareness is global at the switch level is that once a bridge with
 ``vlan_filtering`` enslaves at least one switch port, the other un-bridged
@@ -322,13 +309,6 @@ enslaves eth0 and eth1 (the DSA master of the switch ports). This is because in
 this mode, the switch ports beneath br0 are not capable of regular traffic, and
 are only used as a conduit for switchdev operations.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-``vlan_filtering`` 0, or both 1).
-
-Topology and loop detection through STP is supported.
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Offloads
 ========
 
@@ -532,15 +512,7 @@ not available.
 Device Tree bindings and board design
 =====================================
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-This section references ``Documentation/devicetree/bindings/net/dsa/nxp,sja1105.yaml``
-=======
 This section references ``Documentation/devicetree/bindings/net/dsa/sja1105.txt``
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-This section references ``Documentation/devicetree/bindings/net/dsa/nxp,sja1105.yaml``
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 and aims to showcase some potential switch caveats.
 
 RMII PHY role and out-of-band signaling

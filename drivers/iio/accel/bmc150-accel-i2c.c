@@ -176,14 +176,6 @@ static int bmc150_accel_probe(struct i2c_client *client,
 {
 	struct regmap *regmap;
 	const char *name = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	enum bmc150_type type = BOSCH_UNKNOWN;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	enum bmc150_type type = BOSCH_UNKNOWN;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool block_supported =
 		i2c_check_functionality(client->adapter, I2C_FUNC_I2C) ||
 		i2c_check_functionality(client->adapter,
@@ -196,31 +188,10 @@ static int bmc150_accel_probe(struct i2c_client *client,
 		return PTR_ERR(regmap);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (id) {
-		name = id->name;
-		type = id->driver_data;
-	}
-
-	ret = bmc150_accel_core_probe(&client->dev, regmap, client->irq,
-				      type, name, block_supported);
-=======
 	if (id)
-=======
-	if (id) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		name = id->name;
-		type = id->driver_data;
-	}
 
-<<<<<<< HEAD
 	ret = bmc150_accel_core_probe(&client->dev, regmap, client->irq, name, block_supported);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = bmc150_accel_core_probe(&client->dev, regmap, client->irq,
-				      type, name, block_supported);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -265,14 +236,6 @@ static const struct i2c_device_id bmc150_accel_id[] = {
 	{"bma255"},
 	{"bma280"},
 	{"bmc150_accel"},
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{"bmc156_accel", BOSCH_BMC156},
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{"bmc156_accel", BOSCH_BMC156},
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{"bmi055_accel"},
 	{}
 };
@@ -288,14 +251,6 @@ static const struct of_device_id bmc150_accel_of_match[] = {
 	{ .compatible = "bosch,bma255" },
 	{ .compatible = "bosch,bma280" },
 	{ .compatible = "bosch,bmc150_accel" },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "bosch,bmc156_accel" },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "bosch,bmc156_accel" },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "bosch,bmi055_accel" },
 	{ },
 };

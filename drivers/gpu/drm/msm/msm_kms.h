@@ -117,15 +117,9 @@ struct msm_kms_funcs {
 			struct drm_encoder *encoder,
 			struct drm_encoder *slave_encoder,
 			bool is_cmd_mode);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	void (*set_encoder_mode)(struct msm_kms *kms,
 				 struct drm_encoder *encoder,
 				 bool cmd_mode);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* cleanup: */
 	void (*destroy)(struct msm_kms *kms);
 
@@ -156,15 +150,7 @@ struct msm_kms {
 	const struct msm_kms_funcs *funcs;
 	struct drm_device *dev;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* irq number to be passed on to msm_irq_install */
-=======
 	/* irq number to be passed on to drm_irq_install */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* irq number to be passed on to msm_irq_install */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int irq;
 
 	/* mapper-id used to request GEM buffer mapped for scanout: */

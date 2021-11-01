@@ -293,15 +293,7 @@ static inline bool flow_action_has_entries(const struct flow_action *action)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * flow_offload_has_one_action() - check if exactly one action is present
-=======
  * flow_action_has_one_action() - check if exactly one action is present
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * flow_offload_has_one_action() - check if exactly one action is present
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @action: tc filter flow offload action
  *
  * Returns true if exactly one action is present.
@@ -327,18 +319,6 @@ flow_action_mixed_hw_stats_check(const struct flow_action *action,
 	if (flow_offload_has_one_action(action))
 		return true;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	flow_action_for_each(i, action_entry, action) {
-		if (i && action_entry->hw_stats != last_hw_stats) {
-			NL_SET_ERR_MSG_MOD(extack, "Mixing HW stats types for actions is not supported");
-			return false;
-<<<<<<< HEAD
-		}
-		last_hw_stats = action_entry->hw_stats;
-=======
 	if (action) {
 		flow_action_for_each(i, action_entry, action) {
 			if (i && action_entry->hw_stats != last_hw_stats) {
@@ -347,11 +327,6 @@ flow_action_mixed_hw_stats_check(const struct flow_action *action,
 			}
 			last_hw_stats = action_entry->hw_stats;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		}
-		last_hw_stats = action_entry->hw_stats;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return true;
 }
@@ -478,14 +453,6 @@ struct flow_block_offload {
 	struct list_head *driver_block_list;
 	struct netlink_ext_ack *extack;
 	struct Qdisc *sch;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct list_head *cb_list_head;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct list_head *cb_list_head;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum tc_setup_type;

@@ -496,21 +496,6 @@ struct hns_roce_bank {
 	u32 next; /* Next ID to allocate. */
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct hns_roce_idx_table {
-	u32 *spare_idx;
-	u32 head;
-	u32 tail;
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct hns_roce_qp_table {
 	struct hns_roce_hem_table	qp_table;
 	struct hns_roce_hem_table	irrl_table;
@@ -519,14 +504,6 @@ struct hns_roce_qp_table {
 	struct mutex			scc_mutex;
 	struct hns_roce_bank bank[HNS_ROCE_QP_BANK_NUM];
 	struct mutex bank_mutex;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct hns_roce_idx_table	idx_table;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct hns_roce_idx_table	idx_table;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct hns_roce_cq_table {
@@ -537,15 +514,7 @@ struct hns_roce_cq_table {
 };
 
 struct hns_roce_srq_table {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct hns_roce_ida		srq_ida;
-=======
 	struct hns_roce_bitmap		bitmap;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct hns_roce_ida		srq_ida;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xarray			xa;
 	struct hns_roce_hem_table	table;
 };
@@ -994,15 +963,7 @@ struct hns_roce_dev {
 	struct hns_roce_cmdq	cmd;
 	struct hns_roce_ida pd_ida;
 	struct hns_roce_ida xrcd_ida;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct hns_roce_ida uar_ida;
-=======
 	struct hns_roce_uar_table uar_table;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct hns_roce_ida uar_ida;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hns_roce_mr_table  mr_table;
 	struct hns_roce_cq_table  cq_table;
 	struct hns_roce_srq_table srq_table;
@@ -1157,20 +1118,10 @@ static inline u8 get_tclass(const struct ib_global_route *grh)
 	       grh->traffic_class >> DSCP_SHIFT : grh->traffic_class;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void hns_roce_init_uar_table(struct hns_roce_dev *dev);
-int hns_roce_uar_alloc(struct hns_roce_dev *dev, struct hns_roce_uar *uar);
-=======
 int hns_roce_init_uar_table(struct hns_roce_dev *dev);
 int hns_roce_uar_alloc(struct hns_roce_dev *dev, struct hns_roce_uar *uar);
 void hns_roce_uar_free(struct hns_roce_dev *dev, struct hns_roce_uar *uar);
 void hns_roce_cleanup_uar_table(struct hns_roce_dev *dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void hns_roce_init_uar_table(struct hns_roce_dev *dev);
-int hns_roce_uar_alloc(struct hns_roce_dev *dev, struct hns_roce_uar *uar);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int hns_roce_cmd_init(struct hns_roce_dev *hr_dev);
 void hns_roce_cmd_cleanup(struct hns_roce_dev *hr_dev);
@@ -1195,27 +1146,13 @@ int hns_roce_mtr_map(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
 void hns_roce_init_pd_table(struct hns_roce_dev *hr_dev);
 void hns_roce_init_mr_table(struct hns_roce_dev *hr_dev);
 void hns_roce_init_cq_table(struct hns_roce_dev *hr_dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int hns_roce_init_qp_table(struct hns_roce_dev *hr_dev);
-void hns_roce_init_srq_table(struct hns_roce_dev *hr_dev);
-=======
 void hns_roce_init_qp_table(struct hns_roce_dev *hr_dev);
 int hns_roce_init_srq_table(struct hns_roce_dev *hr_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int hns_roce_init_qp_table(struct hns_roce_dev *hr_dev);
-void hns_roce_init_srq_table(struct hns_roce_dev *hr_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hns_roce_init_xrcd_table(struct hns_roce_dev *hr_dev);
 
 void hns_roce_cleanup_eq_table(struct hns_roce_dev *hr_dev);
 void hns_roce_cleanup_cq_table(struct hns_roce_dev *hr_dev);
 void hns_roce_cleanup_qp_table(struct hns_roce_dev *hr_dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
 void hns_roce_cleanup_srq_table(struct hns_roce_dev *hr_dev);
 
 int hns_roce_bitmap_alloc(struct hns_roce_bitmap *bitmap, unsigned long *obj);
@@ -1223,10 +1160,6 @@ void hns_roce_bitmap_free(struct hns_roce_bitmap *bitmap, unsigned long obj);
 int hns_roce_bitmap_init(struct hns_roce_bitmap *bitmap, u32 num, u32 mask,
 			 u32 reserved_bot, u32 resetrved_top);
 void hns_roce_bitmap_cleanup(struct hns_roce_bitmap *bitmap);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hns_roce_cleanup_bitmap(struct hns_roce_dev *hr_dev);
 
 int hns_roce_create_ah(struct ib_ah *ah, struct rdma_ah_init_attr *init_attr,
@@ -1283,19 +1216,9 @@ int hns_roce_destroy_srq(struct ib_srq *ibsrq, struct ib_udata *udata);
 int hns_roce_alloc_xrcd(struct ib_xrcd *ib_xrcd, struct ib_udata *udata);
 int hns_roce_dealloc_xrcd(struct ib_xrcd *ib_xrcd, struct ib_udata *udata);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int hns_roce_create_qp(struct ib_qp *ib_qp, struct ib_qp_init_attr *init_attr,
-		       struct ib_udata *udata);
-=======
 struct ib_qp *hns_roce_create_qp(struct ib_pd *ib_pd,
 				 struct ib_qp_init_attr *init_attr,
 				 struct ib_udata *udata);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int hns_roce_create_qp(struct ib_qp *ib_qp, struct ib_qp_init_attr *init_attr,
-		       struct ib_udata *udata);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hns_roce_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
 		       int attr_mask, struct ib_udata *udata);
 void init_flush_work(struct hns_roce_dev *hr_dev, struct hns_roce_qp *hr_qp);

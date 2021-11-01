@@ -23,15 +23,7 @@
 //   IN2 +---o--+------------+--o---+ OUT2
 //               loop2 relays
 //
-<<<<<<< HEAD
-<<<<<<< HEAD
-// The 'loop1' gpio pin controls two relays, which are either in loop
-=======
 // The 'loop1' gpio pin controlls two relays, which are either in loop
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-// The 'loop1' gpio pin controls two relays, which are either in loop
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 // position, meaning that input and output are directly connected, or
 // they are in mixer position, meaning that the signal is passed through
 // the 'Sum' mixer. Similarly for 'loop2'.

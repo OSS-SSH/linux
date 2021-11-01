@@ -47,15 +47,7 @@ static int can_validate(struct nlattr *tb[], struct nlattr *data[],
 	}
 
 	if (data[IFLA_CAN_DATA_BITTIMING]) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!is_can_fd)
-=======
 		if (!is_can_fd || !data[IFLA_CAN_BITTIMING])
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!is_can_fd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EOPNOTSUPP;
 	}
 
@@ -124,15 +116,7 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
 		maskedflags = cm->flags & cm->mask;
 
 		/* check whether provided bits are allowed to be passed */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (maskedflags & ~(priv->ctrlmode_supported | ctrlstatic))
-=======
 		if (cm->mask & ~(priv->ctrlmode_supported | ctrlstatic))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (maskedflags & ~(priv->ctrlmode_supported | ctrlstatic))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EOPNOTSUPP;
 
 		/* do not check for static fd-non-iso if 'fd' is disabled */
@@ -148,30 +132,10 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
 		priv->ctrlmode |= maskedflags;
 
 		/* CAN_CTRLMODE_FD can only be set when driver supports FD */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (priv->ctrlmode & CAN_CTRLMODE_FD) {
-			dev->mtu = CANFD_MTU;
-		} else {
-			dev->mtu = CAN_MTU;
-			memset(&priv->data_bittiming, 0,
-			       sizeof(priv->data_bittiming));
-		}
-=======
 		if (priv->ctrlmode & CAN_CTRLMODE_FD)
-=======
-		if (priv->ctrlmode & CAN_CTRLMODE_FD) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev->mtu = CANFD_MTU;
-		} else {
+		else
 			dev->mtu = CAN_MTU;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			memset(&priv->data_bittiming, 0,
-			       sizeof(priv->data_bittiming));
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (data[IFLA_CAN_RESTART_MS]) {

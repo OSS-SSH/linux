@@ -2582,17 +2582,7 @@ static void rtllib_start_ibss_wq(void *data)
 	mutex_lock(&ieee->wx_mutex);
 
 	if (ieee->current_network.ssid_len == 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		strscpy(ieee->current_network.ssid, RTLLIB_DEFAULT_TX_ESSID,
-			sizeof(ieee->current_network.ssid));
-=======
 		strcpy(ieee->current_network.ssid, RTLLIB_DEFAULT_TX_ESSID);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		strscpy(ieee->current_network.ssid, RTLLIB_DEFAULT_TX_ESSID,
-			sizeof(ieee->current_network.ssid));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ieee->current_network.ssid_len = strlen(RTLLIB_DEFAULT_TX_ESSID);
 		ieee->ssid_set = 1;
 	}

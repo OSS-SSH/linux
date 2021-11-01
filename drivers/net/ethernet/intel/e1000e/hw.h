@@ -98,47 +98,14 @@ struct e1000_hw;
 #define E1000_DEV_ID_PCH_TGP_I219_V14		0x15FA
 #define E1000_DEV_ID_PCH_TGP_I219_LM15		0x15F4
 #define E1000_DEV_ID_PCH_TGP_I219_V15		0x15F5
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define E1000_DEV_ID_PCH_RPL_I219_LM23		0x0DC5
-#define E1000_DEV_ID_PCH_RPL_I219_V23		0x0DC6
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define E1000_DEV_ID_PCH_RPL_I219_LM23		0x0DC5
-#define E1000_DEV_ID_PCH_RPL_I219_V23		0x0DC6
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define E1000_DEV_ID_PCH_ADP_I219_LM16		0x1A1E
 #define E1000_DEV_ID_PCH_ADP_I219_V16		0x1A1F
 #define E1000_DEV_ID_PCH_ADP_I219_LM17		0x1A1C
 #define E1000_DEV_ID_PCH_ADP_I219_V17		0x1A1D
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define E1000_DEV_ID_PCH_RPL_I219_LM22		0x0DC7
-#define E1000_DEV_ID_PCH_RPL_I219_V22		0x0DC8
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define E1000_DEV_ID_PCH_RPL_I219_LM22		0x0DC7
-#define E1000_DEV_ID_PCH_RPL_I219_V22		0x0DC8
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define E1000_DEV_ID_PCH_MTP_I219_LM18		0x550A
 #define E1000_DEV_ID_PCH_MTP_I219_V18		0x550B
 #define E1000_DEV_ID_PCH_MTP_I219_LM19		0x550C
 #define E1000_DEV_ID_PCH_MTP_I219_V19		0x550D
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define E1000_DEV_ID_PCH_LNP_I219_LM20		0x550E
-#define E1000_DEV_ID_PCH_LNP_I219_V20		0x550F
-#define E1000_DEV_ID_PCH_LNP_I219_LM21		0x5510
-#define E1000_DEV_ID_PCH_LNP_I219_V21		0x5511
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define E1000_REVISION_4	4
 
@@ -165,14 +132,6 @@ enum e1000_mac_type {
 	e1000_pch_tgp,
 	e1000_pch_adp,
 	e1000_pch_mtp,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	e1000_pch_lnp,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	e1000_pch_lnp,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum e1000_media_type {

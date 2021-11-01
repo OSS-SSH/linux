@@ -27,44 +27,10 @@
 #include <err.h>
 #include <stdlib.h>
 #include <sys/time.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <sys/mman.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <sys/mman.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* all threads will block on the same futex */
 static u_int32_t futex1 = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static pthread_t *worker;
-static bool done = false;
-static pthread_mutex_t thread_lock;
-static pthread_cond_t thread_parent, thread_worker;
-static struct stats waketime_stats, wakeup_stats;
-static unsigned int threads_starting;
-static int futex_flag = 0;
-
-static struct bench_futex_parameters params = {
-	/*
-	 * How many wakeups to do at a time.
-	 * Default to 1 in order to make the kernel work more.
-	 */
-	.nwakes  = 1,
-};
-
-static const struct option options[] = {
-	OPT_UINTEGER('t', "threads", &params.nthreads, "Specify amount of threads"),
-	OPT_UINTEGER('w', "nwakes",  &params.nwakes, "Specify amount of threads to wake at once"),
-	OPT_BOOLEAN( 's', "silent",  &params.silent, "Silent mode: do not display data/details"),
-	OPT_BOOLEAN( 'S', "shared",  &params.fshared, "Use shared futexes instead of private ones"),
-	OPT_BOOLEAN( 'm', "mlockall", &params.mlockall, "Lock all current and future memory"),
-
-=======
 /*
  * How many wakeups to do at a time.
  * Default to 1 in order to make the kernel work more.
@@ -73,39 +39,17 @@ static unsigned int nwakes = 1;
 
 pthread_t *worker;
 static bool done = false, silent = false, fshared = false;
-=======
-static pthread_t *worker;
-static bool done = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static pthread_mutex_t thread_lock;
 static pthread_cond_t thread_parent, thread_worker;
 static struct stats waketime_stats, wakeup_stats;
-static unsigned int threads_starting;
+static unsigned int threads_starting, nthreads = 0;
 static int futex_flag = 0;
 
-static struct bench_futex_parameters params = {
-	/*
-	 * How many wakeups to do at a time.
-	 * Default to 1 in order to make the kernel work more.
-	 */
-	.nwakes  = 1,
-};
-
 static const struct option options[] = {
-<<<<<<< HEAD
 	OPT_UINTEGER('t', "threads", &nthreads, "Specify amount of threads"),
 	OPT_UINTEGER('w', "nwakes",  &nwakes,   "Specify amount of threads to wake at once"),
 	OPT_BOOLEAN( 's', "silent",  &silent,   "Silent mode: do not display data/details"),
 	OPT_BOOLEAN( 'S', "shared",  &fshared,  "Use shared futexes instead of private ones"),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	OPT_UINTEGER('t', "threads", &params.nthreads, "Specify amount of threads"),
-	OPT_UINTEGER('w', "nwakes",  &params.nwakes, "Specify amount of threads to wake at once"),
-	OPT_BOOLEAN( 's', "silent",  &params.silent, "Silent mode: do not display data/details"),
-	OPT_BOOLEAN( 'S', "shared",  &params.fshared, "Use shared futexes instead of private ones"),
-	OPT_BOOLEAN( 'm', "mlockall", &params.mlockall, "Lock all current and future memory"),
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	OPT_END()
 };
 
@@ -140,15 +84,7 @@ static void print_summary(void)
 
 	printf("Wokeup %d of %d threads in %.4f ms (+-%.2f%%)\n",
 	       wakeup_avg,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	       params.nthreads,
-=======
 	       nthreads,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	       params.nthreads,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       waketime_avg / USEC_PER_MSEC,
 	       rel_stddev_stats(waketime_stddev, waketime_avg));
 }
@@ -159,24 +95,10 @@ static void block_threads(pthread_t *w,
 	cpu_set_t cpuset;
 	unsigned int i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	threads_starting = params.nthreads;
-
-	/* create and block all threads */
-	for (i = 0; i < params.nthreads; i++) {
-=======
 	threads_starting = nthreads;
 
 	/* create and block all threads */
 	for (i = 0; i < nthreads; i++) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	threads_starting = params.nthreads;
-
-	/* create and block all threads */
-	for (i = 0; i < params.nthreads; i++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		CPU_ZERO(&cpuset);
 		CPU_SET(cpu->map[i % cpu->nr], &cpuset);
 
@@ -218,55 +140,19 @@ int bench_futex_wake(int argc, const char **argv)
 	act.sa_sigaction = toggle_done;
 	sigaction(SIGINT, &act, NULL);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (params.mlockall) {
-		if (mlockall(MCL_CURRENT | MCL_FUTURE))
-			err(EXIT_FAILURE, "mlockall");
-	}
-
-	if (!params.nthreads)
-		params.nthreads = cpu->nr;
-<<<<<<< HEAD
-
-	worker = calloc(params.nthreads, sizeof(*worker));
-	if (!worker)
-		err(EXIT_FAILURE, "calloc");
-
-	if (!params.fshared)
-=======
 	if (!nthreads)
 		nthreads = cpu->nr;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	worker = calloc(params.nthreads, sizeof(*worker));
+	worker = calloc(nthreads, sizeof(*worker));
 	if (!worker)
 		err(EXIT_FAILURE, "calloc");
 
-<<<<<<< HEAD
 	if (!fshared)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!params.fshared)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		futex_flag = FUTEX_PRIVATE_FLAG;
 
 	printf("Run summary [PID %d]: blocking on %d threads (at [%s] futex %p), "
 	       "waking up %d at a time.\n\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-	       getpid(), params.nthreads, params.fshared ? "shared":"private",
-	       &futex1, params.nwakes);
-=======
 	       getpid(), nthreads, fshared ? "shared":"private",  &futex1, nwakes);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	       getpid(), params.nthreads, params.fshared ? "shared":"private",
-	       &futex1, params.nwakes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	init_stats(&wakeup_stats);
 	init_stats(&waketime_stats);
@@ -293,51 +179,20 @@ int bench_futex_wake(int argc, const char **argv)
 
 		/* Ok, all threads are patiently blocked, start waking folks up */
 		gettimeofday(&start, NULL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		while (nwoken != params.nthreads)
-			nwoken += futex_wake(&futex1,
-					     params.nwakes, futex_flag);
-=======
 		while (nwoken != nthreads)
 			nwoken += futex_wake(&futex1, nwakes, futex_flag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		while (nwoken != params.nthreads)
-			nwoken += futex_wake(&futex1,
-					     params.nwakes, futex_flag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gettimeofday(&end, NULL);
 		timersub(&end, &start, &runtime);
 
 		update_stats(&wakeup_stats, nwoken);
 		update_stats(&waketime_stats, runtime.tv_usec);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!params.silent) {
-			printf("[Run %d]: Wokeup %d of %d threads in %.4f ms\n",
-			       j + 1, nwoken, params.nthreads,
-			       runtime.tv_usec / (double)USEC_PER_MSEC);
-		}
-
-		for (i = 0; i < params.nthreads; i++) {
-=======
 		if (!silent) {
-=======
-		if (!params.silent) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			printf("[Run %d]: Wokeup %d of %d threads in %.4f ms\n",
-			       j + 1, nwoken, params.nthreads,
-			       runtime.tv_usec / (double)USEC_PER_MSEC);
+			       j + 1, nwoken, nthreads, runtime.tv_usec / (double)USEC_PER_MSEC);
 		}
 
-<<<<<<< HEAD
 		for (i = 0; i < nthreads; i++) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		for (i = 0; i < params.nthreads; i++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = pthread_join(worker[i], NULL);
 			if (ret)
 				err(EXIT_FAILURE, "pthread_join");

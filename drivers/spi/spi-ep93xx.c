@@ -550,15 +550,7 @@ static int ep93xx_spi_prepare_hardware(struct spi_master *master)
 	u32 val;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = clk_prepare_enable(espi->clk);
-=======
 	ret = clk_enable(espi->clk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = clk_prepare_enable(espi->clk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -578,15 +570,7 @@ static int ep93xx_spi_unprepare_hardware(struct spi_master *master)
 	val &= ~SSPCR1_SSE;
 	writel(val, espi->mmio + SSPCR1);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clk_disable_unprepare(espi->clk);
-=======
 	clk_disable(espi->clk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clk_disable_unprepare(espi->clk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

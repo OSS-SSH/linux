@@ -18,9 +18,6 @@
 #include <linux/random.h>
 #include <linux/types.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* relevant device tree properties */
 #define FDT_PROP_KEXEC_ELFHDR	"linux,elfcorehdr"
 #define FDT_PROP_MEM_RANGE	"linux,usable-memory-range"
@@ -29,9 +26,6 @@
 #define FDT_PROP_BOOTARGS	"bootargs"
 #define FDT_PROP_KASLR_SEED	"kaslr-seed"
 #define FDT_PROP_RNG_SEED	"rng-seed"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define RNG_SEED_SIZE		128
 
 /*
@@ -316,24 +310,10 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = fdt_delprop(fdt, chosen_node, "linux,elfcorehdr");
-	if (ret && ret != -FDT_ERR_NOTFOUND)
-		goto out;
-	ret = fdt_delprop(fdt, chosen_node, "linux,usable-memory-range");
-=======
 	ret = fdt_delprop(fdt, chosen_node, FDT_PROP_KEXEC_ELFHDR);
 	if (ret && ret != -FDT_ERR_NOTFOUND)
 		goto out;
 	ret = fdt_delprop(fdt, chosen_node, FDT_PROP_MEM_RANGE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = fdt_delprop(fdt, chosen_node, "linux,elfcorehdr");
-	if (ret && ret != -FDT_ERR_NOTFOUND)
-		goto out;
-	ret = fdt_delprop(fdt, chosen_node, "linux,usable-memory-range");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret && ret != -FDT_ERR_NOTFOUND)
 		goto out;
 
@@ -367,28 +347,12 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
 
 	/* add initrd-* */
 	if (initrd_load_addr) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = fdt_setprop_u64(fdt, chosen_node, "linux,initrd-start",
-=======
 		ret = fdt_setprop_u64(fdt, chosen_node, FDT_PROP_INITRD_START,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = fdt_setprop_u64(fdt, chosen_node, "linux,initrd-start",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      initrd_load_addr);
 		if (ret)
 			goto out;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = fdt_setprop_u64(fdt, chosen_node, "linux,initrd-end",
-=======
 		ret = fdt_setprop_u64(fdt, chosen_node, FDT_PROP_INITRD_END,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = fdt_setprop_u64(fdt, chosen_node, "linux,initrd-end",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      initrd_load_addr + initrd_len);
 		if (ret)
 			goto out;
@@ -398,27 +362,11 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
 			goto out;
 
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = fdt_delprop(fdt, chosen_node, "linux,initrd-start");
-		if (ret && (ret != -FDT_ERR_NOTFOUND))
-			goto out;
-
-		ret = fdt_delprop(fdt, chosen_node, "linux,initrd-end");
-=======
 		ret = fdt_delprop(fdt, chosen_node, FDT_PROP_INITRD_START);
 		if (ret && (ret != -FDT_ERR_NOTFOUND))
 			goto out;
 
 		ret = fdt_delprop(fdt, chosen_node, FDT_PROP_INITRD_END);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = fdt_delprop(fdt, chosen_node, "linux,initrd-start");
-		if (ret && (ret != -FDT_ERR_NOTFOUND))
-			goto out;
-
-		ret = fdt_delprop(fdt, chosen_node, "linux,initrd-end");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret && (ret != -FDT_ERR_NOTFOUND))
 			goto out;
 	}
@@ -426,16 +374,8 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
 	if (image->type == KEXEC_TYPE_CRASH) {
 		/* add linux,elfcorehdr */
 		ret = fdt_appendprop_addrrange(fdt, 0, chosen_node,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				"linux,elfcorehdr", image->elf_load_addr,
-=======
 				FDT_PROP_KEXEC_ELFHDR,
 				image->elf_load_addr,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				"linux,elfcorehdr", image->elf_load_addr,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				image->elf_headers_sz);
 		if (ret)
 			goto out;
@@ -451,16 +391,8 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
 
 		/* add linux,usable-memory-range */
 		ret = fdt_appendprop_addrrange(fdt, 0, chosen_node,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				"linux,usable-memory-range", crashk_res.start,
-=======
 				FDT_PROP_MEM_RANGE,
 				crashk_res.start,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				"linux,usable-memory-range", crashk_res.start,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				crashk_res.end - crashk_res.start + 1);
 		if (ret)
 			goto out;
@@ -468,41 +400,17 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
 
 	/* add bootargs */
 	if (cmdline) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = fdt_setprop_string(fdt, chosen_node, "bootargs", cmdline);
-		if (ret)
-			goto out;
-	} else {
-		ret = fdt_delprop(fdt, chosen_node, "bootargs");
-=======
 		ret = fdt_setprop_string(fdt, chosen_node, FDT_PROP_BOOTARGS, cmdline);
 		if (ret)
 			goto out;
 	} else {
 		ret = fdt_delprop(fdt, chosen_node, FDT_PROP_BOOTARGS);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = fdt_setprop_string(fdt, chosen_node, "bootargs", cmdline);
-		if (ret)
-			goto out;
-	} else {
-		ret = fdt_delprop(fdt, chosen_node, "bootargs");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret && (ret != -FDT_ERR_NOTFOUND))
 			goto out;
 	}
 
 	/* add kaslr-seed */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = fdt_delprop(fdt, chosen_node, "kaslr-seed");
-=======
 	ret = fdt_delprop(fdt, chosen_node, FDT_PROP_KASLR_SEED);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = fdt_delprop(fdt, chosen_node, "kaslr-seed");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret == -FDT_ERR_NOTFOUND)
 		ret = 0;
 	else if (ret)
@@ -511,58 +419,26 @@ void *of_kexec_alloc_and_setup_fdt(const struct kimage *image,
 	if (rng_is_initialized()) {
 		u64 seed = get_random_u64();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = fdt_setprop_u64(fdt, chosen_node, "kaslr-seed", seed);
-=======
 		ret = fdt_setprop_u64(fdt, chosen_node, FDT_PROP_KASLR_SEED, seed);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = fdt_setprop_u64(fdt, chosen_node, "kaslr-seed", seed);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			goto out;
 	} else {
 		pr_notice("RNG is not initialised: omitting \"%s\" property\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			  "kaslr-seed");
-=======
 				FDT_PROP_KASLR_SEED);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			  "kaslr-seed");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* add rng-seed */
 	if (rng_is_initialized()) {
 		void *rng_seed;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = fdt_setprop_placeholder(fdt, chosen_node, "rng-seed",
-=======
 		ret = fdt_setprop_placeholder(fdt, chosen_node, FDT_PROP_RNG_SEED,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = fdt_setprop_placeholder(fdt, chosen_node, "rng-seed",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				RNG_SEED_SIZE, &rng_seed);
 		if (ret)
 			goto out;
 		get_random_bytes(rng_seed, RNG_SEED_SIZE);
 	} else {
 		pr_notice("RNG is not initialised: omitting \"%s\" property\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			  "rng-seed");
-=======
 				FDT_PROP_RNG_SEED);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			  "rng-seed");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = fdt_setprop(fdt, chosen_node, "linux,booted-from-kexec", NULL, 0);

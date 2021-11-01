@@ -155,14 +155,6 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(0x10C4, 0x89A4) }, /* CESINEL FTBC Flexible Thyristor Bridge Controller */
 	{ USB_DEVICE(0x10C4, 0x89FB) }, /* Qivicon ZigBee USB Radio Stick */
 	{ USB_DEVICE(0x10C4, 0x8A2A) }, /* HubZ dual ZigBee and Z-Wave dongle */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ USB_DEVICE(0x10C4, 0x8A5B) }, /* CEL EM3588 ZigBee USB Stick */
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ USB_DEVICE(0x10C4, 0x8A5B) }, /* CEL EM3588 ZigBee USB Stick */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ USB_DEVICE(0x10C4, 0x8A5E) }, /* CEL EM3588 ZigBee USB Stick Long Range */
 	{ USB_DEVICE(0x10C4, 0x8B34) }, /* Qivicon ZigBee USB Radio Stick */
 	{ USB_DEVICE(0x10C4, 0xEA60) }, /* Silicon Labs factory default */
@@ -210,18 +202,8 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(0x1901, 0x0194) },	/* GE Healthcare Remote Alarm Box */
 	{ USB_DEVICE(0x1901, 0x0195) },	/* GE B850/B650/B450 CP2104 DP UART interface */
 	{ USB_DEVICE(0x1901, 0x0196) },	/* GE B850 CP2105 DP UART interface */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ USB_DEVICE(0x1901, 0x0197) }, /* GE CS1000 M.2 Key E serial interface */
-	{ USB_DEVICE(0x1901, 0x0198) }, /* GE CS1000 Display serial interface */
-=======
 	{ USB_DEVICE(0x1901, 0x0197) }, /* GE CS1000 Display serial interface */
 	{ USB_DEVICE(0x1901, 0x0198) }, /* GE CS1000 M.2 Key E serial interface */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ USB_DEVICE(0x1901, 0x0197) }, /* GE CS1000 M.2 Key E serial interface */
-	{ USB_DEVICE(0x1901, 0x0198) }, /* GE CS1000 Display serial interface */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ USB_DEVICE(0x199B, 0xBA30) }, /* LORD WSDA-200-USB */
 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
@@ -250,14 +232,6 @@ static const struct usb_device_id id_table[] = {
 	{ USB_DEVICE(0x1FB9, 0x0602) }, /* Lake Shore Model 648 Magnet Power Supply */
 	{ USB_DEVICE(0x1FB9, 0x0700) }, /* Lake Shore Model 737 VSM Controller */
 	{ USB_DEVICE(0x1FB9, 0x0701) }, /* Lake Shore Model 776 Hall Matrix */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ USB_DEVICE(0x2184, 0x0030) }, /* GW Instek GDM-834x Digital Multimeter */
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ USB_DEVICE(0x2184, 0x0030) }, /* GW Instek GDM-834x Digital Multimeter */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ USB_DEVICE(0x2626, 0xEA60) }, /* Aruba Networks 7xxx USB Serial Console */
 	{ USB_DEVICE(0x3195, 0xF190) }, /* Link Instruments MSO-19 */
 	{ USB_DEVICE(0x3195, 0xF280) }, /* Link Instruments MSO-28 */
@@ -283,14 +257,6 @@ struct cp210x_serial_private {
 	speed_t			max_speed;
 	bool			use_actual_rate;
 	bool			no_flow_control;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool			no_event_mode;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool			no_event_mode;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum cp210x_event_state {
@@ -433,14 +399,6 @@ struct cp210x_special_chars {
 };
 
 /* CP210X_VENDOR_SPECIFIC values */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CP210X_GET_FW_VER	0x000E
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CP210X_GET_FW_VER	0x000E
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CP210X_READ_2NCONFIG	0x000E
 #define CP210X_GET_FW_VER_2N	0x0010
 #define CP210X_READ_LATCH	0x00C2
@@ -679,15 +637,7 @@ static int cp210x_read_reg_block(struct usb_serial_port *port, u8 req,
 	result = usb_control_msg(serial->dev, usb_rcvctrlpipe(serial->dev, 0),
 			req, REQTYPE_INTERFACE_TO_HOST, 0,
 			port_priv->bInterfaceNumber, dmabuf, bufsize,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			USB_CTRL_GET_TIMEOUT);
-=======
 			USB_CTRL_SET_TIMEOUT);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			USB_CTRL_GET_TIMEOUT);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (result == bufsize) {
 		memcpy(buf, dmabuf, bufsize);
 		result = 0;
@@ -1161,32 +1111,12 @@ static void cp210x_change_speed(struct tty_struct *tty,
 
 static void cp210x_enable_event_mode(struct usb_serial_port *port)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct cp210x_serial_private *priv = usb_get_serial_data(port->serial);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct cp210x_serial_private *priv = usb_get_serial_data(port->serial);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cp210x_port_private *port_priv = usb_get_serial_port_data(port);
 	int ret;
 
 	if (port_priv->event_mode)
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (priv->no_event_mode)
-		return;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (priv->no_event_mode)
-		return;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	port_priv->event_state = ES_DATA;
 	port_priv->event_mode = true;
 
@@ -1214,9 +1144,6 @@ static void cp210x_disable_event_mode(struct usb_serial_port *port)
 	port_priv->event_mode = false;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int cp210x_set_chars(struct usb_serial_port *port,
 		struct cp210x_special_chars *chars)
 {
@@ -1244,9 +1171,6 @@ static int cp210x_set_chars(struct usb_serial_port *port,
 	return 0;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool cp210x_termios_change(const struct ktermios *a, const struct ktermios *b)
 {
 	bool iflag_change, cc_change;
@@ -1267,14 +1191,6 @@ static void cp210x_set_flow_control(struct tty_struct *tty,
 	struct cp210x_flow_ctl flow_ctl;
 	u32 flow_repl;
 	u32 ctl_hs;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool crtscts;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool crtscts;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	/*
@@ -1301,24 +1217,9 @@ static void cp210x_set_flow_control(struct tty_struct *tty,
 		chars.bXonChar = START_CHAR(tty);
 		chars.bXoffChar = STOP_CHAR(tty);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		ret = cp210x_write_reg_block(port, CP210X_SET_CHARS, &chars,
-				sizeof(chars));
-		if (ret) {
-			dev_err(&port->dev, "failed to set special chars: %d\n",
-					ret);
-		}
-<<<<<<< HEAD
-=======
 		ret = cp210x_set_chars(port, &chars);
 		if (ret)
 			return;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mutex_lock(&port_priv->mutex);
@@ -1347,30 +1248,14 @@ static void cp210x_set_flow_control(struct tty_struct *tty,
 			flow_repl |= CP210X_SERIAL_RTS_FLOW_CTL;
 		else
 			flow_repl |= CP210X_SERIAL_RTS_INACTIVE;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		crtscts = true;
-=======
 		port_priv->crtscts = true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		crtscts = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		ctl_hs &= ~CP210X_SERIAL_CTS_HANDSHAKE;
 		if (port_priv->rts)
 			flow_repl |= CP210X_SERIAL_RTS_ACTIVE;
 		else
 			flow_repl |= CP210X_SERIAL_RTS_INACTIVE;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		crtscts = false;
-=======
 		port_priv->crtscts = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		crtscts = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (I_IXOFF(tty)) {
@@ -1393,26 +1278,8 @@ static void cp210x_set_flow_control(struct tty_struct *tty,
 	flow_ctl.ulControlHandshake = cpu_to_le32(ctl_hs);
 	flow_ctl.ulFlowReplace = cpu_to_le32(flow_repl);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = cp210x_write_reg_block(port, CP210X_SET_FLOW, &flow_ctl,
-			sizeof(flow_ctl));
-	if (ret)
-		goto out_unlock;
-
-	port_priv->crtscts = crtscts;
-=======
 	cp210x_write_reg_block(port, CP210X_SET_FLOW, &flow_ctl,
 			sizeof(flow_ctl));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = cp210x_write_reg_block(port, CP210X_SET_FLOW, &flow_ctl,
-			sizeof(flow_ctl));
-	if (ret)
-		goto out_unlock;
-
-	port_priv->crtscts = crtscts;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_unlock:
 	mutex_unlock(&port_priv->mutex);
 }
@@ -2224,42 +2091,6 @@ static void cp210x_init_max_speed(struct usb_serial *serial)
 	priv->use_actual_rate = use_actual_rate;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void cp2102_determine_quirks(struct usb_serial *serial)
-{
-	struct cp210x_serial_private *priv = usb_get_serial_data(serial);
-	u8 *buf;
-	int ret;
-
-	buf = kmalloc(2, GFP_KERNEL);
-	if (!buf)
-		return;
-	/*
-	 * Some (possibly counterfeit) CP2102 do not support event-insertion
-	 * mode and respond differently to malformed vendor requests.
-	 * Specifically, they return one instead of two bytes when sent a
-	 * two-byte part-number request.
-	 */
-	ret = usb_control_msg(serial->dev, usb_rcvctrlpipe(serial->dev, 0),
-			CP210X_VENDOR_SPECIFIC, REQTYPE_DEVICE_TO_HOST,
-			CP210X_GET_PARTNUM, 0, buf, 2, USB_CTRL_GET_TIMEOUT);
-	if (ret == 1) {
-		dev_dbg(&serial->interface->dev,
-				"device does not support event-insertion mode\n");
-		priv->no_event_mode = true;
-	}
-
-	kfree(buf);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int cp210x_get_fw_version(struct usb_serial *serial, u16 value)
 {
 	struct cp210x_serial_private *priv = usb_get_serial_data(serial);
@@ -2279,49 +2110,12 @@ static int cp210x_get_fw_version(struct usb_serial *serial, u16 value)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void cp210x_determine_type(struct usb_serial *serial)
-=======
 static void cp210x_determine_quirks(struct usb_serial *serial)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void cp210x_determine_type(struct usb_serial *serial)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cp210x_serial_private *priv = usb_get_serial_data(serial);
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = cp210x_read_vendor_block(serial, REQTYPE_DEVICE_TO_HOST,
-			CP210X_GET_PARTNUM, &priv->partnum,
-			sizeof(priv->partnum));
-	if (ret < 0) {
-		dev_warn(&serial->interface->dev,
-				"querying part number failed\n");
-		priv->partnum = CP210X_PARTNUM_UNKNOWN;
-		return;
-	}
-
-	dev_dbg(&serial->interface->dev, "partnum = 0x%02x\n", priv->partnum);
-
 	switch (priv->partnum) {
-	case CP210X_PARTNUM_CP2102:
-		cp2102_determine_quirks(serial);
-		break;
-	case CP210X_PARTNUM_CP2105:
-	case CP210X_PARTNUM_CP2108:
-		cp210x_get_fw_version(serial, CP210X_GET_FW_VER);
-		break;
-<<<<<<< HEAD
-=======
-	switch (priv->partnum) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case CP210X_PARTNUM_CP2102N_QFN28:
 	case CP210X_PARTNUM_CP2102N_QFN24:
 	case CP210X_PARTNUM_CP2102N_QFN20:
@@ -2345,12 +2139,6 @@ static int cp210x_attach(struct usb_serial *serial)
 	if (!priv)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	usb_set_serial_data(serial, priv);
-
-	cp210x_determine_type(serial);
-=======
 	result = cp210x_read_vendor_block(serial, REQTYPE_DEVICE_TO_HOST,
 					  CP210X_GET_PARTNUM, &priv->partnum,
 					  sizeof(priv->partnum));
@@ -2363,12 +2151,6 @@ static int cp210x_attach(struct usb_serial *serial)
 	usb_set_serial_data(serial, priv);
 
 	cp210x_determine_quirks(serial);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	usb_set_serial_data(serial, priv);
-
-	cp210x_determine_type(serial);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cp210x_init_max_speed(serial);
 
 	result = cp210x_gpio_init(serial);

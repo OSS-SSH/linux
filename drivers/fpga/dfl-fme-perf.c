@@ -953,16 +953,6 @@ static int fme_perf_offline_cpu(unsigned int cpu, struct hlist_node *node)
 		return 0;
 
 	priv->cpu = target;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	perf_pmu_migrate_context(&priv->pmu, cpu, target);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	perf_pmu_migrate_context(&priv->pmu, cpu, target);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

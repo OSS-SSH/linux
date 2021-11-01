@@ -1556,14 +1556,6 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
 	struct fuse_mount *fm = get_fuse_mount(inode);
 	struct fuse_conn *fc = fm->fc;
 	struct fuse_inode *fi = get_fuse_inode(inode);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct address_space *mapping = inode->i_mapping;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct address_space *mapping = inode->i_mapping;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	FUSE_ARGS(args);
 	struct fuse_setattr_in inarg;
 	struct fuse_attr_out outarg;
@@ -1588,27 +1580,11 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
 	}
 
 	if (FUSE_IS_DAX(inode) && is_truncate) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		filemap_invalidate_lock(mapping);
-		fault_blocked = true;
-		err = fuse_dax_break_layouts(inode, 0, 0);
-		if (err) {
-			filemap_invalidate_unlock(mapping);
-=======
 		down_write(&fi->i_mmap_sem);
 		fault_blocked = true;
 		err = fuse_dax_break_layouts(inode, 0, 0);
 		if (err) {
 			up_write(&fi->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		filemap_invalidate_lock(mapping);
-		fault_blocked = true;
-		err = fuse_dax_break_layouts(inode, 0, 0);
-		if (err) {
-			filemap_invalidate_unlock(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return err;
 		}
 	}
@@ -1718,29 +1694,13 @@ int fuse_do_setattr(struct dentry *dentry, struct iattr *attr,
 	if ((is_truncate || !is_wb) &&
 	    S_ISREG(inode->i_mode) && oldsize != outarg.attr.size) {
 		truncate_pagecache(inode, outarg.attr.size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		invalidate_inode_pages2(mapping);
-=======
 		invalidate_inode_pages2(inode->i_mapping);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		invalidate_inode_pages2(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 out:
 	if (fault_blocked)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		filemap_invalidate_unlock(mapping);
-=======
 		up_write(&fi->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		filemap_invalidate_unlock(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 
@@ -1751,15 +1711,7 @@ error:
 	clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 
 	if (fault_blocked)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		filemap_invalidate_unlock(mapping);
-=======
 		up_write(&fi->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		filemap_invalidate_unlock(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 

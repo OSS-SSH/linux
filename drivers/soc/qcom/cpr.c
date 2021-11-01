@@ -801,9 +801,6 @@ unlock:
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int cpr_read_efuse(struct device *dev, const char *cname, u32 *data)
 {
 	struct nvmem_cell *cell;
@@ -836,9 +833,6 @@ static int cpr_read_efuse(struct device *dev, const char *cname, u32 *data)
 	return 0;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 cpr_populate_ring_osc_idx(struct cpr_drv *drv)
 {
@@ -849,16 +843,8 @@ cpr_populate_ring_osc_idx(struct cpr_drv *drv)
 	int ret;
 
 	for (; fuse < end; fuse++, fuses++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->ring_osc, &data);
-=======
 		ret = cpr_read_efuse(drv->dev, fuses->ring_osc,
 				     &data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->ring_osc, &data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 		fuse->ring_osc_idx = data;
@@ -877,15 +863,7 @@ static int cpr_read_fuse_uV(const struct cpr_desc *desc,
 	u32 bits = 0;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = nvmem_cell_read_variable_le_u32(drv->dev, init_v_efuse, &bits);
-=======
 	ret = cpr_read_efuse(drv->dev, init_v_efuse, &bits);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = nvmem_cell_read_variable_le_u32(drv->dev, init_v_efuse, &bits);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -954,15 +932,7 @@ static int cpr_fuse_corner_init(struct cpr_drv *drv)
 		}
 
 		/* Populate target quotient by scaling */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->quotient, &fuse->quot);
-=======
 		ret = cpr_read_efuse(drv->dev, fuses->quotient, &fuse->quot);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->quotient, &fuse->quot);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 
@@ -1031,15 +1001,7 @@ static int cpr_calculate_scaling(const char *quot_offset,
 	prev_fuse = fuse - 1;
 
 	if (quot_offset) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = nvmem_cell_read_variable_le_u32(drv->dev, quot_offset, &quot_diff);
-=======
 		ret = cpr_read_efuse(drv->dev, quot_offset, &quot_diff);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = nvmem_cell_read_variable_le_u32(drv->dev, quot_offset, &quot_diff);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 
@@ -1739,15 +1701,7 @@ static int cpr_probe(struct platform_device *pdev)
 	 * initialized after attaching to the power domain,
 	 * since it depends on the CPU's OPP table.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = nvmem_cell_read_variable_le_u32(dev, "cpr_fuse_revision", &cpr_rev);
-=======
 	ret = cpr_read_efuse(dev, "cpr_fuse_revision", &cpr_rev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = nvmem_cell_read_variable_le_u32(dev, "cpr_fuse_revision", &cpr_rev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 

@@ -10,16 +10,6 @@ config DRM_ROCKCHIP
 	select DRM_DW_HDMI if ROCKCHIP_DW_HDMI
 	select DRM_DW_MIPI_DSI if ROCKCHIP_DW_MIPI_DSI
 	select DRM_RGB if ROCKCHIP_RGB
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select GENERIC_PHY if ROCKCHIP_DW_MIPI_DSI
-	select GENERIC_PHY_MIPI_DPHY if ROCKCHIP_DW_MIPI_DSI
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select GENERIC_PHY if ROCKCHIP_DW_MIPI_DSI
-	select GENERIC_PHY_MIPI_DPHY if ROCKCHIP_DW_MIPI_DSI
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select SND_SOC_HDMI_CODEC if ROCKCHIP_CDN_DP && SND_SOC
 	help
 	  Choose this option if you have a Rockchip soc chipset.

@@ -479,20 +479,8 @@ static int sdmmc_post_sig_volt_switch(struct mmci_host *host,
 	u32 status;
 	int ret = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock_irqsave(&host->lock, flags);
-	if (ios->signal_voltage == MMC_SIGNAL_VOLTAGE_180 &&
-	    host->pwr_reg & MCI_STM32_VSWITCHEN) {
-=======
 	if (ios->signal_voltage == MMC_SIGNAL_VOLTAGE_180) {
 		spin_lock_irqsave(&host->lock, flags);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_irqsave(&host->lock, flags);
-	if (ios->signal_voltage == MMC_SIGNAL_VOLTAGE_180 &&
-	    host->pwr_reg & MCI_STM32_VSWITCHEN) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mmci_write_pwrreg(host, host->pwr_reg | MCI_STM32_VSWITCH);
 		spin_unlock_irqrestore(&host->lock, flags);
 
@@ -504,25 +492,9 @@ static int sdmmc_post_sig_volt_switch(struct mmci_host *host,
 
 		writel_relaxed(MCI_STM32_VSWENDC | MCI_STM32_CKSTOPC,
 			       host->base + MMCICLEAR);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		spin_lock_irqsave(&host->lock, flags);
 		mmci_write_pwrreg(host, host->pwr_reg &
 				  ~(MCI_STM32_VSWITCHEN | MCI_STM32_VSWITCH));
 	}
-	spin_unlock_irqrestore(&host->lock, flags);
-=======
-		mmci_write_pwrreg(host, host->pwr_reg &
-				  ~(MCI_STM32_VSWITCHEN | MCI_STM32_VSWITCH));
-	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		spin_lock_irqsave(&host->lock, flags);
-		mmci_write_pwrreg(host, host->pwr_reg &
-				  ~(MCI_STM32_VSWITCHEN | MCI_STM32_VSWITCH));
-	}
-	spin_unlock_irqrestore(&host->lock, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }

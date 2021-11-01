@@ -253,18 +253,6 @@ void inflate_fast(z_streamp strm, unsigned start)
 
 			sfrom = (unsigned short *)(from);
 			loops = len >> 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			do {
-			    if (IS_ENABLED(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS))
-				*sout++ = *sfrom++;
-			    else
-				*sout++ = get_unaligned16(sfrom++);
-			} while (--loops);
-<<<<<<< HEAD
-=======
 			do
 #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
 			    *sout++ = *sfrom++;
@@ -272,9 +260,6 @@ void inflate_fast(z_streamp strm, unsigned start)
 			    *sout++ = get_unaligned16(sfrom++);
 #endif
 			while (--loops);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			out = (unsigned char *)sout;
 			from = (unsigned char *)sfrom;
 		    } else { /* dist == 1 or dist == 2 */

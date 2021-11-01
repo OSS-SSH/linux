@@ -262,15 +262,9 @@
 #define JS_COMMAND_SOFT_STOP_1		0x06	/* Execute SOFT_STOP if JOB_CHAIN_FLAG is 1 */
 #define JS_COMMAND_HARD_STOP_1		0x07	/* Execute HARD_STOP if JOB_CHAIN_FLAG is 1 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define JS_STATUS_EVENT_ACTIVE		0x08
 
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* MMU regs */
 #define MMU_INT_RAWSTAT			0x2000
 #define MMU_INT_CLEAR			0x2004
@@ -325,16 +319,6 @@
 #define AS_FAULTSTATUS_ACCESS_TYPE_READ		(0x2 << 8)
 #define AS_FAULTSTATUS_ACCESS_TYPE_WRITE	(0x3 << 8)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define AS_LOCK_REGION_MIN_SIZE                 (1ULL << 15)
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define AS_LOCK_REGION_MIN_SIZE                 (1ULL << 15)
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define gpu_write(dev, reg, data) writel(data, dev->iomem + reg)
 #define gpu_read(dev, reg) readl(dev->iomem + reg)
 

@@ -79,15 +79,7 @@ _ENTRY(_start);
 	mr	r23,r3
 	mr	r25,r4
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	0f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0:	mflr	r8
 	addis	r3,r8,(is_second_reloc - 0b)@ha
 	lwz	r19,(is_second_reloc - 0b)@l(r3)
@@ -866,15 +858,7 @@ KernelSPE:
 	ori	r3,r3,87f@l
 	mr	r4,r2		/* current */
 	lwz	r5,_NIP(r1)
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bl	_printk
-=======
 	bl	printk
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bl	_printk
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	b	interrupt_return
 #ifdef CONFIG_PRINTK
@@ -1148,15 +1132,7 @@ _GLOBAL(switch_to_as1)
 	bne	1b
 
 	/* Get the tlb entry used by the current running code */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	0f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0:	mflr	r4
 	tlbsx	0,r4
 
@@ -1190,15 +1166,7 @@ _GLOBAL(switch_to_as1)
 _GLOBAL(restore_to_as0)
 	mflr	r0
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bcl	20,31,$+4
-=======
 	bl	0f
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bcl	20,31,$+4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 0:	mflr	r9
 	addi	r9,r9,1f - 0b
 

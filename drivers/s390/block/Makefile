@@ -16,13 +16,7 @@ obj-$(CONFIG_DASD) += dasd_mod.o
 obj-$(CONFIG_DASD_DIAG) += dasd_diag_mod.o
 obj-$(CONFIG_DASD_ECKD) += dasd_eckd_mod.o
 obj-$(CONFIG_DASD_FBA)  += dasd_fba_mod.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 obj-$(CONFIG_BLK_DEV_XPRAM) += xpram.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_DCSSBLK) += dcssblk.o
 
 scm_block-objs := scm_drv.o scm_blk.o

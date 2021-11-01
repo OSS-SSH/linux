@@ -21,14 +21,8 @@ struct armada_plane_state {
 
 void armada_drm_plane_calc(struct drm_plane_state *state, u32 addrs[2][3],
 	u16 pitches[3], bool interlaced);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 int armada_drm_plane_prepare_fb(struct drm_plane *plane,
 	struct drm_plane_state *state);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void armada_drm_plane_cleanup_fb(struct drm_plane *plane,
 	struct drm_plane_state *old_state);
 int armada_drm_plane_atomic_check(struct drm_plane *plane,

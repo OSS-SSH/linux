@@ -9,14 +9,6 @@
 #include <linux/slab.h>
 #include "afs_fs.h"
 #include "internal.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "protocol_afs.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "protocol_afs.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "protocol_yfs.h"
 
 static unsigned int afs_fs_probe_fast_poll_interval = 30 * HZ;
@@ -110,15 +102,7 @@ void afs_fileserver_probe_result(struct afs_call *call)
 	struct afs_addr_list *alist = call->alist;
 	struct afs_server *server = call->server;
 	unsigned int index = call->addr_ix;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int rtt_us = 0, cap0;
-=======
 	unsigned int rtt_us = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int rtt_us = 0, cap0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = call->error;
 
 	_enter("%pU,%u", &server->uuid, index);
@@ -175,20 +159,6 @@ responded:
 			clear_bit(AFS_SERVER_FL_IS_YFS, &server->flags);
 			alist->addrs[index].srx_service = call->service_id;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		cap0 = ntohl(call->tmp);
-		if (cap0 & AFS3_VICED_CAPABILITY_64BITFILES)
-			set_bit(AFS_SERVER_FL_HAS_FS64, &server->flags);
-		else
-			clear_bit(AFS_SERVER_FL_HAS_FS64, &server->flags);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us) &&

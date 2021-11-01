@@ -17,14 +17,8 @@ struct intel_crtc_state;
 struct intel_plane;
 struct intel_plane_state;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 extern const struct drm_plane_helper_funcs intel_plane_helper_funcs;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned int intel_adjusted_rate(const struct drm_rect *src,
 				 const struct drm_rect *dst,
 				 unsigned int rate);
@@ -71,13 +65,5 @@ int intel_atomic_plane_check_clipping(struct intel_plane_state *plane_state,
 				      bool can_position);
 void intel_plane_set_invisible(struct intel_crtc_state *crtc_state,
 			       struct intel_plane_state *plane_state);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void intel_plane_helper_add(struct intel_plane *plane);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void intel_plane_helper_add(struct intel_plane *plane);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* __INTEL_ATOMIC_PLANE_H__ */

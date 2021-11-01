@@ -29,16 +29,8 @@ static struct sk_buff *hellcreek_xmit(struct sk_buff *skb,
 }
 
 static struct sk_buff *hellcreek_rcv(struct sk_buff *skb,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				     struct net_device *dev)
-=======
 				     struct net_device *dev,
 				     struct packet_type *pt)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				     struct net_device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Tag decoding */
 	u8 *tag = skb_tail_pointer(skb) - HELLCREEK_TAG_LEN;
@@ -52,15 +44,7 @@ static struct sk_buff *hellcreek_rcv(struct sk_buff *skb,
 
 	pskb_trim_rcsum(skb, skb->len - HELLCREEK_TAG_LEN);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dsa_default_offload_fwd_mark(skb);
-=======
 	skb->offload_fwd_mark = true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dsa_default_offload_fwd_mark(skb);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return skb;
 }

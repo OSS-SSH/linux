@@ -100,21 +100,9 @@ int kernfs_setattr(struct kernfs_node *kn, const struct iattr *iattr)
 {
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	down_write(&kernfs_rwsem);
-	ret = __kernfs_setattr(kn, iattr);
-	up_write(&kernfs_rwsem);
-=======
 	mutex_lock(&kernfs_mutex);
 	ret = __kernfs_setattr(kn, iattr);
 	mutex_unlock(&kernfs_mutex);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	down_write(&kernfs_rwsem);
-	ret = __kernfs_setattr(kn, iattr);
-	up_write(&kernfs_rwsem);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -128,15 +116,7 @@ int kernfs_iop_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
 	if (!kn)
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	down_write(&kernfs_rwsem);
-=======
 	mutex_lock(&kernfs_mutex);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	down_write(&kernfs_rwsem);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = setattr_prepare(&init_user_ns, dentry, iattr);
 	if (error)
 		goto out;
@@ -149,15 +129,7 @@ int kernfs_iop_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
 	setattr_copy(&init_user_ns, inode, iattr);
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	up_write(&kernfs_rwsem);
-=======
 	mutex_unlock(&kernfs_mutex);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	up_write(&kernfs_rwsem);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return error;
 }
 
@@ -213,30 +185,11 @@ int kernfs_iop_getattr(struct user_namespace *mnt_userns,
 	struct inode *inode = d_inode(path->dentry);
 	struct kernfs_node *kn = inode->i_private;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	down_read(&kernfs_rwsem);
-	spin_lock(&inode->i_lock);
-	kernfs_refresh_inode(kn, inode);
-	generic_fillattr(&init_user_ns, inode, stat);
-	spin_unlock(&inode->i_lock);
-	up_read(&kernfs_rwsem);
-
-=======
 	mutex_lock(&kernfs_mutex);
-=======
-	down_read(&kernfs_rwsem);
-	spin_lock(&inode->i_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kernfs_refresh_inode(kn, inode);
-	generic_fillattr(&init_user_ns, inode, stat);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_unlock(&inode->i_lock);
-	up_read(&kernfs_rwsem);
+	mutex_unlock(&kernfs_mutex);
 
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	generic_fillattr(&init_user_ns, inode, stat);
 	return 0;
 }
 
@@ -319,47 +272,17 @@ int kernfs_iop_permission(struct user_namespace *mnt_userns,
 			  struct inode *inode, int mask)
 {
 	struct kernfs_node *kn;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mask & MAY_NOT_BLOCK)
 		return -ECHILD;
 
 	kn = inode->i_private;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	down_read(&kernfs_rwsem);
-	spin_lock(&inode->i_lock);
-	kernfs_refresh_inode(kn, inode);
-	ret = generic_permission(&init_user_ns, inode, mask);
-	spin_unlock(&inode->i_lock);
-	up_read(&kernfs_rwsem);
-
-	return ret;
-=======
 	mutex_lock(&kernfs_mutex);
-=======
-	down_read(&kernfs_rwsem);
-	spin_lock(&inode->i_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kernfs_refresh_inode(kn, inode);
-	ret = generic_permission(&init_user_ns, inode, mask);
-	spin_unlock(&inode->i_lock);
-	up_read(&kernfs_rwsem);
+	mutex_unlock(&kernfs_mutex);
 
-<<<<<<< HEAD
 	return generic_permission(&init_user_ns, inode, mask);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int kernfs_xattr_get(struct kernfs_node *kn, const char *name,

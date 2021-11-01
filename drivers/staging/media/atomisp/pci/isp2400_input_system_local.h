@@ -356,24 +356,12 @@ struct rx_cfg_s {
 };
 
 /* NOTE: The base has already an offset of 0x0100 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const hrt_address __maybe_unused MIPI_PORT_OFFSET[N_MIPI_PORT_ID] = {
-=======
 static const hrt_address MIPI_PORT_OFFSET[N_MIPI_PORT_ID] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const hrt_address __maybe_unused MIPI_PORT_OFFSET[N_MIPI_PORT_ID] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	0x00000000UL,
 	0x00000100UL,
 	0x00000200UL
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const hrt_address __maybe_unused SUB_SYSTEM_OFFSET[N_SUB_SYSTEM_ID] = {
-=======
 static const mipi_lane_cfg_t MIPI_PORT_MAXLANES[N_MIPI_PORT_ID] = {
 	MIPI_4LANE_CFG,
 	MIPI_1LANE_CFG,
@@ -403,10 +391,6 @@ static const mipi_lane_cfg_t MIPI_PORT_LANES[N_RX_MODE][N_MIPI_PORT_ID] = {
 };
 
 static const hrt_address SUB_SYSTEM_OFFSET[N_SUB_SYSTEM_ID] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const hrt_address __maybe_unused SUB_SYSTEM_OFFSET[N_SUB_SYSTEM_ID] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	0x00001000UL,
 	0x00002000UL,
 	0x00003000UL,

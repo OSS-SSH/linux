@@ -70,13 +70,7 @@ struct usb_mixer_elem_list {
 	bool is_std_info;
 	usb_mixer_elem_dump_func_t dump;
 	usb_mixer_elem_resume_func_t resume;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	usb_mixer_elem_resume_func_t reset_resume;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* iterate over mixer element list of the given unit id */
@@ -103,16 +97,8 @@ struct usb_mixer_elem_info {
 	void *private_data;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int snd_usb_create_mixer(struct snd_usb_audio *chip, int ctrlif);
-=======
 int snd_usb_create_mixer(struct snd_usb_audio *chip, int ctrlif,
 			 int ignore_error);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int snd_usb_create_mixer(struct snd_usb_audio *chip, int ctrlif);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void snd_usb_mixer_disconnect(struct usb_mixer_interface *mixer);
 
 void snd_usb_mixer_notify_id(struct usb_mixer_interface *mixer, int unitid);
@@ -136,15 +122,7 @@ int snd_usb_mixer_vol_tlv(struct snd_kcontrol *kcontrol, int op_flag,
 
 #ifdef CONFIG_PM
 int snd_usb_mixer_suspend(struct usb_mixer_interface *mixer);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int snd_usb_mixer_resume(struct usb_mixer_interface *mixer);
-=======
 int snd_usb_mixer_resume(struct usb_mixer_interface *mixer, bool reset_resume);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int snd_usb_mixer_resume(struct usb_mixer_interface *mixer);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 int snd_usb_set_cur_mix_value(struct usb_mixer_elem_info *cval, int channel,

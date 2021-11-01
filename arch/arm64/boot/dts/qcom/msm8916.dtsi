@@ -489,35 +489,6 @@
 				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
 		};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		stm: stm@802000 {
-			compatible = "arm,coresight-stm", "arm,primecell";
-			reg = <0x00802000 0x1000>,
-			      <0x09280000 0x180000>;
-			reg-names = "stm-base", "stm-stimulus-base";
-
-			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
-			clock-names = "apb_pclk", "atclk";
-
-			status = "disabled";
-
-			out-ports {
-				port {
-					stm_out: endpoint {
-						remote-endpoint = <&funnel0_in7>;
-					};
-				};
-			};
-		};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* System CTIs */
 		/* CTI 0 - TMC connections */
 		cti0: cti@810000 {
@@ -591,22 +562,6 @@
 						remote-endpoint = <&funnel1_out>;
 					};
 				};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-				port@7 {
-					reg = <7>;
-					funnel0_in7: endpoint {
-						remote-endpoint = <&stm_out>;
-					};
-				};
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			out-ports {

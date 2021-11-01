@@ -2,30 +2,12 @@
 
 .. include:: ../disclaimer-zh_CN.rst
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-:Original: Documentation/cpu-freq/cpufreq-stats.rst
-
-:翻译:
-
- 司延腾 Yanteng Si <siyanteng@loongson.cn>
-
-.. _cn_cpufreq-stats.rst:
-
-=======
 :Original: :doc:`../../../cpu-freq/cpufreq-stats`
 :Translator: Yanteng Si <siyanteng@loongson.cn>
-=======
-:Original: Documentation/cpu-freq/cpufreq-stats.rst
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-:翻译:
-
- 司延腾 Yanteng Si <siyanteng@loongson.cn>
 
 .. _cn_cpufreq-stats.rst:
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
 ==========================================
 sysfs CPUFreq Stats的一般说明
 ==========================================

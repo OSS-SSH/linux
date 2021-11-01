@@ -302,13 +302,7 @@ static const struct drm_simple_display_pipe_funcs display_funcs = {
 	.mode_valid = display_mode_valid,
 	.enable = display_enable,
 	.disable = display_disable,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.prepare_fb = drm_gem_simple_display_pipe_prepare_fb,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.check = display_check,
 	.update = display_update,
 };

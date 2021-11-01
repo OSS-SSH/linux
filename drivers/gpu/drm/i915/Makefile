@@ -19,13 +19,7 @@ subdir-ccflags-y += $(call cc-disable-warning, missing-field-initializers)
 subdir-ccflags-y += $(call cc-disable-warning, unused-but-set-variable)
 # clang warnings
 subdir-ccflags-y += $(call cc-disable-warning, sign-compare)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 subdir-ccflags-y += $(call cc-disable-warning, sometimes-uninitialized)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 subdir-ccflags-y += $(call cc-disable-warning, initializer-overrides)
 subdir-ccflags-y += $(call cc-disable-warning, frame-address)
 subdir-ccflags-$(CONFIG_DRM_I915_WERROR) += -Werror
@@ -44,14 +38,6 @@ i915-y += i915_drv.o \
 	  i915_irq.o \
 	  i915_getparam.o \
 	  i915_mitigations.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	  i915_module.o \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	  i915_module.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  i915_params.o \
 	  i915_pci.o \
 	  i915_scatterlist.o \
@@ -103,13 +89,7 @@ gt-y += \
 	gt/gen8_ppgtt.o \
 	gt/intel_breadcrumbs.o \
 	gt/intel_context.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	gt/intel_context_param.o \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gt/intel_context_sseu.o \
 	gt/intel_engine_cs.o \
 	gt/intel_engine_heartbeat.o \
@@ -128,14 +108,6 @@ gt-y += \
 	gt/intel_gtt.o \
 	gt/intel_llc.o \
 	gt/intel_lrc.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	gt/intel_migrate.o \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	gt/intel_migrate.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gt/intel_mocs.o \
 	gt/intel_ppgtt.o \
 	gt/intel_rc6.o \
@@ -163,13 +135,7 @@ i915-y += $(gt-y)
 gem-y += \
 	gem/i915_gem_busy.o \
 	gem/i915_gem_clflush.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	gem/i915_gem_client_blt.o \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gem/i915_gem_context.o \
 	gem/i915_gem_create.o \
 	gem/i915_gem_dmabuf.o \
@@ -177,13 +143,7 @@ gem-y += \
 	gem/i915_gem_execbuffer.o \
 	gem/i915_gem_internal.o \
 	gem/i915_gem_object.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	gem/i915_gem_object_blt.o \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gem/i915_gem_lmem.o \
 	gem/i915_gem_mman.o \
 	gem/i915_gem_pages.o \
@@ -195,54 +155,21 @@ gem-y += \
 	gem/i915_gem_stolen.o \
 	gem/i915_gem_throttle.o \
 	gem/i915_gem_tiling.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	gem/i915_gem_ttm.o \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	gem/i915_gem_ttm.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gem/i915_gem_userptr.o \
 	gem/i915_gem_wait.o \
 	gem/i915_gemfs.o
 i915-y += \
 	  $(gem-y) \
 	  i915_active.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	  i915_buddy.o \
 	  i915_cmd_parser.o \
 	  i915_gem_evict.o \
 	  i915_gem_gtt.o \
-	  i915_gem_ww.o \
 	  i915_gem.o \
-=======
-=======
-	  i915_buddy.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	  i915_cmd_parser.o \
-	  i915_gem_evict.o \
-	  i915_gem_gtt.o \
-	  i915_gem_ww.o \
-	  i915_gem.o \
-<<<<<<< HEAD
 	  i915_globals.o \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  i915_query.o \
 	  i915_request.o \
 	  i915_scheduler.o \
 	  i915_trace_points.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	  i915_ttm_buddy_manager.o \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	  i915_ttm_buddy_manager.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  i915_vma.o \
 	  intel_wopcm.o
 
@@ -257,16 +184,6 @@ i915-y += gt/uc/intel_uc.o \
 	  gt/uc/intel_guc_fw.o \
 	  gt/uc/intel_guc_log.o \
 	  gt/uc/intel_guc_log_debugfs.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	  gt/uc/intel_guc_rc.o \
-	  gt/uc/intel_guc_slpc.o \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	  gt/uc/intel_guc_rc.o \
-	  gt/uc/intel_guc_slpc.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  gt/uc/intel_guc_submission.o \
 	  gt/uc/intel_huc.o \
 	  gt/uc/intel_huc_debugfs.o \
@@ -348,14 +265,6 @@ i915-y += \
 	display/intel_pps.o \
 	display/intel_qp_tables.o \
 	display/intel_sdvo.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	display/intel_snps_phy.o \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	display/intel_snps_phy.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	display/intel_tv.o \
 	display/intel_vdsc.o \
 	display/intel_vrr.o \
@@ -367,19 +276,7 @@ i915-y += i915_perf.o
 # Post-mortem debug and GPU hang state capture
 i915-$(CONFIG_DRM_I915_CAPTURE_ERROR) += i915_gpu_error.o
 i915-$(CONFIG_DRM_I915_SELFTEST) += \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	gem/selftests/i915_gem_client_blt.o \
 	gem/selftests/igt_gem_utils.o \
-	selftests/intel_scheduler_helpers.o \
-=======
-	gem/selftests/igt_gem_utils.o \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	gem/selftests/i915_gem_client_blt.o \
-	gem/selftests/igt_gem_utils.o \
-	selftests/intel_scheduler_helpers.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	selftests/i915_random.o \
 	selftests/i915_selftest.o \
 	selftests/igt_atomic.o \

@@ -156,29 +156,15 @@ struct rkisp1_vdev_node {
  * @vb:		vb2 buffer
  * @queue:	entry of the buffer in the queue
  * @buff_addr:	dma addresses of each plane, used only by the capture devices: selfpath, mainpath
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * @vaddr:	virtual address for buffers used by params and stats devices
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct rkisp1_buffer {
 	struct vb2_v4l2_buffer vb;
 	struct list_head queue;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 buff_addr[VIDEO_MAX_PLANES];
-=======
 	union {
 		u32 buff_addr[VIDEO_MAX_PLANES];
 		void *vaddr;
 	};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 buff_addr[VIDEO_MAX_PLANES];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*

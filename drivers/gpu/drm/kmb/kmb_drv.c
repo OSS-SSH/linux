@@ -17,13 +17,7 @@
 #include <drm/drm_drv.h>
 #include <drm/drm_gem_cma_helper.h>
 #include <drm/drm_gem_framebuffer_helper.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <drm/drm_irq.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_vblank.h>
 
@@ -179,23 +173,10 @@ static int kmb_setup_mode_config(struct drm_device *drm)
 	ret = drmm_mode_config_init(drm);
 	if (ret)
 		return ret;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	drm->mode_config.min_width = KMB_FB_MIN_WIDTH;
-	drm->mode_config.min_height = KMB_FB_MIN_HEIGHT;
-	drm->mode_config.max_width = KMB_FB_MAX_WIDTH;
-	drm->mode_config.max_height = KMB_FB_MAX_HEIGHT;
-<<<<<<< HEAD
-=======
 	drm->mode_config.min_width = KMB_MIN_WIDTH;
 	drm->mode_config.min_height = KMB_MIN_HEIGHT;
 	drm->mode_config.max_width = KMB_MAX_WIDTH;
 	drm->mode_config.max_height = KMB_MAX_HEIGHT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drm->mode_config.funcs = &kmb_mode_config_funcs;
 
 	ret = kmb_setup_crtc(drm);
@@ -222,14 +203,6 @@ static irqreturn_t handle_lcd_irq(struct drm_device *dev)
 	unsigned long status, val, val1;
 	int plane_id, dma0_state, dma1_state;
 	struct kmb_drm_private *kmb = to_kmb(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 ctrl = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 ctrl = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	status = kmb_read_lcd(kmb, LCD_INT_STATUS);
 
@@ -254,28 +227,6 @@ static irqreturn_t handle_lcd_irq(struct drm_device *dev)
 				kmb_clr_bitmask_lcd(kmb, LCD_CONTROL,
 						    kmb->plane_status[plane_id].ctrl);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-				ctrl = kmb_read_lcd(kmb, LCD_CONTROL);
-				if (!(ctrl & (LCD_CTRL_VL1_ENABLE |
-				    LCD_CTRL_VL2_ENABLE |
-				    LCD_CTRL_GL1_ENABLE |
-				    LCD_CTRL_GL2_ENABLE))) {
-					/* If no LCD layers are using DMA,
-					 * then disable DMA pipelined AXI read
-					 * transactions.
-					 */
-					kmb_clr_bitmask_lcd(kmb, LCD_CONTROL,
-							    LCD_CTRL_PIPELINE_DMA);
-				}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				kmb->plane_status[plane_id].disable = false;
 			}
 		}
@@ -448,68 +399,22 @@ static void kmb_irq_reset(struct drm_device *drm)
 	kmb_write_lcd(to_kmb(drm), LCD_INT_ENABLE, 0);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int kmb_irq_install(struct drm_device *drm, unsigned int irq)
-{
-	if (irq == IRQ_NOTCONNECTED)
-		return -ENOTCONN;
-
-	kmb_irq_reset(drm);
-
-	return request_irq(irq, kmb_isr, 0, drm->driver->name, drm);
-}
-
-static void kmb_irq_uninstall(struct drm_device *drm)
-{
-	struct kmb_drm_private *kmb = to_kmb(drm);
-
-	kmb_irq_reset(drm);
-	free_irq(kmb->irq_lcd, drm);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 DEFINE_DRM_GEM_CMA_FOPS(fops);
 
 static const struct drm_driver kmb_driver = {
 	.driver_features = DRIVER_GEM |
 	    DRIVER_MODESET | DRIVER_ATOMIC,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.irq_handler = kmb_isr,
 	.irq_preinstall = kmb_irq_reset,
 	.irq_uninstall = kmb_irq_reset,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* GEM Operations */
 	.fops = &fops,
 	DRM_GEM_CMA_DRIVER_OPS_VMAP,
 	.name = "kmb-drm",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	.desc = "KEEMBAY DISPLAY DRIVER",
-	.date = DRIVER_DATE,
-	.major = DRIVER_MAJOR,
-	.minor = DRIVER_MINOR,
-<<<<<<< HEAD
-=======
 	.desc = "KEEMBAY DISPLAY DRIVER ",
 	.date = "20201008",
 	.major = 1,
 	.minor = 0,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int kmb_remove(struct platform_device *pdev)
@@ -523,15 +428,7 @@ static int kmb_remove(struct platform_device *pdev)
 	of_node_put(kmb->crtc.port);
 	kmb->crtc.port = NULL;
 	pm_runtime_get_sync(drm->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kmb_irq_uninstall(drm);
-=======
 	drm_irq_uninstall(drm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kmb_irq_uninstall(drm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pm_runtime_put_sync(drm->dev);
 	pm_runtime_disable(drm->dev);
 
@@ -621,15 +518,7 @@ static int kmb_probe(struct platform_device *pdev)
 	if (ret)
 		goto err_free;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = kmb_irq_install(&kmb->drm, kmb->irq_lcd);
-=======
 	ret = drm_irq_install(&kmb->drm, kmb->irq_lcd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = kmb_irq_install(&kmb->drm, kmb->irq_lcd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		drm_err(&kmb->drm, "failed to install IRQ handler\n");
 		goto err_irq;

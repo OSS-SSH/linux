@@ -70,15 +70,7 @@
 
 #include "amdgpu_dm.h"
 #include "amdgpu_amdkfd.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "amdgpu_vkms.h"
-=======
 #include "dce_virtual.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "amdgpu_vkms.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct amdgpu_video_codec_info cik_video_codecs_encode_array[] =
 {
@@ -2267,15 +2259,7 @@ int cik_set_ip_blocks(struct amdgpu_device *adev)
 		amdgpu_device_ip_block_add(adev, &cik_sdma_ip_block);
 		amdgpu_device_ip_block_add(adev, &pp_smu_ip_block);
 		if (adev->enable_virtual_display)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC)
 		else if (amdgpu_device_has_dc_support(adev))
 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
@@ -2293,15 +2277,7 @@ int cik_set_ip_blocks(struct amdgpu_device *adev)
 		amdgpu_device_ip_block_add(adev, &cik_sdma_ip_block);
 		amdgpu_device_ip_block_add(adev, &pp_smu_ip_block);
 		if (adev->enable_virtual_display)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC)
 		else if (amdgpu_device_has_dc_support(adev))
 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
@@ -2319,15 +2295,7 @@ int cik_set_ip_blocks(struct amdgpu_device *adev)
 		amdgpu_device_ip_block_add(adev, &cik_sdma_ip_block);
 		amdgpu_device_ip_block_add(adev, &kv_smu_ip_block);
 		if (adev->enable_virtual_display)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC)
 		else if (amdgpu_device_has_dc_support(adev))
 			amdgpu_device_ip_block_add(adev, &dm_ip_block);
@@ -2347,15 +2315,7 @@ int cik_set_ip_blocks(struct amdgpu_device *adev)
 		amdgpu_device_ip_block_add(adev, &cik_sdma_ip_block);
 		amdgpu_device_ip_block_add(adev, &kv_smu_ip_block);
 		if (adev->enable_virtual_display)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
-=======
 			amdgpu_device_ip_block_add(adev, &dce_virtual_ip_block);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			amdgpu_device_ip_block_add(adev, &amdgpu_vkms_ip_block);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if defined(CONFIG_DRM_AMD_DC)
 		else if (amdgpu_device_has_dc_support(adev))
 			amdgpu_device_ip_block_add(adev, &dm_ip_block);

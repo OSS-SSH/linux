@@ -18,27 +18,13 @@
 #include <linux/string.h>
 #include <linux/kernel.h>
 #include <linux/random.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <crypto/des.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "cifs_fs_sb.h"
 #include "cifs_unicode.h"
 #include "cifspdu.h"
 #include "cifsglob.h"
 #include "cifs_debug.h"
 #include "cifsproto.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "../smbfs_common/md4.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "../smbfs_common/md4.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef false
 #define false 0
@@ -52,32 +38,6 @@
 #define SSVALX(buf,pos,val) (CVAL(buf,pos)=(val)&0xFF,CVAL(buf,pos+1)=(val)>>8)
 #define SSVAL(buf,pos,val) SSVALX((buf),(pos),((__u16)(val)))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* produce a md4 message digest from data of length n bytes */
-static int
-mdfour(unsigned char *md4_hash, unsigned char *link_str, int link_len)
-{
-	int rc;
-	struct md4_ctx mctx;
-
-	rc = cifs_md4_init(&mctx);
-	if (rc) {
-		cifs_dbg(VFS, "%s: Could not init MD4\n", __func__);
-		goto mdfour_err;
-	}
-	rc = cifs_md4_update(&mctx, link_str, link_len);
-	if (rc) {
-		cifs_dbg(VFS, "%s: Could not update MD4\n", __func__);
-		goto mdfour_err;
-	}
-	rc = cifs_md4_final(&mctx, md4_hash);
-	if (rc)
-		cifs_dbg(VFS, "%s: Could not finalize MD4\n", __func__);
-
-
-mdfour_err:
-=======
 static void
 str_to_key(unsigned char *str, unsigned char *key)
 {
@@ -144,35 +104,60 @@ E_P24(unsigned char *p21, const unsigned char *c8, unsigned char *p24)
 	return rc;
 }
 
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* produce a md4 message digest from data of length n bytes */
-static int
+int
 mdfour(unsigned char *md4_hash, unsigned char *link_str, int link_len)
 {
 	int rc;
-	struct md4_ctx mctx;
+	struct crypto_shash *md4 = NULL;
+	struct sdesc *sdescmd4 = NULL;
 
-	rc = cifs_md4_init(&mctx);
-	if (rc) {
-		cifs_dbg(VFS, "%s: Could not init MD4\n", __func__);
-		goto mdfour_err;
-	}
-	rc = cifs_md4_update(&mctx, link_str, link_len);
-	if (rc) {
-		cifs_dbg(VFS, "%s: Could not update MD4\n", __func__);
-		goto mdfour_err;
-	}
-	rc = cifs_md4_final(&mctx, md4_hash);
+	rc = cifs_alloc_hash("md4", &md4, &sdescmd4);
 	if (rc)
-		cifs_dbg(VFS, "%s: Could not finalize MD4\n", __func__);
+		goto mdfour_err;
 
+	rc = crypto_shash_init(&sdescmd4->shash);
+	if (rc) {
+		cifs_dbg(VFS, "%s: Could not init md4 shash\n", __func__);
+		goto mdfour_err;
+	}
+	rc = crypto_shash_update(&sdescmd4->shash, link_str, link_len);
+	if (rc) {
+		cifs_dbg(VFS, "%s: Could not update with link_str\n", __func__);
+		goto mdfour_err;
+	}
+	rc = crypto_shash_final(&sdescmd4->shash, md4_hash);
+	if (rc)
+		cifs_dbg(VFS, "%s: Could not generate md4 hash\n", __func__);
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
 mdfour_err:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	cifs_free_hash(&md4, &sdescmd4);
+	return rc;
+}
+
+/*
+   This implements the X/Open SMB password encryption
+   It takes a password, a 8 byte "crypt key" and puts 24 bytes of
+   encrypted password into p24 */
+/* Note that password must be uppercased and null terminated */
+int
+SMBencrypt(unsigned char *passwd, const unsigned char *c8, unsigned char *p24)
+{
+	int rc;
+	unsigned char p14[14], p16[16], p21[21];
+
+	memset(p14, '\0', 14);
+	memset(p16, '\0', 16);
+	memset(p21, '\0', 21);
+
+	memcpy(p14, passwd, 14);
+	rc = E_P16(p14, p16);
+	if (rc)
+		return rc;
+
+	memcpy(p21, p16, 16);
+	rc = E_P24(p21, c8, p24);
+
 	return rc;
 }
 
@@ -201,9 +186,6 @@ E_md4hash(const unsigned char *passwd, unsigned char *p16,
 
 	return rc;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 /* Does the NT MD4 hash then des encryption. */
 int
@@ -226,6 +208,3 @@ SMBNTencrypt(unsigned char *passwd, unsigned char *c8, unsigned char *p24,
 	rc = E_P24(p21, c8, p24);
 	return rc;
 }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

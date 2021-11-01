@@ -81,25 +81,11 @@ static struct irq_chip cpld_pic = {
 	.irq_unmask = cpld_unmask_irq,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static unsigned int
-cpld_pic_get_irq(int offset, u8 ignore, u8 __iomem *statusp,
-			    u8 __iomem *maskp)
-{
-=======
 static int
 cpld_pic_get_irq(int offset, u8 ignore, u8 __iomem *statusp,
 			    u8 __iomem *maskp)
 {
 	int cpld_irq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static unsigned int
-cpld_pic_get_irq(int offset, u8 ignore, u8 __iomem *statusp,
-			    u8 __iomem *maskp)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 status = in_8(statusp);
 	u8 mask = in_8(maskp);
 
@@ -107,65 +93,28 @@ cpld_pic_get_irq(int offset, u8 ignore, u8 __iomem *statusp,
 	status |= (ignore | mask);
 
 	if (status == 0xff)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ~0;
-
-	return ffz(status) + offset;
-=======
 		return 0;
 
 	cpld_irq = ffz(status) + offset;
 
 	return irq_linear_revmap(cpld_pic_host, cpld_irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ~0;
-
-	return ffz(status) + offset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void cpld_pic_cascade(struct irq_desc *desc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int hwirq;
-
-	hwirq = cpld_pic_get_irq(0, PCI_IGNORE, &cpld_regs->pci_status,
-		&cpld_regs->pci_mask);
-	if (hwirq != ~0) {
-		generic_handle_domain_irq(cpld_pic_host, hwirq);
-		return;
-	}
-
-	hwirq = cpld_pic_get_irq(8, MISC_IGNORE, &cpld_regs->misc_status,
-		&cpld_regs->misc_mask);
-	if (hwirq != ~0) {
-		generic_handle_domain_irq(cpld_pic_host, hwirq);
-=======
 	unsigned int irq;
-=======
-	unsigned int hwirq;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	hwirq = cpld_pic_get_irq(0, PCI_IGNORE, &cpld_regs->pci_status,
+	irq = cpld_pic_get_irq(0, PCI_IGNORE, &cpld_regs->pci_status,
 		&cpld_regs->pci_mask);
-	if (hwirq != ~0) {
-		generic_handle_domain_irq(cpld_pic_host, hwirq);
-		return;
-	}
-
-	hwirq = cpld_pic_get_irq(8, MISC_IGNORE, &cpld_regs->misc_status,
-		&cpld_regs->misc_mask);
-<<<<<<< HEAD
 	if (irq) {
 		generic_handle_irq(irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (hwirq != ~0) {
-		generic_handle_domain_irq(cpld_pic_host, hwirq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		return;
+	}
+
+	irq = cpld_pic_get_irq(8, MISC_IGNORE, &cpld_regs->misc_status,
+		&cpld_regs->misc_mask);
+	if (irq) {
+		generic_handle_irq(irq);
 		return;
 	}
 }

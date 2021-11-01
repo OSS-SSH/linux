@@ -385,19 +385,7 @@ static struct platform_device *lpss_clk_dev;
 
 static inline void lpt_register_clock_device(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lpss_clk_dev = platform_device_register_simple("clk-lpss-atom",
-						       PLATFORM_DEVID_NONE,
-						       NULL, 0);
-=======
 	lpss_clk_dev = platform_device_register_simple("clk-lpt", -1, NULL, 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lpss_clk_dev = platform_device_register_simple("clk-lpss-atom",
-						       PLATFORM_DEVID_NONE,
-						       NULL, 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int register_device_clock(struct acpi_device *adev,
@@ -446,18 +434,8 @@ static int register_device_clock(struct acpi_device *adev,
 		if (!clk_name)
 			return -ENOMEM;
 		clk = clk_register_fractional_divider(NULL, clk_name, parent,
-<<<<<<< HEAD
-<<<<<<< HEAD
-						      CLK_FRAC_DIVIDER_POWER_OF_TWO_PS,
-						      prv_base, 1, 15, 16, 15, 0, NULL);
-=======
 						      0, prv_base,
 						      1, 15, 16, 15, 0, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						      CLK_FRAC_DIVIDER_POWER_OF_TWO_PS,
-						      prv_base, 1, 15, 16, 15, 0, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		parent = clk_name;
 
 		clk_name = kasprintf(GFP_KERNEL, "%s-update", devname);
@@ -1359,15 +1337,7 @@ void __init acpi_lpss_init(void)
 	const struct x86_cpu_id *id;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = lpss_atom_clk_init();
-=======
 	ret = lpt_clk_init();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = lpss_atom_clk_init();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return;
 

@@ -681,35 +681,11 @@ out_free:
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* The following chips supports the Microsoft vendor extension,
-	 * therefore set the corresponding VsMsftOpCode.
-	 */
-	switch (lmp_subver) {
-	case RTL_ROM_LMP_8822B:
-	case RTL_ROM_LMP_8852A:
-		hci_set_msft_opcode(hdev, 0xFCF0);
-		break;
-	}
-=======
 	/* RTL8822CE supports the Microsoft vendor extension and uses 0xFCF0
 	 * for VsMsftOpCode.
-=======
-	/* The following chips supports the Microsoft vendor extension,
-	 * therefore set the corresponding VsMsftOpCode.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-	switch (lmp_subver) {
-	case RTL_ROM_LMP_8822B:
-	case RTL_ROM_LMP_8852A:
+	if (lmp_subver == RTL_ROM_LMP_8822B)
 		hci_set_msft_opcode(hdev, 0xFCF0);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		break;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return btrtl_dev;
 

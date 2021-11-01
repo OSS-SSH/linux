@@ -746,15 +746,7 @@ static void meson_mmc_desc_chain_transfer(struct mmc_host *mmc, u32 cmd_cfg)
 	writel(start, host->regs + SD_EMMC_START);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* local sg copy for dram_access_quirk */
-=======
 /* local sg copy to buffer version with _to/fromio usage for dram_access_quirk */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* local sg copy for dram_access_quirk */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void meson_mmc_copy_buffer(struct meson_host *host, struct mmc_data *data,
 				  size_t buflen, bool to_buffer)
 {
@@ -772,62 +764,21 @@ static void meson_mmc_copy_buffer(struct meson_host *host, struct mmc_data *data
 	sg_miter_start(&miter, sgl, nents, sg_flags);
 
 	while ((offset < buflen) && sg_miter_next(&miter)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		unsigned int buf_offset = 0;
-		unsigned int len, left;
-		u32 *buf = miter.addr;
-
-		len = min(miter.length, buflen - offset);
-		left = len;
-
-		if (to_buffer) {
-			do {
-				writel(*buf++, host->bounce_iomem_buf + offset + buf_offset);
-
-				buf_offset += 4;
-				left -= 4;
-			} while (left);
-		} else {
-			do {
-				*buf++ = readl(host->bounce_iomem_buf + offset + buf_offset);
-
-				buf_offset += 4;
-				left -= 4;
-			} while (left);
-=======
 		unsigned int len;
-=======
-		unsigned int buf_offset = 0;
-		unsigned int len, left;
-		u32 *buf = miter.addr;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		len = min(miter.length, buflen - offset);
-		left = len;
 
-		if (to_buffer) {
-			do {
-				writel(*buf++, host->bounce_iomem_buf + offset + buf_offset);
-
-				buf_offset += 4;
-				left -= 4;
-			} while (left);
+		/* When dram_access_quirk, the bounce buffer is a iomem mapping */
+		if (host->dram_access_quirk) {
+			if (to_buffer)
+				memcpy_toio(host->bounce_iomem_buf + offset, miter.addr, len);
+			else
+				memcpy_fromio(miter.addr, host->bounce_iomem_buf + offset, len);
 		} else {
-<<<<<<< HEAD
 			if (to_buffer)
 				memcpy(host->bounce_buf + offset, miter.addr, len);
 			else
 				memcpy(miter.addr, host->bounce_buf + offset, len);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			do {
-				*buf++ = readl(host->bounce_iomem_buf + offset + buf_offset);
-
-				buf_offset += 4;
-				left -= 4;
-			} while (left);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		offset += len;
@@ -879,21 +830,7 @@ static void meson_mmc_start_cmd(struct mmc_host *mmc, struct mmc_command *cmd)
 		if (data->flags & MMC_DATA_WRITE) {
 			cmd_cfg |= CMD_CFG_DATA_WR;
 			WARN_ON(xfer_bytes > host->bounce_buf_size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (host->dram_access_quirk)
-				meson_mmc_copy_buffer(host, data, xfer_bytes, true);
-			else
-				sg_copy_to_buffer(data->sg, data->sg_len,
-						  host->bounce_buf, xfer_bytes);
-<<<<<<< HEAD
-=======
 			meson_mmc_copy_buffer(host, data, xfer_bytes, true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dma_wmb();
 		}
 
@@ -912,61 +849,12 @@ static void meson_mmc_start_cmd(struct mmc_host *mmc, struct mmc_command *cmd)
 	writel(cmd->arg, host->regs + SD_EMMC_CMD_ARG);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int meson_mmc_validate_dram_access(struct mmc_host *mmc, struct mmc_data *data)
-{
-	struct scatterlist *sg;
-	int i;
-
-	/* Reject request if any element offset or size is not 32bit aligned */
-	for_each_sg(data->sg, sg, data->sg_len, i) {
-		if (!IS_ALIGNED(sg->offset, sizeof(u32)) ||
-		    !IS_ALIGNED(sg->length, sizeof(u32))) {
-			dev_err(mmc_dev(mmc), "unaligned sg offset %u len %u\n",
-				data->sg->offset, data->sg->length);
-			return -EINVAL;
-		}
-	}
-
-	return 0;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void meson_mmc_request(struct mmc_host *mmc, struct mmc_request *mrq)
 {
 	struct meson_host *host = mmc_priv(mmc);
 	bool needs_pre_post_req = mrq->data &&
 			!(mrq->data->host_cookie & SD_EMMC_PRE_REQ_DONE);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * The memory at the end of the controller used as bounce buffer for
-	 * the dram_access_quirk only accepts 32bit read/write access,
-	 * check the aligment and length of the data before starting the request.
-	 */
-	if (host->dram_access_quirk && mrq->data) {
-		mrq->cmd->error = meson_mmc_validate_dram_access(mmc, mrq->data);
-		if (mrq->cmd->error) {
-			mmc_request_done(mmc, mrq);
-			return;
-		}
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (needs_pre_post_req) {
 		meson_mmc_get_transfer_mode(mmc, mrq);
 		if (!meson_mmc_desc_chain_mode(mrq->data))
@@ -1111,21 +999,7 @@ static irqreturn_t meson_mmc_irq_thread(int irq, void *dev_id)
 	if (meson_mmc_bounce_buf_read(data)) {
 		xfer_bytes = data->blksz * data->blocks;
 		WARN_ON(xfer_bytes > host->bounce_buf_size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (host->dram_access_quirk)
-			meson_mmc_copy_buffer(host, data, xfer_bytes, false);
-		else
-			sg_copy_from_buffer(data->sg, data->sg_len,
-					    host->bounce_buf, xfer_bytes);
-<<<<<<< HEAD
-=======
 		meson_mmc_copy_buffer(host, data, xfer_bytes, false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	next_cmd = meson_mmc_get_next_command(cmd);

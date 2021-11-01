@@ -152,18 +152,8 @@ struct sk_buff *skb_udp_tunnel_segment(struct sk_buff *skb,
 				       netdev_features_t features,
 				       bool is_ipv6)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct net_offload __rcu **offloads;
-	__be16 protocol = skb->protocol;
-=======
 	__be16 protocol = skb->protocol;
 	const struct net_offload **offloads;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct net_offload __rcu **offloads;
-	__be16 protocol = skb->protocol;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct net_offload *ops;
 	struct sk_buff *segs = ERR_PTR(-EINVAL);
 	struct sk_buff *(*gso_inner_segment)(struct sk_buff *skb,
@@ -535,21 +525,8 @@ struct sk_buff *udp_gro_receive(struct list_head *head, struct sk_buff *skb,
 
 		if ((!sk && (skb->dev->features & NETIF_F_GRO_UDP_FWD)) ||
 		    (sk && udp_sk(sk)->gro_enabled) || NAPI_GRO_CB(skb)->is_flist)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			return call_gro_receive(udp_gro_receive_segment, head, skb);
-
-		/* no GRO, be sure flush the current packet */
-		goto out;
-<<<<<<< HEAD
-=======
 			pp = call_gro_receive(udp_gro_receive_segment, head, skb);
 		return pp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (NAPI_GRO_CB(skb)->encap_mark ||
@@ -645,19 +622,6 @@ static int udp_gro_complete_segment(struct sk_buff *skb)
 
 	skb_shinfo(skb)->gso_segs = NAPI_GRO_CB(skb)->count;
 	skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_L4;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (skb->encapsulation)
-		skb->inner_transport_header = skb->transport_header;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

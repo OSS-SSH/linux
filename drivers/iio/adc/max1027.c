@@ -103,15 +103,7 @@ MODULE_DEVICE_TABLE(of, max1027_adc_dt_ids);
 			.sign = 'u',					\
 			.realbits = depth,				\
 			.storagebits = 16,				\
-<<<<<<< HEAD
-<<<<<<< HEAD
-			.shift = (depth == 10) ? 2 : 0,			\
-=======
 			.shift = 2,					\
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			.shift = (depth == 10) ? 2 : 0,			\
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			.endianness = IIO_BE,				\
 		},							\
 	}
@@ -150,13 +142,7 @@ MODULE_DEVICE_TABLE(of, max1027_adc_dt_ids);
 	MAX1027_V_CHAN(11, depth)
 
 #define MAX1X31_CHANNELS(depth)			\
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	MAX1X27_CHANNELS(depth),		\
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MAX1X29_CHANNELS(depth),		\
 	MAX1027_V_CHAN(12, depth),		\
 	MAX1027_V_CHAN(13, depth),		\

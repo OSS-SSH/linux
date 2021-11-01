@@ -53,21 +53,6 @@
 			status = "disabled";
 		};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		pm8150b_vbus: dcdc@1100 {
-			compatible = "qcom,pm8150b-vbus-reg";
-			status = "disabled";
-			reg = <0x1100>;
-		};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pm8150b_temp: temp-alarm@2400 {
 			compatible = "qcom,spmi-temp-alarm";
 			reg = <0x2400>;

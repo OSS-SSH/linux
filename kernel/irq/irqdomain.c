@@ -136,15 +136,7 @@ EXPORT_SYMBOL_GPL(irq_domain_free_fwnode);
  * Allocates and initializes an irq_domain structure.
  * Returns pointer to IRQ domain, or NULL on failure.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
-=======
 struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, int size,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct irq_domain *__irq_domain_add(struct fwnode_handle *fwnode, unsigned int size,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    irq_hw_number_t hwirq_max, int direct_max,
 				    const struct irq_domain_ops *ops,
 				    void *host_data)
@@ -499,14 +491,6 @@ struct irq_domain *irq_get_default_host(void)
 {
 	return irq_default_domain;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-EXPORT_SYMBOL_GPL(irq_get_default_host);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-EXPORT_SYMBOL_GPL(irq_get_default_host);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static bool irq_domain_is_nomap(struct irq_domain *domain)
 {
@@ -1231,14 +1215,6 @@ int irq_domain_disconnect_hierarchy(struct irq_domain *domain,
 	irqd->chip = ERR_PTR(-ENOTCONN);
 	return 0;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-EXPORT_SYMBOL_GPL(irq_domain_disconnect_hierarchy);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-EXPORT_SYMBOL_GPL(irq_domain_disconnect_hierarchy);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int irq_domain_trim_hierarchy(unsigned int virq)
 {

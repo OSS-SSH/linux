@@ -175,16 +175,8 @@ int delta_ipc_open(struct delta_ctx *pctx, const char *name,
 	msg.ipc_buf_size = ipc_buf_size;
 	msg.ipc_buf_paddr = ctx->ipc_buf->paddr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	strscpy(msg.name, name, sizeof(msg.name));
-=======
 	memcpy(msg.name, name, sizeof(msg.name));
 	msg.name[sizeof(msg.name) - 1] = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	strscpy(msg.name, name, sizeof(msg.name));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	msg.param_size = param->size;
 	memcpy(ctx->ipc_buf->vaddr, param->data, msg.param_size);

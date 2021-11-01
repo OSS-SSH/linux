@@ -148,46 +148,18 @@ void hide_boot_cursor(bool hide);
 
 /* keyboard  provided interfaces */
 int vt_do_diacrit(unsigned int cmd, void __user *up, int eperm);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int vt_do_kdskbmode(unsigned int console, unsigned int arg);
-int vt_do_kdskbmeta(unsigned int console, unsigned int arg);
-int vt_do_kbkeycode_ioctl(int cmd, struct kbkeycode __user *user_kbkc,
-			  int perm);
-int vt_do_kdsk_ioctl(int cmd, struct kbentry __user *user_kbe, int perm,
-		     unsigned int console);
-int vt_do_kdgkb_ioctl(int cmd, struct kbsentry __user *user_kdgkb, int perm);
-int vt_do_kdskled(unsigned int console, int cmd, unsigned long arg, int perm);
-int vt_do_kdgkbmode(unsigned int console);
-int vt_do_kdgkbmeta(unsigned int console);
-void vt_reset_unicode(unsigned int console);
-int vt_get_shift_state(void);
-void vt_reset_keyboard(unsigned int console);
-int vt_get_leds(unsigned int console, int flag);
-int vt_get_kbd_mode_bit(unsigned int console, int bit);
-void vt_set_kbd_mode_bit(unsigned int console, int bit);
-void vt_clr_kbd_mode_bit(unsigned int console, int bit);
-void vt_set_led_state(unsigned int console, int leds);
-void vt_kbd_con_start(unsigned int console);
-void vt_kbd_con_stop(unsigned int console);
-=======
 int vt_do_kdskbmode(int console, unsigned int arg);
 int vt_do_kdskbmeta(int console, unsigned int arg);
-=======
-int vt_do_kdskbmode(unsigned int console, unsigned int arg);
-int vt_do_kdskbmeta(unsigned int console, unsigned int arg);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int vt_do_kbkeycode_ioctl(int cmd, struct kbkeycode __user *user_kbkc,
 			  int perm);
 int vt_do_kdsk_ioctl(int cmd, struct kbentry __user *user_kbe, int perm,
-		     unsigned int console);
+		     int console);
 int vt_do_kdgkb_ioctl(int cmd, struct kbsentry __user *user_kdgkb, int perm);
-int vt_do_kdskled(unsigned int console, int cmd, unsigned long arg, int perm);
-int vt_do_kdgkbmode(unsigned int console);
-int vt_do_kdgkbmeta(unsigned int console);
-void vt_reset_unicode(unsigned int console);
+int vt_do_kdskled(int console, int cmd, unsigned long arg, int perm);
+int vt_do_kdgkbmode(int console);
+int vt_do_kdgkbmeta(int console);
+void vt_reset_unicode(int console);
 int vt_get_shift_state(void);
-<<<<<<< HEAD
 void vt_reset_keyboard(int console);
 int vt_get_leds(int console, int flag);
 int vt_get_kbd_mode_bit(int console, int bit);
@@ -196,17 +168,6 @@ void vt_clr_kbd_mode_bit(int console, int bit);
 void vt_set_led_state(int console, int leds);
 void vt_kbd_con_start(int console);
 void vt_kbd_con_stop(int console);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void vt_reset_keyboard(unsigned int console);
-int vt_get_leds(unsigned int console, int flag);
-int vt_get_kbd_mode_bit(unsigned int console, int bit);
-void vt_set_kbd_mode_bit(unsigned int console, int bit);
-void vt_clr_kbd_mode_bit(unsigned int console, int bit);
-void vt_set_led_state(unsigned int console, int leds);
-void vt_kbd_con_start(unsigned int console);
-void vt_kbd_con_stop(unsigned int console);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void vc_scrolldelta_helper(struct vc_data *c, int lines,
 		unsigned int rolled_over, void *_base, unsigned int size);

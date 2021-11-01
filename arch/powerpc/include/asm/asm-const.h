@@ -12,10 +12,6 @@
 #  define ASM_CONST(x)		__ASM_CONST(x)
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define UPD_CONSTR "<>"
-=======
 /*
  * Inline assembly memory constraint
  *
@@ -27,9 +23,5 @@
 #else
 #define UPD_CONSTR "<>"
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define UPD_CONSTR "<>"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _ASM_POWERPC_ASM_CONST_H */

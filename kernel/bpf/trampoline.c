@@ -172,15 +172,7 @@ static int register_fentry(struct bpf_trampoline *tr, void *new_addr)
 }
 
 static struct bpf_tramp_progs *
-<<<<<<< HEAD
-<<<<<<< HEAD
-bpf_trampoline_get_progs(const struct bpf_trampoline *tr, int *total, bool *ip_arg)
-=======
 bpf_trampoline_get_progs(const struct bpf_trampoline *tr, int *total)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-bpf_trampoline_get_progs(const struct bpf_trampoline *tr, int *total, bool *ip_arg)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct bpf_prog_aux *aux;
 	struct bpf_tramp_progs *tprogs;
@@ -197,22 +189,8 @@ bpf_trampoline_get_progs(const struct bpf_trampoline *tr, int *total, bool *ip_a
 		*total += tr->progs_cnt[kind];
 		progs = tprogs[kind].progs;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		hlist_for_each_entry(aux, &tr->progs_hlist[kind], tramp_hlist) {
-			*ip_arg |= aux->prog->call_get_func_ip;
-			*progs++ = aux->prog;
-		}
-=======
 		hlist_for_each_entry(aux, &tr->progs_hlist[kind], tramp_hlist)
 			*progs++ = aux->prog;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		hlist_for_each_entry(aux, &tr->progs_hlist[kind], tramp_hlist) {
-			*ip_arg |= aux->prog->call_get_func_ip;
-			*progs++ = aux->prog;
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return tprogs;
 }
@@ -355,23 +333,9 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr)
 	struct bpf_tramp_image *im;
 	struct bpf_tramp_progs *tprogs;
 	u32 flags = BPF_TRAMP_F_RESTORE_REGS;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool ip_arg = false;
-	int err, total;
-
-	tprogs = bpf_trampoline_get_progs(tr, &total, &ip_arg);
-=======
 	int err, total;
 
 	tprogs = bpf_trampoline_get_progs(tr, &total);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool ip_arg = false;
-	int err, total;
-
-	tprogs = bpf_trampoline_get_progs(tr, &total, &ip_arg);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(tprogs))
 		return PTR_ERR(tprogs);
 
@@ -393,18 +357,6 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr)
 	    tprogs[BPF_TRAMP_MODIFY_RETURN].nr_progs)
 		flags = BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_SKIP_FRAME;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ip_arg)
-		flags |= BPF_TRAMP_F_IP_ARG;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ip_arg)
-		flags |= BPF_TRAMP_F_IP_ARG;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = arch_prepare_bpf_trampoline(im, im->image, im->image + PAGE_SIZE,
 					  &tr->func.model, flags, tprogs,
 					  tr->func.addr);
@@ -590,15 +542,7 @@ static void notrace inc_misses_counter(struct bpf_prog *prog)
 	u64_stats_update_end(&stats->syncp);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* The logic is similar to bpf_prog_run(), but with an explicit
-=======
 /* The logic is similar to BPF_PROG_RUN, but with an explicit
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* The logic is similar to bpf_prog_run(), but with an explicit
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * rcu_read_lock() and migrate_disable() which are required
  * for the trampoline. The macro is split into
  * call __bpf_prog_enter

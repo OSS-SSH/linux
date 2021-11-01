@@ -20,9 +20,6 @@ static struct coex_dm_8723b_2ant *pCoexDm = &GLCoexDm8723b2Ant;
 static struct coex_sta_8723b_2ant GLCoexSta8723b2Ant;
 static struct coex_sta_8723b_2ant *pCoexSta = &GLCoexSta8723b2Ant;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static const char *const GLBtInfoSrc8723b2Ant[] = {
 	"BT Info[wifi fw]",
 	"BT Info[bt rsp]",
@@ -32,9 +29,6 @@ static const char *const GLBtInfoSrc8723b2Ant[] = {
 static u32 GLCoexVerDate8723b2Ant = 20131211;
 static u32 GLCoexVer8723b2Ant = 0x40;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*  local function start with halbtc8723b2ant_ */
 static u8 halbtc8723b2ant_BtRssiState(
 	u8 levelNum, u8 rssiThresh, u8 rssiThresh1
@@ -194,9 +188,6 @@ static void halbtc8723b2ant_LimitedRx(
 	pBtCoexist->fBtcSet(pBtCoexist, BTC_SET_ACT_AGGREGATE_CTRL, NULL);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void halbtc8723b2ant_MonitorBtCtr(struct btc_coexist *pBtCoexist)
 {
 	u32 regHPTxRx, regLPTxRx, u4Tmp;
@@ -222,9 +213,6 @@ static void halbtc8723b2ant_MonitorBtCtr(struct btc_coexist *pBtCoexist)
 	pBtCoexist->fBtcWrite1Byte(pBtCoexist, 0x76e, 0xc);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void halbtc8723b2ant_QueryBtInfo(struct btc_coexist *pBtCoexist)
 {
 	u8 	H2C_Parameter[1] = {0};
@@ -2435,9 +2423,6 @@ void EXhalbtc8723b2ant_InitCoexDm(struct btc_coexist *pBtCoexist)
 	halbtc8723b2ant_InitCoexDm(pBtCoexist);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void EXhalbtc8723b2ant_DisplayCoexInfo(struct btc_coexist *pBtCoexist)
 {
 	struct btc_board_info *pBoardInfo = &pBtCoexist->boardInfo;
@@ -2818,9 +2803,6 @@ void EXhalbtc8723b2ant_DisplayCoexInfo(struct btc_coexist *pBtCoexist)
 }
 
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void EXhalbtc8723b2ant_IpsNotify(struct btc_coexist *pBtCoexist, u8 type)
 {
 	if (BTC_IPS_ENTER == type) {

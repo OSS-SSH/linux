@@ -290,9 +290,6 @@ config SLIC_DS26522
 	  To compile this driver as a module, choose M here: the
 	  module will be called slic_ds26522.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 config DSCC4_PCISYNC
 	bool "Etinc PCISYNC features"
 	depends on DSCC4
@@ -317,9 +314,6 @@ config DSCC4_PCI_RST
 
 	  Say Y if your card supports this feature.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config IXP4XX_HSS
 	tristate "Intel IXP4xx HSS (synchronous serial port) support"
 	depends on HDLC && IXP4XX_NPE && IXP4XX_QMGR
@@ -343,9 +337,6 @@ config LAPBETHER
 	  To compile this driver as a module, choose M here: the
 	  module will be called lapbether.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	  If unsure, say N.
 
 config SBNI
@@ -373,9 +364,6 @@ config SBNI_MULTILINE
 	  If you have two computers connected with two parallel lines it's
 	  possible to increase transfer rate nearly twice. You should have
 	  a program named 'sbniconfig' to configure adapters.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	  If unsure, say N.
 

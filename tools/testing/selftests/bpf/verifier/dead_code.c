@@ -159,24 +159,3 @@
 	.result = ACCEPT,
 	.retval = 2,
 },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-{
-	"dead code: zero extension",
-	.insns = {
-	BPF_MOV64_IMM(BPF_REG_0, 0),
-	BPF_STX_MEM(BPF_W, BPF_REG_10, BPF_REG_0, -4),
-	BPF_JMP_IMM(BPF_JGE, BPF_REG_0, 0, 1),
-	BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_10, -4),
-	BPF_EXIT_INSN(),
-	},
-	.result = ACCEPT,
-	.retval = 0,
-},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

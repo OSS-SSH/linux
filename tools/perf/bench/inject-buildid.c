@@ -133,15 +133,7 @@ static u64 dso_map_addr(struct bench_dso *dso)
 	return 0x400000ULL + dso->ino * 8192ULL;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t synthesize_attr(struct bench_data *data)
-=======
 static u32 synthesize_attr(struct bench_data *data)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t synthesize_attr(struct bench_data *data)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	union perf_event event;
 
@@ -159,15 +151,7 @@ static ssize_t synthesize_attr(struct bench_data *data)
 	return writen(data->input_pipe[1], &event, event.header.size);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t synthesize_fork(struct bench_data *data)
-=======
 static u32 synthesize_fork(struct bench_data *data)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t synthesize_fork(struct bench_data *data)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	union perf_event event;
 
@@ -185,16 +169,8 @@ static ssize_t synthesize_fork(struct bench_data *data)
 	return writen(data->input_pipe[1], &event, event.header.size);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t synthesize_mmap(struct bench_data *data, struct bench_dso *dso, u64 timestamp)
-=======
 static u32 synthesize_mmap(struct bench_data *data, struct bench_dso *dso,
 			   u64 timestamp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t synthesize_mmap(struct bench_data *data, struct bench_dso *dso, u64 timestamp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	union perf_event event;
 	size_t len = offsetof(struct perf_record_mmap2, filename);
@@ -222,61 +198,23 @@ static ssize_t synthesize_mmap(struct bench_data *data, struct bench_dso *dso, u
 
 	if (len > sizeof(event.mmap2)) {
 		/* write mmap2 event first */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (writen(data->input_pipe[1], &event, len - bench_id_hdr_size) < 0)
-			return -1;
-=======
 		writen(data->input_pipe[1], &event, len - bench_id_hdr_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (writen(data->input_pipe[1], &event, len - bench_id_hdr_size) < 0)
-			return -1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* zero-fill sample id header */
 		memset(id_hdr_ptr, 0, bench_id_hdr_size);
 		/* put timestamp in the right position */
 		ts_idx = (bench_id_hdr_size / sizeof(u64)) - 2;
 		id_hdr_ptr[ts_idx] = timestamp;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (writen(data->input_pipe[1], id_hdr_ptr, bench_id_hdr_size) < 0)
-			return -1;
-
-		return len;
-<<<<<<< HEAD
-	}
-
-	ts_idx = (len / sizeof(u64)) - 2;
-	id_hdr_ptr[ts_idx] = timestamp;
-	return writen(data->input_pipe[1], &event, len);
-}
-
-static ssize_t synthesize_sample(struct bench_data *data, struct bench_dso *dso, u64 timestamp)
-=======
 		writen(data->input_pipe[1], id_hdr_ptr, bench_id_hdr_size);
 	} else {
 		ts_idx = (len / sizeof(u64)) - 2;
 		id_hdr_ptr[ts_idx] = timestamp;
 		writen(data->input_pipe[1], &event, len);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
-
-	ts_idx = (len / sizeof(u64)) - 2;
-	id_hdr_ptr[ts_idx] = timestamp;
-	return writen(data->input_pipe[1], &event, len);
+	return len;
 }
 
-<<<<<<< HEAD
 static u32 synthesize_sample(struct bench_data *data, struct bench_dso *dso,
 			     u64 timestamp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t synthesize_sample(struct bench_data *data, struct bench_dso *dso, u64 timestamp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	union perf_event event;
 	struct perf_sample sample = {
@@ -295,15 +233,7 @@ static ssize_t synthesize_sample(struct bench_data *data, struct bench_dso *dso,
 	return writen(data->input_pipe[1], &event, event.header.size);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t synthesize_flush(struct bench_data *data)
-=======
 static u32 synthesize_flush(struct bench_data *data)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t synthesize_flush(struct bench_data *data)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct perf_event_header header = {
 		.size = sizeof(header),
@@ -418,34 +348,14 @@ static int inject_build_id(struct bench_data *data, u64 *max_rss)
 	int status;
 	unsigned int i, k;
 	struct rusage rusage;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u64 len = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* this makes the child to run */
 	if (perf_header__write_pipe(data->input_pipe[1]) < 0)
 		return -1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (synthesize_attr(data) < 0)
-		return -1;
-
-	if (synthesize_fork(data) < 0)
-		return -1;
-<<<<<<< HEAD
-=======
 	len += synthesize_attr(data);
 	len += synthesize_fork(data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < nr_mmaps; i++) {
 		int idx = rand() % (nr_dsos - 1);
@@ -453,42 +363,13 @@ static int inject_build_id(struct bench_data *data, u64 *max_rss)
 		u64 timestamp = rand() % 1000000;
 
 		pr_debug2("   [%d] injecting: %s\n", i+1, dso->name);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (synthesize_mmap(data, dso, timestamp) < 0)
-			return -1;
-
-		for (k = 0; k < nr_samples; k++) {
-			if (synthesize_sample(data, dso, timestamp + k * 1000) < 0)
-				return -1;
-		}
-
-		if ((i + 1) % 10 == 0) {
-			if (synthesize_flush(data) < 0)
-				return -1;
-		}
-=======
 		len += synthesize_mmap(data, dso, timestamp);
-=======
-		if (synthesize_mmap(data, dso, timestamp) < 0)
-			return -1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		for (k = 0; k < nr_samples; k++) {
-			if (synthesize_sample(data, dso, timestamp + k * 1000) < 0)
-				return -1;
-		}
+		for (k = 0; k < nr_samples; k++)
+			len += synthesize_sample(data, dso, timestamp + k * 1000);
 
-<<<<<<< HEAD
 		if ((i + 1) % 10 == 0)
 			len += synthesize_flush(data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if ((i + 1) % 10 == 0) {
-			if (synthesize_flush(data) < 0)
-				return -1;
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* this makes the child to finish */

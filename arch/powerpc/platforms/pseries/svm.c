@@ -63,18 +63,6 @@ void __init svm_swiotlb_init(void)
 
 int set_memory_encrypted(unsigned long addr, int numpages)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!mem_encrypt_active())
-		return 0;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!mem_encrypt_active())
-		return 0;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!PAGE_ALIGNED(addr))
 		return -EINVAL;
 
@@ -85,18 +73,6 @@ int set_memory_encrypted(unsigned long addr, int numpages)
 
 int set_memory_decrypted(unsigned long addr, int numpages)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!mem_encrypt_active())
-		return 0;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!mem_encrypt_active())
-		return 0;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!PAGE_ALIGNED(addr))
 		return -EINVAL;
 

@@ -17,16 +17,6 @@
 
 #define ARCH_HAS_RELATIVE_EXTABLE
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifndef __ASSEMBLY__
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifndef __ASSEMBLY__
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct exception_table_entry {
 	int insn;
 	int fixup;
@@ -38,24 +28,3 @@ static inline unsigned long extable_fixup(const struct exception_table_entry *x)
 }
 
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-/*
- * Helper macro for exception table entries
- */
-#define EX_TABLE(_fault, _target)		\
-	stringify_in_c(.section __ex_table,"a";)\
-	stringify_in_c(.balign 4;)		\
-	stringify_in_c(.long (_fault) - . ;)	\
-	stringify_in_c(.long (_target) - . ;)	\
-	stringify_in_c(.previous)
-
-#endif
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

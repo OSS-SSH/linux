@@ -428,13 +428,7 @@ do {									\
 
 extern size_t __raw_copy_from_user(void *__to, const void *__from, size_t __n);
 extern size_t __raw_copy_to_user(void *__to, const void *__from, size_t __n);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 extern size_t __raw_copy_in_user(void *__to, const void *__from, size_t __n);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline unsigned long
 raw_copy_from_user(void *to, const void __user *from, unsigned long n)
@@ -486,9 +480,6 @@ raw_copy_to_user(void __user *to, const void *from, unsigned long n)
 #define INLINE_COPY_FROM_USER
 #define INLINE_COPY_TO_USER
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline unsigned long
 raw_copy_in_user(void __user *to, const void __user *from, unsigned long n)
 {
@@ -514,9 +505,6 @@ raw_copy_in_user(void __user *to, const void __user *from, unsigned long n)
 	return __cu_len_r;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern __kernel_size_t __bzero(void __user *addr, __kernel_size_t size);
 
 /*

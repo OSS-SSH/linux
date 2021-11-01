@@ -368,15 +368,7 @@ static ssize_t regmap_reg_ranges_read_file(struct file *file,
 	char *buf;
 	char *entry;
 	int ret;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int entry_len;
-=======
 	unsigned entry_len;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int entry_len;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (*ppos < 0 || !count)
 		return -EINVAL;

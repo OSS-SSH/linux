@@ -7,28 +7,12 @@
 #include <linux/cpufreq.h>
 #include <linux/init.h>
 #include <linux/interconnect.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/interrupt.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/interrupt.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/of_address.h>
 #include <linux/of_platform.h>
 #include <linux/pm_opp.h>
 #include <linux/slab.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/spinlock.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/spinlock.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define LUT_MAX_ENTRIES			40U
 #define LUT_SRC				GENMASK(31, 30)
@@ -38,28 +22,10 @@
 #define CLK_HW_DIV			2
 #define LUT_TURBO_IND			1
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define HZ_PER_KHZ			1000
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define HZ_PER_KHZ			1000
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct qcom_cpufreq_soc_data {
 	u32 reg_enable;
 	u32 reg_freq_lut;
 	u32 reg_volt_lut;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 reg_current_vote;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 reg_current_vote;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 reg_perf_state;
 	u8 lut_row_size;
 };
@@ -68,25 +34,6 @@ struct qcom_cpufreq_data {
 	void __iomem *base;
 	struct resource *res;
 	const struct qcom_cpufreq_soc_data *soc_data;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/*
-	 * Mutex to synchronize between de-init sequence and re-starting LMh
-	 * polling/interrupts
-	 */
-	struct mutex throttle_lock;
-	int throttle_irq;
-	bool cancel_throttle;
-	struct delayed_work throttle_work;
-	struct cpufreq_policy *policy;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static unsigned long cpu_hw_rate, xo_rate;
@@ -304,108 +251,10 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static unsigned int qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
-{
-	unsigned int val = readl_relaxed(data->base + data->soc_data->reg_current_vote);
-
-	return (val & 0x3FF) * 19200;
-}
-
-static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
-{
-	unsigned long max_capacity, capacity, freq_hz, throttled_freq;
-	struct cpufreq_policy *policy = data->policy;
-	int cpu = cpumask_first(policy->cpus);
-	struct device *dev = get_cpu_device(cpu);
-	struct dev_pm_opp *opp;
-	unsigned int freq;
-
-	/*
-	 * Get the h/w throttled frequency, normalize it using the
-	 * registered opp table and use it to calculate thermal pressure.
-	 */
-	freq = qcom_lmh_get_throttle_freq(data);
-	freq_hz = freq * HZ_PER_KHZ;
-
-	opp = dev_pm_opp_find_freq_floor(dev, &freq_hz);
-	if (IS_ERR(opp) && PTR_ERR(opp) == -ERANGE)
-		dev_pm_opp_find_freq_ceil(dev, &freq_hz);
-
-	throttled_freq = freq_hz / HZ_PER_KHZ;
-
-	/* Update thermal pressure */
-
-	max_capacity = arch_scale_cpu_capacity(cpu);
-	capacity = mult_frac(max_capacity, throttled_freq, policy->cpuinfo.max_freq);
-
-	/* Don't pass boost capacity to scheduler */
-	if (capacity > max_capacity)
-		capacity = max_capacity;
-
-	arch_set_thermal_pressure(policy->cpus, max_capacity - capacity);
-
-	/*
-	 * In the unlikely case policy is unregistered do not enable
-	 * polling or h/w interrupt
-	 */
-	mutex_lock(&data->throttle_lock);
-	if (data->cancel_throttle)
-		goto out;
-
-	/*
-	 * If h/w throttled frequency is higher than what cpufreq has requested
-	 * for, then stop polling and switch back to interrupt mechanism.
-	 */
-	if (throttled_freq >= qcom_cpufreq_hw_get(cpu))
-		enable_irq(data->throttle_irq);
-	else
-		mod_delayed_work(system_highpri_wq, &data->throttle_work,
-				 msecs_to_jiffies(10));
-
-out:
-	mutex_unlock(&data->throttle_lock);
-}
-
-static void qcom_lmh_dcvs_poll(struct work_struct *work)
-{
-	struct qcom_cpufreq_data *data;
-
-	data = container_of(work, struct qcom_cpufreq_data, throttle_work.work);
-	qcom_lmh_dcvs_notify(data);
-}
-
-static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
-{
-	struct qcom_cpufreq_data *c_data = data;
-
-	/* Disable interrupt and enable polling */
-	disable_irq_nosync(c_data->throttle_irq);
-	qcom_lmh_dcvs_notify(c_data);
-
-	return 0;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct qcom_cpufreq_soc_data qcom_soc_data = {
 	.reg_enable = 0x0,
 	.reg_freq_lut = 0x110,
 	.reg_volt_lut = 0x114,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.reg_current_vote = 0x704,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.reg_current_vote = 0x704,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.reg_perf_state = 0x920,
 	.lut_row_size = 32,
 };
@@ -425,60 +274,6 @@ static const struct of_device_id qcom_cpufreq_hw_match[] = {
 };
 MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
-{
-	struct qcom_cpufreq_data *data = policy->driver_data;
-	struct platform_device *pdev = cpufreq_get_driver_data();
-	char irq_name[15];
-	int ret;
-
-	/*
-	 * Look for LMh interrupt. If no interrupt line is specified /
-	 * if there is an error, allow cpufreq to be enabled as usual.
-	 */
-	data->throttle_irq = platform_get_irq(pdev, index);
-	if (data->throttle_irq <= 0)
-		return data->throttle_irq == -EPROBE_DEFER ? -EPROBE_DEFER : 0;
-
-	data->cancel_throttle = false;
-	data->policy = policy;
-
-	mutex_init(&data->throttle_lock);
-	INIT_DEFERRABLE_WORK(&data->throttle_work, qcom_lmh_dcvs_poll);
-
-	snprintf(irq_name, sizeof(irq_name), "dcvsh-irq-%u", policy->cpu);
-	ret = request_threaded_irq(data->throttle_irq, NULL, qcom_lmh_dcvs_handle_irq,
-				   IRQF_ONESHOT, irq_name, data);
-	if (ret) {
-		dev_err(&pdev->dev, "Error registering %s: %d\n", irq_name, ret);
-		return 0;
-	}
-
-	return 0;
-}
-
-static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
-{
-	if (data->throttle_irq <= 0)
-		return;
-
-	mutex_lock(&data->throttle_lock);
-	data->cancel_throttle = true;
-	mutex_unlock(&data->throttle_lock);
-
-	cancel_delayed_work_sync(&data->throttle_work);
-	free_irq(data->throttle_irq, data);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
 {
 	struct platform_device *pdev = cpufreq_get_driver_data();
@@ -553,14 +348,6 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
 	}
 
 	policy->driver_data = data;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	policy->dvfs_possible_from_any_cpu = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	policy->dvfs_possible_from_any_cpu = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = qcom_cpufreq_hw_read_lut(cpu_dev, policy);
 	if (ret) {
@@ -575,33 +362,14 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
 		goto error;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (policy_has_boost_freq(policy)) {
 		ret = cpufreq_enable_boost_support();
 		if (ret)
 			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = qcom_cpufreq_hw_lmh_init(policy, index);
-	if (ret)
-		goto error;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 error:
 	kfree(data);
@@ -621,14 +389,6 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
 
 	dev_pm_opp_remove_all_dynamic(cpu_dev);
 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	qcom_cpufreq_hw_lmh_exit(data);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	qcom_cpufreq_hw_lmh_exit(data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(policy->freq_table);
 	kfree(data);
 	iounmap(base);
@@ -652,14 +412,6 @@ static struct cpufreq_driver cpufreq_qcom_hw_driver = {
 	.get		= qcom_cpufreq_hw_get,
 	.init		= qcom_cpufreq_hw_cpu_init,
 	.exit		= qcom_cpufreq_hw_cpu_exit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.register_em	= cpufreq_register_em_with_opp,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.register_em	= cpufreq_register_em_with_opp,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.fast_switch    = qcom_cpufreq_hw_fast_switch,
 	.name		= "qcom-cpufreq-hw",
 	.attr		= qcom_cpufreq_hw_attr,

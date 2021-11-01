@@ -160,15 +160,7 @@ static int lirc_bpf_attach(struct rc_dev *rcdev, struct bpf_prog *prog)
 		goto unlock;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = bpf_prog_array_copy(old_array, NULL, prog, 0, &new_array);
-=======
 	ret = bpf_prog_array_copy(old_array, NULL, prog, &new_array);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = bpf_prog_array_copy(old_array, NULL, prog, 0, &new_array);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		goto unlock;
 
@@ -201,15 +193,7 @@ static int lirc_bpf_detach(struct rc_dev *rcdev, struct bpf_prog *prog)
 	}
 
 	old_array = lirc_rcu_dereference(raw->progs);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = bpf_prog_array_copy(old_array, prog, NULL, 0, &new_array);
-=======
 	ret = bpf_prog_array_copy(old_array, prog, NULL, &new_array);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = bpf_prog_array_copy(old_array, prog, NULL, 0, &new_array);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Do not use bpf_prog_array_delete_safe() as we would end up
 	 * with a dummy entry in the array, and the we would free the
@@ -233,15 +217,7 @@ void lirc_bpf_run(struct rc_dev *rcdev, u32 sample)
 	raw->bpf_sample = sample;
 
 	if (raw->progs)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		BPF_PROG_RUN_ARRAY(raw->progs, &raw->bpf_sample, bpf_prog_run);
-=======
 		BPF_PROG_RUN_ARRAY(raw->progs, &raw->bpf_sample, BPF_PROG_RUN);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		BPF_PROG_RUN_ARRAY(raw->progs, &raw->bpf_sample, bpf_prog_run);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

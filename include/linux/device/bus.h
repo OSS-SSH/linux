@@ -91,15 +91,7 @@ struct bus_type {
 	int (*uevent)(struct device *dev, struct kobj_uevent_env *env);
 	int (*probe)(struct device *dev);
 	void (*sync_state)(struct device *dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	void (*remove)(struct device *dev);
-=======
 	int (*remove)(struct device *dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	void (*remove)(struct device *dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*shutdown)(struct device *dev);
 
 	int (*online)(struct device *dev);

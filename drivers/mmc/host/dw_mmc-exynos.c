@@ -464,8 +464,6 @@ static s8 dw_mci_exynos_get_best_clksmpl(u8 candiates)
 		}
 	}
 
-<<<<<<< HEAD
-=======
 	/*
 	 * If there is no cadiates value, then it needs to return -EIO.
 	 * If there are candiates values and don't find bset clk sample value,
@@ -478,7 +476,6 @@ static s8 dw_mci_exynos_get_best_clksmpl(u8 candiates)
 			goto out;
 		}
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	return loc;
 }
@@ -509,11 +506,8 @@ static int dw_mci_exynos_execute_tuning(struct dw_mci_slot *slot, u32 opcode)
 		priv->tuned_sample = found;
 	} else {
 		ret = -EIO;
-<<<<<<< HEAD
-=======
 		dev_warn(&mmc->class_dev,
 			"There is no candiates value about clksmpl!\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return ret;

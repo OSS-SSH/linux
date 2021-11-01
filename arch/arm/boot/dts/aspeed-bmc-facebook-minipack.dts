@@ -265,49 +265,19 @@
 		};
 
 		/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * FIT image: 55.5 MB.
-		 */
-		fit@80000 {
-			reg = <0x80000 0x3780000>;
-=======
 		 * FIT image: 59.5 MB.
 		 */
 		fit@80000 {
 			reg = <0x80000 0x3b80000>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 * FIT image: 55.5 MB.
-		 */
-		fit@80000 {
-			reg = <0x80000 0x3780000>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			label = "fit";
 		};
 
 		/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * "data0" partition (8MB) is reserved for persistent
-		 * data store.
-		 */
-		data0@3800000 {
-			reg = <0x3800000 0x800000>;
-=======
 		 * "data0" partition (4MB) is reserved for persistent
 		 * data store.
 		 */
 		data0@3800000 {
 			reg = <0x3c00000 0x400000>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 * "data0" partition (8MB) is reserved for persistent
-		 * data store.
-		 */
-		data0@3800000 {
-			reg = <0x3800000 0x800000>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			label = "data0";
 		};
 

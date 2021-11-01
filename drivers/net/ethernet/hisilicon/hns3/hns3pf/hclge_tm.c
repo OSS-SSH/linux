@@ -581,15 +581,7 @@ int hclge_tm_qs_shaper_cfg(struct hclge_vport *vport, int max_tx_rate)
 		ret = hclge_cmd_send(&hdev->hw, &desc, 1);
 		if (ret) {
 			dev_err(&hdev->pdev->dev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				"vport%u, qs%u failed to set tx_rate:%d, ret=%d\n",
-=======
 				"vf%u, qs%u failed to set tx_rate:%d, ret=%d\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				"vport%u, qs%u failed to set tx_rate:%d, ret=%d\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				vport->vport_id, shap_cfg_cmd->qs_id,
 				max_tx_rate, ret);
 			return ret;
@@ -695,24 +687,12 @@ static void hclge_tm_vport_tc_info_update(struct hclge_vport *vport)
 
 	for (i = 0; i < HNAE3_MAX_TC; i++) {
 		if (hdev->hw_tc_map & BIT(i) && i < kinfo->tc_info.num_tc) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			set_bit(i, &kinfo->tc_info.tc_en);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			kinfo->tc_info.tqp_offset[i] = i * kinfo->rss_size;
 			kinfo->tc_info.tqp_count[i] = kinfo->rss_size;
 		} else {
 			/* Set to default queue if TC is disable */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			clear_bit(i, &kinfo->tc_info.tc_en);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			kinfo->tc_info.tqp_offset[i] = 0;
 			kinfo->tc_info.tqp_count[i] = 1;
 		}
@@ -749,9 +729,6 @@ static void hclge_tm_tc_info_init(struct hclge_dev *hdev)
 	for (i = 0; i < HNAE3_MAX_USER_PRIO; i++)
 		hdev->tm_info.prio_tc[i] =
 			(i >= hdev->tm_info.num_tc) ? 0 : i;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	/* DCB is enabled if we have more than 1 TC or pfc_en is
 	 * non-zero.
@@ -760,9 +737,6 @@ static void hclge_tm_tc_info_init(struct hclge_dev *hdev)
 		hdev->flag |= HCLGE_FLAG_DCB_ENABLE;
 	else
 		hdev->flag &= ~HCLGE_FLAG_DCB_ENABLE;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void hclge_tm_pg_info_init(struct hclge_dev *hdev)
@@ -793,24 +767,10 @@ static void hclge_tm_pg_info_init(struct hclge_dev *hdev)
 
 static void hclge_update_fc_mode_by_dcb_flag(struct hclge_dev *hdev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (hdev->tm_info.num_tc == 1 && !hdev->tm_info.pfc_en) {
-		if (hdev->fc_mode_last_time == HCLGE_FC_PFC)
-			dev_warn(&hdev->pdev->dev,
-				 "Only 1 tc used, but last mode is FC_PFC\n");
-=======
 	if (!(hdev->flag & HCLGE_FLAG_DCB_ENABLE)) {
 		if (hdev->fc_mode_last_time == HCLGE_FC_PFC)
 			dev_warn(&hdev->pdev->dev,
 				 "DCB is disable, but last mode is FC_PFC\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (hdev->tm_info.num_tc == 1 && !hdev->tm_info.pfc_en) {
-		if (hdev->fc_mode_last_time == HCLGE_FC_PFC)
-			dev_warn(&hdev->pdev->dev,
-				 "Only 1 tc used, but last mode is FC_PFC\n");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		hdev->tm_info.fc_mode = hdev->fc_mode_last_time;
 	} else if (hdev->tm_info.fc_mode != HCLGE_FC_PFC) {
@@ -836,15 +796,7 @@ static void hclge_update_fc_mode(struct hclge_dev *hdev)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void hclge_tm_pfc_info_update(struct hclge_dev *hdev)
-=======
 static void hclge_pfc_info_init(struct hclge_dev *hdev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void hclge_tm_pfc_info_update(struct hclge_dev *hdev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (hdev->ae_dev->dev_version >= HNAE3_DEVICE_VERSION_V3)
 		hclge_update_fc_mode(hdev);
@@ -860,15 +812,7 @@ static void hclge_tm_schd_info_init(struct hclge_dev *hdev)
 
 	hclge_tm_vport_info_update(hdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hclge_tm_pfc_info_update(hdev);
-=======
 	hclge_pfc_info_init(hdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hclge_tm_pfc_info_update(hdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int hclge_tm_pg_to_pri_map(struct hclge_dev *hdev)
@@ -1614,9 +1558,6 @@ void hclge_tm_schd_info_update(struct hclge_dev *hdev, u8 num_tc)
 	hclge_tm_schd_info_init(hdev);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void hclge_tm_pfc_info_update(struct hclge_dev *hdev)
 {
 	/* DCB is enabled if we have more than 1 TC or pfc_en is
@@ -1630,9 +1571,6 @@ void hclge_tm_pfc_info_update(struct hclge_dev *hdev)
 	hclge_pfc_info_init(hdev);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hclge_tm_init_hw(struct hclge_dev *hdev, bool init)
 {
 	int ret;
@@ -1678,15 +1616,7 @@ int hclge_tm_vport_map_update(struct hclge_dev *hdev)
 	if (ret)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (hdev->tm_info.num_tc == 1 && !hdev->tm_info.pfc_en)
-=======
 	if (!(hdev->flag & HCLGE_FLAG_DCB_ENABLE))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (hdev->tm_info.num_tc == 1 && !hdev->tm_info.pfc_en)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	return hclge_tm_bp_setup(hdev);

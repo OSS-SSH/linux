@@ -681,20 +681,8 @@ svcauth_unix_set_client(struct svc_rqst *rqstp)
 
 	rqstp->rq_client = NULL;
 	if (rqstp->rq_proc == 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto out;
-
-	rqstp->rq_auth_stat = rpc_autherr_badcred;
-=======
 		return SVC_OK;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto out;
-
-	rqstp->rq_auth_stat = rpc_autherr_badcred;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ipm = ip_map_cached_get(xprt);
 	if (ipm == NULL)
 		ipm = __ip_map_lookup(sn->ip_map_cache, rqstp->rq_server->sv_program->pg_class,
@@ -731,33 +719,13 @@ svcauth_unix_set_client(struct svc_rqst *rqstp)
 		put_group_info(cred->cr_group_info);
 		cred->cr_group_info = gi;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-out:
-	rqstp->rq_auth_stat = rpc_auth_ok;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-out:
-	rqstp->rq_auth_stat = rpc_auth_ok;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return SVC_OK;
 }
 
 EXPORT_SYMBOL_GPL(svcauth_unix_set_client);
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-svcauth_null_accept(struct svc_rqst *rqstp)
-=======
 svcauth_null_accept(struct svc_rqst *rqstp, __be32 *authp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-svcauth_null_accept(struct svc_rqst *rqstp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct kvec	*argv = &rqstp->rq_arg.head[0];
 	struct kvec	*resv = &rqstp->rq_res.head[0];
@@ -768,28 +736,12 @@ svcauth_null_accept(struct svc_rqst *rqstp)
 
 	if (svc_getu32(argv) != 0) {
 		dprintk("svc: bad null cred\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rqstp->rq_auth_stat = rpc_autherr_badcred;
-=======
 		*authp = rpc_autherr_badcred;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rqstp->rq_auth_stat = rpc_autherr_badcred;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return SVC_DENIED;
 	}
 	if (svc_getu32(argv) != htonl(RPC_AUTH_NULL) || svc_getu32(argv) != 0) {
 		dprintk("svc: bad null verf\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rqstp->rq_auth_stat = rpc_autherr_badverf;
-=======
 		*authp = rpc_autherr_badverf;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rqstp->rq_auth_stat = rpc_autherr_badverf;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return SVC_DENIED;
 	}
 
@@ -833,15 +785,7 @@ struct auth_ops svcauth_null = {
 
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-svcauth_unix_accept(struct svc_rqst *rqstp)
-=======
 svcauth_unix_accept(struct svc_rqst *rqstp, __be32 *authp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-svcauth_unix_accept(struct svc_rqst *rqstp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct kvec	*argv = &rqstp->rq_arg.head[0];
 	struct kvec	*resv = &rqstp->rq_res.head[0];
@@ -883,15 +827,7 @@ svcauth_unix_accept(struct svc_rqst *rqstp)
 	}
 	groups_sort(cred->cr_group_info);
 	if (svc_getu32(argv) != htonl(RPC_AUTH_NULL) || svc_getu32(argv) != 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rqstp->rq_auth_stat = rpc_autherr_badverf;
-=======
 		*authp = rpc_autherr_badverf;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rqstp->rq_auth_stat = rpc_autherr_badverf;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return SVC_DENIED;
 	}
 
@@ -903,15 +839,7 @@ svcauth_unix_accept(struct svc_rqst *rqstp)
 	return SVC_OK;
 
 badcred:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rqstp->rq_auth_stat = rpc_autherr_badcred;
-=======
 	*authp = rpc_autherr_badcred;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rqstp->rq_auth_stat = rpc_autherr_badcred;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return SVC_DENIED;
 }
 

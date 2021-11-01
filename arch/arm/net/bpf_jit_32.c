@@ -36,19 +36,6 @@
  *                        +-----+
  *                        |RSVD | JIT scratchpad
  * current ARM_SP =>      +-----+ <= (BPF_FP - STACK_SIZE + SCRATCH_SIZE)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- *                        | ... | caller-saved registers
- *                        +-----+
- *                        | ... | arguments passed on stack
- * ARM_SP during call =>  +-----|
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *                        |     |
  *                        | ... | Function call stack
  *                        |     |
@@ -76,21 +63,6 @@
  *
  * When popping registers off the stack at the end of a BPF function, we
  * reference them via the current ARM_FP register.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- *
- * Some eBPF operations are implemented via a call to a helper function.
- * Such calls are "invisible" in the eBPF code, so it is up to the calling
- * program to preserve any caller-saved ARM registers during the call. The
- * JIT emits code to push and pop those registers onto the stack, immediately
- * above the callee stack frame.
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #define CALLEE_MASK	(1 << ARM_R4 | 1 << ARM_R5 | 1 << ARM_R6 | \
 			 1 << ARM_R7 | 1 << ARM_R8 | 1 << ARM_R9 | \
@@ -98,16 +70,6 @@
 #define CALLEE_PUSH_MASK (CALLEE_MASK | 1 << ARM_LR)
 #define CALLEE_POP_MASK  (CALLEE_MASK | 1 << ARM_PC)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CALLER_MASK	(1 << ARM_R0 | 1 << ARM_R1 | 1 << ARM_R2 | 1 << ARM_R3)
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CALLER_MASK	(1 << ARM_R0 | 1 << ARM_R1 | 1 << ARM_R2 | 1 << ARM_R3)
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	/* Stack layout - these are offsets from (top of stack - 4) */
 	BPF_R2_HI,
@@ -502,14 +464,6 @@ static inline int epilogue_offset(const struct jit_ctx *ctx)
 
 static inline void emit_udivmod(u8 rd, u8 rm, u8 rn, struct jit_ctx *ctx, u8 op)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const int exclude_mask = BIT(ARM_R0) | BIT(ARM_R1);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const int exclude_mask = BIT(ARM_R0) | BIT(ARM_R1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const s8 *tmp = bpf2a32[TMP_REG_1];
 
 #if __LINUX_ARM_ARCH__ == 7
@@ -541,35 +495,11 @@ static inline void emit_udivmod(u8 rd, u8 rm, u8 rn, struct jit_ctx *ctx, u8 op)
 		emit(ARM_MOV_R(ARM_R0, rm), ctx);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Push caller-saved registers on stack */
-	emit(ARM_PUSH(CALLER_MASK & ~exclude_mask), ctx);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Push caller-saved registers on stack */
-	emit(ARM_PUSH(CALLER_MASK & ~exclude_mask), ctx);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Call appropriate function */
 	emit_mov_i(ARM_IP, op == BPF_DIV ?
 		   (u32)jit_udiv32 : (u32)jit_mod32, ctx);
 	emit_blx_r(ARM_IP, ctx);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Restore caller-saved registers from stack */
-	emit(ARM_POP(CALLER_MASK & ~exclude_mask), ctx);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Restore caller-saved registers from stack */
-	emit(ARM_POP(CALLER_MASK & ~exclude_mask), ctx);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Save return value */
 	if (rd != ARM_R0)
 		emit(ARM_MOV_R(rd, ARM_R0), ctx);
@@ -1672,18 +1602,6 @@ exit:
 		rn = arm_bpf_get_reg32(src_lo, tmp2[1], ctx);
 		emit_ldx_r(dst, rn, off, ctx, BPF_SIZE(code));
 		break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* speculation barrier */
-	case BPF_ST | BPF_NOSPEC:
-		break;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* speculation barrier */
-	case BPF_ST | BPF_NOSPEC:
-		break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* ST: *(size *)(dst + off) = imm */
 	case BPF_ST | BPF_MEM | BPF_W:
 	case BPF_ST | BPF_MEM | BPF_H:

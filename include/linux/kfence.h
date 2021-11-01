@@ -51,26 +51,10 @@ extern atomic_t kfence_allocation_gate;
 static __always_inline bool is_kfence_address(const void *addr)
 {
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * The __kfence_pool != NULL check is required to deal with the case
-	 * where __kfence_pool == NULL && addr < KFENCE_POOL_SIZE. Keep it in
-	 * the slow-path after the range-check!
-	 */
-	return unlikely((unsigned long)((char *)addr - __kfence_pool) < KFENCE_POOL_SIZE && __kfence_pool);
-=======
 	 * The non-NULL check is required in case the __kfence_pool pointer was
 	 * never initialized; keep it in the slow-path after the range-check.
 	 */
 	return unlikely((unsigned long)((char *)addr - __kfence_pool) < KFENCE_POOL_SIZE && addr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * The __kfence_pool != NULL check is required to deal with the case
-	 * where __kfence_pool == NULL && addr < KFENCE_POOL_SIZE. Keep it in
-	 * the slow-path after the range-check!
-	 */
-	return unlikely((unsigned long)((char *)addr - __kfence_pool) < KFENCE_POOL_SIZE && __kfence_pool);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

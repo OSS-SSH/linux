@@ -1,25 +1,11 @@
 /* SPDX-License-Identifier: GPL-2.0 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Marvell RVU Ethernet driver
- *
- * Copyright (C) 2020 Marvell.
- *
-=======
 /* Marvell OcteonTx2 RVU Ethernet driver
-=======
-/* Marvell RVU Ethernet driver
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2020 Marvell.
+ * Copyright (C) 2020 Marvell International Ltd.
  *
-<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #ifndef OTX2_TXRX_H
@@ -127,13 +113,7 @@ struct otx2_cq_poll {
 struct otx2_pool {
 	struct qmem		*stack;
 	struct qmem		*fc_addr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u64			*lmt_addr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16			rbsize;
 };
 

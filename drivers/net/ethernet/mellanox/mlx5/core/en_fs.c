@@ -718,15 +718,7 @@ static int mlx5e_add_promisc_rule(struct mlx5e_priv *priv)
 	if (!spec)
 		return -ENOMEM;
 	dest.type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dest.ft = mlx5_get_ttc_flow_table(priv->fs.ttc);
-=======
 	dest.ft = priv->fs.ttc.ft.t;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dest.ft = mlx5_get_ttc_flow_table(priv->fs.ttc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rule_p = &priv->fs.promisc.rule;
 	*rule_p = mlx5_add_flow_rules(ft, spec, &flow_act, &dest, 1);
@@ -862,62 +854,6 @@ void mlx5e_destroy_flow_table(struct mlx5e_flow_table *ft)
 	ft->t = NULL;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void mlx5e_set_inner_ttc_params(struct mlx5e_priv *priv,
-				       struct ttc_params *ttc_params)
-{
-	struct mlx5_flow_table_attr *ft_attr = &ttc_params->ft_attr;
-	int tt;
-
-	memset(ttc_params, 0, sizeof(*ttc_params));
-	ttc_params->ns = mlx5_get_flow_namespace(priv->mdev,
-						 MLX5_FLOW_NAMESPACE_KERNEL);
-	ft_attr->level = MLX5E_INNER_TTC_FT_LEVEL;
-	ft_attr->prio = MLX5E_NIC_PRIO;
-
-	for (tt = 0; tt < MLX5_NUM_TT; tt++) {
-		ttc_params->dests[tt].type = MLX5_FLOW_DESTINATION_TYPE_TIR;
-		ttc_params->dests[tt].tir_num =
-			tt == MLX5_TT_ANY ?
-				mlx5e_rx_res_get_tirn_direct(priv->rx_res, 0) :
-				mlx5e_rx_res_get_tirn_rss_inner(priv->rx_res,
-								tt);
-	}
-}
-
-void mlx5e_set_ttc_params(struct mlx5e_priv *priv,
-			  struct ttc_params *ttc_params, bool tunnel)
-
-{
-	struct mlx5_flow_table_attr *ft_attr = &ttc_params->ft_attr;
-	int tt;
-
-	memset(ttc_params, 0, sizeof(*ttc_params));
-	ttc_params->ns = mlx5_get_flow_namespace(priv->mdev,
-						 MLX5_FLOW_NAMESPACE_KERNEL);
-	ft_attr->level = MLX5E_TTC_FT_LEVEL;
-	ft_attr->prio = MLX5E_NIC_PRIO;
-
-	for (tt = 0; tt < MLX5_NUM_TT; tt++) {
-		ttc_params->dests[tt].type = MLX5_FLOW_DESTINATION_TYPE_TIR;
-		ttc_params->dests[tt].tir_num =
-			tt == MLX5_TT_ANY ?
-				mlx5e_rx_res_get_tirn_direct(priv->rx_res, 0) :
-				mlx5e_rx_res_get_tirn_rss(priv->rx_res, tt);
-	}
-
-	ttc_params->inner_ttc = tunnel;
-	if (!tunnel || !mlx5_tunnel_inner_ft_supported(priv->mdev))
-		return;
-
-	for (tt = 0; tt < MLX5_NUM_TUNNEL_TT; tt++) {
-		ttc_params->tunnel_dests[tt].type =
-			MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
-		ttc_params->tunnel_dests[tt].ft =
-			mlx5_get_ttc_flow_table(priv->fs.inner_ttc);
-	}
-=======
 static void mlx5e_cleanup_ttc_rules(struct mlx5e_ttc_table *ttc)
 {
 	int i;
@@ -1389,62 +1325,85 @@ void mlx5e_set_ttc_basic_params(struct mlx5e_priv *priv,
 }
 
 void mlx5e_set_inner_ttc_ft_params(struct ttc_params *ttc_params)
-=======
-static void mlx5e_set_inner_ttc_params(struct mlx5e_priv *priv,
-				       struct ttc_params *ttc_params)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5_flow_table_attr *ft_attr = &ttc_params->ft_attr;
-	int tt;
 
-	memset(ttc_params, 0, sizeof(*ttc_params));
-	ttc_params->ns = mlx5_get_flow_namespace(priv->mdev,
-						 MLX5_FLOW_NAMESPACE_KERNEL);
+	ft_attr->max_fte = MLX5E_INNER_TTC_TABLE_SIZE;
 	ft_attr->level = MLX5E_INNER_TTC_FT_LEVEL;
 	ft_attr->prio = MLX5E_NIC_PRIO;
-
-	for (tt = 0; tt < MLX5_NUM_TT; tt++) {
-		ttc_params->dests[tt].type = MLX5_FLOW_DESTINATION_TYPE_TIR;
-		ttc_params->dests[tt].tir_num =
-			tt == MLX5_TT_ANY ?
-				mlx5e_rx_res_get_tirn_direct(priv->rx_res, 0) :
-				mlx5e_rx_res_get_tirn_rss_inner(priv->rx_res,
-								tt);
-	}
 }
 
-void mlx5e_set_ttc_params(struct mlx5e_priv *priv,
-			  struct ttc_params *ttc_params, bool tunnel)
+void mlx5e_set_ttc_ft_params(struct ttc_params *ttc_params)
 
 {
 	struct mlx5_flow_table_attr *ft_attr = &ttc_params->ft_attr;
-	int tt;
 
-	memset(ttc_params, 0, sizeof(*ttc_params));
-	ttc_params->ns = mlx5_get_flow_namespace(priv->mdev,
-						 MLX5_FLOW_NAMESPACE_KERNEL);
+	ft_attr->max_fte = MLX5E_TTC_TABLE_SIZE;
 	ft_attr->level = MLX5E_TTC_FT_LEVEL;
 	ft_attr->prio = MLX5E_NIC_PRIO;
+}
 
-	for (tt = 0; tt < MLX5_NUM_TT; tt++) {
-		ttc_params->dests[tt].type = MLX5_FLOW_DESTINATION_TYPE_TIR;
-		ttc_params->dests[tt].tir_num =
-			tt == MLX5_TT_ANY ?
-				mlx5e_rx_res_get_tirn_direct(priv->rx_res, 0) :
-				mlx5e_rx_res_get_tirn_rss(priv->rx_res, tt);
+int mlx5e_create_inner_ttc_table(struct mlx5e_priv *priv, struct ttc_params *params,
+				 struct mlx5e_ttc_table *ttc)
+{
+	struct mlx5e_flow_table *ft = &ttc->ft;
+	int err;
+
+	if (!mlx5e_tunnel_inner_ft_supported(priv->mdev))
+		return 0;
+
+	ft->t = mlx5_create_flow_table(priv->fs.ns, &params->ft_attr);
+	if (IS_ERR(ft->t)) {
+		err = PTR_ERR(ft->t);
+		ft->t = NULL;
+		return err;
 	}
 
-	ttc_params->inner_ttc = tunnel;
-	if (!tunnel || !mlx5_tunnel_inner_ft_supported(priv->mdev))
+	err = mlx5e_create_inner_ttc_table_groups(ttc);
+	if (err)
+		goto err;
+
+	err = mlx5e_generate_inner_ttc_table_rules(priv, params, ttc);
+	if (err)
+		goto err;
+
+	return 0;
+
+err:
+	mlx5e_destroy_flow_table(ft);
+	return err;
+}
+
+void mlx5e_destroy_inner_ttc_table(struct mlx5e_priv *priv,
+				   struct mlx5e_ttc_table *ttc)
+{
+	if (!mlx5e_tunnel_inner_ft_supported(priv->mdev))
 		return;
 
-	for (tt = 0; tt < MLX5_NUM_TUNNEL_TT; tt++) {
-		ttc_params->tunnel_dests[tt].type =
-			MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
-		ttc_params->tunnel_dests[tt].ft =
-			mlx5_get_ttc_flow_table(priv->fs.inner_ttc);
+	mlx5e_cleanup_ttc_rules(ttc);
+	mlx5e_destroy_flow_table(&ttc->ft);
+}
+
+void mlx5e_destroy_ttc_table(struct mlx5e_priv *priv,
+			     struct mlx5e_ttc_table *ttc)
+{
+	mlx5e_cleanup_ttc_rules(ttc);
+	mlx5e_destroy_flow_table(&ttc->ft);
+}
+
+int mlx5e_create_ttc_table(struct mlx5e_priv *priv, struct ttc_params *params,
+			   struct mlx5e_ttc_table *ttc)
+{
+	bool match_ipv_outer = MLX5_CAP_FLOWTABLE_NIC_RX(priv->mdev, ft_field_support.outer_ip_version);
+	struct mlx5e_flow_table *ft = &ttc->ft;
+	int err;
+
+	ft->t = mlx5_create_flow_table(priv->fs.ns, &params->ft_attr);
+	if (IS_ERR(ft->t)) {
+		err = PTR_ERR(ft->t);
+		ft->t = NULL;
+		return err;
 	}
-<<<<<<< HEAD
 
 	err = mlx5e_create_ttc_table_groups(ttc, match_ipv_outer);
 	if (err)
@@ -1482,9 +1441,6 @@ int mlx5e_ttc_fwd_default_dest(struct mlx5e_priv *priv, enum mlx5e_traffic_types
 	struct mlx5_flow_destination dest = mlx5e_ttc_get_default_dest(priv, type);
 
 	return mlx5e_ttc_fwd_dest(priv, type, &dest);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mlx5e_del_l2_flow_rule(struct mlx5e_priv *priv,
@@ -1517,15 +1473,7 @@ static int mlx5e_add_l2_flow_rule(struct mlx5e_priv *priv,
 			       outer_headers.dmac_47_16);
 
 	dest.type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dest.ft = mlx5_get_ttc_flow_table(priv->fs.ttc);
-=======
 	dest.ft = priv->fs.ttc.ft.t;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dest.ft = mlx5_get_ttc_flow_table(priv->fs.ttc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (type) {
 	case MLX5E_FULLMATCH:
@@ -1821,88 +1769,10 @@ static void mlx5e_destroy_vlan_table(struct mlx5e_priv *priv)
 	kvfree(priv->fs.vlan);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void mlx5e_destroy_inner_ttc_table(struct mlx5e_priv *priv)
-{
-	if (!mlx5_tunnel_inner_ft_supported(priv->mdev))
-		return;
-	mlx5_destroy_ttc_table(priv->fs.inner_ttc);
-}
-
-void mlx5e_destroy_ttc_table(struct mlx5e_priv *priv)
-{
-	mlx5_destroy_ttc_table(priv->fs.ttc);
-}
-
-static int mlx5e_create_inner_ttc_table(struct mlx5e_priv *priv)
-<<<<<<< HEAD
-{
-	struct ttc_params ttc_params = {};
-
-	if (!mlx5_tunnel_inner_ft_supported(priv->mdev))
-		return 0;
-
-	mlx5e_set_inner_ttc_params(priv, &ttc_params);
-	priv->fs.inner_ttc = mlx5_create_inner_ttc_table(priv->mdev,
-							 &ttc_params);
-	if (IS_ERR(priv->fs.inner_ttc))
-		return PTR_ERR(priv->fs.inner_ttc);
-	return 0;
-}
-
-int mlx5e_create_ttc_table(struct mlx5e_priv *priv)
-{
-	struct ttc_params ttc_params = {};
-
-	mlx5e_set_ttc_params(priv, &ttc_params, true);
-	priv->fs.ttc = mlx5_create_ttc_table(priv->mdev, &ttc_params);
-	if (IS_ERR(priv->fs.ttc))
-		return PTR_ERR(priv->fs.ttc);
-	return 0;
-}
-
-int mlx5e_create_flow_steering(struct mlx5e_priv *priv)
-{
-	int err;
-=======
 int mlx5e_create_flow_steering(struct mlx5e_priv *priv)
 {
 	struct ttc_params ttc_params = {};
 	int tt, err;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-{
-	struct ttc_params ttc_params = {};
-
-	if (!mlx5_tunnel_inner_ft_supported(priv->mdev))
-		return 0;
-
-	mlx5e_set_inner_ttc_params(priv, &ttc_params);
-	priv->fs.inner_ttc = mlx5_create_inner_ttc_table(priv->mdev,
-							 &ttc_params);
-	if (IS_ERR(priv->fs.inner_ttc))
-		return PTR_ERR(priv->fs.inner_ttc);
-	return 0;
-}
-
-int mlx5e_create_ttc_table(struct mlx5e_priv *priv)
-{
-	struct ttc_params ttc_params = {};
-
-	mlx5e_set_ttc_params(priv, &ttc_params, true);
-	priv->fs.ttc = mlx5_create_ttc_table(priv->mdev, &ttc_params);
-	if (IS_ERR(priv->fs.ttc))
-		return PTR_ERR(priv->fs.ttc);
-	return 0;
-}
-
-int mlx5e_create_flow_steering(struct mlx5e_priv *priv)
-{
-	int err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	priv->fs.ns = mlx5_get_flow_namespace(priv->mdev,
 					       MLX5_FLOW_NAMESPACE_KERNEL);
@@ -1917,13 +1787,6 @@ int mlx5e_create_flow_steering(struct mlx5e_priv *priv)
 		priv->netdev->hw_features &= ~NETIF_F_NTUPLE;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = mlx5e_create_inner_ttc_table(priv);
-	if (err) {
-		netdev_err(priv->netdev,
-			   "Failed to create inner ttc table, err=%d\n",
-=======
 	mlx5e_set_ttc_basic_params(priv, &ttc_params);
 	mlx5e_set_inner_ttc_ft_params(&ttc_params);
 	for (tt = 0; tt < MLX5E_NUM_INDIR_TIRS; tt++)
@@ -1932,30 +1795,15 @@ int mlx5e_create_flow_steering(struct mlx5e_priv *priv)
 	err = mlx5e_create_inner_ttc_table(priv, &ttc_params, &priv->fs.inner_ttc);
 	if (err) {
 		netdev_err(priv->netdev, "Failed to create inner ttc table, err=%d\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = mlx5e_create_inner_ttc_table(priv);
-	if (err) {
-		netdev_err(priv->netdev,
-			   "Failed to create inner ttc table, err=%d\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   err);
 		goto err_destroy_arfs_tables;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = mlx5e_create_ttc_table(priv);
-=======
 	mlx5e_set_ttc_ft_params(&ttc_params);
 	for (tt = 0; tt < MLX5E_NUM_INDIR_TIRS; tt++)
 		ttc_params.indir_tirn[tt] = priv->indir_tir[tt].tirn;
 
 	err = mlx5e_create_ttc_table(priv, &ttc_params, &priv->fs.ttc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = mlx5e_create_ttc_table(priv);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		netdev_err(priv->netdev, "Failed to create ttc table, err=%d\n",
 			   err);
@@ -1989,21 +1837,9 @@ err_destory_vlan_table:
 err_destroy_l2_table:
 	mlx5e_destroy_l2_table(priv);
 err_destroy_ttc_table:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mlx5e_destroy_ttc_table(priv);
-err_destroy_inner_ttc_table:
-	mlx5e_destroy_inner_ttc_table(priv);
-=======
 	mlx5e_destroy_ttc_table(priv, &priv->fs.ttc);
 err_destroy_inner_ttc_table:
 	mlx5e_destroy_inner_ttc_table(priv, &priv->fs.inner_ttc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mlx5e_destroy_ttc_table(priv);
-err_destroy_inner_ttc_table:
-	mlx5e_destroy_inner_ttc_table(priv);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_destroy_arfs_tables:
 	mlx5e_arfs_destroy_tables(priv);
 
@@ -2015,18 +1851,8 @@ void mlx5e_destroy_flow_steering(struct mlx5e_priv *priv)
 	mlx5e_ptp_free_rx_fs(priv);
 	mlx5e_destroy_vlan_table(priv);
 	mlx5e_destroy_l2_table(priv);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mlx5e_destroy_ttc_table(priv);
-	mlx5e_destroy_inner_ttc_table(priv);
-=======
 	mlx5e_destroy_ttc_table(priv, &priv->fs.ttc);
 	mlx5e_destroy_inner_ttc_table(priv, &priv->fs.inner_ttc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mlx5e_destroy_ttc_table(priv);
-	mlx5e_destroy_inner_ttc_table(priv);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mlx5e_arfs_destroy_tables(priv);
 	mlx5e_ethtool_cleanup_steering(priv);
 }

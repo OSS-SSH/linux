@@ -228,18 +228,8 @@ static int snd_gusextreme_probe(struct device *dev, unsigned int n)
 	struct snd_opl3 *opl3;
 	int error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE,
-				  sizeof(struct snd_es1688), &card);
-=======
 	error = snd_card_new(dev, index[n], id[n], THIS_MODULE,
 			     sizeof(struct snd_es1688), &card);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	error = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE,
-				  sizeof(struct snd_es1688), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (error < 0)
 		return error;
 
@@ -253,136 +243,56 @@ static int snd_gusextreme_probe(struct device *dev, unsigned int n)
 
 	error = snd_gusextreme_es1688_create(card, es1688, dev, n);
 	if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return error;
-=======
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (gf1_port[n] < 0)
 		gf1_port[n] = es1688->port + 0x20;
 
 	error = snd_gusextreme_gus_card_create(card, dev, n, &gus);
 	if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return error;
-
-	error = snd_gusextreme_detect(gus, es1688);
-	if (error < 0)
-		return error;
-=======
 		goto out;
 
 	error = snd_gusextreme_detect(gus, es1688);
 	if (error < 0)
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
-
-	error = snd_gusextreme_detect(gus, es1688);
-	if (error < 0)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	gus->joystick_dac = joystick_dac[n];
 
 	error = snd_gus_initialize(gus);
 	if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return error;
-=======
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = -ENODEV;
 	if (!gus->ess_flag) {
 		dev_err(dev, "GUS Extreme soundcard was not "
 			"detected at 0x%lx\n", gus->gf1.port);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return error;
-=======
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	gus->codec_flag = 1;
 
 	error = snd_es1688_pcm(card, es1688, 0);
 	if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return error;
-
-	error = snd_es1688_mixer(card, es1688);
-	if (error < 0)
-		return error;
-=======
 		goto out;
 
 	error = snd_es1688_mixer(card, es1688);
 	if (error < 0)
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
-
-	error = snd_es1688_mixer(card, es1688);
-	if (error < 0)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_component_add(card, "ES1688");
 
 	if (pcm_channels[n] > 0) {
 		error = snd_gf1_pcm_new(gus, 1, 1);
 		if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return error;
-=======
 			goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	error = snd_gf1_new_mixer(gus);
 	if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return error;
-
-	error = snd_gusextreme_mixer(card);
-	if (error < 0)
-		return error;
-=======
 		goto out;
 
 	error = snd_gusextreme_mixer(card);
 	if (error < 0)
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
-
-	error = snd_gusextreme_mixer(card);
-	if (error < 0)
-		return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (snd_opl3_create(card, es1688->port, es1688->port + 2,
 			OPL3_HW_OPL3, 0, &opl3) < 0)
@@ -390,30 +300,14 @@ static int snd_gusextreme_probe(struct device *dev, unsigned int n)
 	else {
 		error = snd_opl3_hwdep_new(opl3, 0, 2, NULL);
 		if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return error;
-=======
 			goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (es1688->mpu_port >= 0x300) {
 		error = snd_mpu401_uart_new(card, 0, MPU401_HW_ES1688,
 				es1688->mpu_port, 0, mpu_irq[n], NULL);
 		if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return error;
-=======
 			goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return error;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	sprintf(card->longname, "Gravis UltraSound Extreme at 0x%lx, "
@@ -422,13 +316,6 @@ static int snd_gusextreme_probe(struct device *dev, unsigned int n)
 
 	error = snd_card_register(card);
 	if (error < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return error;
-
-	dev_set_drvdata(dev, card);
-	return 0;
-=======
 		goto out;
 
 	dev_set_drvdata(dev, card);
@@ -441,25 +328,12 @@ out:	snd_card_free(card);
 static void snd_gusextreme_remove(struct device *dev, unsigned int n)
 {
 	snd_card_free(dev_get_drvdata(dev));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
-
-	dev_set_drvdata(dev, card);
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct isa_driver snd_gusextreme_driver = {
 	.match		= snd_gusextreme_match,
 	.probe		= snd_gusextreme_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove		= snd_gusextreme_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if 0	/* FIXME */
 	.suspend	= snd_gusextreme_suspend,
 	.resume		= snd_gusextreme_resume,

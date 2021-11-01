@@ -43,32 +43,12 @@ properties:
               - renesas,etheravb-r8a779a0     # R-Car V3U
           - const: renesas,etheravb-rcar-gen3 # R-Car Gen3 and RZ/G2
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-      - items:
-          - enum:
-              - renesas,r9a07g044-gbeth # RZ/G2{L,LC}
-          - const: renesas,rzg2l-gbeth  # RZ/G2L
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   reg: true
 
   interrupts: true
 
   interrupt-names: true
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  clocks: true
-
-  clock-names: true
-=======
   clocks:
     minItems: 1
     items:
@@ -80,12 +60,6 @@ properties:
     items:
       - const: fck
       - const: refclk
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  clocks: true
-
-  clock-names: true
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   iommus:
     maxItems: 1
@@ -171,44 +145,14 @@ allOf:
       properties:
         compatible:
           contains:
-<<<<<<< HEAD
-<<<<<<< HEAD
-            enum:
-              - renesas,etheravb-rcar-gen2
-              - renesas,rzg2l-gbeth
-    then:
-      properties:
-        interrupts:
-          minItems: 1
-          maxItems: 3
-        interrupt-names:
-          minItems: 1
-          items:
-            - const: mux
-            - const: fil
-            - const: arp_ns
-=======
             const: renesas,etheravb-rcar-gen2
-=======
-            enum:
-              - renesas,etheravb-rcar-gen2
-              - renesas,rzg2l-gbeth
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     then:
       properties:
         interrupts:
-          minItems: 1
-          maxItems: 3
+          maxItems: 1
         interrupt-names:
-          minItems: 1
           items:
             - const: mux
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            - const: fil
-            - const: arp_ns
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         rx-internal-delay-ps: false
     else:
       properties:
@@ -264,45 +208,6 @@ allOf:
         tx-internal-delay-ps:
           const: 2000
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  - if:
-      properties:
-        compatible:
-          contains:
-            const: renesas,rzg2l-gbeth
-    then:
-      properties:
-        clocks:
-          items:
-            - description: Main clock
-            - description: Register access clock
-            - description: Reference clock for RGMII
-        clock-names:
-          items:
-            - const: axi
-            - const: chi
-            - const: refclk
-    else:
-      properties:
-        clocks:
-          minItems: 1
-          items:
-            - description: AVB functional clock
-            - description: Optional TXC reference clock
-        clock-names:
-          minItems: 1
-          items:
-            - const: fck
-            - const: refclk
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 additionalProperties: false
 
 examples:

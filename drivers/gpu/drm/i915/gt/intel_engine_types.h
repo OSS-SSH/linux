@@ -21,23 +21,13 @@
 #include "i915_pmu.h"
 #include "i915_priolist_types.h"
 #include "i915_selftest.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include "intel_breadcrumbs_types.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_sseu.h"
 #include "intel_timeline_types.h"
 #include "intel_uncore.h"
 #include "intel_wakeref.h"
 #include "intel_workarounds_types.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* HW Engine class + instance */
-=======
 /* Legacy HW Engine ID */
 
 #define RCS0_HW		0
@@ -50,25 +40,13 @@
 #define VECS1_HW	12
 
 /* Gen11+ HW Engine class + instance */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* HW Engine class + instance */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define RENDER_CLASS		0
 #define VIDEO_DECODE_CLASS	1
 #define VIDEO_ENHANCEMENT_CLASS	2
 #define COPY_ENGINE_CLASS	3
 #define OTHER_CLASS		4
 #define MAX_ENGINE_CLASS	4
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MAX_ENGINE_INSTANCE	7
-=======
 #define MAX_ENGINE_INSTANCE	3
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MAX_ENGINE_INSTANCE	7
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define I915_MAX_SLICES	3
 #define I915_MAX_SUBSLICES 8
@@ -81,30 +59,11 @@ struct drm_i915_reg_table;
 struct i915_gem_context;
 struct i915_request;
 struct i915_sched_attr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct i915_sched_engine;
 struct intel_gt;
 struct intel_ring;
 struct intel_uncore;
-struct intel_breadcrumbs;
 
-typedef u32 intel_engine_mask_t;
-=======
-=======
-struct i915_sched_engine;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct intel_gt;
-struct intel_ring;
-struct intel_uncore;
-struct intel_breadcrumbs;
-
-<<<<<<< HEAD
 typedef u8 intel_engine_mask_t;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-typedef u32 intel_engine_mask_t;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ALL_ENGINES ((intel_engine_mask_t)~0ul)
 
 struct intel_hw_status_page {
@@ -141,18 +100,8 @@ struct i915_ctx_workarounds {
 	struct i915_vma *vma;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define I915_MAX_VCS	8
-#define I915_MAX_VECS	4
-=======
 #define I915_MAX_VCS	4
 #define I915_MAX_VECS	2
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define I915_MAX_VCS	8
-#define I915_MAX_VECS	4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Engine IDs definitions.
@@ -165,32 +114,9 @@ enum intel_engine_id {
 	VCS1,
 	VCS2,
 	VCS3,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	VCS4,
-	VCS5,
-	VCS6,
-	VCS7,
-<<<<<<< HEAD
 #define _VCS(n) (VCS0 + (n))
 	VECS0,
 	VECS1,
-	VECS2,
-	VECS3,
-=======
-#define _VCS(n) (VCS0 + (n))
-	VECS0,
-	VECS1,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define _VCS(n) (VCS0 + (n))
-	VECS0,
-	VECS1,
-	VECS2,
-	VECS3,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define _VECS(n) (VECS0 + (n))
 	I915_NUM_ENGINES
 #define INVALID_ENGINE ((enum intel_engine_id)-1)
@@ -212,17 +138,11 @@ struct st_preempt_hang {
  */
 struct intel_engine_execlists {
 	/**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	 * @tasklet: softirq tasklet for bottom handler
 	 */
 	struct tasklet_struct tasklet;
 
 	/**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @timer: kick the current context if its timeslice expires
 	 */
 	struct timer_list timer;
@@ -233,17 +153,11 @@ struct intel_engine_execlists {
 	struct timer_list preempt;
 
 	/**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	 * @default_priolist: priority list for I915_PRIORITY_NORMAL
 	 */
 	struct i915_priolist default_priolist;
 
 	/**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @ccid: identifier for contexts submitted to this engine
 	 */
 	u32 ccid;
@@ -278,17 +192,11 @@ struct intel_engine_execlists {
 	u32 reset_ccid;
 
 	/**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	 * @no_priolist: priority lists disabled
 	 */
 	bool no_priolist;
 
 	/**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @submit_reg: gen-specific execlist submission register
 	 * set to the ExecList Submission Port (elsp) register pre-Gen11 and to
 	 * the ExecList Submission Queue Contents register array for Gen11+
@@ -330,13 +238,6 @@ struct intel_engine_execlists {
 	unsigned int port_mask;
 
 	/**
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * @virtual: Queue of requets on a virtual engine, sorted by priority.
-	 * Each RB entry is a struct i915_priolist containing a list of requests
-	 * of the same priority.
-	 */
-=======
 	 * @queue_priority_hint: Highest pending priority.
 	 *
 	 * When we add requests into the queue, or adjust the priority of
@@ -354,13 +255,6 @@ struct intel_engine_execlists {
 	 * @queue: queue of requests, in priority lists
 	 */
 	struct rb_root_cached queue;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * @virtual: Queue of requets on a virtual engine, sorted by priority.
-	 * Each RB entry is a struct i915_priolist containing a list of requests
-	 * of the same priority.
-	 */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rb_root_cached virtual;
 
 	/**
@@ -401,13 +295,7 @@ struct intel_engine_cs {
 	enum intel_engine_id id;
 	enum intel_engine_id legacy_idx;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned int hw_id;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int guc_id;
 
 	intel_engine_mask_t mask;
@@ -438,33 +326,15 @@ struct intel_engine_cs {
 
 	struct intel_sseu sseu;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct i915_sched_engine *sched_engine;
-=======
 	struct {
 		spinlock_t lock;
 		struct list_head requests;
 		struct list_head hold; /* ready requests, but on hold */
 	} active;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct i915_sched_engine *sched_engine;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* keep a request in reserve for a [pm] barrier under oom */
 	struct i915_request *request_pool;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct intel_context *hung_ce;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct intel_context *hung_ce;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct llist_head barrier_tasks;
 
 	struct intel_context *kernel_context; /* pinned */
@@ -549,16 +419,6 @@ struct intel_engine_cs {
 	void		(*park)(struct intel_engine_cs *engine);
 	void		(*unpark)(struct intel_engine_cs *engine);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	void		(*bump_serial)(struct intel_engine_cs *engine);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	void		(*bump_serial)(struct intel_engine_cs *engine);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void		(*set_default_submission)(struct intel_engine_cs *engine);
 
 	const struct intel_context_ops *cops;
@@ -587,39 +447,22 @@ struct intel_engine_cs {
 	 */
 	void		(*submit_request)(struct i915_request *rq);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	void		(*release)(struct intel_engine_cs *engine);
-
-	/*
-	 * Add / remove request from engine active tracking
-	 */
-	void		(*add_active_request)(struct i915_request *rq);
-	void		(*remove_active_request)(struct i915_request *rq);
-=======
 	/*
 	 * Called on signaling of a SUBMIT_FENCE, passing along the signaling
 	 * request down to the bonded pairs.
 	 */
 	void            (*bond_execute)(struct i915_request *rq,
 					struct dma_fence *signal);
-=======
-	void		(*release)(struct intel_engine_cs *engine);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
-	 * Add / remove request from engine active tracking
+	 * Call when the priority on a request has changed and it and its
+	 * dependencies may need rescheduling. Note the request itself may
+	 * not be ready to run!
 	 */
-<<<<<<< HEAD
 	void		(*schedule)(struct i915_request *request,
 				    const struct i915_sched_attr *attr);
 
 	void		(*release)(struct intel_engine_cs *engine);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	void		(*add_active_request)(struct i915_request *rq);
-	void		(*remove_active_request)(struct i915_request *rq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct intel_engine_execlists execlists;
 
@@ -642,14 +485,6 @@ struct intel_engine_cs {
 #define I915_ENGINE_IS_VIRTUAL       BIT(5)
 #define I915_ENGINE_HAS_RELATIVE_MMIO BIT(6)
 #define I915_ENGINE_REQUIRES_CMD_PARSER BIT(7)
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define I915_ENGINE_WANT_FORCED_PREEMPTION BIT(8)
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define I915_ENGINE_WANT_FORCED_PREEMPTION BIT(8)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int flags;
 
 	/*

@@ -28,15 +28,9 @@
 #include <linux/serio.h>
 #include "../../misc/lis3lv02d/lis3lv02d.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define DRIVER_NAME     "hp_accel"
 #define ACPI_MDPS_CLASS "accelerometer"
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Delayed LEDs infrastructure ------------------------------------ */
 
 /* Special LED class that can defer work */
@@ -84,28 +78,15 @@ static const struct acpi_device_id lis3lv02d_device_ids[] = {
 };
 MODULE_DEVICE_TABLE(acpi, lis3lv02d_device_ids);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/**
- * lis3lv02d_acpi_init - initialize the device for ACPI
-=======
 
 /**
  * lis3lv02d_acpi_init - ACPI _INI method: initialize the device.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/**
- * lis3lv02d_acpi_init - initialize the device for ACPI
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @lis3: pointer to the device struct
  *
  * Returns 0 on success.
  */
 static int lis3lv02d_acpi_init(struct lis3lv02d *lis3)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct acpi_device *dev = lis3->bus_priv;
 	if (!lis3->init_required)
 		return 0;
@@ -114,9 +95,6 @@ static int lis3lv02d_acpi_init(struct lis3lv02d *lis3)
 				 NULL, NULL) != AE_OK)
 		return -EINVAL;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -300,9 +278,6 @@ static struct delayed_led_classdev hpled_led = {
 	.set_brightness = hpled_set,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static acpi_status
 lis3lv02d_get_resource(struct acpi_resource *resource, void *context)
 {
@@ -327,9 +302,6 @@ static void lis3lv02d_enum_resources(struct acpi_device *device)
 		printk(KERN_DEBUG DRIVER_NAME ": Error getting resources\n");
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool hp_accel_i8042_filter(unsigned char data, unsigned char str,
 				  struct serio *port)
 {
@@ -359,43 +331,23 @@ static bool hp_accel_i8042_filter(unsigned char data, unsigned char str,
 	return false;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int lis3lv02d_probe(struct platform_device *device)
-{
-	int ret;
-
-	lis3_dev.bus_priv = ACPI_COMPANION(&device->dev);
-	lis3_dev.init = lis3lv02d_acpi_init;
-	lis3_dev.read = lis3lv02d_acpi_read;
-	lis3_dev.write = lis3lv02d_acpi_write;
-
-	/* obtain IRQ number of our device from ACPI */
-	ret = platform_get_irq_optional(device, 0);
-	if (ret > 0)
-		lis3_dev.irq = ret;
-=======
 static int lis3lv02d_add(struct acpi_device *device)
-=======
-static int lis3lv02d_probe(struct platform_device *device)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 
-	lis3_dev.bus_priv = ACPI_COMPANION(&device->dev);
+	if (!device)
+		return -EINVAL;
+
+	lis3_dev.bus_priv = device;
 	lis3_dev.init = lis3lv02d_acpi_init;
 	lis3_dev.read = lis3lv02d_acpi_read;
 	lis3_dev.write = lis3lv02d_acpi_write;
+	strcpy(acpi_device_name(device), DRIVER_NAME);
+	strcpy(acpi_device_class(device), ACPI_MDPS_CLASS);
+	device->driver_data = &lis3_dev;
 
 	/* obtain IRQ number of our device from ACPI */
-<<<<<<< HEAD
 	lis3lv02d_enum_resources(device);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = platform_get_irq_optional(device, 0);
-	if (ret > 0)
-		lis3_dev.irq = ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* If possible use a "standard" axes order */
 	if (lis3_dev.ac.x && lis3_dev.ac.y && lis3_dev.ac.z) {
@@ -407,13 +359,7 @@ static int lis3lv02d_probe(struct platform_device *device)
 	}
 
 	/* call the core layer do its init */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	lis3_dev.init_required = true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = lis3lv02d_init_device(&lis3_dev);
 	if (ret)
 		return ret;
@@ -435,21 +381,11 @@ static int lis3lv02d_probe(struct platform_device *device)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int lis3lv02d_remove(struct platform_device *device)
-{
-=======
 static int lis3lv02d_remove(struct acpi_device *device)
 {
 	if (!device)
 		return -EINVAL;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int lis3lv02d_remove(struct platform_device *device)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	i8042_remove_filter(hp_accel_i8042_filter);
 	lis3lv02d_joystick_disable(&lis3_dev);
 	lis3lv02d_poweroff(&lis3_dev);
@@ -460,13 +396,7 @@ static int lis3lv02d_remove(struct platform_device *device)
 	return lis3lv02d_remove_fs(&lis3_dev);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM_SLEEP
 static int lis3lv02d_suspend(struct device *dev)
 {
@@ -477,26 +407,14 @@ static int lis3lv02d_suspend(struct device *dev)
 
 static int lis3lv02d_resume(struct device *dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	lis3_dev.init_required = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lis3lv02d_poweron(&lis3_dev);
 	return 0;
 }
 
 static int lis3lv02d_restore(struct device *dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	lis3_dev.init_required = true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lis3lv02d_poweron(&lis3_dev);
 	return 0;
 }
@@ -516,22 +434,6 @@ static const struct dev_pm_ops hp_accel_pm = {
 #endif
 
 /* For the HP MDPS aka 3D Driveguard */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static struct platform_driver lis3lv02d_driver = {
-	.probe	= lis3lv02d_probe,
-	.remove	= lis3lv02d_remove,
-	.driver	= {
-		.name	= "hp_accel",
-		.pm	= HP_ACCEL_PM,
-		.acpi_match_table = lis3lv02d_device_ids,
-<<<<<<< HEAD
-	},
-};
-module_platform_driver(lis3lv02d_driver);
-=======
 static struct acpi_driver lis3lv02d_driver = {
 	.name  = DRIVER_NAME,
 	.class = ACPI_MDPS_CLASS,
@@ -539,16 +441,10 @@ static struct acpi_driver lis3lv02d_driver = {
 	.ops = {
 		.add     = lis3lv02d_add,
 		.remove  = lis3lv02d_remove,
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
+	.drv.pm = HP_ACCEL_PM,
 };
-<<<<<<< HEAD
 module_acpi_driver(lis3lv02d_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_platform_driver(lis3lv02d_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_DESCRIPTION("Glue between LIS3LV02Dx and HP ACPI BIOS and support for disk protection LED.");
 MODULE_AUTHOR("Yan Burman, Eric Piel, Pavel Machek");

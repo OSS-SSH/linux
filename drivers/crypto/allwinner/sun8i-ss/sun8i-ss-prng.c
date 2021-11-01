@@ -20,16 +20,8 @@ int sun8i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed,
 	struct sun8i_ss_rng_tfm_ctx *ctx = crypto_rng_ctx(tfm);
 
 	if (ctx->seed && ctx->slen != slen) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		kfree_sensitive(ctx->seed);
-=======
 		memzero_explicit(ctx->seed, ctx->slen);
 		kfree(ctx->seed);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		kfree_sensitive(ctx->seed);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ctx->slen = 0;
 		ctx->seed = NULL;
 	}
@@ -56,16 +48,8 @@ void sun8i_ss_prng_exit(struct crypto_tfm *tfm)
 {
 	struct sun8i_ss_rng_tfm_ctx *ctx = crypto_tfm_ctx(tfm);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kfree_sensitive(ctx->seed);
-=======
 	memzero_explicit(ctx->seed, ctx->slen);
 	kfree(ctx->seed);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kfree_sensitive(ctx->seed);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ctx->seed = NULL;
 	ctx->slen = 0;
 }
@@ -183,19 +167,9 @@ err_iv:
 		/* Update seed */
 		memcpy(ctx->seed, d + dlen, ctx->slen);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-err_free:
-	kfree_sensitive(d);
-=======
 	memzero_explicit(d, todo);
 err_free:
 	kfree(d);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-err_free:
-	kfree_sensitive(d);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return err;
 }

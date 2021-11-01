@@ -66,15 +66,7 @@ int slim_alloc_txn_tid(struct slim_controller *ctrl, struct slim_msg_txn *txn)
 	int ret = 0;
 
 	spin_lock_irqsave(&ctrl->txn_lock, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = idr_alloc_cyclic(&ctrl->tid_idr, txn, 1,
-=======
 	ret = idr_alloc_cyclic(&ctrl->tid_idr, txn, 0,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = idr_alloc_cyclic(&ctrl->tid_idr, txn, 1,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				SLIM_MAX_TIDS, GFP_ATOMIC);
 	if (ret < 0) {
 		spin_unlock_irqrestore(&ctrl->txn_lock, flags);
@@ -139,17 +131,7 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
 			goto slim_xfer_err;
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Initialize tid to invalid value */
-	txn->tid = 0;
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Initialize tid to invalid value */
-	txn->tid = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	need_tid = slim_tid_txn(txn->mt, txn->mc);
 
 	if (need_tid) {
@@ -181,15 +163,7 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
 			txn->mt, txn->mc, txn->la, ret);
 
 slim_xfer_err:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!clk_pause_msg && (txn->tid == 0  || ret == -ETIMEDOUT)) {
-=======
 	if (!clk_pause_msg && (!need_tid  || ret == -ETIMEDOUT)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!clk_pause_msg && (txn->tid == 0  || ret == -ETIMEDOUT)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * remove runtime-pm vote if this was TX only, or
 		 * if there was error during this transaction

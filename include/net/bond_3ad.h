@@ -303,14 +303,6 @@ int  __bond_3ad_get_active_agg_info(struct bonding *bond,
 int bond_3ad_lacpdu_recv(const struct sk_buff *skb, struct bonding *bond,
 			 struct slave *slave);
 int bond_3ad_set_carrier(struct bonding *bond);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void bond_3ad_update_lacp_active(struct bonding *bond);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void bond_3ad_update_lacp_active(struct bonding *bond);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void bond_3ad_update_lacp_rate(struct bonding *bond);
 void bond_3ad_update_ad_actor_settings(struct bonding *bond);
 int bond_3ad_stats_fill(struct sk_buff *skb, struct bond_3ad_stats *stats);

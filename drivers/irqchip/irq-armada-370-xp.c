@@ -359,36 +359,16 @@ static void armada_370_xp_ipi_send_mask(struct irq_data *d,
 		ARMADA_370_XP_SW_TRIG_INT_OFFS);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void armada_370_xp_ipi_ack(struct irq_data *d)
-=======
 static void armada_370_xp_ipi_eoi(struct irq_data *d)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void armada_370_xp_ipi_ack(struct irq_data *d)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	writel(~BIT(d->hwirq), per_cpu_int_base + ARMADA_370_XP_IN_DRBEL_CAUSE_OFFS);
 }
 
 static struct irq_chip ipi_irqchip = {
 	.name		= "IPI",
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.irq_ack	= armada_370_xp_ipi_ack,
-	.irq_mask	= armada_370_xp_ipi_mask,
-	.irq_unmask	= armada_370_xp_ipi_unmask,
-=======
 	.irq_mask	= armada_370_xp_ipi_mask,
 	.irq_unmask	= armada_370_xp_ipi_unmask,
 	.irq_eoi	= armada_370_xp_ipi_eoi,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.irq_ack	= armada_370_xp_ipi_ack,
-	.irq_mask	= armada_370_xp_ipi_mask,
-	.irq_unmask	= armada_370_xp_ipi_unmask,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ipi_send_mask	= armada_370_xp_ipi_send_mask,
 };
 

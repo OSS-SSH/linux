@@ -233,18 +233,6 @@ int fifo_set_limit(struct Qdisc *q, unsigned int limit)
 	if (strncmp(q->ops->id + 1, "fifo", 4) != 0)
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!q->ops->change)
-		return 0;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!q->ops->change)
-		return 0;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nla = kmalloc(nla_attr_size(sizeof(struct tc_fifo_qopt)), GFP_KERNEL);
 	if (nla) {
 		nla->nla_type = RTM_NEWQDISC;

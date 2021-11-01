@@ -33,21 +33,9 @@ int kobj_map(struct kobj_map *domain, dev_t dev, unsigned long range,
 	     struct module *module, kobj_probe_t *probe,
 	     int (*lock)(dev_t, void *), void *data)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;
-	unsigned int index = MAJOR(dev);
-	unsigned int i;
-=======
 	unsigned n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;
 	unsigned index = MAJOR(dev);
 	unsigned i;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;
-	unsigned int index = MAJOR(dev);
-	unsigned int i;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct probe *p;
 
 	if (n > 255)
@@ -79,21 +67,9 @@ int kobj_map(struct kobj_map *domain, dev_t dev, unsigned long range,
 
 void kobj_unmap(struct kobj_map *domain, dev_t dev, unsigned long range)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;
-	unsigned int index = MAJOR(dev);
-	unsigned int i;
-=======
 	unsigned n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;
 	unsigned index = MAJOR(dev);
 	unsigned i;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int n = MAJOR(dev + range - 1) - MAJOR(dev) + 1;
-	unsigned int index = MAJOR(dev);
-	unsigned int i;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct probe *found = NULL;
 
 	if (n > 255)

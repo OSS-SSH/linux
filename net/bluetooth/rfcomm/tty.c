@@ -1127,22 +1127,9 @@ int __init rfcomm_init_ttys(void)
 {
 	int error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	rfcomm_tty_driver = tty_alloc_driver(RFCOMM_TTY_PORTS,
-			TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
-	if (IS_ERR(rfcomm_tty_driver))
-		return PTR_ERR(rfcomm_tty_driver);
-<<<<<<< HEAD
-=======
 	rfcomm_tty_driver = alloc_tty_driver(RFCOMM_TTY_PORTS);
 	if (!rfcomm_tty_driver)
 		return -ENOMEM;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rfcomm_tty_driver->driver_name	= "rfcomm";
 	rfcomm_tty_driver->name		= "rfcomm";
@@ -1150,13 +1137,7 @@ int __init rfcomm_init_ttys(void)
 	rfcomm_tty_driver->minor_start	= RFCOMM_TTY_MINOR;
 	rfcomm_tty_driver->type		= TTY_DRIVER_TYPE_SERIAL;
 	rfcomm_tty_driver->subtype	= SERIAL_TYPE_NORMAL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	rfcomm_tty_driver->flags	= TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rfcomm_tty_driver->init_termios	= tty_std_termios;
 	rfcomm_tty_driver->init_termios.c_cflag	= B9600 | CS8 | CREAD | HUPCL;
 	rfcomm_tty_driver->init_termios.c_lflag &= ~ICANON;
@@ -1165,15 +1146,7 @@ int __init rfcomm_init_ttys(void)
 	error = tty_register_driver(rfcomm_tty_driver);
 	if (error) {
 		BT_ERR("Can't register RFCOMM TTY driver");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		tty_driver_kref_put(rfcomm_tty_driver);
-=======
 		put_tty_driver(rfcomm_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		tty_driver_kref_put(rfcomm_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return error;
 	}
 
@@ -1185,13 +1158,5 @@ int __init rfcomm_init_ttys(void)
 void rfcomm_cleanup_ttys(void)
 {
 	tty_unregister_driver(rfcomm_tty_driver);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tty_driver_kref_put(rfcomm_tty_driver);
-=======
 	put_tty_driver(rfcomm_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tty_driver_kref_put(rfcomm_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

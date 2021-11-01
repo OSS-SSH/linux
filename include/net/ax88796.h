@@ -38,16 +38,4 @@ struct ax_plat_data {
 	int (*check_irq)(struct platform_device *pdev);
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* exported from ax88796.c for xsurf100.c  */
-extern void ax_NS8390_reinit(struct net_device *dev);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* exported from ax88796.c for xsurf100.c  */
-extern void ax_NS8390_reinit(struct net_device *dev);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __NET_AX88796_PLAT_H */

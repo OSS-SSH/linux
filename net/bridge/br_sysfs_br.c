@@ -384,29 +384,13 @@ static ssize_t multicast_router_show(struct device *d,
 				     struct device_attribute *attr, char *buf)
 {
 	struct net_bridge *br = to_bridge(d);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return sprintf(buf, "%d\n", br->multicast_ctx.multicast_router);
-=======
 	return sprintf(buf, "%d\n", br->multicast_router);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return sprintf(buf, "%d\n", br->multicast_ctx.multicast_router);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_multicast_router(struct net_bridge *br, unsigned long val,
 				struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return br_multicast_set_router(&br->multicast_ctx, val);
-=======
 	return br_multicast_set_router(br, val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return br_multicast_set_router(&br->multicast_ctx, val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t multicast_router_store(struct device *d,
@@ -463,29 +447,13 @@ static ssize_t multicast_querier_show(struct device *d,
 				      char *buf)
 {
 	struct net_bridge *br = to_bridge(d);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return sprintf(buf, "%d\n", br->multicast_ctx.multicast_querier);
-=======
 	return sprintf(buf, "%d\n", br_opt_get(br, BROPT_MULTICAST_QUERIER));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return sprintf(buf, "%d\n", br->multicast_ctx.multicast_querier);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_multicast_querier(struct net_bridge *br, unsigned long val,
 				 struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return br_multicast_set_querier(&br->multicast_ctx, val);
-=======
 	return br_multicast_set_querier(br, val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return br_multicast_set_querier(&br->multicast_ctx, val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t multicast_querier_store(struct device *d,
@@ -546,29 +514,13 @@ static ssize_t multicast_igmp_version_show(struct device *d,
 {
 	struct net_bridge *br = to_bridge(d);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_igmp_version);
-=======
 	return sprintf(buf, "%u\n", br->multicast_igmp_version);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_igmp_version);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_multicast_igmp_version(struct net_bridge *br, unsigned long val,
 				      struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return br_multicast_set_igmp_version(&br->multicast_ctx, val);
-=======
 	return br_multicast_set_igmp_version(br, val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return br_multicast_set_igmp_version(&br->multicast_ctx, val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t multicast_igmp_version_store(struct device *d,
@@ -584,29 +536,13 @@ static ssize_t multicast_last_member_count_show(struct device *d,
 						char *buf)
 {
 	struct net_bridge *br = to_bridge(d);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_last_member_count);
-=======
 	return sprintf(buf, "%u\n", br->multicast_last_member_count);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_last_member_count);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_last_member_count(struct net_bridge *br, unsigned long val,
 				 struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_last_member_count = val;
-=======
 	br->multicast_last_member_count = val;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_last_member_count = val;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -622,29 +558,13 @@ static ssize_t multicast_startup_query_count_show(
 	struct device *d, struct device_attribute *attr, char *buf)
 {
 	struct net_bridge *br = to_bridge(d);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_startup_query_count);
-=======
 	return sprintf(buf, "%u\n", br->multicast_startup_query_count);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_startup_query_count);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_startup_query_count(struct net_bridge *br, unsigned long val,
 				   struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_startup_query_count = val;
-=======
 	br->multicast_startup_query_count = val;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_startup_query_count = val;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -661,29 +581,13 @@ static ssize_t multicast_last_member_interval_show(
 {
 	struct net_bridge *br = to_bridge(d);
 	return sprintf(buf, "%lu\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_last_member_interval));
-=======
 		       jiffies_to_clock_t(br->multicast_last_member_interval));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_last_member_interval));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_last_member_interval(struct net_bridge *br, unsigned long val,
 				    struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_last_member_interval = clock_t_to_jiffies(val);
-=======
 	br->multicast_last_member_interval = clock_t_to_jiffies(val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_last_member_interval = clock_t_to_jiffies(val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -700,29 +604,13 @@ static ssize_t multicast_membership_interval_show(
 {
 	struct net_bridge *br = to_bridge(d);
 	return sprintf(buf, "%lu\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_membership_interval));
-=======
 		       jiffies_to_clock_t(br->multicast_membership_interval));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_membership_interval));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_membership_interval(struct net_bridge *br, unsigned long val,
 				   struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_membership_interval = clock_t_to_jiffies(val);
-=======
 	br->multicast_membership_interval = clock_t_to_jiffies(val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_membership_interval = clock_t_to_jiffies(val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -740,29 +628,13 @@ static ssize_t multicast_querier_interval_show(struct device *d,
 {
 	struct net_bridge *br = to_bridge(d);
 	return sprintf(buf, "%lu\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_querier_interval));
-=======
 		       jiffies_to_clock_t(br->multicast_querier_interval));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_querier_interval));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_querier_interval(struct net_bridge *br, unsigned long val,
 				struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_querier_interval = clock_t_to_jiffies(val);
-=======
 	br->multicast_querier_interval = clock_t_to_jiffies(val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_querier_interval = clock_t_to_jiffies(val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -780,29 +652,13 @@ static ssize_t multicast_query_interval_show(struct device *d,
 {
 	struct net_bridge *br = to_bridge(d);
 	return sprintf(buf, "%lu\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_query_interval));
-=======
 		       jiffies_to_clock_t(br->multicast_query_interval));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       jiffies_to_clock_t(br->multicast_ctx.multicast_query_interval));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_query_interval(struct net_bridge *br, unsigned long val,
 			      struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_query_interval = clock_t_to_jiffies(val);
-=======
 	br->multicast_query_interval = clock_t_to_jiffies(val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_query_interval = clock_t_to_jiffies(val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -820,29 +676,13 @@ static ssize_t multicast_query_response_interval_show(
 	struct net_bridge *br = to_bridge(d);
 	return sprintf(
 		buf, "%lu\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		jiffies_to_clock_t(br->multicast_ctx.multicast_query_response_interval));
-=======
 		jiffies_to_clock_t(br->multicast_query_response_interval));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		jiffies_to_clock_t(br->multicast_ctx.multicast_query_response_interval));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_query_response_interval(struct net_bridge *br, unsigned long val,
 				       struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_query_response_interval = clock_t_to_jiffies(val);
-=======
 	br->multicast_query_response_interval = clock_t_to_jiffies(val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_query_response_interval = clock_t_to_jiffies(val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -860,29 +700,13 @@ static ssize_t multicast_startup_query_interval_show(
 	struct net_bridge *br = to_bridge(d);
 	return sprintf(
 		buf, "%lu\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		jiffies_to_clock_t(br->multicast_ctx.multicast_startup_query_interval));
-=======
 		jiffies_to_clock_t(br->multicast_startup_query_interval));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		jiffies_to_clock_t(br->multicast_ctx.multicast_startup_query_interval));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_startup_query_interval(struct net_bridge *br, unsigned long val,
 				      struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	br->multicast_ctx.multicast_startup_query_interval = clock_t_to_jiffies(val);
-=======
 	br->multicast_startup_query_interval = clock_t_to_jiffies(val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	br->multicast_ctx.multicast_startup_query_interval = clock_t_to_jiffies(val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -927,29 +751,13 @@ static ssize_t multicast_mld_version_show(struct device *d,
 {
 	struct net_bridge *br = to_bridge(d);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_mld_version);
-=======
 	return sprintf(buf, "%u\n", br->multicast_mld_version);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return sprintf(buf, "%u\n", br->multicast_ctx.multicast_mld_version);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_multicast_mld_version(struct net_bridge *br, unsigned long val,
 				     struct netlink_ext_ack *extack)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return br_multicast_set_mld_version(&br->multicast_ctx, val);
-=======
 	return br_multicast_set_mld_version(br, val);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return br_multicast_set_mld_version(&br->multicast_ctx, val);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t multicast_mld_version_store(struct device *d,

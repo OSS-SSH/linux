@@ -260,24 +260,10 @@ xchk_bmap_iextent_xref(
 	agbno = XFS_FSB_TO_AGBNO(mp, irec->br_startblock);
 	len = irec->br_blockcount;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	error = xchk_ag_init_existing(info->sc, agno, &info->sc->sa);
-	if (!xchk_fblock_process_error(info->sc, info->whichfork,
-			irec->br_startoff, &error))
-		goto out_free;
-=======
 	error = xchk_ag_init(info->sc, agno, &info->sc->sa);
 	if (!xchk_fblock_process_error(info->sc, info->whichfork,
 			irec->br_startoff, &error))
 		return;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	error = xchk_ag_init_existing(info->sc, agno, &info->sc->sa);
-	if (!xchk_fblock_process_error(info->sc, info->whichfork,
-			irec->br_startoff, &error))
-		goto out_free;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	xchk_xref_is_used_space(info->sc, agbno, len);
 	xchk_xref_is_not_inode_chunk(info->sc, agbno, len);
@@ -297,14 +283,6 @@ xchk_bmap_iextent_xref(
 		break;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-out_free:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-out_free:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xchk_ag_free(info->sc, &info->sc->sa);
 }
 
@@ -405,15 +383,7 @@ xchk_bmap_iextent(
 STATIC int
 xchk_bmapbt_rec(
 	struct xchk_btree	*bs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const union xfs_btree_rec *rec)
-=======
 	union xfs_btree_rec	*rec)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const union xfs_btree_rec *rec)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_bmbt_irec	irec;
 	struct xfs_bmbt_irec	iext_irec;
@@ -430,15 +400,7 @@ xchk_bmapbt_rec(
 	 * Check the owners of the btree blocks up to the level below
 	 * the root since the verifiers don't do that.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(bs->cur->bc_mp) &&
-=======
 	if (xfs_sb_version_hascrc(&bs->cur->bc_mp->m_sb) &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(bs->cur->bc_mp) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    bs->cur->bc_ptrs[0] == 1) {
 		for (i = 0; i < bs->cur->bc_nlevels - 1; i++) {
 			block = xfs_btree_get_block(bs->cur, i, &bp);
@@ -511,26 +473,10 @@ struct xchk_bmap_check_rmap_info {
 STATIC int
 xchk_bmap_check_rmap(
 	struct xfs_btree_cur		*cur,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct xfs_rmap_irec	*rec,
-	void				*priv)
-{
-	struct xfs_bmbt_irec		irec;
-	struct xfs_rmap_irec		check_rec;
-=======
 	struct xfs_rmap_irec		*rec,
 	void				*priv)
 {
 	struct xfs_bmbt_irec		irec;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct xfs_rmap_irec	*rec,
-	void				*priv)
-{
-	struct xfs_bmbt_irec		irec;
-	struct xfs_rmap_irec		check_rec;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct xchk_bmap_check_rmap_info	*sbcri = priv;
 	struct xfs_ifork		*ifp;
 	struct xfs_scrub		*sc = sbcri->sc;
@@ -564,70 +510,28 @@ xchk_bmap_check_rmap(
 	 * length, so we have to loop through the bmbt to make sure that the
 	 * entire rmap is covered by bmbt records.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	check_rec = *rec;
 	while (have_map) {
-		if (irec.br_startoff != check_rec.rm_offset)
+		if (irec.br_startoff != rec->rm_offset)
 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
-					check_rec.rm_offset);
+					rec->rm_offset);
 		if (irec.br_startblock != XFS_AGB_TO_FSB(sc->mp,
-				cur->bc_ag.pag->pag_agno,
-				check_rec.rm_startblock))
+				cur->bc_ag.pag->pag_agno, rec->rm_startblock))
 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
-					check_rec.rm_offset);
-		if (irec.br_blockcount > check_rec.rm_blockcount)
+					rec->rm_offset);
+		if (irec.br_blockcount > rec->rm_blockcount)
 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
-					check_rec.rm_offset);
+					rec->rm_offset);
 		if (sc->sm->sm_flags & XFS_SCRUB_OFLAG_CORRUPT)
 			break;
-		check_rec.rm_startblock += irec.br_blockcount;
-		check_rec.rm_offset += irec.br_blockcount;
-		check_rec.rm_blockcount -= irec.br_blockcount;
-		if (check_rec.rm_blockcount == 0)
-=======
-=======
-	check_rec = *rec;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	while (have_map) {
-		if (irec.br_startoff != check_rec.rm_offset)
-			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
-					check_rec.rm_offset);
-		if (irec.br_startblock != XFS_AGB_TO_FSB(sc->mp,
-				cur->bc_ag.pag->pag_agno,
-				check_rec.rm_startblock))
-			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
-					check_rec.rm_offset);
-		if (irec.br_blockcount > check_rec.rm_blockcount)
-			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
-					check_rec.rm_offset);
-		if (sc->sm->sm_flags & XFS_SCRUB_OFLAG_CORRUPT)
-			break;
-<<<<<<< HEAD
 		rec->rm_startblock += irec.br_blockcount;
 		rec->rm_offset += irec.br_blockcount;
 		rec->rm_blockcount -= irec.br_blockcount;
 		if (rec->rm_blockcount == 0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		check_rec.rm_startblock += irec.br_blockcount;
-		check_rec.rm_offset += irec.br_blockcount;
-		check_rec.rm_blockcount -= irec.br_blockcount;
-		if (check_rec.rm_blockcount == 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		have_map = xfs_iext_next_extent(ifp, &sbcri->icur, &irec);
 		if (!have_map)
 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					check_rec.rm_offset);
-=======
 					rec->rm_offset);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					check_rec.rm_offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 out:
@@ -677,15 +581,7 @@ xchk_bmap_check_rmaps(
 	bool			zero_size;
 	int			error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_rmapbt(sc->mp) ||
-=======
 	if (!xfs_sb_version_hasrmapbt(&sc->mp->m_sb) ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_rmapbt(sc->mp) ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    whichfork == XFS_COW_FORK ||
 	    (sc->sm->sm_flags & XFS_SCRUB_OFLAG_CORRUPT))
 		return 0;
@@ -763,16 +659,8 @@ xchk_bmap(
 		}
 		break;
 	case XFS_ATTR_FORK:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!xfs_has_attr(mp) && !xfs_has_attr2(mp))
-=======
 		if (!xfs_sb_version_hasattr(&mp->m_sb) &&
 		    !xfs_sb_version_hasattr2(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!xfs_has_attr(mp) && !xfs_has_attr2(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xchk_ino_set_corrupt(sc, sc->ip->i_ino);
 		break;
 	default:

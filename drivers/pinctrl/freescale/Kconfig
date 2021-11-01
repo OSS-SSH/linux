@@ -166,22 +166,6 @@ config PINCTRL_IMX8DXL
 	help
 	  Say Y here to enable the imx8dxl pinctrl driver
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-config PINCTRL_IMX8ULP
-	tristate "IMX8ULP pinctrl driver"
-	depends on ARCH_MXC
-	select PINCTRL_IMX
-	help
-	  Say Y here to enable the imx8ulp pinctrl driver
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config PINCTRL_VF610
 	bool "Freescale Vybrid VF610 pinctrl driver"
 	depends on SOC_VF610

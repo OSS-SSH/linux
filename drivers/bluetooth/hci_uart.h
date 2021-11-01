@@ -86,22 +86,9 @@ struct hci_uart {
 };
 
 /* HCI_UART proto flag bits */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define HCI_UART_PROTO_SET		0
-#define HCI_UART_REGISTERED		1
-#define HCI_UART_PROTO_READY		2
-#define HCI_UART_NO_SUSPEND_NOTIFIER	3
-<<<<<<< HEAD
-=======
 #define HCI_UART_PROTO_SET	0
 #define HCI_UART_REGISTERED	1
 #define HCI_UART_PROTO_READY	2
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* TX states  */
 #define HCI_UART_SENDING	1

@@ -111,14 +111,6 @@ int drmem_update_dt(void);
 int __init
 walk_drmem_lmbs_early(unsigned long node, void *data,
 		      int (*func)(struct drmem_lmb *, const __be32 **, void *));
-<<<<<<< HEAD
-<<<<<<< HEAD
-void drmem_update_lmbs(struct property *prop);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void drmem_update_lmbs(struct property *prop);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static inline void invalidate_lmb_associativity_index(struct drmem_lmb *lmb)

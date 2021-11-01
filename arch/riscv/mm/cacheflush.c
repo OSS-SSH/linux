@@ -16,16 +16,6 @@ static void ipi_remote_fence_i(void *info)
 
 void flush_icache_all(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	local_flush_icache_all();
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	local_flush_icache_all();
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ENABLED(CONFIG_RISCV_SBI))
 		sbi_remote_fence_i(NULL);
 	else

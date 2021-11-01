@@ -286,25 +286,11 @@ struct cred *prepare_creds(void)
 	new->security = NULL;
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
+		goto error;
+
 	new->ucounts = get_ucounts(new->ucounts);
 	if (!new->ucounts)
-		goto error;
-
-	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
-=======
-	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
-		goto error;
-
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	new->ucounts = get_ucounts(new->ucounts);
-	if (!new->ucounts)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-		goto error;
-
-	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
 		goto error;
 
 	validate_creds(new);
@@ -767,25 +753,11 @@ struct cred *prepare_kernel_cred(struct task_struct *daemon)
 #ifdef CONFIG_SECURITY
 	new->security = NULL;
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
+	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
+		goto error;
+
 	new->ucounts = get_ucounts(new->ucounts);
 	if (!new->ucounts)
-		goto error;
-
-	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
-=======
-	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
-		goto error;
-
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	new->ucounts = get_ucounts(new->ucounts);
-	if (!new->ucounts)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-		goto error;
-
-	if (security_prepare_creds(new, old, GFP_KERNEL_ACCOUNT) < 0)
 		goto error;
 
 	put_cred(old);

@@ -85,13 +85,7 @@ available subsections can be seen below.
    io-mapping
    io_ordering
    generic-counter
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
    lightnvm-pblk
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    memory-devices/index
    men-chameleon-bus
    ntb

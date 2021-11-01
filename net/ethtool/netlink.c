@@ -2,14 +2,6 @@
 
 #include <net/sock.h>
 #include <linux/ethtool_netlink.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/pm_runtime.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/pm_runtime.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "netlink.h"
 
 static struct genl_family ethtool_genl_family;
@@ -37,53 +29,6 @@ const struct nla_policy ethnl_header_policy_stats[] = {
 							  ETHTOOL_FLAGS_STATS),
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-int ethnl_ops_begin(struct net_device *dev)
-{
-	int ret;
-
-	if (!dev)
-		return -ENODEV;
-
-	if (dev->dev.parent)
-		pm_runtime_get_sync(dev->dev.parent);
-
-	if (!netif_device_present(dev)) {
-		ret = -ENODEV;
-		goto err;
-	}
-
-	if (dev->ethtool_ops->begin) {
-		ret = dev->ethtool_ops->begin(dev);
-		if (ret)
-			goto err;
-	}
-
-	return 0;
-err:
-	if (dev->dev.parent)
-		pm_runtime_put(dev->dev.parent);
-
-	return ret;
-}
-
-void ethnl_ops_complete(struct net_device *dev)
-{
-	if (dev->ethtool_ops->complete)
-		dev->ethtool_ops->complete(dev);
-
-	if (dev->dev.parent)
-		pm_runtime_put(dev->dev.parent);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ethnl_parse_header_dev_get() - parse request header
  * @req_info:    structure to put results into
@@ -156,18 +101,12 @@ int ethnl_parse_header_dev_get(struct ethnl_req_info *req_info,
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (dev && !netif_device_present(dev)) {
 		dev_put(dev);
 		NL_SET_ERR_MSG(extack, "device not present");
 		return -ENODEV;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	req_info->dev = dev;
 	req_info->flags = flags;
 	return 0;
@@ -309,14 +248,6 @@ ethnl_default_requests[__ETHTOOL_MSG_USER_CNT] = {
 	[ETHTOOL_MSG_TSINFO_GET]	= &ethnl_tsinfo_request_ops,
 	[ETHTOOL_MSG_MODULE_EEPROM_GET]	= &ethnl_module_eeprom_request_ops,
 	[ETHTOOL_MSG_STATS_GET]		= &ethnl_stats_request_ops,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	[ETHTOOL_MSG_PHC_VCLOCKS_GET]	= &ethnl_phc_vclocks_request_ops,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	[ETHTOOL_MSG_PHC_VCLOCKS_GET]	= &ethnl_phc_vclocks_request_ops,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct ethnl_dump_ctx *ethnl_dump_context(struct netlink_callback *cb)
@@ -433,16 +364,8 @@ static int ethnl_default_doit(struct sk_buff *skb, struct genl_info *info)
 		ops->cleanup_data(reply_data);
 
 	genlmsg_end(rskb, reply_payload);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_put(req_info->dev);
-=======
 	if (req_info->dev)
 		dev_put(req_info->dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_put(req_info->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(reply_data);
 	kfree(req_info);
 	return genlmsg_reply(rskb, info);
@@ -454,16 +377,8 @@ err_cleanup:
 	if (ops->cleanup_data)
 		ops->cleanup_data(reply_data);
 err_dev:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_put(req_info->dev);
-=======
 	if (req_info->dev)
 		dev_put(req_info->dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_put(req_info->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(reply_data);
 	kfree(req_info);
 	return ret;
@@ -1043,24 +958,6 @@ static const struct genl_ops ethtool_genl_ops[] = {
 		.policy = ethnl_stats_get_policy,
 		.maxattr = ARRAY_SIZE(ethnl_stats_get_policy) - 1,
 	},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{
-		.cmd	= ETHTOOL_MSG_PHC_VCLOCKS_GET,
-		.doit	= ethnl_default_doit,
-		.start	= ethnl_default_start,
-		.dumpit	= ethnl_default_dumpit,
-		.done	= ethnl_default_done,
-		.policy = ethnl_phc_vclocks_get_policy,
-		.maxattr = ARRAY_SIZE(ethnl_phc_vclocks_get_policy) - 1,
-	},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct genl_multicast_group ethtool_nl_mcgrps[] = {

@@ -1021,15 +1021,7 @@ clear_diag_irq:
 
 static void qlcnic_create_loopback_buff(unsigned char *data, u8 mac[])
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const unsigned char random_data[] = {0xa8, 0x06, 0x45, 0x00};
-=======
 	unsigned char random_data[] = {0xa8, 0x06, 0x45, 0x00};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const unsigned char random_data[] = {0xa8, 0x06, 0x45, 0x00};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	memset(data, 0x4e, QLCNIC_ILB_PKT_SIZE);
 
@@ -1535,19 +1527,7 @@ qlcnic_set_wol(struct net_device *dev, struct ethtool_wolinfo *wol)
  * firmware coalescing to default.
  */
 static int qlcnic_set_intr_coalesce(struct net_device *netdev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    struct ethtool_coalesce *ethcoal,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
-=======
 			struct ethtool_coalesce *ethcoal)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    struct ethtool_coalesce *ethcoal,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct qlcnic_adapter *adapter = netdev_priv(netdev);
 	int err;
@@ -1571,19 +1551,7 @@ static int qlcnic_set_intr_coalesce(struct net_device *netdev,
 }
 
 static int qlcnic_get_intr_coalesce(struct net_device *netdev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    struct ethtool_coalesce *ethcoal,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
-=======
 			struct ethtool_coalesce *ethcoal)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    struct ethtool_coalesce *ethcoal,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct qlcnic_adapter *adapter = netdev_priv(netdev);
 

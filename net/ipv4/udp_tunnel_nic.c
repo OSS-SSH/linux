@@ -935,15 +935,7 @@ static int __init udp_tunnel_nic_init_module(void)
 {
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	udp_tunnel_nic_workqueue = alloc_ordered_workqueue("udp_tunnel_nic", 0);
-=======
 	udp_tunnel_nic_workqueue = alloc_workqueue("udp_tunnel_nic", 0, 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	udp_tunnel_nic_workqueue = alloc_ordered_workqueue("udp_tunnel_nic", 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!udp_tunnel_nic_workqueue)
 		return -ENOMEM;
 

@@ -843,17 +843,7 @@ static int gswip_setup(struct dsa_switch *ds)
 
 	gswip_switch_mask(priv, 0, GSWIP_MAC_CTRL_2_MLEN,
 			  GSWIP_MAC_CTRL_2p(cpu_port));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	gswip_switch_w(priv, VLAN_ETH_FRAME_LEN + 8 + ETH_FCS_LEN,
-		       GSWIP_MAC_FLEN);
-=======
 	gswip_switch_w(priv, VLAN_ETH_FRAME_LEN + 8, GSWIP_MAC_FLEN);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	gswip_switch_w(priv, VLAN_ETH_FRAME_LEN + 8 + ETH_FCS_LEN,
-		       GSWIP_MAC_FLEN);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gswip_switch_mask(priv, 0, GSWIP_BM_QUEUE_GCTRL_GL_MOD,
 			  GSWIP_BM_QUEUE_GCTRL);
 
@@ -1414,37 +1404,11 @@ static int gswip_port_fdb_dump(struct dsa_switch *ds, int port,
 		addr[1] = mac_bridge.key[2] & 0xff;
 		addr[0] = (mac_bridge.key[2] >> 8) & 0xff;
 		if (mac_bridge.val[1] & GSWIP_TABLE_MAC_BRIDGE_STATIC) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (mac_bridge.val[0] & BIT(port)) {
-				err = cb(addr, 0, true, data);
-				if (err)
-					return err;
-			}
-<<<<<<< HEAD
-		} else {
-			if (((mac_bridge.val[0] & GENMASK(7, 4)) >> 4) == port) {
-				err = cb(addr, 0, false, data);
-				if (err)
-					return err;
-			}
-=======
 			if (mac_bridge.val[0] & BIT(port))
 				cb(addr, 0, true, data);
 		} else {
 			if (((mac_bridge.val[0] & GENMASK(7, 4)) >> 4) == port)
 				cb(addr, 0, false, data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		} else {
-			if (((mac_bridge.val[0] & GENMASK(7, 4)) >> 4) == port) {
-				err = cb(addr, 0, false, data);
-				if (err)
-					return err;
-			}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 	return 0;
@@ -1914,21 +1878,6 @@ static int gswip_gphy_fw_load(struct gswip_priv *priv, struct gswip_gphy_fw *gph
 
 	reset_control_assert(gphy_fw->reset);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* The vendor BSP uses a 200ms delay after asserting the reset line.
-	 * Without this some users are observing that the PHY is not coming up
-	 * on the MDIO bus.
-	 */
-	msleep(200);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = request_firmware(&fw, gphy_fw->fw_name, dev);
 	if (ret) {
 		dev_err(dev, "failed to load firmware: %s, error: %i\n",
@@ -2222,18 +2171,6 @@ static int gswip_remove(struct platform_device *pdev)
 	struct gswip_priv *priv = platform_get_drvdata(pdev);
 	int i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!priv)
-		return 0;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!priv)
-		return 0;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* disable the switch */
 	gswip_mdio_mask(priv, GSWIP_MDIO_GLOB_ENABLE, 0, GSWIP_MDIO_GLOB);
 
@@ -2247,49 +2184,9 @@ static int gswip_remove(struct platform_device *pdev)
 	for (i = 0; i < priv->num_gphy_fw; i++)
 		gswip_gphy_fw_remove(priv, &priv->gphy_fw[i]);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	platform_set_drvdata(pdev, NULL);
-
 	return 0;
 }
 
-static void gswip_shutdown(struct platform_device *pdev)
-{
-	struct gswip_priv *priv = platform_get_drvdata(pdev);
-
-	if (!priv)
-		return;
-
-	dsa_switch_shutdown(priv->ds);
-
-	platform_set_drvdata(pdev, NULL);
-}
-
-=======
-	return 0;
-}
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	platform_set_drvdata(pdev, NULL);
-
-	return 0;
-}
-
-static void gswip_shutdown(struct platform_device *pdev)
-{
-	struct gswip_priv *priv = platform_get_drvdata(pdev);
-
-	if (!priv)
-		return;
-
-	dsa_switch_shutdown(priv->ds);
-
-	platform_set_drvdata(pdev, NULL);
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct gswip_hw_info gswip_xrx200 = {
 	.max_ports = 7,
 	.cpu_port = 6,
@@ -2313,14 +2210,6 @@ MODULE_DEVICE_TABLE(of, gswip_of_match);
 static struct platform_driver gswip_driver = {
 	.probe = gswip_probe,
 	.remove = gswip_remove,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.shutdown = gswip_shutdown,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.shutdown = gswip_shutdown,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.name = "gswip",
 		.of_match_table = gswip_of_match,

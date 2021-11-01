@@ -57,13 +57,7 @@
 
 #include <linux/ip.h>
 #include <linux/if_ether.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <ethernet.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define SPEC_DEV_ID_NONE BIT(0)
 #define SPEC_DEV_ID_DISABLE_HT BIT(1)
@@ -138,29 +132,17 @@ struct registry_priv {
 
 	u8 lowrate_two_xmit;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u8 rf_config;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 low_power;
 
 	u8 wifi_spec;/*  !turbo_mode */
 
 	u8 channel_plan;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u8 btcoex;
 	u8 bt_iso;
 	u8 bt_sco;
 	u8 bt_ampdu;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	s8	ant_num;
 
 	/* false:Reject AP's Add BA req, true:accept AP's Add BA req */
@@ -518,15 +500,9 @@ static inline u8 *myid(struct eeprom_priv *peepriv)
 
 #include <rtw_btcoex.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void rtw_indicate_wx_disassoc_event(struct adapter *padapter);
 void rtw_indicate_wx_assoc_event(struct adapter *padapter);
 void indicate_wx_scan_complete_event(struct adapter *padapter);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int rtw_change_ifname(struct adapter *padapter, const char *ifname);
 
 extern char *rtw_initmac;

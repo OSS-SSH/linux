@@ -1226,15 +1226,7 @@ PAGE_SIZE multiple when read back.
 
 	Note that all fields in this file are hierarchical and the
 	file modified event can be generated due to an event down the
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hierarchy. For the local events at the cgroup level see
-=======
 	hierarchy. For for the local events at the cgroup level see
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hierarchy. For the local events at the cgroup level see
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memory.events.local.
 
 	  low
@@ -2064,26 +2056,6 @@ Cpuset Interface Files
 	The value of "cpuset.mems" stays constant until the next update
 	and won't be affected by any memory nodes hotplug events.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	Setting a non-empty value to "cpuset.mems" causes memory of
-	tasks within the cgroup to be migrated to the designated nodes if
-	they are currently using memory outside of the designated nodes.
-
-	There is a cost for this memory migration.  The migration
-	may not be complete and some memory pages may be left behind.
-	So it is recommended that "cpuset.mems" should be set properly
-	before spawning new tasks into the cpuset.  Even if there is
-	a need to change "cpuset.mems" with active tasks, it shouldn't
-	be done frequently.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   cpuset.mems.effective
 	A read-only multiple values file which exists on all
 	cpuset-enabled cgroups.
@@ -2187,25 +2159,6 @@ existing device files.
 
 Cgroup v2 device controller has no interface files and is implemented
 on top of cgroup BPF. To control access to device files, a user may
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-create bpf programs of type BPF_PROG_TYPE_CGROUP_DEVICE and attach
-them to cgroups with BPF_CGROUP_DEVICE flag. On an attempt to access a
-device file, corresponding BPF programs will be executed, and depending
-on the return value the attempt will succeed or fail with -EPERM.
-
-A BPF_PROG_TYPE_CGROUP_DEVICE program takes a pointer to the
-bpf_cgroup_dev_ctx structure, which describes the device access attempt:
-access type (mknod/read/write) and device (type, major and minor numbers).
-If the program returns 0, the attempt fails with -EPERM, otherwise it
-succeeds.
-
-An example of BPF_PROG_TYPE_CGROUP_DEVICE program may be found in
-tools/testing/selftests/bpf/progs/dev_cgroup.c in the kernel source tree.
-<<<<<<< HEAD
-=======
 create bpf programs of the BPF_CGROUP_DEVICE type and attach them
 to cgroups. On an attempt to access a device file, corresponding
 BPF programs will be executed, and depending on the return value
@@ -2219,9 +2172,6 @@ it succeeds.
 
 An example of BPF_CGROUP_DEVICE program may be found in the kernel
 source tree in the tools/testing/selftests/bpf/progs/dev_cgroup.c file.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 RDMA

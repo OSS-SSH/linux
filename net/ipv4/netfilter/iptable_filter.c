@@ -19,13 +19,7 @@ MODULE_DESCRIPTION("iptables filter table");
 #define FILTER_VALID_HOOKS ((1 << NF_INET_LOCAL_IN) | \
 			    (1 << NF_INET_FORWARD) | \
 			    (1 << NF_INET_LOCAL_OUT))
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int __net_init iptable_filter_table_init(struct net *net);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct xt_table packet_filter = {
 	.name		= "filter",
@@ -33,13 +27,7 @@ static const struct xt_table packet_filter = {
 	.me		= THIS_MODULE,
 	.af		= NFPROTO_IPV4,
 	.priority	= NF_IP_PRI_FILTER,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.table_init	= iptable_filter_table_init,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static unsigned int
@@ -55,15 +43,7 @@ static struct nf_hook_ops *filter_ops __read_mostly;
 static bool forward __read_mostly = true;
 module_param(forward, bool, 0000);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int iptable_filter_table_init(struct net *net)
-=======
 static int __net_init iptable_filter_table_init(struct net *net)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int iptable_filter_table_init(struct net *net)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ipt_replace *repl;
 	int err;
@@ -82,15 +62,7 @@ static int iptable_filter_table_init(struct net *net)
 
 static int __net_init iptable_filter_net_init(struct net *net)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!forward)
-=======
 	if (net == &init_net || !forward)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!forward)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return iptable_filter_table_init(net);
 
 	return 0;
@@ -114,68 +86,22 @@ static struct pernet_operations iptable_filter_net_ops = {
 
 static int __init iptable_filter_init(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	int ret = xt_register_template(&packet_filter,
-				       iptable_filter_table_init);
-
-	if (ret < 0)
-		return ret;
-<<<<<<< HEAD
-
-	filter_ops = xt_hook_ops_alloc(&packet_filter, iptable_filter_hook);
-	if (IS_ERR(filter_ops)) {
-		xt_unregister_template(&packet_filter);
-		return PTR_ERR(filter_ops);
-	}
-
-	ret = register_pernet_subsys(&iptable_filter_net_ops);
-	if (ret < 0) {
-		xt_unregister_template(&packet_filter);
-		kfree(filter_ops);
-		return ret;
-	}
-
-	return 0;
-=======
 	int ret;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	filter_ops = xt_hook_ops_alloc(&packet_filter, iptable_filter_hook);
-	if (IS_ERR(filter_ops)) {
-		xt_unregister_template(&packet_filter);
+	if (IS_ERR(filter_ops))
 		return PTR_ERR(filter_ops);
-	}
 
 	ret = register_pernet_subsys(&iptable_filter_net_ops);
-	if (ret < 0) {
-		xt_unregister_template(&packet_filter);
+	if (ret < 0)
 		kfree(filter_ops);
-		return ret;
-	}
 
-<<<<<<< HEAD
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __exit iptable_filter_fini(void)
 {
 	unregister_pernet_subsys(&iptable_filter_net_ops);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xt_unregister_template(&packet_filter);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xt_unregister_template(&packet_filter);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(filter_ops);
 }
 

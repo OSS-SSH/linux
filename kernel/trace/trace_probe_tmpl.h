@@ -54,15 +54,7 @@ fetch_apply_bitfield(struct fetch_insn *code, void *buf)
  * If dest is NULL, don't store result and return required dynamic data size.
  */
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-process_fetch_insn(struct fetch_insn *code, void *rec,
-=======
 process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-process_fetch_insn(struct fetch_insn *code, void *rec,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		   void *dest, void *base);
 static nokprobe_inline int fetch_store_strlen(unsigned long addr);
 static nokprobe_inline int
@@ -196,15 +188,7 @@ __get_data_size(struct trace_probe *tp, struct pt_regs *regs)
 
 /* Store the value of each argument */
 static nokprobe_inline void
-<<<<<<< HEAD
-<<<<<<< HEAD
-store_trace_args(void *data, struct trace_probe *tp, void *rec,
-=======
 store_trace_args(void *data, struct trace_probe *tp, struct pt_regs *regs,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-store_trace_args(void *data, struct trace_probe *tp, void *rec,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 int header_size, int maxlen)
 {
 	struct probe_arg *arg;
@@ -219,15 +203,7 @@ store_trace_args(void *data, struct trace_probe *tp, void *rec,
 		/* Point the dynamic data area if needed */
 		if (unlikely(arg->dynamic))
 			*dl = make_data_loc(maxlen, dyndata - base);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = process_fetch_insn(arg->code, rec, dl, base);
-=======
 		ret = process_fetch_insn(arg->code, regs, dl, base);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = process_fetch_insn(arg->code, rec, dl, base);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (unlikely(ret < 0 && arg->dynamic)) {
 			*dl = make_data_loc(0, dyndata - base);
 		} else {

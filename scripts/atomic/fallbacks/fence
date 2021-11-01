@@ -1,26 +1,10 @@
 cat <<EOF
 static __always_inline ${ret}
-<<<<<<< HEAD
-<<<<<<< HEAD
-arch_${atomic}_${pfx}${name}${sfx}(${params})
-{
-	${ret} ret;
-	__atomic_pre_full_fence();
-	ret = arch_${atomic}_${pfx}${name}${sfx}_relaxed(${args});
-=======
 ${arch}${atomic}_${pfx}${name}${sfx}(${params})
 {
 	${ret} ret;
 	__atomic_pre_full_fence();
 	ret = ${arch}${atomic}_${pfx}${name}${sfx}_relaxed(${args});
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-arch_${atomic}_${pfx}${name}${sfx}(${params})
-{
-	${ret} ret;
-	__atomic_pre_full_fence();
-	ret = arch_${atomic}_${pfx}${name}${sfx}_relaxed(${args});
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__atomic_post_full_fence();
 	return ret;
 }

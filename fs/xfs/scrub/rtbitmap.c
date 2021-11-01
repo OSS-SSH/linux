@@ -41,15 +41,7 @@ xchk_setup_rt(
 STATIC int
 xchk_rtbitmap_rec(
 	struct xfs_trans	*tp,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct xfs_rtalloc_rec *rec,
-=======
 	struct xfs_rtalloc_rec	*rec,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct xfs_rtalloc_rec *rec,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void			*priv)
 {
 	struct xfs_scrub	*sc = priv;

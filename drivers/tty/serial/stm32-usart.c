@@ -1034,18 +1034,8 @@ static int stm32_usart_init_port(struct stm32_port *stm32port,
 	int ret, irq;
 
 	irq = platform_get_irq(pdev, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (irq < 0)
-		return irq;
-=======
 	if (irq <= 0)
 		return irq ? : -ENODEV;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (irq < 0)
-		return irq;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	port->iotype	= UPIO_MEM;
 	port->flags	= UPF_BOOT_AUTOCONF;
@@ -1074,16 +1064,8 @@ static int stm32_usart_init_port(struct stm32_port *stm32port,
 				      &stm32port->txftcfg);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	port->membase = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
-=======
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	port->membase = devm_ioremap_resource(&pdev->dev, res);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	port->membase = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(port->membase))
 		return PTR_ERR(port->membase);
 	port->mapbase = res->start;
@@ -1195,15 +1177,7 @@ static int stm32_usart_of_dma_rx_probe(struct stm32_port *stm32port,
 	if (uart_console(port))
 		return -ENODEV;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	stm32port->rx_buf = dma_alloc_coherent(dev, RX_BUF_L,
-=======
 	stm32port->rx_buf = dma_alloc_coherent(&pdev->dev, RX_BUF_L,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	stm32port->rx_buf = dma_alloc_coherent(dev, RX_BUF_L,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					       &stm32port->rx_dma_buf,
 					       GFP_KERNEL);
 	if (!stm32port->rx_buf)
@@ -1269,15 +1243,7 @@ static int stm32_usart_of_dma_tx_probe(struct stm32_port *stm32port,
 
 	stm32port->tx_dma_busy = false;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	stm32port->tx_buf = dma_alloc_coherent(dev, TX_BUF_L,
-=======
 	stm32port->tx_buf = dma_alloc_coherent(&pdev->dev, TX_BUF_L,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	stm32port->tx_buf = dma_alloc_coherent(dev, TX_BUF_L,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					       &stm32port->tx_dma_buf,
 					       GFP_KERNEL);
 	if (!stm32port->tx_buf)

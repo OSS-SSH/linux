@@ -1090,15 +1090,7 @@ static int genwqe_pci_setup(struct genwqe_dev *cd)
 
 	/* check for 64-bit DMA address supported (DAC) */
 	/* check for 32-bit DMA address supported (SAC) */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (dma_set_mask_and_coherent(&pci_dev->dev, DMA_BIT_MASK(64)) &&
-=======
 	if (dma_set_mask_and_coherent(&pci_dev->dev, DMA_BIT_MASK(64)) ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (dma_set_mask_and_coherent(&pci_dev->dev, DMA_BIT_MASK(64)) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    dma_set_mask_and_coherent(&pci_dev->dev, DMA_BIT_MASK(32))) {
 		dev_err(&pci_dev->dev,
 			"err: neither DMA32 nor DMA64 supported\n");

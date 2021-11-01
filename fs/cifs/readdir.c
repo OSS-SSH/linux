@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *   fs/cifs/readdir.c
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Directory search handling
  *
@@ -375,15 +369,7 @@ int get_symlink_reparse_path(char *full_path, struct cifs_sb_info *cifs_sb,
  */
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-_initiate_cifs_search(const unsigned int xid, struct file *file,
-=======
 initiate_cifs_search(const unsigned int xid, struct file *file,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-_initiate_cifs_search(const unsigned int xid, struct file *file,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     const char *full_path)
 {
 	__u16 search_flags;
@@ -465,36 +451,6 @@ error_exit:
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int
-initiate_cifs_search(const unsigned int xid, struct file *file,
-		     const char *full_path)
-{
-	int rc, retry_count = 0;
-
-	do {
-		rc = _initiate_cifs_search(xid, file, full_path);
-		/*
-		 * If we don't have enough credits to start reading the
-		 * directory just try again after short wait.
-		 */
-		if (rc != -EDEADLK)
-			break;
-
-		usleep_range(512, 2048);
-	} while (retry_count++ < 5);
-
-	return rc;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* return length of unicode string in bytes */
 static int cifs_unicode_bytelen(const char *str)
 {

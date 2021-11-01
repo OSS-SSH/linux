@@ -1583,13 +1583,7 @@ static int analogix_dp_create_bridge(struct drm_device *drm_dev,
 				     struct analogix_dp_device *dp)
 {
 	struct drm_bridge *bridge;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	bridge = devm_kzalloc(drm_dev->dev, sizeof(*bridge), GFP_KERNEL);
 	if (!bridge) {
@@ -1602,10 +1596,6 @@ static int analogix_dp_create_bridge(struct drm_device *drm_dev,
 	bridge->driver_private = dp;
 	bridge->funcs = &analogix_dp_bridge_funcs;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return drm_bridge_attach(dp->encoder, bridge, NULL, 0);
-=======
 	ret = drm_bridge_attach(dp->encoder, bridge, NULL, 0);
 	if (ret) {
 		DRM_ERROR("failed to attach drm bridge\n");
@@ -1613,10 +1603,6 @@ static int analogix_dp_create_bridge(struct drm_device *drm_dev,
 	}
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return drm_bridge_attach(dp->encoder, bridge, NULL, 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int analogix_dp_dt_parse_pdata(struct analogix_dp_device *dp)

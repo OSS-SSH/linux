@@ -18,11 +18,6 @@ real, with all the uAPI bits is:
         * Route shmem backend over to TTM SYSTEM for discrete
         * TTM purgeable object support
         * Move i915 buddy allocator over to TTM
-<<<<<<< HEAD
-<<<<<<< HEAD
-* Send RFC(with mesa-dev on cc) for final sign off on the uAPI
-* Add pciid for DG1 and turn on uAPI for real
-=======
         * MMAP ioctl mode(see `I915 MMAP`_)
         * SET/GET ioctl caching(see `I915 SET/GET CACHING`_)
 * Send RFC(with mesa-dev on cc) for final sign off on the uAPI
@@ -134,8 +129,3 @@ Links
 [1] https://patchwork.freedesktop.org/series/86798/
 
 [2] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/5599#note_553791
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-* Send RFC(with mesa-dev on cc) for final sign off on the uAPI
-* Add pciid for DG1 and turn on uAPI for real
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

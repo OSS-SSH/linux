@@ -1787,13 +1787,7 @@ static int tegra_xusb_remove(struct platform_device *pdev)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if IS_ENABLED(CONFIG_PM) || IS_ENABLED(CONFIG_PM_SLEEP)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool xhci_hub_ports_suspended(struct xhci_hub *hub)
 {
 	struct device *dev = hub->hcd->self.controller;
@@ -2108,15 +2102,7 @@ out:
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static __maybe_unused int tegra_xusb_suspend(struct device *dev)
-=======
 static int tegra_xusb_suspend(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static __maybe_unused int tegra_xusb_suspend(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int err;
@@ -2158,15 +2144,7 @@ out:
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static __maybe_unused int tegra_xusb_resume(struct device *dev)
-=======
 static int tegra_xusb_resume(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static __maybe_unused int tegra_xusb_resume(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int err;
@@ -2196,20 +2174,10 @@ static __maybe_unused int tegra_xusb_resume(struct device *dev)
 
 	return 0;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-static __maybe_unused int tegra_xusb_runtime_suspend(struct device *dev)
-=======
 #endif
 
 #ifdef CONFIG_PM
 static int tegra_xusb_runtime_suspend(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-static __maybe_unused int tegra_xusb_runtime_suspend(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int ret;
@@ -2222,15 +2190,7 @@ static __maybe_unused int tegra_xusb_runtime_suspend(struct device *dev)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static __maybe_unused int tegra_xusb_runtime_resume(struct device *dev)
-=======
 static int tegra_xusb_runtime_resume(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static __maybe_unused int tegra_xusb_runtime_resume(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int err;
@@ -2241,13 +2201,7 @@ static __maybe_unused int tegra_xusb_runtime_resume(struct device *dev)
 
 	return err;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct dev_pm_ops tegra_xusb_pm_ops = {
 	SET_RUNTIME_PM_OPS(tegra_xusb_runtime_suspend,

@@ -277,31 +277,15 @@ static void brcmstb_gpio_irq_bank_handler(struct brcmstb_gpio_bank *bank)
 	unsigned long status;
 
 	while ((status = brcmstb_gpio_get_active_irqs(bank))) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		unsigned int offset;
-=======
 		unsigned int irq, offset;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		unsigned int offset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		for_each_set_bit(offset, &status, 32) {
 			if (offset >= bank->width)
 				dev_warn(&priv->pdev->dev,
 					 "IRQ for invalid GPIO (bank=%d, offset=%d)\n",
 					 bank->id, offset);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			generic_handle_domain_irq(domain, hwbase + offset);
-=======
 			irq = irq_linear_revmap(domain, hwbase + offset);
 			generic_handle_irq(irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			generic_handle_domain_irq(domain, hwbase + offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -619,9 +603,6 @@ static const struct dev_pm_ops brcmstb_gpio_pm_ops = {
 	.resume_noirq = brcmstb_gpio_resume,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void brcmstb_gpio_set_names(struct device *dev,
 				   struct brcmstb_gpio_bank *bank)
 {
@@ -665,9 +646,6 @@ static void brcmstb_gpio_set_names(struct device *dev,
 	bank->gc.names = names;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int brcmstb_gpio_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
@@ -781,14 +759,6 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
 		gc->of_xlate = brcmstb_gpio_of_xlate;
 		/* not all ngpio lines are valid, will use bank width later */
 		gc->ngpio = MAX_GPIO_PER_BANK;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		gc->offset = bank->id * MAX_GPIO_PER_BANK;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		gc->offset = bank->id * MAX_GPIO_PER_BANK;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (priv->parent_irq > 0)
 			gc->to_irq = brcmstb_gpio_to_irq;
 
@@ -799,13 +769,7 @@ static int brcmstb_gpio_probe(struct platform_device *pdev)
 		need_wakeup_event |= !!__brcmstb_gpio_get_active_irqs(bank);
 		gc->write_reg(reg_base + GIO_MASK(bank->id), 0);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		brcmstb_gpio_set_names(dev, bank);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = gpiochip_add_data(gc, bank);
 		if (err) {
 			dev_err(dev, "Could not add gpiochip for bank %d\n",

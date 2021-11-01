@@ -129,19 +129,6 @@
 
 #define HNS_ROCE_V2_TABLE_CHUNK_SIZE		(1 << 18)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-enum {
-	HNS_ROCE_CMD_FLAG_IN = BIT(0),
-	HNS_ROCE_CMD_FLAG_OUT = BIT(1),
-	HNS_ROCE_CMD_FLAG_NEXT = BIT(2),
-	HNS_ROCE_CMD_FLAG_WR = BIT(3),
-	HNS_ROCE_CMD_FLAG_ERR_INTR = BIT(5),
-};
-<<<<<<< HEAD
-=======
 #define HNS_ROCE_CMD_FLAG_IN_VALID_SHIFT	0
 #define HNS_ROCE_CMD_FLAG_OUT_VALID_SHIFT	1
 #define HNS_ROCE_CMD_FLAG_NEXT_SHIFT		2
@@ -155,9 +142,6 @@ enum {
 #define HNS_ROCE_CMD_FLAG_WR		BIT(HNS_ROCE_CMD_FLAG_WR_OR_RD_SHIFT)
 #define HNS_ROCE_CMD_FLAG_NO_INTR	BIT(HNS_ROCE_CMD_FLAG_NO_INTR_SHIFT)
 #define HNS_ROCE_CMD_FLAG_ERR_INTR	BIT(HNS_ROCE_CMD_FLAG_ERR_INTR_SHIFT)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define HNS_ROCE_CMQ_DESC_NUM_S		3
 
@@ -1429,13 +1413,7 @@ struct hns_roce_cmq_desc {
 			__le32 rsv[4];
 		} func_info;
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct hns_roce_v2_cmq_ring {
@@ -1469,15 +1447,7 @@ struct hns_roce_v2_priv {
 
 struct hns_roce_dip {
 	u8 dgid[GID_LEN_V2];
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 dip_idx;
-=======
 	u8 dip_idx;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 dip_idx;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head node;	/* all dips are on a list */
 };
 

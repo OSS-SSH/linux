@@ -434,16 +434,8 @@ static void zynqmp_dma_free_descriptor(struct zynqmp_dma_chan *chan,
 	struct zynqmp_dma_desc_sw *child, *next;
 
 	chan->desc_free_cnt++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	list_move_tail(&sdesc->node, &chan->free_list);
-=======
 	list_del(&sdesc->node);
 	list_add_tail(&sdesc->node, &chan->free_list);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	list_move_tail(&sdesc->node, &chan->free_list);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry_safe(child, next, &sdesc->tx_list, node) {
 		chan->desc_free_cnt++;
 		list_move_tail(&child->node, &chan->free_list);

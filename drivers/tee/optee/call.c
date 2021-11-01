@@ -184,15 +184,7 @@ static struct tee_shm *get_msg_arg(struct tee_context *ctx, size_t num_params,
 	struct optee_msg_arg *ma;
 
 	shm = tee_shm_alloc(ctx, OPTEE_MSG_GET_ARG_SIZE(num_params),
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    TEE_SHM_MAPPED | TEE_SHM_PRIV);
-=======
 			    TEE_SHM_MAPPED);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    TEE_SHM_MAPPED | TEE_SHM_PRIV);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(shm))
 		return shm;
 
@@ -424,32 +416,11 @@ void optee_enable_shm_cache(struct optee *optee)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * __optee_disable_shm_cache() - Disables caching of some shared memory
- *                               allocation in OP-TEE
- * @optee:	main service struct
- * @is_mapped:	true if the cached shared memory addresses were mapped by this
- *		kernel, are safe to dereference, and should be freed
- */
-static void __optee_disable_shm_cache(struct optee *optee, bool is_mapped)
-=======
  * optee_disable_shm_cache() - Disables caching of some shared memory allocation
  *			      in OP-TEE
-=======
- * __optee_disable_shm_cache() - Disables caching of some shared memory
- *                               allocation in OP-TEE
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @optee:	main service struct
- * @is_mapped:	true if the cached shared memory addresses were mapped by this
- *		kernel, are safe to dereference, and should be freed
  */
-<<<<<<< HEAD
 void optee_disable_shm_cache(struct optee *optee)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void __optee_disable_shm_cache(struct optee *optee, bool is_mapped)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct optee_call_waiter w;
 
@@ -468,22 +439,6 @@ static void __optee_disable_shm_cache(struct optee *optee, bool is_mapped)
 		if (res.result.status == OPTEE_SMC_RETURN_OK) {
 			struct tee_shm *shm;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			/*
-			 * Shared memory references that were not mapped by
-			 * this kernel must be ignored to prevent a crash.
-			 */
-			if (!is_mapped)
-				continue;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			shm = reg_pair_to_ptr(res.result.shm_upper32,
 					      res.result.shm_lower32);
 			tee_shm_free(shm);
@@ -494,36 +449,6 @@ static void __optee_disable_shm_cache(struct optee *optee, bool is_mapped)
 	optee_cq_wait_final(&optee->call_queue, &w);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * optee_disable_shm_cache() - Disables caching of mapped shared memory
- *                             allocations in OP-TEE
- * @optee:	main service struct
- */
-void optee_disable_shm_cache(struct optee *optee)
-{
-	return __optee_disable_shm_cache(optee, true);
-}
-
-/**
- * optee_disable_unmapped_shm_cache() - Disables caching of shared memory
- *                                      allocations in OP-TEE which are not
- *                                      currently mapped
- * @optee:	main service struct
- */
-void optee_disable_unmapped_shm_cache(struct optee *optee)
-{
-	return __optee_disable_shm_cache(optee, false);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PAGELIST_ENTRIES_PER_PAGE				\
 	((OPTEE_MSG_NONCONTIG_PAGE_SIZE / sizeof(u64)) - 1)
 

@@ -295,15 +295,7 @@ Description:
 
 What:		/sys/power/resume_offset
 Date:		April 2018
-<<<<<<< HEAD
-<<<<<<< HEAD
-Contact:	Mario Limonciello <mario.limonciello@outlook.com>
-=======
 Contact:	Mario Limonciello <mario.limonciello@dell.com>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-Contact:	Mario Limonciello <mario.limonciello@outlook.com>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Description:
 		This file is used for telling the kernel an offset into a disk
 		to use when hibernating the system such as with a swap file.

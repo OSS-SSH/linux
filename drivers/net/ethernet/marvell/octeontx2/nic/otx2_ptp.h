@@ -1,19 +1,5 @@
 /* SPDX-License-Identifier: GPL-2.0 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Marvell RVU Ethernet driver
- *
- * Copyright (C) 2020 Marvell.
- *
- */
-<<<<<<< HEAD
-=======
 /* Marvell OcteonTx2 PTP support for ethernet driver */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef OTX2_PTP_H
 #define OTX2_PTP_H

@@ -467,20 +467,6 @@
 		};
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	crypto@60 {
-		compatible = "atmel,atecc508a";
-		reg = <0x60>;
-	};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imu@6a {
 		compatible = "st,lsm9ds1-imu";
 		reg = <0x6a>;

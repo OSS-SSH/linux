@@ -26,32 +26,11 @@
 MODULE_VERSION(IDXD_DRIVER_VERSION);
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR("Intel Corporation");
-<<<<<<< HEAD
-<<<<<<< HEAD
-MODULE_IMPORT_NS(IDXD);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-MODULE_IMPORT_NS(IDXD);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static bool sva = true;
 module_param(sva, bool, 0644);
 MODULE_PARM_DESC(sva, "Toggle SVA support on/off");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-bool tc_override;
-module_param(tc_override, bool, 0644);
-MODULE_PARM_DESC(tc_override, "Override traffic class defaults");
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DRV_NAME "idxd"
 
 bool support_enqcmd;
@@ -123,16 +102,6 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
 		spin_lock_init(&idxd->irq_entries[i].list_lock);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	idxd_msix_perm_setup(idxd);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	idxd_msix_perm_setup(idxd);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	irq_entry = &idxd->irq_entries[0];
 	rc = request_threaded_irq(irq_entry->vector, NULL, idxd_misc_thread,
 				  0, "idxd-misc", irq_entry);
@@ -179,13 +148,7 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
 	}
 
 	idxd_unmask_error_interrupts(idxd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	idxd_msix_perm_setup(idxd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
  err_wq_irqs:
@@ -199,14 +162,6 @@ static int idxd_setup_interrupts(struct idxd_device *idxd)
  err_misc_irq:
 	/* Disable error interrupt generation */
 	idxd_mask_error_interrupts(idxd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	idxd_msix_perm_clear(idxd);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	idxd_msix_perm_clear(idxd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  err_irq_entries:
 	pci_free_irq_vectors(pdev);
 	dev_err(dev, "No usable interrupts\n");
@@ -243,14 +198,6 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
 {
 	struct device *dev = &idxd->pdev->dev;
 	struct idxd_wq *wq;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct device *conf_dev;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct device *conf_dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, rc;
 
 	idxd->wqs = kcalloc_node(idxd->max_wqs, sizeof(struct idxd_wq *),
@@ -265,38 +212,15 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
 			goto err;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		idxd_dev_set_type(&wq->idxd_dev, IDXD_DEV_WQ);
-		conf_dev = wq_confdev(wq);
 		wq->id = i;
 		wq->idxd = idxd;
-		device_initialize(wq_confdev(wq));
-		conf_dev->parent = idxd_confdev(idxd);
-		conf_dev->bus = &dsa_bus_type;
-		conf_dev->type = &idxd_wq_device_type;
-		rc = dev_set_name(conf_dev, "wq%d.%d", idxd->id, wq->id);
+		device_initialize(&wq->conf_dev);
+		wq->conf_dev.parent = &idxd->conf_dev;
+		wq->conf_dev.bus = &dsa_bus_type;
+		wq->conf_dev.type = &idxd_wq_device_type;
+		rc = dev_set_name(&wq->conf_dev, "wq%d.%d", idxd->id, wq->id);
 		if (rc < 0) {
-			put_device(conf_dev);
-=======
-=======
-		idxd_dev_set_type(&wq->idxd_dev, IDXD_DEV_WQ);
-		conf_dev = wq_confdev(wq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		wq->id = i;
-		wq->idxd = idxd;
-		device_initialize(wq_confdev(wq));
-		conf_dev->parent = idxd_confdev(idxd);
-		conf_dev->bus = &dsa_bus_type;
-		conf_dev->type = &idxd_wq_device_type;
-		rc = dev_set_name(conf_dev, "wq%d.%d", idxd->id, wq->id);
-		if (rc < 0) {
-<<<<<<< HEAD
 			put_device(&wq->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			put_device(conf_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto err;
 		}
 
@@ -307,15 +231,7 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
 		wq->max_batch_size = idxd->max_batch_size;
 		wq->wqcfg = kzalloc_node(idxd->wqcfg_size, GFP_KERNEL, dev_to_node(dev));
 		if (!wq->wqcfg) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			put_device(conf_dev);
-=======
 			put_device(&wq->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			put_device(conf_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = -ENOMEM;
 			goto err;
 		}
@@ -325,22 +241,8 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
 	return 0;
 
  err:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	while (--i >= 0) {
-		wq = idxd->wqs[i];
-		conf_dev = wq_confdev(wq);
-		put_device(conf_dev);
-	}
-<<<<<<< HEAD
-=======
 	while (--i >= 0)
 		put_device(&idxd->wqs[i]->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -348,14 +250,6 @@ static int idxd_setup_engines(struct idxd_device *idxd)
 {
 	struct idxd_engine *engine;
 	struct device *dev = &idxd->pdev->dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct device *conf_dev;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct device *conf_dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i, rc;
 
 	idxd->engines = kcalloc_node(idxd->max_engines, sizeof(struct idxd_engine *),
@@ -370,38 +264,15 @@ static int idxd_setup_engines(struct idxd_device *idxd)
 			goto err;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		idxd_dev_set_type(&engine->idxd_dev, IDXD_DEV_ENGINE);
-		conf_dev = engine_confdev(engine);
 		engine->id = i;
 		engine->idxd = idxd;
-		device_initialize(conf_dev);
-		conf_dev->parent = idxd_confdev(idxd);
-		conf_dev->bus = &dsa_bus_type;
-		conf_dev->type = &idxd_engine_device_type;
-		rc = dev_set_name(conf_dev, "engine%d.%d", idxd->id, engine->id);
+		device_initialize(&engine->conf_dev);
+		engine->conf_dev.parent = &idxd->conf_dev;
+		engine->conf_dev.bus = &dsa_bus_type;
+		engine->conf_dev.type = &idxd_engine_device_type;
+		rc = dev_set_name(&engine->conf_dev, "engine%d.%d", idxd->id, engine->id);
 		if (rc < 0) {
-			put_device(conf_dev);
-=======
-=======
-		idxd_dev_set_type(&engine->idxd_dev, IDXD_DEV_ENGINE);
-		conf_dev = engine_confdev(engine);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		engine->id = i;
-		engine->idxd = idxd;
-		device_initialize(conf_dev);
-		conf_dev->parent = idxd_confdev(idxd);
-		conf_dev->bus = &dsa_bus_type;
-		conf_dev->type = &idxd_engine_device_type;
-		rc = dev_set_name(conf_dev, "engine%d.%d", idxd->id, engine->id);
-		if (rc < 0) {
-<<<<<<< HEAD
 			put_device(&engine->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			put_device(conf_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto err;
 		}
 
@@ -411,36 +282,14 @@ static int idxd_setup_engines(struct idxd_device *idxd)
 	return 0;
 
  err:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	while (--i >= 0) {
-		engine = idxd->engines[i];
-		conf_dev = engine_confdev(engine);
-		put_device(conf_dev);
-	}
-<<<<<<< HEAD
-=======
 	while (--i >= 0)
 		put_device(&idxd->engines[i]->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
 static int idxd_setup_groups(struct idxd_device *idxd)
 {
 	struct device *dev = &idxd->pdev->dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct device *conf_dev;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct device *conf_dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct idxd_group *group;
 	int i, rc;
 
@@ -456,80 +305,28 @@ static int idxd_setup_groups(struct idxd_device *idxd)
 			goto err;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		idxd_dev_set_type(&group->idxd_dev, IDXD_DEV_GROUP);
-		conf_dev = group_confdev(group);
 		group->id = i;
 		group->idxd = idxd;
-		device_initialize(conf_dev);
-		conf_dev->parent = idxd_confdev(idxd);
-		conf_dev->bus = &dsa_bus_type;
-		conf_dev->type = &idxd_group_device_type;
-		rc = dev_set_name(conf_dev, "group%d.%d", idxd->id, group->id);
+		device_initialize(&group->conf_dev);
+		group->conf_dev.parent = &idxd->conf_dev;
+		group->conf_dev.bus = &dsa_bus_type;
+		group->conf_dev.type = &idxd_group_device_type;
+		rc = dev_set_name(&group->conf_dev, "group%d.%d", idxd->id, group->id);
 		if (rc < 0) {
-			put_device(conf_dev);
-=======
-=======
-		idxd_dev_set_type(&group->idxd_dev, IDXD_DEV_GROUP);
-		conf_dev = group_confdev(group);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		group->id = i;
-		group->idxd = idxd;
-		device_initialize(conf_dev);
-		conf_dev->parent = idxd_confdev(idxd);
-		conf_dev->bus = &dsa_bus_type;
-		conf_dev->type = &idxd_group_device_type;
-		rc = dev_set_name(conf_dev, "group%d.%d", idxd->id, group->id);
-		if (rc < 0) {
-<<<<<<< HEAD
 			put_device(&group->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			put_device(conf_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto err;
 		}
 
 		idxd->groups[i] = group;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (idxd->hw.version < DEVICE_VERSION_2 && !tc_override) {
-			group->tc_a = 1;
-			group->tc_b = 1;
-		} else {
-			group->tc_a = -1;
-			group->tc_b = -1;
-		}
-<<<<<<< HEAD
-=======
 		group->tc_a = -1;
 		group->tc_b = -1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
 
  err:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	while (--i >= 0) {
-		group = idxd->groups[i];
-		put_device(group_confdev(group));
-	}
-<<<<<<< HEAD
-=======
 	while (--i >= 0)
 		put_device(&idxd->groups[i]->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 
@@ -538,27 +335,11 @@ static void idxd_cleanup_internals(struct idxd_device *idxd)
 	int i;
 
 	for (i = 0; i < idxd->max_groups; i++)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		put_device(group_confdev(idxd->groups[i]));
-	for (i = 0; i < idxd->max_engines; i++)
-		put_device(engine_confdev(idxd->engines[i]));
-	for (i = 0; i < idxd->max_wqs; i++)
-		put_device(wq_confdev(idxd->wqs[i]));
-=======
 		put_device(&idxd->groups[i]->conf_dev);
-=======
-		put_device(group_confdev(idxd->groups[i]));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < idxd->max_engines; i++)
-		put_device(engine_confdev(idxd->engines[i]));
+		put_device(&idxd->engines[i]->conf_dev);
 	for (i = 0; i < idxd->max_wqs; i++)
-<<<<<<< HEAD
 		put_device(&idxd->wqs[i]->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		put_device(wq_confdev(idxd->wqs[i]));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	destroy_workqueue(idxd->wq);
 }
 
@@ -598,31 +379,13 @@ static int idxd_setup_internals(struct idxd_device *idxd)
 
  err_wkq_create:
 	for (i = 0; i < idxd->max_groups; i++)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		put_device(group_confdev(idxd->groups[i]));
- err_group:
-	for (i = 0; i < idxd->max_engines; i++)
-		put_device(engine_confdev(idxd->engines[i]));
- err_engine:
-	for (i = 0; i < idxd->max_wqs; i++)
-		put_device(wq_confdev(idxd->wqs[i]));
-=======
 		put_device(&idxd->groups[i]->conf_dev);
-=======
-		put_device(group_confdev(idxd->groups[i]));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  err_group:
 	for (i = 0; i < idxd->max_engines; i++)
-		put_device(engine_confdev(idxd->engines[i]));
+		put_device(&idxd->engines[i]->conf_dev);
  err_engine:
 	for (i = 0; i < idxd->max_wqs; i++)
-<<<<<<< HEAD
 		put_device(&idxd->wqs[i]->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		put_device(wq_confdev(idxd->wqs[i]));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  err_wqs:
 	kfree(idxd->int_handles);
 	return rc;
@@ -704,14 +467,6 @@ static void idxd_read_caps(struct idxd_device *idxd)
 static struct idxd_device *idxd_alloc(struct pci_dev *pdev, struct idxd_driver_data *data)
 {
 	struct device *dev = &pdev->dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct device *conf_dev;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct device *conf_dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct idxd_device *idxd;
 	int rc;
 
@@ -719,38 +474,12 @@ static struct idxd_device *idxd_alloc(struct pci_dev *pdev, struct idxd_driver_d
 	if (!idxd)
 		return NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	conf_dev = idxd_confdev(idxd);
 	idxd->pdev = pdev;
 	idxd->data = data;
-	idxd_dev_set_type(&idxd->idxd_dev, idxd->data->type);
-<<<<<<< HEAD
-=======
-	idxd->pdev = pdev;
-	idxd->data = data;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	idxd->id = ida_alloc(&idxd_ida, GFP_KERNEL);
 	if (idxd->id < 0)
 		return NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	device_initialize(conf_dev);
-	conf_dev->parent = dev;
-	conf_dev->bus = &dsa_bus_type;
-	conf_dev->type = idxd->data->dev_type;
-	rc = dev_set_name(conf_dev, "%s%d", idxd->data->name_prefix, idxd->id);
-<<<<<<< HEAD
-	if (rc < 0) {
-		put_device(conf_dev);
-=======
 	device_initialize(&idxd->conf_dev);
 	idxd->conf_dev.parent = dev;
 	idxd->conf_dev.bus = &dsa_bus_type;
@@ -758,11 +487,6 @@ static struct idxd_device *idxd_alloc(struct pci_dev *pdev, struct idxd_driver_d
 	rc = dev_set_name(&idxd->conf_dev, "%s%d", idxd->data->name_prefix, idxd->id);
 	if (rc < 0) {
 		put_device(&idxd->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (rc < 0) {
-		put_device(conf_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 	}
 
@@ -913,12 +637,6 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	}
 
 	dev_dbg(dev, "Set DMA masks\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
-	if (rc)
-		rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-=======
 	rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
 	if (rc)
 		rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
@@ -928,12 +646,6 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	rc = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
 	if (rc)
 		rc = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
-	if (rc)
-		rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		goto err;
 
@@ -954,14 +666,8 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		goto err_dev_register;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	idxd->state = IDXD_DEV_CONF_READY;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_info(&pdev->dev, "Intel(R) Accelerator Device (v%x)\n",
 		 idxd->hw.version);
 
@@ -972,15 +678,7 @@ static int idxd_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
  err:
 	pci_iounmap(pdev, idxd->reg_base);
  err_iomap:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	put_device(idxd_confdev(idxd));
-=======
 	put_device(&idxd->conf_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	put_device(idxd_confdev(idxd));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  err_idxd_alloc:
 	pci_disable_device(pdev);
 	return rc;
@@ -1060,22 +758,12 @@ static void idxd_shutdown(struct pci_dev *pdev)
 	for (i = 0; i < msixcnt; i++) {
 		irq_entry = &idxd->irq_entries[i];
 		synchronize_irq(irq_entry->vector);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		free_irq(irq_entry->vector, irq_entry);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (i == 0)
 			continue;
 		idxd_flush_pending_llist(irq_entry);
 		idxd_flush_work_list(irq_entry);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	flush_workqueue(idxd->wq);
-=======
 
 	idxd_msix_perm_clear(idxd);
 	idxd_release_int_handles(idxd);
@@ -1083,63 +771,19 @@ static void idxd_shutdown(struct pci_dev *pdev)
 	pci_iounmap(pdev, idxd->reg_base);
 	pci_disable_device(pdev);
 	destroy_workqueue(idxd->wq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	flush_workqueue(idxd->wq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void idxd_remove(struct pci_dev *pdev)
 {
 	struct idxd_device *idxd = pci_get_drvdata(pdev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct idxd_irq_entry *irq_entry;
-	int msixcnt = pci_msix_vec_count(pdev);
-	int i;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct idxd_irq_entry *irq_entry;
-	int msixcnt = pci_msix_vec_count(pdev);
-	int i;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(&pdev->dev, "%s called\n", __func__);
 	idxd_shutdown(pdev);
 	if (device_pasid_enabled(idxd))
 		idxd_disable_system_pasid(idxd);
 	idxd_unregister_devices(idxd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	for (i = 0; i < msixcnt; i++) {
-		irq_entry = &idxd->irq_entries[i];
-		free_irq(irq_entry->vector, irq_entry);
-	}
-	idxd_msix_perm_clear(idxd);
-	idxd_release_int_handles(idxd);
-	pci_free_irq_vectors(pdev);
-	pci_iounmap(pdev, idxd->reg_base);
-<<<<<<< HEAD
-	iommu_dev_disable_feature(&pdev->dev, IOMMU_DEV_FEAT_SVA);
-	pci_disable_device(pdev);
-	destroy_workqueue(idxd->wq);
-	perfmon_pmu_remove(idxd);
-	device_unregister(idxd_confdev(idxd));
-=======
 	perfmon_pmu_remove(idxd);
 	iommu_dev_disable_feature(&pdev->dev, IOMMU_DEV_FEAT_SVA);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	iommu_dev_disable_feature(&pdev->dev, IOMMU_DEV_FEAT_SVA);
-	pci_disable_device(pdev);
-	destroy_workqueue(idxd->wq);
-	perfmon_pmu_remove(idxd);
-	device_unregister(idxd_confdev(idxd));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct pci_driver idxd_pci_driver = {
@@ -1170,39 +814,13 @@ static int __init idxd_init_module(void)
 
 	perfmon_init();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = idxd_driver_register(&idxd_drv);
-	if (err < 0)
-		goto err_idxd_driver_register;
-
-	err = idxd_driver_register(&idxd_dmaengine_drv);
-	if (err < 0)
-		goto err_idxd_dmaengine_driver_register;
-
-	err = idxd_driver_register(&idxd_user_drv);
-	if (err < 0)
-		goto err_idxd_user_driver_register;
-=======
 	err = idxd_register_bus_type();
-=======
-	err = idxd_driver_register(&idxd_drv);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (err < 0)
+		return err;
+
+	err = idxd_register_driver();
 	if (err < 0)
 		goto err_idxd_driver_register;
-
-	err = idxd_driver_register(&idxd_dmaengine_drv);
-	if (err < 0)
-<<<<<<< HEAD
-		goto err_idxd_driver_register;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_idxd_dmaengine_driver_register;
-
-	err = idxd_driver_register(&idxd_user_drv);
-	if (err < 0)
-		goto err_idxd_user_driver_register;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = idxd_cdev_register();
 	if (err)
@@ -1217,51 +835,19 @@ static int __init idxd_init_module(void)
 err_pci_register:
 	idxd_cdev_remove();
 err_cdev_register:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	idxd_driver_unregister(&idxd_user_drv);
-err_idxd_user_driver_register:
-	idxd_driver_unregister(&idxd_dmaengine_drv);
-err_idxd_dmaengine_driver_register:
-	idxd_driver_unregister(&idxd_drv);
-<<<<<<< HEAD
-err_idxd_driver_register:
-=======
 	idxd_unregister_driver();
 err_idxd_driver_register:
 	idxd_unregister_bus_type();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-err_idxd_driver_register:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 module_init(idxd_init_module);
 
 static void __exit idxd_exit_module(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	idxd_driver_unregister(&idxd_user_drv);
-	idxd_driver_unregister(&idxd_dmaengine_drv);
-	idxd_driver_unregister(&idxd_drv);
-	pci_unregister_driver(&idxd_pci_driver);
-	idxd_cdev_remove();
-=======
 	idxd_unregister_driver();
 	pci_unregister_driver(&idxd_pci_driver);
 	idxd_cdev_remove();
 	idxd_unregister_bus_type();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	idxd_driver_unregister(&idxd_user_drv);
-	idxd_driver_unregister(&idxd_dmaengine_drv);
-	idxd_driver_unregister(&idxd_drv);
-	pci_unregister_driver(&idxd_pci_driver);
-	idxd_cdev_remove();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	perfmon_exit();
 }
 module_exit(idxd_exit_module);

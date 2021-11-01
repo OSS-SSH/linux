@@ -17,14 +17,8 @@ struct iptable_nat_pernet {
 	struct nf_hook_ops *nf_nat_ops;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int __net_init iptable_nat_table_init(struct net *net);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static unsigned int iptable_nat_net_id __read_mostly;
 
 static const struct xt_table nf_nat_ipv4_table = {
@@ -35,13 +29,7 @@ static const struct xt_table nf_nat_ipv4_table = {
 			  (1 << NF_INET_LOCAL_IN),
 	.me		= THIS_MODULE,
 	.af		= NFPROTO_IPV4,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.table_init	= iptable_nat_table_init,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static unsigned int iptable_nat_do_chain(void *priv,
@@ -125,15 +113,7 @@ static void ipt_nat_unregister_lookups(struct net *net)
 	kfree(ops);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int iptable_nat_table_init(struct net *net)
-=======
 static int __net_init iptable_nat_table_init(struct net *net)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int iptable_nat_table_init(struct net *net)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ipt_replace *repl;
 	int ret;
@@ -175,55 +155,20 @@ static struct pernet_operations iptable_nat_net_ops = {
 
 static int __init iptable_nat_init(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	int ret = xt_register_template(&nf_nat_ipv4_table,
-				       iptable_nat_table_init);
-
-	if (ret < 0)
-		return ret;
-<<<<<<< HEAD
-
-	ret = register_pernet_subsys(&iptable_nat_net_ops);
-	if (ret < 0) {
-		xt_unregister_template(&nf_nat_ipv4_table);
-		return ret;
-	}
-
-=======
 	int ret = register_pernet_subsys(&iptable_nat_net_ops);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	ret = register_pernet_subsys(&iptable_nat_net_ops);
-	if (ret < 0) {
-		xt_unregister_template(&nf_nat_ipv4_table);
+	if (ret)
 		return ret;
-	}
 
-<<<<<<< HEAD
 	ret = iptable_nat_table_init(&init_net);
 	if (ret)
 		unregister_pernet_subsys(&iptable_nat_net_ops);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
 static void __exit iptable_nat_exit(void)
 {
 	unregister_pernet_subsys(&iptable_nat_net_ops);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xt_unregister_template(&nf_nat_ipv4_table);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xt_unregister_template(&nf_nat_ipv4_table);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(iptable_nat_init);

@@ -134,15 +134,7 @@ void max_98373_set_codec_conf(struct snd_soc_card *card)
 EXPORT_SYMBOL_NS(max_98373_set_codec_conf, SND_SOC_INTEL_SOF_MAXIM_COMMON);
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Maxim MAX98357A/MAX98360A
-=======
  * Maxim MAX98357A
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Maxim MAX98357A/MAX98360A
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static const struct snd_kcontrol_new max_98357a_kcontrols[] = {
 	SOC_DAPM_PIN_SWITCH("Spk"),
@@ -164,22 +156,6 @@ static struct snd_soc_dai_link_component max_98357a_components[] = {
 	}
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static struct snd_soc_dai_link_component max_98360a_components[] = {
-	{
-		.name = MAX_98360A_DEV0_NAME,
-		.dai_name = MAX_98357A_CODEC_DAI,
-	}
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int max_98357a_init(struct snd_soc_pcm_runtime *rtd)
 {
 	struct snd_soc_card *card = rtd->card;
@@ -217,22 +193,5 @@ void max_98357a_dai_link(struct snd_soc_dai_link *link)
 }
 EXPORT_SYMBOL_NS(max_98357a_dai_link, SND_SOC_INTEL_SOF_MAXIM_COMMON);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-void max_98360a_dai_link(struct snd_soc_dai_link *link)
-{
-	link->codecs = max_98360a_components;
-	link->num_codecs = ARRAY_SIZE(max_98360a_components);
-	link->init = max_98357a_init;
-}
-EXPORT_SYMBOL_NS(max_98360a_dai_link, SND_SOC_INTEL_SOF_MAXIM_COMMON);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_DESCRIPTION("ASoC Intel SOF Maxim helpers");
 MODULE_LICENSE("GPL");

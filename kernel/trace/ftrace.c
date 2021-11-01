@@ -3100,14 +3100,6 @@ ops_references_rec(struct ftrace_ops *ops, struct dyn_ftrace *rec)
 
 static int ftrace_update_code(struct module *mod, struct ftrace_page *new_pgs)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool init_nop = ftrace_need_init_nop();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool init_nop = ftrace_need_init_nop();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ftrace_page *pg;
 	struct dyn_ftrace *p;
 	u64 start, stop;
@@ -3146,16 +3138,8 @@ static int ftrace_update_code(struct module *mod, struct ftrace_page *new_pgs)
 			 * Do the initial record conversion from mcount jump
 			 * to the NOP instructions.
 			 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (init_nop && !ftrace_nop_initialize(mod, p))
-=======
 			if (!__is_defined(CC_USING_NOP_MCOUNT) &&
 			    !ftrace_nop_initialize(mod, p))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (init_nop && !ftrace_nop_initialize(mod, p))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 
 			update_cnt++;
@@ -6001,17 +5985,7 @@ ftrace_graph_release(struct inode *inode, struct file *file)
 		 * infrastructure to do the synchronization, thus we must do it
 		 * ourselves.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (old_hash != EMPTY_HASH)
-			synchronize_rcu_tasks_rude();
-=======
 		synchronize_rcu_tasks_rude();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (old_hash != EMPTY_HASH)
-			synchronize_rcu_tasks_rude();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		free_ftrace_hash(old_hash);
 	}
@@ -7570,15 +7544,7 @@ int ftrace_is_dead(void)
  */
 int register_ftrace_function(struct ftrace_ops *ops)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
 	int ret = -1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ftrace_ops_init(ops);
 

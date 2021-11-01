@@ -38,15 +38,7 @@ DECLARE_EVENT_CLASS(page_ref_mod_template,
 
 	TP_printk("pfn=0x%lx flags=%s count=%d mapcount=%d mapping=%p mt=%d val=%d",
 		__entry->pfn,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		show_page_flags(__entry->flags & PAGEFLAGS_MASK),
-=======
 		show_page_flags(__entry->flags & ((1UL << NR_PAGEFLAGS) - 1)),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		show_page_flags(__entry->flags & PAGEFLAGS_MASK),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__entry->count,
 		__entry->mapcount, __entry->mapping, __entry->mt,
 		__entry->val)
@@ -96,15 +88,7 @@ DECLARE_EVENT_CLASS(page_ref_mod_and_test_template,
 
 	TP_printk("pfn=0x%lx flags=%s count=%d mapcount=%d mapping=%p mt=%d val=%d ret=%d",
 		__entry->pfn,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		show_page_flags(__entry->flags & PAGEFLAGS_MASK),
-=======
 		show_page_flags(__entry->flags & ((1UL << NR_PAGEFLAGS) - 1)),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		show_page_flags(__entry->flags & PAGEFLAGS_MASK),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__entry->count,
 		__entry->mapcount, __entry->mapping, __entry->mt,
 		__entry->val, __entry->ret)
