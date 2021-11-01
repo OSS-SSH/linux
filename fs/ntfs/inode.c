@@ -477,6 +477,10 @@ err_corrupt_attr:
 		}
 		file_name_attr = (FILE_NAME_ATTR*)((u8*)attr +
 				le16_to_cpu(attr->data.resident.value_offset));
+<<<<<<< HEAD
+=======
+		/* p2 = (u8*)attr + le32_to_cpu(attr->data.resident.value_length); */
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 		p2 = (u8 *)file_name_attr + le32_to_cpu(attr->data.resident.value_length);
 		if (p2 < (u8*)attr || p2 > p)
 			goto err_corrupt_attr;

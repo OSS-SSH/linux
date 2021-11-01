@@ -267,6 +267,7 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(regs->msr & MSR_EE) || is_implicit_soft_masked(regs)) {
@@ -293,6 +294,14 @@ static inline void interrupt_nmi_enter_prepare(struct pt_regs *regs, struct inte
 		regs->softe = IRQS_ALL_DISABLED;
 	}
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) && !(regs->msr & MSR_PR) &&
+				regs->nip < (unsigned long)__end_interrupts) {
+		// Kernel code running below __end_interrupts is
+		// implicitly soft-masked.
+		regs->softe = IRQS_ALL_DISABLED;
+	}
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 
 	/* Don't do any per-CPU operations until interrupt state is fixed */
 

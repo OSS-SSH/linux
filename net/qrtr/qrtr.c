@@ -495,6 +495,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (!size || len != ALIGN(size, 4) + hdrlen)
 =======
 	if (len != ALIGN(size, 4) + hdrlen)
@@ -502,6 +503,9 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 =======
 	if (!size || len != ALIGN(size, 4) + hdrlen)
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	if (!size || len != ALIGN(size, 4) + hdrlen)
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 		goto err;
 
 	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&

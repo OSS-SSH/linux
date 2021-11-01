@@ -24,6 +24,7 @@ typedef __builtin_va_list va_list;
 #else
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/stdarg.h>
 =======
 #include <stdarg.h>
@@ -33,6 +34,16 @@ typedef __builtin_va_list va_list;
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 #endif
+=======
+#ifdef __KERNEL__
+#include <stdarg.h>
+#else
+/* Used to build acpi tools */
+#include <stdarg.h>
+#endif /* __KERNEL__ */
+#endif /* ACPI_USE_BUILTIN_STDARG */
+#endif /* ! va_arg */
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 
 #define ACPI_INLINE             __inline__
 

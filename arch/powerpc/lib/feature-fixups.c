@@ -151,6 +151,7 @@ static void do_stf_entry_barrier_fixups(enum stf_barrier_type types)
 
 		// See comment in do_entry_flush_fixups() RE order of patching
 		if (types & STF_BARRIER_FALLBACK) {
+<<<<<<< HEAD
 			patch_instruction(dest, ppc_inst(instrs[0]));
 			patch_instruction(dest + 2, ppc_inst(instrs[2]));
 			patch_branch(dest + 1,
@@ -159,6 +160,16 @@ static void do_stf_entry_barrier_fixups(enum stf_barrier_type types)
 			patch_instruction(dest + 1, ppc_inst(instrs[1]));
 			patch_instruction(dest + 2, ppc_inst(instrs[2]));
 			patch_instruction(dest, ppc_inst(instrs[0]));
+=======
+			patch_instruction((struct ppc_inst *)dest, ppc_inst(instrs[0]));
+			patch_instruction((struct ppc_inst *)(dest + 2), ppc_inst(instrs[2]));
+			patch_branch((struct ppc_inst *)(dest + 1),
+				     (unsigned long)&stf_barrier_fallback, BRANCH_SET_LINK);
+		} else {
+			patch_instruction((struct ppc_inst *)(dest + 1), ppc_inst(instrs[1]));
+			patch_instruction((struct ppc_inst *)(dest + 2), ppc_inst(instrs[2]));
+			patch_instruction((struct ppc_inst *)dest, ppc_inst(instrs[0]));
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 		}
 	}
 
@@ -226,9 +237,12 @@ static void do_stf_exit_barrier_fixups(enum stf_barrier_type types)
 		                                           : "unknown");
 }
 
+<<<<<<< HEAD
 static bool stf_exit_reentrant = false;
 static bool rfi_exit_reentrant = false;
 
+=======
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 static int __do_stf_barrier_fixups(void *data)
 {
 	enum stf_barrier_type *types = data;
@@ -243,6 +257,7 @@ void do_stf_barrier_fixups(enum stf_barrier_type types)
 {
 	/*
 	 * The call to the fallback entry flush, and the fallback/sync-ori exit
+<<<<<<< HEAD
 	 * flush can not be safely patched in/out while other CPUs are
 	 * executing them. So call __do_stf_barrier_fixups() on one CPU while
 	 * all other CPUs spin in the stop machine core with interrupts hard
@@ -264,6 +279,13 @@ void do_stf_barrier_fixups(enum stf_barrier_type types)
 
 	if (stf_exit_reentrant && rfi_exit_reentrant)
 		static_branch_disable(&interrupt_exit_not_reentrant);
+=======
+	 * flush can not be safely patched in/out while other CPUs are executing
+	 * them. So call __do_stf_barrier_fixups() on one CPU while all other CPUs
+	 * spin in the stop machine core with interrupts hard disabled.
+	 */
+	stop_machine(__do_stf_barrier_fixups, &types, NULL);
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 }
 
 void do_uaccess_flush_fixups(enum l1d_flush_type types)
@@ -367,6 +389,31 @@ static int __do_entry_flush_fixups(void *data)
 	 * semi-patched state.
 	 */
 
+	/*
+	 * If we're patching in or out the fallback flush we need to be careful about the
+	 * order in which we patch instructions. That's because it's possible we could
+	 * take a page fault after patching one instruction, so the sequence of
+	 * instructions must be safe even in a half patched state.
+	 *
+	 * To make that work, when patching in the fallback flush we patch in this order:
+	 *  - the mflr		(dest)
+	 *  - the mtlr		(dest + 2)
+	 *  - the branch	(dest + 1)
+	 *
+	 * That ensures the sequence is safe to execute at any point. In contrast if we
+	 * patch the mtlr last, it's possible we could return from the branch and not
+	 * restore LR, leading to a crash later.
+	 *
+	 * When patching out the fallback flush (either with nops or another flush type),
+	 * we patch in this order:
+	 *  - the branch	(dest + 1)
+	 *  - the mtlr		(dest + 2)
+	 *  - the mflr		(dest)
+	 *
+	 * Note we are protected by stop_machine() from other CPUs executing the code in a
+	 * semi-patched state.
+	 */
+
 	start = PTRRELOC(&__start___entry_flush_fixup);
 	end = PTRRELOC(&__stop___entry_flush_fixup);
 	for (i = 0; start < end; start++, i++) {
@@ -375,6 +422,7 @@ static int __do_entry_flush_fixups(void *data)
 		pr_devel("patching dest %lx\n", (unsigned long)dest);
 
 		if (types == L1D_FLUSH_FALLBACK) {
+<<<<<<< HEAD
 			patch_instruction(dest, ppc_inst(instrs[0]));
 			patch_instruction(dest + 2, ppc_inst(instrs[2]));
 			patch_branch(dest + 1,
@@ -383,6 +431,16 @@ static int __do_entry_flush_fixups(void *data)
 			patch_instruction(dest + 1, ppc_inst(instrs[1]));
 			patch_instruction(dest + 2, ppc_inst(instrs[2]));
 			patch_instruction(dest, ppc_inst(instrs[0]));
+=======
+			patch_instruction((struct ppc_inst *)dest, ppc_inst(instrs[0]));
+			patch_instruction((struct ppc_inst *)(dest + 2), ppc_inst(instrs[2]));
+			patch_branch((struct ppc_inst *)(dest + 1),
+				     (unsigned long)&entry_flush_fallback, BRANCH_SET_LINK);
+		} else {
+			patch_instruction((struct ppc_inst *)(dest + 1), ppc_inst(instrs[1]));
+			patch_instruction((struct ppc_inst *)(dest + 2), ppc_inst(instrs[2]));
+			patch_instruction((struct ppc_inst *)dest, ppc_inst(instrs[0]));
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 		}
 	}
 
@@ -394,6 +452,7 @@ static int __do_entry_flush_fixups(void *data)
 		pr_devel("patching dest %lx\n", (unsigned long)dest);
 
 		if (types == L1D_FLUSH_FALLBACK) {
+<<<<<<< HEAD
 			patch_instruction(dest, ppc_inst(instrs[0]));
 			patch_instruction(dest + 2, ppc_inst(instrs[2]));
 			patch_branch(dest + 1,
@@ -402,6 +461,16 @@ static int __do_entry_flush_fixups(void *data)
 			patch_instruction(dest + 1, ppc_inst(instrs[1]));
 			patch_instruction(dest + 2, ppc_inst(instrs[2]));
 			patch_instruction(dest, ppc_inst(instrs[0]));
+=======
+			patch_instruction((struct ppc_inst *)dest, ppc_inst(instrs[0]));
+			patch_instruction((struct ppc_inst *)(dest + 2), ppc_inst(instrs[2]));
+			patch_branch((struct ppc_inst *)(dest + 1),
+				     (unsigned long)&scv_entry_flush_fallback, BRANCH_SET_LINK);
+		} else {
+			patch_instruction((struct ppc_inst *)(dest + 1), ppc_inst(instrs[1]));
+			patch_instruction((struct ppc_inst *)(dest + 2), ppc_inst(instrs[2]));
+			patch_instruction((struct ppc_inst *)dest, ppc_inst(instrs[0]));
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 		}
 	}
 
@@ -416,6 +485,20 @@ static int __do_entry_flush_fixups(void *data)
 						: "unknown");
 
 	return 0;
+<<<<<<< HEAD
+=======
+}
+
+void do_entry_flush_fixups(enum l1d_flush_type types)
+{
+	/*
+	 * The call to the fallback flush can not be safely patched in/out while
+	 * other CPUs are executing it. So call __do_entry_flush_fixups() on one
+	 * CPU while all other CPUs spin in the stop machine core with interrupts
+	 * hard disabled.
+	 */
+	stop_machine(__do_entry_flush_fixups, &types, NULL);
+>>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
 }
 
 void do_entry_flush_fixups(enum l1d_flush_type types)
